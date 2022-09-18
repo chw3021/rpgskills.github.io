@@ -59,7 +59,6 @@ public class Broskills extends Pak implements Listener, Serializable {
 	 *
 	 */
 	private static transient final long serialVersionUID = -5657446578866501591L;
-	private HashMap<String, Long> swcooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> sdcooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> cdcooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> frcooldown = new HashMap<String, Long>();
