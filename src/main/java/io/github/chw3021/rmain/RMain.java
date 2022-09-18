@@ -1,135 +1,190 @@
 package io.github.chw3021.rmain;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.SpawnCategory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import io.github.chw3021.angler.AngSkillsData;
-import io.github.chw3021.angler.Angskills;
-import io.github.chw3021.archer.ArchSkillsData;
-import io.github.chw3021.archer.Archskills;
-import io.github.chw3021.berserker.BerSkillsData;
-import io.github.chw3021.berserker.Berskills;
-import io.github.chw3021.boxer.BoxSkillsData;
-import io.github.chw3021.boxer.Boxskills;
-import io.github.chw3021.chemist.CheSkillsData;
-import io.github.chw3021.chemist.Cheskills;
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.HashMultimap;
+
 import io.github.chw3021.classes.ClassData;
-import io.github.chw3021.commons.Event;
+import io.github.chw3021.classes.Proficiency;
+import io.github.chw3021.classes.angler.AngSkillsData;
+import io.github.chw3021.classes.archer.ArchSkillsData;
+import io.github.chw3021.classes.berserker.BerSkillsData;
+import io.github.chw3021.classes.boxer.BoxSkillsData;
+import io.github.chw3021.classes.broiler.BroSkillsData;
+import io.github.chw3021.classes.chemist.CheSkillsData;
+import io.github.chw3021.classes.cook.CookSkillsData;
+import io.github.chw3021.classes.engineer.EngSkillsData;
+import io.github.chw3021.classes.firemage.FireSkillsData;
+import io.github.chw3021.classes.forger.ForSkillsData;
+import io.github.chw3021.classes.frostman.FrostSkillsData;
+import io.github.chw3021.classes.hunter.HunSkillsData;
+import io.github.chw3021.classes.illusionist.IllSkillsData;
+import io.github.chw3021.classes.launcher.LaunSkillsData;
+import io.github.chw3021.classes.medic.MedSkillsData;
+import io.github.chw3021.classes.nobility.NobSkillsData;
+import io.github.chw3021.classes.oceanknight.OceSkillsData;
+import io.github.chw3021.classes.paladin.PalSkillsData;
+import io.github.chw3021.classes.sniper.SnipSkillsData;
+import io.github.chw3021.classes.swordman.SwordSkillsData;
+import io.github.chw3021.classes.tamer.TamSkillsData;
+import io.github.chw3021.classes.taoist.TaoSkillsData;
+import io.github.chw3021.classes.witchdoctor.WdcSkillsData;
+import io.github.chw3021.classes.witherist.WitSkillsData;
+import io.github.chw3021.classes.wreltler.WreSkillsData;
+import io.github.chw3021.commons.CommonEvents;
+import io.github.chw3021.commons.Holding;
+import io.github.chw3021.commons.Pak;
 import io.github.chw3021.commons.Rpgs;
-import io.github.chw3021.cook.CookSkillsData;
-import io.github.chw3021.cook.Cookskills;
-import io.github.chw3021.engineer.EngSkillsData;
-import io.github.chw3021.engineer.Engskills;
-import io.github.chw3021.firemage.FireSkillsData;
-import io.github.chw3021.firemage.Fireskills;
-import io.github.chw3021.forger.ForSkillsData;
-import io.github.chw3021.forger.Forskills;
-import io.github.chw3021.frostman.FrostSkillsData;
-import io.github.chw3021.frostman.Frostskills;
-import io.github.chw3021.hunter.HunSkillsData;
-import io.github.chw3021.hunter.Hunskills;
-import io.github.chw3021.illusionist.IllSkillsData;
-import io.github.chw3021.illusionist.Illskills;
-import io.github.chw3021.launcher.LaunSkillsData;
-import io.github.chw3021.launcher.Launskills;
-import io.github.chw3021.medic.MedSkillsData;
-import io.github.chw3021.medic.Medskills;
-import io.github.chw3021.monsters.RedBoss;
-import io.github.chw3021.monsters.SnowBoss;
-import io.github.chw3021.monsters.Mobs;
-import io.github.chw3021.nobility.NobSkillsData;
-import io.github.chw3021.nobility.Nobskills;
-import io.github.chw3021.oceanknight.OceSkillsData;
-import io.github.chw3021.oceanknight.Oceskills;
-import io.github.chw3021.paladin.PalSkillsData;
-import io.github.chw3021.paladin.Palskills;
-import io.github.chw3021.party.PartyData;
-import io.github.chw3021.party.PartyEvent;
-import io.github.chw3021.party.Partycom;
-import io.github.chw3021.sniper.SnipSkillsData;
-import io.github.chw3021.sniper.Snipskills;
-import io.github.chw3021.swordman.SwordSkillsData;
-import io.github.chw3021.swordman.Swordskills;
-import io.github.chw3021.tamer.TamSkillsData;
-import io.github.chw3021.tamer.Tamskills;
-import io.github.chw3021.taoist.TaoSkillsData;
-import io.github.chw3021.taoist.Taoskills;
-import io.github.chw3021.witchdoctor.WdcSkillsData;
-import io.github.chw3021.witchdoctor.Wdcskills;
-import io.github.chw3021.witherist.WitSkillsData;
-import io.github.chw3021.witherist.Witskills;
-import io.github.chw3021.wreltler.WreSkillsData;
-import io.github.chw3021.wreltler.Wreskills;
+import io.github.chw3021.commons.ShulkerBag;
+import io.github.chw3021.commons.SkillUsing;
+import io.github.chw3021.commons.party.Party;
+import io.github.chw3021.items.Backpack;
+import io.github.chw3021.items.Elements;
+import io.github.chw3021.items.Enchanting;
+import io.github.chw3021.items.NamingPrevent;
+import io.github.chw3021.items.ScrollPoint;
+import io.github.chw3021.items.armors.ArmorSet;
+import io.github.chw3021.items.armors.ArmorSetEffects;
+import io.github.chw3021.items.armors.Boots;
+import io.github.chw3021.items.armors.Chestplate;
+import io.github.chw3021.items.armors.Helmet;
+import io.github.chw3021.items.armors.Leggings;
+import io.github.chw3021.items.weapons.Bow;
+import io.github.chw3021.items.weapons.CrossBow;
+import io.github.chw3021.items.weapons.Fighter;
+import io.github.chw3021.items.weapons.FishingRod;
+import io.github.chw3021.items.weapons.Tridentnaming;
+import io.github.chw3021.items.weapons.Wand;
+import io.github.chw3021.monsters.worldgen.RaidWorldLoad;
+import io.github.chw3021.monsters.Drops;
+import io.github.chw3021.monsters.MobArmor;
+import io.github.chw3021.monsters.MobsSkillsEvents;
+import io.github.chw3021.obtains.NPCLoc;
+import io.github.chw3021.obtains.NPCcontact;
+import io.github.chw3021.obtains.Obtained;
+import io.github.chw3021.obtains.TrophyLoc;
 
 public class RMain extends JavaPlugin{
 
 	private static RMain instance;
-
-    @Override
+	
+	@Override
     public void onEnable() {
+
+    	getConfig().addDefault("Language", "ko_kr");
+        getConfig().options().copyDefaults(true);
+        getConfig().options().setHeader(Arrays.asList("English - en_us","ÇÑ±¹¾î - ko_kr"));
+        saveConfig();
     	instance = this;
         System.out.println("Plugin is Activated");
-        this.getDataFolder().mkdir();
-        getServer().getPluginManager().registerEvents(new ClassData(new HashMap<UUID, Integer>()), this);
-        getServer().getPluginManager().registerEvents(new PartyData(new HashMap<UUID, String>(), new HashMap<UUID, String>()), this);
-        this.getCommand("party").setExecutor(new Partycom());
-        getServer().getPluginManager().registerEvents(new SwordSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
-        getServer().getPluginManager().registerEvents(new BerSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
-        getServer().getPluginManager().registerEvents(new HunSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
-        getServer().getPluginManager().registerEvents(new PalSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
-        getServer().getPluginManager().registerEvents(new LaunSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
-        getServer().getPluginManager().registerEvents(new MedSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
-        getServer().getPluginManager().registerEvents(new SnipSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
-        getServer().getPluginManager().registerEvents(new ArchSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
-        getServer().getPluginManager().registerEvents(new BoxSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
-        getServer().getPluginManager().registerEvents(new WreSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
-        getServer().getPluginManager().registerEvents(new TamSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
-        getServer().getPluginManager().registerEvents(new TaoSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
-        getServer().getPluginManager().registerEvents(new IllSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
-        getServer().getPluginManager().registerEvents(new FireSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
-        getServer().getPluginManager().registerEvents(new WitSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
-        getServer().getPluginManager().registerEvents(new WdcSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
-        getServer().getPluginManager().registerEvents(new CheSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
-        getServer().getPluginManager().registerEvents(new ForSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
-        getServer().getPluginManager().registerEvents(new EngSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
-        getServer().getPluginManager().registerEvents(new CookSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
-        getServer().getPluginManager().registerEvents(new OceSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
-        getServer().getPluginManager().registerEvents(new NobSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
-        getServer().getPluginManager().registerEvents(new FrostSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
-        getServer().getPluginManager().registerEvents(new AngSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
 
-        getServer().getPluginManager().registerEvents(new PartyEvent(), this);
-        getServer().getPluginManager().registerEvents(new Wdcskills(), this);
-        getServer().getPluginManager().registerEvents(new Medskills(), this);
-        getServer().getPluginManager().registerEvents(new Cookskills(), this);
-        getServer().getPluginManager().registerEvents(new Swordskills(), this);
-        getServer().getPluginManager().registerEvents(new Hunskills(), this);
-        getServer().getPluginManager().registerEvents(new Berskills(), this);
-        getServer().getPluginManager().registerEvents(new Launskills(), this);
-        getServer().getPluginManager().registerEvents(new Palskills(), this);
-        getServer().getPluginManager().registerEvents(new Archskills(), this);
-        getServer().getPluginManager().registerEvents(new Angskills(), this);
-        getServer().getPluginManager().registerEvents(new Snipskills(), this);
-        getServer().getPluginManager().registerEvents(new Boxskills(), this);
-        getServer().getPluginManager().registerEvents(new Wreskills(), this);
-        getServer().getPluginManager().registerEvents(new Tamskills(), this);
-        getServer().getPluginManager().registerEvents(new Taoskills(), this);
-        getServer().getPluginManager().registerEvents(new Illskills(), this);
-        getServer().getPluginManager().registerEvents(new Fireskills(), this);
-        getServer().getPluginManager().registerEvents(new Witskills(), this);
-        getServer().getPluginManager().registerEvents(new Cheskills(), this);
-        getServer().getPluginManager().registerEvents(new Forskills(), this);
-        getServer().getPluginManager().registerEvents(new Engskills(), this);
-        getServer().getPluginManager().registerEvents(new Oceskills(), this);
-        getServer().getPluginManager().registerEvents(new Nobskills(), this);
-        getServer().getPluginManager().registerEvents(new Frostskills(), this);
-        getServer().getPluginManager().registerEvents(new Mobs(), this);
-        getServer().getPluginManager().registerEvents(new RedBoss(), this);
-        getServer().getPluginManager().registerEvents(new SnowBoss(), this);
+        Bukkit.getWorlds().forEach(w -> {
+        	if(w.getName().contains("Raid")) {
+        		return;
+        	}
+        	w.setSpawnLimit(SpawnCategory.MONSTER, 300);
+        	w.setSpawnLimit(SpawnCategory.WATER_UNDERGROUND_CREATURE, 20);
+        	w.setTicksPerSpawns(SpawnCategory.AMBIENT, 1);
+        	w.setTicksPerSpawns(SpawnCategory.AXOLOTL, 1);
+        	w.setTicksPerSpawns(SpawnCategory.ANIMAL, 1);
+        	w.setTicksPerSpawns(SpawnCategory.MONSTER, 1);
+        	w.setTicksPerSpawns(SpawnCategory.WATER_AMBIENT, 1);
+        	w.setTicksPerSpawns(SpawnCategory.WATER_ANIMAL, 1);
+        	w.setTicksPerSpawns(SpawnCategory.WATER_UNDERGROUND_CREATURE, 1);
+        });
+        Bukkit.getPluginManager().registerEvents(new RaidWorldLoad(), this);
+        
+        this.getDataFolder().mkdir();
+        Bukkit.getPluginManager().registerEvents(new ClassData(new HashMap<UUID, Integer>()), this);
+        Bukkit.getPluginManager().registerEvents(new Backpack(new HashMap<UUID, ItemStack[]>()), this);
+        Bukkit.getPluginManager().registerEvents(new ScrollPoint(new HashMap<UUID, Integer>()), this);
+        Bukkit.getPluginManager().registerEvents(new Party(), this);
+        this.getCommand("party").setExecutor(new Party());
+
+        Bukkit.getPluginManager().registerEvents(new TrophyLoc(HashMultimap.create()), this);
+        Bukkit.getPluginManager().registerEvents(new Obtained(new HashMap<UUID, Integer>(),new HashMap<UUID, Integer>(),new HashMap<UUID, Integer>(),new HashMap<UUID, Integer>(),new HashMap<UUID, Integer>(),new HashMap<UUID, Integer>(),new HashMap<UUID, Integer>(),new HashMap<UUID, Integer>(),new HashMap<UUID, Integer>(),new HashMap<UUID, Integer>(),new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
+        
+        Bukkit.getPluginManager().registerEvents(new SwordSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
+        Bukkit.getPluginManager().registerEvents(new BerSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
+        Bukkit.getPluginManager().registerEvents(new HunSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
+        Bukkit.getPluginManager().registerEvents(new PalSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
+        Bukkit.getPluginManager().registerEvents(new LaunSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
+        Bukkit.getPluginManager().registerEvents(new MedSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
+        Bukkit.getPluginManager().registerEvents(new SnipSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
+        Bukkit.getPluginManager().registerEvents(new ArchSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
+        Bukkit.getPluginManager().registerEvents(new BoxSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
+        Bukkit.getPluginManager().registerEvents(new WreSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
+        Bukkit.getPluginManager().registerEvents(new TamSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
+        Bukkit.getPluginManager().registerEvents(new TaoSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
+        Bukkit.getPluginManager().registerEvents(new IllSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
+        Bukkit.getPluginManager().registerEvents(new FireSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
+        Bukkit.getPluginManager().registerEvents(new WitSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
+        Bukkit.getPluginManager().registerEvents(new WdcSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
+        Bukkit.getPluginManager().registerEvents(new CheSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
+        Bukkit.getPluginManager().registerEvents(new ForSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
+        Bukkit.getPluginManager().registerEvents(new EngSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
+        Bukkit.getPluginManager().registerEvents(new CookSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
+        Bukkit.getPluginManager().registerEvents(new OceSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
+        Bukkit.getPluginManager().registerEvents(new NobSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
+        Bukkit.getPluginManager().registerEvents(new FrostSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
+        Bukkit.getPluginManager().registerEvents(new AngSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
+        Bukkit.getPluginManager().registerEvents(new BroSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
+
+        Bukkit.getPluginManager().registerEvents(new Proficiency(HashBasedTable.create(), HashBasedTable.create()), this);
+
+        Bukkit.getPluginManager().registerEvents(new Tridentnaming(), this);
+        
+        Bukkit.getPluginManager().registerEvents(new ArmorSetEffects(), this);
+
+        Bukkit.getPluginManager().registerEvents(new NPCcontact(), this);
+
+        Bukkit.getPluginManager().registerEvents(new SkillUsing(), this);
+        Bukkit.getPluginManager().registerEvents(new ShulkerBag(), this);
+
+        Bukkit.getPluginManager().registerEvents(new ArmorSet(), this);
+        Bukkit.getPluginManager().registerEvents(new Enchanting(), this);
+        Bukkit.getPluginManager().registerEvents(new NamingPrevent(), this);
+        
+        Bukkit.getPluginManager().registerEvents(new Elements(), this);
+        Bukkit.getPluginManager().registerEvents(new Bow(), this);
+        Bukkit.getPluginManager().registerEvents(new Fighter(), this);
+        Bukkit.getPluginManager().registerEvents(new CrossBow(), this);
+        Bukkit.getPluginManager().registerEvents(new Wand(), this);
+        Bukkit.getPluginManager().registerEvents(new FishingRod(), this);
+        
+        Bukkit.getPluginManager().registerEvents(new Helmet(), this);
+        Bukkit.getPluginManager().registerEvents(new Boots(), this);
+        Bukkit.getPluginManager().registerEvents(new Chestplate(), this);
+        Bukkit.getPluginManager().registerEvents(new Leggings(), this);
+
+        
+        Bukkit.getPluginManager().registerEvents(new Pak(), this);
+
+        Bukkit.getPluginManager().registerEvents(new MobArmor(), this);
+
+        
+        Bukkit.getPluginManager().registerEvents(new MobsSkillsEvents(), this);
+
+        
+        
         this.getCommand("rpg").setExecutor(new Rpgs());
-        getServer().getPluginManager().registerEvents(new Event(), this);
+        Bukkit.getPluginManager().registerEvents(new Drops(), this);
+        Bukkit.getPluginManager().registerEvents(new CommonEvents(), this);
+        Bukkit.getPluginManager().registerEvents(new Holding(), this);
+        
+        //Bukkit.getPluginManager().registerEvents(new NPCLoc(HashMultimap.create()), this);
     }
     
     public static RMain getInstance()
@@ -139,9 +194,27 @@ public class RMain extends JavaPlugin{
     
     @Override
     public void onDisable() {
+		List<World> worlds = Bukkit.getWorlds();
+
+		worlds.forEach(w ->{
+			w.getEntities().forEach(b -> {
+				b.setCustomName(CommonEvents.damaged.get(b.getUniqueId()));
+				if((b.hasMetadata("obnpc") || b.hasMetadata("rpgspawned") || b.hasMetadata("untargetable")|| b.hasMetadata("fake")) && !(b instanceof Player)) {
+					b.setPersistent(false);
+					if(b instanceof LivingEntity) {
+						LivingEntity le = (LivingEntity) b;
+						le.setRemoveWhenFarAway(true);
+					}
+					b.remove();
+				}
+			});
+			}
+		);
         System.out.println("Plugin is DisActivated");
     }
     
 
 }
+
+
 

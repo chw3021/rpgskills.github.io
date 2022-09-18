@@ -1,181 +1,188 @@
 package io.github.chw3021.commons;
 
-import java.io.File;
 import java.util.HashMap;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
-import org.bukkit.attribute.Attribute;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Creeper;
-import org.bukkit.entity.EnderDragonPart;
-import org.bukkit.entity.Enderman;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import io.github.chw3021.party.PartyData;
+import io.github.chw3021.commons.party.Party;
 import io.github.chw3021.rmain.RMain;
 
-public class Holding {
+public class Holding implements Listener{
 	
-	static public HashMap<LivingEntity, Long> holded = new HashMap<LivingEntity, Long>();
-	static public HashMap<LivingEntity, Long> slowed = new HashMap<LivingEntity, Long>();
-	static public HashMap<LivingEntity, Double> orspeed = new HashMap<LivingEntity, Double>();
-	static public HashMap<Player, Long> superholding = new HashMap<Player, Long>();
+	static public HashMap<UUID, Long> holded = new HashMap<UUID, Long>();
+	static public HashMap<UUID, Long> slowed = new HashMap<UUID, Long>();
+	static public HashMap<UUID, Double> orspeed = new HashMap<UUID, Double>();
+	static public HashMap<UUID, Long> superholding = new HashMap<UUID, Long>();
+	static public HashMap<UUID, Integer> lasttask = new HashMap<UUID, Integer>();
+	static public HashMap<UUID, Long> untouchable = new HashMap<UUID, Long>();
+	
+
+	static public HashMap<UUID, Integer> flyt = new HashMap<UUID,Integer>();
 	
 	private static final Holding instance = new Holding ();
 	public static Holding getInstance()
 	{
 		return instance;
 	}
-	
-	public void attack(Player p, Entity e, Double amount) {
 
-		if ((!(e == p))&& e instanceof LivingEntity && !(e.hasMetadata("fake"))) 
-		{
-			if (e instanceof Player) 
-			{
-			    String path = new File("").getAbsolutePath();
-				Player p1 = (Player) e;
-				try {
-				if(PartyData.hasParty(p) && PartyData.hasParty(p1))	{
-				if(PartyData.getParty(p).equalsIgnoreCase(PartyData.getParty(p1)))
-					{
-						return;
-					}
-				}}
-				catch(NullPointerException ne) {
-					return;
-				}
-			}
-			LivingEntity le = (LivingEntity)e;
-			le.damage(0, p);
-			le.damage(amount, p);
+	static public Entity ale(Entity le) {
+		Entity ale = (Entity) Bukkit.getEntity(le.getUniqueId());
+		if(ale == null) {
+			return le;
 		}
-		else if (e instanceof EnderDragonPart) {
-			EnderDragonPart edp = (EnderDragonPart) e;
-			edp.damage(0, p);
-			edp.damage(amount, p);
+		return ale;
+	}
+
+	static public LivingEntity ale(LivingEntity le) {
+		LivingEntity ale = (LivingEntity) Bukkit.getEntity(le.getUniqueId());
+		if(ale == null) {
+			return le;
 		}
+		return ale;
 	}
 	
-	static public void superholding(Player p, LivingEntity le, Long tick) {
-		if(le.getType()!=EntityType.PLAYER && !le.isDead())
+	static public void superholding(@NotNull Player p, final LivingEntity le, Long tick) {
+		if(le.hasMetadata("fake") || untouchable.containsKey(le.getUniqueId())) {
+			return;
+		}
+		if(ale(le).getType()!=EntityType.PLAYER && ale(le).getType()!=EntityType.VILLAGER && !ale(le).isDead())
 		{
-			if(holded.containsKey(le) && superholding.containsKey(p)) {
-				holded.computeIfPresent(le, (k, v) -> v+1);
-				superholding.computeIfPresent(p, (k, v) -> v+1);
-				le.setAI(false);
-				if(le.getType()==EntityType.CREEPER) {
-					Creeper c = (Creeper)le;
-					c.setMaxFuseTicks(tick.intValue() + c.getMaxFuseTicks());
+			if(holded.containsKey(le.getUniqueId()) && superholding.containsKey(p.getUniqueId())) {
+				holded.computeIfPresent(le.getUniqueId(), (k, v) -> v+1);
+				superholding.computeIfPresent(p.getUniqueId(), (k, v) -> v+1);
+				ale(le).setAI(false);
+				if(ale(le).getType()==EntityType.CREEPER) {
+					Creeper c = (Creeper)ale(le);
+					c.setFuseTicks(0);
 				}
+				ale(le).setVelocity(ale(le).getVelocity().multiply(0));
 				p.setInvulnerable(true);
 			}
-			else if(holded.containsKey(le) && !superholding.containsKey(p)) {
-				holded.computeIfPresent(le, (k, v) -> v+1);
-				superholding.put(p, (long) 0);
-				le.setAI(false);
-				if(le.getType()==EntityType.CREEPER) {
-					Creeper c = (Creeper)le;
-					c.setMaxFuseTicks(tick.intValue() + c.getMaxFuseTicks());
+			else if(holded.containsKey(le.getUniqueId()) && !superholding.containsKey(p.getUniqueId())) {
+				holded.computeIfPresent(le.getUniqueId(), (k, v) -> v+1);
+				superholding.put(p.getUniqueId(), (long) 0);
+				ale(le).setAI(false);
+				if(ale(le).getType()==EntityType.CREEPER) {
+					Creeper c = (Creeper)ale(le);
+					c.setFuseTicks(0);
 				}
+				ale(le).setVelocity(ale(le).getVelocity().multiply(0));
 				p.setInvulnerable(true);				
 			}
-			else if(!holded.containsKey(le) && superholding.containsKey(p)) {
-				holded.put(le, (long) 0);
-				superholding.computeIfPresent(p, (k, v) -> v+1);
-				le.setAI(false);
-				if(le.getType()==EntityType.CREEPER) {
-					Creeper c = (Creeper)le;
-					c.setMaxFuseTicks(tick.intValue() + c.getMaxFuseTicks());
+			else if(!holded.containsKey(le.getUniqueId()) && superholding.containsKey(p.getUniqueId())) {
+				holded.put(le.getUniqueId(), (long) 0);
+				superholding.computeIfPresent(p.getUniqueId(), (k, v) -> v+1);
+				ale(le).setAI(false);
+				if(ale(le).getType()==EntityType.CREEPER) {
+					Creeper c = (Creeper)ale(le);
+					c.setFuseTicks(0);
 				}
+				ale(le).setVelocity(ale(le).getVelocity().multiply(0));
 				p.setInvulnerable(true);				
 			}
-			else if(!holded.containsKey(le) && !superholding.containsKey(p)) {
-				holded.put(le, (long) 0);
-				superholding.put(p, (long) 0);
-				le.setAI(false);
-				if(le.getType()==EntityType.CREEPER) {
-					Creeper c = (Creeper)le;
-					c.setMaxFuseTicks(tick.intValue() + c.getMaxFuseTicks());
+			else if(!holded.containsKey(le.getUniqueId()) && !superholding.containsKey(p.getUniqueId())) {
+				holded.put(le.getUniqueId(), (long) 0);
+				superholding.put(p.getUniqueId(), (long) 0);
+				ale(le).setAI(false);
+				if(ale(le).getType()==EntityType.CREEPER) {
+					Creeper c = (Creeper)ale(le);
+					c.setFuseTicks(0);
 				}
+				ale(le).setVelocity(ale(le).getVelocity().multiply(0));
 				p.setInvulnerable(true);
 			}
+			int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                @Override
+                public void run() 
+                {
+                	holded.computeIfPresent(le.getUniqueId(), (k, v) -> v-1);
+                	if(holded.getOrDefault(le.getUniqueId(),0l)<0) {
+                		ale(le).setAI(true);
+                		holded.remove(le.getUniqueId());
+                	}
+                }
+			}, tick); 
+			lasttask.put(le.getUniqueId(), task);
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
                 @Override
                 public void run() 
                 {
-                	holded.computeIfPresent(le, (k, v) -> v-1);
-                	superholding.computeIfPresent(p, (k, v) -> v-1);
-					if(superholding.get(p)<0) {
+                	superholding.computeIfPresent(p.getUniqueId(), (k, v) -> v-1);
+					if(superholding.get(p.getUniqueId())<0) {
 						p.setInvulnerable(false);
-						superholding.remove(p);
+						superholding.remove(p.getUniqueId());
 					}
-                	if(holded.get(le)<0) {
-					le.setAI(true);
-					holded.remove(le);
-                	}
                 }
-    	   }, tick); 
+			}, tick); 
 		}
 		else if(le.getType()==EntityType.PLAYER&& !le.isDead()){
 			if (le instanceof Player) 
 			{
-			    String path = new File("").getAbsolutePath();
-				PartyData party = new PartyData(PartyData.loadData(path +"/plugins/RPGskills/PartyData.data"));
 				Player p1 = (Player) le;
-				try {
-				if(PartyData.hasParty(p) && PartyData.hasParty(p1))	{
-				if(PartyData.getParty(p).equalsIgnoreCase(PartyData.getParty(p1)))
+				if(p!=null && Party.hasParty(p) && Party.hasParty(p1))	{
+				if(Party.getParty(p).equalsIgnoreCase(Party.getParty(p1)))
 					{
 						return;
 					}
-				}}
-				catch(NullPointerException ne) {
-					return;
 				}
 			}
 
-			if(holded.containsKey(le) && superholding.containsKey(p)) {
-				holded.computeIfPresent(le, (k, v) -> v+1);
-				superholding.computeIfPresent(p, (k, v) -> v+1);
-                le.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0);
+			if(holded.containsKey(le.getUniqueId()) && superholding.containsKey(p.getUniqueId())) {
+				holded.computeIfPresent(le.getUniqueId(), (k, v) -> v+1);
+				superholding.computeIfPresent(p.getUniqueId(), (k, v) -> v+1);
 				p.setInvulnerable(true);
 			}
-			else if(holded.containsKey(le) && !superholding.containsKey(p)) {
-				holded.computeIfPresent(le, (k, v) -> v+1);
-				superholding.put(p, (long) 0);
-                le.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0);
+			else if(holded.containsKey(le.getUniqueId()) && !superholding.containsKey(p.getUniqueId())) {
+				holded.computeIfPresent(le.getUniqueId(), (k, v) -> v+1);
+				superholding.put(p.getUniqueId(), (long) 0);
 				p.setInvulnerable(true);				
 			}
-			else if(!holded.containsKey(le) && superholding.containsKey(p)) {
-				holded.put(le, (long) 0);
-				superholding.computeIfPresent(p, (k, v) -> v+1);
-                le.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0);
+			else if(!holded.containsKey(le.getUniqueId()) && superholding.containsKey(p.getUniqueId())) {
+				holded.put(le.getUniqueId(), (long) 0);
+				superholding.computeIfPresent(p.getUniqueId(), (k, v) -> v+1);
 				p.setInvulnerable(true);				
 			}
-			else if(!holded.containsKey(le) && !superholding.containsKey(p)) {
-				holded.put(le, (long) 0);
-				superholding.put(p, (long) 0);
-                le.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0);
+			else if(!holded.containsKey(le.getUniqueId()) && !superholding.containsKey(p.getUniqueId())) {
+				holded.put(le.getUniqueId(), (long) 0);
+				superholding.put(p.getUniqueId(), (long) 0);
 				p.setInvulnerable(true);
 			}
+			int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                @Override
+                public void run() 
+                {
+                	holded.computeIfPresent(le.getUniqueId(), (k, v) -> v-1);
+                	if(holded.getOrDefault(le.getUniqueId(),0l)<0) {
+					holded.remove(le.getUniqueId());
+                	}
+                }
+			}, tick); 
+			lasttask.put(le.getUniqueId(), task);
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
                 @Override
                 public void run() 
                 {
-                	holded.computeIfPresent(le, (k, v) -> v-1);
-                	superholding.computeIfPresent(p, (k, v) -> v-1);
-					if(superholding.get(p)<0) {
+                	superholding.computeIfPresent(p.getUniqueId(), (k, v) -> v-1);
+					if(superholding.get(p.getUniqueId())<0) {
 						p.setInvulnerable(false);
-						superholding.remove(p);
+						superholding.remove(p.getUniqueId());
 					}
-                	if(holded.get(le)<0) {
-     					le.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.1);
-					holded.remove(le);
-                	}
                 }
     	   }, tick); 
 		
@@ -183,145 +190,227 @@ public class Holding {
 	
 	}
 	
-	static public void holding(@Nullable Player p, LivingEntity le, Long tick) {
-			if(le.getType()!=EntityType.PLAYER&& !le.isDead())
+	static public void holding(@Nullable Player p, final LivingEntity le, Long tick) {
+		if(le.hasMetadata("fake") || untouchable.containsKey(le.getUniqueId())) {
+			return;
+		}
+			if(ale(le).getType()!=EntityType.PLAYER && ale(le).getType()!=EntityType.VILLAGER && !ale(le).isDead())
 			{
-				if(holded.containsKey(le)) {
-					holded.computeIfPresent(le, (k, v) -> v+1);
-					le.setAI(false);
+				if(holded.containsKey(le.getUniqueId())) {
+					holded.computeIfPresent(le.getUniqueId(), (k, v) -> v+1);
+					ale(le).setAI(false);
+					ale(le).setVelocity(ale(le).getVelocity().multiply(0));
 					if(le.getType()==EntityType.CREEPER) {
-						Creeper c = (Creeper)le;
-						c.setMaxFuseTicks(tick.intValue() + c.getMaxFuseTicks());
+						Creeper c = (Creeper)ale(le);
+						c.setFuseTicks(0);
 					}
 				}
 				else {
-					holded.put(le, (long) 0);
-					le.setAI(false);
-					if(le.getType()==EntityType.CREEPER) {
-						Creeper c = (Creeper)le;
-						c.setMaxFuseTicks(tick.intValue() + c.getMaxFuseTicks());
+					holded.put(le.getUniqueId(), (long) 0);
+					ale(le).setAI(false);
+					ale(le).setVelocity(ale(le).getVelocity().multiply(0));
+					if(ale(le).getType()==EntityType.CREEPER) {
+						Creeper c = (Creeper)ale(le);
+						c.setFuseTicks(0);
 					}
 				}
-				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+				int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	                @Override
 	                public void run() 
 	                {
-	                	holded.computeIfPresent(le, (k, v) -> v-1);
-	                	if(holded.get(le)<0) {
-						le.setAI(true);
-						holded.remove(le);
+	                	holded.computeIfPresent(le.getUniqueId(), (k, v) -> v-1);
+	                	if(holded.getOrDefault(le.getUniqueId(),0l)<0) {
+	                		ale(le).setAI(true);
+	                		holded.remove(le.getUniqueId());
 	                	}
 	                }
-        	   }, tick); 
+				}, tick); 
+				lasttask.put(le.getUniqueId(), task);
 			}
-			else if(le.getType()==EntityType.PLAYER&& !le.isDead()){
+			else if(ale(le).getType()==EntityType.PLAYER&& !ale(le).isDead()){
 				if (le instanceof Player) 
 				{
-				    String path = new File("").getAbsolutePath();
-					PartyData party = new PartyData(PartyData.loadData(path +"/plugins/RPGskills/PartyData.data"));
 					Player p1 = (Player) le;
-					try {
-					if(PartyData.hasParty(p) && PartyData.hasParty(p1))	{
-					if(PartyData.getParty(p).equalsIgnoreCase(PartyData.getParty(p1)))
+					if(p!=null && Party.hasParty(p) && Party.hasParty(p1))	{
+					if(Party.getParty(p).equalsIgnoreCase(Party.getParty(p1)))
 						{
 							return;
 						}
-					}}
-					catch(NullPointerException ne) {
-						return;
 					}
 				}
 			
-				if(holded.containsKey(le)) {
-					holded.computeIfPresent(le, (k, v) -> v+1);
-	                le.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0);
+				if(holded.containsKey(le.getUniqueId())) {
+					holded.computeIfPresent(le.getUniqueId(), (k, v) -> v+1);
 				}
 				else {
-					holded.put(le, (long) 0);
-	                le.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0);
+					holded.put(le.getUniqueId(), (long) 0);
 				}
-				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+				int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	                @Override
 	                public void run() 
 	                {
-	                	holded.computeIfPresent(le, (k, v) -> v-1);
-	                	if(holded.get(le)<0) {
-	     					le.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.1);
-						holded.remove(le);
+	                	holded.computeIfPresent(le.getUniqueId(), (k, v) -> v-1);
+	                	if(holded.getOrDefault(le.getUniqueId(),0l)<0) {
+						holded.remove(le.getUniqueId());
 	                	}
 	                }
-        	   }, tick); 
+				}, tick); 
+				lasttask.put(le.getUniqueId(), task);
 			}
 		
 	}
 	
 
-	
-	static public void slow(@Nullable Player p, LivingEntity le, Long tick, Double amount) {
-			if(!le.isDead())
-			{
-				if (le instanceof Player) 
-				{
-					Player p1 = (Player) le;
-					try {
-					if(PartyData.hasParty(p) && PartyData.hasParty(p1))	{
-					if(PartyData.getParty(p).equalsIgnoreCase(PartyData.getParty(p1)))
-						{
-							return;
-						}
-					}}
-					catch(NullPointerException ne) {
-						return;
-					}
-				}
-				if(slowed.containsKey(le)) {
-					slowed.computeIfPresent(le, (k, v) -> v+1);
-					le.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(orspeed.get(le)*(100-amount)/100);
-					le.setVelocity(le.getVelocity().zero());
-				}
-				else {
-					orspeed.put(le, le.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue());
-					slowed.put(le, (long) 0);
-					le.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(orspeed.get(le)*(100-amount)/100);
-					le.setVelocity(le.getVelocity().zero());
-				}
-				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	                @Override
-	                public void run() 
-	                {
-	                	slowed.computeIfPresent(le, (k, v) -> v-1);
-	                	if(slowed.get(le)<0) {
-	    					le.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(orspeed.get(le));
-	    					slowed.remove(le);
-	    					orspeed.remove(le);
-	                	}
-	                }
-        	   }, tick); 
-			}
-		
-	}
-	
-
-	static public void invur(@Nullable Player p, Long tick) {
-		if(superholding.containsKey(p)) {
-			superholding.computeIfPresent(p, (k, v) -> v+1);
-			p.setInvulnerable(true);
+	static public void invur(final LivingEntity le, Long tick) {
+		if(superholding.containsKey(le.getUniqueId())) {
+			superholding.computeIfPresent(le.getUniqueId(), (k, v) -> v+1);
+			ale(le).setInvulnerable(true);
 		}
-		else if(!superholding.containsKey(p)) {
-			superholding.put(p, (long) 0);
-			p.setInvulnerable(true);				
+		else if(!superholding.containsKey(le.getUniqueId())) {
+			superholding.put(le.getUniqueId(), (long) 0);
+			ale(le).setInvulnerable(true);				
 		}
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
             @Override
             public void run() 
             {
-            	superholding.computeIfPresent(p, (k, v) -> v-1);
-				if(superholding.get(p)<0) {
-					p.setInvulnerable(false);
-					superholding.remove(p);
+            	superholding.computeIfPresent(le.getUniqueId(), (k, v) -> v-1);
+				if(superholding.getOrDefault(le.getUniqueId(),0l)<0) {
+					superholding.remove(le.getUniqueId());
+					ale(le).setInvulnerable(false);
 				}
             }
 	   }, tick); 
-		
 	}
+
+
+	static public void untouchable(@NotNull LivingEntity le, Long tick) {
+		if(untouchable.containsKey(le.getUniqueId())) {
+			untouchable.computeIfPresent(le.getUniqueId(), (k, v) -> v+1);
+			ale(le).setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+		}
+		else if(!untouchable.containsKey(le.getUniqueId())) {
+			untouchable.put(le.getUniqueId(), (long) 0);
+			ale(le).setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+		}
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() 
+            {
+            	untouchable.computeIfPresent(le.getUniqueId(), (k, v) -> v-1);
+				if(untouchable.getOrDefault(le.getUniqueId(),0l)<0) {
+	            	ale(le).removeMetadata("fake", RMain.getInstance());
+					untouchable.remove(le.getUniqueId());
+				}
+            }
+	   }, tick); 
+	}
+
+	static public void reset(@NotNull LivingEntity le) {
+		if(untouchable.containsKey(le.getUniqueId())) {
+        	ale(le).removeMetadata("fake", RMain.getInstance());
+			untouchable.remove(le.getUniqueId());
+		}
+	}
+
+	static public void fly(@NotNull Player p, Long tick) {
+        if(flyt.containsKey(p.getUniqueId())) {
+        	Bukkit.getScheduler().cancelTask(flyt.get(p.getUniqueId()));
+        }
+        p.setAllowFlight(true);
+        p.setFlying(true);
+		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() 
+            {
+            	if(p.getGameMode() != GameMode.CREATIVE && p.getGameMode() != GameMode.SPECTATOR) {
+					p.setAllowFlight(false);
+	                p.setFlying(false);
+            	}
+            }
+        }, tick); 
+		flyt.put(p.getUniqueId(), task);
+	}
+	
+	
+	
+
+	static public void unhold(@NotNull LivingEntity le) {
+		if(ale(le).getType()!=EntityType.PLAYER && ale(le).getType()!=EntityType.VILLAGER && !ale(le).isDead())
+		{
+        	holded.computeIfPresent(le.getUniqueId(), (k, v) -> v-1);
+        	if(holded.getOrDefault(le.getUniqueId(),(long) -1)<0) {
+        		ale(le).setAI(true);
+				holded.remove(le.getUniqueId());
+        	}
+        	Bukkit.getServer().getScheduler().cancelTask(lasttask.getOrDefault(le.getUniqueId(),0));
+		}
+		else if(ale(le).getType()==EntityType.PLAYER&& !ale(le).isDead()){
+        	holded.computeIfPresent(le.getUniqueId(), (k, v) -> v-1);
+        	if(holded.getOrDefault(le.getUniqueId(),0l)<0) {
+				holded.remove(le.getUniqueId());
+        	}
+        	Bukkit.getServer().getScheduler().cancelTask(lasttask.getOrDefault(le.getUniqueId(),0));
+		
+		}
+	
+	}
+	public void holded(ProjectileHitEvent ev) {
+		if(ev.getHitEntity() == null) {
+			return;
+		}
+		if(!superholding.containsKey(ev.getHitEntity().getUniqueId())) {
+			ev.getHitEntity().setInvulnerable(false);
+		}
+	}
+
+	public void holded(PlayerInteractEntityEvent ev) {
+		if(ev.getRightClicked() == null) {
+			return;
+		}
+		if(!superholding.containsKey(ev.getRightClicked().getUniqueId())) {
+			ev.getRightClicked().setInvulnerable(false);
+		}
+		if(!holded.containsKey(ev.getRightClicked().getUniqueId()) && ev.getRightClicked() instanceof LivingEntity && !ev.getRightClicked().hasMetadata("fake")) {
+			((LivingEntity)ale(ev.getRightClicked())).setAI(true);
+		}
+	}
+
+	public void holded(EntityDamageByEntityEvent ev) {
+		if(ev.getEntity() == null) {
+			return;
+		}
+		if(!superholding.containsKey(ev.getEntity().getUniqueId())) {
+			ev.getEntity().setInvulnerable(false);
+		}
+		if(!holded.containsKey(ev.getEntity().getUniqueId()) && ev.getEntity() instanceof LivingEntity && !ev.getEntity().hasMetadata("fake")) {
+			((LivingEntity)ale(ev.getEntity())).setAI(true);
+		}
+	}
+	
+	public void holded(PlayerTeleportEvent ev) {
+		ev.getTo().getWorld().getNearbyEntities(ev.getTo(), 60, 60, 60).forEach(e -> {
+			if(!superholding.containsKey(e.getUniqueId()) && !e.hasMetadata("fake")) {
+				ale(e).setInvulnerable(false);
+			}
+			if(!holded.containsKey(e.getUniqueId()) && e instanceof LivingEntity && !e.hasMetadata("fake")) {
+				((LivingEntity)ale(e)).setAI(true);
+			}
+			
+
+			if(!untouchable.containsKey(e.getUniqueId()) && e.hasMetadata("boss")) {
+            	ale(e).removeMetadata("fake", RMain.getInstance());
+			}
+		});
+	}
+	
+	
+	public void holded(PlayerMoveEvent ev) {
+		if(holded.containsKey(ev.getPlayer().getUniqueId())) {
+			ev.setCancelled(true);
+		}
+	}
+	
+	
+	
 }

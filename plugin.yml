@@ -4,10 +4,11 @@ version: 1.0
 
 main: io.github.chw3021.rmain.RMain
 
+
 commands:
    rpg:
       description: plugin
    party:
       description: plugin
       
-api-version: 1.16
+api-version: 1.18
