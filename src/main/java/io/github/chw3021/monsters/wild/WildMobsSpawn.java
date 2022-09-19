@@ -2,7 +2,6 @@ package io.github.chw3021.monsters.wild;
 
 import java.util.Random;
 
-import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.World.Environment;
 import org.bukkit.attribute.Attribute;
@@ -17,11 +16,9 @@ import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Slime;
 import org.bukkit.entity.Spider;
 import org.bukkit.entity.Vindicator;
-import org.bukkit.entity.Witch;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import io.github.chw3021.monsters.Mobs;
 import io.github.chw3021.rmain.RMain;

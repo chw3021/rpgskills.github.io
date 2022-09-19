@@ -13,7 +13,10 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
+import org.bukkit.PortalType;
 import org.bukkit.Sound;
+import org.bukkit.World;
+import org.bukkit.block.EndGateway;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
@@ -21,6 +24,7 @@ import org.bukkit.boss.BossBar;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -32,6 +36,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -814,6 +819,44 @@ public class Summoned extends Mobs implements CommandExecutor, Serializable{
 		}
 	}
 
+
+	@SuppressWarnings("unchecked")
+	private final void AncientPortal(String rn, Integer combo, LivingEntity le) {
+
+		EndGateway eg = (EndGateway) le.getWorld().getBlockState(le.getLocation());
+		eg.setExactTeleport(true);
+		eg.setExitLocation(null);
+		eg.setMetadata("overworldraidpor", new FixedMetadataValue(RMain.getInstance(), rn));
+		
+		if(getherotype(rn) instanceof Player) {
+			Player p = (Player) getherotype(rn);
+			
+			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+				p.sendTitle(ChatColor.RED +""+ combo + "콤보 달성!", ChatColor.DARK_RED +"고대의 포탈이 소환되었습니다", 10,25, 10);
+				p.sendMessage(ChatColor.RED +""+ combo + "콤보 달성!", ChatColor.DARK_RED +"고대의 포탈이 소환되었습니다");
+			}
+			else {
+				p.sendTitle(ChatColor.RED +""+ combo + "Combo!", ChatColor.DARK_RED +"Ancient Portal is Summoned", 10,25, 10);
+				p.sendMessage(ChatColor.RED +""+ combo + "Combo!", ChatColor.DARK_RED +"Ancient Portal is Summoned");
+			}
+		}
+		else if(getherotype(rn) instanceof HashSet){
+			HashSet<Player> par = (HashSet<Player>) getherotype(rn);
+			par.forEach(p ->{
+				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+					p.sendTitle(ChatColor.RED +""+ combo + "콤보 달성!", ChatColor.DARK_RED +"고대의 포탈이 소환되었습니다", 10,25, 10);
+					p.sendMessage(ChatColor.RED +""+ combo + "콤보 달성!", ChatColor.DARK_RED +"고대의 포탈이 소환되었습니다");
+				}
+				else {
+					p.sendTitle(ChatColor.RED +""+ combo + "Combo!", ChatColor.DARK_RED +"Ancient Portal is Summoned", 10,25, 10);
+					p.sendMessage(ChatColor.RED +""+ combo + "Combo!", ChatColor.DARK_RED +"Ancient Portal is Summoned");
+				}
+			});
+		}
+	
+	}
+
+	
 	@SuppressWarnings("unchecked")
 	private final void ComboMessage(String rn, Integer combo, Boolean boss) {
 
@@ -871,6 +914,15 @@ public class Summoned extends Mobs implements CommandExecutor, Serializable{
 				final String rn = gethero(le);
 				int combo = comin(rn,meta);
 
+				if(meta.equals("wild")) {
+
+					if(combo==MINCOMBO) {
+						AncientPortal(rn,combo,le);
+						return rn;
+					}
+					return null;
+				}
+				
 				if(combo==MINCOMBO) {
 					ComboMessage(rn,combo,false);
 					return rn;
