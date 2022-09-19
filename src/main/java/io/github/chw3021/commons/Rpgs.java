@@ -20,7 +20,6 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Slime;
 import org.bukkit.event.player.PlayerExpChangeEvent;
-import org.bukkit.generator.structure.Structure;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import io.github.chw3021.classes.ClassData;
@@ -75,6 +74,7 @@ public class Rpgs implements CommandExecutor, Serializable {
 			p.sendMessage(ChatColor.GREEN +"---Rpg 명령어---");
 			p.sendMessage(ChatColor.GREEN +"/rpg dam (/rpg d, /rpg damage) -> 현재 데미지를 표시합니다");
 			p.sendMessage(ChatColor.GREEN +"/rpg element (/rpg el) -> 현재 원소 계열 공격력, 저항력을 표시합니다");
+			p.sendMessage(ChatColor.GREEN +"/rpg escape (/rpg es) -> 현재 진행중인 전투를 종료합니다");
 			p.sendMessage(ChatColor.GREEN +"/rpg skill (/rpg s) -> 스킬창을 엽니다");
 			p.sendMessage(ChatColor.GREEN +"/rpg class (/rpg c) -> 직업 선택창을 엽니다");
 			p.sendMessage(ChatColor.GREEN +"/rpg rank (/rpg r) -> 자신의 직업의 숙련도 10순위를 표시합니다");
@@ -103,6 +103,7 @@ public class Rpgs implements CommandExecutor, Serializable {
 			p.sendMessage(ChatColor.GREEN +"/rpg dam (/rpg d, /rpg damage) -> show player's current attack damage");
 			p.sendMessage(ChatColor.GREEN +"/rpg element (/rpg el) -> show player's element power & resistance");
 			p.sendMessage(ChatColor.GREEN +"/rpg skill (/rpg s) -> show player's skills gui");
+			p.sendMessage(ChatColor.GREEN +"/rpg escape (/rpg es) -> end current fighting");
 			p.sendMessage(ChatColor.GREEN +"/rpg class (/rpg c) -> show player's classes gui");
 			p.sendMessage(ChatColor.GREEN +"/rpg rank (/rpg r) -> show Top 10 ranking of proficiency of your class");
 			if(p.isOp())
@@ -179,7 +180,7 @@ public class Rpgs implements CommandExecutor, Serializable {
 				help(p);
 			}
 
-			if(args[0].equalsIgnoreCase("water"))
+			if(args[0].equalsIgnoreCase("water") && p.isOp())
 			{
 				HashSet<Location> lhs = new HashSet<>();
 				final Location rl = p.getLocation().clone();
@@ -196,15 +197,7 @@ public class Rpgs implements CommandExecutor, Serializable {
 			}
 			else if(args.length > 0)
 			{
-
-				if(args[0].equalsIgnoreCase("st")  || args[0].equalsIgnoreCase("st"))
-				{
-					Bukkit.getWorlds().forEach(w -> {
-						if(w.locateNearestStructure(w.getSpawnLocation(), Structure.DESERT_PYRAMID, 3, false) != null)
-						p.sendRawMessage(w.locateNearestStructure(w.getSpawnLocation(), Structure.DESERT_PYRAMID, 3, false).toString());
-					});
-				}
-				else if(args[0].equalsIgnoreCase("bm")  || args[0].equalsIgnoreCase("bi"))
+				if(args[0].equalsIgnoreCase("bm")  || args[0].equalsIgnoreCase("bi"))
 				{
 					p.sendRawMessage(p.getLocation().getBlock().getBiome().toString());
 				}

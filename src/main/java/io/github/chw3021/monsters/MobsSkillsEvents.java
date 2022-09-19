@@ -407,18 +407,8 @@ public class MobsSkillsEvents implements Listener, Serializable {
 				RedMobsSpawn.getInstance().Spawn(le,b);
 				PoisonMobsSpawn.getInstance().Spawn(le,b);
 				
-				if (b.name().contains("JUNGLE")
-						&& le.getLocation().getWorld().getEnvironment() == Environment.NORMAL) {
-					String reg = lang.contains("kr") ? "¾ß»ý":"Wild";
-					LivingEntity newmob = mobs.Mobspawn(le, reg + trans(le), 25000.0, le.getEquipment().getHelmet(),
-							le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
-							le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(),
-							le.getEquipment().getItemInOffHand(), le.getType());
-					newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
-					newmob.setMetadata("wild", new FixedMetadataValue(RMain.getInstance(), true));
-				} 
 				
-				else if ((b.name().contains("NETHER"))
+				if ((b.name().contains("NETHER"))
 						&& le.getLocation().getWorld().getEnvironment() == Environment.NETHER) {
 					LivingEntity newmob = mobs.Mobspawn(le, trans(le), 35000.0, le.getEquipment().getHelmet(),
 							le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
@@ -653,7 +643,7 @@ public class MobsSkillsEvents implements Listener, Serializable {
 		DarkRaids.getInstance().DarkCombo(d);
 		HyperRaids.getInstance().HyperCombo(d);
 		RedRaids.getInstance().RedCombo(d);
-		PoisonRaids.getInstance().DarkCombo(d);
+		PoisonRaids.getInstance().PoisonCombo(d);
 		
 		
 	

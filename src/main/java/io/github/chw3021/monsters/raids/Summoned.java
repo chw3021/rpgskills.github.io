@@ -1,5 +1,6 @@
 package io.github.chw3021.monsters.raids;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
@@ -17,6 +18,9 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -44,7 +48,7 @@ import io.github.chw3021.items.Elements;
 import io.github.chw3021.monsters.Mobs;
 import io.github.chw3021.rmain.RMain;
 
-public class Summoned extends Mobs{
+public class Summoned extends Mobs implements CommandExecutor, Serializable{
 	
 	/**
 	 * 
@@ -1070,7 +1074,7 @@ public class Summoned extends Mobs{
 	}
 
 	@SuppressWarnings("unchecked")
-	final private void RaidFinish(String rn, String title, String sub, Integer factor) {
+	public final void RaidFinish(String rn, String title, String sub, Integer factor) {
 
 		if(raidpor.containsKey(rn)) {
 			if(Bukkit.getEntity(raidpor.get(rn)) != null) {
@@ -1201,9 +1205,11 @@ public class Summoned extends Mobs{
 				ev.setCancelled(true);
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 					p.sendMessage("전투중에는 아이템을 버릴수 없습니다");
+					p.sendMessage("/rpg escape 또는 /rpg es 명령어로 전투를 종료할수 있습니다.");
 				}
 				else {
 					p.sendMessage("You Can't Drop Items While Fightning");
+					p.sendMessage("You Can escape from fighting by" +ChatColor.BLUE+ "/rpg escape(es) "  +ChatColor.RESET+  "command");
 				}
 			}
 	
@@ -1217,9 +1223,11 @@ public class Summoned extends Mobs{
 			ev.setCancelled(true);
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 				p.sendMessage("전투중에는 파티생성이 불가능 합니다");
+				p.sendMessage("/rpg escape 또는 /rpg es 명령어로 전투를 종료할수 있습니다.");
 			}
 			else {
 				p.sendMessage("You Can't Create Party While Fightning");
+				p.sendMessage("You Can escape from fighting by" +ChatColor.BLUE+ "/rpg escape(es) "  +ChatColor.RESET+  "command");
 			}
 		}
 	}
@@ -1232,9 +1240,11 @@ public class Summoned extends Mobs{
 			ev.setCancelled(true);
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 				p.sendMessage("전투중에는 파티원 추가가 불가능 합니다");
+				p.sendMessage("/rpg escape 또는 /rpg es 명령어로 전투를 종료할수 있습니다.");
 			}
 			else {
 				p.sendMessage("You Can't Add member while fighting");
+				p.sendMessage("You Can escape from fighting by" +ChatColor.BLUE+ "/rpg escape(es)"  +ChatColor.RESET+  "command");
 			}
 		}
 	}
@@ -1275,6 +1285,19 @@ public class Summoned extends Mobs{
 		}
 	}
 
+	@Override
+	public boolean onCommand(CommandSender sender, Command cmd, String alias, String [] args)         
+    {
+		if(!(sender instanceof Player) &&alias.equals("rpg"))
+		{
+			Player p = (Player)sender;
+			if(args[0].equalsIgnoreCase("bm")  || args[0].equalsIgnoreCase("bi"))
+			{
+				RaidFinish(getheroname(p), "탈주","몬스터들이 떠났습니다",0);
+			}
+		}
+		return false;
+    }
 
 	public void SummonedTarget(EntityTargetEvent d) 
 	{	

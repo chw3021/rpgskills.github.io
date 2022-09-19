@@ -220,9 +220,11 @@ public class ClassData implements Serializable, Listener{
 		            p.closeInventory();
 		    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						p.sendMessage(ChatColor.BOLD+"전투중에는 전직변경이 불가능합니다");
+						p.sendMessage("/rpg escape 또는 /rpg es 명령어로 전투를 종료할수 있습니다.");
 		    		}
 		    		else {
 						p.sendMessage(ChatColor.BOLD+"You Can't Change Class While Fighting");
+						p.sendMessage("You Can escape from fighting by" +ChatColor.BLUE+ "/rpg escape(es) "  +ChatColor.RESET+  "command");
 		    		}
 					return;
 				}

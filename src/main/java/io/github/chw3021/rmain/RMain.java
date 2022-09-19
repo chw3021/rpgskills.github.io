@@ -71,6 +71,7 @@ import io.github.chw3021.monsters.worldgen.RaidWorldLoad;
 import io.github.chw3021.monsters.Drops;
 import io.github.chw3021.monsters.MobArmor;
 import io.github.chw3021.monsters.MobsSkillsEvents;
+import io.github.chw3021.monsters.raids.Summoned;
 import io.github.chw3021.obtains.NPCLoc;
 import io.github.chw3021.obtains.NPCcontact;
 import io.github.chw3021.obtains.Obtained;
@@ -180,6 +181,7 @@ public class RMain extends JavaPlugin{
         
         
         this.getCommand("rpg").setExecutor(new Rpgs());
+        this.getCommand("rpg").setExecutor(new Summoned());
         Bukkit.getPluginManager().registerEvents(new Drops(), this);
         Bukkit.getPluginManager().registerEvents(new CommonEvents(), this);
         Bukkit.getPluginManager().registerEvents(new Holding(), this);

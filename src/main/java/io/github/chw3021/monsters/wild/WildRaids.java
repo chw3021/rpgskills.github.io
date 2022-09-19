@@ -1,4 +1,4 @@
-package io.github.chw3021.monsters.poison;
+package io.github.chw3021.monsters.wild;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -30,7 +30,7 @@ import io.github.chw3021.monsters.raids.Summoned;
 import io.github.chw3021.rmain.RMain;
 
 
-public class PoisonRaids extends Summoned {
+public class WildRaids extends Summoned {
 
 	/**
 	 * 
@@ -40,16 +40,16 @@ public class PoisonRaids extends Summoned {
 	 * 
 	 */
 	
-	private static final PoisonRaids instance = new PoisonRaids ();
-	public static PoisonRaids getInstance()
+	private static final WildRaids instance = new WildRaids ();
+	public static WildRaids getInstance()
 	{
 		return instance;
 		
 	}
-	String META = "poison";
+	String META = "wild";
 	
 	
-	public void PoisonCombo(EntityDeathEvent d) 
+	public void WildCombo(EntityDeathEvent d) 
 	{	
 		final Object com = Combo(d,META);
 	
@@ -154,7 +154,7 @@ public class PoisonRaids extends Summoned {
 		mm.setCustomModelData(2008);
 		main.setItemMeta(mm);
 		ItemStack off = new ItemStack(Material.OBSIDIAN);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "강화형소총수":"VenomRifleman";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "강화형소총수":"SuperRifleman";
 		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 26000.0, head, chest, leg, boots, main, off, EntityType.SKELETON);
 		
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
@@ -182,7 +182,7 @@ public class PoisonRaids extends Summoned {
 
 		ItemStack off = new ItemStack(Material.SHIELD);
 
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "강화형전사":"VenomSoldier";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "강화형전사":"SuperSoldier";
 		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 26500.0, head, chest, leg, boots, main, off, EntityType.SKELETON);
 		
 		
@@ -322,7 +322,7 @@ public class PoisonRaids extends Summoned {
     	
 		ItemStack main = new ItemStack(Material.NETHERITE_AXE);
 		
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "강화형돌격병":"VenomCharger";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "강화형돌격병":"SuperCharger";
 		Vindicator newmob = (Vindicator) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 27000.0, head, null, null, null, main, main, EntityType.VINDICATOR);
 		newmob.setCanJoinRaid(false);
 		newmob.setPatrolLeader(false);
@@ -330,7 +330,7 @@ public class PoisonRaids extends Summoned {
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(),rn));
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.setMetadata("VenomSuicider", new FixedMetadataValue(RMain.getInstance(), true));
+		newmob.setMetadata("SuperSuicider", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		newmob.setLootTable(null);
