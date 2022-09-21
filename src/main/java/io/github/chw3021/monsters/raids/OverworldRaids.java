@@ -48,6 +48,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -678,9 +679,10 @@ public class OverworldRaids extends Mobs implements Listener {
 	}
 	@SuppressWarnings("deprecation")
 	
-	public void OverworldRaidStart(PlayerInteractEvent d) 
+	public void OverworldRaidStart(PlayerPortalEvent d) 
 	{	
-		if(d.getClickedBlock() != null && d.getClickedBlock().hasMetadata("OverworldRaidPortal") && d.getAction() == Action.RIGHT_CLICK_BLOCK && d.getAction() != Action.LEFT_CLICK_BLOCK) {
+		//if(d.getClickedBlock() != null && d.getClickedBlock().hasMetadata("OverworldRaidPortal") && d.getAction() == Action.RIGHT_CLICK_BLOCK && d.getAction() != Action.LEFT_CLICK_BLOCK) {
+				if(d.getFrom().getBlock().getState().hasMetadata("overworldraidpor")) {
 
 				Player p = (Player) d.getPlayer();
 				if(heroes.containsValue(p.getUniqueId())|| raider.containsKey(p.getName()) || beforepl.containsKey(p.getUniqueId()) || p.hasCooldown(Material.RAIL)) {
@@ -789,7 +791,7 @@ public class OverworldRaids extends Mobs implements Listener {
 								}
 	    		        		p.playSound(spl, Sound.EVENT_RAID_HORN, 1, 1);
 	    					}
-	    					d.getClickedBlock().setType(Material.VOID_AIR);
+	    					d.getFrom().getBlock().setType(Material.VOID_AIR);
 	    	        		ArmorStand portal = (ArmorStand) spl.getWorld().spawn(spl, ArmorStand.class);
 	    	        		portal.setMetadata("portal", new FixedMetadataValue(RMain.getInstance(), true));
 	    	        		portal.setMetadata("OverworldRaidExit", new FixedMetadataValue(RMain.getInstance(), true));

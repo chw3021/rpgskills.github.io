@@ -823,7 +823,9 @@ public class Summoned extends Mobs implements CommandExecutor, Serializable{
 	@SuppressWarnings("unchecked")
 	private final void AncientPortal(String rn, Integer combo, LivingEntity le) {
 
-		EndGateway eg = (EndGateway) le.getWorld().getBlockState(le.getLocation());
+		final Location sl = le.getLocation().clone().add(0, 0.5, 0);
+		sl.getBlock().setType(Material.END_GATEWAY);
+		EndGateway eg = (EndGateway) le.getWorld().getBlockState(sl);
 		eg.setExactTeleport(true);
 		eg.setExitLocation(null);
 		eg.setMetadata("overworldraidpor", new FixedMetadataValue(RMain.getInstance(), rn));
