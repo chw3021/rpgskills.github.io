@@ -73,6 +73,7 @@ import io.github.chw3021.monsters.red.RedSkills;
 import io.github.chw3021.monsters.snow.SnowMobsSpawn;
 import io.github.chw3021.monsters.snow.SnowRaids;
 import io.github.chw3021.monsters.snow.SnowSkills;
+import io.github.chw3021.monsters.wild.WildMobsSpawn;
 import io.github.chw3021.rmain.RMain;
 
 public class MobsSkillsEvents implements Listener, Serializable {
@@ -406,6 +407,7 @@ public class MobsSkillsEvents implements Listener, Serializable {
 				HyperMobsSpawn.getInstance().Spawn(le,b);
 				RedMobsSpawn.getInstance().Spawn(le,b);
 				PoisonMobsSpawn.getInstance().Spawn(le,b);
+				WildMobsSpawn.getInstance().Spawn(le,b);
 				
 				
 				if ((b.name().contains("NETHER"))
