@@ -18,47 +18,10 @@ import io.github.chw3021.rmain.RMain;
 
 public class RaidWorldLoad implements Listener {
 
-	//@EventHandler
-	public void raidworldload(PluginEnableEvent ev)        
+	@EventHandler
+	public void raidworldload(PluginEnableEvent ev)   
     {
-		if (Bukkit.getServer().getWorld("TreasureRaid") == null) {
-			WorldCreator rwc = new WorldCreator("TreasureRaid");
-			rwc.environment(Environment.NORMAL);
-			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				@Override
-				public void run() {
-					rwc.generator(new TreasureRaidChunkGenerator());
-					World rw = rwc.createWorld();
-					rw.setMetadata("rpgraidworld", new FixedMetadataValue(RMain.getInstance(),true));
-					rwc.environment(Environment.NORMAL);
-					rw.setDifficulty(Difficulty.EASY);
-					rw.setTime(5000);
-					rw.setAutoSave(false);
-					rw.setKeepSpawnInMemory(false);
-					rw.setPVP(false);
-					rw.setSpawnFlags(false, false);
-					rw.setGameRule(GameRule.KEEP_INVENTORY, true);
-					rw.setGameRule(GameRule.DO_INSOMNIA, false);
-					rw.setGameRule(GameRule.DO_IMMEDIATE_RESPAWN, true);
-					rw.setGameRule(GameRule.DISABLE_RAIDS, true);
-					rw.setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
-					rw.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
-					rw.setGameRule(GameRule.DO_WEATHER_CYCLE, false);
-					rw.setGameRule(GameRule.DO_PATROL_SPAWNING, false);
-					rw.setGameRule(GameRule.DO_TILE_DROPS, false);
-					rw.setGameRule(GameRule.DO_TRADER_SPAWNING, false);
-					rw.setGameRule(GameRule.DO_ENTITY_DROPS, false);
-					rw.setGameRule(GameRule.DO_MOB_LOOT, false);
-					rw.setGameRule(GameRule.SPAWN_RADIUS, 0);
-				}
-			}, 2);
-		}
-		return;
-    }
-	//@EventHandler
-	public void raidworldload(WorldLoadEvent ev)        
-    {
-		if (ev.getWorld().getName().equals("TreasureRaid") && Bukkit.getServer().getWorld("OverworldRaid") == null) {
+		if (Bukkit.getServer().getWorld("OverworldRaid") == null) {
 			WorldCreator rwc = new WorldCreator("OverworldRaid");
 			rwc.environment(Environment.NORMAL);
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {

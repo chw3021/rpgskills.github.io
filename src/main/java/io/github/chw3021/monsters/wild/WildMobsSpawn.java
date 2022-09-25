@@ -43,11 +43,9 @@ public class WildMobsSpawn extends Mobs implements Listener {
 	final private Zombie Mob1(LivingEntity le) {
 		ItemStack head = new ItemStack(Material.MOSSY_COBBLESTONE);
 		head.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 3);
-		ItemStack main = new ItemStack(Material.POTION);
-		ItemStack off = new ItemStack(Material.BREWING_STAND);
-		off.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 2);
+		ItemStack main = new ItemStack(Material.NETHERITE_SWORD);
 		String reg = lang.contains("kr") ? "고대좀비":"AncientZombie";
-		Zombie newmob = (Zombie) Mobspawn(le, reg, 35000.0, head, null, null, null, main, off, EntityType.ZOMBIE);
+		Zombie newmob = (Zombie) Mobspawn(le, reg, 35000.0, head, null, null, null, main, null, EntityType.ZOMBIE);
 		newmob.setConversionTime(-1);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("wild", new FixedMetadataValue(RMain.getInstance(), true));

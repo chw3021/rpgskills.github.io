@@ -23,22 +23,22 @@ public class MobArmor implements Listener {
 				d.setDamage(d.getDamage()*0.93);
 			}
 			if(d.getEntity().hasMetadata("ocean")) {
-				d.setDamage(d.getDamage()*0.78);
+				d.setDamage(d.getDamage()*1.1);
 			}
 			if(d.getEntity().hasMetadata("dark")) {
-				d.setDamage(d.getDamage()*0.7);
+				d.setDamage(d.getDamage()*0.9);
 			}
 			if(d.getEntity().hasMetadata("hyper")) {
-				d.setDamage(d.getDamage()*0.62);
+				d.setDamage(d.getDamage()*0.85);
 			}
 			if(d.getEntity().hasMetadata("red")) {
-				d.setDamage(d.getDamage()*0.53);
+				d.setDamage(d.getDamage()*0.8);
 			}
 			if(d.getEntity().hasMetadata("swamp")) {
-				d.setDamage(d.getDamage()*0.46);
+				d.setDamage(d.getDamage()*0.75);
 			}
 			if(d.getEntity().hasMetadata("wild")) {
-				d.setDamage(d.getDamage()*0.4);
+				d.setDamage(d.getDamage()*0.7);
 			}
 		}
 		if(d.getEntity().hasMetadata("raid")) {

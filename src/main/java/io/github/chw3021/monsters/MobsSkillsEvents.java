@@ -66,7 +66,6 @@ import io.github.chw3021.monsters.poison.PoisonMobsSpawn;
 import io.github.chw3021.monsters.poison.PoisonRaids;
 import io.github.chw3021.monsters.poison.PoisonSkills;
 import io.github.chw3021.monsters.raids.Summoned;
-import io.github.chw3021.monsters.raids.TreasureRaid;
 import io.github.chw3021.monsters.red.RedMobsSpawn;
 import io.github.chw3021.monsters.red.RedRaids;
 import io.github.chw3021.monsters.red.RedSkills;
@@ -74,6 +73,7 @@ import io.github.chw3021.monsters.snow.SnowMobsSpawn;
 import io.github.chw3021.monsters.snow.SnowRaids;
 import io.github.chw3021.monsters.snow.SnowSkills;
 import io.github.chw3021.monsters.wild.WildMobsSpawn;
+import io.github.chw3021.monsters.wild.WildRaids;
 import io.github.chw3021.rmain.RMain;
 
 public class MobsSkillsEvents implements Listener, Serializable {
@@ -508,21 +508,18 @@ public class MobsSkillsEvents implements Listener, Serializable {
 	@EventHandler	
 	public void Join(PlayerJoinEvent ev) 
 	{
-		TreasureRaid.getInstance().TreasureRaidExit(ev);
 
 	}
 
 	@EventHandler	
 	public void er(PluginEnableEvent ev) 
 	{
-		TreasureRaid.getInstance().TreasureRaidExit(ev);
 	}
 	
 
 	@EventHandler
-	public void Sleep(PlayerInteractEvent d) 
+	public void Click(PlayerInteractEvent d) 
 	{	
-
 	}
 
 	@EventHandler
@@ -538,12 +535,6 @@ public class MobsSkillsEvents implements Listener, Serializable {
 	{
 		mobs.MobDam(d);
 		mobs.PDam(d);
-		
-
-		TreasureRaid.getInstance().TreasureRaidStart(d);
-		TreasureRaid.getInstance().TreasureRaidExit(d);
-		TreasureRaid.getInstance().RaiderHeoresDam(d);
-
 		Summoned.getInstance().SummonedDamage(d);;
 
 		PlainRaids.getInstance().DamagerSave(d);
@@ -554,6 +545,7 @@ public class MobsSkillsEvents implements Listener, Serializable {
 		DarkRaids.getInstance().DamagerSave(d);
 		OceanRaids.getInstance().DamagerSave(d);
 		PoisonRaids.getInstance().DamagerSave(d);
+		WildRaids.getInstance().DamagerSave(d);
 
 		MountainsSkills.getInstance().GolemSmash(d);
 		MountainsSkills.getInstance().IronBody(d);
@@ -624,8 +616,6 @@ public class MobsSkillsEvents implements Listener, Serializable {
 	@EventHandler
 	public void Death(PlayerDeathEvent ev)
 	{
-		TreasureRaid.getInstance().Defeat(ev);
-		
 		Summoned.getInstance().Defeat(ev);
 	}
 
@@ -633,7 +623,6 @@ public class MobsSkillsEvents implements Listener, Serializable {
 	@EventHandler
 	public void entitydeath(EntityDeathEvent d) 
 	{
-		TreasureRaid.getInstance().Victory(d);
 		
 		Summoned.getInstance().Victory(d);
 		
@@ -646,6 +635,7 @@ public class MobsSkillsEvents implements Listener, Serializable {
 		HyperRaids.getInstance().HyperCombo(d);
 		RedRaids.getInstance().RedCombo(d);
 		PoisonRaids.getInstance().PoisonCombo(d);
+		WildRaids.getInstance().WildCombo(d);
 		
 		
 	
@@ -663,18 +653,12 @@ public class MobsSkillsEvents implements Listener, Serializable {
 	@EventHandler
 	public void Respawn(PlayerRespawnEvent ev) 
 	{
-		
-		TreasureRaid.getInstance().RaidBack(ev);
-
-		TreasureRaid.getInstance().RaidBack(ev);
-		
 	}
 
 
 	@EventHandler
 	public void Quit(PlayerQuitEvent ev) 
 	{
-		TreasureRaid.getInstance().Escape(ev);
 		
 		Summoned.getInstance().Defeat(ev);
 		
@@ -685,7 +669,6 @@ public class MobsSkillsEvents implements Listener, Serializable {
 	@EventHandler
 	public void Off(PluginDisableEvent ev) 
 	{
-		TreasureRaid.getInstance().TreasureRaidExit(ev);
 
 	}
 
@@ -836,8 +819,6 @@ public class MobsSkillsEvents implements Listener, Serializable {
 		if(d.getBlock().getWorld().getName().contains("FakeDimension") || d.getBlock().getWorld().getName().contains("Raid")) {
 			d.setCancelled(true);
 		}
-
-		TreasureRaid.getInstance().BlockPlace(d);
 	}
 
 	@EventHandler
@@ -846,7 +827,6 @@ public class MobsSkillsEvents implements Listener, Serializable {
 		if(d.getBlock().getWorld().getName().contains("FakeDimension") || d.getBlock().getWorld().getName().contains("Raid")) {
 			d.setCancelled(true);
 		}
-		TreasureRaid.getInstance().BlockBreak(d);
 	}
 }
 

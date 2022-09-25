@@ -53,7 +53,7 @@ import io.github.chw3021.items.Elements;
 import io.github.chw3021.monsters.Mobs;
 import io.github.chw3021.rmain.RMain;
 
-public class Summoned extends Mobs implements CommandExecutor, Serializable{
+public class Summoned extends Mobs implements Serializable{
 	
 	/**
 	 * 
@@ -828,17 +828,17 @@ public class Summoned extends Mobs implements CommandExecutor, Serializable{
 		EndGateway eg = (EndGateway) le.getWorld().getBlockState(sl);
 		eg.setExactTeleport(true);
 		eg.setExitLocation(null);
-		eg.setMetadata("overworldraidpor", new FixedMetadataValue(RMain.getInstance(), rn));
+		eg.update();
+		eg.setMetadata("OverworldRaidPortal", new FixedMetadataValue(RMain.getInstance(), rn));
 		
 		if(getherotype(rn) instanceof Player) {
 			Player p = (Player) getherotype(rn);
-			
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				p.sendTitle(ChatColor.RED +""+ combo + "콤보 달성!", ChatColor.DARK_RED +"고대의 포탈이 소환되었습니다", 10,25, 10);
+				p.sendTitle(ChatColor.RED +""+ combo + "콤보 달성!", ChatColor.DARK_RED +"고대의 포탈이 소환되었습니다", 10,35, 10);
 				p.sendMessage(ChatColor.RED +""+ combo + "콤보 달성!", ChatColor.DARK_RED +"고대의 포탈이 소환되었습니다");
 			}
 			else {
-				p.sendTitle(ChatColor.RED +""+ combo + "Combo!", ChatColor.DARK_RED +"Ancient Portal is Summoned", 10,25, 10);
+				p.sendTitle(ChatColor.RED +""+ combo + "Combo!", ChatColor.DARK_RED +"Ancient Portal is Summoned", 10,35, 10);
 				p.sendMessage(ChatColor.RED +""+ combo + "Combo!", ChatColor.DARK_RED +"Ancient Portal is Summoned");
 			}
 		}
@@ -846,11 +846,11 @@ public class Summoned extends Mobs implements CommandExecutor, Serializable{
 			HashSet<Player> par = (HashSet<Player>) getherotype(rn);
 			par.forEach(p ->{
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					p.sendTitle(ChatColor.RED +""+ combo + "콤보 달성!", ChatColor.DARK_RED +"고대의 포탈이 소환되었습니다", 10,25, 10);
+					p.sendTitle(ChatColor.RED +""+ combo + "콤보 달성!", ChatColor.DARK_RED +"고대의 포탈이 소환되었습니다", 10,35, 10);
 					p.sendMessage(ChatColor.RED +""+ combo + "콤보 달성!", ChatColor.DARK_RED +"고대의 포탈이 소환되었습니다");
 				}
 				else {
-					p.sendTitle(ChatColor.RED +""+ combo + "Combo!", ChatColor.DARK_RED +"Ancient Portal is Summoned", 10,25, 10);
+					p.sendTitle(ChatColor.RED +""+ combo + "Combo!", ChatColor.DARK_RED +"Ancient Portal is Summoned", 10,35, 10);
 					p.sendMessage(ChatColor.RED +""+ combo + "Combo!", ChatColor.DARK_RED +"Ancient Portal is Summoned");
 				}
 			});
@@ -947,6 +947,14 @@ public class Summoned extends Mobs implements CommandExecutor, Serializable{
 						int combo = comin(rn,meta);
 
 						if(combo==MINCOMBO) {
+							if(meta.equals("wild")) {
+
+								if(combo==MINCOMBO) {
+									AncientPortal(rn,combo,le);
+									hs.add(rn);
+								}
+							}
+							
 							ComboMessage(rn,combo,false);
 							hs.add(rn);
 						}
@@ -1338,21 +1346,21 @@ public class Summoned extends Mobs implements CommandExecutor, Serializable{
 			RaidFinish(getheroname(p), "Death","Monsters Left",0);
 		}
 	}
-
+/*
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String alias, String [] args)         
     {
+		return false;
 		if(!(sender instanceof Player) &&alias.equals("rpg"))
 		{
 			Player p = (Player)sender;
-			if(args[0].equalsIgnoreCase("bm")  || args[0].equalsIgnoreCase("bi"))
+			if(args[0].equalsIgnoreCase("escape")  || args[0].equalsIgnoreCase("es"))
 			{
 				RaidFinish(getheroname(p), "탈주","몬스터들이 떠났습니다",0);
 			}
 		}
-		return false;
     }
-
+*/
 	public void SummonedTarget(EntityTargetEvent d) 
 	{	
 		if(d.getEntity().hasMetadata("summoned")) {

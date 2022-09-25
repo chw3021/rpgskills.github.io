@@ -98,45 +98,15 @@ public class WildRaids extends Summoned {
 	}
 	
 	final private ItemStack mobhead() {
-		ItemStack pe = new ItemStack(Material.NETHERITE_HELMET);
-		ItemMeta im = pe.getItemMeta();
-		im.setLore(Arrays.asList("Poison Mob"));
-		pe.setItemMeta(im);
+		ItemStack pe = new ItemStack(Material.MOSS_BLOCK);
 		return pe;
 	}
 	final private ItemStack mobchest() {
 		ItemStack pe = new ItemStack(Material.NETHERITE_CHESTPLATE);
-		ItemMeta im = pe.getItemMeta();
-		im.setLore(Arrays.asList("Poison Mob"));
-		pe.setItemMeta(im);
 		return pe;
 	}
 	final private ItemStack mobboots() {
 		ItemStack pe = new ItemStack(Material.NETHERITE_BOOTS);
-		ItemMeta im = pe.getItemMeta();
-		im.setLore(Arrays.asList("Poison Mob"));
-		pe.setItemMeta(im);
-		return pe;
-	}
-	final private ItemStack bosshead() {
-		ItemStack pe = new ItemStack(Material.NETHERITE_HELMET);
-		ItemMeta im = pe.getItemMeta();
-		im.setLore(Arrays.asList("Poison Boss"));
-		pe.setItemMeta(im);
-		return pe;
-	}
-	final private ItemStack bosschest() {
-		ItemStack pe = new ItemStack(Material.NETHERITE_CHESTPLATE);
-		ItemMeta im = pe.getItemMeta();
-		im.setLore(Arrays.asList("Poison Boss"));
-		pe.setItemMeta(im);
-		return pe;
-	}
-	final private ItemStack bossboots() {
-		ItemStack pe = new ItemStack(Material.NETHERITE_BOOTS);
-		ItemMeta im = pe.getItemMeta();
-		im.setLore(Arrays.asList("Poison Boss"));
-		pe.setItemMeta(im);
 		return pe;
 	}
 	
@@ -318,7 +288,7 @@ public class WildRaids extends Summoned {
     	double number = (random.nextDouble()+1.5) * 2.5 * (random.nextBoolean() ? -1 : 1);
     	double number2 = (random.nextDouble()+1.5) * 2.5 * (random.nextBoolean() ? -1 : 1);
     	Location esl = spl.clone().add(number, 2.5, number2);
-    	ItemStack head = bosshead();
+    	ItemStack head = null;
     	
 		ItemStack main = new ItemStack(Material.NETHERITE_AXE);
 		
@@ -345,10 +315,10 @@ public class WildRaids extends Summoned {
     	double number2 = (random.nextDouble()+1.5) * 1 * (random.nextBoolean() ? -1 : 1);
     	Location esl = spl.clone().add(number, 1.1, number2);
 
-    	ItemStack head =  bosshead();
-		ItemStack chest = bosschest();
+    	ItemStack head = null;
+		ItemStack chest = null;
 		ItemStack leg = new ItemStack(Material.NETHERITE_LEGGINGS);
-		ItemStack boots = bossboots();
+		ItemStack boots = null;
 		ItemStack main = new ItemStack(Material.BOW);
 		ItemStack off = new ItemStack(Material.BREWING_STAND);
 

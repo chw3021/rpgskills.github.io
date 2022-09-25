@@ -24,6 +24,7 @@ import org.bukkit.boss.BossBar;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.ElderGuardian;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Husk;
@@ -39,6 +40,7 @@ import org.bukkit.entity.Villager;
 import org.bukkit.entity.Witch;
 import org.bukkit.entity.Villager.Profession;
 import org.bukkit.entity.Villager.Type;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -46,6 +48,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
@@ -151,10 +154,10 @@ public class OverworldRaids extends Mobs implements Listener {
 	
 	private void RaidFinish(String rn, String title, String sub, Integer factor) {
 
-		Bukkit.getWorld("SnowWitchRaid").getEntities().stream().filter(e -> e.hasMetadata("mirror"+rn)).forEach(e -> e.remove());
+		Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("mirror"+rn)).forEach(e -> e.remove());
 
-		Bukkit.getWorld("RedKnightRaid").getEntities().stream().filter(e -> e.hasMetadata("redknightcharge"+rn)).forEach(e -> e.remove());
-		Bukkit.getWorld("RedKnightRaid").getEntities().stream().filter(e -> e.hasMetadata("redknightmagma"+rn)).forEach(e -> e.remove());
+		Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("redknightcharge"+rn)).forEach(e -> e.remove());
+		Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("redknightmagma"+rn)).forEach(e -> e.remove());
 
 		if(MountainsSkills.ordt.containsKey(rn)) {
 			MountainsSkills.ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
@@ -645,6 +648,7 @@ public class OverworldRaids extends Mobs implements Listener {
 		
 	}
 	
+	@EventHandler
 	public void Escape(PlayerQuitEvent ev) 
 	{
 		Player p = ev.getPlayer();
@@ -678,11 +682,12 @@ public class OverworldRaids extends Mobs implements Listener {
 		}
 	}
 	@SuppressWarnings("deprecation")
-	
-	public void OverworldRaidStart(PlayerPortalEvent d) 
+
+	@EventHandler
+	public void OverworldRaidStart(PlayerInteractEvent d) 
 	{	
-		//if(d.getClickedBlock() != null && d.getClickedBlock().hasMetadata("OverworldRaidPortal") && d.getAction() == Action.RIGHT_CLICK_BLOCK && d.getAction() != Action.LEFT_CLICK_BLOCK) {
-				if(d.getFrom().getBlock().getState().hasMetadata("overworldraidpor")) {
+		if(d.getClickedBlock() != null && d.getClickedBlock().hasMetadata("OverworldRaidPortal") && d.getAction() == Action.RIGHT_CLICK_BLOCK && d.getAction() != Action.LEFT_CLICK_BLOCK) {
+				
 
 				Player p = (Player) d.getPlayer();
 				if(heroes.containsValue(p.getUniqueId())|| raider.containsKey(p.getName()) || beforepl.containsKey(p.getUniqueId()) || p.hasCooldown(Material.RAIL)) {
@@ -791,7 +796,7 @@ public class OverworldRaids extends Mobs implements Listener {
 								}
 	    		        		p.playSound(spl, Sound.EVENT_RAID_HORN, 1, 1);
 	    					}
-	    					d.getFrom().getBlock().setType(Material.VOID_AIR);
+	    					d.getClickedBlock().setType(Material.VOID_AIR);
 	    	        		ArmorStand portal = (ArmorStand) spl.getWorld().spawn(spl, ArmorStand.class);
 	    	        		portal.setMetadata("portal", new FixedMetadataValue(RMain.getInstance(), true));
 	    	        		portal.setMetadata("OverworldRaidExit", new FixedMetadataValue(RMain.getInstance(), true));
@@ -902,6 +907,7 @@ public class OverworldRaids extends Mobs implements Listener {
 		}
 	}
 
+	@EventHandler
 	public void Victory(EntityDeathEvent d) 
 	{		
 		if(d.getEntity().hasMetadata("finalboss") && raider.containsValue(d.getEntity().getUniqueId())) {
@@ -916,7 +922,8 @@ public class OverworldRaids extends Mobs implements Listener {
 
 
 
-	
+
+	@EventHandler
 	public void Defeat(EntityDeathEvent d) 
 	{		
 		if(d.getEntity().hasMetadata("raidvil")) {
@@ -932,7 +939,8 @@ public class OverworldRaids extends Mobs implements Listener {
 		}
 	}
 	
-	
+
+	@EventHandler
 	public void Defeat(PlayerDeathEvent ev) 
 	{
 		Player dp = ev.getEntity();
@@ -953,7 +961,8 @@ public class OverworldRaids extends Mobs implements Listener {
         	}
 		}
 	}
-	
+
+	@EventHandler
 	public void OverworldRaidExit(EntityDamageByEntityEvent d) 
 	{	
 		if(d.getEntity().hasMetadata("OverworldRaidExit")) {
@@ -999,7 +1008,8 @@ public class OverworldRaids extends Mobs implements Listener {
 		}
 	}
 
-	
+
+	@EventHandler
 	public void OverworldRaidExit(PlayerJoinEvent ev) 
 	{
 		Player p = ev.getPlayer();
@@ -1009,7 +1019,8 @@ public class OverworldRaids extends Mobs implements Listener {
 		}
 	}
 
-	
+
+	@EventHandler
 	public void OverworldRaidExit(PluginEnableEvent ev) 
 	{
 		List<World> worlds = Bukkit.getServer().getWorlds();
@@ -1020,7 +1031,8 @@ public class OverworldRaids extends Mobs implements Listener {
 				}
 		}));
 	}
-	
+
+	@EventHandler
 	public void OverworldRaidExit(PluginDisableEvent ev) 
 	{
 		List<World> worlds = Bukkit.getServer().getWorlds();
@@ -1034,7 +1046,8 @@ public class OverworldRaids extends Mobs implements Listener {
 		heroes.clear();
 	}
 
-	
+
+	@EventHandler
 	public void RaiderHeoresDam(EntityDamageByEntityEvent d) 
 	{	
 		if(d.getEntity().getWorld().getName().contains("Raid")) {
@@ -1099,7 +1112,8 @@ public class OverworldRaids extends Mobs implements Listener {
 		}
 	}
 
-	
+
+	@EventHandler
 	public void Targetchange(EntityDamageByEntityEvent d) 
 	{
 		if(d.getEntity().hasMetadata("raid") && d.getEntity().hasMetadata("mountains") && !d.isCancelled()) {
@@ -1212,7 +1226,8 @@ public class OverworldRaids extends Mobs implements Listener {
 			}
 		}
 	}
-	
+
+	@EventHandler
 	public void RaidBack(PlayerRespawnEvent ev) 
 	{
 		Player p = ev.getPlayer();
@@ -1241,6 +1256,7 @@ public class OverworldRaids extends Mobs implements Listener {
 	}
 	
 
+	@EventHandler
 	public void Teleport(PlayerTeleportEvent e)
 	{
 		Player p = e.getPlayer();
@@ -1255,6 +1271,7 @@ public class OverworldRaids extends Mobs implements Listener {
 			}
 		}
 	}
+	@EventHandler
 	public void BlockPlace(BlockPlaceEvent d) 
 	{
 		Player p = d.getPlayer();
@@ -1263,6 +1280,7 @@ public class OverworldRaids extends Mobs implements Listener {
 		}
 	}
 
+	@EventHandler
 	public void BlockBreak(BlockBreakEvent d) 
 	{
 		Player p = d.getPlayer();
@@ -1270,7 +1288,19 @@ public class OverworldRaids extends Mobs implements Listener {
 			d.setCancelled(true);
 		}
 	}
+	@EventHandler
+	public void Inhibitordamage(EntityDamageByEntityEvent d) 
+	{	
 
+		if(d.getEntity().hasMetadata("inhibitor") && inhibitor.containsValue(d.getEntity().getUniqueId())) {
+			Entity le = d.getEntity();
+			String rn = le.getMetadata("raid").get(0).asString();
+			Bukkit.getPluginManager().callEvent(new EntityDeathEvent((LivingEntity) Bukkit.getEntity(inhibitor.get(rn)) , null));
+		}
+	}
+	
+
+	@EventHandler
 	public void ElderGuardianRaidBoss(EntityDeathEvent d) 
 	{	
 		if(d.getEntity().hasMetadata("inhibitor") && inhibitor.containsValue(d.getEntity().getUniqueId())) {
@@ -1398,6 +1428,7 @@ public class OverworldRaids extends Mobs implements Listener {
 		}
 	}
 
+	@EventHandler
 	public void ElderGuardianRaidBoss2(EntityDeathEvent d) 
 	{	
 		if(d.getEntity().hasMetadata("bosswave1") && d.getEntity().hasMetadata("oceanboss") &&raider.containsValue(d.getEntity().getUniqueId())) {
@@ -1501,6 +1532,7 @@ public class OverworldRaids extends Mobs implements Listener {
 		}
 	}
 
+	@EventHandler
 	public void DrBRaidBoss2(EntityDeathEvent d) 
 	{	
 		if(d.getEntity().hasMetadata("bosswave1") && d.getEntity().hasMetadata("hyperboss") && raider.containsValue(d.getEntity().getUniqueId())) {
@@ -1604,6 +1636,7 @@ public class OverworldRaids extends Mobs implements Listener {
 		}
 	}
 
+	@EventHandler
 	public void RedKnightRaidBoss2(EntityDeathEvent d) 
 	{	
 		if(d.getEntity().hasMetadata("bosswave1") && d.getEntity().hasMetadata("redboss") && raider.containsValue(d.getEntity().getUniqueId())) {
