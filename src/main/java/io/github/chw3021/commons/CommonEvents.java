@@ -1018,6 +1018,7 @@ public class CommonEvents implements Listener {
 			if(!le.hasMetadata("rpgspawned") && le.getCustomName() == null) {
 				le.setCustomName(trans(le));
 				le.setCustomNameVisible(true);
+				le.setMetadata("plain", new FixedMetadataValue(RMain.getInstance(),true));
 			}
 			
 			final Double mh =Math.round(le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*10)/10.0;

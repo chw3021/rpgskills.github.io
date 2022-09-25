@@ -8,22 +8,17 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
-import org.bukkit.PortalType;
 import org.bukkit.Sound;
-import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.block.EndGateway;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -36,6 +31,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -86,7 +82,8 @@ public class Summoned extends Mobs implements Serializable{
 	static public Table<String, String, Integer> combo = HashBasedTable.create();
 	static public Table<String, String, Integer> combot = HashBasedTable.create();
 	
-	private HashMap<String, UUID> raidpor = new HashMap<String, UUID>();
+	static private HashMap<String, UUID> raidporstand = new HashMap<String, UUID>();
+	static private HashMap<String, Block> raidpor = new HashMap<String, Block>();
 
 	private Multimap<UUID, String> damaged = HashMultimap.create();
 
@@ -126,7 +123,7 @@ public class Summoned extends Mobs implements Serializable{
 		return null;
 	}
 	
-	private final String getheroname(Player p) {
+	protected final String getheroname(Player p) {
 		if(Party.hasParty(p)) {
 			return Party.getParty(p);
 		}
@@ -256,7 +253,11 @@ public class Summoned extends Mobs implements Serializable{
 	                public void run() 
 	                {
 	                	final BossBar rb = combobar.get(rn,meta);
-	                	final double comt = (double)(COMBOTIME*((1.2-combo.get(rn, meta)/(double)MAXCOMBO)));
+	                	double comt = (double)COMBOTIME*(1.2-combo.get(rn, meta)/(double)MAXCOMBO);
+	        			if(combo.get(rn, meta)>=MAXCOMBO) {
+	        				comt = 40d;
+	        			}
+	                	
 	                	final double prg = rb.getProgress() - 1d/comt;
 	                	if(prg>=0&&prg<=1) {
 		                	rb.setProgress(prg);
@@ -264,7 +265,7 @@ public class Summoned extends Mobs implements Serializable{
 	                	rb.setTitle((getelcolor(meta)+"<" + combo.get(rn, meta) +" COMBO!>")+ChatColor.UNDERLINE);
 	    				rb.addPlayer(p);
 	                }
-				}, 0, 1);
+				}, 1, 1);
 	    		combobart.put(rn,meta, task1);
 			}
 			else if(getherotype(rn) instanceof HashSet){
@@ -276,7 +277,10 @@ public class Summoned extends Mobs implements Serializable{
 	                {
 
 	                	final BossBar rb = combobar.get(rn,meta);
-	                	final double comt = (double)(COMBOTIME*((1.2-combo.get(rn, meta)/(double)MAXCOMBO)));
+	                	double comt = (double)COMBOTIME*(1.2-combo.get(rn, meta)/(double)MAXCOMBO);
+	        			if(combo.get(rn, meta)>=MAXCOMBO) {
+	        				comt = 40d;
+	        			}
 	                	final double prg = rb.getProgress() - 1d/comt;
 	                	if(prg>=0&&prg<=1) {
 		                	rb.setProgress(prg);
@@ -286,7 +290,7 @@ public class Summoned extends Mobs implements Serializable{
 	        				combobar.get(rn,meta).addPlayer(p);
 	            		});
 	                }
-				}, 0, 1);
+				}, 1, 1);
 	    		combobart.put(rn,meta, task1);
 			}
 		}
@@ -312,6 +316,11 @@ public class Summoned extends Mobs implements Serializable{
 		if(combo.contains(rn, meta)) {
 			final int com = combo.get(rn, meta)+1;
 			combo.put(rn, meta, com);
+			
+			double comt = (double)COMBOTIME*(1.2-combo.get(rn, meta)/(double)MAXCOMBO);
+			if(combo.get(rn, meta)>=MAXCOMBO) {
+				comt = 40d;
+			}
 			combobar(rn,meta);
 			
 			int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -319,7 +328,7 @@ public class Summoned extends Mobs implements Serializable{
 				public void run() {
 					RaidFinish(rn, "","",0,meta);
 				}
-			},(long) (COMBOTIME*((1.2-combo.get(rn, meta)/(double)MAXCOMBO))));
+			},(long) (comt));
 			combot.put(rn, meta, task);
 			
 			
@@ -327,14 +336,18 @@ public class Summoned extends Mobs implements Serializable{
 		}
 		else {
 			combo.put(rn, meta, 1);
+			double comt = (double)COMBOTIME*(1.2-combo.get(rn, meta)/(double)MAXCOMBO);
+			if(combo.get(rn, meta)>=MAXCOMBO) {
+				comt = 40d;
+			}
+			combobar(rn,meta);
 			int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 				@Override
 				public void run() {
 					RaidFinish(rn, "","",0,meta);
 				}
-			},(long) (COMBOTIME*((1.2-combo.get(rn, meta)/(double)MAXCOMBO))));
+			},(long) (comt));
 			combot.put(rn, meta, task);
-			combobar(rn,meta);
 
 			return 1;
 		}
@@ -695,7 +708,7 @@ public class Summoned extends Mobs implements Serializable{
         	Elements.give(Material.EMERALD, count, p);
         	Elements.give(Material.NETHERITE_SCRAP, count, p);
         	Elements.give(Elements.getel(getelnum(meta), p), count, p);
-			if(com>MAXCOMBO) {
+			if(com==-1) {
 				int exp = 2*getelexp(meta)*MAXCOMBO;
 	        	p.giveExp(exp);
 				Bukkit.getServer().getPluginManager().callEvent(new PlayerExpChangeEvent(p,exp));
@@ -710,8 +723,21 @@ public class Summoned extends Mobs implements Serializable{
 					p.sendMessage(ChatColor.GOLD + "You've just got Boss Reward");
 				}
 			}
-			else if(com>=MINCOMBO){
-				int exp = getelexp(meta)*MAXCOMBO/2/(2+MAXCOMBO-com);;
+			else if(com>=MINCOMBO && com<MAXCOMBO){
+				int exp = getelexp(meta)*MAXCOMBO/2/(2+MAXCOMBO-com);
+	        	p.giveExp(exp);
+				Bukkit.getServer().getPluginManager().callEvent(new PlayerExpChangeEvent(p,exp));
+				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+					p.sendMessage(ChatColor.GOLD + "" + exp + " 경험치를 획득했습니다");
+					p.sendMessage(ChatColor.GOLD + "" + com + " 콤보 보상이 지급되었습니다");
+				}
+				else {
+					p.sendMessage(ChatColor.GOLD + "You've got " + exp + " experience point");
+					p.sendMessage(ChatColor.GOLD + "You've just got " + com + " Combo Reward");
+				}
+			}
+			else if(com>=MAXCOMBO){
+				int exp = getelexp(meta)*MAXCOMBO*(1+com/COMBOPER);
 	        	p.giveExp(exp);
 				Bukkit.getServer().getPluginManager().callEvent(new PlayerExpChangeEvent(p,exp));
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -733,14 +759,19 @@ public class Summoned extends Mobs implements Serializable{
 					f = p;
 				}
 			}
-			
-			if(com>MAXCOMBO) {
+
+			if(com==-1) {
 				int exp = 2*getelexp(meta)*MAXCOMBO;
 				f.giveExp(exp);
 				Bukkit.getServer().getPluginManager().callEvent(new PlayerExpChangeEvent(f,exp));
 			}
-			else if(com>=MINCOMBO){
-				int exp = getelexp(meta)*MAXCOMBO/2/(2+MAXCOMBO-com);;
+			else if(com>=MINCOMBO && com<MAXCOMBO){
+				int exp = getelexp(meta)*MAXCOMBO/2/(2+MAXCOMBO-com);
+				f.giveExp(exp);
+				Bukkit.getServer().getPluginManager().callEvent(new PlayerExpChangeEvent(f,exp));
+			}
+			else if(com>=MAXCOMBO) {
+				int	exp = getelexp(meta)*MAXCOMBO*(1+com/COMBOPER);
 				f.giveExp(exp);
 				Bukkit.getServer().getPluginManager().callEvent(new PlayerExpChangeEvent(f,exp));
 			}
@@ -809,7 +840,6 @@ public class Summoned extends Mobs implements Serializable{
 			        			le.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, lel, 300,1,1,1);
 			        			le.getWorld().spawnParticle(Particle.FLAME, lel, 100,1,1,1);
 			        			le.getWorld().spawnParticle(Particle.SOUL, lel, 100,1,1,1);
-			        			le.getWorld().playEffect(lel, Effect.ENDER_DRAGON_DESTROY_BLOCK, 1);
 			                }
 	            	   }, i*3); 
 				}
@@ -830,28 +860,46 @@ public class Summoned extends Mobs implements Serializable{
 		eg.setExitLocation(null);
 		eg.update();
 		eg.setMetadata("OverworldRaidPortal", new FixedMetadataValue(RMain.getInstance(), rn));
+		eg.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
+		raidpor.put(rn, eg.getBlock());
+
+		
+		ArmorStand as = le.getWorld().spawn(sl, ArmorStand.class, a ->{
+			a.setInvulnerable(true);
+			a.setInvisible(true);
+			a.setGravity(false);
+			a.setCollidable(false);
+			a.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
+			a.setMetadata("rob", new FixedMetadataValue(RMain.getInstance(), rn));
+			raidporstand.put(rn, a.getUniqueId());
+			a.setCustomNameVisible(true);
+		});
 		
 		if(getherotype(rn) instanceof Player) {
 			Player p = (Player) getherotype(rn);
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				p.sendTitle(ChatColor.RED +""+ combo + "콤보 달성!", ChatColor.DARK_RED +"고대의 포탈이 소환되었습니다", 10,35, 10);
-				p.sendMessage(ChatColor.RED +""+ combo + "콤보 달성!", ChatColor.DARK_RED +"고대의 포탈이 소환되었습니다");
+				as.setCustomName(ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다");
+				p.sendTitle(ChatColor.RED +"고대의 포탈 소환", ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다", 10,35, 10);
+				p.sendMessage(ChatColor.RED +"고대의 포탈 소환", ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다");
 			}
 			else {
-				p.sendTitle(ChatColor.RED +""+ combo + "Combo!", ChatColor.DARK_RED +"Ancient Portal is Summoned", 10,35, 10);
-				p.sendMessage(ChatColor.RED +""+ combo + "Combo!", ChatColor.DARK_RED +"Ancient Portal is Summoned");
+				as.setCustomName(ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
+				p.sendTitle(ChatColor.RED +"Ancient Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)", 10,35, 10);
+				p.sendMessage(ChatColor.RED +"Ancient Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
 			}
 		}
 		else if(getherotype(rn) instanceof HashSet){
 			HashSet<Player> par = (HashSet<Player>) getherotype(rn);
 			par.forEach(p ->{
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					p.sendTitle(ChatColor.RED +""+ combo + "콤보 달성!", ChatColor.DARK_RED +"고대의 포탈이 소환되었습니다", 10,35, 10);
-					p.sendMessage(ChatColor.RED +""+ combo + "콤보 달성!", ChatColor.DARK_RED +"고대의 포탈이 소환되었습니다");
+					as.setCustomName(ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다");
+					p.sendTitle(ChatColor.RED +"고대의 포탈 소환", ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다", 10,35, 10);
+					p.sendMessage(ChatColor.RED +"고대의 포탈 소환", ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다");
 				}
 				else {
-					p.sendTitle(ChatColor.RED +""+ combo + "Combo!", ChatColor.DARK_RED +"Ancient Portal is Summoned", 10,35, 10);
-					p.sendMessage(ChatColor.RED +""+ combo + "Combo!", ChatColor.DARK_RED +"Ancient Portal is Summoned");
+					as.setCustomName(ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
+					p.sendTitle(ChatColor.RED +"Ancient Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)", 10,35, 10);
+					p.sendMessage(ChatColor.RED +"Ancient Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
 				}
 			});
 		}
@@ -922,23 +970,27 @@ public class Summoned extends Mobs implements Serializable{
 						AncientPortal(rn,combo,le);
 						return rn;
 					}
+					else if(combo % COMBOPER == 0 && combo>=COMBOPER) {
+						ComboMessage(rn,combo,false);
+						return rn;
+					}
+				}
+				else {
+					if(combo==MINCOMBO) {
+						ComboMessage(rn,combo,false);
+						return rn;
+					}
+					else if(combo % COMBOPER == 0 && combo>=COMBOPER && combo < MAXCOMBO) {
+						ComboMessage(rn,combo,false);
+						return rn;
+
+					}
+					else if(combo == MAXCOMBO) {
+						ComboMessage(rn,combo,true);
+						Boss(rn,meta, le.getLocation().clone());
+					}
 					return null;
 				}
-				
-				if(combo==MINCOMBO) {
-					ComboMessage(rn,combo,false);
-					return rn;
-				}
-				else if(combo % COMBOPER == 0 && combo>=20 && combo < MAXCOMBO) {
-					ComboMessage(rn,combo,false);
-					return rn;
-
-				}
-				else if(combo == MAXCOMBO) {
-					ComboMessage(rn,combo,true);
-					Boss(rn,meta, le.getLocation().clone());
-				}
-				return null;
 			}
 			else {
 				if(damaged.containsKey(le.getUniqueId())) {
@@ -946,25 +998,33 @@ public class Summoned extends Mobs implements Serializable{
 					damaged.get(le.getUniqueId()).forEach(rn -> {
 						int combo = comin(rn,meta);
 
-						if(combo==MINCOMBO) {
-							if(meta.equals("wild")) {
+						if(meta.equals("wild")) {
 
-								if(combo==MINCOMBO) {
-									AncientPortal(rn,combo,le);
-									hs.add(rn);
-								}
+							if(combo==MINCOMBO) {
+								AncientPortal(rn,combo,le);
+								hs.add(rn);
 							}
+							else if(combo % COMBOPER == 0 && combo>=COMBOPER) {
+								ComboMessage(rn,combo,false);
+								hs.add(rn);
+							}
+							return;
+						}
+						else {
 							
-							ComboMessage(rn,combo,false);
-							hs.add(rn);
-						}
-						else if(combo % COMBOPER == 0 && combo>=20 && combo < MAXCOMBO) {
-							ComboMessage(rn,combo,false);
-							hs.add(rn);
-						}
-						else if(combo == MAXCOMBO) {
-							ComboMessage(rn,combo,true);
-							Boss(rn,meta, le.getLocation().clone());
+							if(combo==MINCOMBO) {
+								
+								ComboMessage(rn,combo,false);
+								hs.add(rn);
+							}
+							else if(combo % COMBOPER == 0 && combo>=COMBOPER && combo < MAXCOMBO) {
+								ComboMessage(rn,combo,false);
+								hs.add(rn);
+							}
+							else if(combo == MAXCOMBO) {
+								ComboMessage(rn,combo,true);
+								Boss(rn,meta, le.getLocation().clone());
+							}
 						}
 					});
 					damaged.removeAll(le.getUniqueId());
@@ -1030,7 +1090,7 @@ public class Summoned extends Mobs implements Serializable{
 		RaidFinish(rn,"","",0,meta);
 	}
 
-	final private void RaidFinish(String rn, String title, String sub, Integer factor, String meta) {
+	final protected void RaidFinish(String rn, String title, String sub, Integer factor, String meta) {
 
 		if(combot.contains(rn,meta)) {
 			Bukkit.getScheduler().cancelTask(combot.get(rn, meta));
@@ -1101,7 +1161,7 @@ public class Summoned extends Mobs implements Serializable{
 		
 		if(combo.contains(rn,meta)) {
 			if(factor == 1) {
-				Reward(meta,rn,MAXCOMBO+1);
+				Reward(meta,rn,-1);
 			}
 			else {
 				Reward(meta,rn,combo.get(rn, meta));
@@ -1115,10 +1175,14 @@ public class Summoned extends Mobs implements Serializable{
 	    	}
 			combo.remove(rn, meta);
 		}
-		if(raidpor.containsKey(rn)) {
-			if(Bukkit.getEntity(raidpor.get(rn)) != null) {
-				Bukkit.getEntity(raidpor.get(rn)).remove();
+		if(raidporstand.containsKey(rn)) {
+			if(Bukkit.getEntity(raidporstand.get(rn)) != null) {
+				Bukkit.getEntity(raidporstand.get(rn)).remove();
 			}
+			raidporstand.remove(rn);
+		}
+		if(raidpor.containsKey(rn)) {
+			raidpor.get(rn).setType(Material.VOID_AIR);
 			raidpor.remove(rn);
 		}
 	
@@ -1136,12 +1200,16 @@ public class Summoned extends Mobs implements Serializable{
 	}
 
 	@SuppressWarnings("unchecked")
-	public final void RaidFinish(String rn, String title, String sub, Integer factor) {
+	protected void RaidFinish(String rn, String title, String sub, Integer factor) {
 
-		if(raidpor.containsKey(rn)) {
-			if(Bukkit.getEntity(raidpor.get(rn)) != null) {
-				Bukkit.getEntity(raidpor.get(rn)).remove();
+		if(raidporstand.containsKey(rn)) {
+			if(Bukkit.getEntity(raidporstand.get(rn)) != null) {
+				Bukkit.getEntity(raidporstand.get(rn)).remove();
 			}
+			raidporstand.remove(rn);
+		}
+		if(raidpor.containsKey(rn)) {
+			raidpor.get(rn).setType(Material.VOID_AIR);
 			raidpor.remove(rn);
 		}
 		HashSet<String> metaset = new HashSet<>();
@@ -1155,7 +1223,7 @@ public class Summoned extends Mobs implements Serializable{
 			combo.row(rn).keySet().forEach(meta -> {
 				if(factor == 1) {
 
-					Reward(meta,rn,100);
+					Reward(meta,rn,-1);
 				}
 				else {
 					Reward(meta,rn,combo.get(rn, meta));
@@ -1323,6 +1391,13 @@ public class Summoned extends Mobs implements Serializable{
 		}
 	}
 
+	public void deleter(PluginDisableEvent ev) 
+	{
+		raidpor.values().forEach(b -> {
+			b.setType(Material.VOID_AIR);
+		});
+	}
+	
 	public void Defeat(PlayerQuitEvent ev) 
 	{
 		Player p = ev.getPlayer();
@@ -1430,7 +1505,7 @@ public class Summoned extends Mobs implements Serializable{
 				if(getherotype(rn1) instanceof HashSet){
 					@SuppressWarnings("unchecked")
 					HashSet<Player> par = (HashSet<Player>) getherotype(rn1);
-					d.setDamage(d.getDamage()/par.size()*1d);
+					d.setDamage(d.getDamage()*(1 - par.size()*0.1));
 				}
 				
 			}
@@ -1457,7 +1532,7 @@ public class Summoned extends Mobs implements Serializable{
 					if(getherotype(rn1) instanceof HashSet){
 						@SuppressWarnings("unchecked")
 						HashSet<Player> par = (HashSet<Player>) getherotype(rn1);
-						d.setDamage(d.getDamage()/par.size()*1d);
+						d.setDamage(d.getDamage()*(1 - par.size()*0.1));
 					}
 				}
 				else if(d.getDamager().hasMetadata("summoned")) {

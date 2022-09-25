@@ -465,8 +465,8 @@ public class MountainsSkills extends Summoned implements Listener{
 		{
 			int sec =3;
 			IronGolem p = (IronGolem)d.getDamager();
-			LivingEntity le = (LivingEntity)d.getEntity();
-			final Location tl = le.getLocation().clone();
+			LivingEntity he = (LivingEntity)d.getEntity();
+			final Location tl = he.getLocation().clone();
 			if(rb1cooldown.containsKey(p.getUniqueId()))
 	        {
 	            long timer = (rb1cooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
@@ -476,41 +476,31 @@ public class MountainsSkills extends Summoned implements Listener{
 	            else 
 	            {
 	                rb1cooldown.remove(p.getUniqueId()); // removing player from HashMap
-	                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	                    @Override
-	                    public void run() {
 
-	    					p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100,3,2,3,1, Material.STONE.createBlockData());
-	    					p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_ATTACK, 1, 0);
+					p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100,3,2,3,1, Material.STONE.createBlockData());
+					p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_ATTACK, 1, 0);
 
-	    					for(Entity e : p.getWorld().getNearbyEntities(tl,3, 2, 3)) {
-	    						if(p!=e && e instanceof LivingEntity) {
-	    							LivingEntity le = (LivingEntity)e;
-	    							le.damage(d.getDamage(),p);
-	    						}
-	    					}
-	                    }
-	                }, 1);
+					for(Entity e : p.getWorld().getNearbyEntities(tl,3, 2, 3)) {
+						if(p!=e && e instanceof LivingEntity) {
+							LivingEntity le = (LivingEntity)e;
+							le.damage(d.getDamage(),p);
+						}
+					}
 		            rb1cooldown.put(p.getUniqueId(), System.currentTimeMillis());
 	            }
 	        }
 	        else 
 	        {
-	            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	                @Override
-	                public void run() {
 
-						p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100,3,2,3,1, Material.STONE.createBlockData());
-						p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_ATTACK, 1, 0);
+				p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100,3,2,3,1, Material.STONE.createBlockData());
+				p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_ATTACK, 1, 0);
 
-						for(Entity e : p.getWorld().getNearbyEntities(tl,3, 2, 3)) {
-							if(p!=e && e instanceof LivingEntity) {
-								LivingEntity le = (LivingEntity)e;
-								le.damage(d.getDamage(),p);
-							}
-						}
-	                }
-	            }, 1);
+				for(Entity e : p.getWorld().getNearbyEntities(tl,3, 2, 3)) {
+					if(p!=e && e instanceof LivingEntity) {
+						LivingEntity le = (LivingEntity)e;
+						le.damage(d.getDamage(),p);
+					}
+				}
 	            rb1cooldown.put(p.getUniqueId(), System.currentTimeMillis());
 	        }
 		}

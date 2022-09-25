@@ -828,7 +828,7 @@ public class SnowSkills extends Summoned implements Listener{
 			if(p.hasMetadata("mirror")) {
         		ordeal.remove(ordeal.get(p.getUniqueId()));
                 rb6cooldown.remove(ordeal.get(p.getUniqueId()));
-				Bukkit.getWorld("SnowWitchRaid").getEntities().stream().filter(e -> e.hasMetadata("mirror"+rn)).forEach(e -> e.remove());
+				Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("mirror"+rn)).forEach(e -> e.remove());
         		if(ordt.containsKey(rn)) {
         			ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
         		}
@@ -846,7 +846,7 @@ public class SnowSkills extends Summoned implements Listener{
 			else {
 
             	p.playEffect(EntityEffect.HURT);
-				Bukkit.getWorld("SnowWitchRaid").getEntities().stream().filter(e -> e.hasMetadata("mirror"+rn)).forEach(e -> e.remove());
+				Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("mirror"+rn)).forEach(e -> e.remove());
         		ordeal.remove(p.getUniqueId());
 
         		if(ordt.containsKey(rn)) {
@@ -964,7 +964,7 @@ public class SnowSkills extends Summoned implements Listener{
 			                @Override
 			                public void run() {
 		                		ordeal.remove(p.getUniqueId());
-								Bukkit.getWorld("SnowWitchRaid").getEntities().stream().filter(e -> e.hasMetadata("mirror"+rn)).forEach(e -> {
+								Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("mirror"+rn)).forEach(e -> {
 									ordeal.remove(e.getUniqueId());
 									e.remove();
 								});
@@ -1058,7 +1058,7 @@ public class SnowSkills extends Summoned implements Listener{
 		                @Override
 		                public void run() {
 	                		ordeal.remove(p.getUniqueId());
-							Bukkit.getWorld("SnowWitchRaid").getEntities().stream().filter(e -> e.hasMetadata("mirror"+rn)).forEach(e -> {
+							Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("mirror"+rn)).forEach(e -> {
 								ordeal.remove(e.getUniqueId());
 								e.remove();
 							});

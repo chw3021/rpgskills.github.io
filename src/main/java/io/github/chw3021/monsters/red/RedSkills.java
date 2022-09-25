@@ -2031,8 +2031,8 @@ public class RedSkills extends Summoned{
 	                    }
 		            	redcharge.remove(p.getUniqueId());
 	                	Holding.reset(Holding.ale(p));
-		            	Bukkit.getWorld("RedKnightRaid").getEntities().stream().filter(e -> e.hasMetadata("redknightcharge"+rn)).forEach(e -> e.remove());
-						Bukkit.getWorld("RedKnightRaid").getEntities().stream().filter(e -> e.hasMetadata("redknightmagma"+rn)).forEach(e -> e.remove());
+		            	Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("redknightcharge"+rn)).forEach(e -> e.remove());
+						Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("redknightmagma"+rn)).forEach(e -> e.remove());
 		            	Holding.ale(p).setAI(true);
 		                rb6cooldown.remove(p.getUniqueId());
 		                for(Player pe : OverworldRaids.getheroes(p)) {

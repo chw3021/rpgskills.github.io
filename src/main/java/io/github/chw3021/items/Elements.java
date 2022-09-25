@@ -857,6 +857,12 @@ public class Elements implements Listener {
 				imeta.setDisplayName(ChatColor.GOLD +"강력한 맹독의 핵");
 				imeta.setLocalizedName(ChatColor.GOLD +"강력한 맹독의 핵");
 			}
+			else if(i == 12) {
+				ii.setType(Material.BLACK_GLAZED_TERRACOTTA);
+				imeta.setLore(Arrays.asList("고고학자에게 강력한 원소핵을 구매할 수 있습니다","고고학자는 정글피라미드에서 찾을수 있습니다"));
+				imeta.setDisplayName(ChatColor.GOLD +"강력한 원소의 기운");
+				imeta.setLocalizedName(ChatColor.GOLD +"강력한 원소의 기운");
+			}
 			else if(i == -2 || i== -3 || i == -4 || i == -5) {
 				ii.setType(Material.ANCIENT_DEBRIS);
 				imeta.setLore(Arrays.asList("투구, 갑옷 강화에 사용됩니다(방어구당 한번만 가능)","",
@@ -956,6 +962,12 @@ public class Elements implements Listener {
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.GOLD +"Core of Venom");
 				imeta.setLocalizedName(ChatColor.GOLD +"Core of Venom");
+			}
+			else if(i == 12) {
+				ii.setType(Material.BLACK_GLAZED_TERRACOTTA);
+				imeta.setLore(Arrays.asList("You can buy Strong Core from [Archaeologist]","(Archaeologist Locates on the Jungle Pyramid)"));
+				imeta.setDisplayName(ChatColor.GOLD +"강력한 원소의 기운");
+				imeta.setLocalizedName(ChatColor.GOLD +"강력한 원소의 기운");
 			}
 			else if(i == -2 || i == -3 || 3==-4||i==-5) {
 				ii.setType(Material.ANCIENT_DEBRIS);

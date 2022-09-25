@@ -669,7 +669,7 @@ public class MobsSkillsEvents implements Listener, Serializable {
 	@EventHandler
 	public void Off(PluginDisableEvent ev) 
 	{
-
+		Summoned.getInstance().deleter(ev);
 	}
 
 

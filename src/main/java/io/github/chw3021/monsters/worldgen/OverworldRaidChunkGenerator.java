@@ -33,14 +33,11 @@ public class OverworldRaidChunkGenerator extends ChunkGenerator {
             for (int z = 0; z < 16; z++) {
                 double noise = generator.noise(worldX + x, worldZ + z, 1, 1, true);
                 int height = 100;
-                if (height < chunkData.getMaxHeight()) {
-                    height = chunkData.getMaxHeight();
-                }
                 for (int y = 40; y < height; y++) {
                     chunkData.setBlock(x, y, z, material);
                     chunkData.setBlock(x+(int) noise, y, z, Material.MOSSY_STONE_BRICKS);
                 }
-                for (int y = 2; y < 39; y++) {
+                for (int y = chunkData.getMinHeight()+2; y < 39; y++) {
                     chunkData.setBlock(x, y, z, Material.WATER);
                 }
             }

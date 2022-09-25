@@ -639,7 +639,7 @@ public class ClassData implements Serializable, Listener{
 		
 	}
     
-    public HashMap<UUID, Integer> getPlayerclassdata(){
+    final public HashMap<UUID, Integer> getPlayerclassdata(){
         String path = new File("").getAbsolutePath();
         ClassData data = new ClassData(ClassData.loadData(path +"/plugins/RPGskills/ClassData.data"));
 		return data.playerclass;

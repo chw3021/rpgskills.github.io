@@ -57,13 +57,13 @@ public class RaidWorldLoad implements Listener {
     }
 	
 	
-	//@EventHandler
+	@EventHandler
 	public void raidworldunload(PluginDisableEvent ev) {
 
 		List<World> worlds = Bukkit.getServer().getWorlds();
 		worlds.forEach(w -> {
 
-			if (w.getName().contains("Treasure")) {
+			if (w.hasMetadata("rpgraidworld")) {
 				w.getEntities().forEach(a -> a.remove());
 				Bukkit.unloadWorld(w, false);
 			}

@@ -1,5 +1,6 @@
 package io.github.chw3021.monsters.red;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 
@@ -519,8 +520,7 @@ public class RedRaids extends Summoned {
 		
 		ItemStack head = new ItemStack(Material.LEATHER_HELMET);
 		LeatherArmorMeta hem = (LeatherArmorMeta) head.getItemMeta();
-		hem.setDisplayName("RedKnight Helmet");
-		hem.setLocalizedName("RedKnight Helmet");
+		hem.setLore(Arrays.asList("RedKnight Helmet"));
 		hem.setCustomModelData(100);
 		head.setItemMeta(hem);
 		ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);

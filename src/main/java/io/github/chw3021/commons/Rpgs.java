@@ -18,7 +18,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Slime;
 import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -56,11 +55,12 @@ import io.github.chw3021.items.armors.Chestplate;
 import io.github.chw3021.items.armors.Helmet;
 import io.github.chw3021.items.armors.Leggings;
 import io.github.chw3021.items.weapons.Weapons;
+import io.github.chw3021.monsters.raids.Summoned;
 import me.nullicorn.nedit.NBTInputStream;
 import me.nullicorn.nedit.type.NBTCompound;
 import net.md_5.bungee.api.ChatColor;
 
-public class Rpgs implements CommandExecutor, Serializable {
+public class Rpgs extends Summoned implements CommandExecutor, Serializable {
 	
 	/**
 	 * 
@@ -207,17 +207,16 @@ public class Rpgs implements CommandExecutor, Serializable {
 					p.sendRawMessage(p.getNearbyEntities(10,5, 10).toString());
 				}
 
-				else if(args[0].equalsIgnoreCase("slime") && p.isOp()&& !args[1].isEmpty())
+				else if(args[0].equalsIgnoreCase("escape")||args[0].equalsIgnoreCase("es"))
 				{
-					Slime s = p.getWorld().spawn(p.getLocation(), Slime.class);
-					s.setSize(Integer.parseInt(args[1]));
-					
+					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+						RaidFinish(getheroname(p), "탈주","몬스터들이 떠났습니다",0);
+					}
+					else {
+						RaidFinish(getheroname(p), "Escaped","Monsters Left",0);
+					}
 				}
-				
-				else if(args[0].equalsIgnoreCase("vec")  || args[0].equalsIgnoreCase("v"))
-				{
-					p.sendRawMessage(p.getEyeLocation().getDirection().toString());
-				}
+
 				else if(args[0].equalsIgnoreCase("element")||args[0].equalsIgnoreCase("el"))
 				{
 					Pak pak = new Pak();

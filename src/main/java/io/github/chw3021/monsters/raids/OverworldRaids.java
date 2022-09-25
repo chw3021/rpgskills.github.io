@@ -1,6 +1,9 @@
 package io.github.chw3021.monsters.raids;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -48,10 +51,9 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -70,7 +72,6 @@ import com.google.common.collect.Multimap;
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.commons.party.Party;
 import io.github.chw3021.items.Elements;
-import io.github.chw3021.monsters.Mobs;
 import io.github.chw3021.monsters.hyper.HyperSkills;
 import io.github.chw3021.monsters.mountains.MountainsSkills;
 import io.github.chw3021.monsters.ocean.OceanSkills;
@@ -81,7 +82,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
 
-public class OverworldRaids extends Mobs implements Listener {
+public class OverworldRaids extends Summoned implements Listener {
 
 	/**
 	 * 
@@ -108,12 +109,15 @@ public class OverworldRaids extends Mobs implements Listener {
 	private HashMap<String, Integer> timet = new HashMap<String, Integer>();
 	private HashMap<String, BossBar> timebar = new HashMap<String, BossBar>();
 
-	
+
+	private HashMap<String, Integer> difen = new HashMap<String, Integer>();
+	private HashMap<String, Integer> difent = new HashMap<String, Integer>();
 
 	private HashMap<String, UUID> inhibitor = new HashMap<String, UUID>();
 	private HashMap<String, Integer> inhibitorhp = new HashMap<String, Integer>();
 	
-	Integer DelayTime =  200;
+	Integer DelayTime =  100;
+	Integer LIVES = 5;
 	
 	
 	private static final OverworldRaids instance = new OverworldRaids ();
@@ -152,7 +156,8 @@ public class OverworldRaids extends Mobs implements Listener {
 		}
 	}
 	
-	private void RaidFinish(String rn, String title, String sub, Integer factor) {
+	protected final void OverworldRaidFinish(String rn, String title, String sub, Integer factor) {
+		RaidFinish(rn,title,sub,factor);
 
 		Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("mirror"+rn)).forEach(e -> e.remove());
 
@@ -179,7 +184,6 @@ public class OverworldRaids extends Mobs implements Listener {
 			RedSkills.ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
 			RedSkills.ordt.removeAll(rn);
 		}
-		
 		if(raidbart.containsKey(rn)) {
 			Bukkit.getServer().getScheduler().cancelTask(raidbart.get(rn));
 		raidbart.remove(rn);
@@ -263,6 +267,8 @@ public class OverworldRaids extends Mobs implements Listener {
             	p.spawnParticle(Particle.VILLAGER_ANGRY, spl, 1000,6,6,6);
     		}
     		else {
+    			RaidDifficulties.saver(p, RaidCategory.OVERWORLD, difen.get(rn)+2);
+    			
         		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "승리":"Victory!";
         		p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + reg), null, 5, 60, 5);
         		p.playSound(spl, Sound.ENTITY_VILLAGER_CELEBRATE, 1, 1);
@@ -270,7 +276,7 @@ public class OverworldRaids extends Mobs implements Listener {
             	spl.getWorld().spawn(spl, Firework.class);
             	raidcool.put(pu, System.currentTimeMillis());
             	
-            	Elements.give(Elements.getel(5,p), 30/(heroes.get(rn).size()), p);
+            	Elements.give(Elements.getstel(12,p), 5*(int)(1+ 0.05*difen.get(rn)*(1 - 0.1*heroes.get(rn).size())), p);
             	p.spawnParticle(Particle.COMPOSTER, spl, 1000,6,6,6);
             	p.spawnParticle(Particle.HEART, spl, 1000,6,6,6);
             	
@@ -280,12 +286,13 @@ public class OverworldRaids extends Mobs implements Listener {
                 public void run() {
 					p.teleport(beforepl.get(p.getUniqueId()));
 					beforepl.remove(p.getUniqueId());
-					raidbart.remove(p.getName());
+					raidbart.remove(rn);
                 }
             }, 160); 
     	});
 		heroes.removeAll(rn);
-        
+
+		difen.remove(rn);
 	}
 	
 
@@ -329,13 +336,46 @@ public class OverworldRaids extends Mobs implements Listener {
 		tart.put(rn, tt);
 	}
 	
-	final private LivingEntity bossgen(Location spl, Player p, String rn, Integer in) {
+	final private void bossbargen(String name, String rn, LivingEntity newmob) {
+
+		BossBar	newbar = Bukkit.getServer().createBossBar(new NamespacedKey(RMain.getInstance(), rn +name+"ow"),newmob.getName(), BarColor.WHITE, BarStyle.SEGMENTED_20, BarFlag.CREATE_FOG);
+        newbar.setVisible(true);
+		raidbar.put(rn, newbar);
+        newbar.setVisible(true);
+        
+		int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() 
+            {
+
+            	
+				if(Holding.ale(newmob)!=null) {
+                	raidbar.get(rn).setProgress(Holding.ale(newmob).getHealth()/Holding.ale(newmob).getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+                	raidbar.get(rn).setTitle(Holding.ale(newmob).getName());
+            		heroes.get(rn).forEach(pu -> {
+        				Player p = (Player) Bukkit.getPlayer(pu);
+        				raidbar.get(rn).addPlayer(p);
+        				
+        				p.addPotionEffect(new PotionEffect(PotionEffectType.CONDUIT_POWER,20,0,false,false));
+        				p.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING,20,0,false,false));
+        				p.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE,20,0,false,false));
+        				p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION,20,0,false,false));
+            		});
+				}
+            }
+		}, 0, 1);
+		raidbart.put(rn, task);
+	}
+	
+	final private LivingEntity bossgen(Location spl, Player p, String rn, Integer in, Double dif) {
 		
     	Random random=new Random();
     	double number = (random.nextDouble()+1.5) * 5 * (random.nextBoolean() ? -1 : 1);
     	double number2 = (random.nextDouble()+1.5) * 5 * (random.nextBoolean() ? -1 : 1);
     	Location esl = spl.clone().add(number, 2.5, number2);
 		targeting(rn);
+		
+		//Double dif = 100000 * BigDecimal.valueOf(1 + 0.1*RaidDifficulties.getPlayerDifficulty(p, RaidCategory.OVERWORLD)).setScale(1, RoundingMode.HALF_EVEN).doubleValue();
 
 		
 		if(in == 0) {
@@ -344,15 +384,12 @@ public class OverworldRaids extends Mobs implements Listener {
 			ItemStack off = new ItemStack(Material.STONE);
 			off.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
     		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "스톤골렘":"StoneGolem";
-			IronGolem newmob = (IronGolem) MobspawnLoc(esl, ChatColor.GRAY + reg, 100000.0, null,
+			IronGolem newmob = (IronGolem) MobspawnLoc(esl, ChatColor.GRAY + reg, dif, null,
 					null, null, null, main, off, EntityType.IRON_GOLEM);
 			newmob.setGlowing(true);
 			newmob.setPlayerCreated(false);
     		newmob.setLootTable(null);
 
-    		BossBar	newbar = Bukkit.getServer().createBossBar(new NamespacedKey(RMain.getInstance(), p.getName() +"StoneGolem"),newmob.getName(), BarColor.WHITE, BarStyle.SEGMENTED_20, BarFlag.CREATE_FOG);
-            newbar.setVisible(true);
-    		raidbar.put(rn, newbar);
     		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
     		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
     		newmob.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(4);
@@ -366,32 +403,14 @@ public class OverworldRaids extends Mobs implements Listener {
     		newmob.setMetadata("bosswave1", new FixedMetadataValue(RMain.getInstance(), true));
     		newmob.setMetadata("finalboss", new FixedMetadataValue(RMain.getInstance(), true));
     		
-    		
-    		int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-                @Override
-                public void run() 
-                {
-
-					if(Holding.ale(newmob)!=null) {
-	                	raidbar.get(rn).setProgress(Holding.ale(newmob).getHealth()/100000d);
-	                	raidbar.get(rn).setTitle(Holding.ale(newmob).getName());
-	            		heroes.get(rn).forEach(pu -> {
-            				Player p = (Player) Bukkit.getPlayer(pu);
-            				raidbar.get(rn).addPlayer(p);
-	            		});
-					}
-                }
-			}, 0, 1);
-    		raidbart.put(rn, task);
-            newbar.setVisible(true);
+    		bossbargen("stoneboss", rn, newmob);
 
     		return newmob;
 		}
 		else if(in == 1) {
     		ItemStack head = new ItemStack(Material.LEATHER_HELMET);
 			LeatherArmorMeta hem = (LeatherArmorMeta) head.getItemMeta();
-			hem.setDisplayName("RedKnight Helmet");
-			hem.setLocalizedName("RedKnight Helmet");
+			hem.setLore(Arrays.asList("RedKnight Helmet"));
 			hem.setCustomModelData(100);
 			head.setItemMeta(hem);
 			ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
@@ -423,7 +442,7 @@ public class OverworldRaids extends Mobs implements Listener {
     		off.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
     		off.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
     		String reg = Bukkit.getPlayer(rn).getLocale().equalsIgnoreCase("ko_kr") ? "붉은기사":"RedKnight";
-    		Skeleton newmob = (Skeleton) MobspawnLoc(esl, ChatColor.RED+reg, 80000.0, head, chest, leg, boots, main, off, EntityType.SKELETON);
+    		Skeleton newmob = (Skeleton) MobspawnLoc(esl, ChatColor.RED+reg, dif, head, chest, leg, boots, main, off, EntityType.SKELETON);
     		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
     		newmob.setGlowing(true);
     		newmob.getEquipment().setBootsDropChance(0);
@@ -438,9 +457,7 @@ public class OverworldRaids extends Mobs implements Listener {
     		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
     		newmob.setMetadata("bosswave1", new FixedMetadataValue(RMain.getInstance(), true));
     		newmob.setLootTable(null);
-    		BossBar	newbar = Bukkit.getServer().createBossBar(new NamespacedKey(RMain.getInstance(), rn +"RedKnight"),newmob.getName(), BarColor.RED, BarStyle.SEGMENTED_20, BarFlag.CREATE_FOG);
-            newbar.setVisible(true);
-    		raidbar.put(rn, newbar);
+    		
     		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
     		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
     		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
@@ -448,23 +465,7 @@ public class OverworldRaids extends Mobs implements Listener {
     		raider.put(rn, newmob.getUniqueId());
     		
 
-    		int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-                @Override
-                public void run() 
-                {
-
-					if(Holding.ale(newmob)!=null) {
-	                	raidbar.get(rn).setProgress(Holding.ale(newmob).getHealth()/80000d);
-	                	raidbar.get(rn).setTitle(Holding.ale(newmob).getName());
-	            		heroes.get(rn).forEach(pu -> {
-            				Player p = (Player) Bukkit.getPlayer(pu);
-            				raidbar.get(rn).addPlayer(p);
-	            		});
-					}
-                }
-			}, 0, 1);
-    		raidbart.put(rn, task);
-            newbar.setVisible(true);
+    		bossbargen("redboss", rn, newmob);
 
     		return newmob;
 		}
@@ -498,7 +499,7 @@ public class OverworldRaids extends Mobs implements Listener {
     		ItemStack off = new ItemStack(Material.ICE);
     		off.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
     		String reg = Bukkit.getPlayer(rn).getLocale().equalsIgnoreCase("ko_kr") ? "설산마녀":"SnowWitch";
-    		Witch newmob = (Witch) MobspawnLoc(esl, ChatColor.BLUE+reg, 70000.0, null, null, null, boots, main, off, EntityType.WITCH);
+    		Witch newmob = (Witch) MobspawnLoc(esl, ChatColor.BLUE+reg, dif, null, null, null, boots, main, off, EntityType.WITCH);
     		newmob.setGlowing(true);
     		newmob.getEquipment().setBootsDropChance(0);
     		newmob.getEquipment().setChestplateDropChance(0);
@@ -521,80 +522,42 @@ public class OverworldRaids extends Mobs implements Listener {
     		newmob.setMetadata("bosswave1", new FixedMetadataValue(RMain.getInstance(), true));
     		newmob.setMetadata("finalboss", new FixedMetadataValue(RMain.getInstance(), true));
     		newmob.setLootTable(null);
-    		BossBar	newbar = Bukkit.getServer().createBossBar(new NamespacedKey(RMain.getInstance(), rn +"SnowWitch"),newmob.getName(), BarColor.WHITE, BarStyle.SEGMENTED_20, BarFlag.CREATE_FOG);
-            newbar.setVisible(true);
-    		raidbar.put(rn, newbar);
     		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
     		newmob.setRemoveWhenFarAway(false);
     		raider.put(rn, newmob.getUniqueId());
-    		
 
-    		
-    		int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-                @Override
-                public void run() 
-                {
+    		bossbargen("snowboss", rn, newmob);
 
-					if(Holding.ale(newmob)!=null) {
-	                	raidbar.get(rn).setProgress(Holding.ale(newmob).getHealth()/70000d);
-	                	raidbar.get(rn).setTitle(Holding.ale(newmob).getName());
-	            		heroes.get(rn).forEach(pu -> {
-            				Player p = (Player) Bukkit.getPlayer(pu);
-            				raidbar.get(rn).addPlayer(p);
-	            		});
-					}
-                }
-			}, 0, 1);
-    		raidbart.put(rn, task);
-            newbar.setVisible(true);
 
     		return newmob;
 		}
 		else if(in == 3) {
     		ArmorStand inhb = (ArmorStand) spl.getWorld().spawn(spl.clone().add(20, 0,20), ArmorStand.class);
     		inhb.setMetadata("portal", new FixedMetadataValue(RMain.getInstance(), true));
-    		inhb.setMetadata("inhibitor", new FixedMetadataValue(RMain.getInstance(), p.getName()));
+    		inhb.setMetadata("inhibitor", new FixedMetadataValue(RMain.getInstance(), rn));
     		inhb.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
     		inhb.setRemoveWhenFarAway(false);
     		inhb.setGlowing(true);
     		inhb.getEquipment().setHelmet(new ItemStack(Material.BEACON));
+    		inhb.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(dif);;
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-        		inhb.setCustomName(p.getName() + " 엘더가디언 억제기");
+        		inhb.setCustomName(rn + " 엘더가디언 억제기");
 			}
 			else {
-        		inhb.setCustomName(p.getName() + "'s ElderGuardian Inhibitor");
+        		inhb.setCustomName(rn + "'s ElderGuardian Inhibitor");
 			}
     		inhb.setCustomNameVisible(true);
     		inhb.setCollidable(false);
-    		inhibitor.put(p.getName(), inhb.getUniqueId());
-    		inhibitorhp.put(p.getName(), 20);
+    		inhibitor.put(rn, inhb.getUniqueId());
+    		inhibitorhp.put(rn, 20);
     		
-			String w = p.getLocale().equalsIgnoreCase("ko_kr") ? "억제기 내구도 ":"Inhibitor Durabity";
-    		BossBar	newbar = Bukkit.getServer().createBossBar(new NamespacedKey(RMain.getInstance(), p.getName()+"ElderGuardianRaid"),w, BarColor.BLUE, BarStyle.SEGMENTED_20, BarFlag.PLAY_BOSS_MUSIC);
-            newbar.setVisible(true);
-    		raidbar.put(p.getName(), newbar);
-    		int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-                @Override
-                public void run() 
-                {
-            		raidbar.get(p.getName()).setProgress((double)inhibitorhp.get(p.getName()) / 20d);
-            		raidbar.get(p.getName()).setTitle(w + (double)inhibitorhp.get(p.getName()) + "/" + 20);
-            		heroes.get(p.getName()).forEach(pu -> {
-        				Player p1 = (Player) Bukkit.getPlayer(pu);
-        				if(p1 != null) {
-        					raidbar.get(p.getName()).addPlayer(p1);
-        				}
-            		});
-                }
-			}, 0, 1);
-    		raidbart.put(p.getName(), task);
 
     		return inhb;
 		}
 		else if(in == 4) {
 
     		String reg = Bukkit.getPlayer(rn).getLocale().equalsIgnoreCase("ko_kr") ? "닥터B":"Dr.B";
-    		Illusioner newmob = (Illusioner) MobspawnLoc(esl.clone().add(0, -20, 0), ChatColor.DARK_PURPLE+reg, 20000.0, new ItemStack(Material.BLACK_STAINED_GLASS), null, null, null, null, null, EntityType.ILLUSIONER);
+    		Illusioner newmob = (Illusioner) MobspawnLoc(esl.clone().add(0, -20, 0), ChatColor.DARK_PURPLE+reg, dif, new ItemStack(Material.BLACK_STAINED_GLASS), null, null, null, null, null, EntityType.ILLUSIONER);
 			newmob.setCanJoinRaid(false);
 			newmob.setPatrolTarget(null);
 			newmob.setPatrolLeader(false);
@@ -611,9 +574,6 @@ public class OverworldRaids extends Mobs implements Listener {
     		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
     		newmob.setMetadata("bosswave1", new FixedMetadataValue(RMain.getInstance(), true));
     		newmob.setLootTable(null);
-    		BossBar	newbar = Bukkit.getServer().createBossBar(new NamespacedKey(RMain.getInstance(), rn +"DrB"),newmob.getName(), BarColor.PURPLE, BarStyle.SEGMENTED_20, BarFlag.CREATE_FOG);
-            newbar.setVisible(true);
-    		raidbar.put(rn, newbar);
     		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
     		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
     		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
@@ -621,24 +581,7 @@ public class OverworldRaids extends Mobs implements Listener {
     		raider.put(rn, newmob.getUniqueId());
     		
 
-    		
-    		int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-                @Override
-                public void run() 
-                {
-
-					if(Holding.ale(newmob)!=null) {
-	                	raidbar.get(rn).setProgress(Holding.ale(newmob).getHealth()/20000d);
-	                	raidbar.get(rn).setTitle(Holding.ale(newmob).getName());
-	            		heroes.get(rn).forEach(pu -> {
-            				Player p = (Player) Bukkit.getPlayer(pu);
-        					p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 50, 1, false, false));
-            				raidbar.get(rn).addPlayer(p);
-	            		});
-					}
-                }
-			}, 0, 1);
-    		raidbart.put(rn, task);
+    		bossbargen("hyperboss", rn, newmob);
 
     		return newmob;
 		}
@@ -655,15 +598,15 @@ public class OverworldRaids extends Mobs implements Listener {
 		if(heroes.containsValue(p.getUniqueId())) {
 	
 			if(Party.hasParty(p)) {
-				if(Party.isOwner(p) == true) {
+				if(Party.isOwner(p)) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						RaidFinish(p.getName(), "탈주","파티장이 떠났습니다",0);
+						OverworldRaidFinish(getheroname(p), "탈주","파티장이 떠났습니다",0);
 					}
 					else {
-						RaidFinish(p.getName(), "Escaped","Party Owner Left",0);
+						OverworldRaidFinish(getheroname(p), "Escaped","Party Owner Left",0);
 					}
 				}
-				else if(Party.isOwner(p) == false){
+				else {
 	        		heroes.remove(Party.getOwner(Party.getParty(p)).getName(), p.getUniqueId());
 	        		p.teleport(beforepl.get(p.getUniqueId()));
 	    			beforepl.remove(p.getUniqueId());
@@ -672,10 +615,10 @@ public class OverworldRaids extends Mobs implements Listener {
 			}
 			else {
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					RaidFinish(p.getName(), "탈주","파티장이 떠났습니다",0);
+					OverworldRaidFinish(getheroname(p), "탈주","파티장이 떠났습니다",0);
 				}
 				else {
-					RaidFinish(p.getName(), "Escaped","Party Owner Left",0);
+					OverworldRaidFinish(getheroname(p), "Escaped","Party Owner Left",0);
 				}
 			}
 			
@@ -683,16 +626,89 @@ public class OverworldRaids extends Mobs implements Listener {
 	}
 	@SuppressWarnings("deprecation")
 
+	
 	@EventHandler
-	public void OverworldRaidStart(PlayerInteractEvent d) 
-	{	
+	public void OverworldRaidStart(PlayerInteractEvent d)
+	{
 		if(d.getClickedBlock() != null && d.getClickedBlock().hasMetadata("OverworldRaidPortal") && d.getAction() == Action.RIGHT_CLICK_BLOCK && d.getAction() != Action.LEFT_CLICK_BLOCK) {
-				
 
-				Player p = (Player) d.getPlayer();
-				if(heroes.containsValue(p.getUniqueId())|| raider.containsKey(p.getName()) || beforepl.containsKey(p.getUniqueId()) || p.hasCooldown(Material.RAIL)) {
+			Player p = (Player) d.getPlayer();
+			if(!p.getInventory().getItemInMainHand().getType().isAir() || heroes.containsValue(p.getUniqueId())|| raider.containsKey(getheroname(p)) || beforepl.containsKey(p.getUniqueId()) || p.hasCooldown(Material.RAIL)) {
+				return;
+			}
+			if(raidcool.containsKey(p.getUniqueId())) {
+
+	            double timer = (raidcool.get(p.getUniqueId())/1000 + 10) - System.currentTimeMillis()/1000; 
+	            if(!(timer < 0))
+	            {
+					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder("다음 보스 침공작전 입장까지 " + timer + "초 기다려야 됩니다").create());
+					}
+					else {
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder("You have to wait for " + timer + " seconds to Start Next Boss Raid").create());
+					}
+	            	return;
+	            }
+	            else { 
+					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder("이제 보스 침공작전에 입장하실수 있습니다").create());
+					}
+					else {
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder("Now You Can Start Boss Raid").create());
+					}
+	            	raidcool.remove(p.getUniqueId());
+	            }
+			}
+    		String rn = d.getClickedBlock().getMetadata("OverworldRaidPortal").get(0).asString();
+    		World rw = Bukkit.getServer().getWorld("OverworldRaid");
+    		int fix = p.getEntityId()*50-29999900;
+    		int fiz = p.getEntityId()*50-29999900;
+    		if(fix >= 29999900) {
+    			fix = fix - 29999900*2;
+    			fiz = 29999900*2 - fiz;
+    		}
+    		for(int in = 0; in<20; in++) {
+	    		if(rw.getHighestBlockAt(fix, fiz).getType().name().contains("LEAVES")) {
+	    			fix++;
+	    		}
+	    		else {
+	    			break;
+	    		}
+    		}
+        	p.setCooldown(Material.RAIL, 100);
+    		Location spl = rw.getHighestBlockAt(fix, fiz).getLocation().clone().add(0, 1, 0);
+    		if(Party.hasParty(p)) {
+				if(Party.isOwner(p)) {
+					Party.getMembers(Party.getParty(p)).forEach(pu -> {
+						if(Bukkit.getPlayer(pu).getInventory().firstEmpty() == -1) {
+							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+				            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder("인벤토리에 빈칸이 없는 파티원이 있습니다").create());
+							}
+							else {
+				            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder("Players should empty inventory least one space").create());
+							}
+							return;
+						}
+		        		heroes.put(rn, pu);
+		        		
+						final Location pl = Bukkit.getPlayer(pu).getLocation();
+						beforepl.put(pu, pl);
+        				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 20,1,false,false));
+						Bukkit.getPlayer(pu).teleport(spl.clone().add(0,0.5,0));
+						Holding.invur(Bukkit.getPlayer(pu), 40l);
+					});
+				}
+				else {
+					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+						p.sendMessage("파티장만 가능합니다");
+					}
+					else {
+						p.sendMessage("You Should Be Owner");
+					}
 					return;
 				}
+			}
+			else {
 				if(p.getInventory().firstEmpty() == -1) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder("인벤토리에 빈칸이 없습니다").create());
@@ -702,209 +718,267 @@ public class OverworldRaids extends Mobs implements Listener {
 					}
 					return;
 				}
-				if(raidcool.containsKey(p.getUniqueId())) {
+        		heroes.put(rn, p.getUniqueId());
+				final Location pl = p.getLocation();
+				beforepl.put(p.getUniqueId(), pl);
+				p.teleport(spl.clone().add(0,0.5,0));
+				Holding.invur(p, 40l);
+			}
+    		RaidFinish(rn,"","",0,"wild");
+			d.getClickedBlock().setType(Material.VOID_AIR);
+    		ArmorStand portal = (ArmorStand) spl.getWorld().spawn(spl, ArmorStand.class);
+    		portal.setMetadata("portal", new FixedMetadataValue(RMain.getInstance(), true));
+    		portal.setMetadata("OverworldRaidExit", new FixedMetadataValue(RMain.getInstance(), true));
+    		portal.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
+    		portal.setRemoveWhenFarAway(false);
+    		portal.setGlowing(true);
+    		portal.setGravity(false);
+    		
+			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+        		portal.setCustomName(rn + "파티의 출구 (웅크린상태에서 맨손으로 가격)");
+			}
+			else {
+        		portal.setCustomName(rn + "'s Party Exit (Sneaking + Hit with Fist)");
+			}
+    		portal.setCustomNameVisible(true);
+    		portal.setCollidable(false);
+    		raidloc.put(rn, spl);
+    		raidpor.put(rn, portal.getUniqueId());
 
-		            double timer = (raidcool.get(p.getUniqueId())/1000 + 600) - System.currentTimeMillis()/1000; 
-		            if(!(timer < 0))
-		            {
-						if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder("보스 침공작전 입장까지 " + timer + "초 기다려야 됩니다").create());
+    		Villager v = (Villager) spl.getWorld().spawn(spl.clone().add(1,1,0), Villager.class);
+    		v.setMetadata("raidvil", new FixedMetadataValue(RMain.getInstance(), rn));
+    		v.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), rn));
+    		v.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+    		v.setAdult();
+    		v.setAgeLock(true);
+    		v.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0);
+    		v.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+    		v.setGravity(true);
+    		v.setNoDamageTicks(0);
+    		v.setMaxHealth(10000);
+    		v.setHealth(10000);
+    		v.setRemoveWhenFarAway(false);
+    		v.setGlowing(true);
+    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? rn + " 고고학자":rn + "'s Archaeologist";
+    		v.setVillagerType(Type.JUNGLE);
+    		v.setProfession(Profession.LIBRARIAN);
+    		v.setCustomName(reg);
+    		v.setCustomNameVisible(true);
+    		timeout.put(rn, 420);
+    		vil.put(rn, v.getUniqueId());
+    		
+    		
+    		if(Party.hasParty(p)) {
+				if(Party.isOwner(p)) {
+					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "난이도를 입력하세요 (최소: 0, 최대: "+RaidDifficulties.getMaxDifficulty(p, RaidCategory.OVERWORLD)+")").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BLUE + "5초안에 미입력 또는 올바른 입력이 아닐 시 도전 가능한 가장 높은 난이도로 자동 설정됩니다").create());
+					}
+					else {
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "Enter difficulty level (min: 0, MAX: "+RaidDifficulties.getMaxDifficulty(p, RaidCategory.OVERWORLD)+")").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BLUE + "If you do not enter anything in 5 second or enter invalid inputs").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BLUE + "It will be automatically set to the highest level of difficulty you can challenge").create());
+
+					}
+					difen.put(rn, RaidDifficulties.getMaxDifficulty(p, RaidCategory.OVERWORLD));
+					int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+			            @Override
+			            public void run() 
+			            {
+			            	OverworldRaidStart(p,rn,difen.get(rn));
+			            	difent.remove(rn);
+			            }
+					}, 160); 
+					difent.put(rn, task);
+
+					Party.getMembers(Party.getParty(p)).forEach(pu -> {
+						if(Bukkit.getPlayer(pu).getLocale().equalsIgnoreCase("ko_kr")) {
+							Bukkit.getPlayer(pu).spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "파티장이 난이도를 선택중입니다").create());
 						}
 						else {
-			            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder("You have to wait for " + timer + " seconds to Start Boss Raid").create());
+							Bukkit.getPlayer(pu).spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "Owner is selecting difficulty now").create());
 						}
-		            	return;
-		            }
-		            else { 
-						if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder("이제 보스 침공작전에 입장하실수 있습니다").create());
-						}
-						else {
-			            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder("Now You Can Start Boss Raid").create());
-						}
-		            	raidcool.remove(p.getUniqueId());
-		            }
+					});
 				}
-	    		World rw = Bukkit.getServer().getWorld("OverworldRaid");
-	    		int fix = p.getEntityId()*50-29999900;
-	    		int fiz = p.getEntityId()*50-29999900;
-	    		if(fix >= 29999900) {
-	    			fix = fix - 29999900*2;
-	    			fiz = 29999900*2 - fiz;
-	    		}
-	    		for(int in = 0; in<20; in++) {
-		    		if(rw.getHighestBlockAt(fix, fiz).getType().name().contains("LEAVES")) {
-		    			fix++;
-		    		}
-		    		else {
-		    			break;
-		    		}
-	    		}
-	        	p.setCooldown(Material.RAIL, 100);
-	    		Location spl = rw.getHighestBlockAt(fix, fiz).getLocation().clone().add(0, 1, 0);
-	    		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	                @Override
-	                public void run() {
+			}
+			else {
+				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "난이도를 입력하세요 (최소: 0, 최대: "+RaidDifficulties.getMaxDifficulty(p, RaidCategory.OVERWORLD)+")").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BLUE + "5초안에 미입력 또는 올바른 입력이 아닐 시 도전 가능한 가장 높은 난이도로 자동 설정됩니다").create());
+				}
+				else {
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "Enter difficulty level (min: 0, MAX: "+RaidDifficulties.getMaxDifficulty(p, RaidCategory.OVERWORLD)+")").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BLUE + "If you do not enter anything in 5 second or enter invalid inputs").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BLUE + "It will be automatically set to the highest level of difficulty you can challenge").create());
 
-	    	    		if(Party.hasParty(p)) {
-	    					if(Party.isOwner(p)) {
-	    						Party.getMembers(Party.getParty(p)).forEach(pu -> {
-	    			        		heroes.put(p.getName(), pu);
-	    						});
-	    					}
-	    				}
-	    				else {
-	    	        		heroes.put(p.getName(), p.getUniqueId());
-	    				}
-	    		    		if(Party.hasParty(p)) {
-	    						if(Party.isOwner(p)) {
-	    							Party.getMembers(Party.getParty(p)).forEach(pu -> {
-	    								final Location pl = Bukkit.getPlayer(pu).getLocation();
-	    								beforepl.put(pu, pl);
-	    	            				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 20,1,false,false));
-	    								Bukkit.getPlayer(pu).teleport(spl.clone().add(0,0.5,0));
-	    								Holding.invur(Bukkit.getPlayer(pu), 40l);
-	    								if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		    				        		Bukkit.getPlayer(pu).sendTitle(ChatColor.GRAY + "작전이 시작됩니다", "주민을 보호하고 적을 모두 섬멸하십시오", 5, 69, 5);
-	    								}
-	    								else {
-		    				        		Bukkit.getPlayer(pu).sendTitle(ChatColor.GRAY + "Raid Will Start", "Protect Villager & Sweep All Enemies", 5, 69, 5);
-	    								}
-	    				            
-	    							});
-	    						}
-	    						else {
-	    							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		    							p.sendMessage("파티장만 가능합니다");
-	    							}
-	    							else {
-		    							p.sendMessage("You Should Be Owner");
-	    							}
-	    							return;
-	    						}
-	    					}
-	    					else {
-	    						final Location pl = p.getLocation();
-	    						beforepl.put(p.getUniqueId(), pl);
-	    						p.teleport(spl.clone().add(0,0.5,0));
-	    						Holding.invur(p, 40l);
-								if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    				        		p.sendTitle(ChatColor.GRAY + "작전이 시작됩니다", "주민을 보호하고 적을 모두 섬멸하십시오", 5, 69, 5);
+				}
+				difen.put(rn, RaidDifficulties.getMaxDifficulty(p, RaidCategory.OVERWORLD));
+				int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		            @Override
+		            public void run() 
+		            {
+		            	OverworldRaidStart(p,rn,difen.get(rn));
+		            	difent.remove(rn);
+		            }
+				}, 160); 
+				difent.put(rn, task);
+			}
+    		
+		}
+	}
+	
+	final private void OverworldRaidStart(Player p, String rn, Integer endif) {
+
+		
+		final Location spl = raidloc.get(rn);
+
+		if(Party.hasParty(p)) {
+			if(Party.isOwner(p)) {
+				Party.getMembers(Party.getParty(p)).forEach(pu -> {
+					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+		        		Bukkit.getPlayer(pu).sendMessage(ChatColor.AQUA + "난이도가 "+endif+"로 설정 되었습니다");
+					}
+					else {
+		        		Bukkit.getPlayer(pu).sendMessage(ChatColor.AQUA + "Difficulty level set to "+endif);
+					}
+				});
+			}
+		}
+		else {
+			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+        		p.sendMessage(ChatColor.AQUA + "난이도가 "+endif+"로 설정 되었습니다");
+			}
+			else {
+        		p.sendMessage(ChatColor.AQUA + "Difficulty level set to "+endif);
+			}
+		}
+		
+		Double dif = 100000 * BigDecimal.valueOf(1 + 0.1*endif).setScale(1, RoundingMode.HALF_EVEN).doubleValue();
+		
+		if(Party.hasParty(p)) {
+			if(Party.isOwner(p)) {
+				Party.getMembers(Party.getParty(p)).forEach(pu -> {
+					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+		        		Bukkit.getPlayer(pu).sendTitle(ChatColor.GRAY + "작전이 시작됩니다", "주민을 보호하고 적을 모두 섬멸하십시오", 5, 69, 5);
+					}
+					else {
+		        		Bukkit.getPlayer(pu).sendTitle(ChatColor.GRAY + "Raid Will Start", "Protect Villager & Sweep All Enemies", 5, 69, 5);
+					}
+				});
+			}
+		}
+		else {
+			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+        		p.sendTitle(ChatColor.GRAY + "작전이 시작됩니다", "주민을 보호하고 적을 모두 섬멸하십시오", 5, 69, 5);
+			}
+			else {
+        		p.sendTitle(ChatColor.GRAY + "Raid Will Start", "Protect Villager & Sweep All Enemies", 5, 69, 5);
+			}
+		}
+		lives.put(rn, LIVES);
+		
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+
+	                int rat = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		                @Override
+		                public void run() {
+
+		                	Random random=new Random();
+		                	double number = (random.nextDouble()+1.5) * 5 * (random.nextBoolean() ? -1 : 1);
+		                	double number2 = (random.nextDouble()+1.5) * 5 * (random.nextBoolean() ? -1 : 1);
+		                	Location esl = spl.clone().add(number, 1, number2);
+	                    	
+	                    	int ri = random.nextInt(4);
+	                    	
+	                    	bossgen(esl,p, rn, ri,dif);
+	                    	
+		                	heroes.get(rn).forEach(pu -> {
+		                		Player pa = Bukkit.getPlayer(pu);
+								if(pa.getLocale().equalsIgnoreCase("ko_kr")) {
+    		                		pa.sendTitle(ChatColor.GRAY + "작전 시작", null, 5, 69, 5);
+    				        		pa.playSound(spl, Sound.EVENT_RAID_HORN, 1, 1);
+    		                		pa.sendMessage("남은 목숨: " +ChatColor.BOLD + String.valueOf(lives.get(rn)));
 								}
 								else {
-		    		        		p.sendTitle(ChatColor.GRAY + "Raid Will Start", "Protect Villager & Sweep All Enemies", 5, 69, 5);
+    		                		pa.sendTitle(ChatColor.GRAY + "Raid Start", null, 5, 69, 5);
+    				        		pa.playSound(spl, Sound.EVENT_RAID_HORN, 1, 1);
+    		                		pa.sendMessage(ChatColor.BOLD + String.valueOf(lives.get(rn)) + "lives Left");
 								}
-	    		        		p.playSound(spl, Sound.EVENT_RAID_HORN, 1, 1);
-	    					}
-	    					d.getClickedBlock().setType(Material.VOID_AIR);
-	    	        		ArmorStand portal = (ArmorStand) spl.getWorld().spawn(spl, ArmorStand.class);
-	    	        		portal.setMetadata("portal", new FixedMetadataValue(RMain.getInstance(), true));
-	    	        		portal.setMetadata("OverworldRaidExit", new FixedMetadataValue(RMain.getInstance(), true));
-	    	        		portal.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
-	    	        		portal.setRemoveWhenFarAway(false);
-	    	        		portal.setGlowing(true);
-							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		    	        		portal.setCustomName(p.getName() + "파티의 출구 (웅크린상태에서 맨손으로 가격)");
-							}
-							else {
-		    	        		portal.setCustomName(p.getName() + "'s Party Exit (Sneaking + Hit with Fist)");
-							}
-	    	        		portal.setCustomNameVisible(true);
-	                		portal.setCollidable(false);
-	    	        		raidloc.put(p.getName(), spl);
-	    	        		raidpor.put(p.getName(), portal.getUniqueId());
-	    	        		
-	        	    		lives.put(p.getName(), 5);
-	    	        		Villager v = (Villager) spl.getWorld().spawn(spl.clone().add(1,1,0), Villager.class);
-	    	        		v.setMetadata("raidvil", new FixedMetadataValue(RMain.getInstance(), p.getName()));
-	    	        		v.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), p.getName()));
-	    	        		v.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-	    	        		v.setAdult();
-	    	        		v.setAgeLock(true);
-	    	        		v.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0);
-	    	        		v.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
-	    	        		v.setGravity(true);
-	    	        		v.setNoDamageTicks(0);
-	    	        		v.setMaxHealth(10000);
-	    	        		v.setHealth(10000);
-	    	        		v.setRemoveWhenFarAway(false);
-	    	        		v.setGlowing(true);
-	    	        		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? p.getName() + " 고고학자":p.getName() + "'s Archaeologist";
-	    	        		v.setVillagerType(Type.JUNGLE);
-	    	        		v.setProfession(Profession.LIBRARIAN);
-	    	        		v.setCustomName(reg);
-	    	        		v.setCustomNameVisible(true);
-	    	        		timeout.put(p.getName(), 420);
-	    	        		vil.put(p.getName(), v.getUniqueId());
-	    	                int rat = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	    		                @Override
-	    		                public void run() {
+		                	});
 
-	    		                	Random random=new Random();
-	    		                	double number = (random.nextDouble()+1.5) * 5 * (random.nextBoolean() ? -1 : 1);
-	    		                	double number2 = (random.nextDouble()+1.5) * 5 * (random.nextBoolean() ? -1 : 1);
-	    		                	Location esl = spl.clone().add(number, 1, number2);
-    		                    	
-    		                    	int ri = random.nextInt(4);
-    		                    	
-    		                    	bossgen(esl,p, p.getName(), ri);
-    		                    	
-	    		                	heroes.get(p.getName()).forEach(pu -> {
-	    		                		Player pa = Bukkit.getPlayer(pu);
-	    								if(pa.getLocale().equalsIgnoreCase("ko_kr")) {
-		    		                		pa.sendTitle(ChatColor.GRAY + "작전 시작", null, 5, 69, 5);
-		    				        		pa.playSound(spl, Sound.EVENT_RAID_HORN, 1, 1);
-		    		                		pa.sendMessage("남은 목숨: " +ChatColor.BOLD + String.valueOf(lives.get(p.getName())));
+	        	    		targeting(rn);
+
+		        			String t = p.getLocale().equalsIgnoreCase("ko_kr") ? "남은시간 - ":"TimeLeft - ";
+	        	    		BossBar	timeb = Bukkit.getServer().createBossBar(new NamespacedKey(RMain.getInstance(), rn+"OverworldRaidTime"),t + String.valueOf((int)timeout.get(rn)/20/60) + ":" + String.valueOf((int)(timeout.get(rn)/20)%60), BarColor.WHITE, BarStyle.SEGMENTED_6);
+	        	    		timeb.setVisible(true);
+	        	    		timebar.put(rn, timeb);
+	        	    		int timetask = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
+	        	                @Override
+	        	                public void run() 
+	        	                {
+	        	            		timebar.get(rn).setProgress((double)timeout.get(rn)/420d);
+	        	            		timebar.get(rn).setTitle(t +"[" + String.valueOf((int)timeout.get(rn)/60) + ":" + String.valueOf((int)(timeout.get(rn))%60)+"]");
+	        	            		heroes.get(rn).forEach(pu -> {
+	    	            				Player p1 = (Player) Bukkit.getPlayer(pu);
+	    	            				if(p1 != null) {
+		    	            				timebar.get(rn).addPlayer(p1);
+	    	            				}
+	        	            		});
+	        	            		timeout.computeIfPresent(rn, (k,v) -> v-1);
+	        	            		if(timeout.get(rn) <=0) {
+
+	    								if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+    	        	            			OverworldRaidFinish(rn,"패배..", "시간초과",0);
 	    								}
 	    								else {
-		    		                		pa.sendTitle(ChatColor.GRAY + "Raid Start", null, 5, 69, 5);
-		    				        		pa.playSound(spl, Sound.EVENT_RAID_HORN, 1, 1);
-		    		                		pa.sendMessage(ChatColor.BOLD + String.valueOf(lives.get(p.getName())) + "lives Left");
+    	        	            			OverworldRaidFinish(rn,"Defeated..", "TimeOut",0);
 	    								}
-	    		                	});
+	        	                    	
+	        	                    	spl.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, spl, 1000,6,6,6);
+	        	            		}
+	        	                }
+	        				}, 0, 20);
+	        	    		timet.put(rn, timetask);
+		                }
+		            }, DelayTime); 
+	                raidt.put(rn, rat);
+            }
+		},5);
+        return;
+	
+	}
+	
+	
+	@EventHandler
+	public void OverworldRaidStart(AsyncPlayerChatEvent d) 
+	{	
+			Player p = (Player) d.getPlayer();
 
-	    	        	    		targeting(p.getName());
+			final String rn = getheroname(p);
 
-	    		        			String t = p.getLocale().equalsIgnoreCase("ko_kr") ? "남은시간 - ":"TimeLeft - ";
-	    	        	    		BossBar	timeb = Bukkit.getServer().createBossBar(new NamespacedKey(RMain.getInstance(), p.getName()+"OverworldRaidTime"),t + String.valueOf((int)timeout.get(p.getName())/20/60) + ":" + String.valueOf((int)(timeout.get(p.getName())/20)%60), BarColor.WHITE, BarStyle.SEGMENTED_6);
-	    	        	    		timeb.setVisible(true);
-	    	        	    		timebar.put(p.getName(), timeb);
-	    	        	    		int timetask = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-	    	        	                @Override
-	    	        	                public void run() 
-	    	        	                {
-	    	        	            		timebar.get(p.getName()).setProgress((double)timeout.get(p.getName())/420d);
-	    	        	            		timebar.get(p.getName()).setTitle(t +"[" + String.valueOf((int)timeout.get(p.getName())/60) + ":" + String.valueOf((int)(timeout.get(p.getName()))%60)+"]");
-	    	        	            		heroes.get(p.getName()).forEach(pu -> {
-	    	    	            				Player p1 = (Player) Bukkit.getPlayer(pu);
-	    	    	            				if(p1 != null) {
-	    		    	            				timebar.get(p.getName()).addPlayer(p1);
-	    	    	            				}
-	    	        	            		});
-	    	        	            		timeout.computeIfPresent(p.getName(), (k,v) -> v-1);
-	    	        	            		if(timeout.get(p.getName()) <=0) {
-	    	        	            			String rn = p.getName();
-
-	    	    								if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		    	        	            			RaidFinish(rn,"패배..", "시간초과",0);
-	    	    								}
-	    	    								else {
-		    	        	            			RaidFinish(rn,"Defeated..", "TimeOut",0);
-	    	    								}
-	    	        	                    	
-	    	        	                    	spl.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, spl, 1000,6,6,6);
-	    	        	            		}
-	    	        	                }
-	    	        				}, 0, 20);
-	    	        	    		timet.put(p.getName(), timetask);
-	    		                }
-	    		            }, DelayTime); 
-	    	                raidt.put(p.getName(), rat);
-	                }
-	    		},5);
-                return;
+			if(!difen.containsKey(rn)) {
+				return;
+			}
+			if(difent.containsKey(rn)) {
+				Bukkit.getScheduler().cancelTask(difent.remove(rn));
+			}
+			Integer endif = 0;
 			
-		}
+			try {
+				endif = Integer.parseInt(d.getMessage());
+				if(endif > RaidDifficulties.getMaxDifficulty(p,RaidCategory.OVERWORLD)) {
+					endif = RaidDifficulties.getMaxDifficulty(p,RaidCategory.OVERWORLD);
+				}
+			}
+			catch(NumberFormatException e) {
+				endif = RaidDifficulties.getMaxDifficulty(p,RaidCategory.OVERWORLD);
+			}
+
+			difen.put(rn, endif);
+			OverworldRaidStart(p,rn,endif);
+		
 	}
 
 	@EventHandler
@@ -915,7 +989,7 @@ public class OverworldRaids extends Mobs implements Listener {
 			String rn = le.getMetadata("raid").get(0).asString();
 			raider.remove(rn, le.getUniqueId());
 			if(raider.get(rn).size()<=0){
-	        	RaidFinish(rn, "", "",1);
+	        	OverworldRaidFinish(rn, "", "",1);
 			}
 		}
 	}
@@ -931,10 +1005,10 @@ public class OverworldRaids extends Mobs implements Listener {
 			String rn = le.getMetadata("raidvil").get(0).asString();
 
 			if(Bukkit.getPlayer(rn).getLocale().equalsIgnoreCase("ko_kr")) {
-				RaidFinish(rn, "패배..", "주민 보호 실패",0);
+				OverworldRaidFinish(rn, "패배..", "주민 보호 실패",0);
 			}
 			else {
-				RaidFinish(rn, "Defeated..", "Fail to Protect the Villager",0);
+				OverworldRaidFinish(rn, "Defeated..", "Fail to Protect the Villager",0);
 			}
 		}
 	}
@@ -953,10 +1027,10 @@ public class OverworldRaids extends Mobs implements Listener {
         	if(lives.getOrDefault(rn, 0)<=0) {
 
     			if(Bukkit.getPlayer(rn).getLocale().equalsIgnoreCase("ko_kr")) {
-    				RaidFinish(rn, "패배..", "모든 목숨 소진",0);
+    				OverworldRaidFinish(rn, "패배..", "모든 목숨 소진",0);
     			}
     			else {
-                	RaidFinish(rn, "Defeated..", "All Lives Exhausted", 0);
+                	OverworldRaidFinish(rn, "Defeated..", "All Lives Exhausted", 0);
     			}
         	}
 		}
@@ -977,10 +1051,10 @@ public class OverworldRaids extends Mobs implements Listener {
 					if(Party.hasParty(p)) {
 						if(Party.isOwner(p)) {
 			    			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								RaidFinish(p.getName(), "항복","",0);
+								OverworldRaidFinish(getheroname(p), "항복","",0);
 			    			}
 			    			else {
-								RaidFinish(p.getName(), "Surrender","",0);
+								OverworldRaidFinish(getheroname(p), "Surrender","",0);
 			    			}
 						}
 						else {
@@ -995,10 +1069,10 @@ public class OverworldRaids extends Mobs implements Listener {
 					}
 					else {
 		    			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-							RaidFinish(p.getName(), "항복","",0);
+							OverworldRaidFinish(getheroname(p), "항복","",0);
 		    			}
 		    			else {
-							RaidFinish(p.getName(), "Surrender","",0);
+							OverworldRaidFinish(getheroname(p), "Surrender","",0);
 		    			}
 					}
 					
@@ -1239,7 +1313,7 @@ public class OverworldRaids extends Mobs implements Listener {
         			if(Party.hasParty(p)) {
         				if(Party.isOwner(p)) {
         					Holding.invur(p, 40l);
-        					p.teleport(raidloc.get(p.getName()));
+        					p.teleport(raidloc.get(getheroname(p)));
         				}
         				else {
         					Holding.invur(p, 40l);
@@ -1248,7 +1322,7 @@ public class OverworldRaids extends Mobs implements Listener {
         			}
         			else {
     					Holding.invur(p, 40l);
-        				p.teleport(raidloc.get(p.getName()));
+        				p.teleport(raidloc.get(getheroname(p)));
         			}
                 }
             }, 25); 
@@ -1275,7 +1349,7 @@ public class OverworldRaids extends Mobs implements Listener {
 	public void BlockPlace(BlockPlaceEvent d) 
 	{
 		Player p = d.getPlayer();
-		if(heroes.containsValue(p.getUniqueId())|| raider.containsKey(p.getName()) || beforepl.containsKey(p.getUniqueId())) {
+		if(heroes.containsValue(p.getUniqueId())|| raider.containsKey(getheroname(p)) || beforepl.containsKey(p.getUniqueId())) {
 			d.setCancelled(true);
 		}
 	}
@@ -1284,7 +1358,7 @@ public class OverworldRaids extends Mobs implements Listener {
 	public void BlockBreak(BlockBreakEvent d) 
 	{
 		Player p = d.getPlayer();
-		if(heroes.containsValue(p.getUniqueId())|| raider.containsKey(p.getName()) || beforepl.containsKey(p.getUniqueId())) {
+		if(heroes.containsValue(p.getUniqueId())|| raider.containsKey(getheroname(p)) || beforepl.containsKey(p.getUniqueId())) {
 			d.setCancelled(true);
 		}
 	}
@@ -1294,7 +1368,7 @@ public class OverworldRaids extends Mobs implements Listener {
 
 		if(d.getEntity().hasMetadata("inhibitor") && inhibitor.containsValue(d.getEntity().getUniqueId())) {
 			Entity le = d.getEntity();
-			String rn = le.getMetadata("raid").get(0).asString();
+			String rn = le.getMetadata("inhibitor").get(0).asString();
 			Bukkit.getPluginManager().callEvent(new EntityDeathEvent((LivingEntity) Bukkit.getEntity(inhibitor.get(rn)) , null));
 		}
 	}
@@ -1307,6 +1381,8 @@ public class OverworldRaids extends Mobs implements Listener {
 			LivingEntity le = d.getEntity();
 			String rn = le.getMetadata("inhibitor").get(0).asString();
 			Location spl = le.getLocation().clone().add(0, -60, 0);
+			spl.setY(30);
+			raidloc.put(rn, spl);
 			le.remove();
 			if(Bukkit.getEntity(inhibitor.get(rn)) !=null) {
 				Bukkit.getEntity(inhibitor.get(rn)).remove();
@@ -1321,10 +1397,8 @@ public class OverworldRaids extends Mobs implements Listener {
 				Bukkit.getServer().getScheduler().cancelTask(tart.get(rn));
 				tart.remove(rn);
 			}
-			Bukkit.getServer().getScheduler().cancelTask(raidbart.get(rn));
 			Bukkit.getServer().getScheduler().cancelTask(raidt.get(rn));
-			BossBar	newbar = raidbar.get(rn);
-			newbar.setVisible(false);
+			
 			if(leadert.containsKey(rn)) {
 				Bukkit.getServer().getScheduler().cancelTask(leadert.get(rn));
 				leadert.remove(rn);
@@ -1356,6 +1430,7 @@ public class OverworldRaids extends Mobs implements Listener {
 	    		Bukkit.getPlayer(pu).teleport(spl.clone().add(0,2.5,0));
 	    	});
 	    	Bukkit.getEntity(vil.get(rn)).teleport(spl.clone().add(1,1,1));
+	    	Bukkit.getEntity(raidpor.get(rn)).teleport(spl.clone().add(1,1,1));
 	        int rat =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	            @Override
 	            public void run() {
@@ -1363,10 +1438,10 @@ public class OverworldRaids extends Mobs implements Listener {
 	            	Random random=new Random();
 	            	double number = (random.nextDouble()+1.5) * 5 * (random.nextBoolean() ? -1 : 1);
 	            	double number2 = (random.nextDouble()+1.5) * 5 * (random.nextBoolean() ? -1 : 1);
-	            	Location esl = spl.clone().add(number, -20, number2);
+	            	Location esl = spl.clone().add(number, -10, number2);
 	
 	        		String reg = Bukkit.getPlayer(rn).getLocale().equalsIgnoreCase("ko_kr") ? "엘더가디언":"ElderGuardian";
-	        		ElderGuardian newmob = (ElderGuardian) MobspawnLoc(esl, ChatColor.BLUE+reg, 40000.0, null, null, null, null, null, null, EntityType.ELDER_GUARDIAN);
+	        		ElderGuardian newmob = (ElderGuardian) MobspawnLoc(esl, ChatColor.BLUE+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, null, null, null, null, null, null, EntityType.ELDER_GUARDIAN);
 		    		newmob.setGlowing(true);
 		    		newmob.getEquipment().setBootsDropChance(0);
 		    		newmob.getEquipment().setChestplateDropChance(0);
@@ -1380,33 +1455,15 @@ public class OverworldRaids extends Mobs implements Listener {
 		    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
 		    		newmob.setMetadata("bosswave1", new FixedMetadataValue(RMain.getInstance(), true));
 		    		newmob.setLootTable(null);
-		    		BossBar	newbar = Bukkit.getServer().createBossBar(new NamespacedKey(RMain.getInstance(), rn +"ElderGuardian"),newmob.getName(), BarColor.BLUE, BarStyle.SEGMENTED_20, BarFlag.CREATE_FOG);
-		            newbar.setVisible(true);
-		    		raidbar.put(rn, newbar);
+		    		
 		    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
 		    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
 		    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		    		newmob.setRemoveWhenFarAway(false);
 		    		raider.put(rn, newmob.getUniqueId());
 		    		
-	
-		    		
-		    		int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() 
-		                {
-	
-							if(Holding.ale(newmob)!=null) {
-	    	                	raidbar.get(rn).setProgress(Holding.ale(newmob).getHealth()/40000d);
-	    	                	raidbar.get(rn).setTitle(Holding.ale(newmob).getName());
-	    	            		heroes.get(rn).forEach(pu -> {
-		            				Player p = (Player) Bukkit.getPlayer(pu);
-		            				raidbar.get(rn).addPlayer(p);
-	    	            		});
-							}
-		                }
-					}, 0, 1);
-		    		raidbart.put(rn, task);
+
+    	    		bossbargen("ElderGuardian", rn, newmob);
 	        		
 	            	heroes.get(rn).forEach(pu -> {
 						if(Bukkit.getPlayer(pu).getLocale().equalsIgnoreCase("ko_kr")) {
@@ -1420,7 +1477,6 @@ public class OverworldRaids extends Mobs implements Listener {
 	                		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + String.valueOf(lives.getOrDefault(rn, 0)) + "lives Left");
 						}
 	            	});
-		            newbar.setVisible(true);
 	            }
 	        }, DelayTime); 
 	        raidt.put(rn, rat);
@@ -1433,6 +1489,8 @@ public class OverworldRaids extends Mobs implements Listener {
 	{	
 		if(d.getEntity().hasMetadata("bosswave1") && d.getEntity().hasMetadata("oceanboss") &&raider.containsValue(d.getEntity().getUniqueId())) {
 			LivingEntity le = d.getEntity();
+			final Location lel = le.getLocation().clone();
+			
 			String rn = le.getMetadata("raid").get(0).asString();
 			raider.remove(rn, le.getUniqueId());
 			if(raider.get(rn).size()<=0){
@@ -1452,22 +1510,22 @@ public class OverworldRaids extends Mobs implements Listener {
 	        	heroes.get(rn).forEach(pu -> {
 	        		Bukkit.getPlayer(pu).sendTitle(ChatColor.MAGIC + "aaaaaa",ChatColor.MAGIC + "aaaaaa", 5, 20, 5);
 	        	});
-	        	spl.getWorld().spawnParticle(Particle.SOUL, d.getEntity().getLocation(), 1000,1,1,1);
-	        	spl.getWorld().spawnParticle(Particle.BUBBLE_COLUMN_UP, d.getEntity().getLocation(), 1000,1,1,1);
-	        	spl.getWorld().spawnParticle(Particle.NAUTILUS, d.getEntity().getLocation(), 1000,1,1,1);
-	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.BLOCK_BUBBLE_COLUMN_WHIRLPOOL_AMBIENT, 1, 0);
-	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 1, 0);
-	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.BLOCK_BUBBLE_COLUMN_WHIRLPOOL_INSIDE, 1, 0);
+	        	spl.getWorld().spawnParticle(Particle.SOUL, lel, 1000,1,1,1);
+	        	spl.getWorld().spawnParticle(Particle.BUBBLE_COLUMN_UP, lel, 1000,1,1,1);
+	        	spl.getWorld().spawnParticle(Particle.NAUTILUS, lel, 1000,1,1,1);
+	        	spl.getWorld().playSound(lel, Sound.BLOCK_BUBBLE_COLUMN_WHIRLPOOL_AMBIENT, 1, 0);
+	        	spl.getWorld().playSound(lel, Sound.ENTITY_ELDER_GUARDIAN_CURSE, 1, 0);
+	        	spl.getWorld().playSound(lel, Sound.BLOCK_BUBBLE_COLUMN_WHIRLPOOL_INSIDE, 1, 0);
 	        	Bukkit.getEntity(vil.get(rn)).teleport(spl.clone().add(1,2.5,1));
 	            int rat =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	                @Override
 	                public void run() {
 	
-	                	Location esl = d.getEntity().getLocation().clone().add(0,0.5, 0);
+	                	Location esl = lel.clone().add(0, -10, 0);
 	
 	    	    		
 		        		String reg = Bukkit.getPlayer(rn).getLocale().equalsIgnoreCase("ko_kr") ? "잠식된 엘더가디언":"Encroached ElderGuardian";
-		        		ElderGuardian newmob = (ElderGuardian) MobspawnLoc(esl, ChatColor.BLUE+reg, 80000.0, null, null, null, null, null, null, EntityType.ELDER_GUARDIAN);
+		        		ElderGuardian newmob = (ElderGuardian) MobspawnLoc(esl, ChatColor.BLUE+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, null, null, null, null, null, null, EntityType.ELDER_GUARDIAN);
 	    	    		newmob.setGlowing(true);
 	    	    		newmob.getEquipment().setBootsDropChance(0);
 	    	    		newmob.getEquipment().setChestplateDropChance(0);
@@ -1484,33 +1542,14 @@ public class OverworldRaids extends Mobs implements Listener {
 	    	    		newmob.setLootTable(null);
 	    	    		
 	    	    		
-	    	    		BossBar	newbar = Bukkit.getServer().createBossBar(new NamespacedKey(RMain.getInstance(),rn +"Encroached_ElderGuardian"),newmob.getName(), BarColor.BLUE, BarStyle.SEGMENTED_20, BarFlag.CREATE_FOG);
-	    	            newbar.setVisible(true);
-	    	    		raidbar.put(rn, newbar);
 	    	    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.4);
 	    	    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
 	    	    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		newmob.setRemoveWhenFarAway(false);
 	    	    		raider.put(rn, newmob.getUniqueId());
 	    	    		
-	
-	    	    		
-	    	    		int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-	    	                @Override
-	    	                public void run() 
-	    	                {
-	    						if(Holding.ale(newmob)!=null) {
-	        	                	raidbar.get(rn).setProgress(Holding.ale(newmob).getHealth()/80000d);
-	        	                	raidbar.get(rn).setTitle(Holding.ale(newmob).getName());
-	        	            		heroes.get(rn).forEach(pu -> {
-	    	            				Player p = (Player) Bukkit.getPlayer(pu);
-	    	            				raidbar.get(rn).addPlayer(p);
-	        	            		});
-	    						}
-	    	                }
-	    				}, 0, 1);
-	    	    		raidbart.put(rn, task);
-	
+
+	    	    		bossbargen("EncroachedElderGuardian", rn, newmob);
 	            		
 	                	heroes.get(rn).forEach(pu -> {
 							if(Bukkit.getPlayer(pu).getLocale().equalsIgnoreCase("ko_kr")) {
@@ -1524,7 +1563,6 @@ public class OverworldRaids extends Mobs implements Listener {
 		                		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + String.valueOf(lives.getOrDefault(rn, 0)) + "lives Left");
 							}
 	                	});
-	    	            newbar.setVisible(true);
 	                }
 	            }, 50); 
 	            raidt.put(rn, rat);
@@ -1573,7 +1611,7 @@ public class OverworldRaids extends Mobs implements Listener {
 	        			mm.setCustomModelData(7009);
 	        			main.setItemMeta(mm);
 		        		String reg = Bukkit.getPlayer(rn).getLocale().equalsIgnoreCase("ko_kr") ? "더비스트":"TheBeast";
-		        		Husk newmob = (Husk) MobspawnLoc(le.getLocation().add(0, -20, 0), ChatColor.DARK_PURPLE+reg, 120000.0,  head, null, null, null, main, null, EntityType.HUSK);
+		        		Husk newmob = (Husk) MobspawnLoc(le.getLocation().add(0, -20, 0), ChatColor.DARK_PURPLE+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2,  head, null, null, null, main, null, EntityType.HUSK);
 	    	    		newmob.setGlowing(true);
 	    	    		newmob.setMetadata("hyperboss", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		newmob.setMetadata("ruined", new FixedMetadataValue(RMain.getInstance(), true));
@@ -1586,9 +1624,6 @@ public class OverworldRaids extends Mobs implements Listener {
 	    	    		newmob.setConversionTime(-1);
 	    	    		
 	    	    		
-	    	    		BossBar	newbar = Bukkit.getServer().createBossBar(new NamespacedKey(RMain.getInstance(),rn +"TheBeast"),newmob.getName(), BarColor.PURPLE, BarStyle.SEGMENTED_20, BarFlag.CREATE_FOG);
-	    	            newbar.setVisible(true);
-	    	    		raidbar.put(rn, newbar);
 	    	    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.4);
 	    	    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
 	    	    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
@@ -1596,24 +1631,9 @@ public class OverworldRaids extends Mobs implements Listener {
 	    	    		raider.put(rn, newmob.getUniqueId());
 	    	    		
 	
+
+	    	    		bossbargen("TheBeast", rn, newmob);
 	    	    		
-	    	    		int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-	    	                @Override
-	    	                public void run() 
-	    	                {
-	    						if(Holding.ale(newmob)!=null) {
-	        	                	raidbar.get(rn).setProgress(Holding.ale(newmob).getHealth()/120000d);
-	        	                	raidbar.get(rn).setTitle(Holding.ale(newmob).getName());
-	        	            		heroes.get(rn).forEach(pu -> {
-	    	            				Player p = (Player) Bukkit.getPlayer(pu);
-	    	        					p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 50, 1, false, false));
-	    	            				raidbar.get(rn).addPlayer(p);
-	        	            		});
-	    						}
-	    	                }
-	    				}, 0, 1);
-	    	    		raidbart.put(rn, task);
-	
 	    	    		targeting(rn);
 	            		
 	                	heroes.get(rn).forEach(pu -> {
@@ -1628,7 +1648,6 @@ public class OverworldRaids extends Mobs implements Listener {
 		                		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + String.valueOf(lives.getOrDefault(rn, 0)) + "lives Left");
 							}
 	                	});
-	    	            newbar.setVisible(true);
 	                }
 	            }, 50); 
 	            raidt.put(rn, rat);
@@ -1674,12 +1693,7 @@ public class OverworldRaids extends Mobs implements Listener {
 	                	Location esl = d.getEntity().getLocation().clone().add(0,0.5, 0);
 	
 	    	    		
-	    	    		ItemStack head = new ItemStack(Material.LEATHER_HELMET);
-	    				LeatherArmorMeta hem = (LeatherArmorMeta) head.getItemMeta();
-	    				hem.setDisplayName("RedKnight Helmet");
-	    				hem.setLocalizedName("RedKnight Helmet");
-	    				hem.setCustomModelData(100);
-	    				head.setItemMeta(hem);
+	    	    		ItemStack head = le.getEquipment().getHelmet();
 	    				ItemStack chest = new ItemStack(Material.NETHERITE_CHESTPLATE);
 	    				chest.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
 	    				chest.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
@@ -1700,7 +1714,7 @@ public class OverworldRaids extends Mobs implements Listener {
 	    	    		off.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
 	    	    		off.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
 		        		String reg = Bukkit.getPlayer(rn).getLocale().equalsIgnoreCase("ko_kr") ? "몰락한 붉은기사":"Ruined RedKnight";
-	    	    		Stray newmob = (Stray) MobspawnLoc(esl, ChatColor.RED+reg, 100000.0, head, chest, leg, boots, main, main, EntityType.STRAY);
+	    	    		Stray newmob = (Stray) MobspawnLoc(esl, ChatColor.RED+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, head, chest, leg, boots, main, main, EntityType.STRAY);
 	    	    		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
 	    	    		newmob.setGlowing(true);
 	    	    		newmob.getEquipment().setBootsDropChance(0);
@@ -1718,32 +1732,14 @@ public class OverworldRaids extends Mobs implements Listener {
 	    	    		newmob.setLootTable(null);
 	    	    		
 	    	    		
-	    	    		BossBar	newbar = Bukkit.getServer().createBossBar(new NamespacedKey(RMain.getInstance(),rn +"Ruined_RedKnight"),newmob.getName(), BarColor.BLUE, BarStyle.SEGMENTED_20, BarFlag.CREATE_FOG);
-	    	            newbar.setVisible(true);
-	    	    		raidbar.put(rn, newbar);
 	    	    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.4);
 	    	    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
 	    	    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		newmob.setRemoveWhenFarAway(false);
 	    	    		raider.put(rn, newmob.getUniqueId());
 	    	    		
-	
-	    	    		
-	    	    		int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-	    	                @Override
-	    	                public void run() 
-	    	                {
-	    						if(Holding.ale(newmob)!=null) {
-	        	                	raidbar.get(rn).setProgress(Holding.ale(newmob).getHealth()/100000);
-	        	                	raidbar.get(rn).setTitle(Holding.ale(newmob).getName());
-	        	            		heroes.get(rn).forEach(pu -> {
-	    	            				Player p = (Player) Bukkit.getPlayer(pu);
-	    	            				raidbar.get(rn).addPlayer(p);
-	        	            		});
-	    						}
-	    	                }
-	    				}, 0, 1);
-	    	    		raidbart.put(rn, task);
+
+	    	    		bossbargen("RuinedRedKnight", rn, newmob);
 	
 	    	    		targeting(rn);
 	                	heroes.get(rn).forEach(pu -> {
@@ -1758,7 +1754,6 @@ public class OverworldRaids extends Mobs implements Listener {
 		                		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + String.valueOf(lives.getOrDefault(rn, 0)) + "lives Left");
 							}
 	                	});
-	    	            newbar.setVisible(true);
 	                }
 	            }, 50); 
 	            raidt.put(rn, rat);

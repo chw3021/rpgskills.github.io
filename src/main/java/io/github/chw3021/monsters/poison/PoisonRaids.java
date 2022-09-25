@@ -14,6 +14,7 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Evoker;
 import org.bukkit.entity.Illusioner;
@@ -151,7 +152,7 @@ public class PoisonRaids extends Summoned {
 		ItemStack boots = mobboots();
 		ItemStack main = new ItemStack(Material.BOW);
 		ItemMeta mm = main.getItemMeta();
-		mm.setCustomModelData(2008);
+		mm.setCustomModelData(2011);
 		main.setItemMeta(mm);
 		ItemStack off = new ItemStack(Material.OBSIDIAN);
 		String reg = lang.equalsIgnoreCase("ko_kr") ? "강화형소총수":"VenomRifleman";
@@ -179,6 +180,10 @@ public class PoisonRaids extends Summoned {
 		ItemStack leg = new ItemStack(Material.NETHERITE_LEGGINGS);
 		ItemStack boots = mobboots();
 		ItemStack main = new ItemStack(Material.NETHERITE_SWORD);
+		ItemMeta offm = main.getItemMeta();
+		offm.setCustomModelData(3011);
+		main.setItemMeta(offm);
+		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
 
 		ItemStack off = new ItemStack(Material.SHIELD);
 
@@ -265,6 +270,10 @@ public class PoisonRaids extends Summoned {
 		ItemStack boots = mobboots();
 		
 		ItemStack main = new ItemStack(Material.BOW);
+		ItemMeta offm = main.getItemMeta();
+		offm.setCustomModelData(2011);
+		main.setItemMeta(offm);
+		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
 		ItemStack off = new ItemStack(Material.DEEPSLATE_IRON_ORE);
 		
 		String reg = lang.equalsIgnoreCase("ko_kr") ? "기관총난사범":"MachineGunman";
@@ -279,7 +288,6 @@ public class PoisonRaids extends Summoned {
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.35);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
-		newmob.setTarget(Bukkit.getPlayer(rn));
 		newmob.setLootTable(null);
 		
 		addraider(rn,META,newmob);
@@ -350,6 +358,10 @@ public class PoisonRaids extends Summoned {
 		ItemStack leg = new ItemStack(Material.NETHERITE_LEGGINGS);
 		ItemStack boots = bossboots();
 		ItemStack main = new ItemStack(Material.BOW);
+		ItemMeta offm = main.getItemMeta();
+		offm.setCustomModelData(2011);
+		main.setItemMeta(offm);
+		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
 		ItemStack off = new ItemStack(Material.BREWING_STAND);
 
 		

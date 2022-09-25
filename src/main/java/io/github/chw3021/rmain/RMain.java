@@ -72,6 +72,7 @@ import io.github.chw3021.monsters.Drops;
 import io.github.chw3021.monsters.MobArmor;
 import io.github.chw3021.monsters.MobsSkillsEvents;
 import io.github.chw3021.monsters.raids.OverworldRaids;
+import io.github.chw3021.monsters.raids.RaidDifficulties;
 import io.github.chw3021.monsters.raids.Summoned;
 import io.github.chw3021.obtains.NPCLoc;
 import io.github.chw3021.obtains.NPCcontact;
@@ -143,6 +144,8 @@ public class RMain extends JavaPlugin{
         Bukkit.getPluginManager().registerEvents(new FrostSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
         Bukkit.getPluginManager().registerEvents(new AngSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
         Bukkit.getPluginManager().registerEvents(new BroSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
+       
+        Bukkit.getPluginManager().registerEvents(new RaidDifficulties(HashBasedTable.create()), this);
 
         Bukkit.getPluginManager().registerEvents(new Proficiency(HashBasedTable.create(), HashBasedTable.create()), this);
 

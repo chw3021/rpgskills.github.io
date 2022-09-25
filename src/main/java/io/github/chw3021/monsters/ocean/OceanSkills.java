@@ -509,7 +509,7 @@ public class OceanSkills extends Summoned{
 		                Holding.invur(p, 20l);
 		                Holding.untouchable(p, 20l);
 		                for(Entity e : OverworldRaids.getheroes(p)) {
-		                	if(e instanceof Player && !e.hasMetadata("fake")) {
+		                	if(e instanceof Player) {
 		                		Player pe = (Player) e;
 		    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
 			                		pe.sendMessage(ChatColor.BOLD+"엘더가디언: 허영은 파멸을 부를 것이다.");
@@ -541,7 +541,7 @@ public class OceanSkills extends Summoned{
 	                Holding.invur(p, 20l);
 	                Holding.untouchable(p, 20l);
 	                for(Entity e : OverworldRaids.getheroes(p)) {
-	                	if(e instanceof Player && !e.hasMetadata("fake")) {
+	                	if(e instanceof Player) {
 	                		Player pe = (Player) e;
 	    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
 		                		pe.sendMessage(ChatColor.BOLD+"엘더가디언: 허영은 파멸을 부를 것이다.");
@@ -606,7 +606,7 @@ public class OceanSkills extends Summoned{
 		                	Holding.untouchable.remove(p.getUniqueId());
 		                	Holding.holding(null, Holding.ale(p), 300l);
 			                for(Entity e1 : OverworldRaids.getheroes(p)) {
-			                	if(e1 instanceof Player && !e1.hasMetadata("fake")) {
+			                	if(e1 instanceof Player) {
 			                		Player pe = (Player) e1;
 				                	Holding.superholding(pe, Holding.ale(p), 300l);
 			    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -635,7 +635,7 @@ public class OceanSkills extends Summoned{
 								ript.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
 							}
 			                for(Entity e1 : OverworldRaids.getheroes(p)) {
-			                	if(e1 instanceof Player && !e1.hasMetadata("fake")) {
+			                	if(e1 instanceof Player) {
 			                		Player pe = (Player) e1;
 			    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
 				                		pe.sendMessage(ChatColor.BOLD+"엘더가디언: 모든것은 그분 뜻대로...");
@@ -649,7 +649,7 @@ public class OceanSkills extends Summoned{
 						}
 	    			});
                 }
-            }, j.incrementAndGet()/50+10);
+            }, j.incrementAndGet()/20+12);
             ript.put(rn, i1); 
 		});
 	}
@@ -686,7 +686,7 @@ public class OceanSkills extends Summoned{
 		                Holding.holding(null, p, 40l);
 		                Holding.untouchable(p, 40l);
 		                for(Entity e : OverworldRaids.getheroes(p)) {
-		                	if(e instanceof Player && !e.hasMetadata("fake")) {
+		                	if(e instanceof Player) {
 		                		Player pe = (Player) e;
 		    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
 			                		pe.sendMessage(ChatColor.BOLD+"엘더가디언: "+tar.getName()+"! 네놈부터 처리해주겠다!");
@@ -719,7 +719,7 @@ public class OceanSkills extends Summoned{
 	                Holding.holding(null, p, 40l);
 	                Holding.untouchable(p, 40l);
 	                for(Entity e : OverworldRaids.getheroes(p)) {
-	                	if(e instanceof Player && !e.hasMetadata("fake")) {
+	                	if(e instanceof Player) {
 	                		Player pe = (Player) e;
 	    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
 		                		pe.sendMessage(ChatColor.BOLD+"엘더가디언: "+tar.getName()+"! 네놈부터 처리해주겠다!");

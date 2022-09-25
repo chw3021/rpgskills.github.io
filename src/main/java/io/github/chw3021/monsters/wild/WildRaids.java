@@ -14,11 +14,14 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Drowned;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Evoker;
 import org.bukkit.entity.Illusioner;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
+import org.bukkit.entity.Stray;
 import org.bukkit.entity.Vindicator;
 import org.bukkit.entity.Witch;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -69,12 +72,12 @@ public class WildRaids extends Summoned {
 			hs.forEach(rn -> MobSpawn(l,rn));
 		}
 	}
-	final protected void Boss(String rn, String meta, Location esl) {
+	/*final protected void Boss(String rn, String meta, Location esl) {
 		super.Boss(rn, meta, esl);
 		if(meta.equals(META)) {
 			Boss(esl,rn);
 		}
-	}
+	}*/
 	final private void MobSpawn(final Location spl, final String rn) {
 
         for(int i = 0; i<SUMMONCOUNT; i++) {
@@ -119,20 +122,14 @@ public class WildRaids extends Summoned {
 		ItemStack chest = mobchest();
 		ItemStack leg = new ItemStack(Material.NETHERITE_LEGGINGS);
 		ItemStack boots = mobboots();
-		ItemStack main = new ItemStack(Material.BOW);
-		ItemMeta mm = main.getItemMeta();
-		mm.setCustomModelData(2008);
-		main.setItemMeta(mm);
-		ItemStack off = new ItemStack(Material.OBSIDIAN);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "강화형소총수":"SuperRifleman";
-		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 26000.0, head, chest, leg, boots, main, off, EntityType.SKELETON);
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "고대의사수":"AncientShooter";
+		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 35000.0, head, chest, leg, boots, null, null, EntityType.SKELETON);
 		
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.setMetadata("Rifleman", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		
 		newmob.setLootTable(null);
@@ -152,8 +149,8 @@ public class WildRaids extends Summoned {
 
 		ItemStack off = new ItemStack(Material.SHIELD);
 
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "강화형전사":"SuperSoldier";
-		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 26500.0, head, chest, leg, boots, main, off, EntityType.SKELETON);
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "고대의전사":"AncientWarrior";
+		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 40000.0, head, chest, leg, boots, main, off, EntityType.SKELETON);
 		
 		
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
@@ -180,17 +177,15 @@ public class WildRaids extends Summoned {
 		ItemStack chest = mobchest();
 		ItemStack leg = new ItemStack(Material.NETHERITE_LEGGINGS);
 		ItemStack boots = mobboots();
-		ItemStack main = new ItemStack(Material.FLINT_AND_STEEL);
-		ItemStack off = new ItemStack(Material.TORCH);
+		ItemStack main = new ItemStack(Material.BOOK);
 		
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "방화범":"Arsonist";
-		Evoker newmob = (Evoker) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 27000.0, head, chest, leg, boots, main, off, EntityType.EVOKER);
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "고대의마법사":"AncientMage";
+		Illusioner newmob = (Illusioner) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 35000.0, head, chest, leg, boots, main, null, EntityType.ILLUSIONER);
 
 		newmob.setCanJoinRaid(false);
 		newmob.setPatrolLeader(false);
 		newmob.setPatrolTarget(null);
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
-		newmob.setMetadata("Arsonist", new FixedMetadataValue(RMain.getInstance(), rn));
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
@@ -207,8 +202,8 @@ public class WildRaids extends Summoned {
     	double number2 = (random.nextDouble()+1.5) * 2.5 * (random.nextBoolean() ? -1 : 1);
     	Location esl = spl.clone().add(number, 2.5, number2);
 		
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "맹독폭탄투척병":"PoisonBomber";
-		Witch newmob = (Witch) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 26000.0, null, null, null, null, null, null, EntityType.WITCH);
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "고대의과학자":"AncientScientist";
+		Witch newmob = (Witch) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 38000.0, null, null, null, null, null, null, EntityType.WITCH);
 		newmob.setCanJoinRaid(false);
 		newmob.setPatrolLeader(false);
 		newmob.setPatrolTarget(null);
@@ -216,7 +211,6 @@ public class WildRaids extends Summoned {
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.setMetadata("PoisonGrenadier", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		
 		newmob.setLootTable(null);
@@ -234,22 +228,19 @@ public class WildRaids extends Summoned {
 		ItemStack leg = new ItemStack(Material.NETHERITE_LEGGINGS);
 		ItemStack boots = mobboots();
 		
-		ItemStack main = new ItemStack(Material.BOW);
-		ItemStack off = new ItemStack(Material.DEEPSLATE_IRON_ORE);
+		ItemStack off = new ItemStack(Material.SHIELD);
 		
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "기관총난사범":"MachineGunman";
-		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 25500.0, head, chest, leg, boots, main, off, EntityType.SKELETON);
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "고대의바다전사":"AncientMarine";
+		Drowned newmob = (Drowned) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 42000.0, head, chest, leg, boots, null, off, EntityType.DROWNED);
 		newmob.setConversionTime(-1);
 		
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
-		newmob.setMetadata("MachineGunman", new FixedMetadataValue(RMain.getInstance(), rn));
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
 		
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.35);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
-		newmob.setTarget(Bukkit.getPlayer(rn));
 		newmob.setLootTable(null);
 		
 		addraider(rn,META,newmob);
@@ -261,16 +252,17 @@ public class WildRaids extends Summoned {
     	Location esl = spl.clone().add(number, 2.5, number2);
 
     	ItemStack head = mobhead();
+		ItemStack main = new ItemStack(Material.NETHERITE_HOE);
 		
-		String reg = lang.contains("kr") ? "독가스살포병":"GasSprayer";
-		Illusioner newmob = (Illusioner) Summon(esl, reg, 26500.0, head, null, null, null, null,
-				null, EntityType.ILLUSIONER);
+		String reg = lang.contains("kr") ? "고대의복수자":"AncientAvenger";
+		Evoker newmob = (Evoker) Summon(esl, reg, 35000.0, head, null, null, null, main,
+				null, EntityType.EVOKER);
 		newmob.setCanJoinRaid(false);
 		newmob.setPatrolLeader(false);
 		newmob.setPatrolTarget(null);
 		
+		
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
-		newmob.setMetadata("GasSprayer", new FixedMetadataValue(RMain.getInstance(), rn));
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
@@ -290,9 +282,13 @@ public class WildRaids extends Summoned {
     	Location esl = spl.clone().add(number, 2.5, number2);
     	ItemStack head = null;
     	
-		ItemStack main = new ItemStack(Material.NETHERITE_AXE);
+		ItemStack main = new ItemStack(Material.GLOBE_BANNER_PATTERN);
+		ItemMeta offm = main.getItemMeta();
+		offm.setCustomModelData(1060);
+		main.setItemMeta(offm);
+		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
 		
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "강화형돌격병":"SuperCharger";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "고대의격투가":"AncientFighter";
 		Vindicator newmob = (Vindicator) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 27000.0, head, null, null, null, main, main, EntityType.VINDICATOR);
 		newmob.setCanJoinRaid(false);
 		newmob.setPatrolLeader(false);
@@ -300,7 +296,6 @@ public class WildRaids extends Summoned {
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(),rn));
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.setMetadata("SuperSuicider", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		newmob.setLootTable(null);

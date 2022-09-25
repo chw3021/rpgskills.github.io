@@ -141,6 +141,16 @@ public class Party implements CommandExecutor, Serializable, Listener{
 				return;
 			}
 			
+			if(Party.get(name).size()>8) {
+				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+					p.sendMessage("파티원은 최대 8명까지 가능합니다");
+				}
+				else {
+					p.sendMessage("Party members should be less than 8 people.");
+				}
+				return;
+			}
+			
 			PartyJoinEvent pe = new PartyJoinEvent(p, name);
 			
 			Bukkit.getPluginManager().callEvent(pe);

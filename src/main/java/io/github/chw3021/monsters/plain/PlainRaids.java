@@ -290,7 +290,6 @@ public class PlainRaids extends Summoned {
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.35);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
-		newmob.setTarget(Bukkit.getPlayer(rn));
 		newmob.setLootTable(null);
 		
 		addraider(rn,META,newmob);
