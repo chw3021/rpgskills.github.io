@@ -997,7 +997,7 @@ public class HyperSkills extends Summoned{
                 	rl.getWorld().spawnParticle(Particle.BLOCK_CRACK, l,35, 0.5,0.5,0.5,0, Material.LIME_STAINED_GLASS.createBlockData());
             		rl.getWorld().spawnParticle(Particle.GLOW, l,20, 0.5,0.5,0.5,0);
 
-                	for (Entity e : rl.getWorld().getNearbyEntities(l, 1, 1,1))
+                	for (Entity e : rl.getWorld().getNearbyEntities(l, 1, 2,1))
     				{
                 		if(e == Holding.ale(p) || e.getUniqueId() == p.getUniqueId()) {
 			                guud.computeIfPresent(p.getUniqueId(), (k,v) -> v-1);
