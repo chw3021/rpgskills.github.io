@@ -198,6 +198,10 @@ public class RedSkills extends Summoned{
 		{
 			LivingEntity p = (LivingEntity)d.getDamager();
 			LivingEntity le = (LivingEntity)d.getEntity();
+			if(rb6cooldown.containsKey(p.getUniqueId())) {
+				return;
+			}
+			
 			final Location tl = le.getLocation().clone();
 						if(rb1cooldown.containsKey(p.getUniqueId()))
 				        {
@@ -1610,8 +1614,8 @@ public class RedSkills extends Summoned{
 						p.setHealth(p.getMaxHealth()*0.2);
 		                d.setCancelled(true);
 	                	p.teleport(rl.clone().add(0, 0, 1));
-		                Holding.holding(null, p, 1000l);
-		                Holding.invur(p, 1000l);
+		                Holding.holding(null, p, 1001l);
+		                Holding.invur(p, 1001l);
 		                for(Player pe : OverworldRaids.getheroes(p)) {
 	    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
 		                		pe.sendMessage(ChatColor.BOLD+"붉은기사: 시련의 시간이다.");
@@ -1689,7 +1693,7 @@ public class RedSkills extends Summoned{
 															}
 									                		
 									                	});
-														hp.forEach(pe -> pe.damage(1,p));
+														hp.forEach(pe -> pe.damage(5));
 									                }
 									            }, i*10); 	 
 												ordt.put(rn, t1);
@@ -1812,8 +1816,8 @@ public class RedSkills extends Summoned{
 					p.setHealth(p.getMaxHealth()*0.2);
 	                d.setCancelled(true);
                 	p.teleport(rl.clone().add(0, 0, 1));
-	                Holding.holding(null, p, 1000l);
-	                Holding.invur(p, 1000l);
+	                Holding.holding(null, p, 1001l);
+	                Holding.invur(p, 1001l);
 	                for(Player pe : OverworldRaids.getheroes(p)) {
     					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
 	                		pe.sendMessage(ChatColor.BOLD+"붉은기사: 시련의 시간이다.");
@@ -1891,7 +1895,7 @@ public class RedSkills extends Summoned{
 														}
 								                		
 								                	});
-													hp.forEach(pe -> pe.damage(1,p));
+													hp.forEach(pe -> pe.damage(5));
 								                }
 								            }, i*10); 	 
 											ordt.put(rn, t1);

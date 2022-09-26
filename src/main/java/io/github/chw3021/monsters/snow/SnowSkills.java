@@ -874,6 +874,98 @@ public class SnowSkills extends Summoned implements Listener{
 		}
 	}
 	    
+	
+	final private void Ordeal(LivingEntity p, EntityDamageByEntityEvent d) {
+
+		String rn = p.getMetadata("raid").get(0).asString();
+		if(ordt.containsKey(rn)) {
+			ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
+		}
+
+        Location rl = OverworldRaids.getraidloc(p).clone();
+		p.setHealth(p.getMaxHealth()*0.2);
+        d.setCancelled(true);
+    	p.teleport(rl.clone().add(0, 0, 1));
+		Holding.invur(p, 60l);
+		p.setCustomName("SnowWitch");
+		p.setCustomNameVisible(false);
+		
+        for(Player pe : OverworldRaids.getheroes(p)) {
+			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
+        		pe.sendMessage(ChatColor.BLUE+"시련의 시간이다");
+			}
+			else {
+        		pe.sendMessage(ChatColor.BLUE+"Time To Ordeal.");
+			}
+    		pe.teleport(rl);
+    		Holding.invur(pe, 30l);
+        }
+
+		int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+            	Random random=new Random();
+            	double number = (random.nextDouble()+1) * 2 * (random.nextBoolean() ? -1 : 1);
+            	double number2 = (random.nextDouble()+1) * 2 * (random.nextBoolean() ? -1 : 1);
+            	Location esl = rl.clone().add(number, 0.5, number2);
+            	p.teleport(esl);
+            	ordeal.put(p.getUniqueId(), p.getUniqueId());
+            	
+            	for(int i =0; i<5; i++) {
+                	Random random1=new Random();
+                	double number1 = (random1.nextDouble()+1) * 3 * (random1.nextBoolean() ? -1 : 1);
+                	double number21 = (random1.nextDouble()+1) * 3 * (random1.nextBoolean() ? -1 : 1);
+                	Location esl1 = rl.clone().add(number1, 0.5, number21);
+            		ItemStack main = new ItemStack(Material.SNOW);
+            		ItemStack off = new ItemStack(Material.ICE);
+            		Witch newmob = (Witch) esl1.getWorld().spawnEntity(esl1, EntityType.WITCH);
+            		newmob.setCustomName(p.getCustomName());
+            		newmob.getEquipment().setItemInMainHand(main);
+            		newmob.getEquipment().setItemInOffHand(off);
+            		newmob.setMaxHealth(p.getMaxHealth());
+            		newmob.setHealth(p.getHealth());
+            		newmob.setCanJoinRaid(false);
+            		newmob.setPatrolTarget(null);
+            		newmob.setPatrolLeader(false);
+            		newmob.setGlowing(true);
+            		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), rn));
+    	    		newmob.setMetadata("mirror", new FixedMetadataValue(RMain.getInstance(), rn));
+    	    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
+    	    		newmob.setMetadata("mirror"+rn, new FixedMetadataValue(RMain.getInstance(), rn));
+    	    		Holding.invur(newmob, 10l);
+                	ordeal.put(newmob.getUniqueId(), p.getUniqueId());
+            	}
+            }
+        }, 50); 	 
+		ordt.put(rn, t1);
+		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+        		ordeal.remove(p.getUniqueId());
+				Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("mirror"+rn)).forEach(e -> {
+					ordeal.remove(e.getUniqueId());
+					e.remove();
+				});
+
+        		if(ordt.containsKey(rn)) {
+        			ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
+        		}
+                for(Player pe : OverworldRaids.getheroes(p)) {
+					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
+                		pe.sendMessage(ChatColor.BOLD+"네놈들은 절대 이길수 없다.");
+					}
+					else {
+                		pe.sendMessage(ChatColor.BOLD+"You Can Never Beat Me!");
+					}
+            		Holding.invur(pe, 60l);
+        			p.getWorld().playSound(pe.getLocation(), Sound.ENTITY_PLAYER_HURT_FREEZE, 1, 0);
+            		pe.setHealth(0);
+            	}
+                rb6cooldown.remove(p.getUniqueId());
+            }
+        }, 200);
+		ordt.put(rn, task);
+	}
 		
 	@SuppressWarnings("deprecation")
 	public void Ordeal(EntityDamageByEntityEvent d) 
@@ -899,188 +991,14 @@ public class SnowSkills extends Summoned implements Listener{
 		            else 
 		            {
 		                rb6cooldown.remove(p.getUniqueId()); // removing player from HashMap
-
-		    			String rn = p.getMetadata("raid").get(0).asString();
-		        		if(ordt.containsKey(rn)) {
-		        			ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
-		        		}
-
-		                Location rl = OverworldRaids.getraidloc(p).clone();
-						p.setHealth(p.getMaxHealth()*0.2);
-		                d.setCancelled(true);
-	                	p.teleport(rl.clone().add(0, 0, 1));
-                		Holding.invur(p, 20l);
-                		p.setCustomName("SnowWitch");
-                		p.setCustomNameVisible(false);
-                		
-		                for(Player pe : OverworldRaids.getheroes(p)) {
-	    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-		                		pe.sendMessage(ChatColor.BLUE+"시련의 시간이다");
-	    					}
-	    					else {
-		                		pe.sendMessage(ChatColor.BLUE+"Time To Ordeal.");
-	    					}
-	                		pe.teleport(rl);
-	                		Holding.invur(pe, 20l);
-		                }
-
-						int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() {
-		                    	Random random=new Random();
-		                    	double number = (random.nextDouble()+1) * 2 * (random.nextBoolean() ? -1 : 1);
-		                    	double number2 = (random.nextDouble()+1) * 2 * (random.nextBoolean() ? -1 : 1);
-		                    	Location esl = rl.clone().add(number, 0.5, number2);
-		                    	p.teleport(esl);
-		                    	ordeal.put(p.getUniqueId(), p.getUniqueId());
-		                    	
-			                	for(int i =0; i<5; i++) {
-			                    	Random random1=new Random();
-			                    	double number1 = (random1.nextDouble()+1) * 3 * (random1.nextBoolean() ? -1 : 1);
-			                    	double number21 = (random1.nextDouble()+1) * 3 * (random1.nextBoolean() ? -1 : 1);
-			                    	Location esl1 = rl.clone().add(number1, 0.5, number21);
-				            		ItemStack main = new ItemStack(Material.STICK);
-				            		ItemStack off = new ItemStack(Material.ICE);
-				            		Witch newmob = (Witch) esl1.getWorld().spawnEntity(esl1, EntityType.WITCH);
-				            		newmob.setCustomName("SnowWitch");
-				            		newmob.getEquipment().setItemInMainHand(main);
-				            		newmob.getEquipment().setItemInOffHand(off);
-				            		newmob.setMaxHealth(p.getMaxHealth());
-				            		newmob.setHealth(p.getHealth());
-				            		newmob.setCanJoinRaid(false);
-				            		newmob.setPatrolTarget(null);
-				            		newmob.setPatrolLeader(false);
-				            		newmob.setGlowing(true);
-				            		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), rn));
-			        	    		newmob.setMetadata("mirror", new FixedMetadataValue(RMain.getInstance(), rn));
-			        	    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
-			        	    		newmob.setMetadata("mirror"+rn, new FixedMetadataValue(RMain.getInstance(), rn));
-			                    	ordeal.put(newmob.getUniqueId(), p.getUniqueId());
-			                	}
-			                }
-			            }, 20); 	 
-						ordt.put(rn, t1);
-						int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() {
-		                		ordeal.remove(p.getUniqueId());
-								Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("mirror"+rn)).forEach(e -> {
-									ordeal.remove(e.getUniqueId());
-									e.remove();
-								});
-
-				        		if(ordt.containsKey(rn)) {
-				        			ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
-				        		}
-				                for(Player pe : OverworldRaids.getheroes(p)) {
-			    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-				                		pe.sendMessage(ChatColor.BOLD+"네놈들은 절대 이길수 없다.");
-			    					}
-			    					else {
-				                		pe.sendMessage(ChatColor.BOLD+"You Can Never Beat Me!");
-			    					}
-			                		Holding.invur(pe, 60l);
-			            			p.getWorld().playSound(pe.getLocation(), Sound.ENTITY_PLAYER_HURT_FREEZE, 1, 0);
-			                		pe.setHealth(0);
-			                	}
-				                rb6cooldown.remove(p.getUniqueId());
-			                }
-			            }, 200);
-						ordt.put(rn, task);
+		                Ordeal(p,d);
 			            rb6cooldown.put(p.getUniqueId(), System.currentTimeMillis());
 		            }
 		        }
 		        else 
 		        {
 
-
-	    			String rn = p.getMetadata("raid").get(0).asString();
-	        		if(ordt.containsKey(rn)) {
-	        			ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
-	        		}
-
-	                Location rl = OverworldRaids.getraidloc(p).clone();
-					p.setHealth(p.getMaxHealth()*0.2);
-	                d.setCancelled(true);
-                	p.teleport(rl.clone().add(0, 0, 1));
-            		Holding.invur(p, 20l);
-            		p.setCustomName("SnowWitch");
-            		p.setCustomNameVisible(false);
-            		
-	                for(Player pe : OverworldRaids.getheroes(p)) {
-    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-	                		pe.sendMessage(ChatColor.BLUE+"시련의 시간이다");
-    					}
-    					else {
-	                		pe.sendMessage(ChatColor.BLUE+"Time To Ordeal.");
-    					}
-                		pe.teleport(rl);
-                		Holding.invur(pe, 20l);
-	                }
-
-					int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() {
-	                    	Random random=new Random();
-	                    	double number = (random.nextDouble()+1) * 2 * (random.nextBoolean() ? -1 : 1);
-	                    	double number2 = (random.nextDouble()+1) * 2 * (random.nextBoolean() ? -1 : 1);
-	                    	Location esl = rl.clone().add(number, 0.5, number2);
-	                    	p.teleport(esl);
-	                    	ordeal.put(p.getUniqueId(), p.getUniqueId());
-	                    	
-		                	for(int i =0; i<5; i++) {
-		                    	Random random1=new Random();
-		                    	double number1 = (random1.nextDouble()+1) * 3 * (random1.nextBoolean() ? -1 : 1);
-		                    	double number21 = (random1.nextDouble()+1) * 3 * (random1.nextBoolean() ? -1 : 1);
-		                    	Location esl1 = rl.clone().add(number1, 0.5, number21);
-			            		ItemStack main = new ItemStack(Material.STICK);
-			            		ItemStack off = new ItemStack(Material.ICE);
-			            		Witch newmob = (Witch) esl1.getWorld().spawnEntity(esl1, EntityType.WITCH);
-			            		newmob.setCustomName("SnowWitch");
-			            		newmob.getEquipment().setItemInMainHand(main);
-			            		newmob.getEquipment().setItemInOffHand(off);
-			            		newmob.setMaxHealth(p.getMaxHealth());
-			            		newmob.setHealth(p.getHealth());
-			            		newmob.setCanJoinRaid(false);
-			            		newmob.setPatrolTarget(null);
-			            		newmob.setPatrolLeader(false);
-			            		newmob.setGlowing(true);
-			            		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), rn));
-		        	    		newmob.setMetadata("mirror", new FixedMetadataValue(RMain.getInstance(), rn));
-		        	    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
-		        	    		newmob.setMetadata("mirror"+rn, new FixedMetadataValue(RMain.getInstance(), rn));
-		                    	ordeal.put(newmob.getUniqueId(), p.getUniqueId());
-		                	}
-		                }
-		            }, 20); 	 
-					ordt.put(rn, t1);
-					int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() {
-	                		ordeal.remove(p.getUniqueId());
-							Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("mirror"+rn)).forEach(e -> {
-								ordeal.remove(e.getUniqueId());
-								e.remove();
-							});
-
-			        		if(ordt.containsKey(rn)) {
-			        			ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
-			        		}
-			                for(Player pe : OverworldRaids.getheroes(p)) {
-		    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-			                		pe.sendMessage(ChatColor.BOLD+"네놈들은 절대 이길수 없다.");
-		    					}
-		    					else {
-			                		pe.sendMessage(ChatColor.BOLD+"You Can Never Beat Me!");
-		    					}
-		                		Holding.invur(pe, 60l);
-		            			p.getWorld().playSound(pe.getLocation(), Sound.ENTITY_PLAYER_HURT_FREEZE, 1, 0);
-		                		pe.setHealth(0);
-		                	}
-			                rb6cooldown.remove(p.getUniqueId());
-		                }
-		            }, 200);
-					ordt.put(rn, task);
+	                Ordeal(p,d);
 		            rb6cooldown.put(p.getUniqueId(), System.currentTimeMillis());
 		        }
 			}

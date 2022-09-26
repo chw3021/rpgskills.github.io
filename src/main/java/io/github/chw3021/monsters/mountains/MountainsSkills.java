@@ -463,7 +463,7 @@ public class MountainsSkills extends Summoned implements Listener{
 	    
 		if((d.getDamager() instanceof IronGolem) && d.getEntity() instanceof LivingEntity&& !d.isCancelled() &&d.getDamager().hasMetadata("stoneboss")) 
 		{
-			int sec =3;
+			int sec =1;
 			IronGolem p = (IronGolem)d.getDamager();
 			LivingEntity he = (LivingEntity)d.getEntity();
 			final Location tl = he.getLocation().clone();
@@ -483,7 +483,7 @@ public class MountainsSkills extends Summoned implements Listener{
 					for(Entity e : p.getWorld().getNearbyEntities(tl,3, 2, 3)) {
 						if(p!=e && e instanceof LivingEntity) {
 							LivingEntity le = (LivingEntity)e;
-							le.damage(d.getDamage(),p);
+							le.damage(d.getDamage());
 						}
 					}
 		            rb1cooldown.put(p.getUniqueId(), System.currentTimeMillis());
@@ -498,7 +498,7 @@ public class MountainsSkills extends Summoned implements Listener{
 				for(Entity e : p.getWorld().getNearbyEntities(tl,3, 2, 3)) {
 					if(p!=e && e instanceof LivingEntity) {
 						LivingEntity le = (LivingEntity)e;
-						le.damage(d.getDamage(),p);
+						le.damage(d.getDamage());
 					}
 				}
 	            rb1cooldown.put(p.getUniqueId(), System.currentTimeMillis());

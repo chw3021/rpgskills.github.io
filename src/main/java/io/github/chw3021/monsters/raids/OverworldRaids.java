@@ -118,6 +118,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	
 	Integer DelayTime =  100;
 	Integer LIVES = 5;
+	Double BOSSHP = 100000d;
 	
 	
 	private static final OverworldRaids instance = new OverworldRaids ();
@@ -350,7 +351,13 @@ public class OverworldRaids extends Summoned implements Listener {
 
             	
 				if(Holding.ale(newmob)!=null) {
-                	raidbar.get(rn).setProgress(Holding.ale(newmob).getHealth()/Holding.ale(newmob).getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+					final double pr = Holding.ale(newmob).getHealth()/Holding.ale(newmob).getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+					if(pr>=0 && pr<=1) {
+	                	raidbar.get(rn).setProgress(pr);
+					}
+					else if(pr>1){
+	                	raidbar.get(rn).setProgress(1d);
+					}
                 	raidbar.get(rn).setTitle(Holding.ale(newmob).getName());
             		heroes.get(rn).forEach(pu -> {
         				Player p = (Player) Bukkit.getPlayer(pu);
@@ -370,21 +377,32 @@ public class OverworldRaids extends Summoned implements Listener {
 	final private LivingEntity bossgen(Location spl, Player p, String rn, Integer in, Double dif) {
 		
     	Random random=new Random();
-    	double number = (random.nextDouble()+1.5) * 5 * (random.nextBoolean() ? -1 : 1);
-    	double number2 = (random.nextDouble()+1.5) * 5 * (random.nextBoolean() ? -1 : 1);
+    	double number = (random.nextDouble()+1.5) * 2 * (random.nextBoolean() ? -1 : 1);
+    	double number2 = (random.nextDouble()+1.5) * 2 * (random.nextBoolean() ? -1 : 1);
     	Location esl = spl.clone().add(number, 2.5, number2);
+    	for(;!esl.getBlock().isPassable(); esl.add(1, 0, 0));
+    	
 		targeting(rn);
+		double armor = 1;
+		double dif1 = dif;
+		
+		final Double maxh = Bukkit.spigot().getConfig().getDouble("settings.attribute.maxHealth.max");
+		if(dif1 >= maxh) {
+			dif1 = maxh;
+			armor = (dif-maxh)/BOSSHP;
+		}
+		
 		
 		//Double dif = 100000 * BigDecimal.valueOf(1 + 0.1*RaidDifficulties.getPlayerDifficulty(p, RaidCategory.OVERWORLD)).setScale(1, RoundingMode.HALF_EVEN).doubleValue();
 
 		
-		if(in == 0) {
+		/*if(in == 0) {
 			ItemStack main = new ItemStack(Material.STONE);
 			main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
 			ItemStack off = new ItemStack(Material.STONE);
 			off.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
     		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "½ºÅæ°ñ·½":"StoneGolem";
-			IronGolem newmob = (IronGolem) MobspawnLoc(esl, ChatColor.GRAY + reg, dif, null,
+			IronGolem newmob = (IronGolem) MobspawnLoc(esl, ChatColor.GRAY + reg, dif1, null,
 					null, null, null, main, off, EntityType.IRON_GOLEM);
 			newmob.setGlowing(true);
 			newmob.setPlayerCreated(false);
@@ -396,7 +414,7 @@ public class OverworldRaids extends Summoned implements Listener {
     		newmob.setRemoveWhenFarAway(false);
     		raider.put(rn, newmob.getUniqueId());
 			newmob.setMetadata("stoneboss", new FixedMetadataValue(RMain.getInstance(), true));
-			newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), true));
+			newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), armor));
 			newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 			
     		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
@@ -442,7 +460,7 @@ public class OverworldRaids extends Summoned implements Listener {
     		off.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
     		off.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
     		String reg = Bukkit.getPlayer(rn).getLocale().equalsIgnoreCase("ko_kr") ? "ºÓÀº±â»ç":"RedKnight";
-    		Skeleton newmob = (Skeleton) MobspawnLoc(esl, ChatColor.RED+reg, dif, head, chest, leg, boots, main, off, EntityType.SKELETON);
+    		Skeleton newmob = (Skeleton) MobspawnLoc(esl, ChatColor.RED+reg, dif1, head, chest, leg, boots, main, off, EntityType.SKELETON);
     		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
     		newmob.setGlowing(true);
     		newmob.getEquipment().setBootsDropChance(0);
@@ -453,7 +471,7 @@ public class OverworldRaids extends Summoned implements Listener {
     		newmob.getEquipment().setLeggingsDropChance(0);
     		newmob.setMetadata("redboss", new FixedMetadataValue(RMain.getInstance(), true));
     		
-    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), true));
+    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), armor));
     		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
     		newmob.setMetadata("bosswave1", new FixedMetadataValue(RMain.getInstance(), true));
     		newmob.setLootTable(null);
@@ -499,7 +517,7 @@ public class OverworldRaids extends Summoned implements Listener {
     		ItemStack off = new ItemStack(Material.ICE);
     		off.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
     		String reg = Bukkit.getPlayer(rn).getLocale().equalsIgnoreCase("ko_kr") ? "¼³»ê¸¶³à":"SnowWitch";
-    		Witch newmob = (Witch) MobspawnLoc(esl, ChatColor.BLUE+reg, dif, null, null, null, boots, main, off, EntityType.WITCH);
+    		Witch newmob = (Witch) MobspawnLoc(esl, ChatColor.BLUE+reg, dif1, null, null, null, boots, main, off, EntityType.WITCH);
     		newmob.setGlowing(true);
     		newmob.getEquipment().setBootsDropChance(0);
     		newmob.getEquipment().setChestplateDropChance(0);
@@ -515,8 +533,9 @@ public class OverworldRaids extends Summoned implements Listener {
     		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(0.9);
     		newmob.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 999999, 3, false, false));
     		
-    		newmob.setMetadata("snowboss", new FixedMetadataValue(RMain.getInstance(), true));
-    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), true));
+    		newmob.setMetadata("snowyboss", new FixedMetadataValue(RMain.getInstance(), true));
+    		newmob.setMetadata("snowy", new FixedMetadataValue(RMain.getInstance(), true));
+    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), armor));
     		
     		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
     		newmob.setMetadata("bosswave1", new FixedMetadataValue(RMain.getInstance(), true));
@@ -536,10 +555,11 @@ public class OverworldRaids extends Summoned implements Listener {
     		inhb.setMetadata("portal", new FixedMetadataValue(RMain.getInstance(), true));
     		inhb.setMetadata("inhibitor", new FixedMetadataValue(RMain.getInstance(), rn));
     		inhb.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
+    		inhb.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), armor));
     		inhb.setRemoveWhenFarAway(false);
     		inhb.setGlowing(true);
     		inhb.getEquipment().setHelmet(new ItemStack(Material.BEACON));
-    		inhb.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(dif);;
+    		inhb.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(dif1);;
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
         		inhb.setCustomName(rn + " ¿¤´õ°¡µð¾ð ¾ïÁ¦±â");
 			}
@@ -553,11 +573,11 @@ public class OverworldRaids extends Summoned implements Listener {
     		
 
     		return inhb;
-		}
-		else if(in == 4) {
+		}*/
+		if(in >-1) {
 
     		String reg = Bukkit.getPlayer(rn).getLocale().equalsIgnoreCase("ko_kr") ? "´ÚÅÍB":"Dr.B";
-    		Illusioner newmob = (Illusioner) MobspawnLoc(esl.clone().add(0, -20, 0), ChatColor.DARK_PURPLE+reg, dif, new ItemStack(Material.BLACK_STAINED_GLASS), null, null, null, null, null, EntityType.ILLUSIONER);
+    		Illusioner newmob = (Illusioner) MobspawnLoc(esl, ChatColor.DARK_PURPLE+reg, dif1, new ItemStack(Material.BLACK_STAINED_GLASS), null, null, null, null, null, EntityType.ILLUSIONER);
 			newmob.setCanJoinRaid(false);
 			newmob.setPatrolTarget(null);
 			newmob.setPatrolLeader(false);
@@ -569,8 +589,8 @@ public class OverworldRaids extends Summoned implements Listener {
     		newmob.getEquipment().setItemInOffHandDropChance(0);
     		newmob.getEquipment().setLeggingsDropChance(0);
     		newmob.setMetadata("hyperboss", new FixedMetadataValue(RMain.getInstance(), true));
-    		
-    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), true));
+
+    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), armor));
     		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
     		newmob.setMetadata("bosswave1", new FixedMetadataValue(RMain.getInstance(), true));
     		newmob.setLootTable(null);
@@ -853,8 +873,7 @@ public class OverworldRaids extends Summoned implements Listener {
 			}
 		}
 		
-		Double dif = 100000 * BigDecimal.valueOf(1 + 0.1*endif).setScale(1, RoundingMode.HALF_EVEN).doubleValue();
-		
+		Double dif = BOSSHP * BigDecimal.valueOf(1 + 0.1*endif).setScale(1, RoundingMode.HALF_EVEN).doubleValue();
 		if(Party.hasParty(p)) {
 			if(Party.isOwner(p)) {
 				Party.getMembers(Party.getParty(p)).forEach(pu -> {
@@ -890,7 +909,7 @@ public class OverworldRaids extends Summoned implements Listener {
 		                	double number2 = (random.nextDouble()+1.5) * 5 * (random.nextBoolean() ? -1 : 1);
 		                	Location esl = spl.clone().add(number, 1, number2);
 	                    	
-	                    	int ri = random.nextInt(4);
+	                    	int ri = random.nextInt(5);
 	                    	
 	                    	bossgen(esl,p, rn, ri,dif);
 	                    	
@@ -958,10 +977,10 @@ public class OverworldRaids extends Summoned implements Listener {
 
 			final String rn = getheroname(p);
 
-			if(!difen.containsKey(rn)) {
+			if(!difent.containsKey(rn)) {
 				return;
 			}
-			if(difent.containsKey(rn)) {
+			else {
 				Bukkit.getScheduler().cancelTask(difent.remove(rn));
 			}
 			Integer endif = 0;
@@ -1190,7 +1209,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	@EventHandler
 	public void Targetchange(EntityDamageByEntityEvent d) 
 	{
-		if(d.getEntity().hasMetadata("raid") && d.getEntity().hasMetadata("mountains") && !d.isCancelled()) {
+		if(d.getEntity().hasMetadata("raid") && d.getEntity().hasMetadata("boss") && !d.isCancelled()) {
 
 			String rn = d.getEntity().getMetadata("raid").get(0).asString();
 			if(tart.containsKey(rn) && !ptart.containsKey(rn)) {
@@ -1450,8 +1469,8 @@ public class OverworldRaids extends Summoned implements Listener {
 		    		newmob.getEquipment().setItemInOffHandDropChance(0);
 		    		newmob.getEquipment().setLeggingsDropChance(0);
 		    		newmob.setMetadata("oceanboss", new FixedMetadataValue(RMain.getInstance(), true));
-		    		
-		    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), true));
+
+    	    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), le.getMetadata("boss").get(0).asDouble()));
 		    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
 		    		newmob.setMetadata("bosswave1", new FixedMetadataValue(RMain.getInstance(), true));
 		    		newmob.setLootTable(null);
@@ -1489,7 +1508,8 @@ public class OverworldRaids extends Summoned implements Listener {
 	{	
 		if(d.getEntity().hasMetadata("bosswave1") && d.getEntity().hasMetadata("oceanboss") &&raider.containsValue(d.getEntity().getUniqueId())) {
 			LivingEntity le = d.getEntity();
-			final Location lel = le.getLocation().clone();
+			Location lel = le.getLocation().clone();
+			lel.setY(20);
 			
 			String rn = le.getMetadata("raid").get(0).asString();
 			raider.remove(rn, le.getUniqueId());
@@ -1535,8 +1555,8 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		newmob.getEquipment().setLeggingsDropChance(0);
 	    	    		newmob.setMetadata("oceanboss", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		newmob.setMetadata("ruined", new FixedMetadataValue(RMain.getInstance(), true));
-	    	    		
-	    	    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), true));
+
+	    	    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), le.getMetadata("boss").get(0).asDouble()));
 	    	    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
 	    	    		newmob.setMetadata("finalboss", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		newmob.setLootTable(null);
@@ -1594,7 +1614,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	        	heroes.get(rn).forEach(pu -> {
 	        		Bukkit.getPlayer(pu).sendTitle(ChatColor.MAGIC + "aaaaaa",ChatColor.MAGIC + "aaaaaa", 5, 20, 5);
 	        	});
-	        	spl.getWorld().spawnParticle(Particle.BLOCK_MARKER, d.getEntity().getLocation(), 1000,1,1,1);
+	        	spl.getWorld().spawnParticle(Particle.BLOCK_MARKER, d.getEntity().getLocation(), 1000,1,1,1, Material.GLASS.createBlockData());
 	        	spl.getWorld().spawnParticle(Particle.SPELL_INSTANT, d.getEntity().getLocation(), 1000,1,1,1);
 	        	spl.getWorld().spawnParticle(Particle.CLOUD, d.getEntity().getLocation(), 1000,1,1,1);
 	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_GOAT_SCREAMING_AMBIENT, 1, 0);
@@ -1615,8 +1635,8 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		newmob.setGlowing(true);
 	    	    		newmob.setMetadata("hyperboss", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		newmob.setMetadata("ruined", new FixedMetadataValue(RMain.getInstance(), true));
-	    	    		
-	    	    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), true));
+
+	    	    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), le.getMetadata("boss").get(0).asDouble()));
 	    	    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
 	    	    		newmob.setMetadata("finalboss", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		newmob.setLootTable(null);
@@ -1726,7 +1746,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		newmob.setMetadata("redboss", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		newmob.setMetadata("ruined", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		
-	    	    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), le.getMetadata("boss").get(0).asDouble()));
 	    	    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
 	    	    		newmob.setMetadata("finalboss", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		newmob.setLootTable(null);

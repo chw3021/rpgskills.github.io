@@ -304,7 +304,7 @@ public class HyperSkills extends Summoned{
 	{
 		if(d.getEntity().getShooter() instanceof Illusioner && d.getEntity() instanceof Arrow) {
 			Illusioner p = (Illusioner) d.getEntity().getShooter();
-			if(p.hasMetadata("hyper") && p.hasMetadata("hyperboss")) {
+			if(p.hasMetadata("hyperboss")) {
 	        	d.setCancelled(true);
 	        	final ArrayList<Location> line = RayBow(p.getEyeLocation().clone());
                 for(double an = -Math.PI/3; an<=Math.PI/3; an += Math.PI/6) {
@@ -328,7 +328,7 @@ public class HyperSkills extends Summoned{
 
 		                    	for (Entity e : p.getWorld().getNearbyEntities(l, 0.25, 0.25, 0.25))
 		        				{
-		        					if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
+		        					if(p!=e && e instanceof LivingEntity) {
 		        						LivingEntity le = (LivingEntity)e;
 		        						le.damage(2.35,p);
 		        					}
@@ -967,18 +967,18 @@ public class HyperSkills extends Summoned{
 		HashSet<Location> mls1 = new HashSet<>();
 		if(f%2 ==0) {
 			for(int i = 0; i<30; i++) {
-				mls1.add(rl.clone().add(i, -4, 0));
-				mls1.add(rl.clone().add(-i, -4, 0));
-				mls1.add(rl.clone().add(0, -4, i));
-				mls1.add(rl.clone().add(0, -4, -i));
+				mls1.add(rl.clone().add(i, 0, 0));
+				mls1.add(rl.clone().add(-i, 0, 0));
+				mls1.add(rl.clone().add(0, 0, i));
+				mls1.add(rl.clone().add(0, 0, -i));
 			}
 		}
 		else {
 			for(int i = 0; i<30; i++) {
-				mls1.add(rl.clone().add(i, -4, i));
-				mls1.add(rl.clone().add(-i, -4, i));
-				mls1.add(rl.clone().add(-i, -4, i));
-				mls1.add(rl.clone().add(-i, -4, -i));
+				mls1.add(rl.clone().add(i, 0, i));
+				mls1.add(rl.clone().add(-i, 0, i));
+				mls1.add(rl.clone().add(-i, 0, i));
+				mls1.add(rl.clone().add(-i, 0, -i));
 			}
 		}
     	rl.getWorld().playSound(rl, Sound.BLOCK_BEACON_ACTIVATE, 1f, 2f);
@@ -1099,7 +1099,7 @@ public class HyperSkills extends Summoned{
 	                    p.teleport(rl.clone());
 		                
 		                for(Entity e : OverworldRaids.getheroes(p)) {
-		                	if(e instanceof Player && !e.hasMetadata("fake")) {
+		                	if(e instanceof Player ) {
 		                		Player pe = (Player) e;
 		                		Holding.invur(pe, 40l);
 		    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -1244,7 +1244,7 @@ public class HyperSkills extends Summoned{
                     }
                     p.teleport(rl.clone());
 	                for(Entity e : OverworldRaids.getheroes(p)) {
-	                	if(e instanceof Player && !e.hasMetadata("fake")) {
+	                	if(e instanceof Player) {
 	                		Player pe = (Player) e;
 	                		Holding.invur(pe, 40l);
 	    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {

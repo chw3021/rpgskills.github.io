@@ -959,7 +959,7 @@ public class Summoned extends Mobs implements Serializable{
 	public final Object Combo(EntityDeathEvent d, String meta) 
 	{		
 		final LivingEntity le = d.getEntity();
-		if(le.hasMetadata(meta)) {
+		if(le.hasMetadata(meta) && !le.hasMetadata("raid")) {
 			if(le.hasMetadata("summoned") && !le.hasMetadata("boss")) {
 				final String rn = gethero(le);
 				int combo = comin(rn,meta);
