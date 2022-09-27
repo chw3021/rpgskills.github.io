@@ -447,7 +447,6 @@ public class DarkRaids extends Summoned {
 		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
 		newmob.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(4);
 		
-		addraider(rn,META,newmob);
 		newmob.setMetadata(META+"boss", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
@@ -459,9 +458,6 @@ public class DarkRaids extends Summoned {
 		BossBar	newbar = Bukkit.getServer().createBossBar(new NamespacedKey(RMain.getInstance(), rn +"Nightmare"),newmob.getName(), BarColor.PURPLE, BarStyle.SEGMENTED_20, BarFlag.CREATE_FOG);
         newbar.setVisible(true);
 		raidbar.put(rn, META, newbar);
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
-		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
-		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		addraider(rn,META,newmob);
 		

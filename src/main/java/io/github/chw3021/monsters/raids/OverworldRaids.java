@@ -13,6 +13,7 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
+import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -20,6 +21,8 @@ import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.block.banner.Pattern;
+import org.bukkit.block.banner.PatternType;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
@@ -60,6 +63,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -396,7 +400,7 @@ public class OverworldRaids extends Summoned implements Listener {
 		//Double dif = 100000 * BigDecimal.valueOf(1 + 0.1*RaidDifficulties.getPlayerDifficulty(p, RaidCategory.OVERWORLD)).setScale(1, RoundingMode.HALF_EVEN).doubleValue();
 
 		
-		/*if(in == 0) {
+		if(in == 0) {
 			ItemStack main = new ItemStack(Material.STONE);
 			main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
 			ItemStack off = new ItemStack(Material.STONE);
@@ -573,8 +577,8 @@ public class OverworldRaids extends Summoned implements Listener {
     		
 
     		return inhb;
-		}*/
-		if(in >-1) {
+		}
+		else if(in ==4) {
 
     		String reg = Bukkit.getPlayer(rn).getLocale().equalsIgnoreCase("ko_kr") ? "¥⁄≈ÕB":"Dr.B";
     		Illusioner newmob = (Illusioner) MobspawnLoc(esl, ChatColor.DARK_PURPLE+reg, dif1, new ItemStack(Material.BLACK_STAINED_GLASS), null, null, null, null, null, EntityType.ILLUSIONER);
@@ -602,6 +606,70 @@ public class OverworldRaids extends Summoned implements Listener {
     		
 
     		bossbargen("hyperboss", rn, newmob);
+
+    		return newmob;
+		}
+		else if(in ==5) {
+
+			ItemStack pe = new ItemStack(Material.BLACK_BANNER);
+			BannerMeta pem = (BannerMeta) pe.getItemMeta();
+			pem.addPattern(new Pattern(DyeColor.BLACK, PatternType.BASE));
+			pem.addPattern(new Pattern(DyeColor.GRAY, PatternType.STRIPE_SMALL));
+			pem.addPattern(new Pattern(DyeColor.BLACK, PatternType.CROSS));
+			pem.addPattern(new Pattern(DyeColor.LIGHT_GRAY, PatternType.TRIANGLES_TOP));
+			pem.addPattern(new Pattern(DyeColor.LIGHT_GRAY, PatternType.TRIANGLES_BOTTOM));
+			pem.addPattern(new Pattern(DyeColor.BLACK, PatternType.BORDER));
+			pem.addPattern(new Pattern(DyeColor.YELLOW, PatternType.MOJANG));
+			pe.setItemMeta(pem);
+			ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
+			LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
+			chm.setColor(Color.BLACK);
+			chest.setItemMeta(chm);
+			chest.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
+			chest.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+			chest.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+			ItemStack leg = new ItemStack(Material.LEATHER_LEGGINGS);
+			LeatherArmorMeta lem = (LeatherArmorMeta) leg.getItemMeta();
+			lem.setColor(Color.BLACK);
+			leg.setItemMeta(lem);
+			leg.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
+			leg.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+			leg.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+			ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
+			LeatherArmorMeta bom = (LeatherArmorMeta) boots.getItemMeta();
+			bom.setColor(Color.BLACK);
+			boots.setItemMeta(bom);
+			boots.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
+			boots.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+			boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+			ItemStack main = new ItemStack(Material.NETHERITE_HOE);
+			ItemMeta mm = main.getItemMeta();
+			mm.setCustomModelData(8008);
+			main.setItemMeta(mm);
+			
+    		String reg = Bukkit.getPlayer(rn).getLocale().equalsIgnoreCase("ko_kr") ? "π„¿«±∫¥‹¿Â":"Nightmare";
+    		Skeleton newmob = (Skeleton) MobspawnLoc(esl, ChatColor.GRAY+reg, dif1, pe, chest, leg, boots, main, null, EntityType.SKELETON);
+
+    		newmob.setConversionTime(-1);
+    		newmob.setLootTable(null);
+    		newmob.setGlowing(true);
+    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
+    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+    		newmob.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(4);
+    		
+    		newmob.setMetadata("darkboss", new FixedMetadataValue(RMain.getInstance(), true));
+    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), true));
+    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
+    		newmob.setMetadata("dark", new FixedMetadataValue(RMain.getInstance(), true));
+    		
+    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
+    		newmob.setMetadata("bosswave1", new FixedMetadataValue(RMain.getInstance(), true));
+    		newmob.setLootTable(null);
+    		newmob.setRemoveWhenFarAway(false);
+    		raider.put(rn, newmob.getUniqueId());
+    		
+
+    		bossbargen("darkboss", rn, newmob);
 
     		return newmob;
 		}
