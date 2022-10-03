@@ -271,6 +271,42 @@ public class SnowSkills extends Summoned implements Listener{
 			p.getWorld().playSound(p.getLocation(), Sound.BLOCK_SNOW_PLACE, 1.0f, 2f);
         	p.getWorld().playSound(p.getLocation(), Sound.ENTITY_SNOWBALL_THROW, 1.0f, 0f);
 			ItemStack is = new ItemStack(Material.SNOW_BLOCK);
+			
+			if(p.hasMetadata("ruined")) {
+
+		    	for(double pi= -Math.PI/3; pi<=Math.PI/4.5; pi += Math.PI/6) {
+					Item solid = p.getWorld().dropItem(p.getEyeLocation(), is);
+					solid.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+					solid.setMetadata("crystal of"+p.getUniqueId(), new FixedMetadataValue(RMain.getInstance(), true));
+					solid.setPickupDelay(9999);
+		            solid.setVelocity(p.getLocation().getDirection().normalize().multiply(0.05*t.getLocation().distance(p.getLocation())));
+		            solid.setGravity(false);
+		            solid.setGlowing(true);
+		            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		                @Override
+		                public void run() 
+		                {
+		                	solid.getWorld().spawnParticle(Particle.BLOCK_CRACK, solid.getLocation(), 400,3,3,3,0.1,Material.SNOW.createBlockData());
+		                	solid.getWorld().spawnParticle(Particle.BLOCK_CRACK, solid.getLocation(), 300,3,3,3,0.1,Material.ICE.createBlockData());
+		                	solid.getWorld().spawnParticle(Particle.SNOWFLAKE, solid.getLocation(), 300,3,3,3,0.1);
+		                        p.getWorld().playSound(solid.getLocation(), Sound.BLOCK_POWDER_SNOW_BREAK, 1, 0);
+			                    p.getWorld().playSound(solid.getLocation(), Sound.BLOCK_SNOW_BREAK, 1, 0);
+			                    p.getWorld().playSound(solid.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_HURT, 1, 2);
+
+			                	for(Entity e : solid.getWorld().getNearbyEntities(solid.getLocation(), 3, 3, 3)) {
+									if(p!=e && e instanceof Player&& !(e.hasMetadata("fake"))) {
+										LivingEntity le = (LivingEntity)e;
+										le.damage(5,p);
+										Holding.holding(null, le, 20l);
+									}
+			                	}
+			                    p.getWorld().getEntities().stream().filter(en -> en.hasMetadata("crystal of"+p.getUniqueId())).forEach(n -> n.remove());
+				                solid.remove();
+		                }
+		            }, 30); 	
+		    	}
+			}
+			
 			Item solid = p.getWorld().dropItem(p.getEyeLocation(), is);
 			solid.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 			solid.setMetadata("crystal of"+p.getUniqueId(), new FixedMetadataValue(RMain.getInstance(), true));
@@ -819,7 +855,7 @@ public class SnowSkills extends Summoned implements Listener{
 		}					
 	}
 
-	public void Ordealed(EntityDamageByEntityEvent d) 
+	public void mirrored(EntityDamageByEntityEvent d) 
 	{
 		if(ordeal.containsKey(d.getEntity().getUniqueId())) {
 			Witch p = (Witch)d.getEntity();
@@ -834,10 +870,10 @@ public class SnowSkills extends Summoned implements Listener{
         		}
                 for(Player pe : OverworldRaids.getheroes(p)) {
 					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-                		pe.sendMessage(ChatColor.BOLD+"네놈들은 절대 이길수 없다.");
+                		pe.sendMessage(ChatColor.BOLD+"실패!");
 					}
 					else {
-                		pe.sendMessage(ChatColor.BOLD+"You Can Never Beat Me!");
+                		pe.sendMessage(ChatColor.BOLD+"Failed!");
 					}
         			p.getWorld().playSound(pe.getLocation(), Sound.ENTITY_PLAYER_HURT_FREEZE, 1, 0);
             		pe.setHealth(0);
@@ -856,7 +892,7 @@ public class SnowSkills extends Summoned implements Listener{
             	Holding.ale(p).setMetadata("failed", new FixedMetadataValue(RMain.getInstance(),true));
                 for(Player pe : OverworldRaids.getheroes(p)) {
 					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-                		pe.sendMessage(ChatColor.BLUE+"이런 건방진..");
+                		pe.sendMessage(ChatColor.BLUE+"이걸 맞추다니..");
 					}
 					else {
                 		pe.sendMessage(ChatColor.BLUE+"How Dare Are You..");
@@ -875,7 +911,7 @@ public class SnowSkills extends Summoned implements Listener{
 	}
 	    
 	
-	final private void Ordeal(LivingEntity p, EntityDamageByEntityEvent d) {
+	final private void mirror(LivingEntity p, EntityDamageByEntityEvent d) {
 
 		String rn = p.getMetadata("raid").get(0).asString();
 		if(ordt.containsKey(rn)) {
@@ -892,10 +928,10 @@ public class SnowSkills extends Summoned implements Listener{
 		
         for(Player pe : OverworldRaids.getheroes(p)) {
 			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-        		pe.sendMessage(ChatColor.BLUE+"시련의 시간이다");
+        		pe.sendMessage(ChatColor.BLUE+"한번 찾아보시지!");
 			}
 			else {
-        		pe.sendMessage(ChatColor.BLUE+"Time To Ordeal.");
+        		pe.sendMessage(ChatColor.BLUE+"Look it up!");
 			}
     		pe.teleport(rl);
     		Holding.invur(pe, 30l);
@@ -968,7 +1004,7 @@ public class SnowSkills extends Summoned implements Listener{
 	}
 		
 	@SuppressWarnings("deprecation")
-	public void Ordeal(EntityDamageByEntityEvent d) 
+	public void Mirror(EntityDamageByEntityEvent d) 
 	{
 	    
 		int sec =70;
@@ -991,14 +1027,14 @@ public class SnowSkills extends Summoned implements Listener{
 		            else 
 		            {
 		                rb6cooldown.remove(p.getUniqueId()); // removing player from HashMap
-		                Ordeal(p,d);
+		                mirror(p,d);
 			            rb6cooldown.put(p.getUniqueId(), System.currentTimeMillis());
 		            }
 		        }
 		        else 
 		        {
 
-	                Ordeal(p,d);
+	                mirror(p,d);
 		            rb6cooldown.put(p.getUniqueId(), System.currentTimeMillis());
 		        }
 			}

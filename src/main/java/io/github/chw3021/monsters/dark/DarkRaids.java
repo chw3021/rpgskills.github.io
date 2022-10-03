@@ -20,6 +20,7 @@ import org.bukkit.boss.BossBar;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Evoker;
+import org.bukkit.entity.Phantom;
 import org.bukkit.entity.Pillager;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
@@ -345,19 +346,13 @@ public class DarkRaids extends Summoned {
     	
 		ItemStack head = headflag();
 		
-		ItemStack main = new ItemStack(Material.CROSSBOW);
-		main.addUnsafeEnchantment(Enchantment.QUICK_CHARGE, 2);
-		main.addUnsafeEnchantment(Enchantment.MULTISHOT, 1);
-		ItemMeta mm = main.getItemMeta();
-		mm.setCustomModelData(5008);
-		main.setItemMeta(mm);
-		String reg = lang.contains("kr") ? "π„¿«±∫¥‹¿˙∞›ºˆ":"NightCorpsSniper";
-		Pillager newmob = (Pillager) Summon(esl, reg, 6500.0, head, null, null, null, main,
-				null, EntityType.PILLAGER);
-		newmob.setCanJoinRaid(false);
-		newmob.setPatrolLeader(false);
-		newmob.setPatrolTarget(null);
-		newmob.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999, 1, false, false));
+		String reg = lang.contains("kr") ? "π„¿«∏¡∑…":"NightPhantom";
+		Phantom newmob = (Phantom) Summon(esl, reg, 6500.0, head, null, null, null, null,
+				null, EntityType.PHANTOM);
+		newmob.setFireTicks(0);
+		newmob.setSize(6);
+		newmob.setVisualFire(false);
+		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 1, false, false));
 		newmob.addPotionEffect(
 				new PotionEffect(PotionEffectType.NIGHT_VISION, 999999, 1, false, false));
 		
@@ -436,7 +431,7 @@ public class DarkRaids extends Summoned {
 		main.setItemMeta(mm);
 
 		
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "π„¿«±∫¥‹¿Â":"Nightmare";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "π„¿«±∫¥‹¿Â":"NightCorpsCommander";
 		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.DARK_GRAY + reg, 25000.0, head,
 				chest, leg, boots, main, null, EntityType.SKELETON);
 

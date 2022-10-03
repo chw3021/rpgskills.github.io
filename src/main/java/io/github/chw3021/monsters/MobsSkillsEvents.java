@@ -579,8 +579,8 @@ public class MobsSkillsEvents implements Listener, Serializable {
 		SnowSkills.getInstance().Breeze(d);
 		SnowSkills.getInstance().Cyclone(d);
 		SnowSkills.getInstance().SnowBlock(d);
-		SnowSkills.getInstance().Ordeal(d);
-		SnowSkills.getInstance().Ordealed(d);
+		SnowSkills.getInstance().Mirror(d);
+		SnowSkills.getInstance().mirrored(d);
 		SnowSkills.getInstance().Icefall(d);
 
 		OceanSkills.getInstance().Mimic(d);

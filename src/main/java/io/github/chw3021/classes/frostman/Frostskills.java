@@ -1473,6 +1473,48 @@ public class Frostskills extends Pak implements Listener, Serializable {
 		}
 	}
 	
+	final private void icicleshot(Player p, World w) {
+
+    	p.playSound(p.getLocation(), Sound.BLOCK_GLASS_HIT, 1f, 2f);
+    	p.playSound(p.getLocation(), Sound.BLOCK_GLASS_BREAK, 0.5f, 2f);
+    	p.playSound(p.getLocation(), Sound.ITEM_TRIDENT_HIT_GROUND, 1f, 2f);
+    	ArrayList<Location> line = new ArrayList<Location>();
+    	HashSet<LivingEntity> les = new HashSet<LivingEntity>();
+    	for(double pi= -Math.PI/3; pi<=Math.PI/4.5; pi += Math.PI/6) {
+            for(double d = 0.1; d <= 7.1; d += 0.2) {
+                Location pl = p.getEyeLocation().clone();
+    			pl.add(p.getEyeLocation().getDirection().normalize().rotateAroundY(pi).multiply(d));
+    			line.add(pl);
+            }
+    	}
+        line.forEach(l -> {
+        	w.spawnParticle(Particle.BLOCK_CRACK, l.add(0, -0.289, 0),5, 0.05,0.05,0.05,0,Material.ICE.createBlockData());
+        	w.spawnParticle(Particle.BLOCK_CRACK, l.add(0, -0.289, 0),5, 0.01,0.01,0.01,0,Material.PACKED_ICE.createBlockData());
+        	w.spawnParticle(Particle.SNOW_SHOVEL, l.add(0, -0.289, 0),1, 0.05,0.05,0.05,0.5);
+
+        	for (Entity a : l.getWorld().getNearbyEntities(l, 1.5, 1.5, 1.5))
+			{
+				if ((!(a == p))&& a instanceof LivingEntity&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal"))) 
+				{
+					if (a instanceof Player) 
+					{
+						Player p1 = (Player) a;
+						if(Party.hasParty(p) && Party.hasParty(p1))	{
+						if(Party.getParty(p).equals(Party.getParty(p1)))
+							{
+								continue;
+							}
+						}
+					}
+					LivingEntity le = (LivingEntity)a;
+					les.add(le);										
+				}
+			}
+        });
+    	les.forEach(le -> {
+			atk0(0.32,bsd.IcicleShot.get(p.getUniqueId())*0.31, p, le);
+    	});
+	}
 	
 	public void IcicleShot(PlayerInteractEvent ev) 
 	{
@@ -1494,12 +1536,12 @@ public class Frostskills extends Pak implements Listener, Serializable {
 	                if(!(timer < 0)) // if timer is still more then 0 or 0
 	                {
 
-if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("고드름화살 재사용 대기시간이 " + String.valueOf(Math.round(timer*10)/10.0) + "초 남았습니다").create());
-}
-else {
-	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use IcicleShot").create());
-}
+					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+						p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("고드름화살 재사용 대기시간이 " + String.valueOf(Math.round(timer*10)/10.0) + "초 남았습니다").create());
+					}
+					else {
+						p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use IcicleShot").create());
+					}
 
 	                }
 	                else // if timer is done
@@ -1539,43 +1581,7 @@ else {
 					                @Override
 					                public void run() 
 					                {
-					                	p.playSound(p.getLocation(), Sound.BLOCK_GLASS_HIT, 1f, 2f);
-					                	p.playSound(p.getLocation(), Sound.BLOCK_GLASS_BREAK, 0.5f, 2f);
-					                	p.playSound(p.getLocation(), Sound.ITEM_TRIDENT_HIT_GROUND, 1f, 2f);
-					                	ArrayList<Location> line = new ArrayList<Location>();
-					                	HashSet<LivingEntity> les = new HashSet<LivingEntity>();
-					                    for(double d = 0.1; d <= 7.1; d += 0.2) {
-						                    Location pl = p.getEyeLocation().clone();
-											pl.add(p.getEyeLocation().getDirection().normalize().multiply(d));
-											line.add(pl);
-					                    }
-					                    line.forEach(l -> {
-					                    	w.spawnParticle(Particle.BLOCK_CRACK, l.add(0, -0.289, 0),5, 0.05,0.05,0.05,0,Material.ICE.createBlockData());
-					                    	w.spawnParticle(Particle.BLOCK_CRACK, l.add(0, -0.289, 0),5, 0.01,0.01,0.01,0,Material.PACKED_ICE.createBlockData());
-					                    	w.spawnParticle(Particle.SNOW_SHOVEL, l.add(0, -0.289, 0),1, 0.05,0.05,0.05,0.5);
-
-					                    	for (Entity a : l.getWorld().getNearbyEntities(l, 1.5, 1.5, 1.5))
-											{
-												if ((!(a == p))&& a instanceof LivingEntity&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal"))) 
-												{
-													if (a instanceof Player) 
-													{
-														Player p1 = (Player) a;
-														if(Party.hasParty(p) && Party.hasParty(p1))	{
-														if(Party.getParty(p).equals(Party.getParty(p1)))
-															{
-																continue;
-															}
-														}
-													}
-													LivingEntity le = (LivingEntity)a;
-													les.add(le);										
-												}
-											}
-					                    });
-					                	les.forEach(le -> {
-											atk0(0.32,bsd.IcicleShot.get(p.getUniqueId())*0.31, p, le);
-					                	});
+					                	icicleshot(p,w);
 					                }
 		                	   }, i+20); 
 						}
@@ -1617,43 +1623,7 @@ else {
 				                @Override
 				                public void run() 
 				                {
-				                	p.playSound(p.getLocation(), Sound.BLOCK_GLASS_HIT, 1f, 2f);
-				                	p.playSound(p.getLocation(), Sound.BLOCK_GLASS_BREAK, 0.5f, 2f);
-				                	p.playSound(p.getLocation(), Sound.ITEM_TRIDENT_HIT_GROUND, 1f, 2f);
-				                	ArrayList<Location> line = new ArrayList<Location>();
-				                	HashSet<LivingEntity> les = new HashSet<LivingEntity>();
-				                    for(double d = 0.1; d <= 7.1; d += 0.2) {
-					                    Location pl = p.getEyeLocation().clone();
-										pl.add(p.getEyeLocation().getDirection().normalize().multiply(d));
-										line.add(pl);
-				                    }
-				                    line.forEach(l -> {
-				                    	w.spawnParticle(Particle.BLOCK_CRACK, l.add(0, -0.289, 0),5, 0.05,0.05,0.05,0,Material.ICE.createBlockData());
-				                    	w.spawnParticle(Particle.BLOCK_CRACK, l.add(0, -0.289, 0),5, 0.01,0.01,0.01,0,Material.PACKED_ICE.createBlockData());
-				                    	w.spawnParticle(Particle.SNOW_SHOVEL, l.add(0, -0.289, 0),1, 0.05,0.05,0.05,0.5);
-
-				                    	for (Entity a : l.getWorld().getNearbyEntities(l, 1.5, 1.5, 1.5))
-										{
-											if ((!(a == p))&& a instanceof LivingEntity&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal"))) 
-											{
-												if (a instanceof Player) 
-												{
-													Player p1 = (Player) a;
-													if(Party.hasParty(p) && Party.hasParty(p1))	{
-													if(Party.getParty(p).equals(Party.getParty(p1)))
-														{
-															continue;
-														}
-													}
-												}
-												LivingEntity le = (LivingEntity)a;
-												les.add(le);										
-											}
-										}
-				                    });
-				                	les.forEach(le -> {
-										atk0(0.32,bsd.IcicleShot.get(p.getUniqueId())*0.31, p, le);
-				                	});
+				                	icicleshot(p,w);
 				                }
 	                	   }, i+20); 
 					}

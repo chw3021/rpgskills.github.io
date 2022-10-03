@@ -1579,367 +1579,77 @@ public class RedSkills extends Summoned{
 	}
 	
 	
-	
-
-	@SuppressWarnings("deprecation")
-	
-	public void Ordeal(EntityDamageByEntityEvent d) 
-	{
-	    
-		int sec =70;
-		if(d.getEntity() instanceof Stray && d.getEntity().hasMetadata("redboss") && d.getEntity().hasMetadata("ruined")&& !d.getEntity().hasMetadata("failed")) 
-		{
-			Stray p = (Stray)d.getEntity();
-			if(!(p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2)|| !ordealable.containsKey(p.getUniqueId())) {
-				return;
+	final private void ordeal(LivingEntity p, EntityDamageEvent d) {
+		if(fbt.containsKey(p.getUniqueId())) {
+        	Bukkit.getScheduler().cancelTask(fbt.get(p.getUniqueId()));
+        }
+		String rn = p.getMetadata("raid").get(0).asString();
+        if(ordt.containsKey(rn)) {
+        	ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
+        	ordt.removeAll(rn);
+        }
+        Location rl = OverworldRaids.getraidloc(p).clone();
+		p.setHealth(p.getMaxHealth()*0.2);
+        d.setCancelled(true);
+    	p.teleport(rl.clone().add(0, 0, 1));
+        Holding.holding(null, p, 651l);
+        Holding.invur(p, 651l);
+        for(Player pe : OverworldRaids.getheroes(p)) {
+			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
+        		pe.sendMessage(ChatColor.BOLD+"붉은기사: 시련의 시간이다.");
 			}
-				if(rb6cooldown.containsKey(p.getUniqueId()))
-		        {
-		            long timer = (rb6cooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
-		            if(!(timer < 0))
-		            {
-		            }
-		            else 
-		            {
-		                rb6cooldown.remove(p.getUniqueId()); // removing player from HashMap
-	                    if(fbt.containsKey(p.getUniqueId())) {
-	                    	Bukkit.getScheduler().cancelTask(fbt.get(p.getUniqueId()));
-	                    }
-		    			String rn = p.getMetadata("raid").get(0).asString();
-	                    if(ordt.containsKey(rn)) {
-	                    	ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
-	                    	ordt.removeAll(rn);
-	                    }
-		                Location rl = OverworldRaids.getraidloc(p).clone();
-						p.setHealth(p.getMaxHealth()*0.2);
-		                d.setCancelled(true);
-	                	p.teleport(rl.clone().add(0, 0, 1));
-		                Holding.holding(null, p, 1001l);
-		                Holding.invur(p, 1001l);
-		                for(Player pe : OverworldRaids.getheroes(p)) {
-	    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-		                		pe.sendMessage(ChatColor.BOLD+"붉은기사: 시련의 시간이다.");
-	    					}
-	    					else {
-		                		pe.sendMessage(ChatColor.BOLD+"RedKnight: Time To Ordeal.");
-	    					}
-	                		pe.teleport(rl);
-	                		Holding.invur(pe, 40l);
-		                }
-	                    int t1 = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() {
+			else {
+        		pe.sendMessage(ChatColor.BOLD+"RedKnight: Time To Ordeal.");
+			}
+    		pe.teleport(rl);
+    		Holding.invur(pe, 40l);
+        }
+        int t1 = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() {
 
-				                Holding.untouchable(p, 970l);
-								for(int i = 0; i <10; i++) {
-				                    int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-						                @Override
-						                public void run() {
-						                	p.teleport(rl.clone().add(0, 0.5, 1));
-											p.getWorld().playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 1, 0);
-						                    AtomicInteger j = new AtomicInteger(10);
-											for(int i = 0; i <20; i++) {
-												int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-									                @Override
-									                public void run() {
-										                Holding.holding(null, p, 40l);
-										                Holding.invur(p, 40l);
-									                	Random r1 = new Random();
-									                	Random r2 = new Random();
-									                	Random r3 = new Random();
-									                	Random r4 = new Random();
-									                	double rd1 = r1.nextDouble()*10 *(r3.nextBoolean()?1:-1);
-									                	double rd2 = r2.nextDouble()*10*(r4.nextBoolean()?1:-1);
-									                	Location frl = new Location(p.getWorld(), p.getLocation().getX()+rd1, p.getEyeLocation().getY(), p.getLocation().getZ()+rd2);
-									                	
-									                	Item sn = p.getWorld().dropItem(frl, new ItemStack(Material.FIRE_CORAL_BLOCK));
-									                	sn.setMetadata("redknightcharge", new FixedMetadataValue(RMain.getInstance(), true));
-									                	sn.setMetadata("redknightcharge"+rn, new FixedMetadataValue(RMain.getInstance(), true));
-									                	sn.setGlowing(true);
-									                	sn.setGravity(false);
-									                	sn.setVisualFire(true);
-									                	sn.setVelocity(p.getLocation().toVector().subtract(frl.toVector()).normalize().multiply(0.135));
+                Holding.untouchable(p, 631l);
+				for(int i = 0; i <10; i++) {
+                    int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		                @Override
+		                public void run() {
+		                	p.teleport(rl.clone().add(0, 0.5, 1));
+							p.getWorld().playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 1, 0);
+							for(int i = 0; i <20; i++) {
+								int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+					                @Override
+					                public void run() {
+						                Holding.holding(null, p, 40l);
+						                Holding.invur(p, 40l);
+					                	Random r1 = new Random();
+					                	Random r2 = new Random();
+					                	Random r3 = new Random();
+					                	Random r4 = new Random();
+					                	double rd1 = r1.nextDouble()*10 *(r3.nextBoolean()?1:-1);
+					                	double rd2 = r2.nextDouble()*10*(r4.nextBoolean()?1:-1);
+					                	Location frl = new Location(p.getWorld(), p.getLocation().getX()+rd1, p.getEyeLocation().getY(), p.getLocation().getZ()+rd2);
+					                	
+					                	Item sn = p.getWorld().dropItem(frl, new ItemStack(Material.FIRE_CORAL_BLOCK));
+					                	sn.setMetadata("redknightcharge", new FixedMetadataValue(RMain.getInstance(), true));
+					                	sn.setMetadata("redknightcharge"+rn, new FixedMetadataValue(RMain.getInstance(), true));
+					                	sn.setGlowing(true);
+					                	sn.setGravity(false);
+					                	sn.setVisualFire(true);
+					                	sn.setVelocity(p.getLocation().toVector().subtract(frl.toVector()).normalize().multiply(0.135));
 
-										                for(Player pe : OverworldRaids.getheroes(p)) {
-									                		if(pe.getWorld().equals(p.getWorld()) && rl.clone().distance(p.getLocation()) > 20 && pe.getWorld() == p.getWorld()) {
-										    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-											                		pe.sendMessage(ChatColor.BOLD+"붉은기사: 원위치!");
-										    					}
-										    					else {
-											                		pe.sendMessage(ChatColor.BOLD+"RedKnight: You Can't Get Away!");
-										    					}
-									                    		pe.teleport(rl);
-									                		}
-										                }
-										            	ArrayList<Location> ring = new ArrayList<Location>();
-										            	HashSet<Player> hp = new HashSet<>();
-									                    for(double angle=0.1; angle<Math.PI*2; angle += Math.PI/180) {
-									                    	Location one = rl.setDirection(rl.getDirection()).clone();
-									                    	one.setDirection(one.getDirection().rotateAroundY(angle));
-									                    	one.add(one.getDirection().normalize().multiply(j.get()*2));
-									                    	ring.add(one);
-									                	} 
-														j.getAndDecrement();
-														if(j.get()<=0) {
-															j.set(10);
-														}
-									                	ring.forEach(l -> {
-															p.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, l, 15, 0.6,1,0.6,0);
-															for(Entity e : p.getWorld().getNearbyEntities(l,0.6, 0.9, 0.6)) {
-																if(e instanceof Player && e!=p) {
-																	Player pe = (Player)e;
-																	hp.add(pe);
-																}
-															}
-									                		
-									                	});
-														hp.forEach(pe -> pe.damage(5));
-									                }
-									            }, i*10); 	 
-												ordt.put(rn, t1);
-						                    }
-											for(int i = 0; i <100; i++) {
-												int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-									                @Override
-									                public void run() {
-									                	for(Entity e : p.getNearbyEntities(1, 1, 1)) {
-									                		if(e.hasMetadata("redknightcharge"+rn)) {
-									                			Item sn = (Item) e;
-									                			Bukkit.getServer().getPluginManager().callEvent(new EntityPickupItemEvent(p,sn, 1));
-									                			sn.remove();
-									                			
-									                		}
-									                	}
-									                }
-									            }, i*2); 	 
-												ordt.put(rn, t1);
-						                    }
+						                for(Player pe : OverworldRaids.getheroes(p)) {
+					                		if(pe.getWorld().equals(p.getWorld()) && rl.clone().distance(p.getLocation()) > 20 && pe.getWorld() == p.getWorld()) {
+						    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
+							                		pe.sendMessage(ChatColor.BOLD+"붉은기사: 원위치!");
+						    					}
+						    					else {
+							                		pe.sendMessage(ChatColor.BOLD+"RedKnight: You Can't Get Away!");
+						    					}
+					                    		pe.teleport(rl);
+					                		}
 						                }
-						            }, i*40); 	 
-									ordt.put(rn, t1);                   	
-			                    }
-			                }
-			            }, 20);
-						ordt.put(rn, t1);
-	                    int t2 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() {
-				                Holding.holding(null, p, 40l);
-				                Holding.invur(p, 40l);
-			                	if(redcharge.containsKey(p.getUniqueId())) {
-				                	redcharge.remove(p.getUniqueId());
-			                	}
-			    				p.getWorld().getEntities().stream().filter(e -> e.hasMetadata("redknightcharge"+rn)).forEach(e -> e.remove());
-				                for(Player pe : OverworldRaids.getheroes(p)) {
+						                for(Player pe : OverworldRaids.getheroes(p)) {
 
-									for(int i = 0; i <30; i++) {
-										int t2 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-							                @Override
-							                public void run() {
-								                Holding.holding(null, p, 40l);
-								                Holding.invur(p, 40l);
-												if(pe.getWorld() == p.getWorld()) {
-								                	final Location pel = pe.getLocation();
-								                    p.getWorld().playSound(pel, Sound.BLOCK_LAVA_POP, 1.0f, 2f);
-								                    p.getWorld().playSound(pel, Sound.BLOCK_LAVA_POP, 1.0f, 0f);
-						             				p.getWorld().spawnParticle(Particle.LANDING_LAVA, pel, 500, 1.5,0.1,1.5,0);
-						             				int t2 =Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-											                @Override
-											                public void run() {	
-											                		p.getWorld().playSound(pel, Sound.ITEM_BUCKET_FILL_LAVA, 1.0f, 0f);
-											                		p.getWorld().playSound(pel, Sound.ENTITY_PLAYER_SPLASH, 1.0f, 0f);
-												                    p.getWorld().playSound(pel, Sound.ITEM_FIRECHARGE_USE, 1.0f, 0f);
-																	p.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, pel, 200, 1.5,1,1.5,0);	
-																	p.getWorld().spawnParticle(Particle.LAVA, pel, 200, 1.5,1,1.5,0);	
-																for(Entity e : p.getWorld().getNearbyEntities(pel,1.5, 1.5, 1.5)) {
-																	if(e instanceof Player && e!=p) {
-																		Player pe = (Player)e;
-																		pe.damage(15,p);
-																	}
-																}
-											                }
-											            }, 12); 
-						        					ordt.put(rn, t2);
-												}
-							                }
-							            }, i*10); 	 
-										ordt.put(rn, t2);               	
-				                    }
-				                }
-			                }
-			            }, 650);
-						ordt.put(rn, t2);
-	                    int t3 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() {
-			                	p.playEffect(EntityEffect.HURT);
-			                	Holding.reset(Holding.ale(p));
-			                	Holding.ale(p).setMetadata("failed", new FixedMetadataValue(RMain.getInstance(),true));
-		                		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
-				                for(Player pe : OverworldRaids.getheroes(p)) {
-			    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-				                		pe.sendMessage(ChatColor.BOLD+"붉은기사: 힘이 빠지는군..");
-			    					}
-			    					else {
-				                		pe.sendMessage(ChatColor.BOLD+"RedKnight: I think it's time to go...");
-			    					}
-			                		Holding.holding(pe, p, 300l);
-			                		p.removeMetadata("fake", RMain.getInstance());
-			                		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
-				                }
-					            rb6cooldown.put(p.getUniqueId(), System.currentTimeMillis());
-					            int t3 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					                @Override
-					                public void run() {
-					                	p.removeMetadata("failed", RMain.getInstance());
-				                		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
-					                }
-					            }, 300);
-								ordt.put(rn, t3);
-			                }
-			            }, 1001);
-						ordt.put(rn, t3);
-			            rb6cooldown.put(p.getUniqueId(), System.currentTimeMillis());
-		            }
-		        }
-		        else 
-		        {
-                    if(fbt.containsKey(p.getUniqueId())) {
-                    	Bukkit.getScheduler().cancelTask(fbt.get(p.getUniqueId()));
-                    }
-	    			String rn = p.getMetadata("raid").get(0).asString();
-                    if(ordt.containsKey(rn)) {
-                    	ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
-                    	ordt.removeAll(rn);
-                    }
-	                Location rl = OverworldRaids.getraidloc(p).clone();
-					p.setHealth(p.getMaxHealth()*0.2);
-	                d.setCancelled(true);
-                	p.teleport(rl.clone().add(0, 0, 1));
-	                Holding.holding(null, p, 1001l);
-	                Holding.invur(p, 1001l);
-	                for(Player pe : OverworldRaids.getheroes(p)) {
-    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-	                		pe.sendMessage(ChatColor.BOLD+"붉은기사: 시련의 시간이다.");
-    					}
-    					else {
-	                		pe.sendMessage(ChatColor.BOLD+"RedKnight: Time To Ordeal.");
-    					}
-                		pe.teleport(rl);
-                		Holding.invur(pe, 40l);
-	                }
-                    int t1 = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() {
-
-			                Holding.untouchable(p, 970l);
-							for(int i = 0; i <10; i++) {
-			                    int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					                @Override
-					                public void run() {
-					                	p.teleport(rl.clone().add(0, 0.5, 1));
-										p.getWorld().playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 1, 0);
-					                    AtomicInteger j = new AtomicInteger(10);
-										for(int i = 0; i <20; i++) {
-											int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-								                @Override
-								                public void run() {
-									                Holding.holding(null, p, 40l);
-									                Holding.invur(p, 40l);
-								                	Random r1 = new Random();
-								                	Random r2 = new Random();
-								                	Random r3 = new Random();
-								                	Random r4 = new Random();
-								                	double rd1 = r1.nextDouble()*10 *(r3.nextBoolean()?1:-1);
-								                	double rd2 = r2.nextDouble()*10*(r4.nextBoolean()?1:-1);
-								                	Location frl = new Location(p.getWorld(), p.getLocation().getX()+rd1, p.getEyeLocation().getY(), p.getLocation().getZ()+rd2);
-								                	
-								                	Item sn = p.getWorld().dropItem(frl, new ItemStack(Material.FIRE_CORAL_BLOCK));
-								                	sn.setMetadata("redknightcharge", new FixedMetadataValue(RMain.getInstance(), true));
-								                	sn.setMetadata("redknightcharge"+rn, new FixedMetadataValue(RMain.getInstance(), true));
-								                	sn.setGlowing(true);
-								                	sn.setGravity(false);
-								                	sn.setVisualFire(true);
-								                	sn.setVelocity(p.getLocation().toVector().subtract(frl.toVector()).normalize().multiply(0.135));
-
-									                for(Player pe : OverworldRaids.getheroes(p)) {
-								                		if(pe.getWorld().equals(p.getWorld()) && rl.clone().distance(p.getLocation()) > 20 && pe.getWorld() == p.getWorld()) {
-									    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-										                		pe.sendMessage(ChatColor.BOLD+"붉은기사: 원위치!");
-									    					}
-									    					else {
-										                		pe.sendMessage(ChatColor.BOLD+"RedKnight: You Can't Get Away!");
-									    					}
-								                    		pe.teleport(rl);
-								                		}
-									                }
-									            	ArrayList<Location> ring = new ArrayList<Location>();
-									            	HashSet<Player> hp = new HashSet<>();
-								                    for(double angle=0.1; angle<Math.PI*2; angle += Math.PI/180) {
-								                    	Location one = rl.setDirection(rl.getDirection()).clone();
-								                    	one.setDirection(one.getDirection().rotateAroundY(angle));
-								                    	one.add(one.getDirection().normalize().multiply(j.get()*2));
-								                    	ring.add(one);
-								                	} 
-													j.getAndDecrement();
-													if(j.get()<=0) {
-														j.set(10);
-													}
-								                	ring.forEach(l -> {
-														p.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, l, 15, 0.6,1,0.6,0);
-														for(Entity e : p.getWorld().getNearbyEntities(l,0.6, 0.9, 0.6)) {
-															if(e instanceof Player && e!=p) {
-																Player pe = (Player)e;
-																hp.add(pe);
-															}
-														}
-								                		
-								                	});
-													hp.forEach(pe -> pe.damage(5));
-								                }
-								            }, i*10); 	 
-											ordt.put(rn, t1);
-					                    }
-										for(int i = 0; i <100; i++) {
-											int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-								                @Override
-								                public void run() {
-								                	for(Entity e : p.getNearbyEntities(1, 1, 1)) {
-								                		if(e.hasMetadata("redknightcharge"+rn)) {
-								                			Item sn = (Item) e;
-								                			Bukkit.getServer().getPluginManager().callEvent(new EntityPickupItemEvent(p,sn, 1));
-								                			sn.remove();
-								                			
-								                		}
-								                	}
-								                }
-								            }, i*2); 	 
-											ordt.put(rn, t1);
-					                    }
-					                }
-					            }, i*40); 	 
-								ordt.put(rn, t1);                   	
-		                    }
-		                }
-		            }, 20);
-					ordt.put(rn, t1);
-                    int t2 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() {
-			                Holding.holding(null, p, 40l);
-			                Holding.invur(p, 40l);
-		                	if(redcharge.containsKey(p.getUniqueId())) {
-			                	redcharge.remove(p.getUniqueId());
-		                	}
-		    				p.getWorld().getEntities().stream().filter(e -> e.hasMetadata("redknightcharge"+rn)).forEach(e -> e.remove());
-			                for(Player pe : OverworldRaids.getheroes(p)) {
-
-								for(int i = 0; i <30; i++) {
-									int t2 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-						                @Override
-						                public void run() {
-							                Holding.holding(null, p, 40l);
-							                Holding.invur(p, 40l);
 											if(pe.getWorld() == p.getWorld()) {
 							                	final Location pel = pe.getLocation();
 							                    p.getWorld().playSound(pel, Sound.BLOCK_LAVA_POP, 1.0f, 2f);
@@ -1963,44 +1673,100 @@ public class RedSkills extends Summoned{
 										            }, 12); 
 					        					ordt.put(rn, t2);
 											}
+						                    
 						                }
-						            }, i*10); 	 
-									ordt.put(rn, t2);               	
-			                    }
-			                }
+					                }
+					            }, i*10); 	 
+								ordt.put(rn, t1);
+		                    }
+							for(int i = 0; i <100; i++) {
+								int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+					                @Override
+					                public void run() {
+					                	for(Entity e : p.getNearbyEntities(1, 1, 1)) {
+					                		if(e.hasMetadata("redknightcharge"+rn)) {
+					                			Item sn = (Item) e;
+					                			Bukkit.getServer().getPluginManager().callEvent(new EntityPickupItemEvent(p,sn, 1));
+					                			sn.remove();
+					                			
+					                		}
+					                	}
+					                }
+					            }, i*2); 	 
+								ordt.put(rn, t1);
+		                    }
 		                }
-		            }, 650);
-					ordt.put(rn, t2);
-                    int t3 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() {
-		                	p.playEffect(EntityEffect.HURT);
-		                	Holding.reset(Holding.ale(p));
-		                	Holding.ale(p).setMetadata("failed", new FixedMetadataValue(RMain.getInstance(),true));
-	                		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
-			                for(Player pe : OverworldRaids.getheroes(p)) {
-		    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-			                		pe.sendMessage(ChatColor.BOLD+"붉은기사: 힘이 빠지는군..");
-		    					}
-		    					else {
-			                		pe.sendMessage(ChatColor.BOLD+"RedKnight: I think it's time to go...");
-		    					}
-		                		Holding.holding(pe, p, 300l);
-		                		p.removeMetadata("fake", RMain.getInstance());
-		                		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
-			                }
-				            rb6cooldown.put(p.getUniqueId(), System.currentTimeMillis());
-				            int t3 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() {
-				                	p.removeMetadata("failed", RMain.getInstance());
-			                		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
-				                }
-				            }, 300);
-							ordt.put(rn, t3);
-		                }
-		            }, 1001);
-					ordt.put(rn, t3);
+		            }, i*40); 	 
+					ordt.put(rn, t1);                   	
+                }
+            }
+        }, 20);
+		ordt.put(rn, t1);
+		
+        int t3 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+            	redknightfailed(p,rn);
+            }
+        }, 651);
+		ordt.put(rn, t3);
+	}
+
+	final private void redknightfailed(LivingEntity p, String rn) {
+    	p.playEffect(EntityEffect.HURT);
+    	Holding.reset(Holding.ale(p));
+    	Holding.ale(p).setMetadata("failed", new FixedMetadataValue(RMain.getInstance(),true));
+		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
+        for(Player pe : OverworldRaids.getheroes(p)) {
+			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
+        		pe.sendMessage(ChatColor.BOLD+"붉은기사: 힘이 빠지는군..");
+			}
+			else {
+        		pe.sendMessage(ChatColor.BOLD+"RedKnight: I think it's time to go...");
+			}
+    		Holding.holding(pe, p, 300l);
+    		p.removeMetadata("fake", RMain.getInstance());
+    		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
+        }
+        rb6cooldown.put(p.getUniqueId(), System.currentTimeMillis());
+        int t3 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+            	p.removeMetadata("failed", RMain.getInstance());
+        		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
+            }
+        }, 300);
+		ordt.put(rn, t3);
+	}
+	
+	@SuppressWarnings("deprecation")
+	
+	public void Ordeal(EntityDamageEvent d) 
+	{
+	    
+		int sec =70;
+		if(d.getEntity() instanceof Stray && d.getEntity().hasMetadata("redboss") && d.getEntity().hasMetadata("ruined")&& !d.getEntity().hasMetadata("failed")) 
+		{
+			Stray p = (Stray)d.getEntity();
+			if(!(p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2)|| !ordealable.containsKey(p.getUniqueId())) {
+				return;
+			}
+				if(rb6cooldown.containsKey(p.getUniqueId()))
+		        {
+		            long timer = (rb6cooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
+		            if(!(timer < 0))
+		            {
+		            }
+		            else 
+		            {
+		                rb6cooldown.remove(p.getUniqueId()); // removing player from HashMap
+		                ordeal(p,d);
+			            rb6cooldown.put(p.getUniqueId(), System.currentTimeMillis());
+		            }
+		        }
+		        else 
+		        {
+	                ordeal(p,d);
 		            rb6cooldown.put(p.getUniqueId(), System.currentTimeMillis());
 		        }
 			}

@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+import javax.annotation.Nullable;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -120,6 +122,9 @@ public class OverworldRaids extends Summoned implements Listener {
 	private HashMap<String, UUID> inhibitor = new HashMap<String, UUID>();
 	private HashMap<String, Integer> inhibitorhp = new HashMap<String, Integer>();
 	
+
+	private HashMap<String, String> language = new HashMap<String, String>();
+	
 	Integer DelayTime =  100;
 	Integer LIVES = 5;
 	Double BOSSHP = 100000d;
@@ -224,7 +229,7 @@ public class OverworldRaids extends Summoned implements Listener {
 			leadert.remove(rn);
 		}
 		
-		Location spl = raidloc.get(rn);
+		Location spl = raidloc.get(rn).clone();
 		if(tart.containsKey(rn)) {
 			Bukkit.getServer().getScheduler().cancelTask(tart.get(rn));
 			tart.remove(rn);
@@ -253,6 +258,7 @@ public class OverworldRaids extends Summoned implements Listener {
 			inhibitorhp.remove(rn);
 		}
 		
+		language.remove(rn);
 		
 		vil.remove(rn);
 		lives.remove(rn);
@@ -423,75 +429,12 @@ public class OverworldRaids extends Summoned implements Listener {
 			
     		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
     		newmob.setMetadata("bosswave1", new FixedMetadataValue(RMain.getInstance(), true));
-    		newmob.setMetadata("finalboss", new FixedMetadataValue(RMain.getInstance(), true));
     		
     		bossbargen("stoneboss", rn, newmob);
 
     		return newmob;
 		}
 		else if(in == 1) {
-    		ItemStack head = new ItemStack(Material.LEATHER_HELMET);
-			LeatherArmorMeta hem = (LeatherArmorMeta) head.getItemMeta();
-			hem.setLore(Arrays.asList("RedKnight Helmet"));
-			hem.setCustomModelData(100);
-			head.setItemMeta(hem);
-			ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
-			LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
-			chm.setColor(Color.RED);
-			chest.setItemMeta(chm);
-			chest.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-			chest.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-			chest.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
-			ItemStack leg = new ItemStack(Material.LEATHER_LEGGINGS);
-			LeatherArmorMeta lem = (LeatherArmorMeta) leg.getItemMeta();
-			lem.setColor(Color.RED);
-			leg.setItemMeta(lem);
-			leg.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-			leg.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-			leg.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
-			ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
-			LeatherArmorMeta bom = (LeatherArmorMeta) boots.getItemMeta();
-			bom.setColor(Color.RED);
-			boots.setItemMeta(bom);
-			boots.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-			boots.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-			boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
-			boots.addUnsafeEnchantment(Enchantment.DEPTH_STRIDER,5);
-    		ItemStack main = new ItemStack(Material.NETHERITE_AXE);
-    		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
-    		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
-    		ItemStack off = new ItemStack(Material.SHIELD);
-    		off.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
-    		off.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
-    		String reg = Bukkit.getPlayer(rn).getLocale().equalsIgnoreCase("ko_kr") ? "붉은기사":"RedKnight";
-    		Skeleton newmob = (Skeleton) MobspawnLoc(esl, ChatColor.RED+reg, dif1, head, chest, leg, boots, main, off, EntityType.SKELETON);
-    		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
-    		newmob.setGlowing(true);
-    		newmob.getEquipment().setBootsDropChance(0);
-    		newmob.getEquipment().setChestplateDropChance(0);
-    		newmob.getEquipment().setHelmetDropChance(0);
-    		newmob.getEquipment().setItemInMainHandDropChance(0);
-    		newmob.getEquipment().setItemInOffHandDropChance(0);
-    		newmob.getEquipment().setLeggingsDropChance(0);
-    		newmob.setMetadata("redboss", new FixedMetadataValue(RMain.getInstance(), true));
-    		
-    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), armor));
-    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
-    		newmob.setMetadata("bosswave1", new FixedMetadataValue(RMain.getInstance(), true));
-    		newmob.setLootTable(null);
-    		
-    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
-    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
-    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
-    		newmob.setRemoveWhenFarAway(false);
-    		raider.put(rn, newmob.getUniqueId());
-    		
-
-    		bossbargen("redboss", rn, newmob);
-
-    		return newmob;
-		}
-		else if(in == 2) {
 			ItemStack head = new ItemStack(Material.LEATHER_HELMET);
 			LeatherArmorMeta hem = (LeatherArmorMeta) head.getItemMeta();
 			head.setItemMeta(hem);
@@ -520,7 +463,7 @@ public class OverworldRaids extends Summoned implements Listener {
     		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
     		ItemStack off = new ItemStack(Material.ICE);
     		off.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
-    		String reg = Bukkit.getPlayer(rn).getLocale().equalsIgnoreCase("ko_kr") ? "설산마녀":"SnowWitch";
+    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "설산마녀":"SnowWitch";
     		Witch newmob = (Witch) MobspawnLoc(esl, ChatColor.BLUE+reg, dif1, null, null, null, boots, main, off, EntityType.WITCH);
     		newmob.setGlowing(true);
     		newmob.getEquipment().setBootsDropChance(0);
@@ -543,7 +486,6 @@ public class OverworldRaids extends Summoned implements Listener {
     		
     		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
     		newmob.setMetadata("bosswave1", new FixedMetadataValue(RMain.getInstance(), true));
-    		newmob.setMetadata("finalboss", new FixedMetadataValue(RMain.getInstance(), true));
     		newmob.setLootTable(null);
     		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
     		newmob.setRemoveWhenFarAway(false);
@@ -554,7 +496,7 @@ public class OverworldRaids extends Summoned implements Listener {
 
     		return newmob;
 		}
-		else if(in == 3) {
+		else if(in == 2) {
     		ArmorStand inhb = (ArmorStand) spl.getWorld().spawn(spl.clone().add(20, 0,20), ArmorStand.class);
     		inhb.setMetadata("portal", new FixedMetadataValue(RMain.getInstance(), true));
     		inhb.setMetadata("inhibitor", new FixedMetadataValue(RMain.getInstance(), rn));
@@ -578,38 +520,7 @@ public class OverworldRaids extends Summoned implements Listener {
 
     		return inhb;
 		}
-		else if(in ==4) {
-
-    		String reg = Bukkit.getPlayer(rn).getLocale().equalsIgnoreCase("ko_kr") ? "닥터B":"Dr.B";
-    		Illusioner newmob = (Illusioner) MobspawnLoc(esl, ChatColor.DARK_PURPLE+reg, dif1, new ItemStack(Material.BLACK_STAINED_GLASS), null, null, null, null, null, EntityType.ILLUSIONER);
-			newmob.setCanJoinRaid(false);
-			newmob.setPatrolTarget(null);
-			newmob.setPatrolLeader(false);
-    		newmob.setGlowing(true);
-    		newmob.getEquipment().setBootsDropChance(0);
-    		newmob.getEquipment().setChestplateDropChance(0);
-    		newmob.getEquipment().setHelmetDropChance(0);
-    		newmob.getEquipment().setItemInMainHandDropChance(0);
-    		newmob.getEquipment().setItemInOffHandDropChance(0);
-    		newmob.getEquipment().setLeggingsDropChance(0);
-    		newmob.setMetadata("hyperboss", new FixedMetadataValue(RMain.getInstance(), true));
-
-    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), armor));
-    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
-    		newmob.setMetadata("bosswave1", new FixedMetadataValue(RMain.getInstance(), true));
-    		newmob.setLootTable(null);
-    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
-    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
-    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
-    		newmob.setRemoveWhenFarAway(false);
-    		raider.put(rn, newmob.getUniqueId());
-    		
-
-    		bossbargen("hyperboss", rn, newmob);
-
-    		return newmob;
-		}
-		else if(in ==5) {
+		else if(in ==3) {
 
 			ItemStack pe = new ItemStack(Material.BLACK_BANNER);
 			BannerMeta pem = (BannerMeta) pe.getItemMeta();
@@ -647,7 +558,7 @@ public class OverworldRaids extends Summoned implements Listener {
 			mm.setCustomModelData(8008);
 			main.setItemMeta(mm);
 			
-    		String reg = Bukkit.getPlayer(rn).getLocale().equalsIgnoreCase("ko_kr") ? "밤의군단장":"Nightmare";
+    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "밤의군단장":"NightCorpsCommander";
     		Skeleton newmob = (Skeleton) MobspawnLoc(esl, ChatColor.GRAY+reg, dif1, pe, chest, leg, boots, main, null, EntityType.SKELETON);
 
     		newmob.setConversionTime(-1);
@@ -658,9 +569,151 @@ public class OverworldRaids extends Summoned implements Listener {
     		newmob.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(4);
     		
     		newmob.setMetadata("darkboss", new FixedMetadataValue(RMain.getInstance(), true));
-    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), true));
+    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), armor));
     		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
     		newmob.setMetadata("dark", new FixedMetadataValue(RMain.getInstance(), true));
+    		
+    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
+    		newmob.setMetadata("bosswave1", new FixedMetadataValue(RMain.getInstance(), true));
+    		newmob.setLootTable(null);
+    		newmob.setRemoveWhenFarAway(false);
+    		raider.put(rn, newmob.getUniqueId());
+    		
+
+    		bossbargen("darkboss", rn, newmob);
+
+    		return newmob;
+		}
+		else if(in ==4) {
+
+    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "닥터B":"Dr.B";
+    		Illusioner newmob = (Illusioner) MobspawnLoc(esl, ChatColor.DARK_PURPLE+reg, dif1, new ItemStack(Material.BLACK_STAINED_GLASS), null, null, null, null, null, EntityType.ILLUSIONER);
+			newmob.setCanJoinRaid(false);
+			newmob.setPatrolTarget(null);
+			newmob.setPatrolLeader(false);
+    		newmob.setGlowing(true);
+    		newmob.getEquipment().setBootsDropChance(0);
+    		newmob.getEquipment().setChestplateDropChance(0);
+    		newmob.getEquipment().setHelmetDropChance(0);
+    		newmob.getEquipment().setItemInMainHandDropChance(0);
+    		newmob.getEquipment().setItemInOffHandDropChance(0);
+    		newmob.getEquipment().setLeggingsDropChance(0);
+    		newmob.setMetadata("hyperboss", new FixedMetadataValue(RMain.getInstance(), true));
+
+    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), armor));
+    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
+    		newmob.setMetadata("bosswave1", new FixedMetadataValue(RMain.getInstance(), true));
+    		newmob.setLootTable(null);
+    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
+    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
+    		newmob.setRemoveWhenFarAway(false);
+    		raider.put(rn, newmob.getUniqueId());
+    		
+
+    		bossbargen("hyperboss", rn, newmob);
+
+    		return newmob;
+		}
+		else if(in == 5) {
+    		ItemStack head = new ItemStack(Material.LEATHER_HELMET);
+			LeatherArmorMeta hem = (LeatherArmorMeta) head.getItemMeta();
+			hem.setLore(Arrays.asList("RedKnight Helmet"));
+			hem.setCustomModelData(100);
+			head.setItemMeta(hem);
+			ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
+			LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
+			chm.setColor(Color.RED);
+			chest.setItemMeta(chm);
+			chest.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
+			chest.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+			chest.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+			ItemStack leg = new ItemStack(Material.LEATHER_LEGGINGS);
+			LeatherArmorMeta lem = (LeatherArmorMeta) leg.getItemMeta();
+			lem.setColor(Color.RED);
+			leg.setItemMeta(lem);
+			leg.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
+			leg.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+			leg.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+			ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
+			LeatherArmorMeta bom = (LeatherArmorMeta) boots.getItemMeta();
+			bom.setColor(Color.RED);
+			boots.setItemMeta(bom);
+			boots.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
+			boots.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+			boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+			boots.addUnsafeEnchantment(Enchantment.DEPTH_STRIDER,5);
+    		ItemStack main = new ItemStack(Material.NETHERITE_AXE);
+    		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
+    		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
+    		ItemStack off = new ItemStack(Material.SHIELD);
+    		off.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
+    		off.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
+    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "붉은기사":"RedKnight";
+    		Skeleton newmob = (Skeleton) MobspawnLoc(esl, ChatColor.RED+reg, dif1, head, chest, leg, boots, main, off, EntityType.SKELETON);
+    		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
+    		newmob.setGlowing(true);
+    		newmob.getEquipment().setBootsDropChance(0);
+    		newmob.getEquipment().setChestplateDropChance(0);
+    		newmob.getEquipment().setHelmetDropChance(0);
+    		newmob.getEquipment().setItemInMainHandDropChance(0);
+    		newmob.getEquipment().setItemInOffHandDropChance(0);
+    		newmob.getEquipment().setLeggingsDropChance(0);
+    		newmob.setMetadata("redboss", new FixedMetadataValue(RMain.getInstance(), true));
+    		
+    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), armor));
+    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
+    		newmob.setMetadata("bosswave1", new FixedMetadataValue(RMain.getInstance(), true));
+    		newmob.setLootTable(null);
+    		
+    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
+    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
+    		newmob.setRemoveWhenFarAway(false);
+    		raider.put(rn, newmob.getUniqueId());
+    		
+
+    		bossbargen("redboss", rn, newmob);
+
+    		return newmob;
+		}
+		else if(in ==6) {
+
+			ItemStack pe = new ItemStack(Material.NETHERITE_HELMET);
+			ItemMeta im = pe.getItemMeta();
+			im.setLore(Arrays.asList("Poison Boss"));
+			pe.setItemMeta(im);
+			ItemStack pe1 = new ItemStack(Material.NETHERITE_CHESTPLATE);
+			ItemMeta im1 = pe1.getItemMeta();
+			im1.setLore(Arrays.asList("Poison Boss"));
+			pe1.setItemMeta(im1);
+			pe1.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
+			pe1.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+			pe1.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+			ItemStack leg = new ItemStack(Material.NETHERITE_LEGGINGS);
+			ItemStack pe11 = new ItemStack(Material.NETHERITE_BOOTS);
+			ItemMeta im11 = pe11.getItemMeta();
+			im11.setLore(Arrays.asList("Poison Boss"));
+			pe11.setItemMeta(im11);
+			ItemStack main = new ItemStack(Material.NETHERITE_HOE);
+			ItemMeta mm = main.getItemMeta();
+			mm.setCustomModelData(8008);
+			main.setItemMeta(mm);
+			
+    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "테러리스트":"Terrorist";
+    		Skeleton newmob = (Skeleton) MobspawnLoc(esl, ChatColor.DARK_GREEN+reg, dif1, pe, pe1, leg, pe11, main, null, EntityType.SKELETON);
+
+    		newmob.setConversionTime(-1);
+    		newmob.setLootTable(null);
+    		newmob.setGlowing(true);
+    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
+    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+    		newmob.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(4);
+    		
+    		newmob.setMetadata("poisonboss", new FixedMetadataValue(RMain.getInstance(), true));
+    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), armor));
+    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
+    		newmob.setMetadata("poison", new FixedMetadataValue(RMain.getInstance(), true));
     		
     		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
     		newmob.setMetadata("bosswave1", new FixedMetadataValue(RMain.getInstance(), true));
@@ -678,6 +731,30 @@ public class OverworldRaids extends Summoned implements Listener {
 		}
 		
 	}
+	
+	final private void bossphase2(LivingEntity le) {
+		String rn = le.getMetadata("raid").get(0).asString();
+		raider.remove(rn, le.getUniqueId());
+		Bukkit.getServer().getScheduler().cancelTask(raidbart.get(rn));
+		Bukkit.getServer().getScheduler().cancelTask(raidt.get(rn));
+		BossBar	newbar = raidbar.get(rn);
+		newbar.setVisible(false);
+		if(leadert.containsKey(rn)) {
+			Bukkit.getServer().getScheduler().cancelTask(leadert.get(rn));
+			leadert.remove(rn);
+		}
+		if(tart.containsKey(rn)) {
+			Bukkit.getServer().getScheduler().cancelTask(tart.get(rn));
+			tart.remove(rn);
+		}
+    	heroes.get(rn).forEach(pu -> {
+    		Bukkit.getPlayer(pu).sendTitle(ChatColor.MAGIC + "aaaaaa",ChatColor.MAGIC + "aaaaaa", 5, 20, 5);
+    	});
+        
+		return;
+	}
+
+	
 	
 	@EventHandler
 	public void Escape(PlayerQuitEvent ev) 
@@ -726,7 +803,7 @@ public class OverworldRaids extends Summoned implements Listener {
 			}
 			if(raidcool.containsKey(p.getUniqueId())) {
 
-	            double timer = (raidcool.get(p.getUniqueId())/1000 + 10) - System.currentTimeMillis()/1000; 
+	            double timer = (raidcool.get(p.getUniqueId())/1000 + 5) - System.currentTimeMillis()/1000; 
 	            if(!(timer < 0))
 	            {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -824,9 +901,11 @@ public class OverworldRaids extends Summoned implements Listener {
     		
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
         		portal.setCustomName(rn + "파티의 출구 (웅크린상태에서 맨손으로 가격)");
+        		language.put(rn, p.getLocale());
 			}
 			else {
         		portal.setCustomName(rn + "'s Party Exit (Sneaking + Hit with Fist)");
+        		language.put(rn, p.getLocale());
 			}
     		portal.setCustomNameVisible(true);
     		portal.setCollidable(false);
@@ -918,7 +997,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	final private void OverworldRaidStart(Player p, String rn, Integer endif) {
 
 		
-		final Location spl = raidloc.get(rn);
+		final Location spl = raidloc.get(rn).clone();
 
 		if(Party.hasParty(p)) {
 			if(Party.isOwner(p)) {
@@ -1091,7 +1170,7 @@ public class OverworldRaids extends Summoned implements Listener {
 			LivingEntity le = d.getEntity();
 			String rn = le.getMetadata("raidvil").get(0).asString();
 
-			if(Bukkit.getPlayer(rn).getLocale().equalsIgnoreCase("ko_kr")) {
+			if(language.get(rn).equalsIgnoreCase("ko_kr")) {
 				OverworldRaidFinish(rn, "패배..", "주민 보호 실패",0);
 			}
 			else {
@@ -1113,7 +1192,7 @@ public class OverworldRaids extends Summoned implements Listener {
         	});
         	if(lives.getOrDefault(rn, 0)<=0) {
 
-    			if(Bukkit.getPlayer(rn).getLocale().equalsIgnoreCase("ko_kr")) {
+    			if(language.get(rn).equalsIgnoreCase("ko_kr")) {
     				OverworldRaidFinish(rn, "패배..", "모든 목숨 소진",0);
     			}
     			else {
@@ -1450,16 +1529,169 @@ public class OverworldRaids extends Summoned implements Listener {
 		}
 	}
 	@EventHandler
+	public void StoneGolemBoss2(EntityDeathEvent d) 
+	{	
+		if(d.getEntity().hasMetadata("bosswave1") && d.getEntity().hasMetadata("stoneboss") && raider.containsValue(d.getEntity().getUniqueId())) {
+			LivingEntity le = d.getEntity();
+			String rn = le.getMetadata("raid").get(0).asString();
+			
+			
+			raider.remove(rn, le.getUniqueId());
+			if(raider.get(rn).size()<=0){
+				bossphase2(le);
+				Location spl = raidloc.get(rn).clone();
+	        	spl.getWorld().spawnParticle(Particle.BLOCK_MARKER, d.getEntity().getLocation(), 1000,1,1,1, Material.STONE.createBlockData());
+	        	spl.getWorld().spawnParticle(Particle.BLOCK_MARKER, d.getEntity().getLocation(), 1000,1,1,1, Material.GRANITE.createBlockData());
+	        	spl.getWorld().spawnParticle(Particle.CLOUD, d.getEntity().getLocation(), 1000,1,1,1);
+	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_IRON_GOLEM_REPAIR, 1, 0);
+	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.BLOCK_STONE_BREAK, 1f, 0);
+	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_IRON_GOLEM_DEATH, 0.5f, 0);
+	        	
+	            int rat =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	                @Override
+	                public void run() {
+	
+	                	Location esl = d.getEntity().getLocation().clone().add(0,0.5, 0);
+	
+	    	    		
+		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "분노한스톤골렘":"OutragedStoneGolem";
+		        		IronGolem newmob = (IronGolem) MobspawnLoc(esl, ChatColor.RED+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, null, null, null, null, null, null, EntityType.IRON_GOLEM);
+		        		newmob.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 999999, 3, false, false));
+	    	    		newmob.setGlowing(true);
+	    	    		newmob.getEquipment().setBootsDropChance(0);
+	    	    		newmob.getEquipment().setChestplateDropChance(0);
+	    	    		newmob.getEquipment().setHelmetDropChance(0);
+	    	    		newmob.getEquipment().setItemInMainHandDropChance(0);
+	    	    		newmob.getEquipment().setItemInOffHandDropChance(0);
+	    	    		newmob.getEquipment().setLeggingsDropChance(0);
+	    	    		newmob.setMetadata("stoneboss", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		newmob.setMetadata("ruined", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		
+	    	    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), le.getMetadata("boss").get(0).asDouble()));
+	    	    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
+	    	    		newmob.setMetadata("finalboss", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		newmob.setLootTable(null);
+	    	    		
+	    	    		
+	    	    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.4);
+	    	    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+	    	    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		newmob.setRemoveWhenFarAway(false);
+	    	    		raider.put(rn, newmob.getUniqueId());
+	    	    		
+
+
+	    	    		bossbargen("RagedStoneGolem", rn, newmob);
+	    	    		
+	    	    		targeting(rn);
+	            		
+	                	heroes.get(rn).forEach(pu -> {
+							if(Bukkit.getPlayer(pu).getLocale().equalsIgnoreCase("ko_kr")) {
+		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "토벌작전 2단계"), null, 5, 69, 5);
+				        		Bukkit.getPlayer(pu).playSound(spl, Sound.EVENT_RAID_HORN, 1, 1);
+					    		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + "남은 목숨 "+ String.valueOf(lives.getOrDefault(rn, 0)));
+							}
+							else {
+		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "PHASE 2"), null, 5, 69, 5);
+				        		Bukkit.getPlayer(pu).playSound(spl, Sound.AMBIENT_CRIMSON_FOREST_ADDITIONS, 1, 1);
+		                		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + String.valueOf(lives.getOrDefault(rn, 0)) + "lives Left");
+							}
+	                	});
+	    	    		
+	                }
+	            }, 50); 
+	            raidt.put(rn, rat);
+			}
+		}
+	}
+
+	@EventHandler
+	public void SnowWitchBoss2(EntityDeathEvent d) 
+	{	
+		if(d.getEntity().hasMetadata("bosswave1") && d.getEntity().hasMetadata("snowyboss") && raider.containsValue(d.getEntity().getUniqueId())) {
+			LivingEntity le = d.getEntity();
+			String rn = le.getMetadata("raid").get(0).asString();
+			
+			
+			raider.remove(rn, le.getUniqueId());
+			if(raider.get(rn).size()<=0){
+				bossphase2(le);
+				Location spl = raidloc.get(rn).clone();
+	        	spl.getWorld().spawnParticle(Particle.SOUL, d.getEntity().getLocation(), 1000,1,1,1);
+	        	spl.getWorld().spawnParticle(Particle.SNOWFLAKE, d.getEntity().getLocation(), 500,1,1,1);
+	        	spl.getWorld().spawnParticle(Particle.WHITE_ASH, d.getEntity().getLocation(), 1000,1,1,1);
+	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_SKELETON_AMBIENT, 1, 0);
+	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_PLAYER_HURT_FREEZE, 0.2f, 0);
+	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ITEM_BUCKET_FILL_POWDER_SNOW, 1, 0);
+	        	
+	            int rat =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	                @Override
+	                public void run() {
+	
+	                	Location esl = d.getEntity().getLocation().clone().add(0,0.5, 0);
+	
+	    	    		
+		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "차가운심장의마녀":"FrozenHeart";
+		        		Witch newmob = (Witch) MobspawnLoc(esl, ChatColor.RED+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, null, null, null, null, null, null, EntityType.WITCH);
+	    	    		newmob.setGlowing(true);
+	    	    		newmob.getEquipment().setBootsDropChance(0);
+	    	    		newmob.getEquipment().setChestplateDropChance(0);
+	    	    		newmob.getEquipment().setHelmetDropChance(0);
+	    	    		newmob.getEquipment().setItemInMainHandDropChance(0);
+	    	    		newmob.getEquipment().setItemInOffHandDropChance(0);
+	    	    		newmob.getEquipment().setLeggingsDropChance(0);
+	    	    		newmob.setMetadata("snowyboss", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		newmob.setMetadata("snowy", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		newmob.setMetadata("ruined", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		
+	    	    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), le.getMetadata("boss").get(0).asDouble()));
+	    	    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
+	    	    		newmob.setMetadata("finalboss", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		newmob.setLootTable(null);
+	    	    		
+	    	    		
+	    	    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.4);
+	    	    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+	    	    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		newmob.setRemoveWhenFarAway(false);
+	    	    		raider.put(rn, newmob.getUniqueId());
+	    	    		
+	
+	
+	    	    		bossbargen("FrozenHeart", rn, newmob);
+	    	    		
+	    	    		targeting(rn);
+	            		
+	                	heroes.get(rn).forEach(pu -> {
+							if(Bukkit.getPlayer(pu).getLocale().equalsIgnoreCase("ko_kr")) {
+		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "토벌작전 2단계"), null, 5, 69, 5);
+				        		Bukkit.getPlayer(pu).playSound(spl, Sound.EVENT_RAID_HORN, 1, 1);
+					    		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + "남은 목숨 "+ String.valueOf(lives.getOrDefault(rn, 0)));
+							}
+							else {
+		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "PHASE 2"), null, 5, 69, 5);
+				        		Bukkit.getPlayer(pu).playSound(spl, Sound.AMBIENT_CRIMSON_FOREST_ADDITIONS, 1, 1);
+		                		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + String.valueOf(lives.getOrDefault(rn, 0)) + "lives Left");
+							}
+	                	});
+	    	    		
+	                }
+	            }, 50); 
+	            raidt.put(rn, rat);
+			}
+		}
+	}
+
+	@EventHandler
 	public void Inhibitordamage(EntityDamageByEntityEvent d) 
 	{	
-
+	
 		if(d.getEntity().hasMetadata("inhibitor") && inhibitor.containsValue(d.getEntity().getUniqueId())) {
 			Entity le = d.getEntity();
 			String rn = le.getMetadata("inhibitor").get(0).asString();
 			Bukkit.getPluginManager().callEvent(new EntityDeathEvent((LivingEntity) Bukkit.getEntity(inhibitor.get(rn)) , null));
 		}
 	}
-	
 
 	@EventHandler
 	public void ElderGuardianRaidBoss(EntityDeathEvent d) 
@@ -1527,7 +1759,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	            	double number2 = (random.nextDouble()+1.5) * 5 * (random.nextBoolean() ? -1 : 1);
 	            	Location esl = spl.clone().add(number, -10, number2);
 	
-	        		String reg = Bukkit.getPlayer(rn).getLocale().equalsIgnoreCase("ko_kr") ? "엘더가디언":"ElderGuardian";
+	        		String reg = lang.equalsIgnoreCase("ko_kr") ? "엘더가디언":"ElderGuardian";
 	        		ElderGuardian newmob = (ElderGuardian) MobspawnLoc(esl, ChatColor.BLUE+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, null, null, null, null, null, null, EntityType.ELDER_GUARDIAN);
 		    		newmob.setGlowing(true);
 		    		newmob.getEquipment().setBootsDropChance(0);
@@ -1537,8 +1769,8 @@ public class OverworldRaids extends Summoned implements Listener {
 		    		newmob.getEquipment().setItemInOffHandDropChance(0);
 		    		newmob.getEquipment().setLeggingsDropChance(0);
 		    		newmob.setMetadata("oceanboss", new FixedMetadataValue(RMain.getInstance(), true));
-
-    	    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), le.getMetadata("boss").get(0).asDouble()));
+	
+		    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), le.getMetadata("boss").get(0).asDouble()));
 		    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
 		    		newmob.setMetadata("bosswave1", new FixedMetadataValue(RMain.getInstance(), true));
 		    		newmob.setLootTable(null);
@@ -1549,8 +1781,8 @@ public class OverworldRaids extends Summoned implements Listener {
 		    		newmob.setRemoveWhenFarAway(false);
 		    		raider.put(rn, newmob.getUniqueId());
 		    		
-
-    	    		bossbargen("ElderGuardian", rn, newmob);
+	
+		    		bossbargen("ElderGuardian", rn, newmob);
 	        		
 	            	heroes.get(rn).forEach(pu -> {
 						if(Bukkit.getPlayer(pu).getLocale().equalsIgnoreCase("ko_kr")) {
@@ -1582,22 +1814,8 @@ public class OverworldRaids extends Summoned implements Listener {
 			String rn = le.getMetadata("raid").get(0).asString();
 			raider.remove(rn, le.getUniqueId());
 			if(raider.get(rn).size()<=0){
-				Bukkit.getServer().getScheduler().cancelTask(raidbart.get(rn));
-				Bukkit.getServer().getScheduler().cancelTask(raidt.get(rn));
-	    		BossBar	newbar = raidbar.get(rn);
-	    		newbar.setVisible(false);
-				Location spl = raidloc.get(rn);
-				if(leadert.containsKey(rn)) {
-					Bukkit.getServer().getScheduler().cancelTask(leadert.get(rn));
-					leadert.remove(rn);
-				}
-	    		if(tart.containsKey(rn)) {
-	    			Bukkit.getServer().getScheduler().cancelTask(tart.get(rn));
-	    			tart.remove(rn);
-	    		}
-	        	heroes.get(rn).forEach(pu -> {
-	        		Bukkit.getPlayer(pu).sendTitle(ChatColor.MAGIC + "aaaaaa",ChatColor.MAGIC + "aaaaaa", 5, 20, 5);
-	        	});
+				bossphase2(le);
+				Location spl = raidloc.get(rn).clone();
 	        	spl.getWorld().spawnParticle(Particle.SOUL, lel, 1000,1,1,1);
 	        	spl.getWorld().spawnParticle(Particle.BUBBLE_COLUMN_UP, lel, 1000,1,1,1);
 	        	spl.getWorld().spawnParticle(Particle.NAUTILUS, lel, 1000,1,1,1);
@@ -1612,7 +1830,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	                	Location esl = lel.clone().add(0, -10, 0);
 	
 	    	    		
-		        		String reg = Bukkit.getPlayer(rn).getLocale().equalsIgnoreCase("ko_kr") ? "잠식된 엘더가디언":"Encroached ElderGuardian";
+		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "잠식된 엘더가디언":"Encroached ElderGuardian";
 		        		ElderGuardian newmob = (ElderGuardian) MobspawnLoc(esl, ChatColor.BLUE+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, null, null, null, null, null, null, EntityType.ELDER_GUARDIAN);
 	    	    		newmob.setGlowing(true);
 	    	    		newmob.getEquipment().setBootsDropChance(0);
@@ -1623,7 +1841,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		newmob.getEquipment().setLeggingsDropChance(0);
 	    	    		newmob.setMetadata("oceanboss", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		newmob.setMetadata("ruined", new FixedMetadataValue(RMain.getInstance(), true));
-
+	
 	    	    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), le.getMetadata("boss").get(0).asDouble()));
 	    	    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
 	    	    		newmob.setMetadata("finalboss", new FixedMetadataValue(RMain.getInstance(), true));
@@ -1636,7 +1854,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		newmob.setRemoveWhenFarAway(false);
 	    	    		raider.put(rn, newmob.getUniqueId());
 	    	    		
-
+	
 	    	    		bossbargen("EncroachedElderGuardian", rn, newmob);
 	            		
 	                	heroes.get(rn).forEach(pu -> {
@@ -1659,6 +1877,110 @@ public class OverworldRaids extends Summoned implements Listener {
 	}
 
 	@EventHandler
+	public void NightBoss2(EntityDeathEvent d) 
+	{	
+		if(d.getEntity().hasMetadata("bosswave1") && d.getEntity().hasMetadata("darkboss") && raider.containsValue(d.getEntity().getUniqueId())) {
+			LivingEntity le = d.getEntity();
+			String rn = le.getMetadata("raid").get(0).asString();
+			raider.remove(rn, le.getUniqueId());
+			if(raider.get(rn).size()<=0){
+				bossphase2(le);
+				Location spl = raidloc.get(rn).clone();
+	        	spl.getWorld().spawnParticle(Particle.SOUL, spl, 1000,1,1,1);
+	        	spl.getWorld().spawnParticle(Particle.DRIPPING_OBSIDIAN_TEAR, spl, 1000,1,1,1);
+	        	spl.getWorld().spawnParticle(Particle.SPELL_WITCH, spl, 1000,1,1,1);
+	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_PHANTOM_AMBIENT, 1, 0);
+	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_SKELETON_CONVERTED_TO_STRAY, 1, 0);
+	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_WITHER_DEATH, 0.1f, 0);
+	            int rat =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	                @Override
+	                public void run() {
+	
+
+	        			ItemStack pe = new ItemStack(Material.BLACK_BANNER);
+	        			BannerMeta pem = (BannerMeta) pe.getItemMeta();
+	        			pem.addPattern(new Pattern(DyeColor.BLACK, PatternType.BASE));
+	        			pem.addPattern(new Pattern(DyeColor.GRAY, PatternType.STRIPE_SMALL));
+	        			pem.addPattern(new Pattern(DyeColor.BLACK, PatternType.CROSS));
+	        			pem.addPattern(new Pattern(DyeColor.LIGHT_GRAY, PatternType.TRIANGLES_TOP));
+	        			pem.addPattern(new Pattern(DyeColor.LIGHT_GRAY, PatternType.TRIANGLES_BOTTOM));
+	        			pem.addPattern(new Pattern(DyeColor.BLACK, PatternType.BORDER));
+	        			pem.addPattern(new Pattern(DyeColor.YELLOW, PatternType.MOJANG));
+	        			pe.setItemMeta(pem);
+	        			ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
+	        			LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
+	        			chm.setColor(Color.BLACK);
+	        			chest.setItemMeta(chm);
+	        			chest.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
+	        			chest.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+	        			chest.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+	        			ItemStack leg = new ItemStack(Material.LEATHER_LEGGINGS);
+	        			LeatherArmorMeta lem = (LeatherArmorMeta) leg.getItemMeta();
+	        			lem.setColor(Color.BLACK);
+	        			leg.setItemMeta(lem);
+	        			leg.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
+	        			leg.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+	        			leg.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+	        			ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
+	        			LeatherArmorMeta bom = (LeatherArmorMeta) boots.getItemMeta();
+	        			bom.setColor(Color.BLACK);
+	        			boots.setItemMeta(bom);
+	        			boots.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
+	        			boots.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+	        			boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+	        			ItemStack main = new ItemStack(Material.NETHERITE_HOE);
+	        			ItemMeta mm = main.getItemMeta();
+	        			mm.setCustomModelData(8008);
+	        			main.setItemMeta(mm);
+		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "악몽의형상":"NightMare";
+	        			
+	            		Skeleton newmob = (Skeleton) MobspawnLoc(le.getLocation(), ChatColor.GRAY+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, pe, chest, leg, boots, main, null, EntityType.SKELETON);
+	            		
+	            		
+	    	    		newmob.setGlowing(true);
+	    	    		newmob.setMetadata("darkboss", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		newmob.setMetadata("ruined", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		newmob.setMetadata("dark", new FixedMetadataValue(RMain.getInstance(), true));
+	
+	    	    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), le.getMetadata("boss").get(0).asDouble()));
+	    	    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
+	    	    		newmob.setMetadata("finalboss", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		newmob.setLootTable(null);
+	    	    		newmob.setConversionTime(-1);
+	    	    		
+	    	    		
+	    	    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.4);
+	    	    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+	    	    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		newmob.setRemoveWhenFarAway(false);
+	    	    		raider.put(rn, newmob.getUniqueId());
+	    	    		
+	
+	
+	    	    		bossbargen("NightMare", rn, newmob);
+	    	    		
+	    	    		targeting(rn);
+	            		
+	                	heroes.get(rn).forEach(pu -> {
+							if(Bukkit.getPlayer(pu).getLocale().equalsIgnoreCase("ko_kr")) {
+		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "토벌작전 2단계"), null, 5, 69, 5);
+				        		Bukkit.getPlayer(pu).playSound(spl, Sound.EVENT_RAID_HORN, 1, 1);
+					    		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + "남은 목숨 "+ String.valueOf(lives.getOrDefault(rn, 0)));
+							}
+							else {
+		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "PHASE 2"), null, 5, 69, 5);
+				        		Bukkit.getPlayer(pu).playSound(spl, Sound.AMBIENT_CRIMSON_FOREST_ADDITIONS, 1, 1);
+		                		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + String.valueOf(lives.getOrDefault(rn, 0)) + "lives Left");
+							}
+	                	});
+	                }
+	            }, 50); 
+	            raidt.put(rn, rat);
+			}
+		}
+	}
+
+	@EventHandler
 	public void DrBRaidBoss2(EntityDeathEvent d) 
 	{	
 		if(d.getEntity().hasMetadata("bosswave1") && d.getEntity().hasMetadata("hyperboss") && raider.containsValue(d.getEntity().getUniqueId())) {
@@ -1666,23 +1988,9 @@ public class OverworldRaids extends Summoned implements Listener {
 			String rn = le.getMetadata("raid").get(0).asString();
 			raider.remove(rn, le.getUniqueId());
 			if(raider.get(rn).size()<=0){
-				Bukkit.getServer().getScheduler().cancelTask(raidbart.get(rn));
-				Bukkit.getServer().getScheduler().cancelTask(raidt.get(rn));
-	    		BossBar	newbar = raidbar.get(rn);
-	    		newbar.setVisible(false);
-				Location spl = raidloc.get(rn);
-				if(leadert.containsKey(rn)) {
-					Bukkit.getServer().getScheduler().cancelTask(leadert.get(rn));
-					leadert.remove(rn);
-				}
-	    		if(tart.containsKey(rn)) {
-	    			Bukkit.getServer().getScheduler().cancelTask(tart.get(rn));
-	    			tart.remove(rn);
-	    		}
-	        	heroes.get(rn).forEach(pu -> {
-	        		Bukkit.getPlayer(pu).sendTitle(ChatColor.MAGIC + "aaaaaa",ChatColor.MAGIC + "aaaaaa", 5, 20, 5);
-	        	});
-	        	spl.getWorld().spawnParticle(Particle.BLOCK_MARKER, d.getEntity().getLocation(), 1000,1,1,1, Material.GLASS.createBlockData());
+				bossphase2(le);
+				Location spl = raidloc.get(rn).clone();
+	        	spl.getWorld().spawnParticle(Particle.BLOCK_MARKER, d.getEntity().getLocation(), 1000,1,1,1, Material.BARRIER.createBlockData());
 	        	spl.getWorld().spawnParticle(Particle.SPELL_INSTANT, d.getEntity().getLocation(), 1000,1,1,1);
 	        	spl.getWorld().spawnParticle(Particle.CLOUD, d.getEntity().getLocation(), 1000,1,1,1);
 	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_GOAT_SCREAMING_AMBIENT, 1, 0);
@@ -1698,12 +2006,12 @@ public class OverworldRaids extends Summoned implements Listener {
 	        			ItemMeta mm = main.getItemMeta();
 	        			mm.setCustomModelData(7009);
 	        			main.setItemMeta(mm);
-		        		String reg = Bukkit.getPlayer(rn).getLocale().equalsIgnoreCase("ko_kr") ? "더비스트":"TheBeast";
-		        		Husk newmob = (Husk) MobspawnLoc(le.getLocation().add(0, -20, 0), ChatColor.DARK_PURPLE+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2,  head, null, null, null, main, null, EntityType.HUSK);
+		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "더비스트":"TheBeast";
+		        		Husk newmob = (Husk) MobspawnLoc(le.getLocation().clone().add(0, 0.5, 0), ChatColor.DARK_PURPLE+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2,  head, null, null, null, main, null, EntityType.HUSK);
 	    	    		newmob.setGlowing(true);
 	    	    		newmob.setMetadata("hyperboss", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		newmob.setMetadata("ruined", new FixedMetadataValue(RMain.getInstance(), true));
-
+	
 	    	    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), le.getMetadata("boss").get(0).asDouble()));
 	    	    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
 	    	    		newmob.setMetadata("finalboss", new FixedMetadataValue(RMain.getInstance(), true));
@@ -1719,7 +2027,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		raider.put(rn, newmob.getUniqueId());
 	    	    		
 	
-
+	
 	    	    		bossbargen("TheBeast", rn, newmob);
 	    	    		
 	    	    		targeting(rn);
@@ -1751,22 +2059,8 @@ public class OverworldRaids extends Summoned implements Listener {
 			String rn = le.getMetadata("raid").get(0).asString();
 			raider.remove(rn, le.getUniqueId());
 			if(raider.get(rn).size()<=0){
-				Bukkit.getServer().getScheduler().cancelTask(raidbart.get(rn));
-				Bukkit.getServer().getScheduler().cancelTask(raidt.get(rn));
-	    		BossBar	newbar = raidbar.get(rn);
-	    		newbar.setVisible(false);
-				Location spl = raidloc.get(rn);
-				if(leadert.containsKey(rn)) {
-					Bukkit.getServer().getScheduler().cancelTask(leadert.get(rn));
-					leadert.remove(rn);
-				}
-	    		if(tart.containsKey(rn)) {
-	    			Bukkit.getServer().getScheduler().cancelTask(tart.get(rn));
-	    			tart.remove(rn);
-	    		}
-	        	heroes.get(rn).forEach(pu -> {
-	        		Bukkit.getPlayer(pu).sendTitle(ChatColor.MAGIC + "aaaaaa",ChatColor.MAGIC + "aaaaaa", 5, 20, 5);
-	        	});
+				bossphase2(le);
+				Location spl = raidloc.get(rn).clone();
 	        	spl.getWorld().spawnParticle(Particle.SOUL, d.getEntity().getLocation(), 1000,1,1,1);
 	        	spl.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, d.getEntity().getLocation(), 1000,1,1,1);
 	        	spl.getWorld().spawnParticle(Particle.FLAME, d.getEntity().getLocation(), 1000,1,1,1);
@@ -1784,24 +2078,16 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		ItemStack head = le.getEquipment().getHelmet();
 	    				ItemStack chest = new ItemStack(Material.NETHERITE_CHESTPLATE);
 	    				chest.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-	    				chest.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-	    				chest.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
 	    				ItemStack leg = new ItemStack(Material.NETHERITE_LEGGINGS);
 	    				leg.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-	    				leg.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-	    				leg.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
 	    				ItemStack boots = new ItemStack(Material.NETHERITE_BOOTS);
 	    				boots.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-	    				boots.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-	    				boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
 	    				boots.addUnsafeEnchantment(Enchantment.DEPTH_STRIDER,5);
 	    	    		ItemStack main = new ItemStack(Material.NETHERITE_AXE);
 	    	    		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
-	    	    		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
 	    	    		ItemStack off = new ItemStack(Material.SHIELD);
 	    	    		off.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
-	    	    		off.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
-		        		String reg = Bukkit.getPlayer(rn).getLocale().equalsIgnoreCase("ko_kr") ? "몰락한 붉은기사":"Ruined RedKnight";
+		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "몰락한 붉은기사":"Ruined RedKnight";
 	    	    		Stray newmob = (Stray) MobspawnLoc(esl, ChatColor.RED+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, head, chest, leg, boots, main, main, EntityType.STRAY);
 	    	    		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
 	    	    		newmob.setGlowing(true);
@@ -1826,7 +2112,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		newmob.setRemoveWhenFarAway(false);
 	    	    		raider.put(rn, newmob.getUniqueId());
 	    	    		
-
+	
 	    	    		bossbargen("RuinedRedKnight", rn, newmob);
 	
 	    	    		targeting(rn);
@@ -1838,6 +2124,93 @@ public class OverworldRaids extends Summoned implements Listener {
 							}
 							else {
 		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.RED + "PHASE 2"), null, 5, 69, 5);
+				        		Bukkit.getPlayer(pu).playSound(spl, Sound.AMBIENT_CRIMSON_FOREST_ADDITIONS, 1, 1);
+		                		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + String.valueOf(lives.getOrDefault(rn, 0)) + "lives Left");
+							}
+	                	});
+	                }
+	            }, 50); 
+	            raidt.put(rn, rat);
+			}
+		}
+	}
+	
+
+	@EventHandler
+	public void PoisonBoss2(EntityDeathEvent d) 
+	{	
+		if(d.getEntity().hasMetadata("bosswave1") && d.getEntity().hasMetadata("poisonboss") && raider.containsValue(d.getEntity().getUniqueId())) {
+			LivingEntity le = d.getEntity();
+			String rn = le.getMetadata("raid").get(0).asString();
+			raider.remove(rn, le.getUniqueId());
+			if(raider.get(rn).size()<=0){
+				bossphase2(le);
+				Location spl = raidloc.get(rn).clone();
+	        	spl.getWorld().spawnParticle(Particle.BLOCK_MARKER, d.getEntity().getLocation(), 1000,1,1,1, Material.BARRIER.createBlockData());
+	        	spl.getWorld().spawnParticle(Particle.SPELL_INSTANT, d.getEntity().getLocation(), 1000,1,1,1);
+	        	spl.getWorld().spawnParticle(Particle.CLOUD, d.getEntity().getLocation(), 1000,1,1,1);
+	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_GOAT_SCREAMING_AMBIENT, 1, 0);
+	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_HUSK_CONVERTED_TO_ZOMBIE, 1, 0);
+	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_HUSK_AMBIENT, 1, 0);
+	            int rat =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	                @Override
+	                public void run() {
+	
+	                	ItemStack pe = new ItemStack(Material.NETHERITE_HELMET);
+	        			ItemMeta im = pe.getItemMeta();
+	        			im.setLore(Arrays.asList("Poison Boss"));
+	        			pe.setItemMeta(im);
+	        			ItemStack pe1 = new ItemStack(Material.NETHERITE_CHESTPLATE);
+	        			ItemMeta im1 = pe1.getItemMeta();
+	        			im1.setLore(Arrays.asList("Poison Boss"));
+	        			pe1.setItemMeta(im1);
+	        			pe1.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
+	        			pe1.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+	        			pe1.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+	        			ItemStack leg = new ItemStack(Material.NETHERITE_LEGGINGS);
+	        			ItemStack pe11 = new ItemStack(Material.NETHERITE_BOOTS);
+	        			ItemMeta im11 = pe11.getItemMeta();
+	        			im11.setLore(Arrays.asList("Poison Boss"));
+	        			pe11.setItemMeta(im11);
+	        			ItemStack main = new ItemStack(Material.NETHERITE_HOE);
+	        			ItemMeta mm = main.getItemMeta();
+	        			mm.setCustomModelData(8008);
+	        			main.setItemMeta(mm);
+	        			
+	            		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "종말론자":"TheApocalyptic";
+	            		Skeleton newmob = (Skeleton) MobspawnLoc(le.getLocation().clone().add(0, 0.5, 0), ChatColor.DARK_GREEN+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, pe, pe1, leg, pe11, main, null, EntityType.SKELETON);
+	            		
+	    	    		newmob.setGlowing(true);
+	    	    		newmob.setMetadata("poisonboss", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		newmob.setMetadata("ruined", new FixedMetadataValue(RMain.getInstance(), true));
+	
+	    	    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), le.getMetadata("boss").get(0).asDouble()));
+	    	    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
+	    	    		newmob.setMetadata("finalboss", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		newmob.setLootTable(null);
+	    	    		newmob.setConversionTime(-1);
+	    	    		
+	    	    		
+	    	    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.4);
+	    	    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+	    	    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		newmob.setRemoveWhenFarAway(false);
+	    	    		raider.put(rn, newmob.getUniqueId());
+	    	    		
+	
+	
+	    	    		bossbargen("TheApocalyptic", rn, newmob);
+	    	    		
+	    	    		targeting(rn);
+	            		
+	                	heroes.get(rn).forEach(pu -> {
+							if(Bukkit.getPlayer(pu).getLocale().equalsIgnoreCase("ko_kr")) {
+		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "토벌작전 2단계"), null, 5, 69, 5);
+				        		Bukkit.getPlayer(pu).playSound(spl, Sound.EVENT_RAID_HORN, 1, 1);
+					    		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + "남은 목숨 "+ String.valueOf(lives.getOrDefault(rn, 0)));
+							}
+							else {
+		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "PHASE 2"), null, 5, 69, 5);
 				        		Bukkit.getPlayer(pu).playSound(spl, Sound.AMBIENT_CRIMSON_FOREST_ADDITIONS, 1, 1);
 		                		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + String.valueOf(lives.getOrDefault(rn, 0)) + "lives Left");
 							}
