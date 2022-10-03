@@ -1131,7 +1131,7 @@ public class OverworldRaids extends Summoned implements Listener {
 				Bukkit.getScheduler().cancelTask(difent.remove(rn));
 			}
 			Integer endif = 0;
-			
+			d.setCancelled(true);
 			try {
 				endif = Integer.parseInt(d.getMessage());
 				if(endif > RaidDifficulties.getMaxDifficulty(p,RaidCategory.OVERWORLD)) {
