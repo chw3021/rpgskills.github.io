@@ -697,9 +697,9 @@ public class OverworldRaids extends Summoned implements Listener {
 			ItemMeta im11 = pe11.getItemMeta();
 			im11.setLore(Arrays.asList("Poison Boss"));
 			pe11.setItemMeta(im11);
-			ItemStack main = new ItemStack(Material.NETHERITE_HOE);
+			ItemStack main = new ItemStack(Material.BOW);
 			ItemMeta mm = main.getItemMeta();
-			mm.setCustomModelData(8008);
+			mm.setCustomModelData(2011);
 			main.setItemMeta(mm);
 			
     		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "Å×·¯¸®½ºÆ®":"Terrorist";
@@ -1906,34 +1906,13 @@ public class OverworldRaids extends Summoned implements Listener {
 	        			pem.addPattern(new Pattern(DyeColor.BLACK, PatternType.BORDER));
 	        			pem.addPattern(new Pattern(DyeColor.YELLOW, PatternType.MOJANG));
 	        			pe.setItemMeta(pem);
-	        			ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
-	        			LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
-	        			chm.setColor(Color.BLACK);
-	        			chest.setItemMeta(chm);
-	        			chest.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-	        			chest.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-	        			chest.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
-	        			ItemStack leg = new ItemStack(Material.LEATHER_LEGGINGS);
-	        			LeatherArmorMeta lem = (LeatherArmorMeta) leg.getItemMeta();
-	        			lem.setColor(Color.BLACK);
-	        			leg.setItemMeta(lem);
-	        			leg.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-	        			leg.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-	        			leg.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
-	        			ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
-	        			LeatherArmorMeta bom = (LeatherArmorMeta) boots.getItemMeta();
-	        			bom.setColor(Color.BLACK);
-	        			boots.setItemMeta(bom);
-	        			boots.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-	        			boots.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-	        			boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
 	        			ItemStack main = new ItemStack(Material.NETHERITE_HOE);
 	        			ItemMeta mm = main.getItemMeta();
 	        			mm.setCustomModelData(8008);
 	        			main.setItemMeta(mm);
 		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "¾Ç¸ùÀÇÇü»ó":"NightMare";
 	        			
-	            		Skeleton newmob = (Skeleton) MobspawnLoc(le.getLocation(), ChatColor.GRAY+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, pe, chest, leg, boots, main, null, EntityType.SKELETON);
+	            		Skeleton newmob = (Skeleton) MobspawnLoc(le.getLocation(), ChatColor.GRAY+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, pe, null, null, null, main, null, EntityType.SKELETON);
 	            		
 	            		
 	    	    		newmob.setGlowing(true);
