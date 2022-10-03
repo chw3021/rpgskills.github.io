@@ -1579,7 +1579,7 @@ public class RedSkills extends Summoned{
 	}
 	
 	
-	final private void ordeal(LivingEntity p, EntityDamageEvent d) {
+	final private void ordeal(LivingEntity p, EntityDamageByEntityEvent d) {
 		if(fbt.containsKey(p.getUniqueId())) {
         	Bukkit.getScheduler().cancelTask(fbt.get(p.getUniqueId()));
         }
@@ -1663,7 +1663,7 @@ public class RedSkills extends Summoned{
 											                    p.getWorld().playSound(pel, Sound.ITEM_FIRECHARGE_USE, 1.0f, 0f);
 																p.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, pel, 200, 1.5,1,1.5,0);	
 																p.getWorld().spawnParticle(Particle.LAVA, pel, 200, 1.5,1,1.5,0);	
-															for(Entity e : p.getWorld().getNearbyEntities(pel,1.5, 1.5, 1.5)) {
+															for(Entity e : p.getWorld().getNearbyEntities(pel,1.3, 1.5, 1.3)) {
 																if(e instanceof Player && e!=p) {
 																	Player pe = (Player)e;
 																	pe.damage(15,p);
@@ -1741,7 +1741,7 @@ public class RedSkills extends Summoned{
 	
 	@SuppressWarnings("deprecation")
 	
-	public void Ordeal(EntityDamageEvent d) 
+	public void Ordeal(EntityDamageByEntityEvent d) 
 	{
 	    
 		int sec =70;

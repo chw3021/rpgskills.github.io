@@ -278,7 +278,9 @@ public class OverworldRaids extends Summoned implements Listener {
             	p.spawnParticle(Particle.VILLAGER_ANGRY, spl, 1000,6,6,6);
     		}
     		else {
-    			RaidDifficulties.saver(p, RaidCategory.OVERWORLD, difen.get(rn)+2);
+    			if(RaidDifficulties.getMaxDifficulty(p, RaidCategory.OVERWORLD) >= difen.get(rn)) {
+        			RaidDifficulties.saver(p, RaidCategory.OVERWORLD, difen.get(rn)+2);
+    			}
     			
         		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "½Â¸®":"Victory!";
         		p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + reg), null, 5, 60, 5);
@@ -677,7 +679,7 @@ public class OverworldRaids extends Summoned implements Listener {
 
     		return newmob;
 		}
-		else if(in ==6) {
+		else {
 
 			ItemStack pe = new ItemStack(Material.NETHERITE_HELMET);
 			ItemMeta im = pe.getItemMeta();
@@ -725,9 +727,6 @@ public class OverworldRaids extends Summoned implements Listener {
     		bossbargen("darkboss", rn, newmob);
 
     		return newmob;
-		}
-		else {
-			return null;
 		}
 		
 	}
@@ -1056,7 +1055,7 @@ public class OverworldRaids extends Summoned implements Listener {
 		                	double number2 = (random.nextDouble()+1.5) * 5 * (random.nextBoolean() ? -1 : 1);
 		                	Location esl = spl.clone().add(number, 1, number2);
 	                    	
-	                    	int ri = random.nextInt(5);
+	                    	int ri = random.nextInt(7);
 	                    	
 	                    	bossgen(esl,p, rn, ri,dif);
 	                    	
