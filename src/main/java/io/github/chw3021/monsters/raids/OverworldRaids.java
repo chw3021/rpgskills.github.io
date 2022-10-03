@@ -2158,11 +2158,11 @@ public class OverworldRaids extends Summoned implements Listener {
 	
 	                	ItemStack pe = new ItemStack(Material.NETHERITE_HELMET);
 	        			ItemMeta im = pe.getItemMeta();
-	        			im.setLore(Arrays.asList("Poison Boss"));
+	        			im.setLore(Arrays.asList("Poison Boss2"));
 	        			pe.setItemMeta(im);
 	        			ItemStack pe1 = new ItemStack(Material.NETHERITE_CHESTPLATE);
 	        			ItemMeta im1 = pe1.getItemMeta();
-	        			im1.setLore(Arrays.asList("Poison Boss"));
+	        			im1.setLore(Arrays.asList("Poison Boss2"));
 	        			pe1.setItemMeta(im1);
 	        			pe1.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
 	        			pe1.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
@@ -2170,7 +2170,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	        			ItemStack leg = new ItemStack(Material.NETHERITE_LEGGINGS);
 	        			ItemStack pe11 = new ItemStack(Material.NETHERITE_BOOTS);
 	        			ItemMeta im11 = pe11.getItemMeta();
-	        			im11.setLore(Arrays.asList("Poison Boss"));
+	        			im11.setLore(Arrays.asList("Poison Boss2"));
 	        			pe11.setItemMeta(im11);
 	        			ItemStack main = new ItemStack(Material.NETHERITE_HOE);
 	        			ItemMeta mm = main.getItemMeta();
