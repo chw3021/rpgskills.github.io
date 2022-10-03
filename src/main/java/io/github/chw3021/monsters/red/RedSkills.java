@@ -1710,6 +1710,8 @@ public class RedSkills extends Summoned{
             }
         }, 651);
 		ordt.put(rn, t3);
+		
+		return;
 	}
 
 	final private void redknightfailed(LivingEntity p, String rn) {
