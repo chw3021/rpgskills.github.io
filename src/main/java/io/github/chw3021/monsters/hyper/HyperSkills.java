@@ -999,7 +999,11 @@ public class HyperSkills extends Summoned{
 
                 	for (Entity e : rl.getWorld().getNearbyEntities(l, 1, 2,1))
     				{
-                		if(e == Holding.ale(p) || e.getUniqueId() == p.getUniqueId()) {
+    					if(p!=e && e instanceof LivingEntity) {
+    						LivingEntity le = (LivingEntity)e;
+    						le.damage(2.5,p);
+    					}
+                		if(e == Holding.ale(p)) {
 			                guud.computeIfPresent(p.getUniqueId(), (k,v) -> v-1);
 		                	p.playEffect(EntityEffect.HURT);
 			                for(Player pe : OverworldRaids.getheroes(p)) {
@@ -1048,12 +1052,8 @@ public class HyperSkills extends Summoned{
 								ordt.put(rn, t3);
 	                			break;
 			                }
-			                continue;
+			                return;
                 		}
-    					if(p!=e && e instanceof LivingEntity) {
-    						LivingEntity le = (LivingEntity)e;
-    						le.damage(2.5,p);
-    					}
     				}
                 });
             }
