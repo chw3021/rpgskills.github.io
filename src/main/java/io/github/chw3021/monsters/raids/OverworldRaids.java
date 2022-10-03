@@ -278,7 +278,7 @@ public class OverworldRaids extends Summoned implements Listener {
             	p.spawnParticle(Particle.VILLAGER_ANGRY, spl, 1000,6,6,6);
     		}
     		else {
-    			if(RaidDifficulties.getMaxDifficulty(p, RaidCategory.OVERWORLD) >= difen.get(rn)) {
+    			if(RaidDifficulties.getMaxDifficulty(p, RaidCategory.OVERWORLD) <= difen.get(rn)) {
         			RaidDifficulties.saver(p, RaidCategory.OVERWORLD, difen.get(rn)+2);
     			}
     			
