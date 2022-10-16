@@ -1593,7 +1593,7 @@ public class RedSkills extends Summoned{
         d.setCancelled(true);
     	p.teleport(rl.clone().add(0, 0, 1));
         Holding.holding(null, p, 651l);
-        Holding.invur(p, 651l);
+        Holding.untouchable(p, 651l);
         for(Player pe : OverworldRaids.getheroes(p)) {
 			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
         		pe.sendMessage(ChatColor.BOLD+"붉은기사: 시련의 시간이다.");
@@ -1608,7 +1608,6 @@ public class RedSkills extends Summoned{
             @Override
             public void run() {
 
-                Holding.untouchable(p, 631l);
 				for(int i = 0; i <10; i++) {
                     int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		                @Override
