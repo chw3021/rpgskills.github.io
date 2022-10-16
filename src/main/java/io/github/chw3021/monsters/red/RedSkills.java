@@ -1720,7 +1720,7 @@ public class RedSkills extends Summoned{
 		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
         for(Player pe : OverworldRaids.getheroes(p)) {
 			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-        		pe.sendMessage(ChatColor.BOLD+"붉은기사: 힘이 빠지는군..");
+        		pe.sendMessage(ChatColor.BOLD+"붉은기사: 힘이 빠지는군...");
 			}
 			else {
         		pe.sendMessage(ChatColor.BOLD+"RedKnight: I think it's time to go...");
