@@ -129,6 +129,8 @@ public class OverworldRaids extends Summoned implements Listener {
 	Integer LIVES = 5;
 	Double BOSSHP = 100000d;
 	
+	Integer BOSSNUM = 3;
+	
 	
 	private static final OverworldRaids instance = new OverworldRaids ();
 	public static OverworldRaids getInstance()
@@ -170,30 +172,15 @@ public class OverworldRaids extends Summoned implements Listener {
 		RaidFinish(rn,title,sub,factor);
 
 		Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("mirror"+rn)).forEach(e -> e.remove());
+		Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(e -> e.remove());
 
 		Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("redknightcharge"+rn)).forEach(e -> e.remove());
 		Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("redknightmagma"+rn)).forEach(e -> e.remove());
 
-		if(MountainsSkills.ordt.containsKey(rn)) {
-			MountainsSkills.ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
-			MountainsSkills.ordt.removeAll(rn);
-		}
-		if(OceanSkills.ordt.containsKey(rn)) {
-			OceanSkills.ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
-			OceanSkills.ordt.removeAll(rn);
-		}
-		if(SnowSkills.ordt.containsKey(rn)) {
-			SnowSkills.ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
-			SnowSkills.ordt.removeAll(rn);
-		}
-        if(HyperSkills.ordt.containsKey(rn)) {
-        	HyperSkills.ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
-        	HyperSkills.ordt.removeAll(rn);
-        }
-		if(RedSkills.ordt.containsKey(rn)) {
-			RedSkills.ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
-			RedSkills.ordt.removeAll(rn);
-		}
+		
+		ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
+		ordt.removeAll(rn);
+		
 		if(raidbart.containsKey(rn)) {
 			Bukkit.getServer().getScheduler().cancelTask(raidbart.get(rn));
 		raidbart.remove(rn);
@@ -1055,9 +1042,11 @@ public class OverworldRaids extends Summoned implements Listener {
 		                	double number2 = (random.nextDouble()+1.5) * 5 * (random.nextBoolean() ? -1 : 1);
 		                	Location esl = spl.clone().add(number, 1, number2);
 	                    	
+		                	/*
 	                    	int ri = random.nextInt(7);
-	                    	
-	                    	bossgen(esl,p, rn, ri,dif);
+	                    	bossgen(esl,p, rn, ri,dif);*/
+		                	
+	                    	bossgen(esl,p, rn, BOSSNUM,dif);
 	                    	
 		                	heroes.get(rn).forEach(pu -> {
 		                		Player pa = Bukkit.getPlayer(pu);
@@ -1472,23 +1461,13 @@ public class OverworldRaids extends Summoned implements Listener {
 		Player p = ev.getPlayer();
 		if(heroes.containsValue(p.getUniqueId())) {
 
+			Holding.invur(p, 40l);
             Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
                 @Override
                 public void run() {
-        			if(Party.hasParty(p)) {
-        				if(Party.isOwner(p)) {
-        					Holding.invur(p, 40l);
-        					p.teleport(raidloc.get(getheroname(p)));
-        				}
-        				else {
-        					Holding.invur(p, 40l);
-        					p.teleport(raidloc.get(Party.getOwner(Party.getParty(p)).getName()));
-        				}
-        			}
-        			else {
-    					Holding.invur(p, 40l);
-        				p.teleport(raidloc.get(getheroname(p)));
-        			}
+    				p.teleport(raidloc.get(getheroname(p)));
+    				Holding.invur(p, 60l);
+    				Holding.untouchable(p, 60l);
                 }
             }, 25); 
 		}
@@ -1914,7 +1893,8 @@ public class OverworldRaids extends Summoned implements Listener {
 	        			
 	            		Skeleton newmob = (Skeleton) MobspawnLoc(le.getLocation(), ChatColor.GRAY+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, pe, null, null, null, main, null, EntityType.SKELETON);
 	            		
-	            		
+	            		newmob.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 999999, 1, false, false));
+	    	    		
 	    	    		newmob.setGlowing(true);
 	    	    		newmob.setMetadata("darkboss", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		newmob.setMetadata("ruined", new FixedMetadataValue(RMain.getInstance(), true));

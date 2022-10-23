@@ -69,7 +69,7 @@ public class SnowSkills extends Summoned implements Listener{
 	public HashMap<UUID, Long> hunt = new HashMap<UUID, Long>();
 	public HashMap<UUID, Long> icefall = new HashMap<UUID, Long>();
 	public HashMap<UUID, Long> rb6cooldown = new HashMap<UUID, Long>();
-	public static Multimap<String, Integer> ordt = ArrayListMultimap.create();
+	
 	public static HashMap<UUID, Boolean> ordealable = new HashMap<UUID, Boolean>();
 	public static HashMap<UUID, UUID> ordeal = new HashMap<UUID, UUID>();
 
@@ -923,7 +923,6 @@ public class SnowSkills extends Summoned implements Listener{
         d.setCancelled(true);
     	p.teleport(rl.clone().add(0, 0, 1));
 		Holding.invur(p, 60l);
-		p.setCustomName("SnowWitch");
 		p.setCustomNameVisible(false);
 		
         for(Player pe : OverworldRaids.getheroes(p)) {
@@ -956,6 +955,7 @@ public class SnowSkills extends Summoned implements Listener{
             		ItemStack off = new ItemStack(Material.ICE);
             		Witch newmob = (Witch) esl1.getWorld().spawnEntity(esl1, EntityType.WITCH);
             		newmob.setCustomName(p.getCustomName());
+            		newmob.setCustomNameVisible(false);
             		newmob.getEquipment().setItemInMainHand(main);
             		newmob.getEquipment().setItemInOffHand(off);
             		newmob.setMaxHealth(p.getMaxHealth());
@@ -1008,7 +1008,7 @@ public class SnowSkills extends Summoned implements Listener{
 	{
 	    
 		int sec =70;
-		if(d.getEntity() instanceof Witch && !d.isCancelled() && d.getEntity().hasMetadata("snowyboss") && !d.getEntity().hasMetadata("failed")) 
+		if(d.getEntity() instanceof Witch && !d.isCancelled() && d.getEntity().hasMetadata("snowyboss") && !d.getEntity().hasMetadata("failed") && !d.getEntity().hasMetadata("ruined")) 
 		{
 			Witch p = (Witch)d.getEntity();
 			p.getWorld().playSound(p.getEyeLocation(), Sound.ENTITY_WITCH_HURT, 1,2);

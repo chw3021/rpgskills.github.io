@@ -443,7 +443,7 @@ public class DarkRaids extends Summoned {
 		newmob.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(4);
 		
 		newmob.setMetadata(META+"boss", new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), true));
+		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), rn));
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));

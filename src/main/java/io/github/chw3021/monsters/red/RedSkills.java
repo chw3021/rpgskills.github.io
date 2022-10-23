@@ -23,6 +23,7 @@ import org.bukkit.entity.Husk;
 import org.bukkit.entity.Illusioner;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Snowball;
@@ -79,7 +80,6 @@ public class RedSkills extends Summoned{
 	private HashMap<UUID, Boolean> stab = new HashMap<UUID, Boolean>();
 	private HashMap<UUID, Boolean> chargable = new HashMap<UUID, Boolean>();
 	
-	static public Multimap<String, Integer> ordt = ArrayListMultimap.create();
 	private static HashMap<UUID, Integer> fbt = new HashMap<UUID, Integer>();
 	
 	private HashMap<UUID, LivingEntity> magma = new HashMap<UUID, LivingEntity>();
@@ -624,9 +624,9 @@ public class RedSkills extends Summoned{
 	
 	public void BackStab(EntityDamageByEntityEvent d) 
 	{
-		if((d.getEntity() instanceof Skeleton) && d.getEntity().hasMetadata("redboss")) 
+		if(d.getEntity().hasMetadata("redboss") && (d.getEntity() instanceof Mob)) 
 		{
-			Skeleton p = (Skeleton)d.getEntity();
+			Mob p = (Mob)d.getEntity();
 			int sec = 8;
 	        
 

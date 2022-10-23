@@ -5,6 +5,8 @@ package io.github.chw3021.monsters;
 import java.io.Serializable;
 import java.util.Random;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.World.Environment;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
@@ -26,6 +28,7 @@ import org.bukkit.event.entity.EntityDropItemEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.EntitySpellCastEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
@@ -558,7 +561,7 @@ public class MobsSkillsEvents implements Listener, Serializable {
 		PlainSkills.getInstance().StoneThrow(d);
 
 		RedSkills.getInstance().Ordeal(d);
-		RedSkills.getInstance().Meteor(d);
+		//RedSkills.getInstance().Meteor(d);
 		RedSkills.getInstance().Daze(d);
 		RedSkills.getInstance().Ring(d);
 		RedSkills.getInstance().MagmaBlock(d);
@@ -572,6 +575,7 @@ public class MobsSkillsEvents implements Listener, Serializable {
 		DarkSkills.getInstance().reapingHook(d);
 		DarkSkills.getInstance().ReapingHook(d);
 		DarkSkills.getInstance().cage(d);
+		DarkSkills.getInstance().darkcircle(d);
 		
 		
 
@@ -607,6 +611,13 @@ public class MobsSkillsEvents implements Listener, Serializable {
 
 	}
 
+
+	@EventHandler
+	public void Regain(EntityRegainHealthEvent d)
+	{
+		MountainsSkills.getInstance().Smash(d);
+	}
+	
 	@EventHandler
 	public void PartyLeave(PartyLeaveEvent ev)
 	{
@@ -810,6 +821,8 @@ public class MobsSkillsEvents implements Listener, Serializable {
 		HyperSkills.getInstance().CreepJumper(d);
 		HyperSkills.getInstance().Stalker(d);
 
+		DarkSkills.getInstance().Fly(d);
+		
 		PoisonSkills.getInstance().poisoncreep(d);
 	}
 	

@@ -12,6 +12,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.IronGolem;
@@ -19,10 +20,12 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Snowball;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDropItemEvent;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
@@ -52,7 +55,6 @@ public class MountainsSkills extends Summoned implements Listener{
 	private HashMap<UUID, Long> rb8cooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Integer> throwable = new HashMap<UUID, Integer>();
 	private HashMap<UUID, Integer> strong = new HashMap<UUID, Integer>();
-	static public Multimap<String, Integer> ordt = ArrayListMultimap.create();
 
 	
 	private static final MountainsSkills instance = new MountainsSkills ();
@@ -273,6 +275,7 @@ public class MountainsSkills extends Summoned implements Listener{
 			
 		}
 	}
+
 
 	@SuppressWarnings("unchecked")
 	public void Drop(EntityDamageByEntityEvent ev) 
@@ -542,7 +545,53 @@ public class MountainsSkills extends Summoned implements Listener{
 		}
 	}
 	
-	
+
+	public void Smash(EntityRegainHealthEvent d)
+	{
+		if((d.getEntity() instanceof IronGolem) && !d.isCancelled() &&d.getEntity().hasMetadata("stoneboss")) 
+		{
+			int sec =1;
+			IronGolem p = (IronGolem)d.getEntity();
+			final Location tl = p.getLocation().clone();
+			if(rb1cooldown.containsKey(p.getUniqueId()))
+	        {
+	            long timer = (rb1cooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
+	            if(!(timer < 0))
+	            {
+	            }
+	            else 
+	            {
+	                rb1cooldown.remove(p.getUniqueId()); // removing player from HashMap
+
+					p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100,3,2,3,1, Material.STONE.createBlockData());
+					p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_ATTACK, 1, 0);
+
+					for(Entity e : p.getWorld().getNearbyEntities(tl,3, 2, 3)) {
+						if(p!=e && e instanceof LivingEntity) {
+							LivingEntity le = (LivingEntity)e;
+							le.damage(3.5);
+						}
+					}
+		            rb1cooldown.put(p.getUniqueId(), System.currentTimeMillis());
+	            }
+	        }
+	        else 
+	        {
+
+				p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100,3,2,3,1, Material.STONE.createBlockData());
+				p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_ATTACK, 1, 0);
+
+				for(Entity e : p.getWorld().getNearbyEntities(tl,3, 2, 3)) {
+					if(p!=e && e instanceof LivingEntity) {
+						LivingEntity le = (LivingEntity)e;
+						le.damage(3.5);
+					}
+				}
+	            rb1cooldown.put(p.getUniqueId(), System.currentTimeMillis());
+	        }
+		}
+		
+	}
 
 	@SuppressWarnings("deprecation")
 	

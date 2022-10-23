@@ -205,7 +205,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 									p.getWorld().spawnParticle(Particle.COMPOSTER, l, 600, 4, 4, 4);
 									p.getWorld().spawnParticle(Particle.CRIT, l, 600, 4, 4, 4);
 									p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 0.7f, 0f);
-									p.playSound(p.getLocation(), Sound.ENTITY_SQUID_DEATH, 1f, 1.3f);
+									p.playSound(p.getLocation(), Sound.ENTITY_WARDEN_SONIC_BOOM, 1f, 2f);
 				                	for(Entity e : p.getWorld().getNearbyEntities(l, 4,4,4)) {
 
 			                    		if (e instanceof Player) 
@@ -222,7 +222,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 			                    		if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
 										{
 											LivingEntity le = (LivingEntity)e;
-											atk0(0d, fistforce.get(p.getUniqueId())*1.5, p, le);
+											atk0(1d, fistforce.get(p.getUniqueId())*1.5, p, le);
 										}
 				                	}
 				                    fistforce.remove(p.getUniqueId());
@@ -253,7 +253,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 								p.getWorld().spawnParticle(Particle.COMPOSTER, l, 600, 4, 4, 4);
 								p.getWorld().spawnParticle(Particle.CRIT, l, 600, 4, 4, 4);
 								p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 0.7f, 0f);
-								p.playSound(p.getLocation(), Sound.ENTITY_SQUID_DEATH, 1f, 1.3f);
+								p.playSound(p.getLocation(), Sound.ENTITY_WARDEN_SONIC_BOOM, 1f, 2f);
 			                	for(Entity e : p.getWorld().getNearbyEntities(l, 4,4,4)) {
 
 		                    		if (e instanceof Player) 
@@ -270,7 +270,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 		                    		if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
 									{
 										LivingEntity le = (LivingEntity)e;
-										atk0(0d, fistforce.get(p.getUniqueId())*1.5, p, le);
+										atk0(1d, fistforce.get(p.getUniqueId())*1.5, p, le);
 									}
 			                	}
 			                    fistforce.remove(p.getUniqueId());
@@ -2641,7 +2641,12 @@ public class Boxskills extends Pak implements Listener, Serializable {
 			                gdcooldown.remove(p.getName()); // removing player from HashMap
 							d.setCancelled(true);
 							p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1.0f, 0.3f);
-							p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("[Weaving]").color(ChatColor.BOLD).color(ChatColor.BLUE).create());
+			        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+								p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("[À§ºù]").color(ChatColor.BOLD).color(ChatColor.BLUE).create());
+						    }
+			        		else {
+								p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("[Weaving]").color(ChatColor.BOLD).color(ChatColor.BLUE).create());
+			        		}
 							counter.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
 							counter.putIfAbsent(p.getUniqueId(), 0);
 							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -2662,7 +2667,12 @@ public class Boxskills extends Pak implements Listener, Serializable {
 			        {
 			        	d.setCancelled(true);
 						p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1.0f, 0.3f);
-						p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("Weaving").color(ChatColor.BOLD).color(ChatColor.BLUE).create());
+		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+							p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("[À§ºù]").color(ChatColor.BOLD).color(ChatColor.BLUE).create());
+					    }
+		        		else {
+							p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("[Weaving]").color(ChatColor.BOLD).color(ChatColor.BLUE).create());
+		        		}
 						counter.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
 						counter.putIfAbsent(p.getUniqueId(), 0);
 						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -2736,14 +2746,18 @@ public class Boxskills extends Pak implements Listener, Serializable {
 								d.setDamage(d.getDamage()*0.3);
 								p.playSound(p.getLocation(), Sound.ITEM_SHIELD_BLOCK, 1.0f, 2f);
 								p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1.0f, 0.3f);
-								p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("Parrying").color(ChatColor.BOLD).color(ChatColor.BLUE).create());
 							}
 							if(d.getDamager() instanceof Projectile && d.getDamage()>0) {
 								d.setDamage(d.getDamage()*0.3);
-								p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("Parrying").color(ChatColor.BOLD).color(ChatColor.BLUE).create());
 								Projectile pr = (Projectile) d.getDamager();
 								p.launchProjectile(pr.getClass());
 							}
+			        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+								p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("[ÆÐ¸µ]").color(ChatColor.BOLD).color(ChatColor.BLUE).create());
+						    }
+			        		else {
+								p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("[Parrying]").color(ChatColor.BOLD).color(ChatColor.BLUE).create());
+			        		}
 							counter.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
 							counter.putIfAbsent(p.getUniqueId(), 0);
 							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -2833,7 +2847,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 						
 						if(counter.containsKey(p.getUniqueId())) 
 						{
-							dset2(d, p, 1.35+bsd.Counter.getOrDefault(p.getUniqueId(),0)*0.02,le,5);
+							dset2(d, p, 1.4+bsd.Counter.getOrDefault(p.getUniqueId(),0)*0.025,le,5);
 			            	p.getWorld().spawnParticle(Particle.FLASH, le.getLocation(), 2);
 			        		p.playSound(le.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 0.8f, 2f);
 						}

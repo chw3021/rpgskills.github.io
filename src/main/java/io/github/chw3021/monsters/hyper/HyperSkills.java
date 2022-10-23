@@ -64,7 +64,6 @@ public class HyperSkills extends Summoned{
 	private HashMap<UUID, Boolean> chargable = new HashMap<UUID, Boolean>();
 	private HashMap<UUID, Boolean> scratchable = new HashMap<UUID, Boolean>();
 	private HashMap<UUID, Boolean> ordealable = new HashMap<UUID, Boolean>();
-	static public Multimap<String, Integer> ordt = ArrayListMultimap.create();
 	private HashMap<UUID, Integer> guud = new HashMap<UUID, Integer>();
 	
 

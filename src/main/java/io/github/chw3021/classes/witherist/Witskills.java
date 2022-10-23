@@ -1309,6 +1309,20 @@ public class Witskills extends Pak implements Listener, Serializable {
 			                public void run() {
 								if(Proficiency.getpro(p)>=1) {
 									blckspin.putIfAbsent(p.getUniqueId(), 0);
+				                	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+				                		StringBuffer sb = new StringBuffer();
+				                		sb.append(ChatColor.GRAY + (ChatColor.STRIKETHROUGH + "[历林]"));
+				                		sb.append(ChatColor.RESET + (ChatColor.BOLD + " ⒑⒑⒑ "));
+				                		sb.append(ChatColor.AQUA + (ChatColor.ITALIC + "[广狼 绊府]"));
+				                		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(sb.toString()).create());
+				                	}
+				                	else {
+				                		StringBuffer sb = new StringBuffer();
+				                		sb.append(ChatColor.GRAY + (ChatColor.STRIKETHROUGH + "[Curse]"));
+				                		sb.append(ChatColor.RESET + (ChatColor.BOLD + " ⒑⒑⒑ "));
+				                		sb.append(ChatColor.AQUA + (ChatColor.ITALIC + "[CircleOfNight]"));
+				                		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(sb.toString()).create());
+				                	}
 								}
 			                }
 			            }, 6); 
@@ -1392,6 +1406,20 @@ public class Witskills extends Pak implements Listener, Serializable {
 		                public void run() {
 							if(Proficiency.getpro(p)>=1) {
 								blckspin.putIfAbsent(p.getUniqueId(), 0);
+			                	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+			                		StringBuffer sb = new StringBuffer();
+			                		sb.append(ChatColor.GRAY + (ChatColor.STRIKETHROUGH + "[历林]"));
+			                		sb.append(ChatColor.RESET + (ChatColor.BOLD + " ⒑⒑⒑ "));
+			                		sb.append(ChatColor.AQUA + (ChatColor.ITALIC + "[广狼 绊府]"));
+			                		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(sb.toString()).create());
+			                	}
+			                	else {
+			                		StringBuffer sb = new StringBuffer();
+			                		sb.append(ChatColor.GRAY + (ChatColor.STRIKETHROUGH + "[Curse]"));
+			                		sb.append(ChatColor.RESET + (ChatColor.BOLD + " ⒑⒑⒑ "));
+			                		sb.append(ChatColor.AQUA + (ChatColor.ITALIC + "[CircleOfNight]"));
+			                		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(sb.toString()).create());
+			                	}
 							}
 		                }
 		            }, 6); 
@@ -1517,7 +1545,7 @@ public class Witskills extends Pak implements Listener, Serializable {
 
 	             			
 		             			Location ptl = BlackSpins(pl,c).clone();
-		    					for (Entity a : p.getWorld().getNearbyEntities(p.getLocation(), 4.5, 4.5, 4.5))
+		    					for (Entity a : p.getWorld().getNearbyEntities(ptl.clone(), 4.5, 4.5, 4.5))
 		    					{
 		    						if ((!(a == p))&& a instanceof LivingEntity&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal"))) 
 		    						{
@@ -1559,6 +1587,24 @@ public class Witskills extends Pak implements Listener, Serializable {
 		                public void run() {
 							if(Proficiency.getpro(p)>=2) {
 								cryscg.putIfAbsent(p.getUniqueId(), 0);
+			                	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+			                		StringBuffer sb = new StringBuffer();
+			                		sb.append(ChatColor.GRAY + (ChatColor.STRIKETHROUGH + "[历林]"));
+			                		sb.append(ChatColor.RESET + (ChatColor.BOLD + " ⒑⒑⒑ "));
+			                		sb.append(ChatColor.GRAY + (ChatColor.STRIKETHROUGH + "[广狼 绊府]"));
+			                		sb.append(ChatColor.RESET + (ChatColor.BOLD + " ⒑⒑⒑ "));
+			                		sb.append(ChatColor.AQUA + (ChatColor.ITALIC + "[荐沥 皑苛]"));
+			                		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(sb.toString()).create());
+			                	}
+			                	else {
+			                		StringBuffer sb = new StringBuffer();
+			                		sb.append(ChatColor.GRAY + (ChatColor.STRIKETHROUGH + "[Curse]"));
+			                		sb.append(ChatColor.RESET + (ChatColor.BOLD + " ⒑⒑⒑ "));
+			                		sb.append(ChatColor.GRAY + (ChatColor.STRIKETHROUGH + "[CircleOfNight]"));
+			                		sb.append(ChatColor.RESET + (ChatColor.BOLD + " ⒑⒑⒑ "));
+			                		sb.append(ChatColor.AQUA + (ChatColor.ITALIC + "[CrystalCage]"));
+			                		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(sb.toString()).create());
+			                	}
 							}
 		                }
 		            }, 5); 

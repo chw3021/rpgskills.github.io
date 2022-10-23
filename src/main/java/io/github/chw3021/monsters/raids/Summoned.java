@@ -36,6 +36,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
@@ -84,6 +85,8 @@ public class Summoned extends Mobs implements Serializable{
 	
 	static private HashMap<String, UUID> raidporstand = new HashMap<String, UUID>();
 	static private HashMap<String, Block> raidpor = new HashMap<String, Block>();
+	
+	static public Multimap<String, Integer> ordt = ArrayListMultimap.create();
 
 	private Multimap<UUID, String> damaged = HashMultimap.create();
 
@@ -103,6 +106,10 @@ public class Summoned extends Mobs implements Serializable{
 	{
 		if(entity.hasMetadata("summoned")) {
 			String rn = entity.getMetadata("summoned").get(0).asString();
+			return rn;
+		}
+		if(entity.hasMetadata("raid")) {
+			String rn = entity.getMetadata("raid").get(0).asString();
 			return rn;
 		}
 		else{

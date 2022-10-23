@@ -57,7 +57,7 @@ public class OceanSkills extends Summoned{
 	private HashMap<UUID, Long> rb3cooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Long> rb4cooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Boolean> ordealable = new HashMap<UUID, Boolean>();
-	static public Multimap<String, Integer> ordt = ArrayListMultimap.create();
+	
 	private Multimap<String, Integer> ript = ArrayListMultimap.create();
 	
 
@@ -701,8 +701,8 @@ public class OceanSkills extends Summoned{
 	                    int i1 =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
 			                @Override
 			                public void run() {
-				                Holding.invur(p, 30l);
-				                Holding.untouchable(p, 30l);
+				                Holding.invur(p, 40l);
+				                Holding.untouchable(p, 40l);
 			                	Riptide(p, tar);
 			                }
 			            }, 40, 20);
@@ -734,8 +734,8 @@ public class OceanSkills extends Summoned{
                     int i1 =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
 		                @Override
 		                public void run() {
-			                Holding.invur(p, 30l);
-			                Holding.untouchable(p, 30l);
+			                Holding.invur(p, 40l);
+			                Holding.untouchable(p, 40l);
 		                	Riptide(p, tar);
 		                }
 		            }, 40, 20);

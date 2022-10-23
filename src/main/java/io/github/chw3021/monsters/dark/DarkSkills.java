@@ -7,14 +7,17 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Creeper;
+import org.bukkit.entity.ElderGuardian;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Evoker;
+import org.bukkit.entity.IronGolem;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.LivingEntity;
@@ -24,8 +27,10 @@ import org.bukkit.entity.Witch;
 import org.bukkit.entity.WitherSkull;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.EntitySpellCastEvent;
+import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
@@ -40,9 +45,11 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
 import io.github.chw3021.commons.Holding;
+import io.github.chw3021.commons.party.Party;
 import io.github.chw3021.monsters.raids.OverworldRaids;
 import io.github.chw3021.monsters.raids.Summoned;
 import io.github.chw3021.rmain.RMain;
+import net.md_5.bungee.api.chat.ComponentBuilder;
 
 
 
@@ -53,15 +60,21 @@ public class DarkSkills extends Summoned{
 	 */
 	private transient static final long serialVersionUID = 3862591169683563580L;
 	Holding hold = Holding.getInstance();
+	private HashMap<UUID, Long> rb1cooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Long> rb3cooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Long> rb4cooldown = new HashMap<UUID, Long>();
+	private HashMap<UUID, Long> rb5cooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Long> rb8cooldown = new HashMap<UUID, Long>();
+	private HashMap<UUID, Long> rb7cooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Integer> throwable = new HashMap<UUID, Integer>();
-	static public Multimap<String, Integer> ordt = ArrayListMultimap.create();
-	
-	private HashMap<UUID, Boolean> cageable = new HashMap<UUID, Boolean>();
 
+	private HashMap<UUID, Boolean> unreapable = new HashMap<UUID, Boolean>();
+	private HashMap<UUID, Boolean> cageable = new HashMap<UUID, Boolean>();
 	
+	private HashMap<UUID, Boolean> ordealable = new HashMap<UUID, Boolean>();
+
+
+	static public Multimap<String, Integer> ordt = ArrayListMultimap.create();
 	private static final DarkSkills instance = new DarkSkills ();
 	public static DarkSkills getInstance()
 	{
@@ -213,6 +226,9 @@ public class DarkSkills extends Summoned{
 	            	throwable.remove(p.getUniqueId());
 	                Holding.holding(null, p, 10l);
 	                
+	                if(p.hasMetadata("ruined")) {
+	            		p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 20, 3, false, false));
+	                }
 
 		            for(int i = 0; i<3; i++) {
 			            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -241,7 +257,10 @@ public class DarkSkills extends Summoned{
             	throwable.remove(p.getUniqueId());
 
                 Holding.holding(null, p, 10l);
-                
+
+                if(p.hasMetadata("ruined")) {
+            		p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 20, 3, false, false));
+                }
 
 	            for(int i = 0; i<3; i++) {
 		            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -314,7 +333,7 @@ public class DarkSkills extends Summoned{
 	@SuppressWarnings("unchecked")
 	public void reapingHook(EntityDamageByEntityEvent ev) 
 	{
-		if(ev.getEntity().hasMetadata("darkboss")) 
+		if(ev.getEntity().hasMetadata("darkboss") && !unreapable.containsKey(ev.getEntity().getUniqueId())) 
 		{
 			final Skeleton p = (Skeleton)ev.getEntity();
 	        
@@ -361,6 +380,10 @@ public class DarkSkills extends Summoned{
             {
             	rb8cooldown.remove(p.getUniqueId()); // removing player from HashMap
 
+                if(p.hasMetadata("ruined")) {
+     				unreapable.putIfAbsent(p.getUniqueId(), true);
+            		p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 20, 3, false, false));
+                }
                 final Location pfl = p.getLocation().clone();
                 
                 final Vector pv = tl.clone().toVector().subtract(pfl.clone().toVector()).normalize();
@@ -374,6 +397,7 @@ public class DarkSkills extends Summoned{
      			Holding.holding(null, p, 10l);
 
 				Location pl = pfl.clone();
+
 				
 				Item hook = p.getWorld().dropItem(p.getLocation(), reap);
 				hook.setPickupDelay(9999);
@@ -382,6 +406,8 @@ public class DarkSkills extends Summoned{
 				hook.setOwner(p.getUniqueId());
 				hook.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 				hook.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+        		String rn = gethero(p);
+				hook.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
 				hook.setVelocity(pl.getDirection().clone().normalize().multiply(1.2));
 				hooki.put(p.getUniqueId(), hook);
 
@@ -398,8 +424,8 @@ public class DarkSkills extends Summoned{
 	         			p.getWorld().spawnParticle(Particle.SPELL_INSTANT ,pl, 10, 0.2,0.2,0.2,0);
 	         			p.getWorld().spawnParticle(Particle.SCULK_SOUL ,pl, 10, 0.2,0.2,0.2,0);
 	                    for(Entity e : pl.getWorld().getNearbyEntities(pl, 1.2,1.2,1.2)) {
-							if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
-								LivingEntity le = (LivingEntity)e;
+							if(p!=e && e instanceof Player&& !(e.hasMetadata("fake"))) {
+								Player le = (Player)e;
 								le.damage(3.5,p);
 								hookl.put(p.getUniqueId(), le);
 							}
@@ -434,6 +460,10 @@ public class DarkSkills extends Summoned{
         else 
         {
 
+            if(p.hasMetadata("ruined")) {
+ 				unreapable.putIfAbsent(p.getUniqueId(), true);
+        		p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 20, 3, false, false));
+            }
 
             final Location pfl = p.getLocation().clone();
             
@@ -441,7 +471,7 @@ public class DarkSkills extends Summoned{
             
 
     		p.swingMainHand();
-			ItemStack reap = new ItemStack(Material.NETHERITE_HOE);
+			ItemStack reap = new ItemStack(Material.WITHER_SKELETON_SKULL);
 			p.getWorld().playSound(p.getLocation(), Sound.ENTITY_FISHING_BOBBER_THROW, 1.0f, 0f);
 			p.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_SKELETON_AMBIENT, 1.0f, 0f);
  			p.getWorld().spawnParticle(Particle.SCULK_SOUL ,p.getLocation(), 200, 0.2,0.2,0.2);
@@ -456,6 +486,8 @@ public class DarkSkills extends Summoned{
 			hook.setOwner(p.getUniqueId());
 			hook.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 			hook.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+    		String rn = gethero(p);
+			hook.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
 			hook.setVelocity(pl.getDirection().clone().normalize().multiply(1.2));
 			hooki.put(p.getUniqueId(), hook);
 
@@ -472,8 +504,8 @@ public class DarkSkills extends Summoned{
          			p.getWorld().spawnParticle(Particle.SPELL_INSTANT ,pl, 10, 0.2,0.2,0.2,0);
          			p.getWorld().spawnParticle(Particle.SCULK_SOUL ,pl, 10, 0.2,0.2,0.2,0);
                     for(Entity e : pl.getWorld().getNearbyEntities(pl, 1.2,1.2,1.2)) {
-						if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
-							LivingEntity le = (LivingEntity)e;
+						if(p!=e && e instanceof Player&& !(e.hasMetadata("fake"))) {
+							Player le = (Player)e;
 							le.damage(3.5,p);
 							hookl.put(p.getUniqueId(), le);
 						}
@@ -508,10 +540,10 @@ public class DarkSkills extends Summoned{
 	
 	public void ReapingHook(EntityDamageByEntityEvent d) 
 	{
-		if(d.getEntity() instanceof LivingEntity && d.getDamager().hasMetadata("darkboss"))
+		if(d.getEntity() instanceof Player && d.getDamager().hasMetadata("darkboss"))
 		{
 			Skeleton p = (Skeleton)d.getDamager();
-			LivingEntity le = (LivingEntity)d.getEntity();
+			Player le = (Player)d.getEntity();
 				if(hookl.containsKey(p.getUniqueId()) && hookl.getOrDefault(p.getUniqueId(), p)==le) {
 
         			if(hookt1.containsKey(p.getUniqueId())) {
@@ -545,8 +577,8 @@ public class DarkSkills extends Summoned{
          							l.getWorld().playSound(l, Sound.ENTITY_EVOKER_FANGS_ATTACK, 0.1f, 2f);
          							Holding.holding(null, le, 10l);
      		                        for(Entity e : le.getWorld().getNearbyEntities(le.getLocation(), 2.5,2.5,2.5)) {
-         	    						if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
-         	    							LivingEntity le = (LivingEntity)e;
+         	    						if(p!=e && e instanceof Player&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
+         	    							Player le = (Player)e;
          	    							le.teleport(l);
          	    						}
          	                        }
@@ -557,7 +589,7 @@ public class DarkSkills extends Summoned{
 
                 		final Location el =le.getLocation();
 
-						for(int i = 0; i<25; i++) {
+						for(int i = 0; i<5; i++) {
 		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 			             		@Override
 			                	public void run() 
@@ -603,11 +635,13 @@ public class DarkSkills extends Summoned{
 		                else 
 		                {
 		                	rb4cooldown.remove(p.getUniqueId()); // removing player from HashMap
+			        		String rn = gethero(p);
 		                	
 		                    Holding.holding(null, p, 34l);
 		                    
-							ptl.getWorld().spawnParticle(Particle.PORTAL, ptl, 500, 4,2,4); 
-							ptl.getWorld().spawnParticle(Particle.REVERSE_PORTAL, ptl, 500, 4,1.5,4); 
+							ptl.getWorld().spawnParticle(Particle.PORTAL, ptl, 500, 4,2,4,0); 
+							ptl.getWorld().spawnParticle(Particle.SOUL, ptl, 500, 4,1.5,4,0); 
+							ptl.getWorld().spawnParticle(Particle.SQUID_INK, ptl, 500, 4,1.5,4,0); 
 		     				ptl.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_SKELETON_AMBIENT, 1f, 0f);
 		     				ptl.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_AMBIENT, 1f, 2f);
 
@@ -628,6 +662,7 @@ public class DarkSkills extends Summoned{
 				            		ArmorStand afs = ptl.getWorld().spawn(ptl, ArmorStand.class);
 				            		afs.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 				            		afs.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+				            		afs.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
 				            		afs.setInvisible(true);
 				            		afs.setCollidable(false);
 				            		afs.getEquipment().setHelmet(new ItemStack(Material.CRYING_OBSIDIAN));
@@ -640,6 +675,7 @@ public class DarkSkills extends Summoned{
 					            		ArmorStand as = l.getWorld().spawn(l, ArmorStand.class);
 					            		as.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 					            		as.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+					            		as.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
 					            		as.setInvisible(true);
 					            		as.setCollidable(false);
 					            		as.getEquipment().setHelmet(new ItemStack(Material.CRYING_OBSIDIAN));
@@ -650,6 +686,7 @@ public class DarkSkills extends Summoned{
 					            		ArmorStand as1 = l.getWorld().spawn(l.clone().add(0,1,0), ArmorStand.class);
 					            		as1.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 					            		as1.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+					            		as1.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
 					            		as1.setInvisible(true);
 					            		as1.setCollidable(false);
 					            		as1.getEquipment().setHelmet(new ItemStack(Material.CRACKED_POLISHED_BLACKSTONE_BRICKS));
@@ -660,9 +697,9 @@ public class DarkSkills extends Summoned{
 				                		@Override
 						                	public void run() 
 							                {	
-				                				as.remove();
-				             					as1.remove();
-				             					afs.remove();
+				                				Holding.ale(as).remove();
+				                				Holding.ale(as1).remove();
+				                				Holding.ale(afs).remove();
 							                }
 				                    	},80);
 					            	});
@@ -677,7 +714,7 @@ public class DarkSkills extends Summoned{
 					     				ptl.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_HURT, 0.2f, 2f);
 											for (Entity e : ptl.getWorld().getNearbyEntities(ptl.clone(), 4, 4, 4))
 											{
-		         	    						if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
+		         	    						if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
 		         	    							LivingEntity le = (LivingEntity)e;
 		         	    							le.damage(3.5,p);
 		         	    							le.teleport(ptl);
@@ -705,11 +742,13 @@ public class DarkSkills extends Summoned{
 		            }
 		            else 
 		            {
-
+		        		String rn = gethero(p);
+	                	
 	                    Holding.holding(null, p, 34l);
-	                    
-						ptl.getWorld().spawnParticle(Particle.PORTAL, ptl, 500, 4,2,4); 
-						ptl.getWorld().spawnParticle(Particle.REVERSE_PORTAL, ptl, 500, 4,1.5,4); 
+
+						ptl.getWorld().spawnParticle(Particle.PORTAL, ptl, 500, 4,2,4,0); 
+						ptl.getWorld().spawnParticle(Particle.SOUL, ptl, 500, 4,1.5,4,0); 
+						ptl.getWorld().spawnParticle(Particle.SQUID_INK, ptl, 500, 4,1.5,4,0); 
 	     				ptl.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_SKELETON_AMBIENT, 1f, 0f);
 	     				ptl.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_AMBIENT, 1f, 2f);
 
@@ -730,6 +769,7 @@ public class DarkSkills extends Summoned{
 			            		ArmorStand afs = ptl.getWorld().spawn(ptl, ArmorStand.class);
 			            		afs.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 			            		afs.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+			            		afs.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
 			            		afs.setInvisible(true);
 			            		afs.setCollidable(false);
 			            		afs.getEquipment().setHelmet(new ItemStack(Material.CRYING_OBSIDIAN));
@@ -742,6 +782,7 @@ public class DarkSkills extends Summoned{
 				            		ArmorStand as = l.getWorld().spawn(l, ArmorStand.class);
 				            		as.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 				            		as.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+				            		as.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
 				            		as.setInvisible(true);
 				            		as.setCollidable(false);
 				            		as.getEquipment().setHelmet(new ItemStack(Material.CRYING_OBSIDIAN));
@@ -752,6 +793,7 @@ public class DarkSkills extends Summoned{
 				            		ArmorStand as1 = l.getWorld().spawn(l.clone().add(0,1,0), ArmorStand.class);
 				            		as1.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 				            		as1.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+				            		as1.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
 				            		as1.setInvisible(true);
 				            		as1.setCollidable(false);
 				            		as1.getEquipment().setHelmet(new ItemStack(Material.CRACKED_POLISHED_BLACKSTONE_BRICKS));
@@ -762,9 +804,9 @@ public class DarkSkills extends Summoned{
 			                		@Override
 					                	public void run() 
 						                {	
-			                				as.remove();
-			             					as1.remove();
-			             					afs.remove();
+			                				Holding.ale(as).remove();
+			                				Holding.ale(as1).remove();
+			                				Holding.ale(afs).remove();
 						                }
 			                    	},80);
 				            	});
@@ -779,7 +821,7 @@ public class DarkSkills extends Summoned{
 				     				ptl.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_HURT, 0.2f, 2f);
 										for (Entity e : ptl.getWorld().getNearbyEntities(ptl.clone(), 4, 4, 4))
 										{
-	         	    						if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
+	         	    						if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
 	         	    							LivingEntity le = (LivingEntity)e;
 	         	    							le.damage(3.5,p);
 	         	    							le.teleport(ptl);
@@ -799,13 +841,340 @@ public class DarkSkills extends Summoned{
 					            }, 80); 
 			                }
 			            }, 35); 
-
-             			
+	                    
+		        		
 						rb4cooldown.put(p.getUniqueId(), System.currentTimeMillis());  
 					}
 		}
 	}
 
+
 	
+	public void Fly(EntityTargetEvent d)
+	{
+		if((d.getEntity() instanceof Skeleton)  &&d.getEntity().hasMetadata("ruined")  &&d.getEntity().hasMetadata("darkboss")) 
+		{
+			int sec =2;
+			Skeleton p = (Skeleton)d.getEntity();
+			if(rb1cooldown.containsKey(p.getUniqueId()))
+	        {
+	            long timer = (rb1cooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
+	            if(!(timer < 0))
+	            {
+	            }
+	            else 
+	            {
+	                rb1cooldown.remove(p.getUniqueId()); // removing player from HashMap
+
+            		p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 20, 2, false, false));
+
+		            rb1cooldown.put(p.getUniqueId(), System.currentTimeMillis());
+	            }
+	        }
+	        else 
+	        {
+
+        		p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 20, 2, false, false));
+        		
+	            rb1cooldown.put(p.getUniqueId(), System.currentTimeMillis());
+	        }
+		}
+		
+	}
+	
+	final private Location BlackSpins(Location pl, AtomicInteger j) {
+
+		ArrayList<Location> swing = new ArrayList<Location>();
+		AtomicInteger k = new AtomicInteger(0);
+		final double dis = j.getAndIncrement()*0.5+0.12;
+		final Location l1 = pl.clone().add(pl.clone().getDirection().normalize().multiply(dis));
+		final Vector v = l1.clone().toVector().subtract(l1.clone().add(0, 0, 1).toVector());
+		for(double i = 0; i<Math.PI*2; i += Math.PI/90) {
+			Location s = l1.clone().setDirection(v.clone().rotateAroundY(i).normalize());
+			s.add(s.clone().getDirection().multiply(4.5));
+			swing.add(s);
+		}
+		swing.forEach(l ->{
+			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
+			{
+	     	@Override
+            public void run() 
+ 				{	
+	            	pl.getWorld().spawnParticle(Particle.ASH,l, 3,0,0,0,0); 
+					pl.getWorld().spawnParticle(Particle.SQUID_INK,l, 4, 0.1,0.1,0.1,0.05); 
+	            }
+	        }, k.incrementAndGet()/90); 
+		});
+		return l1;
+	}
+
+
+
+	final private void darkcircle(Skeleton p, Location tl) {
+		if(cageable.containsKey(p.getUniqueId()) || throwable.containsKey(p.getUniqueId()) || !unreapable.containsKey(p.getUniqueId())) {
+			return;
+		}
+		if(rb7cooldown.containsKey(p.getUniqueId()))
+	    {
+	        long timer = (rb7cooldown.get(p.getUniqueId())/1000 + 9) - System.currentTimeMillis()/1000; 
+	        if(!(timer < 0))
+	        {
+	        }
+	        else 
+	        {
+	        	rb7cooldown.remove(p.getUniqueId()); // removing player from HashMap
+
+        		p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 30, 10, false, false));
+ 				p.getWorld().playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_ELYTRA, 1f, 0);
+            	p.getWorld().spawnParticle(Particle.ASH,p.getEyeLocation(), 400,1,1,1,0); 
+            	
+            	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+        		@Override
+                	public void run() 
+	                {	
+            		p.swingMainHand();
+    	            
+    				ArrayList<Location> eye = new ArrayList<Location>();
+    				for(double i = 0; i<Math.PI*2; i += Math.PI/90) {
+    					Location l2 = p.getEyeLocation().clone();
+    					Location e = l2.setDirection(l2.getDirection().rotateAroundY(i).normalize());
+    					eye.add(e);
+    				}
+
+    				AtomicInteger j = new AtomicInteger(0);
+    				AtomicInteger c = new AtomicInteger(0);
+
+     				p.getWorld().playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 0);
+     				p.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_SHOOT, 1f, 2);
+    				eye.forEach(l ->{
+    					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
+    					{
+    			     	@Override
+    	                public void run() 
+    	     				{	
+    	                    	p.teleport(l);
+    			            }
+    			        }, j.incrementAndGet()/150); 
+    				});
+
+    				Location pl = p.getLocation().clone().add(0, 0.2, 0);
+    				pl.setDirection(tl.clone().toVector().subtract(pl.clone().toVector()).normalize());
+					
+					final Integer dis = (int) tl.clone().distance(pl.clone())*2-1;
+    				
+    				for(int i = 0; i<dis; i++) {
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                 		@Override
+    	                	public void run() 
+    		                {	
+
+                 			
+    	             			Location ptl = BlackSpins(pl.clone(),c).clone();
+    	             			for (Entity e : ptl.getWorld().getNearbyEntities(ptl.clone(), 4, 4, 4))
+    							{
+     	    						if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
+     	    							LivingEntity le = (LivingEntity)e;
+     	    							le.damage(3.5,p);
+     	    							le.teleport(ptl);
+     	    							Holding.holding(null, le, 20l);
+     	    						}
+    							}
+    			            }
+                        }, i*2); 
+    					
+    				}
+	                }
+            	},35);
+                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+             		@Override
+                    	public void run() 
+                        {	
+             				unreapable.remove(p.getUniqueId());
+        	            }
+                    }, 80); 
+				rb7cooldown.put(p.getUniqueId(), System.currentTimeMillis());  
+	        }
+	    }
+	    else 
+	    {
+
+    		p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 30, 10, false, false));
+				p.getWorld().playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_ELYTRA, 1f, 0);
+        	p.getWorld().spawnParticle(Particle.ASH,p.getEyeLocation(), 400,1,1,1,0); 
+        	
+        	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+    		@Override
+            	public void run() 
+                {
+        		p.swingMainHand();
+	            
+				ArrayList<Location> eye = new ArrayList<Location>();
+				for(double i = 0; i<Math.PI*2; i += Math.PI/90) {
+					Location l2 = p.getEyeLocation().clone();
+					Location e = l2.setDirection(l2.getDirection().rotateAroundY(i).normalize());
+					eye.add(e);
+				}
+
+				AtomicInteger j = new AtomicInteger(0);
+				AtomicInteger c = new AtomicInteger(0);
+
+ 				p.getWorld().playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 0);
+ 				p.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_SHOOT, 1f, 2);
+				eye.forEach(l ->{
+					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
+					{
+			     	@Override
+	                public void run() 
+	     				{	
+	                    	p.teleport(l);
+			            }
+			        }, j.incrementAndGet()/150); 
+				});
+
+				Location pl = p.getLocation().clone().add(0, 0.2, 0);
+				pl.setDirection(tl.clone().toVector().subtract(pl.clone().toVector()).normalize());
+
+				final Integer dis = (int) tl.clone().distance(pl.clone())*2-1;
+				
+				for(int i = 0; i<dis; i++) {
+                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+             		@Override
+	                	public void run() 
+		                {	
+
+             			
+	             			Location ptl = BlackSpins(pl.clone(),c).clone();
+	             			for (Entity e : ptl.getWorld().getNearbyEntities(ptl.clone(), 4, 4, 4))
+							{
+ 	    						if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
+ 	    							LivingEntity le = (LivingEntity)e;
+ 	    							le.damage(3.5,p);
+ 	    							le.teleport(ptl);
+ 	    							Holding.holding(null, le, 20l);
+ 	    						}
+							}
+			            }
+                    }, i*3); 
+					
+				}
+                }
+        	},35);
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+     		@Override
+            	public void run() 
+                {	
+     				unreapable.remove(p.getUniqueId());
+	            }
+            }, 80); 
+			rb7cooldown.put(p.getUniqueId(), System.currentTimeMillis());  
+		}
+	}
+
+
+	public void darkcircle(EntityDamageByEntityEvent ev) 
+	{
+		if(ev.getEntity().hasMetadata("darkboss")) 
+		{
+			final Skeleton p = (Skeleton)ev.getEntity();
+	        
+
+			if(p.hasMetadata("raid") && p.hasMetadata("ruined")) {
+				if(!OverworldRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| p.hasMetadata("failed")) {
+					return;
+				}
+
+				final Location tl = OverworldRaids.getheroes(p).stream().filter(pe -> pe.getWorld().equals(p.getWorld())).findAny().get().getLocation().clone().add(0,0.2,0);
+				darkcircle(p,tl);
+			}
+		}
+	}
+
+	@SuppressWarnings("deprecation")
+	public void nightMare(EntityDamageByEntityEvent d) 
+	{
+	    
+		int sec = 100;
+		if(d.getEntity().hasMetadata("darkboss") && d.getEntity() instanceof Skeleton&& !d.isCancelled() && d.getEntity().hasMetadata("ruined")&& !d.getEntity().hasMetadata("failed")) 
+		{
+			Skeleton p = (Skeleton)d.getEntity();
+			if(p.hasMetadata("failed")) {
+				return;
+			}
+			if(!(p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2)|| !ordealable.containsKey(p.getUniqueId())) {
+				return;
+			}
+			if(rb5cooldown.containsKey(p.getUniqueId()))
+	        {
+	            long timer = (rb5cooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
+	            if(!(timer < 0))
+	            {
+	            	p.spigot().sendMessage(new ComponentBuilder("You have to wait for " + timer + " seconds to use Riptide").create());
+	            }
+	            else 
+	            {
+	            	rb5cooldown.remove(p.getUniqueId()); // removing player from HashMap
+	        		String rn = gethero(p);
+	        		
+	        		final Player tar = OverworldRaids.getheroes(p).stream().findAny().get();
+	                d.setCancelled(true);
+	                Holding.invur(p, 40l);
+	                Holding.holding(null, p, 40l);
+	                Holding.untouchable(p, 40l);
+	                for(Entity e : OverworldRaids.getheroes(p)) {
+	                	if(e instanceof Player) {
+	                		Player pe = (Player) e;
+	    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
+		                		pe.sendMessage(ChatColor.BOLD+"악몽의형상: 어둠을 맞이해라...");
+	    					}
+	    					else {
+		                		pe.sendMessage(ChatColor.BOLD+"NightMare: Embrace the darkness...");
+	    					}
+	                	}
+	                }
+	    			p.getWorld().spawnParticle(Particle.NAUTILUS, p.getLocation().clone(), 200,2,2,2,0.1);
+	    			p.getWorld().spawnParticle(Particle.WATER_WAKE, p.getLocation().clone(), 200,2,2,2,0.1);
+                    int i1 =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
+		                @Override
+		                public void run() {
+			                Holding.invur(p, 30l);
+			                Holding.untouchable(p, 30l);
+		                }
+		            }, 40, 20);
+					ordt.put(rn, i1); 
+	            }
+	        }
+	        else 
+	        {
+        		String rn = p.getMetadata("raid").get(0).asString();
+        		final Player tar = OverworldRaids.getheroes(p).stream().findAny().get();
+                d.setCancelled(true);
+                Holding.invur(p, 40l);
+                Holding.holding(null, p, 40l);
+                Holding.untouchable(p, 40l);
+                for(Entity e : OverworldRaids.getheroes(p)) {
+                	if(e instanceof Player) {
+                		Player pe = (Player) e;
+    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
+	                		pe.sendMessage(ChatColor.BOLD+"엘더가디언: "+tar.getName()+"! 네놈부터 처리해주겠다!");
+    					}
+    					else {
+	                		pe.sendMessage(ChatColor.BOLD+"ElderGuardian: "+tar.getName()+"! I'll kill you first!");
+    					}
+                	}
+                }
+    			p.getWorld().spawnParticle(Particle.NAUTILUS, p.getLocation().clone(), 200,2,2,2,0.1);
+    			p.getWorld().spawnParticle(Particle.WATER_WAKE, p.getLocation().clone(), 200,2,2,2,0.1);
+                int i1 =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
+	                @Override
+	                public void run() {
+		                Holding.invur(p, 30l);
+		                Holding.untouchable(p, 30l);
+	                }
+	            }, 40, 20);
+				ordt.put(rn, i1); 
+	        }
+		
+		}
+	}
 	
 }

@@ -312,7 +312,7 @@ public class CommonEvents implements Listener {
 			dinvv.rotateAroundAxis(dinv.clone().rotateAroundY(Math.PI/2), -Math.PI/6).normalize();
 		}
 		else {
-			dinvv.rotateAroundAxis(dinv.clone().rotateAroundY(Math.PI/2), -Math.PI/45).normalize();					
+			dinvv.rotateAroundAxis(dinv.clone().rotateAroundY(Math.PI/2), -Math.PI/45).normalize();
 		}*/
 		final ArmorStand din = dinspawn(p, disloc(p,le,pl,elf), d);
 		
@@ -678,7 +678,7 @@ public class CommonEvents implements Listener {
 			LivingEntity le = (LivingEntity) d.getEntity();
 			le.setMaximumNoDamageTicks(0);
 			le.setNoDamageTicks(0);
-			if(d.getEntity().hasMetadata("fake"))
+			if(d.getEntity().hasMetadata("fake") || d.getEntity().hasMetadata("portal"))
 			{
 				d.setCancelled(true);
 				return;
