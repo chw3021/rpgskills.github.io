@@ -320,9 +320,13 @@ public class HyperRaids extends Summoned {
     	double number = (random.nextDouble()+1.5) * 2.5 * (random.nextBoolean() ? -1 : 1);
     	double number2 = (random.nextDouble()+1.5) * 2.5 * (random.nextBoolean() ? -1 : 1);
     	Location esl = spl.clone().add(number, 0, number2);
+		ItemStack main = new ItemStack(Material.BOW);
+		ItemMeta mm = main.getItemMeta();
+		mm.setCustomModelData(2009);
+		main.setItemMeta(mm);
 
 		String reg = lang.equalsIgnoreCase("ko_kr") ? "´ÚÅÍB":"Dr.B";
-		Illusioner newmob = (Illusioner) Summon(esl.clone(), ChatColor.DARK_PURPLE+reg + "<"+rn+">", 40000.0, new ItemStack(Material.BLACK_STAINED_GLASS), null, null, null, null, null, EntityType.ILLUSIONER);
+		Illusioner newmob = (Illusioner) Summon(esl.clone(), ChatColor.DARK_PURPLE+reg + "<"+rn+">", 40000.0, new ItemStack(Material.BLACK_STAINED_GLASS), null, null, null, main, null, EntityType.ILLUSIONER);
 		newmob.setCanJoinRaid(false);
 		newmob.setPatrolTarget(null);
 		newmob.setPatrolLeader(false);

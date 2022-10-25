@@ -94,7 +94,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	 * 
 	 */
 	private static final long serialVersionUID = 8118960217265734839L;
-	private HashMap<UUID, Location> beforepl = new HashMap<UUID, Location>();
+	private static HashMap<UUID, Location> beforepl = new HashMap<UUID, Location>();
 	private Multimap<String, UUID> raider = ArrayListMultimap.create();
 	private static Multimap<String, UUID> heroes = ArrayListMultimap.create();
 	private static HashMap<String, Location> raidloc = new HashMap<String, Location>();
@@ -574,9 +574,13 @@ public class OverworldRaids extends Summoned implements Listener {
     		return newmob;
 		}
 		else if(in ==4) {
+			ItemStack main = new ItemStack(Material.BOW);
+			ItemMeta mm = main.getItemMeta();
+			mm.setCustomModelData(2009);
+			main.setItemMeta(mm);
 
     		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "´ÚÅÍB":"Dr.B";
-    		Illusioner newmob = (Illusioner) MobspawnLoc(esl, ChatColor.DARK_PURPLE+reg, dif1, new ItemStack(Material.BLACK_STAINED_GLASS), null, null, null, null, null, EntityType.ILLUSIONER);
+    		Illusioner newmob = (Illusioner) MobspawnLoc(esl, ChatColor.DARK_PURPLE+reg, dif1, new ItemStack(Material.BLACK_STAINED_GLASS), null, null, null, main, null, EntityType.ILLUSIONER);
 			newmob.setCanJoinRaid(false);
 			newmob.setPatrolTarget(null);
 			newmob.setPatrolLeader(false);
@@ -875,7 +879,7 @@ public class OverworldRaids extends Summoned implements Listener {
 				p.teleport(spl.clone().add(0,0.5,0));
 				Holding.invur(p, 40l);
 			}
-    		RaidFinish(rn,"","",0,"wild");
+    		RaidFinish(rn,"","",0);
 			d.getClickedBlock().setType(Material.VOID_AIR);
     		ArmorStand portal = (ArmorStand) spl.getWorld().spawn(spl, ArmorStand.class);
     		portal.setMetadata("portal", new FixedMetadataValue(RMain.getInstance(), true));
@@ -1027,7 +1031,7 @@ public class OverworldRaids extends Summoned implements Listener {
         		p.sendTitle(ChatColor.GRAY + "Raid Will Start", "Protect Villager & Sweep All Enemies", 5, 69, 5);
 			}
 		}
-		lives.put(rn, LIVES);
+		lives.put(rn, LIVES+heroes.get(rn).size());
 		
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
             @Override

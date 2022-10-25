@@ -556,7 +556,6 @@ public class Party implements CommandExecutor, Serializable, Listener{
 
 		if(hasParty(p)) 
 		{
-			System.out.println(getMembers(getParty(p)).count());
 			if(getMembers(getParty(p)).count()>1)
 			{
 				if(isOwner(p)) {

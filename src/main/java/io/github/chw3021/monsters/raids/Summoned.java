@@ -42,6 +42,7 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Table;
 
+import io.github.chw3021.commons.CommonEvents;
 import io.github.chw3021.commons.party.Party;
 import io.github.chw3021.commons.party.PartyCreateEvent;
 import io.github.chw3021.commons.party.PartyJoinEvent;
@@ -65,11 +66,11 @@ public class Summoned extends Mobs implements Serializable{
 
 	Double TC = 100d;
 	Integer MINCOMBO = 5;
-	Integer MAXCOMBO = 10;
+	Integer MAXCOMBO = 80;
 	Integer COMBOPER = 12;
 	public Integer SUMMONCOUNT = 2;
 	
-	Integer COMBOTIME = 50000;
+	Integer COMBOTIME = 400;
 	Integer BOSSTIME = 6000;
 	
 	
@@ -860,7 +861,10 @@ public class Summoned extends Mobs implements Serializable{
 	@SuppressWarnings("unchecked")
 	private final void AncientPortal(String rn, Integer combo, LivingEntity le) {
 
-		final Location sl = le.getLocation().clone().add(0, 0.5, 0);
+		Location sl = le.getLocation().clone().add(0, 0.5, 0);
+		if(!sl.getBlock().isEmpty()) {
+			sl = CommonEvents.getInstance().BlankFinder(sl);
+		}
 		sl.getBlock().setType(Material.END_GATEWAY);
 		EndGateway eg = (EndGateway) le.getWorld().getBlockState(sl);
 		eg.setExactTeleport(true);
@@ -1337,7 +1341,7 @@ public class Summoned extends Mobs implements Serializable{
     {
 		Player p = (Player)ev.getPlayer();
 		String rn = getheroname(p);
-			if(!p.isSneaking() && !p.isSprinting() && combo.containsRow(rn))
+			if(!p.isSneaking() && !p.isSprinting() && (combo.containsRow(rn) || p.getWorld().hasMetadata("rpgraidworld")))
 			{
 				ev.setCancelled(true);
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {

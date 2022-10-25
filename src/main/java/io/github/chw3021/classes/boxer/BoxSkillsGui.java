@@ -51,17 +51,17 @@ public class BoxSkillsGui extends SkillsGui{
 				itemset("긴장", Material.TORCH, 0, 1, Arrays.asList("수치를 즉시 최대화 시킵니다"), 9, Boxskillsinv);
 				itemset("피커브", Material.NETHERITE_HELMET, 0, 1, Arrays.asList("웅크리기중 방어력이 증가합니다"), 10, Boxskillsinv);
 				itemset("승천권", Material.LIGHT_BLUE_GLAZED_TERRACOTTA, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[바람 계열]","재입력시 승천권을 사용합니다","",ChatColor.BOLD+" X"+BigDecimal.valueOf(0.4*(1+bsd.Straight.getOrDefault(p.getUniqueId(),0)*0.046)).setScale(2, RoundingMode.HALF_EVEN)+"D", "(피해량은 붕권 레벨에 비례합니다)"), 11, Boxskillsinv);
-				itemset("지열권", Material.POPPED_CHORUS_FRUIT, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[바람 계열]","재입력시 지열권을 사용합니다","",ChatColor.BOLD+" X"+BigDecimal.valueOf(0.35*(1+ bsd.BodyBlow.getOrDefault(p.getUniqueId(),0)*0.035)).setScale(2, RoundingMode.HALF_EVEN)+"D", "(피해량은 철산고 레벨에 비례합니다)"), 12, Boxskillsinv);
+				itemset("지열권", Material.POPPED_CHORUS_FRUIT, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[바람 계열]","재입력시 지열권을 사용합니다","",ChatColor.BOLD+" X"+BigDecimal.valueOf(0.5*(1+ bsd.BodyBlow.getOrDefault(p.getUniqueId(),0)*0.035)).setScale(2, RoundingMode.HALF_EVEN)+"D", "(피해량은 철산고 레벨에 비례합니다)"), 12, Boxskillsinv);
 				itemset("몰입", Material.RAIL, 0, 1, Arrays.asList("재입력시 뎀프시롤을 한번더 사용할수 있습니다"), 13, Boxskillsinv);
 				itemset("기회", Material.SHIELD, 0, 1, Arrays.asList("적에게 공격 받아도 반격이 활성화 됩니다"), 14, Boxskillsinv);
 				itemset("강심장", Material.GOLDEN_APPLE, 0, 1, Arrays.asList("체력 재생효과가 증가합니다"), 15, Boxskillsinv);
 				itemset("인내", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("전체 공격력과 방어력이 증가합니다"), 16, Boxskillsinv);
-				itemset("일격권", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[바람 계열]","웅크리기 + 아이템던지기", "",ChatColor.BOLD+" X 12.1D"), 17, Boxskillsinv);
+				itemset("일격권", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[바람 계열]","웅크리기 + 아이템던지기", "",ChatColor.BOLD+" X 17.1D"), 17, Boxskillsinv);
 				
 				itemset("더킹(잠김)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/155015"), 19, Boxskillsinv);
 				itemset("대지가르기(잠김)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/155015"), 20, Boxskillsinv);
 				itemset("권풍(잠김)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/155015"), 21, Boxskillsinv);
-				itemset("가속(잠김)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/155015"), 22, Boxskillsinv);
+				itemset("폭권(잠김)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/155015"), 22, Boxskillsinv);
 				itemset("활력(잠김)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/155015"), 25, Boxskillsinv);
 				itemset("철인의 의지(잠김)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/155015"), 26, Boxskillsinv);
 			}
@@ -69,19 +69,19 @@ public class BoxSkillsGui extends SkillsGui{
 				itemset("긴장", Material.TORCH, 0, 1, Arrays.asList("수치를 즉시 최대화 시킵니다"), 9, Boxskillsinv);
 				itemset("피커브", Material.NETHERITE_HELMET, 0, 1, Arrays.asList("웅크리기중 방어력이 증가합니다"), 10, Boxskillsinv);
 				itemset("승천권", Material.LIGHT_BLUE_GLAZED_TERRACOTTA, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[바람 계열]","재입력시 승천권을 사용합니다","",ChatColor.BOLD+" X"+BigDecimal.valueOf(0.4*(1+bsd.Straight.getOrDefault(p.getUniqueId(),0)*0.046)).setScale(2, RoundingMode.HALF_EVEN)+"D", "(피해량은 붕권 레벨에 비례합니다)"), 11, Boxskillsinv);
-				itemset("지열권", Material.POPPED_CHORUS_FRUIT, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[바람 계열]","재입력시 지열권을 사용합니다","",ChatColor.BOLD+" X"+BigDecimal.valueOf(0.35*(1+ bsd.BodyBlow.getOrDefault(p.getUniqueId(),0)*0.035)).setScale(2, RoundingMode.HALF_EVEN)+"D", "(피해량은 철산고 레벨에 비례합니다)"), 12, Boxskillsinv);
+				itemset("지열권", Material.POPPED_CHORUS_FRUIT, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[바람 계열]","재입력시 지열권을 사용합니다","",ChatColor.BOLD+" X"+BigDecimal.valueOf(0.5*(1+ bsd.BodyBlow.getOrDefault(p.getUniqueId(),0)*0.035)).setScale(2, RoundingMode.HALF_EVEN)+"D", "(피해량은 철산고 레벨에 비례합니다)"), 12, Boxskillsinv);
 				itemset("몰입", Material.RAIL, 0, 1, Arrays.asList("재입력시 뎀프시롤을 한번더 사용할수 있습니다"), 13, Boxskillsinv);
 				itemset("기회", Material.SHIELD, 0, 1, Arrays.asList("적에게 공격 받아도 반격이 활성화 됩니다"), 14, Boxskillsinv);
 				itemset("강심장", Material.GOLDEN_APPLE, 0, 1, Arrays.asList("체력 재생효과가 증가합니다"), 15, Boxskillsinv);
 				itemset("인내", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("전체 공격력과 방어력이 증가합니다"), 16, Boxskillsinv);
-				itemset("일격권", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[바람 계열]","웅크리기 + 아이템던지기", "",ChatColor.BOLD+" X 12.1D"), 17, Boxskillsinv);
+				itemset("일격권", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[바람 계열]","웅크리기 + 아이템던지기", "",ChatColor.BOLD+" X 17.1D"), 17, Boxskillsinv);
 				
 				itemset("더킹", Material.CHICKEN, 0, 1, Arrays.asList("웅크리기 사용시 반격이 활성화 됩니다"), 19, Boxskillsinv);
 				itemset("대지가르기", Material.BLACK_GLAZED_TERRACOTTA, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[바람 계열]","재입력시 대지가르기를 사용합니다","",ChatColor.BOLD+" X"+BigDecimal.valueOf(0.54*(1+bsd.Straight.getOrDefault(p.getUniqueId(),0)*0.05)).setScale(2, RoundingMode.HALF_EVEN)+"D", "(피해량은 붕권 레벨에 비례합니다)"), 20, Boxskillsinv);
 				itemset("권풍", Material.IRON_BOOTS, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[바람 계열]","재입력시 권풍을 사용합니다","",ChatColor.BOLD+"8 X "+BigDecimal.valueOf(0.35*(1+ bsd.BodyBlow.getOrDefault(p.getUniqueId(),0)*0.035)).setScale(2, RoundingMode.HALF_EVEN)+"D", "(피해량은 철산고 레벨에 비례합니다)"), 21, Boxskillsinv);
-				itemset("가속", Material.ENCHANTED_GOLDEN_APPLE, 0, 1, Arrays.asList("재입력시 뎀프시롤을 한번더 사용할수 있습니다"), 22, Boxskillsinv);
+				itemset("폭권", Material.ENCHANTED_GOLDEN_APPLE, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[바람 계열]","뎀프시롤 이후 재입력시 폭권을 사용합니다","",ChatColor.BOLD+"1 X "+BigDecimal.valueOf(1.5*(1+ bsd.BodyBlow.getOrDefault(p.getUniqueId(),0)*0.09)).setScale(2, RoundingMode.HALF_EVEN)+"D", "(피해량은 뎀프시롤 레벨에 비례합니다)"), 22, Boxskillsinv);
 				itemset("활력", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("전체 공격력과 방어력이 증가합니다","일격권의 재사용 대기시간이 감소합니다"), 25, Boxskillsinv);
-				itemset("철인의 의지", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[바람 계열]","달리기 + 아이템던지기", "",ChatColor.BOLD+" X 18.1D"), 26, Boxskillsinv);
+				itemset("철인의 의지", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[바람 계열]","달리기 + 아이템던지기", "",ChatColor.BOLD+"40 X 0.16 + 3 X 2.1D + 17.5D"), 26, Boxskillsinv);
 			}
 			itemset("현재 숙련도", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(""+Proficiency.getproexp(p)), 27, Boxskillsinv);
 			itemset("스킬포인트", Material.NETHER_STAR, 0, 1, Arrays.asList(ChatColor.AQUA+"SP."+bsd.SkillPoints.getOrDefault(p.getUniqueId(),0),"","클릭하면 스킬포인트가 초기화 됩니다"), 35, Boxskillsinv);
@@ -113,17 +113,17 @@ public class BoxSkillsGui extends SkillsGui{
 				itemset("Intension", Material.TORCH, 0, 1, Arrays.asList("Maximize FistForce Instantly"), 9, Boxskillsinv);
 				itemset("Peek-a-boo", Material.NETHERITE_HELMET, 0, 1, Arrays.asList("Increases Armor While Sneaking"), 10, Boxskillsinv);
 				itemset("SkyCrasher", Material.LIGHT_BLUE_GLAZED_TERRACOTTA, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Use SkyCrasher When use Once more","",ChatColor.BOLD+" X"+BigDecimal.valueOf(0.4*(1+bsd.Straight.getOrDefault(p.getUniqueId(),0)*0.046)).setScale(2, RoundingMode.HALF_EVEN)+"D", "(Damage Affected By Straight)"), 11, Boxskillsinv);
-				itemset("UnderHook", Material.POPPED_CHORUS_FRUIT, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Use UnderHook When use Once more","",ChatColor.BOLD+" X"+BigDecimal.valueOf(0.35*(1+ bsd.BodyBlow.getOrDefault(p.getUniqueId(),0)*0.035)).setScale(2, RoundingMode.HALF_EVEN)+"D", "(Damage Affected By Bodyblow)"), 12, Boxskillsinv);
+				itemset("UnderHook", Material.POPPED_CHORUS_FRUIT, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Use UnderHook When use Once more","",ChatColor.BOLD+" X"+BigDecimal.valueOf(0.5*(1+ bsd.BodyBlow.getOrDefault(p.getUniqueId(),0)*0.035)).setScale(2, RoundingMode.HALF_EVEN)+"D", "(Damage Affected By Bodyblow)"), 12, Boxskillsinv);
 				itemset("Immersion", Material.RAIL, 0, 1, Arrays.asList("Able to use Once more"), 13, Boxskillsinv);
 				itemset("Chance", Material.SHIELD, 0, 1, Arrays.asList("Activate Counter When Damaged by Enimies as well"), 14, Boxskillsinv);
 				itemset("Strong heart", Material.GOLDEN_APPLE, 0, 1, Arrays.asList("Amplify Regeneration Effect"), 15, Boxskillsinv);
 				itemset("Patience", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage & Armor"), 16, Boxskillsinv);
-				itemset("One Punch", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Sneaking + ThrowItem", "",ChatColor.BOLD+" X 12.1D"), 17, Boxskillsinv);
+				itemset("One Punch", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Sneaking + ThrowItem", "",ChatColor.BOLD+" X 17.1D"), 17, Boxskillsinv);
 
 				itemset("Ducking(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 19, Boxskillsinv);
 				itemset("EarthQuaker(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 20, Boxskillsinv);
 				itemset("FistStorm(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 21, Boxskillsinv);
-				itemset("Acceleration(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 22, Boxskillsinv);
+				itemset("ExplodingFist(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 22, Boxskillsinv);
 				itemset("Stamina(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 25, Boxskillsinv);
 				itemset("Will Of Ironman(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 26, Boxskillsinv);
 			}
@@ -131,19 +131,19 @@ public class BoxSkillsGui extends SkillsGui{
 				itemset("Intension", Material.TORCH, 0, 1, Arrays.asList("Maximize FistForce Instantly"), 9, Boxskillsinv);
 				itemset("Peek-a-boo", Material.NETHERITE_HELMET, 0, 1, Arrays.asList("Increases Armor While Sneaking"), 10, Boxskillsinv);
 				itemset("SkyCrasher", Material.LIGHT_BLUE_GLAZED_TERRACOTTA, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Use SkyCrasher When use Once more","",ChatColor.BOLD+" X"+BigDecimal.valueOf(0.4*(1+bsd.Straight.getOrDefault(p.getUniqueId(),0)*0.046)).setScale(2, RoundingMode.HALF_EVEN)+"D", "(Damage Affected By Straight)"), 11, Boxskillsinv);
-				itemset("UnderHook", Material.POPPED_CHORUS_FRUIT, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Use UnderHook When use Once more","",ChatColor.BOLD+" X"+BigDecimal.valueOf(0.35*(1+ bsd.BodyBlow.getOrDefault(p.getUniqueId(),0)*0.035)).setScale(2, RoundingMode.HALF_EVEN)+"D", "(Damage Affected By Bodyblow)"), 12, Boxskillsinv);
+				itemset("UnderHook", Material.POPPED_CHORUS_FRUIT, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Use UnderHook When use Once more","",ChatColor.BOLD+" X"+BigDecimal.valueOf(0.5*(1+ bsd.BodyBlow.getOrDefault(p.getUniqueId(),0)*0.035)).setScale(2, RoundingMode.HALF_EVEN)+"D", "(Damage Affected By Bodyblow)"), 12, Boxskillsinv);
 				itemset("Immersion", Material.RAIL, 0, 1, Arrays.asList("Able to use Once more"), 13, Boxskillsinv);
 				itemset("Chance", Material.SHIELD, 0, 1, Arrays.asList("Activate Counter When Damaged by Enimies as well"), 14, Boxskillsinv);
 				itemset("Strong heart", Material.GOLDEN_APPLE, 0, 1, Arrays.asList("Amplify Regeneration Effect"), 15, Boxskillsinv);
 				itemset("Patience", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage & Armor"), 16, Boxskillsinv);
-				itemset("One Punch", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Sneaking + ThrowItem", "",ChatColor.BOLD+" X 12.1D"), 17, Boxskillsinv);
+				itemset("One Punch", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Sneaking + ThrowItem", "",ChatColor.BOLD+" X 17.1D"), 17, Boxskillsinv);
 
 				itemset("Ducking", Material.CHICKEN, 0, 1, Arrays.asList("Activate Counter When Sneaking"), 19, Boxskillsinv);
 				itemset("EarthQuaker", Material.BLACK_GLAZED_TERRACOTTA, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Use EarthQuaker When use Once more","",ChatColor.BOLD+" X"+BigDecimal.valueOf(0.54*(1+bsd.Straight.getOrDefault(p.getUniqueId(),0)*0.05)).setScale(2, RoundingMode.HALF_EVEN)+"D", "(Damage Affected By Straight)"), 20, Boxskillsinv);
 				itemset("FistStorm", Material.IRON_BOOTS, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Use FistStorm When use Once more","",ChatColor.BOLD+"8 X "+BigDecimal.valueOf(0.35*(1+ bsd.BodyBlow.getOrDefault(p.getUniqueId(),0)*0.035)).setScale(2, RoundingMode.HALF_EVEN)+"D", "(Damage Affected By Bodyblow)"), 21, Boxskillsinv);
-				itemset("Acceleration", Material.ENCHANTED_GOLDEN_APPLE, 0, 1, Arrays.asList("Able to use Once more"), 22, Boxskillsinv);
+				itemset("ExplodingFist", Material.ENCHANTED_GOLDEN_APPLE, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Use ExplodingFist When use Once more After DempseyRoll","",ChatColor.BOLD+"1 X "+BigDecimal.valueOf(1.5*(1+ bsd.DempseyRoll.getOrDefault(p.getUniqueId(),0)*0.09)).setScale(2, RoundingMode.HALF_EVEN)+"D", "(Damage Affected By DempseyRoll)"), 22, Boxskillsinv);
 				itemset("Stamina", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Damage & Armor","Decreases One Punch Cooldown"), 25, Boxskillsinv);
-				itemset("Will Of Ironman", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Sprinting + ThrowItem", "",ChatColor.BOLD+" X 18.1D"), 26, Boxskillsinv);
+				itemset("Will Of Ironman", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Sprinting + ThrowItem", "",ChatColor.BOLD+"40 X 0.16 + 3 X 2.1D + 17.5D"), 26, Boxskillsinv);
 			}
 			itemset("Current Proficiency", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(""+Proficiency.getproexp(p)), 27, Boxskillsinv);
 			itemset("SkillPoints", Material.NETHER_STAR, 0, 1, Arrays.asList(ChatColor.AQUA+"SP."+bsd.SkillPoints.getOrDefault(p.getUniqueId(),0),"","Click if you want to reset your skill's levels"), 35, Boxskillsinv);

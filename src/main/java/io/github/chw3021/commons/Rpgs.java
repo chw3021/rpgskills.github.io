@@ -132,44 +132,6 @@ public class Rpgs extends Summoned implements CommandExecutor, Serializable {
     {
 		if(!(sender instanceof Player) &&alias.equals("rpg"))
 		{
-			if(args[0].equalsIgnoreCase("data")  || args[0].equalsIgnoreCase("dat"))
-			{ 
-					HashSet<String> wns = new HashSet<>();;
-					Bukkit.getWorlds().stream().filter(w ->  !w.hasMetadata("rpgraidworld") && w.canGenerateStructures()).forEach(w -> wns.add(w.getName()));
-					wns.forEach(wn ->{
-						File rg = new File(Bukkit.getServer().getWorldContainer().getPath()+ "/"+wn + "/region");
-						File[] files = rg.listFiles();
-						if(files != null) {
-					        try {
-								for (File file : files) {;
-								System.out.println(file);
-								
-								BufferedInputStream inp = null;
-								try {
-								    inp = new BufferedInputStream(new FileInputStream(file));
-								}
-								catch (FileNotFoundException e) {
-								}
-
-								NBTInputStream ns = new NBTInputStream(inp);
-								NBTCompound nbtc = ns.readCompound();
-								
-								
-								System.out.println(nbtc.entrySet());
-								
-								inp.close();
-						        break;
-						        
-									
-								}
-							} catch (NullPointerException | IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						}
-						
-					});
-			}
 		}
 		if(sender instanceof Player && alias.equals("rpg"))
 		{

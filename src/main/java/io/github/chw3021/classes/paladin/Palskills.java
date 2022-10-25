@@ -12,6 +12,8 @@ import io.github.chw3021.obtains.Obtained;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.EulerAngle;
+import org.bukkit.util.Vector;
+
 import io.github.chw3021.rmain.RMain;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
@@ -179,7 +181,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3 && psd.Restraint.getOrDefault(p.getUniqueId(), 0)>=1) {
-			double sec =8*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec =7*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 			if(p.getInventory().getItemInMainHand().getType().name().contains("AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD") && p.isBlocking() && p.isSneaking())
 			{
 				
@@ -381,6 +383,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 				p.getWorld().spawnParticle(Particle.FLASH, p.getLocation(), 10,4,2,4,0);
 
             	cross.forEach(cl -> {
+    				p.getWorld().spawnParticle(Particle.FLASH, cl, 5, 0.25,0.25,0.25,0);
     				p.getWorld().spawnParticle(Particle.COMPOSTER, cl, 100, 0.25,0.25,0.25,0);
     				p.getWorld().spawnParticle(Particle.WHITE_ASH, cl, 100, 0.25,0.25,0.25,0);
     				p.getWorld().spawnParticle(Particle.BLOCK_CRACK, cl, 100, 0.25,0.25,0.25,0, Material.CHISELED_QUARTZ_BLOCK.createBlockData());
@@ -388,7 +391,6 @@ public class Palskills extends Pak implements Serializable, Listener {
             	
 				p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_STEP, 0.8f, 0f);
 				p.playSound(p.getLocation(), Sound.ENTITY_GLOW_SQUID_AMBIENT, 0.8f, 0f);
-				p.playSound(p.getLocation(), Sound.ITEM_GLOW_INK_SAC_USE, 0.8f, 2f);
                 
 				for (Entity e : p.getWorld().getNearbyEntities(l, 4, 4, 4))
 				{
@@ -432,28 +434,11 @@ public class Palskills extends Pak implements Serializable, Listener {
             	}
 				doom.remove(p.getUniqueId());
 
-            	Location l = p.getLocation().clone().add(p.getLocation().getDirection().clone().normalize().multiply(2.2));
-				HashSet<Location> cross = new HashSet<>();
-				
-				for(int i = -1; i<7; i++) {
-					cross.add(l.clone().add(0, i, 0));
-				}
-				for(int i = -3; i<3; i++) {
-					cross.add(l.clone().add(i, 4, 0));
-					cross.add(l.clone().add(0, 4, i));
-				}
+            	Location ttl = p.getLocation().clone().add(p.getLocation().getDirection().clone().normalize().multiply(3));
+            	
+            	HashSet<LivingEntity> les = new HashSet<>();
 
-            	cross.forEach(tl -> {
-    				p.getWorld().spawnParticle(Particle.CRIT_MAGIC, tl, 300, 0.5, 0.5, 0.5);
-    				p.getWorld().spawnParticle(Particle.WAX_ON, tl, 300, 0.5, 0.5, 0.5,0);
-    				p.getWorld().spawnParticle(Particle.SPELL_INSTANT, tl, 300, 0.5, 0.5, 0.5,0);
-    				p.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, tl, 300, 1, 1, 1,0.5);
-            	});
-				p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE,0.3f, 0.3f);
-				p.playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 0.8f, 2f);
-				
-                
-				for (Entity e : p.getWorld().getNearbyEntities(l, 4, 4, 4))
+				for (Entity e : p.getWorld().getNearbyEntities(p.getLocation(), 4, 4, 4))
 				{
             		if (e instanceof Player) 
 					{
@@ -468,11 +453,83 @@ public class Palskills extends Pak implements Serializable, Listener {
 					if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
 					{
 						final LivingEntity le = (LivingEntity)e;
-						atks(1.5, psd.Restraint.get(p.getUniqueId())*1.68, p, le,9);
-						le.teleport(l);
+						les.add(le);
 						Holding.holding(p, le, 30l);
 					}
 				}
+            	
+
+				ArrayList<Location> air = new ArrayList<Location>();
+				ArrayList<Location> sight = new ArrayList<Location>();
+                AtomicInteger j = new AtomicInteger(0);
+                AtomicInteger k = new AtomicInteger(0);
+                for(double i=Math.PI/180; i > -Math.PI; i -= Math.PI/180) {
+                	Location eye = p.getEyeLocation().clone();
+                	eye.setDirection(eye.clone().getDirection().multiply(-1));
+                	Vector eyev = eye.getDirection().clone().rotateAroundY(Math.PI/2);
+                	Location a = eye.clone().setDirection(eye.getDirection().rotateAroundAxis(eyev, i).normalize());
+                	Location b = eye.clone().add(eye.getDirection().rotateAroundAxis(eyev, i).normalize().multiply(3));
+                	sight.add(a);
+                	air.add(b);
+                }
+                air.forEach(l -> {
+                	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		                @Override
+		                public void run() {
+    						p.getWorld().spawnParticle(Particle.BLOCK_CRACK, l, 5, 0.3,0.3,0.3,0 ,Material.QUARTZ_PILLAR.createBlockData());
+    						p.getWorld().spawnParticle(Particle.FLASH, l, 2, 0.3,0.3,0.3,0);
+		                    p.playSound(p.getLocation(), Sound.ENTITY_GLOW_SQUID_AMBIENT, 0.01f, 2f);
+		                    
+		                    for(LivingEntity le: les) {
+	    							le.teleport(l);
+							}
+		                }
+		            }, j.incrementAndGet()/20);
+                });
+                sight.forEach(l -> {
+                	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		                @Override
+		                public void run() {
+    						p.teleport(l);
+		                }
+		            }, k.incrementAndGet()/20);
+                });
+                
+
+            	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	                @Override
+	                public void run() {
+	                	
+	    				HashSet<Location> cross = new HashSet<>();
+	    				
+	    				for(int i = -1; i<7; i++) {
+	    					cross.add(ttl.clone().add(0, i, 0));
+	    				}
+	    				
+	    				for(int i = -3; i<3; i++) {
+	    					cross.add(ttl.clone().add(i, 4, 0));
+	    					cross.add(ttl.clone().add(0, 4, i));
+	    				}
+	    				
+	    				ttl.getWorld().strikeLightningEffect(ttl);
+
+	                    
+	                	cross.forEach(tl -> {
+	        				p.getWorld().spawnParticle(Particle.CRIT_MAGIC, tl, 300, 0.5, 0.5, 0.5);
+	        				p.getWorld().spawnParticle(Particle.WAX_ON, tl, 300, 0.5, 0.5, 0.5,0);
+	        				p.getWorld().spawnParticle(Particle.SPELL_INSTANT, tl, 300, 0.5, 0.5, 0.5,0);
+	        				p.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, tl, 300, 1, 1, 1,0.5);
+	                	});
+	    				p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE,0.3f, 0.3f);
+	    				
+	    				les.forEach(le ->{
+	    					atks(1.5, psd.Restraint.get(p.getUniqueId())*1.68, p, le,9);
+	    					le.teleport(ttl);
+	    					Holding.holding(p, le, 30l);
+	    				});
+	                }
+	            }, j.incrementAndGet()/20);
+            	
 
 				
 			}
@@ -1462,9 +1519,9 @@ public class Palskills extends Pak implements Serializable, Listener {
 		                    p.playSound(p.getLocation(), Sound.ENTITY_SPLASH_POTION_BREAK, 1.0f, 2f);
 		                    p.playSound(p.getLocation(), Sound.ENTITY_GENERIC_SPLASH, 1.0f, 2f);
 		                    p.playSound(p.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1.0f, 2f);
-			        		jo.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, l, 200,4,4,4);
-			        		jo.getWorld().spawnParticle(Particle.WATER_SPLASH, l, 200,4,4,4);
-			        		jo.getWorld().spawnParticle(Particle.BLOCK_CRACK, l, 200,4,4,4,Material.CHISELED_QUARTZ_BLOCK.createBlockData());
+			        		jo.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, l, 200,1,1,1);
+			        		jo.getWorld().spawnParticle(Particle.WATER_SPLASH, l, 200,1,1,1);
+			        		jo.getWorld().spawnParticle(Particle.BLOCK_CRACK, l, 600,4,3,4,Material.CHISELED_QUARTZ_BLOCK.createBlockData());
 		                	for (Entity e : jo.getWorld().getNearbyEntities(l, 4, 4, 4))
 							{
 	                    		if (e instanceof Player) 
@@ -1821,7 +1878,7 @@ public class Palskills extends Pak implements Serializable, Listener {
                 AtomicInteger j = new AtomicInteger();
                 p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.6f, 0.5f);
                 p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_CLUSTER_BREAK, 0.6f, 1.5f);
-                for(double an = Math.PI/36; an>-Math.PI/36; an-=Math.PI/180) {
+                for(double an = Math.PI/20; an>-Math.PI/20; an-=Math.PI/180) {
                 	Location pl = p.getEyeLocation();
                 	pl.add(pl.getDirection().rotateAroundY(an).normalize().multiply(2.5));
                 	line.add(pl);
@@ -1832,7 +1889,8 @@ public class Palskills extends Pak implements Serializable, Listener {
 		                public void run() 
 		                {
 			        		p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l,10,2,2,2,0);
-			        		p.getWorld().spawnParticle(Particle.COMPOSTER, l,10,2,2,2,0);	          
+			        		p.getWorld().spawnParticle(Particle.COMPOSTER, l,10,2,2,2,0);	    
+			        		p.getWorld().spawnParticle(Particle.WHITE_ASH, l,10,2,2,2,0.1);
 		                }
 					}, j.incrementAndGet()/900); 
                 	

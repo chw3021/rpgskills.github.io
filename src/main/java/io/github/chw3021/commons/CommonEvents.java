@@ -173,7 +173,7 @@ public class CommonEvents implements Listener {
 			p.setRemoveWhenFarAway(false);
 	}
 	
-	private Location BlankFinder(Location l) {
+	final public Location BlankFinder(Location l) {
 		
 		HashSet<Location> lhs = new HashSet<>();
 		Double dis = 7d;

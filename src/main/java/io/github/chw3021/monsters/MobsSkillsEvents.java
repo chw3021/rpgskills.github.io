@@ -576,6 +576,8 @@ public class MobsSkillsEvents implements Listener, Serializable {
 		DarkSkills.getInstance().ReapingHook(d);
 		DarkSkills.getInstance().cage(d);
 		DarkSkills.getInstance().darkcircle(d);
+		DarkSkills.getInstance().nightCounter(d);
+		DarkSkills.getInstance().nightMare(d);
 		
 		
 

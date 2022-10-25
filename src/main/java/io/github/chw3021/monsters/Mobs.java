@@ -436,7 +436,26 @@ public class Mobs extends Pak {
 			}, 6);
 		}
 	}
-	
+
+	final protected void equipsum(LivingEntity creature, @Nullable ItemStack head,
+			@Nullable ItemStack chest, @Nullable ItemStack leg, @Nullable ItemStack boots, @Nullable ItemStack main,
+			@Nullable ItemStack off) {
+
+		creature.getEquipment().setHelmet(head);
+		creature.getEquipment().setChestplate(chest);
+		creature.getEquipment().setLeggings(leg);
+		creature.getEquipment().setBoots(boots);
+		creature.getEquipment().setItemInMainHand(main);
+		creature.getEquipment().setItemInOffHand(off);
+		
+		creature.getEquipment().setBootsDropChance(0);
+		creature.getEquipment().setChestplateDropChance(0);
+		creature.getEquipment().setHelmetDropChance(0);
+		creature.getEquipment().setItemInMainHandDropChance(0);
+		creature.getEquipment().setItemInOffHandDropChance(0);
+		creature.getEquipment().setLeggingsDropChance(0);
+	}
+
 	final protected void equip(LivingEntity creature, @Nullable ItemStack head,
 			@Nullable ItemStack chest, @Nullable ItemStack leg, @Nullable ItemStack boots, @Nullable ItemStack main,
 			@Nullable ItemStack off) {
@@ -519,7 +538,7 @@ public class Mobs extends Pak {
 		creature.getEquipment().setItemInOffHandDropChance(0);
 		creature.getEquipment().setLeggingsDropChance(0);
 		
-		equip(creature,head,chest,leg,boots,main,off);
+		equipsum(creature,head,chest,leg,boots,main,off);
 		
 		Lootable cl = (Lootable) creature;
 		cl.setLootTable(LootTables.EMPTY.getLootTable());
@@ -539,7 +558,7 @@ public class Mobs extends Pak {
 		creature.setHealth(health);
 		creature.setCustomName(name);
 		
-		equip(creature,head,chest,leg,boots,main,off);
+		equipsum(creature,head,chest,leg,boots,main,off);
 		
 		Lootable cl = (Lootable) creature;
 		cl.setLootTable(LootTables.EMPTY.getLootTable());

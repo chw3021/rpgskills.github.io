@@ -1545,7 +1545,7 @@ public class Witskills extends Pak implements Listener, Serializable {
 
 	             			
 		             			Location ptl = BlackSpins(pl,c).clone();
-		    					for (Entity a : p.getWorld().getNearbyEntities(ptl.clone(), 4.5, 4.5, 4.5))
+		    					for (Entity a : ptl.getWorld().getNearbyEntities(ptl.clone(), 4.5, 4.5, 4.5))
 		    					{
 		    						if ((!(a == p))&& a instanceof LivingEntity&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal"))) 
 		    						{
