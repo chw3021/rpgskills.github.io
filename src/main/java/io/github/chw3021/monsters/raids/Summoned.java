@@ -66,7 +66,7 @@ public class Summoned extends Mobs implements Serializable{
 
 	Double TC = 100d;
 	Integer MINCOMBO = 5;
-	Integer MAXCOMBO = 80;
+	Integer MAXCOMBO = 20;
 	Integer COMBOPER = 12;
 	public Integer SUMMONCOUNT = 2;
 	
@@ -703,7 +703,7 @@ public class Summoned extends Mobs implements Serializable{
 	}
 	@SuppressWarnings("unchecked")
 	final protected void Reward(String meta, String rn, int com) {
-		if(com <MINCOMBO) {
+		if(com <MINCOMBO && com!=-1) {
 			return;
 		}
 		
@@ -1171,7 +1171,7 @@ public class Summoned extends Mobs implements Serializable{
 		}
 		
 		if(combo.contains(rn,meta)) {
-			if(factor == 1) {
+			if(factor.equals(1) || factor == 1) {
 				Reward(meta,rn,-1);
 			}
 			else {

@@ -28,19 +28,25 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Rabbit;
 import org.bukkit.entity.Silverfish;
 import org.bukkit.entity.Snowball;
+import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EnderDragonChangePhaseEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLocaleChangeEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -49,6 +55,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.event.world.WorldUnloadEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -63,6 +70,7 @@ import com.google.common.collect.Multimap;
 
 import io.github.chw3021.classes.ClassData;
 import io.github.chw3021.classes.Classgui;
+import io.github.chw3021.classes.illusionist.Illskills;
 import io.github.chw3021.commons.party.Party;
 import io.github.chw3021.rmain.RMain;
 
@@ -131,10 +139,40 @@ public class CommonEvents implements Listener {
 		}
 	}
 	
-	public void Naming(PlayerInteractEntityEvent d) 
+	public void namingAndBarRemove(PlayerInteractAtEntityEvent d) 
 	{
-		if(d.getPlayer().getInventory().getItemInMainHand().getType() == Material.NAME_TAG && d.getRightClicked().hasMetadata("rpgspawned")) {
-			Entity e = d.getRightClicked();
+		final Entity e = d.getRightClicked();
+		if(e.hasMetadata("fake") || e.hasMetadata("portal") || e.hasMetadata("din") || e instanceof Villager) {
+			Player p = d.getPlayer();
+			d.setCancelled(true);
+			Bukkit.getPluginManager().callEvent(new PlayerInteractEvent(p, Action.RIGHT_CLICK_AIR, p.getEquipment().getItemInMainHand(), null, p.getFacing()));
+		}
+		if(d.getPlayer().getInventory().getItemInMainHand().getType() == Material.NAME_TAG && e.hasMetadata("rpgspawned")) {
+			if(!e.hasMetadata("unmodified") || e.hasMetadata("fake") || e.hasMetadata("raid") || e.hasMetadata("boss") || e.hasMetadata("quest")){
+				d.setCancelled(true);
+				return;
+			}
+			if(damaged.containsKey(e.getUniqueId())) {
+				damaged.remove(e.getUniqueId());
+			}
+		}
+		if(d.getRightClicked().hasMetadata("din")) {
+			final Entity re = d.getRightClicked();
+			dinclickedremove(re);
+			d.setCancelled(true);
+			re.remove();
+		}
+	}
+	
+	public void namingAndBarRemove(PlayerInteractEntityEvent d) 
+	{
+		final Entity e = d.getRightClicked();
+		if(e.hasMetadata("fake") || e.hasMetadata("portal") || e.hasMetadata("din") || e instanceof Villager) {
+			Player p = d.getPlayer();
+			d.setCancelled(true);
+			Bukkit.getPluginManager().callEvent(new PlayerInteractEvent(p, Action.RIGHT_CLICK_AIR, p.getEquipment().getItemInMainHand(), null, p.getFacing()));
+		}
+		if(d.getPlayer().getInventory().getItemInMainHand().getType() == Material.NAME_TAG && e.hasMetadata("rpgspawned")) {
 			if(!e.hasMetadata("unmodified") || e.hasMetadata("fake") || e.hasMetadata("raid") || e.hasMetadata("boss") || e.hasMetadata("quest")){
 				d.setCancelled(true);
 				return;
@@ -592,6 +630,32 @@ public class CommonEvents implements Listener {
 
 
 
+	@EventHandler
+	public void barremove(EntityPotionEffectEvent d) 
+	{
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+			@Override
+            public void run() 
+            {
+				if(d.getEntity() instanceof LivingEntity && bar.containsKey(d.getEntity().getUniqueId())) {
+					LivingEntity le = (LivingEntity) d.getEntity();
+					if(le.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
+						ArmorStand din = (ArmorStand) Bukkit.getEntity(bar.get(le.getUniqueId()));
+						Bukkit.getScheduler().cancelTask(trackt.get(le.getUniqueId()));
+						if (din != null) {
+							din.setCustomNameVisible(false);
+							din.remove();
+							bart.remove(le.getUniqueId());
+							bar.remove(le.getUniqueId());
+						}
+					}
+					
+				}
+            }
+        }, 2);
+	}
+
+
 
 	@EventHandler
 	public void barremove(EntityDeathEvent d) 
@@ -717,6 +781,12 @@ public class CommonEvents implements Listener {
 			}
 		}
 		if(d.getDamager() instanceof Projectile && d.getEntity() instanceof LivingEntity&& !d.isCancelled()) {
+			if(d.getEntity().hasMetadata("fake") || d.getEntity().hasMetadata("portal"))
+			{
+				d.setCancelled(true);
+				return;
+			}
+
 			Projectile pr = (Projectile) d.getDamager();
 			if(pr.getShooter() instanceof Player && !(pr instanceof Snowball)) {
 				Player p = (Player) pr.getShooter();

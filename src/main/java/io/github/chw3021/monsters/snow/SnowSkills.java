@@ -69,6 +69,7 @@ public class SnowSkills extends Summoned implements Listener{
 	public HashMap<UUID, Long> hunt = new HashMap<UUID, Long>();
 	public HashMap<UUID, Long> icefall = new HashMap<UUID, Long>();
 	public HashMap<UUID, Long> rb6cooldown = new HashMap<UUID, Long>();
+	public HashMap<UUID, Long> rb7cooldown = new HashMap<UUID, Long>();
 	
 	public static HashMap<UUID, Boolean> ordealable = new HashMap<UUID, Boolean>();
 	public static HashMap<UUID, UUID> ordeal = new HashMap<UUID, UUID>();
@@ -265,11 +266,13 @@ public class SnowSkills extends Summoned implements Listener{
     	p.getWorld().playSound(p.getLocation(), Sound.ENTITY_SNOWBALL_THROW, 1.0f, 0f);
 		ItemStack is = new ItemStack(Material.SNOW_BLOCK);
 		
+		String rn = gethero(p);
 		if(p.hasMetadata("ruined")) {
 
 	    	for(double pi= -Math.PI/4.5; pi<=Math.PI/4.5; pi += Math.PI/6) {
 				Item solid = p.getWorld().dropItem(p.getEyeLocation(), is);
 				solid.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+				solid.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
 				solid.setMetadata("crystal of"+p.getUniqueId(), new FixedMetadataValue(RMain.getInstance(), true));
 				solid.setPickupDelay(9999);
 	            solid.setVelocity(p.getLocation().getDirection().normalize().multiply(0.05*t.getLocation().distance(p.getLocation())));
@@ -287,7 +290,7 @@ public class SnowSkills extends Summoned implements Listener{
 		                    p.getWorld().playSound(solid.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_HURT, 1, 2);
 
 		                	for(Entity e : solid.getWorld().getNearbyEntities(solid.getLocation(), 3, 3, 3)) {
-								if(p!=e && e instanceof Player&& !(e.hasMetadata("fake"))) {
+								if(p!=e && e instanceof LivingEntity) {
 									LivingEntity le = (LivingEntity)e;
 									le.damage(5,p);
 									Holding.holding(null, le, 20l);
@@ -302,6 +305,7 @@ public class SnowSkills extends Summoned implements Listener{
 		
 		Item solid = p.getWorld().dropItem(p.getEyeLocation(), is);
 		solid.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+		solid.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
 		solid.setMetadata("crystal of"+p.getUniqueId(), new FixedMetadataValue(RMain.getInstance(), true));
 		solid.setPickupDelay(9999);
         solid.setVelocity(p.getLocation().getDirection().normalize().multiply(0.05*t.getLocation().distance(p.getLocation())));
@@ -319,7 +323,7 @@ public class SnowSkills extends Summoned implements Listener{
                     p.getWorld().playSound(solid.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_HURT, 1, 2);
 
                 	for(Entity e : solid.getWorld().getNearbyEntities(solid.getLocation(), 3, 3, 3)) {
-						if(p!=e && e instanceof Player&& !(e.hasMetadata("fake"))) {
+						if(p!=e && e instanceof LivingEntity) {
 							LivingEntity le = (LivingEntity)e;
 							le.damage(5,p);
 							Holding.holding(null, le, 20l);
@@ -614,7 +618,7 @@ public class SnowSkills extends Summoned implements Listener{
 			LivingEntity p = (LivingEntity)ev.getEntity();
 
 			if(p.hasMetadata("raid")) {
-				if(!OverworldRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| p.hasMetadata("failed")) {
+				if(!OverworldRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| p.hasMetadata("failed")|| ordeal.containsKey(p.getUniqueId())) {
 					return;
 				}
 
@@ -639,6 +643,23 @@ public class SnowSkills extends Summoned implements Listener{
 		}
 	}
 
+	final private void blockexplode(FallingBlock fallingb) {
+		LivingEntity p = (LivingEntity) Holding.ale(snowblock.get(fallingb.getUniqueId()));
+		Location tl = fallingb.getLocation();
+		tl.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, tl, 1);
+		tl.getWorld().spawnParticle(Particle.SNOW_SHOVEL, tl, 400,3,3,3);
+
+		for (Entity e : p.getWorld().getNearbyEntities(tl, 3, 3, 3))
+		{
+			if(p!=e && e instanceof Player) {
+				Player le = (Player)e;
+        		le.damage(6, p);
+			}
+			
+		}
+		p.getWorld().playSound(tl, Sound.BLOCK_POWDER_SNOW_BREAK, 1, 0);
+		fallingb.remove();
+	}
 	
 	public void SnowBlock(EntityDropItemEvent ev) 
 	{
@@ -646,20 +667,7 @@ public class SnowSkills extends Summoned implements Listener{
 		    FallingBlock fallingb = (FallingBlock) ev.getEntity();
 	        if(snowblock.containsKey(fallingb.getUniqueId())){
 	        	ev.setCancelled(true);
-				LivingEntity p = (LivingEntity) Holding.ale(snowblock.get(fallingb.getUniqueId()));
-				Location tl = fallingb.getLocation();
-				tl.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, tl, 1);
-
-				for (Entity e : p.getWorld().getNearbyEntities(tl, 3, 3, 3))
-				{
-					if(p!=e && e instanceof Player) {
-						Player le = (Player)e;
-                		le.damage(6, p);
-					}
-					
-				}
-				p.getWorld().playSound(tl, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 0);
-				fallingb.remove();
+	        	blockexplode(fallingb);
 	        }
 		 }
 	}
@@ -673,20 +681,7 @@ public class SnowSkills extends Summoned implements Listener{
 		    FallingBlock fallingb = (FallingBlock) ev.getDamager();
 	        if(snowblock.containsKey(fallingb.getUniqueId())){
 	        	ev.setCancelled(true);
-				LivingEntity p = (LivingEntity) Holding.ale(snowblock.get(fallingb.getUniqueId()));
-				Location tl = fallingb.getLocation();
-				tl.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, tl, 1);
-
-				for (Entity e : p.getWorld().getNearbyEntities(tl, 3, 3, 3))
-				{
-					if(p!=e && e instanceof Player) {
-						Player le = (Player)e;
-                		le.damage(6, p);
-					}
-					
-				}
-				p.getWorld().playSound(tl, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 0);
-				fallingb.remove();
+	        	blockexplode(fallingb);
 	        }
 		 }
 	}
@@ -699,20 +694,7 @@ public class SnowSkills extends Summoned implements Listener{
 		    FallingBlock fallingb = (FallingBlock) ev.getEntity();
 	        if(snowblock.containsKey(fallingb.getUniqueId())){
 	        	ev.setCancelled(true);
-				LivingEntity p = (LivingEntity) Holding.ale(snowblock.get(fallingb.getUniqueId()));
-				Location tl = fallingb.getLocation();
-				tl.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, tl, 1);
-
-				for (Entity e : p.getWorld().getNearbyEntities(tl, 3, 3, 3))
-				{
-					if(p!=e && e instanceof Player) {
-						Player le = (Player)e;
-                		le.damage(6, p);
-					}
-					
-				}
-				p.getWorld().playSound(tl, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 0);
-				fallingb.remove();
+	        	blockexplode(fallingb);
 	        }
 		 }
 	}
@@ -734,7 +716,7 @@ public class SnowSkills extends Summoned implements Listener{
 						for(Entity e : p.getWorld().getNearbyEntities(ar.getLocation(),2, 2, 2)) {
 							if(p!=e && e instanceof Player&& !(e.hasMetadata("fake"))) {
 								LivingEntity le = (LivingEntity)e;
-								le.damage(1,p);
+								le.damage(1.1,p);
 							}
 						}
 	                }
@@ -776,7 +758,7 @@ public class SnowSkills extends Summoned implements Listener{
 			if(p.hasMetadata("failed")||p.hasMetadata("summoned")) {
 				return;
 			}
-			if((p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
+			if(p.hasMetadata("ruined") && (p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
 				p.setHealth(p.getMaxHealth()*0.2);
                 ordealable.put(p.getUniqueId(), true);
                 d.setCancelled(true);
@@ -794,9 +776,11 @@ public class SnowSkills extends Summoned implements Listener{
 				            else
 				            {
 				                rb1cooldown.remove(p.getUniqueId()); 
-			                    p.getWorld().spawnParticle(Particle.CLOUD, p.getLocation(), 100,5,2,5);
-			                    p.getWorld().spawnParticle(Particle.SNOWFLAKE, p.getLocation(), 100,5,2,5);
-				    			String rn = p.getMetadata("raid").get(0).asString();
+								p.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_AMBIENT, 0.6f, 0);
+			                    p.getWorld().spawnParticle(Particle.CLOUD, p.getLocation(), 300,5,2,5);
+			                    p.getWorld().spawnParticle(Particle.SOUL, p.getLocation(), 300,5,2,5);
+			                    p.getWorld().spawnParticle(Particle.SNOWFLAKE, p.getLocation(), 300,5,2,5);
+				    			String rn = gethero(p);
 				                p.getNearbyEntities(25, 25, 25).forEach(ne -> {
 				                	if(ne instanceof Player) {
 				                		Player pe = (Player) ne;
@@ -809,8 +793,10 @@ public class SnowSkills extends Summoned implements Listener{
 				                	}
 				                	
 				                });
+				                final World pw = p.getWorld();
 				                Holding.holding(null, p, 40l);
 				                Holding.invur(p, 40l);
+				                AtomicInteger j = new AtomicInteger();	
 			                    int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					                @Override
 					                public void run() {
@@ -818,12 +804,25 @@ public class SnowSkills extends Summoned implements Listener{
 											int t1 = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 								                @Override
 								                public void run() {
+									            	ArrayList<Location> ring = new ArrayList<Location>();
+													p.getWorld().playSound(p.getLocation(), Sound.BLOCK_POWDER_SNOW_PLACE, 1, 0);
+
+								                	for(double an = 0; an<Math.PI*2; an +=Math.PI/180) {
+								                		ring.add(p.getLocation().clone().add(p.getLocation().getDirection().normalize().rotateAroundY(an).multiply(an)).add(0, an+j.get(), 0));
+								                	}
+								                	ring.forEach(l -> {
+								                		pw.spawnParticle(Particle.WHITE_ASH, l, 5, 0.5,0.5,0.5,0);
+								                		pw.spawnParticle(Particle.SNOW_SHOVEL, l, 2, 0.5,0.5,0.5,0);
+								                		pw.spawnParticle(Particle.SNOWFLAKE, l, 2, 0.5,0.5,0.5,0);
+								                		
+								                	});
+													p.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_AMBIENT, 0.1f, 2f);
 								                    p.getWorld().spawnParticle(Particle.SNOW_SHOVEL, p.getLocation(), 100,5,2,5);
 								                    p.getWorld().spawnParticle(Particle.WHITE_ASH, p.getLocation(), 100,5,2,5);
 													for(Entity e : p.getWorld().getNearbyEntities(p.getLocation(),5, 5, 5)) {
 														if(p!=e && e instanceof Player&& !(e.hasMetadata("fake"))) {
 															LivingEntity le = (LivingEntity)e;
-															le.damage(3);
+															le.damage(10);
 															le.teleport(p);
 														}
 													}
@@ -839,9 +838,11 @@ public class SnowSkills extends Summoned implements Listener{
 				        }
 				        else // if cooldown doesn't have players name in it
 				        {
-		                    p.getWorld().spawnParticle(Particle.CLOUD, p.getLocation(), 100,5,2,5);
-		                    p.getWorld().spawnParticle(Particle.SNOWFLAKE, p.getLocation(), 100,5,2,5);
-			    			String rn = p.getMetadata("raid").get(0).asString();
+							p.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_AMBIENT, 0.6f, 0);
+		                    p.getWorld().spawnParticle(Particle.CLOUD, p.getLocation(), 300,5,2,5);
+		                    p.getWorld().spawnParticle(Particle.SOUL, p.getLocation(), 300,5,2,5);
+		                    p.getWorld().spawnParticle(Particle.SNOWFLAKE, p.getLocation(), 300,5,2,5);
+			    			String rn = gethero(p);
 			                p.getNearbyEntities(25, 25, 25).forEach(ne -> {
 			                	if(ne instanceof Player) {
 			                		Player pe = (Player) ne;
@@ -854,8 +855,10 @@ public class SnowSkills extends Summoned implements Listener{
 			                	}
 			                	
 			                });
+			                final World pw = p.getWorld();
 			                Holding.holding(null, p, 40l);
 			                Holding.invur(p, 40l);
+			                AtomicInteger j = new AtomicInteger();	
 		                    int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 				                @Override
 				                public void run() {
@@ -863,12 +866,25 @@ public class SnowSkills extends Summoned implements Listener{
 										int t1 = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 							                @Override
 							                public void run() {
+								            	ArrayList<Location> ring = new ArrayList<Location>();
+												p.getWorld().playSound(p.getLocation(), Sound.BLOCK_POWDER_SNOW_PLACE, 1, 0);
+
+							                	for(double an = 0; an<Math.PI*2; an +=Math.PI/180) {
+							                		ring.add(p.getLocation().clone().add(p.getLocation().getDirection().normalize().rotateAroundY(an).multiply(an)).add(0, an+j.get(), 0));
+							                	}
+							                	ring.forEach(l -> {
+							                		pw.spawnParticle(Particle.WHITE_ASH, l, 5, 0.5,0.5,0.5,0);
+							                		pw.spawnParticle(Particle.SNOW_SHOVEL, l, 2, 0.5,0.5,0.5,0);
+							                		pw.spawnParticle(Particle.SNOWFLAKE, l, 2, 0.5,0.5,0.5,0);
+							                		
+							                	});
+												p.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_AMBIENT, 0.1f, 2f);
 							                    p.getWorld().spawnParticle(Particle.SNOW_SHOVEL, p.getLocation(), 100,5,2,5);
 							                    p.getWorld().spawnParticle(Particle.WHITE_ASH, p.getLocation(), 100,5,2,5);
 												for(Entity e : p.getWorld().getNearbyEntities(p.getLocation(),5, 5, 5)) {
 													if(p!=e && e instanceof Player&& !(e.hasMetadata("fake"))) {
 														LivingEntity le = (LivingEntity)e;
-														le.damage(3);
+														le.damage(10);
 														le.teleport(p);
 													}
 												}
@@ -884,19 +900,218 @@ public class SnowSkills extends Summoned implements Listener{
 			}
 		}					
 	}
+	
+	final private void meteor(LivingEntity p) {
+
+        Location rl = OverworldRaids.getraidloc(p).clone();
+		String rn = gethero(p);
+        p.teleport(rl.add(0, 1, 0));
+        final Location tl = p.getLocation();
+        
+        for(Entity e : OverworldRaids.getheroes(p)) {
+        	if(e instanceof Player && !e.hasMetadata("fake")) {
+        		Player pe = (Player) e;
+        		Holding.invur(pe, 40l);
+				if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
+            		pe.sendMessage(ChatColor.BOLD+"차가운 심장의 마녀: 운명에 저항하지마라.");
+				}
+				else {
+            		pe.sendMessage(ChatColor.BOLD+"FrozenHeart: You can't change your destiny.");
+				}
+				pe.getWorld().playSound(pe.getLocation(), Sound.ENTITY_WITHER_AMBIENT, 0.3f, 2);
+				if(pe.getWorld() == p.getWorld()) {
+					pe.teleport(tl);
+				}
+        	}
+        }
+        AtomicInteger j = new AtomicInteger();	
+		for(int i = 0; i <5; i++) {
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                @Override
+                public void run() {
+	            	ArrayList<Location> ring = new ArrayList<Location>();
+					p.getWorld().playSound(p.getLocation(), Sound.BLOCK_POWDER_SNOW_PLACE, 1, 0);
+
+                	for(double an = 0; an<Math.PI*2; an +=Math.PI/180) {
+                		ring.add(tl.clone().add(tl.getDirection().normalize().rotateAroundY(an).multiply(an)).add(0, an+j.get(), 0));
+                	}
+                	ring.forEach(l -> {
+						tl.getWorld().spawnParticle(Particle.WHITE_ASH, l, 5, 0.5,0.5,0.5,0);
+						tl.getWorld().spawnParticle(Particle.SNOW_SHOVEL, l, 2, 0.5,0.5,0.5,0);
+						tl.getWorld().spawnParticle(Particle.SNOWFLAKE, l, 2, 0.5,0.5,0.5,0);
+                		
+                	});
+                	j.incrementAndGet();
+                }
+            }, i*5); 	                    	
+        }
+		ArrayList<Location> mls1 = new ArrayList<>();
+		ArrayList<Location> mls2 = new ArrayList<>();
+		ArrayList<Location> mls3 = new ArrayList<>();
+		ArrayList<Location> mls4 = new ArrayList<>();
+		for(int i = 0; i<15; i++) {
+			mls1.add(rl.clone().add(i, 7, 0));
+			mls2.add(rl.clone().add(-i, 7, 0));
+			mls3.add(rl.clone().add(0, 7, i));
+			mls4.add(rl.clone().add(0, 7, -i));
+		}
+
+		for(int i = 0; i<15; i++) {
+			mls1.add(rl.clone().add(i, 7, i));
+			mls2.add(rl.clone().add(-i, 7, i));
+			mls3.add(rl.clone().add(-i, 7, -i));
+			mls4.add(rl.clone().add(i, 7, -i));
+		}
+
+
+		for(int i = 0; i<15; i++) {
+        	Random r1 = new Random();
+        	Random r2 = new Random();
+        	Random r3 = new Random();
+        	Random r4 = new Random();
+        	double rd1 = r1.nextDouble()*20 *(r3.nextBoolean()?1:-1);
+        	double rd2 = r2.nextDouble()*20*(r4.nextBoolean()?1:-1);
+			mls1.add(rl.clone().add(rd1, 7, rd2));
+			mls2.add(rl.clone().add(rd1, 7, rd2));
+			mls3.add(rl.clone().add(rd1, 7, rd2));
+			mls4.add(rl.clone().add(rd1, 7, rd2));
+		}
+        Holding.holding(null, p, 60l);
+        Holding.invur(p, 60l);
+		
+		int t1 = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+                AtomicInteger j1 = new AtomicInteger();
+                AtomicInteger j2 = new AtomicInteger();
+                AtomicInteger j3 = new AtomicInteger();
+                AtomicInteger j4 = new AtomicInteger();
+            	mls1.forEach(l -> {
+            		int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		                @Override
+		                public void run() {
+							FallingBlock fallingb = p.getWorld().spawnFallingBlock(l, Material.SNOW_BLOCK.createBlockData());
+							fallingb.setInvulnerable(true);
+							fallingb.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
+							fallingb.setMetadata("stuff", new FixedMetadataValue(RMain.getInstance(),true));
+							fallingb.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(),true));
+							
+							fallingb.setDropItem(true);
+							fallingb.setHurtEntities(true);
+							snowblock.put(fallingb.getUniqueId(), p);
+		                }
+            		}, j1.getAndIncrement()*4);
+					ordt.put(rn, t1);
+            	});
+            	mls2.forEach(l -> {
+            		int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		                @Override
+		                public void run() {
+							FallingBlock fallingb = p.getWorld().spawnFallingBlock(l, Material.SNOW_BLOCK.createBlockData());
+							fallingb.setInvulnerable(true);
+							fallingb.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
+							fallingb.setMetadata("stuff", new FixedMetadataValue(RMain.getInstance(),true));
+							fallingb.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(),true));
+							
+							fallingb.setDropItem(true);
+							fallingb.setHurtEntities(true);
+							snowblock.put(fallingb.getUniqueId(), p);
+		                }
+            		},j2.getAndIncrement()*4);
+					ordt.put(rn, t1);
+            	});
+            	mls3.forEach(l -> {
+            		int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		                @Override
+		                public void run() {
+							FallingBlock fallingb = p.getWorld().spawnFallingBlock(l, Material.SNOW_BLOCK.createBlockData());
+							fallingb.setInvulnerable(true);
+							fallingb.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
+							fallingb.setMetadata("stuff", new FixedMetadataValue(RMain.getInstance(),true));
+							fallingb.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(),true));
+							
+							fallingb.setDropItem(true);
+							fallingb.setHurtEntities(true);
+							snowblock.put(fallingb.getUniqueId(), p);
+		                }
+            		},j3.getAndIncrement()*4);
+					ordt.put(rn, t1);
+            	});
+            	mls4.forEach(l -> {
+            		int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		                @Override
+		                public void run() {
+							FallingBlock fallingb = p.getWorld().spawnFallingBlock(l, Material.SNOW_BLOCK.createBlockData());
+							fallingb.setInvulnerable(true);
+							fallingb.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
+							fallingb.setMetadata("stuff", new FixedMetadataValue(RMain.getInstance(),true));
+							fallingb.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(),true));
+							
+							fallingb.setDropItem(true);
+							fallingb.setHurtEntities(true);
+							snowblock.put(fallingb.getUniqueId(), p);
+		                }
+            		},j4.getAndIncrement()*4);
+					ordt.put(rn, t1);
+            	});
+            }
+        }, 40);
+		ordt.put(rn, t1);  
+	}
+
+	public void Meteor(EntityDamageByEntityEvent d) 
+	{
+	    
+		int sec = 35;
+		if(d.getEntity() instanceof Witch && d.getEntity().hasMetadata("snowyboss") && d.getEntity().hasMetadata("ruined") ) 
+		{
+			Witch p = (Witch)d.getEntity();
+			if(p.hasMetadata("failed") || ordeal.containsKey(p.getUniqueId())) {
+				return;
+			}
+			if((p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
+				p.setHealth(p.getMaxHealth()*0.2);
+                ordealable.put(p.getUniqueId(), true);
+                d.setCancelled(true);
+				return;
+			}
+				if(rb7cooldown.containsKey(p.getUniqueId()))
+		        {
+		            long timer = (rb7cooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
+		            if(!(timer < 0))
+		            {
+		            }
+		            else 
+		            {
+		                rb7cooldown.remove(p.getUniqueId()); // removing player from HashMap
+		                meteor(p);
+	                    rb7cooldown.put(p.getUniqueId(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
+		            }
+		        }
+		        else 
+		        {
+	                meteor(p);
+		            rb7cooldown.put(p.getUniqueId(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
+		        }
+			}
+	}
+	
 
 	public void mirrored(EntityDamageByEntityEvent d) 
 	{
 		if(ordeal.containsKey(d.getEntity().getUniqueId())) {
 			Witch p = (Witch)d.getEntity();
 			d.setCancelled(true);
+			if(d.getDamager() instanceof Witch) {
+				return;
+			}
 			if(d.getDamager() instanceof Player) {
 				Player dp = (Player) d.getDamager();
 				if(dp.hasCooldown(Material.YELLOW_TERRACOTTA)) {
 					return;
 				}
 			}
-			String rn = p.getMetadata("raid").get(0).asString();
+			String rn = gethero(p);
 			if(p.hasMetadata("mirror")) {
         		ordeal.remove(ordeal.get(p.getUniqueId()));
                 rb6cooldown.remove(ordeal.get(p.getUniqueId()));
@@ -916,19 +1131,23 @@ public class SnowSkills extends Summoned implements Listener{
             	}
 			}
 			else {
+				Holding.invur(p, 20l);
 				if(count.getOrDefault(p.getUniqueId(), 0)>1) {
 					count.computeIfPresent(p.getUniqueId(), (k,v) -> v-1);
 			        Location rl = OverworldRaids.getraidloc(p).clone();
 	                for(Player pe : OverworldRaids.getheroes(p)) {
 	                	pe.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,50,20,false,false));
 	                	pe.teleport(rl);
-	                	Holding.holding(pe, pe, 20l);
                 		pe.sendMessage(ChatColor.BLUE+ "["+(4-count.getOrDefault(p.getUniqueId(), 0))+ "/4]");
+	                	Holding.holding(pe, pe, 20l);
+	                	Holding.invur(pe, 20l);
                 		mirrorcreate(p);
 	                }
 				}
 				else {
-					
+
+        			p.getWorld().playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_CHIME, 1, 0);
+        			p.getWorld().spawnParticle(Particle.SNOWFLAKE, p.getLocation(), 400,1,1,1);
 
 	            	p.playEffect(EntityEffect.HURT);
 					Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("mirror"+rn)).forEach(e -> e.remove());
@@ -962,32 +1181,36 @@ public class SnowSkills extends Summoned implements Listener{
 	
 	final private void mirrorcreate(LivingEntity p) {
 
-		String rn = p.getMetadata("raid").get(0).asString();
+		String rn = gethero(p);
 		if(ordt.containsKey(rn)) {
 			ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
 		}
+		Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(e -> e.remove());
 		Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("mirror"+rn)).forEach(e -> e.remove());
 
         Location rl = OverworldRaids.getraidloc(p).clone();
-        
+
+		p.setCustomNameVisible(false);
+    	p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY,10,1,false,false));
         
     	Random random=new Random();
-    	double number = (random.nextDouble()+1) * 2.5 * (random.nextBoolean() ? -1 : 1);
-    	double number2 = (random.nextDouble()+1) * 2.5 * (random.nextBoolean() ? -1 : 1);
+    	double number = (random.nextDouble()+0.65) * 2.5 * (random.nextBoolean() ? -1 : 1);
+    	double number2 = (random.nextDouble()+0.5) * 2.5 * (random.nextBoolean() ? -1 : 1);
     	Location esl = rl.clone().add(number, 0.5, number2);
     	p.teleport(esl);
     	ordeal.put(p.getUniqueId(), p.getUniqueId());
     	
-    	for(int i =0; i<5; i++) {
+    	for(int i =0; i<9; i++) {
         	Random random1=new Random();
-        	double number1 = (random1.nextDouble()+1) * 3 * (random1.nextBoolean() ? -1 : 1);
-        	double number21 = (random1.nextDouble()+1) * 3 * (random1.nextBoolean() ? -1 : 1);
+        	double number1 = (random1.nextDouble()) * 3 * (random1.nextBoolean() ? -1 : 1);
+        	double number21 = (random1.nextDouble()) * 3 * (random1.nextBoolean() ? -1 : 1);
         	Location esl1 = rl.clone().add(number1, 0.5, number21);
     		ItemStack main = new ItemStack(Material.SNOW);
     		ItemStack off = new ItemStack(Material.ICE);
     		Witch newmob = (Witch) esl1.getWorld().spawnEntity(esl1, EntityType.WITCH);
     		newmob.setCustomName(p.getCustomName());
     		newmob.setCustomNameVisible(false);
+    		newmob.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY,10,1,false,false));
     		newmob.getEquipment().setItemInMainHand(main);
     		newmob.getEquipment().setItemInOffHand(off);
     		newmob.setMaxHealth(p.getMaxHealth());
@@ -1004,7 +1227,9 @@ public class SnowSkills extends Summoned implements Listener{
         	ordeal.put(newmob.getUniqueId(), p.getUniqueId());
     	}
             	
-            	
+
+		
+		
 		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
             @Override
             public void run() {
@@ -1030,17 +1255,18 @@ public class SnowSkills extends Summoned implements Listener{
             	}
                 rb6cooldown.remove(p.getUniqueId());
             }
-        }, 200);
+        }, 300);
 		ordt.put(rn, task);
 	}
 	    
 	
 	final private void mirrorstart(LivingEntity p, EntityDamageByEntityEvent d) {
 
-		String rn = p.getMetadata("raid").get(0).asString();
+		String rn = gethero(p);
 		if(ordt.containsKey(rn)) {
 			ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
 		}
+		Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(e -> e.remove());
 		
 		count.put(p.getUniqueId(), 4);
 		
@@ -1098,14 +1324,14 @@ public class SnowSkills extends Summoned implements Listener{
 		            else 
 		            {
 		                rb6cooldown.remove(p.getUniqueId()); // removing player from HashMap
-		                mirrorstart(p,d);
+		                mirrorstart(Holding.ale(p),d);
 			            rb6cooldown.put(p.getUniqueId(), System.currentTimeMillis());
 		            }
 		        }
 		        else 
 		        {
 
-	                mirrorstart(p,d);
+	                mirrorstart(Holding.ale(p),d);
 		            rb6cooldown.put(p.getUniqueId(), System.currentTimeMillis());
 		        }
 			}

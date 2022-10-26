@@ -1,6 +1,5 @@
 package io.github.chw3021.monsters.wild;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 
@@ -8,27 +7,19 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarFlag;
-import org.bukkit.boss.BarStyle;
-import org.bukkit.boss.BossBar;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Drowned;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Evoker;
 import org.bukkit.entity.Illusioner;
-import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
-import org.bukkit.entity.Stray;
 import org.bukkit.entity.Vindicator;
 import org.bukkit.entity.Witch;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
-import io.github.chw3021.commons.Holding;
 import io.github.chw3021.monsters.raids.Summoned;
 import io.github.chw3021.rmain.RMain;
 
@@ -300,89 +291,6 @@ public class WildRaids extends Summoned {
 		
 		newmob.setLootTable(null);
 		addraider(rn,META,newmob);
-		
-	}
-	@SuppressWarnings("unchecked")
-	final private void Boss(Location spl, String rn) {
-
-    	Random random=new Random();
-    	double number = (random.nextDouble()+1.5) * 1 * (random.nextBoolean() ? -1 : 1);
-    	double number2 = (random.nextDouble()+1.5) * 1 * (random.nextBoolean() ? -1 : 1);
-    	Location esl = spl.clone().add(number, 1.1, number2);
-
-    	ItemStack head = null;
-		ItemStack chest = null;
-		ItemStack leg = new ItemStack(Material.NETHERITE_LEGGINGS);
-		ItemStack boots = null;
-		ItemStack main = new ItemStack(Material.BOW);
-		ItemStack off = new ItemStack(Material.BREWING_STAND);
-
-		
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "테러리스트":"Terrorist";
-		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.DARK_GRAY + reg, 100000.0, head,
-				chest, leg, boots, main, off, EntityType.SKELETON);
-
-		newmob.setConversionTime(-1);
-		newmob.setLootTable(null);
-		newmob.setGlowing(true);
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
-		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
-		newmob.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(4);
-		
-		addraider(rn,META,newmob);
-		newmob.setMetadata(META+"boss", new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
-		newmob.setMetadata("summonedboss", new FixedMetadataValue(RMain.getInstance(), rn));
-		newmob.setRemoveWhenFarAway(false);
-		
-		BossBar	newbar = Bukkit.getServer().createBossBar(new NamespacedKey(RMain.getInstance(), rn +"Terrorist"),newmob.getName(), BarColor.GREEN, BarStyle.SEGMENTED_20, BarFlag.CREATE_FOG);
-        newbar.setVisible(true);
-		raidbar.put(rn, META, newbar);
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
-		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
-		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
-		
-		addraider(rn,META,newmob);
-		
-	
-		final Object ht = getherotype(rn);
-	
-		if(ht instanceof Player) {
-			Player p = (Player) ht;
-			int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-	            @Override
-	            public void run() 
-	            {
-	
-					if(Holding.ale(newmob)!=null) {
-	                	raidbar.get(rn, META).setProgress(Holding.ale(newmob).getHealth()/100000d);
-	                	raidbar.get(rn, META).setTitle(Holding.ale(newmob).getName());
-	    				raidbar.get(rn, META).addPlayer(p);
-					}
-	            }
-			}, 0, 1);
-			raidbart.put(rn, META, task);
-		}
-		else if(getherotype(rn) instanceof HashSet){
-			HashSet<Player> par = (HashSet<Player>) ht;
-			int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-	            @Override
-	            public void run() 
-	            {
-					if(Holding.ale(newmob)!=null) {
-	                	raidbar.get(rn, META).setProgress(Holding.ale(newmob).getHealth()/25000d);
-	                	raidbar.get(rn, META).setTitle(Holding.ale(newmob).getName());
-	            		par.forEach(p -> {
-	        				raidbar.get(rn, META).addPlayer(p);
-	            		});
-					}
-	            }
-			}, 0, 1);
-			raidbart.put(rn, META, task);
-		}
 		
 	}
 	

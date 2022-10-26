@@ -910,23 +910,6 @@ public class Illskills extends Pak implements Serializable {
 		}
 	}
 	
-	
-	public void FakeDoll(PlayerInteractEntityEvent ev)
-	{
-		if(ev.getRightClicked() instanceof ArmorStand && ev.getRightClicked().hasMetadata("fake")){
-			ev.setCancelled(true);
-			return;
-		}
-	}
-
-	public void FakeDoll(PlayerArmorStandManipulateEvent ev)
-	{
-		if(ev.getRightClicked() instanceof ArmorStand && ev.getRightClicked().hasMetadata("fake")){
-			ev.setCancelled(true);
-			return;
-		}
-	}
-	
 	@SuppressWarnings("deprecation")
 	public void FakeDoll(PlayerSwapHandItemsEvent ev) 
 	{

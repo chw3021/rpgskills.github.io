@@ -12,7 +12,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.IronGolem;
@@ -20,7 +19,6 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Snowball;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -31,9 +29,6 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
-
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
 
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.monsters.raids.OverworldRaids;
@@ -55,6 +50,7 @@ public class MountainsSkills extends Summoned implements Listener{
 	private HashMap<UUID, Long> rb8cooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Integer> throwable = new HashMap<UUID, Integer>();
 	private HashMap<UUID, Integer> strong = new HashMap<UUID, Integer>();
+	private HashMap<UUID, Integer> strongt = new HashMap<UUID, Integer>();
 
 	
 	private static final MountainsSkills instance = new MountainsSkills ();
@@ -123,7 +119,10 @@ public class MountainsSkills extends Summoned implements Listener{
     		for(Entity e : p.getWorld().getNearbyEntities(l, 1.5, 1.5, 1.5)) {
 				if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
 					LivingEntity le = (LivingEntity)e;
-					le.damage(5,p);
+					if(p.hasMetadata("raid")) {
+						le.damage(25,p);
+					}
+					le.damage(7,p);
 				}
         	}
 			FallingBlock fallingb = l.getWorld().spawnFallingBlock(l, Material.GRAVEL.createBlockData());
@@ -132,6 +131,7 @@ public class MountainsSkills extends Summoned implements Listener{
 			fallingb.setGravity(false);
 			fallingb.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 			fallingb.setMetadata("stonebossthrow", new FixedMetadataValue(RMain.getInstance(), true));
+			fallingb.setMetadata("stuff"+gethero(p), new FixedMetadataValue(RMain.getInstance(), true));
 
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
                 @Override
@@ -327,6 +327,8 @@ public class MountainsSkills extends Summoned implements Listener{
     			p.getWorld().playSound(pl, Sound.ENTITY_IRON_GOLEM_REPAIR, 1.0f, 0f);
     			p.getWorld().playSound(pl, Sound.ITEM_ARMOR_EQUIP_NETHERITE, 1.0f, 0f);
     			p.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, pl, 20, 2,2,2);
+    			Holding.invur(p, 10l);
+    			
                 Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
              		@Override
                 	public void run() 
@@ -369,6 +371,9 @@ public class MountainsSkills extends Summoned implements Listener{
         	    					for(Entity e : p.getWorld().getNearbyEntities(tl,3, 2, 3)) {
         	    						if(p!=e && e instanceof LivingEntity) {
         	    							LivingEntity le = (LivingEntity)e;
+        	    							if(p.hasMetadata("raid")) {
+        	    								le.damage(20,p);
+        	    							}
         	    							le.damage(5,p);
         	    						}
         	    					}
@@ -461,6 +466,29 @@ public class MountainsSkills extends Summoned implements Listener{
 	}
 	
 
+	public void Smash(EntityRegainHealthEvent d)
+	{
+		if((d.getEntity() instanceof IronGolem) && !d.isCancelled() &&d.getEntity().hasMetadata("stoneboss")) 
+		{
+			IronGolem p = (IronGolem)d.getEntity();
+			final Location tl = p.getLocation().clone();
+			
+			p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 300,2,2,2,1, Material.STONE.createBlockData());
+			p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, tl, 50,2,2,2,1);
+			p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_ATTACK, 1, 0);
+			p.getWorld().playSound(p.getLocation(), Sound.BLOCK_STONE_BREAK, 1, 0);
+
+			for(Entity e : p.getWorld().getNearbyEntities(tl,2, 2, 2)) {
+				if(p!=e && e instanceof LivingEntity) {
+					LivingEntity le = (LivingEntity)e;
+					le.damage(5,p);
+				}
+			}
+		}
+		
+	}
+
+
 	public void GolemSmash(EntityDamageByEntityEvent d) 
 	{
 	    
@@ -508,7 +536,7 @@ public class MountainsSkills extends Summoned implements Listener{
 	        }
 		}
 		
-		if((d.getDamager() instanceof LivingEntity) && d.getEntity() instanceof IronGolem&& !d.isCancelled() &&d.getEntity().hasMetadata("stoneboss") && strong.containsKey(d.getEntity().getUniqueId())) 
+		if((d.getDamager() instanceof LivingEntity) && strong.containsKey(d.getEntity().getUniqueId())) 
 		{
 			IronGolem p = (IronGolem)d.getEntity();
 			LivingEntity le = (LivingEntity)d.getDamager();
@@ -517,14 +545,26 @@ public class MountainsSkills extends Summoned implements Listener{
             d.setCancelled(true);
 			strong.compute(p.getUniqueId(), (k,v) -> v-1);
 			if(strong.get(p.getUniqueId()) <0) {
-    			String rn = p.getMetadata("raid").get(0).asString();
-				ordt.get(rn).forEach(i -> {
-					Bukkit.getScheduler().cancelTask(i);
-				});
+				Bukkit.getScheduler().cancelTask(strongt.get(p.getUniqueId()));
 				strong.remove(p.getUniqueId());
+
+
+				p.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, p.getLocation(), 50,1,1,1,1);
+				p.getWorld().spawnParticle(Particle.BLOCK_CRACK, p.getLocation(), 300,1,1,1,1, Material.STONE.createBlockData());
+				p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_DAMAGE, 1, 0);
+				p.getWorld().playSound(p.getLocation(), Sound.BLOCK_STONE_BREAK, 1, 0);
+				
+				for(Player pe : OverworldRaids.getheroes(p)) {
+					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
+                		pe.sendMessage(ChatColor.BOLD+"ºô¾î¸ÔÀ» ³ðµé..");
+					}
+					else {
+                		pe.sendMessage(ChatColor.BOLD+"Damn..");
+					}
+                }
 			}
 		}
-		if((d.getDamager() instanceof Projectile) && d.getEntity() instanceof IronGolem&& !d.isCancelled() &&d.getEntity().hasMetadata("stoneboss") && strong.containsKey(d.getEntity().getUniqueId())) 
+		if((d.getDamager() instanceof Projectile) && strong.containsKey(d.getEntity().getUniqueId())) 
 		{
 			IronGolem p = (IronGolem)d.getEntity();
 			Projectile pr = (Projectile)d.getDamager();
@@ -535,66 +575,29 @@ public class MountainsSkills extends Summoned implements Listener{
                 d.setCancelled(true);
 				strong.compute(p.getUniqueId(), (k,v) -> v-1);
 				if(strong.get(p.getUniqueId()) <0) {
-	    			String rn = p.getMetadata("raid").get(0).asString();
-					ordt.get(rn).forEach(i -> {
-						Bukkit.getScheduler().cancelTask(i);
-					});
+					Bukkit.getScheduler().cancelTask(strongt.get(p.getUniqueId()));
 					strong.remove(p.getUniqueId());
+
+
+					p.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, p.getLocation(), 50,1,1,1,1);
+					p.getWorld().spawnParticle(Particle.BLOCK_CRACK, p.getLocation(), 300,1,1,1,1, Material.STONE.createBlockData());
+					p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_DAMAGE, 1, 0);
+					p.getWorld().playSound(p.getLocation(), Sound.BLOCK_STONE_BREAK, 1, 0);
+					
+					for(Player pe : OverworldRaids.getheroes(p)) {
+						if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
+	                		pe.sendMessage(ChatColor.BOLD+"ºô¾î¸ÔÀ» ³ðµé..");
+						}
+						else {
+	                		pe.sendMessage(ChatColor.BOLD+"Damn..");
+						}
+	                }
 				}
 			}
 		}
 	}
 	
 
-	public void Smash(EntityRegainHealthEvent d)
-	{
-		if((d.getEntity() instanceof IronGolem) && !d.isCancelled() &&d.getEntity().hasMetadata("stoneboss")) 
-		{
-			int sec =1;
-			IronGolem p = (IronGolem)d.getEntity();
-			final Location tl = p.getLocation().clone();
-			if(rb1cooldown.containsKey(p.getUniqueId()))
-	        {
-	            long timer = (rb1cooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
-	            if(!(timer < 0))
-	            {
-	            }
-	            else 
-	            {
-	                rb1cooldown.remove(p.getUniqueId()); // removing player from HashMap
-
-					p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100,3,2,3,1, Material.STONE.createBlockData());
-					p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_ATTACK, 1, 0);
-
-					for(Entity e : p.getWorld().getNearbyEntities(tl,3, 2, 3)) {
-						if(p!=e && e instanceof LivingEntity) {
-							LivingEntity le = (LivingEntity)e;
-							le.damage(3.5);
-						}
-					}
-		            rb1cooldown.put(p.getUniqueId(), System.currentTimeMillis());
-	            }
-	        }
-	        else 
-	        {
-
-				p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100,3,2,3,1, Material.STONE.createBlockData());
-				p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_ATTACK, 1, 0);
-
-				for(Entity e : p.getWorld().getNearbyEntities(tl,3, 2, 3)) {
-					if(p!=e && e instanceof LivingEntity) {
-						LivingEntity le = (LivingEntity)e;
-						le.damage(3.5);
-					}
-				}
-	            rb1cooldown.put(p.getUniqueId(), System.currentTimeMillis());
-	        }
-		}
-		
-	}
-
-	@SuppressWarnings("deprecation")
-	
 	public void IronBody(EntityDamageByEntityEvent d) 
 	{
 	    
@@ -602,9 +605,7 @@ public class MountainsSkills extends Summoned implements Listener{
 		if(d.getEntity() instanceof IronGolem && !d.isCancelled() && d.getEntity().hasMetadata("stoneboss")&& d.getEntity().hasMetadata("raid") && d.getEntity().hasMetadata("ruined")  && !d.getEntity().hasMetadata("failed")) 
 		{
 			IronGolem p = (IronGolem)d.getEntity();
-			if(!(p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2)) {
-				return;
-			}
+			
 				if(rb6cooldown.containsKey(p.getUniqueId()))
 		        {
 		            long timer = (rb6cooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
@@ -614,65 +615,57 @@ public class MountainsSkills extends Summoned implements Listener{
 		            else 
 		            {
 		                rb6cooldown.remove(p.getUniqueId()); // removing player from HashMap
-		                d.setCancelled(true);
-		                p.setHealth(p.getMaxHealth()*0.2);
-		                strong.put(p.getUniqueId(), 50);
+		                
+		                strong.put(p.getUniqueId(), 20);
 						for(Player pe : OverworldRaids.getheroes(p)) {
-	                		pe.sendMessage(ChatColor.DARK_RED+"I will never die!");
+	    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
+		                		pe.sendMessage(ChatColor.BOLD+"³ª´Â Á×Áö ¾Ê´Â´Ù!");
+	    					}
+	    					else {
+		                		pe.sendMessage(ChatColor.BOLD+"I will never die!");
+	    					}
 		                }
-		                Holding.holding(null, p, 200l);
-		    			String rn = p.getMetadata("raid").get(0).asString();
-						for(int i = 0; i <10; i++) {
-		                    int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() {
-									p.getWorld().spawnParticle(Particle.BLOCK_CRACK, p.getLocation(), 200, 2,1,2,Material.STONE.createBlockData());
-									p.getWorld().spawnParticle(Particle.BLOCK_CRACK, p.getLocation(), 200, 2,1,2,Material.DEEPSLATE.createBlockData());
-									p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_REPAIR, 1, 1);
-									p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 2,2,false,false));
-				                }
-		                    },i*20);
-							ordt.put(rn, t1);                   	
-	                    }
-						int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		    			String rn = gethero(p);
+	                    int t1 =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
 			                @Override
 			                public void run() {
-			                	strong.remove(p.getUniqueId());
+								p.getWorld().spawnParticle(Particle.BLOCK_CRACK, p.getLocation(), 200, 2,1,2,Material.STONE.createBlockData());
+								p.getWorld().spawnParticle(Particle.HEART, p.getLocation(), 50, 2,1,2);
+								p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_REPAIR, 1, 1);
+								p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 5,5,false,false));
 			                }
-	                    },200);
-						ordt.put(rn, task);    
+	                    },20,20);
+						ordt.put(rn, t1);    
+						strongt.put(p.getUniqueId(), t1);
+						
 			            rb6cooldown.put(p.getUniqueId(), System.currentTimeMillis());
 		            }
 		        }
 		        else 
 		        {
-	                d.setCancelled(true);
-	                p.setHealth(p.getMaxHealth()*0.2);
-	                strong.put(p.getUniqueId(), 50);
+	                
+	                strong.put(p.getUniqueId(), 20);
 					for(Player pe : OverworldRaids.getheroes(p)) {
-                		pe.sendMessage(ChatColor.DARK_RED+"I will never die!");
+    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
+	                		pe.sendMessage(ChatColor.BOLD+"³ª´Â Á×Áö ¾Ê´Â´Ù!");
+    					}
+    					else {
+	                		pe.sendMessage(ChatColor.BOLD+"I will never die!");
+    					}
 	                }
-	                Holding.holding(null, p, 200l);
-	    			String rn = p.getMetadata("raid").get(0).asString();
-					for(int i = 0; i <10; i++) {
-	                    int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() {
-								p.getWorld().spawnParticle(Particle.BLOCK_CRACK, p.getLocation(), 200, 2,1,2,Material.STONE.createBlockData());
-								p.getWorld().spawnParticle(Particle.BLOCK_CRACK, p.getLocation(), 200, 2,1,2,Material.DEEPSLATE.createBlockData());
-								p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_REPAIR, 1, 1);
-								p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 10,2,false,false));
-			                }
-	                    },i*20);
-						ordt.put(rn, t1);                   	
-                    }
-					int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	    			String rn = gethero(p);
+                    int t1 =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
 		                @Override
 		                public void run() {
-		                	strong.remove(p.getUniqueId());
+							p.getWorld().spawnParticle(Particle.BLOCK_CRACK, p.getLocation(), 200, 2,1,2,Material.STONE.createBlockData());
+							p.getWorld().spawnParticle(Particle.HEART, p.getLocation(), 50, 2,1,2);
+							p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_REPAIR, 1, 1);
+							p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 5,5,false,false));
 		                }
-                    },200);
-					ordt.put(rn, task); 
+                    },20,20);
+					ordt.put(rn, t1);    
+					strongt.put(p.getUniqueId(), t1);
+					
 		            rb6cooldown.put(p.getUniqueId(), System.currentTimeMillis());
 		        }
 			}

@@ -40,6 +40,7 @@ import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.entity.SlimeSplitEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -576,8 +577,8 @@ public class MobsSkillsEvents implements Listener, Serializable {
 		DarkSkills.getInstance().ReapingHook(d);
 		DarkSkills.getInstance().cage(d);
 		DarkSkills.getInstance().darkcircle(d);
-		DarkSkills.getInstance().nightCounter(d);
 		DarkSkills.getInstance().nightMare(d);
+		DarkSkills.getInstance().nightCounter(d);
 		
 		
 
@@ -588,6 +589,7 @@ public class MobsSkillsEvents implements Listener, Serializable {
 		SnowSkills.getInstance().Mirror(d);
 		SnowSkills.getInstance().mirrored(d);
 		SnowSkills.getInstance().Icefall(d);
+		SnowSkills.getInstance().Meteor(d);
 
 		OceanSkills.getInstance().Mimic(d);
 		OceanSkills.getInstance().Spikes(d);

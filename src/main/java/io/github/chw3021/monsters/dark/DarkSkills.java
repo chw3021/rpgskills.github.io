@@ -3,6 +3,9 @@ package io.github.chw3021.monsters.dark;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -39,9 +42,6 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
 
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
-
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.monsters.raids.OverworldRaids;
 import io.github.chw3021.monsters.raids.Summoned;
@@ -68,14 +68,13 @@ public class DarkSkills extends Summoned{
 	private HashMap<UUID, Boolean> cageable = new HashMap<UUID, Boolean>();
 	
 	private HashMap<UUID, Boolean> ordealable = new HashMap<UUID, Boolean>();
-	private HashMap<UUID, Boolean> ordeal = new HashMap<UUID, Boolean>();
+	static private HashMap<UUID, Boolean> ordeal = new HashMap<UUID, Boolean>();
 
 	private static HashMap<UUID, Boolean> counterable = new HashMap<UUID, Boolean>();
 	
 	private HashMap<UUID, Integer> count = new HashMap<UUID, Integer>();
 
-	static public Multimap<String, Integer> ordt = ArrayListMultimap.create();
-	public HashMap<UUID, Integer> countt = new HashMap<UUID, Integer>();
+	public static HashMap<UUID, Integer> countt = new HashMap<UUID, Integer>();
 	
 	private static final DarkSkills instance = new DarkSkills ();
 	public static DarkSkills getInstance()
@@ -153,7 +152,7 @@ public class DarkSkills extends Summoned{
 		if((d.getDamager() instanceof LivingEntity) && d.getEntity() instanceof LivingEntity &&d.getDamager().hasMetadata("dark")&& !d.isCancelled()) 
 		{
 			LivingEntity le = (LivingEntity) d.getEntity();
-			le.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS, 6,6,false,false));
+			le.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 6,6,false,false));
 		}
 	}
 	
@@ -197,7 +196,7 @@ public class DarkSkills extends Summoned{
 		    				for(Entity e : p.getNearbyEntities(3, 2, 3)) {
 								if(p!=e && e instanceof Player) {
 									LivingEntity le = (LivingEntity)e;
-									le.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS, 6,6,false,false));
+									le.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 6,6,false,false));
 								}
 		    				}
 		                }
@@ -208,13 +207,24 @@ public class DarkSkills extends Summoned{
 	}
 
 
+	@SuppressWarnings("deprecation")
 	public void witherskullthrow(EntityDamageByEntityEvent d) 
 	{
 	    
 		int sec = 4;
-		if(d.getEntity() instanceof Skeleton && d.getEntity().hasMetadata("darkboss") && throwable.containsKey(d.getEntity().getUniqueId())) 
+		if(d.getEntity() instanceof Skeleton&& !d.isCancelled() && d.getEntity().hasMetadata("darkboss") && throwable.containsKey(d.getEntity().getUniqueId())) 
 		{
 			Skeleton p = (Skeleton)d.getEntity();
+			String rn = gethero(p);
+			if((p.hasMetadata("ruined") && p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
+				p.setHealth(p.getMaxHealth()*0.2);
+                d.setCancelled(true);
+                ordealable.put(p.getUniqueId(), true);
+				return;
+			}
+			if(ordeal.containsKey(p.getUniqueId()) || p.hasMetadata("failed")) {
+				return;
+			}
 			if(rb3cooldown.containsKey(p.getUniqueId()))
 	        {
 	            long timer = (rb3cooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
@@ -233,7 +243,7 @@ public class DarkSkills extends Summoned{
 	                }
 
 		            for(int i = 0; i<3; i++) {
-			            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+			            int ta = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 			                @Override
 			                public void run() {
 				            	cageable.put(p.getUniqueId(), true);
@@ -250,6 +260,7 @@ public class DarkSkills extends Summoned{
 								ws.setMetadata("darkbossthrow", new FixedMetadataValue(RMain.getInstance(), true));
 			                }
 			            }, 11+i*4); 
+		                ordt.put(rn, ta);
 		            }
 					rb3cooldown.put(p.getUniqueId(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
 	            }
@@ -263,9 +274,8 @@ public class DarkSkills extends Summoned{
                 if(p.hasMetadata("ruined")) {
             		p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 20, 3, false, false));
                 }
-
 	            for(int i = 0; i<3; i++) {
-		            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		            int ta = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		                @Override
 		                public void run() {
 			            	cageable.put(p.getUniqueId(), true);
@@ -282,6 +292,7 @@ public class DarkSkills extends Summoned{
 							ws.setMetadata("darkbossthrow", new FixedMetadataValue(RMain.getInstance(), true));
 		                }
 		            }, 11+i*4); 
+	                ordt.put(rn, ta);
 	            }
 				rb3cooldown.put(p.getUniqueId(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
 	        }
@@ -332,19 +343,25 @@ public class DarkSkills extends Summoned{
 	}
 
 
-	@SuppressWarnings("unchecked")
-	public void reapingHook(EntityDamageByEntityEvent ev) 
+	@SuppressWarnings({ "unchecked", "deprecation" })
+	public void reapingHook(EntityDamageByEntityEvent d) 
 	{
-		if(ev.getEntity().hasMetadata("darkboss") && !unreapable.containsKey(ev.getEntity().getUniqueId())) 
+		if(d.getEntity().hasMetadata("darkboss") && !unreapable.containsKey(d.getEntity().getUniqueId())) 
 		{
-			final Skeleton p = (Skeleton)ev.getEntity();
+			final Skeleton p = (Skeleton)d.getEntity();
 	        
 
 			if(p.hasMetadata("raid")) {
-				if(!OverworldRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| p.hasMetadata("failed")) {
+				if(!OverworldRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| p.hasMetadata("failed")|| ordeal.containsKey(p.getUniqueId())) {
 					return;
 				}
 
+				if((p.hasMetadata("ruined") && p.hasMetadata("ruined") && p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
+					p.setHealth(p.getMaxHealth()*0.2);
+	                d.setCancelled(true);
+	                ordealable.put(p.getUniqueId(), true);
+					return;
+				}
 				final Location tl = OverworldRaids.getheroes(p).stream().filter(pe -> pe.getWorld().equals(p.getWorld())).findAny().get().getLocation().clone().add(0,0.2,0);
 				reapingHook(p,tl);
 			}
@@ -436,6 +453,7 @@ public class DarkSkills extends Summoned{
 	                }
 	        	},10,1);
                 hookt1.put(p.getUniqueId(), task);
+                ordt.put(rn, task);
                 
             	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
             		@Override
@@ -516,6 +534,7 @@ public class DarkSkills extends Summoned{
                 }
         	},10,1);
             hookt1.put(p.getUniqueId(), task);
+            ordt.put(rn, task);
             
         	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
         		@Override
@@ -542,7 +561,7 @@ public class DarkSkills extends Summoned{
 	
 	public void ReapingHook(EntityDamageByEntityEvent d) 
 	{
-		if(d.getEntity() instanceof Player && d.getDamager().hasMetadata("darkboss"))
+		if(d.getEntity() instanceof Player&& !d.isCancelled() && d.getDamager().hasMetadata("darkboss"))
 		{
 			Skeleton p = (Skeleton)d.getDamager();
 			Player le = (Player)d.getEntity();
@@ -556,6 +575,8 @@ public class DarkSkills extends Summoned{
 	                    AtomicInteger j = new AtomicInteger(0);
         				Location hl = le.getLocation();
         				Location pal = p.getLocation().clone().add(p.getLocation().clone().getDirection().normalize().multiply(0.5));
+        				
+        				String rn = gethero(p);
 	                    ArrayList<Location> line = new ArrayList<Location>();
                         for(double da = 0.1; da < pal.distance(hl); da += 0.1) {
     	                    Location hlc = hl.clone();
@@ -568,7 +589,7 @@ public class DarkSkills extends Summoned{
 						}
                     	line.forEach(l -> {
 
-	                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	                    	int ta = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
                     		@Override
 			                	public void run() 
 				                {	
@@ -587,12 +608,14 @@ public class DarkSkills extends Summoned{
          							
 				                }
 	                    	}, j.getAndIncrement()/20); 
+	                    	
+	                    	ordt.put(rn, ta);
                     	});
 
                 		final Location el =le.getLocation();
 
 						for(int i = 0; i<5; i++) {
-		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		                    int ta = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 			             		@Override
 			                	public void run() 
 				                {	
@@ -608,22 +631,30 @@ public class DarkSkills extends Summoned{
 	        						p.getWorld().spawnParticle(Particle.SPELL_WITCH, el, 50, 1,1,1);
 					            }
 	                	   }, i*2+j.getAndIncrement()+1); 
-							
+
+	                    	ordt.put(rn, ta);
 						}
 				}
 		}
 	}
 	
 
+	@SuppressWarnings("deprecation")
 	public void cage(EntityDamageByEntityEvent d) 
 	{
-		if((d.getEntity() instanceof Skeleton) && d.getEntity().hasMetadata("darkboss")) 
+		if((d.getEntity() instanceof Skeleton)&& !d.isCancelled() && d.getEntity().hasMetadata("darkboss")) 
 		{
 			Skeleton p = (Skeleton)d.getEntity();
 			int sec = 8;
 	        
 
-			if(p.getTarget() == null|| !(p.getTarget() instanceof Player)||p.hasMetadata("failed") || !cageable.containsKey(p.getUniqueId())) {
+			if(p.getTarget() == null|| !(p.getTarget() instanceof Player)||p.hasMetadata("failed") || !cageable.containsKey(p.getUniqueId()) || ordeal.containsKey(p.getUniqueId())) {
+				return;
+			}
+			if((p.hasMetadata("ruined") && p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
+				p.setHealth(p.getMaxHealth()*0.2);
+                d.setCancelled(true);
+                ordealable.put(p.getUniqueId(), true);
 				return;
 			}
 			final Player tar = (Player) p.getTarget();
@@ -647,7 +678,7 @@ public class DarkSkills extends Summoned{
 		     				ptl.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_SKELETON_AMBIENT, 1f, 0f);
 		     				ptl.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_AMBIENT, 1f, 2f);
 
-			        		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+			        		int ta = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 				                @Override
 				                public void run() {
 
@@ -726,6 +757,7 @@ public class DarkSkills extends Summoned{
 					         			
 							            }
 					                }, 0,10);
+			                    	ordt.put(rn, bolt);
 
 					        		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 						                @Override
@@ -736,6 +768,7 @@ public class DarkSkills extends Summoned{
 						            }, 80); 
 				                }
 				            }, 35); 
+	                    	ordt.put(rn, ta);
 		                    
 			        		
 	             			
@@ -747,14 +780,14 @@ public class DarkSkills extends Summoned{
 		        		String rn = gethero(p);
 	                	
 	                    Holding.holding(null, p, 34l);
-
+	                    
 						ptl.getWorld().spawnParticle(Particle.PORTAL, ptl, 500, 4,2,4,0); 
 						ptl.getWorld().spawnParticle(Particle.SOUL, ptl, 500, 4,1.5,4,0); 
 						ptl.getWorld().spawnParticle(Particle.SQUID_INK, ptl, 500, 4,1.5,4,0); 
 	     				ptl.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_SKELETON_AMBIENT, 1f, 0f);
 	     				ptl.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_AMBIENT, 1f, 2f);
 
-		        		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		        		int ta = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 			                @Override
 			                public void run() {
 
@@ -833,6 +866,7 @@ public class DarkSkills extends Summoned{
 				         			
 						            }
 				                }, 0,10);
+		                    	ordt.put(rn, bolt);
 
 				        		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					                @Override
@@ -843,8 +877,8 @@ public class DarkSkills extends Summoned{
 					            }, 80); 
 			                }
 			            }, 35); 
+                    	ordt.put(rn, ta);
 	                    
-		        		
 						rb4cooldown.put(p.getUniqueId(), System.currentTimeMillis());  
 					}
 		}
@@ -884,7 +918,7 @@ public class DarkSkills extends Summoned{
 		
 	}
 	
-	final private Location BlackSpins(Location pl, AtomicInteger j) {
+	final private Location BlackSpins(String rn, Location pl, AtomicInteger j) {
 
 		ArrayList<Location> swing = new ArrayList<Location>();
 		AtomicInteger k = new AtomicInteger(0);
@@ -897,7 +931,7 @@ public class DarkSkills extends Summoned{
 			swing.add(s);
 		}
 		swing.forEach(l ->{
-			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
+			int ta =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
 			{
 	     	@Override
             public void run() 
@@ -905,6 +939,7 @@ public class DarkSkills extends Summoned{
 					pl.getWorld().spawnParticle(Particle.SQUID_INK,l, 3, 0.1,0.1,0.1,0.05); 
 	            }
 	        }, k.incrementAndGet()/90); 
+            ordt.put(rn, ta);
 		});
 		return l1;
 	}
@@ -915,8 +950,9 @@ public class DarkSkills extends Summoned{
 		p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 40, 12, false, false));
 			p.getWorld().playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_ELYTRA, 1f, 0);
     	p.getWorld().spawnParticle(Particle.ASH,p.getEyeLocation(), 400,1,1,1,0); 
+    	String rn = gethero(p);
     	
-    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+    	int ta = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		@Override
         	public void run() 
             {	
@@ -931,7 +967,7 @@ public class DarkSkills extends Summoned{
 
 
 			for(int i = 0; i<5; i++) {
-                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                int ta =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
          		@Override
                 	public void run() 
 	                {	
@@ -954,18 +990,21 @@ public class DarkSkills extends Summoned{
 
     				Location pl = p.getLocation().clone().add(0, 0.2, 0);
     				Location tl = tp.getLocation().clone().add(0, 0.2, 0);
+    				if(!pl.getWorld().equals(tl.getWorld())) {
+    					return;
+    				}
     				
     				pl.setDirection(tl.clone().toVector().subtract(pl.clone().toVector()).normalize());
 					
 					final Integer dis = (int) tl.clone().distance(pl.clone())*2-1;
     				for(int i = 0; i<dis; i++) {
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                        int ta = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
                  		@Override
     	                	public void run() 
     		                {	
 
                  			
-    	             			Location ptl = BlackSpins(pl.clone(),c).clone();
+    	             			Location ptl = BlackSpins(rn,pl.clone(),c).clone();
     	             			ptl.getWorld().playSound(ptl, Sound.ENTITY_WITHER_SKELETON_STEP, 0.1f, 0);
     	         				
     	             			for (Entity e : ptl.getWorld().getNearbyEntities(ptl.clone(), 4, 4, 4))
@@ -979,15 +1018,18 @@ public class DarkSkills extends Summoned{
     							}
     			            }
                         }, i*2); 
+                        ordt.put(rn, ta);
     					
     				}
     				
 		            }
                 }, i*6); 
+                ordt.put(rn, ta);
 				
 			}
             }
     	},35);
+        ordt.put(rn, ta);
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
      		@Override
             	public void run() 
@@ -1022,15 +1064,22 @@ public class DarkSkills extends Summoned{
 	}
 
 
-	public void darkcircle(EntityDamageByEntityEvent ev) 
+	@SuppressWarnings("deprecation")
+	public void darkcircle(EntityDamageByEntityEvent d) 
 	{
-		if(ev.getEntity().hasMetadata("darkboss")) 
+		if(d.getEntity().hasMetadata("darkboss")&& !d.isCancelled()) 
 		{
-			final Skeleton p = (Skeleton)ev.getEntity();
-	        
+			final Skeleton p = (Skeleton)d.getEntity();
+
+			if((p.hasMetadata("ruined") && p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
+				p.setHealth(p.getMaxHealth()*0.2);
+                d.setCancelled(true);
+                ordealable.put(p.getUniqueId(), true);
+				return;
+			}
 
 			if(p.hasMetadata("raid") && p.hasMetadata("ruined")) {
-				if(!OverworldRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| p.hasMetadata("failed")) {
+				if(!OverworldRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| p.hasMetadata("failed")|| ordeal.containsKey(p.getUniqueId())) {
 					return;
 				}
 
@@ -1040,60 +1089,110 @@ public class DarkSkills extends Summoned{
 		}
 	}
 	
-	final private void nightmare(LivingEntity p, Location rl, String rn) {
-        Player tpe = OverworldRaids.getheroes(p).stream().findAny().get();
-        final Location tpel = tpe.getLocation().clone();
-        final Location tl = tpel.clone().add(tpel.clone().getDirection().normalize().multiply(-1.5));
-        OverworldRaids.getheroes(p).forEach(pe ->{
-        	pe.playSound(pe, Sound.ENTITY_WITHER_AMBIENT, 1f, 0.26f);
-			pe.spawnParticle(Particle.SOUL, pe.getLocation().clone(), 200,2,2,2,0.1);
-        });
-        int i1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-            @Override
-            public void run() {
-            	tpe.playSound(tpe, Sound.ENTITY_PHANTOM_SWOOP, 1f, 0.26f);
-            	p.teleport(tl);
-            	counterable.put(p.getUniqueId(), true);
-            }
-        }, 20);
-		ordt.put(rn, i1); 
+	static final private void nightmare(LivingEntity p, Location rl, String rn) {
+        try {
+            Player tpe = OverworldRaids.getheroes(p).stream().filter(pe ->!pe.isDead()&&pe.getWorld().equals(p.getWorld())).findAny().get();
+            final Location tpel = tpe.getLocation().clone();
+            final Location tl = tpel.clone().add(tpel.clone().getDirection().normalize().multiply(-7)).add(0, 2, 0);
+            p.teleport(tl);
+            OverworldRaids.getheroes(p).forEach(pe ->{
+            	pe.playSound(pe, Sound.ENTITY_WITHER_AMBIENT, 1f, 0.26f);
+    			pe.spawnParticle(Particle.SOUL, pe.getLocation().clone(), 200,2,2,2,0.1);
+            });
+        	p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 25,10,false,false));
+            int i1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                @Override
+                public void run() {
+                	tpe.playSound(tpe, Sound.ENTITY_PHANTOM_SWOOP, 1f, 1.5f);
+                	nightswoop(p,tl,tpel);
+                	p.swingMainHand();
+                	counterable.put(p.getUniqueId(), true);
+                }
+            }, 20);
+    		ordt.put(rn, i1); 
 
-        int i2 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-            @Override
-            public void run() {
-    			p.getWorld().spawnParticle(Particle.DRAGON_BREATH, p.getLocation().clone(), 200,2,2,2,0.1);
-            	tpe.playSound(tpe, Sound.ENTITY_WITHER_BREAK_BLOCK, 1f, 1.26f);
-            	tpe.setHealth(0);
-            	counterable.remove(p.getUniqueId());
-            	p.teleport(rl);
-            }
-        }, 30);
-		ordt.put(rn, i2); 
-		countt.put(p.getUniqueId(), i2);
+            int i2 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                @Override
+                public void run() {
+        			p.getWorld().spawnParticle(Particle.DRAGON_BREATH, p.getLocation().clone(), 200,2,2,2,0.1);
+                	p.swingMainHand();
+                	tpe.playSound(tpe, Sound.ENTITY_WITHER_BREAK_BLOCK, 1f, 1.26f);
+                	if(tpe.getWorld().equals(p.getWorld())) {
+                    	tpe.damage(666,p);
+                	}
+                	counterable.remove(p.getUniqueId());
+                	p.teleport(rl.clone().add(0, 10, 0));
+                }
+            }, 42);
+    		ordt.put(rn, i2); 
+    		countt.put(p.getUniqueId(), i2);
+        }
+        catch(NullPointerException | NoSuchElementException | IllegalArgumentException e) {
+        	return;
+        }
 	}
 
+	final private static void nightswoop(LivingEntity p, Location pl, Location tl) 
+	{
+
+        List<Location> line = new ArrayList<>();
+        final Vector vec = tl.clone().toVector().subtract(pl.clone().toVector());
+        
+        for(double an =0; an<tl.distance(pl)-0.1; an+=0.1) {
+        	line.add(pl.clone().add(vec.clone().normalize().multiply(an)));
+        }
+
+    	AtomicInteger u = new AtomicInteger();
+        line.forEach(l -> {
+    		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                @Override
+                public void run() 
+                {
+                	p.setRotation(l.getYaw(),l.getPitch());
+                	p.setGliding(true);
+    				p.getWorld().spawnParticle(Particle.SOUL, l, 3, 1, 1, 1);
+    				p.teleport(l);
+                }
+    		},u.getAndIncrement()/4);
+    	});
+	}
+	
+	
 	public void nightCounter(EntityDamageByEntityEvent d) 
 	{
 		if(d.getEntity().hasMetadata("darkboss") && d.getEntity() instanceof Skeleton&& !d.isCancelled() && d.getEntity().hasMetadata("ruined")) 
 		{
 			Skeleton p = (Skeleton)d.getEntity();
-			String rn = p.getMetadata("raid").get(0).asString();
+			String rn = gethero(p);
 			
 			if(ordeal.containsKey(p.getUniqueId())) {
+				d.setCancelled(true);
 				if(counterable.containsKey(p.getUniqueId())) {
+	    			p.getWorld().spawnParticle(Particle.FLASH, p.getLocation().clone(), 1000,5,2,5);
+
+	    			
 					count.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
 					count.putIfAbsent(p.getUniqueId(), 1);
 					
-			        OverworldRaids.getheroes(p).forEach(pe ->{
-			        	pe.sendMessage(ChatColor.AQUA + "[" + count.get(p.getUniqueId()) + "/8]");
-			        });
-			        
+	                Location rl = OverworldRaids.getraidloc(p).clone();
 			        p.playEffect(EntityEffect.HURT);
 			        Bukkit.getScheduler().cancelTask(countt.get(p.getUniqueId()));
                 	p.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 20,10,false,false));
+                	counterable.remove(p.getUniqueId());
+	                p.teleport(rl);
+
+			        OverworldRaids.getheroes(p).forEach(pe ->{
+			        	pe.playSound(pe, Sound.BLOCK_RESPAWN_ANCHOR_DEPLETE, 1, 1.1f);
+			        	pe.sendMessage(ChatColor.AQUA + "[" + count.get(p.getUniqueId()) + "/5]");
+			        	Random random1=new Random();
+			        	double number1 = (random1.nextDouble()+1) * 5 * (random1.nextBoolean() ? -1 : 1);
+			        	double number21 = (random1.nextDouble()+1) * 5 * (random1.nextBoolean() ? -1 : 1);
+			        	Location esl1 = rl.clone().add(number1, 0.5, number21);
+			        	pe.teleport(esl1);
+			        });
 			        
-			        if(count.get(p.getUniqueId()) == 8) {
-		    			p.getWorld().spawnParticle(Particle.FLASH, p.getLocation().clone(), 1000,5,2,5);
+			        if(count.get(p.getUniqueId()) == 5) {
+		                p.teleport(rl);
 			        	
 			        	p.setGlowing(true);
 			        	ordeal.remove(p.getUniqueId());
@@ -1102,6 +1201,14 @@ public class DarkSkills extends Summoned{
 		        			ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
 		        		}
 
+                		Holding.reset(p);
+                		Holding.ale(p).setInvisible(false);
+	                	Holding.ale(p).setMetadata("failed", new FixedMetadataValue(RMain.getInstance(),true));
+                		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
+                		Holding.ale(p).setInvulnerable(false);
+                		Holding.holding(null, Holding.ale(p), 300l);
+    		            rb5cooldown.put(p.getUniqueId(), System.currentTimeMillis());
+    		            
 		            	Holding.ale(p).setMetadata("failed", new FixedMetadataValue(RMain.getInstance(),true));
 		                for(Player pe : OverworldRaids.getheroes(p)) {
 							if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -1110,13 +1217,17 @@ public class DarkSkills extends Summoned{
 							else {
 		                		pe.sendMessage(ChatColor.BLUE+"NightMare: My Darkness..");
 							}
-							pe.removePotionEffect(PotionEffectType.DARKNESS);
+							pe.removePotionEffect(PotionEffectType.BLINDNESS);
 		            		Holding.holding(pe, p, 300l);
 		                }
+						
 			            int t3 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 			                @Override
 			                public void run() {
-			                	Holding.ale(p).removeMetadata("failed", RMain.getInstance());
+			                	p.removeMetadata("failed", RMain.getInstance());
+		                		Holding.ale(p).setInvisible(false);
+		                		Holding.ale(p).setInvulnerable(false);
+		                		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
 			                }
 			            }, 300);
 						ordt.put(rn, t3);
@@ -1124,8 +1235,15 @@ public class DarkSkills extends Summoned{
 				}
 				else {
 
+                    if(ordt.containsKey(rn)) {
+                    	ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
+                    	ordt.removeAll(rn);
+                    }
+                	ordeal.remove(p.getUniqueId());
+                	rb5cooldown.remove(p.getUniqueId()); 
 	                for(Player pe : OverworldRaids.getheroes(p)) {
                 		if(pe.getWorld().equals(p.getWorld()) && pe.getWorld() == p.getWorld()) {
+                			count.remove(p.getUniqueId());
 	    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
 		                		pe.sendMessage(ChatColor.BOLD+"¾Ç¸ùÀÇ Çü»ó: ºûÀº ¾îµÒÀ» ÀÌ±æ ¼ö ¾ø´Ù..");
 	    					}
@@ -1133,8 +1251,10 @@ public class DarkSkills extends Summoned{
 		                		pe.sendMessage(ChatColor.BOLD+"NightMare: Light can't beat darkness..");
 	    					}
 	            			p.getWorld().playSound(pe.getLocation(), Sound.ENTITY_WITHER_AMBIENT, 1, 0);
-	                		Holding.invur(pe, 60l);
+	                		Holding.invur(pe, 10l);
+				        	p.setGlowing(true);
 		            		pe.teleport(p);
+							pe.removePotionEffect(PotionEffectType.BLINDNESS);
 		            		pe.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 255 ,false,false));
 		            		pe.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 60, 255 ,false,false));
                 		}
@@ -1142,7 +1262,6 @@ public class DarkSkills extends Summoned{
 	 				Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		                @Override
 		                public void run() {	
-		                	rb5cooldown.remove(p.getUniqueId()); 
 	                		p.removeMetadata("fake", RMain.getInstance());
 	                		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
 	    	                p.setInvulnerable(false);
@@ -1160,6 +1279,107 @@ public class DarkSkills extends Summoned{
 	}
 	    
 		
+	final private void nightmareevent(LivingEntity p, EntityDamageByEntityEvent d) {
+
+    	ordeal.put(p.getUniqueId(), true);
+		String rn = gethero(p);
+        Location rl = OverworldRaids.getraidloc(p).clone();
+
+        if(ordt.containsKey(rn)) {
+        	ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
+        	ordt.removeAll(rn);
+        }
+        d.setCancelled(true);
+        p.teleport(rl.clone().add(0, 50, 0));
+        Holding.holding(null, p, 1500l);
+        Holding.invur(p, 100l);
+        Holding.untouchable(p, 100l);
+        p.setGlowing(false);
+        
+        OverworldRaids.getheroes(p).forEach(pe ->{
+			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
+        		pe.sendTitle(ChatColor.DARK_GRAY + (ChatColor.MAGIC + "123456"), ChatColor.DARK_GRAY + "¾îµÒÀ» ¸ÂÀÌÇØ¶ó...", 20, 35, 20);
+ 				Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	                @Override
+	                public void run() {	
+                		pe.sendMessage(ChatColor.BOLD+"Å¸ÀÌ¹Ö¿¡ ¸ÂÃç ÀûÀ» °ø°ÝÇÏ¼¼¿ä");
+	                }
+	            }, 20); 
+			}
+			else {
+        		pe.sendTitle(ChatColor.DARK_GRAY + (ChatColor.MAGIC + "123456"), ChatColor.DARK_GRAY + "Embrace the darkness..", 20, 35, 20);
+ 				Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	                @Override
+	                public void run() {	
+                		pe.sendMessage(ChatColor.BOLD+"Attack the enemy at the right time");
+	                }
+	            }, 20); 
+			}
+        	pe.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 150,10,false,false));
+        	pe.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 150,10,false,false));
+        });
+        
+		p.getWorld().spawnParticle(Particle.SQUID_INK, p.getLocation().clone(), 200,2,2,2,0.1);
+		p.getWorld().spawnParticle(Particle.DRAGON_BREATH, p.getLocation().clone(), 200,2,2,2,0.1);
+        int i1 =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+                OverworldRaids.getheroes(p).forEach(pe ->{
+                	pe.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 150,10,false,false));
+                	pe.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 150,10,false,false));
+                });
+                nightmare(Holding.ale(p),rl,rn);
+            }
+        }, 100, 100);
+		ordt.put(rn, i1); 
+
+			int i2 = Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() {	
+
+                if(ordt.containsKey(rn)) {
+                	ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
+                	ordt.removeAll(rn);
+                }
+    			count.remove(p.getUniqueId());
+                for(Player pe : OverworldRaids.getheroes(p)) {
+            		if(pe.getWorld().equals(p.getWorld()) && pe.getWorld() == p.getWorld()) {
+    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
+	                		pe.sendMessage(ChatColor.BOLD+"¾Ç¸ùÀÇ Çü»ó: ºûÀº ¾îµÒÀ» ÀÌ±æ ¼ö ¾ø´Ù..");
+    					}
+    					else {
+	                		pe.sendMessage(ChatColor.BOLD+"NightMare: Light can't beat darkness..");
+    					}
+            			p.getWorld().playSound(pe.getLocation(), Sound.ENTITY_WITHER_AMBIENT, 1, 0);
+                		Holding.invur(pe, 10l);
+			        	p.setGlowing(true);
+	            		pe.teleport(p);
+						pe.removePotionEffect(PotionEffectType.BLINDNESS);
+	            		pe.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 255 ,false,false));
+	            		pe.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 60, 255 ,false,false));
+            		}
+                }
+ 				Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	                @Override
+	                public void run() {	
+	                	ordeal.remove(p.getUniqueId());
+	                	rb5cooldown.remove(p.getUniqueId()); 
+                		p.removeMetadata("fake", RMain.getInstance());
+                		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
+    	                p.setInvulnerable(false);
+    	                Holding.ale(p).setInvulnerable(false);
+						p.getWorld().spawnParticle(Particle.SQUID_INK, p.getLocation(), 3000, 10,10,10);	
+	                    for(Player pe : OverworldRaids.getheroes(p)) {
+	                		p.removeMetadata("fake", RMain.getInstance());
+	                		pe.setHealth(0);
+	                    }
+	                }
+	            }, 5); 
+            }
+        }, 1505); 
+		ordt.put(rn, i2); 
+		
+	}
 	
 	@SuppressWarnings("deprecation")
 	public void nightMare(EntityDamageByEntityEvent d) 
@@ -1172,7 +1392,7 @@ public class DarkSkills extends Summoned{
 			if(p.hasMetadata("failed")) {
 				return;
 			}
-			if(!(p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2)|| !ordealable.containsKey(p.getUniqueId())|| ordeal.containsKey(p.getUniqueId())|| !OverworldRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))) {
+			if(!(p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2)|| !ordealable.containsKey(p.getUniqueId())|| ordeal.containsKey(p.getUniqueId()) || !OverworldRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))) {
 				return;
 			}
 			if(rb5cooldown.containsKey(p.getUniqueId()))
@@ -1184,90 +1404,14 @@ public class DarkSkills extends Summoned{
 	            else 
 	            {
 	            	rb5cooldown.remove(p.getUniqueId()); // removing player from HashMap
-	            	
-	        		String rn = gethero(p);
-	                Location rl = OverworldRaids.getraidloc(p).clone();
-	        		
-	                d.setCancelled(true);
-	                p.teleport(rl);
-	                Holding.invur(p, 102l);
-	                Holding.holding(null, p, 102l);
-	                Holding.untouchable(p, 102l);
-	                p.setGlowing(false);
-	                
-	                OverworldRaids.getheroes(p).forEach(pe ->{
-    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-	                		pe.sendMessage(ChatColor.BOLD+"¾Ç¸ùÀÇÇü»ó: ¾îµÒÀ» ¸ÂÀÌÇØ¶ó...");
-    					}
-    					else {
-	                		pe.sendMessage(ChatColor.BOLD+"NightMare: Embrace the darkness...");
-    					}
-	                });
-	                OverworldRaids.getheroes(p).forEach(pe ->{
-	                	pe.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS, 150,10,false,false));
-	                });
-	                
-	    			p.getWorld().spawnParticle(Particle.SQUID_INK, p.getLocation().clone(), 200,2,2,2,0.1);
-	    			p.getWorld().spawnParticle(Particle.DRAGON_BREATH, p.getLocation().clone(), 200,2,2,2,0.1);
-                    int i1 =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() {
-			                Holding.invur(p, 102l);
-			                Holding.holding(null, p, 102l);
-			                Holding.untouchable(p, 102l);
-			                OverworldRaids.getheroes(p).forEach(pe ->{
-			                	pe.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS, 150,10,false,false));
-			                });
-			                
-			                nightmare(p,rl,rn);
-		                }
-		            }, 100, 100);
-					ordt.put(rn, i1); 
-					
+	            	nightmareevent(p,d);
 		            rb5cooldown.put(p.getUniqueId(), System.currentTimeMillis());
 	            }
 	        }
 	        else 
 	        {
-        		String rn = gethero(p);
-                Location rl = OverworldRaids.getraidloc(p).clone();
-        		
-                d.setCancelled(true);
-                p.teleport(rl);
-                Holding.invur(p, 102l);
-                Holding.holding(null, p, 102l);
-                Holding.untouchable(p, 102l);
-                p.setGlowing(false);
-                
-                OverworldRaids.getheroes(p).forEach(pe ->{
-					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-                		pe.sendMessage(ChatColor.BOLD+"¾Ç¸ùÀÇÇü»ó: ¾îµÒÀ» ¸ÂÀÌÇØ¶ó...");
-					}
-					else {
-                		pe.sendMessage(ChatColor.BOLD+"NightMare: Embrace the darkness...");
-					}
-                });
-                OverworldRaids.getheroes(p).forEach(pe ->{
-                	pe.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS, 150,10,false,false));
-                });
-                
-    			p.getWorld().spawnParticle(Particle.SQUID_INK, p.getLocation().clone(), 200,2,2,2,0.1);
-    			p.getWorld().spawnParticle(Particle.DRAGON_BREATH, p.getLocation().clone(), 200,2,2,2,0.1);
-                int i1 =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-	                @Override
-	                public void run() {
-		                Holding.invur(p, 102l);
-		                Holding.holding(null, p, 102l);
-		                Holding.untouchable(p, 102l);
-		                OverworldRaids.getheroes(p).forEach(pe ->{
-		                	pe.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS, 150,10,false,false));
-		                });
-		                
-		                nightmare(p,rl,rn);
-	                }
-	            }, 100, 100);
-				ordt.put(rn, i1); 
-				
+
+	        	nightmareevent(p,d);
 	            rb5cooldown.put(p.getUniqueId(), System.currentTimeMillis());
 	        }
 		

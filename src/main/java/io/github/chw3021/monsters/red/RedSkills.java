@@ -373,6 +373,7 @@ public class RedSkills extends Summoned{
 	                    	p.teleport(l.add(0, 0.5, 0));
 	                    });
 	                	chargable.remove(p.getUniqueId());
+	                	dazable.put(p.getUniqueId(), true);
 		            }
             	}, 21); 
 				chcooldown.put(p.getUniqueId(), System.currentTimeMillis());  
@@ -412,6 +413,7 @@ public class RedSkills extends Summoned{
                 	p.teleport(l.add(0, 0.5, 0));
                 });
             	chargable.remove(p.getUniqueId());
+            	dazable.put(p.getUniqueId(), true);
 	            }
         	}, 21); 
 			chcooldown.put(p.getUniqueId(), System.currentTimeMillis());  
@@ -419,13 +421,19 @@ public class RedSkills extends Summoned{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void Charge(EntityDamageByEntityEvent ev) 
+	public void Charge(EntityDamageByEntityEvent d) 
 	{
-		if((ev.getEntity() instanceof Skeleton) && ev.getEntity().hasMetadata("redboss")) 
+		if((d.getEntity() instanceof Skeleton) && d.getEntity().hasMetadata("redboss")) 
 		{
-			final Skeleton p = (Skeleton)ev.getEntity();
+			final Skeleton p = (Skeleton)d.getEntity();
 
 			if(p.hasMetadata("raid")) {
+				if((p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
+					p.setHealth(p.getMaxHealth()*0.2);
+	                d.setCancelled(true);
+	                ordealable.put(p.getUniqueId(), true);
+					return;
+				}
 				if(!OverworldRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| backable.containsKey(p.getUniqueId()) || !rb3cooldown.containsKey(p.getUniqueId()) || !chargable.containsKey(p.getUniqueId())) {
 					return;
 				}
@@ -1039,13 +1047,13 @@ public class RedSkills extends Summoned{
 		if(d.getEntity() instanceof Stray && d.getEntity().hasMetadata("redboss") && d.getEntity().hasMetadata("ruined")) 
 		{
 			Stray p = (Stray)d.getEntity();
-			if(p.hasMetadata("failed") || !dazable.containsKey(p.getUniqueId())) {
-				return;
-			}
 			if((p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
 				p.setHealth(p.getMaxHealth()*0.2);
                 d.setCancelled(true);
                 ordealable.put(p.getUniqueId(), true);
+				return;
+			}
+			if(p.hasMetadata("failed") || !dazable.containsKey(p.getUniqueId())) {
 				return;
 			}
 				if(rb2cooldown.containsKey(p.getUniqueId()))
@@ -1718,6 +1726,8 @@ public class RedSkills extends Summoned{
     	Holding.reset(Holding.ale(p));
     	Holding.ale(p).setMetadata("failed", new FixedMetadataValue(RMain.getInstance(),true));
 		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
+		Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("redknightcharge"+rn)).forEach(e -> e.remove());
+		Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("redknightmagma"+rn)).forEach(e -> e.remove());
         for(Player pe : OverworldRaids.getheroes(p)) {
 			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
         		pe.sendMessage(ChatColor.BOLD+"ºÓÀº±â»ç: ÈûÀÌ ºüÁö´Â±º...");

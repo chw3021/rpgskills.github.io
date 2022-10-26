@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-import javax.annotation.Nullable;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -78,11 +76,6 @@ import com.google.common.collect.Multimap;
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.commons.party.Party;
 import io.github.chw3021.items.Elements;
-import io.github.chw3021.monsters.hyper.HyperSkills;
-import io.github.chw3021.monsters.mountains.MountainsSkills;
-import io.github.chw3021.monsters.ocean.OceanSkills;
-import io.github.chw3021.monsters.red.RedSkills;
-import io.github.chw3021.monsters.snow.SnowSkills;
 import io.github.chw3021.rmain.RMain;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -129,7 +122,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	Integer LIVES = 5;
 	Double BOSSHP = 100000d;
 	
-	Integer BOSSNUM = 3;
+	Integer BOSSNUM = 0;
 	
 	
 	private static final OverworldRaids instance = new OverworldRaids ();
@@ -1538,7 +1531,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		
 		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "∫–≥Î«—Ω∫≈Ê∞Ò∑Ω":"OutragedStoneGolem";
 		        		IronGolem newmob = (IronGolem) MobspawnLoc(esl, ChatColor.RED+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, null, null, null, null, null, null, EntityType.IRON_GOLEM);
-		        		newmob.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 999999, 3, false, false));
+		        		newmob.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 999999, 1, false, false));
 	    	    		newmob.setGlowing(true);
 	    	    		newmob.getEquipment().setBootsDropChance(0);
 	    	    		newmob.getEquipment().setChestplateDropChance(0);

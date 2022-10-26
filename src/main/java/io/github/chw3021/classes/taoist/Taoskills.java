@@ -788,7 +788,7 @@ public class Taoskills extends Pak implements Listener, Serializable {
 				final Location el = p.getEyeLocation().clone().add(p.getEyeLocation().clone().getDirection().normalize().multiply(2.5));
 				
 
-				p.playSound(el, Sound.ENTITY_EVOKER_PREPARE_SUMMON, 1, 1.6f);
+				p.playSound(el, Sound.ENTITY_EVOKER_PREPARE_SUMMON, 0.3f, 1.6f);
 				p.getWorld().spawnParticle(Particle.CLOUD, el, 50, 1, 1, 1);
 				p.getWorld().spawnParticle(Particle.ASH, el, 50, 1, 1, 1);
 				

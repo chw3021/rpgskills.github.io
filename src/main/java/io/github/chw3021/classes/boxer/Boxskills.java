@@ -37,7 +37,6 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Cat;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Entity;
@@ -654,7 +653,8 @@ public class Boxskills extends Pak implements Listener, Serializable {
 				fs.remove(p.getUniqueId());
 				
 	
-				
+
+                p.swingMainHand();
 	
             	for(int i =0; i<8; i++) {
              	   Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -667,7 +667,6 @@ public class Boxskills extends Pak implements Listener, Serializable {
 			    				p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 0.3f, 2f);
 			    		        FistStorm(p.getLocation().clone());
 			    				
-	    	                    p.swingMainHand();
 
 			                	for (Entity e : tl.getWorld().getNearbyEntities(tl, 4, 3, 4))
 								{
@@ -1452,6 +1451,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 	                    p.playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_ATTACK, 0.8f, 0f);
 	                    p.playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 0.4f, 2f);
 	                    p.swingMainHand();
+	                    p.swingOffHand();
 						parrying.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
 						parrying.putIfAbsent(p.getUniqueId(), 0);
 						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -1470,7 +1470,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 		        		p.getWorld().spawnParticle(Particle.SONIC_BOOM, l, 20,2,2,2);
 						p.swingMainHand();
 		        		
-		        		for (Entity e : p.getWorld().getNearbyEntities(l, 3, 3, 3))
+		        		for (Entity e : l.getWorld().getNearbyEntities(l, 3, 3, 3))
 						{
                     		if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
 							{
@@ -2056,7 +2056,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 		rl.setDirection(pl.clone().getDirection());
 		ll.setDirection(pl.clone().getDirection());
 
-        ArrayList<Location> line = new ArrayList<Location>();
+        HashSet<Location> line = new HashSet<Location>();
         for(int d = 0; d <= 10; d++) {
         	Location ri = rl.clone().add(rl.clone().getDirection().normalize().multiply(d));
         	Location li = ll.clone().add(ll.clone().getDirection().normalize().multiply(d));
@@ -2071,7 +2071,23 @@ public class Boxskills extends Pak implements Listener, Serializable {
         line.forEach(l ->{
         	w.spawnParticle(Particle.CLOUD, l, 50,1,1,1,0);
         });
+        
+        
+
+        HashSet<Location> cir = new HashSet<Location>();
+        Vector plv = pl.getDirection().clone();
+        for(double angle=0.1; angle<Math.PI*3; angle += Math.PI/90) {
+        	Location one = pl.clone();
+        	one.add(plv.clone().rotateAroundY(Math.PI/2).rotateAroundAxis(plv.clone(),angle).normalize().multiply(2).add(plv.clone().normalize().multiply(angle)));
+        	cir.add(one);
+        }
+    	cir.forEach(l -> {
+			w.spawnParticle(Particle.SWEEP_ATTACK, l,2,0.1,0.1,0.1,0);
+        	w.spawnParticle(Particle.CLOUD, l, 10,0.2,0.2,0.2,0);
+			w.spawnParticle(Particle.CRIT, l,2,0.1,0.1,0.1,0);
+	    });
 	}
+	
 	
 	
 	public void ULT(PlayerDropItemEvent ev)        
@@ -2117,7 +2133,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 			                public void run() 
 			                {
 			    				p.swingMainHand();
-			    		    	final Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 6).getLocation();
+			    		    	final Location l = gettargetblock(p,6);
 			    				p.getWorld().spawnParticle(Particle.FLASH, l, 800, 10, 10, 10);
 								p.getWorld().spawnParticle(Particle.CRIT, l, 600, 10, 10, 10);
 								p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l, 600, 10, 10, 10);
@@ -2126,7 +2142,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 								p.playSound(l, Sound.ENTITY_WARDEN_SONIC_BOOM, 0.6f, 0.6f);
 								p.playSound(l, Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 0.8f, 2f);
 								ult(p);
-			                	for(Entity e : p.getWorld().getNearbyEntities(l, 14,14,14)) {
+			                	for(Entity e : p.getWorld().getNearbyEntities(l, 16,14,16)) {
 
 		                    		if (e instanceof Player) 
 									{
@@ -2184,7 +2200,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 		                public void run() 
 		                {
 		    				p.swingMainHand();
-		    		    	final Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 6).getLocation();
+		    		    	final Location l = gettargetblock(p,6);
 		    				p.getWorld().spawnParticle(Particle.FLASH, l, 800, 10, 10, 10);
 							p.getWorld().spawnParticle(Particle.CRIT, l, 600, 10, 10, 10);
 							p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l, 600, 10, 10, 10);
@@ -2193,7 +2209,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 							p.playSound(l, Sound.ENTITY_WARDEN_SONIC_BOOM, 0.6f, 0.6f);
 							p.playSound(l, Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 0.8f, 2f);
 							ult(p);
-		                	for(Entity e : p.getWorld().getNearbyEntities(l, 14,14,14)) {
+		                	for(Entity e : p.getWorld().getNearbyEntities(l, 16,14,16)) {
 
 	                    		if (e instanceof Player) 
 								{
@@ -2241,7 +2257,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
         List<Location> circle = new ArrayList<>();
         
         for(double an =0; an<=Math.PI*2; an+=Math.PI/20) {
-        	Location il =  tl.clone().add(tv.clone().normalize().rotateAroundY(an).multiply(7));
+        	Location il =  tl.clone().add(tv.clone().normalize().rotateAroundY(an).multiply(6));
         	il.setDirection(tl.clone().toVector().subtract(il.clone().toVector()));
         	circle.add(il);
         }
@@ -2253,11 +2269,11 @@ public class Boxskills extends Pak implements Listener, Serializable {
         ArrayList<Location> a1 = new ArrayList<Location>();
         ArrayList<Location> a3 = new ArrayList<Location>();
 
-    	for(double angley= 0; angley<Math.PI*4; angley += Math.PI/45) {
-        	a1.add(il.clone().add(il.clone().getDirection().normalize().rotateAroundY(angley).multiply(2)).add(0, angley, 0));
+    	for(double angley= 0; angley<Math.PI*6; angley += Math.PI/45) {
+        	a1.add(il.clone().add(il.clone().getDirection().normalize().rotateAroundY(angley).multiply(1.5)).add(0, angley*0.5, 0));
     	}
-    	for(double angley= 0; angley<Math.PI*4; angley += Math.PI/45) {
-    		a1.add(il.clone().add(il.clone().getDirection().normalize().rotateAroundY(-angley).multiply(2)).add(0, angley, 0));
+    	for(double angley= 0; angley<Math.PI*6; angley += Math.PI/45) {
+    		a1.add(il.clone().add(il.clone().getDirection().normalize().rotateAroundY(-angley).multiply(1.5)).add(0, angley*0.5, 0));
     	}
     	for(int d= 0; d<6; d++) {
         	a3.add(il.clone().add(0, d, 0));
@@ -2269,7 +2285,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
     		l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l,5,0.1,0.1,0.1,0);
 		});
 		a3.forEach(l -> {
-    		l.getWorld().spawnParticle(Particle.CLOUD, l,30,0.65,0.65,0.65,0);
+    		l.getWorld().spawnParticle(Particle.CLOUD, l,40,0.65,1,0.65,0);
 		});
 		
 	    return ;
@@ -2340,7 +2356,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 					p.teleport(l);
 					p.swingOffHand();
                 	
-                	for(Entity e : p.getWorld().getNearbyEntities(p.getLocation(), 2.5,8,2.5)) {
+                	for(Entity e : p.getWorld().getNearbyEntities(p.getLocation(), 3.5,8,3.5)) {
                 		if (e instanceof Player) 
 						{
 							
@@ -2379,7 +2395,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 						}
                 	}
 				}
-            }, j.getAndIncrement()*2); 
+            }, j.getAndIncrement()); 
 		});
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
             @Override
@@ -2407,11 +2423,11 @@ public class Boxskills extends Pak implements Listener, Serializable {
                     @Override
                     public void run() 
                     {
-                    	p.teleport(tl.clone().add(0, 1, 0));
+						p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 5,5,false,false));
         				p.swingMainHand();
         				uppersweep(p.getLocation().clone());
         				p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 0.7f, 0f);
-        				p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_HURT, 1f, 1.3f);
+        				p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_HURT, 1f, 1.5f);
         				p.playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 0.8f, 2f);
 	    				p.getWorld().spawnParticle(Particle.FLASH, p.getLocation(), 100, 2, 2, 2);
 	    				p.getWorld().spawnParticle(Particle.CRIT, p.getLocation(), 100, 1, 1, 1);
@@ -2442,7 +2458,8 @@ public class Boxskills extends Pak implements Listener, Serializable {
         			    					{
         			    						LivingEntity le = (LivingEntity)e;
         			    							{
-        			    								le.teleport(tl.clone().add(0, 3, 0));
+        			    								le.teleport(tl.clone().add(0, 5, 0));
+        			    								le.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 15,10,false,false));
         			    								atk1(2.1, p, le);	
         			    								Holding.superholding(p, le, 30l);
         			    							}
@@ -2455,26 +2472,27 @@ public class Boxskills extends Pak implements Listener, Serializable {
         		},u.getAndIncrement());
             	
 			}
-        }, j.getAndIncrement()*2); 
+        }, j.getAndIncrement()); 
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
             @Override
             public void run() 
             {
 				tl.getWorld().spawnParticle(Particle.SONIC_BOOM, tl, 100, 5, 1, 5);
+				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 100,20,false,false));
 				p.playSound(tl, Sound.ENTITY_HOSTILE_BIG_FALL, 0.7f, 0f);
-				p.playSound(tl, Sound.ENTITY_ELDER_GUARDIAN_HURT, 1f, 1.3f);
-				p.playSound(tl, Sound.ENTITY_ELDER_GUARDIAN_HURT, 1f, 0.3f);
+				p.playSound(tl, Sound.ENTITY_ELDER_GUARDIAN_HURT, 0.6f, 0.3f);
+				p.playSound(tl, Sound.ENTITY_ELDER_GUARDIAN_HURT, 1f, 0.1f);
 				p.playSound(tl, Sound.ENTITY_GENERIC_BIG_FALL, 0.8f, 0f);
-
-				p.playSound(tl, Sound.BLOCK_METAL_PLACE, 0.8f, 0f);
-				p.playSound(tl, Sound.BLOCK_METAL_BREAK, 0.8f, 2f);
-				p.playSound(tl, Sound.BLOCK_METAL_BREAK, 0.8f, 0f);
+				p.playSound(tl, Sound.BLOCK_SCULK_CATALYST_BREAK, 0.8f, 0f);
+                p.playSound(tl, Sound.ENTITY_IRON_GOLEM_ATTACK, 0.8f, 0f);
+                p.playSound(tl, Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 0.4f, 2f);
+                
 				tl.getWorld().spawnParticle(Particle.FLASH, tl, 400, 5, 1, 5);
 				tl.getWorld().spawnParticle(Particle.CRIT, tl, 600, 1, 1, 1);
 				tl.getWorld().spawnParticle(Particle.WHITE_ASH, tl, 800, 1, 1, 1);
 				tl.getWorld().spawnParticle(Particle.SWEEP_ATTACK, tl, 600, 5, 1, 5);
 				tl.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 600, 5, 1, 5, Material.IRON_BLOCK.createBlockData());
-            	for(Entity e : p.getWorld().getNearbyEntities(tl, 5,5,5)) {
+            	for(Entity e : tl.getWorld().getNearbyEntities(tl, 5,13,5)) {
 
             		if (e instanceof Player) 
 					{
@@ -2498,7 +2516,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 					}
             	}
 			}
-        }, j.getAndIncrement()*2+30); 
+        }, j.getAndIncrement()+30); 
 		
 	}
 	

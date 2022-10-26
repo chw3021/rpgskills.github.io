@@ -31,7 +31,9 @@ import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.inventory.PrepareSmithingEvent;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerFishEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
@@ -88,6 +90,8 @@ public class SkillUsing implements Listener, Serializable {
 	Pak pak = new Pak();
 	Weapons w = new Weapons();
 
+	
+	
 	@EventHandler
 	public void Localechange(PlayerLocaleChangeEvent e)
 	{
@@ -388,18 +392,24 @@ public class SkillUsing implements Listener, Serializable {
 	@EventHandler
 	public void ClickEntity(PlayerArmorStandManipulateEvent ev) 
 	{
-		Illskills.getInstance().FakeDoll(ev);
+		CommonEvents.getInstance().namingAndBarRemove(ev);
+		
 	}
 
+
+	@EventHandler
+	public void ClickEntity(PlayerInteractAtEntityEvent ev) 
+	{
+		CommonEvents.getInstance().namingAndBarRemove(ev);
+	}
 	@EventHandler
 	public void ClickEntity(PlayerInteractEntityEvent ev) 
 	{
-		CommonEvents.getInstance().Naming(ev);
+		CommonEvents.getInstance().namingAndBarRemove(ev);
 		Holding.getInstance().holded(ev);
 		
 		Hunskills.getInstance().TurnOver(ev);
 
-		Illskills.getInstance().FakeDoll(ev);
 
 		Medskills.getInstance().Stretcher(ev);
 	}
