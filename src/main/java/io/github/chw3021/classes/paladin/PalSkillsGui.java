@@ -81,7 +81,7 @@ public class PalSkillsGui{
 				itemset("최후의 심판(잠김)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/29315"), 17, Palskillsinv);
 			}
 			else if(Proficiency.getpro(p)<2 && Proficiency.getpro(p)>=1) {
-				itemset("신격", Material.SHIELD, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[대지 계열]","재입력시 신격을 사용합니다","(피해량은 진압 레벨에 비례합니다)","",ChatColor.BOLD+" X (0.5D + "+BigDecimal.valueOf(psd.Thrust.getOrDefault(p.getUniqueId(),0)*0.485).setScale(2, RoundingMode.HALF_EVEN)+")"), 9, Palskillsinv);
+				itemset("신격", Material.SHIELD, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[대지 계열]","재입력시 신격을 사용합니다","(피해량은 진압 레벨에 비례합니다)","",ChatColor.BOLD+" X (0.75D + "+BigDecimal.valueOf(psd.Thrust.getOrDefault(p.getUniqueId(),0)*0.485).setScale(2, RoundingMode.HALF_EVEN)+")"), 9, Palskillsinv);
 				itemset("광명", Material.DAYLIGHT_DETECTOR, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[번개 계열]","재입력시 광명을 사용합니다","(피해량은 결박 레벨에 비례합니다)","",ChatColor.BOLD+" X (0.9D + "+BigDecimal.valueOf(psd.Restraint.getOrDefault(p.getUniqueId(),0)*0.9).setScale(2, RoundingMode.HALF_EVEN)+")"), 10, Palskillsinv);
 				itemset("성수", Material.MILK_BUCKET, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[번개 계열]","재입력시 성수를 사용합니다","(피해량은 심판 레벨에 비례합니다)","",ChatColor.BOLD+" X (0.8D + "+BigDecimal.valueOf(psd.Judgement.getOrDefault(p.getUniqueId(),0)*0.8).setScale(2, RoundingMode.HALF_EVEN)+")"), 11, Palskillsinv);
 				itemset("성화", Material.DIAMOND_AXE, 0, 1, Arrays.asList("적을 기절시킵니다"), 12, Palskillsinv);
@@ -99,7 +99,7 @@ public class PalSkillsGui{
 				itemset("참회(잠김)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/155015"), 26, Palskillsinv);
 			}
 			else {
-				itemset("신격", Material.SHIELD, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[대지 계열]","재입력시 신격을 사용합니다","(피해량은 진압 레벨에 비례합니다)","",ChatColor.BOLD+" X (0.5D + "+BigDecimal.valueOf(psd.Thrust.getOrDefault(p.getUniqueId(),0)*0.485).setScale(2, RoundingMode.HALF_EVEN)+")"), 9, Palskillsinv);
+				itemset("신격", Material.SHIELD, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[대지 계열]","재입력시 신격을 사용합니다","(피해량은 진압 레벨에 비례합니다)","",ChatColor.BOLD+" X (0.75D + "+BigDecimal.valueOf(psd.Thrust.getOrDefault(p.getUniqueId(),0)*0.485).setScale(2, RoundingMode.HALF_EVEN)+")"), 9, Palskillsinv);
 				itemset("광명", Material.DAYLIGHT_DETECTOR, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[번개 계열]","재입력시 광명을 사용합니다","(피해량은 결박 레벨에 비례합니다)","",ChatColor.BOLD+" X (0.9D + "+BigDecimal.valueOf(psd.Restraint.getOrDefault(p.getUniqueId(),0)*0.9).setScale(2, RoundingMode.HALF_EVEN)+")"), 10, Palskillsinv);
 				itemset("성수", Material.MILK_BUCKET, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[번개 계열]","재입력시 성수를 사용합니다","(피해량은 심판 레벨에 비례합니다)","",ChatColor.BOLD+" X (0.8D + "+BigDecimal.valueOf(psd.Judgement.getOrDefault(p.getUniqueId(),0)*0.8).setScale(2, RoundingMode.HALF_EVEN)+")"), 11, Palskillsinv);
 				itemset("성화", Material.DIAMOND_AXE, 0, 1, Arrays.asList("적을 기절시킵니다"), 12, Palskillsinv);
@@ -144,7 +144,7 @@ public class PalSkillsGui{
 				itemset("Last judgment(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 17, Palskillsinv);
 			}
 			else if(Proficiency.getpro(p)<2 && Proficiency.getpro(p)>=1) {
-				itemset("HolySmash", Material.SHIELD, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Earth]","Use HolySmash When You Use Once More","(Damage Affected By Thrust)","",ChatColor.BOLD+" X (0.5D + "+BigDecimal.valueOf(psd.Thrust.getOrDefault(p.getUniqueId(),0)*0.485).setScale(2, RoundingMode.HALF_EVEN)+")"), 9, Palskillsinv);
+				itemset("HolySmash", Material.SHIELD, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Earth]","Use HolySmash When You Use Once More","(Damage Affected By Thrust)","",ChatColor.BOLD+" X (0.75D + "+BigDecimal.valueOf(psd.Thrust.getOrDefault(p.getUniqueId(),0)*0.485).setScale(2, RoundingMode.HALF_EVEN)+")"), 9, Palskillsinv);
 				itemset("Illumination", Material.DAYLIGHT_DETECTOR, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Lightning]","Use Illumination When Use Once More","(Damage Affected By Restraint)","",ChatColor.BOLD+" X (0.9D + "+BigDecimal.valueOf(psd.Restraint.getOrDefault(p.getUniqueId(),0)*0.9).setScale(2, RoundingMode.HALF_EVEN)+")"), 10, Palskillsinv);
 				itemset("Asperges", Material.MILK_BUCKET, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Lightning]","Use Asperges When Use Once More","(Damage Affected By Judgement)","",ChatColor.BOLD+" X (0.8D + "+BigDecimal.valueOf(psd.Judgement.getOrDefault(p.getUniqueId(),0)*0.8).setScale(2, RoundingMode.HALF_EVEN)+")"), 11, Palskillsinv);
 				itemset("Sanctification", Material.DIAMOND_AXE, 0, 1, Arrays.asList("Stun Hit Enemy"), 12, Palskillsinv);
@@ -162,7 +162,7 @@ public class PalSkillsGui{
 				itemset("Penance(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 26, Palskillsinv);
 			}
 			else {
-				itemset("HolySmash", Material.SHIELD, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Earth]","Use HolySmash When You Use Once More","(Damage Affected By Thrust)","",ChatColor.BOLD+" X (0.5D + "+BigDecimal.valueOf(psd.Thrust.getOrDefault(p.getUniqueId(),0)*0.485).setScale(2, RoundingMode.HALF_EVEN)+")"), 9, Palskillsinv);
+				itemset("HolySmash", Material.SHIELD, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Earth]","Use HolySmash When You Use Once More","(Damage Affected By Thrust)","",ChatColor.BOLD+" X (0.75D + "+BigDecimal.valueOf(psd.Thrust.getOrDefault(p.getUniqueId(),0)*0.485).setScale(2, RoundingMode.HALF_EVEN)+")"), 9, Palskillsinv);
 				itemset("Illumination", Material.DAYLIGHT_DETECTOR, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Lightning]","Use Illumination When Use Once More","(Damage Affected By Restraint)","",ChatColor.BOLD+" X (0.9D + "+BigDecimal.valueOf(psd.Restraint.getOrDefault(p.getUniqueId(),0)*0.9).setScale(2, RoundingMode.HALF_EVEN)+")"), 10, Palskillsinv);
 				itemset("Asperges", Material.MILK_BUCKET, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Lightning]","Use Asperges When Use Once More","(Damage Affected By Judgement)","",ChatColor.BOLD+" X (0.8D + "+BigDecimal.valueOf(psd.Judgement.getOrDefault(p.getUniqueId(),0)*0.8).setScale(2, RoundingMode.HALF_EVEN)+")"), 11, Palskillsinv);
 				itemset("Sanctification", Material.DIAMOND_AXE, 0, 1, Arrays.asList("Stun Hit Enemy"), 12, Palskillsinv);

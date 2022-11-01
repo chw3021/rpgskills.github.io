@@ -2668,7 +2668,7 @@ public class Tamskills extends Pak implements Listener, Serializable {
 			 LivingEntity le = (LivingEntity)d.getEntity();
 			 if(le.hasMetadata("untargetable")) {
 				 Player ow = Bukkit.getPlayer(le.getMetadata("untargetable").get(0).asString());
-				 if(tamed.containsEntry(p.getUniqueId(), le)) {
+				 if(tamed.containsEntry(p.getUniqueId(), le) || le.hasMetadata("griffon")) {
 					 d.setCancelled(true);
 				 }
 				 if(Party.hasParty(p) && Party.hasParty(ow)) {

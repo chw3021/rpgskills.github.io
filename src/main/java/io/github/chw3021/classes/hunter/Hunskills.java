@@ -514,6 +514,13 @@ public class Hunskills extends Pak implements Serializable, Listener {
 							else {
 								p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 30, 0, false, false));
 							}
+							StringBuffer sb = new StringBuffer();
+							for(int i = 0; i < p.getPotionEffect(PotionEffectType.JUMP).getAmplifier(); i++) {
+								sb.append(ChatColor.GREEN + "бу");
+							}
+							
+							p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(sb.toString()).create());
+
 		                }
 					}, 0, 5); 
 					sz.put(p, task);
@@ -527,7 +534,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 				
 			}
 		}
-		if(e.isSneaking() && p.getInventory().getItemInMainHand().getType().name().contains("RAIL") && p.getInventory().getItemInOffHand().getType().name().contains("RAIL")) {
+		/*if(e.isSneaking() && p.getInventory().getItemInMainHand().getType().name().contains("RAIL") && p.getInventory().getItemInOffHand().getType().name().contains("RAIL")) {
 
 			int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
                 @Override
@@ -561,7 +568,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
     			Bukkit.getServer().getScheduler().cancelTask(skj.get(p));
     			skj.remove(p);
     		}
-		}
+		}*/
 	}
 
 	HashMap<Player, Integer> skj = new HashMap<>();
@@ -592,7 +599,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 				{
 					ev.setCancelled(true);
 					
-	                Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 6).getLocation();
+	                Location l = gettargetblock(p,6);
 					l.setY(l.getY()+1);
 					l.setDirection(p.getLocation().getDirection());
 					if(l.getBlock().isPassable()) {
@@ -1370,7 +1377,7 @@ else {
 				{
 					if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE")&& !p.getInventory().getItemInMainHand().getType().name().contains("PICK") && rage.containsEntry(p.getUniqueId(), e))
 					{
-						dset1(d, p, 1.35, 0.13);
+						dset1(d, p, 1.35, 0.013);
 						p.sendTitle(ChatColor.MAGIC + "RAGE", ChatColor.MAGIC + "RAGE",20,20,20);
 						p.playSound(p.getLocation(), Sound.ITEM_NETHER_WART_PLANT, 1.0f, 0f);
 						Bukkit.getServer().getScheduler().cancelTask(raget.get(p.getUniqueId()));
@@ -1937,7 +1944,7 @@ else {
 						
 						if(p.getAttackCooldown() >=1 || ult2t.containsKey(p.getName())) {
 
-							dset1(d, p, 1.15 *(1+ hsd.HuntingStart.get(p.getUniqueId())*0.04)* (1+hsd.Atrocity.get(p.getUniqueId())*0.05) , 0.01);
+							dset1(d, p, 1.15 *(1+ hsd.HuntingStart.get(p.getUniqueId())*0.04)* (1+hsd.Atrocity.get(p.getUniqueId())*0.045) , 0.005);
 						}
 						else {
 							dset1(d, p, (1+ hsd.HuntingStart.get(p.getUniqueId())*0.04)* (1+hsd.Atrocity.get(p.getUniqueId())*0.015) , 0.005);

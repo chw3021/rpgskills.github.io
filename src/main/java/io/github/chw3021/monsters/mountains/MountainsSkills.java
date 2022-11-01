@@ -125,20 +125,8 @@ public class MountainsSkills extends Summoned implements Listener{
 					le.damage(7,p);
 				}
         	}
-			FallingBlock fallingb = l.getWorld().spawnFallingBlock(l, Material.GRAVEL.createBlockData());
-			fallingb.setDropItem(true);
-			fallingb.setHurtEntities(true);
-			fallingb.setGravity(false);
-			fallingb.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-			fallingb.setMetadata("stonebossthrow", new FixedMetadataValue(RMain.getInstance(), true));
-			fallingb.setMetadata("stuff"+gethero(p), new FixedMetadataValue(RMain.getInstance(), true));
-
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-                @Override
-                public void run() {
-                	fallingb.remove();
-                }
-            }, 40);
+    		p.getWorld().spawnParticle(Particle.BLOCK_MARKER, l, 20, 2,2,2,0 ,Material.GRAVEL.createBlockData());
+    		p.getWorld().spawnParticle(Particle.BLOCK_MARKER, l, 20, 2,2,2,0 ,Material.COBBLESTONE.createBlockData());
 		});
 		
 	}
@@ -186,7 +174,7 @@ public class MountainsSkills extends Summoned implements Listener{
 		int sec = 4;
 		if(d.getEntity() instanceof IronGolem && d.getEntity().hasMetadata("stoneboss") && throwable.containsKey(d.getEntity().getUniqueId())) 
 		{
-			IronGolem p = (IronGolem)d.getEntity();
+			IronGolem p = (IronGolem)Holding.ale(d.getEntity());
 			if(rb3cooldown.containsKey(p.getUniqueId()))
 	        {
 	            long timer = (rb3cooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
@@ -255,7 +243,7 @@ public class MountainsSkills extends Summoned implements Listener{
 	{
 		if(d.getEntity() instanceof Snowball) 
 		{
-			Snowball po = (Snowball)d.getEntity();
+			Snowball po = (Snowball)Holding.ale(d.getEntity());
 			if(po.getShooter() instanceof LivingEntity) {
 				LivingEntity p = (LivingEntity) po.getShooter();
 				if(po.hasMetadata("stonebossthrow")) {
@@ -470,10 +458,11 @@ public class MountainsSkills extends Summoned implements Listener{
 	{
 		if((d.getEntity() instanceof IronGolem) && !d.isCancelled() &&d.getEntity().hasMetadata("stoneboss")) 
 		{
-			IronGolem p = (IronGolem)d.getEntity();
+			IronGolem p = (IronGolem)Holding.ale(d.getEntity());
 			final Location tl = p.getLocation().clone();
 			
 			p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 300,2,2,2,1, Material.STONE.createBlockData());
+			p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 300,2,2,2,1, Material.GRANITE.createBlockData());
 			p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, tl, 50,2,2,2,1);
 			p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_ATTACK, 1, 0);
 			p.getWorld().playSound(p.getLocation(), Sound.BLOCK_STONE_BREAK, 1, 0);
@@ -496,7 +485,7 @@ public class MountainsSkills extends Summoned implements Listener{
 		{
 			int sec =1;
 			IronGolem p = (IronGolem)d.getDamager();
-			LivingEntity he = (LivingEntity)d.getEntity();
+			LivingEntity he = (LivingEntity)Holding.ale(d.getEntity());
 			final Location tl = he.getLocation().clone();
 			if(rb1cooldown.containsKey(p.getUniqueId()))
 	        {
@@ -538,7 +527,7 @@ public class MountainsSkills extends Summoned implements Listener{
 		
 		if((d.getDamager() instanceof LivingEntity) && strong.containsKey(d.getEntity().getUniqueId())) 
 		{
-			IronGolem p = (IronGolem)d.getEntity();
+			IronGolem p = (IronGolem)Holding.ale(d.getEntity());
 			LivingEntity le = (LivingEntity)d.getDamager();
 			
 			le.damage(d.getDamage()*0.03,p);
@@ -566,7 +555,7 @@ public class MountainsSkills extends Summoned implements Listener{
 		}
 		if((d.getDamager() instanceof Projectile) && strong.containsKey(d.getEntity().getUniqueId())) 
 		{
-			IronGolem p = (IronGolem)d.getEntity();
+			IronGolem p = (IronGolem)Holding.ale(d.getEntity());
 			Projectile pr = (Projectile)d.getDamager();
 			
 			if(pr.getShooter() instanceof LivingEntity) {
@@ -604,7 +593,7 @@ public class MountainsSkills extends Summoned implements Listener{
 		int sec =50;
 		if(d.getEntity() instanceof IronGolem && !d.isCancelled() && d.getEntity().hasMetadata("stoneboss")&& d.getEntity().hasMetadata("raid") && d.getEntity().hasMetadata("ruined")  && !d.getEntity().hasMetadata("failed")) 
 		{
-			IronGolem p = (IronGolem)d.getEntity();
+			IronGolem p = (IronGolem) Holding.ale(d.getEntity());
 			
 				if(rb6cooldown.containsKey(p.getUniqueId()))
 		        {

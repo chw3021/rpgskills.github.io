@@ -17,40 +17,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import io.github.chw3021.classes.Proficiency;
+import io.github.chw3021.classes.SkillsGui;
 import io.github.chw3021.obtains.Obtained;
 import net.md_5.bungee.api.ChatColor;
 
-public class HunSkillsGui{
+public class HunSkillsGui extends SkillsGui{
 	
 
-
-
-	public void itemset(String display, Material ID, int data, int stack, List<String> Lore, int loc, Inventory inv)
-	{
-		ItemStack item = new ItemStack(ID,stack);
-		ItemMeta items = item.getItemMeta();
-		items.setDisplayName(display);
-		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-		items.setLore(Lore);
-		item.setItemMeta(items);
-		inv.setItem(loc, item);
-	}
-	
-	public void itemset(String display, ItemStack is, int data, int stack, List<String> Lore, int loc, Inventory inv)
-	{
-		ItemStack item = is;
-		ItemMeta items = item.getItemMeta();
-		items.setDisplayName(display);
-		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-		items.setLore(Lore);
-		item.setItemMeta(items);
-		inv.setItem(loc, item);
-	}
-	
 	
 	public void Hunskillsinv(Player p)
 	{
@@ -63,11 +36,11 @@ public class HunSkillsGui{
 			itemset("뒤집기", Material.WOODEN_AXE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+hsd.Chain.getOrDefault(p.getUniqueId(), 0),"","대상에게우클릭","적이 등을 보이게 만듭니다", "Master LV.1"), 0, Hunskillsinv);
 			itemset("그물투척", Material.STONE_AXE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+hsd.Webthrow.getOrDefault(p.getUniqueId(), 0),"","웅크리기 + 우클릭"), 1, Hunskillsinv);
 			itemset("회피", Material.IRON_AXE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+hsd.Dodge.getOrDefault(p.getUniqueId(), 0),"","손바꾸기","낙하데미지가 감소합니다","Master LV.1"), 2, Hunskillsinv);
-			itemset("사냥", Material.IRON_AXE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+hsd.HuntingStart.getOrDefault(p.getUniqueId(), 0),"",ChatColor.UNDERLINE+"[바람 계열]","우클릭 + 점프", "적에게 피해를 주면 비활성화됩니다", "적 저치시 대기시간이 2초 감소합니다","",ChatColor.BOLD+" X 0.01D X "+BigDecimal.valueOf(1.15 *(1+ hsd.HuntingStart.getOrDefault(p.getUniqueId(), 0)*0.04)).setScale(2, RoundingMode.HALF_EVEN),"Master LV.50"), 3, Hunskillsinv);
+			itemset("사냥", Material.IRON_AXE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+hsd.HuntingStart.getOrDefault(p.getUniqueId(), 0),"",ChatColor.UNDERLINE+"[바람 계열]","우클릭 + 점프", "적에게 피해를 주면 비활성화됩니다", "적 저치시 대기시간이 2초 감소합니다","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.005 * 1.15 *(1+ hsd.HuntingStart.getOrDefault(p.getUniqueId(), 0)*0.04)).setScale(2, RoundingMode.HALF_EVEN),"Master LV.50"), 3, Hunskillsinv);
 			itemset("참격", Material.GOLDEN_AXE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+hsd.Daze.getOrDefault(p.getUniqueId(), 0),"",ChatColor.UNDERLINE+"[바람 계열]","웅크리기 + 공격","",ChatColor.BOLD+" X 1.5 + "+BigDecimal.valueOf(hsd.Daze.getOrDefault(p.getUniqueId(), 0)*1.68).setScale(2, RoundingMode.HALF_EVEN),"Master LV.50"), 4, Hunskillsinv);
 			itemset("두개골분쇄", Material.DIAMOND_AXE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+hsd.SkullCrusher.getOrDefault(p.getUniqueId(), 0),"",ChatColor.UNDERLINE+"[바람 계열]","점프 + 공격","",ChatColor.BOLD+" X 2.5 + "+BigDecimal.valueOf(hsd.SkullCrusher.getOrDefault(p.getUniqueId(), 0)*2.5).setScale(2, RoundingMode.HALF_EVEN),"Master LV.50"), 5, Hunskillsinv);
 			itemset("등반", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+hsd.Climb.getOrDefault(p.getUniqueId(), 0),"", "웅크리기 + 손바꾸기 로 활성화/비활성화","Master LV.1"), 6, Hunskillsinv);
-			itemset("극악무도", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+hsd.Atrocity.getOrDefault(p.getUniqueId(),0),"","사냥의 피해량이 증가하고","허기에 면역이 됩니다", "최대충전 상태로 공격시 두배의 피해량과", "적의 최대체력의"+ Math.round(5+0.02*hsd.Atrocity.getOrDefault(p.getUniqueId(), 0))  +"% 에 해당하는 추가피해를 줍니다","",ChatColor.BOLD+" X "+BigDecimal.valueOf(1+hsd.Atrocity.getOrDefault(p.getUniqueId(), 0)*0.05).setScale(2, RoundingMode.HALF_EVEN)), 7, Hunskillsinv);
+			itemset("극악무도", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+hsd.Atrocity.getOrDefault(p.getUniqueId(),0),"","[사냥]의 피해량이 증가하고","허기에 면역이 됩니다", "최대충전 상태로 공격시 두배의 피해량과", "적의 최대체력의"+ Math.round(5+0.02*hsd.Atrocity.getOrDefault(p.getUniqueId(), 0))  +"% 에 해당하는 추가피해를 줍니다","",ChatColor.BOLD+" X "+BigDecimal.valueOf(1+hsd.Atrocity.getOrDefault(p.getUniqueId(), 0)*0.045).setScale(2, RoundingMode.HALF_EVEN)), 7, Hunskillsinv);
 			itemset("암습", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+hsd.Backattack.getOrDefault(p.getUniqueId(), 0),"","적의 뒷쪽을 공격하면 50%추가 피해를 줍니다", "경험치레벨이 높을수록 판정이 좋아집니다", "Master LV.1"), 8, Hunskillsinv);
 			if(Proficiency.getpro(p)<1) {
 				itemset("뒷목가격(잠김)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/29315"), 9, Hunskillsinv);
@@ -89,7 +62,7 @@ public class HunSkillsGui{
 				itemset("공포", Material.SKELETON_SKULL, 0, 1, Arrays.asList("적 처치시 주변적들이 참격합니다"), 14, Hunskillsinv);
 				itemset("도움닫기", Material.CHAINMAIL_LEGGINGS, 0, 1, Arrays.asList("웅크리기 유지시 점프력이 충전됩니다","최대 10"), 15, Hunskillsinv);
 				itemset("무결", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("공격력이 증가합니다"), 16, Hunskillsinv);
-				itemset("갈망", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("웅크리기 + 아이템던지기", "참격과 두개골분쇄의 대기시간이 초기화됩니다","",ChatColor.BOLD+"X 1.35 X (1 + 0.13D)"), 17, Hunskillsinv);
+				itemset("갈망", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("웅크리기 + 아이템던지기", "참격과 두개골분쇄의 대기시간이 초기화됩니다","",ChatColor.BOLD+"X 1.35 X (1 + 0.013D)"), 17, Hunskillsinv);
 
 				itemset("그물추가(잠김)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/155015"), 19, Hunskillsinv);
 				itemset("자세(잠김)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/155015"), 20, Hunskillsinv);
@@ -108,7 +81,7 @@ public class HunSkillsGui{
 				itemset("공포", Material.SKELETON_SKULL, 0, 1, Arrays.asList("적 처치시 주변적들이 참격합니다"), 14, Hunskillsinv);
 				itemset("도움닫기", Material.CHAINMAIL_LEGGINGS, 0, 1, Arrays.asList("웅크리기 유지시 점프력이 충전됩니다","최대 10"), 15, Hunskillsinv);
 				itemset("무결", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("공격력이 증가합니다"), 16, Hunskillsinv);
-				itemset("갈망", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("웅크리기 + 아이템던지기", "참격과 두개골분쇄의 대기시간이 초기화됩니다","",ChatColor.BOLD+"X 1.35 X (1 + 0.13D)"), 17, Hunskillsinv);
+				itemset("갈망", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("웅크리기 + 아이템던지기", "참격과 두개골분쇄의 대기시간이 초기화됩니다","",ChatColor.BOLD+"X 1.35 X (1 + 0.013D)"), 17, Hunskillsinv);
 
 				itemset("그물추가", Material.FERMENTED_SPIDER_EYE, 0, 1, Arrays.asList("그물을 여러개 던집니다"), 19, Hunskillsinv);
 				itemset("자세", Material.NETHERITE_CHESTPLATE, 0, 1, Arrays.asList("회피이후 다음 1회의 공격이 강화됩니다"), 20, Hunskillsinv);
@@ -126,7 +99,7 @@ public class HunSkillsGui{
 			itemset("TurnOver", Material.WOODEN_AXE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+hsd.Chain.getOrDefault(p.getUniqueId(), 0),"","RightClickToTarget","Makes enemy Show Back", "(Master LV.1)"), 0, Hunskillsinv);
 			itemset("Webthrow", Material.STONE_AXE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+hsd.Webthrow.getOrDefault(p.getUniqueId(), 0),"","Sneaking + RightClick","Master LV.1"), 1, Hunskillsinv);
 			itemset("Dodge", Material.IRON_AXE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+hsd.Dodge.getOrDefault(p.getUniqueId(), 0),"","SwapHand (Master LV.1)","Decreases Falling Damage"), 2, Hunskillsinv);
-			itemset("Hunting", Material.IRON_AXE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+hsd.HuntingStart.getOrDefault(p.getUniqueId(), 0),"",ChatColor.UNDERLINE+"[Wind]","Rightclick + Jump", "Disabled when you damage to enemy", "Reduce cooldown 2s if you kill enemy","",ChatColor.BOLD+" X 0.01D X "+BigDecimal.valueOf(1.15 *(1+ hsd.HuntingStart.getOrDefault(p.getUniqueId(), 0)*0.04)).setScale(2, RoundingMode.HALF_EVEN),"Master LV.50"), 3, Hunskillsinv);
+			itemset("Hunting", Material.IRON_AXE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+hsd.HuntingStart.getOrDefault(p.getUniqueId(), 0),"",ChatColor.UNDERLINE+"[Wind]","Rightclick + Jump", "Disabled when you damage to enemy", "Reduce cooldown 2s if you kill enemy","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.005*1.15 *(1+ hsd.HuntingStart.getOrDefault(p.getUniqueId(), 0)*0.04)).setScale(2, RoundingMode.HALF_EVEN),"Master LV.50"), 3, Hunskillsinv);
 			itemset("Daze", Material.GOLDEN_AXE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+hsd.Daze.getOrDefault(p.getUniqueId(), 0),"",ChatColor.UNDERLINE+"[Wind]","Sneaking + Hit","",ChatColor.BOLD+" X 1.5 + "+BigDecimal.valueOf(hsd.Daze.getOrDefault(p.getUniqueId(), 0)*1.68).setScale(2, RoundingMode.HALF_EVEN),"Master LV.50"), 4, Hunskillsinv);
 			itemset("SkullCrusher", Material.DIAMOND_AXE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+hsd.SkullCrusher.getOrDefault(p.getUniqueId(), 0),"",ChatColor.UNDERLINE+"[Wind]","Jump + Hit","",ChatColor.BOLD+" X 2.5 + "+BigDecimal.valueOf(hsd.SkullCrusher.getOrDefault(p.getUniqueId(), 0)*2.5).setScale(2, RoundingMode.HALF_EVEN),"Master LV.50"), 5, Hunskillsinv);
 			itemset("Climbing", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+hsd.Climb.getOrDefault(p.getUniqueId(), 0),"", "Sneaking + SwapHand to on/off","Master LV.1"), 6, Hunskillsinv);
@@ -152,7 +125,7 @@ public class HunSkillsGui{
 				itemset("Fear", Material.SKELETON_SKULL, 0, 1, Arrays.asList("Stuns Near By Enemies When Enemy is dead"), 14, Hunskillsinv);
 				itemset("SuperJump", Material.CHAINMAIL_LEGGINGS, 0, 1, Arrays.asList("Charge SuperJump When you Hold Sneaking","While Climbing is On","Max 10"), 15, Hunskillsinv);
 				itemset("Flawless", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage"), 16, Hunskillsinv);
-				itemset("Rage", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("Sneaking + ThrowItem", "Resets Cooldown of Daze & SkullCrusher","",ChatColor.BOLD+"X 1.35 X (1 + 0.13D)"), 17, Hunskillsinv);
+				itemset("Rage", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("Sneaking + ThrowItem", "Resets Cooldown of Daze & SkullCrusher","",ChatColor.BOLD+"X 1.35 X (1 + 0.013D)"), 17, Hunskillsinv);
 				
 				itemset("ExtraWebs(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 19, Hunskillsinv);
 				itemset("Posture(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 20, Hunskillsinv);
@@ -171,7 +144,7 @@ public class HunSkillsGui{
 				itemset("Fear", Material.SKELETON_SKULL, 0, 1, Arrays.asList("Stuns Near By Enemies When Enemy is dead"), 14, Hunskillsinv);
 				itemset("SuperJump", Material.CHAINMAIL_LEGGINGS, 0, 1, Arrays.asList("Charge SuperJump When you Hold Sneaking","While Climbing is On","Max 10"), 15, Hunskillsinv);
 				itemset("Flawless", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage"), 16, Hunskillsinv);
-				itemset("Rage", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("Sneaking + ThrowItem", "Resets Cooldown of Daze & SkullCrusher","",ChatColor.BOLD+"X 1.35 X (1 + 0.13D)"), 17, Hunskillsinv);
+				itemset("Rage", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("Sneaking + ThrowItem", "Resets Cooldown of Daze & SkullCrusher","",ChatColor.BOLD+"X 1.35 X (1 + 0.013D)"), 17, Hunskillsinv);
 				
 				itemset("ExtraWebs", Material.FERMENTED_SPIDER_EYE, 0, 1, Arrays.asList("Throw several Webs"), 19, Hunskillsinv);
 				itemset("Posture", Material.NETHERITE_CHESTPLATE, 0, 1, Arrays.asList("Increases Next Hit Damage After Dodge"), 20, Hunskillsinv);

@@ -7,6 +7,7 @@ import org.bukkit.World.Environment;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Bee;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Enderman;
 import org.bukkit.entity.EntityCategory;
@@ -110,6 +111,17 @@ public class WildMobsSpawn extends Mobs implements Listener {
 		newmob.setMetadata("wild", new FixedMetadataValue(RMain.getInstance(), true));
 		return newmob;
 	}
+	final private Bee Hammy(LivingEntity le) {
+		String reg = lang.contains("kr") ? "날햄스터":"Hammy";
+		Bee newmob = (Bee) Mobspawn(le, reg, 30000.0, le.getEquipment().getHelmet(),
+				le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
+				le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(),
+				le.getEquipment().getItemInOffHand(), le.getType());
+		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
+		newmob.setMetadata("unmodified", new FixedMetadataValue(RMain.getInstance(), true));
+		newmob.setMetadata("wild", new FixedMetadataValue(RMain.getInstance(), true));
+		return newmob;
+	}
 	final private LivingEntity Default(LivingEntity le) {
 		String reg = lang.contains("kr") ? "야생":"Wild";
 		LivingEntity newmob = Mobspawn(le, reg + trans(le), 30000.0, le.getEquipment().getHelmet(),
@@ -153,6 +165,9 @@ public class WildMobsSpawn extends Mobs implements Listener {
 		} 
 		else if (le.getType() == EntityType.ENDERMAN) {
 			EndermanV(le);
+		}
+		else if (le.getType() == EntityType.BEE) {
+			Hammy(le);
 		}
 		else {
 			Default(le);

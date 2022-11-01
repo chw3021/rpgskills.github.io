@@ -1940,6 +1940,11 @@ public class Pak implements Serializable, Listener{
 		d.setDamage(d.getDamage()*(dou1)*(1+(pd*dou2)));
     }
 	
+	final public void dseth(EntityDamageByEntityEvent d, Player p, Double dou1, Double dou2) {
+		Double pd = player_damage.get(p.getName());
+		d.setDamage(d.getDamage()*(dou1)*(1+(pd*dou2)));
+    }
+	
 
 	/**
 	 * d.getDamage()*(dou1)*(1+(pd*dou2))

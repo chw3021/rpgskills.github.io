@@ -52,6 +52,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.HorseJumpEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -62,6 +63,7 @@ import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.event.vehicle.VehicleExitEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.loot.LootTables;
 import org.bukkit.metadata.FixedMetadataValue;
 
 public class Palskills extends Pak implements Serializable, Listener {
@@ -889,8 +891,8 @@ public class Palskills extends Pak implements Serializable, Listener {
 		                	ariat.put(p.getUniqueId(), task);
 		                	
 			                Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 3).getLocation();
-		                    p.playSound(p.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 1.0f, 0f);
-			        		p.getWorld().spawnParticle(Particle.END_ROD, l, 400, 4, 2, 4);
+		                    p.playSound(p.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_CHARGE, 1.0f, 0f);
+			        		p.getWorld().spawnParticle(Particle.END_ROD, l, 400, 2, 2, 2);
 			        		p.getWorld().spawnParticle(Particle.GLOW, l, 100, 4, 2, 4);
 							p.setAbsorptionAmount(p.getAbsorptionAmount()+2 + psd.Encourge.get(p.getUniqueId())*0.5);
 							for (Entity e : p.getWorld().getNearbyEntities(l ,4, 5, 4))
@@ -943,7 +945,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 	                	
 		            	Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 3).getLocation();
 	                    p.playSound(p.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 1.0f, 0f);
-		        		p.getWorld().spawnParticle(Particle.END_ROD, l, 400, 4, 2, 4);
+		        		p.getWorld().spawnParticle(Particle.END_ROD, l, 400, 2, 2, 2);
 		        		p.getWorld().spawnParticle(Particle.GLOW, l, 100, 4, 2, 4);
 						p.setAbsorptionAmount(p.getAbsorptionAmount()+2 + psd.Encourge.get(p.getUniqueId())*0.5);
 						for (Entity e : p.getWorld().getNearbyEntities(l ,4, 5, 4))
@@ -1017,9 +1019,10 @@ public class Palskills extends Pak implements Serializable, Listener {
             	final Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 3).getLocation();
                 p.playNote(l, Instrument.CHIME, Note.sharp(1, Tone.C));
                 p.playNote(l, Instrument.CHIME, Note.sharp(1, Tone.G));
-                p.playNote(l, Instrument.CHIME, Note.natural(1, Tone.B));;
+                p.playNote(l, Instrument.CHIME, Note.natural(1, Tone.E));;
         		p.getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE, l, 400, 4, 4, 4);
         		p.getWorld().spawnParticle(Particle.WAX_ON, l, 400, 4, 4, 4);
+        		p.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, l, 100, 2, 2, 2);
 				for (Entity e : p.getWorld().getNearbyEntities(l ,5, 5, 5))
 				{
 					if (e instanceof Player) 
@@ -1053,46 +1056,10 @@ public class Palskills extends Pak implements Serializable, Listener {
 	                public void run() {
 	                    p.playNote(l, Instrument.CHIME, Note.natural(1, Tone.A));
 	                    p.playNote(l, Instrument.CHIME, Note.natural(1, Tone.E));
-	                    p.playNote(l, Instrument.CHIME, Note.natural(1, Tone.B));
+	                    p.playNote(l, Instrument.CHIME, Note.sharp(1, Tone.C));
 	            		p.getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE, l, 400, 4, 0, 4);
 	            		p.getWorld().spawnParticle(Particle.WAX_ON, l, 400, 4, 0, 4);
-	    				for (Entity e : p.getWorld().getNearbyEntities(l ,5, 5, 5))
-	    				{
-	    					if (e instanceof Player) 
-	    					{
-
-	    						if(e==p) {
-									p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 30, 2, false, false));
-									p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 30, 2, false, false));
-		    						continue;
-	    						}
-	    						Player p1 = (Player) e;
-	    						if(Party.hasParty(p) && Party.hasParty(p1))	{
-	    						if(Party.getParty(p).equals(Party.getParty(p1)))
-	    							{
-									p1.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 30, 2, false, false));
-									p1.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 30, 2, false, false));
-	    							}
-	    						}
-	    						continue;
-	    					}
-	    					if (e instanceof LivingEntity && (e!=p)&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
-	    					{
-	    						LivingEntity le = (LivingEntity) e;
-	    						atks(0.5, psd.Encourge.get(p.getUniqueId())*0.5, p, le,14);
-	    					}
-	    				}
-	                	
-	                }
-	            }, 5); 
-        		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	                @Override
-	                public void run() {
-	                    p.playNote(l, Instrument.CHIME, Note.natural(1, Tone.E));
-	                    p.playNote(l, Instrument.CHIME, Note.natural(1, Tone.B));
-	                    p.playNote(l, Instrument.CHIME, Note.sharp(1, Tone.G));
-	            		p.getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE, l, 400, 4, 0, 4);
-	            		p.getWorld().spawnParticle(Particle.WAX_ON, l, 400, 4, 0, 4);
+	            		p.getWorld().spawnParticle(Particle.NOTE, l, 100, 2, 2, 2);
 	    				for (Entity e : p.getWorld().getNearbyEntities(l ,5, 5, 5))
 	    				{
 	    					if (e instanceof Player) 
@@ -1122,6 +1089,44 @@ public class Palskills extends Pak implements Serializable, Listener {
 	                	
 	                }
 	            }, 10); 
+        		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	                @Override
+	                public void run() {
+	                    p.playNote(l, Instrument.CHIME, Note.natural(1, Tone.E));
+	                    p.playNote(l, Instrument.CHIME, Note.natural(1, Tone.B));
+	                    p.playNote(l, Instrument.CHIME, Note.sharp(1, Tone.G));
+	            		p.getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE, l, 400, 4, 0, 4);
+	            		p.getWorld().spawnParticle(Particle.WAX_ON, l, 400, 4, 0, 4);
+	            		p.getWorld().spawnParticle(Particle.SPELL, l, 100, 2, 2, 2);
+	    				for (Entity e : p.getWorld().getNearbyEntities(l ,5, 5, 5))
+	    				{
+	    					if (e instanceof Player) 
+	    					{
+
+	    						if(e==p) {
+									p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 30, 2, false, false));
+									p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 30, 2, false, false));
+		    						continue;
+	    						}
+	    						Player p1 = (Player) e;
+	    						if(Party.hasParty(p) && Party.hasParty(p1))	{
+	    						if(Party.getParty(p).equals(Party.getParty(p1)))
+	    							{
+									p1.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 30, 2, false, false));
+									p1.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 30, 2, false, false));
+	    							}
+	    						}
+	    						continue;
+	    					}
+	    					if (e instanceof LivingEntity && (e!=p)&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
+	    					{
+	    						LivingEntity le = (LivingEntity) e;
+	    						atks(0.5, psd.Encourge.get(p.getUniqueId())*0.5, p, le,14);
+	    					}
+	    				}
+	                	
+	                }
+	            }, 20); 
 			}
 		}
 	}
@@ -1185,11 +1190,11 @@ public class Palskills extends Pak implements Serializable, Listener {
 					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		                @Override
 		                public void run() {
-		                    p.playSound(l, Sound.BLOCK_NOTE_BLOCK_CHIME, 1.0f, 1f);
-		                    p.playSound(l, Sound.BLOCK_NOTE_BLOCK_CHIME, 1.0f, 1.122462f);
-		                    p.playSound(l, Sound.BLOCK_NOTE_BLOCK_CHIME, 1.0f, 1.259921f);
+		                    p.playNote(l, Instrument.CHIME, Note.sharp(1, Tone.D));
+		                    p.playNote(l, Instrument.CHIME, Note.natural(1, Tone.B));
+		                    p.playNote(l, Instrument.CHIME, Note.sharp(1, Tone.F));
 		            		p.getWorld().spawnParticle(Particle.COMPOSTER, l, 400, 4, 0, 4);
-		            		p.getWorld().spawnParticle(Particle.TOWN_AURA, l, 400, 4, 0, 4);
+		            		p.getWorld().spawnParticle(Particle.BLOCK_MARKER, l, 100, 4, 0, 4,Material.CHISELED_QUARTZ_BLOCK.createBlockData());
 		    				for (Entity e : l.getWorld().getNearbyEntities(l ,4, 5, 4))
 		    				{
 		    					if (e instanceof Player) 
@@ -1211,6 +1216,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 		    					{
 		    						LivingEntity le = (LivingEntity) e;
 		    						atks(0.55, psd.Encourge.get(p.getUniqueId())*0.68, p, le,14);
+		    						Holding.holding(p, le, 11l);
 		    					}
 		    				}
 						}
@@ -1500,9 +1506,10 @@ public class Palskills extends Pak implements Serializable, Listener {
 	            	grfft.put(p.getUniqueId(), task);
 	            	
 	            	
-	            	final Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 3).getLocation();							
+	            	final Location l = gettargetblock(p,3);					
                     
 
+	        		l.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, l, 200,1,1,1);
 					ItemStack jack = new ItemStack(Material.CHISELED_QUARTZ_BLOCK, 1);	
 					Item jo = p.getWorld().dropItemNaturally(l, jack);
 					jo.setGlowing(true);
@@ -1521,6 +1528,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 		                    p.playSound(p.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1.0f, 2f);
 			        		jo.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, l, 200,1,1,1);
 			        		jo.getWorld().spawnParticle(Particle.WATER_SPLASH, l, 200,1,1,1);
+			        		jo.getWorld().spawnParticle(Particle.FLASH, l, 50,2,2,2);
 			        		jo.getWorld().spawnParticle(Particle.BLOCK_CRACK, l, 600,4,3,4,Material.CHISELED_QUARTZ_BLOCK.createBlockData());
 		                	for (Entity e : jo.getWorld().getNearbyEntities(l, 4, 4, 4))
 							{
@@ -1578,21 +1586,37 @@ public class Palskills extends Pak implements Serializable, Listener {
 	                	
 	                }
                     p.playSound(p.getLocation(), Sound.ENTITY_HORSE_AMBIENT, 1.0f, 1f);
-                    Horse h = (Horse) p.getWorld().spawnEntity(p.getLocation(), EntityType.HORSE);
-					h.setOwner(null);
-                    h.setDomestication(h.getMaxDomestication());
-					h.setTamed(true);
-					h.setOwner(p);
-                    h.setCustomName(p.getName());
-					h.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	
-					h.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-					h.setColor(Color.WHITE);
-					h.setStyle(Style.WHITE);
-					h.getInventory().setSaddle(new ItemStack(Material.SADDLE));
-					h.getInventory().setArmor(new ItemStack(Material.DIAMOND_HORSE_ARMOR));
-					griffon.put(p.getUniqueId(), h);
-					
-					
+	        		p.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, p.getLocation(), 200,1,1,1);
+                    p.getWorld().spawn(p.getLocation(), Horse.class, h ->{
+	                    h.setDomestication(h.getMaxDomestication());
+						h.setTamed(true);
+						h.setOwner(p);
+	                    h.setCustomName(p.getName());
+						h.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	
+						h.setMetadata("untargetable", new FixedMetadataValue(RMain.getInstance(), p.getName()));	
+						h.setMetadata("griffon", new FixedMetadataValue(RMain.getInstance(), p.getName()));	
+						h.setLeashHolder(p);
+						h.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 999999, 5, false, false));
+						h.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 999999, 5, false, false));
+						h.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 5, false, false));
+						h.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 2, false, false));
+						h.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999, 2, false, false));
+						h.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 999999, 2, false, false));
+						h.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 999999, 2, false, false));
+						h.addPotionEffect(new PotionEffect(PotionEffectType.CONDUIT_POWER, 999999, 2, false, false));
+						h.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 999999, 2, false, false));
+						h.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 999999, 2, false, false));
+						
+						h.setInvulnerable(true);
+						h.setCollidable(false);
+						h.setColor(Color.WHITE);
+						h.setStyle(Style.WHITE);
+						h.getInventory().setSaddle(new ItemStack(Material.SADDLE));
+						h.getInventory().setArmor(new ItemStack(Material.DIAMOND_HORSE_ARMOR));
+						h.setLootTable(LootTables.EMPTY.getLootTable());
+						griffon.put(p.getUniqueId(), h);
+						
+                    });
 				}
 			}
 		}
@@ -1718,7 +1742,8 @@ public class Palskills extends Pak implements Serializable, Listener {
 							p.teleport(l);
 							p.playSound(p.getLocation(), Sound.ITEM_SHIELD_BLOCK, 1.0f, 1.6f);
 							p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_FALL, 1.0f, 1.6f);
-							p.getWorld().spawnParticle(Particle.ASH, l, 80, 3, 0, 3);
+							p.getWorld().spawnParticle(Particle.END_ROD, l, 50, 0, 0, 0);
+							p.getWorld().spawnParticle(Particle.WHITE_ASH, l, 300, 3, 0, 3);
 
 							
 							for (Entity a : p.getWorld().getNearbyEntities(l, 2, 2, 2))
@@ -1799,8 +1824,8 @@ public class Palskills extends Pak implements Serializable, Listener {
 						p.teleport(l);
 						p.playSound(p.getLocation(), Sound.ITEM_SHIELD_BLOCK, 1.0f, 1.6f);
 						p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_FALL, 1.0f, 1.6f);
-						p.getWorld().spawnParticle(Particle.ASH, l, 80, 3, 0, 3);
-
+						p.getWorld().spawnParticle(Particle.END_ROD, l, 50, 0, 0, 0);
+						p.getWorld().spawnParticle(Particle.WHITE_ASH, l, 300, 3, 0, 3);
 						
 						for (Entity a : p.getWorld().getNearbyEntities(l, 2, 2, 2))
 						{
@@ -1888,14 +1913,14 @@ public class Palskills extends Pak implements Serializable, Listener {
 		                @Override
 		                public void run() 
 		                {
-			        		p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l,10,2,2,2,0);
-			        		p.getWorld().spawnParticle(Particle.COMPOSTER, l,10,2,2,2,0);	    
+			        		p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l,10,1,1,1,0);
+			        		p.getWorld().spawnParticle(Particle.BLOCK_CRACK, l,10,1,1,1,0,Material.CHISELED_QUARTZ_BLOCK.createBlockData());	    
 			        		p.getWorld().spawnParticle(Particle.WHITE_ASH, l,10,2,2,2,0.1);
 		                }
 					}, j.incrementAndGet()/900); 
                 	
                 });
-        		p.getWorld().spawnParticle(Particle.WHITE_ASH, tl,200,2,2,2,0);
+        		p.getWorld().spawnParticle(Particle.GLOW, tl,200,2,2,2,0);
 
 				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	                @Override
@@ -1916,7 +1941,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 							if ((!(a == p))&& a instanceof LivingEntity&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal"))) 
 							{
 								LivingEntity le = (LivingEntity)a;
-								atks(0.5, psd.Thrust.get(p.getUniqueId())*0.485,p, le,14);
+								atks(0.75, psd.Thrust.get(p.getUniqueId())*0.485,p, le,14);
 								le.teleport(tl);
 							}
 						}
@@ -1945,30 +1970,34 @@ public class Palskills extends Pak implements Serializable, Listener {
 				pltl.remove(p.getUniqueId());
 
             	
-                Location tl = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 2).getLocation();
+                Location tl = gettargetblock(p,2);
                 
 
                 ItemStack head = new ItemStack(Material.QUARTZ_PILLAR);
                 HashSet<ArmorStand> ash = new HashSet<>();
-                for(double d = -1; d<2; d+=0.3) {
-                    ArmorStand as = (ArmorStand)p.getWorld().spawnEntity(tl.clone().add(0, d, 0), EntityType.ARMOR_STAND);
-                    as.setCustomName(p.getName());
-                    as.setBasePlate(false);
-                    as.setGravity(true);
-                    as.setInvulnerable(true);
-                    as.setInvisible(true);
-                    as.getEquipment().setHelmet(head);
-                    as.setCanPickupItems(false);
-                    as.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-                    as.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-                    ash.add(as);
+                for(int i = -1; i<1; i++) {
+                    for(int i1 = -1; i1<1; i1++) {
+                        for(double d = -1; d<2; d+=0.3) {
+                            ArmorStand as = (ArmorStand)p.getWorld().spawnEntity(tl.clone().add(i, d, i1), EntityType.ARMOR_STAND);
+                            as.setCustomName(p.getName());
+                            as.setBasePlate(false);
+                            as.setGravity(true);
+                            as.setInvulnerable(true);
+                            as.setInvisible(true);
+                            as.getEquipment().setHelmet(head);
+                            as.setCanPickupItems(false);
+                            as.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+                            as.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+                            ash.add(as);
+                        }
+                    }
                 }
 
 				for(int co = 0 ; co<4; co++) {
 					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		                @Override
 		                public void run() {
-		                    p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_PLACE, 0.6f, 1.2f);
+		                    p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_PLACE, 0.3f, 0.78f);
 		                    p.playSound(p.getLocation(), Sound.BLOCK_COPPER_BREAK, 1.0f, 0.3f); 
 		            		p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl,100,1,1,1, Material.END_ROD.createBlockData());	   
 		            		p.getWorld().spawnParticle(Particle.ITEM_CRACK, tl,100,1,1,1, new ItemStack(Material.END_ROD));	  
@@ -2540,6 +2569,9 @@ public class Palskills extends Pak implements Serializable, Listener {
 	
 	public void Protection(EntityDamageEvent d) 
 	{
+		if(d.getEntity().hasMetadata("griffon") && d.getCause()!=DamageCause.VOID) {
+			d.setCancelled(true);
+		}
 		if(d.getEntity() instanceof Player&&!d.isCancelled()) 
 		{
 			Player p = (Player)d.getEntity();

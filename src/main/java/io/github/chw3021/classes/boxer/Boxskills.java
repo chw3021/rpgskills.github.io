@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bukkit.Bukkit;
@@ -2255,9 +2256,10 @@ public class Boxskills extends Pak implements Listener, Serializable {
 
 	final private List<Location> ult2(Location tl, Vector tv) {
         List<Location> circle = new ArrayList<>();
+        AtomicBoolean ab = new AtomicBoolean();
         
         for(double an =0; an<=Math.PI*2; an+=Math.PI/20) {
-        	Location il =  tl.clone().add(tv.clone().normalize().rotateAroundY(an).multiply(6));
+        	Location il =  tl.clone().add(tv.clone().normalize().rotateAroundY(an*(ab.getAndSet(!ab.get()) ? 1:-1)).multiply(6));
         	il.setDirection(tl.clone().toVector().subtract(il.clone().toVector()));
         	circle.add(il);
         }
