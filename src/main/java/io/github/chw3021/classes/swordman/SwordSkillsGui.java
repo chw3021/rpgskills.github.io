@@ -18,42 +18,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import io.github.chw3021.classes.Proficiency;
+import io.github.chw3021.classes.SkillsGui;
 import io.github.chw3021.obtains.Obtained;
 import net.md_5.bungee.api.ChatColor;
 
-public class SwordSkillsGui{
+public class SwordSkillsGui extends SkillsGui{
 	
 
 
-
-	public void itemset(String display, Material ID, int data, int stack, List<String> Lore, int loc, Inventory inv)
-	{
-		ItemStack item = new ItemStack(ID);
-		ItemMeta items = item.getItemMeta();
-		items.setDisplayName(display);
-		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-		Lore.forEach(l -> {
-			l=ChatColor.stripColor(l);
-		});
-		items.setLore(Lore);
-		item.setItemMeta(items);
-		inv.setItem(loc, item);
-	}
-	
-	public void itemset(String display, ItemStack is, int data, int stack, List<String> Lore, int loc, Inventory inv)
-	{
-		ItemStack item = is;
-		ItemMeta items = item.getItemMeta();
-		items.setDisplayName(display);
-		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-		items.setLore(Lore);
-		item.setItemMeta(items);
-		inv.setItem(loc, item);
-	}
 	
 	public void SwordSkillsinv(Player p)
 	{

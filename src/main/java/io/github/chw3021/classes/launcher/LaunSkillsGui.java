@@ -131,7 +131,7 @@ public class LaunSkillsGui extends SkillsGui {
 				itemset("원소순환", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("공격력이 상승합니다", "화살변경시 이동속도와 점프효과를 얻습니다"),
 						16, Launskillsinv);
 				itemset("흡수의화살", Material.WRITTEN_BOOK, 0, 1,
-						Arrays.asList("웅크리기 + 아이템던지기", "", ChatColor.BOLD + "10.0D"), 17, Launskillsinv);
+						Arrays.asList("웅크리기 + 아이템던지기", "", ChatColor.BOLD + "범위내에 기술을 사용시 힙을 흡수합니다", ChatColor.BOLD + "0.28D X 흡수한 기술들의 타격수"), 17, Launskillsinv);
 
 				itemset("은하(잠김)", Material.STRUCTURE_VOID, 0, 1,
 						Arrays.asList("요구 숙련도: " + Proficiency.getproexp(p) + "/155015"), 19, Launskillsinv);
@@ -175,7 +175,7 @@ public class LaunSkillsGui extends SkillsGui {
 				itemset("원소순환", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("공격력이 상승합니다", "화살변경시 이동속도와 점프효과를 얻습니다"),
 						16, Launskillsinv);
 				itemset("흡수의화살", Material.WRITTEN_BOOK, 0, 1,
-						Arrays.asList("웅크리기 + 아이템던지기", "", ChatColor.BOLD + "10.0D"), 17, Launskillsinv);
+						Arrays.asList("웅크리기 + 아이템던지기", "", ChatColor.BOLD + "범위내에 기술을 사용시 힙을 흡수합니다", ChatColor.BOLD + "0.28D X 흡수한 기술들의 타격수"), 17, Launskillsinv);
 
 				itemset("은하", Material.END_CRYSTAL, 0, 1,
 						Arrays.asList("재입력시 은하를 사용합니다", "(피해량은 화살세례 레벨에 비례합니다)", "",
@@ -331,7 +331,7 @@ public class LaunSkillsGui extends SkillsGui {
 				itemset("ElementalCycle", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage",
 						"Get Speed&Jump Effect When You Change ArrowType"), 16, Launskillsinv);
 				itemset("AbsorbingArrow", Material.WRITTEN_BOOK, 0, 1,
-						Arrays.asList("Sneaking + ThrowItem", "", ChatColor.BOLD + "10.0D"), 17, Launskillsinv);
+						Arrays.asList("Sneaking + ThrowItem", "", ChatColor.BOLD + "Absorbs skills which are within range", ChatColor.BOLD + "0.28D X Hits of skills"), 17, Launskillsinv);
 
 				itemset("Galaxy(Locked)", Material.STRUCTURE_VOID, 0, 1,
 						Arrays.asList("Required Proficiency: " + Proficiency.getproexp(p) + "/155015"), 19,
@@ -383,7 +383,7 @@ public class LaunSkillsGui extends SkillsGui {
 				itemset("ElementalCycle", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage",
 						"Get Speed&Jump Effect When You Change ArrowType"), 16, Launskillsinv);
 				itemset("AbsorbingArrow", Material.WRITTEN_BOOK, 0, 1,
-						Arrays.asList("Sneaking + ThrowItem", "", ChatColor.BOLD + "10.0D"), 17, Launskillsinv);
+						Arrays.asList("Sneaking + ThrowItem", "", ChatColor.BOLD + "Absorbs skills which are within range", ChatColor.BOLD + "0.28D X Hits of skills"), 17, Launskillsinv);
 
 				itemset("Galaxy", Material.END_CRYSTAL, 0, 1,
 						Arrays.asList("Summon Galaxy When Use Once More", "(Damage Affected By ArrowRain)", "",

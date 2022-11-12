@@ -115,7 +115,7 @@ public class PalSkillsGui{
 				itemset("성역", Material.TRIDENT, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[대지 계열]","재입력시 신격을 사용합니다","(피해량은 격려 레벨에 비례합니다)","",ChatColor.BOLD+"10 X (0.55D + "+BigDecimal.valueOf(psd.Encourge.getOrDefault(p.getUniqueId(),0)*0.68).setScale(2, RoundingMode.HALF_EVEN)+")"), 22, Palskillsinv);
 				itemset("은총", Material.BUBBLE_CORAL, 0, 1, Arrays.asList("파티원들의 허기를 채워줍니다"), 23, Palskillsinv);
 				itemset("구원", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("공격력과 방어력이 증가합니다","최후의 심판 대기시간이 감소합니다"), 25, Palskillsinv);
-				itemset("참회", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[번개 계열]","달리기 + 아이템던지기","",ChatColor.BOLD+" X 15.6D"), 26, Palskillsinv);
+				itemset("참회", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[번개 계열]","달리기 + 아이템던지기","",ChatColor.BOLD+"10 X (3D + 적의 최대체력의 1%)"), 26, Palskillsinv);
 			}
 			itemset("현재 숙련도", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(""+Proficiency.getproexp(p)), 27, Palskillsinv);
 			itemset("스킬포인트", Material.NETHER_STAR, 0, 1, Arrays.asList(ChatColor.AQUA+"SP."+psd.SkillPoints.getOrDefault(p.getUniqueId(),0),"","클릭하면 스킬포인트가 초기화 됩니다"), 35, Palskillsinv);
@@ -178,7 +178,7 @@ public class PalSkillsGui{
 				itemset("Sanctuary", Material.TRIDENT, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Earth]","Summon Sanctuary When Use Once More","(Damage Affected By Encourge)","",ChatColor.BOLD+"10 X (0.55D + "+BigDecimal.valueOf(psd.Encourge.getOrDefault(p.getUniqueId(),0)*0.68).setScale(2, RoundingMode.HALF_EVEN)+")"), 22, Palskillsinv);
 				itemset("Grace", Material.BUBBLE_CORAL, 0, 1, Arrays.asList("Give Saturation to Party"), 23, Palskillsinv);
 				itemset("Salvation", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Damage & Armor","Decreases Last judgment Cooldown"), 25, Palskillsinv);
-				itemset("Penance", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Lightning]","Sprinting + ThrowItem","",ChatColor.BOLD+" X 15.6D"), 26, Palskillsinv);
+				itemset("Penance", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Lightning]","Sprinting + ThrowItem","",ChatColor.BOLD+"10 X (3D + 1% of Enemy's MaxHP)"), 26, Palskillsinv);
 			}
 			itemset("Current Proficiency", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(""+Proficiency.getproexp(p)), 27, Palskillsinv);
 			itemset("SkillPoints", Material.NETHER_STAR, 0, 1, Arrays.asList(ChatColor.AQUA+"SP."+psd.SkillPoints.getOrDefault(p.getUniqueId(),0),"","Click if you want to reset your skill's levels"), 35, Palskillsinv);

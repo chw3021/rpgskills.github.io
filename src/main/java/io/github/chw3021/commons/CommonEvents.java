@@ -42,7 +42,6 @@ import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -55,7 +54,6 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.event.world.WorldUnloadEvent;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -70,7 +68,6 @@ import com.google.common.collect.Multimap;
 
 import io.github.chw3021.classes.ClassData;
 import io.github.chw3021.classes.Classgui;
-import io.github.chw3021.classes.illusionist.Illskills;
 import io.github.chw3021.commons.party.Party;
 import io.github.chw3021.rmain.RMain;
 
@@ -1086,6 +1083,7 @@ public class CommonEvents implements Listener {
 			le.setNoDamageTicks(0);
 			
 			if(!le.hasMetadata("rpgspawned") && le.getCustomName() == null) {
+				le.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
 				le.setCustomName(trans(le));
 				le.setCustomNameVisible(true);
 				le.setMetadata("plain", new FixedMetadataValue(RMain.getInstance(),true));

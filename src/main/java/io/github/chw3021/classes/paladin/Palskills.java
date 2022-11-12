@@ -37,6 +37,7 @@ import org.bukkit.Note;
 import org.bukkit.Note.Tone;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Arrow;
@@ -2340,10 +2341,161 @@ public class Palskills extends Pak implements Serializable, Listener {
 	
 
 	
+	final private void ULT2(Location il){
+    	ArrayList<Location> line = new ArrayList<Location>();
+        for(int d = 0; d <= 30; d += 1) {
+            Location pl = il.clone();
+			pl.add(il.getDirection().normalize().multiply(d));
+			line.add(pl);
+        }
+        final World w = il.getWorld();
+        line.forEach(l -> {
+        	w.spawnParticle(Particle.FLASH, l, 30,1,1,1);
+        	w.spawnParticle(Particle.BLOCK_DUST, l, 200,0.1,0.1,0.1,0, Material.QUARTZ_BLOCK.createBlockData());
+        	w.spawnParticle(Particle.WHITE_ASH, l, 200,1,1,1,0.05);
+        });
+	}
+	
+
+	
+	final private void ult2(Player p){
+		final Location tl = gettargetblock(p,6);
+		
+        p.playSound(p.getLocation(), Sound.AMBIENT_CRIMSON_FOREST_ADDITIONS, 1.0f, 0.5f);
+        p.playSound(p.getLocation(), Sound.ENTITY_HORSE_BREATHE, 1.0f, 0f);
+        p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_BREATH, 1.0f, 0f);
+		Holding.invur(p, 120l);
+		p.teleport(p.getLocation().add(0, 3, 0));
+		
+		HashSet<LivingEntity> les = new HashSet<>();
+		
+		
+		for (Entity e : p.getNearbyEntities(10, 10, 10))
+		{
+    		if (e instanceof Player) 
+			{
+				Player p1 = (Player) e;
+				if(Party.hasParty(p) && Party.hasParty(p1))	{
+				if(Party.getParty(p).equals(Party.getParty(p1)))
+					{
+					continue;
+					}
+				}
+			}
+			if ((e!=p)&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
+			{
+				final LivingEntity le = (LivingEntity)e; 	
+            	le.teleport(tl);
+			}
+		}
+		
+		HashSet<Location> cross = new HashSet<>();
+		
+		for(int i = 0; i<10; i++) {
+			cross.add(tl.clone().add(0, i, 0));
+		}
+		for(int i = -4; i<4; i++) {
+			cross.add(tl.clone().add(i, 6, 0));
+		}
+		for(int i = -6; i<6; i++) {
+			cross.add(tl.clone().add(i, 1, 0));
+			cross.add(tl.clone().add(0, 1, i));
+		}
+		
+		for(int co = 0 ; co<30; co++) {
+			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                @Override
+                public void run() {
+                	
+                	if(p.getEyeLocation().clone().add(0,0.5,0).getBlock().isPassable()) {
+                		Location pl = p.getLocation().clone().add(0, 0.25, 0);
+                		pl.setDirection(tl.clone().toVector().subtract(pl.clone().toVector()));
+                		p.teleport(pl);
+                	}
+					
+                    p.playSound(p.getLocation(), Sound.BLOCK_SOUL_SOIL_BREAK, 1.0f, 0f);
+                    p.playSound(p.getLocation(), Sound.BLOCK_SOUL_SAND_BREAK, 1.0f, 0f);
+                    p.playSound(p.getLocation(), Sound.PARTICLE_SOUL_ESCAPE, 0.5f, 1.5f);
+                	cross.forEach(cl -> {
+	    				cl.getWorld().spawnParticle(Particle.CLOUD, cl, 100, 0.5,0.5,0.5,0);
+	    				cl.getWorld().spawnParticle(Particle.TOWN_AURA, cl, 100, 0.5,0.5,0.5,0);
+	    				cl.getWorld().spawnParticle(Particle.BLOCK_CRACK, cl, 100, 0.5,0.5,0.5,0, Material.WHITE_GLAZED_TERRACOTTA.createBlockData());
+	    				cl.getWorld().spawnParticle(Particle.BLOCK_CRACK, cl, 100, 0.5,0.5,0.5,0, Material.CHISELED_QUARTZ_BLOCK.createBlockData());
+                	});
+					for (Entity e : tl.getWorld().getNearbyEntities(tl,10, 10, 10))
+					{
+						if(e==p) {
+							p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 1, false, false));
+    						continue;
+						}
+                		if (e instanceof Player) 
+						{
+							Player p1 = (Player) e;
+							if(Party.hasParty(p) && Party.hasParty(p1))	{
+							if(Party.getParty(p).equals(Party.getParty(p1)))
+								{
+									p1.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 1, false, false));
+									continue;
+								}
+							}
+						}
+						if ((e!=p)&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
+						{
+							final LivingEntity le = (LivingEntity)e; 	
+		                	Holding.superholding(p, le, 15l);
+		                	les.add(le);
+						}
+					}
+				}
+            }, co*2); 
+		}
+
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+            	Holding.holding(p, p, 40l);
+				tl.getWorld().strikeLightningEffect(tl);
+				tl.getWorld().spawnParticle(Particle.FLASH, tl, 300, 10,10,10);
+				tl.getWorld().spawnParticle(Particle.WHITE_ASH, tl, 1000, 10,10,10);
+				
+                p.playSound(tl, Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1.0f, 0f);
+			}
+        }, 60); 
+		
+		
+		for(int co = 0 ; co<10; co++) {
+			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                @Override
+                public void run() {
+					
+                	ULT2(p.getEyeLocation().clone().add(0, -0.6, 0));
+            		Holding.invur(p, 50l);
+                    p.playSound(p.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 1.0f, 2f);
+                    p.playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 0.2f, 0f);
+					for (LivingEntity le : les)
+					{
+	                	Holding.superholding(p, le, 15l);
+						atk1(3d, p, le,9);
+        				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
+        				{
+						@Override
+        		                public void run() 
+    	         				{	
+
+		    						p.setCooldown(Material.GLISTERING_MELON_SLICE, 1);
+		    						atk0(0d, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*(0.01), p, le);
+    				            }
+        	            }, 3);
+					}
+				}
+            }, co*2+80); 
+		}
+	}
+	
+	
 	public void ULT2(PlayerDropItemEvent ev)        
     {
 		Player p = (Player)ev.getPlayer();
-		final Location l = p.getLocation();
 		Item it = ev.getItemDrop();
 		ItemStack is = it.getItemStack();
 	    
@@ -2369,90 +2521,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 	                {
 	                    ault2cooldown.remove(p.getName()); // removing player from HashMap
 
-	                    
-	                    p.playSound(p.getLocation(), Sound.AMBIENT_CRIMSON_FOREST_ADDITIONS, 1.0f, 0.5f);
-	                    p.playSound(p.getLocation(), Sound.ENTITY_HORSE_BREATHE, 1.0f, 0f);
-	                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_BREATH, 1.0f, 0f);
-						p.getWorld().spawnParticle(Particle.FLASH, p.getLocation(), 300, 10,10,10);
-						p.getWorld().spawnParticle(Particle.WHITE_ASH, p.getLocation(), 1000, 10,10,10);
-						Holding.invur(p, 120l);
-						p.teleport(p.getLocation().add(0, 3, 0));
-						
-						
-						for (Entity e : p.getNearbyEntities(10, 10, 10))
-						{
-                    		if (e instanceof Player) 
-							{
-								Player p1 = (Player) e;
-								if(Party.hasParty(p) && Party.hasParty(p1))	{
-								if(Party.getParty(p).equals(Party.getParty(p1)))
-									{
-									continue;
-									}
-								}
-							}
-							if ((e!=p)&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
-							{
-								final LivingEntity le = (LivingEntity)e; 	
-			                	le.teleport(l);
-							}
-						}
-						
-						HashSet<Location> cross = new HashSet<>();
-						
-						for(int i = 0; i<10; i++) {
-							cross.add(l.clone().add(0, i, 0));
-						}
-						for(int i = -4; i<4; i++) {
-							cross.add(l.clone().add(i, 6, 0));
-						}
-						for(int i = -6; i<6; i++) {
-							cross.add(l.clone().add(i, 1, 0));
-							cross.add(l.clone().add(0, 1, i));
-						}
-						
-						for(int co = 0 ; co<10; co++) {
-							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() {
-									l.getWorld().strikeLightningEffect(l);
-									
-				                    p.playSound(p.getLocation(), Sound.BLOCK_SOUL_SOIL_BREAK, 1.0f, 0f);
-				                    p.playSound(p.getLocation(), Sound.BLOCK_SOUL_SAND_BREAK, 1.0f, 0f);
-				                    p.playSound(p.getLocation(), Sound.PARTICLE_SOUL_ESCAPE, 1.0f, 0f);
-				                	cross.forEach(cl -> {
-					    				cl.getWorld().spawnParticle(Particle.CLOUD, cl, 100, 0.5,0.5,0.5,0);
-					    				cl.getWorld().spawnParticle(Particle.TOWN_AURA, cl, 100, 0.5,0.5,0.5,0);
-					    				cl.getWorld().spawnParticle(Particle.BLOCK_CRACK, cl, 100, 0.5,0.5,0.5,0, Material.WHITE_GLAZED_TERRACOTTA.createBlockData());
-					    				cl.getWorld().spawnParticle(Particle.BLOCK_CRACK, cl, 100, 0.5,0.5,0.5,0, Material.CHISELED_QUARTZ_BLOCK.createBlockData());
-				                	});
-									for (Entity e : l.getWorld().getNearbyEntities(l,10, 10, 10))
-									{
-			    						if(e==p) {
-											p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 1, false, false));
-				    						continue;
-			    						}
-			                    		if (e instanceof Player) 
-										{
-											Player p1 = (Player) e;
-											if(Party.hasParty(p) && Party.hasParty(p1))	{
-											if(Party.getParty(p).equals(Party.getParty(p1)))
-												{
-													p1.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 1, false, false));
-													continue;
-												}
-											}
-										}
-										if ((e!=p)&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
-										{
-											final LivingEntity le = (LivingEntity)e; 	
-						                	Holding.superholding(p, le, 15l);
-											atk1(3d, p, le,9);
-										}
-									}
-								}
-				            }, co*10+10); 
-						}
+	                    ult2(p);
 		                ault2cooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
 		            
 	                }
@@ -2460,91 +2529,8 @@ public class Palskills extends Pak implements Serializable, Listener {
 	            else // if cooldown doesn't have players name in it
 	            {
 
+                    ult2(p);
 
-                    
-                    p.playSound(p.getLocation(), Sound.AMBIENT_CRIMSON_FOREST_ADDITIONS, 1.0f, 0.5f);
-                    p.playSound(p.getLocation(), Sound.ENTITY_HORSE_BREATHE, 1.0f, 0f);
-                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_BREATH, 1.0f, 0f);
-					p.getWorld().spawnParticle(Particle.FLASH, p.getLocation(), 300, 10,10,10);
-					p.getWorld().spawnParticle(Particle.WHITE_ASH, p.getLocation(), 1000, 10,10,10);
-					Holding.invur(p, 120l);
-					p.teleport(p.getLocation().add(0, 3, 0));
-					
-					
-					for (Entity e : p.getNearbyEntities(10, 10, 10))
-					{
-                		if (e instanceof Player) 
-						{
-							Player p1 = (Player) e;
-							if(Party.hasParty(p) && Party.hasParty(p1))	{
-							if(Party.getParty(p).equals(Party.getParty(p1)))
-								{
-								continue;
-								}
-							}
-						}
-						if ((e!=p)&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
-						{
-							final LivingEntity le = (LivingEntity)e; 	
-		                	le.teleport(l);
-						}
-					}
-					
-					HashSet<Location> cross = new HashSet<>();
-					
-					for(int i = 0; i<10; i++) {
-						cross.add(l.clone().add(0, i, 0));
-					}
-					for(int i = -4; i<4; i++) {
-						cross.add(l.clone().add(i, 6, 0));
-					}
-					for(int i = -6; i<6; i++) {
-						cross.add(l.clone().add(i, 1, 0));
-						cross.add(l.clone().add(0, 1, i));
-					}
-					
-					for(int co = 0 ; co<10; co++) {
-						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() {
-								l.getWorld().strikeLightningEffect(l);
-								
-			                    p.playSound(p.getLocation(), Sound.BLOCK_SOUL_SOIL_BREAK, 1.0f, 0f);
-			                    p.playSound(p.getLocation(), Sound.BLOCK_SOUL_SAND_BREAK, 1.0f, 0f);
-			                    p.playSound(p.getLocation(), Sound.PARTICLE_SOUL_ESCAPE, 1.0f, 0f);
-			                	cross.forEach(cl -> {
-				    				cl.getWorld().spawnParticle(Particle.CLOUD, cl, 100, 0.5,0.5,0.5,0);
-				    				cl.getWorld().spawnParticle(Particle.TOWN_AURA, cl, 100, 0.5,0.5,0.5,0);
-				    				cl.getWorld().spawnParticle(Particle.BLOCK_CRACK, cl, 100, 0.5,0.5,0.5,0, Material.WHITE_GLAZED_TERRACOTTA.createBlockData());
-				    				cl.getWorld().spawnParticle(Particle.BLOCK_CRACK, cl, 100, 0.5,0.5,0.5,0, Material.CHISELED_QUARTZ_BLOCK.createBlockData());
-			                	});
-								for (Entity e : l.getWorld().getNearbyEntities(l,10, 10, 10))
-								{
-		    						if(e==p) {
-										p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 1, false, false));
-			    						continue;
-		    						}
-		                    		if (e instanceof Player) 
-									{
-										Player p1 = (Player) e;
-										if(Party.hasParty(p) && Party.hasParty(p1))	{
-										if(Party.getParty(p).equals(Party.getParty(p1)))
-											{
-												p1.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 1, false, false));
-												continue;
-											}
-										}
-									}
-									if ((e!=p)&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
-									{
-										final LivingEntity le = (LivingEntity)e; 	
-					                	Holding.superholding(p, le, 15l);
-										atk1(3d, p, le,9);
-									}
-								}
-							}
-			            }, co*10+10); 
-					}
 	                ault2cooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
 	            }
 			}

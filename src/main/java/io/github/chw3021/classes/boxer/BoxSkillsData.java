@@ -37,19 +37,19 @@ public class BoxSkillsData implements Serializable, Listener{
 	public final HashMap<UUID, Integer> Parrying;
 	public final HashMap<UUID, Integer> BodyBlow;
 	public final HashMap<UUID, Integer> Counter;
-	public final HashMap<UUID, Integer> Weaving;
+	public final HashMap<UUID, Integer> Jab;
 	public final HashMap<UUID, Integer> Rest;
 	public final HashMap<UUID, Integer> SkillPoints;
     // Can be used for saving
 	
-    public BoxSkillsData(HashMap<UUID, Integer> DempseyRoll, HashMap<UUID, Integer> Training, HashMap<UUID, Integer> Straight, HashMap<UUID, Integer> Parrying, HashMap<UUID, Integer> BodyBlow, HashMap<UUID, Integer> Counter, HashMap<UUID, Integer> Weaving, HashMap<UUID, Integer> Rest, HashMap<UUID, Integer> SkillPoints) {
+    public BoxSkillsData(HashMap<UUID, Integer> DempseyRoll, HashMap<UUID, Integer> Training, HashMap<UUID, Integer> Straight, HashMap<UUID, Integer> Parrying, HashMap<UUID, Integer> BodyBlow, HashMap<UUID, Integer> Counter, HashMap<UUID, Integer> Jab, HashMap<UUID, Integer> Rest, HashMap<UUID, Integer> SkillPoints) {
     	this.DempseyRoll = DempseyRoll;
     	this.Training = Training;
     	this.Straight = Straight;
     	this.Parrying = Parrying;
     	this.BodyBlow = BodyBlow;
     	this.Counter = Counter;
-    	this.Weaving = Weaving;
+    	this.Jab = Jab;
     	this.Rest = Rest;
     	this.SkillPoints = SkillPoints;
     	}
@@ -61,7 +61,7 @@ public class BoxSkillsData implements Serializable, Listener{
     	this.Parrying = loadedData.Parrying;
     	this.BodyBlow = loadedData.BodyBlow;
     	this.Counter = loadedData.Counter;
-    	this.Weaving = loadedData.Weaving;
+    	this.Jab = loadedData.Jab;
     	this.Rest = loadedData.Rest;
     	this.SkillPoints = loadedData.SkillPoints;
     	}
@@ -114,7 +114,7 @@ public class BoxSkillsData implements Serializable, Listener{
 					HashMap<UUID, Integer> Parrying = getBoxerdata().Parrying;
 					HashMap<UUID, Integer> Counter = getBoxerdata().Counter;
 					HashMap<UUID, Integer> BodyBlow = getBoxerdata().BodyBlow;
-					HashMap<UUID, Integer> Weaving = getBoxerdata().Weaving;
+					HashMap<UUID, Integer> Jab = getBoxerdata().Jab;
 					HashMap<UUID, Integer> Rest = getBoxerdata().Rest;
 					HashMap<UUID, Integer> SkillPoints = getBoxerdata().SkillPoints;
 					SkillPoints.put(p.getUniqueId(), p.getLevel() + ScrollPoint.sp.get(p.getUniqueId()));
@@ -124,9 +124,9 @@ public class BoxSkillsData implements Serializable, Listener{
 					Parrying.put(p.getUniqueId(), 0);
 					BodyBlow.put(p.getUniqueId(), 0);
 					Counter.put(p.getUniqueId(), 0);
-					Weaving.put(p.getUniqueId(), 0);
+					Jab.put(p.getUniqueId(), 0);
 					Rest.put(p.getUniqueId(), 0);
-					new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+					new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 
 					BoxSkillsGui bxg = new BoxSkillsGui();
 					bxg.BoxSkillsinv(p);
@@ -140,7 +140,7 @@ public class BoxSkillsData implements Serializable, Listener{
 				HashMap<UUID, Integer> Parrying = new HashMap<UUID, Integer>();
 				HashMap<UUID, Integer> BodyBlow = new HashMap<UUID, Integer>();
 				HashMap<UUID, Integer> Counter = new HashMap<UUID, Integer>();
-				HashMap<UUID, Integer> Weaving = new HashMap<UUID, Integer>();
+				HashMap<UUID, Integer> Jab = new HashMap<UUID, Integer>();
 				HashMap<UUID, Integer> Rest = new HashMap<UUID, Integer>();
 				HashMap<UUID, Integer> SkillPoints = new HashMap<UUID, Integer>();
 				SkillPoints.put(p.getUniqueId(), p.getLevel() + ScrollPoint.sp.get(p.getUniqueId()));
@@ -150,9 +150,9 @@ public class BoxSkillsData implements Serializable, Listener{
 				Parrying.put(p.getUniqueId(), 0);
 				BodyBlow.put(p.getUniqueId(), 0);
 				Counter.put(p.getUniqueId(), 0);
-				Weaving.put(p.getUniqueId(), 0);
+				Jab.put(p.getUniqueId(), 0);
 				Rest.put(p.getUniqueId(), 0);
-				new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+				new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 
 				BoxSkillsGui bxg = new BoxSkillsGui();
 				bxg.BoxSkillsinv(p);
@@ -173,14 +173,14 @@ public class BoxSkillsData implements Serializable, Listener{
 		HashMap<UUID, Integer> Parrying = getBoxerdata().Parrying;
 		HashMap<UUID, Integer> Counter = getBoxerdata().Counter;
 		HashMap<UUID, Integer> BodyBlow = getBoxerdata().BodyBlow;
-		HashMap<UUID, Integer> Weaving = getBoxerdata().Weaving;
+		HashMap<UUID, Integer> Jab = getBoxerdata().Jab;
 		HashMap<UUID, Integer> Rest = getBoxerdata().Rest;
 		HashMap<UUID, Integer> SkillPoints = getBoxerdata().SkillPoints;
 		if(SkillPoints.containsKey(p.getUniqueId())) {
 			if(e.getNewLevel() > e.getOldLevel())
 			{
 				SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) + e.getNewLevel() - e.getOldLevel());
-				new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+				new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 		        
 			}
 			else
@@ -190,12 +190,12 @@ public class BoxSkillsData implements Serializable, Listener{
 				Training.put(p.getUniqueId(), 0);
 				Straight.put(p.getUniqueId(), 0);
 				Parrying.put(p.getUniqueId(), 0);
-				Weaving.put(p.getUniqueId(), 0);
+				Jab.put(p.getUniqueId(), 0);
 				BodyBlow.put(p.getUniqueId(), 0);
 				Counter.put(p.getUniqueId(), 0);
 				Rest.put(p.getUniqueId(), 0);
 				SkillPoints.put(p.getUniqueId(), e.getNewLevel() + ScrollPoint.sp.get(p.getUniqueId()));
-				new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+				new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 		        
 			}
 		}
@@ -209,12 +209,12 @@ public class BoxSkillsData implements Serializable, Listener{
 		HashMap<UUID, Integer> Parrying = getBoxerdata().Parrying;
 		HashMap<UUID, Integer> Counter = getBoxerdata().Counter;
 		HashMap<UUID, Integer> BodyBlow = getBoxerdata().BodyBlow;
-		HashMap<UUID, Integer> Weaving = getBoxerdata().Weaving;
+		HashMap<UUID, Integer> Jab = getBoxerdata().Jab;
 		HashMap<UUID, Integer> Rest = getBoxerdata().Rest;
 		HashMap<UUID, Integer> SkillPoints = getBoxerdata().SkillPoints;
 		
 		SkillPoints.put(p.getUniqueId(), SkillPoints.getOrDefault(p.getUniqueId(),1) + 1);
-		new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+		new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 
 
 	}
@@ -242,7 +242,7 @@ public class BoxSkillsData implements Serializable, Listener{
 				HashMap<UUID, Integer> Parrying = getBoxerdata().Parrying;
 				HashMap<UUID, Integer> Counter = getBoxerdata().Counter;
 				HashMap<UUID, Integer> BodyBlow = getBoxerdata().BodyBlow;
-				HashMap<UUID, Integer> Weaving = getBoxerdata().Weaving;
+				HashMap<UUID, Integer> Jab = getBoxerdata().Jab;
 				HashMap<UUID, Integer> Rest = getBoxerdata().Rest;
 				HashMap<UUID, Integer> SkillPoints = getBoxerdata().SkillPoints;
 				switch (ChatColor.stripColor((e.getCurrentItem().getItemMeta().getDisplayName())))
@@ -254,7 +254,7 @@ public class BoxSkillsData implements Serializable, Listener{
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && DempseyRoll.get(p.getUniqueId())<50){
 								DempseyRoll.put(p.getUniqueId(), DempseyRoll.get(p.getUniqueId()) +1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -1);
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}	
 						}
@@ -262,7 +262,7 @@ public class BoxSkillsData implements Serializable, Listener{
 							if(DempseyRoll.get(p.getUniqueId()) >= 1){
 								DempseyRoll.put(p.getUniqueId(), DempseyRoll.get(p.getUniqueId()) -1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) +1);
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}	
 						}
@@ -279,7 +279,7 @@ public class BoxSkillsData implements Serializable, Listener{
 									DempseyRoll.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+DempseyRoll.get(p.getUniqueId()));
 									SkillPoints.put(p.getUniqueId(), 0);						
 								}
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}
 						}
@@ -287,7 +287,7 @@ public class BoxSkillsData implements Serializable, Listener{
 							if(DempseyRoll.get(p.getUniqueId())>0) {
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+DempseyRoll.get(p.getUniqueId()));
 								DempseyRoll.put(p.getUniqueId(), 0);
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}
 						}
@@ -299,7 +299,7 @@ public class BoxSkillsData implements Serializable, Listener{
 							if(SkillPoints.get(p.getUniqueId()) >= 1){
 								Training.put(p.getUniqueId(), Training.get(p.getUniqueId()) +1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -1);
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}	
 						}
@@ -307,7 +307,7 @@ public class BoxSkillsData implements Serializable, Listener{
 							if(Training.get(p.getUniqueId()) >= 1){
 								Training.put(p.getUniqueId(), Training.get(p.getUniqueId()) -1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) +1);
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}	
 						}
@@ -315,7 +315,7 @@ public class BoxSkillsData implements Serializable, Listener{
 							if(SkillPoints.get(p.getUniqueId())>0) {
 								Training.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+Training.get(p.getUniqueId()));
 								SkillPoints.put(p.getUniqueId(), 0);
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}
 						}
@@ -323,7 +323,7 @@ public class BoxSkillsData implements Serializable, Listener{
 							if(Training.get(p.getUniqueId())>0) {
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+Training.get(p.getUniqueId()));
 								Training.put(p.getUniqueId(), 0);
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}
 						}
@@ -334,7 +334,7 @@ public class BoxSkillsData implements Serializable, Listener{
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Straight.get(p.getUniqueId())<50){
 								Straight.put(p.getUniqueId(), Straight.get(p.getUniqueId()) +1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -1);
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}	
 						}
@@ -342,7 +342,7 @@ public class BoxSkillsData implements Serializable, Listener{
 							if(Straight.get(p.getUniqueId()) >= 1){
 								Straight.put(p.getUniqueId(), Straight.get(p.getUniqueId()) -1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) +1);
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}	
 						}
@@ -360,7 +360,7 @@ public class BoxSkillsData implements Serializable, Listener{
 									Straight.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+Straight.get(p.getUniqueId()));
 									SkillPoints.put(p.getUniqueId(), 0);						
 								}
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}
 						}
@@ -368,7 +368,7 @@ public class BoxSkillsData implements Serializable, Listener{
 							if(Straight.get(p.getUniqueId())>0) {
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+Straight.get(p.getUniqueId()));
 								Straight.put(p.getUniqueId(), 0);
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}
 						}
@@ -379,7 +379,7 @@ public class BoxSkillsData implements Serializable, Listener{
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && BodyBlow.get(p.getUniqueId())<50){
 								BodyBlow.put(p.getUniqueId(), BodyBlow.get(p.getUniqueId()) +1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -1);
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}	
 						}
@@ -387,7 +387,7 @@ public class BoxSkillsData implements Serializable, Listener{
 							if(BodyBlow.get(p.getUniqueId()) >= 1){
 								BodyBlow.put(p.getUniqueId(), BodyBlow.get(p.getUniqueId()) -1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) +1);
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}	
 						}
@@ -404,7 +404,7 @@ public class BoxSkillsData implements Serializable, Listener{
 									BodyBlow.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+BodyBlow.get(p.getUniqueId()));
 									SkillPoints.put(p.getUniqueId(), 0);						
 								}
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}
 						}
@@ -412,7 +412,7 @@ public class BoxSkillsData implements Serializable, Listener{
 							if(BodyBlow.get(p.getUniqueId())>0) {
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+BodyBlow.get(p.getUniqueId()));
 								BodyBlow.put(p.getUniqueId(), 0);
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}
 						}
@@ -423,7 +423,7 @@ public class BoxSkillsData implements Serializable, Listener{
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Counter.get(p.getUniqueId())<50){
 								Counter.put(p.getUniqueId(), Counter.get(p.getUniqueId()) +1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -1);
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}	
 						}
@@ -431,7 +431,7 @@ public class BoxSkillsData implements Serializable, Listener{
 							if(Counter.get(p.getUniqueId()) >= 1){
 								Counter.put(p.getUniqueId(), Counter.get(p.getUniqueId()) -1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) +1);
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}	
 						}
@@ -448,7 +448,7 @@ public class BoxSkillsData implements Serializable, Listener{
 									Counter.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+Counter.get(p.getUniqueId()));
 									SkillPoints.put(p.getUniqueId(), 0);						
 								}
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}
 						}
@@ -456,50 +456,51 @@ public class BoxSkillsData implements Serializable, Listener{
 							if(Counter.get(p.getUniqueId())>0) {
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+Counter.get(p.getUniqueId()));
 								Counter.put(p.getUniqueId(), 0);
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}
 						}
 						break;		
-					case "Weaving":
-					case "À§ºù":
+					case "FlikerJab":
+					case "ÁúÇ³±Ç":
 						if(e.getClick().equals(ClickType.LEFT)) {
-							if(SkillPoints.get(p.getUniqueId()) >= 1 && Weaving.get(p.getUniqueId()) < 1){
-								Weaving.put(p.getUniqueId(), Weaving.get(p.getUniqueId()) +1);
+							if(SkillPoints.get(p.getUniqueId()) >= 1 && Jab.get(p.getUniqueId())<50){
+								Jab.put(p.getUniqueId(), Jab.get(p.getUniqueId()) +1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -1);
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}	
 						}
 						else if(e.getClick().equals(ClickType.RIGHT)) {
-							if(Weaving.get(p.getUniqueId()) >= 1){
-								Weaving.put(p.getUniqueId(), Weaving.get(p.getUniqueId()) -1);
+							if(Jab.get(p.getUniqueId()) >= 1){
+								Jab.put(p.getUniqueId(), Jab.get(p.getUniqueId()) -1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) +1);
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
-							}
+							}	
 						}
 						else if(e.getClick().equals(ClickType.SHIFT_LEFT)) {
 							if(SkillPoints.get(p.getUniqueId())>0) {
-								if(Weaving.get(p.getUniqueId())+SkillPoints.get(p.getUniqueId())>1) {
-									if(Weaving.get(p.getUniqueId()) < 1) {
-										Weaving.put(p.getUniqueId(), 1);
-										SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) - 1);										
-									}							
+								if(Jab.get(p.getUniqueId())+SkillPoints.get(p.getUniqueId())>50) {
+									if(Jab.get(p.getUniqueId())<50){
+										final int a = 50 - Jab.get(p.getUniqueId());
+										Jab.put(p.getUniqueId(), 50);
+										SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -  a);						
+									}
 								}
-								else {
-									Weaving.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+Weaving.get(p.getUniqueId()));
-									SkillPoints.put(p.getUniqueId(), 0);									
+								else{
+									Jab.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+Jab.get(p.getUniqueId()));
+									SkillPoints.put(p.getUniqueId(), 0);						
 								}
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}
 						}
 						else if(e.getClick().equals(ClickType.SHIFT_RIGHT)) {
-							if(Weaving.get(p.getUniqueId())>0) {
-								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+Weaving.get(p.getUniqueId()));
-								Weaving.put(p.getUniqueId(), 0);
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+							if(Jab.get(p.getUniqueId())>0) {
+								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+Jab.get(p.getUniqueId()));
+								Jab.put(p.getUniqueId(), 0);
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}
 						}
@@ -510,7 +511,7 @@ public class BoxSkillsData implements Serializable, Listener{
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Rest.get(p.getUniqueId()) < 1){
 								Rest.put(p.getUniqueId(), Rest.get(p.getUniqueId()) +1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -1);
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}	
 						}
@@ -518,7 +519,7 @@ public class BoxSkillsData implements Serializable, Listener{
 							if(Rest.get(p.getUniqueId()) >= 1){
 								Rest.put(p.getUniqueId(), Rest.get(p.getUniqueId()) -1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) +1);
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}
 						}
@@ -534,7 +535,7 @@ public class BoxSkillsData implements Serializable, Listener{
 									Rest.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+Rest.get(p.getUniqueId()));
 									SkillPoints.put(p.getUniqueId(), 0);									
 								}
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}
 						}
@@ -542,7 +543,7 @@ public class BoxSkillsData implements Serializable, Listener{
 							if(Rest.get(p.getUniqueId())>0) {
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+Rest.get(p.getUniqueId()));
 								Rest.put(p.getUniqueId(), 0);
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}
 						}
@@ -553,7 +554,7 @@ public class BoxSkillsData implements Serializable, Listener{
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Parrying.get(p.getUniqueId()) < 1){
 								Parrying.put(p.getUniqueId(), Parrying.get(p.getUniqueId()) +1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -1);
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}	
 						}
@@ -561,7 +562,7 @@ public class BoxSkillsData implements Serializable, Listener{
 							if(Parrying.get(p.getUniqueId()) >= 1){
 								Parrying.put(p.getUniqueId(), Parrying.get(p.getUniqueId()) -1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) +1);
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}
 						}
@@ -577,7 +578,7 @@ public class BoxSkillsData implements Serializable, Listener{
 									Parrying.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+Parrying.get(p.getUniqueId()));
 									SkillPoints.put(p.getUniqueId(), 0);									
 								}
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}
 						}
@@ -585,7 +586,7 @@ public class BoxSkillsData implements Serializable, Listener{
 							if(Parrying.get(p.getUniqueId())>0) {
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+Parrying.get(p.getUniqueId()));
 								Parrying.put(p.getUniqueId(), 0);
-								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+								new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 						        l.BoxSkillsinv(p);
 							}
 						}
@@ -596,13 +597,13 @@ public class BoxSkillsData implements Serializable, Listener{
 						Training.put(p.getUniqueId(), 0);
 						Straight.put(p.getUniqueId(), 0);
 						Parrying.put(p.getUniqueId(), 0);
-						Weaving.put(p.getUniqueId(), 0);
+						Jab.put(p.getUniqueId(), 0);
 						BodyBlow.put(p.getUniqueId(), 0);
 						DempseyRoll.put(p.getUniqueId(), 0);
 						Counter.put(p.getUniqueId(), 0);
 						Rest.put(p.getUniqueId(), 0);
 						SkillPoints.put(p.getUniqueId(), p.getLevel() + ScrollPoint.sp.get(p.getUniqueId()));
-						new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Weaving, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
+						new BoxSkillsData(DempseyRoll, Training, Straight, Parrying, BodyBlow, Counter, Jab, Rest, SkillPoints).saveData(path +"/plugins/RPGskills/BoxSkillsData.data");
 				        l.BoxSkillsinv(p);
 				        break;	
 				}

@@ -211,20 +211,29 @@ public class Pak implements Serializable, Listener{
 	}
 	
 	protected final Location gettargetblock(Player p, Integer in) {
-		final Location tl = p.getTargetBlock(passables, in).getLocation().clone();
-		if(tl == null) {
-			final Location pl = p.getLocation().clone();
-			for(int i =0; i<in; i++) {
-				if(!pl.clone().add(pl.clone().getDirection().normalize().multiply(i)).getBlock().isPassable()) {
-					return pl.clone().add(pl.clone().getDirection().normalize().multiply(i));
+		if(p.rayTraceBlocks(in) == null) {
+
+			final Location tl = p.getTargetBlock(passables, in).getLocation().clone();
+			
+			if(tl == null) {
+				final Location pl = p.getLocation().clone();
+				for(int i =0; i<in; i++) {
+					if(!pl.clone().add(pl.clone().getDirection().normalize().multiply(i)).getBlock().isPassable()) {
+						return pl.clone().add(pl.clone().getDirection().normalize().multiply(i));
+					}
 				}
 			}
+			if(tl.getBlock().getType().isOccluding()) {
+				return tl.clone().add(0, 0.75, 0);
+			}
+			return tl;
 		}
-		if(tl.getBlock().getType().isOccluding()) {
-			return tl.clone().add(0, 0.75, 0);
+		final Location rl = p.rayTraceBlocks(in).getHitPosition().toLocation(p.getWorld());
+		if(rl.getBlock().getType().isOccluding()) {
+			return rl.clone().add(0, 0.75, 0);
 		}
 		else {
-			return tl;
+			return rl;
 		}
 		
 

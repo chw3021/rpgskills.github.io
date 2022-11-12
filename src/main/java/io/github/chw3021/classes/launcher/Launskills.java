@@ -24,6 +24,7 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
@@ -44,6 +45,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.entity.AbstractArrow.PickupStatus;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Enderman;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityCategory;
@@ -91,7 +93,9 @@ public class Launskills extends Pak implements Serializable, Listener {
 	private HashMap<String, Long> bult2cooldown = new HashMap<String, Long>();
 	
 	private HashMap<String, Integer> arrowtype = new HashMap<String, Integer>();
-	
+
+	private HashMap<UUID, Integer> absrb = new HashMap<UUID, Integer>();
+	private HashMap<UUID, Location> absrbl = new HashMap<UUID, Location>();
 
 
 	private HashMultimap<UUID, Firework> rockh = HashMultimap.create();
@@ -858,7 +862,9 @@ public class Launskills extends Pak implements Serializable, Listener {
 			Firework fw = (Firework) d.getEntity();
 		    if (fw.hasMetadata("discharge") && fw.getShooter() instanceof Player) {
 		    	Player p = (Player) fw.getShooter();
+	    		final Location fl = fw.getLocation();
 		        
+		    	absorbing(p,fl);
 				
 		    	for (Entity e : fw.getNearbyEntities(5, 5, 5))
 				{
@@ -882,7 +888,6 @@ public class Launskills extends Pak implements Serializable, Listener {
 					}
 				}
 		    	if(Proficiency.getpro(p)>=2) {
-		    		final Location fl = fw.getLocation();
 		    		
 		    		for(int i =0; i<3; i++) {
 		    			Random ran = new Random();
@@ -971,6 +976,9 @@ public class Launskills extends Pak implements Serializable, Listener {
 		final Projectile pr = d.getEntity();
 		if(d.getEntity().hasMetadata("comet")) {
 			 Player p = (Player) d.getEntity().getShooter();
+
+		    	absorbing(p,pr.getLocation().clone());
+			 
 				if(arrowtype.get(p.getName()) == 4)
 				{
 					 pr.getWorld().spawnParticle(Particle.END_ROD, pr.getLocation(), 50, 2,2,2);
@@ -1039,9 +1047,6 @@ public class Launskills extends Pak implements Serializable, Listener {
 				{
 		        	ev.setCancelled(true);
 
-                    if(p.rayTraceBlocks(30) == null) {
-                    	return;
-                    }
                     if(!arrowtype.containsKey(p.getName())) {
 						arrowtype.put(p.getName(), 0);
 						if(Proficiency.getpro(p)>=1) {
@@ -1049,8 +1054,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 						}
 						return;
                     }
-                    final Location l = p.rayTraceBlocks(30).getHitPosition().toLocation(p.getWorld());
-
+                    final Location l = gettargetblock(p,30);
 
 					if(arcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
 		            {
@@ -1120,6 +1124,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 					                @Override
 					                public void run() 
 					                {
+								    	absorbing(p,l);
 										Arrow ar =p.getWorld().spawnArrow(el, l.toVector().subtract(el.toVector()), 0.5f, 60);
 										ar.setShooter(p);
 										ar.setMetadata("arrowrain "+ p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
@@ -1217,6 +1222,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 				                @Override
 				                public void run() 
 				                {
+							    	absorbing(p,l);
 									Arrow ar =p.getWorld().spawnArrow(el, l.toVector().subtract(el.toVector()), 0.5f, 60);
 									ar.setShooter(p);
 									ar.setMetadata("arrowrain "+ p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
@@ -1280,11 +1286,8 @@ public class Launskills extends Pak implements Serializable, Listener {
 				{
 		        	ev.setCancelled(true);
 
-                    if(p.rayTraceBlocks(30) == null) {
-                    	return;
-                    }
-                    final Location l = p.rayTraceBlocks(30).getHitPosition().toLocation(p.getWorld());
-
+                    final Location l = gettargetblock(p,30);
+                    
 	            	if(arrftnt.containsKey(p.getUniqueId())) {
 	            		Bukkit.getScheduler().cancelTask(arrftnt.get(p.getUniqueId()));
 	            		arrftnt.remove(p.getUniqueId());
@@ -1338,6 +1341,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 			                @Override
 			                public void run() 
 			                {
+						    	absorbing(p,l);
 				            	for(int i = 0; i <25; i++) {
 									Arrow ar =p.getWorld().spawnArrow(l, el.toVector().subtract(l.toVector()), 0.5f, 60);
 									ar.setShooter(p);
@@ -1419,11 +1423,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 		        	ev.setCancelled(true);
 
 
-                    if(p.rayTraceBlocks(30) == null) {
-                    	return;
-                    }
-                    final Location tl = p.rayTraceBlocks(30).getHitPosition().toLocation(p.getWorld());
-
+                    final Location tl = gettargetblock(p,30);
 	            	if(glxyt.containsKey(p.getUniqueId())) {
 	            		Bukkit.getScheduler().cancelTask(glxyt.get(p.getUniqueId()));
 	            		glxyt.remove(p.getUniqueId());
@@ -1432,14 +1432,8 @@ public class Launskills extends Pak implements Serializable, Listener {
 
 
 
-	            	ArrayList<Location> ring = new ArrayList<Location>();
-                    AtomicDouble j = new AtomicDouble(0);	
                     AtomicInteger k = new AtomicInteger();	
-
-                    	for(double an = 0; an<Math.PI*2; an +=Math.PI/90) {
-                    		ring.add(tl.clone().add(tl.getDirection().normalize().rotateAroundY(an+j.getAndAdd(0.01)).multiply(j.getAndAdd(0.01))));
-                    	}
-
+                    AtomicDouble j = new AtomicDouble(0);	
 
                 	
 	            	for(int i = 0; i <3; i++) {
@@ -1447,17 +1441,24 @@ public class Launskills extends Pak implements Serializable, Listener {
 			                @Override
 			                public void run() 
 			                {
+						    	absorbing(p,tl);
+				            	ArrayList<Location> ring = new ArrayList<Location>();
+
 			                	k.incrementAndGet();
+			                    	for(double an = 0; an<Math.PI*3; an +=Math.PI/90) {
+			                    		ring.add(tl.clone().add(tl.getDirection().normalize().rotateAroundY(an+ k.get()).multiply(j.getAndAdd(0.01))));
+			                    	}
+
 								p.playSound(p.getLocation(), Sound.ENTITY_GLOW_SQUID_AMBIENT, 1.0f, 2f);
 								p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 1.0f, 2f);
 			                	ring.forEach(l -> {
-		    		            	p.getWorld().spawnParticle(Particle.END_ROD, l.clone().add(0, k.get() ,0), 5,0.35,0.35,0.35,0.2);
+		    		            	p.getWorld().spawnParticle(Particle.END_ROD, l.clone().add(0, k.get() ,0), 2,0.35,0.35,0.35,0);
 			    					if(arrowtype.getOrDefault(p.getName(), 0)==4) {
-			    		            	p.getWorld().spawnParticle(Particle.GLOW, l.clone().add(0, k.get(),0), 3,0.2,0.2,0.2,0.05);
+			    		            	p.getWorld().spawnParticle(Particle.GLOW, l.clone().add(0, k.get(),0), 3,0.2,0.2,0.2,0.12);
 			    					};
 			    					if(arrowtype.getOrDefault(p.getName(), 0)==5) {
-			    		            	p.getWorld().spawnParticle(Particle.WAX_ON, l.clone().add(0, k.get() ,0), 1,0.2,0.2,0.2,0.05);
-			    		            	p.getWorld().spawnParticle(Particle.FLAME, l.clone().add(0, k.get() ,0), 2,0.2,0.2,0.2,0.05);
+			    		            	p.getWorld().spawnParticle(Particle.WAX_ON, l.clone().add(0, k.get() ,0), 1,0.2,0.2,0.2,0.12);
+			    		            	p.getWorld().spawnParticle(Particle.FLAME, l.clone().add(0, k.get() ,0), 2,0.2,0.2,0.2,0.12);
 			    					}
 			                		
 			                	});    
@@ -1481,23 +1482,6 @@ public class Launskills extends Pak implements Serializable, Listener {
 												atk0(0.5, lsd.ArrowRain.get(p.getUniqueId())*0.5, p, le);
 												Holding.holding(p, le, (long) 10);
 									            le.teleport(tl);
-												/*
-												if(le instanceof EnderDragon) {
-								                    Arrow firstarrow = p.launchProjectile(Arrow.class);
-								                    firstarrow.setDamage(0);
-								                    firstarrow.remove();
-													Arrow enar = (Arrow) p.getWorld().spawn(le.getLocation().add(0, 5.163, 0), Arrow.class, a->{
-														a.setShooter(p);
-														a.setCritical(false);
-														a.setSilent(true);
-														a.setPickupStatus(PickupStatus.DISALLOWED);
-														a.setVelocity(le.getLocation().clone().add(0, -1, 0).toVector().subtract(le.getLocation().toVector()).normalize().multiply(2.6));
-													});
-													enar.setDamage(lsd.ArrowRain.get(p.getUniqueId())*0.5 + player_damage.get(p.getName())*0.5);								
-												}
-												le.damage(0, p);
-												le.damage(lsd.ArrowRain.get(p.getUniqueId())*0.5 + player_damage.get(p.getName())*0.5, p);
-												*/
 											}
 									}
 								}
@@ -1510,33 +1494,32 @@ public class Launskills extends Pak implements Serializable, Listener {
 			}
 	}
 	
-	final private void GiantArrow(LivingEntity le, Player p) {
+	final private void GiantArrow(Location el, Player p) {
 
-        final Location el = le.getLocation().clone().add(0, 2, 0);
         HashSet<Location> els = new HashSet<>();
         
-        for(int i = 1; i<=8; i ++) {
+        for(int i = 1; i<=9; i ++) {
         	els.add(el.clone().add(0,i,0));
         }
         els.forEach(l -> {
-    		p.getWorld().spawnParticle(Particle.BLOCK_CRACK, l, 200, 0.1, 1, 0.1,0,Material.OAK_LOG.createBlockData());
+    		p.getWorld().spawnParticle(Particle.BLOCK_MARKER, l, 50, 0.1, 1, 0.1,1,Material.OAK_LOG.createBlockData());
         });
-		p.getWorld().spawnParticle(Particle.BLOCK_CRACK, el.clone().add(0, 9, 0), 500, 0.5, 1, 0.5,0,Material.WHITE_WOOL.createBlockData());
+		p.getWorld().spawnParticle(Particle.BLOCK_MARKER, el.clone().add(0, 10, 0), 600, 0.6, 1, 0.6,1,Material.WHITE_WOOL.createBlockData());
     	if(arrowtype.get(p.getName()) == 0 || arrowtype.get(p.getName()) == 5)
 		{
-    		p.getWorld().spawnParticle(Particle.BLOCK_CRACK, el.clone(), 500, 0.43, 1, 0.43,0,Material.SHROOMLIGHT.createBlockData());
+    		p.getWorld().spawnParticle(Particle.BLOCK_MARKER, el.clone(), 200, 0.43, 0.6, 0.43,1,Material.SHROOMLIGHT.createBlockData());
 		}
 		if(arrowtype.get(p.getName()) == 1 || arrowtype.get(p.getName()) == 4)
 		{
-			p.getWorld().spawnParticle(Particle.FALLING_WATER, el.clone(), 500, 0.43, 1, 0.43,0);
+    		p.getWorld().spawnParticle(Particle.BLOCK_MARKER, el.clone(), 200, 0.43, 0.6, 0.43,1,Material.BLUE_GLAZED_TERRACOTTA.createBlockData());
 		}
 		if(arrowtype.get(p.getName()) == 2 || arrowtype.get(p.getName()) == 5)
 		{
-			p.getWorld().spawnParticle(Particle.FALLING_LAVA, el.clone(), 500, 0.43, 1, 0.43,0);
+    		p.getWorld().spawnParticle(Particle.BLOCK_MARKER, el.clone(), 200, 0.43, 0.6, 0.43,1,Material.RED_GLAZED_TERRACOTTA.createBlockData());
 		}
 		if(arrowtype.get(p.getName()) == 3 || arrowtype.get(p.getName()) == 4)
 		{
-    		p.getWorld().spawnParticle(Particle.BLOCK_CRACK, el.clone(), 500, 0.43, 1, 0.43,0,Material.END_PORTAL_FRAME.createBlockData());
+    		p.getWorld().spawnParticle(Particle.BLOCK_MARKER, el.clone(), 200, 0.43, 0.6, 0.43,1,Material.PURPLE_GLAZED_TERRACOTTA.createBlockData());
 		}
 	}
 	
@@ -1557,9 +1540,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 				{
 					
 		        	ev.setCancelled(true);
-                    if(p.rayTraceBlocks(30) == null) {
-                    	return;
-                    }
+		        	
                     if(!arrowtype.containsKey(p.getName())) {
 						arrowtype.put(p.getName(), 0);
 						if(Proficiency.getpro(p)>=1) {
@@ -1567,7 +1548,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 						}
 						return;
                     }
-                    final Location l = p.rayTraceBlocks(30).getHitPosition().toLocation(p.getWorld());
+                    final Location l = gettargetblock(p,30);
 
 					if(gacooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
 		            {
@@ -1585,104 +1566,121 @@ public class Launskills extends Pak implements Serializable, Listener {
 		                else // if timer is done
 		                {
 		                    gacooldown.remove(p.getName()); // removing player from HashMap
-
-							p.playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1.0f, 0f);
-							for (Entity e : p.getWorld().getNearbyEntities(l, 5,15, 5))
-							{
-								if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
-								{
-									LivingEntity le = (LivingEntity)e;
-									if (le instanceof Player) 
+							p.playSound(l, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 0f);
+				    		p.getWorld().spawnParticle(Particle.REVERSE_PORTAL, l, 2000, 0.1, 3, 0.1,0.5);
+		                    
+		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		    	                @Override
+		    	                public void run() {
+									GiantArrow(l,p);
+							    	absorbing(p,l);
+									p.playSound(l, Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1.0f, 0f);
+									for (Entity e : p.getWorld().getNearbyEntities(l, 5,15, 5))
 									{
-										
-										Player p1 = (Player) le;
-										if(Party.hasParty(p) && Party.hasParty(p1))	{
-										if(Party.getParty(p).equals(Party.getParty(p1)))
+										if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
+										{
+											LivingEntity le = (LivingEntity)e;
+											if (le instanceof Player) 
 											{
-												continue;
+												
+												Player p1 = (Player) le;
+												if(Party.hasParty(p) && Party.hasParty(p1))	{
+												if(Party.getParty(p).equals(Party.getParty(p1)))
+													{
+														continue;
+													}
+												}
 											}
+											atk0(1.3, lsd.GiantArrow.get(p.getUniqueId())*1.56, p, le);
+											Holding.holding(p, le, (long) 60);
 										}
 									}
-									atk0(1.3, lsd.GiantArrow.get(p.getUniqueId())*1.56, p, le);
-									Holding.holding(p, le, (long) 60);
-									GiantArrow(le,p);
-								}
-							}
-							
-		                	if(metrt.containsKey(p.getUniqueId())) {
-		                		Bukkit.getScheduler().cancelTask(metrt.get(p.getUniqueId()));
-		                		metrt.remove(p.getUniqueId());
-		                	}
+									
+				                	if(metrt.containsKey(p.getUniqueId())) {
+				                		Bukkit.getScheduler().cancelTask(metrt.get(p.getUniqueId()));
+				                		metrt.remove(p.getUniqueId());
+				                	}
 
-		    				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		    	                @Override
-		    	                public void run() {
-		    						if(Proficiency.getpro(p)>=1) {
-		    							metr.putIfAbsent(p.getUniqueId(), 0);
-		    						}
-		    	                }
-		    	            }, 3); 
+				    				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+				    	                @Override
+				    	                public void run() {
+				    						if(Proficiency.getpro(p)>=1) {
+				    							metr.putIfAbsent(p.getUniqueId(), 0);
+				    						}
+				    	                }
+				    	            }, 3); 
 
-		            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		    	                @Override
-		    	                public void run() {
-		    						metr.remove(p.getUniqueId());
+				            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+				    	                @Override
+				    	                public void run() {
+				    						metr.remove(p.getUniqueId());
+				    	                }
+				    	            }, 40); 
+				                	metrt.put(p.getUniqueId(), task);
+				                	
 		    	                }
-		    	            }, 40); 
-		                	metrt.put(p.getUniqueId(), task);
-		                	
+		    	            }, 10); 
+		                    
 			                gacooldown.put(p.getName(), System.currentTimeMillis());
 		                }
 		            }
 		            else // if cooldown doesn't have players name in it
 		            {
-
-
-						p.playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1.0f, 0f);
-						for (Entity e : p.getWorld().getNearbyEntities(l, 5,15, 5))
-						{
-							if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
-							{
-								LivingEntity le = (LivingEntity)e;
-								if (le instanceof Player) 
+						p.playSound(l, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 0f);
+			    		p.getWorld().spawnParticle(Particle.REVERSE_PORTAL, l, 2000, 0.1, 3, 0.1,0.5);
+	                    
+	                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	    	                @Override
+	    	                public void run() {
+								GiantArrow(l,p);
+						    	absorbing(p,l);
+								p.playSound(l, Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1.0f, 0f);
+								for (Entity e : p.getWorld().getNearbyEntities(l, 5,15, 5))
 								{
-									
-									Player p1 = (Player) le;
-									if(Party.hasParty(p) && Party.hasParty(p1))	{
-									if(Party.getParty(p).equals(Party.getParty(p1)))
+									if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
+									{
+										LivingEntity le = (LivingEntity)e;
+										if (le instanceof Player) 
 										{
-											continue;
+											
+											Player p1 = (Player) le;
+											if(Party.hasParty(p) && Party.hasParty(p1))	{
+											if(Party.getParty(p).equals(Party.getParty(p1)))
+												{
+													continue;
+												}
+											}
 										}
+										atk0(1.3, lsd.GiantArrow.get(p.getUniqueId())*1.56, p, le);
+										Holding.holding(p, le, (long) 60);
 									}
 								}
-								atk0(1.3, lsd.GiantArrow.get(p.getUniqueId())*1.56, p, le);
-								Holding.holding(p, le, (long) 60);
-								GiantArrow(le,p);
-							}
-						}
-						
-	                	if(metrt.containsKey(p.getUniqueId())) {
-	                		Bukkit.getScheduler().cancelTask(metrt.get(p.getUniqueId()));
-	                		metrt.remove(p.getUniqueId());
-	                	}
+								
+			                	if(metrt.containsKey(p.getUniqueId())) {
+			                		Bukkit.getScheduler().cancelTask(metrt.get(p.getUniqueId()));
+			                		metrt.remove(p.getUniqueId());
+			                	}
 
-	    				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	    	                @Override
-	    	                public void run() {
-	    						if(Proficiency.getpro(p)>=1) {
-	    							metr.putIfAbsent(p.getUniqueId(), 0);
-	    						}
-	    	                }
-	    	            }, 3); 
+			    				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+			    	                @Override
+			    	                public void run() {
+			    						if(Proficiency.getpro(p)>=1) {
+			    							metr.putIfAbsent(p.getUniqueId(), 0);
+			    						}
+			    	                }
+			    	            }, 3); 
 
-	            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	    	                @Override
-	    	                public void run() {
-	    						metr.remove(p.getUniqueId());
+			            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+			    	                @Override
+			    	                public void run() {
+			    						metr.remove(p.getUniqueId());
+			    	                }
+			    	            }, 40); 
+			                	metrt.put(p.getUniqueId(), task);
+			                	
 	    	                }
-	    	            }, 40); 
-	                	metrt.put(p.getUniqueId(), task);
-	                	
+	    	            }, 10); 
+	                    
 		                gacooldown.put(p.getName(), System.currentTimeMillis()); 
 		            }
 				}
@@ -1705,10 +1703,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 					{
 			        	ev.setCancelled(true);
 
-	                    if(p.rayTraceBlocks(30) == null) {
-	                    	return;
-	                    }
-	                    final Location tl = p.rayTraceBlocks(30).getHitPosition().toLocation(p.getWorld());
+	                    final Location tl = gettargetblock(p,30);
 
 		            	if(metrt.containsKey(p.getUniqueId())) {
 		            		Bukkit.getScheduler().cancelTask(metrt.get(p.getUniqueId()));
@@ -1795,6 +1790,46 @@ public class Launskills extends Pak implements Serializable, Listener {
 			}
 	}
 
+	final private void meteor(Location tl, Player p) {
+		tl.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, tl, 2,1,1,1);
+    	absorbing(p,tl);
+
+		if(arrowtype.getOrDefault(p.getName(), 0)==4) {
+			tl.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100,5,5,5, Material.END_STONE.createBlockData());
+			tl.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100,5,5,5, Material.PRISMARINE.createBlockData());
+			tl.getWorld().spawnParticle(Particle.WATER_WAKE, tl, 100,5,5,5);
+			tl.getWorld().spawnParticle(Particle.END_ROD, tl, 100,5,5,5);
+			tl.getWorld().spawnParticle(Particle.GLOW, tl, 50,5,5,5);
+		}
+		else if(arrowtype.getOrDefault(p.getName(), 0)==5) {
+			tl.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100,5,5,5, Material.SHROOMLIGHT.createBlockData());
+			tl.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100,5,5,5, Material.GLOWSTONE.createBlockData());
+			tl.getWorld().spawnParticle(Particle.FLAME, tl, 100,5,5,5);
+			tl.getWorld().spawnParticle(Particle.WAX_ON, tl, 50,5,5,5);
+			tl.getWorld().spawnParticle(Particle.FLASH, tl, 10,5,5,5);
+		}
+		for (Entity e : p.getWorld().getNearbyEntities(tl, 5, 5, 5))
+		{
+    		if (e instanceof Player) 
+			{
+				
+				Player p1 = (Player) e;
+				if(Party.hasParty(p) && Party.hasParty(p1))	{
+				if(Party.getParty(p).equals(Party.getParty(p1)))
+					{
+						continue;
+					}
+				}
+			}
+			if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
+				LivingEntity le = (LivingEntity)e;
+				atk0(0.34, lsd.GiantArrow.get(p.getUniqueId())*0.4, p, le);
+				Holding.holding(p, le, 30l);
+			}
+			
+		}
+		p.playSound(tl, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 0);
+	}
 	
 
 	
@@ -1806,43 +1841,9 @@ public class Launskills extends Pak implements Serializable, Listener {
 	        	ev.setCancelled(true);
 				Player p = Bukkit.getPlayer(fallingb.getMetadata("meteor").get(0).asString());
 				Location tl = fallingb.getLocation();
-				tl.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, tl, 2,1,1,1);
-
-				if(arrowtype.getOrDefault(p.getName(), 0)==4) {
-					tl.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100,5,5,5, Material.END_STONE.createBlockData());
-					tl.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100,5,5,5, Material.PRISMARINE.createBlockData());
-					tl.getWorld().spawnParticle(Particle.WATER_WAKE, tl, 100,5,5,5);
-					tl.getWorld().spawnParticle(Particle.END_ROD, tl, 100,5,5,5);
-					tl.getWorld().spawnParticle(Particle.GLOW, tl, 50,5,5,5);
-				}
-				else if(arrowtype.getOrDefault(p.getName(), 0)==5) {
-					tl.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100,5,5,5, Material.SHROOMLIGHT.createBlockData());
-					tl.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100,5,5,5, Material.GLOWSTONE.createBlockData());
-					tl.getWorld().spawnParticle(Particle.FLAME, tl, 100,5,5,5);
-					tl.getWorld().spawnParticle(Particle.WAX_ON, tl, 50,5,5,5);
-					tl.getWorld().spawnParticle(Particle.FLASH, tl, 10,5,5,5);
-				}
-				for (Entity e : p.getWorld().getNearbyEntities(tl, 5, 5, 5))
-				{
-            		if (e instanceof Player) 
-					{
-						
-						Player p1 = (Player) e;
-						if(Party.hasParty(p) && Party.hasParty(p1))	{
-						if(Party.getParty(p).equals(Party.getParty(p1)))
-							{
-								continue;
-							}
-						}
-					}
-					if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
-						LivingEntity le = (LivingEntity)e;
-						atk0(0.34, lsd.GiantArrow.get(p.getUniqueId())*0.4, p, le);
-						Holding.holding(p, le, 30l);
-					}
-					
-				}
-				p.playSound(tl, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 0);
+				
+				meteor(tl,p);
+				
 				fallingb.remove();
 	        }
 		 }
@@ -1859,42 +1860,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 				Player p = Bukkit.getPlayer(fallingb.getMetadata("meteor").get(0).asString());
 				Location tl = fallingb.getLocation();
 				tl.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, tl, 2,1,1,1);
-
-				if(arrowtype.getOrDefault(p.getName(), 0)==4) {
-					tl.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100,5,5,5, Material.END_STONE.createBlockData());
-					tl.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100,5,5,5, Material.PRISMARINE.createBlockData());
-					tl.getWorld().spawnParticle(Particle.WATER_WAKE, tl, 100,5,5,5);
-					tl.getWorld().spawnParticle(Particle.END_ROD, tl, 100,5,5,5);
-					tl.getWorld().spawnParticle(Particle.GLOW, tl, 50,5,5,5);
-				}
-				else if(arrowtype.getOrDefault(p.getName(), 0)==5) {
-					tl.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100,5,5,5, Material.SHROOMLIGHT.createBlockData());
-					tl.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100,5,5,5, Material.GLOWSTONE.createBlockData());
-					tl.getWorld().spawnParticle(Particle.FLAME, tl, 100,5,5,5);
-					tl.getWorld().spawnParticle(Particle.WAX_ON, tl, 50,5,5,5);
-					tl.getWorld().spawnParticle(Particle.FLASH, tl, 10,5,5,5);
-				}
-				for (Entity e : p.getWorld().getNearbyEntities(tl, 5, 5, 5))
-				{
-            		if (e instanceof Player) 
-					{
-						
-						Player p1 = (Player) e;
-						if(Party.hasParty(p) && Party.hasParty(p1))	{
-						if(Party.getParty(p).equals(Party.getParty(p1)))
-							{
-								continue;
-							}
-						}
-					}
-					if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
-						LivingEntity le = (LivingEntity)e;
-						atk0(0.34, lsd.GiantArrow.get(p.getUniqueId())*0.4, p, le);
-						Holding.holding(p, le, 30l);
-					}
-					
-				}
-				p.playSound(tl, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 0);
+				meteor(tl,p);
 				fallingb.remove();
 	        }
 		 }
@@ -1910,48 +1876,49 @@ public class Launskills extends Pak implements Serializable, Listener {
 				Player p = Bukkit.getPlayer(fallingb.getMetadata("meteor").get(0).asString());
 				Location tl = fallingb.getLocation();
 				tl.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, tl, 2,1,1,1);
-
-				if(arrowtype.getOrDefault(p.getName(), 0)==4) {
-					tl.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100,5,5,5, Material.END_STONE.createBlockData());
-					tl.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100,5,5,5, Material.PRISMARINE.createBlockData());
-					tl.getWorld().spawnParticle(Particle.WATER_WAKE, tl, 100,5,5,5);
-					tl.getWorld().spawnParticle(Particle.END_ROD, tl, 100,5,5,5);
-					tl.getWorld().spawnParticle(Particle.GLOW, tl, 50,5,5,5);
-				}
-				else if(arrowtype.getOrDefault(p.getName(), 0)==5) {
-					tl.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100,5,5,5, Material.SHROOMLIGHT.createBlockData());
-					tl.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100,5,5,5, Material.GLOWSTONE.createBlockData());
-					tl.getWorld().spawnParticle(Particle.FLAME, tl, 100,5,5,5);
-					tl.getWorld().spawnParticle(Particle.WAX_ON, tl, 50,5,5,5);
-					tl.getWorld().spawnParticle(Particle.FLASH, tl, 10,5,5,5);
-				}
-				for (Entity e : p.getWorld().getNearbyEntities(tl, 5, 5, 5))
-				{
-            		if (e instanceof Player) 
-					{
-						
-						Player p1 = (Player) e;
-						if(Party.hasParty(p) && Party.hasParty(p1))	{
-						if(Party.getParty(p).equals(Party.getParty(p1)))
-							{
-								continue;
-							}
-						}
-					}
-					if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
-						LivingEntity le = (LivingEntity)e;
-						atk0(0.34, lsd.GiantArrow.get(p.getUniqueId())*0.4, p, le);
-						Holding.holding(p, le, 30l);
-					}
-					
-				}
-				p.playSound(tl, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 0);
+				meteor(tl,p);
 				fallingb.remove();
 	        }
 		 }
 	}
 	
 
+	final private void neb(Location el, Player p) {
+		ArrayList<Location> line = new ArrayList<>();
+		final Vector l1 = el.clone().getDirection().normalize().rotateAroundY(Math.PI/2);
+		final Vector l2 = el.clone().getDirection().normalize().rotateAroundY(Math.PI);
+		final Vector l3 = el.clone().getDirection().normalize().rotateAroundY(-Math.PI/2);
+		final Vector l4 = el.clone().getDirection().normalize();
+
+		AtomicDouble k = new AtomicDouble();
+		
+    	for(double an = 0; an<Math.PI*3; an +=Math.PI/45) {
+    		line.add(el.clone().add(l1.clone().multiply(k.addAndGet(0.1)).rotateAroundY(an).rotateAroundNonUnitAxis(l1.clone(), an)));
+    		line.add(el.clone().add(l2.clone().multiply(k.get()).rotateAroundY(an).rotateAroundNonUnitAxis(l2.clone(), an)));
+    		line.add(el.clone().add(l3.clone().multiply(k.get()).rotateAroundY(an).rotateAroundNonUnitAxis(l3.clone(), an)));
+    		line.add(el.clone().add(l4.clone().multiply(k.get()).rotateAroundY(an).rotateAroundNonUnitAxis(l4.clone(), an)));
+    	}
+    	Collections.reverse(line);
+    	
+    	final World w = el.getWorld();
+
+        line.forEach(l -> {
+        	if(arrowtype.getOrDefault(p.getName(),0) == 4)
+			{
+        		w.spawnParticle(Particle.GLOW_SQUID_INK, l, 1, 0.1,0.1, 0.1,0.1);
+        		w.spawnParticle(Particle.REDSTONE, l, 1, 0.1,0.1, 0.1,0, new DustOptions(Color.AQUA, 2));
+        		w.spawnParticle(Particle.REDSTONE, l, 1, 0.1, 0.1, 0.1,0, new DustOptions(Color.TEAL, 2));
+			}
+        	else if(arrowtype.getOrDefault(p.getName(),0) == 5)
+			{
+				w.spawnParticle(Particle.WAX_ON, l, 1, 0.1, 0.1, 0.1,0.1);
+				w.spawnParticle(Particle.FLAME, l, 1, 0.1,0.1, 0.01,0.1);
+				w.spawnParticle(Particle.REDSTONE, l, 1,0.1, 0.1, 0.1,0, new DustOptions(Color.RED, 2));
+				w.spawnParticle(Particle.REDSTONE, l, 1, 0.1, 0.1, 0.1,0, new DustOptions(Color.YELLOW, 2));
+			}
+        	
+        });
+	}
 	
 	
 	@SuppressWarnings("deprecation")
@@ -1967,11 +1934,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 					{
 			        	ev.setCancelled(true);
 
-
-	                    if(p.rayTraceBlocks(30) == null) {
-	                    	return;
-	                    }
-	                    final Location l = p.rayTraceBlocks(30).getHitPosition().toLocation(p.getWorld());
+	                    final Location el = gettargetblock(p,30).clone().add(0, 3, 0);
 	                    
 		            	if(neblt.containsKey(p.getUniqueId())) {
 		            		Bukkit.getScheduler().cancelTask(neblt.get(p.getUniqueId()));
@@ -1979,12 +1942,11 @@ public class Launskills extends Pak implements Serializable, Listener {
 		            	}
 						nebl.remove(p.getUniqueId());
 
-		            	Location el = new Location(p.getWorld(), l.getX(), l.getY()+3, l.getZ());
 
 						p.playSound(el, Sound.BLOCK_RESPAWN_ANCHOR_AMBIENT, 1.0f, 2f);
 						p.playSound(el, Sound.ENTITY_FOX_TELEPORT, 1.0f, 0f);
 						
-						for (Entity e : p.getWorld().getNearbyEntities(l, 6,6, 6))
+						for (Entity e : p.getWorld().getNearbyEntities(el, 6,6, 6))
 						{
 							if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
 							{
@@ -2010,28 +1972,14 @@ public class Launskills extends Pak implements Serializable, Listener {
 		            	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 			                @Override
 			                public void run() {
-				            	if(arrowtype.getOrDefault(p.getName(),0) == 4)
-								{
-				            		el.getWorld().spawnParticle(Particle.GLOW, el.clone(), 700, 5, 5, 5,0);
-				            		el.getWorld().spawnParticle(Particle.GLOW_SQUID_INK, el.clone(), 700, 5, 5, 5,0);
-				            		el.getWorld().spawnParticle(Particle.REDSTONE, el.clone(), 300, 4, 5, 5,0, new DustOptions(Color.LIME, 2));
-				            		el.getWorld().spawnParticle(Particle.REDSTONE, el.clone(), 300, 4, 5, 4,0, new DustOptions(Color.AQUA, 2));
-				            		el.getWorld().spawnParticle(Particle.REDSTONE, el.clone(), 300, 5, 5, 4,0, new DustOptions(Color.TEAL, 2));
-								}
-				            	else if(arrowtype.getOrDefault(p.getName(),0) == 5)
-								{
-									el.getWorld().spawnParticle(Particle.WAX_ON, el.clone(), 700, 5, 5, 5,0);
-									el.getWorld().spawnParticle(Particle.FLAME, el.clone(), 700, 5, 5, 5,0);
-									el.getWorld().spawnParticle(Particle.REDSTONE, el.clone(), 300, 4, 5, 5,0, new DustOptions(Color.RED, 2));
-									el.getWorld().spawnParticle(Particle.REDSTONE, el.clone(), 300, 4, 5, 4,0, new DustOptions(Color.YELLOW, 2));
-									el.getWorld().spawnParticle(Particle.REDSTONE, el.clone(), 300, 5, 5, 4,0, new DustOptions(Color.ORANGE, 2));
-								}
 
+						    	absorbing(p,el);
+			                	neb(el.clone(),p);
 								el.getWorld().spawnParticle(Particle.CLOUD, el.clone(), 300, 5, 5, 5,0);
 								p.playSound(el, Sound.ENTITY_GLOW_SQUID_AMBIENT, 1.0f, 2f);
 								p.playSound(el, Sound.BLOCK_END_GATEWAY_SPAWN, 0.3f, 2f);
 								p.playSound(el, Sound.ITEM_GLOW_INK_SAC_USE, 1.0f, 0f);
-								for (Entity e : el.getWorld().getNearbyEntities(l, 6,6, 6))
+								for (Entity e : el.getWorld().getNearbyEntities(el, 6,6, 6))
 								{
 									if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
 									{
@@ -2181,6 +2129,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 					{
 					
 						Location el = a.getLocation();
+				    	absorbing(p,el);
 						
 		                if(arrowtype.get(p.getName()) == 0 || arrowtype.get(p.getName()) == 5)
 						{
@@ -2240,6 +2189,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 								el.getWorld().spawnParticle(Particle.SPORE_BLOSSOM_AIR, el, 200, 1, 2, 1,0.1);
 								el.getWorld().spawnParticle(Particle.TOWN_AURA, el, 200, 1, 2, 1,0.1);
 								el.getWorld().spawnParticle(Particle.CLOUD, el, 200, 1, 2, 1,0.1);
+						    	absorbing(p,el);
 								
 								
 				                for (Entity a1 : el.getWorld().getNearbyEntities(el, 4, 4, 4))
@@ -2280,7 +2230,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 	{
 		Player p = ev.getPlayer();
 		Action a = ev.getAction();
-		double sec = 3*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec = 10*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 		if(ClassData.pc.get(p.getUniqueId()) == 5 && lsd.ChargingShot.getOrDefault(p.getUniqueId(), 0)>=1) {
 		
@@ -2417,6 +2367,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 							{
 								LivingEntity le = (LivingEntity)e;
 								atk0(1.8, lsd.ChargingShot.get(p.getUniqueId())*1.8, p, le);
+						    	absorbing(p,el);
 								
 								Holding.superholding(p, le, 20l);
 								p.playSound(el, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 1);
@@ -2513,7 +2464,7 @@ public class Launskills extends Pak implements Serializable, Listener {
                 p.setCooldown(Material.FIREWORK_STAR, 1);
 				if(bultcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
 	            {
-	                double timer = (bultcooldown.get(p.getName())/1000d + 55/Proficiency.getpro(p)*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d)) - System.currentTimeMillis()/1000d; // geting time in seconds
+	                double timer = (bultcooldown.get(p.getName())/1000d + 75/Proficiency.getpro(p)*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d)) - System.currentTimeMillis()/1000d; // geting time in seconds
 	                if(!(timer < 0)) // if timer is still more then 0 or 0
 	                {
 	                	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -2558,8 +2509,72 @@ public class Launskills extends Pak implements Serializable, Listener {
 			}	
 	}
 	
-	
+	final private void ult(Location el, Player p) {
+		ArrayList<Location> line = new ArrayList<>();
+		final Vector l1 = el.clone().getDirection().normalize().rotateAroundY(Math.PI/2);
+		final Vector l2 = el.clone().getDirection().normalize().rotateAroundY(Math.PI);
+		final Vector l3 = el.clone().getDirection().normalize().rotateAroundY(-Math.PI/2);
+		final Vector l4 = el.clone().getDirection().normalize();
 
+		AtomicInteger j = new AtomicInteger();
+		AtomicDouble k = new AtomicDouble();
+		
+    	for(double an = 0; an<Math.PI*3; an +=Math.PI/45) {
+    		line.add(el.clone().add(l1.clone().multiply(k.addAndGet(0.03)).rotateAroundY(an).rotateAroundAxis(l1.clone(), an)));
+    		line.add(el.clone().add(l2.clone().multiply(k.get()).rotateAroundY(an).rotateAroundAxis(l2.clone(), an)));
+    		line.add(el.clone().add(l3.clone().multiply(k.get()).rotateAroundY(an).rotateAroundAxis(l3.clone(), an)));
+    		line.add(el.clone().add(l4.clone().multiply(k.get()).rotateAroundY(an).rotateAroundAxis(l4.clone(), an)));
+    		line.add(el.clone().add(l1.clone().multiply(k.addAndGet(0.03)).rotateAroundY(an)).add(0, an, 0));
+    		line.add(el.clone().add(l2.clone().multiply(k.get()).rotateAroundY(an)).add(0, an, 0));
+    		line.add(el.clone().add(l3.clone().multiply(k.get()).rotateAroundY(an)).add(0, an, 0));
+    		line.add(el.clone().add(l4.clone().multiply(k.get()).rotateAroundY(an)).add(0, an, 0));
+    	}
+    	Collections.reverse(line);
+    	
+    	final World w = el.getWorld();
+    	
+		if(absrb.containsKey(p.getUniqueId())) {
+        	final int count = absrb.getOrDefault(p.getUniqueId(), 1);
+			w.spawnParticle(Particle.FLAME, el, 50*count,1,8,1,0.2);
+			w.spawnParticle(Particle.WATER_WAKE, el, 50*count,1,8,1,0.2);
+			w.spawnParticle(Particle.PORTAL, el, 50*count,1,8,1,0.2);
+			w.spawnParticle(Particle.WAX_ON, el, 50*count,1,8,1,0.2);
+		}
+
+        line.forEach(l -> {
+			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                @Override
+                public void run() 
+                {
+                	/*w.spawn(l, Chicken.class, ch ->{
+                        ch.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+                        ch.setAI(false);
+                        ch.setGravity(false);
+                        ch.setInvulnerable(true);
+                        ch.setCollidable(false);
+                        ch.setSilent(true);
+                	});*/
+					w.spawnParticle(Particle.SWEEP_ATTACK, l, 1);
+                }
+			}, j.incrementAndGet()/54); 
+        	
+        });
+	}
+
+	final private void absorbing(Player p, Location tl) {
+		if(!absrbl.containsKey(p.getUniqueId())) {
+			return;
+		}
+		if(tl.distance(absrbl.get(p.getUniqueId())) <=15) {
+			StringBuffer sb = new StringBuffer();
+			absrb.computeIfPresent(p.getUniqueId(), (k,v)->v+1);
+			for(int i = 0; i < absrb.get(p.getUniqueId()); i++) {
+				sb.append(ChatColor.LIGHT_PURPLE + "|");
+			}
+    		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(sb.toString()).create());
+    		
+		}
+	}
 	
 	public void ULT(ProjectileHitEvent ev) 
 	{
@@ -2571,19 +2586,22 @@ public class Launskills extends Pak implements Serializable, Listener {
 			
 			
 			if(ClassData.pc.get(p.getUniqueId()) == 5 && ev.getEntity().hasMetadata("abar of"+p.getName())) {
-				if(ev.getHitEntity()!=null) {
-					Entity e = ev.getHitEntity();
+					Location el = ev.getEntity().getLocation();
 					ev.getEntity().remove();
-					Location el = e.getLocation();
-					final World ew = e.getWorld();
-					for(int i =0; i<20; i++) {
+					final World ew = el.getWorld();
+
+					absrb.putIfAbsent(p.getUniqueId(), 1);
+					absrbl.putIfAbsent(p.getUniqueId(), el);
+					
+					for(int i =0; i<16; i++) {
                 	   Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 			                @Override
 			                public void run() 
 			                {
+			                	ult(el,p);
+			                	
 			                    p.playSound(el, Sound.ITEM_ARMOR_EQUIP_ELYTRA, 0.3f, 0.0f);
-				        		ew.spawnParticle(Particle.CLOUD, el, 100,15,13,15);
-								ew.spawnParticle(Particle.ASH, el, 100, 15,13,15,0);
+			                    p.playSound(el, Sound.ITEM_ARMOR_EQUIP_ELYTRA, 0.3f, 2.0f);
 			                	for (Entity e : ew.getNearbyEntities(el, 15, 13, 15))
 								{
 			                		if (e instanceof Player) 
@@ -2602,29 +2620,31 @@ public class Launskills extends Pak implements Serializable, Listener {
 										LivingEntity le = (LivingEntity)e;
 											{
 							                    le.teleport(el);
-												Holding.holding(p, le, (long)4);
+												Holding.holding(p, le, (long)10);
 											}
 									}
 								}
 			                }
-                	   }, i*4); 
+                	   }, i*10); 
 				}
             	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	                @Override
 	                public void run() 
 	                {
+	                	final int count = absrb.getOrDefault(p.getUniqueId(), 1);
+	                	absrb.remove(p.getUniqueId());
+						absrbl.remove(p.getUniqueId());
 	                    p.playSound(el, Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f);
-		        		ew.spawnParticle(Particle.EXPLOSION_HUGE, el, 10,8,8,8);
+		        		ew.spawnParticle(Particle.EXPLOSION_HUGE, el, count,8,8,8);
 						p.playSound(el, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 1);
-						ew.spawnParticle(Particle.FLASH, el, 100, 10, 10, 10);
-						ew.spawnParticle(Particle.WATER_DROP, el,100, 10, 10, 10);
-						ew.spawnParticle(Particle.DRIP_WATER, el, 100, 10, 10, 10);
-						ew.spawnParticle(Particle.FLAME, el, 40, 100, 10, 10);
-						ew.spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, el, 100, 10, 10, 10);
+						ew.spawnParticle(Particle.FLASH, el, 20*count, 5, 5, 5);
+						ew.spawnParticle(Particle.DRIP_WATER, el, 20*count, 5, 5, 5);
+						ew.spawnParticle(Particle.FLAME, el, 20*count, 5, 5, 5);
+						ew.spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, el, 10, 5, 5, 5);
 						ew.spawnParticle(Particle.LAVA, el, 40, 3, 1, 3, 0);
-						ew.spawnParticle(Particle.SPELL_MOB_AMBIENT, el,100, 10, 10, 10);
-						ew.spawnParticle(Particle.END_ROD, el, 100, 10, 10, 10, 0);
-						ew.spawnParticle(Particle.PORTAL, el, 100, 10, 10, 10, 0);
+						ew.spawnParticle(Particle.SPELL_MOB_AMBIENT, el,20*count, 10, 10, 10);
+						ew.spawnParticle(Particle.END_ROD, el, 20*count, 10, 10, 10, 0);
+						ew.spawnParticle(Particle.PORTAL, el, 20*count, 10, 10, 10, 0);
 	                	for (Entity e : ew.getNearbyEntities(el, 10, 10, 10))
 						{
 	                		if (e instanceof Player) 
@@ -2642,7 +2662,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 							{
 								LivingEntity le = (LivingEntity)e;
 									{
-										atk1(10.0, p, le);
+										atk1(0.28 * count, p, le);
 										le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 40, 0, false, false));
 										le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 40, 0, false, false));
 										le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 40, 0, false, false));
@@ -2653,93 +2673,9 @@ public class Launskills extends Pak implements Serializable, Listener {
 							}
 						}
 	                }
-        	   }, 82); 
-			}
-				else if(ev.getHitBlock()!=null) {
-					Block e = ev.getHitBlock();
-					final World ew = e.getWorld();
-					ev.getEntity().remove();
-					Location el = e.getLocation();
-					for(int i =0; i<20; i++) {
-	                	   Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() 
-				                {
-				                    p.playSound(el, Sound.ITEM_ARMOR_EQUIP_ELYTRA,0.3f, 0.0f);
-					        		ew.spawnParticle(Particle.CLOUD, el, 100,15,13,15);
-									ew.spawnParticle(Particle.ASH, el, 100, 15,13,15,0);
-				                	for (Entity e : ew.getNearbyEntities(el, 15, 13, 15))
-									{
-				                		if (e instanceof Player) 
-										{
-											
-											Player p1 = (Player) e;
-											if(Party.hasParty(p) && Party.hasParty(p1))	{
-											if(Party.getParty(p).equals(Party.getParty(p1)))
-												{
-													continue;
-												}
-											}
-										}
-			                    		if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
-										{
-											LivingEntity le = (LivingEntity)e;
-												{
-								                    le.teleport(el);
-													Holding.holding(p, le, (long)4);
-												}
-										}
-									}
-				                }
-	                	   }, i*4); 
-					}
-	            	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() 
-		                {
-		                    p.playSound(el, Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f);
-			        		ew.spawnParticle(Particle.EXPLOSION_HUGE, el, 10,8,8,8);
-							p.playSound(el, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 1);
-							ew.spawnParticle(Particle.FLASH, el, 100, 10, 10, 10);
-							ew.spawnParticle(Particle.WATER_DROP, el,100, 10, 10, 10);
-							ew.spawnParticle(Particle.DRIP_WATER, el, 100, 10, 10, 10);
-							ew.spawnParticle(Particle.FLAME, el, 40, 100, 10, 10);
-							ew.spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, el, 100, 10, 10, 10);
-							ew.spawnParticle(Particle.LAVA, el, 40, 3, 1, 3, 0);
-							ew.spawnParticle(Particle.SPELL_MOB_AMBIENT, el,100, 10, 10, 10);
-							ew.spawnParticle(Particle.END_ROD, el, 100, 10, 10, 10, 0);
-							ew.spawnParticle(Particle.PORTAL, el, 100, 10, 10, 10, 0);
-		                	for (Entity e : ew.getNearbyEntities(el, 10, 10, 10))
-							{
-		                		if (e instanceof Player) 
-								{
-									
-									Player p1 = (Player) e;
-									if(Party.hasParty(p) && Party.hasParty(p1))	{
-									if(Party.getParty(p).equals(Party.getParty(p1)))
-										{
-											continue;
-										}
-									}
-								}
-	                    		if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
-								{
-									LivingEntity le = (LivingEntity)e;
-										{
-
-											atk1(10.0, p, le);
-											le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 40, 0, false, false));
-											le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 40, 0, false, false));
-											le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 40, 0, false, false));
-											le.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 15, 0, false, false));
-											le.setFireTicks(40);									
-												
-										}
-								}	
-	                    	}
-	                }
-        	   }, 82); 
-			}
+        	   }, 180); 
+			
+			
 			}
 		}
 	}
@@ -2759,12 +2695,16 @@ public class Launskills extends Pak implements Serializable, Listener {
 			{
 				ev.setCancelled(true);
                 p.setCooldown(Material.FIREWORK_STAR, 1);
-                
-                if(p.rayTraceBlocks(30) == null) {
-                	return;
-                }
-                final Location tl = p.rayTraceBlocks(30).getHitPosition().toLocation(p.getWorld());
 
+                final Location tl = gettargetblock(p,30);
+
+                if(!arrowtype.containsKey(p.getName())) {
+					arrowtype.put(p.getName(), 0);
+					if(Proficiency.getpro(p)>=1) {
+						arrowtype.put(p.getName(), 4);
+					}
+					return;
+                }
 				if(bult2cooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
 	            {
 	                double timer = (bult2cooldown.get(p.getName())/1000d + 70*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d)) - System.currentTimeMillis()/1000d; // geting time in seconds
@@ -2781,10 +2721,6 @@ public class Launskills extends Pak implements Serializable, Listener {
 	                {
 	                    bult2cooldown.remove(p.getName()); // removing player from HashMap
 	                    
-	                    if(!arrowtype.containsKey(p.getName())) {
-							p.sendMessage("You should Choose ArrowType First");
-							return;
-	                    }
 	                    final Location pfl = p.getLocation();
 	                    Location arfl = p.getLocation().clone().add(0,12,0);
 	                    Vector arvec = tl.clone().toVector().subtract(arfl.clone().toVector());
@@ -2803,6 +2739,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 	                    p.teleport(arfl);
 						p.getWorld().spawnParticle(Particle.PORTAL, p.getLocation(), 100, 2, 2, 2);
 	                    p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 0);
+	                    p.playSound(p.getLocation(), Sound.ITEM_CROSSBOW_LOADING_START, 1, 0);
 	                    Holding.superholding(p, p, 20l);
 	                    p.setGravity(false);
 	                    
@@ -2817,6 +2754,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 						                @Override
 						                public void run() 
 						                {
+									    	absorbing(p,tl);
 						                    HashSet<Location> spl = new HashSet<>();
 											HashMap<Location, Block> sph = new HashMap<Location, Block>();
 						            		for(int ix = -4; ix<4; ix++) {
@@ -2900,6 +2838,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 					                @Override
 					                public void run() 
 					                {
+								    	absorbing(p,tl);
 
 					                    p.playSound(tl, Sound.BLOCK_RESPAWN_ANCHOR_CHARGE, 1f, 2);
 					                    p.playSound(tl, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1f, 0);
@@ -2940,10 +2879,6 @@ public class Launskills extends Pak implements Serializable, Listener {
 	            }
 	            else // if cooldown doesn't have players name in it
 	            {
-                    if(!arrowtype.containsKey(p.getName())) {
-						p.sendMessage("You should Choose ArrowType First");
-						return;
-                    }
                     final Location pfl = p.getLocation();
                     Location arfl = p.getLocation().clone().add(0,12,0);
                     Vector arvec = tl.clone().toVector().subtract(arfl.clone().toVector());
@@ -2962,6 +2897,7 @@ public class Launskills extends Pak implements Serializable, Listener {
                     p.teleport(arfl);
 					p.getWorld().spawnParticle(Particle.PORTAL, p.getLocation(), 100, 2, 2, 2);
                     p.playSound(p.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 0);
+                    p.playSound(p.getLocation(), Sound.ITEM_CROSSBOW_LOADING_START, 1, 0);
                     Holding.superholding(p, p, 20l);
                     p.setGravity(false);
                     
@@ -2976,6 +2912,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 					                @Override
 					                public void run() 
 					                {
+								    	absorbing(p,tl);
 					                    HashSet<Location> spl = new HashSet<>();
 										HashMap<Location, Block> sph = new HashMap<Location, Block>();
 					            		for(int ix = -4; ix<4; ix++) {
@@ -3060,6 +2997,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 				                public void run() 
 				                {
 
+							    	absorbing(p,tl);
 				                    p.playSound(tl, Sound.BLOCK_RESPAWN_ANCHOR_CHARGE, 1f, 2);
 				                    p.playSound(tl, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1f, 0);
 									p.getWorld().spawnParticle(Particle.CLOUD, tl, 1000, 8, 8, 8);

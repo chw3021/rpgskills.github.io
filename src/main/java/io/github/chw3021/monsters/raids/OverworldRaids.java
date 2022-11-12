@@ -1529,7 +1529,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	                	Location esl = d.getEntity().getLocation().clone().add(0,0.5, 0);
 	
 	    	    		
-		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "∫–≥Î«—Ω∫≈Ê∞Ò∑Ω":"OutragedStoneGolem";
+		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "∫–≥Î«—∞Ò∑Ω":"OutragedGolem";
 		        		IronGolem newmob = (IronGolem) MobspawnLoc(esl, ChatColor.RED+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, null, null, null, null, null, null, EntityType.IRON_GOLEM);
 		        		newmob.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 999999, 1, false, false));
 	    	    		newmob.setGlowing(true);

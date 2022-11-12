@@ -1106,10 +1106,16 @@ public class DarkSkills extends Summoned{
                 	tpe.playSound(tpe, Sound.ENTITY_PHANTOM_SWOOP, 1f, 1.5f);
                 	nightswoop(p,tl,tpel);
                 	p.swingMainHand();
-                	counterable.put(p.getUniqueId(), true);
                 }
             }, 20);
     		ordt.put(rn, i1); 
+            int i11 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                @Override
+                public void run() {
+                	counterable.put(p.getUniqueId(), true);
+                }
+            }, 30);
+    		ordt.put(rn, i11); 
 
             int i2 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
                 @Override

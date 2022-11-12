@@ -439,6 +439,9 @@ public class SkillUsing implements Listener, Serializable {
 		Boxskills.getInstance().Straight(ev);
 		Boxskills.getInstance().UnderHook(ev);
 		Boxskills.getInstance().FistStorm(ev);
+		Boxskills.getInstance().JabRush(ev);
+		Boxskills.getInstance().FlickerJab(ev);
+		Boxskills.getInstance().oneInchPunch(ev);
 
 		Broskills.getInstance().CactusTrap(ev);
 		Broskills.getInstance().Crack(ev);

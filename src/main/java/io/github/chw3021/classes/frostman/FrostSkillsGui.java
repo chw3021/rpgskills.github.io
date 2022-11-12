@@ -132,7 +132,7 @@ public class FrostSkillsGui extends SkillsGui {
 				itemset("냉혈", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("공격력과 동상의 경직지속시간이 증가합니다"), 16,
 						Frostskillsinv);
 				itemset("서리폭풍", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE + "[서리 계열]",
-						"웅크리기 + 아이템던지기", "", ChatColor.BOLD + "20 X 0.32D"), 17, Frostskillsinv);
+						"웅크리기 + 아이템던지기", "", ChatColor.BOLD + "60 X 0.32D"), 17, Frostskillsinv);
 
 				itemset("대균열(잠김)", Material.STRUCTURE_VOID, 0, 1,
 						Arrays.asList("요구 숙련도: " + Proficiency.getproexp(p) + "/155015"), 18, Frostskillsinv);
@@ -184,7 +184,7 @@ public class FrostSkillsGui extends SkillsGui {
 				itemset("냉혈", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("공격력과 동상의 경직지속시간이 증가합니다"), 16,
 						Frostskillsinv);
 				itemset("서리폭풍", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE + "[서리 계열]",
-						"웅크리기 + 아이템던지기", "", ChatColor.BOLD + "20 X 0.32D"), 17, Frostskillsinv);
+						"웅크리기 + 아이템던지기", "", ChatColor.BOLD + "60 X 0.32D"), 17, Frostskillsinv);
 
 				itemset("대균열", Material.ICE, 0, 1, Arrays.asList("Increases Range"), 18, Frostskillsinv);
 				itemset("극한의추위", Material.WHITE_SHULKER_BOX, 0, 1,
@@ -350,7 +350,7 @@ public class FrostSkillsGui extends SkillsGui {
 						Arrays.asList("Increases Whole Skills Damage", "Increases Frostbite Duration"), 16,
 						Frostskillsinv);
 				itemset("Blizzard", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE + "[Frost]",
-						"Sneaking + ThrowItem", "", ChatColor.BOLD + "20 X 0.32D"), 17, Frostskillsinv);
+						"Sneaking + ThrowItem", "", ChatColor.BOLD + "60 X 0.32D"), 17, Frostskillsinv);
 
 				itemset("HugeBreak(Locked)", Material.STRUCTURE_VOID, 0, 1,
 						Arrays.asList("Required Proficiency: " + Proficiency.getproexp(p) + "/155015"), 18,
@@ -415,7 +415,7 @@ public class FrostSkillsGui extends SkillsGui {
 						Arrays.asList("Increases Whole Skills Damage", "Increases Frostbite Duration"), 16,
 						Frostskillsinv);
 				itemset("Blizzard", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE + "[Frost]",
-						"Sneaking + ThrowItem", "", ChatColor.BOLD + "20 X 0.32D"), 17, Frostskillsinv);
+						"Sneaking + ThrowItem", "", ChatColor.BOLD + "60 X 0.32D"), 17, Frostskillsinv);
 
 				itemset("HugeBreak", Material.ICE, 0, 1, Arrays.asList("Increases Range"), 18, Frostskillsinv);
 				itemset("Extremecold", Material.WHITE_SHULKER_BOX, 0, 1,

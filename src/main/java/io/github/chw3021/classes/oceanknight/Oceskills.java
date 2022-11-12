@@ -746,7 +746,7 @@ public class Oceskills extends Pak implements Serializable {
 		                    p.playSound(p.getLocation(), Sound.ENTITY_DROWNED_SHOOT, 0.6f, 0.5f);
 			            	p.setCooldown(Material.BONE, 3);
 							p.swingMainHand();
-		                    for(double an = Math.PI/2.5; an>-Math.PI/2.5; an-=Math.PI/180) {
+		                    for(double an = Math.PI/2.5; an>-Math.PI/2.5; an-=Math.PI/90) {
 		                    	Location pl = p.getEyeLocation();
 		                    	pl.add(pl.getDirection().rotateAroundY(an).normalize().multiply(6.5));
 		                    	line.add(pl);
@@ -844,7 +844,7 @@ public class Oceskills extends Pak implements Serializable {
 		            	p.setCooldown(Material.BONE, 3);
 						p.swingMainHand();
 						
-	                    for(double an = Math.PI/2.5; an>-Math.PI/2.5; an-=Math.PI/180) {
+	                    for(double an = Math.PI/2.5; an>-Math.PI/2.5; an-=Math.PI/90) {
 	                    	Location pl = p.getEyeLocation();
 	                    	pl.add(pl.getDirection().rotateAroundY(an).normalize().multiply(6.5));
 	                    	line.add(pl);

@@ -18,6 +18,7 @@ import org.bukkit.entity.IronGolem;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
+import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
@@ -46,11 +47,14 @@ public class MountainsSkills extends Summoned implements Listener{
 	Holding hold = Holding.getInstance();
 	private HashMap<UUID, Long> rb1cooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Long> rb3cooldown = new HashMap<UUID, Long>();
+	private HashMap<UUID, Long> rb5cooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Long> rb6cooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Long> rb8cooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Integer> throwable = new HashMap<UUID, Integer>();
 	private HashMap<UUID, Integer> strong = new HashMap<UUID, Integer>();
 	private HashMap<UUID, Integer> strongt = new HashMap<UUID, Integer>();
+	private HashMap<UUID, Boolean> ordealable = new HashMap<UUID, Boolean>();
+	static private HashMap<UUID, Boolean> ordeal = new HashMap<UUID, Boolean>();
 
 	
 	private static final MountainsSkills instance = new MountainsSkills ();
@@ -175,6 +179,9 @@ public class MountainsSkills extends Summoned implements Listener{
 		if(d.getEntity() instanceof IronGolem && d.getEntity().hasMetadata("stoneboss") && throwable.containsKey(d.getEntity().getUniqueId())) 
 		{
 			IronGolem p = (IronGolem)Holding.ale(d.getEntity());
+			if(ordeal.containsKey(p.getUniqueId()) || p.hasMetadata("failed")) {
+				return;
+			}
 			if(rb3cooldown.containsKey(p.getUniqueId()))
 	        {
 	            long timer = (rb3cooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
@@ -273,6 +280,9 @@ public class MountainsSkills extends Summoned implements Listener{
 			final LivingEntity p = (LivingEntity)ev.getEntity();
 	        
 
+			if(ordeal.containsKey(p.getUniqueId()) || p.hasMetadata("failed")) {
+				return;
+			}
 			if(p.hasMetadata("raid")) {
 				if(!OverworldRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| p.hasMetadata("failed")) {
 					return;
@@ -459,20 +469,33 @@ public class MountainsSkills extends Summoned implements Listener{
 		if((d.getEntity() instanceof IronGolem) && !d.isCancelled() &&d.getEntity().hasMetadata("stoneboss")) 
 		{
 			IronGolem p = (IronGolem)Holding.ale(d.getEntity());
-			final Location tl = p.getLocation().clone();
-			
-			p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 300,2,2,2,1, Material.STONE.createBlockData());
-			p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 300,2,2,2,1, Material.GRANITE.createBlockData());
-			p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, tl, 50,2,2,2,1);
-			p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_ATTACK, 1, 0);
-			p.getWorld().playSound(p.getLocation(), Sound.BLOCK_STONE_BREAK, 1, 0);
-
-			for(Entity e : p.getWorld().getNearbyEntities(tl,2, 2, 2)) {
-				if(p!=e && e instanceof LivingEntity) {
-					LivingEntity le = (LivingEntity)e;
-					le.damage(5,p);
-				}
+			if(ordeal.containsKey(p.getUniqueId()) || p.hasMetadata("failed")) {
+				return;
 			}
+			final Location tl = p.getLocation().clone();
+
+			p.getWorld().spawnParticle(Particle.ASH, tl, 400,2,1,2,0.05);
+			p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, tl, 50,2,2,2,1);
+			p.getWorld().playSound(tl, Sound.BLOCK_STONE_BREAK, 1, 0);
+			p.getWorld().playSound(tl, Sound.ENTITY_IRON_GOLEM_REPAIR, 1, 0);
+			
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+         		@Override
+            	public void run() 
+                {	
+        			p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 300,2,2,2,1, Material.GRANITE.createBlockData());
+        			p.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, tl, 10,2,1,2,1);
+        			p.getWorld().playSound(tl, Sound.ENTITY_IRON_GOLEM_ATTACK, 1, 0);
+        			p.getWorld().playSound(tl, Sound.BLOCK_STONE_BREAK, 1, 2);
+        			for(Entity e : p.getWorld().getNearbyEntities(tl,2, 2, 2)) {
+        				if(p!=e && e instanceof LivingEntity) {
+        					LivingEntity le = (LivingEntity)e;
+        					le.damage(5,p);
+        				}
+        			}
+	            }
+    	   	}, 20);
+
 		}
 		
 	}
@@ -594,7 +617,10 @@ public class MountainsSkills extends Summoned implements Listener{
 		if(d.getEntity() instanceof IronGolem && !d.isCancelled() && d.getEntity().hasMetadata("stoneboss")&& d.getEntity().hasMetadata("raid") && d.getEntity().hasMetadata("ruined")  && !d.getEntity().hasMetadata("failed")) 
 		{
 			IronGolem p = (IronGolem) Holding.ale(d.getEntity());
-			
+
+			if(ordeal.containsKey(p.getUniqueId()) || p.hasMetadata("failed")) {
+				return;
+			}
 				if(rb6cooldown.containsKey(p.getUniqueId()))
 		        {
 		            long timer = (rb6cooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
@@ -605,7 +631,7 @@ public class MountainsSkills extends Summoned implements Listener{
 		            {
 		                rb6cooldown.remove(p.getUniqueId()); // removing player from HashMap
 		                
-		                strong.put(p.getUniqueId(), 20);
+		                strong.put(p.getUniqueId(), 4*OverworldRaids.getheroes(p).size());
 						for(Player pe : OverworldRaids.getheroes(p)) {
 	    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
 		                		pe.sendMessage(ChatColor.BOLD+"나는 죽지 않는다!");
@@ -632,8 +658,8 @@ public class MountainsSkills extends Summoned implements Listener{
 		        }
 		        else 
 		        {
-	                
-	                strong.put(p.getUniqueId(), 20);
+
+	                strong.put(p.getUniqueId(), 4*OverworldRaids.getheroes(p).size());
 					for(Player pe : OverworldRaids.getheroes(p)) {
     					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
 	                		pe.sendMessage(ChatColor.BOLD+"나는 죽지 않는다!");
@@ -649,7 +675,7 @@ public class MountainsSkills extends Summoned implements Listener{
 							p.getWorld().spawnParticle(Particle.BLOCK_CRACK, p.getLocation(), 200, 2,1,2,Material.STONE.createBlockData());
 							p.getWorld().spawnParticle(Particle.HEART, p.getLocation(), 50, 2,1,2);
 							p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_REPAIR, 1, 1);
-							p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 5,5,false,false));
+							p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 6,5,false,false));
 		                }
                     },20,20);
 					ordt.put(rn, t1);    
@@ -658,5 +684,48 @@ public class MountainsSkills extends Summoned implements Listener{
 		            rb6cooldown.put(p.getUniqueId(), System.currentTimeMillis());
 		        }
 			}
+	}
+
+	
+	final private void mantleevent(LivingEntity p, EntityDamageByEntityEvent d) {
+		
+	}
+
+
+	
+	@SuppressWarnings("deprecation")
+	public void mantle(EntityDamageByEntityEvent d) 
+	{
+	    
+		int sec = 100;
+		if(d.getEntity().hasMetadata("stoneboss") && d.getEntity() instanceof IronGolem&& !d.isCancelled() && d.getEntity().hasMetadata("ruined")) 
+		{
+			IronGolem p = (IronGolem)d.getEntity();
+			if(p.hasMetadata("failed")) {
+				return;
+			}
+			if(!(p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2)|| !ordealable.containsKey(p.getUniqueId())|| ordeal.containsKey(p.getUniqueId()) || !OverworldRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))) {
+				return;
+			}
+			if(rb5cooldown.containsKey(p.getUniqueId()))
+	        {
+	            long timer = (rb5cooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
+	            if(!(timer < 0))
+	            {
+	            }
+	            else 
+	            {
+	            	rb5cooldown.remove(p.getUniqueId()); // removing player from HashMap
+	            	
+		            rb5cooldown.put(p.getUniqueId(), System.currentTimeMillis());
+	            }
+	        }
+	        else 
+	        {
+	        	
+	            rb5cooldown.put(p.getUniqueId(), System.currentTimeMillis());
+	        }
+		
+		}
 	}
 }
