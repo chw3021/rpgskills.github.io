@@ -470,6 +470,7 @@ public class MountainsSkills extends Summoned implements Listener{
 		{
 			IronGolem p = (IronGolem)Holding.ale(d.getEntity());
 			if(ordeal.containsKey(p.getUniqueId()) || p.hasMetadata("failed")) {
+				d.setCancelled(true);
 				return;
 			}
 			final Location tl = p.getLocation().clone();
@@ -688,6 +689,92 @@ public class MountainsSkills extends Summoned implements Listener{
 
 	
 	final private void mantleevent(LivingEntity p, EntityDamageByEntityEvent d) {
+
+    	ordeal.put(p.getUniqueId(), true);
+		String rn = gethero(p);
+        Location rl = OverworldRaids.getraidloc(p).clone();
+
+        if(ordt.containsKey(rn)) {
+        	ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
+        	ordt.removeAll(rn);
+        }
+        d.setCancelled(true);
+        p.teleport(rl.clone().add(0, 50, 0));
+        Holding.holding(null, p, 1500l);
+        Holding.invur(p, 100l);
+        Holding.untouchable(p, 100l);
+        p.setGlowing(false);
+        
+        OverworldRaids.getheroes(p).forEach(pe ->{
+			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
+        		pe.sendTitle(ChatColor.DARK_GRAY + (ChatColor.MAGIC + "123456"), ChatColor.DARK_GRAY + "ÀüºÎ Á×ÀÌ°Ú´Ù!!", 20, 35, 20);
+			}
+			else {
+        		pe.sendTitle(ChatColor.DARK_GRAY + (ChatColor.MAGIC + "123456"), ChatColor.DARK_GRAY + "Die!!", 20, 35, 20);
+			}
+        	pe.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 150,10,false,false));
+        	pe.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 150,10,false,false));
+        });
+        
+		p.getWorld().spawnParticle(Particle.SQUID_INK, p.getLocation().clone(), 200,2,2,2,0.1);
+		p.getWorld().spawnParticle(Particle.DRAGON_BREATH, p.getLocation().clone(), 200,2,2,2,0.1);
+        int i1 =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+                OverworldRaids.getheroes(p).forEach(pe ->{
+                	pe.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 150,10,false,false));
+                	pe.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 150,10,false,false));
+                });
+                nightmare(Holding.ale(p),rl,rn);
+            }
+        }, 100, 100);
+		ordt.put(rn, i1); 
+
+			int i2 = Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() {	
+
+                if(ordt.containsKey(rn)) {
+                	ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
+                	ordt.removeAll(rn);
+                }
+    			count.remove(p.getUniqueId());
+                for(Player pe : OverworldRaids.getheroes(p)) {
+            		if(pe.getWorld().equals(p.getWorld()) && pe.getWorld() == p.getWorld()) {
+    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
+	                		pe.sendMessage(ChatColor.BOLD+"¾Ç¸ùÀÇ Çü»ó: ºûÀº ¾îµÒÀ» ÀÌ±æ ¼ö ¾ø´Ù..");
+    					}
+    					else {
+	                		pe.sendMessage(ChatColor.BOLD+"NightMare: Light can't beat darkness..");
+    					}
+            			p.getWorld().playSound(pe.getLocation(), Sound.ENTITY_WITHER_AMBIENT, 1, 0);
+                		Holding.invur(pe, 10l);
+			        	p.setGlowing(true);
+	            		pe.teleport(p);
+						pe.removePotionEffect(PotionEffectType.BLINDNESS);
+	            		pe.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 255 ,false,false));
+	            		pe.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 60, 255 ,false,false));
+            		}
+                }
+ 				Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	                @Override
+	                public void run() {	
+	                	ordeal.remove(p.getUniqueId());
+	                	rb5cooldown.remove(p.getUniqueId()); 
+                		p.removeMetadata("fake", RMain.getInstance());
+                		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
+    	                p.setInvulnerable(false);
+    	                Holding.ale(p).setInvulnerable(false);
+						p.getWorld().spawnParticle(Particle.SQUID_INK, p.getLocation(), 3000, 10,10,10);	
+	                    for(Player pe : OverworldRaids.getheroes(p)) {
+	                		p.removeMetadata("fake", RMain.getInstance());
+	                		pe.setHealth(0);
+	                    }
+	                }
+	            }, 5); 
+            }
+        }, 1505); 
+		ordt.put(rn, i2); 
 		
 	}
 

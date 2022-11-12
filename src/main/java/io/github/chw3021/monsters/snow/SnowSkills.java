@@ -586,6 +586,7 @@ public class SnowSkills extends Summoned implements Listener{
 				FallingBlock fallingb = p.getWorld().spawnFallingBlock(tl.clone().add(0, 8.5, 0), Material.SNOW_BLOCK.createBlockData());
 				fallingb.setInvulnerable(true);
 				fallingb.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
+				fallingb.setMetadata("stuff", new FixedMetadataValue(RMain.getInstance(),gethero(p)));
 				fallingb.setMetadata("snowblockfall", new FixedMetadataValue(RMain.getInstance(),p.getName()));
 				fallingb.setDropItem(true);
 				fallingb.setHurtEntities(true);
@@ -602,6 +603,7 @@ public class SnowSkills extends Summoned implements Listener{
 			FallingBlock fallingb = p.getWorld().spawnFallingBlock(tl.clone().add(0, 8.5, 0), Material.SNOW_BLOCK.createBlockData());
 			fallingb.setInvulnerable(true);
 			fallingb.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
+			fallingb.setMetadata("stuff", new FixedMetadataValue(RMain.getInstance(),gethero(p)));
 			fallingb.setMetadata("snowblockfall", new FixedMetadataValue(RMain.getInstance(),p.getName()));
 			fallingb.setDropItem(true);
 			fallingb.setHurtEntities(true);
