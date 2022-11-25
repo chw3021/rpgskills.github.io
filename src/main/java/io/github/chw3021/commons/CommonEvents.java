@@ -856,7 +856,7 @@ public class CommonEvents implements Listener {
 				return "블레이즈";
 			}
 			else if(t== EntityType.CAT) {
-				return "캣맘충들은 제발 자살해라";
+				return "고양이";
 			}
 			else if(t== EntityType.CAVE_SPIDER) {
 				return "동굴거미";
@@ -865,7 +865,7 @@ public class CommonEvents implements Listener {
 				return "닭";
 			}
 			else if(t== EntityType.COD) {
-				return "머구";
+				return "대구";
 			}
 			else if(t== EntityType.COW) {
 				return "소";

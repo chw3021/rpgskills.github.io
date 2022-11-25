@@ -3,6 +3,9 @@ package io.github.chw3021.monsters.mountains;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -51,6 +54,7 @@ public class MountainsSkills extends Summoned implements Listener{
 	private HashMap<UUID, Long> rb6cooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Long> rb8cooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Integer> throwable = new HashMap<UUID, Integer>();
+	private HashMap<UUID, Integer> count = new HashMap<UUID, Integer>();
 	private HashMap<UUID, Integer> strong = new HashMap<UUID, Integer>();
 	private HashMap<UUID, Integer> strongt = new HashMap<UUID, Integer>();
 	private HashMap<UUID, Boolean> ordealable = new HashMap<UUID, Boolean>();
@@ -687,6 +691,62 @@ public class MountainsSkills extends Summoned implements Listener{
 			}
 	}
 
+	final private void mantle(LivingEntity p, Location rl, String rn) {
+            OverworldRaids.getheroes(p).stream().filter(pe ->!pe.isDead()&&pe.getWorld().equals(p.getWorld())).forEach(tpe->{
+            final Location tpel = tpe.getLocation().clone();
+            final Location tl = tpel.clone().add(tpel.clone().getDirection().normalize().multiply(-7)).add(0, 2, 0);
+            
+        	Random random=new Random();
+        	double number = (random.nextDouble()+0.65) * 2.5 * (random.nextBoolean() ? -1 : 1);
+        	double number2 = (random.nextDouble()+0.5) * 2.5 * (random.nextBoolean() ? -1 : 1);
+        	Location esl = rl.clone().add(number, 10, number2);
+        	
+            p.teleport(tl);
+            
+            
+        	tpe.playSound(tpe, Sound.ENTITY_PHANTOM_SWOOP, 1f, 1.5f);
+        	dropping(p,tl,tpel);
+        	p.swingMainHand();
+
+            int i2 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                @Override
+                public void run() {
+        			p.getWorld().spawnParticle(Particle.DRAGON_BREATH, p.getLocation().clone(), 200,2,2,2,0.1);
+                	p.swingMainHand();
+                	tpe.playSound(tpe, Sound.ENTITY_WITHER_BREAK_BLOCK, 1f, 1.26f);
+                	if(tpe.getWorld().equals(p.getWorld())) {
+                    	tpe.damage(200,p);
+                	}
+                	p.teleport(rl.clone().add(0, 10, 0));
+                }
+            }, 42);
+    		ordt.put(rn, i2);
+            });
+	}
+
+	final private void dropping(LivingEntity p, Location pl, Location tl) 
+	{
+
+        List<Location> line = new ArrayList<>();
+        
+        for(double an =0; an<10; an+=0.5) {
+        	line.add(pl.clone().add(0,-an,0));
+        }
+
+    	AtomicInteger u = new AtomicInteger();
+        line.forEach(l -> {
+    		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                @Override
+                public void run() 
+                {
+                	p.setGliding(true);
+    				p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l, 3, 1, 1, 1);
+    				p.teleport(l);
+                }
+    		},u.getAndIncrement());
+    	});
+	}
+	
 	
 	final private void mantleevent(LivingEntity p, EntityDamageByEntityEvent d) {
 
@@ -712,8 +772,6 @@ public class MountainsSkills extends Summoned implements Listener{
 			else {
         		pe.sendTitle(ChatColor.DARK_GRAY + (ChatColor.MAGIC + "123456"), ChatColor.DARK_GRAY + "Die!!", 20, 35, 20);
 			}
-        	pe.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 150,10,false,false));
-        	pe.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 150,10,false,false));
         });
         
 		p.getWorld().spawnParticle(Particle.SQUID_INK, p.getLocation().clone(), 200,2,2,2,0.1);
@@ -725,7 +783,6 @@ public class MountainsSkills extends Summoned implements Listener{
                 	pe.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 150,10,false,false));
                 	pe.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 150,10,false,false));
                 });
-                nightmare(Holding.ale(p),rl,rn);
             }
         }, 100, 100);
 		ordt.put(rn, i1); 
