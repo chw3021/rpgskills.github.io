@@ -645,3 +645,4 @@ public class ClassData implements Serializable, Listener{
 		return data.playerclass;
 	}
 }
+//차현욱보지
