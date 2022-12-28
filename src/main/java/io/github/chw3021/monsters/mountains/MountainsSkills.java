@@ -711,7 +711,7 @@ public class MountainsSkills extends Summoned implements Listener{
             int i2 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
                 @Override
                 public void run() {
-        			p.getWorld().spawnParticle(Particle.DRAGON_BREATH, p.getLocation().clone(), 200,2,2,2,0.1);
+        			p.getWorld().spawnParticle(Particle.BLOCK_CRACK, p.getLocation().clone(), 200,2,2,2,0.1,Material.STONE);
                 	p.swingMainHand();
                 	tpe.playSound(tpe, Sound.ENTITY_WITHER_BREAK_BLOCK, 1f, 1.26f);
                 	if(tpe.getWorld().equals(p.getWorld())) {
@@ -743,7 +743,7 @@ public class MountainsSkills extends Summoned implements Listener{
     				p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l, 3, 1, 1, 1);
     				p.teleport(l);
                 }
-    		},u.getAndIncrement());
+    		},u.getAndIncrement()*2);
     	});
 	}
 	
@@ -776,13 +776,11 @@ public class MountainsSkills extends Summoned implements Listener{
         
 		p.getWorld().spawnParticle(Particle.SQUID_INK, p.getLocation().clone(), 200,2,2,2,0.1);
 		p.getWorld().spawnParticle(Particle.DRAGON_BREATH, p.getLocation().clone(), 200,2,2,2,0.1);
+		
         int i1 =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
             @Override
             public void run() {
-                OverworldRaids.getheroes(p).forEach(pe ->{
-                	pe.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 150,10,false,false));
-                	pe.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 150,10,false,false));
-                });
+                mantle(Holding.ale(p),rl,rn);
             }
         }, 100, 100);
 		ordt.put(rn, i1); 

@@ -38,7 +38,6 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Chicken;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
@@ -828,28 +827,6 @@ public class Boxskills extends Pak implements Listener, Serializable {
 													LivingEntity le = (LivingEntity)e;
 													atk1(0.15*(1+bsd.DempseyRoll.get(p.getUniqueId())*0.025), p, le);												
 								                    le.teleport(l);
-								                    /*
-													if(le instanceof EnderDragon) {
-									                    Arrow firstarrow = p.launchProjectile(Arrow.class);
-									                    firstarrow.setDamage(0);
-									                    firstarrow.remove();
-														Arrow enar = (Arrow) p.getWorld().spawn(le.getLocation().add(0, 5.163, 0), Arrow.class, ar->{
-															ar.setShooter(p);
-															ar.setCritical(false);
-															ar.setSilent(true);
-															ar.setPickupStatus(PickupStatus.DISALLOWED);
-															ar.setVelocity(le.getLocation().clone().add(0, -1, 0).toVector().subtract(le.getLocation().toVector()).normalize().multiply(2.6));
-														});
-														enar.setDamage((player_damage.get(p.getName())*0.15*(1+bsd.DempseyRoll.get(p.getUniqueId())*0.025)));
-													}
-														{
-								                    		p.setSprinting(true);			
-										                    le.damage(0,p);
-										                    le.damage(player_damage.get(p.getName())*0.15*(1+bsd.DempseyRoll.get(p.getUniqueId())*0.025),p);
-										                    le.setLastDamageCause(new EntityDamageEvent(le, DamageCause.CUSTOM, player_damage.get(p.getName())*0.8+0.5));
-															
-																
-														}*/
 												}
 											}
 						                }
@@ -943,27 +920,6 @@ public class Boxskills extends Pak implements Listener, Serializable {
 											LivingEntity le = (LivingEntity)e;
 											atk1(0.5*(1+bsd.DempseyRoll.get(p.getUniqueId())*0.05), p, le);												
 						                    Holding.holding(p, le, 3l);
-											/*if(le instanceof EnderDragon) {
-							                    Arrow firstarrow = p.launchProjectile(Arrow.class);
-							                    firstarrow.setDamage(0);
-							                    firstarrow.remove();
-												Arrow enar = (Arrow) p.getWorld().spawn(le.getLocation().add(0, 5.163, 0), Arrow.class, ar->{
-													ar.setShooter(p);
-													ar.setCritical(false);
-													ar.setSilent(true);
-													ar.setVelocity(le.getLocation().clone().add(0, -1, 0).toVector().subtract(le.getLocation().toVector()).normalize().multiply(2.6));
-												});
-												enar.setDamage(player_damage.get(p.getName())*0.5*(1+bsd.DempseyRoll.get(p.getUniqueId())*0.05));
-											}
-												{
-													p.setSprinting(true);
-									        		p.getWorld().spawnParticle(Particle.CRIT, p.getEyeLocation(), 10,1,1,1);
-									        		p.getWorld().spawnParticle(Particle.WHITE_ASH, p.getEyeLocation(), 10,1,1,1);
-								                    le.damage(player_damage.get(p.getName())*0.5*(1+bsd.DempseyRoll.get(p.getUniqueId())*0.05),p);
-								                    le.setLastDamageCause(new EntityDamageEvent(le, DamageCause.CUSTOM, player_damage.get(p.getName())));
-													
-														
-												}*/
 										}
 									}
 				                }
@@ -1664,7 +1620,6 @@ public class Boxskills extends Pak implements Listener, Serializable {
 									{
 										LivingEntity le = (LivingEntity)e;
 										atk1(0.3*(1+bsd.Straight.get(p.getUniqueId())*0.035), p, le);
-										
 									}
 								}
 				        		p.getWorld().spawnParticle(Particle.CRIT, p.getEyeLocation(), 50,1,1,1);
