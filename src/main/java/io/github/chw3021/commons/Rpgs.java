@@ -1,10 +1,5 @@
 package io.github.chw3021.commons;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashSet;
 import org.bukkit.Bukkit;
