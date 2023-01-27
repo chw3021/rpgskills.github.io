@@ -393,7 +393,7 @@ public class Forskills extends Pak implements Serializable {
     			        		}
     			        		
     		                }
-                	   }, 60-fsd.Development.get(p.getUniqueId())/2);
+                	   }, 60-fsd.Development.get(p.getUniqueId())/3);
                 	}
                 }
                 else if(!mga.containsKey(p)&&mgar.containsKey(p)){
@@ -440,6 +440,7 @@ public class Forskills extends Pak implements Serializable {
 		
 		if((p.isSneaking()) && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK))
 		{
+			p.setCooldown(Material.HONEYCOMB, 2);
 
 				if(gdcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
 	            {
@@ -1392,6 +1393,7 @@ public class Forskills extends Pak implements Serializable {
 		double sec =4*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 		if(!(p.isSneaking()) && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK))
 		{
+			p.setCooldown(Material.HONEYCOMB, 2);
 				
 
 				if(frcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
@@ -1772,7 +1774,7 @@ public class Forskills extends Pak implements Serializable {
 
         
 		if(ClassData.pc.get(p.getUniqueId()) == 16 && fsd.HoneyMissile.getOrDefault(p.getUniqueId(), 0) >=1 && p.getInventory().getItemInMainHand().getType().name().contains("PICKAXE") && !p.hasCooldown(Material.HONEYCOMB)) {
-			if((!p.isSneaking())&& !p.isOnGround() && (ac == Action.LEFT_CLICK_AIR || ac== Action.LEFT_CLICK_BLOCK) &&(ac!= Action.RIGHT_CLICK_AIR)&&(ac!= Action.RIGHT_CLICK_AIR))
+			if((!p.isSneaking())&& !p.isOnGround() && (ac == Action.LEFT_CLICK_AIR || ac== Action.LEFT_CLICK_BLOCK))
 			{
 				ev.setCancelled(true);
 				if(smcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
@@ -2125,6 +2127,7 @@ else {
 			if(ClassData.pc.get(p.getUniqueId()) == 16 && ((is.getType().name().contains("PICKAXE"))) && p.isSneaking()&& Proficiency.getpro(p) >=1)
 			{
 				ev.setCancelled(true);
+				p.setCooldown(Material.HONEYCOMB, 2);
 				if(sultcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
 	            {
 	                double timer = (sultcooldown.get(p.getName())/1000d + 70/Proficiency.getpro(p)*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d)) - System.currentTimeMillis()/1000d; // geting time in seconds
@@ -2340,7 +2343,7 @@ else {
         
 			if(ClassData.pc.get(p.getUniqueId()) == 16 && ((is.getType().name().contains("PICKAXE"))) && !p.isSneaking()&& p.isSprinting()&& Proficiency.getpro(p) >=2)
 			{
-				p.setCooldown(Material.HONEYCOMB, 1);
+				p.setCooldown(Material.HONEYCOMB, 2);
 				ev.setCancelled(true);
 				if(sult2cooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
 	            {

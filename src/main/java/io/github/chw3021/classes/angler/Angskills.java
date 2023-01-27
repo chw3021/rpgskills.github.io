@@ -2165,10 +2165,6 @@ public class Angskills extends Pak implements Serializable, Listener{
 	{
 		Player p = e.getPlayer();
 		
-		if(e.getDamage() >= 10) {
-			e.setDamage(10);
-		}
-		
 		if(ClassData.pc.get(p.getUniqueId()) == 22)
 		{
 			if(p.getInventory().getItemInMainHand().getType()==Material.FISHING_ROD)

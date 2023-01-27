@@ -2876,7 +2876,7 @@ public class Oceskills extends Pak implements Serializable {
 		
 		if(d.getCause().equals(DamageCause.FALL)) 
 		{
-	        if(ClassData.pc.get(p.getUniqueId()) == 20) {
+	        if(ClassData.pc.get(p.getUniqueId()) == 20 && (p.getInventory().getItemInMainHand().getType()==Material.TRIDENT || p.getInventory().getItemInMainHand().getType()==Material.SHIELD)) {
 	        	p.getWorld().spawnParticle(Particle.WATER_SPLASH, p.getLocation(), 65*(int)p.getFallDistance(), p.getFallDistance(), 1, p.getFallDistance());
 				p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_SPLASH, 1, 0);
 	        	for(Entity e: p.getNearbyEntities(p.getFallDistance(), 2, p.getFallDistance())) {

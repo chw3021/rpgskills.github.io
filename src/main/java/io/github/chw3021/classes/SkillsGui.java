@@ -30,6 +30,7 @@ public class SkillsGui {
 		input.add(ChatColor.AQUA + "LV." + lv);
 		input.add("");
 		input.addAll(Lore);
+		input.addAll(des(inv));
 		input.add("");
 		if(dam1 != 0) {
 			input.add(ChatColor.BOLD+ "" +hit+ " X "+BigDecimal.valueOf(dam1 * (1 +  lv * dam2)).setScale(2, RoundingMode.HALF_EVEN)+"D");
@@ -56,6 +57,7 @@ public class SkillsGui {
 		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
 		List<String> input = new ArrayList<>();
 		input.addAll(Lore);
+		input.addAll(des(inv));
 		input.add("");
 		if(dam1 != 0) {
 			input.add(ChatColor.BOLD+ "" +hit+ " X "+BigDecimal.valueOf(dam1 * (1 +  lv * dam2)).setScale(2, RoundingMode.HALF_EVEN)+"D");
@@ -80,6 +82,7 @@ public class SkillsGui {
 		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
 		List<String> input = new ArrayList<>();
 		input.addAll(Lore);
+		input.addAll(des(inv));
 		
 		input.forEach(l -> {
 			l=ChatColor.RESET+l;
@@ -99,6 +102,7 @@ public class SkillsGui {
 		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
 		List<String> input = new ArrayList<>();
 		input.addAll(Lore);
+		input.addAll(des(inv));
 		
 		input.forEach(l -> {
 			l=ChatColor.RESET+l;

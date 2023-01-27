@@ -32,10 +32,12 @@ import org.bukkit.Color;
 import org.bukkit.EntityEffect;
 import org.bukkit.FireworkEffect;
 import org.bukkit.FireworkEffect.Type;
+import org.bukkit.Vibration.Destination;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.Vibration;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.entity.Arrow;
@@ -47,6 +49,7 @@ import org.bukkit.entity.Firework;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Snowball;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.entity.ThrownPotion;
 import org.bukkit.event.Listener;
@@ -230,125 +233,13 @@ public class Cheskills extends Pak implements Listener, Serializable {
 	                	
 						p.playSound(p.getLocation(), Sound.ENTITY_FISHING_BOBBER_THROW, 1.0f, 0f);
 						p.playSound(p.getLocation(), Sound.ENTITY_SLIME_JUMP, 1.0f, 0f);
-						Item slime = p.getWorld().dropItemNaturally(p.getLocation(), new ItemStack(Material.SLIME_BALL));
-						slime.setPickupDelay(5555);
-						slime.setVelocity(p.getLocation().getDirection().normalize().multiply(2));
-						slime.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-	                    ArrayList<Location> line = new ArrayList<Location>();
-	                    AtomicInteger j = new AtomicInteger(0);
-	                    AtomicInteger a = new AtomicInteger(0);
-	                    new AtomicInteger(0);
-	                    for(double d = 0.1; d <= 5; d += 0.1) {
-		                    Location pl = p.getLocation();
-							pl.add(pl.getDirection().normalize().multiply(d));
-							line.add(pl);
-	                    }
-	                    if(line.stream().filter(o -> o.getWorld().getNearbyEntities(o,1.3,1.3,1.3).stream().filter(en -> en instanceof LivingEntity && en!=p).findFirst().isPresent()).findFirst().isPresent()) 
-	                    {
-		                    Location block =line.stream().filter(o -> o.getWorld().getNearbyEntities(o,1.3,1.3,1.3).stream().filter(en -> en instanceof LivingEntity && en!=p).findFirst().isPresent()).findFirst().get();
-		                    for(int k=0; k<line.indexOf(block); k++) {
-		                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		             		@Override
-				                	public void run() 
-					                {	
-     									slime.teleport(line.get(a.getAndIncrement()));
-     									slime.getWorld().spawnParticle(Particle.SLIME ,line.get(a.get()), 3, 1,1,1,0);
-						            }
-			                	   }, j.getAndIncrement()/20); 
-							 }
-	                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		             		@Override
-				                	public void run() 
-					                {	
-		             					for(Entity e: slime.getNearbyEntities(3, 3, 3)) {
-		             						if(e instanceof LivingEntity && e!=p && !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
-		             							LivingEntity le = (LivingEntity)e;
-		             							if (le instanceof Player) 
-		            							{
-		            								
-		            								Player p1 = (Player) le;
-		            								if(Party.hasParty(p) && Party.hasParty(p1))	{
-		            								if(Party.getParty(p).equals(Party.getParty(p1)))
-		            									{
-		            										continue;
-		            									}
-		            								}
-		            							}
-		             							atk1(0.45*(1+csd.SlimeBall.get(p.getUniqueId())*0.035), p, le);
-		             							/*
-												if(le instanceof EnderDragon) {
-								                    Arrow firstarrow = p.launchProjectile(Arrow.class);
-								                    firstarrow.setDamage(0);
-								                    firstarrow.remove();
-													Arrow enar = (Arrow) p.getWorld().spawn(le.getLocation().add(0, 5.163, 0), Arrow.class, ar->{
-														ar.setShooter(p);
-														ar.setCritical(false);
-														ar.setSilent(true);
-														ar.setPickupStatus(PickupStatus.DISALLOWED);
-														ar.setVelocity(le.getLocation().clone().add(0, -1, 0).toVector().subtract(le.getLocation().toVector()).normalize().multiply(2.6));
-													});
-													enar.setDamage(player_damage.get(p.getName())*0.45*(1+csd.SlimeBall.get(p.getUniqueId())*0.02));
-												}		             			
-		             							le.damage(0,p);
-		             							le.damage(player_damage.get(p.getName())*0.45*(1+csd.SlimeBall.get(p.getUniqueId())*0.02),p);*/
-		             							Holding.holding(p, le, 20l);
-		             							le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 40, 2, false, false));
-		             							le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 40, 2, false, false));
-		             						}
-		             					}
-		             					slime.getWorld().spawnParticle(Particle.SLIME, slime.getLocation(), 460, 3,3,3);
-		             					slime.getWorld().playSound(block, Sound.ENTITY_SLIME_SQUISH, 1, 0);
-		             					slime.getWorld().playSound(block, Sound.ENTITY_SLIME_HURT, 1, 0);
-		             					slime.getWorld().playSound(block, Sound.ENTITY_SLIME_DEATH, 1, 0);
-		             					slime.getWorld().playSound(block, Sound.BLOCK_SLIME_BLOCK_BREAK, 1, 0);
-		             					slime.remove();
-						            }
-	                    	}, j.getAndIncrement()/20+1);
-		                }
-	                    else {
-	                    	line.forEach(i -> {
-		                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		             		@Override
-				                	public void run() 
-					                {	
-     									slime.teleport(i);
-     									slime.getWorld().spawnParticle(Particle.SLIME ,line.get(a.get()), 3, 1,1,1,0);
-						            }
-			                	   }, j.getAndIncrement()/20); 
-							}); 
-		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			             		@Override
-					                	public void run() 
-						                {	
-					             			for(Entity e: slime.getNearbyEntities(3, 3, 3)) {
-			             						if(e instanceof LivingEntity && e!=p && !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
-			             							LivingEntity le = (LivingEntity)e;
-			             							if (le instanceof Player) 
-			            							{
-			            								
-			            								Player p1 = (Player) le;
-			            								if(Party.hasParty(p) && Party.hasParty(p1))	{
-			            								if(Party.getParty(p).equals(Party.getParty(p1)))
-			            									{
-			            										continue;
-			            									}
-			            								}
-			            							}		             			
-			             							atk1(0.45*(1+csd.SlimeBall.get(p.getUniqueId())*0.035), p, le);
-			             							Holding.holding(p, le, 20l);
-			             							le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 40, 2, false, false));
-			             							le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 40, 2, false, false));       							
-			             						}
-			             					}
-			             					slime.getWorld().spawnParticle(Particle.SLIME, slime.getLocation(), 460, 3,3,3);
-			             					slime.getWorld().playSound(slime.getLocation(), Sound.ENTITY_SLIME_SQUISH, 1, 0);
-			             					slime.getWorld().playSound(slime.getLocation(), Sound.ENTITY_SLIME_HURT, 1, 0);
-			             					slime.getWorld().playSound(slime.getLocation(), Sound.ENTITY_SLIME_DEATH, 1, 0);
-			             					slime.getWorld().playSound(slime.getLocation(), Sound.BLOCK_SLIME_BLOCK_BREAK, 1, 0);
-			             					slime.remove();
-							            }
-				                	   }, j.getAndIncrement()/20+1); 
-	                    }
+	                    Snowball thr = (Snowball) p.launchProjectile(Snowball.class);
+	                    thr.setShooter(p);
+	                    thr.setBounce(true);
+	                    thr.setItem(new ItemStack(Material.SLIME_BALL));
+	                    thr.setVelocity(p.getEyeLocation().getDirection().normalize().multiply(3));
+	                    thr.setMetadata("slimeball"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	 
+	                    thr.setMetadata("fake"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	
 						sdcooldown.put(p.getName(), System.currentTimeMillis());
 	                }
 	            }
@@ -376,110 +267,17 @@ public class Cheskills extends Pak implements Listener, Serializable {
 		            }, 25); 
                 	mgt.put(p.getUniqueId(), task);
                 	
+
                 	
 					p.playSound(p.getLocation(), Sound.ENTITY_FISHING_BOBBER_THROW, 1.0f, 0f);
 					p.playSound(p.getLocation(), Sound.ENTITY_SLIME_JUMP, 1.0f, 0f);
-					Item slime = p.getWorld().dropItemNaturally(p.getLocation(), new ItemStack(Material.SLIME_BALL));
-					slime.setPickupDelay(5555);
-					slime.setVelocity(p.getLocation().getDirection().normalize().multiply(2));
-					slime.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-                    ArrayList<Location> line = new ArrayList<Location>();
-                    AtomicInteger j = new AtomicInteger(0);
-                    AtomicInteger a = new AtomicInteger(0);
-                    new AtomicInteger(0);
-                    for(double d = 0.1; d <= 5; d += 0.1) {
-	                    Location pl = p.getLocation();
-						pl.add(pl.getDirection().normalize().multiply(d));
-						line.add(pl);
-                    }
-                    if(line.stream().filter(o -> o.getWorld().getNearbyEntities(o,1.3,1.3,1.3).stream().filter(en -> en instanceof LivingEntity && en!=p).findFirst().isPresent()).findFirst().isPresent()) 
-                    {
-	                    Location block =line.stream().filter(o -> o.getWorld().getNearbyEntities(o,1.3,1.3,1.3).stream().filter(en -> en instanceof LivingEntity && en!=p).findFirst().isPresent()).findFirst().get();
-	                    for(int k=0; k<line.indexOf(block); k++) {
-	                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	             		@Override
-			                	public void run() 
-				                {	
- 									slime.teleport(line.get(a.getAndIncrement()));
-			             			p.getWorld().spawnParticle(Particle.SLIME ,line.get(a.get()), 3, 1,1,1,0);
-					            }
-		                	   }, j.getAndIncrement()/20); 
-						 }
-                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	             		@Override
-			                	public void run() 
-				                {	
-	             					for(Entity e: slime.getNearbyEntities(3, 3, 3)) {
-	             						if(e instanceof LivingEntity && e!=p && !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
-	             							LivingEntity le = (LivingEntity)e;
-	             							if (le instanceof Player) 
-	            							{
-	            								Player p1 = (Player) le;
-	            								if(Party.hasParty(p) && Party.hasParty(p1))	{
-	            								if(Party.getParty(p).equals(Party.getParty(p1)))
-	            									{
-	            										continue;
-	            									}
-	            								}
-	            							}		             		
-	             							atk1(0.45*(1+csd.SlimeBall.get(p.getUniqueId())*0.035), p, le);
-	             							Holding.holding(p, le, 20l);
-	             							le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 40, 2, false, false));
-	             							le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 40, 2, false, false));        							
-	             						}
-	             					}
-	             					slime.getWorld().spawnParticle(Particle.SLIME, slime.getLocation(), 460, 3,3,3);
-	             					slime.getWorld().playSound(block, Sound.ENTITY_SLIME_SQUISH, 1, 0);
-	             					slime.getWorld().playSound(block, Sound.ENTITY_SLIME_HURT, 1, 0);
-	             					slime.getWorld().playSound(block, Sound.ENTITY_SLIME_DEATH, 1, 0);
-	             					slime.getWorld().playSound(block, Sound.BLOCK_SLIME_BLOCK_BREAK, 1, 0);
-	             					slime.remove();
-					            }
-                    	}, j.getAndIncrement()/20+1);
-	                }
-                    else {
-                    	line.forEach(i -> {
-	                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	             		@Override
-			                	public void run() 
-				                {	
- 									slime.teleport(i);
-			             			p.getWorld().spawnParticle(Particle.SLIME ,line.get(a.get()), 3, 1,1,1,0);
-					            }
-		                	   }, j.getAndIncrement()/20); 
-						}); 
-	                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		             		@Override
-				                	public void run() 
-					                {	
-				             			for(Entity e: slime.getNearbyEntities(3, 3, 3)) {
-		             						if(e instanceof LivingEntity && e!=p && !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
-		             							LivingEntity le = (LivingEntity)e;
-		             							if (le instanceof Player) 
-		            							{
-		            								Player p1 = (Player) le;
-		            								if(Party.hasParty(p) && Party.hasParty(p1))	{
-		            								if(Party.getParty(p).equals(Party.getParty(p1)))
-		            									{
-		            										continue;
-		            									}
-		            								}
-		            							}
-		             							atk1(0.45*(1+csd.SlimeBall.get(p.getUniqueId())*0.035), p, le);
-		             							Holding.holding(p, le, 20l);
-		             							le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 40, 2, false, false));
-		             							le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 40, 2, false, false));           							
-		             						}
-		             					}
-		             					slime.getWorld().spawnParticle(Particle.SLIME, slime.getLocation(), 460, 3,3,3);
-		             					slime.getWorld().playSound(slime.getLocation(), Sound.ENTITY_SLIME_SQUISH, 1, 0);
-		             					slime.getWorld().playSound(slime.getLocation(), Sound.ENTITY_SLIME_HURT, 1, 0);
-		             					slime.getWorld().playSound(slime.getLocation(), Sound.ENTITY_SLIME_DEATH, 1, 0);
-		             					slime.getWorld().playSound(slime.getLocation(), Sound.BLOCK_SLIME_BLOCK_BREAK, 1, 0);
-		             					slime.remove();
-						            }
-			                	   }, j.getAndIncrement()/20+1); 
-                    }
+                    Snowball thr = (Snowball) p.launchProjectile(Snowball.class);
+                    thr.setShooter(p);
+                    thr.setBounce(true);
+                    thr.setItem(new ItemStack(Material.SLIME_BALL));
+                    thr.setVelocity(p.getEyeLocation().getDirection().normalize().multiply(3));
+                    thr.setMetadata("slimeball"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	 
+                    thr.setMetadata("fake"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	
 	                sdcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
 	            }
 			}
@@ -529,111 +327,15 @@ public class Cheskills extends Pak implements Listener, Serializable {
             	gbt.put(p.getUniqueId(), task);
 				
 
-				p.playSound(p.getLocation(), Sound.ENTITY_FISHING_BOBBER_THROW, 1.0f, 0f);
-				p.playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 1.0f, 0f);
-				Item slime = p.getWorld().dropItemNaturally(p.getLocation(), new ItemStack(Material.MAGMA_CREAM));
-				slime.setPickupDelay(5555);
-				slime.setVelocity(p.getLocation().getDirection().normalize().multiply(2));
-				slime.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-                ArrayList<Location> line = new ArrayList<Location>();
-                AtomicInteger j = new AtomicInteger(0);
-                AtomicInteger a = new AtomicInteger(0);
-                new AtomicInteger(0);
-                for(double d = 0.1; d <= 5; d += 0.1) {
-                    Location pl = p.getLocation();
-					pl.add(pl.getDirection().normalize().multiply(d));
-					line.add(pl);
-                }
-                if(line.stream().filter(o -> o.getWorld().getNearbyEntities(o,1.3,1.3,1.3).stream().filter(en -> en instanceof LivingEntity && en!=p).findFirst().isPresent()).findFirst().isPresent()) 
-                {
-                    Location block =line.stream().filter(o -> o.getWorld().getNearbyEntities(o,1.3,1.3,1.3).stream().filter(en -> en instanceof LivingEntity && en!=p).findFirst().isPresent()).findFirst().get();
-                    for(int k=0; k<line.indexOf(block); k++) {
-                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-             		@Override
-		                	public void run() 
-			                {	
-									slime.teleport(line.get(a.getAndIncrement()));
-									slime.getWorld().spawnParticle(Particle.SMALL_FLAME ,line.get(a.get()), 3, 1,1,1,0);
-				            }
-	                	   }, j.getAndIncrement()/20); 
-					 }
-                	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-             		@Override
-		                	public void run() 
-			                {	
-             					for(Entity e: slime.getNearbyEntities(3.5, 3.5, 3.5)) {
-             						if(e instanceof LivingEntity && e!=p && !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
-             							LivingEntity le = (LivingEntity)e;
-             							if (le instanceof Player) 
-            							{
-            								
-            								Player p1 = (Player) le;
-            								if(Party.hasParty(p) && Party.hasParty(p1))	{
-            								if(Party.getParty(p).equals(Party.getParty(p1)))
-            									{
-            										continue;
-            									}
-            								}
-            							}
-             							atk1(0.9*(1+csd.SlimeBall.get(p.getUniqueId())*0.07), p, le);
-             							le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 40, 2, false, false));
-             							le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 40, 2, false, false));
-             							le.setFireTicks(40);
-             						}
-             					}
-             					slime.getWorld().spawnParticle(Particle.LAVA, slime.getLocation(), 130, 3,3,3);
-             					slime.getWorld().playSound(block, Sound.ENTITY_MAGMA_CUBE_SQUISH, 1, 0);
-             					slime.getWorld().playSound(block, Sound.ENTITY_MAGMA_CUBE_HURT, 1, 0);
-             					slime.getWorld().playSound(block, Sound.ENTITY_MAGMA_CUBE_DEATH, 1, 0);
-             					slime.getWorld().playSound(block, Sound.ENTITY_MAGMA_CUBE_JUMP, 1, 0);
-             					slime.remove();
-				            }
-                	}, j.getAndIncrement()/20+1);
-                }
-                else {
-                	line.forEach(i -> {
-                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-             		@Override
-		                	public void run() 
-			                {	
-									slime.teleport(i);
-			             			p.getWorld().spawnParticle(Particle.SMALL_FLAME ,line.get(a.get()), 3, 1,1,1,0);
-				            }
-	                	   }, j.getAndIncrement()/20); 
-					}); 
-                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	             		@Override
-			                	public void run() 
-				                {	
-         					for(Entity e: slime.getNearbyEntities(3.5, 3.5, 3.5)) {
-         						if(e instanceof LivingEntity && e!=p && !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
-         							LivingEntity le = (LivingEntity)e;
-         							if (le instanceof Player) 
-        							{
-        								
-        								Player p1 = (Player) le;
-        								if(Party.hasParty(p) && Party.hasParty(p1))	{
-        								if(Party.getParty(p).equals(Party.getParty(p1)))
-        									{
-        										continue;
-        									}
-        								}
-        							}
-         							atk1(0.9*(1+csd.SlimeBall.get(p.getUniqueId())*0.07), p, le);
-         							le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 40, 2, false, false));
-         							le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 40, 2, false, false));
-         							le.setFireTicks(40);
-         						}
-         					}
-         					slime.getWorld().spawnParticle(Particle.LAVA, slime.getLocation(), 130, 3,3,3);
-         					slime.getWorld().playSound(slime.getLocation(), Sound.ENTITY_MAGMA_CUBE_SQUISH, 1, 0);
-         					slime.getWorld().playSound(slime.getLocation(), Sound.ENTITY_MAGMA_CUBE_HURT, 1, 0);
-         					slime.getWorld().playSound(slime.getLocation(), Sound.ENTITY_MAGMA_CUBE_DEATH, 1, 0);
-         					slime.getWorld().playSound(slime.getLocation(), Sound.ENTITY_MAGMA_CUBE_JUMP, 1, 0);
-         					slime.remove();
-					            }
-		                	   }, j.getAndIncrement()/20+1); 
-                }
+            	
+				p.playSound(p.getLocation(), Sound.ENTITY_MAGMA_CUBE_JUMP, 1.0f, 0f);
+                Snowball thr = (Snowball) p.launchProjectile(Snowball.class);
+                thr.setShooter(p);
+                thr.setBounce(true);
+                thr.setItem(new ItemStack(Material.MAGMA_CREAM));
+                thr.setVelocity(p.getEyeLocation().getDirection().normalize().multiply(3));
+                thr.setMetadata("magmaball"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	 
+                thr.setMetadata("fake"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 							
 			}
 		
@@ -657,112 +359,15 @@ public class Cheskills extends Pak implements Listener, Serializable {
             	}
 				gb.remove(p.getUniqueId());
 
-
-				p.playSound(p.getLocation(), Sound.ENTITY_GLOW_SQUID_SQUIRT, 1.0f, 0f);
-				p.playSound(p.getLocation(), Sound.ENTITY_ENDER_PEARL_THROW, 1.0f, 0f);
-				Item slime = p.getWorld().dropItemNaturally(p.getLocation(), new ItemStack(Material.GLOWSTONE));
-				slime.setPickupDelay(5555);
-				slime.setVelocity(p.getLocation().getDirection().normalize().multiply(2));
-				slime.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-                ArrayList<Location> line = new ArrayList<Location>();
-                AtomicInteger j = new AtomicInteger(0);
-                AtomicInteger a = new AtomicInteger(0);
-                new AtomicInteger(0);
-                for(double d = 0.1; d <= 5; d += 0.1) {
-                    Location pl = p.getLocation();
-					pl.add(pl.getDirection().normalize().multiply(d));
-					line.add(pl);
-                }
-                if(line.stream().filter(o -> o.getWorld().getNearbyEntities(o,1.3,1.3,1.3).stream().filter(en -> en instanceof LivingEntity && en!=p).findFirst().isPresent()).findFirst().isPresent()) 
-                {
-                    Location block =line.stream().filter(o -> o.getWorld().getNearbyEntities(o,1.3,1.3,1.3).stream().filter(en -> en instanceof LivingEntity && en!=p).findFirst().isPresent()).findFirst().get();
-                    for(int k=0; k<line.indexOf(block); k++) {
-                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-             		@Override
-		                	public void run() 
-			                {	
-									slime.teleport(line.get(a.getAndIncrement()));
-		             			p.getWorld().spawnParticle(Particle.GLOW_SQUID_INK ,line.get(a.get()), 3, 1,1,1,0);
-				            }
-	                	   }, j.getAndIncrement()/20); 
-					 }
-                	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-             		@Override
-		                	public void run() 
-			                {	
-             					for(Entity e: slime.getNearbyEntities(2, 2, 2)) {
-             						if(e instanceof LivingEntity && e!=p && !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
-             							LivingEntity le = (LivingEntity)e;
-             							if (le instanceof Player) 
-            							{
-            								
-            								Player p1 = (Player) le;
-            								if(Party.hasParty(p) && Party.hasParty(p1))	{
-            								if(Party.getParty(p).equals(Party.getParty(p1)))
-            									{
-            										continue;
-            									}
-            								}
-            							}
-             							atk1(0.8*(1+csd.SlimeBall.get(p.getUniqueId())*0.08), p, le);
-             							le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 40, 2, false, false));
-             						}
-             					}
-             					slime.getWorld().spawnParticle(Particle.GLOW, slime.getLocation(), 130, 3,3,3);
-             					slime.getWorld().spawnParticle(Particle.GLOW_SQUID_INK, slime.getLocation(), 130, 3,3,3);
-             					slime.getWorld().spawnParticle(Particle.WAX_ON, slime.getLocation(), 130, 3,3,3);
-             					slime.getWorld().playSound(block, Sound.ITEM_GLOW_INK_SAC_USE, 1, 0);
-             					slime.getWorld().playSound(block, Sound.ENTITY_GLOW_SQUID_HURT, 1, 0);
-             					slime.getWorld().playSound(block, Sound.ENTITY_GLOW_SQUID_DEATH, 1, 0);
-             					slime.getWorld().playSound(block, Sound.ENTITY_GLOW_SQUID_AMBIENT, 1, 0);
-             					slime.remove();
-				            }
-                	}, j.getAndIncrement()/20+1);
-                }
-                else {
-                	line.forEach(i -> {
-                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-             		@Override
-		                	public void run() 
-			                {	
-									slime.teleport(i);
-			             			p.getWorld().spawnParticle(Particle.GLOW_SQUID_INK ,line.get(a.get()), 3, 1,1,1,0);
-				            }
-	                	   }, j.getAndIncrement()/20); 
-					}); 
-                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	             		@Override
-			                	public void run() 
-				                {	
-         					for(Entity e: slime.getNearbyEntities(2, 2, 2)) {
-         						if(e instanceof LivingEntity && e!=p && !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
-         							LivingEntity le = (LivingEntity)e;
-         							if (le instanceof Player) 
-        							{
-        								
-        								Player p1 = (Player) le;
-        								if(Party.hasParty(p) && Party.hasParty(p1))	{
-        								if(Party.getParty(p).equals(Party.getParty(p1)))
-        									{
-        										continue;
-        									}
-        								}
-        							}
-         							atk1(0.8*(1+csd.SlimeBall.get(p.getUniqueId())*0.08), p, le);
-         							le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 40, 2, false, false));
-         						}
-         					}
-         					slime.getWorld().spawnParticle(Particle.GLOW, slime.getLocation(), 130, 3,3,3);
-         					slime.getWorld().spawnParticle(Particle.GLOW_SQUID_INK, slime.getLocation(), 130, 3,3,3);
-         					slime.getWorld().spawnParticle(Particle.WAX_ON, slime.getLocation(), 130, 3,3,3);
-         					slime.getWorld().playSound(slime.getLocation(), Sound.ITEM_GLOW_INK_SAC_USE, 1, 0);
-         					slime.getWorld().playSound(slime.getLocation(), Sound.ENTITY_GLOW_SQUID_HURT, 1, 0);
-         					slime.getWorld().playSound(slime.getLocation(), Sound.ENTITY_GLOW_SQUID_DEATH, 1, 0);
-         					slime.getWorld().playSound(slime.getLocation(), Sound.ENTITY_GLOW_SQUID_AMBIENT, 1, 0);
-         					slime.remove();
-					            }
-		                	   }, j.getAndIncrement()/20+1); 
-                }
+				p.playSound(p.getLocation(), Sound.ENTITY_GLOW_SQUID_SQUIRT, 0.6f, 0f);
+				p.playSound(p.getLocation(), Sound.ENTITY_ENDER_PEARL_THROW, 0.8f, 0f);
+                Snowball thr = (Snowball) p.launchProjectile(Snowball.class);
+                thr.setShooter(p);
+                thr.setBounce(true);
+                thr.setItem(new ItemStack(Material.GLOWSTONE));
+                thr.setVelocity(p.getEyeLocation().getDirection().normalize().multiply(3));
+                thr.setMetadata("glowingball"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	 
+                thr.setMetadata("fake"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 			}
 		
 		}
@@ -886,6 +491,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 			if(ClassData.pc.get(p.getUniqueId()) == 15&& csd.AcidCloud.getOrDefault(p.getUniqueId(), 0)>=1) {
 				if(!(p.isSneaking()) && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK))
 				{
+					p.setCooldown(Material.TNT,3);
 				if(gdcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
 		        {
 		            double timer = (gdcooldown.get(p.getName())/1000d + 0.25) - System.currentTimeMillis()/1000d; // geting time in seconds
@@ -2200,10 +1806,101 @@ public class Cheskills extends Pak implements Listener, Serializable {
 		{
 			Player p = (Player)ev.getEntity().getShooter();
 		    
+			if(ClassData.pc.get(p.getUniqueId()) != 15) {
+				return;
+			}
+
+			if(ev.getEntity().hasMetadata("slimeball"+p.getName())) {
+				Snowball slime = (Snowball) ev.getEntity();
+					for(Entity e: slime.getNearbyEntities(3, 3, 3)) {
+ 						if(e instanceof LivingEntity && e!=p && !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
+ 							LivingEntity le = (LivingEntity)e;
+ 							if (le instanceof Player) 
+							{
+								
+								Player p1 = (Player) le;
+								if(Party.hasParty(p) && Party.hasParty(p1))	{
+								if(Party.getParty(p).equals(Party.getParty(p1)))
+									{
+										continue;
+									}
+								}
+							}
+ 							atk1(0.45*(1+csd.SlimeBall.get(p.getUniqueId())*0.035), p, le);
+ 							Holding.holding(p, le, 20l);
+ 							le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 40, 2, false, false));
+ 							le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 40, 2, false, false));
+ 						}
+ 					}
+ 					slime.getWorld().spawnParticle(Particle.SLIME, slime.getLocation(), 460, 3,3,3);
+ 					slime.getWorld().playSound(slime.getLocation(), Sound.ENTITY_SLIME_SQUISH, 1, 0);
+ 					slime.getWorld().playSound(slime.getLocation(), Sound.ENTITY_SLIME_HURT, 1, 0);
+ 					slime.getWorld().playSound(slime.getLocation(), Sound.ENTITY_SLIME_DEATH, 1, 0);
+ 					slime.getWorld().playSound(slime.getLocation(), Sound.BLOCK_SLIME_BLOCK_BREAK, 1, 0);
+ 					slime.remove();
+			}
 			
-			
-			
-			if(ClassData.pc.get(p.getUniqueId()) == 15 && ev.getEntity().hasMetadata("thrown of"+p.getName())) {
+
+			if(ev.getEntity().hasMetadata("magmaball"+p.getName())) {
+				Snowball slime = (Snowball) ev.getEntity();
+					for(Entity e: slime.getNearbyEntities(3.5, 3.5, 3.5)) {
+ 						if(e instanceof LivingEntity && e!=p && !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
+ 							LivingEntity le = (LivingEntity)e;
+ 							if (le instanceof Player) 
+							{
+								
+								Player p1 = (Player) le;
+								if(Party.hasParty(p) && Party.hasParty(p1))	{
+								if(Party.getParty(p).equals(Party.getParty(p1)))
+									{
+										continue;
+									}
+								}
+							}
+ 							atk1(0.9*(1+csd.SlimeBall.get(p.getUniqueId())*0.07), p, le);
+ 							le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 40, 2, false, false));
+ 							le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 40, 2, false, false));
+ 							le.setFireTicks(40);
+ 						}
+ 					}
+ 					slime.getWorld().spawnParticle(Particle.LAVA, slime.getLocation(), 130, 3,3,3);
+ 					slime.getWorld().playSound(slime.getLocation(), Sound.ENTITY_MAGMA_CUBE_SQUISH, 1, 0);
+ 					slime.getWorld().playSound(slime.getLocation(), Sound.ENTITY_MAGMA_CUBE_HURT, 1, 0);
+ 					slime.getWorld().playSound(slime.getLocation(), Sound.ENTITY_MAGMA_CUBE_DEATH, 1, 0);
+ 					slime.getWorld().playSound(slime.getLocation(), Sound.ENTITY_MAGMA_CUBE_JUMP, 1, 0);
+ 					slime.remove();
+			}
+
+			if(ev.getEntity().hasMetadata("glowingball"+p.getName())) {
+				Snowball slime = (Snowball) ev.getEntity();
+					for(Entity e: slime.getNearbyEntities(2, 2, 2)) {
+ 						if(e instanceof LivingEntity && e!=p && !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
+ 							LivingEntity le = (LivingEntity)e;
+ 							if (le instanceof Player) 
+							{
+								
+								Player p1 = (Player) le;
+								if(Party.hasParty(p) && Party.hasParty(p1))	{
+								if(Party.getParty(p).equals(Party.getParty(p1)))
+									{
+										continue;
+									}
+								}
+							}
+ 							atk1(0.8*(1+csd.SlimeBall.get(p.getUniqueId())*0.08), p, le);
+ 							le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 40, 2, false, false));
+ 						}
+ 					}
+ 					slime.getWorld().spawnParticle(Particle.GLOW, slime.getLocation(), 130, 3,3,3);
+ 					slime.getWorld().spawnParticle(Particle.GLOW_SQUID_INK, slime.getLocation(), 130, 3,3,3);
+ 					slime.getWorld().spawnParticle(Particle.WAX_ON, slime.getLocation(), 130, 3,3,3);
+ 					slime.getWorld().playSound(slime.getLocation(), Sound.ITEM_GLOW_INK_SAC_USE, 1, 0);
+ 					slime.getWorld().playSound(slime.getLocation(), Sound.ENTITY_GLOW_SQUID_HURT, 1, 0);
+ 					slime.getWorld().playSound(slime.getLocation(), Sound.ENTITY_GLOW_SQUID_DEATH, 1, 0);
+ 					slime.getWorld().playSound(slime.getLocation(), Sound.ENTITY_GLOW_SQUID_AMBIENT, 1, 0);
+ 					slime.remove();
+			}
+			if(ev.getEntity().hasMetadata("thrown of"+p.getName())) {
 				if(ev.getHitEntity()!=null) {
 					ev.getHitEntity().getWorld().spawnParticle(Particle.FLAME, ev.getHitEntity().getLocation(), 30,2,2,2,1);
 					for (Entity e : p.getWorld().getNearbyEntities(ev.getHitEntity().getLocation(), 3, 3, 3))

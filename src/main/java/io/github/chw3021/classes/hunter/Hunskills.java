@@ -8,6 +8,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
 import io.github.chw3021.classes.ClassData;
@@ -74,7 +75,6 @@ public class Hunskills extends Pak implements Serializable, Listener {
 	
 	private static transient final long serialVersionUID = -6374689169024724861L;
 	private HashMap<String, Long> tbcooldown = new HashMap<String, Long>();
-	private HashMap<String, Long> chcooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> djcooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> hucooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> smcooldown = new HashMap<String, Long>();
@@ -82,6 +82,10 @@ public class Hunskills extends Pak implements Serializable, Listener {
 	private HashMap<String, Long> aultcooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> ault2cooldown = new HashMap<String, Long>();
 	private HashMap<String, Integer> ult2t = new HashMap<String, Integer>();
+	
+
+	private Multimap<UUID, UUID> str2 = HashMultimap.create();
+	private HashMap<UUID, Integer> str2t = new HashMap<UUID, Integer>();
 	
 	private static HashMap<String, Integer> hunting = new HashMap<String, Integer>();
 	private static HashMap<String, Integer> huntt = new HashMap<String, Integer>();
@@ -194,39 +198,90 @@ public class Hunskills extends Pak implements Serializable, Listener {
 	                {
 		        		
 	                	tbcooldown.remove(p.getName());
-	                	if(Proficiency.getpro(p)>=2) {
 
-		                    ArrayList<Location> line = new ArrayList<Location>();
-		                    for(double dou = -Math.PI/12; dou<= Math.PI/12; dou += Math.PI/60) {
-			                    Location l = p.getEyeLocation().clone();
-			                    l.setDirection(l.getDirection().rotateAroundY(dou));
-			                    l.add(l.getDirection().normalize().multiply(25.1));
-			                    line.add(l);
-		                    }
-							line.forEach(l -> {
-			            		Snowball sn = p.launchProjectile(Snowball.class);
-			            		sn.setItem(new ItemStack(Material.COBWEB));
-			            		sn.setVelocity(l.getDirection().multiply(0.68));
-			            		sn.setMetadata("web", new FixedMetadataValue(RMain.getInstance(), true));
-			            		sn.setShooter(p);
-			            		sn.setGlowing(true);
-							});
+	                	if(str2.containsKey(p.getUniqueId())) {
+    						str2.removeAll(p.getUniqueId());
 	                	}
-		            	else {
-			        		Snowball sn = p.launchProjectile(Snowball.class);
-			        		sn.setItem(new ItemStack(Material.COBWEB));
-			        		sn.setVelocity(sn.getVelocity().multiply(0.68));
-			        		sn.setMetadata("web", new FixedMetadataValue(RMain.getInstance(), true));
-			        		sn.setShooter(p);
-			        		sn.setGlowing(true);
-		            	}
+                    	if(str2t.containsKey(p.getUniqueId())) {
+                    		Bukkit.getScheduler().cancelTask(str2t.get(p.getUniqueId()));
+                    		str2t.remove(p.getUniqueId());
+                    	}
+
+                		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+        	                @Override
+        	                public void run() {
+        	                	if(str2.containsKey(p.getUniqueId())) {
+            						str2.removeAll(p.getUniqueId());
+        	                	}
+        	                }
+        	            }, 50); 
+                    	str2t.put(p.getUniqueId(), task);
+
+    	            	if(Proficiency.getpro(p)>=1) {
+    	
+    	                    ArrayList<Location> line = new ArrayList<Location>();
+    	                    for(double dou = -Math.PI/12; dou<= Math.PI/12; dou += Math.PI/60) {
+    		                    Location l = p.getEyeLocation().clone();
+    		                    l.setDirection(l.getDirection().rotateAroundY(dou));
+    		                    l.add(l.getDirection().normalize().multiply(25.1));
+    		                    line.add(l);
+    	                    }
+    						line.forEach(l -> {
+    		            		Snowball sn = p.launchProjectile(Snowball.class);
+    		            		sn.setItem(new ItemStack(Material.COBWEB));
+    		            		sn.setVelocity(l.getDirection().multiply(0.78));
+    		            		sn.setMetadata("web_hunter", new FixedMetadataValue(RMain.getInstance(), true));
+    		            		sn.setShooter(p);
+    		            		sn.setGlowing(true);
+    		            		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+    		    	                @Override
+    		    	                public void run() {
+    		    	                	sn.remove();
+    		    	                }
+    		    	            }, 50); 
+    						});
+    						
+    	            	}
+    	            	else {
+    		        		Snowball sn = p.launchProjectile(Snowball.class);
+    		        		sn.setItem(new ItemStack(Material.COBWEB));
+    		        		sn.setVelocity(sn.getVelocity().multiply(0.78));
+    		        		sn.setMetadata("web_hunter", new FixedMetadataValue(RMain.getInstance(), true));
+    		        		sn.setShooter(p);
+    		        		sn.setGlowing(true);
+		            		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		    	                @Override
+		    	                public void run() {
+		    	                	sn.remove();
+		    	                }
+		    	            }, 50); 
+    	            		}
+					
 		                tbcooldown.put(p.getName(), System.currentTimeMillis()); 
 	                }
 	            }
 	            else 
 	            {
+                	if(str2t.containsKey(p.getUniqueId())) {
+                		Bukkit.getScheduler().cancelTask(str2t.get(p.getUniqueId()));
+                		str2t.remove(p.getUniqueId());
+                	}
+                	if(str2.containsKey(p.getUniqueId())) {
+						str2.removeAll(p.getUniqueId());
+                	}
+                	
+                	
+            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+    	                @Override
+    	                public void run() {
+    	                	if(str2.containsKey(p.getUniqueId())) {
+        						str2.removeAll(p.getUniqueId());
+    	                	}
+    	                }
+    	            }, 50); 
+                	str2t.put(p.getUniqueId(), task);
 
-	            	if(Proficiency.getpro(p)>=2) {
+	            	if(Proficiency.getpro(p)>=1) {
 	
 	                    ArrayList<Location> line = new ArrayList<Location>();
 	                    for(double dou = -Math.PI/12; dou<= Math.PI/12; dou += Math.PI/60) {
@@ -238,20 +293,32 @@ public class Hunskills extends Pak implements Serializable, Listener {
 						line.forEach(l -> {
 		            		Snowball sn = p.launchProjectile(Snowball.class);
 		            		sn.setItem(new ItemStack(Material.COBWEB));
-		            		sn.setVelocity(l.getDirection().multiply(0.68));
-		            		sn.setMetadata("web", new FixedMetadataValue(RMain.getInstance(), true));
+		            		sn.setVelocity(l.getDirection().multiply(0.78));
+		            		sn.setMetadata("web_hunter", new FixedMetadataValue(RMain.getInstance(), true));
 		            		sn.setShooter(p);
 		            		sn.setGlowing(true);
+		            		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		    	                @Override
+		    	                public void run() {
+		    	                	sn.remove();
+		    	                }
+		    	            }, 50); 
 						});
 						
 	            	}
 	            	else {
 		        		Snowball sn = p.launchProjectile(Snowball.class);
 		        		sn.setItem(new ItemStack(Material.COBWEB));
-		        		sn.setVelocity(sn.getVelocity().multiply(0.68));
-		        		sn.setMetadata("web", new FixedMetadataValue(RMain.getInstance(), true));
+		        		sn.setVelocity(sn.getVelocity().multiply(0.78));
+		        		sn.setMetadata("web_hunter", new FixedMetadataValue(RMain.getInstance(), true));
 		        		sn.setShooter(p);
 		        		sn.setGlowing(true);
+	            		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	    	                @Override
+	    	                public void run() {
+	    	                	sn.remove();
+	    	                }
+	    	            }, 50); 
 	            	}
 	                tbcooldown.put(p.getName(), System.currentTimeMillis()); 
 	            }
@@ -265,11 +332,14 @@ public class Hunskills extends Pak implements Serializable, Listener {
 	
 	public void Webthrow(ProjectileHitEvent ev) 
 	{
-		if(ev.getEntity().hasMetadata("web")) {
+		if(ev.getEntity().hasMetadata("web_hunter")) {
 			Projectile pr = ev.getEntity();
 			if(pr.getShooter() instanceof Player && ev.getHitEntity() instanceof LivingEntity) {
 				Player p = (Player) pr.getShooter();
 				LivingEntity e = (LivingEntity) ev.getHitEntity();
+            	if(!str2t.containsKey(p.getUniqueId())) {
+            		return;
+            	}
         		if (e instanceof Player) 
 				{
         			
@@ -285,20 +355,57 @@ public class Hunskills extends Pak implements Serializable, Listener {
 				{
 					LivingEntity le = (LivingEntity)e;
 					p.getWorld().spawnParticle(Particle.BLOCK_CRACK, le.getLocation(), 50, 1,1,1, 0.21, Material.COBWEB.createBlockData());
-					p.playSound(le.getLocation(), Sound.BLOCK_WEEPING_VINES_BREAK, 1, 0);
-					p.playSound(le.getLocation(), Sound.ENTITY_SPIDER_HURT, 1, 0);
-					Holding.holding(p, le, 2l);
-					le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 40, 3, false, false));
-					le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 40, 3, false, false));
-					if(Proficiency.getpro(p)>=1) {
-						Holding.holding(p, le, 40l);
+					p.playSound(le.getLocation(), Sound.BLOCK_WEEPING_VINES_BREAK, 0.7f, 0);
+					p.playSound(le.getLocation(), Sound.ENTITY_SPIDER_HURT, 0.5f, 0.2f);
+					le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 50, 3, false, false));
+					le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 50, 3, false, false));
+					
+					Holding.holding(p, le, 30l);
+					if(Proficiency.getpro(p)>=2) {
+						str2.put(p.getUniqueId(), le.getUniqueId());
 					}
+					
 				}
 			}
 		}
 	}
 	
+
+
 	
+	public void webRetrieving(PlayerInteractEvent ev) 
+	{
+	    
+		Player p = ev.getPlayer();
+		Action a = ev.getAction();
+		
+		if(ClassData.pc.get(p.getUniqueId()) == 2) {
+			
+			if(((a==Action.RIGHT_CLICK_AIR || a==Action.RIGHT_CLICK_BLOCK)) && (p.isSneaking()) && str2.containsKey(p.getUniqueId()))
+			{
+				if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE")&& !p.getInventory().getItemInMainHand().getType().name().contains("PICK"))
+				{
+					final Location ptl = gettargetblock(p,1);
+					
+					str2.get(p.getUniqueId()).forEach(lu ->{
+						if(Bukkit.getEntity(lu) != null) {
+							LivingEntity le = (LivingEntity) Bukkit.getEntity(lu);
+							le.teleport(ptl);
+							Holding.holding(p, le, 12l);
+						}
+					});
+					
+                	if(str2t.containsKey(p.getUniqueId())) {
+                		Bukkit.getScheduler().cancelTask(str2t.get(p.getUniqueId()));
+                		str2t.remove(p.getUniqueId());
+                	}
+					str2.removeAll(p.getUniqueId());
+				}
+			}
+		}
+	}
+		
+	/*
 	public void TurnOver(PlayerInteractEntityEvent ev) 
 	{
 			Player p = ev.getPlayer();
@@ -383,7 +490,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 				}
 			}
 	}
-	
+	*/
 	
 	public void Climb(PlayerSwapHandItemsEvent ev) 
 	{
@@ -715,7 +822,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 2 && hsd.HuntingStart.get(p.getUniqueId())>=1) {
-		if(((a==Action.RIGHT_CLICK_AIR || a==Action.RIGHT_CLICK_BLOCK)) && !(p.isOnGround()) && !(p.isSneaking()))
+		if(((a==Action.RIGHT_CLICK_AIR || a==Action.RIGHT_CLICK_BLOCK)) && !(p.isSneaking()))
 		{
 			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && !p.getInventory().getItemInMainHand().getType().name().contains("PICK")&& !hunting.containsKey(p.getName())&& Proficiency.getpro(p)<2)
 			{
@@ -1411,14 +1518,14 @@ else {
 		p.getWorld().spawnParticle(Particle.SOUL, p.getLocation(), 400,8,5,8);
         for(double an = Math.PI/2.5; an>-Math.PI/2.5; an-=Math.PI/60) {
         	Location pl = p.getLocation();
-        	pl.add(pl.getDirection().rotateAroundY(an).normalize().multiply(10));
+        	pl.add(pl.getDirection().rotateAroundY(an).normalize().multiply(8));
         	line.add(pl);
         }
         line.forEach(l -> {
     		p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l,5,0.1,0.1,0.1,0);
     		p.getWorld().spawnParticle(Particle.CRIT, l,5,0.1,0.1,0.1,0);
     		p.getWorld().spawnParticle(Particle.CRIT_MAGIC, l,5,0.1,0.1,0.1,0);
-            for(int i = 0; i<10;i+=1) {
+            for(int i = 0; i<8;i+=1) {
             	Location pl = p.getLocation();
             	Vector v = l.clone().toVector().subtract(pl.toVector()).normalize();
             	fill.add(pl.add(v.multiply(i)));
@@ -1442,7 +1549,7 @@ else {
 				ev.setCancelled(true);
 				if(ault2cooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
 	            {
-	                double timer = (ault2cooldown.get(p.getName())/1000d + 25*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d)) - System.currentTimeMillis()/1000d; // geting time in seconds
+	                double timer = (ault2cooldown.get(p.getName())/1000d + 50*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d)) - System.currentTimeMillis()/1000d; // geting time in seconds
 	                if(!(timer < 0)) // if timer is still more then 0 or 0
 	                {
 	                	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -1472,7 +1579,7 @@ else {
 			                	HashSet<Location> fill = ULT2(p);
 			                    HashSet<LivingEntity> les = new HashSet<LivingEntity>();
 			                    fill.forEach(l ->{
-			                    	for(Entity e: l.getWorld().getNearbyEntities(l,3,8,3)) {
+			                    	for(Entity e: l.getWorld().getNearbyEntities(l,2,4,2)) {
 										if (e instanceof Player) 
 										{
 											Player p1 = (Player) e;
@@ -1530,7 +1637,7 @@ else {
 		                	HashSet<Location> fill = ULT2(p);
 		                    HashSet<LivingEntity> les = new HashSet<LivingEntity>();
 		                    fill.forEach(l ->{
-		                    	for(Entity e: l.getWorld().getNearbyEntities(l,3,8,3)) {
+		                    	for(Entity e: l.getWorld().getNearbyEntities(l,2,4,2)) {
 									if (e instanceof Player) 
 									{
 										Player p1 = (Player) e;

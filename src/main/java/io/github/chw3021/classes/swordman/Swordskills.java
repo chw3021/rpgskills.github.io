@@ -970,7 +970,7 @@ public class Swordskills extends Pak implements Listener, Serializable {
                 	ArrayList<Location> line2 = new ArrayList<Location>();
 
                     Holding.superholding(p, p,20l);
-                    Holding.invur(p, 21l);
+                    Holding.invur(p, 30l);
 
                     Location fl = p.getLocation().clone();
                     final Location pl = p.getEyeLocation().clone();
@@ -1605,7 +1605,7 @@ public class Swordskills extends Pak implements Listener, Serializable {
 								LivingEntity le = (LivingEntity)e;
 								atk1(0.6*(1+ ssd.CriticalDraw.get(p.getUniqueId())*0.045), p, le);
 								le.teleport(p);
-								Holding.holding(p, le, 2l);
+								Holding.superholding(p, le, 10l);
 								
 							}
 						}
@@ -2487,7 +2487,9 @@ public class Swordskills extends Pak implements Listener, Serializable {
     		}
     	}
         line.forEach(il -> {
-    		il.getWorld().spawnParticle(Particle.FLASH, il,10,0.5,0.5,0.5,0);
+        	if(a==0) {
+        		il.getWorld().spawnParticle(Particle.FLASH, il,10,0.5,0.5,0.5,0);
+        	}
     		il.getWorld().spawnParticle(Particle.SWEEP_ATTACK, il,50,0.5,0.5,0.5,0);
     		il.getWorld().spawnParticle(Particle.BLOCK_CRACK, il,25,0.5,0.5,0.5,0, Material.GLOWSTONE.createBlockData());
         	
@@ -2577,7 +2579,10 @@ public class Swordskills extends Pak implements Listener, Serializable {
 	                    sult2cooldown.remove(p.getName()); // removing player from HashMap
 						p.getWorld().spawnParticle(Particle.CLOUD, l, 800, 8, 2, 8);
 						AtomicInteger j = new AtomicInteger();
-						p.playSound(l, Sound.WEATHER_RAIN_ABOVE, 1.0f, 0f);
+						p.playSound(l, Sound.WEATHER_RAIN_ABOVE, 0.5f, 0f);
+		            	p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, p.getLocation(), 10,2,1,2);
+						p.playSound(l, Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.5f, 0f);
+						p.playSound(l, Sound.ENTITY_ENDER_DRAGON_FLAP, 1.0f, 0f);
 
                     	for(int i =0; i<45; i++) {
     	                	   Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -2587,8 +2592,6 @@ public class Swordskills extends Pak implements Listener, Serializable {
     				                	ult2(fl.clone(), j.incrementAndGet());
         								p.teleport(l.clone().add(0, 3, 0));
         								Holding.holding(p, p, 30l);
-    					            	p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, p.getLocation(), 10,2,1,2);
-        								p.playSound(l, Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 0f);
 
 				                    	for (Entity a : l.getWorld().getNearbyEntities(l, 35, 35, 35))
 										{
@@ -2606,12 +2609,11 @@ public class Swordskills extends Pak implements Listener, Serializable {
 													}
 												}
 												LivingEntity le = (LivingEntity)a;
-	    										atk1(0.1, p, le);
 												Holding.superholding(p, le, 30l);
 											}
 										}
     				                }
-    	                	   }, i); 
+    	                	   }, i/2); 
                     	}
                     	
                         AtomicInteger j1 = new AtomicInteger();
@@ -2624,8 +2626,8 @@ public class Swordskills extends Pak implements Listener, Serializable {
     			                {
     								p.teleport(l.clone().add(0, 2, 0));
     								Holding.holding(p, p, 30l);
-    								p.playSound(l, Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 1.5f);
-    								p.playSound(l, Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1.0f, 1.5f);
+    								p.playSound(l, Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.76f, 1.5f);
+    								p.playSound(l, Sound.BLOCK_RESPAWN_ANCHOR_DEPLETE, 0.35f, 1.5f);
     								ULT2(l.clone(), j1.incrementAndGet());
     								
     			                    	for (Entity a : l.getWorld().getNearbyEntities(l, 25, 25, 25))
@@ -2644,12 +2646,11 @@ public class Swordskills extends Pak implements Listener, Serializable {
     												}
     											}
     											LivingEntity le = (LivingEntity)a;
-        										atk1(3.3, p, le);
     											Holding.superholding(p, le, 30l);
     										}
     									}
     			                }
-                    	   	}, 55 + i *2); 
+                    	   	}, 35 + i *2); 
                     	}
                     	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 			                @Override
@@ -2661,7 +2662,7 @@ public class Swordskills extends Pak implements Listener, Serializable {
 								p.playSound(l, Sound.BLOCK_CONDUIT_ACTIVATE, 1.0f, 1.5f);
 								Mindswords(l,p,is);
 			                }
-                	   	}, 82); 
+                	   	}, 62); 
                     	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 			                @Override
 			                public void run() 
@@ -2689,14 +2690,14 @@ public class Swordskills extends Pak implements Listener, Serializable {
 												}
 											}
 											LivingEntity le = (LivingEntity)a;
-    										atk1(12.1, p, le);
+    										atk1(45.1, p, le);
 											p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, le.getLocation(), 1);
 											p.playSound(le.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 1.5f);
 											p.playSound(le.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1.0f, 1.5f);
 										}
 									}
 			                }
-                	   	}, 100); 
+                	   	}, 80); 
 		                sult2cooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
 		            
 	                }
@@ -2705,7 +2706,10 @@ public class Swordskills extends Pak implements Listener, Serializable {
 	            {
 					p.getWorld().spawnParticle(Particle.CLOUD, l, 800, 8, 2, 8);
 					AtomicInteger j = new AtomicInteger();
-					p.playSound(l, Sound.WEATHER_RAIN_ABOVE, 1.0f, 0f);
+					p.playSound(l, Sound.WEATHER_RAIN_ABOVE, 0.5f, 0f);
+	            	p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, p.getLocation(), 10,2,1,2);
+					p.playSound(l, Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.5f, 0f);
+					p.playSound(l, Sound.ENTITY_ENDER_DRAGON_FLAP, 1.0f, 0f);
 
                 	for(int i =0; i<45; i++) {
 	                	   Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -2715,8 +2719,6 @@ public class Swordskills extends Pak implements Listener, Serializable {
 				                	ult2(fl.clone(), j.incrementAndGet());
     								p.teleport(l.clone().add(0, 3, 0));
     								Holding.holding(p, p, 30l);
-					            	p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, p.getLocation(), 10,2,1,2);
-    								p.playSound(l, Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 0f);
 
 			                    	for (Entity a : l.getWorld().getNearbyEntities(l, 35, 35, 35))
 									{
@@ -2734,12 +2736,11 @@ public class Swordskills extends Pak implements Listener, Serializable {
 												}
 											}
 											LivingEntity le = (LivingEntity)a;
-    										atk1(0.1, p, le);
 											Holding.superholding(p, le, 30l);
 										}
 									}
 				                }
-	                	   }, i); 
+	                	   }, i/2); 
                 	}
                 	
                     AtomicInteger j1 = new AtomicInteger();
@@ -2752,8 +2753,8 @@ public class Swordskills extends Pak implements Listener, Serializable {
 			                {
 								p.teleport(l.clone().add(0, 2, 0));
 								Holding.holding(p, p, 30l);
-								p.playSound(l, Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 1.5f);
-								p.playSound(l, Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1.0f, 1.5f);
+								p.playSound(l, Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.76f, 1.5f);
+								p.playSound(l, Sound.BLOCK_RESPAWN_ANCHOR_DEPLETE, 0.35f, 1.5f);
 								ULT2(l.clone(), j1.incrementAndGet());
 								
 			                    	for (Entity a : l.getWorld().getNearbyEntities(l, 25, 25, 25))
@@ -2772,12 +2773,11 @@ public class Swordskills extends Pak implements Listener, Serializable {
 												}
 											}
 											LivingEntity le = (LivingEntity)a;
-    										atk1(3.3, p, le);
 											Holding.superholding(p, le, 30l);
 										}
 									}
 			                }
-                	   	}, 55 + i *2); 
+                	   	}, 35 + i *2); 
                 	}
                 	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		                @Override
@@ -2789,7 +2789,7 @@ public class Swordskills extends Pak implements Listener, Serializable {
 							p.playSound(l, Sound.BLOCK_CONDUIT_ACTIVATE, 1.0f, 1.5f);
 							Mindswords(l,p,is);
 		                }
-            	   	}, 82); 
+            	   	}, 62); 
                 	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		                @Override
 		                public void run() 
@@ -2817,14 +2817,14 @@ public class Swordskills extends Pak implements Listener, Serializable {
 											}
 										}
 										LivingEntity le = (LivingEntity)a;
-										atk1(12.1, p, le);
+										atk1(45.1, p, le);
 										p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, le.getLocation(), 1);
 										p.playSound(le.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 1.5f);
 										p.playSound(le.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1.0f, 1.5f);
 									}
 								}
 		                }
-            	   	}, 100); 
+            	   	}, 80); 
 	                sult2cooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
 	            }
 			}

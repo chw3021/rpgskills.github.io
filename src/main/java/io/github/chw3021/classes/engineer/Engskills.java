@@ -37,6 +37,7 @@ import org.bukkit.Vibration;
 import org.bukkit.Vibration.Destination;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.block.BlockFace;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Arrow;
@@ -684,6 +685,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 		{
 			if(p.getInventory().getItemInMainHand().getType().name().contains("PICKAXE"))
 			{
+				p.setCooldown(Material.STRUCTURE_VOID, 2);
 
 				if(gdcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
 	            {
@@ -1618,7 +1620,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 			if(p.getInventory().getItemInMainHand().getType().name().contains("PICKAXE"))
 			{
 				
-				final Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 4).getLocation();
+				final Location l = gettargetblock(p,4);
 				if(frcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
 	            {
 	                double timer = (frcooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d; // geting time in seconds
@@ -1754,17 +1756,17 @@ public class Engskills extends Pak implements Listener, Serializable {
     	            }, 25); 
                 	thcrt.put(p.getUniqueId(), task);
                 	
-					p.getWorld().playSound(p.getLocation(), Sound.BLOCK_BEACON_AMBIENT, 1, 0);
-					p.getWorld().playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_TWINKLE, 1, 2);
+					l.getWorld().playSound(p.getLocation(), Sound.BLOCK_BEACON_AMBIENT, 1, 0);
+					l.getWorld().playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_TWINKLE, 1, 2);
                     for(int i =0; i<8; i++) {
 	                	   Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 				                @Override
 				                public void run() 
 				                {
-				                    p.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, l, 200, 4,1,4,0.3);
-				                    p.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, l, 200, 4,1,4,0.3);
-									p.getWorld().playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_TWINKLE, 0.8f, 2);
-									for (Entity a : p.getWorld().getNearbyEntities(l,4, 4, 4))
+				                    l.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, l, 200, 4,1,4,0.3);
+				                    l.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, l, 200, 4,1,4,0.3);
+									l.getWorld().playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_TWINKLE, 0.8f, 2);
+									for (Entity a : l.getWorld().getNearbyEntities(l,4, 4, 4))
 									{
 										if ((!(a == p))&& a instanceof LivingEntity&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal"))) 
 										{
@@ -1894,7 +1896,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 				                public void run() 
 				                {
 				                	as.remove();
-									for (Entity a : p.getWorld().getNearbyEntities(l, 5, 10, 5))
+									for (Entity a : l.getWorld().getNearbyEntities(l, 5, 10, 5))
 									{
 										if ((!(a == p))&& a instanceof LivingEntity&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal"))) 
 										{
@@ -2023,7 +2025,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 									l.getWorld().playSound(l, Sound.BLOCK_CONDUIT_ACTIVATE, 0.4f, 1.4f);
 									l.getWorld().playSound(l, Sound.BLOCK_CONDUIT_ACTIVATE, 0.4f, 1.8f);
 									l.getWorld().playSound(l, Sound.BLOCK_CONDUIT_ACTIVATE, 0.4f, 2f);
-									for (Entity a : p.getWorld().getNearbyEntities(l, 5, 10, 5))
+									for (Entity a : l.getWorld().getNearbyEntities(l, 5, 10, 5))
 									{
 										if ((!(a == p))&& a instanceof LivingEntity&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal"))) 
 										{
@@ -2204,7 +2206,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 17 && p.getInventory().getItemInMainHand().getType().name().contains("PICKAXE") && esd.Jetpack.get(p.getUniqueId())>=1) {
-			if((!p.isSneaking())&& !p.isOnGround() && (ac == Action.LEFT_CLICK_AIR || ac== Action.LEFT_CLICK_BLOCK) &&(ac!= Action.RIGHT_CLICK_AIR)&&(ac!= Action.RIGHT_CLICK_AIR) && p.getCooldown(Material.STRUCTURE_VOID) <=0)
+			if((!p.isSneaking())&& !p.isOnGround() && (ac == Action.LEFT_CLICK_AIR || ac== Action.LEFT_CLICK_BLOCK)&& p.getCooldown(Material.STRUCTURE_VOID) <=0)
 			{
 				ev.setCancelled(true);
 				if(smcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
@@ -2255,7 +2257,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 	                	
 			        	p.getWorld().spawnParticle(Particle.CAMPFIRE_SIGNAL_SMOKE, p.getLocation(), 100, 1, 2, 1);
 		                p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1, 0);
-	                	p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 20, 11, false, false));
+	                	p.setVelocity(BlockFace.UP.getDirection().normalize().multiply(1.5));
 			            smcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
 		            }
 		        }
@@ -2294,7 +2296,7 @@ public class Engskills extends Pak implements Listener, Serializable {
                 	
 		        	p.getWorld().spawnParticle(Particle.CAMPFIRE_SIGNAL_SMOKE, p.getLocation(), 100, 1, 2, 1);
 	                p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1, 0);
-                	p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 20, 11, false, false));
+                	p.setVelocity(BlockFace.UP.getDirection().normalize().multiply(1.5));
 		            smcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
 		        }
 			}
@@ -2354,7 +2356,7 @@ public class Engskills extends Pak implements Listener, Serializable {
         
 		
 
-        if(ClassData.pc.get(p.getUniqueId()) == 17) {
+        if(ClassData.pc.get(p.getUniqueId()) == 17 && p.getInventory().getItemInMainHand().getType().name().contains("PICKAXE") && esd.Jetpack.get(p.getUniqueId())>=1) {
 			if(d.getCause().equals(DamageCause.FALL)) 
 			{
 		        	p.getWorld().spawnParticle(Particle.BLOCK_CRACK, p.getLocation(), 65*(int)p.getFallDistance(), p.getFallDistance(), 1, p.getFallDistance(), p.getLocation().add(0, -1, 0).getBlock().getBlockData());
@@ -2417,6 +2419,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 			if(ClassData.pc.get(p.getUniqueId()) == 17 && ((is.getType().name().contains("PICKAXE"))) && p.isSneaking()&& Proficiency.getpro(p) >=1)
 			{
 				ev.setCancelled(true);
+				p.setCooldown(Material.STRUCTURE_VOID, 2);
 				if(sultcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
 	            {
 	                double timer = (sultcooldown.get(p.getName())/1000d + 60/Proficiency.getpro(p)*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d)) - System.currentTimeMillis()/1000d; // geting time in seconds

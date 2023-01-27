@@ -553,6 +553,8 @@ public class MobsSkillsEvents implements Listener, Serializable {
 		MountainsSkills.getInstance().Drop(d);
 		MountainsSkills.getInstance().EarthQuake(d);
 		MountainsSkills.getInstance().EarthBlock(d);
+		MountainsSkills.getInstance().mantle(d);
+		MountainsSkills.getInstance().mCounter(d);
 		
 
 		PlainSkills.getInstance().Burrow(d);

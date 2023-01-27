@@ -42,6 +42,8 @@ import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerAnimationEvent;
+import org.bukkit.event.player.PlayerAnimationType;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -135,13 +137,37 @@ public class CommonEvents implements Listener {
 			bar.remove(leud);
 		}
 	}
+	@EventHandler
+	public void leftClickTrigger(PlayerAnimationEvent d) 
+	{
+		Player p = (Player) d.getPlayer();
+		if(d.getAnimationType() == PlayerAnimationType.ARM_SWING && d.getAnimationType() != PlayerAnimationType.OFF_ARM_SWING) {
+			Bukkit.getPluginManager().callEvent(new PlayerInteractEvent(p, Action.LEFT_CLICK_AIR, p.getEquipment().getItemInMainHand(), null, p.getFacing()));
+		}
+	}
+	
+	public void leftClickTrigger(EntityDamageByEntityEvent d) 
+	{
+		if(d.getDamager() instanceof Player){
+			Player p = (Player) d.getDamager();
+			if(!p.hasCooldown(Material.YELLOW_TERRACOTTA)) {
+				Bukkit.getPluginManager().callEvent(new PlayerInteractEvent(p, Action.LEFT_CLICK_AIR, p.getEquipment().getItemInMainHand(), null, p.getFacing()));
+			}
+		}
+	}
 	
 	public void namingAndBarRemove(PlayerInteractAtEntityEvent d) 
 	{
 		final Entity e = d.getRightClicked();
+		if(e.hasMetadata("fake")|| e.hasMetadata("din")) {
+			d.setCancelled(true);
+		}
+		if(e instanceof ArmorStand && !e.hasGravity() && e.isInvulnerable() && !e.hasMetadata("fake")) {
+			final Entity re = e;
+			re.remove();
+		}
 		if(e.hasMetadata("fake") || e.hasMetadata("portal") || e.hasMetadata("din") || e instanceof Villager) {
 			Player p = d.getPlayer();
-			d.setCancelled(true);
 			Bukkit.getPluginManager().callEvent(new PlayerInteractEvent(p, Action.RIGHT_CLICK_AIR, p.getEquipment().getItemInMainHand(), null, p.getFacing()));
 		}
 		if(d.getPlayer().getInventory().getItemInMainHand().getType() == Material.NAME_TAG && e.hasMetadata("rpgspawned")) {
@@ -164,9 +190,11 @@ public class CommonEvents implements Listener {
 	public void namingAndBarRemove(PlayerInteractEntityEvent d) 
 	{
 		final Entity e = d.getRightClicked();
+		if(e.hasMetadata("fake")|| e.hasMetadata("din")) {
+			d.setCancelled(true);
+		}
 		if(e.hasMetadata("fake") || e.hasMetadata("portal") || e.hasMetadata("din") || e instanceof Villager) {
 			Player p = d.getPlayer();
-			d.setCancelled(true);
 			Bukkit.getPluginManager().callEvent(new PlayerInteractEvent(p, Action.RIGHT_CLICK_AIR, p.getEquipment().getItemInMainHand(), null, p.getFacing()));
 		}
 		if(d.getPlayer().getInventory().getItemInMainHand().getType() == Material.NAME_TAG && e.hasMetadata("rpgspawned")) {
@@ -234,6 +262,10 @@ public class CommonEvents implements Listener {
 		if(d.getEntity().hasMetadata("din")) {
 			final Entity re = d.getEntity();
 			dinclickedremove(re);
+			re.remove();
+		}
+		if(d.getEntity() instanceof ArmorStand && !d.getEntity().hasGravity() && d.getEntity().isInvulnerable() && !d.getEntity().hasMetadata("fake")) {
+			final Entity re = d.getEntity();
 			re.remove();
 		}
 		if(d.getEntity() instanceof LivingEntity && (d.getCause() == DamageCause.SUFFOCATION))
@@ -1228,6 +1260,9 @@ public class CommonEvents implements Listener {
 				}
 				b.remove();
 			}
+			if(b instanceof ArmorStand && !b.hasGravity() && b.isInvulnerable() && !b.hasMetadata("fake")) {
+				b.remove();
+			}
 		});
 	}
 
@@ -1399,18 +1434,24 @@ public class CommonEvents implements Listener {
 		});
 
 		p.getScoreboard().getObjectives().forEach(o -> o.unregister());
-		if(Bukkit.getServer().getOnlinePlayers().stream().count() < 1 || Bukkit.getServer().getOnlinePlayers().isEmpty()) {
-			List<World> worlds = Bukkit.getServer().getWorlds();
-			worlds.forEach(w ->{
-				w.getEntities().forEach(b -> {
-					b.setCustomName(CommonEvents.damaged.get(b.getUniqueId()));
-					if((b.hasMetadata("obnpc") || b.hasMetadata("rpgspawned") || b.hasMetadata("untargetable")|| b.hasMetadata("fake")) && !(b instanceof Player)) {
-						b.remove();
-					}
-				});
-				}
-			);
-		}
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() 
+            {
+        		if(Bukkit.getServer().getOnlinePlayers().stream().count() < 1 || Bukkit.getServer().getOnlinePlayers().isEmpty()) {
+        			List<World> worlds = Bukkit.getServer().getWorlds();
+        			worlds.forEach(w ->{
+        				w.getEntities().forEach(b -> {
+        					b.setCustomName(CommonEvents.damaged.get(b.getUniqueId()));
+        					if((b.hasMetadata("obnpc") || b.hasMetadata("rpgspawned") || b.hasMetadata("untargetable")|| b.hasMetadata("fake")) && !(b instanceof Player)) {
+        						b.remove();
+        					}
+        				});
+        				}
+        			);
+        		}
+            }
+        }, 3); 
 		
 	}
 	public void delete(PlayerTeleportEvent d) 

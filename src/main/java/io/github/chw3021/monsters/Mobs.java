@@ -9,6 +9,7 @@ import org.bukkit.entity.ElderGuardian;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Guardian;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -369,6 +370,7 @@ public class Mobs extends Pak {
 			d.setDamage(d.getDamage() * 2.5);
 		}
 	}
+
 	
 	public void MobDam(EntityDamageByEntityEvent d) {
 		if (d.getDamager() instanceof LivingEntity && d.getEntity() instanceof LivingEntity) {
@@ -394,6 +396,10 @@ public class Mobs extends Pak {
 			if (p.getCooldown(Material.GLISTERING_MELON_SLICE) <= 0) {
 				d.setDamage(d.getDamage() * (1 + Proficiency.getpro(p)*0.25));
 			}
+			if(!d.getEntity().hasMetadata("raid") && d.getEntity() instanceof Mob && !p.hasMetadata("fake")) {
+				Mob m = (Mob) d.getEntity();
+				m.setTarget(p);
+			}
 		}
 		if (d.getDamager() instanceof Projectile && d.getEntity() instanceof LivingEntity) {
 			Projectile pr = (Projectile) d.getDamager();
@@ -401,6 +407,10 @@ public class Mobs extends Pak {
 				Player p = (Player) pr.getShooter();
 				if (p.getCooldown(Material.GLISTERING_MELON_SLICE) <= 0) {
 					d.setDamage(d.getDamage() * (1 + Proficiency.getpro(p)*0.25));
+				}
+				if(!d.getEntity().hasMetadata("raid") && d.getEntity() instanceof Mob && !p.hasMetadata("fake")) {
+					Mob m = (Mob) d.getEntity();
+					m.setTarget(p);
 				}
 			}
 		}

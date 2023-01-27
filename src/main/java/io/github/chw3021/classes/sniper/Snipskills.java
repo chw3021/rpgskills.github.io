@@ -473,20 +473,8 @@ public class Snipskills extends Pak implements Serializable, Listener {
 	        		}
 					Arrow ar = (Arrow) ev.getEntity();
 	    			if(ar.hasMetadata("APA") && !ar.hasMetadata("ShockArrow")) {
-						Snowball sn = p.launchProjectile(Snowball.class);
-						sn.setItem(new ItemStack(Material.ARROW));
-	    				sn.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
-	    				le.damage(0,p);
 	    				le.setHealth(le.getHealth()*(1-(0.01+ssd.ArmourPiercingArrow.get(p.getUniqueId())*0.001)));
-	    				
-	    				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
-	    				{
-	    	         	@Override
-			                public void run() 
-	         				{	
-	    	        		Bukkit.getPluginManager().callEvent(new EntityDamageByEntityEvent(p,le, DamageCause.ENTITY_ATTACK,le.getHealth()*(0.01+ssd.ArmourPiercingArrow.get(p.getUniqueId())*0.001)));
-				            }
-	    	            }, 3);
+	    				atkab0(0d,le.getHealth()*0.01+ssd.ArmourPiercingArrow.get(p.getUniqueId())*0.001,p,le);
 	    			}
 				}
 			}			
@@ -1100,7 +1088,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 4 && ssd.Flare.getOrDefault(p.getUniqueId(),0)>=1 && !p.hasCooldown(Material.FIREWORK_STAR)) {
-			if((a == Action.LEFT_CLICK_AIR || a == Action.LEFT_CLICK_BLOCK) && !p.isSprinting()&& p.isSneaking())
+			if((a == Action.LEFT_CLICK_AIR || a == Action.LEFT_CLICK_BLOCK) && p.isSneaking())
 			{	
 				
 				if(p.getInventory().getItemInMainHand().getType() == Material.CROSSBOW)

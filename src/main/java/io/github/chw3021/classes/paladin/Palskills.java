@@ -14,6 +14,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
 
+import com.google.common.collect.ArrayListMultimap;
 import io.github.chw3021.rmain.RMain;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
@@ -39,8 +40,8 @@ import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Horse;
@@ -49,6 +50,7 @@ import org.bukkit.entity.Horse.Style;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -85,6 +87,10 @@ public class Palskills extends Pak implements Serializable, Listener {
 	private HashMap<String, Long> ault2cooldown = new HashMap<String, Long>();
 
 
+	private HashMap<UUID, Integer> chargingt = new HashMap<UUID, Integer>();
+	private ArrayListMultimap<UUID, LivingEntity> ars = ArrayListMultimap.create();
+	
+	private HashMap<UUID, Integer> shieldt = new HashMap<UUID, Integer>();
 
 
 	private HashMap<UUID, Integer> illm = new HashMap<UUID, Integer>();
@@ -166,6 +172,12 @@ public class Palskills extends Pak implements Serializable, Listener {
 			}
 			
 		}
+		if(e.getClickedInventory() != null&&e.getClickedInventory().getHolder() != null&& e.getClickedInventory().getHolder() instanceof Horse) {
+			Horse h = (Horse) e.getClickedInventory().getHolder();
+			if(h.hasMetadata("griffon")) {
+				e.setCancelled(true);
+			}
+		}
 	}
 
 		
@@ -184,8 +196,8 @@ public class Palskills extends Pak implements Serializable, Listener {
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3 && psd.Restraint.getOrDefault(p.getUniqueId(), 0)>=1) {
-			double sec =7*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
-			if(p.getInventory().getItemInMainHand().getType().name().contains("AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD") && p.isBlocking() && p.isSneaking())
+			double sec =8*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD") && p.isBlocking() && p.isSneaking())
 			{
 				
 				ev.setCancelled(true);
@@ -341,7 +353,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 		Player p = ev.getPlayer();
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3 && illm.containsKey(p.getUniqueId())) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD") && p.isBlocking() && p.isSneaking())
+			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD") && p.isBlocking() && p.isSneaking())
 			{
 				ev.setCancelled(true);
 
@@ -427,7 +439,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 		Player p = ev.getPlayer();
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3 && doom.containsKey(p.getUniqueId())) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD") && p.isBlocking() && p.isSneaking())
+			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD") && p.isBlocking() && p.isSneaking())
 			{
 				ev.setCancelled(true);
 
@@ -544,12 +556,12 @@ public class Palskills extends Pak implements Serializable, Listener {
 	public void Pray(PlayerSwapHandItemsEvent ev) 
 	{
 		Player p = ev.getPlayer();
-		double sec = 11*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);;
+		double sec = 10*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);;
 	    
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3 && psd.Pray.getOrDefault(p.getUniqueId(), 0)>=1) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD") && p.isSneaking() && !p.isBlocking())
+			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD") && p.isSneaking() && !p.isBlocking())
 			{
 				
 				ev.setCancelled(true);
@@ -847,7 +859,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3 && psd.Encourge.getOrDefault(p.getUniqueId(), 0)>=1) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD") && !p.isSneaking() && !p.isBlocking())
+			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD") && !p.isSneaking() && !p.isBlocking())
 			{
 				ev.setCancelled(true);
 				
@@ -982,7 +994,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3 && aria.containsKey(p.getUniqueId())) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD") && !p.isSneaking() && !p.isBlocking())
+			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD") && !p.isSneaking() && !p.isBlocking())
 			{
 				ev.setCancelled(true);
                 
@@ -1138,7 +1150,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3 && scry.containsKey(p.getUniqueId())) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD") && !p.isSneaking() && !p.isBlocking())
+			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD") && !p.isSneaking() && !p.isBlocking())
 			{
 				ev.setCancelled(true);
 
@@ -1149,7 +1161,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 				scry.remove(p.getUniqueId());
 
                 
-				final Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 3).getLocation();
+				final Location l = gettargetblock(p,3).clone().add(0, -0.786, 0);
 				
                 HashSet<ArmorStand> remove = new HashSet<>();
                 for(double vi = -1; vi<4; vi+=0.5) {
@@ -1194,7 +1206,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 		                    p.playNote(l, Instrument.CHIME, Note.sharp(1, Tone.D));
 		                    p.playNote(l, Instrument.CHIME, Note.natural(1, Tone.B));
 		                    p.playNote(l, Instrument.CHIME, Note.sharp(1, Tone.F));
-		            		p.getWorld().spawnParticle(Particle.COMPOSTER, l, 400, 4, 0, 4);
+		            		p.getWorld().spawnParticle(Particle.TOWN_AURA, l, 400, 4, 0, 4);
 		            		p.getWorld().spawnParticle(Particle.BLOCK_MARKER, l, 100, 4, 0, 4,Material.CHISELED_QUARTZ_BLOCK.createBlockData());
 		    				for (Entity e : l.getWorld().getNearbyEntities(l ,4, 5, 4))
 		    				{
@@ -1245,7 +1257,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3 && psd.Judgement.getOrDefault(p.getUniqueId(), 0)>=1) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD")  && p.isSneaking() && !p.isBlocking()) 
+			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD")  && p.isSneaking() && !p.isBlocking()) 
 			{
 				if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK) && !p.hasCooldown(Material.ARMOR_STAND))
 				{
@@ -1470,7 +1482,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3&& aspg.containsKey(p.getUniqueId())) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD")  && p.isSneaking() && !p.isBlocking()) 
+			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD")  && p.isSneaking() && !p.isBlocking()) 
 			{
 				if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK) && !p.hasCooldown(Material.ARMOR_STAND))
 				{
@@ -1568,7 +1580,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3 && grff.containsKey(p.getUniqueId())) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD")  && p.isSneaking() && !p.isBlocking()) 
+			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD")  && p.isSneaking() && !p.isBlocking()) 
 			{
 				if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK) && !p.hasCooldown(Material.ARMOR_STAND))
 				{
@@ -1596,13 +1608,14 @@ public class Palskills extends Pak implements Serializable, Listener {
 						h.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	
 						h.setMetadata("untargetable", new FixedMetadataValue(RMain.getInstance(), p.getName()));	
 						h.setMetadata("griffon", new FixedMetadataValue(RMain.getInstance(), p.getName()));	
+						h.setMetadata("portal", new FixedMetadataValue(RMain.getInstance(), p.getName()));	
 						h.setLeashHolder(p);
 						h.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 999999, 5, false, false));
 						h.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 999999, 5, false, false));
 						h.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 5, false, false));
 						h.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 2, false, false));
 						h.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999, 2, false, false));
-						h.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 999999, 2, false, false));
+						h.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 999999, 0, false, false));
 						h.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 999999, 2, false, false));
 						h.addPotionEffect(new PotionEffect(PotionEffectType.CONDUIT_POWER, 999999, 2, false, false));
 						h.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 999999, 2, false, false));
@@ -1642,7 +1655,11 @@ public class Palskills extends Pak implements Serializable, Listener {
             	Horse h = (Horse) ev.getEntity();
             	Player p = (Player) h.getOwner();
             	h.getWorld().spawnParticle(Particle.WHITE_ASH, h.getLocation(), 100,2,2,2);
-            	p.playSound(h.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1, 2);
+            	p.playSound(h.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 0.5f, 2);
+            	p.playSound(h.getLocation(), Sound.ENTITY_ENDER_DRAGON_FLAP, 0.5f, 2);
+            	if(ev.getPower()>=0.8) {
+                	h.setVelocity(BlockFace.UP.getDirection().normalize().multiply(1.5));
+            	}
             	for (Entity e : h.getWorld().getNearbyEntities(h.getLocation(), 4, 4, 4))
 				{
             		if (e instanceof Player) 
@@ -1666,21 +1683,121 @@ public class Palskills extends Pak implements Serializable, Listener {
             }
 	}
 	
+	final private void thrust(Player p){
+
+    	if(hlsmt.containsKey(p.getUniqueId())) {
+    		Bukkit.getScheduler().cancelTask(hlsmt.get(p.getUniqueId()));
+    		hlsmt.remove(p.getUniqueId());
+    	}
+
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+				if(Proficiency.getpro(p)>=1) {
+					hlsm.putIfAbsent(p.getUniqueId(), 0);
+				}
+            }
+        }, 3); 
+
+		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+				hlsm.remove(p.getUniqueId());
+            }
+        }, 45); 
+    	hlsmt.put(p.getUniqueId(), task);
+
+    	p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION,2,25,false,false));
+
+    	if(griffon.containsKey(p.getUniqueId())) {
+    		Horse h = griffon.get(p.getUniqueId());
+        	h.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION,2,25,false,false));
+    		
+    	}
+    	
+        int q =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() 
+            {
+            	Holding.invur(p, 10l);
+            	p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_CHAIN, 0.2f, 0.5f);
+            	p.setVelocity(p.getEyeLocation().getDirection().clone().normalize().multiply(0.98));
+				p.getWorld().spawnParticle(Particle.END_ROD, p.getLocation().clone(), 50, 1, 1, 1);
+
+		    	if(griffon.containsKey(p.getUniqueId())) {
+		    		Horse h = griffon.get(p.getUniqueId());
+	            	h.setVelocity(p.getEyeLocation().getDirection().clone().normalize().multiply(1.38));
+		    		
+		    	}
+            	Location tl = p.getLocation().clone().add(p.getEyeLocation().getDirection().clone().normalize().multiply(0.98));
+            	if(tl.getWorld().getNearbyEntities(tl, 1.2,1.2,1.2).stream().anyMatch(e -> (!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")))) {
+
+            		p.setVelocity(p.getVelocity().zero());
+    		    	if(griffon.containsKey(p.getUniqueId())) {
+    		    		Horse h = griffon.get(p.getUniqueId());
+    		    		h.setVelocity(h.getVelocity().zero());
+    		    	}
+					p.playSound(p.getLocation(), Sound.ITEM_SHIELD_BLOCK, 0.6f, 0.6f);
+					p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_BREAK, 0.7f, 0.1f);
+					p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_FALL, 0.1f, 0.53f);
+					p.getWorld().spawnParticle(Particle.END_ROD, tl, 50, 0, 0, 0);
+					p.getWorld().spawnParticle(Particle.WHITE_ASH, tl, 300, 3, 0, 3);
+					
+                	if(chargingt.containsKey(p.getUniqueId())) {
+                		Bukkit.getScheduler().cancelTask(chargingt.get(p.getUniqueId()));
+                		chargingt.remove(p.getUniqueId());
+                	}
+                	
+                    for (Entity e : tl.getWorld().getNearbyEntities(tl, 2.5, 2.5, 2.5))
+    				{
+                		if (e instanceof Player) 
+    					{
+    						
+    						Player p1 = (Player) e;
+    						if(Party.hasParty(p) && Party.hasParty(p1))	{
+    						if(Party.getParty(p).equals(Party.getParty(p1)))
+    							{
+    							continue;
+    							}
+    						}
+    					}
+                		if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
+    					{
+                			LivingEntity le = (LivingEntity)e;
+							atks(0.5, psd.Thrust.get(p.getUniqueId())*0.485,p, le,14);
+							le.teleport(tl);
+		                	Holding.holding(p, le, 20l);
+                			
+    					}
+    				}
+            	}
+            }
+    	 }, 0,1);
+        chargingt.put(p.getUniqueId(), q);
+        
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+            	if(chargingt.containsKey(p.getUniqueId())) {
+            		Bukkit.getScheduler().cancelTask(chargingt.get(p.getUniqueId()));
+            		chargingt.remove(p.getUniqueId());
+            	}
+            }
+        }, 8); 
+	}
 	
 	public void Thrust(PlayerSwapHandItemsEvent ev) 
 	{
 		Player p = ev.getPlayer();
-		double sec =3*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =4*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 	    
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3 && psd.Thrust.getOrDefault(p.getUniqueId(), 0)>=1) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD")&& !p.isSneaking() && p.isBlocking())
+			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD")&& !p.isSneaking() && p.isBlocking())
 			{
 				ev.setCancelled(true);
 				
-                final Location tl = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS, Material.ARMOR_STAND)), 4).getLocation();
-                Location l = tl.setDirection(p.getEyeLocation().getDirection());
 					if(thcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
 		            {
 		                double timer = (thcooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d; // geting time in seconds
@@ -1696,162 +1813,13 @@ public class Palskills extends Pak implements Serializable, Listener {
 		                else // if timer is done
 		                {
 		                    thcooldown.remove(p.getName()); // removing player from HashMap
-		                    
-		                	if(hlsmt.containsKey(p.getUniqueId())) {
-		                		Bukkit.getScheduler().cancelTask(hlsmt.get(p.getUniqueId()));
-		                		hlsmt.remove(p.getUniqueId());
-		                	}
-
-		    				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		    	                @Override
-		    	                public void run() {
-		    						if(Proficiency.getpro(p)>=1) {
-		    							hlsm.putIfAbsent(p.getUniqueId(), 0);
-		    						}
-		    	                }
-		    	            }, 3); 
-
-		            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		    	                @Override
-		    	                public void run() {
-		    						hlsm.remove(p.getUniqueId());
-		    	                }
-		    	            }, 45); 
-		                	hlsmt.put(p.getUniqueId(), task);
-		                	
-							for (Entity a : p.getWorld().getNearbyEntities(p.getLocation(), 2, 2, 2))
-							{
-	                    		if (a instanceof Player) 
-								{
-									Player p1 = (Player) a;
-									if(Party.hasParty(p) && Party.hasParty(p1))	{
-									if(Party.getParty(p).equals(Party.getParty(p1)))
-										{
-										continue;
-										}
-									}
-								}
-								if ((!(a == p))&& a instanceof LivingEntity&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal"))) 
-								{
-									LivingEntity le = (LivingEntity)a;
-									atks(0.5, psd.Thrust.get(p.getUniqueId())*0.485,p, le,14);
-									
-									le.teleport(l);
-									
-								}
-							}
-							p.teleport(l);
-							p.playSound(p.getLocation(), Sound.ITEM_SHIELD_BLOCK, 1.0f, 1.6f);
-							p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_FALL, 1.0f, 1.6f);
-							p.getWorld().spawnParticle(Particle.END_ROD, l, 50, 0, 0, 0);
-							p.getWorld().spawnParticle(Particle.WHITE_ASH, l, 300, 3, 0, 3);
-
-							
-							for (Entity a : p.getWorld().getNearbyEntities(l, 2, 2, 2))
-							{
-	                    		if (a instanceof Player) 
-								{
-									Player p1 = (Player) a;
-									if(Party.hasParty(p) && Party.hasParty(p1))	{
-									if(Party.getParty(p).equals(Party.getParty(p1)))
-										{
-										continue;
-										}
-									}
-								}
-								if ((!(a == p))&& a instanceof LivingEntity&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal"))) 
-								{
-									LivingEntity le = (LivingEntity)a;
-										{
-											atks(0.5, psd.Thrust.get(p.getUniqueId())*0.485,p, le,14);
-											
-											le.teleport(l);
-											
-										}
-								}
-							}
-							p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_CHAIN, 1.0f, 2f);
-
+		                    thrust(p);
 							thcooldown.put(p.getName(), System.currentTimeMillis());  
 		                }
 		            }
 		            else // if cooldown doesn't have players name in it
 		            {
-	                    
-	                	if(hlsmt.containsKey(p.getUniqueId())) {
-	                		Bukkit.getScheduler().cancelTask(hlsmt.get(p.getUniqueId()));
-	                		hlsmt.remove(p.getUniqueId());
-	                	}
-
-	    				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	    	                @Override
-	    	                public void run() {
-	    						if(Proficiency.getpro(p)>=1) {
-	    							hlsm.putIfAbsent(p.getUniqueId(), 0);
-	    						}
-	    	                }
-	    	            }, 3); 
-
-	            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	    	                @Override
-	    	                public void run() {
-	    						hlsm.remove(p.getUniqueId());
-	    	                }
-	    	            }, 45); 
-	                	hlsmt.put(p.getUniqueId(), task);
-	                	
-						for (Entity a : p.getWorld().getNearbyEntities(p.getLocation(), 2, 2, 2))
-						{
-                    		if (a instanceof Player) 
-							{
-								Player p1 = (Player) a;
-								if(Party.hasParty(p) && Party.hasParty(p1))	{
-								if(Party.getParty(p).equals(Party.getParty(p1)))
-									{
-									continue;
-									}
-								}
-							}
-							if ((!(a == p))&& a instanceof LivingEntity&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal"))) 
-							{
-								LivingEntity le = (LivingEntity)a;
-									{
-										atks(0.5, psd.Thrust.get(p.getUniqueId())*0.485,p, le,14);
-									le.teleport(l);
-									
-									}
-							}
-						}
-						p.teleport(l);
-						p.playSound(p.getLocation(), Sound.ITEM_SHIELD_BLOCK, 1.0f, 1.6f);
-						p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_FALL, 1.0f, 1.6f);
-						p.getWorld().spawnParticle(Particle.END_ROD, l, 50, 0, 0, 0);
-						p.getWorld().spawnParticle(Particle.WHITE_ASH, l, 300, 3, 0, 3);
-						
-						for (Entity a : p.getWorld().getNearbyEntities(l, 2, 2, 2))
-						{
-                    		if (a instanceof Player) 
-							{
-								Player p1 = (Player) a;
-								if(Party.hasParty(p) && Party.hasParty(p1))	{
-								if(Party.getParty(p).equals(Party.getParty(p1)))
-									{
-									continue;
-									}
-								}
-							}
-							if ((!(a == p))&& a instanceof LivingEntity&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal"))) 
-							{
-								LivingEntity le = (LivingEntity)a;
-									{
-										atks(0.5, psd.Thrust.get(p.getUniqueId())*0.485,p, le,14);
-									le.teleport(l);
-									
-									}
-							}
-						}
-						p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_CHAIN, 1.0f, 2f);
-
+	                    thrust(p);
 						thcooldown.put(p.getName(), System.currentTimeMillis());  
 					}
 			}
@@ -1863,7 +1831,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 		Player p = ev.getPlayer();
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3 && hlsm.containsKey(p.getUniqueId())) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD")&& !p.isSneaking() && p.isBlocking())
+			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD")&& !p.isSneaking() && p.isBlocking())
 			{
 				ev.setCancelled(true);
 				
@@ -1960,7 +1928,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 		Player p = ev.getPlayer();
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3&&pltl.containsKey(p.getUniqueId())) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD")&& !p.isSneaking() && p.isBlocking())
+			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD")&& !p.isSneaking() && p.isBlocking())
 			{
 				ev.setCancelled(true);
 
@@ -2065,11 +2033,11 @@ public class Palskills extends Pak implements Serializable, Listener {
 		
 		
 			if(ClassData.pc.get(p.getUniqueId()) == 3 && psd.Punish.getOrDefault(p.getUniqueId(), 0)>=1 && (!griffon.containsKey(p.getUniqueId()) || (griffon.containsKey(p.getUniqueId()) && p.getVehicle() != griffon.get(p.getUniqueId())))) {				
-				double sec =4*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+				double sec =5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 				if(p.getAttackCooldown()==1) 
 				{	
 				
-					if(p.getInventory().getItemInMainHand().getType().name().contains("AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD")&& !(p.hasCooldown(Material.YELLOW_TERRACOTTA)) && !(p.isSneaking()) && !(p.isOnGround()) && !(p.hasCooldown(Material.YELLOW_TERRACOTTA)))
+					if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD")&& !(p.hasCooldown(Material.YELLOW_TERRACOTTA)) && !(p.isSneaking()) && !(p.isOnGround()) && !(p.hasCooldown(Material.YELLOW_TERRACOTTA)))
 						{
 						if(pncooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
 				        {
@@ -2117,12 +2085,12 @@ public class Palskills extends Pak implements Serializable, Listener {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec = 4*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);;
+		double sec = 5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);;
         
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3 && psd.Punish.getOrDefault(p.getUniqueId(), 0)>=1 && griffon.containsKey(p.getUniqueId()) && p.getVehicle() == griffon.get(p.getUniqueId())) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD")  && !p.isSneaking() && !p.isBlocking() && !p.isOnGround()) 
+			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD")  && !p.isSneaking() && !p.isBlocking() && !p.isOnGround()) 
 			{
 				if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK) && !p.hasCooldown(Material.ARMOR_STAND))
 				{
@@ -2239,13 +2207,13 @@ public class Palskills extends Pak implements Serializable, Listener {
 	    
 		
 		
-		if(ClassData.pc.get(p.getUniqueId()) == 3 && (is.getType().name().contains("AXE")) && p.isSneaking() &&Proficiency.getpro(p)>=1)
+		if(ClassData.pc.get(p.getUniqueId()) == 3 && (is.getType().name().contains("_AXE")) && p.isSneaking() &&Proficiency.getpro(p)>=1)
 			{
 				ev.setCancelled(true);
 				p.setCooldown(Material.ARMOR_STAND, 1);
 				if(aultcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
 	            {
-	                double timer = (aultcooldown.get(p.getName())/1000d + 45/Proficiency.getpro(p)*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d)) - System.currentTimeMillis()/1000d; // geting time in seconds
+	                double timer = (aultcooldown.get(p.getName())/1000d + 50/Proficiency.getpro(p)*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d)) - System.currentTimeMillis()/1000d; // geting time in seconds
 	                if(!(timer < 0)) // if timer is still more then 0 or 0
 	                {
 	                	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -2349,6 +2317,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 			line.add(pl);
         }
         final World w = il.getWorld();
+    	w.spawnParticle(Particle.FLASH, il, 30,2,2,2);
         line.forEach(l -> {
         	w.spawnParticle(Particle.FLASH, l, 30,1,1,1);
         	w.spawnParticle(Particle.BLOCK_DUST, l, 200,0.1,0.1,0.1,0, Material.QUARTZ_BLOCK.createBlockData());
@@ -2365,7 +2334,7 @@ public class Palskills extends Pak implements Serializable, Listener {
         p.playSound(p.getLocation(), Sound.ENTITY_HORSE_BREATHE, 1.0f, 0f);
         p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_BREATH, 1.0f, 0f);
 		Holding.invur(p, 120l);
-		p.teleport(p.getLocation().add(0, 3, 0));
+		p.teleport(p.getLocation().add(0, 6, 0));
 		
 		HashSet<LivingEntity> les = new HashSet<>();
 		
@@ -2402,7 +2371,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 			cross.add(tl.clone().add(0, 1, i));
 		}
 		
-		for(int co = 0 ; co<30; co++) {
+		for(int co = 0 ; co<60; co++) {
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
                 @Override
                 public void run() {
@@ -2413,9 +2382,9 @@ public class Palskills extends Pak implements Serializable, Listener {
                 		p.teleport(pl);
                 	}
 					
-                    p.playSound(p.getLocation(), Sound.BLOCK_SOUL_SOIL_BREAK, 1.0f, 0f);
-                    p.playSound(p.getLocation(), Sound.BLOCK_SOUL_SAND_BREAK, 1.0f, 0f);
-                    p.playSound(p.getLocation(), Sound.PARTICLE_SOUL_ESCAPE, 0.5f, 1.5f);
+                    p.playSound(p.getLocation(), Sound.BLOCK_SOUL_SOIL_BREAK, 0.5f, 0f);
+                    p.playSound(p.getLocation(), Sound.BLOCK_SOUL_SAND_BREAK, 0.1f, 0f);
+                    p.playSound(p.getLocation(), Sound.PARTICLE_SOUL_ESCAPE, 0.4f, 1.8f);
                 	cross.forEach(cl -> {
 	    				cl.getWorld().spawnParticle(Particle.CLOUD, cl, 100, 0.5,0.5,0.5,0);
 	    				cl.getWorld().spawnParticle(Particle.TOWN_AURA, cl, 100, 0.5,0.5,0.5,0);
@@ -2447,7 +2416,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 						}
 					}
 				}
-            }, co*2); 
+            }, co*1); 
 		}
 
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -2468,7 +2437,7 @@ public class Palskills extends Pak implements Serializable, Listener {
                 @Override
                 public void run() {
 					
-                	ULT2(p.getEyeLocation().clone().add(0, -0.6, 0));
+                	ULT2(p.getLocation().clone().add(p.getLocation().clone().getDirection().normalize().multiply(3)).add(0, -2, 0));
             		Holding.invur(p, 50l);
                     p.playSound(p.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 1.0f, 2f);
                     p.playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 0.2f, 0f);
@@ -2501,13 +2470,13 @@ public class Palskills extends Pak implements Serializable, Listener {
 	    
 		
 		
-		if(ClassData.pc.get(p.getUniqueId()) == 3 && (is.getType().name().contains("AXE")) && !p.isSneaking()&& p.isSprinting() &&Proficiency.getpro(p)>=2)
+		if(ClassData.pc.get(p.getUniqueId()) == 3 && (is.getType().name().contains("_AXE")) && !p.isSneaking()&& p.isSprinting() &&Proficiency.getpro(p)>=2)
 			{
 				ev.setCancelled(true);
 				p.setCooldown(Material.ARMOR_STAND, 1);
 				if(ault2cooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
 	            {
-	                double timer = (ault2cooldown.get(p.getName())/1000d + 45*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d)) - System.currentTimeMillis()/1000d; // geting time in seconds
+	                double timer = (ault2cooldown.get(p.getName())/1000d + 65*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d)) - System.currentTimeMillis()/1000d; // geting time in seconds
 	                if(!(timer < 0)) // if timer is still more then 0 or 0
 	                {
 	                	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -2545,60 +2514,383 @@ public class Palskills extends Pak implements Serializable, Listener {
 		Item it = ev.getItemDrop();
 		ItemStack is = it.getItemStack();
 		
-			if(ClassData.pc.get(p.getUniqueId()) == 3 && ((is.getType().name().contains("AXE") || is.getType().name().contains("SHIELD"))) && !p.isSneaking()&& !p.isOnGround()&& !p.isSwimming()&& !p.isSprinting()&& Proficiency.getpro(p) >=2)
+			if(ClassData.pc.get(p.getUniqueId()) == 3 && ((is.getType().name().contains("_AXE") || is.getType().name().contains("SHIELD"))) && !p.isSneaking()&& !p.isOnGround()&& !p.isSwimming()&& !p.isSprinting()&& Proficiency.getpro(p) >=2)
 			{
 				ev.setCancelled(true);
 			}
 	
     }
 	
+	public EulerAngle conv(float pit) {
+
+	    float angle = (float)Math.toRadians(pit);
+		if(pit<0) {
+			angle = (float)Math.toRadians(360+pit);
+		}
+	    
+	    return new EulerAngle(angle,0,0);
+	}
+	public float conav(float pit) {
+
+	    float angle = (float)Math.toRadians(pit);
+		if(pit<0) {
+			angle = (float)Math.toRadians(360+pit);
+		}
+	    
+	    return angle;
+	}
 	
+	final private void giantShield(Player p) {
+
+
+
+    	if(ars.containsKey(p.getUniqueId())) {
+        	ars.get(p.getUniqueId()).forEach(ar -> Holding.ale(ar).remove());
+        	ars.removeAll(p.getUniqueId());
+    	}
+    	if(shieldt.containsKey(p.getUniqueId())) {
+    		Bukkit.getScheduler().cancelTask(shieldt.get(p.getUniqueId()));
+    		shieldt.remove(p.getUniqueId());
+    	}
+
+    	final World pw = p.getWorld();
+    	
+    	p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GOLD, 0.2f, 0.5f);
+    	
+
+    	final Location pfl = p.getLocation().clone().add(0, 0.8, 0).clone().add(p.getEyeLocation().getDirection().clone().normalize().multiply(0.9));
+    	final Location pel = p.getEyeLocation().clone();
+    	final Location pelr = pfl.clone().setDirection(pfl.clone().getDirection().normalize().multiply(-1));
+    	final Vector rr = p.getFacing().getDirection().clone().rotateAroundY(-Math.PI/2);
+    	final Vector rot = pel.clone().getDirection().getCrossProduct(rr);
+    	final Vector pl1 = pel.clone().getDirection().normalize().rotateAroundAxis(rot.clone(),-Math.PI/2);
+    	final Vector pl2 = pel.clone().clone().getDirection().normalize().rotateAroundAxis(rot.clone(),Math.PI/2);
+    	
+    	ArrayList<Location> lhs = new ArrayList<>();
+    	ArrayList<Location> crs = new ArrayList<>();
+    	ArrayList<Location> rev = new ArrayList<>();
+		for(double y=0.5; y<4;y+=0.5) {
+			for(double x=0.5; x<4;x+=0.5) {
+    			lhs.add(pfl.clone().add(pl1.clone().multiply(x)).add(rot.clone().multiply(y)));
+    			lhs.add(pfl.clone().add(pl2.clone().multiply(x)).add(rot.clone().multiply(y)));
+    			lhs.add(pfl.clone().add(pl1.clone().multiply(x)).add(rot.clone().multiply(-y)));
+    			lhs.add(pfl.clone().add(pl2.clone().multiply(x)).add(rot.clone().multiply(-y)));
+    			rev.add(pelr.clone().add(pl1.clone().multiply(x)).add(rot.clone().multiply(y)));
+    			rev.add(pelr.clone().add(pl2.clone().multiply(x)).add(rot.clone().multiply(y)));
+    			rev.add(pelr.clone().add(pl1.clone().multiply(x)).add(rot.clone().multiply(-y)));
+    			rev.add(pelr.clone().add(pl2.clone().multiply(x)).add(rot.clone().multiply(-y)));
+        	}
+    	}
+    	for(double x=0.5; x<4;x+=0.5) {
+			crs.add(pfl.clone().add(pl1.clone().multiply(x)));
+			crs.add(pfl.clone().add(pl2.clone().multiply(x)));
+			crs.add(pfl.clone().add(rot.clone().multiply(-x)));
+			crs.add(pfl.clone().add(rot.clone().multiply(x)));
+			rev.add(pelr.clone().add(pl1.clone().multiply(x)));
+			rev.add(pelr.clone().add(pl2.clone().multiply(x)));
+			rev.add(pelr.clone().add(rot.clone().multiply(-x)));
+			rev.add(pelr.clone().add(rot.clone().multiply(x)));
+    	}
+    	lhs.forEach(l ->{
+    		pw.spawn(l, ArmorStand.class, ar ->{
+    			ar.setGravity(false);
+    			ar.setInvisible(true);
+    			ar.setCollidable(false);
+    			ar.setMarker(true);
+    			ar.setBasePlate(false);
+    			ar.setInvulnerable(true);
+    			ar.setSmall(true);
+    			ar.getEquipment().setHelmet(new ItemStack(Material.WHITE_STAINED_GLASS_PANE));
+				ar.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));	
+				ar.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+				ar.setMetadata("giantshield", new FixedMetadataValue(RMain.getInstance(), p.getName()));
+				ar.setHeadPose(conv(pel.getPitch()));
+				ars.put(p.getUniqueId(), ar);
+    		});
+    	});
+    	crs.forEach(l ->{
+    		pw.spawn(l, ArmorStand.class, ar ->{
+    			ar.setGravity(false);
+    			ar.setInvisible(true);
+    			ar.setCollidable(false);
+    			ar.setMarker(true);
+    			ar.setBasePlate(false);
+    			ar.setInvulnerable(true);
+    			ar.setSmall(true);
+    			ar.getEquipment().setHelmet(new ItemStack(Material.BLUE_STAINED_GLASS_PANE));
+				ar.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));	
+				ar.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+				ar.setMetadata("giantshield", new FixedMetadataValue(RMain.getInstance(), p.getName()));
+				ar.setHeadPose(conv(pel.getPitch()));
+				ars.put(p.getUniqueId(), ar);
+    		});
+    	});
+    	rev.forEach(l ->{
+    		pw.spawn(l, ArmorStand.class, ar ->{
+    			ar.setGravity(false);
+    			ar.setInvisible(true);
+    			ar.setCollidable(false);
+    			ar.setMarker(true);
+    			ar.setBasePlate(false);
+    			ar.setInvulnerable(true);
+    			ar.setSmall(true);
+				ar.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));	
+				ar.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+				ar.setMetadata("giantshieldrev", new FixedMetadataValue(RMain.getInstance(), p.getName()));
+				ar.setHeadPose(conv(pel.getPitch()));
+				ars.put(p.getUniqueId(), ar);
+    		});
+    	});
+
+		pw.spawn(pelr.clone(), ArmorStand.class, ar ->{
+			ar.setGravity(false);
+			ar.setInvisible(true);
+			ar.setCollidable(false);
+			ar.setMarker(true);
+			ar.setBasePlate(false);
+			ar.setInvulnerable(true);
+			ar.setSmall(true);
+			ar.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));	
+			ar.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+			ar.setMetadata("giantshieldrev", new FixedMetadataValue(RMain.getInstance(), p.getName()));
+			ar.setMetadata("giantcenterr", new FixedMetadataValue(RMain.getInstance(), p.getName()));
+			ar.setHeadPose(conv(pel.getPitch()));
+			ars.put(p.getUniqueId(), ar);
+		});
+    	
+		pw.spawn(pfl.clone(), ArmorStand.class, ar ->{
+			ar.setGravity(false);
+			ar.setInvisible(true);
+			ar.setCollidable(false);
+			ar.setMarker(true);
+			ar.setBasePlate(false);
+			ar.setInvulnerable(true);
+			ar.setSmall(true);
+			ar.getEquipment().setHelmet(new ItemStack(Material.GLASS_PANE));
+			ar.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));	
+			ar.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+			ar.setMetadata("giantshield", new FixedMetadataValue(RMain.getInstance(), p.getName()));
+			ar.setMetadata("giantcenter", new FixedMetadataValue(RMain.getInstance(), p.getName()));
+			ar.setHeadPose(conv(pel.getPitch()));
+			ars.put(p.getUniqueId(), ar);
+		});
+    	
+
+		
+        int q =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() 
+            {
+            	final Location pfl = p.getLocation().clone().add(0, 0.8, 0).clone().add(p.getEyeLocation().getDirection().clone().normalize().multiply(1.1));
+            	final Location pel = p.getEyeLocation().clone();
+            	final Location pelr = pfl.clone().setDirection(pfl.clone().getDirection().normalize().multiply(-1));
+            	final Vector rr = p.getFacing().getDirection().clone().rotateAroundY(-Math.PI/2);
+            	final Vector rot = pel.clone().getDirection().getCrossProduct(rr);
+            	final Vector pl1 = pel.clone().getDirection().normalize().rotateAroundAxis(rot.clone(),-Math.PI/2);
+            	final Vector pl2 = pel.clone().clone().getDirection().normalize().rotateAroundAxis(rot.clone(),Math.PI/2);
+            	
+            	ArrayList<Location> lhs = new ArrayList<>();
+            	ArrayList<Location> crs = new ArrayList<>();
+            	ArrayList<Location> rev = new ArrayList<>();
+        		for(double y=0.5; y<4;y+=0.5) {
+        			for(double x=0.5; x<4;x+=0.5) {
+            			lhs.add(pfl.clone().add(pl1.clone().multiply(x)).add(rot.clone().multiply(y)));
+            			lhs.add(pfl.clone().add(pl2.clone().multiply(x)).add(rot.clone().multiply(y)));
+            			lhs.add(pfl.clone().add(pl1.clone().multiply(x)).add(rot.clone().multiply(-y)));
+            			lhs.add(pfl.clone().add(pl2.clone().multiply(x)).add(rot.clone().multiply(-y)));
+            			rev.add(pelr.clone().add(pl1.clone().multiply(x)).add(rot.clone().multiply(y)));
+            			rev.add(pelr.clone().add(pl2.clone().multiply(x)).add(rot.clone().multiply(y)));
+            			rev.add(pelr.clone().add(pl1.clone().multiply(x)).add(rot.clone().multiply(-y)));
+            			rev.add(pelr.clone().add(pl2.clone().multiply(x)).add(rot.clone().multiply(-y)));
+                	}
+            	}
+            	for(double x=0.5; x<4;x+=0.5) {
+        			crs.add(pfl.clone().add(pl1.clone().multiply(x)));
+        			crs.add(pfl.clone().add(pl2.clone().multiply(x)));
+        			crs.add(pfl.clone().add(rot.clone().multiply(-x)));
+        			crs.add(pfl.clone().add(rot.clone().multiply(x)));
+        			rev.add(pelr.clone().add(pl1.clone().multiply(x)));
+        			rev.add(pelr.clone().add(pl2.clone().multiply(x)));
+        			rev.add(pelr.clone().add(rot.clone().multiply(-x)));
+        			rev.add(pelr.clone().add(rot.clone().multiply(x)));
+            	}
+            	AtomicInteger j  = new AtomicInteger();
+            	
+            	lhs.forEach(l ->{
+            		ars.get(p.getUniqueId()).get(j.getAndIncrement()).teleport(l);
+            	});
+            	crs.forEach(l ->{
+            		ars.get(p.getUniqueId()).get(j.getAndIncrement()).teleport(l);
+            	});
+            	rev.forEach(l ->{
+            		ars.get(p.getUniqueId()).get(j.getAndIncrement()).teleport(l);
+            	});
+
+        		ars.get(p.getUniqueId()).get(j.getAndIncrement()).teleport(pelr);
+        		ars.get(p.getUniqueId()).get(j.get()).teleport(pfl);
+        		
+        		ars.get(p.getUniqueId()).forEach(ar ->{
+        			((ArmorStand) ar).setHeadPose(conv(pel.getPitch()));
+    				
+        			ar.getNearbyEntities(0.6, 0.6, 0.6).forEach(ne ->{
+        				if(ne instanceof Projectile) {
+        					Projectile pr = (Projectile) ne;
+        					if(pr.getShooter() instanceof Player) {
+        						Player st = (Player) pr.getShooter();
+        						if(Party.isInSameParty(p, st)) {
+        							return;
+        						}
+        					}
+        					pr.remove();
+        					p.playSound(pr.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_DEPLETE, 0.35f, 1.76f);
+        					pw.spawnParticle(Particle.FLASH, pr.getLocation(), 1);
+        					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+        			            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.BLUE +"[수호의 방벽]").create());
+        					}
+        					else {
+        			            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.BLUE +"[Barrier of Tutelary]").create());
+        					}
+        				
+        				}
+        			});
+        		});
+            	
+        		
+            	if(!p.isBlocking()) {
+                	if(ars.containsKey(p.getUniqueId())) {
+                    	ars.get(p.getUniqueId()).forEach(ar -> Holding.ale(ar).remove());
+                    	ars.removeAll(p.getUniqueId());
+                	}
+                	
+                	if(shieldt.containsKey(p.getUniqueId())) {
+                		Bukkit.getScheduler().cancelTask(shieldt.get(p.getUniqueId()));
+                		shieldt.remove(p.getUniqueId());
+                	}
+            	}
+            }
+
+       	 }, 0,1);
+        shieldt.put(p.getUniqueId(), q);
+    	
+    	
+	}
+	
+	final private boolean protectalbe(Entity tar, Player par, Player pal) {
+
+		final World pw = par.getWorld();
+		Boolean revtar = false;
+		Boolean revpar = false;
+		Boolean fronttar = false;
+		Boolean frontpar = false;
+		for(LivingEntity ar : ars.get(pal.getUniqueId())) {
+			final Location arl = ar.getEyeLocation().clone();
+			if(pw.rayTraceEntities(arl, arl.getDirection(), 60, he -> !he.hasMetadata("fake")&&!he.hasMetadata("portal")&&!he.hasMetadata("din")) !=null) {
+				Entity he = pw.rayTraceEntities(arl, arl.getDirection(), 60, hae -> !hae.hasMetadata("fake")).getHitEntity();
+				
+				if(ar.hasMetadata("giantshieldrev")) {
+					if(he == par) {
+						revpar = true;
+					}
+					if(he == tar) {
+						revtar = true;	
+					}
+				}
+				else if(ar.hasMetadata("giantshield")) {
+					if(he == tar) {
+						fronttar = true;	
+					}
+					if(he == par) {
+						frontpar = true;
+					}
+				}
+			}
+		}
+		
+
+		Boolean returnbool = (revtar&&frontpar)||(revpar&&fronttar);
+		if(returnbool) {
+			pw.spawnParticle(Particle.FLASH, tar.getLocation(), 1);
+			par.playSound(par.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_DEPLETE, 0.35f, 1.76f);
+			if(par.getLocale().equalsIgnoreCase("ko_kr")) {
+	            par.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.BLUE +"[수호의 방벽]").create());
+			}
+			else {
+	            par.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.BLUE +"[Barrier of Tutelary]").create());
+			}
+		}
+		return returnbool;
+	}
+
+	public void Protection(PlayerInteractEvent ev) 
+	{
+		Player p = ev.getPlayer();
+		Action ac = ev.getAction();
+		
+		
+		if(ClassData.pc.get(p.getUniqueId()) == 3) {
+			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD")) 
+			{
+				if((ac == Action.RIGHT_CLICK_AIR || ac == Action.RIGHT_CLICK_BLOCK))
+				{
+			        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+			            @Override
+			            public void run() {
+							giantShield(p);
+			            }
+			        }, 6); 
+					
+				}
+			}
+		}
+	}
 	public void Protection(EntityDamageEvent d) 
 	{
 		if(d.getEntity().hasMetadata("griffon") && d.getCause()!=DamageCause.VOID) {
 			d.setCancelled(true);
 		}
+	}
+	public void Protection(EntityDamageByEntityEvent d) 
+	{
 		if(d.getEntity() instanceof Player&&!d.isCancelled()) 
 		{
-			Player p = (Player)d.getEntity();
+			Player par = (Player)d.getEntity();
 			   
-			if(Party.hasParty(p))	{
-					if(Party.getMembers(Party.getParty(p)).anyMatch(pal -> ClassData.pc.get(pal)==3 && Bukkit.getPlayer(pal).isBlocking() && Proficiency.getpro(Bukkit.getPlayer(pal)) <1 )) {
-						p.playSound(p.getLocation(), Sound.ITEM_SHIELD_BLOCK, 0.6f, 1.46f);
+			if(Party.hasParty(par))	{
+					if(Party.getPlayerMembers(Party.getParty(par)).stream().anyMatch(pal -> ClassData.pc.get(pal.getUniqueId())==3 && pal.isBlocking())) {
+						par.playSound(par.getLocation(), Sound.ITEM_SHIELD_BLOCK, 0.6f, 1.46f);
 						d.setDamage(d.getDamage()*0.5);
-						if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		                    p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(org.bukkit.ChatColor.YELLOW +"[보호]").create());
+						if(par.getLocale().equalsIgnoreCase("ko_kr")) {
+		                    par.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.YELLOW +"[보호]").create());
 						}
 						else {
-		                    p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(org.bukkit.ChatColor.YELLOW +"[Protection]").create());
+		                    par.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.YELLOW +"[Protection]").create());
 						}
-					}
-					else if(Party.getMembers(Party.getParty(p)).anyMatch(pal -> ClassData.pc.get(pal)==3 && Bukkit.getPlayer(pal).isBlocking() && Proficiency.getpro(Bukkit.getPlayer(pal)) >= 1 )) {
-						p.playSound(p.getLocation(), Sound.ITEM_SHIELD_BLOCK, 0.6f, 1.46f);
-						d.setDamage(d.getDamage()*0.2);
-						if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		                    p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(org.bukkit.ChatColor.YELLOW +"[보호]").create());
-						}
-						else {
-		                    p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(org.bukkit.ChatColor.YELLOW +"[Protection]").create());
-						}
+
+						Stream<Player> pals = Party.getPlayerMembers(Party.getParty(par)).stream().filter(pal -> ClassData.pc.get(pal.getUniqueId())==3 && pal.isBlocking());
+						pals.forEach(pal ->{
+							if(Proficiency.getpro(pal)<1) {
+								return;
+							}
+							if(protectalbe(d.getDamager(),par,pal)) {
+								d.setCancelled(true);
+							}
+						});
 					}
 			}   
-			if(ClassData.pc.get(p.getUniqueId()) == 3 && p.isBlocking())	{
+			if(ClassData.pc.get(par.getUniqueId()) == 3 && par.isBlocking())	{
 				d.setDamage(d.getDamage()*0.5);
-				p.playSound(p.getLocation(), Sound.ITEM_SHIELD_BLOCK, 0.6f, 1.46f);
-				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-                    p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(org.bukkit.ChatColor.YELLOW +"[보호]").create());
+				par.playSound(par.getLocation(), Sound.ITEM_SHIELD_BLOCK, 0.6f, 1.46f);
+				if(par.getLocale().equalsIgnoreCase("ko_kr")) {
+                    par.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.YELLOW +"[보호]").create());
 				}
 				else {
-                    p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(org.bukkit.ChatColor.YELLOW +"[Protection]").create());
+                    par.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.YELLOW +"[Protection]").create());
 				}
-			}
-			
-			if(ClassData.pc.get(p.getUniqueId()) == 3&& Proficiency.getpro(p)>=1)
-			{
-				d.setDamage(d.getDamage()*0.8);
-				if(p.isBlocking()) {
+
+				if(Proficiency.getpro(par)<1) {
+					return;
+				}
+				if(protectalbe(d.getDamager(),par,par)) {
 					d.setCancelled(true);
 				}
 			}
@@ -2615,7 +2907,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3)
 		{
-			if(p.getInventory().getItemInMainHand().getType().name().contains("AXE") && p.getInventory().getItemInOffHand().getType()== Material.SHIELD)
+			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType()== Material.SHIELD)
 			{
 				e.setCancelled(true);
 			}
@@ -2645,7 +2937,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 			
 			
 			if(ClassData.pc.get(p.getUniqueId()) == 3) {
-				if(p.getInventory().getItemInMainHand().getType().name().contains("AXE") && p.getInventory().getItemInOffHand().getType()== Material.SHIELD)	{
+				if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType()== Material.SHIELD)	{
 					d.setDamage(d.getDamage()*1.3+psd.Protection.get(p.getUniqueId())*0.4383);
 				}
 				
@@ -2654,9 +2946,9 @@ public class Palskills extends Pak implements Serializable, Listener {
 				d.setDamage(d.getDamage()*(1+0.01*judge.get(p.getUniqueId())));
 			}
 		}
-		if(d.getDamager() instanceof Arrow && d.getEntity() instanceof LivingEntity) 
+		if(d.getDamager() instanceof Projectile && d.getEntity() instanceof LivingEntity) 
 		{
-			Arrow ar = (Arrow)d.getDamager();
+			Projectile ar = (Projectile)d.getDamager();
 			LivingEntity le = (LivingEntity)d.getEntity();
 			if(ar.getShooter() instanceof Player) {
 				Player p = (Player) ar.getShooter();
@@ -2675,7 +2967,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 				
 				
 				if(ClassData.pc.get(p.getUniqueId()) == 3) {		
-					if(p.getInventory().getItemInMainHand().getType().name().contains("AXE") && p.getInventory().getItemInOffHand().getType()== Material.SHIELD)	{
+					if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType()== Material.SHIELD)	{
 						d.setDamage(d.getDamage()*1.3+psd.Protection.get(p.getUniqueId())*0.4383);
 					}
 					

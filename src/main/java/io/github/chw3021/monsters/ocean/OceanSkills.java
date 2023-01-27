@@ -686,6 +686,7 @@ public class OceanSkills extends Summoned{
 		                Holding.holding(null, p, 40l);
 		                Holding.untouchable(p, 40l);
 		                for(Entity e : OverworldRaids.getheroes(p)) {
+		                	Holding.invur(p, 20l);
 		                	if(e instanceof Player) {
 		                		Player pe = (Player) e;
 		    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -719,6 +720,7 @@ public class OceanSkills extends Summoned{
 	                Holding.holding(null, p, 40l);
 	                Holding.untouchable(p, 40l);
 	                for(Entity e : OverworldRaids.getheroes(p)) {
+	                	Holding.invur(p, 20l);
 	                	if(e instanceof Player) {
 	                		Player pe = (Player) e;
 	    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {

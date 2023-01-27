@@ -1008,7 +1008,7 @@ public class Classgui implements Serializable {
 					"방어: 2.5/5", "제어: 2.5/5", "지원: 1/5", "범위: 1/5", "사거리: 1/5", "기동: 5/5", "난이도: 어려움"), 19, inv);
 			itemset(ChatColor.BLUE + "투사", Material.CHAIN, 0, 1, Arrays.asList("추천 장비:", "검", "", "공격: 3/5",
 					"방어: 2.5/5", "제어: 4/5", "지원: 1/5", "범위: 4/5", "사거리: 2/5", "기동: 2.5/5", "난이도: 보통"), 28, inv);
-			itemset(ChatColor.BLUE + "성기사", Material.SHIELD, 0, 1, Arrays.asList("추천 장비:", "주:도끼, 보조:방패 ", "",
+			itemset(ChatColor.BLUE + "성기사", Material.SHIELD, 0, 1, Arrays.asList("추천 장비:", "주:도끼, 보조:방패", "",
 					"공격: 1.5/5", "방어: 5/5", "제어: 3/5", "지원: 4.5/5", "범위: 2/5", "사거리: 2/5", "기동: 2/5", "난이도: 쉬움"), 37,
 					inv);
 
@@ -1073,7 +1073,7 @@ public class Classgui implements Serializable {
 			itemset(ChatColor.BLUE + "위더리스트", Material.WITHER_ROSE, 0, 1, Arrays.asList("추천 장비:", "괭이", "", "공격: 3/5",
 					"방어: 3/5", "제어: 4/5", "지원: 2/5", "범위: 3/5", "사거리: 4/5", "기동: 5/5", "난이도: 보통"), 34, inv);
 			itemset(ChatColor.BLUE + "부두술사", Material.TOTEM_OF_UNDYING, 0, 1,
-					Arrays.asList("추천 장비:", "괭이", "", "공격: 2.5/5", "방어: 3.5/5", "제어: 1.5/5", "지원: 4.5/5", "범위: 2.5/5",
+					Arrays.asList("추천 장비:", "주:괭이, 보조:불사의토템 ", "", "공격: 2.5/5", "방어: 3.5/5", "제어: 1.5/5", "지원: 4.5/5", "범위: 2.5/5",
 							"사거리: 2.5/5", "기동: 2/5", "난이도: 어려움"),
 					43, inv);
 
@@ -1246,7 +1246,7 @@ public class Classgui implements Serializable {
 							"Support: 2/5", "Area: 3/5", "Range: 4/5", "Mobility: 5/5", "Difficulty: Normal"),
 					34, inv);
 			itemset(ChatColor.BLUE + "WitchDoctor", Material.TOTEM_OF_UNDYING, 0, 1,
-					Arrays.asList("Recommended equipment:", "Hoe", "", "Attack: 2.5/5", "Defence: 3.5/5",
+					Arrays.asList("Recommended equipment:", "Hoe(main) & Totem of undying(off)", "", "Attack: 2.5/5", "Defence: 3.5/5",
 							"Control: 1.5/5", "Support: 4.5/5", "Area: 2.5/5", "Range: 2.5/5", "Mobility: 2/5",
 							"Difficulty: Hard"),
 					43, inv);

@@ -577,6 +577,24 @@ public class Weapons {
 		if(m == Material.GLOBE_BANNER_PATTERN) {
 			kname = "너클";
 			ename = "Knuckle";
+			if(p.getLocale().contains("kr")){
+				if (rm.hasLore()) {
+					List<String> lore = rm.getLore();
+					lore.add( "손교체시 장착");
+					rm.setLore(lore);
+				} else {
+					rm.setLore(Arrays.asList("손교체시 장착"));
+				}
+			}
+			else {
+				if (rm.hasLore()) {
+					List<String> lore = rm.getLore();
+					lore.add( "SwapHands To Equip");
+					rm.setLore(lore);
+				} else {
+					rm.setLore(Arrays.asList("SwapHands To Equip"));
+				}
+			}
 			rm.addItemFlags(ItemFlag.HIDE_DYE);
 			rm.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
@@ -786,6 +804,24 @@ public class Weapons {
 		if(m.contains("_BANNER")) {
 			kname = "너클";
 			ename = "Knuckle";
+			if(p.getLocale().contains("kr")){
+				if (rm.hasLore()) {
+					List<String> lore = rm.getLore();
+					lore.add( "손교체시 장착");
+					rm.setLore(lore);
+				} else {
+					rm.setLore(Arrays.asList("손교체시 장착"));
+				}
+			}
+			else {
+				if (rm.hasLore()) {
+					List<String> lore = rm.getLore();
+					lore.add( "SwapHands To Equip");
+					rm.setLore(lore);
+				} else {
+					rm.setLore(Arrays.asList("SwapHands To Equip"));
+				}
+			}
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 					new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 15,
 							Operation.ADD_NUMBER, EquipmentSlot.HAND));

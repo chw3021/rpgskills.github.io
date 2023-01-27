@@ -6,17 +6,11 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Arrays;
-import java.util.List;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
 import io.github.chw3021.classes.Proficiency;
 import io.github.chw3021.classes.SkillsGui;
 import io.github.chw3021.obtains.Obtained;
@@ -119,7 +113,7 @@ public class SwordSkillsGui extends SkillsGui{
 						,"",ChatColor.BOLD+"4 X "+BigDecimal.valueOf(0.43*(1+ ssd.CriticalDraw.getOrDefault(p.getUniqueId(),0)*0.05)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 22, Swordskillsinv);
 				itemset("회복", Material.NETHERITE_HELMET, 0, 1, Arrays.asList("막기 게이지량이 증가합니다", "회복 대기시간이 감소합니다"), 24, Swordskillsinv);
 				itemset("검신일체", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("공격력, 방어력과 범위가 증가합니다","비검 대기시간이 감소합니다"), 25, Swordskillsinv);
-				itemset("심검", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[대지 계열]","달리기 + 아이템던지기","",ChatColor.BOLD+"45 X 0.1D, 12 X 3.3D, 12.1D"), 26, Swordskillsinv);
+				itemset("심검", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[대지 계열]","달리기 + 아이템던지기","",ChatColor.BOLD+"45.1D"), 26, Swordskillsinv);
 			}
 			itemset("현재 숙련도", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(""+Proficiency.getproexp(p)), 27, Swordskillsinv);
 			itemset("스킬포인트", Material.NETHER_STAR, 0, 1, Arrays.asList(ChatColor.AQUA+"SP."+ssd.SkillPoints.getOrDefault(p.getUniqueId(),0),"","클릭하면 스킬포인트가 초기화 됩니다"), 35, Swordskillsinv);
@@ -210,7 +204,7 @@ public class SwordSkillsGui extends SkillsGui{
 						,"",ChatColor.BOLD+"4 X "+BigDecimal.valueOf(0.43*(1+ ssd.CriticalDraw.getOrDefault(p.getUniqueId(),0)*0.05)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 22, Swordskillsinv);
 				itemset("Recovery", Material.NETHERITE_HELMET, 0, 1, Arrays.asList("Increases Guard Gage", "Decreases Recovering Cooldown"), 24, Swordskillsinv);
 				itemset("SteadyBlade", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Damage, Range & Armor","Decreases SwordStorm Cooldown"), 25, Swordskillsinv);
-				itemset("MindSword", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Earth]","Sprinting + ThrowItem","",ChatColor.BOLD+"45 X 0.1D, 12 X 3.3D, 12.1D"), 26, Swordskillsinv);
+				itemset("MindSword", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Earth]","Sprinting + ThrowItem","",ChatColor.BOLD+"45.1D"), 26, Swordskillsinv);
 			}
 			itemset("Current Proficiency", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(""+Proficiency.getproexp(p)), 27, Swordskillsinv);
 			itemset("SkillPoints", Material.NETHER_STAR, 0, 1, Arrays.asList(ChatColor.AQUA+"SP."+ssd.SkillPoints.getOrDefault(p.getUniqueId(),0),"","Click if you want to reset your skill's levels"), 35, Swordskillsinv);

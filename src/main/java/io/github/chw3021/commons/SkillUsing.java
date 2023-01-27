@@ -150,7 +150,6 @@ public class SkillUsing implements Listener, Serializable {
 		Frostskills.getInstance().nepreventer(ev);
 		Hunskills.getInstance().nepreventer(ev);
 		Illskills.getInstance().nepreventer(ev);
-		Illskills.getInstance().FakeDimension(ev);
 		Launskills.getInstance().nepreventer(ev);
 		Medskills.getInstance().nepreventer(ev);
 		Oceskills.getInstance().nepreventer(ev);
@@ -186,7 +185,6 @@ public class SkillUsing implements Listener, Serializable {
 		Frostskills.getInstance().er(ev);
 		Hunskills.getInstance().er(ev);
 		Illskills.getInstance().er(ev);
-		Illskills.getInstance().FakeDimension(ev);
 		Launskills.getInstance().er(ev);
 		Medskills.getInstance().er(ev);
 		Oceskills.getInstance().er(ev);
@@ -375,11 +373,10 @@ public class SkillUsing implements Listener, Serializable {
 		Taoskills.getInstance().Imagery(ev);
 		Taoskills.getInstance().KarmaBreath(ev);
 
-		Wdcskills.getInstance().Bosou(ev);
 		Wdcskills.getInstance().Fangs(ev);
 		Wdcskills.getInstance().FangsRush(ev);
 		Wdcskills.getInstance().ZoglinCharge(ev);
-		Wdcskills.getInstance().ForbiddenHex(ev);
+		Wdcskills.getInstance().AstralProjection(ev);
 
 		Witskills.getInstance().Demolition(ev);
 		Witskills.getInstance().PurifierBeam(ev);
@@ -408,7 +405,6 @@ public class SkillUsing implements Listener, Serializable {
 		CommonEvents.getInstance().namingAndBarRemove(ev);
 		Holding.getInstance().holded(ev);
 		
-		Hunskills.getInstance().TurnOver(ev);
 
 
 		Medskills.getInstance().Stretcher(ev);
@@ -495,6 +491,7 @@ public class SkillUsing implements Listener, Serializable {
 		Hunskills.getInstance().HuntingStart(ev);
 		Hunskills.getInstance().HuntingStart2(ev);
 		Hunskills.getInstance().Webthrow(ev);
+		Hunskills.getInstance().webRetrieving(ev);
 
 		Illskills.getInstance().Distortion(ev);
 		Illskills.getInstance().Encore(ev);
@@ -526,6 +523,7 @@ public class SkillUsing implements Listener, Serializable {
 		Palskills.getInstance().Griffon(ev);
 		Palskills.getInstance().Judgement(ev);
 		Palskills.getInstance().Punish(ev);
+		Palskills.getInstance().Protection(ev);
 
 		Snipskills.getInstance().Rope(ev);
 		Snipskills.getInstance().Flare(ev);
@@ -556,13 +554,14 @@ public class SkillUsing implements Listener, Serializable {
 		Taoskills.getInstance().SpiritStorm(ev);
 		Taoskills.getInstance().Wave(ev);
 
-		Wdcskills.getInstance().AstralProjection(ev);
 		Wdcskills.getInstance().Harvest(ev);
 		Wdcskills.getInstance().Incantation(ev);
 		Wdcskills.getInstance().PhantomSwoop(ev);
 		Wdcskills.getInstance().Sacrifice(ev);
 		Wdcskills.getInstance().VengefulSpirit(ev);
 		Wdcskills.getInstance().Wraith(ev);
+		Wdcskills.getInstance().Bosou(ev);
+		Wdcskills.getInstance().ForbiddenHex(ev);
 
 		Witskills.getInstance().BlackSpin(ev);
 		Witskills.getInstance().CrystalCage(ev);
@@ -583,6 +582,7 @@ public class SkillUsing implements Listener, Serializable {
 			return;
 		}
 		CommonEvents.getInstance().Villdamcan(d);
+		CommonEvents.getInstance().leftClickTrigger(d);
 		
 		
 		
@@ -667,6 +667,7 @@ public class SkillUsing implements Listener, Serializable {
 		Nobskills.getInstance().ULT1(d);
 
 		Palskills.getInstance().Faith(d);
+		Palskills.getInstance().Protection(d);
 		Palskills.getInstance().Punish(d);
 
 		Snipskills.getInstance().AirStrike(d);
@@ -729,7 +730,7 @@ public class SkillUsing implements Listener, Serializable {
 		Oceskills.getInstance().WaterBarrier(d);
 
 		Palskills.getInstance().Protection(d);
-
+		
 		Swordskills.getInstance().guard1(d);
 
 		Tamskills.getInstance().ArmorIncrease(d);
@@ -1061,7 +1062,6 @@ public class SkillUsing implements Listener, Serializable {
 		
 		Cheskills.getInstance().Cloud(ev);
 		
-		Illskills.getInstance().FakeDimension(ev);
 		
 
 		Medskills.getInstance().Stretcher(ev);
@@ -1085,8 +1085,6 @@ public class SkillUsing implements Listener, Serializable {
 	{
 		CommonEvents.getInstance().deleter(ev);
 		
-		
-		Illskills.getInstance().FakeDimension(ev);
 	}
 
 	@EventHandler
@@ -1096,9 +1094,6 @@ public class SkillUsing implements Listener, Serializable {
 		
 		CommonEvents.getInstance().dinremove(ev);
 		
-		
-		
-		Illskills.getInstance().FakeDimension(ev);
 		
 		Nobskills.getInstance().Owner(ev);
 		
@@ -1194,8 +1189,6 @@ public class SkillUsing implements Listener, Serializable {
 		CommonEvents.getInstance().Teleport(d);
 		
 		Holding.getInstance().holded(d);
-		
-		Illskills.getInstance().FakeDimension(d);
 		
 		Tamskills.getInstance().delete(d);
 

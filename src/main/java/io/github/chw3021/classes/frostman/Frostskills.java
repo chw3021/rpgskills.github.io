@@ -793,6 +793,7 @@ public class Frostskills extends Pak implements Listener, Serializable {
 		{
 			if(p.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD)
 			{
+				p.setCooldown(Material.TORCH, 2);
 				
 
 				if(smcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
@@ -1249,7 +1250,7 @@ public class Frostskills extends Pak implements Listener, Serializable {
 		double sec =5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
         if(ClassData.pc.get(p.getUniqueId()) == 21&& bsd.SnowBreeze.getOrDefault(p.getUniqueId(), 0)>=1) {
     		final Location l = p.getLocation().clone();
-			if(p.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD &&!p.isSneaking()&& !p.isOnGround()) 
+			if(p.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD &&!p.isSneaking()&& !p.isOnGround() &&!p.hasCooldown(Material.TORCH)) 
 			{
 				if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK))
 				{
@@ -1427,8 +1428,8 @@ public class Frostskills extends Pak implements Listener, Serializable {
 
         if(ClassData.pc.get(p.getUniqueId()) == 21&&icefall.containsKey(p.getUniqueId())) {
         	final Location hpl = p.getEyeLocation().clone().add(0,3,0);
-    		final Location tl = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR)), 6).getLocation();
-			if(p.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD &&!p.isSneaking()&& !p.isOnGround()) 
+    		final Location tl = gettargetblock(p,6);
+			if(p.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD &&!p.isSneaking()&& !p.isOnGround() &&!p.hasCooldown(Material.TORCH)) 
 			{
 				if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK))
 				{
@@ -1528,6 +1529,7 @@ public class Frostskills extends Pak implements Listener, Serializable {
 			if(p.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD)
 			{
 
+				p.setCooldown(Material.TORCH, 2);
 				ev.setCancelled(true);
 
 				if(frcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
@@ -2231,8 +2233,8 @@ else {
 		ItemStack is = it.getItemStack();
 			if(ClassData.pc.get(p.getUniqueId()) == 21 && (is.getType() == Material.PRISMARINE_SHARD) && p.isSneaking() && Proficiency.getpro(p) >=1)
 			{
-				p.getLocation();
-		        final Location el = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR)), 6).getLocation().setDirection(p.getLocation().getDirection());
+				p.setCooldown(Material.TORCH, 2);
+		        final Location el = gettargetblock(p,6);
 				ev.setCancelled(true);
 				if(sultcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
 	            {
@@ -2474,6 +2476,7 @@ else {
 		ItemStack is = it.getItemStack();
 			if(ClassData.pc.get(p.getUniqueId()) == 21 && (is.getType() == Material.PRISMARINE_SHARD) && !p.isSneaking()&& p.isSprinting() && Proficiency.getpro(p) >=2)
 			{
+				p.setCooldown(Material.TORCH, 2);
 		        ev.setCancelled(true);
 				if(sult2cooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
 	            {

@@ -21,7 +21,9 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Chicken;
@@ -38,6 +40,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Snowball;
 import org.bukkit.entity.Vex;
+import org.bukkit.entity.WitherSkeleton;
 import org.bukkit.entity.Zoglin;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.Listener;
@@ -127,9 +130,9 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 	static public HashMap<UUID, Integer> Baron = new HashMap<UUID, Integer>();
 	static public HashMap<UUID, Integer> Baront = new HashMap<UUID, Integer>();
 
-	static private HashMap<UUID, UUID> deathp = new HashMap<UUID, UUID>();
-	static private HashMap<UUID, Integer> deathpt = new HashMap<UUID, Integer>();
-	static private HashMap<UUID, HashMap<UUID, Double>> deathdamager = new HashMap<UUID, HashMap<UUID, Double>>();
+	private HashMap<UUID, Location> eternal = new HashMap<UUID, Location>();
+	private HashMap<UUID, Integer> eternalt = new HashMap<UUID, Integer>();
+	private HashMap<UUID, Double> eternald = new HashMap<UUID, Double>();
 	
 	private static HashMap<UUID, UUID> Hex = new HashMap<UUID, UUID>();
 	private static HashMap<UUID, Integer> Hext = new HashMap<UUID, Integer>();
@@ -320,7 +323,7 @@ public class Wdcskills extends Pak implements Serializable, Listener {
                 				}
                 			}
 							
-							atk0(0.4, wsd.Fangs.get(p.getUniqueId())*0.3, p, le,11);
+							atks(0.4, wsd.Fangs.get(p.getUniqueId())*0.3, p, le,11);
 						}
 				}
 			}
@@ -350,7 +353,7 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 	    					}
 	    				}
 	    			}
-	        		atk0(0.7, wsd.Fangs.get(p.getUniqueId())*0.8, p, le,11);
+	        		atks(0.7, wsd.Fangs.get(p.getUniqueId())*0.9, p, le,11);
 	        		Holding.holding(p, le, 20l);
 	    		}
 	    	}
@@ -470,7 +473,7 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 		        	    					}
 		        	    				}
 		        	    			}
-		        	        		atk0(0.7, wsd.Fangs.get(p.getUniqueId())*0.8, p, le,11);
+		        	        		atks(0.7, wsd.Fangs.get(p.getUniqueId())*0.8, p, le,11);
 		        	        		Holding.holding(p, le, 5l);
 		        	    		}
 		        	    	}
@@ -563,92 +566,23 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 	}
 
 	
-	public void Bosou(PlayerSwapHandItemsEvent ev) 
+	public void Bosou(PlayerInteractEvent ev) 
 	{
 		Player p = ev.getPlayer();
-	    
+	    Action ac = ev.getAction();
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 14 && wsd.Bosou.getOrDefault(p.getUniqueId(), 0)>=1) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("TOTEM") && p.getInventory().getItemInOffHand().getType().name().contains("HOE") && p.isSneaking())
+			if(p.getInventory().getItemInMainHand().getType().name().contains("HOE") && p.getInventory().getItemInOffHand().getType().name().contains("TOTEM") && !p.isSneaking())
 			{
-				
-		double sec =9*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
-				ev.setCancelled(true);
+
+				if((ac == Action.RIGHT_CLICK_AIR || ac == Action.RIGHT_CLICK_BLOCK))
 				{
-					if(prcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-		            {
-		                double timer = (prcooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d; // geting time in seconds
-		                if(!(timer < 0)) // if timer is still more then 0 or 0
-		                {
-		                	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		                		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("수호의로아:보수 재사용 대기시간이 " + String.valueOf(Math.round(timer*10)/10.0) + "초 남았습니다").create());
-		                	}
-		                	else {
-			                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Bosou").create());
-		                	}
-		                }
-		                else // if timer is done
-		                {
-		                    prcooldown.remove(p.getName()); // removing player from HashMap
+					p.setCooldown(Material.TORCH, 2);
+					double sec =9*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+					ev.setCancelled(true);
+					skilluse(()->{
 
-
-
-		                	if(forbhxt.containsKey(p.getUniqueId())) {
-		                		Bukkit.getScheduler().cancelTask(forbhxt.get(p.getUniqueId()));
-		                		forbhxt.remove(p.getUniqueId());
-		                	}
-
-							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() {
-									if(Proficiency.getpro(p)>=1) {
-										forbhx.putIfAbsent(p.getUniqueId(), 0);
-									}
-				                }
-				            }, 3); 
-
-		            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() {
-									forbhx.remove(p.getUniqueId());
-				                }
-				            }, 40); 
-		                	forbhxt.put(p.getUniqueId(), task);
-		                	
-		                    
-		                    Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 3).getLocation();
-		                    p.playSound(p.getLocation(), Sound.ENTITY_HOGLIN_AMBIENT, 1.0f, 0f);
-			        		p.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, l, 400, 4, 2, 4);
-			        		p.getWorld().spawnParticle(Particle.ASH, l, 400, 4, 2, 4);
-			        		Hoglin h = (Hoglin)p.getWorld().spawnEntity(l, EntityType.HOGLIN);
-			        		h.setAdult();
-			        		h.setAgeLock(true);
-			        		h.setImmuneToZombification(true);
-			        		h.setAI(false);
-			        		h.setInvulnerable(true);
-		                    h.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-		                    h.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-							for(int i = 0; i <3.6*wsd.Bosou.get(p.getUniqueId()); i++) {
-			                		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-						                @Override
-						                public void run() {
-							        		Bosou(p,h.getLocation().clone());
-						                }
-						            }, i*5); 
-		                	}
-							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() 
-				                {
-				                	h.remove();
-				                }
-							}, (long) (3.6*wsd.Bosou.get(p.getUniqueId())*5));
-							prcooldown.put(p.getName(), System.currentTimeMillis());
-						}
-		            }
-		            else // if cooldown doesn't have players name in it
-		            {
 
 	                	if(forbhxt.containsKey(p.getUniqueId())) {
 	                		Bukkit.getScheduler().cancelTask(forbhxt.get(p.getUniqueId()));
@@ -672,7 +606,7 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 			            }, 40); 
 	                	forbhxt.put(p.getUniqueId(), task);
 	                	
-	                	
+	                    
 	                    Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 3).getLocation();
 	                    p.playSound(p.getLocation(), Sound.ENTITY_HOGLIN_AMBIENT, 1.0f, 0f);
 		        		p.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, l, 400, 4, 2, 4);
@@ -700,49 +634,52 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 			                	h.remove();
 			                }
 						}, (long) (3.6*wsd.Bosou.get(p.getUniqueId())*5));
-						prcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
+					}, p, sec,"수호의로아:보수", "Bosou", prcooldown);
+				}
+			}
+		}
+	}
+
+	
+	public void ForbiddenHex(PlayerInteractEvent ev) 
+	{
+		Player p = ev.getPlayer();
+	    Action ac = ev.getAction();
+		
+
+		if(ClassData.pc.get(p.getUniqueId()) == 14&& forbhx.containsKey(p.getUniqueId())) {
+			if(p.getInventory().getItemInMainHand().getType().name().contains("HOE") && p.getInventory().getItemInOffHand().getType().name().contains("TOTEM") && !p.isSneaking())
+			{
+
+				if((ac == Action.RIGHT_CLICK_AIR || ac == Action.RIGHT_CLICK_BLOCK))
+				{
+					ev.setCancelled(true);
+
+	            	if(forbhxt.containsKey(p.getUniqueId())) {
+	            		Bukkit.getScheduler().cancelTask(forbhxt.get(p.getUniqueId()));
+	            		forbhxt.remove(p.getUniqueId());
+	            	}
+					forbhx.remove(p.getUniqueId());
+					p.playSound(p.getLocation(), Sound.ENTITY_VEX_CHARGE, 0.8f, 1.5f);
+	        		p.getWorld().spawnParticle(Particle.SPELL_INSTANT, p.getLocation(), 400, 1, 1, 1);
+					p.setHealth(p.getHealth()*0.8);
+					p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 40, 60, false, false));
+					Holding.invur(p, (long) (9*wsd.Bosou.get(p.getUniqueId())));
+					
+					if(Party.hasParty(p)) {
+						Party.getMembers(Party.getParty(p)).forEach(pu -> {
+							Player p1 = Bukkit.getPlayer(pu);
+							p1.playSound(p1.getLocation(), Sound.ENTITY_VEX_CHARGE, 0.8f, 1.5f);
+			        		p.getWorld().spawnParticle(Particle.SPELL_INSTANT, p1.getLocation(), 400, 1, 1, 1);
+							p1.setHealth(p.getHealth()*0.8);
+							p1.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 40, 60, false, false));
+							Holding.invur(p1, (long) (9*wsd.Bosou.get(p.getUniqueId())));
+						});
 					}
 				}
 			}
 		}
 	}
-
-
-	
-	public void ForbiddenHex(PlayerSwapHandItemsEvent ev) 
-	{
-		Player p = ev.getPlayer();
-		
-		if(ClassData.pc.get(p.getUniqueId()) == 14&& forbhx.containsKey(p.getUniqueId())) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("TOTEM") && p.getInventory().getItemInOffHand().getType().name().contains("HOE") && p.isSneaking())
-			{
-				ev.setCancelled(true);
-
-            	if(forbhxt.containsKey(p.getUniqueId())) {
-            		Bukkit.getScheduler().cancelTask(forbhxt.get(p.getUniqueId()));
-            		forbhxt.remove(p.getUniqueId());
-            	}
-				forbhx.remove(p.getUniqueId());
-				p.playSound(p.getLocation(), Sound.ENTITY_VEX_CHARGE, 0.8f, 1.5f);
-        		p.getWorld().spawnParticle(Particle.SPELL_INSTANT, p.getLocation(), 400, 1, 1, 1);
-				p.setHealth(p.getHealth()*0.8);
-				p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 40, 60, false, false));
-				Holding.invur(p, (long) (9*wsd.Bosou.get(p.getUniqueId())));
-				
-				if(Party.hasParty(p)) {
-					Party.getMembers(Party.getParty(p)).forEach(pu -> {
-						Player p1 = Bukkit.getPlayer(pu);
-						p1.playSound(p1.getLocation(), Sound.ENTITY_VEX_CHARGE, 0.8f, 1.5f);
-		        		p.getWorld().spawnParticle(Particle.SPELL_INSTANT, p1.getLocation(), 400, 1, 1, 1);
-						p1.setHealth(p.getHealth()*0.8);
-						p1.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 40, 60, false, false));
-						Holding.invur(p1, (long) (9*wsd.Bosou.get(p.getUniqueId())));
-					});
-				}
-			}
-		}
-	}
-	
 	
 	final private void Harvest(Player p, LivingEntity le) {
 
@@ -766,6 +703,16 @@ public class Wdcskills extends Pak implements Serializable, Listener {
             			Bukkit.getScheduler().cancelTask(hart.get(le.getUniqueId()));
             			hart.remove(le.getUniqueId());
             		}
+            	}
+            	if(p.getWorld() != le.getWorld()) {
+					p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 1, false, false));
+					p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1, 1, false, false));
+                	p.playSound(p.getLocation(), Sound.ENTITY_ZOMBIE_VILLAGER_CURE, 0.1f, 2);
+            		if(hart.containsKey(le.getUniqueId())) {
+            			Bukkit.getScheduler().cancelTask(hart.get(le.getUniqueId()));
+            			hart.remove(le.getUniqueId());
+            		}
+            		return;
             	}
             	Double spd = p.getLocation().clone().distance(sc.clone());
             	if(spd<0.1 || spd>50 ||le.isDead() || p.isDead() || !le.isValid() || !p.isValid()) {
@@ -793,96 +740,12 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 		if(ClassData.pc.get(p.getUniqueId()) == 14 && wsd.Harvest.getOrDefault(p.getUniqueId(), 0)>=1) {
 			if(p.getInventory().getItemInMainHand().getType().name().contains("HOE") && p.getInventory().getItemInOffHand().getType().name().contains("TOTEM")  &&!p.isSneaking()) 
 			{
-				if((ac == Action.RIGHT_CLICK_AIR || ac == Action.RIGHT_CLICK_BLOCK))
+				if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK) && !p.hasCooldown(Material.TORCH))
 				{
 					double sec =3*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 					ev.setCancelled(true);
 					
-					if(jmcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-		            {
-		                double timer = (jmcooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d; // geting time in seconds
-		                if(!(timer < 0)) // if timer is still more then 0 or 0
-		                {
-		                	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		                		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("수확 재사용 대기시간이 " + String.valueOf(Math.round(timer*10)/10.0) + "초 남았습니다").create());
-		                	}
-		                	else {
-			                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Harvest").create());
-		                	}
-		                }
-		                else // if timer is done
-		                {
-		                    jmcooldown.remove(p.getName()); // removing player from HashMap
-							
-		                	if(vgfsprt.containsKey(p.getUniqueId())) {
-		                		Bukkit.getScheduler().cancelTask(vgfsprt.get(p.getUniqueId()));
-		                		vgfsprt.remove(p.getUniqueId());
-		                	}
-
-							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() {
-									if(Proficiency.getpro(p)>=1) {
-										vgfspr.putIfAbsent(p.getUniqueId(), 0);
-									}
-				                }
-				            }, 4); 
-
-		            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() {
-									vgfspr.remove(p.getUniqueId());
-				                }
-				            }, 40);
-		                	vgfsprt.put(p.getUniqueId(), task);
-		                	
-    	                	p.playSound(p.getLocation(), Sound.ENTITY_EVOKER_CAST_SPELL, 0.6f, 0.5f);
-		                	p.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, p.getLocation(), 10,2,2,2,0);
-							if(Proficiency.getpro(p)>=2) {
-			                	p.getWorld().spawnParticle(Particle.DRAGON_BREATH, p.getLocation(), 200,2,2,2,1);
-			                	p.getWorld().spawnParticle(Particle.EXPLOSION_NORMAL, p.getLocation(), 200,2,2,2,1);
-							}
-		                    for(Entity e: p.getNearbyEntities(4, 4, 4)) {
-		                    	if(e instanceof LivingEntity && !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
-		                    		LivingEntity le = (LivingEntity)e;
-		                    		if (le instanceof Player) 
-		                			{
-		                				
-		                				Player p1 = (Player) le;
-		                				if(Party.hasParty(p) && Party.hasParty(p1))	{
-		                				if(Party.getParty(p).equals(Party.getParty(p1)))
-		                					{
-		                						continue;
-		                					}
-		                				}
-		                			}
-		                    		Harvest(p,le);
-		                    		atk0(0.5, wsd.Harvest.get(p.getUniqueId())*0.56, p, le,14);
-									if(Proficiency.getpro(p)>=2) {
-										Holding.holding(p, le, 25l);
-									}
-		                    		
-		                    		if(Hext.containsKey(le.getUniqueId())) {
-		                    			Bukkit.getScheduler().cancelTask(Hext.get(le.getUniqueId()));
-		                    		}
-		                    		Hex.put(le.getUniqueId(), p.getUniqueId());
-									int ht = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-						                @Override
-						                public void run() 
-						                {
-						                	Hex.remove(le.getUniqueId());
-						                }
-									}, 100);
-									Hext.put(le.getUniqueId(), ht);
-		                    	}
-		                    }
-							jmcooldown.put(p.getName(), System.currentTimeMillis());  
-		                }
-		            }
-		            else // if cooldown doesn't have players name in it
-		            {
-
-						
+					skilluse(()->{
 	                	if(vgfsprt.containsKey(p.getUniqueId())) {
 	                		Bukkit.getScheduler().cancelTask(vgfsprt.get(p.getUniqueId()));
 	                		vgfsprt.remove(p.getUniqueId());
@@ -904,8 +767,8 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 			                }
 			            }, 40);
 	                	vgfsprt.put(p.getUniqueId(), task);
-
-	                	p.playSound(p.getLocation(), Sound.ENTITY_EVOKER_CAST_SPELL, 0.6f, 0.5f);
+	                	
+	                	p.playSound(p.getLocation(), Sound.ENTITY_EVOKER_CAST_SPELL, 0.5f, 1.5f);
 	                	p.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, p.getLocation(), 10,2,2,2,0);
 						if(Proficiency.getpro(p)>=2) {
 		                	p.getWorld().spawnParticle(Particle.DRAGON_BREATH, p.getLocation(), 200,2,2,2,1);
@@ -926,7 +789,7 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 	                				}
 	                			}
 	                    		Harvest(p,le);
-	                    		atk0(0.5, wsd.Harvest.get(p.getUniqueId())*0.56, p, le,14);
+	                    		atks(0.5, wsd.Harvest.get(p.getUniqueId())*0.56, p, le,14);
 								if(Proficiency.getpro(p)>=2) {
 									Holding.holding(p, le, 25l);
 								}
@@ -945,8 +808,8 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 								Hext.put(le.getUniqueId(), ht);
 	                    	}
 	                    }
-						jmcooldown.put(p.getName(), System.currentTimeMillis());  
-					}
+					}, p, sec, "수확", "Harvest", jmcooldown);
+					
 				} 
 				}
 		}
@@ -962,7 +825,7 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 		if(ClassData.pc.get(p.getUniqueId()) == 14 && vgfspr.containsKey(p.getUniqueId())) {
 			if(p.getInventory().getItemInMainHand().getType().name().contains("HOE") && p.getInventory().getItemInOffHand().getType().name().contains("TOTEM")  &&!p.isSneaking()) 
 			{
-				if((ac == Action.RIGHT_CLICK_AIR || ac == Action.RIGHT_CLICK_BLOCK))
+				if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK) && !p.hasCooldown(Material.TORCH))
 				{
 					ev.setCancelled(true);
 					
@@ -1018,7 +881,7 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 			                @Override
 			                public void run() 
 			                {
-		                		atk0(0.7, wsd.Harvest.get(p.getUniqueId())*0.76, p, les.get(s),14);
+		                		atks(0.7, wsd.Harvest.get(p.getUniqueId())*0.76, p, les.get(s),14);
 			                }
 						}, ai.incrementAndGet()/5+1);	
 
@@ -1074,7 +937,7 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 		if(ClassData.pc.get(p.getUniqueId()) == 14 && wsd.Wraith.getOrDefault(p.getUniqueId(), 0)>=1) {
 			if(p.getInventory().getItemInMainHand().getType().name().contains("HOE") && p.getInventory().getItemInOffHand().getType().name().contains("TOTEM")  && p.isSneaking()) 
 			{
-				if((ac == Action.RIGHT_CLICK_AIR || ac == Action.RIGHT_CLICK_BLOCK))
+				if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK) && !p.hasCooldown(Material.TORCH))
 				{
 					ev.setCancelled(true);
 					double sec =6*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
@@ -1135,7 +998,7 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 				                					}
 				                				}
 				                			}
-				                    		atk0(0.2, wsd.Wraith.get(p.getUniqueId())*0.2, p, le,10);
+				                    		atks(0.2, wsd.Wraith.get(p.getUniqueId())*0.32, p, le,10);
 				                		}
 				                	}
 				                }
@@ -1167,7 +1030,7 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 		if(ClassData.pc.get(p.getUniqueId()) == 14 &&phtsw.containsKey(p.getUniqueId())) {
 			if(p.getInventory().getItemInMainHand().getType().name().contains("HOE") && p.getInventory().getItemInOffHand().getType().name().contains("TOTEM")  && p.isSneaking()) 
 			{
-				if((ac == Action.RIGHT_CLICK_AIR || ac == Action.RIGHT_CLICK_BLOCK))
+				if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK) && !p.hasCooldown(Material.TORCH))
 				{
 					ev.setCancelled(true);
 					
@@ -1247,7 +1110,7 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 			                					}
 			                				}
 			                			}
-			                    		atk0(0.2, wsd.Wraith.get(p.getUniqueId())*0.2, p, le,11);
+			                    		atks(0.3, wsd.Wraith.get(p.getUniqueId())*0.342, p, le,11);
 			                    		Holding.holding(p, le, 3l);
 			                		}
 			                	}
@@ -1280,7 +1143,7 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 		if(ClassData.pc.get(p.getUniqueId()) == 14 &&sacrf.containsKey(p.getUniqueId())) {
 			if(p.getInventory().getItemInMainHand().getType().name().contains("HOE") && p.getInventory().getItemInOffHand().getType().name().contains("TOTEM")  && p.isSneaking()) 
 			{
-				if((ac == Action.RIGHT_CLICK_AIR || ac == Action.RIGHT_CLICK_BLOCK))
+				if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK) && !p.hasCooldown(Material.TORCH))
 				{
 					ev.setCancelled(true);
 					
@@ -1310,7 +1173,7 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 		                					}
 		                				}
 		                			}
-		                    		atk0(1.8, wsd.Wraith.get(p.getUniqueId())*2.5, p, le,11);
+		                    		atks(1.8, wsd.Wraith.get(p.getUniqueId())*2.5, p, le,11);
 		                		}
 		                	}
 		                	v.remove();
@@ -1329,17 +1192,14 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 	}
 	
 	
-	public void AstralProjection(PlayerInteractEvent ev)
+	public void AstralProjection(PlayerSwapHandItemsEvent ev)
 	{
 		Player p = ev.getPlayer();
-		Action ac = ev.getAction();
         
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 14 && wsd.AstralProjection.getOrDefault(p.getUniqueId(),0)>=1) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("TOTEM") && p.getInventory().getItemInOffHand().getType().name().contains("HOE") && !p.isSneaking()) 
+			if(p.getInventory().getItemInMainHand().getType().name().contains("HOE") && p.getInventory().getItemInOffHand().getType().name().contains("TOTEM")&& !p.isSneaking()) 
 			{
-				if((ac == Action.RIGHT_CLICK_AIR || ac == Action.RIGHT_CLICK_BLOCK))
-				{
 					double sec =8*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 					ev.setCancelled(true);
 					if(pncooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
@@ -1442,7 +1302,7 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 						}
 						pncooldown.put(p.getName(), System.currentTimeMillis());  
 					}
-				} 
+				
 				}
 		}
 	}
@@ -1487,10 +1347,11 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 		Action ac = ev.getAction();
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 14 && wsd.Incantation.getOrDefault(p.getUniqueId(),0)>=1) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("TOTEM") && p.getInventory().getItemInOffHand().getType().name().contains("HOE")  &&  p.isSneaking()) 
+			if(p.getInventory().getItemInMainHand().getType().name().contains("HOE") && p.getInventory().getItemInOffHand().getType().name().contains("TOTEM") &&  p.isSneaking()) 
 			{
 				if((ac == Action.RIGHT_CLICK_AIR || ac == Action.RIGHT_CLICK_BLOCK))
 				{
+					p.setCooldown(Material.TORCH, 2);
 					double sec = 13*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 					ev.setCancelled(true);
 					if(eccooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
@@ -1522,7 +1383,7 @@ public class Wdcskills extends Pak implements Serializable, Listener {
     							p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 2, 2, false, false));
         					}
 			        		for(Entity e: v.getNearbyEntities(5, 5, 5)) {
-			        			if(e instanceof LivingEntity && e!=p && !e.hasMetadata("chickened") && !e.hasMetadata("enderdragondamager")&& !deathp.containsKey(e.getUniqueId()) && !e.hasMetadata("untargetable") && !e.hasMetadata("fake") && !e.hasMetadata("portal") & e!=v&& !e.isDead()) {
+			        			if(e instanceof LivingEntity && e!=p && !e.hasMetadata("chickened") && !e.hasMetadata("enderdragondamager") && !e.hasMetadata("untargetable") && !e.hasMetadata("fake") && !e.hasMetadata("portal") & e!=v&& !e.isDead()) {
 			        				final LivingEntity le = (LivingEntity)e;
 			        				chickenspawn(le,p);
 			        			}
@@ -1559,7 +1420,7 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 							p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 2, 2, false, false));
     					}
 		        		for(Entity e: v.getNearbyEntities(5, 5, 5)) {
-		        			if(e instanceof LivingEntity && e!=p && !e.hasMetadata("chickened") && !e.hasMetadata("enderdragondamager")&& !deathp.containsKey(e.getUniqueId()) && !e.hasMetadata("untargetable") && !e.hasMetadata("fake") && !e.hasMetadata("portal") & e!=v&& !e.isDead()) {
+		        			if(e instanceof LivingEntity && e!=p && !e.hasMetadata("chickened") && !e.hasMetadata("enderdragondamager") && !e.hasMetadata("untargetable") && !e.hasMetadata("fake") && !e.hasMetadata("portal") & e!=v&& !e.isDead()) {
 		        				final LivingEntity le = (LivingEntity)e;
 		        				chickenspawn(le,p);
 		        			}
@@ -1629,16 +1490,15 @@ public class Wdcskills extends Pak implements Serializable, Listener {
         }
 		chickdam.put(ch, p);	
 		le.setPersistent(true);
-		if(le.hasMetadata("rmf")) {
-			le.setRemoveWhenFarAway(false);
-		}
+		le.setRemoveWhenFarAway(false);
 		chickenget.put(ch, le);
+		Holding.holding(p, le, 60l);
 		Holding.untouchable(le, 60l);
 		le.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY,60, 2, false, false));
 		le.setGravity(false);
 		chickenloc.put(le.getUniqueId(), sl.clone());
 
-		sl.setY(-50);
+		sl.setY(-100);
 		le.teleport(sl);
 		return;
 	}
@@ -1649,12 +1509,6 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 		if(Hex.containsKey(ch.getUniqueId())) {
 			Hex.put(le.getUniqueId(), chickdam.get(ch).getUniqueId());
 		}
-		if(deathdamager.containsKey(ch.getUniqueId())){
-			deathdamager.put(le.getUniqueId(), deathdamager.get(ch.getUniqueId()));
-		}
-		if(le.hasMetadata("rmf")) {
-			le.setRemoveWhenFarAway(true);
-		}
 		le.removeMetadata("fake", RMain.getInstance());
 		le.teleport(chickenloc.get(le.getUniqueId()));
 		le.setFallDistance(0);
@@ -1664,8 +1518,11 @@ public class Wdcskills extends Pak implements Serializable, Listener {
         for(PotionEffect potioneffect: ch.getActivePotionEffects()) {
         	le.addPotionEffect(potioneffect);
         }
-		atk0(0d, d, chickdam.get(ch), le);
+		atks(0d, d, chickdam.get(ch), le);
 		ch.remove();
+		if(!le.hasMetadata("rmf")) {
+			le.setRemoveWhenFarAway(true);
+		}
 	}
 	
 	
@@ -1685,9 +1542,9 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 	final private void ULT(Player p, Location il) {
 
 		p.getWorld().spawnParticle(Particle.DRAGON_BREATH, il, 400, 9, 1, 9,0);
-		p.getWorld().spawnParticle(Particle.ASH, il, 300, 9, 2, 9,0);
+		p.getWorld().spawnParticle(Particle.ASH, il, 300, 11, 2, 11,0);
 
-		for (Entity e : il.getWorld().getNearbyEntities(il,9, 9, 9))
+		for (Entity e : il.getWorld().getNearbyEntities(il,11, 11, 11))
 		{
 			if (e instanceof Player) 
 			{
@@ -1748,9 +1605,10 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 	    
 		
 		
-		if(ClassData.pc.get(p.getUniqueId()) == 14 && (is.getType().name().contains("HOE") || is.getType().name().contains("TOTEM")) && p.isSneaking()&& Proficiency.getpro(p) >=1)
+		if(ClassData.pc.get(p.getUniqueId()) == 14 && (is.getType().name().contains("HOE")) && p.isSneaking()&& Proficiency.getpro(p) >=1)
 			{
 				ev.setCancelled(true);
+				p.setCooldown(Material.TORCH, 2);
 				if(aultcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
 	            {
 	                double timer = (aultcooldown.get(p.getName())/1000d + 80/Proficiency.getpro(p)*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d)) - System.currentTimeMillis()/1000d; // geting time in seconds
@@ -1938,138 +1796,111 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 		}
 	}
 
+	final private void ult2(Player p,Location pl) {
+		final World pw = p.getWorld();
+		
+		HashSet<Location> draw = new HashSet<Location>();
+		HashSet<Vector> vec = new HashSet<Vector>();
+    	Vector pv = pl.clone().add(1, 0, 0).toVector().subtract(pl.clone().toVector());
+    	
+        for(double an = 0; an<Math.PI*2; an+=Math.PI/90) {
+        	draw.add(pl.clone().add(pv.clone().rotateAroundY(an).normalize().multiply(8)));
+        	draw.add(pl.clone().add(pv.clone().rotateAroundY(an).normalize().multiply(10)));
+        }
+        for(double dob = -4*Math.sqrt(3); dob< 4*Math.sqrt(3); dob += 0.1) {
+        	draw.add(pl.clone().add(-4,0,dob));
+        	draw.add(pl.clone().add(4,0,dob));
+        	vec.add(pl.clone().add(-4,0,dob).clone().toVector().subtract(pl.clone().toVector()));
+        	vec.add(pl.clone().add(4,0,dob).clone().toVector().subtract(pl.clone().toVector()));
+        }
+        vec.forEach(v -> {
+            for(double an = 0; an<=Math.PI; an+=Math.PI/12) {
+            	draw.add(pl.clone().add(v.clone().rotateAroundY(an)));
+            }
+        });
+        
+        draw.forEach(l -> {
+    		pw.spawnParticle(Particle.TOTEM, l.clone().add(0, 0.2, 0),1,0,0,0,0);
+        	
+        });
+
+		pw.spawnParticle(Particle.SCULK_SOUL, pl.clone().add(0, 0.2, 0),100,4,2,4);
+	}
+
+	final private void ult2ex(Player p,Location pl) {
+		final World pw = p.getWorld();
+		
+		HashSet<Location> draw = new HashSet<Location>();
+		HashSet<Location> line = new HashSet<Location>();
+		HashSet<Vector> vec = new HashSet<Vector>();
+    	Vector pv = BlockFace.EAST.getDirection().clone().normalize();
+    	
+        for(double an = 0; an<Math.PI*2; an+=Math.PI/90) {
+        	draw.add(pl.clone().add(pv.rotateAroundY(an).normalize().multiply(8)));
+        	draw.add(pl.clone().add(pv.rotateAroundY(an).normalize().multiply(10)));
+        }
+        for(double dob = -4*Math.sqrt(3); dob< 4*Math.sqrt(3); dob += 0.1) {
+        	line.add(pl.clone().add(-4,0,dob));
+        	line.add(pl.clone().add(4,0,dob));
+        	vec.add(pl.clone().add(-4,0,dob).clone().toVector().subtract(pl.clone().toVector()));
+        	vec.add(pl.clone().add(4,0,dob).clone().toVector().subtract(pl.clone().toVector()));
+        }
+        vec.forEach(v -> {
+            for(double an = 0; an<Math.PI/6; an+=Math.PI/12) {
+            	draw.add(pl.clone().add(v.clone().rotateAroundY(an)));
+            }
+        });
+        
+        draw.forEach(l -> {
+    		pw.spawnParticle(Particle.SONIC_BOOM, l.clone().add(0, 0.2, 0),50,0,1,0);
+    		pw.spawnParticle(Particle.SCULK_SOUL, l.clone().add(0, 0.2, 0),50,0,1,0);
+        	
+        });
+
+	}
 	
 	public void ULT2(PlayerDropItemEvent ev)        
     {
 		Player p = (Player)ev.getPlayer();
 		Item it = ev.getItemDrop();
 		ItemStack is = it.getItemStack();
+        final Location l = p.getLocation().clone();
 		
 		
-		if(ClassData.pc.get(p.getUniqueId()) == 14 && (is.getType().name().contains("HOE") || is.getType().name().contains("TOTEM")) && p.isSprinting()&& !p.isSneaking()&&Proficiency.getpro(p) >=2)
+		if(ClassData.pc.get(p.getUniqueId()) == 14 && (is.getType().name().contains("HOE")) && p.isSprinting()&& !p.isSneaking()&&Proficiency.getpro(p) >=2)
 			{
 				ev.setCancelled(true);
-				if(ault2cooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-	            {
-	                double timer = (ault2cooldown.get(p.getName())/1000d + 90*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d)) - System.currentTimeMillis()/1000d; // geting time in seconds
-	                if(!(timer < 0)) // if timer is still more then 0 or 0
-	                {
-	                	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("죽음의표식 재사용 대기시간이 " + String.valueOf(Math.round(timer*10)/10.0) + "초 남았습니다").create());
-	                	}
-	                	else {
-		                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use MarkOfDeath").create());
-	                	}
-		            }
-	                else // if timer is done
-	                {
-	                    ault2cooldown.remove(p.getName()); // removing player from HashMap
+				p.setCooldown(Material.TORCH, 2);
+				
+				skilluse(()->{
+					
+					if(eternalt.containsKey(p.getUniqueId())) {
+						Bukkit.getScheduler().cancelTask(eternalt.get(p.getUniqueId()));
+						eternalt.remove(p.getUniqueId());
+					}
 
-	                    Location l = p.getLocation().clone();
-	                    
-						p.playSound(l, Sound.AMBIENT_SOUL_SAND_VALLEY_ADDITIONS, 1, 2);
-						p.playSound(l, Sound.BLOCK_CONDUIT_AMBIENT_SHORT, 1, 0);
-						p.playSound(l, Sound.ENTITY_HOGLIN_CONVERTED_TO_ZOMBIFIED, 1, 0);
-						
-		        		p.getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE, l, 500, 4, 2, 4);
-		        		p.getWorld().spawnParticle(Particle.SUSPENDED, l, 600, 7, 2, 7,0);
-		        		p.getWorld().spawnParticle(Particle.SUSPENDED_DEPTH, l, 600, 7, 2, 7,0);
-		        		p.getWorld().spawnParticle(Particle.LANDING_OBSIDIAN_TEAR, l, 600, 7, 2, 7,0);
-						
-	                    for(Entity e: p.getNearbyEntities(8, 8, 8)) {
-		        			if(e instanceof LivingEntity && e!=p && !e.hasMetadata("fake") && !e.hasMetadata("portal") && !e.isDead()) {
-		        				LivingEntity le = (LivingEntity)e;
-	                    		if (le instanceof Player) 
-	                			{
-	                				
-	                				Player p1 = (Player) le;
-	                				if(Party.hasParty(p) && Party.hasParty(p1))	{
-	                					if(Party.getParty(p).equals(Party.getParty(p1)))
-	                					{
-	                						continue;
-	                					}
-	                				}
-	                			}
-	                    		
-		        				Holding.superholding(p, le, 80l);
-		        				
-		        				if(deathp.containsKey(le.getUniqueId())) {
-		        					return;
-		        				}
-		        				
-		    					Item t = p.getWorld().dropItem(le.getEyeLocation().clone().add(0, 1, 0), new ItemStack(Material.TOTEM_OF_UNDYING));
-		    					t.setGlowing(true);
-		    					t.setInvulnerable(true);
-		    					t.setPickupDelay(999999);
-		    					t.setCustomName(ChatColor.DARK_RED+ "DEATH PRISONED");
-		    					t.setCustomNameVisible(true);
-		    					t.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
-		    					t.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(),true));
-		    					t.setGravity(false);
-		    					t.setVelocity(t.getVelocity().zero());
-
-		        				if(le.hasMetadata("chickened")&&!le.hasMetadata("enderdragondamager")) {
-		        					LivingEntity tar = chickenget.get(le);
-		        					Holding.superholding(p,tar,80l);
-			        				deathp.put(tar.getUniqueId(), p.getUniqueId());
-			        				int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			        	                @Override
-			        	                public void run() 
-			        	                {
-			        	                	t.remove();
-			        		        		p.getWorld().spawnParticle(Particle.WHITE_ASH, tar.getLocation(), 100, 1, 1, 1);
-
-					        				deathp.remove(tar.getUniqueId());
-			        		        		if(deathdamager.containsKey(tar.getUniqueId())) {
-				        	    				if(Party.hasParty(p)) {
-				        	    					Party.getMembers(Party.getParty(p)).forEach(pu -> {
-				        	    						Player p1 = Bukkit.getPlayer(pu);
-				        	    						atk0(0d, deathdamager.get(tar.getUniqueId()).get(p1.getUniqueId())*(1+ p.getLevel()*0.001), p1, tar);
-				        	    					});
-				        	    				}
-				        	    				else {
-			        	    						atk0(0d, deathdamager.get(tar.getUniqueId()).get(p.getUniqueId())*(1+ p.getLevel()*0.001), p, tar);
-				        	    				}
-			        		        		}
-			        	                }
-			        				}, 80);
-			        				deathpt.put(tar.getUniqueId(), task);
-		        				}
-		        				else {
-			        				deathp.put(le.getUniqueId(), p.getUniqueId());
-			        				
-			        				int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			        	                @Override
-			        	                public void run() 
-			        	                {
-			        	                	deathp.remove(le.getUniqueId());
-			        	                	t.remove();
-			        		        		p.getWorld().spawnParticle(Particle.WHITE_ASH, le.getLocation(), 100, 1, 1, 1);
-
-			        		        		if(deathdamager.containsKey(le.getUniqueId())) {
-				        	    				if(Party.hasParty(p)) {
-				        	    					Party.getMembers(Party.getParty(p)).forEach(pu -> {
-				        	    						Player p1 = Bukkit.getPlayer(pu);
-				        	    						atk0(0d, deathdamager.get(le.getUniqueId()).get(p1.getUniqueId())*(1+ p.getLevel()*0.001), p1, le);
-				        	    					});
-				        	    				}
-				        	    				else {
-			        	    						atk0(0d, deathdamager.get(le.getUniqueId()).get(p.getUniqueId())*(1+ p.getLevel()*0.001), p, le);
-				        	    				}
-			        		        		}
-			        	                }
-			        				}, 80);
-			        				deathpt.put(le.getUniqueId(), task);
-		        				}
-		        			}
-		        		}
-	                    ault2cooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-	                }
-	            }
-	            else // if cooldown doesn't have players name in it
-	            {
-                    
-                    Location l = p.getLocation().clone();
+                    for(Entity e: p.getNearbyEntities(11, 11, 11)) {
+                    	if(e instanceof LivingEntity && !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
+                    		LivingEntity le = (LivingEntity)e;
+                    		if (le instanceof Player) 
+                			{
+                				
+                				Player p1 = (Player) le;
+                				if(Party.hasParty(p) && Party.hasParty(p1))	{
+                				if(Party.getParty(p).equals(Party.getParty(p1)))
+                					{
+                            		le.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION,400,1,false,false));
+                            		le.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE,400,1,false,false));
+                						continue;
+                					}
+                				}
+                			}
+                    		le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,400,1,false,false));
+                    		le.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,400,1,false,false));
+                    		le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING,400,1,false,false));
+                    		
+                    	}
+                    }
                     
 					p.playSound(l, Sound.AMBIENT_SOUL_SAND_VALLEY_ADDITIONS, 1, 2);
 					p.playSound(l, Sound.BLOCK_CONDUIT_AMBIENT_SHORT, 1, 0);
@@ -2079,96 +1910,55 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 	        		p.getWorld().spawnParticle(Particle.SUSPENDED, l, 600, 7, 2, 7,0);
 	        		p.getWorld().spawnParticle(Particle.SUSPENDED_DEPTH, l, 600, 7, 2, 7,0);
 	        		p.getWorld().spawnParticle(Particle.LANDING_OBSIDIAN_TEAR, l, 600, 7, 2, 7,0);
+	        		
+	        		eternal.put(p.getUniqueId(), l.clone());
+	        		eternald.put(p.getUniqueId(), 0d);
+
+					for(int i = 0; i <30; i++) {
+                		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+			                @Override
+			                public void run() {
+			                	ult2(p,l.clone());
+			                }
+			            }, i*10); 
+					}
 					
-                    for(Entity e: p.getNearbyEntities(8, 8, 8)) {
-	        			if(e instanceof LivingEntity && e!=p && !e.hasMetadata("fake") && !e.hasMetadata("portal") && !e.isDead()) {
-	        				LivingEntity le = (LivingEntity)e;
-                    		if (le instanceof Player) 
-                			{
-                				
-                				Player p1 = (Player) le;
-                				if(Party.hasParty(p) && Party.hasParty(p1))	{
-                					if(Party.getParty(p).equals(Party.getParty(p1)))
-                					{
-                						continue;
-                					}
-                				}
-                			}
-                    		
-	        				Holding.superholding(p, le, 80l);
-	        				
-	        				if(deathp.containsKey(le.getUniqueId())) {
-	        					return;
-	        				}
-	        				
-	    					Item t = p.getWorld().dropItem(le.getEyeLocation(), new ItemStack(Material.TOTEM_OF_UNDYING));
-	    					t.setGlowing(true);
-	    					t.setInvulnerable(true);
-	    					t.setPickupDelay(999999);
-	    					t.setCustomName(ChatColor.DARK_RED+ "DEATH PRISONED");
-	    					t.setCustomNameVisible(true);
-	    					t.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
-	    					t.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(),true));
-	    					t.setGravity(false);
-	    					t.setVelocity(t.getVelocity().zero());
+            		int t = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		                @Override
+		                public void run() {
+							p.playSound(l, Sound.ENTITY_WARDEN_SONIC_BOOM, 1, 0);
+		                	ult2ex(p,l.clone());
+		                    for(Entity e: l.getWorld().getNearbyEntities(l,11, 11, 11)) {
+		                    	if(e!=p && e instanceof LivingEntity && !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
+		                    		LivingEntity le = (LivingEntity)e;
+		                    		if (le instanceof Player) 
+		                			{
+		                				
+		                				Player p1 = (Player) le;
+		                				if(Party.hasParty(p) && Party.hasParty(p1))	{
+		                				if(Party.getParty(p).equals(Party.getParty(p1)))
+		                					{
+		                						continue;
+		                					}
+		                				}
+		                			}
+		                    		atks(35d,eternald.get(p.getUniqueId())*0.05,p,le,11);
+		                    		
+		                    	}
+		                    }
 
-	        				if(le.hasMetadata("chickened")&&!le.hasMetadata("enderdragondamager")) {
-	        					LivingEntity tar = chickenget.get(le);
-		        				deathp.put(tar.getUniqueId(), p.getUniqueId());
-	        					Holding.superholding(p,tar,80l);
-		        				int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		        	                @Override
-		        	                public void run() 
-		        	                {
-		        	                	t.remove();
-		        		        		p.getWorld().spawnParticle(Particle.WHITE_ASH, tar.getLocation(), 100, 1, 1, 1);
-
-				        				deathp.remove(tar.getUniqueId());
-		        		        		if(deathdamager.containsKey(tar.getUniqueId())) {
-			        	    				if(Party.hasParty(p)) {
-			        	    					Party.getMembers(Party.getParty(p)).forEach(pu -> {
-			        	    						Player p1 = Bukkit.getPlayer(pu);
-			        	    						atk0(0d, deathdamager.get(tar.getUniqueId()).get(p1.getUniqueId())*(1+ p.getLevel()*0.001), p1, tar);
-			        	    					});
-			        	    				}
-			        	    				else {
-		        	    						atk0(0d, deathdamager.get(tar.getUniqueId()).get(p.getUniqueId())*(1+ p.getLevel()*0.001), p, tar);
-			        	    				}
-		        		        		}
-		        	                }
-		        				}, 80);
-		        				deathpt.put(tar.getUniqueId(), task);
-	        				}
-	        				else {
-		        				deathp.put(le.getUniqueId(), p.getUniqueId());
-		        				
-		        				int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		        	                @Override
-		        	                public void run() 
-		        	                {
-		        	                	deathp.remove(le.getUniqueId());
-		        	                	t.remove();
-		        		        		p.getWorld().spawnParticle(Particle.WHITE_ASH, le.getLocation(), 100, 1, 1, 1);
-
-		        		        		if(deathdamager.containsKey(le.getUniqueId())) {
-			        	    				if(Party.hasParty(p)) {
-			        	    					Party.getMembers(Party.getParty(p)).forEach(pu -> {
-			        	    						Player p1 = Bukkit.getPlayer(pu);
-			        	    						atk0(0d, deathdamager.get(le.getUniqueId()).get(p1.getUniqueId())*(1+ p.getLevel()*0.001), p1, le);
-			        	    					});
-			        	    				}
-			        	    				else {
-		        	    						atk0(0d, deathdamager.get(le.getUniqueId()).get(p.getUniqueId())*(1+ p.getLevel()*0.001), p, le);
-			        	    				}
-		        		        		}
-		        	                }
-		        				}, 80);
-		        				deathpt.put(le.getUniqueId(), task);
-	        				}
-	        			}
-	        		}
-	                ault2cooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-	            }
+		                	eternal.remove(p.getUniqueId());
+		                	eternald.remove(p.getUniqueId());
+							if(eternalt.containsKey(p.getUniqueId())) {
+								Bukkit.getScheduler().cancelTask(eternalt.get(p.getUniqueId()));
+								eternalt.remove(p.getUniqueId());
+							}
+		                    
+		                }
+		            }, 300); 
+            		eternalt.put(p.getUniqueId(), t);
+				}, p, 90*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d), "영원의 마법진", "Eternal MagicCircle", ault2cooldown);
+				
 			}	
     }
 
@@ -2202,9 +1992,9 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 		{
 			Player p = (Player)d.getDamager();
 			LivingEntity le = (LivingEntity)d.getEntity();
-				
+
 				if(ClassData.pc.get(p.getUniqueId()) == 14) {
-						if(p.getInventory().getItemInMainHand().getType().name().contains("HOE")||p.getInventory().getItemInMainHand().getType().name().contains("TOTEM"))
+						if(p.getInventory().getItemInMainHand().getType().name().contains("HOE"))
 						{
 							if(p==le) {d.setCancelled(true);}
 							d.setDamage(d.getDamage()+wsd.Legba.get(p.getUniqueId())*0.585);
@@ -2217,13 +2007,6 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 				if(Baron.containsKey(p.getUniqueId())) {
 					d.setDamage(d.getDamage()*1.23+Baron.get(p.getUniqueId())*0.5);
 				}
-				if(deathp.containsKey(le.getUniqueId())) {
-					if(deathdamager.containsKey(le.getUniqueId())) {
-						deathdamager.get(le.getUniqueId()).computeIfPresent(p.getUniqueId(), (k,v) -> v+d.getDamage());
-					}
-					deathdamager.putIfAbsent(le.getUniqueId(),new HashMap<UUID, Double>(){private static final long serialVersionUID = 1L;{put(p.getUniqueId(),d.getDamage());}});
-					d.setCancelled(true);
-				}
 		}
 
 		if(d.getDamager() instanceof Arrow && d.getEntity() instanceof LivingEntity&& d.getDamage()>0) 
@@ -2235,7 +2018,7 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 				
 				
 					if(ClassData.pc.get(p.getUniqueId()) == 14) {
-							if(p.getInventory().getItemInMainHand().getType().name().contains("HOE")||p.getInventory().getItemInMainHand().getType().name().contains("TOTEM"))
+							if(p.getInventory().getItemInMainHand().getType().name().contains("HOE"))
 							{
 								if(p==le) {d.setCancelled(true);}
 								d.setDamage(d.getDamage()+wsd.Legba.get(p.getUniqueId())*0.585);
@@ -2247,13 +2030,6 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 					}
 					if(Baron.containsKey(p.getUniqueId())) {
 						d.setDamage(d.getDamage()*1.23+Baron.get(p.getUniqueId())*0.5);
-					}
-					if(deathp.containsKey(le.getUniqueId())) {
-						if(deathdamager.containsKey(le.getUniqueId())) {
-							deathdamager.get(le.getUniqueId()).computeIfPresent(p.getUniqueId(), (k,v) -> v+d.getDamage());
-						}
-						deathdamager.putIfAbsent(le.getUniqueId(),new HashMap<UUID, Double>(){private static final long serialVersionUID = 1L;{put(p.getUniqueId(),d.getDamage());}});
-						d.setCancelled(true);
 					}
 			}
 		}
@@ -2269,7 +2045,6 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 		}
 	}
 	
-	
 	public void Legba2(EntityDamageEvent d) 
 	{
 		if(d.getEntity() instanceof LivingEntity) 
@@ -2281,37 +2056,154 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 		}
 	}
 
+	public void ult2(EntityDamageByEntityEvent d) 
+	{
+	    
+		
+		
+		if(d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity && d.getDamage()>0) 
+		{
+			Player p = (Player)d.getDamager();
+			LivingEntity le = (LivingEntity)d.getEntity();
+	
+			if(Party.hasParty(p) && ClassData.pc.get(p.getUniqueId()) != 14)	{
+				if(Party.getPlayerMembers(Party.getParty(p)).stream().anyMatch(par -> ClassData.pc.get(par.getUniqueId())==14))
+				{
+					Party.getPlayerMembers(Party.getParty(p)).stream().filter(par ->ClassData.pc.get(par.getUniqueId())==14).forEach(wdc->{
+						if(Proficiency.getpro(wdc) >=2) {
+							if(eternal.containsKey(wdc.getUniqueId())) {
+								Location el = eternal.get(wdc.getUniqueId());
+								if(p.getLocation().distance(el)<12 && le.getLocation().distance(el)<12) {
+									eternald.computeIfPresent(wdc.getUniqueId(), (k,v)-> v + d.getDamage());
+								}
+							}
+						}
+					});
+				}
+			}
+			else if(ClassData.pc.get(p.getUniqueId()) == 14 && Proficiency.getpro(p)>=2) {
+				if(eternal.containsKey(p.getUniqueId())) {
+					Location el = eternal.get(p.getUniqueId());
+					if(p.getLocation().distance(el)<12 && le.getLocation().distance(el)<12) {
+						eternald.computeIfPresent(p.getUniqueId(), (k,v)-> v + d.getDamage());
+					}
+				}
+			}
+		}
+	
+		if(d.getDamager() instanceof Arrow && d.getEntity() instanceof LivingEntity&& d.getDamage()>0) 
+		{
+			Arrow ar = (Arrow)d.getDamager();
+			LivingEntity le = (LivingEntity)d.getEntity();
+			if(ar.getShooter() instanceof Player) {
+				Player p = (Player) ar.getShooter();
+
+				if(Party.hasParty(p) && ClassData.pc.get(p.getUniqueId()) != 14)	{
+					if(Party.getPlayerMembers(Party.getParty(p)).stream().anyMatch(par -> ClassData.pc.get(par.getUniqueId())==14))
+					{
+						Party.getPlayerMembers(Party.getParty(p)).stream().filter(par ->ClassData.pc.get(par.getUniqueId())==14).forEach(wdc->{
+							if(Proficiency.getpro(wdc) >=2) {
+								if(eternal.containsKey(wdc.getUniqueId())) {
+									Location el = eternal.get(wdc.getUniqueId());
+									if(p.getLocation().distance(el)<12 && le.getLocation().distance(el)<12) {
+										eternald.computeIfPresent(wdc.getUniqueId(), (k,v)-> v + d.getDamage());
+									}
+								}
+							}
+						});
+					}
+				}
+				else if(ClassData.pc.get(p.getUniqueId()) == 14 && Proficiency.getpro(p)>=2) {
+					if(eternal.containsKey(p.getUniqueId())) {
+						Location el = eternal.get(p.getUniqueId());
+						if(p.getLocation().distance(el)<12 && le.getLocation().distance(el)<12) {
+							eternald.computeIfPresent(p.getUniqueId(), (k,v)-> v + d.getDamage());
+						}
+					}
+				}
+				
+			}
+		}
+	}
+
+
 	final private void ZombieSpawn(Player p, LivingEntity le) {
 		if(zombies.containsKey(p.getUniqueId()) && zombies.get(p.getUniqueId()).size() >5) {
 			return;
 		}
-		Zombie zom = le.getWorld().spawn(le.getLocation(), Zombie.class);
-		zom.setAdult();
-		zom.setMetadata("untargetable", new FixedMetadataValue(RMain.getInstance(), p.getName()));
-		zom.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), p.getName()));
-		zom.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), p.getName()));
-		zom.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(wsd.Legba.get(p.getUniqueId())*0.03);
-		zom.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(wsd.Legba.get(p.getUniqueId())*100d);
-		zom.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(wsd.Legba.get(p.getUniqueId()));
-		zom.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).setBaseValue(wsd.Legba.get(p.getUniqueId()));
-		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			zom.setCustomName(p.getName()+"의 좀비");
+		
+		if(eternal.containsKey(p.getUniqueId()) && eternal.get(p.getUniqueId()).distance(le.getLocation()) <=12) {
+			le.getWorld().spawn(le.getLocation(), WitherSkeleton.class, zom ->{
+				zom.setMetadata("untargetable", new FixedMetadataValue(RMain.getInstance(), p.getName()));
+				zom.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), p.getName()));
+				zom.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), p.getName()));
+				zom.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(wsd.Legba.get(p.getUniqueId())*0.065);
+				zom.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(wsd.Legba.get(p.getUniqueId())*100d);
+				zom.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(wsd.Legba.get(p.getUniqueId()));
+				zom.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).setBaseValue(wsd.Legba.get(p.getUniqueId()));
+				zom.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+				
+				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+					zom.setCustomName(p.getName()+"의 죽음의기사");
+				}
+				else {
+					zom.setCustomName(p.getName()+"'s DeathKnight");
+				}
+				zom.setCollidable(false);
+				zom.getEquipment().setHelmet(new ItemStack(Material.NETHERITE_BLOCK));
+				zom.getEquipment().setChestplate(new ItemStack(Material.NETHERITE_CHESTPLATE));
+				zom.getEquipment().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
+				zom.getEquipment().setBoots(new ItemStack(Material.NETHERITE_BOOTS));
+				zom.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_SWORD));
+				zom.getEquipment().setItemInOffHand(new ItemStack(Material.SHIELD));
+				zom.getEquipment().setBootsDropChance(0);
+				zom.getEquipment().setChestplateDropChance(0);
+				zom.getEquipment().setHelmetDropChance(0);
+				zom.getEquipment().setItemInMainHandDropChance(0);
+				zom.getEquipment().setItemInOffHandDropChance(0);
+				zom.getEquipment().setLeggingsDropChance(0);
+				zom.setCustomNameVisible(true);
+				zombies.put(p.getUniqueId(), zom);
+				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		            @Override
+		            public void run() 
+		            {
+		    			p.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, zom.getLocation(),50);
+		            	zom.remove();
+		            	zombies.remove(p.getUniqueId(), zom);
+		            }
+				}, 200);
+			});
+			return;
 		}
-		else {
-			zom.setCustomName(p.getName()+"'s Zombie");
-		}
-		zom.setCollidable(false);
-		zom.setCustomNameVisible(true);
-		zombies.put(p.getUniqueId(), zom);
-		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-            @Override
-            public void run() 
-            {
-    			p.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, zom.getLocation(),50);
-            	zom.remove();
-            	zombies.remove(p.getUniqueId(), zom);
-            }
-		}, 200);
+		le.getWorld().spawn(le.getLocation(), Zombie.class, zom ->{
+			zom.setAdult();
+			zom.setMetadata("untargetable", new FixedMetadataValue(RMain.getInstance(), p.getName()));
+			zom.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), p.getName()));
+			zom.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), p.getName()));
+			zom.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(wsd.Legba.get(p.getUniqueId())*0.03);
+			zom.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(wsd.Legba.get(p.getUniqueId())*100d);
+			zom.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(wsd.Legba.get(p.getUniqueId()));
+			zom.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).setBaseValue(wsd.Legba.get(p.getUniqueId()));
+			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+				zom.setCustomName(p.getName()+"의 좀비");
+			}
+			else {
+				zom.setCustomName(p.getName()+"'s Zombie");
+			}
+			zom.setCollidable(false);
+			zom.setCustomNameVisible(true);
+			zombies.put(p.getUniqueId(), zom);
+			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	            @Override
+	            public void run() 
+	            {
+	    			p.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, zom.getLocation(),50);
+	            	zom.remove();
+	            	zombies.remove(p.getUniqueId(), zom);
+	            }
+			}, 200);
+		});
 	}
 	
 	public void Zombies(EntityDeathEvent d) 

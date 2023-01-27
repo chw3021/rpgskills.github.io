@@ -71,7 +71,7 @@ public class WildMobsSpawn extends Mobs implements Listener {
 		String reg = lang.contains("kr") ? "고대슬라임":"AncientSlime";
 		Slime newmob = (Slime) Mobspawn(le, reg, 20000.0, head, null, null, null, null, null, EntityType.SLIME);
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.33);
-		newmob.setSize(12);
+		newmob.setSize(6);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("wild", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("GiantSlime", new FixedMetadataValue(RMain.getInstance(), true));

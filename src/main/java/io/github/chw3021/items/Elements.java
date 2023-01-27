@@ -14,13 +14,17 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
+import org.bukkit.event.player.PlayerItemBreakEvent;
+import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 
+import io.github.chw3021.classes.ClassData;
 import io.github.chw3021.rmain.RMain;
 import net.md_5.bungee.api.ChatColor;
 
@@ -1070,6 +1074,16 @@ public class Elements implements Listener {
 		}
 	}
 
+
+	@EventHandler
+	public void damageereduce(PlayerItemDamageEvent e) 
+	{
+		
+		if(e.getDamage() >= 2){
+			e.setDamage(2);
+		}
+		
+	}
 	@EventHandler
 	public void PICE(PrepareItemCraftEvent d) 
 	{

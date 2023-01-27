@@ -17,39 +17,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import io.github.chw3021.classes.Proficiency;
+import io.github.chw3021.classes.SkillsGui;
 import io.github.chw3021.obtains.Obtained;
 import net.md_5.bungee.api.ChatColor;
 
-public class PalSkillsGui{
+public class PalSkillsGui extends SkillsGui{
 	
 
-	public void itemset(String display, Material ID, int data, int stack, List<String> Lore, int loc, Inventory inv)
-	{
-		ItemStack item = new ItemStack(ID);
-		ItemMeta items = item.getItemMeta();
-		items.setDisplayName(display);
-		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-		Lore.forEach(l -> {
-			l=ChatColor.RESET+l;
-		});
-		items.setLore(Lore);
-		item.setItemMeta(items);
-		inv.setItem(loc, item);
-	}
-	public void itemset(String display, ItemStack is, int data, int stack, List<String> Lore, int loc, Inventory inv)
-	{
-		ItemStack item = is;
-		ItemMeta items = item.getItemMeta();
-		items.setDisplayName(display);
-		items.removeItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		items.removeItemFlags(ItemFlag.HIDE_ENCHANTS);
-		items.setLore(Lore);
-		item.setItemMeta(items);
-		inv.setItem(loc, item);
-	}
-	
 	public void PalSkillsinv(Player p)
 	{
 	    String path = new File("").getAbsolutePath();
@@ -87,7 +61,7 @@ public class PalSkillsGui{
 				itemset("성화", Material.DIAMOND_AXE, 0, 1, Arrays.asList("적을 기절시킵니다"), 12, Palskillsinv);
 				itemset("영창", Material.NOTE_BLOCK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[대지 계열]","재입력시 영창을 사용합니다","(피해량은 격려 레벨에 비례합니다)","",ChatColor.BOLD+"3 X (0.5D + "+BigDecimal.valueOf(psd.Encourge.getOrDefault(p.getUniqueId(),0)*0.5).setScale(2, RoundingMode.HALF_EVEN)+")"), 13, Palskillsinv);
 				itemset("축복", Material.ENCHANTING_TABLE, 0, 1, Arrays.asList("파티원들을 무적상태로 만듭니다","(지속시간은 기도 레벨에 비례합니다)","",ChatColor.BOLD+""+BigDecimal.valueOf(psd.Pray.getOrDefault(p.getUniqueId(),0)*0.2).setScale(1, RoundingMode.HALF_EVEN)+"초"), 14, Palskillsinv);
-				itemset("수호", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("공격력과 방어력이 증가합니다", "방패를 들고있는 도중 받는 모든 피해를 막습니다", "보호의 피해감소량이 80%로 증가합니다"), 16, Palskillsinv);
+				itemset("수호", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("공격력과 방어력이 증가합니다", "방패를 들때 전방에서 오는 모든 피해를","막아주는 보호막을 전개합니다"), 16, Palskillsinv);
 				itemset("최후의 심판", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[번개 계열]","웅크리기 + 아이템던지기","",ChatColor.BOLD+"10 X 1.5D"), 17, Palskillsinv);
 
 				itemset("응징(잠김)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/155015"), 18, Palskillsinv);
@@ -105,13 +79,13 @@ public class PalSkillsGui{
 				itemset("성화", Material.DIAMOND_AXE, 0, 1, Arrays.asList("적을 기절시킵니다"), 12, Palskillsinv);
 				itemset("영창", Material.NOTE_BLOCK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[대지 계열]","재입력시 영창을 사용합니다","(피해량은 격려 레벨에 비례합니다)","",ChatColor.BOLD+"3 X (0.5D + "+BigDecimal.valueOf(psd.Encourge.getOrDefault(p.getUniqueId(),0)*0.5).setScale(2, RoundingMode.HALF_EVEN)+")"), 13, Palskillsinv);
 				itemset("축복", Material.ENCHANTING_TABLE, 0, 1, Arrays.asList("파티원들을 무적상태로 만듭니다","(지속시간은 기도 레벨에 비례합니다)","",ChatColor.BOLD+""+BigDecimal.valueOf(psd.Pray.getOrDefault(p.getUniqueId(),0)*0.2).setScale(1, RoundingMode.HALF_EVEN)+"초"), 14, Palskillsinv);
-				itemset("수호", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("공격력과 방어력이 증가합니다", "방패를 들고있는 도중 받는 모든 피해를 막습니다", "보호의 피해감소량이 80%로 증가합니다"), 16, Palskillsinv);
+				itemset("수호", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("공격력과 방어력이 증가합니다", "방패를 들때 전방에서 오는 모든 피해를","막아주는 보호막을 전개합니다"), 16, Palskillsinv);
 				itemset("최후의 심판", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[번개 계열]","웅크리기 + 아이템던지기","",ChatColor.BOLD+"10 X 1.5D"), 17, Palskillsinv);
 
 				itemset("응징", Material.LIGHTNING_ROD, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[대지 계열]","재입력시 응징을 사용합니다","(피해량은 진압 레벨에 비례합니다)","",ChatColor.BOLD+"4 X (0.4D + "+BigDecimal.valueOf(psd.Thrust.getOrDefault(p.getUniqueId(),0)*0.455).setScale(2, RoundingMode.HALF_EVEN)+")"), 18, Palskillsinv);
 				itemset("운명", Material.BUBBLE_CORAL, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[번개 계열]","재입력시 운명을 사용합니다","(피해량은 결박 레벨에 비례합니다)","",ChatColor.BOLD+" X (1.5D + "+BigDecimal.valueOf(psd.Restraint.getOrDefault(p.getUniqueId(),0)*1.68).setScale(2, RoundingMode.HALF_EVEN)+")"), 19, Palskillsinv);
 				itemset("그리폰", Material.TRIDENT, 0, 1, Arrays.asList("재입력시 그리폰을 소환합니다", "그리폰에서 내리거나 재소환하면", "기존에 있던 그리폰은 사라집니다","", "그리폰 탑승시 징벌이 강화됩니다","([점프+좌클릭]으로 커맨드 변경)","",
-						ChatColor.UNDERLINE+"[번개 계열]","그리폰 탑승도중 점프시 주변적에게 피해를 줍니다", "(피해량은 심판 레벨에 비례합니다)","",ChatColor.BOLD+" X (1.3D + "+BigDecimal.valueOf(psd.Judgement.getOrDefault(p.getUniqueId(),0)*1.3).setScale(2, RoundingMode.HALF_EVEN)+" X 점프충전량)"), 20, Palskillsinv);
+						ChatColor.UNDERLINE+"[번개 계열]","그리폰 탑승도중 점프시 주변적에게 피해를 줍니다","80% 이상 충전시 공중으로 뜁니다", "(피해량은 심판 레벨에 비례합니다)","",ChatColor.BOLD+" X (1.3D + "+BigDecimal.valueOf(psd.Judgement.getOrDefault(p.getUniqueId(),0)*1.3).setScale(2, RoundingMode.HALF_EVEN)+" X 점프충전량)"), 20, Palskillsinv);
 				itemset("성역", Material.TRIDENT, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[대지 계열]","재입력시 신격을 사용합니다","(피해량은 격려 레벨에 비례합니다)","",ChatColor.BOLD+"10 X (0.55D + "+BigDecimal.valueOf(psd.Encourge.getOrDefault(p.getUniqueId(),0)*0.68).setScale(2, RoundingMode.HALF_EVEN)+")"), 22, Palskillsinv);
 				itemset("은총", Material.BUBBLE_CORAL, 0, 1, Arrays.asList("파티원들의 허기를 채워줍니다"), 23, Palskillsinv);
 				itemset("구원", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("공격력과 방어력이 증가합니다","최후의 심판 대기시간이 감소합니다"), 25, Palskillsinv);
@@ -150,7 +124,7 @@ public class PalSkillsGui{
 				itemset("Sanctification", Material.DIAMOND_AXE, 0, 1, Arrays.asList("Stun Hit Enemy"), 12, Palskillsinv);
 				itemset("Aria", Material.NOTE_BLOCK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Earth]","Use Aria When Use Once More","(Damage Affected By Encourge)","",ChatColor.BOLD+"3 X (0.5D + "+BigDecimal.valueOf(psd.Encourge.getOrDefault(p.getUniqueId(),0)*0.5).setScale(2, RoundingMode.HALF_EVEN)+")"), 13, Palskillsinv);
 				itemset("Bless", Material.ENCHANTING_TABLE, 0, 1, Arrays.asList("Sets Party's Armor Max","(Duration Affected By Pray)","",ChatColor.BOLD+""+BigDecimal.valueOf(psd.Pray.getOrDefault(p.getUniqueId(),0)*0.2).setScale(1, RoundingMode.HALF_EVEN)+"s"), 14, Palskillsinv);
-				itemset("Tutelary", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage & Armor", "Reduces 100% Damage While Raising Shield", "Protection will Reduce 80% of Damage"), 16, Palskillsinv);
+				itemset("Tutelary", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage & Armor", "Summon barrier that protects you from all damage", "from the front While Raising Shield"), 16, Palskillsinv);
 				itemset("Last judgment", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Lightning]","Sneaking + ThrowItem","",ChatColor.BOLD+"10 X 1.5D"), 17, Palskillsinv);
 
 				itemset("HolyPile(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 18, Palskillsinv);
@@ -168,13 +142,13 @@ public class PalSkillsGui{
 				itemset("Sanctification", Material.DIAMOND_AXE, 0, 1, Arrays.asList("Stun Hit Enemy"), 12, Palskillsinv);
 				itemset("Aria", Material.NOTE_BLOCK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Earth]","Use Aria When Use Once More","(Damage Affected By Encourge)","",ChatColor.BOLD+"3 X (0.5D + "+BigDecimal.valueOf(psd.Encourge.getOrDefault(p.getUniqueId(),0)*0.5).setScale(2, RoundingMode.HALF_EVEN)+")"), 13, Palskillsinv);
 				itemset("Bless", Material.ENCHANTING_TABLE, 0, 1, Arrays.asList("Sets Party's Armor Max","(Duration Affected By Pray)","",ChatColor.BOLD+""+BigDecimal.valueOf(psd.Pray.getOrDefault(p.getUniqueId(),0)*0.2).setScale(1, RoundingMode.HALF_EVEN)+"s"), 14, Palskillsinv);
-				itemset("Tutelary", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage & Armor", "Reduces 100% Damage While Raising Shield", "Protection will Reduce 80% of Damage"), 16, Palskillsinv);
+				itemset("Tutelary", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage & Armor", "Summon barrier that protects you from all damage", "from the front While Raising Shield"), 16, Palskillsinv);
 				itemset("Last judgment", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Lightning]","Sneaking + ThrowItem","",ChatColor.BOLD+"10 X 1.5D"), 17, Palskillsinv);
 
 				itemset("HolyPile", Material.LIGHTNING_ROD, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Earth]","Drive HolyPile When You Use Once More","(Damage Affected By Thrust)","",ChatColor.BOLD+"4 X (0.4D + "+BigDecimal.valueOf(psd.Thrust.getOrDefault(p.getUniqueId(),0)*0.455).setScale(2, RoundingMode.HALF_EVEN)+")"), 18, Palskillsinv);
 				itemset("Doom", Material.BUBBLE_CORAL, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Lightning]","Doom To Enemies When Use Once More","(Damage Affected By Restraint)","",ChatColor.BOLD+" X (1.5D + "+BigDecimal.valueOf(psd.Restraint.getOrDefault(p.getUniqueId(),0)*1.68).setScale(2, RoundingMode.HALF_EVEN)+")"), 19, Palskillsinv);
 				itemset("Griffon", Material.TRIDENT, 0, 1, Arrays.asList("Summon Griffon When Use Once More", "Griffon Will disappear When You Dismount", "Or Summon Again","", "Enhance Punish Skill While Riding Griffon","(Change Command to [Jump+LeftClick])","",
-						ChatColor.UNDERLINE+"[Lightning]","Inflicts Splash Damage When Griffon Jump","",ChatColor.BOLD+" X (1.3D + "+BigDecimal.valueOf(psd.Judgement.getOrDefault(p.getUniqueId(),0)*1.3).setScale(2, RoundingMode.HALF_EVEN)+" X JumpPower)", "(Damage Affected By Judgement)"), 20, Palskillsinv);
+						ChatColor.UNDERLINE+"[Lightning]","Inflicts Splash Damage When Griffon Jump","Fly shortly when jump strength over 80%","",ChatColor.BOLD+" X (1.3D + "+BigDecimal.valueOf(psd.Judgement.getOrDefault(p.getUniqueId(),0)*1.3).setScale(2, RoundingMode.HALF_EVEN)+" X JumpPower)", "(Damage Affected By Judgement)"), 20, Palskillsinv);
 				itemset("Sanctuary", Material.TRIDENT, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Earth]","Summon Sanctuary When Use Once More","(Damage Affected By Encourge)","",ChatColor.BOLD+"10 X (0.55D + "+BigDecimal.valueOf(psd.Encourge.getOrDefault(p.getUniqueId(),0)*0.68).setScale(2, RoundingMode.HALF_EVEN)+")"), 22, Palskillsinv);
 				itemset("Grace", Material.BUBBLE_CORAL, 0, 1, Arrays.asList("Give Saturation to Party"), 23, Palskillsinv);
 				itemset("Salvation", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Damage & Armor","Decreases Last judgment Cooldown"), 25, Palskillsinv);

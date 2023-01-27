@@ -12,6 +12,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Drowned;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Evoker;
+import org.bukkit.entity.Husk;
 import org.bukkit.entity.Illusioner;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Vindicator;
@@ -123,7 +124,7 @@ public class WildRaids extends Summoned {
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		
-		newmob.setLootTable(null);
+		
 		addraider(rn,META,newmob);
 	
 	}
@@ -153,7 +154,7 @@ public class WildRaids extends Summoned {
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		
-		newmob.setLootTable(null);
+		
 		
 		addraider(rn,META,newmob);
 		
@@ -171,7 +172,7 @@ public class WildRaids extends Summoned {
 		ItemStack main = new ItemStack(Material.BOOK);
 		
 		String reg = lang.equalsIgnoreCase("ko_kr") ? "고대의마법사":"AncientMage";
-		Illusioner newmob = (Illusioner) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 35000.0, head, chest, leg, boots, main, null, EntityType.ILLUSIONER);
+		Evoker newmob = (Evoker) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 35000.0, head, chest, leg, boots, main, null, EntityType.EVOKER);
 
 		newmob.setCanJoinRaid(false);
 		newmob.setPatrolLeader(false);
@@ -183,7 +184,7 @@ public class WildRaids extends Summoned {
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		
-		newmob.setLootTable(null);
+
 		addraider(rn,META,newmob);
 		
 	}
@@ -204,7 +205,7 @@ public class WildRaids extends Summoned {
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		
-		newmob.setLootTable(null);
+		
 		addraider(rn,META,newmob);
 		
 	}
@@ -232,7 +233,7 @@ public class WildRaids extends Summoned {
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.35);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
-		newmob.setLootTable(null);
+		
 		
 		addraider(rn,META,newmob);
 	}
@@ -243,14 +244,16 @@ public class WildRaids extends Summoned {
     	Location esl = spl.clone().add(number, 2.5, number2);
 
     	ItemStack head = mobhead();
+		ItemStack chest = mobchest();
+		ItemStack leg = new ItemStack(Material.NETHERITE_LEGGINGS);
+		ItemStack boots = mobboots();
+		
 		ItemStack main = new ItemStack(Material.NETHERITE_HOE);
 		
 		String reg = lang.contains("kr") ? "고대의복수자":"AncientAvenger";
-		Evoker newmob = (Evoker) Summon(esl, reg, 35000.0, head, null, null, null, main,
-				null, EntityType.EVOKER);
-		newmob.setCanJoinRaid(false);
-		newmob.setPatrolLeader(false);
-		newmob.setPatrolTarget(null);
+		Husk newmob = (Husk) Summon(esl, reg, 35000.0, head, chest, leg, boots, main,
+				null, EntityType.HUSK);
+		newmob.setConversionTime(-1);
 		
 		
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
@@ -289,7 +292,7 @@ public class WildRaids extends Summoned {
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
-		newmob.setLootTable(null);
+		
 		addraider(rn,META,newmob);
 		
 	}

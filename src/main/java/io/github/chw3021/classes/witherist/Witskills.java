@@ -620,6 +620,7 @@ public class Witskills extends Pak implements Listener, Serializable {
 		{
 			if(p.getInventory().getItemInMainHand().getType().name().contains("HOE"))
 			{
+				p.setCooldown(Material.ELYTRA, 2);
 
 				if(gdcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
 	            {

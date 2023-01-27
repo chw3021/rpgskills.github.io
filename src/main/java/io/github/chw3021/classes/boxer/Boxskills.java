@@ -4,7 +4,6 @@ package io.github.chw3021.classes.boxer;
 
 import io.github.chw3021.classes.ClassData;
 import io.github.chw3021.classes.Proficiency;
-import io.github.chw3021.classes.nobility.NobSkillsData;
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.commons.Pak;
 import io.github.chw3021.commons.party.Party;
@@ -167,13 +166,17 @@ public class Boxskills extends Pak implements Listener, Serializable {
 		bsd = b;
 	}
 	
+	final private Boolean condition(Player p) {
+		return p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData();
+	}
+	
 	
 	public void Adrenaline(PlayerSwapHandItemsEvent ev) 
 	{
 		Player p = ev.getPlayer();
 		if(ClassData.pc.get(p.getUniqueId()) == 7)
 		{
-			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData() && fistforce.containsKey(p.getUniqueId()))
+			if(condition(p) && fistforce.containsKey(p.getUniqueId()))
 			{
 				double sec = 5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 				
@@ -353,7 +356,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 	{
 		Player p = ev.getPlayer();
 		if(ClassData.pc.get(p.getUniqueId()) == 7&& bsd.BodyBlow.getOrDefault(p.getUniqueId(), 0)>=1) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
+			if(condition(p))
 			{
 		    
 			Action ac = ev.getAction();
@@ -405,7 +408,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 	                	
 	                	
 		        		Location str = p.getEyeLocation().clone().add(p.getLocation().getDirection().clone().normalize().multiply(2));
-						p.setCooldown(Material.ACACIA_BOAT, 3); p.swingMainHand();
+						p.setCooldown(Material.TORCH, 3); p.swingMainHand();
 						parrying.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
 						parrying.putIfAbsent(p.getUniqueId(), 0);
 						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -487,7 +490,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
                 	
                 	
 	        		Location str = p.getEyeLocation().clone().add(p.getLocation().getDirection().clone().normalize().multiply(2));
-					p.setCooldown(Material.ACACIA_BOAT, 3); p.swingMainHand();
+					p.setCooldown(Material.TORCH, 3); p.swingMainHand();
 					parrying.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
 					parrying.putIfAbsent(p.getUniqueId(), 0);
 					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -554,7 +557,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 7) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData() && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK)  && p.isSneaking() &&uh.containsKey(p.getUniqueId()))
+			if(condition(p) && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK)  && p.isSneaking() &&uh.containsKey(p.getUniqueId()))
 			{
 				ev.setCancelled(true);
             	if(uht.containsKey(p.getUniqueId())) {
@@ -635,7 +638,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 						atk1(0.5*(1+ bsd.BodyBlow.get(p.getUniqueId())*0.035), p, le);
 	                    le.teleport(tl);
 						Holding.superholding(p, le, 10l);
-	                    p.setCooldown(Material.ACACIA_BOAT, 3); p.swingMainHand();
+	                    p.setCooldown(Material.TORCH, 3); p.swingMainHand();
 					}
 				}
 							
@@ -672,7 +675,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 7) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData() && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK)&& p.isSneaking() &&fs.containsKey(p.getUniqueId()))
+			if(condition(p) && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK)&& p.isSneaking() &&fs.containsKey(p.getUniqueId()))
 			{
 				ev.setCancelled(true);
 	        	if(fst.containsKey(p.getUniqueId())) {
@@ -683,7 +686,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 				
 	
 
-                p.setCooldown(Material.ACACIA_BOAT, 3); p.swingMainHand();
+                p.setCooldown(Material.TORCH, 3); p.swingMainHand();
 	
             	for(int i =0; i<8; i++) {
              	   Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -733,7 +736,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 	    
 		Player p = ev.getPlayer();
 		if(ClassData.pc.get(p.getUniqueId()) == 7&& bsd.DempseyRoll.getOrDefault(p.getUniqueId(), 0)>=1 && p.isSneaking()) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
+			if(condition(p))
 			{
 			double sec = 7*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 	
@@ -839,7 +842,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 						                {
 						                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_STRONG, 1.0f, 1.0f);
 						                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1.0f, 1.3f);
-						                    p.setCooldown(Material.ACACIA_BOAT, 3); p.swingOffHand();
+						                    p.setCooldown(Material.TORCH, 3); p.swingOffHand();
 							        		p.teleport(w2);
 
 							        		Location l = gettargetblock(p, 3);
@@ -886,7 +889,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 				                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1.0f, 0.0f);
 				                    p.playSound(p.getLocation(), Sound.ENTITY_ITEM_BREAK, 1.0f, 2.0f);
 					        		p.teleport(pfl);
-				                    p.setCooldown(Material.ACACIA_BOAT, 3); p.swingMainHand();
+				                    p.setCooldown(Material.TORCH, 3); p.swingMainHand();
 									parrying.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
 									parrying.putIfAbsent(p.getUniqueId(), 0);
 									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -1031,7 +1034,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 					                {
 					                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_STRONG, 1.0f, 1.0f);
 					                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1.0f, 1.3f);
-					                    p.setCooldown(Material.ACACIA_BOAT, 3); p.swingOffHand();
+					                    p.setCooldown(Material.TORCH, 3); p.swingOffHand();
 						        		p.teleport(w2);
 						        		Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 3).getLocation();
 						        		p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l, 5,1,1,1);
@@ -1077,7 +1080,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 			                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1.0f, 0.0f);
 			                    p.playSound(p.getLocation(), Sound.ENTITY_ITEM_BREAK, 1.0f, 2.0f);
 				        		p.teleport(pfl);
-			                    p.setCooldown(Material.ACACIA_BOAT, 3); p.swingMainHand();
+			                    p.setCooldown(Material.TORCH, 3); p.swingMainHand();
 								parrying.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
 								parrying.putIfAbsent(p.getUniqueId(), 0);
 								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -1222,7 +1225,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 			                {
 			                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_STRONG, 1.0f, 1.0f);
 			                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1.0f, 1.3f);
-			                    p.setCooldown(Material.ACACIA_BOAT, 3); p.swingOffHand();
+			                    p.setCooldown(Material.TORCH, 3); p.swingOffHand();
 				        		p.teleport(w2);
 				        		Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 3).getLocation();
 				        		p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l, 5,1,1,1);
@@ -1296,7 +1299,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 	                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1.0f, 0.0f);
 	                    p.playSound(p.getLocation(), Sound.ENTITY_ITEM_BREAK, 1.0f, 2.0f);
 		        		p.teleport(pfl);
-	                    p.setCooldown(Material.ACACIA_BOAT, 3); p.swingMainHand();
+	                    p.setCooldown(Material.TORCH, 3); p.swingMainHand();
 						parrying.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
 						parrying.putIfAbsent(p.getUniqueId(), 0);
 						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -1348,7 +1351,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 7) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData() && p.isSneaking() &&dr2.containsKey(p.getUniqueId()))
+			if(condition(p) && p.isSneaking() &&dr2.containsKey(p.getUniqueId()))
 			{
 				ev.setCancelled(true);
 				
@@ -1364,7 +1367,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 25,20,false,false));
 				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 25,999999,false,false));
 				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 25,20,false,false));
-				p.setCooldown(Material.ACACIA_BOAT, 3); p.swingMainHand();
+				p.setCooldown(Material.TORCH, 3); p.swingMainHand();
 
 				ArrayList<Location> line = new ArrayList<Location>();
                 AtomicInteger j = new AtomicInteger(0);
@@ -1436,8 +1439,9 @@ public class Boxskills extends Pak implements Listener, Serializable {
 	                    p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_HURT, 0.8f, 0f);
 	                    p.playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_ATTACK, 0.8f, 0f);
 	                    p.playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 0.4f, 2f);
-	                    p.setCooldown(Material.ACACIA_BOAT, 3); p.swingMainHand();
-	                    p.setCooldown(Material.ACACIA_BOAT, 3); p.swingOffHand();
+	                    p.setCooldown(Material.TORCH, 3); 
+	                    p.swingMainHand();
+	                    p.swingOffHand();
 						parrying.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
 						parrying.putIfAbsent(p.getUniqueId(), 0);
 						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -1454,7 +1458,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 		        		p.getWorld().spawnParticle(Particle.CRIT, l, 200,1,1,1);
 		        		p.getWorld().spawnParticle(Particle.CRIT_MAGIC, l, 400,1,1,1);
 		        		p.getWorld().spawnParticle(Particle.SONIC_BOOM, l, 50,2,2,2);
-						p.setCooldown(Material.ACACIA_BOAT, 3); p.swingMainHand();
+						p.setCooldown(Material.TORCH, 3); p.swingMainHand();
 		        		
 		        		for (Entity e : l.getWorld().getNearbyEntities(l, 3, 3, 3))
 						{
@@ -1488,7 +1492,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 	{
 		Player p = ev.getPlayer();
 		if(ClassData.pc.get(p.getUniqueId()) == 7&& bsd.Straight.getOrDefault(p.getUniqueId(), 0)>=1) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
+			if(condition(p))
 			{
 			Action ac = ev.getAction();
 			double sec = 3*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
@@ -1496,7 +1500,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 		    
 			
 			
-			if(!(p.isSneaking()) && (ac == Action.LEFT_CLICK_AIR || ac== Action.LEFT_CLICK_BLOCK) && !p.hasCooldown(Material.ACACIA_BOAT))
+			if(!(p.isSneaking()) && (ac == Action.LEFT_CLICK_AIR || ac== Action.LEFT_CLICK_BLOCK) && !p.hasCooldown(Material.TORCH))
 			{
 					
 
@@ -1520,8 +1524,6 @@ public class Boxskills extends Pak implements Listener, Serializable {
 	                    p.playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_STEP, 0.6f, 0f);
 	                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_NODAMAGE, 0.7f, 0f);
 	                    p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_ELYTRA, 0.7f, 2f);
-	                    
-	                    p.setCooldown(Material.ACACIA_BOAT, 3); p.swingMainHand();
 	                    
 						parrying.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
 						parrying.putIfAbsent(p.getUniqueId(), 0);
@@ -1636,8 +1638,6 @@ public class Boxskills extends Pak implements Listener, Serializable {
                     p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_NODAMAGE, 0.7f, 0f);
                     p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_ELYTRA, 0.7f, 2f);
                     
-                    
-                    p.setCooldown(Material.ACACIA_BOAT, 3); p.swingMainHand();
                     
 					parrying.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
 					parrying.putIfAbsent(p.getUniqueId(), 0);
@@ -1761,8 +1761,8 @@ public class Boxskills extends Pak implements Listener, Serializable {
 
 		
 		
-		if(ClassData.pc.get(p.getUniqueId()) == 7 && !p.hasCooldown(Material.ACACIA_BOAT)) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()&& (ac == Action.LEFT_CLICK_AIR || ac== Action.LEFT_CLICK_BLOCK)  && !p.isSneaking() &&sc.containsKey(p.getUniqueId()))
+		if(ClassData.pc.get(p.getUniqueId()) == 7 && !p.hasCooldown(Material.TORCH)) {
+			if(condition(p)&& (ac == Action.LEFT_CLICK_AIR || ac== Action.LEFT_CLICK_BLOCK)  && !p.isSneaking() &&sc.containsKey(p.getUniqueId()))
 			{
 				ev.setCancelled(true);
 				parrying.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
@@ -1805,7 +1805,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 	                public void run() {
 						eq.remove(p.getUniqueId());
 	                }
-	            }, 3); 
+	            }, 30); 
             	eqt.put(p.getUniqueId(), task);
 
                 HashSet<LivingEntity> les = new HashSet<LivingEntity>();
@@ -1817,11 +1817,9 @@ public class Boxskills extends Pak implements Listener, Serializable {
 						break;
 					}
 				}
-                p.playSound(p.getLocation(), Sound.ENTITY_DOLPHIN_JUMP, 1.0f, 2f);
-                p.playSound(p.getLocation(), Sound.ENTITY_HORSE_JUMP, 1.0f, 0f);
-                p.playSound(p.getLocation(), Sound.ENTITY_MAGMA_CUBE_JUMP, 1.0f, 2f);
-                p.playSound(p.getLocation(), Sound.ENTITY_SKELETON_HORSE_JUMP_WATER, 1.0f, 0f);
                 p.playSound(p.getLocation(), Sound.ENTITY_RABBIT_JUMP, 1.0f, 2f);
+                p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_ELYTRA, 0.25f, 2f);
+                p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_NODAMAGE, 1.0f, 1.6f);
                 ArrayList<Location> line = new ArrayList<Location>();
                 for(double an = Math.PI/3; an>-Math.PI/3; an-=Math.PI/180) {
                 	Location pl = p.getLocation();
@@ -1862,7 +1860,6 @@ public class Boxskills extends Pak implements Listener, Serializable {
 								}
 							}
 							Holding.holding(p, le, 5l);
-		                    p.setCooldown(Material.ACACIA_BOAT, 3); p.swingMainHand();
 	     					
 						}
 	                    
@@ -1885,8 +1882,8 @@ public class Boxskills extends Pak implements Listener, Serializable {
 
 		
 		
-		if(ClassData.pc.get(p.getUniqueId()) == 7 && !p.hasCooldown(Material.ACACIA_BOAT)) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()&& (ac == Action.LEFT_CLICK_AIR || ac== Action.LEFT_CLICK_BLOCK)  && !p.isSneaking() &&eq.containsKey(p.getUniqueId()))
+		if(ClassData.pc.get(p.getUniqueId()) == 7 && !p.hasCooldown(Material.TORCH)) {
+			if(condition(p)&& (ac == Action.LEFT_CLICK_AIR || ac== Action.LEFT_CLICK_BLOCK)  && !p.isSneaking() &&eq.containsKey(p.getUniqueId()))
 			{
 				ev.setCancelled(true);
 
@@ -1917,7 +1914,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 				p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 1.0f, 0.1f);
 				p.playSound(p.getLocation(), Sound.BLOCK_BASALT_BREAK, 1.0f, 0f);
 				p.playSound(p.getLocation(), Sound.BLOCK_BASALT_BREAK, 1.0f, 2f);
-				p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_HURT, 1.0f, 2f);
+				p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_HURT, 0.6f, 0.5f);
 				for(int i = 0; i <10; i++) {
 					p.teleport(p.getLocation().clone().add(0, -0.1, 0));
 					p.getWorld().spawnParticle(Particle.CRIT, p.getLocation(), 50, 0.5,2,0.5,0.05);
@@ -1952,7 +1949,6 @@ public class Boxskills extends Pak implements Listener, Serializable {
 							}
 						}
 						Holding.superholding(p, le, 10l);
-	                    p.setCooldown(Material.ACACIA_BOAT, 3); p.swingMainHand();
      					
 					}
 				}
@@ -1968,7 +1964,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 	{
 		Player p = ev.getPlayer();
 		if(ClassData.pc.get(p.getUniqueId()) == 7&& bsd.Straight.getOrDefault(p.getUniqueId(), 0)>=1) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
+			if(condition(p))
 			{
 			Action ac = ev.getAction();
 			double sec = 3*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
@@ -2039,7 +2035,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 							}
 			            }, 9); 
 	                	
-	                	p.setCooldown(Material.ACACIA_BOAT, 3); p.setCooldown(Material.ACACIA_BOAT, 3); p.swingOffHand();
+	                	p.setCooldown(Material.TORCH, 3); p.swingOffHand();
 	                	
 	                    for(double d = 0.1; d <= 2; d += 0.2) {
 		                    Location pl = p.getEyeLocation().clone().add(0, -0.2, 0);
@@ -2124,7 +2120,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 		            }, 30); 
                 	jrt.put(p.getUniqueId(), task);
                 	
-                	p.setCooldown(Material.ACACIA_BOAT, 3); p.setCooldown(Material.ACACIA_BOAT, 3); p.swingOffHand();
+                	p.setCooldown(Material.TORCH, 3); p.swingOffHand();
                 	
                     for(double d = 0.1; d <= 2; d += 0.2) {
 	                    Location pl = p.getEyeLocation().clone().add(0, -0.2, 0);
@@ -2179,8 +2175,8 @@ public class Boxskills extends Pak implements Listener, Serializable {
 	
 		
 		
-		if(ClassData.pc.get(p.getUniqueId()) == 7 && !p.hasCooldown(Material.ACACIA_BOAT)) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()
+		if(ClassData.pc.get(p.getUniqueId()) == 7) {
+			if(condition(p)
 					&& (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK)&& !p.isSneaking() &&jr.containsKey(p.getUniqueId()))
 			{
 				ev.setCancelled(true);
@@ -2261,7 +2257,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 			                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_NODAMAGE, 0.7f, 2f);
 			                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 0.7f, 2f);
 			                	
-			                	p.setCooldown(Material.ACACIA_BOAT, 3); p.swingOffHand();
+			                	p.setCooldown(Material.TORCH, 3); p.swingOffHand();
 			                	
 			                    for(double d = 0.1; d <= 2; d += 0.2) {
 			                        Location pl = p.getEyeLocation().clone().add(0, -0.2, 0);
@@ -2317,8 +2313,8 @@ public class Boxskills extends Pak implements Listener, Serializable {
 	
 		
 		
-		if(ClassData.pc.get(p.getUniqueId()) == 7 && !p.hasCooldown(Material.ACACIA_BOAT)) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()
+		if(ClassData.pc.get(p.getUniqueId()) == 7) {
+			if(condition(p)
 					&& (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK)&& !p.isSneaking() &&op.containsKey(p.getUniqueId()))
 			{
 				ev.setCancelled(true);
@@ -2353,14 +2349,14 @@ public class Boxskills extends Pak implements Listener, Serializable {
 				p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_CHAIN, 0.5f, 2f);
 				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 3,20,false,false));
 				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 3,100,false,false));
-				p.setCooldown(Material.ACACIA_BOAT, 3); p.swingOffHand();
+				p.setCooldown(Material.TORCH, 3); p.swingOffHand();
 				
 				
 				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	                @Override
 	                public void run() 
 	                {
-	    				p.setCooldown(Material.ACACIA_BOAT, 3); p.swingOffHand();
+	    				p.setCooldown(Material.TORCH, 3); p.swingOffHand();
 	    				p.playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 0.7f, 1.6f);
 	    				p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_STRONG, 0.5f, 0.1f);
 	    				
@@ -2415,7 +2411,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 		if(d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity) 
 		{
 		Player p = (Player)d.getDamager();
-		if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
+		if(condition(p))
 		{
 		
 		
@@ -2432,7 +2428,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 			d.getEntity();
 			if(ar.getShooter() instanceof Player) {
 				Player p = (Player) ar.getShooter();
-				if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
+				if(condition(p))
 				{
 					if(ClassData.pc.get(p.getUniqueId()) == 7) {
 
@@ -2548,7 +2544,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 			                @Override
 			                public void run() 
 			                {
-			    				p.setCooldown(Material.ACACIA_BOAT, 3); p.swingMainHand();
+			    				p.setCooldown(Material.TORCH, 3); p.swingMainHand();
 			    		    	final Location l = gettargetblock(p,6);
 			    				p.getWorld().spawnParticle(Particle.FLASH, l, 800, 10, 10, 10);
 								p.getWorld().spawnParticle(Particle.CRIT, l, 600, 10, 10, 10);
@@ -2615,7 +2611,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 		                @Override
 		                public void run() 
 		                {
-		    				p.setCooldown(Material.ACACIA_BOAT, 3); p.swingMainHand();
+		    				p.setCooldown(Material.TORCH, 3); p.swingMainHand();
 		    		    	final Location l = gettargetblock(p,6);
 		    				p.getWorld().spawnParticle(Particle.FLASH, l, 800, 10, 10, 10);
 							p.getWorld().spawnParticle(Particle.CRIT, l, 600, 10, 10, 10);
@@ -2771,7 +2767,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 					p.getWorld().playSound(p.getLocation(),Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 0.3f,0.8f);
 					p.getWorld().playSound(p.getLocation(),Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.3f,1.8f);
 					p.teleport(l);
-					p.setCooldown(Material.ACACIA_BOAT, 3); p.swingOffHand();
+					p.setCooldown(Material.TORCH, 3); p.swingOffHand();
                 	
                 	for(Entity e : p.getWorld().getNearbyEntities(p.getLocation(), 3.5,8,3.5)) {
                 		if (e instanceof Player) 
@@ -2841,7 +2837,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
                     public void run() 
                     {
 						p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 5,5,false,false));
-        				p.setCooldown(Material.ACACIA_BOAT, 3); p.swingMainHand();
+        				p.setCooldown(Material.TORCH, 3); p.swingMainHand();
         				uppersweep(p.getLocation().clone());
         				p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 0.7f, 0f);
         				p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_HURT, 1f, 1.5f);
@@ -2993,7 +2989,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 7)
 		{
-			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData() && (p.getInventory().getItemInOffHand().getType() == p.getInventory().getItemInMainHand().getType()))
+			if(condition(p) && (p.getInventory().getItemInOffHand().getType() == p.getInventory().getItemInMainHand().getType()))
 			{
 					e.setCancelled(true);
 			}
@@ -3011,7 +3007,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 
 		
 		
-		if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData() && ClassData.pc.get(p.getUniqueId()) == 7) {
+		if(condition(p) && ClassData.pc.get(p.getUniqueId()) == 7) {
 			if(Proficiency.getpro(p) >=1) {
 				counter.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
 				counter.putIfAbsent(p.getUniqueId(), 0);
@@ -3040,7 +3036,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 		double sec = 0.5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 		
 		
-		if(ClassData.pc.get(p.getUniqueId()) == 7&&p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()) {
+		if(ClassData.pc.get(p.getUniqueId()) == 7&&condition(p)) {
 			
 				if(p.isSneaking())
 					{
@@ -3123,10 +3119,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
 	    
-		
-		
-		new NobSkillsData(NobSkillsData.loadData(path +"/plugins/RPGskills/NobSkillsData.data"));
-		if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()) 
+		if(condition(p)) 
 			{
 			if(ClassData.pc.get(p.getUniqueId()) == 7 && p.getAttackCooldown()>=1) {
 	
@@ -3156,7 +3149,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 		if(d.getEntity() instanceof Player) 
 		{
 		Player p = (Player)d.getEntity();
-		if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()) {
+		if(condition(p)) {
 
 			
 			
@@ -3266,7 +3259,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 			if(d.getDamager() instanceof Player) 
 			{
 				Player p = (Player)d.getDamager();
-				if(p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData() && (p.getInventory().getItemInOffHand().getType() == p.getInventory().getItemInMainHand().getType()))
+				if(p.getInventory().getItemInMainHand().hasItemMeta() && condition(p) && (p.getInventory().getItemInOffHand().getType() == p.getInventory().getItemInMainHand().getType()))
 				{
 			
 					
@@ -3290,7 +3283,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 		
 				if(a.getShooter() instanceof Player) {
 					Player p = (Player) a.getShooter();
-					if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData() && (p.getInventory().getItemInOffHand().getType() == p.getInventory().getItemInMainHand().getType()))
+					if(condition(p) && (p.getInventory().getItemInOffHand().getType() == p.getInventory().getItemInMainHand().getType()))
 					{
 						
 						

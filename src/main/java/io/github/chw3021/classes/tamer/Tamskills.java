@@ -458,6 +458,7 @@ public class Tamskills extends Pak implements Listener, Serializable {
 		{
 			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
 			{
+				p.setCooldown(Material.CREEPER_HEAD, 2);
 				
 				double sec =7*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
@@ -1185,6 +1186,7 @@ public class Tamskills extends Pak implements Listener, Serializable {
 		double sec = 10*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
 			{
+				p.setCooldown(Material.CREEPER_HEAD, 2);
 				ev.setCancelled(true);
 				
 				if(frcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
@@ -1774,7 +1776,7 @@ public class Tamskills extends Pak implements Listener, Serializable {
 		Action a = ev.getAction();
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 9&& tsd.PandaSweep.getOrDefault(p.getUniqueId(), 0)>=1 && !p.hasCooldown(Material.CREEPER_HEAD)) {	
-			if((a == Action.LEFT_CLICK_AIR || a == Action.LEFT_CLICK_BLOCK)&&(a!= Action.RIGHT_CLICK_AIR)&&(a!= Action.RIGHT_CLICK_AIR)&& !p.isSneaking() && !p.isOnGround())
+			if((a == Action.LEFT_CLICK_AIR || a == Action.LEFT_CLICK_BLOCK)&& !p.isSneaking() && !p.isOnGround())
 			{	
 				if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
 				{

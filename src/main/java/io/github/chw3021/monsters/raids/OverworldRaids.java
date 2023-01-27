@@ -122,7 +122,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	Integer LIVES = 5;
 	Double BOSSHP = 100000d;
 	
-	Integer BOSSNUM = 6;
+	Integer BOSSNUM = 0;
 	
 	
 	private static final OverworldRaids instance = new OverworldRaids ();
@@ -905,8 +905,8 @@ public class OverworldRaids extends Summoned implements Listener {
     		v.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
     		v.setGravity(true);
     		v.setNoDamageTicks(0);
-    		v.setMaxHealth(10000);
-    		v.setHealth(10000);
+    		v.setMaxHealth(4000);
+    		v.setHealth(4000);
     		v.setRemoveWhenFarAway(false);
     		v.setGlowing(true);
     		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? rn + " 고고학자":rn + "'s Archaeologist";

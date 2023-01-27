@@ -18,6 +18,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.AbstractArrow;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.EntityCategory;
@@ -213,20 +214,23 @@ public class Pak implements Serializable, Listener{
 	protected final Location gettargetblock(Player p, Integer in) {
 		if(p.rayTraceBlocks(in) == null) {
 
-			final Location tl = p.getTargetBlock(passables, in).getLocation().clone();
-			
-			if(tl == null) {
+			try {
+				final Location tl = p.getTargetBlock(passables, in).getLocation().clone();
+				
+				if(tl.getBlock().getType().isOccluding()) {
+					return tl.clone().add(0, 0.75, 0);
+				}
+				return tl;
+			}
+			catch(IllegalStateException e) {
 				final Location pl = p.getLocation().clone();
 				for(int i =0; i<in; i++) {
 					if(!pl.clone().add(pl.clone().getDirection().normalize().multiply(i)).getBlock().isPassable()) {
 						return pl.clone().add(pl.clone().getDirection().normalize().multiply(i));
 					}
 				}
+				return pl.clone().add(pl.clone().getDirection().normalize().multiply(in));
 			}
-			if(tl.getBlock().getType().isOccluding()) {
-				return tl.clone().add(0, 0.75, 0);
-			}
-			return tl;
 		}
 		final Location rl = p.rayTraceBlocks(in).getHitPosition().toLocation(p.getWorld());
 		if(rl.getBlock().getType().isOccluding()) {
@@ -2259,14 +2263,87 @@ public class Pak implements Serializable, Listener{
 		le.damage(fd , p);
 	}
 	
+
+	final private Location disloc(final Player p, final LivingEntity le, Location pl, Location elf) {
+
+		if(elf.getWorld() != pl.getWorld()) {
+			if(p.hasPotionEffect(PotionEffectType.SLOW)) {
+				return pl.clone().add(pl.clone().getDirection().rotateAroundY(Math.PI/22).normalize().multiply(2.8)).add(0, 0.1, 0);
+			}
+			else {
+				return pl.clone().add(pl.clone().getDirection().rotateAroundY(Math.PI/12).normalize().multiply(2.2)).add(0, 0.3, 0);
+			}
+		}
+		final Double disd = elf.distance(pl);
+		if(disd<12) {
+			return elf.clone().add(le.getLocation().clone().getDirection().rotateAroundY(Math.PI/2).normalize().multiply(0.76)).add(0, 0.68, 0);
+		}
+		else {
+			if(p.hasPotionEffect(PotionEffectType.SLOW)) {
+				return pl.clone().add(pl.clone().getDirection().rotateAroundY(Math.PI/22).normalize().multiply(2.8)).add(0, 0.1, 0);
+			}
+			else {
+				return pl.clone().add(pl.clone().getDirection().rotateAroundY(Math.PI/12).normalize().multiply(2.2)).add(0, 0.3, 0);
+			}
+		}
+	}
 	
-	
+
+	final private ArmorStand dinspawn(final Player p,Location l, Double d) {
+
+		final ArmorStand din = l.getWorld().spawn(l, ArmorStand.class, e -> e.setVisible(false));
+		din.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 12,2,false,false));
+		din.setMetadata("din", new FixedMetadataValue(RMain.getInstance(),true));
+		din.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
+		din.setMetadata("din of "+p.getName(), new FixedMetadataValue(RMain.getInstance(),true));
+		din.setSilent(true);
+		din.setSmall(true);
+		din.setCollidable(false);
+		din.setInvulnerable(true);
+		if(d<0.1) {
+			din.setCustomName( ChatColor.GRAY + String.valueOf(Math.round(d*1000)/1000.000) + " <"+ p.getName()+">");
+		}
+		else if(d>=9999999) {
+			din.setCustomName( ChatColor.GRAY + "!9999999!" + " <"+ p.getName()+">");
+		}
+		else {
+			din.setCustomName( ChatColor.GRAY + String.valueOf(Math.round(d*10)/10.0) + " <"+ p.getName()+">");
+		}
+		din.setCustomNameVisible(true);
+		return din;
+	}
+
+	final private void damageind(final Player p, final LivingEntity le, Double d) {
+		final Location elf = le.getLocation().clone().add(0, 0.05, 0);
+		final Location pl = p.getLocation().clone().add(0, 0.1, 0);
+		
+		/*if(el.getY()<pel.getY()) {
+			dinvv.rotateAroundAxis(dinv.clone().rotateAroundY(Math.PI/2), -Math.PI/6).normalize();
+		}
+		else {
+			dinvv.rotateAroundAxis(dinv.clone().rotateAroundY(Math.PI/2), -Math.PI/45).normalize();
+		}*/
+		final ArmorStand din = dinspawn(p, disloc(p,le,pl,elf), d);
+		
+		
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
+		{
+     	@Override
+                public void run() 
+     				{	
+     					din.remove();
+		            }
+        }, 30);
+	}
 	
 
 	/**
 	 * pd*dou1 + dou2
 	 */
 	final public void atkab0(Double dou, Double dou2,Player p, LivingEntity le) {
+		if(le.isInvulnerable() || le.hasMetadata("fake")) {
+			return;
+		}
 		Double pd = player_damage.get(p.getName());
 		if(le.getCategory() == EntityCategory.UNDEAD) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_UNDEAD)*2.5;
@@ -2286,12 +2363,23 @@ public class Pak implements Serializable, Listener{
 		else {
 			le.setHealth(0);
 		}
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
+		{
+     	@Override
+            public void run() 
+			{	
+     			damageind(p,le,player_damage.get(p.getName())*dou + dou2);
+			}
+        }, 1);
 	}
 
 	/**
 	 * pd*dou
 	 */
 	final public void atkab1(Double dou, Player p, LivingEntity le) {
+		if(le.isInvulnerable() || le.hasMetadata("fake")) {
+			return;
+		}
 		Double pd = player_damage.get(p.getName());
 		if(le.getCategory() == EntityCategory.UNDEAD) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_UNDEAD)*2.5;
@@ -2311,6 +2399,14 @@ public class Pak implements Serializable, Listener{
 		else {
 			le.setHealth(0);
 		}
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
+		{
+     	@Override
+            public void run() 
+			{	
+     			damageind(p,le,player_damage.get(p.getName())*dou);
+			}
+        }, 1);
 	}
 
 
@@ -2360,7 +2456,7 @@ public class Pak implements Serializable, Listener{
 					return;
 				}
 				if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 10|| ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 61|| ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 3 || ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 18 || ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 22|| ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 26) {
-					d.setDamage(d.getDamage()*(1+p.getLevel()*0.01));
+					d.setDamage(d.getDamage()*(1+p.getLevel()*0.006));
 				}
 			}
 		}
@@ -2370,7 +2466,7 @@ public class Pak implements Serializable, Listener{
 				return;
 			}
 			if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 10|| ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 61|| ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 3 || ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 18 || ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 22|| ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 26) {
-				d.setDamage(d.getDamage()*(1+p.getLevel()*0.01));
+				d.setDamage(d.getDamage()*(1+p.getLevel()*0.006));
 			}
 		}
 	}

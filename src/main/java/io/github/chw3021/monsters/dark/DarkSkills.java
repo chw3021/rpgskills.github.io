@@ -1301,8 +1301,10 @@ public class DarkSkills extends Summoned{
         Holding.invur(p, 100l);
         Holding.untouchable(p, 100l);
         p.setGlowing(false);
+        p.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
         
         OverworldRaids.getheroes(p).forEach(pe ->{
+        	Holding.invur(pe, 60l);
 			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
         		pe.sendTitle(ChatColor.DARK_GRAY + (ChatColor.MAGIC + "123456"), ChatColor.DARK_GRAY + "어둠을 맞이해라...", 20, 35, 20);
  				Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {

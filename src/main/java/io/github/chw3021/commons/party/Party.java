@@ -278,7 +278,20 @@ public class Party implements CommandExecutor, Serializable, Listener{
 	{
 		return Bukkit.getPlayer(Party.get(name).stream().filter(pu -> Owner.get(pu) == true).findFirst().get());
 	}
+
 	
+	public static boolean isInSameParty(Player p1, Player p2)
+	{
+		if(p1 == null || p2 == null) {
+			return false;
+		}
+		if(Party.containsValue(p1.getUniqueId()) && Party.containsValue(p2.getUniqueId())) {
+			return Party.keySet().stream().anyMatch(x -> Party.containsEntry(x, p1.getUniqueId()) && Party.containsEntry(x, p2.getUniqueId()));
+		}
+		else {
+			return false;
+		}
+	}
 	
 	public static boolean hasParty(Player p)
 	{
