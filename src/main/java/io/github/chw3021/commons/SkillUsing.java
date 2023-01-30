@@ -631,12 +631,13 @@ public class SkillUsing implements Listener, Serializable {
 		Frostskills.getInstance().GlacialDrift(d);
 
 		Hunskills.getInstance().ArmorDecrease(d);
-		Hunskills.getInstance().Atrocity(d);
+		Hunskills.getInstance().Huntingdamage(d);
+		Hunskills.getInstance().Daze(d);
+		Hunskills.getInstance().Ult(d);
+		Hunskills.getInstance().SkullCrusher(d);
 		Hunskills.getInstance().Backattack(d);
 		Hunskills.getInstance().Damagegetter(d);
-		Hunskills.getInstance().Daze(d);
-		Hunskills.getInstance().SkullCrusher(d);
-		Hunskills.getInstance().Ult(d);
+		Hunskills.getInstance().Atrocity(d);
 
 		Illskills.getInstance().ArmorDecrease(d);
 		Illskills.getInstance().Damagegetter(d);
@@ -677,24 +678,26 @@ public class SkillUsing implements Listener, Serializable {
 		Snipskills.getInstance().HeadShot(d);
 		Snipskills.getInstance().DangerClose(d);
 
-		Swordskills.getInstance().Dualbladed(d);
 		Swordskills.getInstance().Swoop(d);
+		Swordskills.getInstance().Dualbladed(d);
 
 		Tamskills.getInstance().ArmorDecrease(d);
 		Tamskills.getInstance().DamageCancel(d);
 		Tamskills.getInstance().Damagegetter(d);
 
+		Taoskills.getInstance().CombustInside(d);
 		Taoskills.getInstance().Aura(d);
 		Taoskills.getInstance().KiVibe(d);
-		Taoskills.getInstance().CombustInside(d);
-
-		Wdcskills.getInstance().Legba(d);
-		Wdcskills.getInstance().Fangs(d);
-
+		
 		Witskills.getInstance().ReapingHook(d);
+		Witskills.getInstance().WitherScythe(d);
 		Witskills.getInstance().Witherize(d);
 		Witskills.getInstance().Witherize2(d);
-		Witskills.getInstance().WitherScythe(d);
+
+		Wdcskills.getInstance().Fangs(d);
+		Wdcskills.getInstance().ult2(d);
+		Wdcskills.getInstance().Legba(d);
+
 	}
 
 	@EventHandler

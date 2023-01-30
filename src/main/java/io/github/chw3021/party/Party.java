@@ -1,4 +1,4 @@
-package io.github.chw3021.commons.party;
+package io.github.chw3021.party;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -284,6 +284,9 @@ public class Party implements CommandExecutor, Serializable, Listener{
 	{
 		if(p1 == null || p2 == null) {
 			return false;
+		}
+		if(p1 == p2) {
+			return true;
 		}
 		if(Party.containsValue(p1.getUniqueId()) && Party.containsValue(p2.getUniqueId())) {
 			return Party.keySet().stream().anyMatch(x -> Party.containsEntry(x, p1.getUniqueId()) && Party.containsEntry(x, p2.getUniqueId()));

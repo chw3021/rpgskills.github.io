@@ -6,7 +6,7 @@ import io.github.chw3021.classes.ClassData;
 import io.github.chw3021.classes.Proficiency;
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.commons.Pak;
-import io.github.chw3021.commons.party.Party;
+import io.github.chw3021.party.Party;
 
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;

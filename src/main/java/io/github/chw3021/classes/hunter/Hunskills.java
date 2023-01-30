@@ -15,8 +15,8 @@ import io.github.chw3021.classes.ClassData;
 import io.github.chw3021.classes.Proficiency;
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.commons.Pak;
-import io.github.chw3021.commons.party.Party;
 import io.github.chw3021.obtains.Obtained;
+import io.github.chw3021.party.Party;
 import io.github.chw3021.rmain.RMain;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
@@ -385,7 +385,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 			{
 				if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE")&& !p.getInventory().getItemInMainHand().getType().name().contains("PICK"))
 				{
-					final Location ptl = gettargetblock(p,1);
+					final Location ptl = gettargetblock(p,1).setDirection(p.getEyeLocation().getDirection());
 					
 					str2.get(p.getUniqueId()).forEach(lu ->{
 						if(Bukkit.getEntity(lu) != null) {
@@ -1005,6 +1005,223 @@ public class Hunskills extends Pak implements Serializable, Listener {
 	*/
 	
 	
+	public void Huntingdamage(EntityDamageByEntityEvent d) 
+	{
+	    
+		if(d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity) 
+		{
+		Player p = (Player)d.getDamager();
+		LivingEntity le = (LivingEntity) d.getEntity();
+		
+		
+		if (le instanceof Player) 
+		{
+			Player p1 = (Player) le;
+			if(Party.hasParty(p) && Party.hasParty(p1))	{
+			if(Party.getParty(p).equals(Party.getParty(p1)))
+				{
+				d.setCancelled(true);
+					return;
+				}
+			}
+		}
+		if(ClassData.pc.get(p.getUniqueId()) == 2 && p.getCooldown(Material.GLISTERING_MELON_SLICE)<=0&& !le.hasMetadata("fake")&& !le.hasMetadata("portal"))	
+		{
+			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE")&& !p.getInventory().getItemInMainHand().getType().name().contains("SHIELD")&& !p.getInventory().getItemInOffHand().getType().name().contains("NUGGET")&& !(p.getInventory().getItemInOffHand().getType()==Material.TRIDENT)&& !(p.getInventory().getItemInOffHand().getType()==Material.SHIELD)) {
+	
+				if(hunting.containsKey(p.getName()))
+				{
+					if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE"))
+					{
+						dset3(d, p, 1.0, 1.0*(1+hsd.HuntingStart.get(p.getUniqueId())*0.055));
+					}
+					if(ult2t.containsKey(p.getName())) {
+						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+			                @Override
+			                public void run() 
+			                {
+								HuntingEffectrmv(p);
+								le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 20,20,false,false));
+								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+					                @Override
+					                public void run() { 
+				    					hucooldown.remove(p.getName());
+										Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+							                @Override
+							                public void run() { 
+							    				if(le.isDead() || le.getHealth()<=0) {
+								    				if(Proficiency.getpro(p)>=2) {
+								    					hucooldown.remove(p.getName());
+										                HuntingEffectadd(p);
+										        		p.playSound(p.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1.0f, 1.5f);
+										        		p.getWorld().spawnParticle(Particle.SMOKE_NORMAL, p.getLocation(), 30,1,1,1);
+														if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+											        		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{사냥 시작}").color(ChatColor.DARK_RED).create());
+														}
+														else {
+											        		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{Hunting Start}").color(ChatColor.DARK_RED).create());
+														}
+								    				}
+							    				}
+							                }
+							            },1);
+					                }
+					            }, 1);
+			                }
+						}, 3); 
+					}
+					else {
+						HuntingEffectrmv(p);
+						le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 20,20,false,false));
+						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+			                @Override
+			                public void run() { 
+			    				if(le.isDead() || le.getHealth()<=0) {
+			    					hucooldown.put(p.getName(), System.currentTimeMillis()-2000);
+				    				if(Proficiency.getpro(p)>=2) {
+				    					hucooldown.remove(p.getName());
+						                HuntingEffectadd(p);
+						        		p.playSound(p.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1.0f, 1.5f);
+						        		p.getWorld().spawnParticle(Particle.SMOKE_NORMAL, p.getLocation(), 30,1,1,1);
+										if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+							        		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{사냥 시작}").color(ChatColor.DARK_RED).create());
+										}
+										else {
+							        		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{Hunting Start}").color(ChatColor.DARK_RED).create());
+										}
+				    				}
+			    				}
+			    				else {
+				    				if(Proficiency.getpro(p)>=1) {
+				    					hucooldown.put(p.getName(), System.currentTimeMillis()-2000);
+				    				}
+				    				else {
+				        		        hucooldown.put(p.getName(), System.currentTimeMillis()); 
+				    				}
+			    				}
+			                }
+			            }, 1/5);
+					}
+				}	
+				if(posed.containsKey(p.getName())) {
+					d.setDamage(d.getDamage()*1.5);
+					
+					if(ult2t.containsKey(p.getName())) {
+						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+			                @Override
+			                public void run() 
+			                {
+								posed.remove(p.getName());
+			                }
+						}, 3); 
+					}
+					else {
+						posed.remove(p.getName());
+					}
+				}
+				if(Proficiency.getpro(p)>=1) {
+					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		                @Override
+		                public void run() { 
+		    				if(le.isDead() || le.getHealth()<=0) {
+		    					djcooldown.remove(p.getName());
+		    				}
+		                }
+		            }, 1/5);
+				}
+				if(Proficiency.getpro(p)>=2) {
+					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		                @Override
+		                public void run() { 
+		    				if(le.isDead() || le.getHealth()<=0) {
+		    					smcooldown.remove(p.getName());
+		    					lccooldown.remove(p.getName());
+		    				}
+		                }
+		            }, 1/5);
+				}
+			}
+			else {
+	
+				if(hunting.containsKey(p.getName()))
+				{
+					if(ult2t.containsKey(p.getName())) {
+						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+			                @Override
+			                public void run() 
+			                {
+								HuntingEffectrmv(p);
+								le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 20,20,false,false));
+								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+					                @Override
+					                public void run() { 
+				    					hucooldown.remove(p.getName());
+										Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+							                @Override
+							                public void run() { 
+							    				if(le.isDead() || le.getHealth()<=0) {
+								    				if(Proficiency.getpro(p)>=2) {
+								    					hucooldown.remove(p.getName());
+										                HuntingEffectadd(p);
+										        		p.playSound(p.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1.0f, 1.5f);
+										        		p.getWorld().spawnParticle(Particle.SMOKE_NORMAL, p.getLocation(), 30,1,1,1);
+														if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+											        		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{사냥 시작}").color(ChatColor.DARK_RED).create());
+														}
+														else {
+											        		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{Hunting Start}").color(ChatColor.DARK_RED).create());
+														}
+								    				}
+							    				}
+							                }
+							            }, 1);
+					                }
+					            }, 1);
+			                }
+						}, 3); 
+					}
+					else {
+						HuntingEffectrmv(p);
+						le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 20,20,false,false));
+						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+			                @Override
+			                public void run() { 
+			    				if(le.isDead() || le.getHealth()<=0) {
+			    					hucooldown.put(p.getName(), System.currentTimeMillis()-2000);
+				    				if(Proficiency.getpro(p)>=2) {
+				    					hucooldown.remove(p.getName());
+						                HuntingEffectadd(p);
+						        		p.playSound(p.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1.0f, 1.5f);
+						        		p.getWorld().spawnParticle(Particle.SMOKE_NORMAL, p.getLocation(), 30,1,1,1);
+										if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+							        		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{사냥 시작}").color(ChatColor.DARK_RED).create());
+										}
+										else {
+							        		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{Hunting Start}").color(ChatColor.DARK_RED).create());
+										}
+				    				}
+			    				}
+			    				else {
+				    				if(Proficiency.getpro(p)>=1) {
+				    					hucooldown.put(p.getName(), System.currentTimeMillis()-2000);
+				    				}
+				    				else {
+				        		        hucooldown.put(p.getName(), System.currentTimeMillis()); 
+				    				}
+			    				}
+			                }
+			            }, 1/5);
+					}
+				}	
+			}
+	
+		}
+		
+		}
+		
+	}
+
+
 	public void Daze(EntityDamageByEntityEvent d) 
 	{
 	    
@@ -1049,7 +1266,7 @@ else {
 									}
 								}
 								le.setVelocity(p.getLocation().getDirection());
-								d.setDamage(d.getDamage()*1.5 + hsd.Daze.get(p.getUniqueId())*1.68);
+								dset3(d, p, 1.0, 0.8*(1+hsd.Daze.get(p.getUniqueId())*0.035));
 								p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_BREAK, 1.0f, 2.0f);
 								p.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, le.getLocation(), 5, 1, 0, 1);
 								p.getWorld().spawnParticle(Particle.ASH, le.getLocation(), 200, 0.1, 1, 0.1);
@@ -1105,7 +1322,7 @@ else {
 								}
 							}
 							le.setVelocity(p.getLocation().getDirection());
-							d.setDamage(d.getDamage()*1.5 + hsd.Daze.get(p.getUniqueId())*1.68);
+							dset3(d, p, 1.0, 0.8*(1+hsd.Daze.get(p.getUniqueId())*0.035));
 							p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_BREAK, 1.0f, 2.0f);
 							p.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, le.getLocation(), 5, 1, 0, 1);
 							p.getWorld().spawnParticle(Particle.ASH, le.getLocation(), 200, 1, 1, 1);
@@ -1197,7 +1414,7 @@ else {
 									}
 								}
 							}
-							d.setDamage(d.getDamage()*2.5 + hsd.SkullCrusher.get(p.getUniqueId())*2.5);
+							dset3(d, p, 1.5, 1.1*(1+hsd.SkullCrusher.get(p.getUniqueId())*0.06));
 							p.getWorld().spawnParticle(Particle.BLOCK_CRACK, le.getEyeLocation(), 250, 1.52, 1.2, 1.52, Material.BONE_BLOCK.createBlockData());
 							p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, le.getEyeLocation(), 5, 1.52, 1.2, 1.52);
 							p.playSound(p.getLocation(), Sound.BLOCK_BONE_BLOCK_BREAK, 1.0f, 2f);
@@ -1259,7 +1476,7 @@ else {
 								}
 							}
 						}
-						d.setDamage(d.getDamage()*2.5 + hsd.SkullCrusher.get(p.getUniqueId())*2.5);
+						dset3(d, p, 1.5, 1.1*(1+hsd.SkullCrusher.get(p.getUniqueId())*0.06));
 						p.getWorld().spawnParticle(Particle.BLOCK_CRACK, le.getEyeLocation(), 250, 1.52, 1.2, 1.52, Material.BONE_BLOCK.createBlockData());
 						p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, le.getEyeLocation(), 5, 1.52, 1.2, 1.52);
 						p.playSound(p.getLocation(), Sound.BLOCK_BONE_BLOCK_BREAK, 1.0f, 2f);
@@ -1484,7 +1701,7 @@ else {
 				{
 					if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE")&& !p.getInventory().getItemInMainHand().getType().name().contains("PICK") && rage.containsEntry(p.getUniqueId(), e))
 					{
-						dset1(d, p, 1.35, 0.013);
+						dset3(d, p, 1.0, 27.1);
 						p.sendTitle(ChatColor.MAGIC + "RAGE", ChatColor.MAGIC + "RAGE",20,20,20);
 						p.playSound(p.getLocation(), Sound.ITEM_NETHER_WART_PLANT, 1.0f, 0f);
 						Bukkit.getServer().getScheduler().cancelTask(raget.get(p.getUniqueId()));
@@ -1599,7 +1816,7 @@ else {
 			                    });
 								les.forEach(le ->
 								{
-									atk1(1.6, p, le);
+									atk1(33.2, p, le);
 									
 								});
 								
@@ -1657,7 +1874,7 @@ else {
 		                    });
 							les.forEach(le ->
 							{
-								atk1(1.6, p, le);
+								atk1(33.3, p, le);
 								
 							});
 							
@@ -1753,7 +1970,7 @@ else {
 						        			p.removePotionEffect(PotionEffectType.WITHER);
 						        		}
 						        		p.setFireTicks(0);
-					                	
+					                	p.setFreezeTicks(0);
 				                	}
 				                }
 							}, 5); 
@@ -2018,7 +2235,6 @@ else {
 	
 	public void Damagegetter(EntityDamageByEntityEvent d) 
 	{
-	    
 		if(d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity) 
 		{
 		Player p = (Player)d.getDamager();
@@ -2044,426 +2260,18 @@ else {
 				if(le.hasMetadata("leader") || le.hasMetadata("boss")) {
 					d.setDamage(d.getDamage()*2.5);
 				}
-				if(hunting.containsKey(p.getName()))
-				{
-					if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE"))
-					{
-						
-						if(p.getAttackCooldown() >=1 || ult2t.containsKey(p.getName())) {
+				if(p.getAttackCooldown() >=1 || ult2t.containsKey(p.getName())) {
 
-							dset1(d, p, 1.15 *(1+ hsd.HuntingStart.get(p.getUniqueId())*0.04)* (1+hsd.Atrocity.get(p.getUniqueId())*0.045) , 0.005);
-						}
-						else {
-							dset1(d, p, (1+ hsd.HuntingStart.get(p.getUniqueId())*0.04)* (1+hsd.Atrocity.get(p.getUniqueId())*0.015) , 0.005);
-						}
-					}
-					if(ult2t.containsKey(p.getName())) {
-						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() 
-			                {
-								HuntingEffectrmv(p);
-								le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 20,20,false,false));
-								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					                @Override
-					                public void run() { 
-				    					hucooldown.remove(p.getName());
-										Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-							                @Override
-							                public void run() { 
-							    				if(le.isDead() || le.getHealth()<=0) {
-								    				if(Proficiency.getpro(p)>=2) {
-								    					hucooldown.remove(p.getName());
-										                HuntingEffectadd(p);
-										        		p.playSound(p.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1.0f, 1.5f);
-										        		p.getWorld().spawnParticle(Particle.SMOKE_NORMAL, p.getLocation(), 30,1,1,1);
-														if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-											        		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{사냥 시작}").color(ChatColor.DARK_RED).create());
-														}
-														else {
-											        		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{Hunting Start}").color(ChatColor.DARK_RED).create());
-														}
-								    				}
-							    				}
-							                }
-							            }, 1/5);
-					                }
-					            }, 1/5);
-			                }
-						}, 3); 
-					}
-					else {
-						HuntingEffectrmv(p);
-						le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 20,20,false,false));
-						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() { 
-			    				if(le.isDead() || le.getHealth()<=0) {
-			    					hucooldown.put(p.getName(), System.currentTimeMillis()-2000);
-				    				if(Proficiency.getpro(p)>=2) {
-				    					hucooldown.remove(p.getName());
-						                HuntingEffectadd(p);
-						        		p.playSound(p.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1.0f, 1.5f);
-						        		p.getWorld().spawnParticle(Particle.SMOKE_NORMAL, p.getLocation(), 30,1,1,1);
-										if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-							        		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{사냥 시작}").color(ChatColor.DARK_RED).create());
-										}
-										else {
-							        		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{Hunting Start}").color(ChatColor.DARK_RED).create());
-										}
-				    				}
-			    				}
-			    				else {
-				    				if(Proficiency.getpro(p)>=1) {
-				    					hucooldown.put(p.getName(), System.currentTimeMillis()-2000);
-				    				}
-				    				else {
-				        		        hucooldown.put(p.getName(), System.currentTimeMillis()); 
-				    				}
-			    				}
-			                }
-			            }, 1/5);
-					}
-				}	
-				if(posed.containsKey(p.getName())) {
-					d.setDamage(d.getDamage()*1.5);
-					
-					if(ult2t.containsKey(p.getName())) {
-						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() 
-			                {
-								posed.remove(p.getName());
-			                }
-						}, 3); 
-					}
-					else {
-						posed.remove(p.getName());
-					}
+					dset2(d, p, 1.15 * (1+hsd.Atrocity.get(p.getUniqueId())*0.0576),le,5);
 				}
-				if(Proficiency.getpro(p)>=1) {
-					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() { 
-		    				if(le.isDead() || le.getHealth()<=0) {
-		    					djcooldown.remove(p.getName());
-		    				}
-		                }
-		            }, 1/5);
-				}
-				if(Proficiency.getpro(p)>=2) {
-					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() { 
-		    				if(le.isDead() || le.getHealth()<=0) {
-		    					smcooldown.remove(p.getName());
-		    					lccooldown.remove(p.getName());
-		    				}
-		                }
-		            }, 1/5);
-				}
-			}
-			else {
-
-				if(hunting.containsKey(p.getName()))
-				{
-					if(ult2t.containsKey(p.getName())) {
-						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() 
-			                {
-								HuntingEffectrmv(p);
-								le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 20,20,false,false));
-								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					                @Override
-					                public void run() { 
-				    					hucooldown.remove(p.getName());
-										Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-							                @Override
-							                public void run() { 
-							    				if(le.isDead() || le.getHealth()<=0) {
-								    				if(Proficiency.getpro(p)>=2) {
-								    					hucooldown.remove(p.getName());
-										                HuntingEffectadd(p);
-										        		p.playSound(p.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1.0f, 1.5f);
-										        		p.getWorld().spawnParticle(Particle.SMOKE_NORMAL, p.getLocation(), 30,1,1,1);
-														if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-											        		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{사냥 시작}").color(ChatColor.DARK_RED).create());
-														}
-														else {
-											        		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{Hunting Start}").color(ChatColor.DARK_RED).create());
-														}
-								    				}
-							    				}
-							                }
-							            }, 1/5);
-					                }
-					            }, 1/5);
-			                }
-						}, 3); 
-					}
-					else {
-						HuntingEffectrmv(p);
-						le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 20,20,false,false));
-						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() { 
-			    				if(le.isDead() || le.getHealth()<=0) {
-			    					hucooldown.put(p.getName(), System.currentTimeMillis()-2000);
-				    				if(Proficiency.getpro(p)>=2) {
-				    					hucooldown.remove(p.getName());
-						                HuntingEffectadd(p);
-						        		p.playSound(p.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1.0f, 1.5f);
-						        		p.getWorld().spawnParticle(Particle.SMOKE_NORMAL, p.getLocation(), 30,1,1,1);
-										if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-							        		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{사냥 시작}").color(ChatColor.DARK_RED).create());
-										}
-										else {
-							        		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{Hunting Start}").color(ChatColor.DARK_RED).create());
-										}
-				    				}
-			    				}
-			    				else {
-				    				if(Proficiency.getpro(p)>=1) {
-				    					hucooldown.put(p.getName(), System.currentTimeMillis()-2000);
-				    				}
-				    				else {
-				        		        hucooldown.put(p.getName(), System.currentTimeMillis()); 
-				    				}
-			    				}
-			                }
-			            }, 1/5);
-					}
-				}	
-			}
-
-		}
-		}
-		if(d.getDamager() instanceof Arrow && d.getEntity() instanceof LivingEntity) 
-		{
-			Arrow a = (Arrow)d.getDamager();
-			LivingEntity le = (LivingEntity) d.getEntity();
-	
-			
-			
-			if(a.getShooter() instanceof Player) {
-				Player p = (Player) a.getShooter();
-				if(ClassData.pc.get(p.getUniqueId()) == 2 && p.getCooldown(Material.GLISTERING_MELON_SLICE)<=0&& !le.hasMetadata("fake")&& !le.hasMetadata("portal")) {
-					dset2(d, p, 1d, le, 5);
-					if(p.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD&& p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()&& !p.getInventory().getItemInOffHand().getType().name().contains("NUGGET")&& !(p.getInventory().getItemInOffHand().getType()==Material.TRIDENT)&& !(p.getInventory().getItemInOffHand().getType()==Material.SHIELD))
-					{
-							if(le.hasMetadata("leader") || le.hasMetadata("boss")) {
-								d.setDamage(d.getDamage()*2.5);
-							}
-							if(hunting.containsKey(p.getName()))
-							{
-								if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE"))
-								{
-
-									if(p.getAttackCooldown() >=1 || ult2t.containsKey(p.getName())) {
-
-										dset1(d, p, 1.15 *(1+ hsd.HuntingStart.get(p.getUniqueId())*0.04)* (1+hsd.Atrocity.get(p.getUniqueId())*0.05) , 0.01);
-									}
-									else {
-										dset1(d, p, (1+ hsd.HuntingStart.get(p.getUniqueId())*0.04)* (1+hsd.Atrocity.get(p.getUniqueId())*0.015) , 0.005);
-									}
-								}
-								if(ult2t.containsKey(p.getName())) {
-									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-						                @Override
-						                public void run() 
-						                {
-											HuntingEffectrmv(p);
-											le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 20,20,false,false));
-											Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-								                @Override
-								                public void run() { 
-							    					hucooldown.remove(p.getName());
-													Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-										                @Override
-										                public void run() { 
-										    				if(le.isDead() || le.getHealth()<=0) {
-										    					hucooldown.put(p.getName(), System.currentTimeMillis()-2000);
-											    				if(Proficiency.getpro(p)>=2) {
-											    					hucooldown.remove(p.getName());
-													                HuntingEffectadd(p);
-													        		p.playSound(p.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1.0f, 1.5f);
-													        		p.getWorld().spawnParticle(Particle.SMOKE_NORMAL, p.getLocation(), 30,1,1,1);
-																	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-														        		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{사냥 시작}").color(ChatColor.DARK_RED).create());
-																	}
-																	else {
-														        		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{Hunting Start}").color(ChatColor.DARK_RED).create());
-																	}
-											    				}
-										    				}
-										    				else {
-											    				if(Proficiency.getpro(p)>=1) {
-											    					hucooldown.put(p.getName(), System.currentTimeMillis()-2000);
-											    				}
-											    				else {
-											        		        hucooldown.put(p.getName(), System.currentTimeMillis()); 
-											    				}
-										    				}
-										                }
-										            }, 1/5);
-								                }
-								            }, 1/5);
-						                }
-									}, 3); 
-								}
-								else {
-									HuntingEffectrmv(p);
-									le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 20,20,false,false));
-									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-						                @Override
-						                public void run() { 
-						    				if(le.isDead() || le.getHealth()<=0) {
-						    					hucooldown.put(p.getName(), System.currentTimeMillis()-2000);
-							    				if(Proficiency.getpro(p)>=2) {
-							    					hucooldown.remove(p.getName());
-									                HuntingEffectadd(p);
-									        		p.playSound(p.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1.0f, 1.5f);
-									        		p.getWorld().spawnParticle(Particle.SMOKE_NORMAL, p.getLocation(), 30,1,1,1);
-													if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-										        		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{사냥 시작}").color(ChatColor.DARK_RED).create());
-													}
-													else {
-										        		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{Hunting Start}").color(ChatColor.DARK_RED).create());
-													}
-							    				}
-						    				}
-						    				else {
-							    				if(Proficiency.getpro(p)>=1) {
-							    					hucooldown.put(p.getName(), System.currentTimeMillis()-2000);
-							    				}
-							    				else {
-							        		        hucooldown.put(p.getName(), System.currentTimeMillis()); 
-							    				}
-						    				}
-						                }
-						            }, 1/5);
-								}
-							}	
-							if(posed.containsKey(p.getName())) {
-								d.setDamage(d.getDamage()*1.5);
-								if(ult2t.containsKey(p.getName())) {
-									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-						                @Override
-						                public void run() 
-						                {
-											posed.remove(p.getName());
-						                }
-									}, 3); 
-								}
-								else {
-									posed.remove(p.getName());
-								}
-							}
-							if(Proficiency.getpro(p)>=1) {
-								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					                @Override
-					                public void run() { 
-					    				if(le.isDead() || le.getHealth()<=0) {
-					    					djcooldown.remove(p.getName());
-					    				}
-					                }
-					            }, 1/5);
-							}
-							if(Proficiency.getpro(p)>=2) {
-								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					                @Override
-					                public void run() { 
-					    				if(le.isDead() || le.getHealth()<=0) {
-					    					smcooldown.remove(p.getName());
-					    					lccooldown.remove(p.getName());
-					    				}
-					                }
-					            }, 1/5);
-							}
-						}
-						else {
-							d.setDamage(d.getDamage());
-
-							if(hunting.containsKey(p.getName()))
-							{
-								if(ult2t.containsKey(p.getName())) {
-									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-						                @Override
-						                public void run() 
-						                {
-											HuntingEffectrmv(p);
-											le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 20,20,false,false));
-											Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-								                @Override
-								                public void run() { 
-								    				if(le.isDead() || le.getHealth()<=0) {
-								    					hucooldown.put(p.getName(), System.currentTimeMillis()-2000);
-									    				if(Proficiency.getpro(p)>=2) {
-									    					hucooldown.remove(p.getName());
-											                HuntingEffectadd(p);
-											        		p.playSound(p.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1.0f, 1.5f);
-											        		p.getWorld().spawnParticle(Particle.SMOKE_NORMAL, p.getLocation(), 30,1,1,1);
-															if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-												        		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{사냥 시작}").color(ChatColor.DARK_RED).create());
-															}
-															else {
-												        		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{Hunting Start}").color(ChatColor.DARK_RED).create());
-															}
-									    				}
-								    				}
-								    				else {
-									    				if(Proficiency.getpro(p)>=1) {
-									    					hucooldown.put(p.getName(), System.currentTimeMillis()-2000);
-									    				}
-									    				else {
-									        		        hucooldown.put(p.getName(), System.currentTimeMillis()); 
-									    				}
-								    				}
-								                }
-								            }, 1/5);
-						                }
-									}, 3); 
-								}
-								else {
-									HuntingEffectrmv(p);
-									le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 20,20,false,false));
-									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-						                @Override
-						                public void run() { 
-						    				if(le.isDead() || le.getHealth()<=0) {
-						    					hucooldown.put(p.getName(), System.currentTimeMillis()-2000);
-							    				if(Proficiency.getpro(p)>=2) {
-							    					hucooldown.remove(p.getName());
-									                HuntingEffectadd(p);
-									        		p.playSound(p.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1.0f, 1.5f);
-									        		p.getWorld().spawnParticle(Particle.SMOKE_NORMAL, p.getLocation(), 30,1,1,1);
-													if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-										        		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{사냥 시작}").color(ChatColor.DARK_RED).create());
-													}
-													else {
-										        		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{Hunting Start}").color(ChatColor.DARK_RED).create());
-													}
-							    				}
-						    				}
-						    				else {
-							    				if(Proficiency.getpro(p)>=1) {
-							    					hucooldown.put(p.getName(), System.currentTimeMillis()-2000);
-							    				}
-							    				else {
-							        		        hucooldown.put(p.getName(), System.currentTimeMillis()); 
-							    				}
-						    				}
-						                }
-						            }, 1/5);
-								}
-							}	
-						}
+				else {
+					dset2(d, p, 0.5 * (1+hsd.Atrocity.get(p.getUniqueId())*0.0576),le,5);
 				}
 			}
 		}
+		}
+		
 	}
-	
 	
 }
 

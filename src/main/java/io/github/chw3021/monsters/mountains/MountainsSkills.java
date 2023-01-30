@@ -803,7 +803,7 @@ public class MountainsSkills extends Summoned implements Listener{
                     }, 10);
                 	counterable.remove(p.getUniqueId());
                 }
-            }, 78);
+            }, 83);
     		ordt.put(rn, i2);
     		countt.put(p.getUniqueId(), i2);
 	}
@@ -953,10 +953,8 @@ public class MountainsSkills extends Summoned implements Listener{
         p.teleport(rl.clone());
         Holding.holding(null, p, 1500l);
         Holding.invur(p, 100l);
-        Holding.untouchable(p, 100l);
-        p.setGlowing(false);
-
-        p.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
+        Holding.untouchable(p, 1500l);
+        
         OverworldRaids.getheroes(p).forEach(pe ->{
         	Holding.invur(pe, 60l);
 			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -964,7 +962,7 @@ public class MountainsSkills extends Summoned implements Listener{
  				Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	                @Override
 	                public void run() {	
-                		pe.sendMessage(ChatColor.BOLD+"낙하 근접공격으로 적의 머리를 공격하세요");
+                		pe.sendMessage(ChatColor.BOLD+"낙하 공격으로 적의 머리를 공격하세요");
 	                }
 	            }, 20); 
 			}
@@ -973,7 +971,7 @@ public class MountainsSkills extends Summoned implements Listener{
  				Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	                @Override
 	                public void run() {	
-                		pe.sendMessage(ChatColor.BOLD+"Hit the enemy's Head with falling melee attack");
+                		pe.sendMessage(ChatColor.BOLD+"Hit the enemy's Head with falling attack");
 	                }
 	            }, 20); 
 			}
@@ -987,7 +985,7 @@ public class MountainsSkills extends Summoned implements Listener{
             public void run() {
                 mantle(Holding.ale(p),rl,rn);
             }
-        }, 100, 100);
+        }, 100, 105);
 		ordt.put(rn, i1); 
 
 			int i2 = Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -1063,14 +1061,14 @@ public class MountainsSkills extends Summoned implements Listener{
 	            else 
 	            {
 	            	rb5cooldown.remove(p.getUniqueId()); // removing player from HashMap
-	            	mantleevent(p, d);
+	            	mantleevent(Holding.ale(p), d);
 		            rb5cooldown.put(p.getUniqueId(), System.currentTimeMillis());
 	            }
 	        }
 	        else 
 	        {
 
-            	mantleevent(p, d);
+            	mantleevent(Holding.ale(p), d);
 	            rb5cooldown.put(p.getUniqueId(), System.currentTimeMillis());
 	        }
 		

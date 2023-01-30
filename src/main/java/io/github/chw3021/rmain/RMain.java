@@ -49,7 +49,6 @@ import io.github.chw3021.commons.Pak;
 import io.github.chw3021.commons.Rpgs;
 import io.github.chw3021.commons.ShulkerBag;
 import io.github.chw3021.commons.SkillUsing;
-import io.github.chw3021.commons.party.Party;
 import io.github.chw3021.items.Backpack;
 import io.github.chw3021.items.Elements;
 import io.github.chw3021.items.Enchanting;
@@ -70,6 +69,7 @@ import io.github.chw3021.items.weapons.Wand;
 import io.github.chw3021.monsters.worldgen.RaidWorldLoad;
 import io.github.chw3021.monsters.Drops;
 import io.github.chw3021.monsters.MobArmor;
+import io.github.chw3021.monsters.MobDam;
 import io.github.chw3021.monsters.MobsSkillsEvents;
 import io.github.chw3021.monsters.raids.OverworldRaids;
 import io.github.chw3021.monsters.raids.RaidDifficulties;
@@ -78,6 +78,7 @@ import io.github.chw3021.obtains.NPCLoc;
 import io.github.chw3021.obtains.NPCcontact;
 import io.github.chw3021.obtains.Obtained;
 import io.github.chw3021.obtains.TrophyLoc;
+import io.github.chw3021.party.Party;
 
 public class RMain extends JavaPlugin{
 
@@ -179,8 +180,10 @@ public class RMain extends JavaPlugin{
         Bukkit.getPluginManager().registerEvents(new Pak(), this);
 
         Bukkit.getPluginManager().registerEvents(new MobArmor(), this);
+        Bukkit.getPluginManager().registerEvents(new MobDam(), this);
+        Bukkit.getPluginManager().registerEvents(new Rpgs(), this);
 
-        
+
         Bukkit.getPluginManager().registerEvents(new MobsSkillsEvents(), this);
 
         

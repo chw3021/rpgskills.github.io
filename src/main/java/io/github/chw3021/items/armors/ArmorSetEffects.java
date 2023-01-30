@@ -18,7 +18,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import io.github.chw3021.classes.ClassData;
 import io.github.chw3021.commons.Holding;
-import io.github.chw3021.commons.party.Party;
+import io.github.chw3021.party.Party;
 import io.github.chw3021.rmain.RMain;
 
 

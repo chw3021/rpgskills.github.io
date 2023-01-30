@@ -47,7 +47,6 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 
-import io.github.chw3021.commons.party.PartyLeaveEvent;
 import io.github.chw3021.monsters.dark.DarkMobsSpawn;
 import io.github.chw3021.monsters.dark.DarkRaids;
 import io.github.chw3021.monsters.dark.DarkSkills;
@@ -75,6 +74,7 @@ import io.github.chw3021.monsters.snow.SnowRaids;
 import io.github.chw3021.monsters.snow.SnowSkills;
 import io.github.chw3021.monsters.wild.WildMobsSpawn;
 import io.github.chw3021.monsters.wild.WildRaids;
+import io.github.chw3021.party.PartyLeaveEvent;
 import io.github.chw3021.rmain.RMain;
 
 public class MobsSkillsEvents implements Listener, Serializable {
@@ -527,15 +527,12 @@ public class MobsSkillsEvents implements Listener, Serializable {
 	public void Attacked(EntityDamageEvent d) 
 	{
 
-		mobs.PlayerArmor(d);
 		HyperSkills.getInstance().JetPack(d);
 		RedSkills.getInstance().BackStab(d);
 	}
 	@EventHandler
 	public void Attack(EntityDamageByEntityEvent d) 
 	{
-		mobs.MobDam(d);
-		mobs.PDam(d);
 		Summoned.getInstance().SummonedDamage(d);;
 
 		PlainRaids.getInstance().DamagerSave(d);

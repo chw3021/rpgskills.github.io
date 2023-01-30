@@ -432,7 +432,7 @@ public class DarkRaids extends Summoned {
 
 		
 		String reg = lang.equalsIgnoreCase("ko_kr") ? "π„¿«±∫¥‹¿Â":"NightCorpsCommander";
-		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.DARK_GRAY + reg, 25000.0, head,
+		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.DARK_GRAY + reg+ "<"+rn+">", 25000.0, head,
 				chest, leg, boots, main, null, EntityType.SKELETON);
 
 		newmob.setConversionTime(-1);

@@ -6,8 +6,8 @@ import io.github.chw3021.classes.ClassData;
 import io.github.chw3021.classes.Proficiency;
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.commons.Pak;
-import io.github.chw3021.commons.party.Party;
 import io.github.chw3021.obtains.Obtained;
+import io.github.chw3021.party.Party;
 
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -601,54 +601,14 @@ public class Palskills extends Pak implements Serializable, Listener {
 			        			p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 2, 2, false, false));
 			        		}
 							p.playEffect(org.bukkit.EntityEffect.VILLAGER_HEART);
-			        		if(p.hasPotionEffect(PotionEffectType.BAD_OMEN))
-			        		{
-			        			p.removePotionEffect(PotionEffectType.BAD_OMEN);
-			        		}
-			        		if(p.hasPotionEffect(PotionEffectType.BLINDNESS))
-			        		{
-			        			p.removePotionEffect(PotionEffectType.BLINDNESS);
-			        		}
-			        		if(p.hasPotionEffect(PotionEffectType.CONFUSION))
-			        		{
-			        			p.removePotionEffect(PotionEffectType.CONFUSION);
-			        		}
-			        		if(p.hasPotionEffect(PotionEffectType.HUNGER))
-			        		{
-			        			p.removePotionEffect(PotionEffectType.HUNGER);
-			        		}
-			        		if(p.hasPotionEffect(PotionEffectType.POISON))
-			        		{
-			        			p.removePotionEffect(PotionEffectType.POISON);
-			        		}
-			        		if(p.hasPotionEffect(PotionEffectType.SLOW))
-			        		{
-			        			p.removePotionEffect(PotionEffectType.SLOW);
-			        		}
-			        		if(p.hasPotionEffect(PotionEffectType.SLOW_DIGGING))
-			        		{
-			        			p.removePotionEffect(PotionEffectType.SLOW_DIGGING);
-			        		}
-			        		if(p.hasPotionEffect(PotionEffectType.UNLUCK))
-			        		{
-			        			p.removePotionEffect(PotionEffectType.UNLUCK);
-			        		}
-			        		if(p.hasPotionEffect(PotionEffectType.WEAKNESS))
-			        		{
-			        			p.removePotionEffect(PotionEffectType.WEAKNESS);
-			        		}
-			        		if(p.hasPotionEffect(PotionEffectType.WITHER))
-			        		{
-			        			p.removePotionEffect(PotionEffectType.WITHER);
-			        		}
-			        		p.setFireTicks(0);
+			        		cleans(p);
 							if(Party.hasParty(p)) {
 								for (Entity e : p.getWorld().getNearbyEntities(p.getLocation(),6, 5, 6))
 								{
 									if (e instanceof Player) 
 									{
 										Player le = (Player) e;
-										if(Party.hasParty(le) && Party.getParty(p).equals(Party.getParty(le)))
+										if(Party.isInSameParty(p, le))
 										{
 											if(le.getHealth()+1 + p.getLevel() *0.5* (1+ psd.Pray.get(p.getUniqueId())*0.1) <= le.getMaxHealth())
 							        		{
@@ -665,47 +625,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 							        			le.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 2, 2, false, false));
 							        		}
 											le.playEffect(org.bukkit.EntityEffect.VILLAGER_HEART);
-											if(le.hasPotionEffect(PotionEffectType.BAD_OMEN))
-							        		{
-							        			le.removePotionEffect(PotionEffectType.BAD_OMEN);
-							        		}
-							        		if(le.hasPotionEffect(PotionEffectType.BLINDNESS))
-							        		{
-							        			le.removePotionEffect(PotionEffectType.BLINDNESS);
-							        		}
-							        		if(le.hasPotionEffect(PotionEffectType.CONFUSION))
-							        		{
-							        			le.removePotionEffect(PotionEffectType.CONFUSION);
-							        		}
-							        		if(le.hasPotionEffect(PotionEffectType.HUNGER))
-							        		{
-							        			le.removePotionEffect(PotionEffectType.HUNGER);
-							        		}
-							        		if(le.hasPotionEffect(PotionEffectType.POISON))
-							        		{
-							        			le.removePotionEffect(PotionEffectType.POISON);
-							        		}
-							        		if(le.hasPotionEffect(PotionEffectType.SLOW))
-							        		{
-							        			le.removePotionEffect(PotionEffectType.SLOW);
-							        		}
-							        		if(le.hasPotionEffect(PotionEffectType.SLOW_DIGGING))
-							        		{
-							        			le.removePotionEffect(PotionEffectType.SLOW_DIGGING);
-							        		}
-							        		if(le.hasPotionEffect(PotionEffectType.UNLUCK))
-							        		{
-							        			le.removePotionEffect(PotionEffectType.UNLUCK);
-							        		}
-							        		if(le.hasPotionEffect(PotionEffectType.WEAKNESS))
-							        		{
-							        			le.removePotionEffect(PotionEffectType.WEAKNESS);
-							        		}
-							        		if(le.hasPotionEffect(PotionEffectType.WITHER))
-							        		{
-							        			le.removePotionEffect(PotionEffectType.WITHER);
-							        		}
-							        		le.setFireTicks(0);
+							        		cleans(le);
 										}
 									}
 								} 
@@ -734,54 +654,14 @@ public class Palskills extends Pak implements Serializable, Listener {
 		        			p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 2, 2, false, false));
 		        		}
 						p.playEffect(org.bukkit.EntityEffect.VILLAGER_HEART);
-		        		if(p.hasPotionEffect(PotionEffectType.BAD_OMEN))
-		        		{
-		        			p.removePotionEffect(PotionEffectType.BAD_OMEN);
-		        		}
-		        		if(p.hasPotionEffect(PotionEffectType.BLINDNESS))
-		        		{
-		        			p.removePotionEffect(PotionEffectType.BLINDNESS);
-		        		}
-		        		if(p.hasPotionEffect(PotionEffectType.CONFUSION))
-		        		{
-		        			p.removePotionEffect(PotionEffectType.CONFUSION);
-		        		}
-		        		if(p.hasPotionEffect(PotionEffectType.HUNGER))
-		        		{
-		        			p.removePotionEffect(PotionEffectType.HUNGER);
-		        		}
-		        		if(p.hasPotionEffect(PotionEffectType.POISON))
-		        		{
-		        			p.removePotionEffect(PotionEffectType.POISON);
-		        		}
-		        		if(p.hasPotionEffect(PotionEffectType.SLOW))
-		        		{
-		        			p.removePotionEffect(PotionEffectType.SLOW);
-		        		}
-		        		if(p.hasPotionEffect(PotionEffectType.SLOW_DIGGING))
-		        		{
-		        			p.removePotionEffect(PotionEffectType.SLOW_DIGGING);
-		        		}
-		        		if(p.hasPotionEffect(PotionEffectType.UNLUCK))
-		        		{
-		        			p.removePotionEffect(PotionEffectType.UNLUCK);
-		        		}
-		        		if(p.hasPotionEffect(PotionEffectType.WEAKNESS))
-		        		{
-		        			p.removePotionEffect(PotionEffectType.WEAKNESS);
-		        		}
-		        		if(p.hasPotionEffect(PotionEffectType.WITHER))
-		        		{
-		        			p.removePotionEffect(PotionEffectType.WITHER);
-		        		}
-		        		p.setFireTicks(0);
+		        		cleans(p);
 						if(Party.hasParty(p)) {
 							for (Entity e : p.getWorld().getNearbyEntities(p.getLocation(),6, 5, 6))
 							{
 								if (e instanceof Player) 
 								{
 									Player le = (Player) e;
-									if(Party.hasParty(le) && Party.getParty(p).equals(Party.getParty(le)))
+									if(Party.isInSameParty(p, le))
 									{
 										if(le.getHealth()+1 + p.getLevel() *0.5* (1+ psd.Pray.get(p.getUniqueId())*0.1) <= le.getMaxHealth())
 						        		{
@@ -798,47 +678,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 						        			le.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 2, 2, false, false));
 						        		}
 										le.playEffect(org.bukkit.EntityEffect.VILLAGER_HEART);
-										if(le.hasPotionEffect(PotionEffectType.BAD_OMEN))
-						        		{
-						        			le.removePotionEffect(PotionEffectType.BAD_OMEN);
-						        		}
-						        		if(le.hasPotionEffect(PotionEffectType.BLINDNESS))
-						        		{
-						        			le.removePotionEffect(PotionEffectType.BLINDNESS);
-						        		}
-						        		if(le.hasPotionEffect(PotionEffectType.CONFUSION))
-						        		{
-						        			le.removePotionEffect(PotionEffectType.CONFUSION);
-						        		}
-						        		if(le.hasPotionEffect(PotionEffectType.HUNGER))
-						        		{
-						        			le.removePotionEffect(PotionEffectType.HUNGER);
-						        		}
-						        		if(le.hasPotionEffect(PotionEffectType.POISON))
-						        		{
-						        			le.removePotionEffect(PotionEffectType.POISON);
-						        		}
-						        		if(le.hasPotionEffect(PotionEffectType.SLOW))
-						        		{
-						        			le.removePotionEffect(PotionEffectType.SLOW);
-						        		}
-						        		if(le.hasPotionEffect(PotionEffectType.SLOW_DIGGING))
-						        		{
-						        			le.removePotionEffect(PotionEffectType.SLOW_DIGGING);
-						        		}
-						        		if(le.hasPotionEffect(PotionEffectType.UNLUCK))
-						        		{
-						        			le.removePotionEffect(PotionEffectType.UNLUCK);
-						        		}
-						        		if(le.hasPotionEffect(PotionEffectType.WEAKNESS))
-						        		{
-						        			le.removePotionEffect(PotionEffectType.WEAKNESS);
-						        		}
-						        		if(le.hasPotionEffect(PotionEffectType.WITHER))
-						        		{
-						        			le.removePotionEffect(PotionEffectType.WITHER);
-						        		}
-						        		le.setFireTicks(0);
+						        		cleans(le);
 									}
 								}
 							} 

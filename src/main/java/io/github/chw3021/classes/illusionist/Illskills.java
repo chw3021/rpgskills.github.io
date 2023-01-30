@@ -6,9 +6,9 @@ import io.github.chw3021.classes.ClassData;
 import io.github.chw3021.classes.Proficiency;
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.commons.Pak;
-import io.github.chw3021.commons.party.Party;
 import io.github.chw3021.monsters.worldgen.IllChunkGenerator;
 import io.github.chw3021.obtains.Obtained;
+import io.github.chw3021.party.Party;
 
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -661,6 +661,7 @@ public class Illskills extends Pak implements Serializable {
 
                     stacking(p);
 
+                    p.sendTitle(ChatColor.MAGIC+ " ", ChatColor.MAGIC+ "aaaaaa", 10, 10, 10);
     				Holding.invur(p, 21l);
                     p.playSound(p.getLocation(), Sound.BLOCK_CHEST_LOCKED, 1,2);
                     p.playSound(p.getLocation(), Sound.ITEM_LODESTONE_COMPASS_LOCK, 1,2);

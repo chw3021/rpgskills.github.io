@@ -59,9 +59,9 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
 import io.github.chw3021.commons.Holding;
-import io.github.chw3021.commons.party.Party;
 import io.github.chw3021.items.Elements;
 import io.github.chw3021.monsters.Mobs;
+import io.github.chw3021.party.Party;
 import io.github.chw3021.rmain.RMain;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;

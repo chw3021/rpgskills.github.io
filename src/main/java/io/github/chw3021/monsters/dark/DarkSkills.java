@@ -1299,7 +1299,7 @@ public class DarkSkills extends Summoned{
         p.teleport(rl.clone().add(0, 50, 0));
         Holding.holding(null, p, 1500l);
         Holding.invur(p, 100l);
-        Holding.untouchable(p, 100l);
+        Holding.untouchable(p, 1500l);
         p.setGlowing(false);
         p.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
         

@@ -48,9 +48,10 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import io.github.chw3021.classes.ClassData;
-import io.github.chw3021.commons.party.Party;
+import io.github.chw3021.classes.Proficiency;
 import io.github.chw3021.items.Potions;
 import io.github.chw3021.items.armors.ArmorSet;
+import io.github.chw3021.party.Party;
 import io.github.chw3021.rmain.RMain;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
@@ -242,6 +243,58 @@ public class Pak implements Serializable, Listener{
 		
 
 	}
+	
+	
+	final protected void cleans(Player p) {
+
+
+        	if(p.hasPotionEffect(PotionEffectType.HUNGER)) {
+    			p.removePotionEffect(PotionEffectType.HUNGER);
+        	}
+        	if(p.hasPotionEffect(PotionEffectType.BAD_OMEN))
+    		{
+    			p.removePotionEffect(PotionEffectType.BAD_OMEN);
+    		}
+    		if(p.hasPotionEffect(PotionEffectType.BLINDNESS))
+    		{
+    			p.removePotionEffect(PotionEffectType.BLINDNESS);
+    		}
+    		if(p.hasPotionEffect(PotionEffectType.CONFUSION))
+    		{
+    			p.removePotionEffect(PotionEffectType.CONFUSION);
+    		}
+    		if(p.hasPotionEffect(PotionEffectType.HUNGER))
+    		{
+    			p.removePotionEffect(PotionEffectType.HUNGER);
+    		}
+    		if(p.hasPotionEffect(PotionEffectType.POISON))
+    		{
+    			p.removePotionEffect(PotionEffectType.POISON);
+    		}
+    		if(p.hasPotionEffect(PotionEffectType.SLOW))
+    		{
+    			p.removePotionEffect(PotionEffectType.SLOW);
+    		}
+    		if(p.hasPotionEffect(PotionEffectType.SLOW_DIGGING))
+    		{
+    			p.removePotionEffect(PotionEffectType.SLOW_DIGGING);
+    		}
+    		if(p.hasPotionEffect(PotionEffectType.UNLUCK))
+    		{
+    			p.removePotionEffect(PotionEffectType.UNLUCK);
+    		}
+    		if(p.hasPotionEffect(PotionEffectType.WEAKNESS))
+    		{
+    			p.removePotionEffect(PotionEffectType.WEAKNESS);
+    		}
+    		if(p.hasPotionEffect(PotionEffectType.WITHER))
+    		{
+    			p.removePotionEffect(PotionEffectType.WITHER);
+    		}
+    		p.setFireTicks(0);
+        	p.setFreezeTicks(0);
+	}
+	
 	
 	
 	
@@ -1976,6 +2029,16 @@ public class Pak implements Serializable, Listener{
 		d.setDamage(fd);
     }
 
+	/**
+	 * .getDamage()*(dou1) + pd*dou2
+	 */
+	final public void dset3(EntityDamageByEntityEvent d, Player p, Double dou1, Double dou2) {
+		Double pd = player_damage.get(p.getName());
+		d.setDamage(d.getDamage()*(dou1) + pd*dou2);
+    }
+	
+	
+	
 	/**
 	 * d.getDamage()*(dou1)
 	 */

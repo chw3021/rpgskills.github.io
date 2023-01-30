@@ -20,7 +20,7 @@ import org.bukkit.util.io.BukkitObjectOutputStream;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
-import io.github.chw3021.commons.party.Party;
+import io.github.chw3021.party.Party;
 
 
 public class RaidDifficulties implements Serializable,Listener{

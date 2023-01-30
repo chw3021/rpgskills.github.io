@@ -1,7 +1,11 @@
 package io.github.chw3021.commons;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashSet;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -12,10 +16,21 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
+import org.bukkit.entity.Snowball;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.HashMultimap;
+
 import io.github.chw3021.classes.ClassData;
 import io.github.chw3021.classes.Classgui;
 import io.github.chw3021.classes.Proficiency;
@@ -53,13 +68,111 @@ import io.github.chw3021.items.weapons.Weapons;
 import io.github.chw3021.monsters.raids.Summoned;
 import net.md_5.bungee.api.ChatColor;
 
-public class Rpgs extends Summoned implements CommandExecutor, Serializable {
+public class Rpgs extends Summoned implements CommandExecutor, Serializable, Listener {
 	
 	/**
 	 * 
 	 */
 	private static transient final long serialVersionUID = -712033656548621240L;
 
+	private static HashBasedTable<UUID, String, Double> damagedsdam = HashBasedTable.create();
+	private static HashBasedTable<UUID, String, Integer> damagedscount = HashBasedTable.create();
+	
+
+	final private Integer getkillcount(Player p, String len) {
+		if(damagedscount.contains(p.getUniqueId(), len)) {
+			return damagedscount.get(p.getUniqueId(), len);
+		}
+		else {
+			return 0;
+		}
+	}
+	
+	@EventHandler
+	public void Damagegetter(EntityDeathEvent d) 
+	{
+		LivingEntity le = (LivingEntity) d.getEntity();
+		String len = ChatColor.stripColor(le.getName().split("\\s\\(")[0]);
+		if(!damagedsdam.containsColumn(len)) {
+			return;
+		}
+		damagedsdam.column(len).forEach((k,v)->{
+			if(damagedscount.containsColumn(len)) {
+				damagedscount.put(k, len, damagedscount.get(k, len)+1);
+			}
+			else {
+				damagedscount.put(k, len, 1);
+			}
+		});
+	}
+	
+	@EventHandler
+	public void Damagegetter(EntityDamageByEntityEvent d) 
+	{
+		if(d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity && !d.getEntity().hasMetadata("fake") && !d.getEntity().hasMetadata("portal") && !d.getEntity().isInvulnerable()) {
+			Player p = (Player) d.getDamager();
+			LivingEntity le = (LivingEntity) d.getEntity();
+			String len = ChatColor.stripColor(le.getName().split("\\s\\(")[0]);
+			if(le instanceof Player) {
+				Player hp = (Player) le;
+				len = hp.getDisplayName();
+				if(io.github.chw3021.party.Party.isInSameParty(p, hp)) {
+					return;
+				}
+			}
+
+			if(damagedsdam.containsRow(p.getUniqueId())) {
+				if(damagedsdam.contains(p.getUniqueId(), len)) {
+					damagedsdam.put(p.getUniqueId(), len, damagedsdam.get(p.getUniqueId(), len)+d.getDamage());
+				}
+				else {
+					if(damagedsdam.row(p.getUniqueId()).size()>10) {
+						String re = damagedsdam.row(p.getUniqueId()).keySet().stream().findFirst().get();
+						damagedsdam.remove(p.getUniqueId(),re);
+					}
+					damagedsdam.put(p.getUniqueId(), len, d.getDamage());
+				}
+			}
+			else {
+				damagedsdam.put(p.getUniqueId(), len, d.getDamage());
+			}
+		}
+
+		if(d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity && !d.getEntity().hasMetadata("fake") && !d.getEntity().hasMetadata("portal") && !d.getEntity().isInvulnerable()) {
+			Projectile pr = (Projectile) d.getDamager();
+			if(pr.getShooter() instanceof Player && !(pr instanceof Snowball)) {
+				Player p = (Player) pr.getShooter();
+				LivingEntity le = (LivingEntity) d.getEntity();
+				String len = ChatColor.stripColor(le.getName().split("\\s\\(")[0]);
+				if(le instanceof Player) {
+					Player hp = (Player) le;
+					len = hp.getDisplayName();
+					if(io.github.chw3021.party.Party.isInSameParty(p, hp)) {
+						return;
+					}
+				}
+
+
+				if(damagedsdam.containsRow(p.getUniqueId())) {
+					if(damagedsdam.contains(p.getUniqueId(), len)) {
+						damagedsdam.put(p.getUniqueId(), len, damagedsdam.get(p.getUniqueId(), len)+d.getDamage());
+					}
+					else {
+						if(damagedsdam.row(p.getUniqueId()).size()>10) {
+							String re = damagedsdam.row(p.getUniqueId()).keySet().stream().findFirst().get();
+							damagedsdam.remove(p.getUniqueId(),re);
+						}
+						damagedsdam.put(p.getUniqueId(), len, d.getDamage());
+					}
+				}
+				else {
+					damagedsdam.put(p.getUniqueId(), len, d.getDamage());
+				}
+			}
+			
+		}
+	}
+	
 	final private void help(Player p) {
 
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -71,6 +184,8 @@ public class Rpgs extends Summoned implements CommandExecutor, Serializable {
 			p.sendMessage(ChatColor.GREEN +"/rpg skill (/rpg s) -> 스킬창을 엽니다");
 			p.sendMessage(ChatColor.GREEN +"/rpg class (/rpg c) -> 직업 선택창을 엽니다");
 			p.sendMessage(ChatColor.GREEN +"/rpg rank (/rpg r) -> 자신의 직업의 숙련도 10순위를 표시합니다");
+			p.sendMessage(ChatColor.GREEN +"/rpg graph (/rpg g) -> 적들에게 입힌 피해량을 표시합니다");
+			p.sendMessage(ChatColor.GREEN +"/rpg gclear (/rpg gc) -> 기록된 피해량들을 모두 지웁니다");
 			if(p.isOp())
 			{
 				p.sendMessage(ChatColor.RED +"/rpg exp [amounts]-> give player amounts of exp");
@@ -99,6 +214,8 @@ public class Rpgs extends Summoned implements CommandExecutor, Serializable {
 			p.sendMessage(ChatColor.GREEN +"/rpg escape (/rpg es) -> end current fighting");
 			p.sendMessage(ChatColor.GREEN +"/rpg class (/rpg c) -> show player's classes gui");
 			p.sendMessage(ChatColor.GREEN +"/rpg rank (/rpg r) -> show Top 10 ranking of proficiency of your class");
+			p.sendMessage(ChatColor.GREEN +"/rpg graph (/rpg g) -> show the damage you've done to your enemies");
+			p.sendMessage(ChatColor.GREEN +"/rpg gclear (/rpg gc) -> clear all recorded damage");
 			if(p.isOp())
 			{
 				p.sendMessage(ChatColor.RED +"/rpg exp [amounts]-> give player amounts of exp");
@@ -157,11 +274,6 @@ public class Rpgs extends Summoned implements CommandExecutor, Serializable {
 					p.sendRawMessage(p.getLocation().getBlock().getBiome().toString());
 				}
 
-				else if(args[0].equalsIgnoreCase("near"))
-				{
-					p.sendRawMessage(p.getNearbyEntities(10,5, 10).toString());
-				}
-
 				else if(args[0].equalsIgnoreCase("escape")||args[0].equalsIgnoreCase("es"))
 				{
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -215,11 +327,6 @@ public class Rpgs extends Summoned implements CommandExecutor, Serializable {
 					Weapons w = new Weapons();
 					w.winv(p);
 				}
-				else if((args[0].equalsIgnoreCase("custom")) && p.isOp())
-				{
-					p.sendMessage(p.getEquipment().getItemInMainHand().getItemMeta().getLocalizedName()+"");
-					
-				}
 				else if(args[0].equalsIgnoreCase("god") && p.isOp()&& !args[1].isEmpty())
 				{
 					p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 999999, Integer.parseInt(args[1]), false, false));
@@ -241,21 +348,6 @@ public class Rpgs extends Summoned implements CommandExecutor, Serializable {
 				{
 					Elements.BedInv(p);
 				}
-				else if((args[0].equalsIgnoreCase("gm")||args[0].equalsIgnoreCase("g")) && p.isOp() && !args[1].isEmpty())
-				{
-					if(args[1].equals("0") || args[1].equalsIgnoreCase("s")) {
-						p.setGameMode(GameMode.SURVIVAL);
-					}
-					else if(args[1].equals("1") || args[1].equalsIgnoreCase("c")) {
-						p.setGameMode(GameMode.CREATIVE);
-					}
-					else if(args[1].equals("2") || args[1].equalsIgnoreCase("a")) {
-						p.setGameMode(GameMode.ADVENTURE);
-					}
-					else if(args[1].equals("3") || args[1].equalsIgnoreCase("t")) {
-						p.setGameMode(GameMode.SPECTATOR);
-					}
-				}
 				else if((args[0].equalsIgnoreCase("enchant")||args[0].equalsIgnoreCase("ench")) && p.isOp() && !args[1].isEmpty())
 				{
 					if(args[1].equalsIgnoreCase("clear")) {
@@ -271,6 +363,35 @@ public class Rpgs extends Summoned implements CommandExecutor, Serializable {
 				else if(args[0].equalsIgnoreCase("dam") || args[0].equalsIgnoreCase("d") || args[0].equalsIgnoreCase("damage"))
 				{
 					p.sendMessage(String.valueOf(Pak.player_damage.get(p.getName())) );
+				}
+				else if(args[0].equalsIgnoreCase("graph") || args[0].equalsIgnoreCase("g"))
+				{
+					p.sendMessage(ChatColor.AQUA+"■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+					if(damagedsdam.containsRow(p.getUniqueId())) {
+						damagedsdam.row(p.getUniqueId()).forEach((k,v) ->{
+							p.sendMessage(ChatColor.AQUA+"=================================");
+							p.sendMessage(k+ ": " +ChatColor.AQUA+ ""+ BigDecimal.valueOf(v).setScale(2, RoundingMode.HALF_EVEN) +"  |   X"+getkillcount(p,k));
+						});
+					}
+					p.sendMessage(ChatColor.AQUA+"=================================");
+					p.sendMessage(ChatColor.AQUA+"■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+				}
+				else if(args[0].equalsIgnoreCase("gclear") || args[0].equalsIgnoreCase("gc"))
+				{
+					if(damagedsdam.containsRow(p.getUniqueId())) {
+						HashSet<String> re = new HashSet<>();
+						damagedsdam.row(p.getUniqueId()).keySet().forEach(k->{
+							re.add(k);
+						});
+						re.forEach(k -> damagedsdam.remove(p.getUniqueId(), k));
+					}
+					if(damagedscount.containsRow(p.getUniqueId())) {
+						HashSet<String> re = new HashSet<>();
+						damagedscount.row(p.getUniqueId()).keySet().forEach(k->{
+							re.add(k);
+						});
+						re.forEach(k -> damagedscount.remove(p.getUniqueId(), k));
+					}
 				}
 				else if(args[0].equalsIgnoreCase("ad") || args[0].equalsIgnoreCase("atd") || args[0].equalsIgnoreCase("atdamage"))
 				{

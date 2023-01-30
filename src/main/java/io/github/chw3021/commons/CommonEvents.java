@@ -66,11 +66,12 @@ import org.bukkit.scoreboard.RenderType;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
 import io.github.chw3021.classes.ClassData;
 import io.github.chw3021.classes.Classgui;
-import io.github.chw3021.commons.party.Party;
+import io.github.chw3021.party.Party;
 import io.github.chw3021.rmain.RMain;
 
 
@@ -1430,6 +1431,15 @@ public class CommonEvents implements Listener {
 				if(e.hasMetadata("din of "+p.getName())  || e.hasMetadata("rob"+p.getName()) || e.hasMetadata("rob of"+p.getName())) {
 					e.remove();
 				}
+        		if(Bukkit.getServer().getOnlinePlayers().stream().count() <= 1) {
+    				w.getEntities().forEach(b -> {
+    					b.setCustomName(CommonEvents.damaged.get(b.getUniqueId()));
+    					if((b.hasMetadata("obnpc") || b.hasMetadata("rpgspawned") || b.hasMetadata("untargetable")|| b.hasMetadata("fake")) && !(b instanceof Player)) {
+    						b.remove();
+    					}
+    				});
+        		}
+				
 			});
 		});
 

@@ -38,7 +38,6 @@ import org.bukkit.potion.PotionEffectType;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
-import io.github.chw3021.commons.party.Party;
 import io.github.chw3021.items.Elements;
 import io.github.chw3021.items.Potions;
 import io.github.chw3021.items.armors.Boots;
@@ -47,6 +46,7 @@ import io.github.chw3021.monsters.Mobs;
 import io.github.chw3021.obtains.NPCsSpawn;
 import io.github.chw3021.obtains.Obtained;
 import io.github.chw3021.obtains.TrophyLoc;
+import io.github.chw3021.party.Party;
 import io.github.chw3021.rmain.RMain;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;

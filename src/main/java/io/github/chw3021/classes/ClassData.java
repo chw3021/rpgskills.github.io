@@ -27,8 +27,8 @@ import io.github.chw3021.classes.witchdoctor.WdcSkillsGui;
 import io.github.chw3021.classes.witherist.WitSkillsGui;
 import io.github.chw3021.classes.wreltler.WreSkillsGui;
 import io.github.chw3021.commons.Pak;
-import io.github.chw3021.commons.party.Party;
 import io.github.chw3021.monsters.raids.Summoned;
+import io.github.chw3021.party.Party;
 import io.github.chw3021.rmain.RMain;
 
 import java.io.File;
@@ -159,118 +159,118 @@ public class ClassData implements Serializable, Listener{
 		pc = cdata.playerclass;
 
 		if(pc.getOrDefault(p.getUniqueId(),-1) == 0) { //Swordman
-			p.setMaxHealth(36);
+			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(36);
 		}
 		
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 1) {//berserker
-			p.setMaxHealth(50);
+			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
 		}
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 2) {	//Hunter
-			p.setMaxHealth(18);
+			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(18);
 		
 		}
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 3) {	//Paladin
-			p.setMaxHealth(50);
+			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
 		
 		}
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 4) {//Sniper
-			p.setMaxHealth(16);
+			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(16);
 		}
 		
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 5) {//Launcher
-			p.setMaxHealth(20);
+			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
 		}
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 6) { //Archer
-			p.setMaxHealth(36);
+			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(36);
 		}
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 61) { //Medic
-			p.setMaxHealth(30);
+			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30);
 		}
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 7) { // Boxer
-			p.setMaxHealth(50);
+			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
 		}
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 8) { //Wrestler
-			p.setMaxHealth(46);
+			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(46);
 		}
 		
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 9) { //Tamer
-			p.setMaxHealth(30);
+			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30);
 		}
 		
 	
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 10) { //Taoist
-			p.setMaxHealth(40);
+			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
 		}
 		
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 11) { //Illusionist
-			p.setMaxHealth(18);
+			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(18);
 		}
 		
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 12) {//Firemage
-			p.setMaxHealth(34);
+			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(34);
 		}
 	
 	
 		
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 13) { //Witherist
-			p.setMaxHealth(28);
+			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(28);
 		}
 		
 		
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 14) { //WitchDoctor
-			p.setMaxHealth(30);
+			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30);
 		}
 		
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 15) {//Chemist
-			p.setMaxHealth(46);
+			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(46);
 			
 		}
 		
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 16) {//Forger
-			p.setMaxHealth(20);
+			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
 		}
 		
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 17) {//Engineer
-			p.setMaxHealth(30);
+			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30);
 		}
 	
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 18) { // Cooker
-			p.setMaxHealth(24);
+			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(24);
 		}
 	
 		
 	
 		
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 19) { //Nobility
-			p.setMaxHealth(22);
+			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(22);
 		}
 		
 	
 		
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 20) { //OceanKnight
-			p.setMaxHealth(40);
+			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
 			
 		}
 		
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 21) { //Frostman
-			p.setMaxHealth(30);
+			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30);
 		}
 		
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 22) {//Angler
-			p.setMaxHealth(24);
+			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(24);
 		}
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 23) { // 용병
-			p.setMaxHealth(36);
+			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(36);
 		}
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 24) { // 단검사
-			p.setMaxHealth(20);
+			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
 		}
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 25) { //원예가
-			p.setMaxHealth(25);
+			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(25);
 			
 		}
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 26) { // 에술가
-			p.setMaxHealth(18);
+			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(18);
 		}
 	}
     @EventHandler

@@ -1,4 +1,4 @@
-package io.github.chw3021.commons.party;
+package io.github.chw3021.party;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
@@ -7,7 +7,7 @@ import org.bukkit.event.player.PlayerEvent;
 import org.jetbrains.annotations.NotNull;
 
 
-public class PartyCreateEvent extends PlayerEvent implements Cancellable{
+public class PartyJoinEvent extends PlayerEvent implements Cancellable{
 	
 	
 
@@ -15,12 +15,12 @@ public class PartyCreateEvent extends PlayerEvent implements Cancellable{
     private String partyname;
     
 
-	public PartyCreateEvent(final Player p, final String pn) {
+	public PartyJoinEvent(final Player p, final String pn) {
         super(p);
         this.partyname = pn;
 	}
 
-	public PartyCreateEvent(final Player p) {
+	public PartyJoinEvent(final Player p) {
         super(p);
 	}
 	

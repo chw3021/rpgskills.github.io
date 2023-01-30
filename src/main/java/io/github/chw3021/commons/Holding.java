@@ -20,7 +20,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import io.github.chw3021.commons.party.Party;
+import io.github.chw3021.party.Party;
 import io.github.chw3021.rmain.RMain;
 
 public class Holding implements Listener{

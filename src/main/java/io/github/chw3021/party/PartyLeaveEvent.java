@@ -1,4 +1,4 @@
-package io.github.chw3021.commons.party;
+package io.github.chw3021.party;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
