@@ -57,7 +57,7 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
-public class Pak implements Serializable, Listener{
+public class Pak extends Modechanging implements Serializable, Listener{
 
 	/**
 	 * 
@@ -69,6 +69,9 @@ public class Pak implements Serializable, Listener{
 	public static HashSet<Material> passables = new HashSet<>();
 
 	public String path = new File("").getAbsolutePath();
+	
+
+	static public HashMap<UUID, Boolean> battlemod = new HashMap<UUID, Boolean>();
 
 	static public HashMap<UUID, Double> windyd = new HashMap<UUID, Double>();
 	static public HashMap<UUID, Double> earthd = new HashMap<UUID, Double>();
@@ -308,36 +311,39 @@ public class Pak implements Serializable, Listener{
 			player_damage.put(p.getName(),player_damage.get(p.getName())-p.getPotionEffect(PotionEffectType.WEAKNESS).getAmplifier()*3);
 		}
 	}
+	
+	
 
-	final public void DamageGetter(Player p) {
+	final public boolean DamageGetter(Player p) {
 	
 		final ItemStack mi = p.getInventory().getItemInMainHand();
 		final ItemStack oi = p.getInventory().getItemInOffHand();
 	
+		final int classnum = ClassData.pc.getOrDefault(p.getUniqueId(),-1);
 	
 		
-		if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 0) { //Swordman
+		if(classnum == 0) { //Swordman
 	
 			if(mi.getType().name().contains("SWORD")&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
 				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
 				
-				//wealore(mi);
+				return true;
 			}
 			else {
 				player_damage.put(p.getName(),0d);
 			}
 		}
 		
-		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 1) {//berserker
+		else if(classnum == 1) {//berserker
 	
 			if(mi.getType().name().contains("SWORD")&&!oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
 				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
 				
-				//wealore(mi);
+				return true;
 			}
 			else {
 				player_damage.put(p.getName(),0d);
@@ -346,13 +352,13 @@ public class Pak implements Serializable, Listener{
 	
 	
 		
-		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 2) {	//Hunter				
+		else if(classnum == 2) {	//Hunter				
 	
-			if(mi.getType().name().contains("AXE")&& !oi.getType().name().contains("SHIELD")&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD)) {
+			if(mi.getType().name().contains("_AXE")&& !oi.getType().name().contains("SHIELD")&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD)) {
 				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
 				
-				//wealore(mi);
+				return true;
 			}
 			else {
 				player_damage.put(p.getName(), 0d);
@@ -360,12 +366,12 @@ public class Pak implements Serializable, Listener{
 		
 		}
 		
-		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 3) {	//Paladin					
+		else if(classnum == 3) {	//Paladin					
 	
-			if(mi.getType().name().contains("AXE")&& oi.getType().name().contains("SHIELD")&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)) {
+			if(mi.getType().name().contains("_AXE")&& oi.getType().name().contains("SHIELD")&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)) {
 				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
-				//wealore(mi);
+				return true;
 			}
 			else {
 				player_damage.put(p.getName(), 0d);
@@ -375,41 +381,41 @@ public class Pak implements Serializable, Listener{
 		
 	
 		
-		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 4) {//Sniper
+		else if(classnum == 4) {//Sniper
 	
 			if(mi.getType() == Material.CROSSBOW&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
 				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.ARROW_DAMAGE)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
-				//wealore(mi);
+				return true;
 			}
 			else {
 				player_damage.put(p.getName(), 0d);
 			}
 		}
 		
-		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 5) {//Launcher
+		else if(classnum == 5) {//Launcher
 			if(mi.getType() == Material.BOW&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
 
 				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.ARROW_DAMAGE)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
 				
-				//wealore(mi);
+				return true;
 			}
 			else {
 				player_damage.put(p.getName(), 0d);
 			}
 		}
 	
-		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 6) { //Archer
+		else if(classnum == 6) { //Archer
 	
 			if(mi.getType()==Material.BOW && !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
 				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.ARROW_DAMAGE)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
 					
-					//wealore(mi);
+					return true;
 			}
 			else {
 				player_damage.put(p.getName(), 0d);
@@ -417,21 +423,21 @@ public class Pak implements Serializable, Listener{
 		}
 	
 	
-		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 61) { //Medic
+		else if(classnum == 61) { //Medic
 	
 			if(mi.getType() == Material.CROSSBOW&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
 				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.ARROW_DAMAGE)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
 				
-				//wealore(mi);
+				return true;
 			}
 			else {
 				player_damage.put(p.getName(), 0d);
 			}
 		}
 		
-		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 7) { // Boxer
+		else if(classnum == 7) { // Boxer
 			if(mi.getType().name().contains("BANNER_PATTERN") && mi.hasItemMeta() && mi.getItemMeta().hasCustomModelData() && oi.getType().name().contains("BANNER_PATTERN") && oi.hasItemMeta() && oi.getItemMeta().hasCustomModelData()
 					&& mi.getItemMeta().getCustomModelData() == oi.getItemMeta().getCustomModelData() && (oi.getType() == mi.getType()) &&
 					((mi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")&&!oi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")) ||
@@ -439,7 +445,7 @@ public class Pak implements Serializable, Listener{
 			{
 				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
-				//wealore(mi);
+				return true;
 			}
 			
 			else {
@@ -448,7 +454,7 @@ public class Pak implements Serializable, Listener{
 		}
 	
 	
-		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 8) { //Wrestler
+		else if(classnum == 8) { //Wrestler
 			if(mi.getType().name().contains("BANNER_PATTERN") && mi.hasItemMeta() && mi.getItemMeta().hasCustomModelData() && oi.getType().name().contains("BANNER_PATTERN") && oi.hasItemMeta() && oi.getItemMeta().hasCustomModelData()
 					&& mi.getItemMeta().getCustomModelData() == oi.getItemMeta().getCustomModelData() && (oi.getType() == mi.getType()) &&
 							((mi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")&&!oi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")) ||
@@ -456,14 +462,14 @@ public class Pak implements Serializable, Listener{
 			{
 					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
-					//wealore(mi);
+					return true;
 			}
 			else {
 				player_damage.put(p.getName(), 0d);
 			}
 		}
 		
-		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 9) { //Tamer
+		else if(classnum == 9) { //Tamer
 			if(mi.getType().name().contains("BANNER_PATTERN") && mi.hasItemMeta() && mi.getItemMeta().hasCustomModelData() && oi.getType().name().contains("BANNER_PATTERN") && oi.hasItemMeta() && oi.getItemMeta().hasCustomModelData()
 					&& mi.getItemMeta().getCustomModelData() == oi.getItemMeta().getCustomModelData() && (oi.getType() == mi.getType()) &&
 							((mi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")&&!oi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")) ||
@@ -472,7 +478,7 @@ public class Pak implements Serializable, Listener{
 					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
-					//wealore(mi);
+					return true;
 			}
 			else {
 				player_damage.put(p.getName(), 0d);
@@ -480,7 +486,7 @@ public class Pak implements Serializable, Listener{
 		}
 		
 	
-		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 10) { //Taoist
+		else if(classnum == 10) { //Taoist
 			if(mi.getType().name().contains("BANNER_PATTERN") && mi.hasItemMeta() && mi.getItemMeta().hasCustomModelData() && oi.getType().name().contains("BANNER_PATTERN") && oi.hasItemMeta() && oi.getItemMeta().hasCustomModelData()
 					&& mi.getItemMeta().getCustomModelData() == oi.getItemMeta().getCustomModelData() && (oi.getType() == mi.getType()) &&
 							((mi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")&&!oi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")) ||
@@ -489,34 +495,34 @@ public class Pak implements Serializable, Listener{
 					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
-					//wealore(mi);
+					return true;
 			}
 			else {
 				player_damage.put(p.getName(), 0d);
 			}
 		}
 		
-		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 11) { //Illusionist
+		else if(classnum == 11) { //Illusionist
 	
 			if(mi.getType()==Material.BLAZE_ROD && mi.hasItemMeta() && mi.getItemMeta().hasCustomModelData()&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
 					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
-					//wealore(mi);
+					return true;
 			}
 			else {
 				player_damage.put(p.getName(),0d);
 			}
 		}
 		
-		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 12) {//Firemage
+		else if(classnum == 12) {//Firemage
 			if(mi.getType()==Material.BLAZE_ROD && mi.hasItemMeta() && mi.getItemMeta().hasCustomModelData()&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
 					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
-					//wealore(mi);
+					return true;
 			}
 			else {
 				player_damage.put(p.getName(), 0d);
@@ -525,12 +531,12 @@ public class Pak implements Serializable, Listener{
 	
 	
 		
-		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 13) { //Witherist
+		else if(classnum == 13) { //Witherist
 			if(mi.getType().name().contains("HOE")&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
 				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
-				//wealore(mi);
+				return true;
 			}
 			else {
 				player_damage.put(p.getName(), 0d);
@@ -538,26 +544,26 @@ public class Pak implements Serializable, Listener{
 		}
 		
 		
-		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 14) { //WitchDoctor
+		else if(classnum == 14) { //WitchDoctor
 	
 			if(mi.getType().name().contains("HOE")&&!oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
 				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
-				//wealore(mi);
+				return true;
 			}
 			else {
 				player_damage.put(p.getName(), 0d);
 			}
 		}
 		
-		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 15) {//Chemist
+		else if(classnum == 15) {//Chemist
 			if(mi.getType().name().contains("PICKAXE")&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
 					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
-					//wealore(mi);
+					return true;
 			}
 			else {
 				player_damage.put(p.getName(), 0d);
@@ -565,37 +571,37 @@ public class Pak implements Serializable, Listener{
 			
 		}
 		
-		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 16) {//Forger
+		else if(classnum == 16) {//Forger
 			if(mi.getType().name().contains("PICKAXE")&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
 					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
-					//wealore(mi);
+					return true;
 			}
 			else {
 				player_damage.put(p.getName(), 0d);
 			}
 		}
 		
-		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 17) {//Engineer
+		else if(classnum == 17) {//Engineer
 			if(mi.getType().name().contains("PICKAXE")&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
 					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
-					//wealore(mi);
+					return true;
 			}
 			else {
 				player_damage.put(p.getName(), 0d);
 			}
 		}
 	
-		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 18) { // Cooker
+		else if(classnum == 18) { // Cooker
 			if(mi.getType().name().contains("SHOVEL")&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
 				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
-				//wealore(mi);
+				return true;
 			}
 			else {
 				player_damage.put(p.getName(), 0d);
@@ -605,14 +611,14 @@ public class Pak implements Serializable, Listener{
 		
 	
 		
-		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 19) { //Nobility
+		else if(classnum == 19) { //Nobility
 	
 			if(mi.getType()==Material.TRIDENT&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
 					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
-					//wealore(mi);
+					return true;
 			}
 			else {
 				player_damage.put(p.getName(), 0d);
@@ -621,7 +627,7 @@ public class Pak implements Serializable, Listener{
 		
 	
 		
-		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 20) { //OceanKnight
+		else if(classnum == 20) { //OceanKnight
 	
 	
 			if(mi.getType()==Material.TRIDENT&& oi.getType()==Material.SHIELD&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT))
@@ -629,41 +635,41 @@ public class Pak implements Serializable, Listener{
 					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
-					//wealore(mi);
+					return true;
 			}
 			else if(mi.getType()==Material.SHIELD&&oi.getType()==Material.TRIDENT&& !oi.getType().name().contains("BANNER_PATTERN")&& !(mi.getType()==Material.TRIDENT))
 			{
 					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + oi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
-					//wealore(mi);
+					return true;
 			}
 			else {
 				player_damage.put(p.getName(), 0d);
 			}
 		}
 		
-		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 21) { //Frostman
+		else if(classnum == 21) { //Frostman
 	
 				p.setFreezeTicks(0);
 				if(mi.getType() == Material.PRISMARINE_SHARD&& mi.hasItemMeta() && mi.getItemMeta().hasCustomModelData()&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 				{
 						player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
 						effectdamage(p);
-						//wealore(mi);
+						return true;
 				}
 				else {
 					player_damage.put(p.getName(), 0d);
 				}
 		}
 		
-		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 22) {//Angler
+		else if(classnum == 22) {//Angler
 			if(mi.getType()==Material.FISHING_ROD && !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
 					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
-					//wealore(mi);
+					return true;
 			}
 			else {
 				player_damage.put(p.getName(), 0d);
@@ -673,13 +679,13 @@ public class Pak implements Serializable, Listener{
 		
 	
 	
-		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 25) { // Broiler
+		else if(classnum == 25) { // Broiler
 			if(mi.getType().name().contains("SHOVEL")&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
 					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
-					//wealore(mi);
+					return true;
 			}
 			else {
 				player_damage.put(p.getName(), 0d);
@@ -689,7 +695,7 @@ public class Pak implements Serializable, Listener{
 		EldGetter(p.getInventory().getArmorContents(), mi, oi, p);
 		ElrGetter(p.getInventory().getArmorContents(), p);
 		
-		return;
+		return false;
 		
 	}
 	

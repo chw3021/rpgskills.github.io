@@ -76,7 +76,7 @@ public class HunSkillsGui extends SkillsGui{
 				itemset("갈망", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("웅크리기 + 아이템던지기", "참격과 두개골분쇄의 대기시간이 초기화됩니다","",ChatColor.BOLD+"X 27.1D"), 17, Hunskillsinv);
 
 				itemset("그물회수", Material.FERMENTED_SPIDER_EYE, 0, 1, Arrays.asList("재사용시 그물에 맞은 적들을 끌어옵니다"), 19, Hunskillsinv);
-				itemset("자세", Material.NETHERITE_CHESTPLATE, 0, 1, Arrays.asList("회피이후 다음 1회의 공격이 강화됩니다"), 20, Hunskillsinv);
+				itemset("자세", Material.NETHERITE_CHESTPLATE, 0, 1, Arrays.asList("회피이후 다음 1회의 공격이 강화됩니다","",ChatColor.BOLD+"X 0.35D"), 20, Hunskillsinv);
 				itemset("무한", Material.NETHERITE_AXE, 0, 1, Arrays.asList("사냥이 활성화/비활성화 기술로 변경됩니다", "적을 공격하면 대기시간이 적용됩니다"), 21, Hunskillsinv);
 				itemset("즉결처형", Material.NETHERITE_AXE, 0, 1, Arrays.asList("적 처치시 사냥, 참격, 두개골분쇄의", "재사용대기시간이 초기화 됩니다", "(사냥은 자동으로 활성화됩니다)"), 22, Hunskillsinv);
 				itemset("생존법", Material.GOLDEN_CARROT, 0, 1, Arrays.asList("모든 해로운 효과에 면역이 됩니다"), 24, Hunskillsinv);
@@ -135,7 +135,7 @@ public class HunSkillsGui extends SkillsGui{
 				itemset("Rage", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("Sneaking + ThrowItem", "Resets Cooldown of Daze & SkullCrusher","",ChatColor.BOLD+"X 27.1"), 17, Hunskillsinv);
 				
 				itemset("WebRetrieving", Material.FERMENTED_SPIDER_EYE, 0, 1, Arrays.asList("Pull hit enemies when reusing"), 19, Hunskillsinv);
-				itemset("Posture", Material.NETHERITE_CHESTPLATE, 0, 1, Arrays.asList("Increases Next Hit Damage After Dodge"), 20, Hunskillsinv);
+				itemset("Posture", Material.NETHERITE_CHESTPLATE, 0, 1, Arrays.asList("Increases Next Hit Damage After Dodge","",ChatColor.BOLD+"X 0.35D"), 20, Hunskillsinv);
 				itemset("Infinite", Material.NETHERITE_AXE, 0, 1, Arrays.asList("Changes Hunting on/off Skill", "Cooldown will apply when you hit Enemy"), 21, Hunskillsinv);
 				itemset("SummaryExecution", Material.NETHERITE_AXE, 0, 1, Arrays.asList("Resets Hunting, Daze, SkullCrasher Cooldown", "When you Success to kill Enemy", "(Hunting will be Automatically Active)"), 22, Hunskillsinv);
 				itemset("Survivor", Material.GOLDEN_CARROT, 0, 1, Arrays.asList("Immune to All Negetive Effect"), 24, Hunskillsinv);

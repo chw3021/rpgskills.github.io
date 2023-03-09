@@ -492,6 +492,7 @@ public class SkillUsing implements Listener, Serializable {
 		Hunskills.getInstance().HuntingStart2(ev);
 		Hunskills.getInstance().Webthrow(ev);
 		Hunskills.getInstance().webRetrieving(ev);
+		Hunskills.getInstance().swing(ev);
 
 		Illskills.getInstance().Distortion(ev);
 		Illskills.getInstance().Encore(ev);
@@ -843,7 +844,7 @@ public class SkillUsing implements Listener, Serializable {
 		Witskills.getInstance().ULT2(ev);
 		Witskills.getInstance().ThrowCancel(ev);
 		
-		
+		Modechanging.getInstance().modeChange(ev);
 		Summoned.getInstance().ThrowCancel(ev);
     }
 

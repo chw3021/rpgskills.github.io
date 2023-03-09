@@ -91,7 +91,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 	private static HashMap<String, Integer> huntt = new HashMap<String, Integer>();
 	private static HashMap<String, Integer> huntofft = new HashMap<String, Integer>();
 
-	private static HashMap<String, Integer> posed = new HashMap<String, Integer>();
+	private static HashMap<UUID, Integer> posed = new HashMap<UUID, Integer>();
 	
 	//private HashMap<String, Double> player_damage = new HashMap<String, Double>();
 
@@ -180,6 +180,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 			
 		if(((a==Action.RIGHT_CLICK_AIR || a==Action.RIGHT_CLICK_BLOCK)) && (p.isSneaking()) && hsd.Webthrow.getOrDefault(p.getUniqueId(),0)>=1)
 		{
+			p.setCooldown(Material.MAGENTA_BED, 3);
 			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE")&& !p.getInventory().getItemInMainHand().getType().name().contains("PICK"))
 			{
 				if(tbcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
@@ -496,7 +497,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 	{
 		Player p = ev.getPlayer();
 		double sec =0*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
-
+/*
 		if(p.getInventory().getItemInMainHand().getType().name().contains("RAIL") && p.getInventory().getItemInOffHand().getType().name().contains("RAIL") && !p.isOnGround()) {
 			ev.setCancelled(true);
 			p.setFallDistance(0);
@@ -508,7 +509,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 			ar.getEquipment().setArmorContents(p.getEquipment().getArmorContents());
 			ar.setCustomName(p.getDisplayName());
 			ar.setCustomNameVisible(true);
-		}
+		}*/
 		if(ClassData.pc.get(p.getUniqueId()) == 2 && hsd.Climb.getOrDefault(p.getUniqueId(),0)>=1 && p.isSneaking())	{
 			
 			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE")&& !p.getInventory().getItemInMainHand().getType().name().contains("PICK") && hsd.Climb.get(p.getUniqueId())>=1)
@@ -728,7 +729,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 							p.teleport(l);
 							p.playSound(p.getLocation(), Sound.ENTITY_SPIDER_STEP, 1.0f, 1.5f);
 							if(Proficiency.getpro(p)>=2) {
-								posed.put(p.getName(),1);
+								posed.put(p.getUniqueId(),1);
 							}
 			                djcooldown.put(p.getName(), System.currentTimeMillis());
 		                }
@@ -736,7 +737,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 		            else 
 		            {
 						if(Proficiency.getpro(p)>=2) {
-							posed.put(p.getName(),1);
+							posed.put(p.getUniqueId(),1);
 						}
 						p.teleport(l);
 						p.playSound(p.getLocation(), Sound.ENTITY_SPIDER_STEP, 1.0f, 1.5f);
@@ -772,6 +773,89 @@ public class Hunskills extends Pak implements Serializable, Listener {
 	        }
 		}
 	}
+
+	static private HashSet<Location> swing(Player p) {
+
+		HashSet<Location> line = new HashSet<Location>();
+    	HashSet<Location> fill = new HashSet<Location>();
+        p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 0.5f);
+    	p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 0f);
+
+        for(double an = Math.PI/3; an>-Math.PI/3; an-=Math.PI/60) {
+        	Location pl = p.getLocation();
+        	pl.add(pl.getDirection().rotateAroundY(an).normalize().multiply(3));
+        	line.add(pl);
+        }
+        line.forEach(l -> {
+    		p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l,3,0.1,0.1,0.1,0);
+            for(int i = 0; i<3;i+=1) {
+            	Location pl = p.getLocation();
+            	Vector v = l.clone().toVector().subtract(pl.toVector()).normalize();
+            	fill.add(pl.add(v.multiply(i)));
+            }			          
+        	
+        });
+        return fill;
+	}
+	
+	public void swing(PlayerInteractEvent ev) 
+	{
+	    
+		Player p = ev.getPlayer();
+		Action a = ev.getAction();
+		
+		if(ClassData.pc.get(p.getUniqueId()) == 2 && posed.containsKey(p.getUniqueId())) {
+		if((a==Action.LEFT_CLICK_AIR || a==Action.LEFT_CLICK_BLOCK));
+		{
+			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && !p.getInventory().getItemInMainHand().getType().name().contains("PICK")&& !p.hasCooldown(Material.MAGENTA_BED))
+			{
+            	HashSet<Location> fill = swing(p);
+                HashSet<LivingEntity> les = new HashSet<LivingEntity>();
+                fill.forEach(l ->{
+                	for(Entity e: l.getWorld().getNearbyEntities(l,1.5,1.5,1.5)) {
+						if (e instanceof Player) 
+						{
+							Player p1 = (Player) e;
+							if(Party.hasParty(p) && Party.hasParty(p1))	{
+							if(Party.getParty(p).equals(Party.getParty(p1)))
+								{
+									continue;
+								}
+							}
+						}
+						if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
+						{
+							LivingEntity le = (LivingEntity)e;
+							les.add(le);
+						}
+                	}
+                });
+				
+				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	                @Override
+	                public void run() 
+	                {
+	    				p.setCooldown(Material.MAGENTA_BED, 3);
+	    				les.forEach(le ->
+	    				{
+	    					atk1(1.0, p, le);
+	    					
+	    				});
+	                }
+				},1);
+				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	                @Override
+	                public void run() 
+	                {
+	                	posed.remove(p.getUniqueId());
+	                }
+				},2);
+			}
+		}
+		}
+	}
+	
+	
 	final private void HuntingEffectadd(Player p)
 	{
 
@@ -812,7 +896,6 @@ public class Hunskills extends Pak implements Serializable, Listener {
 	
 
 	
-	@SuppressWarnings("deprecation")
 	public void HuntingStart(PlayerInteractEvent ev) 
 	{
 	    
@@ -824,6 +907,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 		if(ClassData.pc.get(p.getUniqueId()) == 2 && hsd.HuntingStart.get(p.getUniqueId())>=1) {
 		if(((a==Action.RIGHT_CLICK_AIR || a==Action.RIGHT_CLICK_BLOCK)) && !(p.isSneaking()))
 		{
+			p.setCooldown(Material.MAGENTA_BED, 3);
 			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && !p.getInventory().getItemInMainHand().getType().name().contains("PICK")&& !hunting.containsKey(p.getName())&& Proficiency.getpro(p)<2)
 			{
 				if(hucooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
@@ -902,8 +986,6 @@ public class Hunskills extends Pak implements Serializable, Listener {
 		}
 	}
 
-	
-	@SuppressWarnings("deprecation")
 	public void HuntingStart2(PlayerInteractEvent ev) 
 	{
 	    
@@ -913,8 +995,9 @@ public class Hunskills extends Pak implements Serializable, Listener {
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 2) {
-		if(((a==Action.RIGHT_CLICK_AIR || a==Action.RIGHT_CLICK_BLOCK)) && !(p.isOnGround()) && !(p.isSneaking()))
+		if(((a==Action.RIGHT_CLICK_AIR || a==Action.RIGHT_CLICK_BLOCK)) && !(p.isSneaking()))
 		{
+			p.setCooldown(Material.MAGENTA_BED, 3);
 			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && !p.getInventory().getItemInMainHand().getType().name().contains("PICK")&& Proficiency.getpro(p)>=2 && !p.hasCooldown(Material.STRUCTURE_VOID))
 			{
 				if(hucooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
@@ -981,30 +1064,8 @@ public class Hunskills extends Pak implements Serializable, Listener {
 			
 		}
 	}
-	/*
 	
-	public void HuntingOFF(PlayerInteractEvent ev) 
-	{
-	    
-		Player p = ev.getPlayer();
-		Action a = ev.getAction();
-		
-		
-		if(ClassData.pc.get(p.getUniqueId()) == 2) {
-		if(((a==Action.LEFT_CLICK_BLOCK)))
-		{
-			if(hunting.containsKey(p.getName()))
-			{
-				HuntingEffectrmv(p);
-		        hucooldown.put(p.getName(), System.currentTimeMillis()-2500); 
-			}
-		}
-		}
-		
-	}
-	*/
-	
-	
+
 	public void Huntingdamage(EntityDamageByEntityEvent d) 
 	{
 	    
@@ -1035,7 +1096,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 					{
 						dset3(d, p, 1.0, 1.0*(1+hsd.HuntingStart.get(p.getUniqueId())*0.055));
 					}
-					if(ult2t.containsKey(p.getName())) {
+					if(ult2t.containsKey(p.getName()) || posed.containsKey(p.getUniqueId())) {
 						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 			                @Override
 			                public void run() 
@@ -1064,11 +1125,32 @@ public class Hunskills extends Pak implements Serializable, Listener {
 								    				}
 							    				}
 							                }
-							            },1);
+							            },1/5);
 					                }
 					            }, 1);
 			                }
 						}, 3); 
+						if(Proficiency.getpro(p)>=1) {
+							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+				                @Override
+				                public void run() { 
+				    				if(le.isDead() || le.getHealth()<=0) {
+				    					djcooldown.remove(p.getName());
+				    				}
+				                }
+				            }, 3);
+						}
+						if(Proficiency.getpro(p)>=2) {
+							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+				                @Override
+				                public void run() { 
+				    				if(le.isDead() || le.getHealth()<=0) {
+				    					smcooldown.remove(p.getName());
+				    					lccooldown.remove(p.getName());
+				    				}
+				                }
+				            }, 3);
+						}
 					}
 					else {
 						HuntingEffectrmv(p);
@@ -1101,51 +1183,35 @@ public class Hunskills extends Pak implements Serializable, Listener {
 			    				}
 			                }
 			            }, 1/5);
+						if(Proficiency.getpro(p)>=1) {
+							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+				                @Override
+				                public void run() { 
+				    				if(le.isDead() || le.getHealth()<=0) {
+				    					djcooldown.remove(p.getName());
+				    				}
+				                }
+				            }, 1/5);
+						}
+						if(Proficiency.getpro(p)>=2) {
+							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+				                @Override
+				                public void run() { 
+				    				if(le.isDead() || le.getHealth()<=0) {
+				    					smcooldown.remove(p.getName());
+				    					lccooldown.remove(p.getName());
+				    				}
+				                }
+				            }, 1/5);
+						}
 					}
-				}	
-				if(posed.containsKey(p.getName())) {
-					d.setDamage(d.getDamage()*1.5);
-					
-					if(ult2t.containsKey(p.getName())) {
-						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() 
-			                {
-								posed.remove(p.getName());
-			                }
-						}, 3); 
-					}
-					else {
-						posed.remove(p.getName());
-					}
-				}
-				if(Proficiency.getpro(p)>=1) {
-					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() { 
-		    				if(le.isDead() || le.getHealth()<=0) {
-		    					djcooldown.remove(p.getName());
-		    				}
-		                }
-		            }, 1/5);
-				}
-				if(Proficiency.getpro(p)>=2) {
-					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() { 
-		    				if(le.isDead() || le.getHealth()<=0) {
-		    					smcooldown.remove(p.getName());
-		    					lccooldown.remove(p.getName());
-		    				}
-		                }
-		            }, 1/5);
 				}
 			}
 			else {
 	
 				if(hunting.containsKey(p.getName()))
 				{
-					if(ult2t.containsKey(p.getName())) {
+					if(ult2t.containsKey(p.getName())|| posed.containsKey(p.getUniqueId())) {
 						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 			                @Override
 			                public void run() 
@@ -1237,7 +1303,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 				if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE")&& !p.getInventory().getItemInMainHand().getType().name().contains("PICK") && p.isSneaking())
 				{
 
-					if((p.getAttackCooldown()==1|| ult2t.containsKey(p.getName())) && !le.hasMetadata("fake")&& !le.hasMetadata("portal")) 
+					if(!le.hasMetadata("fake")&& !le.hasMetadata("portal")) 
 					{
 						if(lccooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
 				        {
@@ -1293,14 +1359,14 @@ else {
 			    						
 			    					}
 								}
-								if(ult2t.containsKey(p.getName())) {
+								if(ult2t.containsKey(p.getName())|| posed.containsKey(p.getUniqueId())) {
 									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 						                @Override
 						                public void run() 
 						                {
 								            lccooldown.put(p.getName(), System.currentTimeMillis()); 
 						                }
-									}, 5); 
+									}, 2); 
 								}
 								else {
 						            lccooldown.put(p.getName(), System.currentTimeMillis()); 
@@ -1349,14 +1415,14 @@ else {
 		    						
 		    					}
 							}
-							if(ult2t.containsKey(p.getName())) {
+							if(ult2t.containsKey(p.getName())|| posed.containsKey(p.getUniqueId())) {
 								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					                @Override
 					                public void run() 
 					                {
 							            lccooldown.put(p.getName(), System.currentTimeMillis()); 
 					                }
-								}, 5); 
+								}, 2); 
 							}
 							else {
 					            lccooldown.put(p.getName(), System.currentTimeMillis()); 
@@ -1383,7 +1449,7 @@ else {
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 2 && hsd.SkullCrusher.get(p.getUniqueId())>=1&& p.getCooldown(Material.GLISTERING_MELON_SLICE)<=0 && !p.isOnGround())	{
-			if((p.getAttackCooldown()==1|| ult2t.containsKey(p.getName())) && !le.hasMetadata("fake")&& !le.hasMetadata("portal")) 
+			if(!le.hasMetadata("fake")&& !le.hasMetadata("portal")) 
 			{	
 				
 				if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE")&& !p.getInventory().getItemInMainHand().getType().name().contains("PICK"))
@@ -1450,14 +1516,14 @@ else {
 					                }
 					            }, 1/5);
 							}
-							if(ult2t.containsKey(p.getName())) {
+							if(ult2t.containsKey(p.getName())|| posed.containsKey(p.getUniqueId())) {
 								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					                @Override
 					                public void run() 
 					                {
 							            smcooldown.put(p.getName(), System.currentTimeMillis()); 
 					                }
-								}, 5); 
+								}, 2); 
 							}
 							else {
 					            smcooldown.put(p.getName(), System.currentTimeMillis()); 
@@ -1512,14 +1578,14 @@ else {
 				                }
 				            }, 1/5);
 						}
-						if(ult2t.containsKey(p.getName())) {
+						if(ult2t.containsKey(p.getName())|| posed.containsKey(p.getUniqueId())) {
 							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 				                @Override
 				                public void run() 
 				                {
 						            smcooldown.put(p.getName(), System.currentTimeMillis()); 
 				                }
-							}, 5); 
+							}, 2); 
 						}
 						else {
 				            smcooldown.put(p.getName(), System.currentTimeMillis()); 
@@ -1567,6 +1633,7 @@ else {
 		if(ClassData.pc.get(p.getUniqueId()) == 2 && (is.getType().name().contains("_AXE"))&& !p.getInventory().getItemInMainHand().getType().name().contains("PICK") && p.isSneaking()&& Proficiency.getpro(p) >=1)
 			{
 				ev.setCancelled(true);
+				p.setCooldown(Material.MAGENTA_BED, 3);
 				if(aultcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
 	            {
 	                double timer = (aultcooldown.get(p.getName())/1000d + 50/Proficiency.getpro(p)*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d)) - System.currentTimeMillis()/1000d; // geting time in seconds
@@ -1705,7 +1772,7 @@ else {
 						p.sendTitle(ChatColor.MAGIC + "RAGE", ChatColor.MAGIC + "RAGE",20,20,20);
 						p.playSound(p.getLocation(), Sound.ITEM_NETHER_WART_PLANT, 1.0f, 0f);
 						Bukkit.getServer().getScheduler().cancelTask(raget.get(p.getUniqueId()));
-						if(ult2t.containsKey(p.getName())) {
+						if(ult2t.containsKey(p.getName())|| posed.containsKey(p.getUniqueId())) {
 							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 				                @Override
 				                public void run() 
@@ -1764,6 +1831,7 @@ else {
 		if(ClassData.pc.get(p.getUniqueId()) == 2 && (is.getType().name().contains("_AXE"))&& !p.getInventory().getItemInMainHand().getType().name().contains("PICK") && !p.isSneaking()&& p.isSprinting()&& Proficiency.getpro(p) >=2)
 			{
 				ev.setCancelled(true);
+				p.setCooldown(Material.MAGENTA_BED, 3);
 				if(ault2cooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
 	            {
 	                double timer = (ault2cooldown.get(p.getName())/1000d + 50*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d)) - System.currentTimeMillis()/1000d; // geting time in seconds
@@ -1827,7 +1895,7 @@ else {
 					                {
 					                	ult2t.remove(p.getName());
 					                }
-								},3);
+								},1);
 			                }
 						}, 40); 
 						ult2t.put(p.getName(),task);
@@ -1885,7 +1953,7 @@ else {
 				                {
 				                	ult2t.remove(p.getName());
 				                }
-							},3);
+							},1);
 		                }
 					}, 40); 
 					ult2t.put(p.getName(),task);
@@ -2004,14 +2072,10 @@ else {
 			if(ClassData.pc.get(p.getUniqueId()) == 2)	
 			{
 				
-				if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE")&& !p.getInventory().getItemInMainHand().getType().name().contains("PICK") && !ult2t.containsKey(p.getName()))
+				if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE")&& !p.getInventory().getItemInMainHand().getType().name().contains("PICK"))
 				{
 					if(p.getAttackCooldown()==1 && p.getCooldown(Material.GLISTERING_MELON_SLICE)<=0&& !le.hasMetadata("fake")&& !le.hasMetadata("portal")) 
 					{
-        				Location el = le.getLocation().add(0, 0.1, 0);
-        				if(!el.getBlock().isPassable()) {
-        					el.add(0, 1.1, 0);
-        				}
         				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
         				{
         	         	@SuppressWarnings("deprecation")
@@ -2020,7 +2084,7 @@ else {
     	         				{	
 
 		    						p.setCooldown(Material.GLISTERING_MELON_SLICE, 3);
-		    						atk0(0d, le.getMaxHealth()*(0.05+hsd.Atrocity.get(p.getUniqueId())*0.0002), p, le);
+		    						atks(0d, le.getMaxHealth()*(0.05+hsd.Atrocity.get(p.getUniqueId())*0.0002), p, le);
     				            }
         	            }, 3);
 							ArrayList<Location> line = new ArrayList<Location>();
@@ -2068,23 +2132,12 @@ else {
 				
 				if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE")&& !p.getInventory().getItemInMainHand().getType().name().contains("PICK"))
 				{
-					if(p.getAttackCooldown()==1) 
-					{
 							
 						if (Math.abs(e.getLocation().getDirection().angle(p.getLocation().getDirection())) <= Math.PI/3+p.getLevel()/10 || Proficiency.getpro(p)>=2) 
 						{
 							d.setDamage(d.getDamage()*1.5);
 							p.getWorld().spawnParticle(Particle.SPELL_WITCH, e.getLocation(), 100, 0.1, 1, 0.1);
-							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("¾Ï½À").bold(true).create());
-							}
-							else {
-								p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("BackAttack").bold(true).create());
-							}
 						}
-							
-						
-					}
 				}
 			}
 		}
@@ -2260,9 +2313,19 @@ else {
 				if(le.hasMetadata("leader") || le.hasMetadata("boss")) {
 					d.setDamage(d.getDamage()*2.5);
 				}
-				if(p.getAttackCooldown() >=1 || ult2t.containsKey(p.getName())) {
+				if(p.getAttackCooldown() >=1 || ult2t.containsKey(p.getName()) || posed.containsKey(p.getUniqueId())) {
 
-					dset2(d, p, 1.15 * (1+hsd.Atrocity.get(p.getUniqueId())*0.0576),le,5);
+					if(posed.containsKey(p.getUniqueId())) {
+						if(!p.hasCooldown(Material.MAGENTA_BED)) {
+							dset1(d, p, 0d,0d);
+						}
+						else {
+							dset2(d, p, 1.15 * (1+hsd.Atrocity.get(p.getUniqueId())*0.0576),le,5);
+						}
+					}
+					else {
+						dset2(d, p, 1.15 * (1+hsd.Atrocity.get(p.getUniqueId())*0.0576),le,5);
+					}
 				}
 				else {
 					dset2(d, p, 0.5 * (1+hsd.Atrocity.get(p.getUniqueId())*0.0576),le,5);

@@ -109,7 +109,11 @@ public class Rpgs extends Summoned implements CommandExecutor, Serializable, Lis
 	@EventHandler
 	public void Damagegetter(EntityDamageByEntityEvent d) 
 	{
-		if(d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity && !d.getEntity().hasMetadata("fake") && !d.getEntity().hasMetadata("portal") && !d.getEntity().isInvulnerable()) {
+		
+		if(d.getEntity().hasMetadata("fake") || d.getEntity().hasMetadata("portal") || d.getEntity().isInvulnerable()) {
+			return;
+		}
+		if(d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity) {
 			Player p = (Player) d.getDamager();
 			LivingEntity le = (LivingEntity) d.getEntity();
 			String len = ChatColor.stripColor(le.getName().split("\\s\\(")[0]);
@@ -138,7 +142,7 @@ public class Rpgs extends Summoned implements CommandExecutor, Serializable, Lis
 			}
 		}
 
-		if(d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity && !d.getEntity().hasMetadata("fake") && !d.getEntity().hasMetadata("portal") && !d.getEntity().isInvulnerable()) {
+		if(d.getDamager() instanceof Projectile && d.getEntity() instanceof LivingEntity) {
 			Projectile pr = (Projectile) d.getDamager();
 			if(pr.getShooter() instanceof Player && !(pr instanceof Snowball)) {
 				Player p = (Player) pr.getShooter();

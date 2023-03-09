@@ -131,7 +131,6 @@ public class ClassData implements Serializable, Listener{
         }, 3); 
 	}
 	
-	@SuppressWarnings("deprecation")
 	@EventHandler	
 	public void nepreventer(PlayerJoinEvent ev) 
 	{
