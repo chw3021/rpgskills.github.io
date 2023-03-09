@@ -19,22 +19,16 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
-public class Modechanging{
+public class CombatMode{
 
-	/**
-	 * 
-	 */
-	private transient static final long serialVersionUID = -580551522537229007L;
-
-	private static final Modechanging instance = new Modechanging ();
-	public static Modechanging getInstance()
+	private static final CombatMode instance = new CombatMode ();
+	public static CombatMode getInstance()
 	{
 		return instance;
 	}
 
 	final public boolean weaponcheck(Player p, ItemStack mi) {
 		final int classnum = ClassData.pc.getOrDefault(p.getUniqueId(),-1);
-		final ItemStack oi = p.getInventory().getItemInOffHand();
 
 		switch(classnum) {
 			case 0,1,23:

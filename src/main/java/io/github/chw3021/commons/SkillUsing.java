@@ -844,7 +844,7 @@ public class SkillUsing implements Listener, Serializable {
 		Witskills.getInstance().ULT2(ev);
 		Witskills.getInstance().ThrowCancel(ev);
 		
-		Modechanging.getInstance().modeChange(ev);
+		CombatMode.getInstance().modeChange(ev);
 		Summoned.getInstance().ThrowCancel(ev);
     }
 

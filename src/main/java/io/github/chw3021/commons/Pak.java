@@ -57,7 +57,7 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
-public class Pak extends Modechanging implements Serializable, Listener{
+public class Pak extends CombatMode implements Serializable, Listener{
 
 	/**
 	 * 
