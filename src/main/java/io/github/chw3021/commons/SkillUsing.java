@@ -413,6 +413,7 @@ public class SkillUsing implements Listener, Serializable {
 	public void Click(PlayerInteractEvent ev) 
 	{
 		Angskills.getInstance().Whipping(ev);
+		Angskills.getInstance().CoralRoots(ev);
 
 		Archskills.getInstance().Indure(ev);
 		Archskills.getInstance().SpreadingArrows(ev);
@@ -587,7 +588,6 @@ public class SkillUsing implements Listener, Serializable {
 		
 		
 		
-		Angskills.getInstance().CoralRoots(d);
 		Angskills.getInstance().Technic(d);
 		
 		Archskills.getInstance().HookAndShot(d);

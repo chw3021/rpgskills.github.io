@@ -14,12 +14,16 @@ public class SkillUseEvent extends PlayerEvent implements Cancellable{
     private static final HandlerList handlers = new HandlerList();
     private int num;
     private int tick;
+    private String kname;
+    private String ename;
     
 
-	public SkillUseEvent(final Player p, final Double sec, final Integer itemnum) {
+	public SkillUseEvent(final Player p, final Double sec, final Integer itemnum, final String kname, final String ename) {
         super(p);
         this.num = itemnum;
         this.tick = (int) (sec*20);
+        this.kname = kname;
+        this.ename = ename;
 	}
 	
 	public Integer getTick() {
@@ -30,6 +34,12 @@ public class SkillUseEvent extends PlayerEvent implements Cancellable{
 		return num;
 	}
 
+	public String getKname() {
+		return kname;
+	}
+	public String getEname() {
+		return ename;
+	}
 	
     @NotNull
     @Override
