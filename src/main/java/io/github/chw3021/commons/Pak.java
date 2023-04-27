@@ -115,7 +115,6 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	    public void skilluse();
 	}
 	 
-
     public void skilluse(SkillUse s, Player p, Double cl, String kname, String ename, HashMap<String,Long> hm) {
 		if(hm.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
         {

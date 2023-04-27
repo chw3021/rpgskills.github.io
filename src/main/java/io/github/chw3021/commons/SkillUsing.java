@@ -90,7 +90,12 @@ public class SkillUsing implements Listener, Serializable {
 	Pak pak = new Pak();
 	Weapons w = new Weapons();
 
-	
+
+	@EventHandler
+	public void skilluse(SkillUseEvent e) {
+
+		CombatMode.getInstance().modeAlert(e);
+	}
 	
 	@EventHandler
 	public void Localechange(PlayerLocaleChangeEvent e)
@@ -103,6 +108,8 @@ public class SkillUsing implements Listener, Serializable {
 	{
 		pak.classinv(e);
 		w.AttributeChange(e);
+		
+		CombatMode.getInstance().classinv(e);
 		
 		Angskills.getInstance().classinv(e);
 		Archskills.getInstance().classinv(e);
@@ -202,9 +209,48 @@ public class SkillUsing implements Listener, Serializable {
 	
 	
 	@EventHandler
+	public void Quit(PlayerQuitEvent ev) 
+	{
+		CombatMode.getInstance().nepreventer(ev);
+		
+		CommonEvents.getInstance().nepreventer(ev);
+		
+		
+		Cheskills.getInstance().Cloud(ev);
+		
+		
+	
+		Medskills.getInstance().Stretcher(ev);
+		
+		Oceskills.getInstance().Shield(ev);
+	
+		Nobskills.getInstance().delete(ev);
+	
+		Tamskills.getInstance().delete(ev);
+	
+		Taoskills.getInstance().Aura(ev);
+	
+		Wdcskills.getInstance().delete(ev);
+		
+		Witskills.getInstance().Hover(ev);
+	}
+
+	@EventHandler
+	public void Off(PluginDisableEvent ev) 
+	{
+		CombatMode.getInstance().deleter(ev);
+		
+		CommonEvents.getInstance().deleter(ev);
+		
+	}
+
+	@EventHandler
 	public void Wheel(PlayerItemHeldEvent ev) 
 	{
 		pak.DamageGetter(ev);
+		
+		Angskills.getInstance().ULT(ev);
+		Angskills.getInstance().ULT2(ev);
 		
 		Broskills.getInstance().OneOnly(ev);
 		
@@ -751,8 +797,8 @@ public class SkillUsing implements Listener, Serializable {
 	@EventHandler
 	public void Throw(PlayerDropItemEvent ev)        
     {
-		Angskills.getInstance().ULT(ev);
-		Angskills.getInstance().ULT2(ev);
+		CombatMode.getInstance().modeChange(ev);
+		
 		Angskills.getInstance().ThrowCancel(ev);
 		
 		Archskills.getInstance().ULT(ev);
@@ -1057,39 +1103,6 @@ public class SkillUsing implements Listener, Serializable {
 
 
 	
-
-	@EventHandler
-	public void Quit(PlayerQuitEvent ev) 
-	{
-		CommonEvents.getInstance().nepreventer(ev);
-		
-		
-		Cheskills.getInstance().Cloud(ev);
-		
-		
-
-		Medskills.getInstance().Stretcher(ev);
-		
-		Oceskills.getInstance().Shield(ev);
-
-		Nobskills.getInstance().delete(ev);
-
-		Tamskills.getInstance().delete(ev);
-
-		Taoskills.getInstance().Aura(ev);
-
-		Wdcskills.getInstance().delete(ev);
-		
-		Witskills.getInstance().Hover(ev);
-	}
-	
-
-	@EventHandler
-	public void Off(PluginDisableEvent ev) 
-	{
-		CommonEvents.getInstance().deleter(ev);
-		
-	}
 
 	@EventHandler
 	public void Respawn(PlayerRespawnEvent ev) 

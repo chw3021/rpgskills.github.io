@@ -25,6 +25,10 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 public class CombatMode {
 
 	private static final CombatMode instance = new CombatMode();
+	
+	private Material[] mas = { Material.AXOLOTL_SPAWN_EGG, Material.BEE_SPAWN_EGG,
+			Material.CAT_SPAWN_EGG, Material.CHICKEN_SPAWN_EGG, Material.CREEPER_SPAWN_EGG,
+			Material.FROG_SPAWN_EGG, Material.PARROT_SPAWN_EGG};
 
 	public static CombatMode getInstance() {
 		return instance;
@@ -34,7 +38,7 @@ public class CombatMode {
 		final int classnum = ClassData.pc.getOrDefault(p.getUniqueId(), -1);
 
 		switch (classnum) {
-		case 0, 1, 23:
+		case 0,1,23:
 			if (mi.getType().name().contains("SWORD")) {
 				return true;
 			}
@@ -109,19 +113,8 @@ public class CombatMode {
 
 	static private HashMap<UUID, ItemStack[]> pin = new HashMap<>();
 	static private HashMap<UUID, Boolean> mode = new HashMap<>();
-
-	public boolean isCombat(Player p) {
-		return mode.containsKey(p.getUniqueId());
-	}
-
-	public void classinv(InventoryClickEvent e) {
-		if (mode.containsKey(e.getWhoClicked().getUniqueId())) {
-			e.setCancelled(false);
-		}
-	}
-
-	public void nepreventer(PlayerQuitEvent ev) {
-		Player p = ev.getPlayer();
+	
+	final private void quitCombat(Player p) {
 		if (mode.containsKey(p.getUniqueId())) {
 			mode.remove(p.getUniqueId());
 			p.getInventory().clear();
@@ -136,7 +129,25 @@ public class CombatMode {
 
 			p.getInventory().setContents(pin.get(p.getUniqueId()));
 			pin.remove(p.getUniqueId());
+			for(Material m : mas) {
+				p.setCooldown(m, 0);
+			}
 		}
+	}
+
+	public boolean isCombat(Player p) {
+		return mode.containsKey(p.getUniqueId());
+	}
+
+	public void classinv(InventoryClickEvent e) {
+		if (mode.containsKey(e.getWhoClicked().getUniqueId())) {
+			e.setCancelled(false);
+		}
+	}
+
+	public void nepreventer(PlayerQuitEvent ev) {
+		Player p = ev.getPlayer();
+		quitCombat(p);
 	}
 
 	public void deleter(PluginDisableEvent ev) {
@@ -144,21 +155,7 @@ public class CombatMode {
 			if (!p.isValid()) {
 				return;
 			}
-			if (mode.containsKey(p.getUniqueId())) {
-				mode.remove(p.getUniqueId());
-				p.getInventory().clear();
-				if (p.getLocale().equalsIgnoreCase("ko_kr")) {
-					p.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-							new ComponentBuilder(ChatColor.BLUE + "비전투 상태").create());
-				} else {
-					p.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-							new ComponentBuilder(ChatColor.BLUE + "Normal Mode").create());
-				}
-				p.playSound(p.getLocation(), Sound.ENTITY_ITEM_FRAME_REMOVE_ITEM, 1.0f, 0.2f);
-
-				p.getInventory().setContents(pin.get(p.getUniqueId()));
-				pin.remove(p.getUniqueId());
-			}
+			quitCombat(p);
 		});
 	}
 
@@ -174,19 +171,7 @@ public class CombatMode {
 		if (weaponcheck(p, is) && p.isSneaking()) {
 			ev.setCancelled(true);
 			if (mode.containsKey(p.getUniqueId())) {
-				mode.remove(p.getUniqueId());
-				p.getInventory().clear();
-				if (p.getLocale().equalsIgnoreCase("ko_kr")) {
-					p.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-							new ComponentBuilder(ChatColor.BLUE + "비전투 상태").create());
-				} else {
-					p.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-							new ComponentBuilder(ChatColor.BLUE + "Normal Mode").create());
-				}
-				p.playSound(p.getLocation(), Sound.ENTITY_ITEM_FRAME_REMOVE_ITEM, 1.0f, 0.2f);
-
-				p.getInventory().setContents(pin.get(p.getUniqueId()));
-				pin.remove(p.getUniqueId());
+				quitCombat(p);
 			} else {
 				mode.put(p.getUniqueId(), true);
 				if (p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -204,13 +189,10 @@ public class CombatMode {
 				p.getInventory().setItemInOffHand(os);
 				p.getInventory().setArmorContents(ar);
 
-				ItemStack skillcool = new ItemStack(Material.BLACK_STAINED_GLASS);
+				ItemStack skillcool = new ItemStack(Material.ALLAY_SPAWN_EGG);
 				ItemMeta smet = skillcool.getItemMeta();
 				smet.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_DESTROYS, ItemFlag.HIDE_DYE);
 
-				Material[] mas = { Material.RED_STAINED_GLASS, Material.ORANGE_STAINED_GLASS,
-						Material.YELLOW_STAINED_GLASS, Material.GREEN_STAINED_GLASS, Material.CYAN_STAINED_GLASS,
-						Material.BLUE_STAINED_GLASS, Material.MAGENTA_STAINED_GLASS};
 
 				for (int i = 0; i < 7; i++) {
 					smet.setDisplayName(ChatColor.BLUE + "Skill [" + i + "]");
@@ -241,8 +223,7 @@ public class CombatMode {
 						new ComponentBuilder(ChatColor.BLUE + "[웅크리기 + 아이템버리기]로 전투모드로 전환할수 있습니다.").create());
 			} else {
 				p.spigot().sendMessage(ChatMessageType.CHAT,
-						new ComponentBuilder(ChatColor.BLUE + "You can use CombatMode by [Sneaking + Dropping Item]")
-								.create());
+						new ComponentBuilder(ChatColor.BLUE + "You can use CombatMode by [Sneaking + Dropping Item]").create());
 			}
 		}
 	}
