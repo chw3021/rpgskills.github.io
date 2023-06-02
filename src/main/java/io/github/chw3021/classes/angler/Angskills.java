@@ -10,7 +10,6 @@ import io.github.chw3021.commons.SkillBuilder;
 import io.github.chw3021.obtains.Obtained;
 import io.github.chw3021.party.Party;
 
-import org.bukkit.block.data.type.BubbleColumn;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -33,7 +32,6 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.Particle.DustOptions;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.FishHook;
