@@ -10,6 +10,7 @@ import io.github.chw3021.commons.SkillBuilder;
 import io.github.chw3021.obtains.Obtained;
 import io.github.chw3021.party.Party;
 
+import org.bukkit.block.data.type.BubbleColumn;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -20,10 +21,7 @@ import io.github.chw3021.rmain.RMain;
 import net.md_5.bungee.api.ChatColor;
 import java.io.File;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bukkit.Bukkit;
@@ -567,8 +565,16 @@ public class Angskills extends Pak implements Serializable, Listener{
         				}
         			}
         		}
+				List<Material> c = new ArrayList<>();
+				c.add(Material.BRAIN_CORAL_BLOCK);
+				c.add(Material.BUBBLE_CORAL_BLOCK);
+				c.add(Material.TUBE_CORAL_BLOCK);
+				c.add(Material.HORN_CORAL_BLOCK);
+				c.add(Material.FIRE_CORAL_BLOCK);
+				Random random = new Random(p.getPlayerTime());
+
             	sph.forEach(l -> {
-					FallingBlock fallingb = pw.spawnFallingBlock(l, Material.DARK_OAK_WOOD.createBlockData());
+					FallingBlock fallingb = pw.spawnFallingBlock(l, c.get(random.nextInt(4)).createBlockData());
         			fallingb.setInvulnerable(true);
 					fallingb.setDropItem(false);
 					fallingb.setHurtEntities(false);
@@ -576,8 +582,14 @@ public class Angskills extends Pak implements Serializable, Listener{
 					fallingb.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 					fallingb.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 					fallingb.setMetadata("wrose", new FixedMetadataValue(RMain.getInstance(), p.getName()));
-						
-            	});
+
+					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+						@Override
+						public void run() {
+							fallingb.remove();
+						}
+					}, 25);
+				});
 				
 				for(Entity e : pl.getWorld().getNearbyEntities(pl, 4,4,4)) {
 					if (e instanceof Player) 
@@ -1101,7 +1113,7 @@ public class Angskills extends Pak implements Serializable, Listener{
 	public void ULT(PlayerItemHeldEvent ev)        
     {
 		Player p = (Player)ev.getPlayer();
-		final Location tl = gettargetblock(p,5).clone();
+		final Location tl = gettargetblock(p,7).clone().add(0,4,0);
 	    if(!isCombat(p)) {
 	    	return;
 	    }
@@ -1120,49 +1132,53 @@ public class Angskills extends Pak implements Serializable, Listener{
 						.hm(aultcooldown)
 						.skillUse(()->{
 
-							HashSet<Location> loc = new HashSet<>();
-							for(int i =0; i<9; i++) {
-								loc.add(tl.clone().add(15, 13+i, 6));
-								loc.add(tl.clone().add(15, 13+i, 28));
-							}
-							for(int i=0; i<3; i++) {
-								for(int j=0; j<11;j++) {
-									for(int k=0; k<11;k++) {
-										loc.add(tl.clone().add(9+k, 14+i, 11+j));
-										loc.add(tl.clone().add(9+k, 11+i, 11+j));
-										loc.add(tl.clone().add(10+k, 10+i, 11+j));
-										loc.add(tl.clone().add(10+k, 11+i, 12+j));
-										
-										loc.add(tl.clone().add(9+k, 3+i, 11+j));
-										loc.add(tl.clone().add(9+k, 0+i, 11+j));
-										loc.add(tl.clone().add(10+k, 3+i, 11+j));
-										loc.add(tl.clone().add(10+k, 0+i, 11+j));
-										loc.add(tl.clone().add(10+k, 2+i, 12+j));
-										loc.add(tl.clone().add(10+k, 0+i, 12+j));
-									}
+							final World pw = tl.getWorld();
 
+							HashSet<Location> loc = new HashSet<>();
+
+							for(int i =-1; i<1; i++) {
+								for(int j = -4; j<4; j++){
+									loc.add(tl.clone().add(i, 0, j));
 								}
 							}
-							
-							loc.forEach(l -> {
-								l.getWorld().spawn(l, ArmorStand.class, ar->{
-									ar.setInvisible(true);
-									ar.getEquipment().setHelmet(new ItemStack(Material.DARK_OAK_WOOD));
-									ar.setInvulnerable(true);
-									ar.setCollidable(false);
-									ar.setGravity(false);
-									ar.setAI(false);
-									ar.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-									ar.setMetadata("rob", new FixedMetadataValue(RMain.getInstance(), p.getName()));
 
-				                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-							                @Override
-							                public void run() 
-							                {
-							                	ar.remove();
-							                }
-						            }, 100); 
-								});
+							for(int i =-2; i<2; i++) {
+								for(int j = -5; j<5; j++){
+									if(Math.abs(i)<2&&Math.abs(j)<5){
+										continue;
+									}
+									loc.add(tl.clone().add(i, 1, j));
+								}
+							}
+
+							for(int i =-3; i<3; i++) {
+								for(int j = -6; j<6; j++){
+									if(Math.abs(i)<3&&Math.abs(j)<6){
+										continue;
+									}
+									loc.add(tl.clone().add(i, 2, j));
+									loc.add(tl.clone().add(i, 3, j));
+								}
+							}
+
+							loc.forEach(l -> {
+
+								FallingBlock fallingb = pw.spawnFallingBlock(l, Material.DARK_OAK_WOOD.createBlockData());
+								fallingb.setInvulnerable(true);
+								fallingb.setDropItem(false);
+								fallingb.setHurtEntities(false);
+								fallingb.setGravity(false);
+								fallingb.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+								fallingb.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+								fallingb.setMetadata("wrose", new FixedMetadataValue(RMain.getInstance(), p.getName()));
+
+								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+									@Override
+									public void run()
+									{
+										fallingb.remove();
+									}
+								}, 100);
 							});
 							
 							Holding.invur(p, 100l);
@@ -1243,6 +1259,21 @@ public class Angskills extends Pak implements Serializable, Listener{
     }
 
 
+
+	final private void ult2(Location tl, Integer j, Player p) {
+		ArrayList<Location> ring = new ArrayList<Location>();
+		p.playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 0.7f, 0);
+
+		for(double an = 0; an<Math.PI*2; an +=Math.PI/180) {
+			ring.add(tl.clone().add(tl.getDirection().normalize().rotateAroundY(an+j*0.25).multiply(an*0.5)).add(0, an+j*0.1, 0));
+		}
+		ring.forEach(l -> {
+			tl.getWorld().spawnParticle(Particle.WATER_BUBBLE, l, 2, 0.5,0.5,0.5,0);
+			tl.getWorld().spawnParticle(Particle.WATER_WAKE, l, 1, 0.5,0.5,0.5,0);
+			tl.getWorld().spawnParticle(Particle.WATER_SPLASH, l, 2, 0.5,0.5,0.5,0.1);
+
+		});
+	}
 	
 	public void ULT2(PlayerItemHeldEvent ev)        
     {
@@ -1279,12 +1310,6 @@ public class Angskills extends Pak implements Serializable, Listener{
 						                @Override
 						                public void run() 
 						                {
-						                	j.incrementAndGet();
-			    							p.getWorld().spawnParticle(Particle.WATER_WAKE, p.getLocation(), 1000,13,13,13);
-			    							p.getWorld().spawnParticle(Particle.COMPOSTER, p.getLocation(), 1000,13,13,13);
-			    							p.getWorld().spawnParticle(Particle.WATER_BUBBLE, p.getLocation(), 1000,13,13,13);
-			    							p.getWorld().spawnParticle(Particle.WATER_SPLASH, p.getLocation(), 1000,13,13,13);
-			    							p.getWorld().spawnParticle(Particle.WARPED_SPORE, p.getLocation(), 1000,13,13,13);
 			             					p.playSound(p.getLocation(), Sound.ENTITY_DOLPHIN_SPLASH, 1, 2f);
 			             					p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_HURT, 1, 2f);
 			        	                    p.getNearbyEntities(13, 13, 13).forEach(e -> {
@@ -1304,11 +1329,15 @@ public class Angskills extends Pak implements Serializable, Listener{
 			        	        				{
 		        	        						LivingEntity le = (LivingEntity)e;
 		        				                	les.add(le);
-		        				                	final Location lel = le.getLocation().clone().add(0,j.get(),0);
-		        				                	if(lel.getBlock().isPassable() && lel.getBlock().getType() != Material.WATER) {
-		        		        						p.sendBlockChange(lel, Material.WATER.createBlockData());
-		        				                	}
-		        	        						Holding.holding(p, le, 100l);
+		        				                	final Location lel = le.getLocation().clone().add(0,0.2,0);for(int i = 0; i <15; i++) {
+													Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+														@Override
+														public void run() {
+															ult2(lel.clone(),j.getAndIncrement(), p);
+														}
+													}, i*3);
+												}
+		        				                	Holding.holding(p, le, 100l);
 			        	        								
 			        	        				}
 			        	            		});
