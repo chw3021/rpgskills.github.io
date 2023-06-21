@@ -14,17 +14,15 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
-import org.bukkit.event.player.PlayerItemBreakEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 
-import io.github.chw3021.classes.ClassData;
+import io.github.chw3021.commons.CombatMode;
 import io.github.chw3021.rmain.RMain;
 import net.md_5.bungee.api.ChatColor;
 
@@ -35,31 +33,44 @@ public class Elements implements Listener {
 
 		final ItemStack is = new ItemStack(m);
 		is.setAmount(count);
-    	p.getInventory().addItem(is);
+		
+		if(CombatMode.getInstance().isCombat(p)) {
+			Backpack.add(p, is);
+		}
+		else {
+	    	p.getInventory().addItem(is);
+	    	if(p.getInventory().firstEmpty() == -1 && is != null && is.getAmount() >0) {
+	    		p.getWorld().dropItem(p.getLocation(), is);
+	    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "ÀÎº¥Åä¸®°¡ ²ËÃ¡½À´Ï´Ù":"Your Inventory Is Fulled!";
+	    		p.sendMessage(ChatColor.RED + reg);
+	    	}
+		}
+		
+		
     	//final String in = m.name();
 		//String gived = p.getLocale().equalsIgnoreCase("ko_kr") ? in + " " + count + "°³¸¦ È¹µæÇß½À´Ï´Ù":"You've Got " + count +" "+in;
 		//p.sendMessage(ChatColor.GOLD + gived);
 		
-    	if(p.getInventory().firstEmpty() == -1 && is != null && is.getAmount() >0) {
-    		p.getWorld().dropItem(p.getLocation(), is);
-    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "ÀÎº¥Åä¸®°¡ ²ËÃ¡½À´Ï´Ù":"Your Inventory Is Fulled!";
-    		p.sendMessage(ChatColor.RED + reg);
-    	}
     	return is;
 	}
 	
 	public static ItemStack give(ItemStack is, Integer count, Player p) {
 
 		is.setAmount(count);
-    	p.getInventory().addItem(is);
-    	final String in = is.getItemMeta().getDisplayName();
-		String gived = p.getLocale().equalsIgnoreCase("ko_kr") ? in + " " + count + "°³¸¦ È¹µæÇß½À´Ï´Ù":"You've Got " + count +" "+in;
-		p.sendMessage(ChatColor.GOLD + gived);
-    	if(p.getInventory().firstEmpty() == -1 && is != null && is.getAmount() >0) {
-    		p.getWorld().dropItem(p.getLocation(), is);
-    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "ÀÎº¥Åä¸®°¡ ²ËÃ¡½À´Ï´Ù":"Your Inventory Is Fulled!";
-    		p.sendMessage(ChatColor.RED + reg);
-    	}
+		if(CombatMode.getInstance().isCombat(p)) {
+			Backpack.add(p, is);
+		}
+		else {
+	    	p.getInventory().addItem(is);
+	    	final String in = is.getItemMeta().getDisplayName();
+			String gived = p.getLocale().equalsIgnoreCase("ko_kr") ? in + " " + count + "°³¸¦ È¹µæÇß½À´Ï´Ù":"You've Got " + count +" "+in;
+			p.sendMessage(ChatColor.GOLD + gived);
+	    	if(p.getInventory().firstEmpty() == -1 && is != null && is.getAmount() >0) {
+	    		p.getWorld().dropItem(p.getLocation(), is);
+	    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "ÀÎº¥Åä¸®°¡ ²ËÃ¡½À´Ï´Ù":"Your Inventory Is Fulled!";
+	    		p.sendMessage(ChatColor.RED + reg);
+	    	}
+		}
     	return is;
 	}
 

@@ -30,6 +30,7 @@ import io.github.chw3021.commons.Pak;
 import io.github.chw3021.monsters.raids.Summoned;
 import io.github.chw3021.party.Party;
 import io.github.chw3021.rmain.RMain;
+import io.github.chw3021.commons.CombatMode;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -43,15 +44,14 @@ import java.util.zip.GZIPOutputStream;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.io.BukkitObjectInputStream;
@@ -64,6 +64,7 @@ public class ClassData implements Serializable, Listener{
 	static public HashMap<UUID, Integer> pc;
 	Classgui Classgui = new Classgui();
 	Pak pak = new Pak();
+	CombatMode cm = new CombatMode();
  
     // Can be used for saving
 	
@@ -104,59 +105,10 @@ public class ClassData implements Serializable, Listener{
             return data;
         }
     }
+    
+    final private void setMaxHealth(Player p) {
 
-	@EventHandler	
-	public void er(PluginEnableEvent ev) 
-	{
-        String path = new File("").getAbsolutePath();
-		ClassData cdata = new ClassData(ClassData.loadData(path +"/plugins/RPGskills/ClassData.data"));
-		pc = cdata.playerclass;
-	}
-	
-	final private void classanounce(Player p) {
-
-		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-            @Override
-            public void run() 
-            {
-        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-        			p.sendMessage(ChatColor.GREEN +"/rpg c 또는 /rpg class 입력시 직업선택이 가능합니다");
-        			p.sendMessage(ChatColor.GREEN +"/rpg ? 또는 /rpg help 입력시 명령어들이 나옵니다");
-        		}
-        		else {
-        			p.sendMessage(ChatColor.GREEN +"You Can select your class by typing /rpg c Or /rpg class ");
-        			p.sendMessage(ChatColor.GREEN +"If you type /rpg ? or /rpg help, the instructions will come out.");
-        		}
-            }
-        }, 3); 
-	}
-	
-	@EventHandler	
-	public void nepreventer(PlayerJoinEvent ev) 
-	{
-		Player p = ev.getPlayer();
-        String path = new File("").getAbsolutePath();
-		try 
-		{
-			if(!getPlayerclassdata().containsKey(p.getUniqueId()))
-			{
-				HashMap<UUID, Integer> playerclass = getPlayerclassdata();
-				playerclass.put(p.getUniqueId(), -1);
-	    		new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
-	    		classanounce(p);
-			}
-		}
-		catch(NullPointerException ne)
-		{
-			HashMap<UUID, Integer> playerclass = new HashMap<UUID, Integer>();
-			playerclass.put(p.getUniqueId(), -1);
-    		new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
-    		classanounce(p);
-            
-		}
-		ClassData cdata = new ClassData(ClassData.loadData(path +"/plugins/RPGskills/ClassData.data"));
-		pc = cdata.playerclass;
-
+	    p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
 		if(pc.getOrDefault(p.getUniqueId(),-1) == 0) { //Swordman
 			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(36);
 		}
@@ -271,6 +223,65 @@ public class ClassData implements Serializable, Listener{
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 26) { // 에술가
 			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(18);
 		}
+    }
+	@EventHandler
+	public void Respawn(PlayerRespawnEvent ev) {
+		setMaxHealth(ev.getPlayer());
+	}
+
+	@EventHandler	
+	public void er(PluginEnableEvent ev) 
+	{
+        String path = new File("").getAbsolutePath();
+		ClassData cdata = new ClassData(ClassData.loadData(path +"/plugins/RPGskills/ClassData.data"));
+		pc = cdata.playerclass;
+	}
+	
+	final private void classanounce(Player p) {
+
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() 
+            {
+        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+        			p.sendMessage(ChatColor.GREEN +"/rpg c 또는 /rpg class 입력시 직업선택이 가능합니다");
+        			p.sendMessage(ChatColor.GREEN +"/rpg ? 또는 /rpg help 입력시 명령어들이 나옵니다");
+        		}
+        		else {
+        			p.sendMessage(ChatColor.GREEN +"You Can select your class by typing /rpg c Or /rpg class ");
+        			p.sendMessage(ChatColor.GREEN +"If you type /rpg ? or /rpg help, the instructions will come out.");
+        		}
+            }
+        }, 3); 
+	}
+	
+	@EventHandler	
+	public void nepreventer(PlayerJoinEvent ev) 
+	{
+		Player p = ev.getPlayer();
+        String path = new File("").getAbsolutePath();
+		try 
+		{
+			if(!getPlayerclassdata().containsKey(p.getUniqueId()))
+			{
+				HashMap<UUID, Integer> playerclass = getPlayerclassdata();
+				playerclass.put(p.getUniqueId(), -1);
+	    		new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
+	    		classanounce(p);
+			}
+		}
+		catch(NullPointerException ne)
+		{
+			HashMap<UUID, Integer> playerclass = new HashMap<UUID, Integer>();
+			playerclass.put(p.getUniqueId(), -1);
+    		new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
+    		classanounce(p);
+            
+		}
+		ClassData cdata = new ClassData(ClassData.loadData(path +"/plugins/RPGskills/ClassData.data"));
+		pc = cdata.playerclass;
+
+		setMaxHealth(p);
 	}
     @EventHandler
 	public void classopen(InventoryOpenEvent e)
@@ -299,7 +310,6 @@ public class ClassData implements Serializable, Listener{
 		}
 	}
     
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void classinv(InventoryClickEvent e)
 	{
@@ -322,7 +332,18 @@ public class ClassData implements Serializable, Listener{
 						p.sendMessage(ChatColor.BOLD+"You Can't Change Class While Raiding");
 		    		}
 					return;
-				}	
+				}
+
+				if(cm.isCombat(p)) {
+		            p.closeInventory();
+		    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+						p.sendMessage(ChatColor.BOLD+"전투중중에는 전직변경이 불가능합니다");
+		    		}
+		    		else {
+						p.sendMessage(ChatColor.BOLD+"You Can't Change Class While you're in battle");
+		    		}
+					return;
+				}
 				if(Party.hasParty(p)) {
 		            p.closeInventory();
 		    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -366,8 +387,6 @@ public class ClassData implements Serializable, Listener{
 					case"SwordMan":
 					case"검사":
 						playerclass.put(p.getUniqueId(), 0);
-						p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
-						p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(36);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
 			            SwordSkillsGui ssg = new SwordSkillsGui();
@@ -377,8 +396,6 @@ public class ClassData implements Serializable, Listener{
 					case"Berserker":
 					case"광전사":
 						playerclass.put(p.getUniqueId(), 1);
-					    p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
-						p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
 
 						p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(100);
 						p.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
@@ -390,8 +407,6 @@ public class ClassData implements Serializable, Listener{
 					case"Hunter":
 					case"사냥꾼":
 						playerclass.put(p.getUniqueId(), 2);
-					    p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
-						p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(18);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
 			            HunSkillsGui hsg = new HunSkillsGui();
@@ -401,8 +416,6 @@ public class ClassData implements Serializable, Listener{
 					case"Paladin":
 					case"성기사":
 						playerclass.put(p.getUniqueId(), 3);
-					    p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
-						p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
 					    pak.putelmr(p, 9, 0.1);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
@@ -413,8 +426,6 @@ public class ClassData implements Serializable, Listener{
 					case"Sniper":
 					case"저격수":
 						playerclass.put(p.getUniqueId(), 4);
-					    p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
-						p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(16);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
 						SnipSkillsGui l = new SnipSkillsGui();
@@ -424,8 +435,6 @@ public class ClassData implements Serializable, Listener{
 					case"Launcher":
 					case"원소술사":
 						playerclass.put(p.getUniqueId(), 5);
-					    p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
-						p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
 			            LaunSkillsGui lsg = new LaunSkillsGui();
@@ -435,8 +444,6 @@ public class ClassData implements Serializable, Listener{
 					case"Archer":
 					case"궁수":
 						playerclass.put(p.getUniqueId(), 6);
-						p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
-					    p.setMaxHealth(36);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
 			            ArchSkillsGui asg = new ArchSkillsGui();
@@ -446,9 +453,6 @@ public class ClassData implements Serializable, Listener{
 					case"Medic":
 					case"의궁":
 						playerclass.put(p.getUniqueId(), 61);
-					    p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
-					    p.setMaxHealth(30);
-			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
 						MedSkillsGui msg = new MedSkillsGui();
 						msg.Medskillsinv(p);
@@ -457,8 +461,6 @@ public class ClassData implements Serializable, Listener{
 					case"Boxer":
 					case"권사":
 						playerclass.put(p.getUniqueId(), 7);
-					    p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
-					    p.setMaxHealth(50);
 					    pak.putelmr(p, 5, 0.1);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
@@ -469,8 +471,6 @@ public class ClassData implements Serializable, Listener{
 					case"Wrestler":
 					case"유술가":
 						playerclass.put(p.getUniqueId(), 8);
-					    p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
-					    p.setMaxHealth(46);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
 						WreSkillsGui wrg = new WreSkillsGui();
@@ -480,8 +480,6 @@ public class ClassData implements Serializable, Listener{
 					case"Tamer":
 					case"조련사":
 						playerclass.put(p.getUniqueId(), 9);
-					    p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
-					    p.setMaxHealth(30);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
 						TamSkillsGui tsg = new TamSkillsGui();
@@ -491,8 +489,6 @@ public class ClassData implements Serializable, Listener{
 					case"Taoist":
 					case"도사":
 						playerclass.put(p.getUniqueId(), 10);
-					    p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
-					    p.setMaxHealth(40);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
 						TaoSkillsGui tag = new TaoSkillsGui();
@@ -502,8 +498,6 @@ public class ClassData implements Serializable, Listener{
 					case"Illusionist":
 					case"환술사":
 						playerclass.put(p.getUniqueId(), 11);
-					    p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
-					    p.setMaxHealth(18);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
 						IllSkillsGui ilg = new IllSkillsGui();
@@ -513,8 +507,6 @@ public class ClassData implements Serializable, Listener{
 					case"FireMage":
 					case"화염술사":
 						playerclass.put(p.getUniqueId(), 12);
-					    p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
-					    p.setMaxHealth(34);
 					    pak.putelmr(p, 10, 0.1);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
@@ -525,8 +517,6 @@ public class ClassData implements Serializable, Listener{
 					case"Witherist":
 					case"위더리스트":
 						playerclass.put(p.getUniqueId(), 13);
-					    p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
-					    p.setMaxHealth(28);
 					    pak.putelmr(p, 8, 0.1);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
@@ -537,8 +527,6 @@ public class ClassData implements Serializable, Listener{
 					case"WitchDoctor":
 					case"부두술사":
 						playerclass.put(p.getUniqueId(), 14);
-					    p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
-					    p.setMaxHealth(30);
 					    pak.putelmr(p, 14, 0.1);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
@@ -549,8 +537,6 @@ public class ClassData implements Serializable, Listener{
 					case"Chemist":
 					case"화학자":
 						playerclass.put(p.getUniqueId(), 15);
-					    p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
-					    p.setMaxHealth(46);
 					    pak.putelmr(p, 11, 0.1);
 					    
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
@@ -561,8 +547,6 @@ public class ClassData implements Serializable, Listener{
 					case"Forger":
 					case"무기공":
 						playerclass.put(p.getUniqueId(), 16);
-					    p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
-					    p.setMaxHealth(20);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
 						ForSkillsGui fgg = new ForSkillsGui();
@@ -572,8 +556,6 @@ public class ClassData implements Serializable, Listener{
 					case"Engineer":
 					case"공학자":
 						playerclass.put(p.getUniqueId(), 17);
-					    p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
-					    p.setMaxHealth(30);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
 						EngSkillsGui egg = new EngSkillsGui();
@@ -583,8 +565,6 @@ public class ClassData implements Serializable, Listener{
 					case"Cook":
 					case"요리사":
 						playerclass.put(p.getUniqueId(), 18);
-					    p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
-					    p.setMaxHealth(24);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
 						CookSkillsGui csg = new CookSkillsGui();
@@ -594,8 +574,6 @@ public class ClassData implements Serializable, Listener{
 					case"Nobility":
 					case"귀족":
 						playerclass.put(p.getUniqueId(), 19);
-					    p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
-					    p.setMaxHealth(22);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
 						NobSkillsGui nsg = new NobSkillsGui();
@@ -605,8 +583,6 @@ public class ClassData implements Serializable, Listener{
 					case"OceanKnight":
 					case"바다기사":
 						playerclass.put(p.getUniqueId(), 20);
-					    p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
-					    p.setMaxHealth(40);
 					    pak.putelmr(p, 7, 0.1);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
@@ -617,8 +593,6 @@ public class ClassData implements Serializable, Listener{
 					case"Frostman":
 					case"빙술사":
 						playerclass.put(p.getUniqueId(), 21);
-					    p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
-					    p.setMaxHealth(30);
 					    pak.putelmr(p, 6, 0.1);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
@@ -629,8 +603,6 @@ public class ClassData implements Serializable, Listener{
 					case"Angler":
 					case"낚시꾼":
 						playerclass.put(p.getUniqueId(), 22);
-					    p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
-					    p.setMaxHealth(24);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
 						AngSkillsGui arg = new AngSkillsGui();
@@ -640,24 +612,18 @@ public class ClassData implements Serializable, Listener{
 					case"Mercenary":
 					case"용병":
 						playerclass.put(p.getUniqueId(), 23);
-					    p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
-					    p.setMaxHealth(36);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
 						break;
 					case"Daggerist":
 					case"단검사":
 						playerclass.put(p.getUniqueId(), 24);
-					    p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
-					    p.setMaxHealth(20);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
 						break;
 					case"Gardener":
 					case"원예가":
 						playerclass.put(p.getUniqueId(), 25);
-					    p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
-					    p.setMaxHealth(25);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
 						BroSkillsGui brg = new BroSkillsGui();
@@ -667,14 +633,13 @@ public class ClassData implements Serializable, Listener{
 					case"Musician":
 					case"예술가":
 						playerclass.put(p.getUniqueId(), 26);
-					    p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
-					    p.setMaxHealth(18);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
 						break;
 					}
 
 					pc = playerclass;
+					setMaxHealth(p);
 		    		
 					Classgui.LimitBreak(p);
 					

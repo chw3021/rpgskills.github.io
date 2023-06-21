@@ -81,9 +81,14 @@ public class SkillsGui {
 		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
 		List<String> input = new ArrayList<>();
+
+		if(Lore.stream().anyMatch(s -> s.contains("Master"))) {
+			Lore.stream().filter(s -> s.contains("Master")).forEach(l -> {
+				Lore.set(Lore.indexOf(l),ChatColor.GOLD+ l);
+			});
+		}
 		input.addAll(Lore);
 		input.addAll(des(inv));
-		
 		input.forEach(l -> {
 			l=ChatColor.RESET+l;
 		});
@@ -101,6 +106,13 @@ public class SkillsGui {
 		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
 		List<String> input = new ArrayList<>();
+
+		if(Lore.stream().anyMatch(s -> s.contains("Master"))) {
+			Lore.stream().filter(s -> s.contains("Master")).forEach(l -> {
+				
+				Lore.set(Lore.indexOf(l),ChatColor.GOLD+ l);
+			});
+		}
 		input.addAll(Lore);
 		input.addAll(des(inv));
 		

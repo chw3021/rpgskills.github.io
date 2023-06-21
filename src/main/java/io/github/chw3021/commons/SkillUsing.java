@@ -31,7 +31,6 @@ import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.inventory.PrepareSmithingEvent;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -90,7 +89,7 @@ public class SkillUsing implements Listener, Serializable {
 	Pak pak = new Pak();
 	Weapons w = new Weapons();
 
-
+	
 	@EventHandler
 	public void skilluse(SkillUseEvent e) {
 
@@ -251,6 +250,12 @@ public class SkillUsing implements Listener, Serializable {
 		
 		Angskills.getInstance().ULT(ev);
 		Angskills.getInstance().ULT2(ev);
+
+		Archskills.getInstance().ULT(ev);
+		Archskills.getInstance().ULT2(ev);
+
+		Berskills.getInstance().ULT(ev);
+		Berskills.getInstance().ULT2(ev);
 		
 		Broskills.getInstance().OneOnly(ev);
 		
@@ -458,8 +463,12 @@ public class SkillUsing implements Listener, Serializable {
 	@EventHandler
 	public void Click(PlayerInteractEvent ev) 
 	{
+		CombatMode.getInstance().useCancel(ev);
+		
 		Angskills.getInstance().Whipping(ev);
 		Angskills.getInstance().CoralRoots(ev);
+		Angskills.getInstance().CoralPrison(ev);
+		Angskills.getInstance().PufferBomb(ev);
 
 		Archskills.getInstance().Indure(ev);
 		Archskills.getInstance().SpreadingArrows(ev);
@@ -801,12 +810,8 @@ public class SkillUsing implements Listener, Serializable {
 		
 		Angskills.getInstance().ThrowCancel(ev);
 		
-		Archskills.getInstance().ULT(ev);
-		Archskills.getInstance().ULT2(ev);
 		Archskills.getInstance().ThrowCancel(ev);
 
-		Berskills.getInstance().ULT(ev);
-		Berskills.getInstance().ULT2(ev);
 		Berskills.getInstance().ThrowCancel(ev);
 
 		Boxskills.getInstance().ULT(ev);
@@ -1129,6 +1134,8 @@ public class SkillUsing implements Listener, Serializable {
 	public void PickupItem(EntityPickupItemEvent ev) 
 	{
 		w.AttributeChange(ev);
+		
+		CombatMode.getInstance().item(ev);
 		
 		Nobskills.getInstance().Owner(ev);
 		

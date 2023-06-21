@@ -60,21 +60,27 @@ public class SkillBuilder {
     public void execute() {
         if(hm.containsKey(player.getName())) {
             double timer = (hm.get(player.getName())/1000d + cooldown) - System.currentTimeMillis()/1000d;
-            if(slot >-1) {
-        		Bukkit.getPluginManager().callEvent(new SkillUseEvent(player,timer,slot,kname,ename));
-            }
             if(!(timer < 0)) {
+                if(slot >-1) {
+            		Bukkit.getPluginManager().callEvent(new SkillUseEvent(player,timer,slot,kname,ename));
+                }
                 if(player.getLocale().equalsIgnoreCase("ko_kr")) {
                     player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(kname+" 재사용 대기시간이 " + String.valueOf(Math.round(timer*10)/10.0) + "초 남았습니다").create());
                 } else {
                     player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use "+ename).create());
                 }
             } else {
+                if(slot >-1) {
+            		Bukkit.getPluginManager().callEvent(new SkillUseEvent(player,cooldown,slot,kname,ename));
+                }
                 hm.remove(player.getName());
                 skillUse.skilluse();
                 hm.put(player.getName(), System.currentTimeMillis());
             }
         } else {
+            if(slot >-1) {
+        		Bukkit.getPluginManager().callEvent(new SkillUseEvent(player,cooldown,slot,kname,ename));
+            }
             skillUse.skilluse();
             hm.put(player.getName(), System.currentTimeMillis());
         }

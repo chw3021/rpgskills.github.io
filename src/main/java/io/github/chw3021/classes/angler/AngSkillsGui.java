@@ -63,10 +63,11 @@ public class AngSkillsGui extends SkillsGui{
 				itemset("장비개선", Material.FISHING_ROD, 0, 1, Arrays.asList("재사용 대기시간이 감소합니다"), 10, Angskillsinv);
 				itemset("민간요법", Material.STRING, 0, 1, Arrays.asList("주변 파티원들을 치유합니다"), 11, Angskillsinv);
 				itemset("활력제", Material.SPLASH_POTION, 0, 1, Arrays.asList("힘,재생 효과를 줍니다"), 12, Angskillsinv);
-				itemset("산호감옥", Material.BRAIN_CORAL_BLOCK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[바람 계열]","재입력시 산호감옥을 사용합니다", "(피해량은 산호뿌리 레벨에 비례합니다)","",ChatColor.BOLD+"X 0.8D + "+BigDecimal.valueOf(dance*0.8).setScale(2, RoundingMode.HALF_EVEN)), 13, Angskillsinv);
+				itemset("산호감옥", Material.BRAIN_CORAL_BLOCK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[바람 계열]","재입력시 산호감옥을 사용합니다","산호감옥 내의 아군들은 무적상태가 됩니다", "(피해량은 산호뿌리 레벨에 비례합니다)","",ChatColor.BOLD+"X 1.1D + "+ demical(root*1.5)), 13, Angskillsinv);
 				itemset("취보", Material.SEAGRASS, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[바람 계열]","재입력시 취보를 사용합니다", "(피해량은 음주가무 레벨에 비례합니다)","",ChatColor.BOLD+"X 0.8D + "+BigDecimal.valueOf(dance*0.8).setScale(2, RoundingMode.HALF_EVEN)), 14, Angskillsinv);
 				itemset("여유", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("전체 공격력이 증가합니다"), 16, Angskillsinv);
-				itemset("바다신의 배", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[물 계열]","num 4","파티원들의 해로운 효과를 제거하고","5초간 무적상태로 만듭니다", "",ChatColor.BOLD+"50 X 0.1D + 4.0D"), 17, Angskillsinv);
+				itemset("만선", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[물 계열]","전투모드중 웅크리기 + num4","파티원들의 해로운 효과를 제거하고","5초간 무적상태로 만듭니다",ChatColor.BOLD+"50 X 0.1D + 4.0D", ""
+						,"적들이 받는피해량이 증가합니다",ChatColor.BOLD+"10% + " + demical(p.getLevel()*0.2)+" 추가데미지"), 17, Angskillsinv);
 				
 				itemset("내뿜기(잠김)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/155015"), 21, Angskillsinv);
 				itemset("복어폭탄(잠김)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/155015"), 22, Angskillsinv);
@@ -79,16 +80,17 @@ public class AngSkillsGui extends SkillsGui{
 				itemset("장비개선", Material.FISHING_ROD, 0, 1, Arrays.asList("재사용 대기시간이 감소합니다"), 10, Angskillsinv);
 				itemset("민간요법", Material.STRING, 0, 1, Arrays.asList("주변 파티원들을 치유합니다"), 11, Angskillsinv);
 				itemset("활력제", Material.SPLASH_POTION, 0, 1, Arrays.asList("힘,재생 효과를 줍니다"), 12, Angskillsinv);
-				itemset("거대뿌리", Material.BRAIN_CORAL_BLOCK, 0, 1, Arrays.asList("최대범위가 즉시 적용됩니다"), 13, Angskillsinv);
+				itemset("산호감옥", Material.BRAIN_CORAL_BLOCK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[바람 계열]","재입력시 산호감옥을 사용합니다","산호감옥 내의 아군들은 무적상태가 됩니다", "(피해량은 산호뿌리 레벨에 비례합니다)","",ChatColor.BOLD+"X 1.1D + "+BigDecimal.valueOf(root*1.5).setScale(2, RoundingMode.HALF_EVEN)), 13, Angskillsinv);
 				itemset("취보", Material.SEAGRASS, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[바람 계열]","재입력시 취보를 사용합니다", "(피해량은 음주가무 레벨에 비례합니다)","",ChatColor.BOLD+"X 0.8D + "+BigDecimal.valueOf(dance*0.8).setScale(2, RoundingMode.HALF_EVEN)), 14, Angskillsinv);
 				itemset("여유", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("전체 공격력이 증가합니다"), 16, Angskillsinv);
-				itemset("바다신의 배", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[물 계열]","num 4","파티원들의 해로운 효과를 제거하고","5초간 무적상태로 만듭니다", "",ChatColor.BOLD+"50 X 0.1D + 4.0D"), 17, Angskillsinv);
+				itemset("만선", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[물 계열]","전투모드중 웅크리기 + num4","파티원들의 해로운 효과를 제거하고","5초간 무적상태로 만듭니다",ChatColor.BOLD+"50 X 0.1D + 4.0D", ""
+						,"적들이 받는피해량이 증가합니다",ChatColor.BOLD+"10% + " + demical(p.getLevel()*0.2)+" 추가데미지"), 17, Angskillsinv);
 				
 				itemset("내뿜기", Material.FIRE_CORAL, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[물 계열]","재입력시 내뿜기를 사용합니다", "(피해량은 산호주 레벨에 비례합니다)","",ChatColor.BOLD+"X 2.1D + "+BigDecimal.valueOf(coralliquor*2.5).setScale(2, RoundingMode.HALF_EVEN)), 21, Angskillsinv);
-				itemset("복어폭탄", Material.FIRE_CORAL, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[물 계열]","재입력시 복어폭탄을 사용합니다", "(피해량은 산호뿌리 레벨에 비례합니다)","",ChatColor.BOLD+"X 2.1D + "+BigDecimal.valueOf(root*2.5).setScale(2, RoundingMode.HALF_EVEN)), 22, Angskillsinv);
+				itemset("복어폭탄", Material.FIRE_CORAL, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[물 계열]","재입력시 복어폭탄을 사용합니다", "(피해량은 산호뿌리 레벨에 비례합니다)","",ChatColor.BOLD+"X 1.4D + "+BigDecimal.valueOf(root*1.75).setScale(2, RoundingMode.HALF_EVEN)), 22, Angskillsinv);
 				itemset("취격", Material.SEAGRASS, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[바람 계열]","재입력시 취격을 사용합니다", "(피해량은 음주가무 레벨에 비례합니다)","",ChatColor.BOLD+"X 1.3D + "+ BigDecimal.valueOf(dance*1.3).setScale(2, RoundingMode.HALF_EVEN)), 23, Angskillsinv);
-				itemset("해탈", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("공격력과 방어력이 증가합니다","바다신의 배 쿨타임이 감소합니다"), 25, Angskillsinv);
-				itemset("물아일체", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[물 계열]","num 5","파티원들의 해로운 효과를 제거하고","5초간 무적상태로 만듭니다", "",ChatColor.BOLD+"X 40D"), 26, Angskillsinv);
+				itemset("해탈", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("공격력과 방어력이 증가합니다","만선 쿨타임이 감소합니다"), 25, Angskillsinv);
+				itemset("물아일체", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[물 계열]","전투모드중 웅크리기 + num5","파티원들의 해로운 효과를 제거하고","5초간 무적상태로 만듭니다", "",ChatColor.BOLD+"X 40D"), 26, Angskillsinv);
 			}
 			itemset("현재 숙련도", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(""+Proficiency.getproexp(p)), 27, Angskillsinv);
 			itemset("스킬포인트", Material.NETHER_STAR, 0, 1, Arrays.asList(ChatColor.AQUA+"SP."+fsd.SkillPoints.getOrDefault(p.getUniqueId(),0),"","클릭하면 스킬포인트가 초기화 됩니다"), 35, Angskillsinv);
@@ -114,7 +116,7 @@ public class AngSkillsGui extends SkillsGui{
 				itemset("Fishing tackle(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 10, Angskillsinv);
 				itemset("Therapy(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 11, Angskillsinv);
 				itemset("Energizer(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 12, Angskillsinv);
-				itemset("HugeCoral(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 13, Angskillsinv);
+				itemset("CoralPrison(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 13, Angskillsinv);
 				itemset("DrunkenDash(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 14, Angskillsinv);
 				itemset("LaidBack(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 16, Angskillsinv);
 				itemset("Boat Of The Sea God(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 17, Angskillsinv);
@@ -124,10 +126,10 @@ public class AngSkillsGui extends SkillsGui{
 				itemset("Fishing tackle", Material.FISHING_ROD, 0, 1, Arrays.asList("Decreases Cooldown"), 10, Angskillsinv);
 				itemset("Therapy", Material.STRING, 0, 1, Arrays.asList("Heal Near By Party"), 11, Angskillsinv);
 				itemset("Energizer", Material.SPLASH_POTION, 0, 1, Arrays.asList("Give Strenghth & Regen Effect"), 12, Angskillsinv);
-				itemset("HugeCoral", Material.BRAIN_CORAL_BLOCK, 0, 1, Arrays.asList("Increases Range Instantly"), 13, Angskillsinv);
+				itemset("CoralPrison", Material.BRAIN_CORAL_BLOCK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Summon CoralPrison When Use Once More", "(Damage Affected By CoralRoots)","",ChatColor.BOLD+"X 1.1D + "+ demical(root*1.5)), 13, Angskillsinv);
 				itemset("DrunkenDash", Material.SEAGRASS, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Dash When Use Once More", "(Damage Affected By DrunkenDance)","",ChatColor.BOLD+"X 0.8D + "+BigDecimal.valueOf(dance*0.8).setScale(2, RoundingMode.HALF_EVEN)), 14, Angskillsinv);
 				itemset("LaidBack", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage"), 16, Angskillsinv);
-				itemset("Boat Of The Sea God", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Water]","num 4","Removes All Negetive Effects of Party","And Set Invulnerable for 5 seconds","",ChatColor.BOLD+"50 X 0.1D + 4.0D"), 17, Angskillsinv);
+				itemset("Fully Load", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Water]","Sneaking + num4 while CombatMode","Removes All Negetive Effects of Party","And Set Invulnerable for 5 seconds","",ChatColor.BOLD+"50 X 0.1D + 4.0D"), 17, Angskillsinv);
 				
 				itemset("Spout(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 21, Angskillsinv);
 				itemset("DrunkenSmash(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 23, Angskillsinv);
@@ -139,15 +141,15 @@ public class AngSkillsGui extends SkillsGui{
 				itemset("Fishing tackle", Material.FISHING_ROD, 0, 1, Arrays.asList("Decreases Cooldown"), 10, Angskillsinv);
 				itemset("Therapy", Material.STRING, 0, 1, Arrays.asList("Heal Near By Party"), 11, Angskillsinv);
 				itemset("Energizer", Material.SPLASH_POTION, 0, 1, Arrays.asList("Give Strenghth & Regen Effect"), 12, Angskillsinv);
-				itemset("Huge Roots", Material.BRAIN_CORAL_BLOCK, 0, 1, Arrays.asList("Increases Range Instantly"), 13, Angskillsinv);
+				itemset("CoralPrison", Material.BRAIN_CORAL_BLOCK, 0, 1, Arrays.asList("Increases Range Instantly"), 13, Angskillsinv);
 				itemset("DrunkenDash", Material.SEAGRASS, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Dash When Use Once More", "(Damage Affected By DrunkenDance)","",ChatColor.BOLD+"X 0.8D + "+BigDecimal.valueOf(dance*0.8).setScale(2, RoundingMode.HALF_EVEN)), 14, Angskillsinv);
 				itemset("LaidBack", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage"), 16, Angskillsinv);
-				itemset("Boat Of The Sea God", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Water]","num 4","Removes All Negetive Effects of Party","And Set Invulnerable for 5 seconds","",ChatColor.BOLD+"50 X 0.1D + 4.0D"), 17, Angskillsinv);
+				itemset("Fully Load", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Water]","Sneaking + num4 while CombatMode","Removes All Negetive Effects of Party","And Set Invulnerable for 5 seconds","",ChatColor.BOLD+"50 X 0.1D + 4.0D"), 17, Angskillsinv);
 				
 				itemset("Spout", Material.FIRE_CORAL, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Water]","Spout Liquor When Use Once More", "Amplify CoralLiquor Buff", "(Damage Affected By CoralLiquor)","",ChatColor.BOLD+"X 2.1D + "+BigDecimal.valueOf(coralliquor*2.5).setScale(2, RoundingMode.HALF_EVEN)), 21, Angskillsinv);
 				itemset("DrunkenSmash", Material.SEAGRASS, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Smash When Use Once More", "(Damage Affected By DrunkenDance)","",ChatColor.BOLD+"X 1.3D + "+ BigDecimal.valueOf(dance*1.3).setScale(2, RoundingMode.HALF_EVEN)), 23, Angskillsinv);
-				itemset("Liberation", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Damage & Armor","Decreases Boat Of The Sea God Cooldown"), 25, Angskillsinv);
-				itemset("Self and Other Oneness", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Water]","num 5","Removes All Negetive Effects of Party","And Set Invulnerable for 5 seconds","",ChatColor.BOLD+"X 40D"), 26, Angskillsinv);
+				itemset("Liberation", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Damage & Armor","Decreases Fully Load Cooldown"), 25, Angskillsinv);
+				itemset("Self and Other Oneness", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Water]","Sneaking + num5 while CombatMode","Removes All Negetive Effects of Party","And Set Invulnerable for 5 seconds","",ChatColor.BOLD+"X 40D"), 26, Angskillsinv);
 			}
 			itemset("Current Proficiency", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(""+Proficiency.getproexp(p)), 27, Angskillsinv);
 			itemset("SkillPoints", Material.NETHER_STAR, 0, 1, Arrays.asList(ChatColor.AQUA+"SP."+fsd.SkillPoints.getOrDefault(p.getUniqueId(),0),"","Click if you want to reset your skill's levels"), 35, Angskillsinv);

@@ -11,6 +11,8 @@ import io.github.chw3021.classes.ClassData;
 import io.github.chw3021.classes.Proficiency;
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.commons.Pak;
+import io.github.chw3021.commons.SkillBuilder;
+import io.github.chw3021.commons.SkillUseEvent;
 import io.github.chw3021.obtains.Obtained;
 import io.github.chw3021.party.Party;
 import io.github.chw3021.rmain.RMain;
@@ -37,7 +39,6 @@ import org.bukkit.entity.AbstractArrow.PickupStatus;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Enderman;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -53,6 +54,7 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.event.server.PluginEnableEvent;
@@ -68,14 +70,15 @@ public class Archskills extends Pak implements Serializable, Listener{
 	 */
 	private static transient final long serialVersionUID = -7821279144455667112L;
 	private HashMap<String, Integer> sa = new HashMap<String, Integer>();
-	private HashMap<String, Double> hscooldown = new HashMap<String, Double>();
-	private HashMap<String, Double> arcooldown = new HashMap<String, Double>();
-	private HashMap<String, Double> gacooldown = new HashMap<String, Double>();
-	private HashMap<String, Double> dpcooldown = new HashMap<String, Double>();
-	private HashMap<String, Double> bultcooldown = new HashMap<String, Double>();
-	private HashMap<String, Double> bult2cooldown = new HashMap<String, Double>();
+	private HashMap<String, Long> hscooldown = new HashMap<String, Long>();
+	private HashMap<String, Long> arcooldown = new HashMap<String, Long>();
+	private HashMap<String, Long> gacooldown = new HashMap<String, Long>();
+	private HashMap<String, Long> dpcooldown = new HashMap<String, Long>();
+	private HashMap<String, Long> bultcooldown = new HashMap<String, Long>();
+	private HashMap<String, Long> bult2cooldown = new HashMap<String, Long>();
 	
 
+	private HashMap<Arrow, UUID> pitched = new HashMap<Arrow, UUID>();
 
 	private HashMap<UUID, Integer> spins = new HashMap<UUID, Integer>();
 	private HashMap<UUID, Integer> spinst = new HashMap<UUID, Integer>();
@@ -86,8 +89,7 @@ public class Archskills extends Pak implements Serializable, Listener{
 	private HashMap<UUID, Integer> spvt = new HashMap<UUID, Integer>();
 	
 	
-	private HashMap<Player, Projectile> arrow = new HashMap<Player, Projectile>();
-	private HashMap<Projectile, Player> shooter = new HashMap<Projectile, Player>();
+	private HashMap<Player, Projectile> fArrow = new HashMap<Player, Projectile>();
 	private HashMap<Player, LivingEntity> grabbed = new HashMap<Player, LivingEntity>();
 	private HashMap<UUID, Integer> grabt = new HashMap<UUID, Integer>();
 	
@@ -109,7 +111,7 @@ public class Archskills extends Pak implements Serializable, Listener{
 			else
 			{	
 				Player p = (Player) e.getWhoClicked();
-				p.setCooldown(Material.ARROW, 2);
+				p.setCooldown(CAREFUL, 2);
 				ArchSkillsData a = new ArchSkillsData(ArchSkillsData.loadData(path +"/plugins/RPGskills/ArchSkillsData.data"));
 				asd = a;
 			}
@@ -181,11 +183,10 @@ public class Archskills extends Pak implements Serializable, Listener{
 				if(p.getInventory().getItemInMainHand().getType() == Material.BOW && asd.TripleShot.getOrDefault(p.getUniqueId(),0)>=1)
 				{
 					spv.remove(p.getUniqueId());
-					if(a.getProjectile().getType() == EntityType.ARROW)
+					if(a.getProjectile() instanceof AbstractArrow)
 					{
-						Arrow far = (Arrow)a.getProjectile();
-						arrow.put(p, far);
-						shooter.put(arrow.get(p), p);
+						AbstractArrow far = (AbstractArrow)a.getProjectile();
+						fArrow.put(p, far);
 	                	ar2(far, p, far.getDamage() , 0.05* (1+asd.TripleShot.get(p.getUniqueId())*0.035));
 	            		if(Proficiency.getpro(p) >=1 && Proficiency.getpro(p)<2) {
 							for(int i =0; i<3; i++) {
@@ -193,10 +194,11 @@ public class Archskills extends Pak implements Serializable, Listener{
 						                @Override
 						                public void run() 
 						                {
-						                	Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 2, 2);
+						                	//Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 2, 2);
+						                	AbstractArrow ar = p.launchProjectile(far.getClass(),far.getVelocity().multiply(0.9));
 						                	ar.setShooter(p);
+						                	
 						                	ar.setBounce(false);
-											shooter.put(ar, p);
 											p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1f, 1.6f);
 						                	ar.setCritical(true);
 						                	ar2(ar, p, far.getDamage()*0.62 , 0.015);
@@ -218,10 +220,10 @@ public class Archskills extends Pak implements Serializable, Listener{
 						                @Override
 						                public void run() 
 						                {
-						                	Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 2, 2);
+						                	AbstractArrow ar = p.launchProjectile(far.getClass(),far.getVelocity().multiply(0.9));
 						                	ar.setShooter(p);
+						                	
 						                	ar.setBounce(false);
-											shooter.put(ar, p);
 											p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1f, 1.6f);
 						                	ar.setCritical(true);
 						                	ar2(ar, p, far.getDamage()*0.62 , 0.015);
@@ -243,10 +245,10 @@ public class Archskills extends Pak implements Serializable, Listener{
 						                @Override
 						                public void run() 
 						                {
-						                	Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 2, 2);
+						                	AbstractArrow ar = p.launchProjectile(far.getClass(),far.getVelocity().multiply(0.9));
 						                	ar.setShooter(p);
+						                	
 						                	ar.setBounce(false);
-											shooter.put(ar, p);
 											p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1f, 1.6f);
 						                	ar.setCritical(true);
 						                	ar2(ar, p, far.getDamage()*0.62 , 0.015);
@@ -260,14 +262,11 @@ public class Archskills extends Pak implements Serializable, Listener{
 						                    }, 20); 
 						                }
 						            }, i*2); 
-				                }
+				             }
 	            		}
 						if(grabbed.containsKey(p))
 						{
 							Shotmob(p);
-		            		if(Proficiency.getpro(p) >=1) {
-								far.setMetadata("holdshot", new FixedMetadataValue(RMain.getInstance(), true));
-		            		}
 			        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 								p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("샷!").color(ChatColor.DARK_RED).create());
 						    }
@@ -281,33 +280,6 @@ public class Archskills extends Pak implements Serializable, Listener{
 			}
 		}
 	}
-		
-	/*
-	public void Arrowshoot(ProjectileLaunchEvent e) 
-	{
-		
-		if(e.getEntity().getShooter() instanceof Player)
-		{
-			Player p = (Player)e.getEntity().getShooter();
-			if(ClassData.pc.get(p.getUniqueId()) == 6) {
-
-				if(p.getInventory().getItemInMainHand().getType()==Material.BOW && !p.getInventory().getItemInOffHand().getType().name().contains("NUGGET")&& !(p.getInventory().getItemInOffHand().getType()==Material.TRIDENT)&& !(p.getInventory().getItemInOffHand().getType()==Material.SHIELD))
-				{
-						player_damage.put(p.getName(), p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue() + p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.5 + p.getLevel()/10);
-						
-						if (p.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE))
-						{
-							player_damage.put(p.getName(),player_damage.get(p.getName())+p.getPotionEffect(PotionEffectType.INCREASE_DAMAGE).getAmplifier()*3);
-						}
-				}
-				else {
-					player_damage.put(p.getName(), 0d);
-				}
-			}
-			
-		}
-	}
-	*/
 	
 	final private void SpreadingArrows(Player p) {
 
@@ -386,11 +358,8 @@ public class Archskills extends Pak implements Serializable, Listener{
 								{
 									
 									Player p1 = (Player) e;
-									if(Party.hasParty(p) && Party.hasParty(p1))	{
-									if(Party.getParty(p).equals(Party.getParty(p1)))
-										{
+									if(Party.isInSameParty(p,p1))	{
 											continue;
-										}
 									}
 								}
 		                		if ((!(e == p))&& e instanceof LivingEntity && !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
@@ -486,11 +455,12 @@ public class Archskills extends Pak implements Serializable, Listener{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
 
-		if(ClassData.pc.get(p.getUniqueId()) == 6 && !p.hasCooldown(Material.ARROW))	{	
+		if(ClassData.pc.get(p.getUniqueId()) == 6 && !p.hasCooldown(CAREFUL))	{	
 			if(p.getInventory().getItemInMainHand().getType() == Material.BOW && asd.SpreadingArrows.getOrDefault(p.getUniqueId(),0)>=1)
 			{
 				if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK) && !p.isSneaking()) 
 				{
+					p.setCooldown(CAREFUL, 2);
 					if(!sa.containsKey(p.getName())) {
 	            		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
 			                @Override
@@ -501,12 +471,18 @@ public class Archskills extends Pak implements Serializable, Listener{
 					                	if(sa.get(p.getName())<6) {
 						                    sa.computeIfPresent(p.getName(), (k,v) -> v+1);
 						    				p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.BLUE+"화살뿌리기 "+sa.get(p.getName()) + "/6").create());
+						                	if(sa.get(p.getName())<5) {
+							            		Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,5.0,0,ChatColor.BLUE+"화살뿌리기",ChatColor.BLUE+"SpreadingArrows"));
+						                	}
 					                	}
 				            		}
 				            		else {
 					                	if(sa.get(p.getName())<3) {
 						                    sa.computeIfPresent(p.getName(), (k,v) -> v+1);
 						    				p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.BLUE+"화살뿌리기 "+sa.get(p.getName()) + "/3").create());
+						                	if(sa.get(p.getName())<5) {
+							            		Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,5.0,0,ChatColor.BLUE+"화살뿌리기",ChatColor.BLUE+"SpreadingArrows"));
+						                	}
 					                	}
 				            		}
 							    }
@@ -515,12 +491,18 @@ public class Archskills extends Pak implements Serializable, Listener{
 					                	if(sa.get(p.getName())<6) {
 						                    sa.computeIfPresent(p.getName(), (k,v) -> v+1);
 						    				p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.BLUE+"SpreadingArrows "+sa.get(p.getName()) + "/6").create());
+						                	if(sa.get(p.getName())<5) {
+							            		Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,5.0,0,ChatColor.BLUE+"화살뿌리기",ChatColor.BLUE+"SpreadingArrows"));
+						                	}
 					                	}
 				            		}
 				            		else {
 					                	if(sa.get(p.getName())<3) {
 						                    sa.computeIfPresent(p.getName(), (k,v) -> v+1);
 						    				p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.BLUE+"SpreadingArrows "+sa.get(p.getName()) + "/3").create());
+						                	if(sa.get(p.getName())<5) {
+							            		Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,5.0,0,ChatColor.BLUE+"화살뿌리기",ChatColor.BLUE+"SpreadingArrows"));
+						                	}
 					                	}
 				            		}
 				        		}
@@ -561,7 +543,7 @@ public class Archskills extends Pak implements Serializable, Listener{
             				inshot.remove(p.getUniqueId());
             				Arrow far = p.launchProjectile(Arrow.class);
     	                	ar2(far, p, far.getDamage() , 0.05);
-            				Bukkit.getPluginManager().callEvent(new EntityShootBowEvent(p, null, new ItemStack(Material.ARROW), far, EquipmentSlot.HAND, 1f, true));
+            				Bukkit.getPluginManager().callEvent(new EntityShootBowEvent(p, null, new ItemStack(CAREFUL), far, EquipmentSlot.HAND, 1f, true));
             			}
                     	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
     		                @Override
@@ -608,125 +590,91 @@ public class Archskills extends Pak implements Serializable, Listener{
 			}
 		}
 	}
-	
+	final private void retrieve(Player p, LivingEntity le) {
+		if(!le.getWorld().equals(p.getWorld())) {
+			return;
+		}
+		Location lel = le.getLocation().clone().add(0, 0.3, 0);
+		Location pl = p.getEyeLocation().clone().add(0, 0.2, 0);
+		Vector v = pl.clone().toVector().subtract(lel.clone().toVector()).normalize();
+        Arrow ar = p.getWorld().spawnArrow(lel, v, 2, 1);
+        ar.setCritical(false);
+        ar.setBounce(false);
+        ar.setDamage(0);
+        ar.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+        ar.setPickupStatus(PickupStatus.DISALLOWED);
+    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+ 		@Override
+            	public void run() 
+                {	
+ 					ar.remove();
+ 				}
+
+	   }, 20); 
+	}
 
 	public void Retrieve(PlayerSwapHandItemsEvent ev) 
 	{
 		Player p = ev.getPlayer();
-		double sec = 3*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 		if(ClassData.pc.get(p.getUniqueId()) == 6 && !p.isSneaking()) {
 			if(p.getInventory().getItemInMainHand().getType() == Material.BOW && asd.Retrieve.getOrDefault(p.getUniqueId(),0)>=1)
 			{
+				double sec = 3*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 					ev.setCancelled(true);
-					
-					HashMap<UUID, Integer> Retrieve = asd.Retrieve;
-					if(gacooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-		            {
-	                    
-		                double timer = (gacooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d; // geting time in seconds
-		                if(!(timer < 0)) // if timer is still more then 0 or 0
-		                {
-			        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("회수 재사용 대기시간이 " + String.valueOf(Math.round(timer*10)/10.0) + "초 남았습니다").create());
-						    }
-			        		else {
-			                    p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Retrieve").create());
-			        		}
-			            }
-		                else // if timer is done
-		                {
-		                    gacooldown.remove(p.getName()); // removing player from HashMap
-		                    Location l = p.getLocation();
-			            	p.playSound(p.getLocation(), Sound.BLOCK_SWEET_BERRY_BUSH_PICK_BERRIES, 1, 2);
-			            	p.playSound(p.getLocation(), Sound.ENTITY_FISHING_BOBBER_RETRIEVE, 1, 0);
-							for (Entity e : p.getWorld().getNearbyEntities(l, 15, 15, 15))
-							{
-								if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
+					SkillBuilder bd = new SkillBuilder()
+							.player(p)
+							.cooldown(sec)
+							.kname("회수")
+							.ename("Retrieve")
+							.slot(1)
+							.hm(gacooldown)
+							.skillUse(() -> {
+								Location l = p.getLocation();
+				            	p.playSound(p.getLocation(), Sound.BLOCK_SWEET_BERRY_BUSH_PICK_BERRIES, 1, 2);
+				            	p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1, 0);
+								for (Entity e : p.getWorld().getNearbyEntities(l, 15, 15, 15))
 								{
-									LivingEntity le = (LivingEntity)e;
-										{
-											if(le.getArrowsInBody()>=1) {
+									if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
+									{
+										LivingEntity le = (LivingEntity)e;
+											{
+												if(le.getArrowsInBody()>=1) {
 
-												final int arc = le.getArrowsInBody();
-				    	                    	atk1(0.5*(1+arc*0.23)*(Retrieve.get(p.getUniqueId())), p, le,5);
-												le.getWorld().spawnParticle(Particle.CRIT, le.getLocation(), 80);
-												le.getWorld().spawnParticle(Particle.SWEEP_ATTACK, le.getLocation(), 3,1,1,1);
+													final int arc = le.getArrowsInBody();
+					    	                    	atk1(0.5*(1+arc*0.23)*(asd.Retrieve.get(p.getUniqueId())), p, le,5);
+													le.getWorld().spawnParticle(Particle.CRIT, le.getLocation(), 80);
+													le.getWorld().spawnParticle(Particle.SWEEP_ATTACK, le.getLocation(), 3,1,1,1);
 
-							            		if(Proficiency.getpro(p) >=1) {
+								            		if(Proficiency.getpro(p) >=1) {
 
-							                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-										                @Override
-										                public void run() 
-										                {
-							    	                    	atk1(0.5*(1+arc*0.23)*(Retrieve.get(p.getUniqueId())), p, le,5);
-															le.getWorld().spawnParticle(Particle.BLOCK_CRACK, le.getLocation(), 40, Material.REDSTONE_BLOCK.createBlockData());
-															Holding.holding(p, le, 10l);
-										                }
-										            }, 10); 
-													
-								    			}
-												le.setArrowsInBody(0);
+								                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+											                @Override
+											                public void run() 
+											                {
+								    	                    	atk1(0.5*(1+arc*0.23)*(asd.Retrieve.get(p.getUniqueId())), p, le,5);
+																le.getWorld().spawnParticle(Particle.BLOCK_CRACK, le.getLocation(), 40, Material.REDSTONE_BLOCK.createBlockData());
+																Holding.holding(p, le, 10l);
+											                }
+											            }, 10); 
+														
+									    			}
+													le.setArrowsInBody(0);
+													retrieve(p,le);
+												}
 											}
-										}
-								}
-								if (e instanceof AbstractArrow) 
-								{
-									AbstractArrow le = (AbstractArrow)e;
-									if(le.getShooter() == p)
-										{
-											le.teleport(p);
-										}
-								}
-							}
-			                gacooldown.put(p.getName(), System.currentTimeMillis()*1.0);
-		                }
-		            }
-		            else // if cooldown doesn't have players name in it
-		            {
-		            	Location l = p.getLocation();
-		            	p.playSound(p.getLocation(), Sound.BLOCK_SWEET_BERRY_BUSH_PICK_BERRIES, 1, 2);
-		            	p.playSound(p.getLocation(), Sound.ENTITY_FISHING_BOBBER_RETRIEVE, 1, 0);
-						for (Entity e : p.getWorld().getNearbyEntities(l, 15, 15, 15))
-						{
-							if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
-							{
-								LivingEntity le = (LivingEntity)e;
-									{
-										if(le.getArrowsInBody()>=1) {
-											
-											final int arc = le.getArrowsInBody();
-			    	                    	atk1(0.5*(1+arc*0.23)*(Retrieve.get(p.getUniqueId())), p, le,5);
-											le.getWorld().spawnParticle(Particle.CRIT, le.getLocation(), 80);
-											le.getWorld().spawnParticle(Particle.SWEEP_ATTACK, le.getLocation(), 3,1,1,1);
-
-						            		if(Proficiency.getpro(p) >=1) {
-
-						                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-									                @Override
-									                public void run() 
-									                {
-						    	                    	atk1(0.5*(1+arc*0.23)*(Retrieve.get(p.getUniqueId())), p, le,5);
-														le.getWorld().spawnParticle(Particle.BLOCK_CRACK, le.getLocation(), 40, Material.REDSTONE_BLOCK.createBlockData());
-														Holding.holding(p, le, 10l);
-									                }
-									            }, 10); 
-												
-							    			}
-											le.setArrowsInBody(0);
-										}
 									}
-							}
-							if (e instanceof AbstractArrow) 
-							{
-								AbstractArrow le = (AbstractArrow)e;
-								if(le.getShooter() == p)
+									if (e instanceof AbstractArrow) 
 									{
-										le.teleport(p);
+										AbstractArrow le = (AbstractArrow)e;
+										if(le.getShooter() == p)
+											{
+												le.teleport(p);
+											}
 									}
-							}
-						}
-		                gacooldown.put(p.getName(), System.currentTimeMillis()*1.0); // adding players name + current system time in miliseconds
-		            }
+								}
+							});
+							bd.execute();
+					
 				
 			}
 		}
@@ -755,178 +703,86 @@ public class Archskills extends Pak implements Serializable, Listener{
 			if(ClassData.pc.get(p.getUniqueId()) == 6 && p.isSneaking() && asd.RapidFire.getOrDefault(p.getUniqueId(),0)>=1) {
 				if(p.getInventory().getItemInMainHand().getType() == Material.BOW )
 				{
+					double sec = 9*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 		        	ev.setCancelled(true);
-					if(arcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-		            {
-						double sec = 9*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
-	                    
-		                double timer = (arcooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d; // geting time in seconds
-		                if(!(timer < 0)) // if timer is still more then 0 or 0
-		                {
-			        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("속사 재사용 대기시간이 " + String.valueOf(Math.round(timer*10)/10.0) + "초 남았습니다").create());
-						    }
-			        		else {
-			                    p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use RapidFire").create());
-			        		}
-		                    
-		                }
-		                else // if timer is done
-		                {
-		                    arcooldown.remove(p.getName()); // removing player from HashMap
-		                    
+					SkillBuilder bd = new SkillBuilder()
+							.player(p)
+							.cooldown(sec)
+							.kname("속사")
+							.ename("RapidFire")
+							.slot(2)
+							.hm(arcooldown)
+							.skillUse(() -> {
+			                	if(spinst.containsKey(p.getUniqueId())) {
+			                		Bukkit.getScheduler().cancelTask(spinst.get(p.getUniqueId()));
+			                		spinst.remove(p.getUniqueId());
+			                	}
 
-		                	if(spinst.containsKey(p.getUniqueId())) {
-		                		Bukkit.getScheduler().cancelTask(spinst.get(p.getUniqueId()));
-		                		spinst.remove(p.getUniqueId());
-		                	}
+								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+					                @Override
+					                public void run() {
+										if(Proficiency.getpro(p)>=2) {
+											spins.putIfAbsent(p.getUniqueId(), 0);
+										}
+					                }
+					            }, 3); 
 
-							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() {
-									if(Proficiency.getpro(p)>=2) {
-										spins.putIfAbsent(p.getUniqueId(), 0);
-									}
-				                }
-				            }, 3); 
-
-		            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() {
-									spins.remove(p.getUniqueId());
-				                }
-				            }, 35); 
-		                	spinst.put(p.getUniqueId(), task);
-		                	
-		                    Arrow firstarrow = p.launchProjectile(Arrow.class);
-		                    firstarrow.setDamage(0);
-		                    firstarrow.remove();
-		                    ArrayList<Arrow> arar = new ArrayList<Arrow>();
-		                    for(int i =0; i<10+(Proficiency.getpro(p)>=1 ? 10:0); i++) {
-		                	   Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+			            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+					                @Override
+					                public void run() {
+										spins.remove(p.getUniqueId());
+					                }
+					            }, 35); 
+			                	spinst.put(p.getUniqueId(), task);
+			                	
+			                    Arrow firstarrow = p.launchProjectile(Arrow.class);
+			                    firstarrow.setDamage(0);
+			                    firstarrow.remove();
+			                    ArrayList<AbstractArrow> arar = new ArrayList<AbstractArrow>();
+			                    for(int i =0; i<10+(Proficiency.getpro(p)>=1 ? 10:0); i++) {
+			                	   Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+						                @Override
+						                public void run() 
+						                {
+						                	if(fArrow.containsKey(p)) {
+							                	AbstractArrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 10, 1, ((AbstractArrow)fArrow.get(p)).getClass());
+							                	ar.setShooter(p);
+							            		if(Proficiency.getpro(p) >=1) {
+							            			ar.setPierceLevel(10);
+							            		}
+							                	ar.setKnockbackStrength(0);
+							                	ar1(ar, p, 0.034*(1+asd.RapidFire.get(p.getUniqueId())*0.01));
+												p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1f, 1.6f);
+							                	arar.add(ar);
+							                	ar.setPickupStatus(PickupStatus.DISALLOWED);
+						                	}
+						                	else {
+						                		AbstractArrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 10, 1);
+							                	ar.setShooter(p);
+							            		if(Proficiency.getpro(p) >=1) {
+							            			ar.setPierceLevel(10);
+							            		}
+							                	ar.setKnockbackStrength(0);
+							                	ar1(ar, p, 0.034*(1+asd.RapidFire.get(p.getUniqueId())*0.01));
+												p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1f, 1.6f);
+							                	arar.add(ar);
+							                	ar.setPickupStatus(PickupStatus.DISALLOWED);
+						                	}
+						                }
+						            }, i*3/(Proficiency.getpro(p)>=1 ? 2:1)); 
+			                    }	
+		                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					                @Override
 					                public void run() 
 					                {
-					                	if(arrow.containsKey(p)) {
-						                	Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 10, 1, ((Arrow)arrow.get(p)).getClass());
-						                	ar.setShooter(p);
-						            		if(Proficiency.getpro(p) >=1) {
-						            			ar.setPierceLevel(10);
-						            		}
-						                	ar.setKnockbackStrength(0);
-						                	ar1(ar, p, 0.034*(1+asd.RapidFire.get(p.getUniqueId())*0.01));
-											shooter.put(ar, p);
-											p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1f, 1.6f);
-						                	arar.add(ar);
-						                	ar.setPickupStatus(PickupStatus.DISALLOWED);
-					                	}
-					                	else {
-						                	Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 10, 1);
-						                	ar.setShooter(p);
-						            		if(Proficiency.getpro(p) >=1) {
-						            			ar.setPierceLevel(10);
-						            		}
-						                	ar.setKnockbackStrength(0);
-						                	ar1(ar, p, 0.034*(1+asd.RapidFire.get(p.getUniqueId())*0.01));
-											shooter.put(ar, p);
-											p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1f, 1.6f);
-						                	arar.add(ar);
-						                	ar.setPickupStatus(PickupStatus.DISALLOWED);
+					                	for(AbstractArrow a : arar)
+					                	{
+					                		a.remove();
 					                	}
 					                }
-					            }, i*3/(Proficiency.getpro(p)>=1 ? 2:1)); 
-		                    }	
-	                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() 
-				                {
-				                	for(Arrow a : arar)
-				                	{
-				                		a.remove();
-				                	}
-				                }
-				            }, 40); 
-											
-			                arcooldown.put(p.getName(), System.currentTimeMillis()*1.0);
-		                }
-		            }
-		            else // if cooldown doesn't have players name in it
-		            {
-
-	                	if(spinst.containsKey(p.getUniqueId())) {
-	                		Bukkit.getScheduler().cancelTask(spinst.get(p.getUniqueId()));
-	                		spinst.remove(p.getUniqueId());
-	                	}
-
-						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() {
-								if(Proficiency.getpro(p)>=2) {
-									spins.putIfAbsent(p.getUniqueId(), 0);
-								}
-			                }
-			            }, 3); 
-
-	            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() {
-								spins.remove(p.getUniqueId());
-			                }
-			            }, 35); 
-	                	spinst.put(p.getUniqueId(), task);
-	                	
-	                    Arrow firstarrow = p.launchProjectile(Arrow.class);
-	                    firstarrow.setDamage(0);
-	                    firstarrow.remove();
-	                    ArrayList<Arrow> arar = new ArrayList<Arrow>();
-	                    for(int i =0; i<10+(Proficiency.getpro(p)>=1 ? 10:0); i++) {
-	                	   Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() 
-				                {
-				                	if(arrow.containsKey(p)) {
-					                	Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 10, 1, ((Arrow)arrow.get(p)).getClass());
-					                	ar.setShooter(p);
-					            		if(Proficiency.getpro(p) >=1) {
-					            			ar.setPierceLevel(10);
-					            		}
-					                	ar.setKnockbackStrength(0);
-					                	ar1(ar, p, 0.034*(1+asd.RapidFire.get(p.getUniqueId())*0.01));
-										shooter.put(ar, p);
-										p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1f, 1.6f);
-					                	arar.add(ar);
-					                	ar.setPickupStatus(PickupStatus.DISALLOWED);
-				                	}
-				                	else {
-					                	Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 10, 1);
-					                	ar.setShooter(p);
-					            		if(Proficiency.getpro(p) >=1) {
-					            			ar.setPierceLevel(10);
-					            		}
-					                	ar.setKnockbackStrength(0);
-					                	ar1(ar, p, 0.034*(1+asd.RapidFire.get(p.getUniqueId())*0.01));
-										shooter.put(ar, p);
-										p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1f, 1.6f);
-					                	arar.add(ar);
-					                	ar.setPickupStatus(PickupStatus.DISALLOWED);
-				                	}
-				                }
-				            }, i*3/(Proficiency.getpro(p)>=1 ? 2:1)); 
-	                    }	
-                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() 
-			                {
-			                	for(Arrow a : arar)
-			                	{
-			                		a.remove();
-			                	}
-			                }
-			            }, 40); 
-									
-		                arcooldown.put(p.getName(), System.currentTimeMillis()*1.0); // adding players name + current system time in miliseconds
-		            }
-					ev.setCancelled(true);
+					            }, 40); 
+							});
+							bd.execute();
 				}
 			}
 	}
@@ -976,16 +832,12 @@ public class Archskills extends Pak implements Serializable, Listener{
 				                	ar.getWorld().playSound(ar.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1,2);
 									for (Entity e : p.getWorld().getNearbyEntities(ar.getLocation(), 3, 3, 3))
 									{
-
-			                    		if (e instanceof Player) 
+				                		if (e instanceof Player) 
 										{
 											
 											Player p1 = (Player) e;
-											if(Party.hasParty(p) && Party.hasParty(p1))	{
-											if(Party.getParty(p).equals(Party.getParty(p1)))
-												{
+											if(Party.isInSameParty(p,p1))	{
 													continue;
-												}
 											}
 										}
 			                    		if ((!(e == p))&& e instanceof LivingEntity && !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
@@ -1020,31 +872,22 @@ public class Archskills extends Pak implements Serializable, Listener{
 				
 				if(p.getInventory().getItemInMainHand().getType() == Material.BOW)
 				{
-					if(a.getProjectile().getType() == EntityType.ARROW)
+					if(a.getProjectile() instanceof AbstractArrow)
 					{
 						double sec = 4*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
-							if(dpcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-				            {
-			                    
-				                double timer = ((dpcooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d); // geting time in seconds
-				                if(!(timer < 0)) // if timer is still more then 0 or 0
-				                {
-					        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("다중사격 재사용 대기시간이 " + String.valueOf(Math.round(timer*10)/10.0) + "초 남았습니다").create());
-								    }
-					        		else {
-					                    p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use MultiShot").create());
-					        		}
-				                    
-				                }
-				                else // if timer is done
-				                {
-				                	dpcooldown.remove(p.getName());
-				                    Arrow firstarrow = p.launchProjectile(Arrow.class);
+						SkillBuilder bd = new SkillBuilder()
+								.player(p)
+								.cooldown(sec)
+								.kname("다중사격")
+								.ename("MultiShot")
+								.slot(3)
+								.hm(dpcooldown)
+								.skillUse(() -> {
+									Arrow firstarrow = p.launchProjectile(Arrow.class);
 				                    firstarrow.setDamage(0);
 				                    firstarrow.remove();
-				                    Arrow fa = (Arrow) a.getProjectile();
-				                    ArrayList<Arrow> arar = new ArrayList<Arrow>();
+				                    AbstractArrow fa = (AbstractArrow) a.getProjectile();
+				                    ArrayList<AbstractArrow> arar = new ArrayList<>();
 
 				            		if(Proficiency.getpro(p) >=1) {
 					                    for(int i =1; i<3; i++) {
@@ -1053,13 +896,12 @@ public class Archskills extends Pak implements Serializable, Listener{
 									                public void run() 
 									                {
 									                	for(int i = 0; i<25; i++) {
-										                	Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 4, 20, fa.getClass());
+										                	AbstractArrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 4, 20, fa.getClass());
 										                	ar.setShooter(p);
 										                	ar.setKnockbackStrength(0);
 										                	ar.setCritical(true);
 										                	ar.setBounce(false);
 										                	ar1(ar, p, 0.01*(1+asd.MultiShot.get(p.getUniqueId())*0.0065));
-															shooter.put(ar, p);
 															p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 0.1f, 1.6f);
 															p.playSound(p.getLocation(), Sound.BLOCK_DISPENSER_LAUNCH, 0.1f, 1.6f);
 										                	arar.add(ar);
@@ -1071,13 +913,12 @@ public class Archskills extends Pak implements Serializable, Listener{
 				            		}
 				            		else {
 					                	for(int i = 0; i<25; i++) {
-						                	Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 4, 20, fa.getClass());
+					                		AbstractArrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 4, 20, fa.getClass());
 						                	ar.setShooter(p);
 						                	ar.setKnockbackStrength(0);
 						                	ar.setCritical(true);
 						                	ar.setBounce(false);
 						                	ar1(ar, p, 0.01*(1+asd.MultiShot.get(p.getUniqueId())*0.0065));
-											shooter.put(ar, p);
 											p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 0.1f, 1.6f);
 											p.playSound(p.getLocation(), Sound.BLOCK_DISPENSER_LAUNCH, 0.1f, 1.6f);
 						                	arar.add(ar);
@@ -1088,75 +929,15 @@ public class Archskills extends Pak implements Serializable, Listener{
 						                @Override
 						                public void run() 
 						                {
-						                	for(Arrow a : arar)
+						                	for(AbstractArrow a : arar)
 						                	{
 						                		a.remove();
 						                	}
 						                }
 						            }, 10); 
-					                dpcooldown.put(p.getName(), System.currentTimeMillis()*1.0);
-				                }
-				            }
-				            else // if cooldown doesn't have players name in it
-				            {
-			                    Arrow firstarrow = p.launchProjectile(Arrow.class);
-			                    firstarrow.setDamage(0);
-			                    firstarrow.remove();
-				            	Arrow fa = (Arrow) a.getProjectile();
-			                    ArrayList<Arrow> arar = new ArrayList<Arrow>();
 
-			            		if(Proficiency.getpro(p) >=1) {
-				                    for(int i =1; i<3; i++) {
-					                	   Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-								                @Override
-								                public void run() 
-								                {
-								                	for(int i = 0; i<25; i++) {
-									                	Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 4, 20, fa.getClass());
-									                	ar.setShooter(p);
-									                	ar.setKnockbackStrength(0);
-									                	ar.setCritical(true);
-									                	ar.setBounce(false);
-									                	ar1(ar, p, 0.01*(1+asd.MultiShot.get(p.getUniqueId())*0.0065));
-														shooter.put(ar, p);
-														p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 0.1f, 1.6f);
-														p.playSound(p.getLocation(), Sound.BLOCK_DISPENSER_LAUNCH, 0.1f, 1.6f);
-									                	arar.add(ar);
-									                	ar.setPickupStatus(PickupStatus.DISALLOWED);
-								                	}
-								                }
-								            }, i*2); 
-					                    }	
-			            		}
-			            		else {
-				                	for(int i = 0; i<25; i++) {
-					                	Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 4, 20, fa.getClass());
-					                	ar.setShooter(p);
-					                	ar.setKnockbackStrength(0);
-					                	ar.setCritical(true);
-					                	ar.setBounce(false);
-					                	ar1(ar, p, 0.01*(1+asd.MultiShot.get(p.getUniqueId())*0.0065));
-										shooter.put(ar, p);
-										p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 0.1f, 1.6f);
-										p.playSound(p.getLocation(), Sound.BLOCK_DISPENSER_LAUNCH, 0.1f, 1.6f);
-					                	arar.add(ar);
-					                	ar.setPickupStatus(PickupStatus.DISALLOWED);
-				                	}
-			            		}
-			                	
-		                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					                @Override
-					                public void run() 
-					                {
-					                	for(Arrow a : arar)
-					                	{
-					                		a.remove();
-					                	}
-					                }
-					            }, 10); 
-			                	dpcooldown.put(p.getName(), System.currentTimeMillis()*1.0); // adding players name + current system time in miliseconds
-				            }
-						
+								});
+						bd.execute();
 					}
 				}
 			}
@@ -1168,49 +949,42 @@ public class Archskills extends Pak implements Serializable, Listener{
 		if(d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity) 
 		{	
 			Player p = (Player)d.getDamager();
-		    
+            LivingEntity e = (LivingEntity) d.getEntity();
+
+    		if(e.hasMetadata("fake") || e.hasMetadata("portal")) {
+				d.setCancelled(true);
+    			return;
+    		}
+    		if (e instanceof Player) 
+			{
+				
+				Player p1 = (Player) e;
+				if(Party.hasParty(p) && Party.hasParty(p1))	{
+				if(Party.getParty(p).equals(Party.getParty(p1)))
+					{
+						d.setCancelled(true);
+						return;
+					}
+				}
+			}
 			
 
 		if(ClassData.pc.get(p.getUniqueId()) == 6 && asd.HookAndShot.getOrDefault(p.getUniqueId(),0)>=1 && (p.isSneaking()) && !(p.hasCooldown(Material.YELLOW_TERRACOTTA))) {
 			if(p.getInventory().getItemInMainHand().getType() == Material.BOW)
 			{
 				
-		double sec = 9*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
-				if(hscooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-		        {
-		            double timer = (hscooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d; // geting time in seconds
-		            if(!(timer < 0)) // if timer is still more then 0 or 0
-		            {
-		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("훅앤샷 재사용 대기시간이 " + String.valueOf(Math.round(timer*10)/10.0) + "초 남았습니다").create());
-					    }
-		        		else {
-		                    p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use HookAndShot").create());
-		        		}
-		            }
-		            else // if timer is done
-		            {
-		                hscooldown.remove(p.getName()); // removing player from HashMap
-	                    Arrow firstarrow = p.launchProjectile(Arrow.class);
+			double sec = 9*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			SkillBuilder bd = new SkillBuilder()
+					.player(p)
+					.cooldown(sec)
+					.kname("훅앤샷")
+					.ename("HookAndShot")
+					.slot(4)
+					.hm(hscooldown)
+					.skillUse(() -> {
+						Arrow firstarrow = p.launchProjectile(Arrow.class);
 	                    firstarrow.setDamage(0);
 	                    firstarrow.remove();
-		                LivingEntity e = (LivingEntity) d.getEntity();
-                		if (e instanceof Player) 
-						{
-							
-							Player p1 = (Player) e;
-							if(Party.hasParty(p) && Party.hasParty(p1))	{
-							if(Party.getParty(p).equals(Party.getParty(p1)))
-								{
-									d.setCancelled(true);
-									return;
-								}
-							}
-						}
-                		if(e.hasMetadata("fake") || e.hasMetadata("portal")) {
-							d.setCancelled(true);
-                			return;
-                		}
 			            Grabmob(p, e);
 			            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 			                @Override
@@ -1219,42 +993,10 @@ public class Archskills extends Pak implements Serializable, Listener{
 			    				Shotmob(p);
 			                }
 			            }, 40); 
-
-				        hscooldown.put(p.getName(), System.currentTimeMillis()*1.0);
-		            }
-		        }
-		        else // if cooldown doesn't have players name in it
-		        {
-                    Arrow firstarrow = p.launchProjectile(Arrow.class);
-                    firstarrow.setDamage(0);
-                    firstarrow.remove();
-		        	LivingEntity e = (LivingEntity) d.getEntity();
-            		if (e instanceof Player) 
-					{
-						
-						Player p1 = (Player) e;
-						if(Party.hasParty(p) && Party.hasParty(p1))	{
-						if(Party.getParty(p).equals(Party.getParty(p1)))
-							{
-								d.setCancelled(true);
-								return;
-							}
-						}
-					}
-            		if(e.hasMetadata("fake") || e.hasMetadata("portal")) {
-						d.setCancelled(true);
-            			return;
-            		}
-		            Grabmob(p, e);
-		            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() {
-		                	if(grabbed.containsKey(p))
-		    				Shotmob(p);
-		                }
-		            }, 40); 
-			        hscooldown.put(p.getName(), System.currentTimeMillis()*1.0);
-		        }
+	
+					});
+			bd.execute();
+				
 				}	
 			}
 		}
@@ -1296,15 +1038,15 @@ public class Archskills extends Pak implements Serializable, Listener{
 				LivingEntity e = grabbed.get(p);
 				p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 40, 1, false, false));
 				e.setCollidable(true);
-				Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 40, 1);
+				Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 40, 0);
 	        	ar.setShooter(p);
-				shooter.put(ar, p);
         		if(Proficiency.getpro(p) >=1) {
 					ar.setMetadata("holdshot", new FixedMetadataValue(RMain.getInstance(), true));
         		}
+        		ar.setPierceLevel(1);
+				ar.setMetadata("knockback", new FixedMetadataValue(RMain.getInstance(), true));
 				p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1f, 1.6f);
 				ar.setCritical(true);
-				ar.setKnockbackStrength(6);
 				grabbed.remove(p);
 	        }
 		}
@@ -1328,122 +1070,80 @@ public class Archskills extends Pak implements Serializable, Listener{
 		}
 		
 	}
+
 	
-	public void ULT(PlayerDropItemEvent ev)        
+	public void ULT(PlayerItemHeldEvent ev)        
     {
 		Player p = (Player)ev.getPlayer();
-		p.getLocation();
-		Item i = ev.getItemDrop();
-		ItemStack is = i.getItemStack();
-	    
-		
+	    if(!isCombat(p)) {
+	    	return;
+	    }
 		
 			
-			if(ClassData.pc.get(p.getUniqueId()) == 6 &&(is.getType().name().equals("BOW")) && p.isSneaking()&& !p.isSprinting()&& Proficiency.getpro(p) >=1)
+			if(ClassData.pc.get(p.getUniqueId()) == 6&& ev.getNewSlot()==3  && p.isSneaking() && Proficiency.getpro(p) >=1)
 			{
 				ev.setCancelled(true);
-				p.setCooldown(Material.ARROW, 1);
-				if(bultcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-	            {
-	                double timer = (long) ((bultcooldown.get(p.getName())/1000d + 80/Proficiency.getpro(p)*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d)) - System.currentTimeMillis()/1000d); // geting time in seconds
-	                if(!(timer < 0)) // if timer is still more then 0 or 0
-	                {
-		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("광란의화살 재사용 대기시간이 " + String.valueOf(Math.round(timer*10)/10.0) + "초 남았습니다").create());
-					    }
-		        		else {
-		                    p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use CrazyArrows").create());
-		        		}
-			        }
-	                else // if timer is done
-	                {
-	                    bultcooldown.remove(p.getName()); // removing player from HashMap
-	                    Arrow firstarrow = p.launchProjectile(Arrow.class);
-	                    firstarrow.setDamage(0);
-	                    firstarrow.remove();
-						p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_SHOOT, 0.3f, 0.3f);
-						p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 70, 3, false,false));
-	                    ArrayList<Arrow> arar = new ArrayList<Arrow>();
-	                    for(int i1 =0; i1<20; i1++) {
-		                	   Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					                @Override
-					                public void run() 
-					                {					               
-					                	for(int i = 0; i<30; i++) 
-					                	{
-					                	Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 9, 48);
-					                	ar.setShooter(p);
-					                	ar.setKnockbackStrength(0);
-					                	ar.setPickupStatus(PickupStatus.DISALLOWED);
-					                	ar.setCritical(true);
-					                	ar.setBounce(false);
-										shooter.put(ar, p);
-										p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 0.05f, 1.6f);
-					                	ar1(ar, p, 0.028);
-					                	arar.add(ar);
-					                	}
-					                }
-					            }, i1*3); 
-		                   }
-	                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() 
-			                {					               
-			                	for(Arrow a : arar)
-			                	{
-			                		a.remove();
-			                	}
-			                }
-			            }, 65); 
-						bultcooldown.put(p.getName(), System.currentTimeMillis()*1.0); // adding players name + current system time in miliseconds
-						
-		                
-	                }
-	            }
-	            else // if cooldown doesn't have players name in it
-	            {
-
-                    Arrow firstarrow = p.launchProjectile(Arrow.class);
-                    firstarrow.setDamage(0);
-                    firstarrow.remove();
-						p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_SHOOT, 1f, 0.3f);
-						p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 70, 3, false,false));
-	                    ArrayList<Arrow> arar = new ArrayList<Arrow>();
-	                    for(int i1 =0; i1<20; i1++) {
-		                	   Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					                @Override
-					                public void run() 
-					                {					               
-					                	for(int i = 0; i<30; i++) 
-					                	{
-					                	Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 9, 48);
-					                	ar.setShooter(p);
-					                	ar.setKnockbackStrength(0);
-					                	ar.setPickupStatus(PickupStatus.DISALLOWED);
-					                	ar.setCritical(true);
-					                	ar.setBounce(false);
-										shooter.put(ar, p);
-										p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 0.05f, 1.6f);
-					                	ar1(ar, p, 0.028);
-					                	arar.add(ar);
-					                	}
-					                }
-					            }, i1*3); 
-		                   }
-	                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() 
-			                {					               
-			                	for(Arrow a : arar)
-			                	{
-			                		a.remove();
-			                	}
-			                }
-			            }, 65); 
-					bultcooldown.put(p.getName(), System.currentTimeMillis()*1.0); // adding players name + current system time in miliseconds
-					
-	                
-	            }
+				p.setCooldown(CAREFUL, 1);
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(80/Proficiency.getpro(p)*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d))
+						.kname("광란의화살")
+						.ename("CrazyArrows")
+						.slot(6)
+						.hm(bultcooldown)
+						.skillUse(() -> {
+							Arrow firstarrow = p.launchProjectile(Arrow.class);
+		                    firstarrow.setDamage(0);
+		                    firstarrow.remove();
+							p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_SHOOT, 0.3f, 0.3f);
+							p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 70, 3, false,false));
+		                    ArrayList<AbstractArrow> arar = new ArrayList<>();
+		                    for(int i1 =0; i1<20; i1++) {
+			                	   Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+						                @Override
+						                public void run() 
+						                {					               
+						                	for(int i = 0; i<30; i++) 
+						                	{
+							                	if(fArrow.containsKey(p)) {
+								                	AbstractArrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 9, 48, ((AbstractArrow)fArrow.get(p)).getClass());
+								                	ar.setShooter(p);
+								                	ar.setKnockbackStrength(0);
+								                	ar.setPickupStatus(PickupStatus.DISALLOWED);
+								                	ar.setCritical(true);
+								                	ar.setBounce(false);
+													p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 0.05f, 1.6f);
+								                	ar1(ar, p, 0.028);
+								                	arar.add(ar);
+							                	}
+							                	else {
+								                	Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 9, 48);
+								                	ar.setShooter(p);
+								                	ar.setKnockbackStrength(0);
+								                	ar.setPickupStatus(PickupStatus.DISALLOWED);
+								                	ar.setCritical(true);
+								                	ar.setBounce(false);
+													p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 0.05f, 1.6f);
+								                	ar1(ar, p, 0.028);
+								                	arar.add(ar);
+							                	}
+						                	}
+						                }
+						            }, i1*3); 
+			                   }
+		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+				                @Override
+				                public void run() 
+				                {					               
+				                	for(AbstractArrow a : arar)
+				                	{
+				                		a.remove();
+				                	}
+				                }
+				            }, 65); 
+						});
+				bd.execute();
+				
 				
 			}	
 			
@@ -1451,129 +1151,80 @@ public class Archskills extends Pak implements Serializable, Listener{
 	}
 	
 
-	public void ULT2(PlayerDropItemEvent ev)        
+	public void ULT2(PlayerItemHeldEvent ev)        
     {
-		Player p = (Player)ev.getPlayer();
-		p.getLocation();
-		Item i = ev.getItemDrop();
-		ItemStack is = i.getItemStack();
+		final Player p = (Player)ev.getPlayer();
+		ItemStack is = p.getInventory().getItemInMainHand();
 	    
-		
-		
+
+	    if(!isCombat(p)) {
+	    	return;
+	    }
 			
-			if(ClassData.pc.get(p.getUniqueId()) == 6 && (is.getType().name().equals("BOW")) && p.isSprinting() && Proficiency.getpro(p) >=2)
+			if(ClassData.pc.get(p.getUniqueId()) == 6&& ev.getNewSlot()==4  && (is.getType().name().equals("BOW")) && p.isSneaking() && Proficiency.getpro(p) >=2)
 			{
 				ev.setCancelled(true);
-				p.setCooldown(Material.ARROW, 1);
-				if(bult2cooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-	            {
-	                double timer = (bult2cooldown.get(p.getName())/1000d + 80)*Obtained.ucd.getOrDefault(p.getUniqueId(),1d) - System.currentTimeMillis()/1000d; // geting time in seconds
-	                if(!(timer < 0)) // if timer is still more then 0 or 0
-	                {
-		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("화살의 춤 재사용 대기시간이 " + String.valueOf(Math.round(timer*10)/10.0) + "초 남았습니다").create());
-					    }
-		        		else {
-		                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Arrow Arts").create());
-		        		}
-			        }
-	                else // if timer is done
-	                {
-	                    bult2cooldown.remove(p.getName()); // removing player from HashMap
-	                    Arrow firstarrow = p.launchProjectile(Arrow.class);
-	                    firstarrow.setDamage(0);
-	                    firstarrow.remove();
-						p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_SHOOT, 0.3f, 0.3f);
-						p.playSound(p.getLocation(), Sound.AMBIENT_BASALT_DELTAS_ADDITIONS, 0.3f, 1.3f);
-						p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 70, 5, false,false));
-						p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 70, 2, false,false));
-						p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 70, 2, false,false));
-	                    for(int i1 =2; i1<60; i1++) {
-		                	   Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					                @Override
-					                public void run() 
-					                {					
-					                	for(Entity e : p.getNearbyEntities(10, 10, 10)) {
+				p.setCooldown(CAREFUL, 1);
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(80*Obtained.ucd.getOrDefault(p.getUniqueId(),1d))
+						.kname("화살의춤")
+						.ename("Arrow Arts")
+						.slot(7)
+						.hm(bult2cooldown)
+						.skillUse(() -> {
+							Arrow firstarrow = p.launchProjectile(Arrow.class);
+		                    firstarrow.setDamage(0);
+		                    firstarrow.remove();
+							p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_SHOOT, 0.3f, 0.3f);
+							p.playSound(p.getLocation(), Sound.AMBIENT_BASALT_DELTAS_ADDITIONS, 0.3f, 1.3f);
+							p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 70, 5, false,false));
+							p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 70, 2, false,false));
+							p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 70, 2, false,false));
+		                    for(int i1 =2; i1<60; i1++) {
+			                	   Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+						                @Override
+						                public void run() 
+						                {					
+						                	for(Entity e : p.getNearbyEntities(10, 10, 10)) {
 
-				                    		if ((!(e == p))&& e instanceof LivingEntity && !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
-											{
-												LivingEntity le = (LivingEntity)e;
+						                		if (e instanceof Player) 
+												{
+													
+													Player p1 = (Player) e;
+													if(Party.isInSameParty(p,p1))	{
+															continue;
+													}
+												}
+					                    		if ((!(e == p))&& e instanceof LivingEntity && !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
+												{
+													LivingEntity le = (LivingEntity)e;
 
-												Holding.superholding(p, le, 2l);
-							                	Location pl = p.getEyeLocation();
-				    	                        Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), le.getLocation().toVector().subtract(pl.toVector()), 1, 0);
-				    	                        ar.setCritical(false);
-				    	                        ar.setDamage(0);
-				    	                        ar.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-				    	                        ar.setPickupStatus(PickupStatus.DISALLOWED);
-				    	                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				    		             		@Override
-				    				                	public void run() 
-				    					                {	
-				    		             					ar.remove();
-				    		             				}
+													Holding.superholding(p, le, 2l);
+								                	Location pl = p.getEyeLocation();
+					    	                        Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), le.getLocation().toVector().subtract(pl.toVector()), 1, 0);
+					    	                        ar.setCritical(false);
+					    	                        ar.setDamage(0);
+					    	                        ar.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+					    	                        ar.setPickupStatus(PickupStatus.DISALLOWED);
+					    	                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+					    		             		@Override
+					    				                	public void run() 
+					    					                {	
+					    		             					ar.remove();
+					    		             				}
 
-				    	                	   }, 20); 
-				    	                    	atk1(0.35, p, le,5);
-				             					
-											}
-					                	}
-					                }
-					            }, i1); 
-		                   }
-						bult2cooldown.put(p.getName(), System.currentTimeMillis()*1.0); // adding players name + current system time in miliseconds
-						
-		                
-	                }
-	            }
-	            else // if cooldown doesn't have players name in it
-	            {
-
-	            	Arrow firstarrow = p.launchProjectile(Arrow.class);
-                    firstarrow.setDamage(0);
-                    firstarrow.remove();
-					p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_SHOOT, 0.3f, 0.3f);
-					p.playSound(p.getLocation(), Sound.AMBIENT_BASALT_DELTAS_ADDITIONS, 1f, 1.3f);
-					p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 70, 5, false,false));
-					p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 70, 2, false,false));
-					p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 70, 2, false,false));
-                    for(int i1 =2; i1<60; i1++) {
-	                	   Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() 
-				                {					
-				                	for(Entity e : p.getNearbyEntities(10, 10, 10)) {
-
-			                    		if ((!(e == p))&& e instanceof LivingEntity && !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
-										{
-											LivingEntity le = (LivingEntity)e;
-
-											Holding.superholding(p, le, 2l);
-						                	Location pl = p.getEyeLocation();
-			    	                        Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), le.getLocation().toVector().subtract(pl.toVector()), 1, 0);
-			    	                        ar.setCritical(false);
-			    	                        ar.setDamage(0);
-			    	                        ar.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-			    	                        ar.setPickupStatus(PickupStatus.DISALLOWED);
-			    	                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			    		             		@Override
-			    				                	public void run() 
-			    					                {	
-			    		             					ar.remove();
-			    		             				}
-
-			    	                    	}, 20); 
-			    	                    	atk1(0.35, p, le,5);
-			             					
-										}
-				                	}
-				                }
-				            }, i1); 
-	                   }
-					bult2cooldown.put(p.getName(), System.currentTimeMillis()*1.0); // adding players name + current system time in milliseconds
-					
-	                
-	            }
+					    	                	   }, 20); 
+					    	                    	atk1(0.35, p, le,5);
+					             					
+												}
+						                	}
+						                }
+						            }, i1); 
+			                   }
+						});
+				bd.execute();
+				
 				
 			}	
 			
@@ -1603,14 +1254,36 @@ public class Archskills extends Pak implements Serializable, Listener{
 		if(ev.getEntity().getShooter() instanceof Player && ev.getEntity() instanceof Arrow)
 		{
 			Player p = (Player)ev.getEntity().getShooter();
+			Arrow ar = (Arrow) ev.getEntity();
 		    
 			
-			
-			
+
+			if(ar.hasMetadata("knockback") && ev.getHitEntity() instanceof LivingEntity) {
+				LivingEntity e =(LivingEntity) ev.getHitEntity();
+        		if (e instanceof Player) 
+				{
+					
+					Player p1 = (Player) e;
+					if(Party.isInSameParty(p,p1))	{
+						ev.setCancelled(true);	
+						return;
+							
+					}
+				}
+        		pitched.put(ar, e.getUniqueId());
+				if(ar.hasMetadata("holdshot")) {
+					Holding.holding(p, e, 40l);
+				}
+			}
+
+			if(ev.getHitBlock() !=null && pitched.containsKey(ar)) {
+				
+				Bukkit.getEntity(pitched.get(ar)).teleport(ev.getHitBlock().getLocation());
+				pitched.remove(ar);
+			}
 			if(ClassData.pc.get(p.getUniqueId()) == 6 && Proficiency.getpro(p)>=2)  {
 				if(ev.getHitEntity() instanceof Wither) {
 					Wither e =(Wither) ev.getHitEntity();
-					Arrow ar = (Arrow) ev.getEntity();
 					if(ar.hasMetadata("holdshot")) {
 						Holding.holding(p, e, 40l);
 					}
@@ -1636,7 +1309,6 @@ public class Archskills extends Pak implements Serializable, Listener{
 				}
 				if(ev.getHitEntity() instanceof Enderman) {
 					Enderman e =(Enderman) ev.getHitEntity();
-					Arrow ar = (Arrow) ev.getEntity();
 					{
 						if(ar.hasMetadata("holdshot")) {
 							Holding.holding(p, e, 40l);
@@ -1689,9 +1361,6 @@ public class Archskills extends Pak implements Serializable, Listener{
                     	dset2(d, p, (1+asd.Archery.get(p.getUniqueId())*0.035), le, 14);
 						le.setArrowsInBody(le.getArrowsInBody()+1);
 						le.setArrowCooldown(600);
-						if(a.hasMetadata("holdshot")) {
-							Holding.holding(p, le, 40l);
-						}
 						if(Proficiency.getpro(p) >=1 && !p.hasCooldown(Material.CROSSBOW)) {
 		                	if(sa.getOrDefault(p.getName() , 7)<6) {
 			                    sa.computeIfPresent(p.getName(), (k,v) -> v+1);
@@ -1704,25 +1373,7 @@ public class Archskills extends Pak implements Serializable, Listener{
 				        		}
 		                	}
 						}
-							/*player_damage.put(p.getName(), p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue() + p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.5 + p.getLevel()/10);
-							
-							if (le.getCategory() == EntityCategory.UNDEAD)
-							{
-								player_damage.put(p.getName(),player_damage.get(p.getName())+ p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_UNDEAD)*2.5);
-							}
-							if (le.getCategory() == EntityCategory.ARTHROPOD)
-							{
-								player_damage.put(p.getName(),player_damage.get(p.getName())+ p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ARTHROPODS)*2.5);
-								
-							}
-							if (p.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE))
-							{
-								player_damage.put(p.getName(),player_damage.get(p.getName())+p.getPotionEffect(PotionEffectType.INCREASE_DAMAGE).getAmplifier()*3);
-							}*/
-					}/*
-					else {
-						player_damage.put(p.getName(), 0d);
-					}*/
+					}
 				}
 			}
 		}
@@ -1736,30 +1387,12 @@ public class Archskills extends Pak implements Serializable, Listener{
 						
 						if(p.getInventory().getItemInMainHand().getType()==Material.BOW && !p.getInventory().getItemInOffHand().getType().name().contains("NUGGET")&& !(p.getInventory().getItemInOffHand().getType()==Material.TRIDENT)&& !(p.getInventory().getItemInOffHand().getType()==Material.SHIELD))
 						{
-								/*player_damage.put(p.getName(), p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue() + p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.5 + p.getLevel()/10);
-								
-								if (le.getCategory() == EntityCategory.UNDEAD)
-								{
-									player_damage.put(p.getName(),player_damage.get(p.getName())+ p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_UNDEAD)*2.5);
-								}
-								if (le.getCategory() == EntityCategory.ARTHROPOD)
-								{
-									player_damage.put(p.getName(),player_damage.get(p.getName())+ p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ARTHROPODS)*2.5);
-									
-								}
-								if (p.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE))
-								{
-									player_damage.put(p.getName(),player_damage.get(p.getName())+p.getPotionEffect(PotionEffectType.INCREASE_DAMAGE).getAmplifier()*3);
-								}*/
 								if(d.getDamage()>0) {
 									le.setArrowsInBody(le.getArrowsInBody()+1);
 									le.setArrowCooldown(600);
 			                    	dset2(d, p, (1+asd.Archery.get(p.getUniqueId())*0.035), le, 14);
 								}
 						}
-						/*else {
-							player_damage.put(p.getName(), 0d);
-						}*/
 					}
 			}
 		}

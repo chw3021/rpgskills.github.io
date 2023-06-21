@@ -6,22 +6,29 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
+
+import io.github.chw3021.commons.CombatMode;
 
 
 public class Backpack implements Serializable, Listener{
@@ -59,6 +66,9 @@ public class Backpack implements Serializable, Listener{
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            String path = new File("").getAbsolutePath();
+            new Backpack(new HashMap<UUID, ItemStack[]>()).saveData(path +"/plugins/RPGskills/Backpack.data");
+            
             return this;
         }
     }
@@ -80,10 +90,11 @@ public class Backpack implements Serializable, Listener{
         }
     }
     
-    final private void save(Player p,Inventory inv) {
+    final private void save(Player p,Inventory inv, int page) {
         String path = new File("").getAbsolutePath();
         HashMap<UUID, ItemStack[]> chest = getdata();
-        chest.put(p.getUniqueId(), inv.getContents());
+        ItemStack[] con = Arrays.copyOfRange(chest.get(p.getUniqueId()), (page-1)*54, (page-1)*54+53);
+        chest.put(p.getUniqueId(), con);
 		new Backpack(chest).saveData(path +"/plugins/RPGskills/BackPack.data");
         return;
     }
@@ -100,6 +111,18 @@ public class Backpack implements Serializable, Listener{
 	
 
 
+	public static void itemset(String display, ItemStack is, int data, int stack, List<String> Lore, int loc,
+			Inventory inv) {
+		ItemStack item = is;
+		ItemMeta items = item.getItemMeta();
+		items.setDisplayName(display);
+		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+		items.setLore(Lore);
+		item.setItemMeta(items);
+		inv.setItem(loc, item);
+	}
 
     final private void checkoff(Player p) {
 
@@ -112,12 +135,78 @@ public class Backpack implements Serializable, Listener{
 			name = p.getName() + "'s Backpack";
 		}
 		Inventory ci = Bukkit.createInventory(p, 54, name);
-		
+		int pagen = 0;
 		if(check(p)) {
-			ci.setContents(getinv(p));
+			if(getinv(p).length >51) {
+				pagen = page(p,ci,1);
+			}
+			else {
+				pagen =page(p,ci,0);
+			}
 		}
 		p.openInventory(ci);
-		save(p,ci);
+		save(p,ci, pagen);
+    }
+    
+    final private Integer page(Player p, Inventory pi, int op) {
+    	if(op == 0) {
+        	int current = (int) Math.ceil(getinv(p).length/54*1.0);
+    		
+    		String name = null;
+    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+    			name = p.getName() + "의 배낭";
+    		}
+    		else {
+    			name = p.getName() + "'s Backpack";
+    		}
+    		Inventory ci = Bukkit.createInventory(p, 54, name);
+    		
+    		if(check(p)) {
+		        ItemStack[] arr1 = Arrays.copyOfRange(getinv(p), (current-1)*54, (current-1)*54+51);
+				ci.setContents(arr1);
+    		}
+    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+    			itemset(ChatColor.GOLD + "이전 페이지", new ItemStack(Material.CHAIN_COMMAND_BLOCK), 0, 1,
+    					Arrays.asList(ChatColor.GOLD + "" + (current)), 52, ci);
+    			itemset(ChatColor.GOLD + "다음 페이지", new ItemStack(Material.CHAIN_COMMAND_BLOCK), 0, 1,
+    					Arrays.asList(ChatColor.GOLD + "" + (current)), 53, ci);
+    		}
+    		else {
+    			itemset(ChatColor.GOLD + "Prev", new ItemStack(Material.CHAIN_COMMAND_BLOCK), 0, 1,
+    					Arrays.asList(ChatColor.GOLD + "" + (current)), 52, ci);
+    			itemset(ChatColor.GOLD + "Next", new ItemStack(Material.CHAIN_COMMAND_BLOCK), 0, 1,
+    					Arrays.asList(ChatColor.GOLD + "" + (current)), 53, ci);
+    		}
+    		return current;
+    	}
+    	else {
+    		String name = null;
+    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+    			name = p.getName() + "의 배낭";
+    		}
+    		else {
+    			name = p.getName() + "'s Backpack";
+    		}
+    		Inventory ci = Bukkit.createInventory(p, 54, name);
+
+    		if(check(p)) {
+				ci.setContents(getinv(p));
+    		}
+    		
+    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+    			itemset(ChatColor.GOLD + "이전 페이지", new ItemStack(Material.CHAIN_COMMAND_BLOCK), 0, 1,
+    					Arrays.asList(ChatColor.GOLD + "1"), 52, ci);
+    			itemset(ChatColor.GOLD + "다음 페이지", new ItemStack(Material.CHAIN_COMMAND_BLOCK), 0, 1,
+    					Arrays.asList(ChatColor.GOLD + "1"), 53, ci);
+    		}
+    		else {
+    			itemset(ChatColor.GOLD + "Prev", new ItemStack(Material.CHAIN_COMMAND_BLOCK), 0, 1,
+    					Arrays.asList(ChatColor.GOLD + "1"), 52, ci);
+    			itemset(ChatColor.GOLD + "Next", new ItemStack(Material.CHAIN_COMMAND_BLOCK), 0, 1,
+    					Arrays.asList(ChatColor.GOLD + "1"), 53, ci);
+    		}
+    		return 1;
+    	}
     }
 
     final private void dumpster(Player p) {
@@ -132,6 +221,8 @@ public class Backpack implements Serializable, Listener{
 		}
 		Inventory ci = Bukkit.createInventory(p, 54, name);
 		
+		
+		
 		p.openInventory(ci);
     }
 
@@ -139,7 +230,7 @@ public class Backpack implements Serializable, Listener{
 	public void Bag(InventoryClickEvent e)
 	{
         Player p = (Player) e.getWhoClicked();
-		if(ChatColor.stripColor(e.getView().getTitle()).contains("Skills") || ChatColor.stripColor(e.getView().getTitle()).contains("skills"))
+		if(ChatColor.stripColor(e.getView().getTitle()).contains("Skills") || ChatColor.stripColor(e.getView().getTitle()).contains("skills") || CombatMode.getInstance().isCombat(p))
 		{
 			e.setCancelled(true);
 			if(e.getCurrentItem()==null||e.getCurrentItem().getType() == null|| !e.getCurrentItem().hasItemMeta())
@@ -158,6 +249,8 @@ public class Backpack implements Serializable, Listener{
 			}
 		}
 	}
+	
+	
 
     @EventHandler
 	public void Close(InventoryCloseEvent d) 
@@ -168,12 +261,51 @@ public class Backpack implements Serializable, Listener{
 		
 		if(d.getView().getTitle().equals(p.getName() + "'s Backpack") || d.getView().getTitle().equals(p.getName() + "의 배낭")) {
 			if(check(p)) {
-				save(p,ci);
+				save(p,ci, Integer.parseInt(ci.getItem(52).getItemMeta().getLore().get(0)));
 			}
 		}
 	}
-	
-	public HashMap<UUID, ItemStack[]> getdata(){
+
+    private static ItemStack[] Add(ItemStack[] inv, ItemStack val) {
+    	List<ItemStack> iss = Arrays.asList(inv);
+    	if(iss.stream().anyMatch(val::isSimilar)) {
+    		for(ItemStack is : iss) {
+    			if(is.isSimilar(val)) {
+    				final int fa = is.getAmount();
+    				int amount = fa+val.getAmount();
+        			if(amount > is.getMaxStackSize()) {
+        				int i =0; 
+        				for(i=0; i<(amount*1.0)/is.getMaxStackSize()*1.0; i++) {
+        					ItemStack newis = is.clone();
+        					newis.setAmount(is.getMaxStackSize());
+        					iss.add(newis);
+        				}
+        				if(amount%is.getMaxStackSize()+val.getAmount() > is.getMaxStackSize()) {
+        					ItemStack newis = is.clone();
+        					newis.setAmount(is.getMaxStackSize());
+        					iss.add(newis);
+            				is.setAmount(amount%is.getMaxStackSize()+fa-is.getMaxStackSize());
+        				}
+        			}
+        			else {
+        				is.setAmount(amount);
+        			}
+    			}
+    		}
+    	}
+    	return (ItemStack[]) iss.toArray();
+    }
+    
+    public static void add(Player p, ItemStack is) {
+        HashMap<UUID, ItemStack[]> chest = getdata();
+        ItemStack[] nis = Add(chest.get(p.getUniqueId()), is);
+        chest.put(p.getUniqueId(), nis);
+        String path = new File("").getAbsolutePath();
+		new Backpack(chest).saveData(path +"/plugins/RPGskills/BackPack.data");
+    	
+    }
+    
+	public static HashMap<UUID, ItemStack[]> getdata(){
         String path = new File("").getAbsolutePath();
         Backpack data = new Backpack(Backpack.loadData(path +"/plugins/RPGskills/Backpack.data"));
 		return data.chest;

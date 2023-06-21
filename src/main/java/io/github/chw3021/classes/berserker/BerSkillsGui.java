@@ -89,7 +89,7 @@ public class BerSkillsGui extends SkillsGui{
 						Arrays.asList("요구 숙련도: " + Proficiency.getproexp(p) + "/155015"), 24, Berskillsinv);
 				itemset("넘치는힘(잠김)", Material.STRUCTURE_VOID, 0, 1,
 						Arrays.asList("요구 숙련도: " + Proficiency.getproexp(p) + "/155015"), 25, Berskillsinv);
-				itemset("학살(잠김)", Material.STRUCTURE_VOID, 0, 1,
+				itemset("말살(잠김)", Material.STRUCTURE_VOID, 0, 1,
 						Arrays.asList("요구 숙련도: " + Proficiency.getproexp(p) + "/155015"), 26, Berskillsinv);
 			} else {
 				itemset("갈증", Material.CRIMSON_HYPHAE, 0, 1, Arrays.asList("갈망 상태중 포만감 효과도 얻습니다"), 9, Berskillsinv);
@@ -127,7 +127,7 @@ public class BerSkillsGui extends SkillsGui{
 				itemset("넘치는힘", Material.ENCHANTED_BOOK, 0, 1,
 						Arrays.asList("공격력과 방어력이 증가합니다", "들끓는심장과 불사의 대기시간이 감소합니다", "피격시 재생효과를 얻습니다(중첩가능)"), 25,
 						Berskillsinv);
-				itemset("학살", Material.WRITTEN_BOOK, 0, 1,
+				itemset("말살", Material.WRITTEN_BOOK, 0, 1,
 						Arrays.asList(ChatColor.UNDERLINE + "[대지 계열]", "달리기 + 아이템던지기",
 								"", ChatColor.BOLD + "22 X 0.3D + 11.5D"),
 						26, Berskillsinv);
