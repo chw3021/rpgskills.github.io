@@ -194,22 +194,15 @@ public class Fireskills extends Pak implements Serializable, Listener {
 					ev.setCancelled(true);
                     p.setCooldown(Material.FIRE_CHARGE, 1);
 					
-					if(thcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is suncty)
-		            {
-		                double timer = (thcooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d; // geting time in seconds
-		                if(!(timer < 0)) // if timer is still more then 0 or 0
-		                {
-			        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("ºÐÈ­±¸ Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
-						    }
-			        		else {
-			                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Eruption").create());
-			        		}
-		                }
-		                else // if timer is done
-		                {
-		                    thcooldown.remove(p.getName()); // removing player from HashMap
-
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(sec)
+						.kname("ë¶„í™”êµ¬")
+						.ename("Eruption")
+						.slot(0)
+						.hm(thcooldown)
+						.skillUse(() -> {
+						
 		                    Casting(p);
 		                    
 		                	if(lavaft.containsKey(p.getUniqueId())) {
@@ -285,89 +278,9 @@ public class Fireskills extends Pak implements Serializable, Listener {
 					                }
 					            }, i*2+10);
 		                    }
-							thcooldown.put(p.getName(), System.currentTimeMillis());  
-		                }
-		            }
-		            else // if cooldown doesn't have players name in it
-		            {
-	                    Casting(p);
-
-	                	if(lavaft.containsKey(p.getUniqueId())) {
-	                		Bukkit.getScheduler().cancelTask(lavaft.get(p.getUniqueId()));
-	                		lavaft.remove(p.getUniqueId());
-	                	}
-
-						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() {
-								if(Proficiency.getpro(p)>=1) {
-									lavaf.putIfAbsent(p.getUniqueId(), 0);
-								}
-			                }
-			            }, 3); 
-
-	            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() {
-								lavaf.remove(p.getUniqueId());
-			                }
-			            }, 50); 
-	                	lavaft.put(p.getUniqueId(), task);
-	                	
-
-	                    p.playSound(p.getLocation(), Sound.BLOCK_LAVA_AMBIENT, 1.0f, 2f);
-	                    p.playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 1.0f, 0f);
-         				tl.getWorld().spawnParticle(Particle.LANDING_LAVA, tl, 300, 2,0.2,2,0);
-         				tl.getWorld().spawnParticle(Particle.ASH, tl, 300, 2,0.2,2,0);
-         				tl.getWorld().spawnParticle(Particle.SQUID_INK, tl, 300, 2,0.2,2,0);
-                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-                		@Override
-		                	public void run() 
-			                {	
-         					tl.getWorld().spawnParticle(Particle.FALLING_LAVA, tl, 1000, 2,5,2);
-             					tl.getWorld().spawnParticle(Particle.LAVA, tl, 300, 1,2,1,0);
-                 				tl.getWorld().spawnParticle(Particle.ASH, tl, 400, 2,3,2);
-	    	                    p.playSound(p.getLocation(), Sound.ITEM_BUCKET_FILL_LAVA, 1.0f, 0f);
-	    	                    p.playSound(p.getLocation(), Sound.ENTITY_MAGMA_CUBE_SQUISH, 1.0f, 0f);
-	    	                    p.playSound(p.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1.0f, 0f);
-	    	                    p.playSound(p.getLocation(), Sound.ENTITY_GENERIC_SPLASH, 1.0f, 0f);
-				            }
-                    	}, 10); 
-
-						for(int i = 0; i <8; i++) {
-		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() {
-									for(Entity e : tl.getWorld().getNearbyEntities(tl,2.5, 6, 2.5)) {
-										if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
-											LivingEntity le = (LivingEntity)e;
-				                    		if (le==p && p.getLocation().add(0, 0.5, 0).getBlock().isPassable()) 
-											{
-						                    	p.teleport(p.getLocation().clone().add(0, 0.5, 0));	
-						                    	p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 40,1,false,false));
-						                    	continue;
-											}
-				                    		if (e instanceof Player) 
-											{
-												
-												Player p1 = (Player) e;
-												if(Party.hasParty(p) && Party.hasParty(p1))	{
-												if(Party.getParty(p).equals(Party.getParty(p1)))
-													{
-														continue;
-													}
-												}
-											}
-				                    		atk1(0.032*(1+fsd.FlowingLava.get(p.getUniqueId())*0.04), p, le);
-					                    	le.teleport(le.getLocation().clone().add(0, 0.5, 0));		
-			             					
-										}
-									}
-				                }
-				            }, i*2+10);
-	                    }
-						thcooldown.put(p.getName(), System.currentTimeMillis());  
-					}
+						});
+				bd.execute();
+					
 				} 
 				}
 		}
@@ -474,22 +387,14 @@ public class Fireskills extends Pak implements Serializable, Listener {
 					ev.setCancelled(true);
                     p.setCooldown(Material.FIRE_CHARGE, 1);
 					
-					if(rscooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is suncty)
-		            {
-		                double timer = (rscooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d; // geting time in seconds
-		                if(!(timer < 0)) // if timer is still more then 0 or 0
-		                {
-			        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("ºÒÀÇ°í¸® Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
-						    }
-			        		else {
-			                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Ring").create());
-			        		}
-		                }
-		                else // if timer is done
-		                {
-		                    rscooldown.remove(p.getName()); // removing player from HashMap
-
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(sec)
+						.kname("ë¶ˆì˜ê³ ë¦¬")
+						.ename("Ring")
+						.slot(1)
+						.hm(rscooldown)
+						.skillUse(() -> {
 		                    Casting(p);
 							
 		                	if(sunct.containsKey(p.getUniqueId())) {
@@ -568,93 +473,8 @@ public class Fireskills extends Pak implements Serializable, Listener {
 					                }
 					            }, i*4); 	                    	
 		                    }
-			                rscooldown.put(p.getName(), System.currentTimeMillis());
-		                }
-		                    
-		            }
-		            else // if cooldown doesn't have players name in it
-		            {
-
-	                    Casting(p);
-						
-	                	if(sunct.containsKey(p.getUniqueId())) {
-	                		Bukkit.getScheduler().cancelTask(sunct.get(p.getUniqueId()));
-	                		sunct.remove(p.getUniqueId());
-	                	}
-
-	    				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	    	                @Override
-	    	                public void run() {
-	    						if(Proficiency.getpro(p)>=1) {
-	    							sunc.putIfAbsent(p.getUniqueId(), 0);
-	    						}
-	    	                }
-	    	            }, 3); 
-
-	            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	    	                @Override
-	    	                public void run() {
-	    						sunc.remove(p.getUniqueId());
-	    	                }
-	    	            }, 40); 
-	                	sunct.put(p.getUniqueId(), task);
-
-		            	ArrayList<Location> ring = new ArrayList<Location>();
-	                    for(double angle=0.1; angle<Math.PI*2; angle += Math.PI/90) {
-	                    	Location one = tl.clone().add(0, -0.2, 0);
-	                    	one.setDirection(one.getDirection().rotateAroundY(angle));
-	                    	one.add(one.getDirection().normalize().multiply(3.5));
-	                    	ring.add(one);
-	                	} 
-		            	for(int i = 0; i <15; i++) {
-		                    AtomicInteger j = new AtomicInteger();	
-		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() {
-									p.playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 0.2f, 0);
-				                	ring.forEach(l -> {
-				                		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-							                @Override
-							                public void run() {
-												p.getWorld().spawnParticle(Particle.FLAME, l, 6, 0.5,0.2,0.5,0);								                    
-							                }
-							            }, j.incrementAndGet()/60); 
-				                		
-				                	});
-				                }
-				            }, i*1); 	                    	
-	                    }
-						for(int i = 0; i <15; i++) {
-		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() {
-									for(Entity e : tl.getWorld().getNearbyEntities(tl,3.75, 3.75, 3.75)) {
-										if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
-											LivingEntity le = (LivingEntity)e;
-				                    		if (e instanceof Player) 
-											{
-												
-												Player p1 = (Player) e;
-												if(Party.hasParty(p) && Party.hasParty(p1))	{
-												if(Party.getParty(p).equals(Party.getParty(p1)))
-													{
-														continue;
-													}
-												}
-											}
-				                    		atk1(0.2*(1+fsd.Ring.get(p.getUniqueId())*0.045), p, le);
-				                    		
-											if(le.getLocation().distance(tl)>=2.5) {
-												le.teleport(tl);
-											}
-												
-										}
-									}
-				                }
-				            }, i*4); 	                    	
-	                    }
-		                rscooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-		            }
+						});
+				bd.execute();
 				} 
 				}
 		}
@@ -875,24 +695,14 @@ public class Fireskills extends Pak implements Serializable, Listener {
 
 			final Location tl = gettargetblock(p,5);
 				ev.setCancelled(true);
-				{
-					if(prcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is suncty)
-		            {
-		                double timer = (prcooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d; // geting time in seconds
-		                if(!(timer < 0)) // if timer is still more then 0 or 0
-		                {
-			        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("»ì¾ÆÀÖ´ÂºÒ²É Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
-						    }
-			        		else {
-			                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use AliveFlame").create());
-			        		}
-		                    ev.setCancelled(true);
-		                }
-		                else // if timer is done
-		                {							
-		                    prcooldown.remove(p.getName()); // removing player from HashMap
-
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(sec)
+						.kname("ì‚´ì•„ìžˆëŠ”ë¶ˆê½ƒ")
+						.ename("AliveFlame")
+						.slot(2)
+						.hm(prcooldown)
+						.skillUse(() -> {
 		                    Casting(p);
 							
 		                    
@@ -944,96 +754,15 @@ public class Fireskills extends Pak implements Serializable, Listener {
 												LivingEntity le = (LivingEntity)e;
 												AliveFlame(tl,le);
 					                    		atk1(0.07*(1+fsd.AliveFlame.get(p.getUniqueId())*0.016), p, le);
-					                    		/*
-												if(le instanceof EnderDragon) {
-								                    Arrow firstarrow = p.launchProjectile(Arrow.class);
-								                    firstarrow.setDamage(0);
-								                    firstarrow.remove();
-													Arrow enar = (Arrow) p.getWorld().spawn(le.getLocation().add(0, 5.163, 0), Arrow.class, a->{
-														a.setShooter(p);
-														a.setCritical(false);
-														a.setSilent(true);
-														a.setPickupStatus(PickupStatus.DISALLOWED);
-														a.setVelocity(le.getLocation().clone().add(0, -1, 0).toVector().subtract(le.getLocation().toVector()).normalize().multiply(2.6));
-													});
-													enar.setDamage(player_damage.get(p.getName())*0.0665*(1+fsd.AliveFlame.get(p.getUniqueId())*0.0145));								
-												}
-												p.setCooldown(Material.YELLOW_TERRACOTTA, 1);
-												le.damage(0,p);
-												le.damage(player_damage.get(p.getName())*0.0665*(1+fsd.AliveFlame.get(p.getUniqueId())*0.0145),p);	
-													*/
 											}
 										}
 					                }
 					            }, i*2);
 		                    }
-							prcooldown.put(p.getName(), System.currentTimeMillis());
-						}
-		            }
-		            else // if cooldown doesn't have players name in it
-		            {
-
-	                    Casting(p);
-						
-	                    
-	                	if(frst.containsKey(p.getUniqueId())) {
-	                		Bukkit.getScheduler().cancelTask(frst.get(p.getUniqueId()));
-	                		frst.remove(p.getUniqueId());
-	                	}
-
-	    				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	    	                @Override
-	    	                public void run() {
-	    						if(Proficiency.getpro(p)>=1) {
-	    							frs.putIfAbsent(p.getUniqueId(), 0);
-	    						}
-	    	                }
-	    	            }, 3); 
-
-	            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	    	                @Override
-	    	                public void run() {
-	    						frs.remove(p.getUniqueId());
-	    	                }
-	    	            }, 40); 
-	                	frst.put(p.getUniqueId(), task);
-	                	
-	                	
-						p.playSound(tl, Sound.BLOCK_FIRE_AMBIENT, 1, 0.5f);
-						p.playSound(tl, Sound.BLOCK_BLASTFURNACE_FIRE_CRACKLE, 1, 0);
-						
-						for(int i = 0; i <20; i++) {
-		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() {
-									p.playSound(tl, Sound.ITEM_FIRECHARGE_USE, 0.3f, 0.346f);
-									tl.getWorld().spawnParticle(Particle.FLAME, tl, 60, 0.1,0.1,0.1,0.1);
-									tl.getWorld().spawnParticle(Particle.WHITE_ASH, tl, 20, 1.1,1.1,1.1,0.1);
-									for(Entity e : tl.getWorld().getNearbyEntities(tl,4, 4, 4)) {
-										if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
-				                    		if (e instanceof Player) 
-											{
-												
-												Player p1 = (Player) e;
-												if(Party.hasParty(p) && Party.hasParty(p1))	{
-												if(Party.getParty(p).equals(Party.getParty(p1)))
-													{
-														continue;
-													}
-												}
-											}
-											LivingEntity le = (LivingEntity)e;
-											AliveFlame(tl,le);
-				                    		atk1(0.07*(1+fsd.AliveFlame.get(p.getUniqueId())*0.016), p, le);
-												
-										}
-									}
-				                }
-				            }, i*2);
-	                    }
-		                prcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-					}
-				}}
+						});
+				bd.execute();
+				
+				}
 		}
 	}
 	
@@ -1307,23 +1036,15 @@ public class Fireskills extends Pak implements Serializable, Listener {
 				ev.setCancelled(true);
 				
 				
-				{
-					if(eccooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is suncty)
-		            {
-		                double timer = (eccooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d; // geting time in seconds
-		                if(!(timer < 0)) // if timer is still more then 0 or 0
-		                {
-			        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("È­¿°ÀÇ¼û°á Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
-						    }
-			        		else {
-			                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Breath").create());
-			        		}
-		                }
-		                else // if timer is done
-		                {
-		                    eccooldown.remove(p.getName()); // removing player from HashMap
-		                    p.setCooldown(Material.FIRE_CHARGE, 1);
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(sec)
+						.kname("í™”ì—¼ì˜ìˆ¨ê²°")
+						.ename("Breath")
+						.slot(3)
+						.hm(eccooldown)
+						.skillUse(() -> {
+						p.setCooldown(Material.FIRE_CHARGE, 1);
 		                    Casting(p);
 		                	if(lavsht.containsKey(p.getUniqueId())) {
 		                		Bukkit.getScheduler().cancelTask(lavsht.get(p.getUniqueId()));
@@ -1378,70 +1099,9 @@ public class Fireskills extends Pak implements Serializable, Listener {
 					                }
 					            }, i*3); 	                    	
 		                    }
-							eccooldown.put(p.getName(), System.currentTimeMillis());
-		                }
-		            }
-		            else // if cooldown doesn't have players name in it
-		            {
-
-	                    p.setCooldown(Material.FIRE_CHARGE, 1);
-	                    Casting(p);
-	                	if(lavsht.containsKey(p.getUniqueId())) {
-	                		Bukkit.getScheduler().cancelTask(lavsht.get(p.getUniqueId()));
-	                		lavsht.remove(p.getUniqueId());
-	                	}
-
-	    				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	    	                @Override
-	    	                public void run() {
-	    						if(Proficiency.getpro(p)>=1) {
-	    							lavsh.putIfAbsent(p.getUniqueId(), 0);
-	    						}
-	    	                }
-	    	            }, 3); 
-
-	            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	    	                @Override
-	    	                public void run() {
-	    						lavsh.remove(p.getUniqueId());
-	    	                }
-	    	            }, 40); 
-	                	lavsht.put(p.getUniqueId(), task);
-	                	
-						p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 40, 4, false, false));
-						for(int i = 0; i <3; i++) {
-		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() {
-				                	Location tl = p.getEyeLocation().clone().add(0, -0.65, 0);
-				                	Breath1(tl);
-									p.playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 0.8f, 1.2f);
-									p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_BREATH, 0.7f, 0);
-											for(Entity e :tl.getWorld().getNearbyEntities(tl.clone().add(tl.getDirection().clone().normalize().multiply(3)),4, 4, 4)) {
-					                    		if (e instanceof Player) 
-												{
-													
-													Player p1 = (Player) e;
-													if(Party.hasParty(p) && Party.hasParty(p1))	{
-													if(Party.getParty(p).equals(Party.getParty(p1)))
-														{
-															continue;
-														}
-													}
-												}
-												if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
-													LivingEntity le = (LivingEntity)e;
-													
-						                    		atk1(0.4*(1+fsd.Breath.get(p.getUniqueId())*0.05), p, le);
-														
-												}
-											}
-				                }
-				            }, i*3); 	                    	
-	                    }
-		                eccooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-		            }
-				}
+						});
+				bd.execute();
+			
 				}
 		}
 	}
@@ -1689,7 +1349,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
 		                if(!(timer < 0)) // if timer is still more then 0 or 0
 		                {
 			        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("È­¿°±¸ Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
+				            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("í™”ì—¼êµ¬ ìž¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ì´ " + String.valueOf(Math.round(timer*10)/10.0) + "ì´ˆ ë‚¨ì•˜ìŠµë‹ˆë‹¤").create());
 						    }
 			        		else {
 			                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Fireball").create());
@@ -1991,7 +1651,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
 			            if(!(timer < 0)) // if timer is still more then 0 or 0
 			            {
 			        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("È®»ê Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
+				            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("í™•ì‚° ìž¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ì´ " + String.valueOf(Math.round(timer*10)/10.0) + "ì´ˆ ë‚¨ì•˜ìŠµë‹ˆë‹¤").create());
 						    }
 			        		else {
 			                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Spread").create());
@@ -2213,7 +1873,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
 	                if(!(timer < 0)) // if timer is still more then 0 or 0
 	                {
 		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("ºÒ»çÁ¶ÀÇ ³¯°¹Áþ Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
+			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("ë¶ˆì‚¬ì¡°ì˜ ë‚ ê°¯ì§“ ìž¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ì´ " + String.valueOf(Math.round(timer*10)/10.0) + "ì´ˆ ë‚¨ì•˜ìŠµë‹ˆë‹¤").create());
 					    }
 		        		else {
 		                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Phoenix Flap").create());
@@ -2353,7 +2013,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
 	                if(!(timer < 0)) // if timer is still more then 0 or 0
 	                {
 		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("µÎ¹øÂ° ÅÂ¾ç Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
+			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("ë‘ë²ˆì§¸ íƒœì–‘ ìž¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ì´ " + String.valueOf(Math.round(timer*10)/10.0) + "ì´ˆ ë‚¨ì•˜ìŠµë‹ˆë‹¤").create());
 					    }
 		        		else {
 		                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use New SunRise").create());
@@ -2588,7 +2248,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
 				casted.compute(p.getUniqueId(), (k,v) -> v+1);
 	    	}
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.RED + "¿­±â : ("+casted.get(p.getUniqueId()) + "/6)").create());
+            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.RED + "ì—´ê¸° : ("+casted.get(p.getUniqueId()) + "/6)").create());
 		    }
     		else {
             	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.RED + "HotBody : ("+casted.get(p.getUniqueId()) + "/6)").create());
