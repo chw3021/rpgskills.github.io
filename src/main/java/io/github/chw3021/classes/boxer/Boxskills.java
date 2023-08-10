@@ -2298,32 +2298,18 @@ public class Boxskills extends Pak implements Listener, Serializable {
 				ev.setCancelled(true);
 		    	final Location tl = gettargetblock(p,3);
 		    	final Vector tv = tl.clone().toVector().subtract(tl.clone().add(0, -0.01, 1).toVector());
-				if(sult2cooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-	            {
-	                double timer = (sult2cooldown.get(p.getName())/1000d + 70*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d)) - System.currentTimeMillis()/1000d; // geting time in seconds
-	                if(!(timer < 0)) // if timer is still more then 0 or 0
-	                {
-		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("철인의 의지 재사용 대기시간이 " + String.valueOf(Math.round(timer*10)/10.0) + "초 남았습니다").create());
-					    }
-		        		else {
-		                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Will Of Ironman").create());
-		        		}
-	                }
-	                else // if timer is done
-	                {
-	                    sult2cooldown.remove(p.getName()); // removing player from HashMap
-	                    ult2(p,tl,tv);
-		                sult2cooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-		            
-	                }
-	            }
-	            else // if cooldown doesn't have players name in it
-	            {
-
-                    ult2(p,tl,tv);
-	                sult2cooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-	            }
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(sec)
+						.kname("철인의 의지")
+						.ename("Will Of Ironman")
+						.slot(7)
+						.hm(sult2cooldown)
+						.skillUse(() -> {
+	                    	ult2(p,tl,tv);
+						});
+				bd.execute();
+				
 			}
     }
 	
