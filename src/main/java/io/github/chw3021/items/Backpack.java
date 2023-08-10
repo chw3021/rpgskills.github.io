@@ -260,6 +260,7 @@ public class Backpack implements Serializable, Listener{
 	Integer cv = count;
 		indexes.foreach(id -> {
 			if(cv==1){
+				
 				//val setamount val - maxcount*count
 				//ret[id] = valclone
 			}

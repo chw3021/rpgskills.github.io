@@ -170,6 +170,17 @@ public class Engskills extends Pak implements Listener, Serializable {
 			{
 				ev.setCancelled(true);
 				
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(sec)
+						.kname("ï¿½ß»ï¿½ï¿½")
+						.ename("Dispenser")
+						.slot(0)
+						.hm()
+						.skillUse(() -> {
+						
+						});
+				bd.execute();
 				
 				if(sdcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
 	            {
@@ -177,7 +188,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 	                if(!(timer < 0)) // if timer is still more then 0 or 0
 	                {
 		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("¹ß»ç±â Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
+			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("ï¿½ß»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ã°ï¿½ï¿½ï¿½ " + String.valueOf(Math.round(timer*10)/10.0) + "ï¿½ï¿½ ï¿½ï¿½ï¿½Ò½ï¿½ï¿½Ï´ï¿½").create());
 					    }
 		        		else {
 		                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Dispenser").create());
@@ -693,7 +704,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 	                if(!(timer < 0)) // if timer is still more then 0 or 0
 	                {
 		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("¿¢½º¼± Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
+			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ã°ï¿½ï¿½ï¿½ " + String.valueOf(Math.round(timer*10)/10.0) + "ï¿½ï¿½ ï¿½ï¿½ï¿½Ò½ï¿½ï¿½Ï´ï¿½").create());
 					    }
 		        		else {
 		                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use X_ray").create());
@@ -1117,7 +1128,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 		                {
 
 			        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("Áß·ÂÀÚ Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
+				            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("ï¿½ß·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ã°ï¿½ï¿½ï¿½ " + String.valueOf(Math.round(timer*10)/10.0) + "ï¿½ï¿½ ï¿½ï¿½ï¿½Ò½ï¿½ï¿½Ï´ï¿½").create());
 						    }
 			        		else {
 			                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Graviton").create());
@@ -1628,7 +1639,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 	                {
 
 		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("Á¤Àü±âÀå Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
+			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ã°ï¿½ï¿½ï¿½ " + String.valueOf(Math.round(timer*10)/10.0) + "ï¿½ï¿½ ï¿½ï¿½ï¿½Ò½ï¿½ï¿½Ï´ï¿½").create());
 					    }
 		        		else {
 		                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Electrostatic").create());
@@ -2082,7 +2093,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 		            if(!(timer < 0)) // if timer is still more then 0 or 0
 		            {
 		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("ÀÚ¼º Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
+			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("ï¿½Ú¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ã°ï¿½ï¿½ï¿½ " + String.valueOf(Math.round(timer*10)/10.0) + "ï¿½ï¿½ ï¿½ï¿½ï¿½Ò½ï¿½ï¿½Ï´ï¿½").create());
 					    }
 		        		else {
 			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Magnetic").create());
@@ -2215,7 +2226,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 		            if(!(timer < 0)) // if timer is still more then 0 or 0
 		            {
 		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("Á¦Æ®ÆÑ Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
+			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ã°ï¿½ï¿½ï¿½ " + String.valueOf(Math.round(timer*10)/10.0) + "ï¿½ï¿½ ï¿½ï¿½ï¿½Ò½ï¿½ï¿½Ï´ï¿½").create());
 					    }
 		        		else {
 			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Jetpack").create());
@@ -2426,7 +2437,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 	                if(!(timer < 0)) // if timer is still more then 0 or 0
 	                {
 		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("°¨¸¶¼± Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
+			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ã°ï¿½ï¿½ï¿½ " + String.valueOf(Math.round(timer*10)/10.0) + "ï¿½ï¿½ ï¿½ï¿½ï¿½Ò½ï¿½ï¿½Ï´ï¿½").create());
 					    }
 		        		else {
 		                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Gamma Ray").create());
@@ -2640,7 +2651,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 	                if(!(timer < 0)) // if timer is still more then 0 or 0
 	                {
 		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("ºí·¢È¦ Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
+			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("ï¿½ï¿½ï¿½ï¿½È¦ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ã°ï¿½ï¿½ï¿½ " + String.valueOf(Math.round(timer*10)/10.0) + "ï¿½ï¿½ ï¿½ï¿½ï¿½Ò½ï¿½ï¿½Ï´ï¿½").create());
 					    }
 		        		else {
 		                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use BlackHole").create());
