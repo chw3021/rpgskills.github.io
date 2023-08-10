@@ -193,22 +193,15 @@ public class Cheskills extends Pak implements Listener, Serializable {
 			{
 				ev.setCancelled(true);
 				
-				
-				if(sdcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-	            {
-	                double timer = (sdcooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d; // geting time in seconds
-	                if(!(timer < 0)) // if timer is still more then 0 or 0
-	                {
-		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("½½¶óÀÓº¼ Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
-					    }
-		        		else {
-		                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use SlimeBall").create());
-		        		}
-	                }
-	                else // if timer is done
-	                {
-	                    sdcooldown.remove(p.getName()); // removing player from HashMap
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(sec)
+						.kname("ìŠ¬ë¼ìž„ë³¼")
+						.ename("SlimeBall")
+						.slot(0)
+						.hm(sdcooldown)
+						.skillUse(() -> {
+						
 	                	if(mgt.containsKey(p.getUniqueId())) {
 	                		Bukkit.getScheduler().cancelTask(mgt.get(p.getUniqueId()));
 	                		mgt.remove(p.getUniqueId());
@@ -241,45 +234,9 @@ public class Cheskills extends Pak implements Listener, Serializable {
 	                    thr.setMetadata("slimeball"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	 
 	                    thr.setMetadata("fake"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	
 						sdcooldown.put(p.getName(), System.currentTimeMillis());
-	                }
-	            }
-	            else // if cooldown doesn't have players name in it
-	            {
-                	if(mgt.containsKey(p.getUniqueId())) {
-                		Bukkit.getScheduler().cancelTask(mgt.get(p.getUniqueId()));
-                		mgt.remove(p.getUniqueId());
-                	}
-
-					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() {
-							if(Proficiency.getpro(p)>=1) {
-								mg.putIfAbsent(p.getUniqueId(), 0);
-							}
-		                }
-		            }, 3); 
-
-            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() {
-							mg.remove(p.getUniqueId());
-		                }
-		            }, 25); 
-                	mgt.put(p.getUniqueId(), task);
-                	
-
-                	
-					p.playSound(p.getLocation(), Sound.ENTITY_FISHING_BOBBER_THROW, 1.0f, 0f);
-					p.playSound(p.getLocation(), Sound.ENTITY_SLIME_JUMP, 1.0f, 0f);
-                    Snowball thr = (Snowball) p.launchProjectile(Snowball.class);
-                    thr.setShooter(p);
-                    thr.setBounce(true);
-                    thr.setItem(new ItemStack(Material.SLIME_BALL));
-                    thr.setVelocity(p.getEyeLocation().getDirection().normalize().multiply(3));
-                    thr.setMetadata("slimeball"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	 
-                    thr.setMetadata("fake"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	
-	                sdcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-	            }
+						});
+				bd.execute();
+				
 			}
 		}
 	}
@@ -389,7 +346,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 	final private void AcidCloud(Player p) {
 		if(cloudh.containsKey(p.getUniqueId())) {
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.GREEN+"[»ê¼º±¸¸§ ºñÈ°¼ºÈ­]").create());
+            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.GREEN+"[ì‚°ì„±êµ¬ë¦„ ë¹„í™œì„±í™”]").create());
 		    }
     		else {
             	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.GREEN+"[AcidCloud off]").create());
@@ -402,7 +359,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 		}
 		else {
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.GREEN+"[»ê¼º±¸¸§ È°¼ºÈ­]").create());
+            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.GREEN+"[ì‚°ì„±êµ¬ë¦„ í™œì„±í™”]").create());
 		    }
     		else {
             	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.GREEN+"[AcidCloud on]").create());
@@ -492,24 +449,17 @@ public class Cheskills extends Pak implements Listener, Serializable {
 				if(!(p.isSneaking()) && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK))
 				{
 					p.setCooldown(Material.TNT,3);
-				if(gdcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-		        {
-		            double timer = (gdcooldown.get(p.getName())/1000d + 0.25) - System.currentTimeMillis()/1000d; // geting time in seconds
-		            if(!(timer < 0)) // if timer is still more then 0 or 0
-		            {
-			        }
-		            else // if timer is done
-		            {
-		                gdcooldown.remove(p.getName()); // removing player from HashMap
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(sec)
+						.kname("ì‚°ì„±êµ¬ë¦„")
+						.ename("AcidCloud")
+						.slot(1)
+						.hm(gdcooldown)
+						.skillUse(() -> {
 		                AcidCloud(p);
-			            gdcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-		            }
-		        }
-		        else // if cooldown doesn't have players name in it
-		        {
-	                AcidCloud(p);
-		            gdcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-		        }
+						});
+				bd.execute();
 			}
 		}
 		}
@@ -590,22 +540,15 @@ public class Cheskills extends Pak implements Listener, Serializable {
 			
 			
 				ev.setCancelled(true);
-					if(cdcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-		            {
-		                double timer = (cdcooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d; // geting time in seconds
-		                if(!(timer < 0)) // if timer is still more then 0 or 0
-		                {
-			        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("³×ÀÌÆÊ Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
-						    }
-			        		else {
-			                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Napalm").create());
-			        		}
-		                }
-		                else // if timer is done
-		                {
-		                    cdcooldown.remove(p.getName()); // removing player from HashMap
-
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(sec)
+						.kname("ë„¤ì´íŒœ")
+						.ename("Napalm")
+						.slot(2)
+						.hm(cdcooldown)
+						.skillUse(() -> {
+						
 		                	if(wpt.containsKey(p.getUniqueId())) {
 		                		Bukkit.getScheduler().cancelTask(wpt.get(p.getUniqueId()));
 		                		wpt.remove(p.getUniqueId());
@@ -698,105 +641,8 @@ public class Cheskills extends Pak implements Listener, Serializable {
 				                    Bukkit.getWorlds().forEach(w -> w.getEntities().stream().filter(en -> en.hasMetadata("napalm of"+p.getName())).forEach(n -> n.remove()));
 				                }
 		                    }, 10); 
-							cdcooldown.put(p.getName(), System.currentTimeMillis()); 
-		                }
-		            }
-		            else // if cooldown doesn't have players name in it
-		            {
-	                	if(wpt.containsKey(p.getUniqueId())) {
-	                		Bukkit.getScheduler().cancelTask(wpt.get(p.getUniqueId()));
-	                		wpt.remove(p.getUniqueId());
-	                	}
-
-	    				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	    	                @Override
-	    	                public void run() {
-	    						if(Proficiency.getpro(p)>=2) {
-	    							wp.putIfAbsent(p.getUniqueId(), 0);
-	    						}
-	    	                }
-	    	            }, 3); 
-
-	            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	    	                @Override
-	    	                public void run() {
-	    						wp.remove(p.getUniqueId());
-	    	                }
-	    	            }, 25); 
-	                	wpt.put(p.getUniqueId(), task);
-	                	
-		            	p.playSound(p.getLocation(), Sound.ENTITY_TNT_PRIMED, 1.0f, 2f);
-		            	p.playSound(p.getLocation(), Sound.BLOCK_FIRE_AMBIENT, 1.0f, 2f);
-						ItemStack is = new ItemStack(Material.MAGMA_BLOCK);
-						Item solid = p.getWorld().dropItem(p.getEyeLocation(), is);
-						solid.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-						solid.setMetadata("napalm of"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-						solid.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-						
-						solid.setPickupDelay(9999);
-	                    solid.setVelocity(p.getLocation().getDirection().normalize().multiply(1.6));
-	                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() 
-			                {
-				                Firework fr = (Firework) p.getWorld().spawnEntity(solid.getLocation(), EntityType.FIREWORK);
-			                    fr.setShotAtAngle(true);
-			                    fr.setShooter(p);
-			                    fr.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-					        	ev.setCancelled(true);
-			            	
-			        			FireworkEffect effect = FireworkEffect.builder()
-			                                .with(Type.BURST)
-			                                .withColor(Color.RED, Color.ORANGE, Color.BLACK)
-			                                .flicker(true)
-			                                .trail(true)
-			                                .build();
-			                    FireworkMeta meta = fr.getFireworkMeta();
-			                    meta.setPower(0);
-			                    meta.addEffect(effect);
-			                    fr.setFireworkMeta(meta);
-			                    fr.detonate();
-			                    
-			                	solid.getWorld().spawnParticle(Particle.FLAME, solid.getLocation(), 300,1,1,1,1);
-			                	solid.getWorld().spawnParticle(Particle.LAVA, solid.getLocation(), 30,1,1,1,1);
-			                	solid.getWorld().spawnParticle(Particle.BLOCK_CRACK, solid.getLocation(), 300,6,6,6,1,Material.MAGMA_BLOCK.createBlockData());
-			                    p.playSound(solid.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1, 0);
-			                    p.playSound(solid.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 0);
-			                    for (Entity e : solid.getNearbyEntities(4.5, 4.5, 4.5))
-								{
-		                    		if (e instanceof Player) 
-									{
-										
-										Player p1 = (Player) e;
-										if(Party.hasParty(p) && Party.hasParty(p1))	{
-										if(Party.getParty(p).equals(Party.getParty(p1)))
-											{
-											continue;
-											}
-										}
-									}
-		                    		if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
-									{
-										LivingEntity le = (LivingEntity)e;
-											{
-												le.setFireTicks(150);
-												for(int n = 0; n<10; n++) {
-								                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-										                @Override
-										                public void run() 
-										                {
-										                	atk1(0.085*(1+csd.Coagulation.get(p.getUniqueId())*0.065), p, le);
-										                }
-								                	 }, n*3); 														
-												}
-											}
-									}
-								}
-			                    Bukkit.getWorlds().forEach(w -> w.getEntities().stream().filter(en -> en.hasMetadata("napalm of"+p.getName())).forEach(n -> n.remove()));
-			                }
-                	   }, 10); 
-		                cdcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-		            }
+						});
+				bd.execute();
 				}
 		}
 	
@@ -1103,23 +949,14 @@ public class Cheskills extends Pak implements Listener, Serializable {
             	}
             	p.setCooldown(Material.APPLE, 3);
             	
-				if(frcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-	            {
-	                double timer = (frcooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d; // geting time in seconds
-	                if(!(timer < 0)) // if timer is still more then 0 or 0
-	                {
-		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("µ¹Áø Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
-					    }
-		        		else {
-		                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Charge").create());
-		        		}
-	                }
-	                else // if timer is done
-	                {
-	                    frcooldown.remove(p.getName()); // removing player from HashMap
-
-	                	
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(sec)
+						.kname("ëŒì§„")
+						.ename("Charge")
+						.slot(3)
+						.hm(frcooldown)
+						.skillUse(() -> {
 	                    int q =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
 			                @Override
 			                public void run() 
@@ -1222,121 +1059,9 @@ public class Cheskills extends Pak implements Listener, Serializable {
 			                	}
 			                }
 			            }, 60); 
-						frcooldown.put(p.getName(), System.currentTimeMillis());  
-	                }
-	            }
-	            else // if cooldown doesn't have players name in it
-	            {
-
-
-
-                	
-                    int q =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() 
-		                {
-		                	Holding.invur(p, 10l);
-		                	p.playSound(p.getLocation(), Sound.ENTITY_RAVAGER_STEP, 0.1f, 0.5f);
-		                	p.setVelocity(p.getEyeLocation().getDirection().clone().normalize().multiply(0.78));
-		                	
-							p.getWorld().spawnParticle(Particle.REDSTONE, p.getLocation(), 20,1,1,1, new Particle.DustOptions(Color.GREEN,2));
-							
-		                	Location tl = p.getLocation().clone().add(p.getEyeLocation().getDirection().clone().normalize().multiply(0.78));
-		                	if(tl.getWorld().getNearbyEntities(tl, 1.2,1.2,1.2).stream().anyMatch(e -> (!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")))) {
-
-								tl.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 200,3,3,3,1,Material.DIRT_PATH.createBlockData());
-								tl.getWorld().spawnParticle(Particle.CRIT, tl, 200,3,3,3,0.1);
-								tl.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, tl, 100,3,3,3);
-			                	p.playSound(p.getLocation(), Sound.ENTITY_RAVAGER_STUNNED, 1f, 0.2f);
-			                	p.playSound(p.getLocation(), Sound.ENTITY_RAVAGER_STUNNED, 1f, 1.9f);
-			                	if(chargingt.containsKey(p.getUniqueId())) {
-			                		Bukkit.getScheduler().cancelTask(chargingt.get(p.getUniqueId()));
-			                		chargingt.remove(p.getUniqueId());
-			                	}
-		                        
-		                    	if(acdstrmt.containsKey(p.getUniqueId())) {
-		                    		Bukkit.getScheduler().cancelTask(acdstrmt.get(p.getUniqueId()));
-		                    		acdstrmt.remove(p.getUniqueId());
-		                    	}
-
-		    					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		    		                @Override
-		    		                public void run() {
-		    							if(Proficiency.getpro(p)>=1) {
-		    								acdstrm.putIfAbsent(p.getUniqueId(), 0);
-		    							}
-		    		                }
-		    		            }, 6); 
-
-		                		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		    		                @Override
-		    		                public void run() {
-		    							acdstrm.remove(p.getUniqueId());
-		    		                }
-		    		            }, 50); 
-		                    	acdstrmt.put(p.getUniqueId(), task);
-		                    	
-			                    for (Entity e : tl.getWorld().getNearbyEntities(tl, 4, 4, 4))
-			    				{
-			                		if (e instanceof Player) 
-			    					{
-			    						
-			    						Player p1 = (Player) e;
-			    						if(Party.hasParty(p) && Party.hasParty(p1))	{
-			    						if(Party.getParty(p).equals(Party.getParty(p1)))
-			    							{
-			    							continue;
-			    							}
-			    						}
-			    					}
-			                		if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
-			    					{
-			                			LivingEntity le = (LivingEntity)e;
-					                	atk1(0.79*(1+csd.Charge.get(p.getUniqueId())*0.078), p, le);
-					                	Holding.holding(p, le, 20l);
-			                			
-			    					}
-			    				}
-		                	}
-		                }
-                	 }, 2,2);
-                    chargingt.put(p.getUniqueId(), q);
-                    
-                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() {
-		                	if(chargingt.containsKey(p.getUniqueId())) {
-		                		Bukkit.getScheduler().cancelTask(chargingt.get(p.getUniqueId()));
-		                		chargingt.remove(p.getUniqueId());
-			                    
-			                	if(acdstrmt.containsKey(p.getUniqueId())) {
-			                		Bukkit.getScheduler().cancelTask(acdstrmt.get(p.getUniqueId()));
-			                		acdstrmt.remove(p.getUniqueId());
-			                	}
-
-								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					                @Override
-					                public void run() {
-										if(Proficiency.getpro(p)>=1) {
-											acdstrm.putIfAbsent(p.getUniqueId(), 0);
-										}
-					                }
-					            }, 6); 
-
-			            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					                @Override
-					                public void run() {
-										acdstrm.remove(p.getUniqueId());
-					                }
-					            }, 50); 
-			                	acdstrmt.put(p.getUniqueId(), task);
-		                	}
-		                }
-		            }, 60); 
-					frcooldown.put(p.getName(), System.currentTimeMillis());  
-				}
-	            
-			} // adding players name + current system time in miliseconds
+						});
+				bd.execute();
+			} 
             
 		}}
 	}
@@ -1506,7 +1231,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 		if(p.getInventory().getItemInMainHand().getType().name().contains("PICKAXE"))
 		{
 			Action ac = ev.getAction();
-			double sec =1*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec =2*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 	
 	        
 			
@@ -1515,23 +1240,15 @@ public class Cheskills extends Pak implements Listener, Serializable {
 			if((p.isSneaking()) && (ac == Action.LEFT_CLICK_AIR || ac== Action.LEFT_CLICK_BLOCK) && !p.hasCooldown(Material.TNT))
 			{
 				
-
-				if(stcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-	            {
-	                double timer = (stcooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d; // geting time in seconds
-	                if(!(timer < 0)) // if timer is still more then 0 or 0
-	                {
-		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("ÃßÃâ Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
-					    }
-		        		else {
-		                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Extraction").create());
-		        		}
-	                }
-	                else // if timer is done
-	                {
-	                	stcooldown.remove(p.getName()); // removing player from HashMap
-	                    for (Entity e : p.getNearbyEntities(2, 2, 2))
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(sec)
+						.kname("ì¶”ì¶œ")
+						.ename("Extraction")
+						.slot(4)
+						.hm(stcooldown)
+						.skillUse(() -> {
+						for (Entity e : p.getNearbyEntities(2, 2, 2))
 						{
 	                		if (e instanceof Player) 
 							{
@@ -1584,7 +1301,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 	                	}
 		                if(!extracted.containsKey(p)) {
 			        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("¸ÕÀú ÃßÃâÀ» ÇØ¾ßÇÕ´Ï´Ù").create());
+				            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("ë¨¼ì € ì¶”ì¶œì„ í•´ì•¼í•©ë‹ˆë‹¤").create());
 						    }
 			        		else {
 				            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You Should Extract First").create());
@@ -1623,107 +1340,10 @@ public class Cheskills extends Pak implements Listener, Serializable {
 			                	p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1,1,false,false));
 		                	}
 		                }
-		                stcooldown.put(p.getName(), System.currentTimeMillis());  
-	                }
-	            }
-	            else // if cooldown doesn't have players name in it
-	            {
-                    for (Entity e : p.getNearbyEntities(2.5, 2.5, 2.5))
-					{
-                		if (e instanceof Player) 
-						{
-							
-							Player p1 = (Player) e;
-							if(Party.hasParty(p) && Party.hasParty(p1))	{
-							if(Party.getParty(p).equals(Party.getParty(p1)))
-								{
-								continue;
-								}
-							}
-						}
-                		if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
-						{
-							LivingEntity le = (LivingEntity)e;
-								{
-					                le.playEffect(EntityEffect.HURT_BERRY_BUSH);
-					                le.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 200,2,false,false));
-									p.playSound(le.getLocation(), Sound.ENTITY_COW_MILK, 0.2f, 2f);
-									if(le.getCategory() == EntityCategory.ARTHROPOD) {
-										extracted.put(p, 0);
-									}
-									else if(le.getCategory() == EntityCategory.UNDEAD) {
-										extracted.put(p, 1);
-									}
-									else if(le.getCategory() == EntityCategory.WATER) {
-										extracted.put(p, 2);
-									}
-									else if(le.getType() == EntityType.ENDERMAN) {
-										extracted.put(p, 3);
-									}
-									else {
-										extracted.put(p, 4);
-									}
-									if(Proficiency.getpro(p)>=2) {
-										Holding.superholding(p, le, 5l);
-									}
-								}
-						}
-					}
-                    p.playSound(p.getLocation(), Sound.BLOCK_CONDUIT_ATTACK_TARGET, 1.0f, 2f);
-					p.playSound(p.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 1.0f, 1f);
-                	p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 200,1,false,true));
-                	p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200,1,false,true));
-                	if(Proficiency.getpro(p)<1) {
-	                	p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 50,0,false,true));
-                	}
-                	if(Proficiency.getpro(p)>=1) {
-	                	p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 200,1,false,true));
-                	}
-	                if(!extracted.containsKey(p)) {
-		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("¸ÕÀú ÃßÃâÀ» ÇØ¾ßÇÕ´Ï´Ù").create());
-					    }
-		        		else {
-			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You Should Extract First").create());
-		        		}
-		            	sec = 0;
-	                }
-	                if (extracted.containsEntry(p, 0)) {
-	                	p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 200,0,false,true));
-	                	if(Proficiency.getpro(p)>=1) {
-		                	p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 200,1,false,true));
-	                	}
-	                }
-	                if (extracted.containsEntry(p, 1)) {
-	                	p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 200,1,false,true));
-	                	p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 200,1,false,true));
-	                	if(Proficiency.getpro(p)>=1) {
-		                	p.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 200,3,false,true));
-	                	}
-	                }
-	                if (extracted.containsEntry(p, 2)) {
-	                	p.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 200,1,false,true));
-	                	p.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 200,1,false,true));
-	                	if(Proficiency.getpro(p)>=1) {
-		                	p.addPotionEffect(new PotionEffect(PotionEffectType.CONDUIT_POWER, 200,1,false,true));
-	                	}
-	                }
-	                if (extracted.containsEntry(p, 3)) {
-	                	p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 200,1,false,true));
-	                	if(Proficiency.getpro(p)>=1) {
-		                	p.addPotionEffect(new PotionEffect(PotionEffectType.LUCK, 200,1,false,true));
-	                	}
-	                }
-	                if (extracted.containsEntry(p, 4)) {
-	                	p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 200,1,false,true));
-	                	if(Proficiency.getpro(p)>=1) {
-		                	p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1,1,false,false));
-	                	}
-	                }
-	                stcooldown.put(p.getName(), System.currentTimeMillis());  
-				}
-	            
-			} // adding players name + current system time in miliseconds
+						});
+				bd.execute();
+
+			} 
             
 		}}
 	}
@@ -1744,22 +1364,15 @@ public class Cheskills extends Pak implements Listener, Serializable {
 		
 			if((!p.isSneaking())&& !p.isOnGround() && (ac == Action.LEFT_CLICK_AIR || ac== Action.LEFT_CLICK_BLOCK) && !p.hasCooldown(Material.TNT))
 			{
-				if(smcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-		        {
-		            double timer = (smcooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d; // geting time in seconds
-		            if(!(timer < 0)) // if timer is still more then 0 or 0
-		            {
-		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("È­¿°º´ Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
-					    }
-		        		else {
-			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use MolotovCocktail").create());
-		        		}
-			        }
-		            else // if timer is done
-		            {
-		                smcooldown.remove(p.getName()); // removing player from HashMapLocation dam = p.getLocation();
-	                    ItemStack is = new ItemStack(Material.SPLASH_POTION);
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(sec)
+						.kname("í™”ì—¼ë³‘")
+						.ename("MolotovCocktail")
+						.slot(5)
+						.hm(smcooldown)
+						.skillUse(() -> {
+						ItemStack is = new ItemStack(Material.SPLASH_POTION);
 	                    ItemMeta imeta = is.getItemMeta();
 	                    PotionMeta pometa = (PotionMeta)imeta;
 	                    pometa.setColor(Color.GREEN);
@@ -1773,27 +1386,8 @@ public class Cheskills extends Pak implements Listener, Serializable {
 		                    thr.setFireTicks(55);
 		                    thr.setMetadata("thrown of"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	                    	
 	                    }
-			            smcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-		            }
-		        }
-		        else // if cooldown doesn't have players name in it
-		        {
-                    ItemStack is = new ItemStack(Material.SPLASH_POTION);
-                    ItemMeta imeta = is.getItemMeta();
-                    PotionMeta pometa = (PotionMeta)imeta;
-                    pometa.setColor(Color.GREEN);
-                    is.setItemMeta(pometa);
-                    for(double an = -Math.PI/3; an<=Math.PI/3 + (Proficiency.getpro(p)>=2 ? Math.PI/3*4 : 0); an += Math.PI/9) {
-	                    ThrownPotion thr = (ThrownPotion) p.launchProjectile(ThrownPotion.class);
-	                    thr.setShooter(p);
-	                    thr.setBounce(false);
-	                    thr.setItem(is);
-	                    thr.setVelocity(p.getLocation().getDirection().rotateAroundY(an));
-	                    thr.setFireTicks(55);
-	                    thr.setMetadata("thrown of"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	                    	
-                    }
-		            smcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-		        }
+						});
+				bd.execute();
 			}
 		}
 	}
@@ -1988,22 +1582,15 @@ public class Cheskills extends Pak implements Listener, Serializable {
 			{
 				p.setCooldown(Material.TNT,3);
 				ev.setCancelled(true);
-				if(sultcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-	            {
-	                double timer = (sultcooldown.get(p.getName())/1000d + 70/Proficiency.getpro(p)*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d)) - System.currentTimeMillis()/1000d; // geting time in seconds
-	                if(!(timer < 0)) // if timer is still more then 0 or 0
-	                {
-		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("½Å°æµ¶ Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
-					    }
-		        		else {
-		                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use VX").create());
-		        		}
-	                }
-	                else // if timer is done
-	                {
-	                    sultcooldown.remove(p.getName()); // removing player from HashMap
-	                    if(vxt.containsKey(p.getUniqueId())) {
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(sec)
+						.kname("ì‹ ê²½ë…")
+						.ename("VX")
+						.slot(6)
+						.hm(sultcooldown)
+						.skillUse(() -> {
+						if(vxt.containsKey(p.getUniqueId())) {
 	                    	Bukkit.getScheduler().cancelTask(vxt.get(p.getUniqueId()));
 	                    }
 	                    Holding.invur(p, 100l);
@@ -2018,7 +1605,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 	                    vx.putIfAbsent(p.getUniqueId(), 0);
 
 		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-							p.sendTitle(ChatColor.DARK_GREEN + "½Å°æµ¶ È°¼ºÈ­", ChatColor.DARK_GREEN +"»ê¼º±¸¸§ÀÌ °­È­µË´Ï´Ù", 20, 30, 20);
+							p.sendTitle(ChatColor.DARK_GREEN + "ì‹ ê²½ë… í™œì„±í™”", ChatColor.DARK_GREEN +"ì‚°ì„±êµ¬ë¦„ì´ ê°•í™”ë©ë‹ˆë‹¤", 20, 30, 20);
 		        		}
 		        		else {
 							p.sendTitle(ChatColor.DARK_GREEN + "VX Activate", ChatColor.DARK_GREEN +"Acid Cloud Enhanced", 20, 30, 20);
@@ -2031,42 +1618,9 @@ public class Cheskills extends Pak implements Listener, Serializable {
 						            }
 			                	   }, 200); 
 	                    vxt.put(p.getUniqueId(), task);
-		                sultcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-		            
-	                }
-	            }
-	            else // if cooldown doesn't have players name in it
-	            {
-                    if(vxt.containsKey(p.getUniqueId())) {
-                    	Bukkit.getScheduler().cancelTask(vxt.get(p.getUniqueId()));
-                    }
-                    
-                    Holding.invur(p, 100l);
-                	p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 200,3,false,true));
-                	p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200,3,false,true));
-         			p.playSound(p.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 0f, 1f);
-         			p.playSound(p.getLocation(), Sound.BLOCK_BEACON_AMBIENT, 0f, 1f);
-         			p.playSound(p.getLocation(), Sound.BLOCK_BREWING_STAND_BREW, 0f, 1f);
-         			
-                    vx.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
-                    vx.putIfAbsent(p.getUniqueId(), 0);
-
-	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						p.sendTitle(ChatColor.DARK_GREEN + "½Å°æµ¶ È°¼ºÈ­", ChatColor.DARK_GREEN +"»ê¼º±¸¸§ÀÌ °­È­µË´Ï´Ù", 20, 30, 20);
-	        		}
-	        		else {
-						p.sendTitle(ChatColor.DARK_GREEN + "VX Activate", ChatColor.DARK_GREEN +"Acid Cloud Enhanced", 20, 30, 20);
-	        		}
-                    int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	             		@Override
-			                	public void run() 
-				                {
-		                    	vx.remove(p.getUniqueId());
-					            }
-		                	   }, 200); 
-                    vxt.put(p.getUniqueId(), task);
-	                sultcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-	            }
+						});
+				bd.execute();
+				
 			}
     }
 	
@@ -2083,22 +1637,15 @@ public class Cheskills extends Pak implements Listener, Serializable {
 				p.setCooldown(Material.TNT,3);
 				ev.setCancelled(true);
 				p.setCooldown(Material.TNT,3);
-				if(sult2cooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-	            {
-	                double timer = (sult2cooldown.get(p.getName())/1000d + 67*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d)) - System.currentTimeMillis()/1000d; // geting time in seconds
-	                if(!(timer < 0)) // if timer is still more then 0 or 0
-	                {
-		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("¾Æ¸¶°Ùµ· Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
-					    }
-		        		else {
-		                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Armageddon").create());
-		        		}
-	                }
-	                else // if timer is done
-	                {
-	                    sult2cooldown.remove(p.getName()); // removing player from HashMap
-
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(sec)
+						.kname("ì•„ë§ˆê²Ÿëˆ")
+						.ename("Armageddon")
+						.slot(7)
+						.hm(sult2cooldown)
+						.skillUse(() -> {
+						
 	                    Location tl = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 3).getLocation();
 	                    TNTPrimed tp = tl.getWorld().spawn(tl, TNTPrimed.class);
 	                    tp.setCustomName("NUKE");
@@ -2179,94 +1726,9 @@ public class Cheskills extends Pak implements Listener, Serializable {
 				             			
 						            }
 	                    }, 80); 
-		                sult2cooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-		            
-	                }
-	            }
-	            else // if cooldown doesn't have players name in it
-	            {
-                    Location tl = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 3).getLocation();
-                    TNTPrimed tp = tl.getWorld().spawn(tl, TNTPrimed.class);
-                    tp.setCustomName("NUKE");
-                    tp.setYield(0);
-                    tp.setFuseTicks(80);
-                    tp.setFireTicks(80);
-                    tp.setGlowing(true);
-                    tp.setInvulnerable(true);
-                    tp.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-                    tp.setIsIncendiary(false);
-                    tp.setSource(p);
-                    p.playSound(tp.getLocation(), Sound.ENTITY_TNT_PRIMED, 1f, 0);
-					for(int n = 0; n<25; n++) {
-	                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() 
-			                {
-			                    p.playSound(tp.getLocation(), Sound.BLOCK_CAVE_VINES_STEP, 0.15f, 0);
-			                    p.playSound(tp.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_CHARGE, 0.15f, 0);
-								p.getWorld().spawnParticle(Particle.BLOCK_DUST, tp.getLocation(), 100,2,2,2, Material.YELLOW_CONCRETE_POWDER.createBlockData());
-								p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tp.getLocation(), 100,3,3,3, Material.YELLOW_GLAZED_TERRACOTTA.createBlockData());
-								p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tp.getLocation(), 100,4,4,4, Material.RAW_GOLD_BLOCK.createBlockData());
-								p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tp.getLocation(), 100,3,3,3, Material.BLACK_GLAZED_TERRACOTTA.createBlockData());
-								p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tp.getLocation(), 100,2,2,2, Material.OBSIDIAN.createBlockData());
-								p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tp.getLocation(), 100,2,2,2, Material.RED_GLAZED_TERRACOTTA.createBlockData());
-			                }
-	                	 }, n*4); 														
-					}
-                    Holding.invur(p, 100l);
-                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	             		@Override
-			                	public void run() 
-				                {
-	             			p.playSound(tp.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE, 0.5f, 0.5f);
-		                    p.playSound(tp.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1, 0);
-		                    p.playSound(tp.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 0);
-		                    p.playSound(tp.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 0);
-		                    p.playSound(tp.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1, 0);
-		                    tp.getWorld().spawnParticle(Particle.SMOKE_LARGE, tp.getLocation(), 2000, 15,15,15,0);
-		                    tp.getWorld().spawnParticle(Particle.FLAME, tp.getLocation(), 2000, 15,15,15,0);
-		                    tp.getWorld().spawnParticle(Particle.GLOW, tp.getLocation(), 2000, 15,15,15,0);
-		                    tp.getWorld().spawnParticle(Particle.LAVA, tp.getLocation(), 100, 15,15,15,0);
-		                    tp.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, tp.getLocation(), 1000,12,1,12,0);
-		                    tp.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, tp.getLocation(), 1000, 3,10,3,0);
-		                    tp.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, tp.getLocation().clone().add(0, 10, 0), 1000, 15,1,15,0);
-		                    tp.getWorld().spawnParticle(Particle.CLOUD, tp.getLocation(), 2000, 12,1,12,0);
-		                    tp.getWorld().spawnParticle(Particle.CLOUD, tp.getLocation(), 2000, 2,10,2,0);
-		                    tp.getWorld().spawnParticle(Particle.CLOUD, tp.getLocation().clone().add(0, 10, 0), 2000, 15,1,15,0);
-		             			for(Entity e: tp.getWorld().getNearbyEntities(tp.getLocation(),20,15,20)) {
-	                            		if (e instanceof Player) 
-	            						{
-	            							Player p1 = (Player) e;
-	            							if(Party.hasParty(p) && Party.hasParty(p1))	{
-	            							if(Party.getParty(p).equals(Party.getParty(p1)))
-	            								{
-	            								continue;
-	            								}
-	            							}
-	            						}
-	             						if(e instanceof LivingEntity && e!=p && !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
-	             							LivingEntity le = (LivingEntity)e;
-	    				                	atk1(19.0, p, le);
-	             							le.setFireTicks(60);
-	             		                    Holding.holding(p, le, 60l);
-	             		                    le.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,200,1,false,false));
-	             							
-											for(int n = 0; n<10; n++) {
-							                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-									                @Override
-									                public void run() 
-									                {
-				    				                	atk1(0.6, p, le);
-									                }
-							                	 }, n*6); 														
-											}
-	             						}
-	             					}
-			             			
-					            }
-                    }, 80); 
-	                sult2cooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-	            }
+						});
+				bd.execute();
+				
 			}
     }
 
