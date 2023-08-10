@@ -319,11 +319,18 @@ public class Backpack implements Serializable, Listener{
 				for(ItemStack elis : chest.get(p.getUniqueId(),i){
 					if(elis == null){
 						count--;
-						if(count
+						if(count==0){
+							input = chest.get(p.getUniqueId(),i);
+							break;
+						}
 					}
 				}
+				count = Math.ceil((is.getAmount()*1.0)/is.getMaxStackSize()*1.0);
 			}
-		        ItemStack[] nis = Add(getinv(p, chest.row(p.getUniqueId()).keySet().size()-1), is);
+			if(input == null){
+				input = chest.get(p.getUniqueId(),i+1);
+			}
+		        ItemStack[] nis = Add(getinv(p, input, is);
 		        chest.put(p.getUniqueId(), chest.row(p.getUniqueId()).keySet().size()-1, nis);
 		        String path = new File("").getAbsolutePath();
 				new Backpack(chest).saveData(path +"/plugins/RPGskills/BackPack.data");
