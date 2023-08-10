@@ -172,9 +172,10 @@ public class CombatMode implements Serializable{
 		return mode.containsKey(p.getUniqueId());
 	}
 
-	public void classinv(InventoryClickEvent e) {
-		if (mode.containsKey(e.getWhoClicked().getUniqueId())) {
-			e.setCancelled(true);
+	public void classinv(InventoryClickEvent d) {
+		Player p = (Player) d.getWhoClicked();
+		if (mode.containsKey(p.getUniqueId()) && !(d.getView().getTitle().equals(p.getName() + "'s Backpack") || d.getView().getTitle().equals(p.getName() + "ÀÇ ¹è³¶"))) {
+			d.setCancelled(true);
 		}
 	}
 
@@ -198,6 +199,7 @@ public class CombatMode implements Serializable{
 			Player p = (Player) ev.getEntity();
 			if(isCombat(p)) {
 				ev.setCancelled(true);
+				ev.getItem().remove();
 				Backpack.add(p, ev.getItem().getItemStack());
 			}
 		}

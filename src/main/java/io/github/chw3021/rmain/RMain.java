@@ -112,7 +112,7 @@ public class RMain extends JavaPlugin{
         
         this.getDataFolder().mkdir();
         Bukkit.getPluginManager().registerEvents(new ClassData(new HashMap<UUID, Integer>()), this);
-        Bukkit.getPluginManager().registerEvents(new Backpack(new HashMap<UUID, ItemStack[]>()), this);
+        Bukkit.getPluginManager().registerEvents(new Backpack(HashBasedTable.create()), this);
         Bukkit.getPluginManager().registerEvents(new ScrollPoint(new HashMap<UUID, Integer>()), this);
         Bukkit.getPluginManager().registerEvents(new Party(), this);
         this.getCommand("party").setExecutor(new Party());

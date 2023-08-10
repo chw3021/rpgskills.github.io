@@ -33,18 +33,18 @@ public class OceSkillsData implements Serializable, Listener{
 	public final HashMap<UUID, Integer> WaterBarrier;
 	public final HashMap<UUID, Integer> Javelin;
 	public final HashMap<UUID, Integer> RipCurrent;
-	public final HashMap<UUID, Integer> TripleHit;
+	public final HashMap<UUID, Integer> OceanCharge;
 	public final HashMap<UUID, Integer> WetSwing;
 	public final HashMap<UUID, Integer> Splash;
 	public final HashMap<UUID, Integer> SkillPoints;
     // Can be used for saving
 	
-    public OceSkillsData(HashMap<UUID, Integer> WaterSpear, HashMap<UUID, Integer> WaterBarrier, HashMap<UUID, Integer> Javelin, HashMap<UUID, Integer> RipCurrent, HashMap<UUID, Integer> TripleHit, HashMap<UUID, Integer> WetSwing, HashMap<UUID, Integer> Splash, HashMap<UUID, Integer> SkillPoints) {
+    public OceSkillsData(HashMap<UUID, Integer> WaterSpear, HashMap<UUID, Integer> WaterBarrier, HashMap<UUID, Integer> Javelin, HashMap<UUID, Integer> RipCurrent, HashMap<UUID, Integer> OceanCharge, HashMap<UUID, Integer> WetSwing, HashMap<UUID, Integer> Splash, HashMap<UUID, Integer> SkillPoints) {
     	this.WaterSpear = WaterSpear;
     	this.WaterBarrier = WaterBarrier;
     	this.Javelin = Javelin;
     	this.RipCurrent = RipCurrent;
-    	this.TripleHit = TripleHit;
+    	this.OceanCharge = OceanCharge;
     	this.WetSwing = WetSwing;
     	this.Splash = Splash;
     	this.SkillPoints = SkillPoints;
@@ -54,7 +54,7 @@ public class OceSkillsData implements Serializable, Listener{
     	this.WaterBarrier = loadedData.WaterBarrier;
     	this.Javelin = loadedData.Javelin;
     	this.RipCurrent = loadedData.RipCurrent;
-    	this.TripleHit = loadedData.TripleHit;
+    	this.OceanCharge = loadedData.OceanCharge;
     	this.WetSwing = loadedData.WetSwing;
     	this.Splash = loadedData.Splash;
     	this.SkillPoints = loadedData.SkillPoints;
@@ -107,7 +107,7 @@ public class OceSkillsData implements Serializable, Listener{
 					HashMap<UUID, Integer> Javelin = getOceanKnightdata().Javelin;
 					HashMap<UUID, Integer> RipCurrent = getOceanKnightdata().RipCurrent;
 					HashMap<UUID, Integer> WetSwing = getOceanKnightdata().WetSwing;
-					HashMap<UUID, Integer> TripleHit = getOceanKnightdata().TripleHit;
+					HashMap<UUID, Integer> OceanCharge = getOceanKnightdata().OceanCharge;
 					HashMap<UUID, Integer> Splash = getOceanKnightdata().Splash;
 					HashMap<UUID, Integer> SkillPoints = getOceanKnightdata().SkillPoints;
 					SkillPoints.put(p.getUniqueId(), p.getLevel() + ScrollPoint.sp.get(p.getUniqueId()));
@@ -115,10 +115,10 @@ public class OceSkillsData implements Serializable, Listener{
 					WaterBarrier.put(p.getUniqueId(), 0);
 					Javelin.put(p.getUniqueId(), 0);
 					RipCurrent.put(p.getUniqueId(), 0);
-					TripleHit.put(p.getUniqueId(), 0);
+					OceanCharge.put(p.getUniqueId(), 0);
 					WetSwing.put(p.getUniqueId(), 0);
 					Splash.put(p.getUniqueId(), 0);
-					new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+					new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 
 					OceSkillsGui osg = new OceSkillsGui();
 					osg.OceSkillsinv(p);
@@ -130,7 +130,7 @@ public class OceSkillsData implements Serializable, Listener{
 				HashMap<UUID, Integer> WaterBarrier = new HashMap<UUID, Integer>();
 				HashMap<UUID, Integer> Javelin = new HashMap<UUID, Integer>();
 				HashMap<UUID, Integer> RipCurrent = new HashMap<UUID, Integer>();
-				HashMap<UUID, Integer> TripleHit = new HashMap<UUID, Integer>();
+				HashMap<UUID, Integer> OceanCharge = new HashMap<UUID, Integer>();
 				HashMap<UUID, Integer> WetSwing = new HashMap<UUID, Integer>();
 				HashMap<UUID, Integer> Splash = new HashMap<UUID, Integer>();
 				HashMap<UUID, Integer> SkillPoints = new HashMap<UUID, Integer>();
@@ -139,10 +139,10 @@ public class OceSkillsData implements Serializable, Listener{
 				WaterBarrier.put(p.getUniqueId(), 0);
 				Javelin.put(p.getUniqueId(), 0);
 				RipCurrent.put(p.getUniqueId(), 0);
-				TripleHit.put(p.getUniqueId(), 0);
+				OceanCharge.put(p.getUniqueId(), 0);
 				WetSwing.put(p.getUniqueId(), 0);
 				Splash.put(p.getUniqueId(), 0);
-				new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+				new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 
 				OceSkillsGui osg = new OceSkillsGui();
 				osg.OceSkillsinv(p);
@@ -158,12 +158,12 @@ public class OceSkillsData implements Serializable, Listener{
 		HashMap<UUID, Integer> Javelin = getOceanKnightdata().Javelin;
 		HashMap<UUID, Integer> RipCurrent = getOceanKnightdata().RipCurrent;
 		HashMap<UUID, Integer> WetSwing = getOceanKnightdata().WetSwing;
-		HashMap<UUID, Integer> TripleHit = getOceanKnightdata().TripleHit;
+		HashMap<UUID, Integer> OceanCharge = getOceanKnightdata().OceanCharge;
 		HashMap<UUID, Integer> Splash = getOceanKnightdata().Splash;
 		HashMap<UUID, Integer> SkillPoints = getOceanKnightdata().SkillPoints;
 		
 		SkillPoints.put(p.getUniqueId(), SkillPoints.getOrDefault(p.getUniqueId(),1) + 1);
-		new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+		new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 
 
 	}
@@ -181,14 +181,14 @@ public class OceSkillsData implements Serializable, Listener{
 		HashMap<UUID, Integer> Javelin = getOceanKnightdata().Javelin;
 		HashMap<UUID, Integer> RipCurrent = getOceanKnightdata().RipCurrent;
 		HashMap<UUID, Integer> WetSwing = getOceanKnightdata().WetSwing;
-		HashMap<UUID, Integer> TripleHit = getOceanKnightdata().TripleHit;
+		HashMap<UUID, Integer> OceanCharge = getOceanKnightdata().OceanCharge;
 		HashMap<UUID, Integer> Splash = getOceanKnightdata().Splash;
 		HashMap<UUID, Integer> SkillPoints = getOceanKnightdata().SkillPoints;
 		if(SkillPoints.containsKey(p.getUniqueId())) {
 			if(e.getNewLevel() > e.getOldLevel())
 			{
 				SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) + e.getNewLevel() - e.getOldLevel());
-				new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+				new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 		        
 			}
 			else
@@ -204,13 +204,13 @@ public class OceSkillsData implements Serializable, Listener{
 				RipCurrent.put(p.getUniqueId(), 0);
 				Splash.remove(p.getUniqueId());
 				Splash.put(p.getUniqueId(), 0);
-				TripleHit.remove(p.getUniqueId());
-				TripleHit.put(p.getUniqueId(), 0);
+				OceanCharge.remove(p.getUniqueId());
+				OceanCharge.put(p.getUniqueId(), 0);
 				WetSwing.remove(p.getUniqueId());
 				WetSwing.put(p.getUniqueId(), 0);
 				SkillPoints.remove(p.getUniqueId());
 				SkillPoints.put(p.getUniqueId(), e.getNewLevel() + ScrollPoint.sp.get(p.getUniqueId()));
-				new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+				new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 		        
 			}
 		}
@@ -239,7 +239,7 @@ public class OceSkillsData implements Serializable, Listener{
 				HashMap<UUID, Integer> Javelin = getOceanKnightdata().Javelin;
 				HashMap<UUID, Integer> RipCurrent = getOceanKnightdata().RipCurrent;
 				HashMap<UUID, Integer> WetSwing = getOceanKnightdata().WetSwing;
-				HashMap<UUID, Integer> TripleHit = getOceanKnightdata().TripleHit;
+				HashMap<UUID, Integer> OceanCharge = getOceanKnightdata().OceanCharge;
 				HashMap<UUID, Integer> Splash = getOceanKnightdata().Splash;
 				HashMap<UUID, Integer> SkillPoints = getOceanKnightdata().SkillPoints;
 				switch (ChatColor.stripColor((e.getCurrentItem().getItemMeta().getDisplayName())))
@@ -251,7 +251,7 @@ public class OceSkillsData implements Serializable, Listener{
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && WaterSpear.get(p.getUniqueId())<50){
 								WaterSpear.put(p.getUniqueId(), WaterSpear.get(p.getUniqueId()) +1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -1);
-								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 						        fsg.OceSkillsinv(p);
 							}	
 						}
@@ -259,7 +259,7 @@ public class OceSkillsData implements Serializable, Listener{
 							if(WaterSpear.get(p.getUniqueId()) >= 1){
 								WaterSpear.put(p.getUniqueId(), WaterSpear.get(p.getUniqueId()) -1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) +1);
-								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 						        fsg.OceSkillsinv(p);
 							}	
 						}
@@ -276,7 +276,7 @@ public class OceSkillsData implements Serializable, Listener{
 									WaterSpear.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+WaterSpear.get(p.getUniqueId()));
 									SkillPoints.put(p.getUniqueId(), 0);						
 								}
-								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 						        fsg.OceSkillsinv(p);
 							}
 						}
@@ -284,7 +284,7 @@ public class OceSkillsData implements Serializable, Listener{
 							if(WaterSpear.get(p.getUniqueId())>0) {
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+WaterSpear.get(p.getUniqueId()));
 								WaterSpear.put(p.getUniqueId(), 0);
-								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 						        fsg.OceSkillsinv(p);
 							}
 						}
@@ -296,7 +296,7 @@ public class OceSkillsData implements Serializable, Listener{
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && WaterBarrier.get(p.getUniqueId())<50){
 								WaterBarrier.put(p.getUniqueId(), WaterBarrier.get(p.getUniqueId()) +1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -1);
-								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 						        fsg.OceSkillsinv(p);
 							}	
 						}
@@ -304,7 +304,7 @@ public class OceSkillsData implements Serializable, Listener{
 							if(WaterBarrier.get(p.getUniqueId()) >= 1){
 								WaterBarrier.put(p.getUniqueId(), WaterBarrier.get(p.getUniqueId()) -1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) +1);
-								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 						        fsg.OceSkillsinv(p);
 							}	
 						}
@@ -321,7 +321,7 @@ public class OceSkillsData implements Serializable, Listener{
 									WaterBarrier.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+WaterBarrier.get(p.getUniqueId()));
 									SkillPoints.put(p.getUniqueId(), 0);						
 								}
-								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 						        fsg.OceSkillsinv(p);
 							}
 						}
@@ -329,7 +329,7 @@ public class OceSkillsData implements Serializable, Listener{
 							if(WaterBarrier.get(p.getUniqueId())>0) {
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+WaterBarrier.get(p.getUniqueId()));
 								WaterBarrier.put(p.getUniqueId(), 0);
-								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 						        fsg.OceSkillsinv(p);
 							}
 						}
@@ -340,7 +340,7 @@ public class OceSkillsData implements Serializable, Listener{
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Javelin.get(p.getUniqueId())<50){
 								Javelin.put(p.getUniqueId(), Javelin.get(p.getUniqueId()) +1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -1);
-								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 						        fsg.OceSkillsinv(p);
 							}	
 						}
@@ -348,7 +348,7 @@ public class OceSkillsData implements Serializable, Listener{
 							if(Javelin.get(p.getUniqueId()) >= 1){
 								Javelin.put(p.getUniqueId(), Javelin.get(p.getUniqueId()) -1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) +1);
-								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 						        fsg.OceSkillsinv(p);
 							}	
 						}
@@ -365,7 +365,7 @@ public class OceSkillsData implements Serializable, Listener{
 									Javelin.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+Javelin.get(p.getUniqueId()));
 									SkillPoints.put(p.getUniqueId(), 0);						
 								}
-								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 						        fsg.OceSkillsinv(p);
 							}
 						}
@@ -373,51 +373,51 @@ public class OceSkillsData implements Serializable, Listener{
 							if(Javelin.get(p.getUniqueId())>0) {
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+Javelin.get(p.getUniqueId()));
 								Javelin.put(p.getUniqueId(), 0);
-								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 						        fsg.OceSkillsinv(p);
 							}
 						}
 						break;		}
-					case "TripleHit":
+					case "OceanCharge":
 					case "»ï¿¬°Ý":{
 						if(e.getClick().equals(ClickType.LEFT)) {
-							if(SkillPoints.get(p.getUniqueId()) >= 1 && TripleHit.get(p.getUniqueId())<50){
-								TripleHit.put(p.getUniqueId(), TripleHit.get(p.getUniqueId()) +1);
+							if(SkillPoints.get(p.getUniqueId()) >= 1 && OceanCharge.get(p.getUniqueId())<50){
+								OceanCharge.put(p.getUniqueId(), OceanCharge.get(p.getUniqueId()) +1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -1);
-								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 						        fsg.OceSkillsinv(p);
 							}	
 						}
 						else if(e.getClick().equals(ClickType.RIGHT)) {
-							if(TripleHit.get(p.getUniqueId()) >= 1){
-								TripleHit.put(p.getUniqueId(), TripleHit.get(p.getUniqueId()) -1);
+							if(OceanCharge.get(p.getUniqueId()) >= 1){
+								OceanCharge.put(p.getUniqueId(), OceanCharge.get(p.getUniqueId()) -1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) +1);
-								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 						        fsg.OceSkillsinv(p);
 							}	
 						}
 						else if(e.getClick().equals(ClickType.SHIFT_LEFT)) {
 							if(SkillPoints.get(p.getUniqueId())>0) {
-								if(TripleHit.get(p.getUniqueId())+SkillPoints.get(p.getUniqueId())>50) {
-									if(TripleHit.get(p.getUniqueId())<50){
-										final int a = 50 - TripleHit.get(p.getUniqueId());
-										TripleHit.put(p.getUniqueId(), 50);
+								if(OceanCharge.get(p.getUniqueId())+SkillPoints.get(p.getUniqueId())>50) {
+									if(OceanCharge.get(p.getUniqueId())<50){
+										final int a = 50 - OceanCharge.get(p.getUniqueId());
+										OceanCharge.put(p.getUniqueId(), 50);
 										SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -  a);							
 									}
 								}
 								else{
-									TripleHit.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+TripleHit.get(p.getUniqueId()));
+									OceanCharge.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+OceanCharge.get(p.getUniqueId()));
 									SkillPoints.put(p.getUniqueId(), 0);						
 								}
-								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 						        fsg.OceSkillsinv(p);
 							}
 						}
 						else if(e.getClick().equals(ClickType.SHIFT_RIGHT)) {
-							if(TripleHit.get(p.getUniqueId())>0) {
-								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+TripleHit.get(p.getUniqueId()));
-								TripleHit.put(p.getUniqueId(), 0);
-								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+							if(OceanCharge.get(p.getUniqueId())>0) {
+								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+OceanCharge.get(p.getUniqueId()));
+								OceanCharge.put(p.getUniqueId(), 0);
+								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 						        fsg.OceSkillsinv(p);
 							}
 						}
@@ -428,7 +428,7 @@ public class OceSkillsData implements Serializable, Listener{
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && WetSwing.get(p.getUniqueId())<50){
 								WetSwing.put(p.getUniqueId(), WetSwing.get(p.getUniqueId()) +1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -1);
-								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 						        fsg.OceSkillsinv(p);
 							}	
 						}
@@ -436,7 +436,7 @@ public class OceSkillsData implements Serializable, Listener{
 							if(WetSwing.get(p.getUniqueId()) >= 1){
 								WetSwing.put(p.getUniqueId(), WetSwing.get(p.getUniqueId()) -1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) +1);
-								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 						        fsg.OceSkillsinv(p);
 							}	
 						}
@@ -453,7 +453,7 @@ public class OceSkillsData implements Serializable, Listener{
 									WetSwing.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+WetSwing.get(p.getUniqueId()));
 									SkillPoints.put(p.getUniqueId(), 0);						
 								}
-								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 						        fsg.OceSkillsinv(p);
 							}
 						}
@@ -461,7 +461,7 @@ public class OceSkillsData implements Serializable, Listener{
 							if(WetSwing.get(p.getUniqueId())>0) {
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+WetSwing.get(p.getUniqueId()));
 								WetSwing.put(p.getUniqueId(), 0);
-								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 						        fsg.OceSkillsinv(p);
 							}
 						}
@@ -472,7 +472,7 @@ public class OceSkillsData implements Serializable, Listener{
 							if(SkillPoints.get(p.getUniqueId()) >= 1){
 								Splash.put(p.getUniqueId(), Splash.get(p.getUniqueId()) +1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -1);
-								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 						        fsg.OceSkillsinv(p);
 							}	
 						}
@@ -480,7 +480,7 @@ public class OceSkillsData implements Serializable, Listener{
 							if(Splash.get(p.getUniqueId()) >= 1){
 								Splash.put(p.getUniqueId(), Splash.get(p.getUniqueId()) -1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) +1);
-								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 						        fsg.OceSkillsinv(p);
 							}	
 						}
@@ -488,7 +488,7 @@ public class OceSkillsData implements Serializable, Listener{
 							if(SkillPoints.get(p.getUniqueId())>0) {
 								Splash.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+Splash.get(p.getUniqueId()));
 								SkillPoints.put(p.getUniqueId(), 0);
-								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 						        fsg.OceSkillsinv(p);
 							}
 						}
@@ -496,7 +496,7 @@ public class OceSkillsData implements Serializable, Listener{
 							if(Splash.get(p.getUniqueId())>0) {
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+Splash.get(p.getUniqueId()));
 								Splash.put(p.getUniqueId(), 0);
-								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 						        fsg.OceSkillsinv(p);
 							}
 						}
@@ -507,7 +507,7 @@ public class OceSkillsData implements Serializable, Listener{
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && RipCurrent.get(p.getUniqueId()) < 1){
 								RipCurrent.put(p.getUniqueId(), RipCurrent.get(p.getUniqueId()) +1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -1);
-								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 						        fsg.OceSkillsinv(p);
 							}	
 						}
@@ -515,7 +515,7 @@ public class OceSkillsData implements Serializable, Listener{
 							if(RipCurrent.get(p.getUniqueId()) >= 1){
 								RipCurrent.put(p.getUniqueId(), RipCurrent.get(p.getUniqueId()) -1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) +1);
-								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 						        fsg.OceSkillsinv(p);
 							}
 						}
@@ -531,7 +531,7 @@ public class OceSkillsData implements Serializable, Listener{
 									RipCurrent.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+RipCurrent.get(p.getUniqueId()));
 									SkillPoints.put(p.getUniqueId(), 0);									
 								}
-								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 						        fsg.OceSkillsinv(p);
 							}
 						}
@@ -539,7 +539,7 @@ public class OceSkillsData implements Serializable, Listener{
 							if(RipCurrent.get(p.getUniqueId())>0) {
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+RipCurrent.get(p.getUniqueId()));
 								RipCurrent.put(p.getUniqueId(), 0);
-								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+								new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 						        fsg.OceSkillsinv(p);
 							}
 						}
@@ -551,10 +551,10 @@ public class OceSkillsData implements Serializable, Listener{
 						Javelin.put(p.getUniqueId(), 0);
 						RipCurrent.put(p.getUniqueId(), 0);
 						Splash.put(p.getUniqueId(), 0);
-						TripleHit.put(p.getUniqueId(), 0);
+						OceanCharge.put(p.getUniqueId(), 0);
 						WetSwing.put(p.getUniqueId(), 0);
 						SkillPoints.put(p.getUniqueId(), p.getLevel() + ScrollPoint.sp.get(p.getUniqueId()));
-						new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, TripleHit, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
+						new OceSkillsData(WaterSpear, WaterBarrier, Javelin, RipCurrent, OceanCharge, WetSwing, Splash, SkillPoints).saveData(path +"/plugins/RPGskills/OceSkillsData.data");
 				        fsg.OceSkillsinv(p);
 				}break;	}
 			
