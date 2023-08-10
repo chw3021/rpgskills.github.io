@@ -255,14 +255,20 @@ public class Backpack implements Serializable, Listener{
 		}
 	}
 
-    private static ItemStack[] Add(ItemStack[] inv, ItemStack val) {
-    	if(val.getAmount() > is.getMaxStackSize()){
-		
-		int amount = val.getAmount();
-		for(i=0; i<Math.ceil((amount*1.0)/is.getMaxStackSize()*1.0); i++) {
-		}
-	}
-	List<ItemStack> iss = new ArrayList<>(Arrays.asList(inv));
+    private static ItemStack[] Add(ItemStack[] inv, ItemStack val, Integer count, HashSet<Integer> indexes) {
+	ItemStack[] ret = inv;
+	Integer cv = count;
+		indexes.foreach(id -> {
+			if(cv==1){
+				//val setamount val - maxcount*count
+				//ret[id] = valclone
+			}
+			cv--
+		});
+		return ret;
+    }
+
+	/*List<ItemStack> iss = new ArrayList<>(Arrays.asList(inv));
     	if(val==null) {
     		return inv;
     	}
@@ -300,8 +306,7 @@ public class Backpack implements Serializable, Listener{
     	else {
     		iss.add(val);
     	}
-    	return iss.toArray(new ItemStack[iss.size()]);
-    }
+    	return iss.toArray(new ItemStack[iss.size()]);*/
     
     public static void add(Player p, ItemStack is) {
 
@@ -312,6 +317,7 @@ public class Backpack implements Serializable, Listener{
 		    	if(is.getAmount() > is.getMaxStackSize()){
 				count = Math.ceil((is.getAmount()*1.0)/is.getMaxStackSize()*1.0);
 			}
+			HashSet<Integer>() indexes = new HashSet<>();
 			ItemStack[] input = null;
 			int i = 0; 
 			for(i++; i< chest.row(p.getUniqueId()).keySet().size()){
@@ -319,6 +325,7 @@ public class Backpack implements Serializable, Listener{
 				for(ItemStack elis : chest.get(p.getUniqueId(),i){
 					if(elis == null){
 						count--;
+						indexes.add(i);
 						if(count==0){
 							input = chest.get(p.getUniqueId(),i);
 							break;
@@ -326,11 +333,12 @@ public class Backpack implements Serializable, Listener{
 					}
 				}
 				count = Math.ceil((is.getAmount()*1.0)/is.getMaxStackSize()*1.0);
+				indexes.removeAll();
 			}
 			if(input == null){
 				input = chest.get(p.getUniqueId(),i+1);
 			}
-		        ItemStack[] nis = Add(getinv(p, input, is);
+		        ItemStack[] nis = Add(input, is, count, indexes);
 		        chest.put(p.getUniqueId(), chest.row(p.getUniqueId()).keySet().size()-1, nis);
 		        String path = new File("").getAbsolutePath();
 				new Backpack(chest).saveData(path +"/plugins/RPGskills/BackPack.data");
