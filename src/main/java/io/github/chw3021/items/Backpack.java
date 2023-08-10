@@ -144,7 +144,7 @@ public class Backpack implements Serializable, Listener{
 		
 		String name = null;
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			name = p.getName() + "¿« πË≥∂";
+			name = p.getName() + "Ïùò Î∞∞ÎÇ≠";
 		}
 		else {
 			name = p.getName() + "'s Backpack";
@@ -162,7 +162,7 @@ public class Backpack implements Serializable, Listener{
 		
 		String name = null;
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			name = p.getName() + "¿« πË≥∂";
+			name = p.getName() + "Ïùò Î∞∞ÎÇ≠";
 		}
 		else {
 			name = p.getName() + "'s Backpack";
@@ -177,9 +177,9 @@ public class Backpack implements Serializable, Listener{
 		pagerm.setLocalizedName("RpgBagpackPage");
 		pager.setItemMeta(pagerm);
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			itemset(ChatColor.GOLD + "¿Ã¿¸ ∆‰¿Ã¡ˆ", pager, 0, 1,
+			itemset(ChatColor.GOLD + "Ïù¥Ï†Ñ ÌéòÏù¥ÏßÄ", pager, 0, 1,
 					Arrays.asList(ChatColor.GOLD + "" + (page)), 52, ci);
-			itemset(ChatColor.GOLD + "¥Ÿ¿Ω ∆‰¿Ã¡ˆ", pager, 0, 1,
+			itemset(ChatColor.GOLD + "Îã§Ïùå ÌéòÏù¥ÏßÄ", pager, 0, 1,
 					Arrays.asList(ChatColor.GOLD + "" + (page)), 53, ci);
 		}
 		else {
@@ -196,7 +196,7 @@ public class Backpack implements Serializable, Listener{
 		
 		String name = null;
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			name = "æ≤∑π±‚≈Î";
+			name = "Ïì∞Î†àÍ∏∞ÌÜµ";
 		}
 		else {
 			name = "Dumpster";
@@ -222,7 +222,7 @@ public class Backpack implements Serializable, Listener{
 			else
 			{
 				String s = ChatColor.stripColor((e.getCurrentItem().getItemMeta().getDisplayName()));
-				if(s.equals("Backpack") || s.equals("πË≥∂")) {
+				if(s.equals("Backpack") || s.equals("Î∞∞ÎÇ≠")) {
 					try {
 						checkoff(p);
 					}
@@ -231,7 +231,7 @@ public class Backpack implements Serializable, Listener{
 					}
 					p.setItemOnCursor(null);
 				}
-				else if(s.equals("Dumpster") || s.equals("æ≤∑π±‚≈Î")) {
+				else if(s.equals("Dumpster") || s.equals("Ïì∞Î†àÍ∏∞ÌÜµ")) {
 					dumpster(p);
 					p.setItemOnCursor(null);
 				}
@@ -248,7 +248,7 @@ public class Backpack implements Serializable, Listener{
 		Inventory ci = d.getInventory();
 		Player p = (Player) d.getPlayer();
 		
-		if(d.getView().getTitle().equals(p.getName() + "'s Backpack") || d.getView().getTitle().equals(p.getName() + "¿« πË≥∂")) {
+		if(d.getView().getTitle().equals(p.getName() + "'s Backpack") || d.getView().getTitle().equals(p.getName() + "Ïùò Î∞∞ÎÇ≠")) {
 			if(check(p)) {
 				save(p,ci);
 			}
@@ -256,7 +256,13 @@ public class Backpack implements Serializable, Listener{
 	}
 
     private static ItemStack[] Add(ItemStack[] inv, ItemStack val) {
-    	List<ItemStack> iss = new ArrayList<>(Arrays.asList(inv));
+    	if(val.getAmount() > is.getMaxStackSize()){
+		
+		int amount = val.getAmount();
+		for(i=0; i<Math.ceil((amount*1.0)/is.getMaxStackSize()*1.0); i++) {
+		}
+	}
+	List<ItemStack> iss = new ArrayList<>(Arrays.asList(inv));
     	if(val==null) {
     		return inv;
     	}
@@ -302,10 +308,25 @@ public class Backpack implements Serializable, Listener{
         Table<UUID, Integer, ItemStack[]> chest;
 		try {
 			chest = getdata();
-	        ItemStack[] nis = Add(getinv(p, chest.row(p.getUniqueId()).keySet().size()-1), is);
-	        chest.put(p.getUniqueId(), chest.row(p.getUniqueId()).keySet().size()-1, nis);
-	        String path = new File("").getAbsolutePath();
-			new Backpack(chest).saveData(path +"/plugins/RPGskills/BackPack.data");
+			int count = 1;
+		    	if(is.getAmount() > is.getMaxStackSize()){
+				count = Math.ceil((is.getAmount()*1.0)/is.getMaxStackSize()*1.0);
+			}
+			ItemStack[] input = null;
+			int i = 0; 
+			for(i++; i< chest.row(p.getUniqueId()).keySet().size()){
+					
+				for(ItemStack elis : chest.get(p.getUniqueId(),i){
+					if(elis == null){
+						count--;
+						if(count
+					}
+				}
+			}
+		        ItemStack[] nis = Add(getinv(p, chest.row(p.getUniqueId()).keySet().size()-1), is);
+		        chest.put(p.getUniqueId(), chest.row(p.getUniqueId()).keySet().size()-1, nis);
+		        String path = new File("").getAbsolutePath();
+				new Backpack(chest).saveData(path +"/plugins/RPGskills/BackPack.data");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			p.closeInventory();
