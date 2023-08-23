@@ -1468,8 +1468,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 	    if(!isCombat(p)) {
 	    	return;
 	    }
-		
-		final Location l = p.getLocation();
+
 		ItemStack is = p.getInventory().getItemInMainHand();
 		
 			if(ClassData.pc.get(p.getUniqueId()) == 1&& ev.getNewSlot()==3&&
@@ -1485,6 +1484,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 						.slot(6)
 						.hm(sultcooldown)
 						.skillUse(() -> {
+							final Location l = p.getLocation();
 		                    if(conv.getOrDefault(p.getUniqueId(), 0) == 1) {
 		                    	p.damage(4);
 		                    }

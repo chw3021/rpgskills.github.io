@@ -6,6 +6,7 @@ import io.github.chw3021.classes.ClassData;
 import io.github.chw3021.classes.Proficiency;
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.commons.Pak;
+import io.github.chw3021.commons.SkillBuilder;
 import io.github.chw3021.obtains.Obtained;
 import io.github.chw3021.party.Party;
 
@@ -451,7 +452,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 					p.setCooldown(Material.TNT,3);
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
-						.cooldown(sec)
+						.cooldown(1d)
 						.kname("산성구름")
 						.ename("AcidCloud")
 						.slot(1)
@@ -1306,7 +1307,6 @@ public class Cheskills extends Pak implements Listener, Serializable {
 			        		else {
 				            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You Should Extract First").create());
 			        		}
-			            	sec = 0;
 		                }
 		                if (extracted.containsEntry(p, 0)) {
 		                	p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 200,0,false,true));
@@ -1573,18 +1573,20 @@ public class Cheskills extends Pak implements Listener, Serializable {
     }
 	
 	
-	public void ULT(PlayerDropItemEvent ev)        
+	public void ULT(PlayerItemHeldEvent ev)
     {
 		Player p = (Player)ev.getPlayer();
-		Item it = ev.getItemDrop();
-		ItemStack is = it.getItemStack();
+		if(!isCombat(p)) {
+			return;
+		}
+		ItemStack is = p.getInventory().getItemInMainHand();
 			if(ClassData.pc.get(p.getUniqueId()) == 15 && ((is.getType().name().contains("PICKAXE"))) && p.isSneaking()&& Proficiency.getpro(p) >=1)
 			{
 				p.setCooldown(Material.TNT,3);
 				ev.setCancelled(true);
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
-						.cooldown(sec)
+						.cooldown(45/Proficiency.getpro(p)*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d))
 						.kname("신경독")
 						.ename("VX")
 						.slot(6)
@@ -1627,11 +1629,14 @@ public class Cheskills extends Pak implements Listener, Serializable {
 	
 
 	
-	public void ULT2(PlayerDropItemEvent ev)        
-    {
+	public void ULT2(PlayerItemHeldEvent ev)
+	{
 		Player p = (Player)ev.getPlayer();
-		Item it = ev.getItemDrop();
-		ItemStack is = it.getItemStack();
+		if(!isCombat(p)) {
+			return;
+		}
+
+		ItemStack is = p.getInventory().getItemInMainHand();
 			if(ClassData.pc.get(p.getUniqueId()) == 15 && ((is.getType().name().contains("PICKAXE"))) && !p.isSneaking()&& p.isSprinting()&& Proficiency.getpro(p) >=2)
 			{
 				p.setCooldown(Material.TNT,3);
@@ -1639,7 +1644,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 				p.setCooldown(Material.TNT,3);
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
-						.cooldown(sec)
+						.cooldown(80*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d))
 						.kname("아마겟돈")
 						.ename("Armageddon")
 						.slot(7)

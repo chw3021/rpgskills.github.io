@@ -6,9 +6,11 @@ import io.github.chw3021.classes.ClassData;
 import io.github.chw3021.classes.Proficiency;
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.commons.Pak;
+import io.github.chw3021.commons.SkillBuilder;
 import io.github.chw3021.obtains.Obtained;
 import io.github.chw3021.party.Party;
 
+import org.bukkit.event.player.*;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
@@ -49,12 +51,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemDamageEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerSwapHandItemsEvent;
-import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -998,7 +994,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
             	}
 				final Location pfl = dr2.remove(p.getUniqueId()).clone();
         		p.teleport(pfl);
-        		Holding.holding(p, p, 25l);
+        		Holding.holding(p, p, 25L);
 
 				p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 25,20,false,false));
 				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 25,20,false,false));
@@ -1920,26 +1916,26 @@ public class Boxskills extends Pak implements Listener, Serializable {
 			w.spawnParticle(Particle.CRIT, l,2,0.1,0.1,0.1,0);
 	    });
 	}
-	
-	
-	
-	public void ULT(PlayerDropItemEvent ev)        
-    {
-	    
-		Player p = (Player)ev.getPlayer();
-		p.getLocation();
-		Item i = ev.getItemDrop();
-		ItemStack is = i.getItemStack();
 
-		
-		
-		
-			if(ClassData.pc.get(p.getUniqueId()) == 7 && (is.getType().name().contains("BANNER_PATTERN"))&& (is.hasItemMeta()) && is.getItemMeta().hasCustomModelData()  && p.isSneaking()&& Proficiency.getpro(p) >=1)
+
+
+	public void ULT(PlayerItemHeldEvent ev)
+	{
+		Player p = (Player)ev.getPlayer();
+		if(!isCombat(p)) {
+			return;
+		}
+
+		ItemStack is = p.getInventory().getItemInMainHand();
+
+
+
+		if(ClassData.pc.get(p.getUniqueId()) == 7 && (is.getType().name().contains("BANNER_PATTERN"))&& (is.hasItemMeta()) && is.getItemMeta().hasCustomModelData()  && p.isSneaking()&& Proficiency.getpro(p) >=1)
 			{
 				ev.setCancelled(true);
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
-						.cooldown(sec)
+						.cooldown(60/Proficiency.getpro(p)*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d))
 						.kname("일격권")
 						.ename("ONE PUNCH")
 						.slot(6)
@@ -2282,25 +2278,25 @@ public class Boxskills extends Pak implements Listener, Serializable {
 	}
 	
 	
-	public void ULT2(PlayerDropItemEvent ev)        
+	public void ULT2(PlayerItemHeldEvent ev)
     {
-	    
-		Player p = (Player)ev.getPlayer();
-		p.getLocation();
-		Item i = ev.getItemDrop();
-		ItemStack is = i.getItemStack();
 
-		
-		
-		
-			if(ClassData.pc.get(p.getUniqueId()) == 7 && (is.getType().name().contains("BANNER_PATTERN"))&& (is.hasItemMeta()) && is.getItemMeta().hasCustomModelData()  && !p.isSneaking()&& p.isSprinting()&& Proficiency.getpro(p) >=2)
+		Player p = (Player)ev.getPlayer();
+		if(!isCombat(p)) {
+			return;
+		}
+
+		ItemStack is = p.getInventory().getItemInMainHand();
+
+
+		if(ClassData.pc.get(p.getUniqueId()) == 7 && (is.getType().name().contains("BANNER_PATTERN"))&& (is.hasItemMeta()) && is.getItemMeta().hasCustomModelData()  && !p.isSneaking()&& p.isSprinting()&& Proficiency.getpro(p) >=2)
 			{
 				ev.setCancelled(true);
 		    	final Location tl = gettargetblock(p,3);
 		    	final Vector tv = tl.clone().toVector().subtract(tl.clone().add(0, -0.01, 1).toVector());
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
-						.cooldown(sec)
+						.cooldown(75*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d))
 						.kname("철인의 의지")
 						.ename("Will Of Ironman")
 						.slot(7)

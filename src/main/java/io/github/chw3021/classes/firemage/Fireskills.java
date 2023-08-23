@@ -6,6 +6,7 @@ import io.github.chw3021.classes.ClassData;
 import io.github.chw3021.classes.Proficiency;
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.commons.Pak;
+import io.github.chw3021.commons.SkillBuilder;
 import io.github.chw3021.items.armors.ArmorSet;
 import io.github.chw3021.obtains.Obtained;
 import io.github.chw3021.party.Party;
