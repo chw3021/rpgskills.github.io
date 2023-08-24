@@ -2595,18 +2595,18 @@ public class Palskills extends Pak implements Serializable, Listener {
         			});
         		});
             	
-        		
-            	if(!p.isBlocking()) {
-                	if(ars.containsKey(p.getUniqueId())) {
-                    	ars.get(p.getUniqueId()).forEach(ar -> Holding.ale(ar).remove());
-                    	ars.removeAll(p.getUniqueId());
-                	}
-                	
-                	if(shieldt.containsKey(p.getUniqueId())) {
-                		Bukkit.getScheduler().cancelTask(shieldt.get(p.getUniqueId()));
-                		shieldt.remove(p.getUniqueId());
-                	}
-            	}
+
+				if(!p.isBlocking()) {
+					if(ars.containsKey(p.getUniqueId())) {
+						ars.get(p.getUniqueId()).forEach(ar -> Holding.ale(ar).remove());
+						ars.removeAll(p.getUniqueId());
+					}
+
+					if(shieldt.containsKey(p.getUniqueId())) {
+						Bukkit.getScheduler().cancelTask(shieldt.get(p.getUniqueId()));
+						shieldt.remove(p.getUniqueId());
+					}
+				}
             }
 
        	 }, 0,1);

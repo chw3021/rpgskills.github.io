@@ -1580,7 +1580,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 			return;
 		}
 		ItemStack is = p.getInventory().getItemInMainHand();
-			if(ClassData.pc.get(p.getUniqueId()) == 15 && ((is.getType().name().contains("PICKAXE"))) && p.isSneaking()&& Proficiency.getpro(p) >=1)
+			if(ClassData.pc.get(p.getUniqueId()) == 15 && ev.getNewSlot()==3 && ((is.getType().name().contains("PICKAXE"))) && p.isSneaking()&& Proficiency.getpro(p) >=1)
 			{
 				p.setCooldown(Material.TNT,3);
 				ev.setCancelled(true);
@@ -1637,7 +1637,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 		}
 
 		ItemStack is = p.getInventory().getItemInMainHand();
-			if(ClassData.pc.get(p.getUniqueId()) == 15 && ((is.getType().name().contains("PICKAXE"))) && !p.isSneaking()&& p.isSprinting()&& Proficiency.getpro(p) >=2)
+			if(ClassData.pc.get(p.getUniqueId()) == 15 && ev.getNewSlot()==4 && ((is.getType().name().contains("PICKAXE"))) && p.isSneaking()&& Proficiency.getpro(p) >=2)
 			{
 				p.setCooldown(Material.TNT,3);
 				ev.setCancelled(true);

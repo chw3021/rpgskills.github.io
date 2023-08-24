@@ -89,7 +89,7 @@ public class EngSkillsGui extends SkillsGui {
 						Arrays.asList("요구 숙련도: " + Proficiency.getproexp(p) + "/29315"), 14, Engskillsinv);
 				itemset("오버클럭(잠김)", Material.STRUCTURE_VOID, 0, 1,
 						Arrays.asList("요구 숙련도: " + Proficiency.getproexp(p) + "/29315"), 15, Engskillsinv);
-				itemset("감마선(잠김)", Material.STRUCTURE_VOID, 0, 1,
+				itemset("전투 순양함(잠김)", Material.STRUCTURE_VOID, 0, 1,
 						Arrays.asList("요구 숙련도: " + Proficiency.getproexp(p) + "/29315"), 17, Engskillsinv);
 			} else if (Proficiency.getpro(p) < 2 && Proficiency.getpro(p) >= 1) {
 				itemset("에너지구체", Material.AZURE_BLUET, 0, 1,
@@ -121,8 +121,8 @@ public class EngSkillsGui extends SkillsGui {
 				itemset("오버클럭", Material.ENCHANTED_BOOK, 0, 1,
 						Arrays.asList("공격력이 증가합니다", "스킬 사용시 궁극기를 제외한 모든 스킬들의", "재사용 대기시간이 0.5초 감소합니다"), 15,
 						Engskillsinv);
-				itemset("감마선", Material.WRITTEN_BOOK, 0, 1,
-						Arrays.asList("웅크리기 + 아이템던지기", "", ChatColor.BOLD + "5 X 2.2D"), 17, Engskillsinv);
+				itemset("전투 순양함", Material.WRITTEN_BOOK, 0, 1,
+						Arrays.asList("웅크리기 + num4", "", "스킬들의 공격력과 성능이 증가합니다",ChatColor.BOLD + "+ 0.1D"), 17, Engskillsinv);
 
 				itemset("원자궤도(잠김)", Material.STRUCTURE_VOID, 0, 1,
 						Arrays.asList("요구 숙련도: " + Proficiency.getproexp(p) + "/155015"), 18, Engskillsinv);
@@ -166,8 +166,8 @@ public class EngSkillsGui extends SkillsGui {
 				itemset("오버클럭", Material.ENCHANTED_BOOK, 0, 1,
 						Arrays.asList("공격력이 증가합니다", "스킬 사용시 궁극기를 제외한 모든 스킬들의", "재사용 대기시간이 0.5초 감소합니다"), 15,
 						Engskillsinv);
-				itemset("감마선", Material.WRITTEN_BOOK, 0, 1,
-						Arrays.asList("웅크리기 + 아이템던지기", "", ChatColor.BOLD + "5 X 2.2D"), 17, Engskillsinv);
+				itemset("전투 순양함", Material.WRITTEN_BOOK, 0, 1,
+						Arrays.asList("웅크리기 + num4", "", ChatColor.BOLD + "5 X 2.2D"), 17, Engskillsinv);
 				
 
 				itemset("원자궤도", Material.BUCKET, 0, 1,
@@ -193,10 +193,10 @@ public class EngSkillsGui extends SkillsGui {
 										+ BigDecimal.valueOf(0.34 * (1+ esd.Dispenser.getOrDefault(p.getUniqueId(), 0) * 0.04))
 												.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						23, Engskillsinv);
-				itemset("원자로", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("공격력과 방어력이 증가합니다", "감마선 쿨타임이 감소합니다"), 24,
+				itemset("원자로", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("공격력과 방어력이 증가합니다", "전투 순양함 쿨타임이 감소합니다"), 24,
 						Engskillsinv);
 				itemset("블랙홀", Material.WRITTEN_BOOK, 0, 1,
-						Arrays.asList("달리기 + 아이템던지기", "", ChatColor.BOLD + " X 16.4D"), 26, Engskillsinv);
+						Arrays.asList("웅크리기 + num5", "", ChatColor.BOLD + " X 16.4D"), 26, Engskillsinv);
 			}
 
 			itemset("현재 숙련도", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("" + Proficiency.getproexp(p)), 27,
@@ -280,7 +280,7 @@ public class EngSkillsGui extends SkillsGui {
 				itemset("Overclock(Locked)", Material.STRUCTURE_VOID, 0, 1,
 						Arrays.asList("Required Proficiency: " + Proficiency.getproexp(p) + "/29315"), 15,
 						Engskillsinv);
-				itemset("Gamma Ray(Locked)", Material.STRUCTURE_VOID, 0, 1,
+				itemset("Battle Cruiser(Locked)", Material.STRUCTURE_VOID, 0, 1,
 						Arrays.asList("Required Proficiency: " + Proficiency.getproexp(p) + "/29315"), 17,
 						Engskillsinv);
 			} else if (Proficiency.getpro(p) < 2 && Proficiency.getpro(p) >= 1) {
@@ -318,8 +318,8 @@ public class EngSkillsGui extends SkillsGui {
 						14, Engskillsinv);
 				itemset("Overclock", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage",
 						"Decreases All Skills Cooldown 0.5s", "When Use any Skill (Except Ults)"), 15, Engskillsinv);
-				itemset("Gamma Ray", Material.WRITTEN_BOOK, 0, 1,
-						Arrays.asList("Sneaking + ThrowItem", "", ChatColor.BOLD + " X 9.2D"), 17, Engskillsinv);
+				itemset("Battle Cruiser", Material.WRITTEN_BOOK, 0, 1,
+						Arrays.asList("Sneaking + num4", "", ChatColor.BOLD + " X 9.2D"), 17, Engskillsinv);
 
 				itemset("Orbital(Locked)", Material.STRUCTURE_VOID, 0, 1,
 						Arrays.asList("Required Proficiency: " + Proficiency.getproexp(p) + "/155015"), 18,
@@ -374,8 +374,8 @@ public class EngSkillsGui extends SkillsGui {
 						14, Engskillsinv);
 				itemset("Overclock", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage",
 						"Decreases All Skills Cooldown 0.5s", "When Use any Skill (Except Ults)"), 15, Engskillsinv);
-				itemset("Gamma Ray", Material.WRITTEN_BOOK, 0, 1,
-						Arrays.asList("Sneaking + ThrowItem", "", ChatColor.BOLD + " X 9.2D"), 17, Engskillsinv);
+				itemset("Battle Cruiser", Material.WRITTEN_BOOK, 0, 1,
+						Arrays.asList("Sneaking + num4", "", ChatColor.BOLD + " X 9.2D"), 17, Engskillsinv);
 
 				itemset("Orbital", Material.BUCKET, 0, 1,
 						Arrays.asList(ChatColor.UNDERLINE + "[Lightning]", "Make Orbital When Use Once More",
@@ -405,9 +405,9 @@ public class EngSkillsGui extends SkillsGui {
 												.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						23, Engskillsinv);
 				itemset("NuclearReactor", Material.ENCHANTED_BOOK, 0, 1,
-						Arrays.asList("Increases Damage & Armor", "Decreases Gamma Ray Cooldown"), 24, Engskillsinv);
+						Arrays.asList("Increases Damage & Armor", "Decreases Battle Cruiser Cooldown"), 24, Engskillsinv);
 				itemset("BlackHole", Material.WRITTEN_BOOK, 0, 1,
-						Arrays.asList("Sprinting + ThrowItem", "", ChatColor.BOLD + " X 16.4D"), 26, Engskillsinv);
+						Arrays.asList("Sneaking + num5", "", ChatColor.BOLD + " X 16.4D"), 26, Engskillsinv);
 			}
 
 			itemset("Current Proficiency", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("" + Proficiency.getproexp(p)),

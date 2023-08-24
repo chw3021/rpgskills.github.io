@@ -1930,7 +1930,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 
 
 
-		if(ClassData.pc.get(p.getUniqueId()) == 7 && (is.getType().name().contains("BANNER_PATTERN"))&& (is.hasItemMeta()) && is.getItemMeta().hasCustomModelData()  && p.isSneaking()&& Proficiency.getpro(p) >=1)
+		if(ClassData.pc.get(p.getUniqueId()) == 7 && (is.getType().name().contains("BANNER_PATTERN"))&& (is.hasItemMeta()) && is.getItemMeta().hasCustomModelData()  && p.isSneaking()&& Proficiency.getpro(p) >=1 && ev.getNewSlot()==3)
 			{
 				ev.setCancelled(true);
 				SkillBuilder bd = new SkillBuilder()
@@ -2289,7 +2289,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 		ItemStack is = p.getInventory().getItemInMainHand();
 
 
-		if(ClassData.pc.get(p.getUniqueId()) == 7 && (is.getType().name().contains("BANNER_PATTERN"))&& (is.hasItemMeta()) && is.getItemMeta().hasCustomModelData()  && !p.isSneaking()&& p.isSprinting()&& Proficiency.getpro(p) >=2)
+		if(ClassData.pc.get(p.getUniqueId()) == 7 && (is.getType().name().contains("BANNER_PATTERN"))&& (is.hasItemMeta()) && is.getItemMeta().hasCustomModelData()  && p.isSneaking() && ev.getNewSlot()==4&& Proficiency.getpro(p) >=2)
 			{
 				ev.setCancelled(true);
 		    	final Location tl = gettargetblock(p,3);
