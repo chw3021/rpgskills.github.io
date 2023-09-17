@@ -7,9 +7,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 import java.util.zip.GZIPInputStream;
@@ -23,6 +22,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -256,16 +256,29 @@ public class Backpack implements Serializable, Listener{
 	}
 
     private static ItemStack[] Add(ItemStack[] inv, ItemStack val, Integer count, HashSet<Integer> indexes) {
-	ItemStack[] ret = inv;
-	Integer cv = count;
-		indexes.foreach(id -> {
-			if(cv==1){
-				
-				//val setamount val - maxcount*count
-				//ret[id] = valclone
+    	ItemStack[] ret = inv;
+		Integer cv = count;
+		
+		
+		for(Integer id : indexes) {
+			if(count==1) {
+				ItemStack vc = val.clone();
+				vc.setAmount(val.getAmount() + ret[id].getAmount());
+				ret[id] = vc;
+				break;
 			}
-			cv--
-		});
+			cv--;
+			if(cv>1) {
+				ItemStack vc = val.clone();
+				vc.setAmount(val.getMaxStackSize());
+				ret[id] = vc;
+			}
+			else if(cv==1){
+				ItemStack vc = val.clone();
+				vc.setAmount(val.getAmount() + ret[id].getAmount() - val.getMaxStackSize());
+				ret[id] = vc;
+			}
+		}
 		return ret;
     }
 
@@ -311,19 +324,19 @@ public class Backpack implements Serializable, Listener{
     
     public static void add(Player p, ItemStack is) {
 
-        Table<UUID, Integer, ItemStack[]> chest;
 		try {
+	        Table<UUID, Integer, ItemStack[]> chest;
 			chest = getdata();
 			int count = 1;
 		    	if(is.getAmount() > is.getMaxStackSize()){
-				count = Math.ceil((is.getAmount()*1.0)/is.getMaxStackSize()*1.0);
+				count = (int) Math.ceil((is.getAmount()*1.0)/is.getMaxStackSize()*1.0);
 			}
-			HashSet<Integer>() indexes = new HashSet<>();
+			HashSet<Integer> indexes = new HashSet<>();
 			ItemStack[] input = null;
 			int i = 0; 
-			for(i++; i< chest.row(p.getUniqueId()).keySet().size()){
-					
-				for(ItemStack elis : chest.get(p.getUniqueId(),i){
+
+			for(; i < chest.row(p.getUniqueId()).keySet().size(); i++ ){
+				for(ItemStack elis : chest.get(p.getUniqueId(),i)){
 					if(elis == null){
 						count--;
 						indexes.add(i);
@@ -333,8 +346,8 @@ public class Backpack implements Serializable, Listener{
 						}
 					}
 				}
-				count = Math.ceil((is.getAmount()*1.0)/is.getMaxStackSize()*1.0);
-				indexes.removeAll();
+				count = (int) Math.ceil((is.getAmount()*1.0)/is.getMaxStackSize()*1.0); 
+				indexes.clear();
 			}
 			if(input == null){
 				input = chest.get(p.getUniqueId(),i+1);
@@ -343,9 +356,13 @@ public class Backpack implements Serializable, Listener{
 		        chest.put(p.getUniqueId(), chest.row(p.getUniqueId()).keySet().size()-1, nis);
 		        String path = new File("").getAbsolutePath();
 				new Backpack(chest).saveData(path +"/plugins/RPGskills/BackPack.data");
-		} catch (FileNotFoundException e) {
+		} catch (FileNotFoundException | NullPointerException e) {
 			// TODO Auto-generated catch block
+	        Table<UUID, Integer, ItemStack[]> chest = HashBasedTable.create();
 			p.closeInventory();
+	        chest.put(p.getUniqueId(), 0, new ItemStack[54]);
+	        String path = new File("").getAbsolutePath();
+			new Backpack(chest).saveData(path +"/plugins/RPGskills/BackPack.data");
 		}
     }
     

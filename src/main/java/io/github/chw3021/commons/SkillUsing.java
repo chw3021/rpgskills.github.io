@@ -256,10 +256,18 @@ public class SkillUsing implements Listener, Serializable {
 
 		Berskills.getInstance().ULT(ev);
 		Berskills.getInstance().ULT2(ev);
+
+		Boxskills.getInstance().ULT(ev);
+		Boxskills.getInstance().ULT2(ev);
 		
 		Broskills.getInstance().OneOnly(ev);
 		
 		Cheskills.getInstance().Cloud(ev);
+		Cheskills.getInstance().ULT(ev);
+		Cheskills.getInstance().ULT2(ev);
+		
+		Engskills.getInstance().ULT(ev);
+		Engskills.getInstance().ULT2(ev);
 		
 		Forskills.getInstance().MachineGun(ev);
 
@@ -376,7 +384,7 @@ public class SkillUsing implements Listener, Serializable {
 		Oceskills.getInstance().Diffraction(ev);
 		Oceskills.getInstance().Flood(ev);
 		Oceskills.getInstance().RipCurrent(ev);
-		Oceskills.getInstance().TridentDrive(ev);
+		Oceskills.getInstance().ShieldSmite(ev);
 		Oceskills.getInstance().WaterBarrier(ev);
 		Oceskills.getInstance().WaterSpear(ev);
 		Oceskills.getInstance().WetSwing(ev);
@@ -712,9 +720,7 @@ public class SkillUsing implements Listener, Serializable {
 		Medskills.getInstance().RemedyingRocket(d);
 
 		Oceskills.getInstance().Impale(d);
-		Oceskills.getInstance().ShieldSmite(d);
 		Oceskills.getInstance().Splash(d);
-		Oceskills.getInstance().TripleHit(d);
 
 		Nobskills.getInstance().Damagegetter(d);
 		Nobskills.getInstance().GuardianSupport(d);
@@ -814,20 +820,14 @@ public class SkillUsing implements Listener, Serializable {
 
 		Berskills.getInstance().ThrowCancel(ev);
 
-		Boxskills.getInstance().ULT(ev);
-		Boxskills.getInstance().ULT2(ev);
 		Boxskills.getInstance().ThrowCancel(ev);
 
 		Broskills.getInstance().ULT(ev);
 
-		Cheskills.getInstance().ULT(ev);
-		Cheskills.getInstance().ULT2(ev);
 		Cheskills.getInstance().ThrowCancel(ev);
 
 		Cookskills.getInstance().ULT(ev);
 
-		Engskills.getInstance().ULT(ev);
-		Engskills.getInstance().ULT2(ev);
 		Engskills.getInstance().ThrowCancel(ev);
 
 		Fireskills.getInstance().ULT(ev);

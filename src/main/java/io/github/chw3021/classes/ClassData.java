@@ -281,7 +281,13 @@ public class ClassData implements Serializable, Listener{
 		ClassData cdata = new ClassData(ClassData.loadData(path +"/plugins/RPGskills/ClassData.data"));
 		pc = cdata.playerclass;
 
-		setMaxHealth(p);
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() 
+            {
+        		setMaxHealth(p);
+            }
+        }, 12); 
 	}
     @EventHandler
 	public void classopen(InventoryOpenEvent e)

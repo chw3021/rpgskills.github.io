@@ -40,6 +40,7 @@ public class CombatMode implements Serializable{
 	protected Material CAREFUL = Material.EVOKER_SPAWN_EGG;
 	
 	private static final CombatMode instance = new CombatMode();
+	private HashMap<String, Long> hm = new HashMap<String, Long>();
 	
 	private Material[] mas = { Material.AXOLOTL_SPAWN_EGG, Material.BEE_SPAWN_EGG,
 			Material.CAT_SPAWN_EGG, Material.CHICKEN_SPAWN_EGG, Material.CREEPER_SPAWN_EGG,
@@ -326,13 +327,23 @@ public class CombatMode implements Serializable{
 			}
 		} 
 		else {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) {
-				p.spigot().sendMessage(ChatMessageType.CHAT,
-						new ComponentBuilder(ChatColor.BLUE + "[웅크리기 + 아이템버리기]로 전투모드로 전환할수 있습니다.").create());
-			} else {
-				p.spigot().sendMessage(ChatMessageType.CHAT,
-						new ComponentBuilder(ChatColor.BLUE + "You can use CombatMode by [Sneaking + Dropping Item]").create());
-			}
+	        if(hm.containsKey(p.getName())) {
+	            double timer = (hm.get(p.getName())/1000d + 5) - System.currentTimeMillis()/1000d;
+	            if(!(timer < 0)) {
+	            } else {
+	                hm.remove(p.getName());
+	    			if (p.getLocale().equalsIgnoreCase("ko_kr")) {
+	    				p.spigot().sendMessage(ChatMessageType.CHAT,
+	    						new ComponentBuilder(ChatColor.BLUE + "[웅크리기 + 아이템버리기]로 전투모드로 전환할수 있습니다.").create());
+	    			} else {
+	    				p.spigot().sendMessage(ChatMessageType.CHAT,
+	    						new ComponentBuilder(ChatColor.BLUE + "You can use CombatMode by [Sneaking + Dropping Item]").create());
+	    			}
+	                hm.put(p.getName(), System.currentTimeMillis());
+	            }
+	        } else {
+	            hm.put(p.getName(), System.currentTimeMillis());
+	        }
 		}
 	}
 }

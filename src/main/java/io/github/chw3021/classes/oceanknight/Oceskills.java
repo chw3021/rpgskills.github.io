@@ -1408,7 +1408,7 @@ public class Oceskills extends Pak implements Serializable {
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 20 && fsd.Javelin.getOrDefault(p.getUniqueId(),0)>=1&&!p.hasCooldown(Material.BONE)) {
-			if((p.getInventory().getItemInMainHand().getType()==Material.TRIDENT || p.getInventory().getItemInMainHand().getType()==Material.SHIELD)&&p.isSneaking()z &&!p.isBlocking()) 
+			if((p.getInventory().getItemInMainHand().getType()==Material.TRIDENT || p.getInventory().getItemInMainHand().getType()==Material.SHIELD)&&p.isSneaking() &&!p.isBlocking()) 
 			{
 				if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK))
 				{
