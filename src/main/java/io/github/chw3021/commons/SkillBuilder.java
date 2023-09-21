@@ -16,8 +16,20 @@ public class SkillBuilder {
     private String kname;
     private String ename;
     private HashMap<String, Long> hm;
-	private int slot=-1;
+    private int slot=-1;
 
+    /*
+                SkillBuilder bd = new SkillBuilder()
+                        .player(p)
+                        .cooldown(sec)
+                        .kname("")
+                        .ename("")
+                        .slot(2)
+                        .hm(prcooldown)
+                        .skillUse(() -> {
+                        });
+                bd.execute();
+                */
     public SkillBuilder() {}
 
     public SkillBuilder skillUse(SkillUse skillUse) {
@@ -62,16 +74,16 @@ public class SkillBuilder {
             double timer = (hm.get(player.getName())/1000d + cooldown) - System.currentTimeMillis()/1000d;
             if(!(timer < 0)) {
                 if(slot >-1) {
-            		Bukkit.getPluginManager().callEvent(new SkillUseEvent(player,timer,slot,kname,ename));
+                    Bukkit.getPluginManager().callEvent(new SkillUseEvent(player,timer,slot,kname,ename));
                 }
                 if(player.getLocale().equalsIgnoreCase("ko_kr")) {
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(kname+" Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(kname+" ìž¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ì´ " + String.valueOf(Math.round(timer*10)/10.0) + "ì´ˆ ë‚¨ì•˜ìŠµë‹ˆë‹¤").create());
                 } else {
                     player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use "+ename).create());
                 }
             } else {
                 if(slot >-1) {
-            		Bukkit.getPluginManager().callEvent(new SkillUseEvent(player,cooldown,slot,kname,ename));
+                    Bukkit.getPluginManager().callEvent(new SkillUseEvent(player,cooldown,slot,kname,ename));
                 }
                 hm.remove(player.getName());
                 skillUse.skilluse();
@@ -79,7 +91,7 @@ public class SkillBuilder {
             }
         } else {
             if(slot >-1) {
-        		Bukkit.getPluginManager().callEvent(new SkillUseEvent(player,cooldown,slot,kname,ename));
+                Bukkit.getPluginManager().callEvent(new SkillUseEvent(player,cooldown,slot,kname,ename));
             }
             skillUse.skilluse();
             hm.put(player.getName(), System.currentTimeMillis());

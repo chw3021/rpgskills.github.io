@@ -23,187 +23,187 @@ public class EngSkillsGui extends SkillsGui {
 		Obtained.itemset(p, Engskillsinv);
 
 		if (p.getLocale().equalsIgnoreCase("ko_kr")) {
-			itemset("Áß·ÂÀÚ", Material.WOODEN_PICKAXE, 0, 1,
+			itemset("ì¤‘ë ¥ì", Material.WOODEN_PICKAXE, 0, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + esd.Graviton.getOrDefault(p.getUniqueId(), 0), "",
-							ChatColor.UNDERLINE + "[¹ø°³ °è¿­]", "¼Õ¹Ù²Ù±â", "",
+							ChatColor.UNDERLINE + "[ë²ˆê°œ ê³„ì—´]", "ì†ë°”ê¾¸ê¸°", "",
 							ChatColor.BOLD + " 10 X "
 									+ BigDecimal.valueOf(0.12 *(1 + esd.Graviton.getOrDefault(p.getUniqueId(), 0) * 0.0085))
-											.setScale(2, RoundingMode.HALF_EVEN)+"D"
+									.setScale(2, RoundingMode.HALF_EVEN)+"D"
 									+ " , "
 									+ BigDecimal.valueOf(0.52 * (1 + esd.Graviton.getOrDefault(p.getUniqueId(), 0) * 0.05))
-											.setScale(2, RoundingMode.HALF_EVEN)+"D",
+									.setScale(2, RoundingMode.HALF_EVEN)+"D",
 							"Master LV.50"),
 					0, Engskillsinv);
-			itemset("¿¢½º¼±", Material.STONE_PICKAXE, 0, 1,
+			itemset("ì—‘ìŠ¤ì„ ", Material.STONE_PICKAXE, 0, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + esd.X_ray.getOrDefault(p.getUniqueId(), 0), "",
-							ChatColor.UNDERLINE + "[¹ø°³ °è¿­]", "¿õÅ©¸®±â + ¿ìÅ¬¸¯", "ÀûÀÇ °ø°İ·ÂÀ» ³·Ãä´Ï´Ù", "",
+							ChatColor.UNDERLINE + "[ë²ˆê°œ ê³„ì—´]", "ì›…í¬ë¦¬ê¸° + ìš°í´ë¦­", "ì ì˜ ê³µê²©ë ¥ì„ ë‚®ì¶¥ë‹ˆë‹¤", "",
 							ChatColor.BOLD + "1 X "
 									+ BigDecimal.valueOf(0.32 * (1 +esd.X_ray.getOrDefault(p.getUniqueId(), 0) * 0.024)).setScale(2,
-											RoundingMode.HALF_EVEN)+"D",
+									RoundingMode.HALF_EVEN)+"D",
 							"Master LV.50"),
 					1, Engskillsinv);
-			itemset("ÀÚ¼º", Material.STONE_PICKAXE, 0, 1,
+			itemset("ìì„±", Material.STONE_PICKAXE, 0, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + esd.Magnetic.getOrDefault(p.getUniqueId(), 0), "",
-							"±ÙÁ¢°ø°İ + ¿õÅ©¸®±â", "Master LV.1"),
+							"ê·¼ì ‘ê³µê²© + ì›…í¬ë¦¬ê¸°", "Master LV.1"),
 					2, Engskillsinv);
-			itemset("Á¤Àü±âÀå", Material.IRON_PICKAXE, 0, 1,
+			itemset("ì •ì „ê¸°ì¥", Material.IRON_PICKAXE, 0, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + esd.Electrostatic.getOrDefault(p.getUniqueId(), 0), "",
-							ChatColor.UNDERLINE + "[¹ø°³ °è¿­]", "¿ìÅ¬¸¯", "",
+							ChatColor.UNDERLINE + "[ë²ˆê°œ ê³„ì—´]", "ìš°í´ë¦­", "",
 							ChatColor.BOLD + "8 X "
 									+ BigDecimal.valueOf(0.1 * (1+esd.Electrostatic.getOrDefault(p.getUniqueId(), 0) * 0.0078))
-											.setScale(2, RoundingMode.HALF_EVEN)+"D",
+									.setScale(2, RoundingMode.HALF_EVEN)+"D",
 							"Master LV.50"),
 					3, Engskillsinv);
-			itemset("Á¦Æ®ÆÑ", Material.GOLDEN_PICKAXE, 0, 1,
-					Arrays.asList(ChatColor.AQUA + "LV." + esd.Jetpack.getOrDefault(p.getUniqueId(), 0), "", "¿ìÅ¬¸¯ + Á¡ÇÁ",
-							"³«ÇÏ µ¥¹ÌÁö¿¡ ¸é¿ªÀÌ µÇ°í", "ÂøÁö½Ã ÁÖº¯Àû¿¡°Ô ÇÇÇØ¸¦ Áİ´Ï´Ù", "(ÇÇÇØ·®Àº ³ôÀÌ¿¡ ºñ·ÊÇÕ´Ï´Ù)", "",
-							ChatColor.BOLD + "0.3D X ³ôÀÌ ", "Master LV.1"),
+			itemset("ì œíŠ¸íŒ©", Material.GOLDEN_PICKAXE, 0, 1,
+					Arrays.asList(ChatColor.AQUA + "LV." + esd.Jetpack.getOrDefault(p.getUniqueId(), 0), "", "ìš°í´ë¦­ + ì í”„",
+							"ë‚™í•˜ ë°ë¯¸ì§€ì— ë©´ì—­ì´ ë˜ê³ ", "ì°©ì§€ì‹œ ì£¼ë³€ì ì—ê²Œ í”¼í•´ë¥¼ ì¤ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ë†’ì´ì— ë¹„ë¡€í•©ë‹ˆë‹¤)", "",
+							ChatColor.BOLD + "0.3D X ë†’ì´ ", "Master LV.1"),
 					4, Engskillsinv);
-			itemset("¹ß»ç±â", Material.DIAMOND_PICKAXE, 0, 1,
+			itemset("ë°œì‚¬ê¸°", Material.DIAMOND_PICKAXE, 0, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + esd.Dispenser.getOrDefault(p.getUniqueId(), 0), "",
-							ChatColor.UNDERLINE + "[¹ø°³ °è¿­]", "¼Õ¹Ù²Ù±â + ¿õÅ©¸®±â", "",
+							ChatColor.UNDERLINE + "[ë²ˆê°œ ê³„ì—´]", "ì†ë°”ê¾¸ê¸° + ì›…í¬ë¦¬ê¸°", "",
 							ChatColor.BOLD + " 20 X "
 									+ BigDecimal.valueOf(0.06 * (1+esd.Dispenser.getOrDefault(p.getUniqueId(), 0) * 0.006))
-											.setScale(2, RoundingMode.HALF_EVEN)+"D",
+									.setScale(2, RoundingMode.HALF_EVEN)+"D",
 							"Master LV.50"),
 					5, Engskillsinv);
-			itemset("ÀüÅõ½´Æ®", Material.BOOK, 0, 1,
+			itemset("ì „íˆ¬ìŠˆíŠ¸", Material.BOOK, 0, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + esd.CombatSuit.getOrDefault(p.getUniqueId(), 0), "",
-							"°ø°İ·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù", "ÃÖ´ëÃ¼·ÂÀÇ 20%°¡ ³Ñ´Â ÇÇÇØ·®À» °¨¼Ò½ÃÅµ´Ï´Ù", "",
+							"ê³µê²©ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤", "ìµœëŒ€ì²´ë ¥ì˜ 20%ê°€ ë„˜ëŠ” í”¼í•´ëŸ‰ì„ ê°ì†Œì‹œí‚µë‹ˆë‹¤", "",
 							ChatColor.BOLD + " X " + BigDecimal
 									.valueOf(1.2 * (1 + esd.CombatSuit.getOrDefault(p.getUniqueId(), 0) * 0.03935))
 									.setScale(2, RoundingMode.HALF_EVEN)),
 					6, Engskillsinv);
 			if (Proficiency.getpro(p) < 1) {
-				itemset("¿¡³ÊÁö±¸Ã¼(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/29315"), 9, Engskillsinv);
-				itemset("EMP(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/29315"), 10, Engskillsinv);
-				itemset("°­ÀÚ±âÀå(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/29315"), 11, Engskillsinv);
-				itemset("½ã´õÄİ·¯(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/29315"), 12, Engskillsinv);
-				itemset("ÃßÁø(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/29315"), 13, Engskillsinv);
-				itemset("°üÃø±â(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/29315"), 14, Engskillsinv);
-				itemset("¿À¹öÅ¬·°(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/29315"), 15, Engskillsinv);
-				itemset("ÀüÅõ ¼ø¾çÇÔ(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/29315"), 17, Engskillsinv);
+				itemset("ì—ë„ˆì§€êµ¬ì²´(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/29315"), 9, Engskillsinv);
+				itemset("EMP(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/29315"), 10, Engskillsinv);
+				itemset("ê°•ìê¸°ì¥(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/29315"), 11, Engskillsinv);
+				itemset("ì¬ë”ì½œëŸ¬(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/29315"), 12, Engskillsinv);
+				itemset("ì¶”ì§„(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/29315"), 13, Engskillsinv);
+				itemset("ê´€ì¸¡ê¸°(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/29315"), 14, Engskillsinv);
+				itemset("ì˜¤ë²„í´ëŸ­(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/29315"), 15, Engskillsinv);
+				itemset("ì „íˆ¬ ìˆœì–‘í•¨(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/29315"), 17, Engskillsinv);
 			} else if (Proficiency.getpro(p) < 2 && Proficiency.getpro(p) >= 1) {
-				itemset("¿¡³ÊÁö±¸Ã¼", Material.AZURE_BLUET, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¹ø°³ °è¿­]", "ÀçÀÔ·Â½Ã ¿¡³ÊÁö±¸Ã¼¸¦ ¹ß»çÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº Áß·ÂÀÚ ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)", "",
+				itemset("ì—ë„ˆì§€êµ¬ì²´", Material.AZURE_BLUET, 0, 1,
+						Arrays.asList(ChatColor.UNDERLINE + "[ë²ˆê°œ ê³„ì—´]", "ì¬ì…ë ¥ì‹œ ì—ë„ˆì§€êµ¬ì²´ë¥¼ ë°œì‚¬í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ì¤‘ë ¥ì ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)", "",
 								ChatColor.BOLD + "20 X "
 										+ BigDecimal.valueOf(0.25*(1+esd.Graviton.getOrDefault(p.getUniqueId(), 0) * 0.025))
-												.setScale(2, RoundingMode.HALF_EVEN)+"D"),
+										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						9, Engskillsinv);
 				itemset("EMP", Material.SCULK_SENSOR, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¹ø°³ °è¿­]", "ÀçÀÔ·Â½Ã EMP¸¦ ¹ß»çÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº ¿¢½º¼± ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)", "",
+						Arrays.asList(ChatColor.UNDERLINE + "[ë²ˆê°œ ê³„ì—´]", "ì¬ì…ë ¥ì‹œ EMPë¥¼ ë°œì‚¬í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ì—‘ìŠ¤ì„  ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)", "",
 								ChatColor.BOLD + "1 X "
 										+ BigDecimal.valueOf(0.7 * (1+esd.X_ray.getOrDefault(p.getUniqueId(), 0) * 0.057))
-												.setScale(2, RoundingMode.HALF_EVEN)+"D"),
+										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						10, Engskillsinv);
-				itemset("°­ÀÚ±âÀå", Material.LODESTONE, 0, 1, Arrays.asList("¿©·¯ÀûµéÀ» ²ø¾î¿Ã¼ö ÀÖ½À´Ï´Ù"), 11, Engskillsinv);
-				itemset("½ã´õÄİ·¯", Material.LIGHTNING_ROD, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¹ø°³ °è¿­]", "ÀçÀÔ·Â½Ã ½ã´õÄİ·¯¸¦ ¼³Ä¡ÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº Á¤Àü±âÀå ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)", "",
+				itemset("ê°•ìê¸°ì¥", Material.LODESTONE, 0, 1, Arrays.asList("ì—¬ëŸ¬ì ë“¤ì„ ëŒì–´ì˜¬ìˆ˜ ìˆìŠµë‹ˆë‹¤"), 11, Engskillsinv);
+				itemset("ì¬ë”ì½œëŸ¬", Material.LIGHTNING_ROD, 0, 1,
+						Arrays.asList(ChatColor.UNDERLINE + "[ë²ˆê°œ ê³„ì—´]", "ì¬ì…ë ¥ì‹œ ì¬ë”ì½œëŸ¬ë¥¼ ì„¤ì¹˜í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ì •ì „ê¸°ì¥ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)", "",
 								ChatColor.BOLD + "1 X "
 										+ BigDecimal.valueOf(2.1*(1+esd.Electrostatic.getOrDefault(p.getUniqueId(), 0) * 0.2))
-												.setScale(2, RoundingMode.HALF_EVEN)+"D"),
+										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						12, Engskillsinv);
-				itemset("ÃßÁø", Material.BARREL, 0, 1, Arrays.asList("ÀçÀÔ·Â½Ã Àü¹æÀ¸·Î ºü¸£°Ô ÀÌµ¿ÇÕ´Ï´Ù"), 13, Engskillsinv);
-				itemset("°üÃø±â", Material.OBSERVER, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¹ø°³ °è¿­]", "ÀçÀÔ·Â½Ã °üÃø±â¸¦ ¼³Ä¡ÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº ¹ß»ç±â ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)", "",
+				itemset("ì¶”ì§„", Material.BARREL, 0, 1, Arrays.asList("ì¬ì…ë ¥ì‹œ ì „ë°©ìœ¼ë¡œ ë¹ ë¥´ê²Œ ì´ë™í•©ë‹ˆë‹¤"), 13, Engskillsinv);
+				itemset("ê´€ì¸¡ê¸°", Material.OBSERVER, 0, 1,
+						Arrays.asList(ChatColor.UNDERLINE + "[ë²ˆê°œ ê³„ì—´]", "ì¬ì…ë ¥ì‹œ ê´€ì¸¡ê¸°ë¥¼ ì„¤ì¹˜í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ë°œì‚¬ê¸° ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)", "",
 								ChatColor.BOLD + "5 X "
 										+ BigDecimal.valueOf(0.1*(1+esd.Dispenser.getOrDefault(p.getUniqueId(), 0) * 0.006))
-												.setScale(2, RoundingMode.HALF_EVEN)+"D"),
+										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						14, Engskillsinv);
-				itemset("¿À¹öÅ¬·°", Material.ENCHANTED_BOOK, 0, 1,
-						Arrays.asList("°ø°İ·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù", "½ºÅ³ »ç¿ë½Ã ±Ã±Ø±â¸¦ Á¦¿ÜÇÑ ¸ğµç ½ºÅ³µéÀÇ", "Àç»ç¿ë ´ë±â½Ã°£ÀÌ 0.5ÃÊ °¨¼ÒÇÕ´Ï´Ù"), 15,
+				itemset("ì˜¤ë²„í´ëŸ­", Material.ENCHANTED_BOOK, 0, 1,
+						Arrays.asList("ê³µê²©ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤", "ìŠ¤í‚¬ ì‚¬ìš©ì‹œ ê¶ê·¹ê¸°ë¥¼ ì œì™¸í•œ ëª¨ë“  ìŠ¤í‚¬ë“¤ì˜", "ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ì´ 0.5ì´ˆ ê°ì†Œí•©ë‹ˆë‹¤"), 15,
 						Engskillsinv);
-				itemset("ÀüÅõ ¼ø¾çÇÔ", Material.WRITTEN_BOOK, 0, 1,
-						Arrays.asList("¿õÅ©¸®±â + num4", "", "½ºÅ³µéÀÇ °ø°İ·Â°ú ¼º´ÉÀÌ Áõ°¡ÇÕ´Ï´Ù",ChatColor.BOLD + "+ 0.1D"), 17, Engskillsinv);
+				itemset("ì „íˆ¬ ìˆœì–‘í•¨", Material.WRITTEN_BOOK, 0, 1,
+						Arrays.asList("ì›…í¬ë¦¬ê¸° + num4", "", "ìŠ¤í‚¬ë“¤ì˜ ê³µê²©ë ¥ê³¼ ì„±ëŠ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤",ChatColor.BOLD + "+ 0.1D"), 17, Engskillsinv);
 
-				itemset("¿øÀÚ±Ëµµ(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/155015"), 18, Engskillsinv);
-				itemset("Áß·Â°¡¼Ó(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/155015"), 19, Engskillsinv);
-				itemset("¿ªÁß·ÂÀå(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/155015"), 21, Engskillsinv);
-				itemset("ÆÑÅä¸®(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/155015"), 23, Engskillsinv);
-				itemset("¿øÀÚ·Î(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/155015"), 24, Engskillsinv);
-				itemset("ºí·¢È¦(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/155015"), 26, Engskillsinv);
+				itemset("ì›ìê¶¤ë„(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/155015"), 18, Engskillsinv);
+				itemset("ì¤‘ë ¥ê°€ì†(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/155015"), 19, Engskillsinv);
+				itemset("ì—­ì¤‘ë ¥ì¥(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/155015"), 21, Engskillsinv);
+				itemset("íŒ©í† ë¦¬(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/155015"), 23, Engskillsinv);
+				itemset("ì›ìë¡œ(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/155015"), 24, Engskillsinv);
+				itemset("ë¸”ë™í™€(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/155015"), 26, Engskillsinv);
 			} else {
-				itemset("¿¡³ÊÁö±¸Ã¼", Material.AZURE_BLUET, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¹ø°³ °è¿­]", "ÀçÀÔ·Â½Ã ¿¡³ÊÁö±¸Ã¼¸¦ ¹ß»çÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº Áß·ÂÀÚ ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)", "",
+				itemset("ì—ë„ˆì§€êµ¬ì²´", Material.AZURE_BLUET, 0, 1,
+						Arrays.asList(ChatColor.UNDERLINE + "[ë²ˆê°œ ê³„ì—´]", "ì¬ì…ë ¥ì‹œ ì—ë„ˆì§€êµ¬ì²´ë¥¼ ë°œì‚¬í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ì¤‘ë ¥ì ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)", "",
 								ChatColor.BOLD + "20 X "
 										+ BigDecimal.valueOf(0.25*(1+esd.Graviton.getOrDefault(p.getUniqueId(), 0) * 0.025))
-												.setScale(2, RoundingMode.HALF_EVEN)+"D"),
+										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						9, Engskillsinv);
 				itemset("EMP", Material.SCULK_SENSOR, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¹ø°³ °è¿­]", "ÀçÀÔ·Â½Ã EMP¸¦ ¹ß»çÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº ¿¢½º¼± ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)", "",
+						Arrays.asList(ChatColor.UNDERLINE + "[ë²ˆê°œ ê³„ì—´]", "ì¬ì…ë ¥ì‹œ EMPë¥¼ ë°œì‚¬í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ì—‘ìŠ¤ì„  ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)", "",
 								ChatColor.BOLD + "1 X "
 										+ BigDecimal.valueOf(0.7 * (1+esd.X_ray.getOrDefault(p.getUniqueId(), 0) * 0.057))
-												.setScale(2, RoundingMode.HALF_EVEN)+"D"),
+										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						10, Engskillsinv);
-				itemset("°­ÀÚ±âÀå", Material.LODESTONE, 0, 1, Arrays.asList("¿©·¯ÀûµéÀ» ²ø¾î¿Ã¼ö ÀÖ½À´Ï´Ù"), 11, Engskillsinv);
-				itemset("½ã´õÄİ·¯", Material.LIGHTNING_ROD, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¹ø°³ °è¿­]", "ÀçÀÔ·Â½Ã ½ã´õÄİ·¯¸¦ ¼³Ä¡ÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº Á¤Àü±âÀå ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)", "",
+				itemset("ê°•ìê¸°ì¥", Material.LODESTONE, 0, 1, Arrays.asList("ì—¬ëŸ¬ì ë“¤ì„ ëŒì–´ì˜¬ìˆ˜ ìˆìŠµë‹ˆë‹¤"), 11, Engskillsinv);
+				itemset("ì¬ë”ì½œëŸ¬", Material.LIGHTNING_ROD, 0, 1,
+						Arrays.asList(ChatColor.UNDERLINE + "[ë²ˆê°œ ê³„ì—´]", "ì¬ì…ë ¥ì‹œ ì¬ë”ì½œëŸ¬ë¥¼ ì„¤ì¹˜í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ì •ì „ê¸°ì¥ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)", "",
 								ChatColor.BOLD + "1 X "
 										+ BigDecimal.valueOf(2.1*(1+esd.Electrostatic.getOrDefault(p.getUniqueId(), 0) * 0.2))
-												.setScale(2, RoundingMode.HALF_EVEN)+"D"),
+										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						12, Engskillsinv);
-				itemset("ÃßÁø", Material.BARREL, 0, 1, Arrays.asList("ÀçÀÔ·Â½Ã Àü¹æÀ¸·Î ºü¸£°Ô ÀÌµ¿ÇÕ´Ï´Ù"), 13, Engskillsinv);
-				itemset("°üÃø±â", Material.OBSERVER, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¹ø°³ °è¿­]", "ÀçÀÔ·Â½Ã °üÃø±â¸¦ ¼³Ä¡ÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº ¹ß»ç±â ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)", "",
+				itemset("ì¶”ì§„", Material.BARREL, 0, 1, Arrays.asList("ì¬ì…ë ¥ì‹œ ì „ë°©ìœ¼ë¡œ ë¹ ë¥´ê²Œ ì´ë™í•©ë‹ˆë‹¤"), 13, Engskillsinv);
+				itemset("ê´€ì¸¡ê¸°", Material.OBSERVER, 0, 1,
+						Arrays.asList(ChatColor.UNDERLINE + "[ë²ˆê°œ ê³„ì—´]", "ì¬ì…ë ¥ì‹œ ê´€ì¸¡ê¸°ë¥¼ ì„¤ì¹˜í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ë°œì‚¬ê¸° ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)", "",
 								ChatColor.BOLD + "5 X "
 										+ BigDecimal.valueOf(0.1*(1+esd.Dispenser.getOrDefault(p.getUniqueId(), 0) * 0.006))
-												.setScale(2, RoundingMode.HALF_EVEN)+"D"),
+										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						14, Engskillsinv);
-				itemset("¿À¹öÅ¬·°", Material.ENCHANTED_BOOK, 0, 1,
-						Arrays.asList("°ø°İ·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù", "½ºÅ³ »ç¿ë½Ã ±Ã±Ø±â¸¦ Á¦¿ÜÇÑ ¸ğµç ½ºÅ³µéÀÇ", "Àç»ç¿ë ´ë±â½Ã°£ÀÌ 0.5ÃÊ °¨¼ÒÇÕ´Ï´Ù"), 15,
+				itemset("ì˜¤ë²„í´ëŸ­", Material.ENCHANTED_BOOK, 0, 1,
+						Arrays.asList("ê³µê²©ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤", "ìŠ¤í‚¬ ì‚¬ìš©ì‹œ ê¶ê·¹ê¸°ë¥¼ ì œì™¸í•œ ëª¨ë“  ìŠ¤í‚¬ë“¤ì˜", "ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ì´ 0.5ì´ˆ ê°ì†Œí•©ë‹ˆë‹¤"), 15,
 						Engskillsinv);
-				itemset("ÀüÅõ ¼ø¾çÇÔ", Material.WRITTEN_BOOK, 0, 1,
-						Arrays.asList("¿õÅ©¸®±â + num4", "", ChatColor.BOLD + "5 X 2.2D"), 17, Engskillsinv);
-				
+				itemset("ì „íˆ¬ ìˆœì–‘í•¨", Material.WRITTEN_BOOK, 0, 1,
+						Arrays.asList("ì›…í¬ë¦¬ê¸° + num4", "", ChatColor.BOLD + "5 X 2.2D"), 17, Engskillsinv);
 
-				itemset("¿øÀÚ±Ëµµ", Material.BUCKET, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¹ø°³ °è¿­]", "ÀçÀÔ·Â½Ã ¿øÀÚ±Ëµµ¸¦ »ı¼ºÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº Áß·ÂÀÚ ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)", "",
+
+				itemset("ì›ìê¶¤ë„", Material.BUCKET, 0, 1,
+						Arrays.asList(ChatColor.UNDERLINE + "[ë²ˆê°œ ê³„ì—´]", "ì¬ì…ë ¥ì‹œ ì›ìê¶¤ë„ë¥¼ ìƒì„±í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ì¤‘ë ¥ì ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)", "",
 								ChatColor.BOLD + "13 X "
 										+ BigDecimal.valueOf(0.2*(1+esd.Graviton.getOrDefault(p.getUniqueId(), 0) * 0.045))
-												.setScale(2, RoundingMode.HALF_EVEN)+"D"),
+										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						18, Engskillsinv);
-				itemset("Áß·Â°¡¼Ó", Material.QUARTZ, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¹ø°³ °è¿­]", "ÀçÀÔ·Â½Ã Áß·Â°¡¼ÓÀ» »ç¿ëÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº ¿¢½º¼± ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)", "",
+				itemset("ì¤‘ë ¥ê°€ì†", Material.QUARTZ, 0, 1,
+						Arrays.asList(ChatColor.UNDERLINE + "[ë²ˆê°œ ê³„ì—´]", "ì¬ì…ë ¥ì‹œ ì¤‘ë ¥ê°€ì†ì„ ì‚¬ìš©í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ì—‘ìŠ¤ì„  ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)", "",
 								ChatColor.BOLD + "1 X "+ BigDecimal.valueOf(0.76*(1+esd.X_ray.getOrDefault(p.getUniqueId(), 0) * 0.045))
-												.setScale(2, RoundingMode.HALF_EVEN)+"D"),
+										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						19, Engskillsinv);
-				itemset("¿ªÁß·ÂÀå", Material.PISTON, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¹ø°³ °è¿­]", "ÀçÀÔ·Â½Ã ¿ªÁß·ÂÀåÀ» »ı¼ºÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº Á¤Àü±âÀå ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)", "",
+				itemset("ì—­ì¤‘ë ¥ì¥", Material.PISTON, 0, 1,
+						Arrays.asList(ChatColor.UNDERLINE + "[ë²ˆê°œ ê³„ì—´]", "ì¬ì…ë ¥ì‹œ ì—­ì¤‘ë ¥ì¥ì„ ìƒì„±í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ì •ì „ê¸°ì¥ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)", "",
 								ChatColor.BOLD + "1 X + "
 										+ BigDecimal.valueOf(1.1 *(1+ esd.Electrostatic.getOrDefault(p.getUniqueId(), 0) * 0.1))
-												.setScale(2, RoundingMode.HALF_EVEN)+"D"),
+										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						21, Engskillsinv);
-				itemset("ÆÑÅä¸®", Material.COMMAND_BLOCK_MINECART, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¹ø°³ °è¿­]", "ÀçÀÔ·Â½Ã ÆÑÅä¸®¸¦ ¼³Ä¡ÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº ¹ß»ç±â ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)", "",
+				itemset("íŒ©í† ë¦¬", Material.COMMAND_BLOCK_MINECART, 0, 1,
+						Arrays.asList(ChatColor.UNDERLINE + "[ë²ˆê°œ ê³„ì—´]", "ì¬ì…ë ¥ì‹œ íŒ©í† ë¦¬ë¥¼ ì„¤ì¹˜í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ë°œì‚¬ê¸° ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)", "",
 								ChatColor.BOLD + "10 X  "
 										+ BigDecimal.valueOf(0.34 * (1+ esd.Dispenser.getOrDefault(p.getUniqueId(), 0) * 0.04))
-												.setScale(2, RoundingMode.HALF_EVEN)+"D"),
+										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						23, Engskillsinv);
-				itemset("¿øÀÚ·Î", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("°ø°İ·Â°ú ¹æ¾î·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù", "ÀüÅõ ¼ø¾çÇÔ ÄğÅ¸ÀÓÀÌ °¨¼ÒÇÕ´Ï´Ù"), 24,
+				itemset("ì›ìë¡œ", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("ê³µê²©ë ¥ê³¼ ë°©ì–´ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤", "ì „íˆ¬ ìˆœì–‘í•¨ ì¿¨íƒ€ì„ì´ ê°ì†Œí•©ë‹ˆë‹¤"), 24,
 						Engskillsinv);
-				itemset("ºí·¢È¦", Material.WRITTEN_BOOK, 0, 1,
-						Arrays.asList("¿õÅ©¸®±â + num5", "", ChatColor.BOLD + " X 16.4D"), 26, Engskillsinv);
+				itemset("ë¸”ë™í™€", Material.WRITTEN_BOOK, 0, 1,
+						Arrays.asList("ì›…í¬ë¦¬ê¸° + num5", "", ChatColor.BOLD + " X 16.4D"), 26, Engskillsinv);
 			}
 
-			itemset("ÇöÀç ¼÷·Ãµµ", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("" + Proficiency.getproexp(p)), 27,
+			itemset("í˜„ì¬ ìˆ™ë ¨ë„", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("" + Proficiency.getproexp(p)), 27,
 					Engskillsinv);
-			itemset("½ºÅ³Æ÷ÀÎÆ®", Material.NETHER_STAR, 0, 1,
+			itemset("ìŠ¤í‚¬í¬ì¸íŠ¸", Material.NETHER_STAR, 0, 1,
 					Arrays.asList(ChatColor.AQUA + "SP." + esd.SkillPoints.getOrDefault(p.getUniqueId(), 0), "",
-							"Å¬¸¯ÇÏ¸é ½ºÅ³Æ÷ÀÎÆ®°¡ ÃÊ±âÈ­ µË´Ï´Ù"),
+							"í´ë¦­í•˜ë©´ ìŠ¤í‚¬í¬ì¸íŠ¸ê°€ ì´ˆê¸°í™” ë©ë‹ˆë‹¤"),
 					35, Engskillsinv);
 
 		} else {
@@ -212,10 +212,10 @@ public class EngSkillsGui extends SkillsGui {
 					ChatColor.UNDERLINE + "[Lightning]", "SwapHand", "",
 					ChatColor.BOLD + " 10 X "
 							+ BigDecimal.valueOf(0.12 *(1 + esd.Graviton.getOrDefault(p.getUniqueId(), 0) * 0.0085))
-									.setScale(2, RoundingMode.HALF_EVEN)+"D"
+							.setScale(2, RoundingMode.HALF_EVEN)+"D"
 							+ " , "
 							+ BigDecimal.valueOf(0.52 * (1 + esd.Graviton.getOrDefault(p.getUniqueId(), 0) * 0.05))
-									.setScale(2, RoundingMode.HALF_EVEN)+"D",
+							.setScale(2, RoundingMode.HALF_EVEN)+"D",
 					"Master LV.50"), 0, Engskillsinv);
 			itemset("X_ray", Material.STONE_PICKAXE, 0, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + esd.X_ray.getOrDefault(p.getUniqueId(), 0), "",
@@ -223,7 +223,7 @@ public class EngSkillsGui extends SkillsGui {
 							"Decreases Mob's Attack Damage", "",
 							ChatColor.BOLD + "1 X "
 									+ BigDecimal.valueOf(0.32 * (1 +esd.X_ray.getOrDefault(p.getUniqueId(), 0) * 0.024)).setScale(2,
-											RoundingMode.HALF_EVEN)+"D",
+									RoundingMode.HALF_EVEN)+"D",
 							"Master LV.50"),
 					1, Engskillsinv);
 			itemset("Magnetic", Material.STONE_PICKAXE, 0, 1,
@@ -235,7 +235,7 @@ public class EngSkillsGui extends SkillsGui {
 							ChatColor.UNDERLINE + "[Lightning]", "Rightclick", "",
 							ChatColor.BOLD + "8 X "
 									+ BigDecimal.valueOf(0.1 * (1+esd.Electrostatic.getOrDefault(p.getUniqueId(), 0) * 0.0078))
-											.setScale(2, RoundingMode.HALF_EVEN)+"D",
+									.setScale(2, RoundingMode.HALF_EVEN)+"D",
 							"Master LV.50"),
 					3, Engskillsinv);
 			itemset("Jetpack", Material.GOLDEN_PICKAXE, 0, 1,
@@ -249,7 +249,7 @@ public class EngSkillsGui extends SkillsGui {
 							ChatColor.UNDERLINE + "[Lightning]", "SwapHand + Sneaking", "",
 							ChatColor.BOLD + " 20 X "
 									+ BigDecimal.valueOf(0.06 * (1+esd.Dispenser.getOrDefault(p.getUniqueId(), 0) * 0.006))
-											.setScale(2, RoundingMode.HALF_EVEN)+"D",
+									.setScale(2, RoundingMode.HALF_EVEN)+"D",
 							"Master LV.50"),
 					5, Engskillsinv);
 			itemset("CombatSuit", Material.BOOK, 0, 1,
@@ -289,14 +289,14 @@ public class EngSkillsGui extends SkillsGui {
 								"(Damage Affected By Graviton)", "",
 								ChatColor.BOLD + "20 X "
 										+ BigDecimal.valueOf(0.25*(1+esd.Graviton.getOrDefault(p.getUniqueId(), 0) * 0.025))
-												.setScale(2, RoundingMode.HALF_EVEN)+"D"),
+										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						9, Engskillsinv);
 				itemset("EMP", Material.SCULK_SENSOR, 0, 1,
 						Arrays.asList(ChatColor.UNDERLINE + "[Lightning]", "Shot EMP When Use Once More",
 								"(Damage Affected By X_ray)", "",
 								ChatColor.BOLD + "1 X "
 										+ BigDecimal.valueOf(0.7 * (1+esd.X_ray.getOrDefault(p.getUniqueId(), 0) * 0.057))
-												.setScale(2, RoundingMode.HALF_EVEN)+"D"),
+										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						10, Engskillsinv);
 				itemset("Strong Magnetic", Material.LODESTONE, 0, 1, Arrays.asList("Pull Multiple Enemies"), 11,
 						Engskillsinv);
@@ -305,7 +305,7 @@ public class EngSkillsGui extends SkillsGui {
 								"(Damage Affected By Electrostatic)", "",
 								ChatColor.BOLD + "1 X "
 										+ BigDecimal.valueOf(2.1*(1+esd.Electrostatic.getOrDefault(p.getUniqueId(), 0) * 0.2))
-												.setScale(2, RoundingMode.HALF_EVEN)+"D"),
+										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						12, Engskillsinv);
 				itemset("Propellant", Material.BARREL, 0, 1, Arrays.asList("Move Forward Fastly When Use Once More"),
 						13, Engskillsinv);
@@ -314,7 +314,7 @@ public class EngSkillsGui extends SkillsGui {
 								"(Damage Affected By Dispenser)", "",
 								ChatColor.BOLD + "5 X "
 										+ BigDecimal.valueOf(0.1*(1+esd.Dispenser.getOrDefault(p.getUniqueId(), 0) * 0.006))
-												.setScale(2, RoundingMode.HALF_EVEN)+"D"),
+										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						14, Engskillsinv);
 				itemset("Overclock", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage",
 						"Decreases All Skills Cooldown 0.5s", "When Use any Skill (Except Ults)"), 15, Engskillsinv);
@@ -345,14 +345,14 @@ public class EngSkillsGui extends SkillsGui {
 								"(Damage Affected By Graviton)", "",
 								ChatColor.BOLD + "20 X "
 										+ BigDecimal.valueOf(0.25*(1+esd.Graviton.getOrDefault(p.getUniqueId(), 0) * 0.025))
-												.setScale(2, RoundingMode.HALF_EVEN)+"D"),
+										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						9, Engskillsinv);
 				itemset("EMP", Material.SCULK_SENSOR, 0, 1,
 						Arrays.asList(ChatColor.UNDERLINE + "[Lightning]", "Shot EMP When Use Once More",
 								"(Damage Affected By X_ray)", "",
 								ChatColor.BOLD + "1 X "
 										+ BigDecimal.valueOf(0.7 * (1+esd.X_ray.getOrDefault(p.getUniqueId(), 0) * 0.057))
-												.setScale(2, RoundingMode.HALF_EVEN)+"D"),
+										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						10, Engskillsinv);
 				itemset("Strong Magnetic", Material.LODESTONE, 0, 1, Arrays.asList("Pull Multiple Enemies"), 11,
 						Engskillsinv);
@@ -361,7 +361,7 @@ public class EngSkillsGui extends SkillsGui {
 								"(Damage Affected By Electrostatic)", "",
 								ChatColor.BOLD + "1 X "
 										+ BigDecimal.valueOf(2.1*(1+esd.Electrostatic.getOrDefault(p.getUniqueId(), 0) * 0.2))
-												.setScale(2, RoundingMode.HALF_EVEN)+"D"),
+										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						12, Engskillsinv);
 				itemset("Propellant", Material.BARREL, 0, 1, Arrays.asList("Move Forward Fastly When Use Once More"),
 						13, Engskillsinv);
@@ -370,7 +370,7 @@ public class EngSkillsGui extends SkillsGui {
 								"(Damage Affected By Dispenser)", "",
 								ChatColor.BOLD + "5 X "
 										+ BigDecimal.valueOf(0.1*(1+esd.Dispenser.getOrDefault(p.getUniqueId(), 0) * 0.006))
-												.setScale(2, RoundingMode.HALF_EVEN)+"D"),
+										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						14, Engskillsinv);
 				itemset("Overclock", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage",
 						"Decreases All Skills Cooldown 0.5s", "When Use any Skill (Except Ults)"), 15, Engskillsinv);
@@ -382,27 +382,27 @@ public class EngSkillsGui extends SkillsGui {
 								"(Damage Affected By Graviton)", "",
 								ChatColor.BOLD + "13 X "
 										+ BigDecimal.valueOf(0.2*(1+esd.Graviton.getOrDefault(p.getUniqueId(), 0) * 0.045))
-												.setScale(2, RoundingMode.HALF_EVEN)+"D"),
+										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						18, Engskillsinv);
 				itemset("GravityShift", Material.QUARTZ, 0, 1,
 						Arrays.asList(ChatColor.UNDERLINE + "[Lightning]", "Use GravityShift When Use Once More",
 								"(Damage Affected By X_ray)", "",
 								ChatColor.BOLD + "1 X "+ BigDecimal.valueOf(0.76*(1+esd.X_ray.getOrDefault(p.getUniqueId(), 0) * 0.045))
-								.setScale(2, RoundingMode.HALF_EVEN)+"D"),
+										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						19, Engskillsinv);
 				itemset("Anti-Gravity", Material.PISTON, 0, 1,
 						Arrays.asList(ChatColor.UNDERLINE + "[Lightning]", "Make Anti-Gravity When Use Once More",
 								"(Damage Affected By Electrostatic)", "",
 								ChatColor.BOLD + "1 X + "
 										+ BigDecimal.valueOf(1.1 *(1+ esd.Electrostatic.getOrDefault(p.getUniqueId(), 0) * 0.1))
-												.setScale(2, RoundingMode.HALF_EVEN)+"D"),
+										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						21, Engskillsinv);
 				itemset("Factory", Material.COMMAND_BLOCK_MINECART, 0, 1,
 						Arrays.asList(ChatColor.UNDERLINE + "[Lightning]", "Place Factory When Use Once More",
 								"(Damage Affected By Dispenser)", "",
 								ChatColor.BOLD + "10 X  "
 										+ BigDecimal.valueOf(0.34 * (1+ esd.Dispenser.getOrDefault(p.getUniqueId(), 0) * 0.04))
-												.setScale(2, RoundingMode.HALF_EVEN)+"D"),
+										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						23, Engskillsinv);
 				itemset("NuclearReactor", Material.ENCHANTED_BOOK, 0, 1,
 						Arrays.asList("Increases Damage & Armor", "Decreases Battle Cruiser Cooldown"), 24, Engskillsinv);

@@ -17,75 +17,75 @@ import io.github.chw3021.obtains.Obtained;
 import net.md_5.bungee.api.ChatColor;
 
 public class HunSkillsGui extends SkillsGui{
-	
 
-	
+
+
 	public void Hunskillsinv(Player p)
 	{
-	    String path = new File("").getAbsolutePath();
+		String path = new File("").getAbsolutePath();
 		HunSkillsData hsd = new HunSkillsData(HunSkillsData.loadData(path +"/plugins/RPGskills/HunSkillsData.data"));
 		Inventory Hunskillsinv = Bukkit.createInventory(null, 54, "Hunskills");
 		Obtained.itemset(p, Hunskillsinv);
 		final int at = hsd.Atrocity.getOrDefault(p.getUniqueId(),0);
 
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			itemset("¾Ï½À", Material.BOOK, 0, 1, Arrays.asList("ÀûÀÇ ÈÄ¹æÀ» °ø°İÇÏ¸é 50%Ãß°¡ ÇÇÇØ¸¦ Áİ´Ï´Ù", "°æÇèÄ¡·¹º§ÀÌ ³ôÀ»¼ö·Ï ÆÇÁ¤ÀÌ ÁÁ¾ÆÁı´Ï´Ù"),hsd.Backattack.getOrDefault(p.getUniqueId(), 0),1,1,0.5,1, 0, Hunskillsinv);
-			itemset("±×¹°ÅõÃ´", Material.BOOK, 0, 1, Arrays.asList("¿õÅ©¸®±â + ¿ìÅ¬¸¯"),hsd.Webthrow.getOrDefault(p.getUniqueId(), 0),1,0,0.5,1, 1, Hunskillsinv);
-			itemset("È¸ÇÇ", Material.BOOK, 0, 1, Arrays.asList("¼Õ¹Ù²Ù±â","³«ÇÏµ¥¹ÌÁö°¡ °¨¼ÒÇÕ´Ï´Ù"),hsd.Dodge.getOrDefault(p.getUniqueId(), 0),1,0,0.5,1, 2, Hunskillsinv);
-			itemset("»ç³É", Material.BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","¿ìÅ¬¸¯", "Àû¿¡°Ô ÇÇÇØ¸¦ ÁÖ¸é ºñÈ°¼ºÈ­µË´Ï´Ù", "Àû ÀúÄ¡½Ã ´ë±â½Ã°£ÀÌ 2ÃÊ °¨¼ÒÇÕ´Ï´Ù"),hsd.HuntingStart.getOrDefault(p.getUniqueId(), 0),1,1.0,0.055,50, 3, Hunskillsinv);
-			itemset("Âü°İ", Material.BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","¿õÅ©¸®±â + °ø°İ","ÀûÀ» 0.5ÃÊµ¿¾È ±âÀı½ÃÅµ´Ï´Ù"),hsd.Daze.getOrDefault(p.getUniqueId(), 0),1,0.8,0.035,50, 4, Hunskillsinv);
-			itemset("µÎ°³°ñºĞ¼â", Material.BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","Á¡ÇÁ + °ø°İ", "µÎ°³°ñ ºĞ¼â¸¦ Á¦¿ÜÇÑ", "ÇÇÇØ·®ÀÌ 50%Áõ°¡ÇÕ´Ï´Ù"),hsd.SkullCrusher.getOrDefault(p.getUniqueId(), 0),1,1.1,0.06,50, 5, Hunskillsinv);
-			itemset("µî¹İ", Material.BOOK, 0, 1, Arrays.asList("¿õÅ©¸®±â + ¼Õ¹Ù²Ù±â ·Î È°¼ºÈ­/ºñÈ°¼ºÈ­"),hsd.Climb.getOrDefault(p.getUniqueId(), 0),1,0,0.5,1, 6, Hunskillsinv);
-			itemset("±Ø¾Ç¹«µµ", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+at,"","¸ğµç ±â¼úÀº ´ÜÇÑ¹øÀÇ °ø°İÀ» °­È­ÇÕ´Ï´Ù","ÃÖ´ëÃæÀü »óÅÂ°¡ ¾Æ´Ò¶§´Â", "Àı¹İÀÇ ÇÇÇØ¸¸ ÀÔÈü´Ï´Ù","Çã±â¿¡ ¸é¿ªÀÌ µË´Ï´Ù", "ÃÖ´ëÃæÀü »óÅÂ·Î °ø°İ½Ã", "ÀûÀÇ ÃÖ´ëÃ¼·ÂÀÇ"+ Math.round(5+0.02*at)  +"% ¿¡ ÇØ´çÇÏ´Â Ãß°¡ÇÇÇØ¸¦ Áİ´Ï´Ù","°ø°İ·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù",ChatColor.BOLD+"X "+BigDecimal.valueOf(1.15*(1+at*0.0576)).setScale(2, RoundingMode.HALF_EVEN)), 7, Hunskillsinv);
+			itemset("ì•”ìŠµ", Material.BOOK, 0, 1, Arrays.asList("ì ì˜ í›„ë°©ì„ ê³µê²©í•˜ë©´ 50%ì¶”ê°€ í”¼í•´ë¥¼ ì¤ë‹ˆë‹¤", "ê²½í—˜ì¹˜ë ˆë²¨ì´ ë†’ì„ìˆ˜ë¡ íŒì •ì´ ì¢‹ì•„ì§‘ë‹ˆë‹¤"),hsd.Backattack.getOrDefault(p.getUniqueId(), 0),1,1,0.5,1, 0, Hunskillsinv);
+			itemset("ê·¸ë¬¼íˆ¬ì²™", Material.BOOK, 0, 1, Arrays.asList("ì›…í¬ë¦¬ê¸° + ìš°í´ë¦­"),hsd.Webthrow.getOrDefault(p.getUniqueId(), 0),1,0,0.5,1, 1, Hunskillsinv);
+			itemset("íšŒí”¼", Material.BOOK, 0, 1, Arrays.asList("ì†ë°”ê¾¸ê¸°","ë‚™í•˜ë°ë¯¸ì§€ê°€ ê°ì†Œí•©ë‹ˆë‹¤"),hsd.Dodge.getOrDefault(p.getUniqueId(), 0),1,0,0.5,1, 2, Hunskillsinv);
+			itemset("ì‚¬ëƒ¥", Material.BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ìš°í´ë¦­", "ì ì—ê²Œ í”¼í•´ë¥¼ ì£¼ë©´ ë¹„í™œì„±í™”ë©ë‹ˆë‹¤", "ì  ì €ì¹˜ì‹œ ëŒ€ê¸°ì‹œê°„ì´ 2ì´ˆ ê°ì†Œí•©ë‹ˆë‹¤"),hsd.HuntingStart.getOrDefault(p.getUniqueId(), 0),1,1.0,0.055,50, 3, Hunskillsinv);
+			itemset("ì°¸ê²©", Material.BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì›…í¬ë¦¬ê¸° + ê³µê²©","ì ì„ 0.5ì´ˆë™ì•ˆ ê¸°ì ˆì‹œí‚µë‹ˆë‹¤"),hsd.Daze.getOrDefault(p.getUniqueId(), 0),1,0.8,0.035,50, 4, Hunskillsinv);
+			itemset("ë‘ê°œê³¨ë¶„ì‡„", Material.BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì í”„ + ê³µê²©", "ë‘ê°œê³¨ ë¶„ì‡„ë¥¼ ì œì™¸í•œ", "í”¼í•´ëŸ‰ì´ 50%ì¦ê°€í•©ë‹ˆë‹¤"),hsd.SkullCrusher.getOrDefault(p.getUniqueId(), 0),1,1.1,0.06,50, 5, Hunskillsinv);
+			itemset("ë“±ë°˜", Material.BOOK, 0, 1, Arrays.asList("ì›…í¬ë¦¬ê¸° + ì†ë°”ê¾¸ê¸° ë¡œ í™œì„±í™”/ë¹„í™œì„±í™”"),hsd.Climb.getOrDefault(p.getUniqueId(), 0),1,0,0.5,1, 6, Hunskillsinv);
+			itemset("ê·¹ì•…ë¬´ë„", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+at,"","ëª¨ë“  ê¸°ìˆ ì€ ë‹¨í•œë²ˆì˜ ê³µê²©ì„ ê°•í™”í•©ë‹ˆë‹¤","ìµœëŒ€ì¶©ì „ ìƒíƒœê°€ ì•„ë‹ë•ŒëŠ”", "ì ˆë°˜ì˜ í”¼í•´ë§Œ ì…í™ë‹ˆë‹¤","í—ˆê¸°ì— ë©´ì—­ì´ ë©ë‹ˆë‹¤", "ìµœëŒ€ì¶©ì „ ìƒíƒœë¡œ ê³µê²©ì‹œ", "ì ì˜ ìµœëŒ€ì²´ë ¥ì˜"+ Math.round(5+0.02*at)  +"% ì— í•´ë‹¹í•˜ëŠ” ì¶”ê°€í”¼í•´ë¥¼ ì¤ë‹ˆë‹¤","ê³µê²©ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤",ChatColor.BOLD+"X "+BigDecimal.valueOf(1.15*(1+at*0.0576)).setScale(2, RoundingMode.HALF_EVEN)), 7, Hunskillsinv);
 			if(Proficiency.getpro(p)<1) {
-				itemset("±×¹°Ãß°¡(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 10, Hunskillsinv);
-				itemset("±â¹ÎÇÔ(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 11, Hunskillsinv);
-				itemset("¿­±¤(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 12, Hunskillsinv);
-				itemset("Ãæ°İ(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 13, Hunskillsinv);
-				itemset("°øÆ÷(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 14, Hunskillsinv);
-				itemset("µµ¿ò´İ±â(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 15, Hunskillsinv);
-				itemset("¹«°á(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 16, Hunskillsinv);
-				itemset("°¥¸Á(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 17, Hunskillsinv);
+				itemset("ê·¸ë¬¼ì¶”ê°€(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 10, Hunskillsinv);
+				itemset("ê¸°ë¯¼í•¨(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 11, Hunskillsinv);
+				itemset("ì—´ê´‘(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 12, Hunskillsinv);
+				itemset("ì¶©ê²©(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 13, Hunskillsinv);
+				itemset("ê³µí¬(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 14, Hunskillsinv);
+				itemset("ë„ì›€ë‹«ê¸°(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 15, Hunskillsinv);
+				itemset("ë¬´ê²°(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 16, Hunskillsinv);
+				itemset("ê°ˆë§(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 17, Hunskillsinv);
 			}
 			else if(Proficiency.getpro(p)<2 && Proficiency.getpro(p)>=1) {
-				itemset("±×¹°Ãß°¡", Material.CHAINMAIL_BOOTS, 0, 1, Arrays.asList("±×¹°ÀÇ °³¼ö°¡ Áõ°¡ÇÕ´Ï´Ù"), 10, Hunskillsinv);
-				itemset("±â¹ÎÇÔ", Material.CHAINMAIL_BOOTS, 0, 1, Arrays.asList("Àû Ã³Ä¡½Ã ´ë±â½Ã°£ÀÌ ÃÊ±âÈ­ µË´Ï´Ù"), 11, Hunskillsinv);
-				itemset("¿­±¤", Material.ACTIVATOR_RAIL, 0, 1, Arrays.asList("ÀÌÁ¦ Àû¿¡°Ô °ø°İÇÏ´Â°Í ¸¸À¸·Îµµ ´ë±â½Ã°£ÀÌ °¨¼ÒÇÕ´Ï´Ù"), 12, Hunskillsinv);
-				itemset("Ãæ°İ", Material.CREEPER_HEAD, 0, 1, Arrays.asList("ÁÖº¯ Àûµéµµ Âü°İ½ÃÅµ´Ï´Ù"), 13, Hunskillsinv);
-				itemset("°øÆ÷", Material.SKELETON_SKULL, 0, 1, Arrays.asList("Àû Ã³Ä¡½Ã ÁÖº¯ÀûµéÀÌ Âü°İÇÕ´Ï´Ù"), 14, Hunskillsinv);
-				itemset("µµ¿ò´İ±â", Material.CHAINMAIL_LEGGINGS, 0, 1, Arrays.asList("¿õÅ©¸®±â À¯Áö½Ã Á¡ÇÁ·ÂÀÌ ÃæÀüµË´Ï´Ù","ÃÖ´ë 10"), 15, Hunskillsinv);
-				itemset("¹«°á", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("°ø°İ·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù"), 16, Hunskillsinv);
-				itemset("°¥¸Á", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("¿õÅ©¸®±â + ¾ÆÀÌÅÛ´øÁö±â", "Âü°İ°ú µÎ°³°ñºĞ¼âÀÇ ´ë±â½Ã°£ÀÌ ÃÊ±âÈ­µË´Ï´Ù","",ChatColor.BOLD+"X 27.1D"), 17, Hunskillsinv);
+				itemset("ê·¸ë¬¼ì¶”ê°€", Material.CHAINMAIL_BOOTS, 0, 1, Arrays.asList("ê·¸ë¬¼ì˜ ê°œìˆ˜ê°€ ì¦ê°€í•©ë‹ˆë‹¤"), 10, Hunskillsinv);
+				itemset("ê¸°ë¯¼í•¨", Material.CHAINMAIL_BOOTS, 0, 1, Arrays.asList("ì  ì²˜ì¹˜ì‹œ ëŒ€ê¸°ì‹œê°„ì´ ì´ˆê¸°í™” ë©ë‹ˆë‹¤"), 11, Hunskillsinv);
+				itemset("ì—´ê´‘", Material.ACTIVATOR_RAIL, 0, 1, Arrays.asList("ì´ì œ ì ì—ê²Œ ê³µê²©í•˜ëŠ”ê²ƒ ë§Œìœ¼ë¡œë„ ëŒ€ê¸°ì‹œê°„ì´ ê°ì†Œí•©ë‹ˆë‹¤"), 12, Hunskillsinv);
+				itemset("ì¶©ê²©", Material.CREEPER_HEAD, 0, 1, Arrays.asList("ì£¼ë³€ ì ë“¤ë„ ì°¸ê²©ì‹œí‚µë‹ˆë‹¤"), 13, Hunskillsinv);
+				itemset("ê³µí¬", Material.SKELETON_SKULL, 0, 1, Arrays.asList("ì  ì²˜ì¹˜ì‹œ ì£¼ë³€ì ë“¤ì´ ì°¸ê²©í•©ë‹ˆë‹¤"), 14, Hunskillsinv);
+				itemset("ë„ì›€ë‹«ê¸°", Material.CHAINMAIL_LEGGINGS, 0, 1, Arrays.asList("ì›…í¬ë¦¬ê¸° ìœ ì§€ì‹œ ì í”„ë ¥ì´ ì¶©ì „ë©ë‹ˆë‹¤","ìµœëŒ€ 10"), 15, Hunskillsinv);
+				itemset("ë¬´ê²°", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("ê³µê²©ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤"), 16, Hunskillsinv);
+				itemset("ê°ˆë§", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("ì›…í¬ë¦¬ê¸° + num4", "ì°¸ê²©ê³¼ ë‘ê°œê³¨ë¶„ì‡„ì˜ ëŒ€ê¸°ì‹œê°„ì´ ì´ˆê¸°í™”ë©ë‹ˆë‹¤","",ChatColor.BOLD+"X 27.1D"), 17, Hunskillsinv);
 
-				itemset("±×¹°È¸¼ö(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 19, Hunskillsinv);
-				itemset("ÀÚ¼¼(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 20, Hunskillsinv);
-				itemset("¹«ÇÑ(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 21, Hunskillsinv);
-				itemset("Áï°áÃ³Çü(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 22, Hunskillsinv);
-				itemset("»ıÁ¸¹ı(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 24, Hunskillsinv);
-				itemset("»êÀü¼öÀü(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 25, Hunskillsinv);
-				itemset("ÁıÇà(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 26, Hunskillsinv);
+				itemset("ê·¸ë¬¼íšŒìˆ˜(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 19, Hunskillsinv);
+				itemset("ìì„¸(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 20, Hunskillsinv);
+				itemset("ë¬´í•œ(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 21, Hunskillsinv);
+				itemset("ì¦‰ê²°ì²˜í˜•(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 22, Hunskillsinv);
+				itemset("ìƒì¡´ë²•(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 24, Hunskillsinv);
+				itemset("ì‚°ì „ìˆ˜ì „(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 25, Hunskillsinv);
+				itemset("ì§‘í–‰(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 26, Hunskillsinv);
 			}
 			else {
-				itemset("±×¹°Ãß°¡", Material.CHAINMAIL_BOOTS, 0, 1, Arrays.asList("±×¹°ÀÇ °³¼ö°¡ Áõ°¡ÇÕ´Ï´Ù"), 10, Hunskillsinv);
-				itemset("±â¹ÎÇÔ", Material.CHAINMAIL_BOOTS, 0, 1, Arrays.asList("Àû Ã³Ä¡½Ã ´ë±â½Ã°£ÀÌ ÃÊ±âÈ­ µË´Ï´Ù"), 11, Hunskillsinv);
-				itemset("¿­±¤", Material.ACTIVATOR_RAIL, 0, 1, Arrays.asList("ÀÌÁ¦ Àû¿¡°Ô °ø°İÇÏ´Â°Í ¸¸À¸·Îµµ ´ë±â½Ã°£ÀÌ °¨¼ÒÇÕ´Ï´Ù"), 12, Hunskillsinv);
-				itemset("Ãæ°İ", Material.CREEPER_HEAD, 0, 1, Arrays.asList("ÁÖº¯ Àûµéµµ Âü°İ½ÃÅµ´Ï´Ù"), 13, Hunskillsinv);
-				itemset("°øÆ÷", Material.SKELETON_SKULL, 0, 1, Arrays.asList("Àû Ã³Ä¡½Ã ÁÖº¯ÀûµéÀÌ Âü°İÇÕ´Ï´Ù"), 14, Hunskillsinv);
-				itemset("µµ¿ò´İ±â", Material.CHAINMAIL_LEGGINGS, 0, 1, Arrays.asList("¿õÅ©¸®±â À¯Áö½Ã Á¡ÇÁ·ÂÀÌ ÃæÀüµË´Ï´Ù","ÃÖ´ë 10"), 15, Hunskillsinv);
-				itemset("¹«°á", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("°ø°İ·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù"), 16, Hunskillsinv);
-				itemset("°¥¸Á", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("¿õÅ©¸®±â + ¾ÆÀÌÅÛ´øÁö±â", "Âü°İ°ú µÎ°³°ñºĞ¼âÀÇ ´ë±â½Ã°£ÀÌ ÃÊ±âÈ­µË´Ï´Ù","",ChatColor.BOLD+"X 27.1D"), 17, Hunskillsinv);
+				itemset("ê·¸ë¬¼ì¶”ê°€", Material.CHAINMAIL_BOOTS, 0, 1, Arrays.asList("ê·¸ë¬¼ì˜ ê°œìˆ˜ê°€ ì¦ê°€í•©ë‹ˆë‹¤"), 10, Hunskillsinv);
+				itemset("ê¸°ë¯¼í•¨", Material.CHAINMAIL_BOOTS, 0, 1, Arrays.asList("ì  ì²˜ì¹˜ì‹œ ëŒ€ê¸°ì‹œê°„ì´ ì´ˆê¸°í™” ë©ë‹ˆë‹¤"), 11, Hunskillsinv);
+				itemset("ì—´ê´‘", Material.ACTIVATOR_RAIL, 0, 1, Arrays.asList("ì´ì œ ì ì—ê²Œ ê³µê²©í•˜ëŠ”ê²ƒ ë§Œìœ¼ë¡œë„ ëŒ€ê¸°ì‹œê°„ì´ ê°ì†Œí•©ë‹ˆë‹¤"), 12, Hunskillsinv);
+				itemset("ì¶©ê²©", Material.CREEPER_HEAD, 0, 1, Arrays.asList("ì£¼ë³€ ì ë“¤ë„ ì°¸ê²©ì‹œí‚µë‹ˆë‹¤"), 13, Hunskillsinv);
+				itemset("ê³µí¬", Material.SKELETON_SKULL, 0, 1, Arrays.asList("ì  ì²˜ì¹˜ì‹œ ì£¼ë³€ì ë“¤ì´ ì°¸ê²©í•©ë‹ˆë‹¤"), 14, Hunskillsinv);
+				itemset("ë„ì›€ë‹«ê¸°", Material.CHAINMAIL_LEGGINGS, 0, 1, Arrays.asList("ì›…í¬ë¦¬ê¸° ìœ ì§€ì‹œ ì í”„ë ¥ì´ ì¶©ì „ë©ë‹ˆë‹¤","ìµœëŒ€ 10"), 15, Hunskillsinv);
+				itemset("ë¬´ê²°", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("ê³µê²©ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤"), 16, Hunskillsinv);
+				itemset("ê°ˆë§", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("ì›…í¬ë¦¬ê¸° + num4", "ì°¸ê²©ê³¼ ë‘ê°œê³¨ë¶„ì‡„ì˜ ëŒ€ê¸°ì‹œê°„ì´ ì´ˆê¸°í™”ë©ë‹ˆë‹¤","",ChatColor.BOLD+"X 27.1D"), 17, Hunskillsinv);
 
-				itemset("±×¹°È¸¼ö", Material.FERMENTED_SPIDER_EYE, 0, 1, Arrays.asList("Àç»ç¿ë½Ã ±×¹°¿¡ ¸ÂÀº ÀûµéÀ» ²ø¾î¿É´Ï´Ù"), 19, Hunskillsinv);
-				itemset("ÀÚ¼¼", Material.NETHERITE_CHESTPLATE, 0, 1, Arrays.asList("È¸ÇÇÀÌÈÄ ´ÙÀ½ 1È¸ÀÇ °ø°İÀÌ °­È­µË´Ï´Ù","",ChatColor.BOLD+"X 0.35D"), 20, Hunskillsinv);
-				itemset("¹«ÇÑ", Material.NETHERITE_AXE, 0, 1, Arrays.asList("»ç³ÉÀÌ È°¼ºÈ­/ºñÈ°¼ºÈ­ ±â¼ú·Î º¯°æµË´Ï´Ù", "ÀûÀ» °ø°İÇÏ¸é ´ë±â½Ã°£ÀÌ Àû¿ëµË´Ï´Ù"), 21, Hunskillsinv);
-				itemset("Áï°áÃ³Çü", Material.NETHERITE_AXE, 0, 1, Arrays.asList("Àû Ã³Ä¡½Ã »ç³É, Âü°İ, µÎ°³°ñºĞ¼âÀÇ", "Àç»ç¿ë´ë±â½Ã°£ÀÌ ÃÊ±âÈ­ µË´Ï´Ù", "(»ç³ÉÀº ÀÚµ¿À¸·Î È°¼ºÈ­µË´Ï´Ù)"), 22, Hunskillsinv);
-				itemset("»ıÁ¸¹ı", Material.GOLDEN_CARROT, 0, 1, Arrays.asList("¸ğµç ÇØ·Î¿î È¿°ú¿¡ ¸é¿ªÀÌ µË´Ï´Ù"), 24, Hunskillsinv);
-				itemset("»êÀü¼öÀü", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("°ø°İ·Â°ú ¹æ¾î·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù","°¥¸ÁÀÇ ´ë±â½Ã°£ÀÌ °¨¼ÒÇÕ´Ï´Ù","±â½ÀÀÌ Ç×»ó ¹ßµ¿µË´Ï´Ù"), 25, Hunskillsinv);
-				itemset("ÁıÇà", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","´Ş¸®±â + ¾ÆÀÌÅÛ´øÁö±â", "Âü°İ°ú µÎ°³°ñºĞ¼âÀÇ ´ë±â½Ã°£ÀÌ ÃÊ±âÈ­µË´Ï´Ù","",ChatColor.BOLD+"X 33.2D"), 26, Hunskillsinv);
+				itemset("ê·¸ë¬¼íšŒìˆ˜", Material.FERMENTED_SPIDER_EYE, 0, 1, Arrays.asList("ì¬ì‚¬ìš©ì‹œ ê·¸ë¬¼ì— ë§ì€ ì ë“¤ì„ ëŒì–´ì˜µë‹ˆë‹¤"), 19, Hunskillsinv);
+				itemset("ìì„¸", Material.NETHERITE_CHESTPLATE, 0, 1, Arrays.asList("íšŒí”¼ì´í›„ ë‹¤ìŒ 1íšŒì˜ ê³µê²©ì´ ê°•í™”ë©ë‹ˆë‹¤","",ChatColor.BOLD+"X 0.35D"), 20, Hunskillsinv);
+				itemset("ë¬´í•œ", Material.NETHERITE_AXE, 0, 1, Arrays.asList("ì‚¬ëƒ¥ì´ í™œì„±í™”/ë¹„í™œì„±í™” ê¸°ìˆ ë¡œ ë³€ê²½ë©ë‹ˆë‹¤", "ì ì„ ê³µê²©í•˜ë©´ ëŒ€ê¸°ì‹œê°„ì´ ì ìš©ë©ë‹ˆë‹¤"), 21, Hunskillsinv);
+				itemset("ì¦‰ê²°ì²˜í˜•", Material.NETHERITE_AXE, 0, 1, Arrays.asList("ì  ì²˜ì¹˜ì‹œ ì‚¬ëƒ¥, ì°¸ê²©, ë‘ê°œê³¨ë¶„ì‡„ì˜", "ì¬ì‚¬ìš©ëŒ€ê¸°ì‹œê°„ì´ ì´ˆê¸°í™” ë©ë‹ˆë‹¤", "(ì‚¬ëƒ¥ì€ ìë™ìœ¼ë¡œ í™œì„±í™”ë©ë‹ˆë‹¤)"), 22, Hunskillsinv);
+				itemset("ìƒì¡´ë²•", Material.GOLDEN_CARROT, 0, 1, Arrays.asList("ëª¨ë“  í•´ë¡œìš´ íš¨ê³¼ì— ë©´ì—­ì´ ë©ë‹ˆë‹¤"), 24, Hunskillsinv);
+				itemset("ì‚°ì „ìˆ˜ì „", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("ê³µê²©ë ¥ê³¼ ë°©ì–´ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤","ê°ˆë§ì˜ ëŒ€ê¸°ì‹œê°„ì´ ê°ì†Œí•©ë‹ˆë‹¤","ê¸°ìŠµì´ í•­ìƒ ë°œë™ë©ë‹ˆë‹¤"), 25, Hunskillsinv);
+				itemset("ì§‘í–‰", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì›…í¬ë¦¬ê¸° + num5", "ì°¸ê²©ê³¼ ë‘ê°œê³¨ë¶„ì‡„ì˜ ëŒ€ê¸°ì‹œê°„ì´ ì´ˆê¸°í™”ë©ë‹ˆë‹¤","",ChatColor.BOLD+"X 33.2D"), 26, Hunskillsinv);
 			}
-			itemset("ÇöÀç ¼÷·Ãµµ", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(""+Proficiency.getproexp(p)), 27, Hunskillsinv);
-			itemset("½ºÅ³Æ÷ÀÎÆ®", Material.NETHER_STAR, 0, 1, Arrays.asList(ChatColor.AQUA+"SP."+hsd.SkillPoints.getOrDefault(p.getUniqueId(), 0),"","Å¬¸¯ÇÏ¸é ½ºÅ³Æ÷ÀÎÆ®°¡ ÃÊ±âÈ­ µË´Ï´Ù"), 35, Hunskillsinv);
-		
+			itemset("í˜„ì¬ ìˆ™ë ¨ë„", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(""+Proficiency.getproexp(p)), 27, Hunskillsinv);
+			itemset("ìŠ¤í‚¬í¬ì¸íŠ¸", Material.NETHER_STAR, 0, 1, Arrays.asList(ChatColor.AQUA+"SP."+hsd.SkillPoints.getOrDefault(p.getUniqueId(), 0),"","í´ë¦­í•˜ë©´ ìŠ¤í‚¬í¬ì¸íŠ¸ê°€ ì´ˆê¸°í™” ë©ë‹ˆë‹¤"), 35, Hunskillsinv);
+
 		}
 		else {
 			itemset("Backattack", Material.BOOK, 0, 1, Arrays.asList("+50% Damage when you hit enemy's back", "Higher Explevel gets Better hit detection"),hsd.Backattack.getOrDefault(p.getUniqueId(), 0),1,1,0.5,1, 0, Hunskillsinv);
@@ -115,8 +115,8 @@ public class HunSkillsGui extends SkillsGui{
 				itemset("Fear", Material.SKELETON_SKULL, 0, 1, Arrays.asList("Stuns Near By Enemies When Enemy is dead"), 14, Hunskillsinv);
 				itemset("SuperJump", Material.CHAINMAIL_LEGGINGS, 0, 1, Arrays.asList("Charge SuperJump When you Hold Sneaking","While Climbing is On","Max 10"), 15, Hunskillsinv);
 				itemset("Flawless", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage"), 16, Hunskillsinv);
-				itemset("Rage", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("Sneaking + ThrowItem", "Resets Cooldown of Daze & SkullCrusher","",ChatColor.BOLD+"X 27.1"), 17, Hunskillsinv);
-				
+				itemset("Rage", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("Sneaking + num4", "Resets Cooldown of Daze & SkullCrusher","",ChatColor.BOLD+"X 27.1"), 17, Hunskillsinv);
+
 				itemset("WebRetrieving(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 19, Hunskillsinv);
 				itemset("Posture(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 20, Hunskillsinv);
 				itemset("Infinite(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 21, Hunskillsinv);
@@ -132,21 +132,21 @@ public class HunSkillsGui extends SkillsGui{
 				itemset("Fear", Material.SKELETON_SKULL, 0, 1, Arrays.asList("Stuns Near By Enemies When Enemy is dead"), 14, Hunskillsinv);
 				itemset("SuperJump", Material.CHAINMAIL_LEGGINGS, 0, 1, Arrays.asList("Charge SuperJump When you Hold Sneaking","While Climbing is On","Max 10"), 15, Hunskillsinv);
 				itemset("Flawless", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage"), 16, Hunskillsinv);
-				itemset("Rage", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("Sneaking + ThrowItem", "Resets Cooldown of Daze & SkullCrusher","",ChatColor.BOLD+"X 27.1"), 17, Hunskillsinv);
-				
+				itemset("Rage", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("Sneaking + num4", "Resets Cooldown of Daze & SkullCrusher","",ChatColor.BOLD+"X 27.1"), 17, Hunskillsinv);
+
 				itemset("WebRetrieving", Material.FERMENTED_SPIDER_EYE, 0, 1, Arrays.asList("Pull hit enemies when reusing"), 19, Hunskillsinv);
 				itemset("Posture", Material.NETHERITE_CHESTPLATE, 0, 1, Arrays.asList("Increases Next Hit Damage After Dodge","",ChatColor.BOLD+"X 0.35D"), 20, Hunskillsinv);
 				itemset("Infinite", Material.NETHERITE_AXE, 0, 1, Arrays.asList("Changes Hunting on/off Skill", "Cooldown will apply when you hit Enemy"), 21, Hunskillsinv);
 				itemset("SummaryExecution", Material.NETHERITE_AXE, 0, 1, Arrays.asList("Resets Hunting, Daze, SkullCrasher Cooldown", "When you Success to kill Enemy", "(Hunting will be Automatically Active)"), 22, Hunskillsinv);
 				itemset("Survivor", Material.GOLDEN_CARROT, 0, 1, Arrays.asList("Immune to All Negetive Effect"), 24, Hunskillsinv);
 				itemset("HardCore", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Damage & Armor","Decreases Rage Cooldown","BackAttack Always Activate"), 25, Hunskillsinv);
-				itemset("Execute", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Sprinting + ThrowItem", "Reset Cooldown of Daze & SkullCrusher","",ChatColor.BOLD+"X 33.2D"), 26, Hunskillsinv);
+				itemset("Execute", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Sneaking + num5", "Reset Cooldown of Daze & SkullCrusher","",ChatColor.BOLD+"X 33.2D"), 26, Hunskillsinv);
 			}
 			itemset("Current Proficiency", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(""+Proficiency.getproexp(p)), 27, Hunskillsinv);
 			itemset("SkillPoints", Material.NETHER_STAR, 0, 1, Arrays.asList(ChatColor.AQUA+"SP."+hsd.SkillPoints.getOrDefault(p.getUniqueId(), 0),"","Click if you want to reset your skill's levels"), 35, Hunskillsinv);
-		
+
 		}
-		
+
 		p.openInventory(Hunskillsinv);
 	}
 

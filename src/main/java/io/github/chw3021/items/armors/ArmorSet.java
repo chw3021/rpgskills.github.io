@@ -251,7 +251,7 @@ public class ArmorSet implements Listener{
 				lore.add(ChatColor.GREEN + "<Set Effect>: +5 Armor");
 				lore.add(ChatColor.GREEN + "<Set Effect>: +5 Armor Toughness");
 				lore.add(ChatColor.GREEN + "<Set Effect>: +12 Attack_Damage");
-				lore.add(ChatColor.GREEN + "<Set Effect>: Increase Party Damage 10%");
+				lore.add(ChatColor.GREEN + "<Set Effect>: Increases Party Damage 10%");
 				lore.add(ChatColor.GREEN + "<Set Effect>: +45 Luck");
 				bm.setLore(lore);
 			} else {
@@ -260,7 +260,7 @@ public class ArmorSet implements Listener{
 				lore.add(ChatColor.GREEN + "<Set Effect>: +5 Armor");
 				lore.add(ChatColor.GREEN + "<Set Effect>: +5 Armor Toughness");
 				lore.add(ChatColor.GREEN + "<Set Effect>: +12 Attack_Damage");
-				lore.add(ChatColor.GREEN + "<Set Effect>: Increase Party Damage 10%");
+				lore.add(ChatColor.GREEN + "<Set Effect>: Increases Party Damage 10%");
 				lore.add(ChatColor.GREEN + "<Set Effect>: +45 Luck");
 				bm.setLore(lore);
 			}
@@ -271,7 +271,7 @@ public class ArmorSet implements Listener{
 				lore.add(ChatColor.GREEN + "<Set Effect>: +5 Armor");
 				lore.add(ChatColor.GREEN + "<Set Effect>: +5 Armor Toughness");
 				lore.add(ChatColor.GREEN + "<Set Effect>: +12 Attack_Damage");
-				lore.add(ChatColor.GREEN + "<Set Effect>: Increase Party Damage 10%");
+				lore.add(ChatColor.GREEN + "<Set Effect>: Increases Party Damage 10%");
 				lore.add(ChatColor.GREEN + "<Set Effect>: +45 Luck");
 				cm.setLore(lore);
 			} else {
@@ -280,7 +280,7 @@ public class ArmorSet implements Listener{
 				lore.add(ChatColor.GREEN + "<Set Effect>: +5 Armor");
 				lore.add(ChatColor.GREEN + "<Set Effect>: +5 Armor Toughness");
 				lore.add(ChatColor.GREEN + "<Set Effect>: +12 Attack_Damage");
-				lore.add(ChatColor.GREEN + "<Set Effect>: Increase Party Damage 10%");
+				lore.add(ChatColor.GREEN + "<Set Effect>: Increases Party Damage 10%");
 				lore.add(ChatColor.GREEN + "<Set Effect>: +45 Luck");
 				cm.setLore(lore);
 			}
@@ -291,7 +291,7 @@ public class ArmorSet implements Listener{
 				lore.add(ChatColor.GREEN + "<Set Effect>: +5 Armor");
 				lore.add(ChatColor.GREEN + "<Set Effect>: +5 Armor Toughness");
 				lore.add(ChatColor.GREEN + "<Set Effect>: +12 Attack_Damage");
-				lore.add(ChatColor.GREEN + "<Set Effect>: Increase Party Damage 10%");
+				lore.add(ChatColor.GREEN + "<Set Effect>: Increases Party Damage 10%");
 				lore.add(ChatColor.GREEN + "<Set Effect>: +45 Luck");
 				lm.setLore(lore);
 			} else {
@@ -300,7 +300,7 @@ public class ArmorSet implements Listener{
 				lore.add(ChatColor.GREEN + "<Set Effect>: +5 Armor");
 				lore.add(ChatColor.GREEN + "<Set Effect>: +5 Armor Toughness");
 				lore.add(ChatColor.GREEN + "<Set Effect>: +12 Attack_Damage");
-				lore.add(ChatColor.GREEN + "<Set Effect>: Increase Party Damage 10%");
+				lore.add(ChatColor.GREEN + "<Set Effect>: Increases Party Damage 10%");
 				lore.add(ChatColor.GREEN + "<Set Effect>: +45 Luck");
 				lm.setLore(lore);
 			}
@@ -311,7 +311,7 @@ public class ArmorSet implements Listener{
 				lore.add(ChatColor.GREEN + "<Set Effect>: +5 Armor");
 				lore.add(ChatColor.GREEN + "<Set Effect>: +5 Armor Toughness");
 				lore.add(ChatColor.GREEN + "<Set Effect>: +12 Attack_Damage");
-				lore.add(ChatColor.GREEN + "<Set Effect>: Increase Party Damage 10%");
+				lore.add(ChatColor.GREEN + "<Set Effect>: Increases Party Damage 10%");
 				lore.add(ChatColor.GREEN + "<Set Effect>: +45 Luck");
 				hm.setLore(lore);
 			} else {
@@ -320,8 +320,8 @@ public class ArmorSet implements Listener{
 				lore.add(ChatColor.GREEN + "<Set Effect>: +5 Armor");
 				lore.add(ChatColor.GREEN + "<Set Effect>: +5 Armor Toughness");
 				lore.add(ChatColor.GREEN + "<Set Effect>: +12 Attack_Damage");
-				lore.add(ChatColor.GREEN + "<Set Effect>: Stun Hit Enemy for 1s(Cooldown 5s)");
-				lore.add(ChatColor.GREEN + "<Set Effect>: Increase Party Damage 10%");
+				lore.add(ChatColor.GREEN + "<Set Effect>: Stuns Hit Enemy for 1s(Cooldown 5s)");
+				lore.add(ChatColor.GREEN + "<Set Effect>: Increases Party Damage 10%");
 				lore.add(ChatColor.GREEN + "<Set Effect>: +45 Luck");
 				hm.setLore(lore);
 			}
@@ -340,8 +340,8 @@ public class ArmorSet implements Listener{
 				lore.add(ChatColor.AQUA + "<Set Effect>: +20 Attack_Damage");
 				lore.add(ChatColor.AQUA + "<Set Effect>: +35% Movement Speed");
 				lore.add(ChatColor.AQUA + "<Set Effect>: Immune to Slow & Frost");
-				lore.add(ChatColor.AQUA + "Set Effect[Frostman]: Remove Frostbite Cooldown");
-				lore.add(ChatColor.AQUA + "<Set Effect>: Stun Hit Enemy for 1s(Cooldown 5s)");
+				lore.add(ChatColor.AQUA + "Set Effect[Frostman]: Reduces Frostbite Cooldown");
+				lore.add(ChatColor.AQUA + "<Set Effect>: Stuns Hit Enemy for 1s(Cooldown 5s)");
 				lore.add(ChatColor.AQUA + "<Set Effect>: Add Enemy's FreezeTick 2s");
 				lore.add(ChatColor.AQUA + "<Set Effect>: +20 Luck");
 				bm.setLore(lore);
@@ -352,8 +352,8 @@ public class ArmorSet implements Listener{
 				lore.add(ChatColor.AQUA + "<Set Effect>: +20 Attack_Damage");
 				lore.add(ChatColor.AQUA + "<Set Effect>: +35% Movement Speed");
 				lore.add(ChatColor.AQUA + "<Set Effect>: Immune to Slow & Frost");
-				lore.add(ChatColor.AQUA + "Set Effect[Frostman]: Remove Frostbite Cooldown");
-				lore.add(ChatColor.AQUA + "<Set Effect>: Stun Hit Enemy for 1s(Cooldown 5s)");
+				lore.add(ChatColor.AQUA + "Set Effect[Frostman]: Reduces Frostbite Cooldown");
+				lore.add(ChatColor.AQUA + "<Set Effect>: Stuns Hit Enemy for 1s(Cooldown 5s)");
 				lore.add(ChatColor.AQUA + "<Set Effect>: Add Enemy's FreezeTick 2s");
 				lore.add(ChatColor.AQUA + "<Set Effect>: +20 Luck");
 				bm.setLore(lore);
@@ -366,8 +366,8 @@ public class ArmorSet implements Listener{
 				lore.add(ChatColor.AQUA + "<Set Effect>: +20 Attack_Damage");
 				lore.add(ChatColor.AQUA + "<Set Effect>: +35% Movement Speed");
 				lore.add(ChatColor.AQUA + "<Set Effect>: Immune to Slow & Frost");
-				lore.add(ChatColor.AQUA + "Set Effect[Frostman]: Remove Frostbite Cooldown");
-				lore.add(ChatColor.AQUA + "<Set Effect>: Stun Hit Enemy for 1s(Cooldown 5s)");
+				lore.add(ChatColor.AQUA + "Set Effect[Frostman]: Reduces Frostbite Cooldown");
+				lore.add(ChatColor.AQUA + "<Set Effect>: Stuns Hit Enemy for 1s(Cooldown 5s)");
 				lore.add(ChatColor.AQUA + "<Set Effect>: Add Enemy's FreezeTick 2s");
 				lore.add(ChatColor.AQUA + "<Set Effect>: +20 Luck");
 				cm.setLore(lore);
@@ -378,8 +378,8 @@ public class ArmorSet implements Listener{
 				lore.add(ChatColor.AQUA + "<Set Effect>: +20 Attack_Damage");
 				lore.add(ChatColor.AQUA + "<Set Effect>: +35% Movement Speed");
 				lore.add(ChatColor.AQUA + "<Set Effect>: Immune to Slow & Frost");
-				lore.add(ChatColor.AQUA + "Set Effect[Frostman]: Remove Frostbite Cooldown");
-				lore.add(ChatColor.AQUA + "<Set Effect>: Stun Hit Enemy for 1s(Cooldown 5s)");
+				lore.add(ChatColor.AQUA + "Set Effect[Frostman]: Reduces Frostbite Cooldown");
+				lore.add(ChatColor.AQUA + "<Set Effect>: Stuns Hit Enemy for 1s(Cooldown 5s)");
 				lore.add(ChatColor.AQUA + "<Set Effect>: Add Enemy's FreezeTick 2s");
 				lore.add(ChatColor.AQUA + "<Set Effect>: +20 Luck");
 				cm.setLore(lore);
@@ -392,8 +392,8 @@ public class ArmorSet implements Listener{
 				lore.add(ChatColor.AQUA + "<Set Effect>: +20 Attack_Damage");
 				lore.add(ChatColor.AQUA + "<Set Effect>: +35% Movement Speed");
 				lore.add(ChatColor.AQUA + "<Set Effect>: Immune to Slow & Frost");
-				lore.add(ChatColor.AQUA + "Set Effect[Frostman]: Remove Frostbite Cooldown");
-				lore.add(ChatColor.AQUA + "<Set Effect>: Stun Hit Enemy for 1s(Cooldown 5s)");
+				lore.add(ChatColor.AQUA + "Set Effect[Frostman]: Reduces Frostbite Cooldown");
+				lore.add(ChatColor.AQUA + "<Set Effect>: Stuns Hit Enemy for 1s(Cooldown 5s)");
 				lore.add(ChatColor.AQUA + "<Set Effect>: Add Enemy's FreezeTick 2s");
 				lore.add(ChatColor.AQUA + "<Set Effect>: +20 Luck");
 				lm.setLore(lore);
@@ -404,8 +404,8 @@ public class ArmorSet implements Listener{
 				lore.add(ChatColor.AQUA + "<Set Effect>: +20 Attack_Damage");
 				lore.add(ChatColor.AQUA + "<Set Effect>: +35% Movement Speed");
 				lore.add(ChatColor.AQUA + "<Set Effect>: Immune to Slow & Frost");
-				lore.add(ChatColor.AQUA + "Set Effect[Frostman]: Remove Frostbite Cooldown");
-				lore.add(ChatColor.AQUA + "<Set Effect>: Stun Hit Enemy for 1s(Cooldown 5s)");
+				lore.add(ChatColor.AQUA + "Set Effect[Frostman]: Reduces Frostbite Cooldown");
+				lore.add(ChatColor.AQUA + "<Set Effect>: Stuns Hit Enemy for 1s(Cooldown 5s)");
 				lore.add(ChatColor.AQUA + "<Set Effect>: Add Enemy's FreezeTick 2s");
 				lore.add(ChatColor.AQUA + "<Set Effect>: +20 Luck");
 				lm.setLore(lore);
@@ -418,8 +418,8 @@ public class ArmorSet implements Listener{
 				lore.add(ChatColor.AQUA + "<Set Effect>: +20 Attack_Damage");
 				lore.add(ChatColor.AQUA + "<Set Effect>: +35% Movement Speed");
 				lore.add(ChatColor.AQUA + "<Set Effect>: Immune to Slow & Frost");
-				lore.add(ChatColor.AQUA + "Set Effect[Frostman]: Remove Frostbite Cooldown");
-				lore.add(ChatColor.AQUA + "<Set Effect>: Stun Hit Enemy for 1s(Cooldown 5s)");
+				lore.add(ChatColor.AQUA + "Set Effect[Frostman]: Reduces Frostbite Cooldown");
+				lore.add(ChatColor.AQUA + "<Set Effect>: Stuns Hit Enemy for 1s(Cooldown 5s)");
 				lore.add(ChatColor.AQUA + "<Set Effect>: Add Enemy's FreezeTick 2s");
 				lore.add(ChatColor.AQUA + "<Set Effect>: +20 Luck");
 				hm.setLore(lore);
@@ -430,8 +430,8 @@ public class ArmorSet implements Listener{
 				lore.add(ChatColor.AQUA + "<Set Effect>: +20 Attack_Damage");
 				lore.add(ChatColor.AQUA + "<Set Effect>: +35% Movement Speed");
 				lore.add(ChatColor.AQUA + "<Set Effect>: Immune to Slow & Frost");
-				lore.add(ChatColor.AQUA + "Set Effect[Frostman]: Remove Frostbite Cooldown");
-				lore.add(ChatColor.AQUA + "<Set Effect>: Stun Hit Enemy for 1s(Cooldown 5s)");
+				lore.add(ChatColor.AQUA + "Set Effect[Frostman]: Reduces Frostbite Cooldown");
+				lore.add(ChatColor.AQUA + "<Set Effect>: Stuns Hit Enemy for 1s(Cooldown 5s)");
 				lore.add(ChatColor.AQUA + "<Set Effect>: Add Enemy's FreezeTick 2s");
 				lore.add(ChatColor.AQUA + "<Set Effect>: +20 Luck");
 				hm.setLore(lore);
@@ -451,7 +451,7 @@ public class ArmorSet implements Listener{
 				lore.add(ChatColor.BLUE + "<Set Effect>: +14 Attack_Damage");
 				lore.add(ChatColor.BLUE + "<Set Effect>: +15% Movement Speed");
 				lore.add(ChatColor.BLUE + "<Set Effect>: Give Positive Ocean Effect When Swim");
-				lore.add(ChatColor.BLUE + "Set Effect[Marine]: Increase Skill Damage 35%");
+				lore.add(ChatColor.BLUE + "Set Effect[Marine]: Increases Skill Damage 35%");
 				lore.add(ChatColor.BLUE + "<Set Effect>: +20 Luck");
 				bm.setLore(lore);
 			} else {
@@ -461,7 +461,7 @@ public class ArmorSet implements Listener{
 				lore.add(ChatColor.BLUE + "<Set Effect>: +14 Attack_Damage");
 				lore.add(ChatColor.BLUE + "<Set Effect>: +15% Movement Speed");
 				lore.add(ChatColor.BLUE + "<Set Effect>: Give Positive Ocean Effect When Swim");
-				lore.add(ChatColor.BLUE + "Set Effect[Marine]: Increase Skill Damage 35%");
+				lore.add(ChatColor.BLUE + "Set Effect[Marine]: Increases Skill Damage 35%");
 				lore.add(ChatColor.BLUE + "<Set Effect>: +20 Luck");
 				bm.setLore(lore);
 			}
@@ -473,7 +473,7 @@ public class ArmorSet implements Listener{
 				lore.add(ChatColor.BLUE + "<Set Effect>: +14 Attack_Damage");
 				lore.add(ChatColor.BLUE + "<Set Effect>: +15% Movement Speed");
 				lore.add(ChatColor.BLUE + "<Set Effect>: Give Positive Ocean Effect When Swim");
-				lore.add(ChatColor.BLUE + "Set Effect[Marine]: Increase Skill Damage 35%");
+				lore.add(ChatColor.BLUE + "Set Effect[Marine]: Increases Skill Damage 35%");
 				lore.add(ChatColor.BLUE + "<Set Effect>: +20 Luck");
 				cm.setLore(lore);
 			} else {
@@ -483,7 +483,7 @@ public class ArmorSet implements Listener{
 				lore.add(ChatColor.BLUE + "<Set Effect>: +14 Attack_Damage");
 				lore.add(ChatColor.BLUE + "<Set Effect>: +15% Movement Speed");
 				lore.add(ChatColor.BLUE + "<Set Effect>: Give Positive Ocean Effect When Swim");
-				lore.add(ChatColor.BLUE + "Set Effect[Marine]: Increase Skill Damage 35%");
+				lore.add(ChatColor.BLUE + "Set Effect[Marine]: Increases Skill Damage 35%");
 				lore.add(ChatColor.BLUE + "<Set Effect>: +20 Luck");
 				cm.setLore(lore);
 			}
@@ -495,7 +495,7 @@ public class ArmorSet implements Listener{
 				lore.add(ChatColor.BLUE + "<Set Effect>: +14 Attack_Damage");
 				lore.add(ChatColor.BLUE + "<Set Effect>: +15% Movement Speed");
 				lore.add(ChatColor.BLUE + "<Set Effect>: Give Positive Ocean Effect When Swim");
-				lore.add(ChatColor.BLUE + "Set Effect[Marine]: Increase Skill Damage 35%");
+				lore.add(ChatColor.BLUE + "Set Effect[Marine]: Increases Skill Damage 35%");
 				lore.add(ChatColor.BLUE + "<Set Effect>: +20 Luck");
 				lm.setLore(lore);
 			} else {
@@ -505,7 +505,7 @@ public class ArmorSet implements Listener{
 				lore.add(ChatColor.BLUE + "<Set Effect>: +14 Attack_Damage");
 				lore.add(ChatColor.BLUE + "<Set Effect>: +15% Movement Speed");
 				lore.add(ChatColor.BLUE + "<Set Effect>: Give Positive Ocean Effect When Swim");
-				lore.add(ChatColor.BLUE + "Set Effect[Marine]: Increase Skill Damage 35%");
+				lore.add(ChatColor.BLUE + "Set Effect[Marine]: Increases Skill Damage 35%");
 				lore.add(ChatColor.BLUE + "<Set Effect>: +20 Luck");
 				lm.setLore(lore);
 			}
@@ -517,7 +517,7 @@ public class ArmorSet implements Listener{
 				lore.add(ChatColor.BLUE + "<Set Effect>: +14 Attack_Damage");
 				lore.add(ChatColor.BLUE + "<Set Effect>: +15% Movement Speed");
 				lore.add(ChatColor.BLUE + "<Set Effect>: Give Positive Ocean Effect When Swim");
-				lore.add(ChatColor.BLUE + "Set Effect[Marine]: Increase Skill Damage 35%");
+				lore.add(ChatColor.BLUE + "Set Effect[Marine]: Increases Skill Damage 35%");
 				lore.add(ChatColor.BLUE + "<Set Effect>: +20 Luck");
 				hm.setLore(lore);
 			} else {
@@ -527,7 +527,7 @@ public class ArmorSet implements Listener{
 				lore.add(ChatColor.BLUE + "<Set Effect>: +14 Attack_Damage");
 				lore.add(ChatColor.BLUE + "<Set Effect>: +15% Movement Speed");
 				lore.add(ChatColor.BLUE + "<Set Effect>: Give Positive Ocean Effect When Swim");
-				lore.add(ChatColor.BLUE + "Set Effect[Marine]: Increase Skill Damage 35%");
+				lore.add(ChatColor.BLUE + "Set Effect[Marine]: Increases Skill Damage 35%");
 				lore.add(ChatColor.BLUE + "<Set Effect>: +20 Luck");
 				hm.setLore(lore);
 			}

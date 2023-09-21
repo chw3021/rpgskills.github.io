@@ -76,18 +76,18 @@ import io.github.chw3021.rmain.RMain;
 
 
 public class CommonEvents implements Listener {
-	
+
 	static public HashMap<UUID, String> damaged = new HashMap<UUID, String>();
 	private Multimap<UUID, UUID> ind = ArrayListMultimap.create();
 
 	static private HashMap<UUID, UUID> bar = new HashMap<UUID, UUID>();
 	static private HashMap<UUID, Integer> trackt = new HashMap<UUID, Integer>();
 	static private HashMap<UUID, Integer> bart = new HashMap<UUID, Integer>();
-	
-	
+
+
 	Classgui Classgui = new Classgui();
-	
-	
+
+
 
 
 	private static final CommonEvents instance = new CommonEvents ();
@@ -95,27 +95,27 @@ public class CommonEvents implements Listener {
 	{
 		return instance;
 	}
-	
-	
+
+
 	public void classinv(PlayerLocaleChangeEvent e)
 	{
 		Player p = e.getPlayer();
 
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-            @Override
-            public void run() 
-            {
-        		if(ClassData.pc.containsKey(p.getUniqueId())) {
-        			Classgui.LimitBreak(p);
-        		}
-            }
-        }, 1); 
-		
+			@Override
+			public void run()
+			{
+				if(ClassData.pc.containsKey(p.getUniqueId())) {
+					Classgui.LimitBreak(p);
+				}
+			}
+		}, 1);
+
 	}
 
 	private static final ScoreboardManager manager = Bukkit.getScoreboardManager();
 
-	public void Thorndamcan(EntityDamageByEntityEvent d) 
+	public void Thorndamcan(EntityDamageByEntityEvent d)
 	{
 		if(d.getCause() == DamageCause.THORNS && d.getDamager() == d.getEntity()) {
 			d.setCancelled(true);
@@ -139,15 +139,15 @@ public class CommonEvents implements Listener {
 		}
 	}
 	@EventHandler
-	public void leftClickTrigger(PlayerAnimationEvent d) 
+	public void leftClickTrigger(PlayerAnimationEvent d)
 	{
 		Player p = (Player) d.getPlayer();
 		if(d.getAnimationType() == PlayerAnimationType.ARM_SWING && d.getAnimationType() != PlayerAnimationType.OFF_ARM_SWING) {
 			Bukkit.getPluginManager().callEvent(new PlayerInteractEvent(p, Action.LEFT_CLICK_AIR, p.getEquipment().getItemInMainHand(), null, p.getFacing()));
 		}
 	}
-	
-	public void leftClickTrigger(EntityDamageByEntityEvent d) 
+
+	public void leftClickTrigger(EntityDamageByEntityEvent d)
 	{
 		if(d.getDamager() instanceof Player){
 			Player p = (Player) d.getDamager();
@@ -156,8 +156,8 @@ public class CommonEvents implements Listener {
 			}
 		}
 	}
-	
-	public void namingAndBarRemove(PlayerInteractAtEntityEvent d) 
+
+	public void namingAndBarRemove(PlayerInteractAtEntityEvent d)
 	{
 		final Entity e = d.getRightClicked();
 		if(e.hasMetadata("fake")|| e.hasMetadata("din")) {
@@ -187,8 +187,8 @@ public class CommonEvents implements Listener {
 			re.remove();
 		}
 	}
-	
-	public void namingAndBarRemove(PlayerInteractEntityEvent d) 
+
+	public void namingAndBarRemove(PlayerInteractEntityEvent d)
 	{
 		final Entity e = d.getRightClicked();
 		if(e.hasMetadata("fake")|| e.hasMetadata("din")) {
@@ -215,8 +215,8 @@ public class CommonEvents implements Listener {
 		}
 	}
 
-	
-	public void Villdamcan(EntityDamageByEntityEvent d) 
+
+	public void Villdamcan(EntityDamageByEntityEvent d)
 	{
 		if(d.getDamager() instanceof Player && (d.getEntity().getType() == EntityType.VILLAGER ||  d.getEntity().getType() == EntityType.CAT ||  d.getEntity().getType() == EntityType.IRON_GOLEM) && !d.getEntity().hasMetadata("rpgspawned") && !d.getEntity().hasMetadata("fake"))
 		{
@@ -233,12 +233,12 @@ public class CommonEvents implements Listener {
 
 	public void Teleport(PlayerTeleportEvent e)
 	{
-			Player p = (Player) e.getPlayer();
-			p.setRemoveWhenFarAway(false);
+		Player p = (Player) e.getPlayer();
+		p.setRemoveWhenFarAway(false);
 	}
-	
+
 	final public Location BlankFinder(Location l) {
-		
+
 		HashSet<Location> lhs = new HashSet<>();
 		Double dis = 7d;
 		Location rl = l.clone();
@@ -257,8 +257,8 @@ public class CommonEvents implements Listener {
 		}
 		return rl;
 	}
-	
-	public void WallDamagecan(EntityDamageEvent d) 
+
+	public void WallDamagecan(EntityDamageEvent d)
 	{
 		if(d.getEntity().hasMetadata("din")) {
 			final Entity re = d.getEntity();
@@ -280,19 +280,19 @@ public class CommonEvents implements Listener {
 			}
 			catch(IllegalArgumentException ie) {
 				if(le.getNearbyEntities(15, 15, 15).stream().filter(lel -> lel instanceof LivingEntity).findFirst().isPresent()) {
-				    LivingEntity ce = null;
-				    double dis = Double.MAX_VALUE;
-				    for (Entity t : le.getNearbyEntities(16, 16, 16)) { 
-				    	if(t instanceof LivingEntity) {
-				    		LivingEntity let = (LivingEntity) t;
-					        double ed = t.getLocation().distance(le.getLocation());
-					        if (ed < dis) {
-					        	dis = ed;
-					            ce = let;
-					        }
-				    	}
-				    }
-				    le.teleport(ce);
+					LivingEntity ce = null;
+					double dis = Double.MAX_VALUE;
+					for (Entity t : le.getNearbyEntities(16, 16, 16)) {
+						if(t instanceof LivingEntity) {
+							LivingEntity let = (LivingEntity) t;
+							double ed = t.getLocation().distance(le.getLocation());
+							if (ed < dis) {
+								dis = ed;
+								ce = let;
+							}
+						}
+					}
+					le.teleport(ce);
 					d.setCancelled(true);
 				}
 				else {
@@ -304,7 +304,7 @@ public class CommonEvents implements Listener {
 	}
 
 	@EventHandler
-	public void PVP(EntityDamageByEntityEvent d) 
+	public void PVP(EntityDamageByEntityEvent d)
 	{
 		if(d.getDamager() instanceof Player && d.getEntity() instanceof Player && !d.isCancelled() && !d.getEntity().hasMetadata("fake")) {
 			d.setDamage(d.getDamage()*0.0025d);
@@ -347,7 +347,7 @@ public class CommonEvents implements Listener {
 		Vector dinvv = dinv.clone();*/
 		//return el.add(0, 1.1, 0).clone().add(dinvv.clone().multiply(0.1));
 	}
-	
+
 	final private ArmorStand dinspawn(final Player p,Location l, Double d) {
 
 		final ArmorStand din = l.getWorld().spawn(l, ArmorStand.class, e -> e.setVisible(false));
@@ -383,7 +383,7 @@ public class CommonEvents implements Listener {
 			dinvv.rotateAroundAxis(dinv.clone().rotateAroundY(Math.PI/2), -Math.PI/45).normalize();
 		}*/
 		final ArmorStand din = dinspawn(p, disloc(p,le,pl,elf), d);
-		
+
 		ind.put(p.getUniqueId(), din.getUniqueId());
 		if(ind.containsKey(p.getUniqueId()) && ind.get(p.getUniqueId()).size() > 5) {
 			UUID enu = ind.get(p.getUniqueId()).stream().findFirst().get();
@@ -392,24 +392,24 @@ public class CommonEvents implements Listener {
 			}
 			ind.remove(p.getUniqueId(), enu);
 		}
-		
-		
-		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
+
+
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable()
 		{
-     	@Override
-                public void run() 
-     				{	
-     					din.remove();
-     					ind.remove(p.getUniqueId(), din.getUniqueId());
-		            }
-        }, 30);
+			@Override
+			public void run()
+			{
+				din.remove();
+				ind.remove(p.getUniqueId(), din.getUniqueId());
+			}
+		}, 30);
 	}
 
 	final private void damagebar(Double max, Double cur, Double last, Double dam, final ArmorStand ar) {
 		final double rat =  (cur/max)*40d;
 		final double lr =  (last/max)*40d;
 		double d = (dam/max)*40d;
-		
+
 		if(d >= 1) {
 			StringBuffer bar = new StringBuffer();
 			for(int i = 0; i<rat; i++) {
@@ -427,8 +427,8 @@ public class CommonEvents implements Listener {
 			ar.setCustomName(bar.toString());
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 				@Override
-		        public void run() 
-		        {
+				public void run()
+				{
 					StringBuffer bar = new StringBuffer();
 					for(int i = 0; i<rat; i++) {
 						bar.append(ChatColor.GREEN+"|");
@@ -437,8 +437,8 @@ public class CommonEvents implements Listener {
 						bar.append(ChatColor.BLACK+"|");
 					}
 					ar.setCustomName(bar.toString());
-		        }
-		    }, 10); 
+				}
+			}, 10);
 		}
 		else {
 			StringBuffer bar = new StringBuffer();
@@ -452,10 +452,10 @@ public class CommonEvents implements Listener {
 		}
 		return ;
 	}
-	
+
 	final private void healbar(Double max, Double cur, Double last, Double dam, final ArmorStand ar) {
 		final double rat =  (cur/max)*40d;
-		
+
 		StringBuffer bar = new StringBuffer();
 		for(int i = 0; i<rat; i++) {
 			bar.append(ChatColor.GREEN+"|");
@@ -466,25 +466,25 @@ public class CommonEvents implements Listener {
 		ar.setCustomName(bar.toString());
 		return ;
 	}
-	
+
 	final private boolean issmall(LivingEntity le) {
 		if(le instanceof Chicken) {
-			return true; 
+			return true;
 		}
 		if(le instanceof Rabbit) {
-			return true; 
+			return true;
 		}
 		if(le instanceof Ageable) {
 			Ageable al = (Ageable) le;
 			if(!al.isAdult()) {
-				return true; 
+				return true;
 			}
 		}
 		if (le instanceof Silverfish) {
-			return true; 
+			return true;
 		}
 		if (le instanceof Endermite) {
-			return true; 
+			return true;
 		}
 		if(le.getCategory() == EntityCategory.WATER) {
 			return true;
@@ -495,7 +495,7 @@ public class CommonEvents implements Listener {
 	final private ArmorStand bardamaged(Double max, Double cur, Double last, Double dam, LivingEntity le) {
 
 		if(!bar.containsKey(le.getUniqueId())) {
-			
+
 			if(le instanceof Player) {
 				final ArmorStand din = le.getWorld().spawn(le.getEyeLocation().add(0, -0.05, 0), ArmorStand.class, e -> {
 					e.setVisible(false);
@@ -512,8 +512,8 @@ public class CommonEvents implements Listener {
 					damagebar(max,cur, last ,dam,e);
 					int track = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
 						@Override
-			            public void run() 
-			            {
+						public void run()
+						{
 							e.teleport(le.getEyeLocation().clone().add(0, -0.05, 0));
 							if(!le.isValid() || le.isInvisible()) {
 								Bukkit.getScheduler().cancelTask(trackt.get(le.getUniqueId()));
@@ -523,23 +523,23 @@ public class CommonEvents implements Listener {
 									bar.remove(le.getUniqueId());
 								}
 							}
-			            }
-			        }, 0,1); 
+						}
+					}, 0,1);
 					trackt.put(le.getUniqueId(), track);
 				});
 
 				int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					@Override
-		            public void run() 
-		            {
+					public void run()
+					{
 						Bukkit.getScheduler().cancelTask(trackt.get(le.getUniqueId()));
 						if (din != null) {
 							din.remove();
 							bart.remove(le.getUniqueId());
 							bar.remove(le.getUniqueId());
 						}
-		            }
-		        }, 100); 
+					}
+				}, 100);
 				bart.put(le.getUniqueId(), task);
 				return din;
 			}
@@ -564,8 +564,8 @@ public class CommonEvents implements Listener {
 				damagebar(max,cur, last ,dam,din);
 				int track = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
 					@Override
-		            public void run() 
-		            {
+					public void run()
+					{
 						din.teleport(le.getEyeLocation().clone().add(0, -0.15, 0));
 						if(!le.isValid()|| le.isInvisible()) {
 							Bukkit.getScheduler().cancelTask(trackt.get(le.getUniqueId()));
@@ -575,22 +575,22 @@ public class CommonEvents implements Listener {
 								bar.remove(le.getUniqueId());
 							}
 						}
-		            }
-		        }, 0,1); 
+					}
+				}, 0,1);
 				trackt.put(le.getUniqueId(), track);
 
 				int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					@Override
-		            public void run() 
-		            {
+					public void run()
+					{
 						Bukkit.getScheduler().cancelTask(trackt.get(le.getUniqueId()));
 						if (din != null) {
 							din.remove();
 							bart.remove(le.getUniqueId());
 							bar.remove(le.getUniqueId());
 						}
-		            }
-		        }, 100); 
+					}
+				}, 100);
 				bart.put(le.getUniqueId(), task);
 				return din;
 			}
@@ -598,75 +598,75 @@ public class CommonEvents implements Listener {
 		else if (Bukkit.getEntity(bar.get(le.getUniqueId())) != null){
 			ArmorStand din = (ArmorStand) Bukkit.getEntity(bar.get(le.getUniqueId()));
 			damagebar(max,cur,last,dam,din);
-			
+
 			if(bart.containsKey(le.getUniqueId())) {
 				Bukkit.getScheduler().cancelTask(bart.get(le.getUniqueId()));
-				
+
 				int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					@Override
-		            public void run() 
-		            {
+					public void run()
+					{
 						Bukkit.getScheduler().cancelTask(trackt.get(le.getUniqueId()));
 						if (din != null) {
 							din.remove();
 							bart.remove(le.getUniqueId());
 							bar.remove(le.getUniqueId());
 						}
-		            }
-		        }, 100); 
+					}
+				}, 100);
 				bart.put(le.getUniqueId(), task);
 			}
-			
+
 			return din;
 		}
 		else {
 			return null;
 		}
-		
+
 	}
 
 
 	final private ArmorStand barhealed(Double max, Double cur, Double last, Double dam, LivingEntity le) {
-	
+
 		if (Bukkit.getEntity(bar.get(le.getUniqueId())) != null){
 			ArmorStand din = (ArmorStand) Bukkit.getEntity(bar.get(le.getUniqueId()));
 			healbar(max,cur,last,dam,din);
-			
+
 			if(bart.containsKey(le.getUniqueId())) {
 				Bukkit.getScheduler().cancelTask(bart.get(le.getUniqueId()));
-				
+
 				int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					@Override
-		            public void run() 
-		            {
+					public void run()
+					{
 						Bukkit.getScheduler().cancelTask(trackt.get(le.getUniqueId()));
 						if (din != null) {
 							din.remove();
 							bart.remove(le.getUniqueId());
 							bar.remove(le.getUniqueId());
 						}
-		            }
-		        }, 100); 
+					}
+				}, 100);
 				bart.put(le.getUniqueId(), task);
 			}
-			
+
 			return din;
 		}
 		else {
 			return null;
 		}
-		
+
 	}
 
 
 
 	@EventHandler
-	public void barremove(EntityPotionEffectEvent d) 
+	public void barremove(EntityPotionEffectEvent d)
 	{
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 			@Override
-            public void run() 
-            {
+			public void run()
+			{
 				if(d.getEntity() instanceof LivingEntity && bar.containsKey(d.getEntity().getUniqueId())) {
 					LivingEntity le = (LivingEntity) d.getEntity();
 					if(le.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
@@ -679,21 +679,21 @@ public class CommonEvents implements Listener {
 							bar.remove(le.getUniqueId());
 						}
 					}
-					
+
 				}
-            }
-        }, 2);
+			}
+		}, 2);
 	}
 
 
 
 	@EventHandler
-	public void barremove(EntityDeathEvent d) 
+	public void barremove(EntityDeathEvent d)
 	{
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 			@Override
-            public void run() 
-            {
+			public void run()
+			{
 				if(bar.containsKey(d.getEntity().getUniqueId())) {
 					LivingEntity le = d.getEntity();
 					ArmorStand din = (ArmorStand) Bukkit.getEntity(bar.get(le.getUniqueId()));
@@ -705,20 +705,20 @@ public class CommonEvents implements Listener {
 						bar.remove(le.getUniqueId());
 					}
 				}
-            }
-        }, 2);
+			}
+		}, 2);
 	}
 
 
 
 
 	@EventHandler
-	public void barremove(PlayerQuitEvent d) 
+	public void barremove(PlayerQuitEvent d)
 	{
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 			@Override
-            public void run() 
-            {
+			public void run()
+			{
 				if(bar.containsKey(d.getPlayer().getUniqueId())) {
 					Player le = d.getPlayer();
 					ArmorStand din = (ArmorStand) Bukkit.getEntity(bar.get(le.getUniqueId()));
@@ -730,8 +730,8 @@ public class CommonEvents implements Listener {
 						bar.remove(le.getUniqueId());
 					}
 				}
-            }
-        }, 2); 
+			}
+		}, 2);
 	}
 
 
@@ -748,24 +748,24 @@ public class CommonEvents implements Listener {
 			final Double mh =Math.round(le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*10)/10.0;
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 				@Override
-                public void run() 
-                {
+				public void run()
+				{
 					final Double ch = Math.round((le.getHealth())*10)/10.0;
 					if(bar.containsKey(le.getUniqueId())) {
 						barhealed(mh, ch, lh ,d.getAmount(), le);
 					}
 					if(damaged.containsKey(le.getUniqueId())) {
-	    				le.setCustomName(damaged.get(le.getUniqueId()) + (ChatColor.UNDERLINE + " ("+ String.valueOf(ch) + "/" + String.valueOf(mh) + ")"));
-	    				le.setCustomNameVisible(true);
+						le.setCustomName(damaged.get(le.getUniqueId()) + (ChatColor.UNDERLINE + " ("+ String.valueOf(ch) + "/" + String.valueOf(mh) + ")"));
+						le.setCustomNameVisible(true);
 						le.setMetadata("damaged", new FixedMetadataValue(RMain.getInstance(),true));
 					}
-                }
-            }, 1); 
+				}
+			}, 1);
 		}
 	}
-	
+
 	@EventHandler
-	public void Damagegetter(EntityDamageByEntityEvent d) 
+	public void Damagegetter(EntityDamageByEntityEvent d)
 	{
 		if(d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity && !d.isCancelled()) {
 			Player p = (Player) d.getDamager();
@@ -779,35 +779,35 @@ public class CommonEvents implements Listener {
 			}
 
 			final Double mh =Math.round(le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*10)/10.0;
-			
+
 			if(!Holding.holded.containsKey(le.getUniqueId())) {
 				le.setAI(true);
 			}
-				if(d.getDamage()>0) {
-					Double lh = Math.round((le.getHealth())*10)/10.0;
-					
-					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-						@Override
-		                public void run() 
-		                {
-							final Double ch = Math.round((le.getHealth())*10)/10.0;
-							bardamaged(mh, ch, lh ,d.getFinalDamage(), le);
-							if(!damaged.containsKey(le.getUniqueId())) {
-								damaged.put(le.getUniqueId(), le.getName());
-			    				le.setCustomName((le.getName()) + (ChatColor.UNDERLINE + " ("+ String.valueOf(ch) + "/" + String.valueOf(mh) + ")"
-			    						 ));
-			    				le.setCustomNameVisible(true);
-								le.setMetadata("damaged", new FixedMetadataValue(RMain.getInstance(),true));
-							}
-							else {
-			    				le.setCustomName(damaged.get(le.getUniqueId()) + (ChatColor.UNDERLINE + " ("+ String.valueOf(ch) + "/" + String.valueOf(mh) + ")"));
-			    				le.setCustomNameVisible(true);
-								le.setMetadata("damaged", new FixedMetadataValue(RMain.getInstance(),true));
-							}
-		                }
-		            }, 1); 
-					damageind(p, le, d.getFinalDamage());
-				
+			if(d.getDamage()>0) {
+				Double lh = Math.round((le.getHealth())*10)/10.0;
+
+				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+					@Override
+					public void run()
+					{
+						final Double ch = Math.round((le.getHealth())*10)/10.0;
+						bardamaged(mh, ch, lh ,d.getFinalDamage(), le);
+						if(!damaged.containsKey(le.getUniqueId())) {
+							damaged.put(le.getUniqueId(), le.getName());
+							le.setCustomName((le.getName()) + (ChatColor.UNDERLINE + " ("+ String.valueOf(ch) + "/" + String.valueOf(mh) + ")"
+							));
+							le.setCustomNameVisible(true);
+							le.setMetadata("damaged", new FixedMetadataValue(RMain.getInstance(),true));
+						}
+						else {
+							le.setCustomName(damaged.get(le.getUniqueId()) + (ChatColor.UNDERLINE + " ("+ String.valueOf(ch) + "/" + String.valueOf(mh) + ")"));
+							le.setCustomNameVisible(true);
+							le.setMetadata("damaged", new FixedMetadataValue(RMain.getInstance(),true));
+						}
+					}
+				}, 1);
+				damageind(p, le, d.getFinalDamage());
+
 			}
 		}
 		if(d.getDamager() instanceof Projectile && d.getEntity() instanceof LivingEntity&& !d.isCancelled()) {
@@ -823,7 +823,7 @@ public class CommonEvents implements Listener {
 				LivingEntity le = (LivingEntity) d.getEntity();
 
 				final Double mh =Math.round(le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*10)/10.0;
-				
+
 				if(!Holding.holded.containsKey(le.getUniqueId())) {
 					le.setAI(true);
 				}
@@ -832,265 +832,265 @@ public class CommonEvents implements Listener {
 
 					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 						@Override
-		                public void run() 
-		                {
+						public void run()
+						{
 							final Double ch = Math.round((le.getHealth())*10)/10.0 ;
 							bardamaged(mh, ch, lh ,d.getFinalDamage(), le);
 							if(!damaged.containsKey(le.getUniqueId())) {
 								damaged.put(le.getUniqueId(), le.getName());
-			    				le.setCustomName((le.getName()) + (ChatColor.UNDERLINE + " ("+ String.valueOf(ch) + "/" + String.valueOf(mh) + ")"
-			    						 ));
-			    				le.setCustomNameVisible(true);
+								le.setCustomName((le.getName()) + (ChatColor.UNDERLINE + " ("+ String.valueOf(ch) + "/" + String.valueOf(mh) + ")"
+								));
+								le.setCustomNameVisible(true);
 								le.setMetadata("damaged", new FixedMetadataValue(RMain.getInstance(),true));
 							}
 							else {
-			    				le.setCustomName(damaged.get(le.getUniqueId()) + (ChatColor.UNDERLINE + " ("+ String.valueOf(ch) + "/" + String.valueOf(mh) + ")"));
-			    				le.setCustomNameVisible(true);
+								le.setCustomName(damaged.get(le.getUniqueId()) + (ChatColor.UNDERLINE + " ("+ String.valueOf(ch) + "/" + String.valueOf(mh) + ")"));
+								le.setCustomNameVisible(true);
 								le.setMetadata("damaged", new FixedMetadataValue(RMain.getInstance(),true));
 							}
-		                }
-		            }, 1); 
+						}
+					}, 1);
 					damageind(p, le, d.getFinalDamage());
-				
+
+				}
 			}
-			}
-			
+
 		}
 	}
-	
+
 	protected final String lang = RMain.getInstance().getConfig().getString("Language");
 
 	final protected String trans(LivingEntity le) {
 		if(lang.contains("kr")) {
 			EntityType t = le.getType();
 			if(t== EntityType.AXOLOTL) {
-				return "¾ÆÈ¦·ÎÆ²";
+				return "ì•„í™€ë¡œí‹€";
 			}
 			else if(t== EntityType.ALLAY) {
-				return "¾Ë·¹ÀÌ";
+				return "ì•Œë ˆì´";
 			}
 			else if(t== EntityType.FROG) {
-				return "°³±¸¸®";
+				return "ê°œêµ¬ë¦¬";
 			}
 			else if(t== EntityType.TADPOLE) {
-				return "¿ÃÃ¬ÀÌ";
+				return "ì˜¬ì±™ì´";
 			}
 			else if(t== EntityType.WARDEN) {
-				return "¿Íµç";
+				return "ì™€ë“ ";
 			}
-			
+
 			else if(t== EntityType.BAT) {
-				return "¹ÚÁã";
+				return "ë°•ì¥";
 			}
 			else if(t== EntityType.BEE) {
-				return "²Ü¹ú";
+				return "ê¿€ë²Œ";
 			}
 			else if(t== EntityType.BLAZE) {
-				return "ºí·¹ÀÌÁî";
+				return "ë¸”ë ˆì´ì¦ˆ";
 			}
 			else if(t== EntityType.CAT) {
-				return "°í¾çÀÌ";
+				return "ê³ ì–‘ì´";
 			}
 			else if(t== EntityType.CAVE_SPIDER) {
-				return "µ¿±¼°Å¹Ì";
+				return "ë™êµ´ê±°ë¯¸";
 			}
 			else if(t== EntityType.CHICKEN) {
-				return "´ß";
+				return "ë‹­";
 			}
 			else if(t== EntityType.COD) {
-				return "´ë±¸";
+				return "ëŒ€êµ¬";
 			}
 			else if(t== EntityType.COW) {
-				return "¼Ò";
+				return "ì†Œ";
 			}
 			else if(t== EntityType.CREEPER) {
-				return "Å©¸®ÆÛ";
+				return "í¬ë¦¬í¼";
 			}
 			else if(t== EntityType.DOLPHIN) {
-				return "µ¹°í·¡";
+				return "ëŒê³ ë˜";
 			}
 			else if(t== EntityType.DONKEY) {
-				return "´ç³ª±Í";
+				return "ë‹¹ë‚˜ê·€";
 			}
 			else if(t== EntityType.DROWNED) {
-				return "µå¶ó¿îµå";
+				return "ë“œë¼ìš´ë“œ";
 			}
 			else if(t== EntityType.ELDER_GUARDIAN) {
-				return "¿¤´õ°¡µğ¾ğ";
+				return "ì—˜ë”ê°€ë””ì–¸";
 			}
 			else if(t== EntityType.ENDER_DRAGON) {
-				return "¿£´õµå·¡°ï";
+				return "ì—”ë”ë“œë˜ê³¤";
 			}
 			else if(t== EntityType.ENDERMAN) {
-				return "¿£´õ¸Ç";
+				return "ì—”ë”ë§¨";
 			}
 			else if(t== EntityType.ENDERMITE) {
-				return "¿£´õ¸¶ÀÌÆ®";
+				return "ì—”ë”ë§ˆì´íŠ¸";
 			}
 			else if(t== EntityType.EVOKER) {
-				return "¼ÒÈ¯»ç";
+				return "ì†Œí™˜ì‚¬";
 			}
 			else if(t== EntityType.FOX) {
-				return "¿©¿ì";
+				return "ì—¬ìš°";
 			}
 			else if(t== EntityType.GHAST) {
-				return "°¡½ºÆ®";
+				return "ê°€ìŠ¤íŠ¸";
 			}
 			else if(t== EntityType.GLOW_SQUID) {
-				return "¹ß±¤¿ÀÂ¡¾î";
+				return "ë°œê´‘ì˜¤ì§•ì–´";
 			}
 			else if(t== EntityType.GOAT) {
-				return "¿°¼Ò";
+				return "ì—¼ì†Œ";
 			}
 			else if(t== EntityType.GUARDIAN) {
-				return "°¡µğ¾ğ";
+				return "ê°€ë””ì–¸";
 			}
 			else if(t== EntityType.HOGLIN) {
-				return "È£±Û¸°";
+				return "í˜¸ê¸€ë¦°";
 			}
 			else if(t== EntityType.HORSE) {
-				return "¸»";
+				return "ë§";
 			}
 			else if(t== EntityType.HUSK) {
-				return "Çã½ºÅ©";
+				return "í—ˆìŠ¤í¬";
 			}
 			else if(t== EntityType.ILLUSIONER) {
-				return "È¯¼ú»ç";
+				return "í™˜ìˆ ì‚¬";
 			}
 			else if(t== EntityType.IRON_GOLEM) {
-				return "Ã¶°ñ·½";
+				return "ì² ê³¨ë ˜";
 			}
 			else if(t== EntityType.LLAMA) {
-				return "¶ó¸¶";
+				return "ë¼ë§ˆ";
 			}
 			else if(t== EntityType.MAGMA_CUBE) {
-				return "¸¶±×¸¶Å¥ºê";
+				return "ë§ˆê·¸ë§ˆíë¸Œ";
 			}
 			else if(t== EntityType.MULE) {
-				return "³ë»õ";
+				return "ë…¸ìƒˆ";
 			}
 			else if(t== EntityType.MUSHROOM_COW) {
-				return "¹«½Ã·ë";
+				return "ë¬´ì‹œë£¸";
 			}
 			else if(t== EntityType.OCELOT) {
-				return "¿À¼¿·Ô";
+				return "ì˜¤ì…€ë¡¯";
 			}
 			else if(t== EntityType.PANDA) {
-				return "ÆÇ´Ù";
+				return "íŒë‹¤";
 			}
 			else if(t== EntityType.PARROT) {
-				return "¾Ş¹«»õ";
+				return "ì•µë¬´ìƒˆ";
 			}
 			else if(t== EntityType.PHANTOM) {
-				return "¸Á·É";
+				return "ë§ë ¹";
 			}
 			else if(t== EntityType.PIG) {
-				return "¶×¶òÈÆ";
+				return "ëš±ëµí›ˆ";
 			}
 			else if(t== EntityType.PIGLIN) {
-				return "ÇÇ±Û¸°";
+				return "í”¼ê¸€ë¦°";
 			}
 			else if(t== EntityType.PIGLIN_BRUTE) {
-				return "ÇÇ±Û¸°±«¼ö";
+				return "í”¼ê¸€ë¦°ê´´ìˆ˜";
 			}
 			else if(t== EntityType.PILLAGER) {
-				return "¾àÅ»ÀÚ";
+				return "ì•½íƒˆì";
 			}
 			else if(t== EntityType.POLAR_BEAR) {
-				return "ºÏ±Ø°õ";
+				return "ë¶ê·¹ê³°";
 			}
 			else if(t== EntityType.PUFFERFISH) {
-				return "º¹¾î";
+				return "ë³µì–´";
 			}
 			else if(t== EntityType.RABBIT) {
-				return "Åä³¢";
+				return "í† ë¼";
 			}
 			else if(t== EntityType.RAVAGER) {
-				return "ÆÄ±«¼ö";
+				return "íŒŒê´´ìˆ˜";
 			}
 			else if(t== EntityType.SALMON) {
-				return "¿¬¾î";
+				return "ì—°ì–´";
 			}
 			else if(t== EntityType.SHEEP) {
-				return "¾ç";
+				return "ì–‘";
 			}
 			else if(t== EntityType.SHULKER) {
-				return "¼ÈÄ¿";
+				return "ì…œì»¤";
 			}
 			else if(t== EntityType.SILVERFISH) {
-				return "Á»¹ú·¹";
+				return "ì¢€ë²Œë ˆ";
 			}
 			else if(t== EntityType.SKELETON) {
-				return "½ºÄÌ·¹Åæ";
+				return "ìŠ¤ì¼ˆë ˆí†¤";
 			}
 			else if(t== EntityType.SKELETON_HORSE) {
-				return "½ºÄÌ·¹Åæ¸»";
+				return "ìŠ¤ì¼ˆë ˆí†¤ë§";
 			}
 			else if(t== EntityType.SLIME) {
-				return "½½¶óÀÓ";
+				return "ìŠ¬ë¼ì„";
 			}
 			else if(t== EntityType.SNOWMAN) {
-				return "´«»ç¶÷";
+				return "ëˆˆì‚¬ëŒ";
 			}
 			else if(t== EntityType.SPIDER) {
-				return "°Å¹Ì";
+				return "ê±°ë¯¸";
 			}
 			else if(t== EntityType.SQUID) {
-				return "¿ÀÂ¡¾î";
+				return "ì˜¤ì§•ì–´";
 			}
 			else if(t== EntityType.STRAY) {
-				return "½ºÆ®·¹ÀÌ";
+				return "ìŠ¤íŠ¸ë ˆì´";
 			}
 			else if(t== EntityType.STRIDER) {
-				return "½ºÆ®¶óÀÌ´õ";
+				return "ìŠ¤íŠ¸ë¼ì´ë”";
 			}
 			else if(t== EntityType.TRADER_LLAMA) {
-				return "»óÀÎ¶ó¸¶";
+				return "ìƒì¸ë¼ë§ˆ";
 			}
 			else if(t== EntityType.TROPICAL_FISH) {
-				return "¿­´ë¾î";
+				return "ì—´ëŒ€ì–´";
 			}
 			else if(t== EntityType.TURTLE) {
-				return "°ÅºÏ";
+				return "ê±°ë¶";
 			}
 			else if(t== EntityType.VEX) {
-				return "º¤½º";
+				return "ë²¡ìŠ¤";
 			}
 			else if(t== EntityType.VILLAGER) {
-				return "ÁÖ¹Î";
+				return "ì£¼ë¯¼";
 			}
 			else if(t== EntityType.VINDICATOR) {
-				return "º¯¸íÀÚ";
+				return "ë³€ëª…ì";
 			}
 			else if(t== EntityType.WANDERING_TRADER) {
-				return "¶°µ¹ÀÌ»óÀÎ";
+				return "ë– ëŒì´ìƒì¸";
 			}
 			else if(t== EntityType.WITCH) {
-				return "¸¶³à";
+				return "ë§ˆë…€";
 			}
 			else if(t== EntityType.WITHER) {
-				return "À§´õ";
+				return "ìœ„ë”";
 			}
 			else if(t== EntityType.WITHER_SKELETON) {
-				return "À§´õ½ºÄÌ·¹Åæ";
+				return "ìœ„ë”ìŠ¤ì¼ˆë ˆí†¤";
 			}
 			else if(t== EntityType.WOLF) {
-				return "´Á´ë";
+				return "ëŠ‘ëŒ€";
 			}
 			else if(t== EntityType.ZOGLIN) {
-				return "Á¶±Û¸°";
+				return "ì¡°ê¸€ë¦°";
 			}
 			else if(t== EntityType.ZOMBIE) {
-				return "Á»ºñ";
+				return "ì¢€ë¹„";
 			}
 			else if(t== EntityType.ZOMBIE_HORSE) {
-				return "Á»ºñ¸»";
+				return "ì¢€ë¹„ë§";
 			}
 			else if(t== EntityType.ZOMBIE_VILLAGER) {
-				return "Á»ºñÁÖ¹Î";
+				return "ì¢€ë¹„ì£¼ë¯¼";
 			}
 			else if(t== EntityType.ZOMBIFIED_PIGLIN) {
-				return "Á»ºñÈ­ÇÇ±Û¸°";
+				return "ì¢€ë¹„í™”í”¼ê¸€ë¦°";
 			}
 			else {
 				return le.getName();
@@ -1100,9 +1100,9 @@ public class CommonEvents implements Listener {
 			return le.getName();
 		}
 	}
-	
+
 	@EventHandler
-	public void Damagegetter(EntityDamageEvent d) 
+	public void Damagegetter(EntityDamageEvent d)
 	{
 		if(d.getEntity().hasMetadata("portal")) {
 			d.setCancelled(true);
@@ -1114,16 +1114,16 @@ public class CommonEvents implements Listener {
 			final LivingEntity le = (LivingEntity) d.getEntity();
 			le.setMaximumNoDamageTicks(0);
 			le.setNoDamageTicks(0);
-			
+
 			if(!le.hasMetadata("rpgspawned") && le.getCustomName() == null) {
 				le.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
 				le.setCustomName(trans(le));
 				le.setCustomNameVisible(true);
 				le.setMetadata("plain", new FixedMetadataValue(RMain.getInstance(),true));
 			}
-			
+
 			final Double mh =Math.round(le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*10)/10.0;
-			
+
 			if(!Holding.holded.containsKey(le.getUniqueId())) {
 				le.setAI(true);
 			}
@@ -1132,103 +1132,103 @@ public class CommonEvents implements Listener {
 
 				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					@Override
-	                public void run() 
-	                {
+					public void run()
+					{
 						final Double ch = Math.round((le.getHealth())*10)/10.0 ;
 						bardamaged(mh, ch, lh,d.getFinalDamage(), le);
 						if(!damaged.containsKey(le.getUniqueId())) {
 							damaged.put(le.getUniqueId(), le.getName());
-		    				le.setCustomName((le.getName()) + (ChatColor.UNDERLINE + " ("+ String.valueOf(ch) + "/" + String.valueOf(mh) + ")"));
-		    				le.setCustomNameVisible(true);
+							le.setCustomName((le.getName()) + (ChatColor.UNDERLINE + " ("+ String.valueOf(ch) + "/" + String.valueOf(mh) + ")"));
+							le.setCustomNameVisible(true);
 							le.setMetadata("damaged", new FixedMetadataValue(RMain.getInstance(),true));
 						}
 						else {
-		    				le.setCustomName(damaged.get(le.getUniqueId()) + (ChatColor.UNDERLINE + " ("+ String.valueOf(ch) + "/" + String.valueOf(mh) + ")"));
-		    				le.setCustomNameVisible(true);
+							le.setCustomName(damaged.get(le.getUniqueId()) + (ChatColor.UNDERLINE + " ("+ String.valueOf(ch) + "/" + String.valueOf(mh) + ")"));
+							le.setCustomNameVisible(true);
 							le.setMetadata("damaged", new FixedMetadataValue(RMain.getInstance(),true));
 						}
-	                }
-	            }, 1);
+					}
+				}, 1);
 			}
 		}
 	}
 
 	@EventHandler
-	public void Enderdragon(EntityDamageByEntityEvent d) 
-	{		
-        if (!(d.getEntity() instanceof EnderDragon)) {
-            return;
-        }
-        EnderDragon ed = (EnderDragon) d.getEntity();
+	public void Enderdragon(EntityDamageByEntityEvent d)
+	{
+		if (!(d.getEntity() instanceof EnderDragon)) {
+			return;
+		}
+		EnderDragon ed = (EnderDragon) d.getEntity();
 		if(ed.getHealth()<=d.getDamage()) {
 			ed.setAI(true);
 			ed.setCustomName(null);
 			ed.setCustomNameVisible(false);
 			if(ed.getDragonBattle() != null) {
-		        ed.getDragonBattle().getBossBar().setTitle(ed.getName());
+				ed.getDragonBattle().getBossBar().setTitle(ed.getName());
 			}
 		}
 	}
 
 	@EventHandler
 	public void Enderdragon(CreatureSpawnEvent ev) {
-        if(ev.getEntityType() == EntityType.ENDER_DRAGON) {
+		if(ev.getEntityType() == EntityType.ENDER_DRAGON) {
 
-        	ev.getEntity().setCustomName(null);
-        	ev.getEntity().setCustomNameVisible(false);
-            
-        }
+			ev.getEntity().setCustomName(null);
+			ev.getEntity().setCustomNameVisible(false);
+
+		}
 	}
-	
+
 	@EventHandler
-	public void Enderdragon(EnderDragonChangePhaseEvent d) 
-	{	
-        EnderDragon ed = (EnderDragon) d.getEntity();
-        d.getEntity().setCustomName(null);
-        d.getEntity().setCustomNameVisible(false);
-        if(ed.getLocation().getWorld().getEnvironment() == Environment.THE_END && ed.getDragonBattle().getRespawnPhase() == RespawnPhase.END) {
+	public void Enderdragon(EnderDragonChangePhaseEvent d)
+	{
+		EnderDragon ed = (EnderDragon) d.getEntity();
+		d.getEntity().setCustomName(null);
+		d.getEntity().setCustomNameVisible(false);
+		if(ed.getLocation().getWorld().getEnvironment() == Environment.THE_END && ed.getDragonBattle().getRespawnPhase() == RespawnPhase.END) {
 			ed.setCustomName(null);
 			ed.setCustomNameVisible(false);
-        }
+		}
 		if(d.getNewPhase() == Phase.DYING) {
 			ed.setAI(true);
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-                @Override
-                public void run() 
-                {
-        			ed.setAI(true);
-        			ed.setCustomName(null);
-        			ed.setCustomNameVisible(false);
-                }
-            }, 1); 
+				@Override
+				public void run()
+				{
+					ed.setAI(true);
+					ed.setCustomName(null);
+					ed.setCustomNameVisible(false);
+				}
+			}, 1);
 		}
 		if(d.getCurrentPhase() == Phase.DYING) {
 			ed.setAI(true);
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-                @Override
-                public void run() 
-                {
-        			ed.setAI(true);
-        			ed.setCustomName(null);
-        			ed.setCustomNameVisible(false);
-                }
-            }, 1); 
+				@Override
+				public void run()
+				{
+					ed.setAI(true);
+					ed.setCustomName(null);
+					ed.setCustomNameVisible(false);
+				}
+			}, 1);
 		}
 		if(ed.getPhase() == Phase.DYING) {
 			ed.setAI(true);
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-                @Override
-                public void run() 
-                {
-        			ed.setAI(true);
-        			ed.setCustomName(null);
-        			ed.setCustomNameVisible(false);
-                }
-            }, 1); 	
+				@Override
+				public void run()
+				{
+					ed.setAI(true);
+					ed.setCustomName(null);
+					ed.setCustomNameVisible(false);
+				}
+			}, 1);
 		}
 	}
-	
-	public void deleter(PluginDisableEvent ev) 
+
+	public void deleter(PluginDisableEvent ev)
 	{
 		Bukkit.getBossBars().forEachRemaining(b -> b.removeAll());
 		Bukkit.getServer().getOnlinePlayers().forEach(p->{
@@ -1246,9 +1246,9 @@ public class CommonEvents implements Listener {
 			p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.1);
 		});
 	}
-	
+
 	@EventHandler
-	public void deleter(WorldUnloadEvent d) 
+	public void deleter(WorldUnloadEvent d)
 	{
 		World w = d.getWorld();
 		w.getEntities().forEach(b -> {
@@ -1267,22 +1267,22 @@ public class CommonEvents implements Listener {
 		});
 	}
 
-	public void er(PluginEnableEvent ev) 
+	public void er(PluginEnableEvent ev)
 	{
-        Bukkit.spigot().getConfig().set("settings.attribute.maxHealth.max", 99999999);
-        Bukkit.spigot().getConfig().set("settings.attribute.attackDamage.max", 99999999);
-        
+		Bukkit.spigot().getConfig().set("settings.attribute.maxHealth.max", 99999999);
+		Bukkit.spigot().getConfig().set("settings.attribute.attackDamage.max", 99999999);
+
 		Bukkit.getServer().getOnlinePlayers().forEach(p->{
 
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	            @Override
-	            public void run() 
-	            {
-	        		if(ClassData.pc.containsKey(p.getUniqueId())) {
-	        			Classgui.LimitBreak(p);
-	        		}
-	            }
-	        }, 1); 
+				@Override
+				public void run()
+				{
+					if(ClassData.pc.containsKey(p.getUniqueId())) {
+						Classgui.LimitBreak(p);
+					}
+				}
+			}, 1);
 			Scoreboard board = manager.getNewScoreboard();
 			Objective objective = board.registerNewObjective("Hearts" ,Criteria.HEALTH, "[Health]", RenderType.HEARTS);
 			objective.setDisplaySlot(DisplaySlot.BELOW_NAME);
@@ -1295,95 +1295,95 @@ public class CommonEvents implements Listener {
 			p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.1);
 		});
 	}
-	
-	
+
+
 	final private void guide(Player p) {
 		final int lev = p.getLevel();
 		StringBuffer sb = new StringBuffer();
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-            @Override
-            public void run() 
-            {
-            	final String loc = p.getLocale();
-        		if(loc.equalsIgnoreCase("ko_kr")) {
-        			sb.append(ChatColor.GOLD + "ÇöÀç ·¹º§: "+lev + ChatColor.DARK_AQUA + "  ÃßÃµ ±º°è: ");
-        			if(0<=lev && lev <=40) {
-        				sb.append(ChatColor.GREEN + "[Æò¿ø]");
-        			}
-        			if(30<=lev && lev <=70) {
-        				sb.append(ChatColor.GRAY + "[»ê, ¾ğ´ö, Å¸ÀÌ°¡]");
-        			}
-        			if(60<=lev && lev <=100) {
-        				sb.append(ChatColor.AQUA + "[ÇÑ´ë, ³Ã´ë ±âÈÄ]");
-        			}
-        			if(90<=lev && lev <=130) {
-        				sb.append(ChatColor.BLUE + "[¹Ù´Ù]");
-        			}
-        			if(120<=lev && lev <=160) {
-        				sb.append(ChatColor.DARK_GREEN + "[½£, µ¿±¼]");
-        			}
-        			if(150<=lev && lev <=190) {
-        				sb.append(ChatColor.LIGHT_PURPLE + "[»ç¸·, »ç¹Ù³ª]");
-        			}
-        			if(180<=lev && lev <=220) {
-        				sb.append(ChatColor.RED + "[¾ÇÁö]");
-        			}
-        			if(210<=lev && lev <=250) {
-        				sb.append(ChatColor.DARK_GRAY + "[´Ë, ¹ö¼¸ µéÆÇ]");
-        			}
-        			if(240<=lev && lev <=300) {
-        				sb.append(ChatColor.YELLOW + "[Á¤±Û]");
-        			}
-        			if(300<=lev && lev <=400) {
-        				sb.append(ChatColor.DARK_RED + "[Áö¿Á]");
-        			}
-        			if(400<=lev) {
-        				sb.append(ChatColor.DARK_PURPLE + "[¿£´õ]");
-        			}
-        		}
-        		else {
-        			sb.append(ChatColor.GOLD + "Current Level: "+lev + ChatColor.DARK_AQUA + "  Recommended Biome: ");
-        			if(0<=lev && lev <=40) {
-        				sb.append(ChatColor.GREEN + "[Plains]");
-        			}
-        			if(30<=lev && lev <=70) {
-        				sb.append(ChatColor.GRAY + "[Mountains, Hills, Taiga]");
-        			}
-        			if(60<=lev && lev <=100) {
-        				sb.append(ChatColor.AQUA + "[Snowy, Frozen]");
-        			}
-        			if(90<=lev && lev <=130) {
-        				sb.append(ChatColor.BLUE + "[Ocean]");
-        			}
-        			if(120<=lev && lev <=160) {
-        				sb.append(ChatColor.DARK_GREEN + "[Forest, Cave]");
-        			}
-        			if(150<=lev && lev <=190) {
-        				sb.append(ChatColor.LIGHT_PURPLE + "[Desert, Savana]");
-        			}
-        			if(180<=lev && lev <=220) {
-        				sb.append(ChatColor.RED + "[Badlands]");
-        			}
-        			if(210<=lev && lev <=250) {
-        				sb.append(ChatColor.DARK_GRAY + "[Swamp, Mushroom Fields]");
-        			}
-        			if(240<=lev && lev <=300) {
-        				sb.append(ChatColor.YELLOW + "[Jungle]");
-        			}
-        			if(300<=lev && lev <=400) {
-        				sb.append(ChatColor.DARK_RED + "[Nether]");
-        			}
-        			if(400<=lev) {
-        				sb.append(ChatColor.DARK_PURPLE + "[Ender]");
-        			}
-        		}
-        		p.sendMessage(sb.toString());
-            }
-        }, 20); 
-		
+			@Override
+			public void run()
+			{
+				final String loc = p.getLocale();
+				if(loc.equalsIgnoreCase("ko_kr")) {
+					sb.append(ChatColor.GOLD + "í˜„ì¬ ë ˆë²¨: "+lev + ChatColor.DARK_AQUA + "  ì¶”ì²œ êµ°ê³„: ");
+					if(0<=lev && lev <=40) {
+						sb.append(ChatColor.GREEN + "[í‰ì›]");
+					}
+					if(30<=lev && lev <=70) {
+						sb.append(ChatColor.GRAY + "[ì‚°, ì–¸ë•, íƒ€ì´ê°€]");
+					}
+					if(60<=lev && lev <=100) {
+						sb.append(ChatColor.AQUA + "[í•œëŒ€, ëƒ‰ëŒ€ ê¸°í›„]");
+					}
+					if(90<=lev && lev <=130) {
+						sb.append(ChatColor.BLUE + "[ë°”ë‹¤]");
+					}
+					if(120<=lev && lev <=160) {
+						sb.append(ChatColor.DARK_GREEN + "[ìˆ², ë™êµ´]");
+					}
+					if(150<=lev && lev <=190) {
+						sb.append(ChatColor.LIGHT_PURPLE + "[ì‚¬ë§‰, ì‚¬ë°”ë‚˜]");
+					}
+					if(180<=lev && lev <=220) {
+						sb.append(ChatColor.RED + "[ì•…ì§€]");
+					}
+					if(210<=lev && lev <=250) {
+						sb.append(ChatColor.DARK_GRAY + "[ëŠª, ë²„ì„¯ ë“¤íŒ]");
+					}
+					if(240<=lev && lev <=300) {
+						sb.append(ChatColor.YELLOW + "[ì •ê¸€]");
+					}
+					if(300<=lev && lev <=400) {
+						sb.append(ChatColor.DARK_RED + "[ì§€ì˜¥]");
+					}
+					if(400<=lev) {
+						sb.append(ChatColor.DARK_PURPLE + "[ì—”ë”]");
+					}
+				}
+				else {
+					sb.append(ChatColor.GOLD + "Current Level: "+lev + ChatColor.DARK_AQUA + "  Recommended Biome: ");
+					if(0<=lev && lev <=40) {
+						sb.append(ChatColor.GREEN + "[Plains]");
+					}
+					if(30<=lev && lev <=70) {
+						sb.append(ChatColor.GRAY + "[Mountains, Hills, Taiga]");
+					}
+					if(60<=lev && lev <=100) {
+						sb.append(ChatColor.AQUA + "[Snowy, Frozen]");
+					}
+					if(90<=lev && lev <=130) {
+						sb.append(ChatColor.BLUE + "[Ocean]");
+					}
+					if(120<=lev && lev <=160) {
+						sb.append(ChatColor.DARK_GREEN + "[Forest, Cave]");
+					}
+					if(150<=lev && lev <=190) {
+						sb.append(ChatColor.LIGHT_PURPLE + "[Desert, Savana]");
+					}
+					if(180<=lev && lev <=220) {
+						sb.append(ChatColor.RED + "[Badlands]");
+					}
+					if(210<=lev && lev <=250) {
+						sb.append(ChatColor.DARK_GRAY + "[Swamp, Mushroom Fields]");
+					}
+					if(240<=lev && lev <=300) {
+						sb.append(ChatColor.YELLOW + "[Jungle]");
+					}
+					if(300<=lev && lev <=400) {
+						sb.append(ChatColor.DARK_RED + "[Nether]");
+					}
+					if(400<=lev) {
+						sb.append(ChatColor.DARK_PURPLE + "[Ender]");
+					}
+				}
+				p.sendMessage(sb.toString());
+			}
+		}, 20);
+
 	}
-	
-	public void join(PlayerJoinEvent ev) 
+
+	public void join(PlayerJoinEvent ev)
 	{
 		Player p = ev.getPlayer();
 
@@ -1394,12 +1394,12 @@ public class CommonEvents implements Listener {
 		p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(2);
 		p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(4);
 		p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.1);
-		
+
 		Scoreboard board = manager.getNewScoreboard();
 		Objective objective = board.registerNewObjective("Hearts" ,Criteria.HEALTH, "[Health]", RenderType.HEARTS);
 		objective.setDisplaySlot(DisplaySlot.BELOW_NAME);
 		p.setScoreboard(board);
-		
+
 		if(p.getGameMode() == GameMode.CREATIVE) {
 			p.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
 		}
@@ -1410,61 +1410,61 @@ public class CommonEvents implements Listener {
 		}
 
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-            @Override
-            public void run() 
-            {
-            	guide(p);
-        		if(ClassData.pc.containsKey(p.getUniqueId())) {
-        			Classgui.LimitBreak(p);
-        		}
-            }
-        }, 3); 
+			@Override
+			public void run()
+			{
+				guide(p);
+				if(ClassData.pc.containsKey(p.getUniqueId())) {
+					Classgui.LimitBreak(p);
+				}
+			}
+		}, 3);
 	}
-	
-	public void nepreventer(PlayerQuitEvent ev) 
+
+	public void nepreventer(PlayerQuitEvent ev)
 	{
 		Player p = ev.getPlayer();
-		
+
 		p.setAbsorptionAmount(0);
 		Bukkit.getWorlds().forEach(w -> {
 			w.getEntities().forEach(e -> {
 				if(e.hasMetadata("din of "+p.getName())  || e.hasMetadata("rob"+p.getName()) || e.hasMetadata("rob of"+p.getName())) {
 					e.remove();
 				}
-        		if(Bukkit.getServer().getOnlinePlayers().stream().count() <= 1) {
-    				w.getEntities().forEach(b -> {
-    					b.setCustomName(CommonEvents.damaged.get(b.getUniqueId()));
-    					if((b.hasMetadata("obnpc") || b.hasMetadata("rpgspawned") || b.hasMetadata("untargetable")|| b.hasMetadata("fake")) && !(b instanceof Player)) {
-    						b.remove();
-    					}
-    				});
-        		}
-				
+				if(Bukkit.getServer().getOnlinePlayers().stream().count() <= 1) {
+					w.getEntities().forEach(b -> {
+						b.setCustomName(CommonEvents.damaged.get(b.getUniqueId()));
+						if((b.hasMetadata("obnpc") || b.hasMetadata("rpgspawned") || b.hasMetadata("untargetable")|| b.hasMetadata("fake")) && !(b instanceof Player)) {
+							b.remove();
+						}
+					});
+				}
+
 			});
 		});
 
 		p.getScoreboard().getObjectives().forEach(o -> o.unregister());
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-            @Override
-            public void run() 
-            {
-        		if(Bukkit.getServer().getOnlinePlayers().stream().count() < 1 || Bukkit.getServer().getOnlinePlayers().isEmpty()) {
-        			List<World> worlds = Bukkit.getServer().getWorlds();
-        			worlds.forEach(w ->{
-        				w.getEntities().forEach(b -> {
-        					b.setCustomName(CommonEvents.damaged.get(b.getUniqueId()));
-        					if((b.hasMetadata("obnpc") || b.hasMetadata("rpgspawned") || b.hasMetadata("untargetable")|| b.hasMetadata("fake")) && !(b instanceof Player)) {
-        						b.remove();
-        					}
-        				});
-        				}
-        			);
-        		}
-            }
-        }, 3); 
-		
+			@Override
+			public void run()
+			{
+				if(Bukkit.getServer().getOnlinePlayers().stream().count() < 1 || Bukkit.getServer().getOnlinePlayers().isEmpty()) {
+					List<World> worlds = Bukkit.getServer().getWorlds();
+					worlds.forEach(w ->{
+								w.getEntities().forEach(b -> {
+									b.setCustomName(CommonEvents.damaged.get(b.getUniqueId()));
+									if((b.hasMetadata("obnpc") || b.hasMetadata("rpgspawned") || b.hasMetadata("untargetable")|| b.hasMetadata("fake")) && !(b instanceof Player)) {
+										b.remove();
+									}
+								});
+							}
+					);
+				}
+			}
+		}, 3);
+
 	}
-	public void delete(PlayerTeleportEvent d) 
+	public void delete(PlayerTeleportEvent d)
 	{
 		Player p = (Player) d.getPlayer();
 		if(d.getFrom().getWorld() != d.getTo().getWorld()) {
@@ -1477,8 +1477,8 @@ public class CommonEvents implements Listener {
 			});
 		}
 	}
-	
-	public void delete(PlayerDeathEvent ev) 
+
+	public void delete(PlayerDeathEvent ev)
 	{
 		Player p = ev.getEntity();
 		Bukkit.getWorlds().forEach(w -> {
@@ -1489,9 +1489,9 @@ public class CommonEvents implements Listener {
 			});
 		});
 	}
-	
-	
-	public void dinremove(PlayerRespawnEvent ev) 
+
+
+	public void dinremove(PlayerRespawnEvent ev)
 	{
 		Player p = ev.getPlayer();
 
@@ -1509,9 +1509,9 @@ public class CommonEvents implements Listener {
 		}
 		p.setAbsorptionAmount(0);
 	}
-	
-	@EventHandler	
-	public void nepreventer(PlayerGameModeChangeEvent ev) 
+
+	@EventHandler
+	public void nepreventer(PlayerGameModeChangeEvent ev)
 	{
 		Player p = ev.getPlayer();
 		if(ev.getNewGameMode() == GameMode.CREATIVE) {
@@ -1521,8 +1521,8 @@ public class CommonEvents implements Listener {
 			p.removeMetadata("fake", RMain.getInstance());
 		}
 	}
-	
-	public void Bullet(ProjectileHitEvent ev) 
+
+	public void Bullet(ProjectileHitEvent ev)
 	{
 
 		if(ev.getEntity().hasMetadata("din")) {
@@ -1532,31 +1532,31 @@ public class CommonEvents implements Listener {
 		if(ev.getEntity().getShooter() instanceof Player)
 		{
 			Player p = (Player)ev.getEntity().getShooter();
-				if(ev.getHitEntity()!=null) {
-					Entity e =ev.getHitEntity();
+			if(ev.getHitEntity()!=null) {
+				Entity e =ev.getHitEntity();
+				{
+					if (e instanceof Player)
 					{
-                		if (e instanceof Player) 
-						{
-							Player p1 = (Player) e;
-							if(Party.hasParty(p) && Party.hasParty(p1))	{
+						Player p1 = (Player) e;
+						if(Party.hasParty(p) && Party.hasParty(p1))	{
 							if(Party.getParty(p) == Party.getParty(p1))
-								{
+							{
 								return;
-								}
 							}
-						}
-                		if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))) 
-						{
-							LivingEntity le = (LivingEntity)e;
-							if(!Holding.holded.containsKey(le.getUniqueId())) {
-								le.setAI(true);
-							}
-							le.setMaximumNoDamageTicks(0);
-							le.setNoDamageTicks(0);
 						}
 					}
+					if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake")))
+					{
+						LivingEntity le = (LivingEntity)e;
+						if(!Holding.holded.containsKey(le.getUniqueId())) {
+							le.setAI(true);
+						}
+						le.setMaximumNoDamageTicks(0);
+						le.setNoDamageTicks(0);
+					}
 				}
-					
+			}
+
 		}
 	}
 

@@ -11,6 +11,7 @@ import io.github.chw3021.items.armors.ArmorSet;
 import io.github.chw3021.obtains.Obtained;
 import io.github.chw3021.party.Party;
 
+import org.bukkit.event.player.*;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -57,11 +58,6 @@ import org.bukkit.event.entity.EntityDropItemEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemDamageEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -154,7 +150,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
 		}
 		if(ChatColor.stripColor(e.getView().getTitle()).equalsIgnoreCase("FIreskills"))
 		{
-            e.getWhoClicked().setCooldown(Material.FIRE_CHARGE, 2);
+            e.getWhoClicked().setCooldown(CAREFUL, 2);
 			e.setCancelled(true);
 			if(e.getCurrentItem()==null||e.getCurrentItem().getType() == null|| !e.getCurrentItem().hasItemMeta())
 			{
@@ -193,7 +189,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
 				if((ac == Action.RIGHT_CLICK_AIR || ac == Action.RIGHT_CLICK_BLOCK))
 				{
 					ev.setCancelled(true);
-                    p.setCooldown(Material.FIRE_CHARGE, 1);
+                    p.setCooldown(CAREFUL, 1);
 					
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
@@ -301,7 +297,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
 				if((ac == Action.RIGHT_CLICK_AIR || ac == Action.RIGHT_CLICK_BLOCK))
 				{
 					ev.setCancelled(true);
-                    p.setCooldown(Material.FIRE_CHARGE, 1);
+                    p.setCooldown(CAREFUL, 1);
                     Casting(p);
 					
 	            	if(lavaft.containsKey(p.getUniqueId())) {
@@ -386,7 +382,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
 				if((ac == Action.RIGHT_CLICK_AIR || ac == Action.RIGHT_CLICK_BLOCK))
 				{
 					ev.setCancelled(true);
-                    p.setCooldown(Material.FIRE_CHARGE, 1);
+                    p.setCooldown(CAREFUL, 1);
 					
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
@@ -508,7 +504,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
 				if((ac == Action.RIGHT_CLICK_AIR || ac == Action.RIGHT_CLICK_BLOCK))
 				{
 					ev.setCancelled(true);
-                    p.setCooldown(Material.FIRE_CHARGE, 1);
+                    p.setCooldown(CAREFUL, 1);
 
                     Casting(p);
 					
@@ -624,7 +620,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
 				if((ac == Action.RIGHT_CLICK_AIR || ac == Action.RIGHT_CLICK_BLOCK))
 				{
 					ev.setCancelled(true);
-                    p.setCooldown(Material.FIRE_CHARGE, 1);
+                    p.setCooldown(CAREFUL, 1);
 
                     Casting(p);
 					
@@ -690,8 +686,8 @@ public class Fireskills extends Pak implements Serializable, Listener {
 		if( p.getInventory().getItemInMainHand().getType()==Material.BLAZE_ROD && p.isSneaking())
 		{
 			double sec =6*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
-		    
-			
+
+
 			
 
 			final Location tl = gettargetblock(p,5);
@@ -831,7 +827,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
             	Location al = p.getEyeLocation().clone();
             	Location tl = p.getEyeLocation().clone().add(p.getEyeLocation().getDirection().clone().normalize().multiply(3)).clone();
 
-                p.setCooldown(Material.FIRE_CHARGE, 1);
+                p.setCooldown(CAREFUL, 1);
                 p.swingMainHand();
             	AtomicInteger j = new AtomicInteger();
                 
@@ -892,7 +888,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
             		sunlst.remove(p.getUniqueId());
             	}
 				sunls.remove(p.getUniqueId());
-                p.setCooldown(Material.FIRE_CHARGE, 1);
+                p.setCooldown(CAREFUL, 1);
 
 
     			final Location tl = gettargetblock(p,5);
@@ -1045,7 +1041,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
 						.slot(3)
 						.hm(eccooldown)
 						.skillUse(() -> {
-						p.setCooldown(Material.FIRE_CHARGE, 1);
+						p.setCooldown(CAREFUL, 1);
 		                    Casting(p);
 		                	if(lavsht.containsKey(p.getUniqueId())) {
 		                		Bukkit.getScheduler().cancelTask(lavsht.get(p.getUniqueId()));
@@ -1338,124 +1334,66 @@ public class Fireskills extends Pak implements Serializable, Listener {
 	        
 			
 			
-			if(ClassData.pc.get(p.getUniqueId()) == 12 && fsd.Fireball.getOrDefault(p.getUniqueId(),0)>=1 && !p.hasCooldown(Material.FIRE_CHARGE)) {
+			if(ClassData.pc.get(p.getUniqueId()) == 12 && fsd.Fireball.getOrDefault(p.getUniqueId(),0)>=1 && !p.hasCooldown(CAREFUL)) {
 				if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK))
 				{
 					ev.setCancelled(true);
+
+					SkillBuilder bd = new SkillBuilder()
+							.player(p)
+							.cooldown(sec)
+							.kname("화염구")
+							.ename("Fireball")
+							.slot(4)
+							.hm(jmcooldown)
+							.skillUse(() -> {
+								Casting(p);
+								if(magblkt.containsKey(p.getUniqueId())) {
+									Bukkit.getScheduler().cancelTask(magblkt.get(p.getUniqueId()));
+									magblkt.remove(p.getUniqueId());
+								}
+
+								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+									@Override
+									public void run() {
+										if(Proficiency.getpro(p)>=2) {
+											magblk.putIfAbsent(p.getUniqueId(), 0);
+										}
+									}
+								}, 3);
+
+								int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+									@Override
+									public void run() {
+										magblk.remove(p.getUniqueId());
+									}
+								}, 40);
+								magblkt.put(p.getUniqueId(), task);
+
+								Fireball fb = (Fireball) p.launchProjectile(Fireball.class);
+								fb.setYield(0.1f);
+								fb.setBounce(false);
+								fb.setShooter(p);
+								fb.setVelocity(p.getLocation().getDirection().normalize().multiply(2));
+								fb.setIsIncendiary(false);
+								fb.setMetadata("fb of"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+								if(Proficiency.getpro(p)>=1) {
+									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+										@Override
+										public void run() {
+											Fireball fb = (Fireball) p.launchProjectile(Fireball.class);
+											fb.setYield(0.1f);
+											fb.setBounce(false);
+											fb.setShooter(p);
+											fb.setVelocity(p.getLocation().getDirection().normalize().multiply(2));
+											fb.setIsIncendiary(false);
+											fb.setMetadata("fb of"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+										}
+									}, 3);
+								}
+							});
+					bd.execute();
 					
-					
-					if(jmcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is suncty)
-		            {
-		                double timer = (jmcooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d; // geting time in seconds
-		                if(!(timer < 0)) // if timer is still more then 0 or 0
-		                {
-			        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("화염구 재사용 대기시간이 " + String.valueOf(Math.round(timer*10)/10.0) + "초 남았습니다").create());
-						    }
-			        		else {
-			                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Fireball").create());
-			        		}
-		                }
-		                else // if timer is done
-		                {
-		                    jmcooldown.remove(p.getName()); // removing player from HashMap
-
-		                    Casting(p);
-		                	if(magblkt.containsKey(p.getUniqueId())) {
-		                		Bukkit.getScheduler().cancelTask(magblkt.get(p.getUniqueId()));
-		                		magblkt.remove(p.getUniqueId());
-		                	}
-
-		    				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		    	                @Override
-		    	                public void run() {
-		    						if(Proficiency.getpro(p)>=2) {
-		    							magblk.putIfAbsent(p.getUniqueId(), 0);
-		    						}
-		    	                }
-		    	            }, 3); 
-
-		            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		    	                @Override
-		    	                public void run() {
-		    						magblk.remove(p.getUniqueId());
-		    	                }
-		    	            }, 40); 
-		                	magblkt.put(p.getUniqueId(), task);
-		                	
-		                    Fireball fb = (Fireball) p.launchProjectile(Fireball.class);
-		                    fb.setYield(0.1f);
-		                    fb.setBounce(false);
-		                    fb.setShooter(p);
-		                    fb.setVelocity(p.getLocation().getDirection().normalize().multiply(2));
-		                    fb.setIsIncendiary(false);
-							fb.setMetadata("fb of"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-		                    if(Proficiency.getpro(p)>=1) {
-		                		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					                @Override
-					                public void run() {
-					                    Fireball fb = (Fireball) p.launchProjectile(Fireball.class);
-					                    fb.setYield(0.1f);
-					                    fb.setBounce(false);
-					                    fb.setShooter(p);
-					                    fb.setVelocity(p.getLocation().getDirection().normalize().multiply(2));
-					                    fb.setIsIncendiary(false);
-										fb.setMetadata("fb of"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-					                }
-	                			}, 3); 
-		                    }
-							jmcooldown.put(p.getName(), System.currentTimeMillis());  
-		                }
-		            }
-		            else // if cooldown doesn't have players name in it
-		            {
-
-	                    Casting(p);
-	                	if(magblkt.containsKey(p.getUniqueId())) {
-	                		Bukkit.getScheduler().cancelTask(magblkt.get(p.getUniqueId()));
-	                		magblkt.remove(p.getUniqueId());
-	                	}
-
-	    				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	    	                @Override
-	    	                public void run() {
-	    						if(Proficiency.getpro(p)>=2) {
-	    							magblk.putIfAbsent(p.getUniqueId(), 0);
-	    						}
-	    	                }
-	    	            }, 3); 
-
-	            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	    	                @Override
-	    	                public void run() {
-	    						magblk.remove(p.getUniqueId());
-	    	                }
-	    	            }, 40); 
-	                	magblkt.put(p.getUniqueId(), task);
-	                	
-	                    Fireball fb = (Fireball) p.launchProjectile(Fireball.class);
-	                    fb.setYield(0.1f);
-	                    fb.setBounce(false);
-	                    fb.setShooter(p);
-	                    fb.setVelocity(p.getLocation().getDirection().normalize().multiply(2));
-	                    fb.setIsIncendiary(false);
-						fb.setMetadata("fb of"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-	                    if(Proficiency.getpro(p)>=1) {
-	                		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() {
-				                    Fireball fb = (Fireball) p.launchProjectile(Fireball.class);
-				                    fb.setYield(0.1f);
-				                    fb.setBounce(false);
-				                    fb.setShooter(p);
-				                    fb.setVelocity(p.getLocation().getDirection().normalize().multiply(2));
-				                    fb.setIsIncendiary(false);
-									fb.setMetadata("fb of"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-				                }
-                			}, 3); 
-	                    }
-						jmcooldown.put(p.getName(), System.currentTimeMillis());  
-					}
 				} 
 				}
 		}
@@ -1525,7 +1463,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
 		{
 			Action ac = ev.getAction();
 			
-			if(ClassData.pc.get(p.getUniqueId()) == 12 && !p.hasCooldown(Material.FIRE_CHARGE)) {
+			if(ClassData.pc.get(p.getUniqueId()) == 12 && !p.hasCooldown(CAREFUL)) {
 				if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK))
 				{
 					ev.setCancelled(true);
@@ -1644,121 +1582,18 @@ public class Fireskills extends Pak implements Serializable, Listener {
 	    
 		
 		
-		if(ClassData.pc.get(p.getUniqueId()) == 12 && fsd.Spread.getOrDefault(p.getUniqueId(),0)>=1) {			
-			
-					if(pncooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is suncty)
-			        {
-			            double timer = (pncooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d; // geting time in seconds
-			            if(!(timer < 0)) // if timer is still more then 0 or 0
-			            {
-			        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("확산 재사용 대기시간이 " + String.valueOf(Math.round(timer*10)/10.0) + "초 남았습니다").create());
-						    }
-			        		else {
-			                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Spread").create());
-			        		}
-				        }
-			            else // if timer is done
-			            {
-			                pncooldown.remove(p.getName()); // removing player from HashMap
-		                    Casting(p);
-							
-			                ItemStack ifire = new ItemStack(Material.FIRE_CHARGE, 3);
-							p.playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 1, 0);
-							Item fire = p.getWorld().dropItemNaturally(le.getLocation(), ifire);
-							fire.setPickupDelay(9999);
-							fire.setInvulnerable(true);
-							fire.setThrower(p.getUniqueId());
-							fire.setMetadata("af of"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-							fire.setFireTicks(1000);
-							fire.setGlowing(true);
-		                    AtomicInteger k = new AtomicInteger();
+		if(ClassData.pc.get(p.getUniqueId()) == 12 && fsd.Spread.getOrDefault(p.getUniqueId(),0)>=1) {
 
-							for(Entity e : fire.getNearbyEntities(4, 4, 4)) {
-				        		if (e instanceof Player) 
-								{
-									
-									Player p1 = (Player) e;
-									if(Party.hasParty(p) && Party.hasParty(p1))	{
-									if(Party.getParty(p).equals(Party.getParty(p1)))
-										{
-										return;
-										}
-									}
-								}
-								if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
-				                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-						                @Override
-						                public void run() {
-											LivingEntity le = (LivingEntity)e;
-											fire.teleport(le);
-											p.playSound(fire.getLocation(), Sound.ITEM_FIRECHARGE_USE, 1, 0);
-											p.getWorld().spawnParticle(Particle.FLAME, fire.getLocation(), 10, 1,1,1,0);
-					                		atk1(0.5*(1+fsd.Spread.get(p.getUniqueId())*0.08), p, le);
-					                		
-											if(Proficiency.getpro(p)>=1) {
+			SkillBuilder bd = new SkillBuilder()
+					.player(p)
+					.cooldown(sec)
+					.kname("확산")
+					.ename("Spread")
+					.slot(5)
+					.hm(pncooldown)
+					.skillUse(() -> {Casting(p);
 
-								                ItemStack ifire = new ItemStack(Material.FIRE_CHARGE, 3);
-												p.playSound(le.getLocation(), Sound.ITEM_FIRECHARGE_USE, 1, 0);
-												Item fire = p.getWorld().dropItemNaturally(le.getLocation(), ifire);
-												fire.setPickupDelay(9999);
-												fire.setInvulnerable(true);
-												fire.setThrower(p.getUniqueId());
-												fire.setMetadata("af of"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-												fire.setFireTicks(1000);
-												fire.setGlowing(true);
-							                    AtomicInteger k = new AtomicInteger();
-
-												for(Entity e : fire.getNearbyEntities(4, 4, 4)) {
-									        		if (e instanceof Player) 
-													{
-														
-														Player p1 = (Player) e;
-														if(Party.hasParty(p) && Party.hasParty(p1))	{
-														if(Party.getParty(p).equals(Party.getParty(p1)))
-															{
-															return;
-															}
-														}
-													}
-													if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
-									                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-											                @Override
-											                public void run() {
-																LivingEntity le = (LivingEntity)e;
-																fire.teleport(le);
-																p.playSound(fire.getLocation(), Sound.ITEM_FIRECHARGE_USE, 1, 0);
-																p.getWorld().spawnParticle(Particle.FLAME, fire.getLocation(), 10, 1,1,1,0);
-										                		atk1(0.5*(1+fsd.Spread.get(p.getUniqueId())*0.08), p, le);
-											                }
-											            }, k.incrementAndGet()*4); 
-													}
-												}
-							                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-									                @Override
-									                public void run() {
-									                	fire.remove();
-									                }
-									            }, k.incrementAndGet()*4); 
-											}
-						                }
-						            }, k.incrementAndGet()*4); 
-								}
-							}
-		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() {
-				                	fire.remove();
-				                }
-				            }, k.incrementAndGet()*4); 
-				            pncooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-			            }
-			        }
-			        else // if cooldown doesn't have players name in it
-			        {
-	                    Casting(p);
-						
-			        	ItemStack ifire = new ItemStack(Material.FIRE_CHARGE, 3);
+						ItemStack ifire = new ItemStack(Material.FIRE_CHARGE, 3);
 						p.playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 1, 0);
 						Item fire = p.getWorld().dropItemNaturally(le.getLocation(), ifire);
 						fire.setPickupDelay(9999);
@@ -1767,33 +1602,33 @@ public class Fireskills extends Pak implements Serializable, Listener {
 						fire.setMetadata("af of"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 						fire.setFireTicks(1000);
 						fire.setGlowing(true);
-	                    new AtomicInteger();
-	                    AtomicInteger k = new AtomicInteger();
+						AtomicInteger k = new AtomicInteger();
 
-						for(Entity e : fire.getNearbyEntities(8, 4, 8)) {
-			        		if (e instanceof Player) 
+						for(Entity e : fire.getNearbyEntities(4, 4, 4)) {
+							if (e instanceof Player)
 							{
-								
+
 								Player p1 = (Player) e;
 								if(Party.hasParty(p) && Party.hasParty(p1))	{
-								if(Party.getParty(p).equals(Party.getParty(p1)))
+									if(Party.getParty(p).equals(Party.getParty(p1)))
 									{
-									return;
+										return;
 									}
 								}
 							}
 							if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
-			                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					                @Override
-					                public void run() {
+								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+									@Override
+									public void run() {
 										LivingEntity le = (LivingEntity)e;
 										fire.teleport(le);
 										p.playSound(fire.getLocation(), Sound.ITEM_FIRECHARGE_USE, 1, 0);
 										p.getWorld().spawnParticle(Particle.FLAME, fire.getLocation(), 10, 1,1,1,0);
-				                		atk1(0.5*(1+fsd.Spread.get(p.getUniqueId())*0.08), p, le);
+										atk1(0.5*(1+fsd.Spread.get(p.getUniqueId())*0.08), p, le);
+
 										if(Proficiency.getpro(p)>=1) {
 
-							                ItemStack ifire = new ItemStack(Material.FIRE_CHARGE, 3);
+											ItemStack ifire = new ItemStack(Material.FIRE_CHARGE, 3);
 											p.playSound(le.getLocation(), Sound.ITEM_FIRECHARGE_USE, 1, 0);
 											Item fire = p.getWorld().dropItemNaturally(le.getLocation(), ifire);
 											fire.setPickupDelay(9999);
@@ -1802,374 +1637,246 @@ public class Fireskills extends Pak implements Serializable, Listener {
 											fire.setMetadata("af of"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 											fire.setFireTicks(1000);
 											fire.setGlowing(true);
-						                    AtomicInteger k = new AtomicInteger();
+											AtomicInteger k = new AtomicInteger();
 
 											for(Entity e : fire.getNearbyEntities(4, 4, 4)) {
-								        		if (e instanceof Player) 
+												if (e instanceof Player)
 												{
-													
+
 													Player p1 = (Player) e;
 													if(Party.hasParty(p) && Party.hasParty(p1))	{
-													if(Party.getParty(p).equals(Party.getParty(p1)))
+														if(Party.getParty(p).equals(Party.getParty(p1)))
 														{
-														return;
+															return;
 														}
 													}
 												}
 												if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
-								                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-										                @Override
-										                public void run() {
+													Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+														@Override
+														public void run() {
 															LivingEntity le = (LivingEntity)e;
 															fire.teleport(le);
 															p.playSound(fire.getLocation(), Sound.ITEM_FIRECHARGE_USE, 1, 0);
 															p.getWorld().spawnParticle(Particle.FLAME, fire.getLocation(), 10, 1,1,1,0);
-									                		atk1(0.5*(1+fsd.Spread.get(p.getUniqueId())*0.08), p, le);
-										                }
-										            }, k.incrementAndGet()*4); 
+															atk1(0.5*(1+fsd.Spread.get(p.getUniqueId())*0.08), p, le);
+														}
+													}, k.incrementAndGet()*4);
 												}
 											}
-						                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-								                @Override
-								                public void run() {
-								                	fire.remove();
-								                }
-								            }, k.incrementAndGet()*4); 
+											Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+												@Override
+												public void run() {
+													fire.remove();
+												}
+											}, k.incrementAndGet()*4);
 										}
-										
-					                }
-					            }, k.incrementAndGet()*4); 
+									}
+								}, k.incrementAndGet()*4);
 							}
 						}
-	                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() {
-			                	fire.remove();
-			                }
-			            }, k.incrementAndGet()*4); 
-			            pncooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-			        }
+						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+							@Override
+							public void run() {
+								fire.remove();
+							}
+						}, k.incrementAndGet()*4);
+					});
+			bd.execute();
+					
 					}
 			
 		}}
 	}
-	
-	
-	public void ULT(PlayerDropItemEvent ev)        
-    {
+
+
+	public void ULT(PlayerItemHeldEvent ev)
+	{
 		Player p = (Player)ev.getPlayer();
-		p.getLocation();
-		Item it = ev.getItemDrop();
-		ItemStack is = it.getItemStack();
-	    
+		if(!isCombat(p)) {
+			return;
+		}
+		ItemStack is = p.getInventory().getItemInMainHand();
 		
-		
-		if(ClassData.pc.get(p.getUniqueId()) == 12 && ((is.getType()==Material.BLAZE_ROD)) && p.isSneaking()&& Proficiency.getpro(p) >=1)
+		if(ClassData.pc.get(p.getUniqueId()) == 12 && ((is.getType()==Material.BLAZE_ROD)) && ev.getNewSlot()==3 && p.isSneaking()&& Proficiency.getpro(p) >=1)
 			{
-				p.setCooldown(Material.FIRE_CHARGE, 2);
+				p.setCooldown(CAREFUL, 2);
 				ev.setCancelled(true);
-				if(aultcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is suncty)
-	            {
-	                double timer = (aultcooldown.get(p.getName())/1000d + 70/Proficiency.getpro(p)*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d)) - System.currentTimeMillis()/1000d; // geting time in seconds
-	                if(!(timer < 0)) // if timer is still more then 0 or 0
-	                {
-		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("불사조의 날갯짓 재사용 대기시간이 " + String.valueOf(Math.round(timer*10)/10.0) + "초 남았습니다").create());
-					    }
-		        		else {
-		                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Phoenix Flap").create());
-		        		}
-		            }
-	                else // if timer is done
-	                {
-	                    aultcooldown.remove(p.getName()); // removing player from HashMap
-	                    Casting(p);
-						
-	                	final Location one = p.getLocation().clone();
-	                    p.playSound(p.getLocation(), Sound.ENTITY_PHANTOM_AMBIENT, 1.0f, 0.0f);
-						Holding.invur(p, 120l);
-						for(int i = 0; i <5; i++) {
-		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() {
-									HashSet<Location> flap = new HashSet<Location>();
-				                    HashSet<LivingEntity> les = new HashSet<LivingEntity>();
-				                    for(double angle= -Math.PI/2; angle<Math.PI/2; angle += Math.PI/90) {
-				                    	for(int dou = 0; dou <15; dou+=1) { 	
-					                    	flap.add(one.clone().add(one.getDirection().clone().normalize().rotateAroundY(angle).multiply(dou)));
-				                    	}
-				                    }
-									p.playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 1, 0);
-				                    p.playSound(p.getLocation(), Sound.ENTITY_PHANTOM_FLAP, 1.0f, 0f);
-				                    p.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_FLAP, 1.0f, 1f);
-				                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 0f);
-				                    flap.forEach(l -> {
-										p.getWorld().spawnParticle(Particle.FLAME, l, 10, 2,2,2,0.1);
-										for(Entity e : l.getWorld().getNearbyEntities(l,2, 7, 2)) {
-							        		if (e instanceof Player) 
-											{
-												
-												Player p1 = (Player) e;
-												if(Party.hasParty(p) && Party.hasParty(p1))	{
-												if(Party.getParty(p).equals(Party.getParty(p1)))
-													{
-													return;
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(70/Proficiency.getpro(p)*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d))
+						.kname("불사조의 날갯짓")
+						.ename("Flapping of Phoenix")
+						.slot(6)
+						.hm(aultcooldown)
+						.skillUse(() -> {
+							Casting(p);
+
+							final Location one = p.getLocation().clone();
+							p.playSound(p.getLocation(), Sound.ENTITY_PHANTOM_AMBIENT, 1.0f, 0.0f);
+							Holding.invur(p, 120l);
+							for(int i = 0; i <5; i++) {
+								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+									@Override
+									public void run() {
+										HashSet<Location> flap = new HashSet<Location>();
+										HashSet<LivingEntity> les = new HashSet<LivingEntity>();
+										for(double angle= -Math.PI; angle<0; angle += Math.PI/90) {
+											for(int dou = 0; dou <15; dou+=1) {
+												flap.add(one.clone().add(one.getDirection().clone().normalize().rotateAroundY(angle).multiply(dou)));
+											}
+										}
+										for(double angle= Math.PI/2; angle>0; angle -= Math.PI/90) {
+											for(int dou = 0; dou <15; dou+=1) {
+												flap.add(one.clone().add(one.getDirection().clone().normalize().rotateAroundY(angle).multiply(dou)));
+											}
+										}
+										p.playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 1, 0);
+										p.playSound(p.getLocation(), Sound.ENTITY_PHANTOM_FLAP, 1.0f, 0f);
+										p.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_FLAP, 1.0f, 1f);
+										p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 0f);
+										flap.forEach(l -> {
+											p.getWorld().spawnParticle(Particle.FLAME, l, 10, 2,2,2,0.1);
+											for(Entity e : l.getWorld().getNearbyEntities(l,2, 7, 2)) {
+												if (e instanceof Player)
+												{
+
+													Player p1 = (Player) e;
+													if(Party.hasParty(p) && Party.hasParty(p1))	{
+														if(Party.getParty(p).equals(Party.getParty(p1)))
+														{
+															return;
+														}
 													}
 												}
-											}
-											if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
-												LivingEntity le = (LivingEntity)e;
-												les.add(le);	
-											}
-										}
-							                    
-				                    });
-				                    for(LivingEntity le: les) {
-				                		atk1(3.5, p, le);
-														                    	
-				                    }
-						                    
-				                }
-				            }, i*20+15); 	                    	
-	                    }
-		                aultcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-		            
-	                }
-	            }
-	            else // if cooldown doesn't have players name in it
-	            {
-	            	final Location one = p.getLocation().clone();
-                    p.playSound(p.getLocation(), Sound.ENTITY_PHANTOM_AMBIENT, 1.0f, 0.0f);
-					Holding.invur(p, 120l);
-					for(int i = 0; i <5; i++) {
-	                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() {
-								HashSet<Location> flap = new HashSet<Location>();
-			                    HashSet<LivingEntity> les = new HashSet<LivingEntity>();
-			                    for(double angle= -Math.PI/2; angle<Math.PI/2; angle += Math.PI/90) {
-			                    	for(int dou = 0; dou <15; dou+=1) { 	
-				                    	flap.add(one.clone().add(one.getDirection().clone().normalize().rotateAroundY(angle).multiply(dou)));
-			                    	}
-			                    }
-			                    
-								p.playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 1, 0);
-			                    p.playSound(p.getLocation(), Sound.ENTITY_PHANTOM_FLAP, 1.0f, 0f);
-			                    p.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_FLAP, 1.0f, 1f);
-			                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 0f);
-			                    flap.forEach(l -> {
-									p.getWorld().spawnParticle(Particle.FLAME, l, 2, 1,1,1,0.1);
-									for(Entity e : l.getWorld().getNearbyEntities(l,2, 7, 2)) {
-						        		if (e instanceof Player) 
-										{
-											
-											Player p1 = (Player) e;
-											if(Party.hasParty(p) && Party.hasParty(p1))	{
-											if(Party.getParty(p).equals(Party.getParty(p1)))
-												{
-												return;
+												if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
+													LivingEntity le = (LivingEntity)e;
+													les.add(le);
 												}
 											}
+
+										});
+										for(LivingEntity le: les) {
+											atk1(3.5, p, le);
+
 										}
-										if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
-											LivingEntity le = (LivingEntity)e;
-											les.add(le);	
-										}
+
 									}
-						                    
-			                    });
-			                    for(LivingEntity le: les) {
-			                		atk1(3.5, p, le);
-													                    	
-			                    }
-					                    
-			                }
-			            }, i*20+15); 	                    	
-                    }
-	                aultcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-	            }
+								}, i*20+15);
+							}
+						});
+				bd.execute();
+
 			}	
 			
 			
     }
 
 
-	
-	public void ULT2(PlayerDropItemEvent ev)        
-    {
+
+	public void ULT2(PlayerItemHeldEvent ev)
+	{
 		Player p = (Player)ev.getPlayer();
-		p.getLocation();
-		Item it = ev.getItemDrop();
-		ItemStack is = it.getItemStack();
-	    
+		if(!isCombat(p)) {
+			return;
+		}
+		ItemStack is = p.getInventory().getItemInMainHand();
 		
-		
-		if(ClassData.pc.get(p.getUniqueId()) == 12 && ((is.getType()==Material.BLAZE_ROD)) && !p.isSneaking()&& p.isSprinting()&& Proficiency.getpro(p) >=2)
+		if(ClassData.pc.get(p.getUniqueId()) == 12 && ((is.getType()==Material.BLAZE_ROD)) && p.isSneaking() && ev.getNewSlot()==4 && Proficiency.getpro(p) >=2)
 			{
-			p.setCooldown(Material.FIRE_CHARGE, 2);
+			p.setCooldown(CAREFUL, 2);
 				ev.setCancelled(true);
-				if(ault2cooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is suncty)
-	            {
-	                double timer = (ault2cooldown.get(p.getName())/1000d + 80*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d)) - System.currentTimeMillis()/1000d; // geting time in seconds
-	                if(!(timer < 0)) // if timer is still more then 0 or 0
-	                {
-		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("두번째 태양 재사용 대기시간이 " + String.valueOf(Math.round(timer*10)/10.0) + "초 남았습니다").create());
-					    }
-		        		else {
-		                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use New SunRise").create());
-		        		}
-		            }
-	                else // if timer is done
-	                {
-	                    ault2cooldown.remove(p.getName()); // removing player from HashMap
-	                    Casting(p);
-						
-	                    final Location sl = p.getLocation();
-	                    final Location pl = p.getLocation().clone().add(0, 3, 0);
-	                    HashSet<Location> spl = new HashSet<>();
-						HashMap<Location, Block> sph = new HashMap<Location, Block>();
-	                    Holding.invur(p,120l);
-	                    p.teleport(pl);
-	                    final Location tl = pl.clone().add(0, 10, 0);
-	                    p.playSound(pl, Sound.BLOCK_FIRE_AMBIENT, 1.0f, 0f);
-	                    p.playSound(pl, Sound.BLOCK_LAVA_AMBIENT, 1.0f, 0f);
-	                    p.playSound(pl, Sound.AMBIENT_BASALT_DELTAS_ADDITIONS, 1.0f, 0f);
-	                    p.playSound(pl, Sound.ENTITY_GENERIC_BURN, 1.0f, 0f);
-	                    p.playSound(pl, Sound.ENTITY_EVOKER_PREPARE_SUMMON, 1.0f, 0f);
-	                    p.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,120,120,false,false));
-	                    
-	            		for(int ix = -4; ix<4; ix++) {
-	            			for(int iy = -4; iy<4; iy++) {
-	            				for(int iz = -4; iz<4; iz++) {
-	            					if((ix*ix + iy*iy + iz*iz<=16)){
-	            						spl.add(tl.clone().add(ix, iy, iz));
-	            						sph.put(tl.clone().add(ix, iy, iz), tl.clone().add(ix, iy, iz).getBlock());
-	            					}
-	            				}
-	            			}
-	            		}
-	            		spl.forEach(l -> {
-	            			p.sendBlockChange(l, Material.SHROOMLIGHT.createBlockData());
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(80*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d))
+						.kname("두번째 태양")
+						.ename("New SunRise")
+						.slot(7)
+						.hm(prcooldown)
+						.skillUse(() -> {
+							Casting(p);
 
-		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() {
-			            			p.sendBlockChange(l,sph.get(l).getBlockData());
-				                }
-				            }, 120); 	 
-	            		});
-	            		
-						for(int i = 0; i <10; i++) {
-		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() {
+							final World pw = p.getWorld();
+							final Location sl = p.getLocation();
+							final Location pl = p.getLocation().clone().add(0, 3, 0);
+							HashSet<Location> spl = new HashSet<>();
+							HashMap<Location, Block> sph = new HashMap<Location, Block>();
+							Holding.invur(p,120l);
+							p.teleport(pl);
+							final Location tl = pl.clone().add(0, 10, 0);
+							p.playSound(pl, Sound.BLOCK_FIRE_AMBIENT, 1.0f, 0f);
+							p.playSound(pl, Sound.BLOCK_LAVA_AMBIENT, 1.0f, 0f);
+							p.playSound(pl, Sound.AMBIENT_BASALT_DELTAS_ADDITIONS, 1.0f, 0f);
+							p.playSound(pl, Sound.ENTITY_GENERIC_BURN, 1.0f, 0f);
+							p.playSound(pl, Sound.ENTITY_EVOKER_PREPARE_SUMMON, 1.0f, 0f);
+							p.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,120,120,false,false));
 
-									for(Entity e : pl.getWorld().getNearbyEntities(pl,20, 20, 20)) {
-						        		if (e instanceof Player) 
-										{
-											
-											Player p1 = (Player) e;
-											if(Party.hasParty(p) && Party.hasParty(p1))	{
-											if(Party.getParty(p).equals(Party.getParty(p1)))
-												{
-												return;
-												}
-											}
+							for(int ix = -4; ix<4; ix++) {
+								for(int iy = -4; iy<4; iy++) {
+									for(int iz = -4; iz<4; iz++) {
+										if((ix*ix + iy*iy + iz*iz<=16) && ix*ix + iy*iy + iz*iz>=14){
+											spl.add(tl.clone().add(ix, iy, iz));
 										}
-										if(p!=e &&e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
-											LivingEntity le = (LivingEntity)e;
-					                		atk1(2.5, p, le);
-											le.teleport(sl);
-										}
-									}
-									pl.getWorld().spawnParticle(Particle.FLAME, pl, 2000, 20,20,20,1);
-									pl.getWorld().spawnParticle(Particle.WAX_ON, pl, 500, 20,20,20,1);
-									
-									p.playSound(pl, Sound.ITEM_FIRECHARGE_USE, 1, 0);
-				                    p.playSound(pl, Sound.ENTITY_PHANTOM_FLAP, 1.0f, 0f);
-				                    p.playSound(pl, Sound.BLOCK_POINTED_DRIPSTONE_DRIP_LAVA, 1.0f, 0f);
-				                    p.playSound(pl, Sound.BLOCK_FIRE_AMBIENT, 1.0f, 2f);
-				                    p.playSound(pl, Sound.ENTITY_GENERIC_BURN, 1.0f, 2f);
-				                }
-				            }, i*10+20); 	    
-						}
-		                ault2cooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-		            
-	                }
-	            }
-	            else // if cooldown doesn't have players name in it
-	            {
-                    final Location sl = p.getLocation();
-                    final Location pl = p.getLocation().clone().add(0, 3, 0);
-                    HashSet<Location> spl = new HashSet<>();
-					HashMap<Location, Block> sph = new HashMap<Location, Block>();
-                    Holding.invur(p,120l);
-                    p.teleport(pl);
-                    final Location tl = pl.clone().add(0, 10, 0);
-                    p.playSound(pl, Sound.BLOCK_FIRE_AMBIENT, 1.0f, 0f);
-                    p.playSound(pl, Sound.BLOCK_LAVA_AMBIENT, 1.0f, 0f);
-                    p.playSound(pl, Sound.AMBIENT_BASALT_DELTAS_ADDITIONS, 1.0f, 0f);
-                    p.playSound(pl, Sound.ENTITY_GENERIC_BURN, 1.0f, 0f);
-                    p.playSound(pl, Sound.ENTITY_EVOKER_PREPARE_SUMMON, 1.0f, 0f);
-                    p.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,120,120,false,false));
-
-            		for(int ix = -4; ix<4; ix++) {
-            			for(int iy = -4; iy<4; iy++) {
-            				for(int iz = -4; iz<4; iz++) {
-            					if((ix*ix + iy*iy + iz*iz<=16)){
-            						spl.add(tl.clone().add(ix, iy, iz));
-            						sph.put(tl.clone().add(ix, iy, iz), tl.clone().add(ix, iy, iz).getBlock());
-            					}
-            				}
-            			}
-            		}
-            		spl.forEach(l -> {
-            			p.sendBlockChange(l, Material.SHROOMLIGHT.createBlockData());
-
-	                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() {
-		            			p.sendBlockChange(l,sph.get(l).getBlockData());
-			                }
-			            }, 120); 	 
-            		});
-					for(int i = 0; i <10; i++) {
-	                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() {
-
-								for(Entity e : pl.getWorld().getNearbyEntities(pl,20, 20, 20)) {
-					        		if (e instanceof Player) 
-									{
-										
-										Player p1 = (Player) e;
-										if(Party.hasParty(p) && Party.hasParty(p1))	{
-										if(Party.getParty(p).equals(Party.getParty(p1)))
-											{
-											return;
-											}
-										}
-									}
-									if(p!=e &&e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
-										LivingEntity le = (LivingEntity)e;
-				                		atk1(2.5, p, le);	
-										le.teleport(sl);
 									}
 								}
-								pl.getWorld().spawnParticle(Particle.FLAME, pl, 2000, 20,20,20,1);
-								pl.getWorld().spawnParticle(Particle.WAX_ON, pl, 500, 20,20,20,1);
-								
-								p.playSound(pl, Sound.ITEM_FIRECHARGE_USE, 1, 0);
-			                    p.playSound(pl, Sound.ENTITY_PHANTOM_FLAP, 1.0f, 0f);
-			                    p.playSound(pl, Sound.BLOCK_POINTED_DRIPSTONE_DRIP_LAVA, 1.0f, 0f);
-			                    p.playSound(pl, Sound.BLOCK_FIRE_AMBIENT, 1.0f, 2f);
-			                    p.playSound(pl, Sound.ENTITY_GENERIC_BURN, 1.0f, 2f);
-			                }
-			            }, i*10+20); 	    
-					}
-	                ault2cooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-	            }
+							}
+							spl.forEach(l -> {
+								FallingBlock fallingb = pw.spawnFallingBlock(l,  Material.SHROOMLIGHT.createBlockData());
+								fallingb.setInvulnerable(true);
+								fallingb.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
+								fallingb.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+								fallingb.setMetadata("wrose", new FixedMetadataValue(RMain.getInstance(),p.getName()));
+								fallingb.setDropItem(false);
+								fallingb.setHurtEntities(false);
+								fallingb.setGravity(false);
+								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+									@Override
+									public void run() {
+										fallingb.setMetadata("magblk", new FixedMetadataValue(RMain.getInstance(),p.getName()));
+										fallingb.setDropItem(true);
+										fallingb.setHurtEntities(true);
+										fallingb.setGravity(true);
+									}
+								}, 120);
+							});
+
+							for(int i = 0; i <10; i++) {
+								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+									@Override
+									public void run() {
+
+										for(Entity e : pl.getWorld().getNearbyEntities(pl,20, 20, 20)) {
+											if (e instanceof Player)
+											{
+
+												Player p1 = (Player) e;
+												if(Party.hasParty(p) && Party.hasParty(p1))	{
+													if(Party.getParty(p).equals(Party.getParty(p1)))
+													{
+														return;
+													}
+												}
+											}
+											if(p!=e &&e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
+												LivingEntity le = (LivingEntity)e;
+												atk1(0.1, p, le);
+												le.teleport(sl);
+											}
+										}
+										pl.getWorld().spawnParticle(Particle.FLAME, pl, 2000, 20,20,20,1);
+										pl.getWorld().spawnParticle(Particle.WAX_ON, pl, 500, 20,20,20,1);
+
+										p.playSound(pl, Sound.ITEM_FIRECHARGE_USE, 1, 0);
+										p.playSound(pl, Sound.ENTITY_PHANTOM_FLAP, 1.0f, 0f);
+										p.playSound(pl, Sound.BLOCK_POINTED_DRIPSTONE_DRIP_LAVA, 1.0f, 0f);
+										p.playSound(pl, Sound.BLOCK_FIRE_AMBIENT, 1.0f, 2f);
+										p.playSound(pl, Sound.ENTITY_GENERIC_BURN, 1.0f, 2f);
+									}
+								}, i*10+20);
+							}
+						});
+				bd.execute();
+
 			}	
 			
 			

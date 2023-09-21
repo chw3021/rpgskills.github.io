@@ -27,202 +27,202 @@ public class FrostSkillsGui extends SkillsGui {
 
 		if (p.getLocale().equalsIgnoreCase("ko_kr")) {
 
-			itemset("¾óÀ½¼öÁ¤", Material.BLUE_ICE, 0, 1,
+			itemset("ì–¼ìŒìˆ˜ì •", Material.BLUE_ICE, 0, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + bsd.FrozenCrystal.getOrDefault(p.getUniqueId(), 0), "",
-							ChatColor.UNDERLINE + "[¼­¸® °è¿­]", "¼Õ¹Ù²Ù±â", "Àç»ç¿ë½Ã ÀÏÂï ±ú¶ß¸±¼ö ÀÖ½À´Ï´Ù", "",
+							ChatColor.UNDERLINE + "[ì„œë¦¬ ê³„ì—´]", "ì†ë°”ê¾¸ê¸°", "ì¬ì‚¬ìš©ì‹œ ì¼ì° ê¹¨ëœ¨ë¦´ìˆ˜ ìˆìŠµë‹ˆë‹¤", "",
 							ChatColor.BOLD + ""
 									+ BigDecimal.valueOf(0.765 * (1+bsd.FrozenCrystal.getOrDefault(p.getUniqueId(), 0) * 0.055))
-											.setScale(2, RoundingMode.HALF_EVEN)+"D",
+									.setScale(2, RoundingMode.HALF_EVEN)+"D",
 							"Master LV.50"),
 					0, Frostskillsinv);
-			itemset("¿ì¹Ú", Material.PACKED_ICE, 0, 1,
+			itemset("ìš°ë°•", Material.PACKED_ICE, 0, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + bsd.Hailstones.getOrDefault(p.getUniqueId(), 0), "",
-							ChatColor.UNDERLINE + "[¼­¸® °è¿­]", "¿õÅ©¸®±â + ¼Õ¹Ù²Ù±â", "",
+							ChatColor.UNDERLINE + "[ì„œë¦¬ ê³„ì—´]", "ì›…í¬ë¦¬ê¸° + ì†ë°”ê¾¸ê¸°", "",
 							ChatColor.BOLD + "20 X "
 									+ BigDecimal.valueOf(0.16 * (1+bsd.Hailstones.getOrDefault(p.getUniqueId(), 0) * 0.018))
-											.setScale(2, RoundingMode.HALF_EVEN)+"D",
+									.setScale(2, RoundingMode.HALF_EVEN)+"D",
 							"Master LV.50"),
 					1, Frostskillsinv);
-			itemset("°íµå¸§È­»ì", Material.ICE, 0, 1,
+			itemset("ê³ ë“œë¦„í™”ì‚´", Material.ICE, 0, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + bsd.IcicleShot.getOrDefault(p.getUniqueId(), 0), "",
-							ChatColor.UNDERLINE + "[¼­¸® °è¿­]", "¿ìÅ¬¸¯", "",
+							ChatColor.UNDERLINE + "[ì„œë¦¬ ê³„ì—´]", "ìš°í´ë¦­", "",
 							ChatColor.BOLD + "3 X "
 									+ BigDecimal.valueOf(0.32 * (1+bsd.IcicleShot.getOrDefault(p.getUniqueId(), 0) * 0.031))
-											.setScale(2, RoundingMode.HALF_EVEN)+"D",
+									.setScale(2, RoundingMode.HALF_EVEN)+"D",
 							"Master LV.50"),
 					2, Frostskillsinv);
-			itemset("°Å´ë°íµå¸§", Material.PRISMARINE_SHARD, 0, 1,
+			itemset("ê±°ëŒ€ê³ ë“œë¦„", Material.PRISMARINE_SHARD, 0, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + bsd.IceSpikes.getOrDefault(p.getUniqueId(), 0), "",
-							ChatColor.UNDERLINE + "[¼­¸® °è¿­]", "¿õÅ©¸®±â + ¿ìÅ¬¸¯", "",
+							ChatColor.UNDERLINE + "[ì„œë¦¬ ê³„ì—´]", "ì›…í¬ë¦¬ê¸° + ìš°í´ë¦­", "",
 							ChatColor.BOLD + "25 X "
 									+ BigDecimal.valueOf(0.23 * (1 + bsd.IceSpikes.getOrDefault(p.getUniqueId(), 0) * 0.025))
-											.setScale(2, RoundingMode.HALF_EVEN)+"D",
+									.setScale(2, RoundingMode.HALF_EVEN)+"D",
 							"Master LV.50"),
 					3, Frostskillsinv);
-			itemset("±Õ¿­", Material.DIAMOND_PICKAXE, 0, 1,
+			itemset("ê· ì—´", Material.DIAMOND_PICKAXE, 0, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + bsd.Crack.getOrDefault(p.getUniqueId(), 0), "",
-							ChatColor.UNDERLINE + "[¼­¸® °è¿­]", "µ¿»óÀÔÀº Àû¿¡°Ô ±ÙÁ¢°ø°İ + ¿õÅ©¸®±â", "",
+							ChatColor.UNDERLINE + "[ì„œë¦¬ ê³„ì—´]", "ë™ìƒì…ì€ ì ì—ê²Œ ê·¼ì ‘ê³µê²© + ì›…í¬ë¦¬ê¸°", "",
 							ChatColor.BOLD + " X "
 									+ BigDecimal.valueOf(2.5+bsd.Crack.getOrDefault(p.getUniqueId(), 0) * 2.6).setScale(2,
-											RoundingMode.HALF_EVEN)+"D",
+									RoundingMode.HALF_EVEN)+"D",
 							"Master LV.50"),
 					4, Frostskillsinv);
-			itemset("´«¹Ù¶÷", Material.SNOW_BLOCK, 0, 1,
+			itemset("ëˆˆë°”ëŒ", Material.SNOW_BLOCK, 0, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + bsd.SnowBreeze.getOrDefault(p.getUniqueId(), 0), "",
-							ChatColor.UNDERLINE + "[¼­¸® °è¿­]", "Á¡ÇÁ + ÁÂÅ¬¸¯", "", ChatColor.BOLD + "0.25D",
+							ChatColor.UNDERLINE + "[ì„œë¦¬ ê³„ì—´]", "ì í”„ + ì¢Œí´ë¦­", "", ChatColor.BOLD + "0.25D",
 							"Master LV.1"),
 					5, Frostskillsinv);
-			itemset("µ¿»ó", Material.BOOK, 0, 1, Arrays.asList(
-					ChatColor.AQUA + "LV." + bsd.Frostbite.getOrDefault(p.getUniqueId(), 0), "", "°ø°İ·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù",
-					"¼­¸®°è¿­ ÀúÇ×·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù", "3¹ø °ø°İ´çÇÑ ÀûÀº µ¿»ó¿¡ °É·Á", "2ÃÊµ¿¾È °æÁ÷»óÅÂ°¡ µË´Ï´Ù(´ë±â½Ã°£ 5ÃÊ)", "µ¿»óÇÇÇØ¿Í µĞÈ­¿¡ ¸é¿ªÀÌ µË´Ï´Ù", "",
-					ChatColor.BOLD + " X "
-							+ BigDecimal.valueOf(1.15 * (1 + bsd.Frostbite.getOrDefault(p.getUniqueId(), 0) * 0.045))
+			itemset("ë™ìƒ", Material.BOOK, 0, 1, Arrays.asList(
+							ChatColor.AQUA + "LV." + bsd.Frostbite.getOrDefault(p.getUniqueId(), 0), "", "ê³µê²©ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤",
+							"ì„œë¦¬ê³„ì—´ ì €í•­ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤", "3ë²ˆ ê³µê²©ë‹¹í•œ ì ì€ ë™ìƒì— ê±¸ë ¤", "2ì´ˆë™ì•ˆ ê²½ì§ìƒíƒœê°€ ë©ë‹ˆë‹¤(ëŒ€ê¸°ì‹œê°„ 5ì´ˆ)", "ë™ìƒí”¼í•´ì™€ ë‘”í™”ì— ë©´ì—­ì´ ë©ë‹ˆë‹¤", "",
+							ChatColor.BOLD + " X "
+									+ BigDecimal.valueOf(1.15 * (1 + bsd.Frostbite.getOrDefault(p.getUniqueId(), 0) * 0.045))
 									.setScale(2, RoundingMode.HALF_EVEN)),
 					7, Frostskillsinv);
 			if (Proficiency.getpro(p) < 1) {
-				itemset("ÃßÀ§(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/29315"), 9, Frostskillsinv);
-				itemset("´«»çÅÂ(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/29315"), 10, Frostskillsinv);
-				itemset("´«µ¢ÀÌ(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/29315"), 11, Frostskillsinv);
-				itemset("±Ø¼Ò¿ëµ¹ÀÌ(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/29315"), 12, Frostskillsinv);
-				itemset("Å©·¹¹Ù½º(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/29315"), 13, Frostskillsinv);
-				itemset("ºùÆø(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/29315"), 14, Frostskillsinv);
-				itemset("³ÃÇ÷(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/29315"), 16, Frostskillsinv);
-				itemset("¼­¸®ÆøÇ³(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/29315"), 17, Frostskillsinv);
+				itemset("ì¶”ìœ„(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/29315"), 9, Frostskillsinv);
+				itemset("ëˆˆì‚¬íƒœ(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/29315"), 10, Frostskillsinv);
+				itemset("ëˆˆë©ì´(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/29315"), 11, Frostskillsinv);
+				itemset("ê·¹ì†Œìš©ëŒì´(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/29315"), 12, Frostskillsinv);
+				itemset("í¬ë ˆë°”ìŠ¤(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/29315"), 13, Frostskillsinv);
+				itemset("ë¹™í­(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/29315"), 14, Frostskillsinv);
+				itemset("ëƒ‰í˜ˆ(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/29315"), 16, Frostskillsinv);
+				itemset("ì„œë¦¬í­í’(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/29315"), 17, Frostskillsinv);
 			} else if (Proficiency.getpro(p) < 2 && Proficiency.getpro(p) >= 1) {
-				itemset("ÇÑ±â", Material.POWDER_SNOW_BUCKET, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¼­¸® °è¿­]", "¼öÁ¤ÀÌ ±úÁøÈÄ ÁÖº¯Àû¿¡°Ô Ãß°¡ ÇÇÇØ¸¦ Áİ´Ï´Ù", "±âÀı½Ã°£ÀÌ Áõ°¡ÇÕ´Ï´Ù", "",
+				itemset("í•œê¸°", Material.POWDER_SNOW_BUCKET, 0, 1,
+						Arrays.asList(ChatColor.UNDERLINE + "[ì„œë¦¬ ê³„ì—´]", "ìˆ˜ì •ì´ ê¹¨ì§„í›„ ì£¼ë³€ì ì—ê²Œ ì¶”ê°€ í”¼í•´ë¥¼ ì¤ë‹ˆë‹¤", "ê¸°ì ˆì‹œê°„ì´ ì¦ê°€í•©ë‹ˆë‹¤", "",
 								ChatColor.BOLD + "4 X "
 										+ BigDecimal.valueOf(0.5*(1+bsd.FrozenCrystal.getOrDefault(p.getUniqueId(), 0) * 0.031))
-												.setScale(2, RoundingMode.HALF_EVEN)
+										.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						9, Frostskillsinv);
-				itemset("´«»çÅÂ", Material.SNOW, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¼­¸® °è¿­]", "ÀçÀÔ·Â½Ã ´«»çÅÂ¸¦ »ç¿ëÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº ¿ì¹Ú ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)", "",
+				itemset("ëˆˆì‚¬íƒœ", Material.SNOW, 0, 1,
+						Arrays.asList(ChatColor.UNDERLINE + "[ì„œë¦¬ ê³„ì—´]", "ì¬ì…ë ¥ì‹œ ëˆˆì‚¬íƒœë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ìš°ë°• ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)", "",
 								ChatColor.BOLD + "1 X "
 										+ BigDecimal.valueOf(0.76 * (1+bsd.Hailstones.getOrDefault(p.getUniqueId(), 0) * 0.085))
-												.setScale(2, RoundingMode.HALF_EVEN)
+										.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						10, Frostskillsinv);
-				itemset("´«µ¢ÀÌ", Material.SNOWBALL, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¼­¸® °è¿­]", "ÀçÀÔ·Â½Ã ´«µ¢ÀÌ¸¦ »ç¿ëÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº °íµå¸§È­»ì ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)", "",
+				itemset("ëˆˆë©ì´", Material.SNOWBALL, 0, 1,
+						Arrays.asList(ChatColor.UNDERLINE + "[ì„œë¦¬ ê³„ì—´]", "ì¬ì…ë ¥ì‹œ ëˆˆë©ì´ë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ê³ ë“œë¦„í™”ì‚´ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)", "",
 								ChatColor.BOLD + "4 X "
 										+ BigDecimal.valueOf(0.54 * (1 + bsd.IcicleShot.getOrDefault(p.getUniqueId(), 0) * 0.0651))
-												.setScale(2, RoundingMode.HALF_EVEN)
+										.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						11, Frostskillsinv);
-				itemset("±Ø¼Ò¿ëµ¹ÀÌ", Material.WHITE_TULIP, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¼­¸® °è¿­]", "ÀçÀÔ·Â½Ã ±Ø¼Ò¿ëµ¹ÀÌ¸¦ »ç¿ëÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº °Å´ë°íµå¸§ ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)",
+				itemset("ê·¹ì†Œìš©ëŒì´", Material.WHITE_TULIP, 0, 1,
+						Arrays.asList(ChatColor.UNDERLINE + "[ì„œë¦¬ ê³„ì—´]", "ì¬ì…ë ¥ì‹œ ê·¹ì†Œìš©ëŒì´ë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ê±°ëŒ€ê³ ë“œë¦„ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)",
 								"",
 								ChatColor.BOLD + "5 X "
 										+ BigDecimal.valueOf(0.34 * (1 + bsd.IceSpikes.getOrDefault(p.getUniqueId(), 0) * 0.03))
-												.setScale(2, RoundingMode.HALF_EVEN)
+										.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						12, Frostskillsinv);
-				itemset("Å©·¹¹Ù½º", Material.WHITE_CONCRETE_POWDER, 0, 1, Arrays.asList("±¤¿ªÇÇÇØ¸¦ ÀÔÈü´Ï´Ù"), 13, Frostskillsinv);
-				itemset("ºùÆø", Material.INFESTED_CHISELED_STONE_BRICKS, 0, 1,
-						Arrays.asList("ÀçÀÔ·Â½Ã ºùÆøÀ» »ç¿ëÇÕ´Ï´Ù", "ºùÆøÀ» Å¸´ÂÁß¿¡´Â ¹«Àû»óÅÂ°¡ µË´Ï´Ù"), 14, Frostskillsinv);
-				itemset("³ÃÇ÷", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("°ø°İ·Â°ú µ¿»óÀÇ °æÁ÷Áö¼Ó½Ã°£ÀÌ Áõ°¡ÇÕ´Ï´Ù"), 16,
+				itemset("í¬ë ˆë°”ìŠ¤", Material.WHITE_CONCRETE_POWDER, 0, 1, Arrays.asList("ê´‘ì—­í”¼í•´ë¥¼ ì…í™ë‹ˆë‹¤"), 13, Frostskillsinv);
+				itemset("ë¹™í­", Material.INFESTED_CHISELED_STONE_BRICKS, 0, 1,
+						Arrays.asList("ì¬ì…ë ¥ì‹œ ë¹™í­ì„ ì‚¬ìš©í•©ë‹ˆë‹¤", "ë¹™í­ì„ íƒ€ëŠ”ì¤‘ì—ëŠ” ë¬´ì ìƒíƒœê°€ ë©ë‹ˆë‹¤"), 14, Frostskillsinv);
+				itemset("ëƒ‰í˜ˆ", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("ê³µê²©ë ¥ê³¼ ë™ìƒì˜ ê²½ì§ì§€ì†ì‹œê°„ì´ ì¦ê°€í•©ë‹ˆë‹¤"), 16,
 						Frostskillsinv);
-				itemset("¼­¸®ÆøÇ³", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE + "[¼­¸® °è¿­]",
-						"¿õÅ©¸®±â + ¾ÆÀÌÅÛ´øÁö±â", "", ChatColor.BOLD + "60 X 0.32D"), 17, Frostskillsinv);
+				itemset("ì„œë¦¬í­í’", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE + "[ì„œë¦¬ ê³„ì—´]",
+						"ì›…í¬ë¦¬ê¸° + num4", "", ChatColor.BOLD + "60 X 0.32D"), 17, Frostskillsinv);
 
-				itemset("´ë±Õ¿­(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/155015"), 18, Frostskillsinv);
-				itemset("±ØÇÑÀÇÃßÀ§(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/155015"), 19, Frostskillsinv);
-				itemset("¼­¸®Ä®³¯(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/155015"), 20, Frostskillsinv);
-				itemset("ºùÀû(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/155015"), 21, Frostskillsinv);
-				itemset("º¹ºù(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/155015"), 22, Frostskillsinv);
-				itemset("Àı´ë¿µµµ(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/155015"), 25, Frostskillsinv);
-				itemset("ºùÇÏ½Ã´ë(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/155015"), 26, Frostskillsinv);
+				itemset("ëŒ€ê· ì—´(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/155015"), 18, Frostskillsinv);
+				itemset("ê·¹í•œì˜ì¶”ìœ„(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/155015"), 19, Frostskillsinv);
+				itemset("ì„œë¦¬ì¹¼ë‚ (ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/155015"), 20, Frostskillsinv);
+				itemset("ë¹™ì (ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/155015"), 21, Frostskillsinv);
+				itemset("ë³µë¹™(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/155015"), 22, Frostskillsinv);
+				itemset("ì ˆëŒ€ì˜ë„(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/155015"), 25, Frostskillsinv);
+				itemset("ë¹™í•˜ì‹œëŒ€(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/155015"), 26, Frostskillsinv);
 			} else {
-				itemset("ÇÑ±â", Material.POWDER_SNOW_BUCKET, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¼­¸® °è¿­]", "¼öÁ¤ÀÌ ±úÁøÈÄ ÁÖº¯Àû¿¡°Ô Ãß°¡ ÇÇÇØ¸¦ Áİ´Ï´Ù", "±âÀı½Ã°£ÀÌ Áõ°¡ÇÕ´Ï´Ù", "",
+				itemset("í•œê¸°", Material.POWDER_SNOW_BUCKET, 0, 1,
+						Arrays.asList(ChatColor.UNDERLINE + "[ì„œë¦¬ ê³„ì—´]", "ìˆ˜ì •ì´ ê¹¨ì§„í›„ ì£¼ë³€ì ì—ê²Œ ì¶”ê°€ í”¼í•´ë¥¼ ì¤ë‹ˆë‹¤", "ê¸°ì ˆì‹œê°„ì´ ì¦ê°€í•©ë‹ˆë‹¤", "",
 								ChatColor.BOLD + "4 X "
 										+ BigDecimal.valueOf(0.5*(1+bsd.FrozenCrystal.getOrDefault(p.getUniqueId(), 0) * 0.031))
-												.setScale(2, RoundingMode.HALF_EVEN)
+										.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						9, Frostskillsinv);
-				itemset("´«»çÅÂ", Material.SNOW, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¼­¸® °è¿­]", "ÀçÀÔ·Â½Ã ´«»çÅÂ¸¦ »ç¿ëÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº ¿ì¹Ú ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)", "",
+				itemset("ëˆˆì‚¬íƒœ", Material.SNOW, 0, 1,
+						Arrays.asList(ChatColor.UNDERLINE + "[ì„œë¦¬ ê³„ì—´]", "ì¬ì…ë ¥ì‹œ ëˆˆì‚¬íƒœë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ìš°ë°• ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)", "",
 								ChatColor.BOLD + "1 X "
 										+ BigDecimal.valueOf(0.76 * (1+bsd.Hailstones.getOrDefault(p.getUniqueId(), 0) * 0.085))
-												.setScale(2, RoundingMode.HALF_EVEN)
+										.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						10, Frostskillsinv);
-				itemset("´«µ¢ÀÌ", Material.SNOWBALL, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¼­¸® °è¿­]", "ÀçÀÔ·Â½Ã ´«µ¢ÀÌ¸¦ »ç¿ëÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº °íµå¸§È­»ì ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)", "",
+				itemset("ëˆˆë©ì´", Material.SNOWBALL, 0, 1,
+						Arrays.asList(ChatColor.UNDERLINE + "[ì„œë¦¬ ê³„ì—´]", "ì¬ì…ë ¥ì‹œ ëˆˆë©ì´ë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ê³ ë“œë¦„í™”ì‚´ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)", "",
 								ChatColor.BOLD + "4 X "
 										+ BigDecimal.valueOf(0.54 * (1 + bsd.IcicleShot.getOrDefault(p.getUniqueId(), 0) * 0.0651))
-												.setScale(2, RoundingMode.HALF_EVEN)
+										.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						11, Frostskillsinv);
-				itemset("±Ø¼Ò¿ëµ¹ÀÌ", Material.WHITE_TULIP, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¼­¸® °è¿­]", "ÀçÀÔ·Â½Ã ±Ø¼Ò¿ëµ¹ÀÌ¸¦ »ç¿ëÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº °Å´ë°íµå¸§ ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)",
+				itemset("ê·¹ì†Œìš©ëŒì´", Material.WHITE_TULIP, 0, 1,
+						Arrays.asList(ChatColor.UNDERLINE + "[ì„œë¦¬ ê³„ì—´]", "ì¬ì…ë ¥ì‹œ ê·¹ì†Œìš©ëŒì´ë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ê±°ëŒ€ê³ ë“œë¦„ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)",
 								"",
 								ChatColor.BOLD + "5 X "
 										+ BigDecimal.valueOf(0.34 * (1 + bsd.IceSpikes.getOrDefault(p.getUniqueId(), 0) * 0.03))
-												.setScale(2, RoundingMode.HALF_EVEN)
+										.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						12, Frostskillsinv);
-				itemset("Å©·¹¹Ù½º", Material.WHITE_CONCRETE_POWDER, 0, 1, Arrays.asList("±¤¿ªÇÇÇØ¸¦ ÀÔÈü´Ï´Ù"), 13, Frostskillsinv);
-				itemset("ºùÆø", Material.INFESTED_CHISELED_STONE_BRICKS, 0, 1,
-						Arrays.asList("ÀçÀÔ·Â½Ã ºùÆøÀ» »ç¿ëÇÕ´Ï´Ù", "ºùÆøÀ» Å¸´ÂÁß¿¡´Â ¹«Àû»óÅÂ°¡ µË´Ï´Ù"), 14, Frostskillsinv);
-				itemset("³ÃÇ÷", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("°ø°İ·Â°ú µ¿»óÀÇ °æÁ÷Áö¼Ó½Ã°£ÀÌ Áõ°¡ÇÕ´Ï´Ù"), 16,
+				itemset("í¬ë ˆë°”ìŠ¤", Material.WHITE_CONCRETE_POWDER, 0, 1, Arrays.asList("ê´‘ì—­í”¼í•´ë¥¼ ì…í™ë‹ˆë‹¤"), 13, Frostskillsinv);
+				itemset("ë¹™í­", Material.INFESTED_CHISELED_STONE_BRICKS, 0, 1,
+						Arrays.asList("ì¬ì…ë ¥ì‹œ ë¹™í­ì„ ì‚¬ìš©í•©ë‹ˆë‹¤", "ë¹™í­ì„ íƒ€ëŠ”ì¤‘ì—ëŠ” ë¬´ì ìƒíƒœê°€ ë©ë‹ˆë‹¤"), 14, Frostskillsinv);
+				itemset("ëƒ‰í˜ˆ", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("ê³µê²©ë ¥ê³¼ ë™ìƒì˜ ê²½ì§ì§€ì†ì‹œê°„ì´ ì¦ê°€í•©ë‹ˆë‹¤"), 16,
 						Frostskillsinv);
-				itemset("¼­¸®ÆøÇ³", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE + "[¼­¸® °è¿­]",
-						"¿õÅ©¸®±â + ¾ÆÀÌÅÛ´øÁö±â", "", ChatColor.BOLD + "60 X 0.32D"), 17, Frostskillsinv);
+				itemset("ì„œë¦¬í­í’", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE + "[ì„œë¦¬ ê³„ì—´]",
+						"ì›…í¬ë¦¬ê¸° + num4", "", ChatColor.BOLD + "60 X 0.32D"), 17, Frostskillsinv);
 
-				itemset("´ë±Õ¿­", Material.ICE, 0, 1, Arrays.asList("Increases Range"), 18, Frostskillsinv);
-				itemset("±ØÇÑÀÇÃßÀ§", Material.WHITE_SHULKER_BOX, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¼­¸® °è¿­]", "ÀçÀÔ·Â½Ã ±ØÇÑÀÇÃßÀ§¸¦ »ç¿ëÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº ¿ì¹Ú ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)", "",
+				itemset("ëŒ€ê· ì—´", Material.ICE, 0, 1, Arrays.asList("ë²”ìœ„ê°€ ì¦ê°€í•©ë‹ˆë‹¤"), 18, Frostskillsinv);
+				itemset("ê·¹í•œì˜ì¶”ìœ„", Material.WHITE_SHULKER_BOX, 0, 1,
+						Arrays.asList(ChatColor.UNDERLINE + "[ì„œë¦¬ ê³„ì—´]", "ì¬ì…ë ¥ì‹œ ê·¹í•œì˜ì¶”ìœ„ë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ìš°ë°• ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)", "",
 								ChatColor.BOLD + "6 X "
 										+ BigDecimal.valueOf(0.5 * (1 +bsd.Hailstones.getOrDefault(p.getUniqueId(), 0) * 0.06))
-												.setScale(2, RoundingMode.HALF_EVEN)
+										.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						19, Frostskillsinv);
 				ItemStack isw = new ItemStack(Material.NETHERITE_SWORD);
 				isw.getItemMeta().setCustomModelData(3006);
-				itemset("¼­¸®Ä®³¯", isw, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¼­¸® °è¿­]", "ÀçÀÔ·Â½Ã ¼­¸®Ä®³¯À» »ç¿ëÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº °íµå¸§È­»ì ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)", "",
+				itemset("ì„œë¦¬ì¹¼ë‚ ", isw, 0, 1,
+						Arrays.asList(ChatColor.UNDERLINE + "[ì„œë¦¬ ê³„ì—´]", "ì¬ì…ë ¥ì‹œ ì„œë¦¬ì¹¼ë‚ ì„ ì‚¬ìš©í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ê³ ë“œë¦„í™”ì‚´ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)", "",
 								ChatColor.BOLD + "5 X  "
 										+ BigDecimal.valueOf(0.42 * (1 + bsd.IcicleShot.getOrDefault(p.getUniqueId(), 0) * 0.0551))
-												.setScale(2, RoundingMode.HALF_EVEN)
+										.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						20, Frostskillsinv);
-				itemset("ºùÀû", Material.PRISMARINE_SHARD, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¼­¸® °è¿­]", "ÀçÀÔ·Â½Ã ºùÀûÀ» »ç¿ëÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº °Å´ë°íµå¸§ ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)", "",
+				itemset("ë¹™ì ", Material.PRISMARINE_SHARD, 0, 1,
+						Arrays.asList(ChatColor.UNDERLINE + "[ì„œë¦¬ ê³„ì—´]", "ì¬ì…ë ¥ì‹œ ë¹™ì ì„ ì‚¬ìš©í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ê±°ëŒ€ê³ ë“œë¦„ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)", "",
 								ChatColor.BOLD + "20 X "
 										+ BigDecimal.valueOf(0.3 * (1 + bsd.IceSpikes.getOrDefault(p.getUniqueId(), 0) * 0.045))
-												.setScale(2, RoundingMode.HALF_EVEN)
+										.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						21, Frostskillsinv);
-				itemset("º¹ºù", Material.WHITE_GLAZED_TERRACOTTA, 0, 1, Arrays.asList("µ¿»óÀÇ ´ë±â½Ã°£À» ÃÊ±âÈ­ÇÕ´Ï´Ù"), 22,
+				itemset("ë³µë¹™", Material.WHITE_GLAZED_TERRACOTTA, 0, 1, Arrays.asList("ë™ìƒì˜ ëŒ€ê¸°ì‹œê°„ì„ ì´ˆê¸°í™”í•©ë‹ˆë‹¤"), 22,
 						Frostskillsinv);
-				itemset("Àı´ë¿µµµ", Material.ENCHANTED_BOOK, 0, 1,
-						Arrays.asList("°ø°İ·Â°ú ¹æ¾î·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù", "¼­¸®ÆøÇ³ Àç»ç¿ë´ë±â½Ã°£ÀÌ °¨¼ÒÇÕ´Ï´Ù", "µ¿»óÀÇ °æÁ÷Áö¼Ó½Ã°£ÀÌ Áõ°¡ÇÕ´Ï´Ù"), 25,
+				itemset("ì ˆëŒ€ì˜ë„", Material.ENCHANTED_BOOK, 0, 1,
+						Arrays.asList("ê³µê²©ë ¥ê³¼ ë°©ì–´ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤", "ì„œë¦¬í­í’ ì¬ì‚¬ìš©ëŒ€ê¸°ì‹œê°„ì´ ê°ì†Œí•©ë‹ˆë‹¤", "ë™ìƒì˜ ê²½ì§ì§€ì†ì‹œê°„ì´ ì¦ê°€í•©ë‹ˆë‹¤"), 25,
 						Frostskillsinv);
-				itemset("ºùÇÏ½Ã´ë", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE + "[¼­¸® °è¿­]",
-						"´Ş¸®±â+ ¾ÆÀÌÅÛ´øÁö±â", "", ChatColor.BOLD + "10 X 1.0D, 10D"), 26, Frostskillsinv);
+				itemset("ë¹™í•˜ì‹œëŒ€", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE + "[ì„œë¦¬ ê³„ì—´]",
+						"ì›…í¬ë¦¬ê¸°+ num5", "íƒ€ê²©ë‹¹í•œ ì ì€ 10ì´ˆë™ì•ˆ","ë™ìƒ ëŒ€ê¸°ì‹œê°„ì´ ì—†ì–´ì§‘ë‹ˆë‹¤", "", ChatColor.BOLD + "28.5D"), 26, Frostskillsinv);
 			}
-			itemset("ÇöÀç ¼÷·Ãµµ", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("" + Proficiency.getproexp(p)), 27,
+			itemset("í˜„ì¬ ìˆ™ë ¨ë„", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("" + Proficiency.getproexp(p)), 27,
 					Frostskillsinv);
-			itemset("½ºÅ³Æ÷ÀÎÆ®", Material.NETHER_STAR, 0, 1,
+			itemset("ìŠ¤í‚¬í¬ì¸íŠ¸", Material.NETHER_STAR, 0, 1,
 					Arrays.asList(ChatColor.AQUA + "SP." + bsd.SkillPoints.getOrDefault(p.getUniqueId(), 0), "",
-							"Å¬¸¯ÇÏ¸é ½ºÅ³Æ÷ÀÎÆ®°¡ ÃÊ±âÈ­ µË´Ï´Ù"),
+							"í´ë¦­í•˜ë©´ ìŠ¤í‚¬í¬ì¸íŠ¸ê°€ ì´ˆê¸°í™” ë©ë‹ˆë‹¤"),
 					35, Frostskillsinv);
 
 		}
@@ -235,7 +235,7 @@ public class FrostSkillsGui extends SkillsGui {
 							"by Using one more time", "",
 							ChatColor.BOLD + ""
 									+ BigDecimal.valueOf(0.765 * (1+bsd.FrozenCrystal.getOrDefault(p.getUniqueId(), 0) * 0.055))
-											.setScale(2, RoundingMode.HALF_EVEN)+"D",
+									.setScale(2, RoundingMode.HALF_EVEN)+"D",
 							"Master LV.50"),
 					0, Frostskillsinv);
 			itemset("Hailstones", Material.PACKED_ICE, 0, 1,
@@ -243,7 +243,7 @@ public class FrostSkillsGui extends SkillsGui {
 							ChatColor.UNDERLINE + "[Frost]", "Sneaking + SwapHand", "",
 							ChatColor.BOLD + "20 X "
 									+ BigDecimal.valueOf(0.16 * (1+bsd.Hailstones.getOrDefault(p.getUniqueId(), 0) * 0.018))
-											.setScale(2, RoundingMode.HALF_EVEN)+"D",
+									.setScale(2, RoundingMode.HALF_EVEN)+"D",
 							"Master LV.50"),
 					1, Frostskillsinv);
 			itemset("IcicleShot", Material.ICE, 0, 1,
@@ -251,7 +251,7 @@ public class FrostSkillsGui extends SkillsGui {
 							ChatColor.UNDERLINE + "[Frost]", "Rightclick", "",
 							ChatColor.BOLD + "3 X "
 									+ BigDecimal.valueOf(0.32 * (1+bsd.IcicleShot.getOrDefault(p.getUniqueId(), 0) * 0.031))
-											.setScale(2, RoundingMode.HALF_EVEN)+"D",
+									.setScale(2, RoundingMode.HALF_EVEN)+"D",
 							"Master LV.50"),
 					2, Frostskillsinv);
 			itemset("IceSpikes", Material.PRISMARINE_SHARD, 0, 1,
@@ -259,7 +259,7 @@ public class FrostSkillsGui extends SkillsGui {
 							ChatColor.UNDERLINE + "[Frost]", "Sneaking + Rightclick", "",
 							ChatColor.BOLD + "25 X "
 									+ BigDecimal.valueOf(0.23 * (1 + bsd.IceSpikes.getOrDefault(p.getUniqueId(), 0) * 0.025))
-											.setScale(2, RoundingMode.HALF_EVEN)+"D",
+									.setScale(2, RoundingMode.HALF_EVEN)+"D",
 							"Master LV.50"),
 					3, Frostskillsinv);
 			itemset("Crack", Material.DIAMOND_PICKAXE, 0, 1,
@@ -267,7 +267,7 @@ public class FrostSkillsGui extends SkillsGui {
 							ChatColor.UNDERLINE + "[Frost]", "Hit + Sneaking to Frostbite enemy", "",
 							ChatColor.BOLD + " X "
 									+ BigDecimal.valueOf(2.5+bsd.Crack.getOrDefault(p.getUniqueId(), 0) * 2.6).setScale(2,
-											RoundingMode.HALF_EVEN)+"D",
+									RoundingMode.HALF_EVEN)+"D",
 							"Master LV.50"),
 					4, Frostskillsinv);
 			itemset("SnowBreeze", Material.SNOW_BLOCK, 0, 1,
@@ -276,11 +276,11 @@ public class FrostSkillsGui extends SkillsGui {
 							"Master LV.1"),
 					5, Frostskillsinv);
 			itemset("Frostbite", Material.BOOK, 0, 1, Arrays.asList(
-					ChatColor.AQUA + "LV." + bsd.Frostbite.getOrDefault(p.getUniqueId(), 0), "", "Increases damage",
-					"Get Frost Resistance", "Freeze Enemy hit three times for 2s (Cooldown 5s)",
-					"Immune to Slow Effect, Freeze", "",
-					ChatColor.BOLD + " X "
-							+ BigDecimal.valueOf(1.15 * (1 + bsd.Frostbite.getOrDefault(p.getUniqueId(), 0) * 0.045))
+							ChatColor.AQUA + "LV." + bsd.Frostbite.getOrDefault(p.getUniqueId(), 0), "", "Increases damage",
+							"Get Frost Resistance", "Freeze Enemy hit three times for 2s (Cooldown 5s)",
+							"Immune to Slow Effect, Freeze", "",
+							ChatColor.BOLD + " X "
+									+ BigDecimal.valueOf(1.15 * (1 + bsd.Frostbite.getOrDefault(p.getUniqueId(), 0) * 0.045))
 									.setScale(2, RoundingMode.HALF_EVEN)),
 					7, Frostskillsinv);
 			if (Proficiency.getpro(p) < 1) {
@@ -314,7 +314,7 @@ public class FrostSkillsGui extends SkillsGui {
 								"Increases Stun Duration", "",
 								ChatColor.BOLD + "4 X "
 										+ BigDecimal.valueOf(0.5*(1+bsd.FrozenCrystal.getOrDefault(p.getUniqueId(), 0) * 0.031))
-												.setScale(2, RoundingMode.HALF_EVEN)
+										.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						9, Frostskillsinv);
 				itemset("Avalanche", Material.SNOW, 0, 1,
@@ -322,7 +322,7 @@ public class FrostSkillsGui extends SkillsGui {
 								"(Damage Affected By Hailstones)", "",
 								ChatColor.BOLD + "1 X "
 										+ BigDecimal.valueOf(0.76 * (1+bsd.Hailstones.getOrDefault(p.getUniqueId(), 0) * 0.085))
-												.setScale(2, RoundingMode.HALF_EVEN)
+										.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						10, Frostskillsinv);
 				itemset("SnowBall", Material.SNOWBALL, 0, 1,
@@ -330,7 +330,7 @@ public class FrostSkillsGui extends SkillsGui {
 								"(Damage Affected By IcicleShot)", "",
 								ChatColor.BOLD + "4 X "
 										+ BigDecimal.valueOf(0.54 * (1 + bsd.IcicleShot.getOrDefault(p.getUniqueId(), 0) * 0.0651))
-												.setScale(2, RoundingMode.HALF_EVEN)
+										.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						11, Frostskillsinv);
 				itemset("PolarVortex", Material.WHITE_TULIP, 0, 1,
@@ -338,7 +338,7 @@ public class FrostSkillsGui extends SkillsGui {
 								"(Damage Affected By IceSpikes)", "",
 								ChatColor.BOLD + "5 X "
 										+ BigDecimal.valueOf(0.34 * (1 + bsd.IceSpikes.getOrDefault(p.getUniqueId(), 0) * 0.03))
-												.setScale(2, RoundingMode.HALF_EVEN)
+										.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						12, Frostskillsinv);
 				itemset("Crevasse", Material.WHITE_CONCRETE_POWDER, 0, 1, Arrays.asList("Inflicts Splash Damage"), 13,
@@ -350,7 +350,7 @@ public class FrostSkillsGui extends SkillsGui {
 						Arrays.asList("Increases Whole Skills Damage", "Increases Frostbite Duration"), 16,
 						Frostskillsinv);
 				itemset("Blizzard", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE + "[Frost]",
-						"Sneaking + ThrowItem", "", ChatColor.BOLD + "60 X 0.32D"), 17, Frostskillsinv);
+						"Sneaking + num4", "", ChatColor.BOLD + "60 X 0.32D"), 17, Frostskillsinv);
 
 				itemset("HugeBreak(Locked)", Material.STRUCTURE_VOID, 0, 1,
 						Arrays.asList("Required Proficiency: " + Proficiency.getproexp(p) + "/155015"), 18,
@@ -379,7 +379,7 @@ public class FrostSkillsGui extends SkillsGui {
 								"Increases Stun Duration", "",
 								ChatColor.BOLD + "4 X "
 										+ BigDecimal.valueOf(0.5*(1+bsd.FrozenCrystal.getOrDefault(p.getUniqueId(), 0) * 0.031))
-												.setScale(2, RoundingMode.HALF_EVEN)
+										.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						9, Frostskillsinv);
 				itemset("Avalanche", Material.SNOW, 0, 1,
@@ -387,7 +387,7 @@ public class FrostSkillsGui extends SkillsGui {
 								"(Damage Affected By Hailstones)", "",
 								ChatColor.BOLD + "1 X "
 										+ BigDecimal.valueOf(0.76 * (1+bsd.Hailstones.getOrDefault(p.getUniqueId(), 0) * 0.085))
-												.setScale(2, RoundingMode.HALF_EVEN)
+										.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						10, Frostskillsinv);
 				itemset("SnowBall", Material.SNOWBALL, 0, 1,
@@ -395,7 +395,7 @@ public class FrostSkillsGui extends SkillsGui {
 								"(Damage Affected By IcicleShot)", "",
 								ChatColor.BOLD + "4 X "
 										+ BigDecimal.valueOf(0.54 * (1 + bsd.IcicleShot.getOrDefault(p.getUniqueId(), 0) * 0.0651))
-												.setScale(2, RoundingMode.HALF_EVEN)
+										.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						11, Frostskillsinv);
 				itemset("PolarVortex", Material.WHITE_TULIP, 0, 1,
@@ -403,7 +403,7 @@ public class FrostSkillsGui extends SkillsGui {
 								"(Damage Affected By IceSpikes)", "",
 								ChatColor.BOLD + "5 X "
 										+ BigDecimal.valueOf(0.34 * (1 + bsd.IceSpikes.getOrDefault(p.getUniqueId(), 0) * 0.03))
-												.setScale(2, RoundingMode.HALF_EVEN)
+										.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						12, Frostskillsinv);
 				itemset("Crevasse", Material.WHITE_CONCRETE_POWDER, 0, 1, Arrays.asList("Inflicts Splash Damage"), 13,
@@ -415,7 +415,7 @@ public class FrostSkillsGui extends SkillsGui {
 						Arrays.asList("Increases Whole Skills Damage", "Increases Frostbite Duration"), 16,
 						Frostskillsinv);
 				itemset("Blizzard", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE + "[Frost]",
-						"Sneaking + ThrowItem", "", ChatColor.BOLD + "60 X 0.32D"), 17, Frostskillsinv);
+						"Sneaking + num4", "", ChatColor.BOLD + "60 X 0.32D"), 17, Frostskillsinv);
 
 				itemset("HugeBreak", Material.ICE, 0, 1, Arrays.asList("Increases Range"), 18, Frostskillsinv);
 				itemset("Extremecold", Material.WHITE_SHULKER_BOX, 0, 1,
@@ -423,7 +423,7 @@ public class FrostSkillsGui extends SkillsGui {
 								"(Damage Affected By Hailstones)", "",
 								ChatColor.BOLD + "6 X "
 										+ BigDecimal.valueOf(0.5 * (1 +bsd.Hailstones.getOrDefault(p.getUniqueId(), 0) * 0.06))
-												.setScale(2, RoundingMode.HALF_EVEN)
+										.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						19, Frostskillsinv);
 				ItemStack isw = new ItemStack(Material.NETHERITE_SWORD);
@@ -433,7 +433,7 @@ public class FrostSkillsGui extends SkillsGui {
 								"(Damage Affected By IcicleShot)", "",
 								ChatColor.BOLD + "5 X  "
 										+ BigDecimal.valueOf(0.42 * (1 + bsd.IcicleShot.getOrDefault(p.getUniqueId(), 0) * 0.0551))
-												.setScale(2, RoundingMode.HALF_EVEN)
+										.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						20, Frostskillsinv);
 				itemset("GlacialDrift", Material.PRISMARINE_SHARD, 0, 1,
@@ -441,7 +441,7 @@ public class FrostSkillsGui extends SkillsGui {
 								"(Damage Affected By IceSpikes)", "",
 								ChatColor.BOLD + "20 X "
 										+ BigDecimal.valueOf(0.3 * (1 + bsd.IceSpikes.getOrDefault(p.getUniqueId(), 0) * 0.045))
-												.setScale(2, RoundingMode.HALF_EVEN)
+										.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						21, Frostskillsinv);
 				itemset("Regelation", Material.WHITE_GLAZED_TERRACOTTA, 0, 1,
@@ -449,7 +449,7 @@ public class FrostSkillsGui extends SkillsGui {
 				itemset("AbsoluteZero", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Damage & Armor",
 						"Decrease Blizzard Cooldown", "Increases Frostbite Duration"), 25, Frostskillsinv);
 				itemset("Ice Age", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE + "[Frost]",
-						"Sprinting + ThrowItem", "", ChatColor.BOLD + "10 X 1.0D, 10D"), 26, Frostskillsinv);
+						"Sneaking + num5", "", ChatColor.BOLD + "10 X 1.0D, 10D"), 26, Frostskillsinv);
 			}
 			itemset("Current Proficiency", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("" + Proficiency.getproexp(p)),
 					27, Frostskillsinv);

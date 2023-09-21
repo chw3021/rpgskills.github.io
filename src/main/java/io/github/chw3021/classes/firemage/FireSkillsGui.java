@@ -8,6 +8,7 @@ import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.List;
 
+import io.github.chw3021.classes.SkillsGui;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -20,8 +21,8 @@ import io.github.chw3021.classes.Proficiency;
 import io.github.chw3021.obtains.Obtained;
 import net.md_5.bungee.api.ChatColor;
 
-public class FireSkillsGui{
-	
+public class FireSkillsGui extends SkillsGui {
+
 
 
 
@@ -37,72 +38,72 @@ public class FireSkillsGui{
 		item.setItemMeta(items);
 		inv.setItem(loc, item);
 	}
-	
+
 	public void FIreSkillsinv(Player p)
 	{
 		Inventory FIreskillsinv = Bukkit.createInventory(null, 54, "FIreskills");
-		
+
 		Obtained.itemset(p, FIreskillsinv);
 
-	    String path = new File("").getAbsolutePath();
+		String path = new File("").getAbsolutePath();
 		FireSkillsData fsd = new FireSkillsData(FireSkillsData.loadData(path +"/plugins/RPGskills/FireSkillsData.data"));
-		
+
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			itemset("ºĞÈ­±¸", Material.CRYING_OBSIDIAN, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+fsd.FlowingLava.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[È­¿° °è¿­]","¿ìÅ¬¸¯","",ChatColor.BOLD+"8 X "+BigDecimal.valueOf(0.032*(1+fsd.FlowingLava.getOrDefault(p.getUniqueId(),0)*0.04)).setScale(2, RoundingMode.HALF_EVEN).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master Lv.50"), 0, FIreskillsinv);
-			itemset("ºÒÀÇ°í¸®", Material.FIRE_CORAL_FAN, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+fsd.Ring.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[È­¿° °è¿­]","¿õÅ©¸®±â + ¿ìÅ¬¸¯","",ChatColor.BOLD+"15 X "+BigDecimal.valueOf(0.2*(1+fsd.Ring.getOrDefault(p.getUniqueId(),0)*0.045)).setScale(2, RoundingMode.HALF_EVEN).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master Lv.50"), 1, FIreskillsinv);
-			itemset("È­¿°±¸", Material.FIRE_CHARGE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+fsd.Fireball.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[È­¿° °è¿­]","ÁÂÅ¬¸¯ + Á¡ÇÁ","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.25*(1+fsd.Fireball.getOrDefault(p.getUniqueId(),0)*0.04)).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master Lv.50"), 2, FIreskillsinv);
-			itemset("È®»ê", Material.BLAZE_ROD, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+fsd.Spread.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[È­¿° °è¿­]","¿õÅ©¸®±â + ±ÙÁ¢°ø°İ","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.5*(1+fsd.Spread.getOrDefault(p.getUniqueId(),0)*0.08)).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master Lv.50"), 3, FIreskillsinv);
-			itemset("È­¿°ÀÇ¼û°á", Material.CAMPFIRE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+fsd.Breath.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[È­¿° °è¿­]","¼Õ¹Ù²Ù±â","½ÃÀüÁß ¹æ¾î·ÂÀÌ ÃÖ´ëÄ¡°¡ µË´Ï´Ù","",ChatColor.BOLD+"3 X "+BigDecimal.valueOf(0.4*(1+fsd.Breath.getOrDefault(p.getUniqueId(),0)*0.05)).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master Lv.50"), 4, FIreskillsinv);
-			itemset("»ì¾ÆÀÖ´ÂºÒ²É", Material.FIRE_CHARGE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+fsd.AliveFlame.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[È­¿° °è¿­]","¼Õ¹Ù²Ù±â + ¿õÅ©¸®±â","",ChatColor.BOLD+"20 X "+BigDecimal.valueOf(0.07*(1+fsd.AliveFlame.getOrDefault(p.getUniqueId(),0)*0.016)).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master Lv.50"), 5, FIreskillsinv);
-			itemset("¿­±â", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+fsd.HotBody.getOrDefault(p.getUniqueId(),0),"","°ø°İ·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù",ChatColor.BOLD+" X "+BigDecimal.valueOf(1+fsd.HotBody.getOrDefault(p.getUniqueId(),0)*0.044).setScale(2, RoundingMode.HALF_EVEN),"", "ÀûÀ» ÅÂ¿ó´Ï´Ù", "È­¿°¿¡ ¸é¿ªÀÌ µÇ°í È­¿°°è¿­ ÀúÇ×ÀÌ Áõ°¡ÇÕ´Ï´Ù", "ÇÇÇØ·®ÀÇ 5%¸¦ ¹İ»çÇÕ´Ï´Ù(ÇÃ·¹ÀÌ¾î´Â 1%)","","½ºÅ³»ç¿ëÈÄ 3ÃÊ¾È¿¡ ´Ù¸¥½ºÅ³À» »ç¿ëÇÏ¸é","3ÃÊµ¿¾È ¿­±â°¡ È°¼ºÈ­µË´Ï´Ù","¿­±â È°¼ºÈ­ Áß¿¡´Â ¹Ş´ÂÇÇÇØ°¡ °¨¼ÒÇÏ¸ç","ÁÖº¯ Àû¿¡°Ô ÇÇÇØ¸¦ Áİ´Ï´Ù","ÃÖ´ë 6ÁßÃ¸",ChatColor.BOLD+" X 0.03D X ÁßÃ¸¼ö"), 7, FIreskillsinv);
+			itemset("ë¶„í™”êµ¬", Material.CRYING_OBSIDIAN, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+fsd.FlowingLava.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[í™”ì—¼ ê³„ì—´]","ìš°í´ë¦­","",ChatColor.BOLD+"8 X "+BigDecimal.valueOf(0.032*(1+fsd.FlowingLava.getOrDefault(p.getUniqueId(),0)*0.04)).setScale(2, RoundingMode.HALF_EVEN).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master Lv.50"), 0, FIreskillsinv);
+			itemset("ë¶ˆì˜ê³ ë¦¬", Material.FIRE_CORAL_FAN, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+fsd.Ring.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[í™”ì—¼ ê³„ì—´]","ì›…í¬ë¦¬ê¸° + ìš°í´ë¦­","",ChatColor.BOLD+"15 X "+BigDecimal.valueOf(0.2*(1+fsd.Ring.getOrDefault(p.getUniqueId(),0)*0.045)).setScale(2, RoundingMode.HALF_EVEN).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master Lv.50"), 1, FIreskillsinv);
+			itemset("í™”ì—¼êµ¬", Material.FIRE_CHARGE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+fsd.Fireball.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[í™”ì—¼ ê³„ì—´]","ì¢Œí´ë¦­ + ì í”„","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.25*(1+fsd.Fireball.getOrDefault(p.getUniqueId(),0)*0.04)).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master Lv.50"), 2, FIreskillsinv);
+			itemset("í™•ì‚°", Material.BLAZE_ROD, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+fsd.Spread.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[í™”ì—¼ ê³„ì—´]","ì›…í¬ë¦¬ê¸° + ê·¼ì ‘ê³µê²©","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.5*(1+fsd.Spread.getOrDefault(p.getUniqueId(),0)*0.08)).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master Lv.50"), 3, FIreskillsinv);
+			itemset("í™”ì—¼ì˜ìˆ¨ê²°", Material.CAMPFIRE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+fsd.Breath.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[í™”ì—¼ ê³„ì—´]","ì†ë°”ê¾¸ê¸°","ì‹œì „ì¤‘ ë°©ì–´ë ¥ì´ ìµœëŒ€ì¹˜ê°€ ë©ë‹ˆë‹¤","",ChatColor.BOLD+"3 X "+BigDecimal.valueOf(0.4*(1+fsd.Breath.getOrDefault(p.getUniqueId(),0)*0.05)).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master Lv.50"), 4, FIreskillsinv);
+			itemset("ì‚´ì•„ìˆëŠ”ë¶ˆê½ƒ", Material.FIRE_CHARGE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+fsd.AliveFlame.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[í™”ì—¼ ê³„ì—´]","ì†ë°”ê¾¸ê¸° + ì›…í¬ë¦¬ê¸°","",ChatColor.BOLD+"20 X "+BigDecimal.valueOf(0.07*(1+fsd.AliveFlame.getOrDefault(p.getUniqueId(),0)*0.016)).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master Lv.50"), 5, FIreskillsinv);
+			itemset("ì—´ê¸°", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+fsd.HotBody.getOrDefault(p.getUniqueId(),0),"","ê³µê²©ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤",ChatColor.BOLD+" X "+BigDecimal.valueOf(1+fsd.HotBody.getOrDefault(p.getUniqueId(),0)*0.044).setScale(2, RoundingMode.HALF_EVEN),"", "ì ì„ íƒœì›ë‹ˆë‹¤", "í™”ì—¼ì— ë©´ì—­ì´ ë˜ê³  í™”ì—¼ê³„ì—´ ì €í•­ì´ ì¦ê°€í•©ë‹ˆë‹¤", "í”¼í•´ëŸ‰ì˜ 5%ë¥¼ ë°˜ì‚¬í•©ë‹ˆë‹¤(í”Œë ˆì´ì–´ëŠ” 1%)","","ìŠ¤í‚¬ì‚¬ìš©í›„ 3ì´ˆì•ˆì— ë‹¤ë¥¸ìŠ¤í‚¬ì„ ì‚¬ìš©í•˜ë©´","3ì´ˆë™ì•ˆ ì—´ê¸°ê°€ í™œì„±í™”ë©ë‹ˆë‹¤","ì—´ê¸° í™œì„±í™” ì¤‘ì—ëŠ” ë°›ëŠ”í”¼í•´ê°€ ê°ì†Œí•˜ë©°","ì£¼ë³€ ì ì—ê²Œ í”¼í•´ë¥¼ ì¤ë‹ˆë‹¤","ìµœëŒ€ 6ì¤‘ì²©",ChatColor.BOLD+" X 0.03D X ì¤‘ì²©ìˆ˜"), 7, FIreskillsinv);
 			if(Proficiency.getpro(p)<1) {
-				itemset("Èå¸£´Â¿ë¾Ï(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 9, FIreskillsinv);
-				itemset("ÅÂ¾çÀÇ¿òÄÑÁç(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 10, FIreskillsinv);
-				itemset("½Ö±¸(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 11, FIreskillsinv);
-				itemset("¿¬È­(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 12, FIreskillsinv);
-				itemset("¿ë¾Ï¼Ò³ª±â(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 13, FIreskillsinv);
-				itemset("È­¿°°İ(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 14, FIreskillsinv);
-				itemset("Å¸¿À¸£´Â½ÉÀå(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 16, FIreskillsinv);
-				itemset("ºÒ»çÁ¶ÀÇ ³¯°¹Áş(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 17, FIreskillsinv);
+				itemset("íë¥´ëŠ”ìš©ì•”(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 9, FIreskillsinv);
+				itemset("íƒœì–‘ì˜ì›€ì¼œì¥ (ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 10, FIreskillsinv);
+				itemset("ìŒêµ¬(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 11, FIreskillsinv);
+				itemset("ì—°í™”(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 12, FIreskillsinv);
+				itemset("ìš©ì•”ì†Œë‚˜ê¸°(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 13, FIreskillsinv);
+				itemset("í™”ì—¼ê²©(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 14, FIreskillsinv);
+				itemset("íƒ€ì˜¤ë¥´ëŠ”ì‹¬ì¥(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 16, FIreskillsinv);
+				itemset("ë¶ˆì‚¬ì¡°ì˜ ë‚ ê°¯ì§“(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 17, FIreskillsinv);
 			}
 			else if(Proficiency.getpro(p)<2 && Proficiency.getpro(p)>=1) {
-				itemset("Èå¸£´Â¿ë¾Ï", Material.LAVA_BUCKET, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[È­¿° °è¿­]","Àç»ç¿ë½Ã Èå¸£´Â¿ë¾ÏÀ» »ç¿ëÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº ºĞÈ­±¸ ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+"8 X "+BigDecimal.valueOf(0.02*(1+fsd.FlowingLava.getOrDefault(p.getUniqueId(),0)*0.035)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 9, FIreskillsinv);
-				itemset("ÅÂ¾çÀÇ¿òÄÑÁç", Material.SUNFLOWER, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[È­¿° °è¿­]","Àç»ç¿ë½Ã ÅÂ¾çÀÇ¿òÄÑÁçÀ» »ç¿ëÇÕ´Ï´Ù","(ÇÇÇØ·®Àº ºÒÀÇ°í¸® ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+"3 X "+BigDecimal.valueOf(0.6*(1+fsd.Ring.getOrDefault(p.getUniqueId(),0)*0.057)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 10, FIreskillsinv);
-				itemset("½Ö±¸", Material.FIRE_CHARGE, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[È­¿° °è¿­]","ÇÑ¹ø¿¡ µÎ°³ÀÇ È­¿°±¸¸¦ ¹ß»çÇÕ´Ï´Ù"), 11, FIreskillsinv);
-				itemset("¿¬È­", Material.FIRE_CORAL_BLOCK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[È­¿° °è¿­]","È­¿°ÀÌ ÆÛÁø ÀûÀÌ ÁÖº¯ÀÇ", "¶Ç´Ù¸¥ Àûµé¿¡°Ô È­¿°À» ÆÛ¶ß¸³´Ï´Ù"), 12, FIreskillsinv);
-				itemset("¿ë¾Ï¼Ò³ª±â", Material.RED_GLAZED_TERRACOTTA, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[È­¿° °è¿­]","Àç»ç¿ë½Ã ¿ë¾Ï¼Ò³ª±â¸¦ »ç¿ëÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº È­¿°ÀÇ¼û°á ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+"10 X "+BigDecimal.valueOf(0.3*(1+fsd.Breath.getOrDefault(p.getUniqueId(),0)*0.05)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 13, FIreskillsinv);
-				itemset("È­¿°°İ", Material.BLAZE_POWDER, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[È­¿° °è¿­]","Àç»ç¿ë½Ã È­¿°°İÀ» »ç¿ëÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº »ì¾ÆÀÖ´ÂºÒ²É ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+"4 X "+BigDecimal.valueOf(0.36*(1+fsd.AliveFlame.getOrDefault(p.getUniqueId(),0)*0.034)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 14, FIreskillsinv);
-				itemset("Å¸¿À¸£´Â½ÉÀå", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("°ø°İ·Â°ú ¹æ¾î·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù"), 16, FIreskillsinv);
-				itemset("ºÒ»çÁ¶ÀÇ ³¯°¹Áş", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[È­¿° °è¿­]","¿õÅ©¸®±â + ¾ÆÀÌÅÛ´øÁö±â","",ChatColor.BOLD+"5 X 3.5D"), 17, FIreskillsinv);
-				
-				itemset("È­»êÆøÇ³(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 19, FIreskillsinv);
-				itemset("¸¶±×¸¶°áÁ¤Ã¼(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 20, FIreskillsinv);
-				itemset("¿ë¾ÏÆø¹ß(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 22, FIreskillsinv);
-				itemset("ÇŞºûÀÇÃ¢(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 23, FIreskillsinv);
-				itemset("ÅÂ¾çÀÇÈû(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 25, FIreskillsinv);
-				itemset("µÎ¹øÂ° ÅÂ¾ç(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 26, FIreskillsinv);
+				itemset("íë¥´ëŠ”ìš©ì•”", Material.LAVA_BUCKET, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[í™”ì—¼ ê³„ì—´]","ì¬ì‚¬ìš©ì‹œ íë¥´ëŠ”ìš©ì•”ì„ ì‚¬ìš©í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ë¶„í™”êµ¬ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+"8 X "+BigDecimal.valueOf(0.02*(1+fsd.FlowingLava.getOrDefault(p.getUniqueId(),0)*0.035)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 9, FIreskillsinv);
+				itemset("íƒœì–‘ì˜ì›€ì¼œì¥ ", Material.SUNFLOWER, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[í™”ì—¼ ê³„ì—´]","ì¬ì‚¬ìš©ì‹œ íƒœì–‘ì˜ì›€ì¼œì¥ ì„ ì‚¬ìš©í•©ë‹ˆë‹¤","(í”¼í•´ëŸ‰ì€ ë¶ˆì˜ê³ ë¦¬ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+"3 X "+BigDecimal.valueOf(0.6*(1+fsd.Ring.getOrDefault(p.getUniqueId(),0)*0.057)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 10, FIreskillsinv);
+				itemset("ìŒêµ¬", Material.FIRE_CHARGE, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[í™”ì—¼ ê³„ì—´]","í•œë²ˆì— ë‘ê°œì˜ í™”ì—¼êµ¬ë¥¼ ë°œì‚¬í•©ë‹ˆë‹¤"), 11, FIreskillsinv);
+				itemset("ì—°í™”", Material.FIRE_CORAL_BLOCK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[í™”ì—¼ ê³„ì—´]","í™”ì—¼ì´ í¼ì§„ ì ì´ ì£¼ë³€ì˜", "ë˜ë‹¤ë¥¸ ì ë“¤ì—ê²Œ í™”ì—¼ì„ í¼ëœ¨ë¦½ë‹ˆë‹¤"), 12, FIreskillsinv);
+				itemset("ìš©ì•”ì†Œë‚˜ê¸°", Material.RED_GLAZED_TERRACOTTA, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[í™”ì—¼ ê³„ì—´]","ì¬ì‚¬ìš©ì‹œ ìš©ì•”ì†Œë‚˜ê¸°ë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ í™”ì—¼ì˜ìˆ¨ê²° ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+"10 X "+BigDecimal.valueOf(0.3*(1+fsd.Breath.getOrDefault(p.getUniqueId(),0)*0.05)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 13, FIreskillsinv);
+				itemset("í™”ì—¼ê²©", Material.BLAZE_POWDER, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[í™”ì—¼ ê³„ì—´]","ì¬ì‚¬ìš©ì‹œ í™”ì—¼ê²©ì„ ì‚¬ìš©í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ì‚´ì•„ìˆëŠ”ë¶ˆê½ƒ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+"4 X "+BigDecimal.valueOf(0.36*(1+fsd.AliveFlame.getOrDefault(p.getUniqueId(),0)*0.034)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 14, FIreskillsinv);
+				itemset("íƒ€ì˜¤ë¥´ëŠ”ì‹¬ì¥", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("ê³µê²©ë ¥ê³¼ ë°©ì–´ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤"), 16, FIreskillsinv);
+				itemset("ë¶ˆì‚¬ì¡°ì˜ ë‚ ê°¯ì§“", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[í™”ì—¼ ê³„ì—´]","ì›…í¬ë¦¬ê¸° + num4","",ChatColor.BOLD+"5 X 3.5D"), 17, FIreskillsinv);
+
+				itemset("í™”ì‚°í­í’(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 19, FIreskillsinv);
+				itemset("ë§ˆê·¸ë§ˆê²°ì •ì²´(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 20, FIreskillsinv);
+				itemset("ìš©ì•”í­ë°œ(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 22, FIreskillsinv);
+				itemset("í–‡ë¹›ì˜ì°½(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 23, FIreskillsinv);
+				itemset("íƒœì–‘ì˜í˜(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 25, FIreskillsinv);
+				itemset("ë‘ë²ˆì§¸ íƒœì–‘(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 26, FIreskillsinv);
 			}
 			else {
-				itemset("Èå¸£´Â¿ë¾Ï", Material.LAVA_BUCKET, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[È­¿° °è¿­]","Àç»ç¿ë½Ã Èå¸£´Â¿ë¾ÏÀ» »ç¿ëÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº ºĞÈ­±¸ ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+"8 X "+BigDecimal.valueOf(0.02*(1+fsd.FlowingLava.getOrDefault(p.getUniqueId(),0)*0.035)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 9, FIreskillsinv);
-				itemset("ÅÂ¾çÀÇ¿òÄÑÁç", Material.SUNFLOWER, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[È­¿° °è¿­]","Àç»ç¿ë½Ã ÅÂ¾çÀÇ¿òÄÑÁçÀ» »ç¿ëÇÕ´Ï´Ù","(ÇÇÇØ·®Àº ºÒÀÇ°í¸® ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+"3 X "+BigDecimal.valueOf(0.6*(1+fsd.Ring.getOrDefault(p.getUniqueId(),0)*0.057)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 10, FIreskillsinv);
-				itemset("½Ö±¸", Material.FIRE_CHARGE, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[È­¿° °è¿­]","ÇÑ¹ø¿¡ µÎ°³ÀÇ È­¿°±¸¸¦ ¹ß»çÇÕ´Ï´Ù"), 11, FIreskillsinv);
-				itemset("¿¬È­", Material.FIRE_CORAL_BLOCK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[È­¿° °è¿­]","È­¿°ÀÌ ÆÛÁø ÀûÀÌ ÁÖº¯ÀÇ", "¶Ç´Ù¸¥ Àûµé¿¡°Ô È­¿°À» ÆÛ¶ß¸³´Ï´Ù"), 12, FIreskillsinv);
+				itemset("íë¥´ëŠ”ìš©ì•”", Material.LAVA_BUCKET, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[í™”ì—¼ ê³„ì—´]","ì¬ì‚¬ìš©ì‹œ íë¥´ëŠ”ìš©ì•”ì„ ì‚¬ìš©í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ë¶„í™”êµ¬ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+"8 X "+BigDecimal.valueOf(0.02*(1+fsd.FlowingLava.getOrDefault(p.getUniqueId(),0)*0.035)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 9, FIreskillsinv);
+				itemset("íƒœì–‘ì˜ì›€ì¼œì¥ ", Material.SUNFLOWER, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[í™”ì—¼ ê³„ì—´]","ì¬ì‚¬ìš©ì‹œ íƒœì–‘ì˜ì›€ì¼œì¥ ì„ ì‚¬ìš©í•©ë‹ˆë‹¤","(í”¼í•´ëŸ‰ì€ ë¶ˆì˜ê³ ë¦¬ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+"3 X "+BigDecimal.valueOf(0.6*(1+fsd.Ring.getOrDefault(p.getUniqueId(),0)*0.057)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 10, FIreskillsinv);
+				itemset("ìŒêµ¬", Material.FIRE_CHARGE, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[í™”ì—¼ ê³„ì—´]","í•œë²ˆì— ë‘ê°œì˜ í™”ì—¼êµ¬ë¥¼ ë°œì‚¬í•©ë‹ˆë‹¤"), 11, FIreskillsinv);
+				itemset("ì—°í™”", Material.FIRE_CORAL_BLOCK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[í™”ì—¼ ê³„ì—´]","í™”ì—¼ì´ í¼ì§„ ì ì´ ì£¼ë³€ì˜", "ë˜ë‹¤ë¥¸ ì ë“¤ì—ê²Œ í™”ì—¼ì„ í¼ëœ¨ë¦½ë‹ˆë‹¤"), 12, FIreskillsinv);
 
-				itemset("¿ë¾Ï¼Ò³ª±â", Material.RED_GLAZED_TERRACOTTA, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[È­¿° °è¿­]","Àç»ç¿ë½Ã ¿ë¾Ï¼Ò³ª±â¸¦ »ç¿ëÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº È­¿°ÀÇ¼û°á ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+"10 X "+BigDecimal.valueOf(0.3*(1+fsd.Breath.getOrDefault(p.getUniqueId(),0)*0.05)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 13, FIreskillsinv);
-				itemset("È­¿°°İ", Material.BLAZE_POWDER, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[È­¿° °è¿­]","Àç»ç¿ë½Ã È­¿°°İÀ» »ç¿ëÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº »ì¾ÆÀÖ´ÂºÒ²É ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+"4 X "+BigDecimal.valueOf(0.36*(1+fsd.AliveFlame.getOrDefault(p.getUniqueId(),0)*0.034)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 14, FIreskillsinv);
-				itemset("Å¸¿À¸£´Â½ÉÀå", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("°ø°İ·Â°ú ¹æ¾î·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù"), 16, FIreskillsinv);
-				itemset("ºÒ»çÁ¶ÀÇ ³¯°¹Áş", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[È­¿° °è¿­]","¿õÅ©¸®±â + ¾ÆÀÌÅÛ´øÁö±â","",ChatColor.BOLD+"5 X 3.5D"), 17, FIreskillsinv);
-				
-				itemset("È­»êÆøÇ³", Material.GILDED_BLACKSTONE, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[È­¿° °è¿­]","Àç»ç¿ë½Ã È­»êÆøÇ³À» ºÒ·¯¿É´Ï´Ù", "(ÇÇÇØ·®Àº ºÒÀÇ°í¸® ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+"15 X "+BigDecimal.valueOf(0.25*(1+fsd.Ring.getOrDefault(p.getUniqueId(),0)*0.047)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 19, FIreskillsinv);
-				itemset("¸¶±×¸¶°áÁ¤Ã¼", Material.MAGMA_BLOCK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[È­¿° °è¿­]","Àç»ç¿ë½Ã ¸¶±×¸¶°áÁ¤Ã¼À» ¹ß»çÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº È­¿°±¸ ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+"8 X "+BigDecimal.valueOf(0.39*(1+fsd.Fireball.getOrDefault(p.getUniqueId(),0)*0.054)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 20, FIreskillsinv);
-				itemset("¿ë¾ÏÆø¹ß", Material.MAGMA_BLOCK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[È­¿° °è¿­]","Àç»ç¿ë½Ã ¿ë¾ÏÆø¹ßÀ» »ç¿ëÇÕ´Ï´Ù","(ÇÇÇØ·®Àº È­¿°ÀÇ¼û°á ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+"6 X "+BigDecimal.valueOf(0.24*(1+fsd.Breath.getOrDefault(p.getUniqueId(),0)*0.05)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 22, FIreskillsinv);
-				itemset("ÇŞºûÀÇÃ¢", Material.SHROOMLIGHT, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[È­¿° °è¿­]","Àç»ç¿ë½Ã ÇŞºûÀÇÃ¢À» »ç¿ëÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº »ì¾ÆÀÖ´ÂºÒ²É ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+"X "+BigDecimal.valueOf(1.4*(1+fsd.AliveFlame.getOrDefault(p.getUniqueId(),0)*0.05)).setScale(2, RoundingMode.HALF_EVEN)+"D, 6 X "+BigDecimal.valueOf(0.153*(1+fsd.AliveFlame.getOrDefault(p.getUniqueId(),0)*0.015)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 23, FIreskillsinv);
-				itemset("ÅÂ¾çÀÇÈû", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("°ø°İ·Â°ú ¹æ¾î·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù","ºÒ»çÁ¶ÀÇ ³¯°¹Áş Àç»ç¿ë ´ë±â½Ã°£ÀÌ °¨¼ÒÇÕ´Ï´Ù"), 25, FIreskillsinv);
-				itemset("µÎ¹øÂ° ÅÂ¾ç", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[È­¿° °è¿­]","´Ş¸®±â + ¾ÆÀÌÅÛ´øÁö±â","",ChatColor.BOLD+"10 X 2.5D"), 26, FIreskillsinv);
+				itemset("ìš©ì•”ì†Œë‚˜ê¸°", Material.RED_GLAZED_TERRACOTTA, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[í™”ì—¼ ê³„ì—´]","ì¬ì‚¬ìš©ì‹œ ìš©ì•”ì†Œë‚˜ê¸°ë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ í™”ì—¼ì˜ìˆ¨ê²° ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+"10 X "+BigDecimal.valueOf(0.3*(1+fsd.Breath.getOrDefault(p.getUniqueId(),0)*0.05)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 13, FIreskillsinv);
+				itemset("í™”ì—¼ê²©", Material.BLAZE_POWDER, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[í™”ì—¼ ê³„ì—´]","ì¬ì‚¬ìš©ì‹œ í™”ì—¼ê²©ì„ ì‚¬ìš©í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ì‚´ì•„ìˆëŠ”ë¶ˆê½ƒ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+"4 X "+BigDecimal.valueOf(0.36*(1+fsd.AliveFlame.getOrDefault(p.getUniqueId(),0)*0.034)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 14, FIreskillsinv);
+				itemset("íƒ€ì˜¤ë¥´ëŠ”ì‹¬ì¥", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("ê³µê²©ë ¥ê³¼ ë°©ì–´ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤"), 16, FIreskillsinv);
+				itemset("ë¶ˆì‚¬ì¡°ì˜ ë‚ ê°¯ì§“", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[í™”ì—¼ ê³„ì—´]","ì›…í¬ë¦¬ê¸° + num4","",ChatColor.BOLD+"5 X 3.5D"), 17, FIreskillsinv);
+
+				itemset("í™”ì‚°í­í’", Material.GILDED_BLACKSTONE, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[í™”ì—¼ ê³„ì—´]","ì¬ì‚¬ìš©ì‹œ í™”ì‚°í­í’ì„ ë¶ˆëŸ¬ì˜µë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ë¶ˆì˜ê³ ë¦¬ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+"15 X "+BigDecimal.valueOf(0.25*(1+fsd.Ring.getOrDefault(p.getUniqueId(),0)*0.047)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 19, FIreskillsinv);
+				itemset("ë§ˆê·¸ë§ˆê²°ì •ì²´", Material.MAGMA_BLOCK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[í™”ì—¼ ê³„ì—´]","ì¬ì‚¬ìš©ì‹œ ë§ˆê·¸ë§ˆê²°ì •ì²´ì„ ë°œì‚¬í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ í™”ì—¼êµ¬ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+"8 X "+demical(0.39*(1+fsd.Fireball.getOrDefault(p.getUniqueId(),0)*0.054))), 20, FIreskillsinv);
+				itemset("ìš©ì•”í­ë°œ", Material.MAGMA_BLOCK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[í™”ì—¼ ê³„ì—´]","ì¬ì‚¬ìš©ì‹œ ìš©ì•”í­ë°œì„ ì‚¬ìš©í•©ë‹ˆë‹¤","(í”¼í•´ëŸ‰ì€ í™”ì—¼ì˜ìˆ¨ê²° ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+"6 X "+BigDecimal.valueOf(0.24*(1+fsd.Breath.getOrDefault(p.getUniqueId(),0)*0.05)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 22, FIreskillsinv);
+				itemset("í–‡ë¹›ì˜ì°½", Material.SHROOMLIGHT, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[í™”ì—¼ ê³„ì—´]","ì¬ì‚¬ìš©ì‹œ í–‡ë¹›ì˜ì°½ì„ ì‚¬ìš©í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ì‚´ì•„ìˆëŠ”ë¶ˆê½ƒ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+"X "+BigDecimal.valueOf(1.4*(1+fsd.AliveFlame.getOrDefault(p.getUniqueId(),0)*0.05)).setScale(2, RoundingMode.HALF_EVEN)+"D, 6 X "+BigDecimal.valueOf(0.153*(1+fsd.AliveFlame.getOrDefault(p.getUniqueId(),0)*0.015)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 23, FIreskillsinv);
+				itemset("íƒœì–‘ì˜í˜", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("ê³µê²©ë ¥ê³¼ ë°©ì–´ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤","ë¶ˆì‚¬ì¡°ì˜ ë‚ ê°¯ì§“ ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ì´ ê°ì†Œí•©ë‹ˆë‹¤"), 25, FIreskillsinv);
+				itemset("ë‘ë²ˆì§¸ íƒœì–‘", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[í™”ì—¼ ê³„ì—´]","ì›…í¬ë¦¬ê¸° + num5","í­ë°œ í”¼í•´ëŸ‰ì€ ë§ˆê·¸ë§ˆê²°ì •ì²´ì™€ ë™ì¼í•©ë‹ˆë‹¤","",ChatColor.BOLD+"10 X 0.1D + 51*"+demical(0.39*(1+fsd.Fireball.getOrDefault(p.getUniqueId(),0)*0.054))), 26, FIreskillsinv);
 			}
-			itemset("ÇöÀç ¼÷·Ãµµ", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(""+Proficiency.getproexp(p)), 27, FIreskillsinv);
-			itemset("½ºÅ³Æ÷ÀÎÆ®", Material.NETHER_STAR, 0, 1, Arrays.asList(ChatColor.AQUA+"SP."+fsd.SkillPoints.getOrDefault(p.getUniqueId(),0),"","Å¬¸¯ÇÏ¸é ½ºÅ³Æ÷ÀÎÆ®°¡ ÃÊ±âÈ­ µË´Ï´Ù"), 35, FIreskillsinv);
-		
+			itemset("í˜„ì¬ ìˆ™ë ¨ë„", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(""+Proficiency.getproexp(p)), 27, FIreskillsinv);
+			itemset("ìŠ¤í‚¬í¬ì¸íŠ¸", Material.NETHER_STAR, 0, 1, Arrays.asList(ChatColor.AQUA+"SP."+fsd.SkillPoints.getOrDefault(p.getUniqueId(),0),"","í´ë¦­í•˜ë©´ ìŠ¤í‚¬í¬ì¸íŠ¸ê°€ ì´ˆê¸°í™” ë©ë‹ˆë‹¤"), 35, FIreskillsinv);
+
 		}
 		else {
 			itemset("Eruption", Material.CRYING_OBSIDIAN, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+fsd.FlowingLava.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[Flame]","RightClick","",ChatColor.BOLD+"8 X "+BigDecimal.valueOf(0.032*(1+fsd.FlowingLava.getOrDefault(p.getUniqueId(),0)*0.04)).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master Lv.50"), 0, FIreskillsinv);
@@ -120,7 +121,7 @@ public class FireSkillsGui{
 				itemset("LavaBoom(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 13, FIreskillsinv);
 				itemset("FireStrike(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 14, FIreskillsinv);
 				itemset("BurningHeart(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 16, FIreskillsinv);
-				itemset("Phoenix Flap(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 17, FIreskillsinv);
+				itemset("Flapping of Phoenix(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 17, FIreskillsinv);
 			}
 			else if(Proficiency.getpro(p)<2 && Proficiency.getpro(p)>=1) {
 				itemset("FlowingLava", Material.LAVA_BUCKET, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Flame]","Use FlowingLava When Use Once More", "(Damage Affected By Eruption)","",ChatColor.BOLD+"8 X "+BigDecimal.valueOf(0.02*(1+fsd.FlowingLava.getOrDefault(p.getUniqueId(),0)*0.035)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 9, FIreskillsinv);
@@ -130,8 +131,8 @@ public class FireSkillsGui{
 				itemset("LavaShower", Material.RED_GLAZED_TERRACOTTA, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Flame]","Call LavaShower When Use Once More", "(Damage Affected By Breath)","",ChatColor.BOLD+"10 X "+BigDecimal.valueOf(0.3*(1+fsd.Breath.getOrDefault(p.getUniqueId(),0)*0.05)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 13, FIreskillsinv);
 				itemset("FireStrike", Material.BLAZE_POWDER, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Flame]","Use FireStrike When Use Once More", "(Damage Affected By AliveFlame)","",ChatColor.BOLD+"4 X "+BigDecimal.valueOf(0.36*(1+fsd.AliveFlame.getOrDefault(p.getUniqueId(),0)*0.034)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 14, FIreskillsinv);
 				itemset("BurningHeart", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage & Armor","Increases Hotbody's Armor Increasement"), 16, FIreskillsinv);
-				itemset("Phoenix Flap", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Flame]","Sneaking + ThrowItem",ChatColor.BOLD+"5 X 3.5D"), 17, FIreskillsinv);
-				
+				itemset("Flapping of Phoenix", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Flame]","Sneaking + num4",ChatColor.BOLD+"5 X 3.5D"), 17, FIreskillsinv);
+
 				itemset("VolcanicStorm(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 19, FIreskillsinv);
 				itemset("MagmaBlock(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 20, FIreskillsinv);
 				itemset("LavaBoom(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 22, FIreskillsinv);
@@ -147,20 +148,20 @@ public class FireSkillsGui{
 				itemset("LavaShower", Material.RED_GLAZED_TERRACOTTA, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Flame]","Call LavaShower When Use Once More", "(Damage Affected By Breath)","",ChatColor.BOLD+"10 X "+BigDecimal.valueOf(0.3*(1+fsd.Breath.getOrDefault(p.getUniqueId(),0)*0.05)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 13, FIreskillsinv);
 				itemset("FireStrike", Material.BLAZE_POWDER, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Flame]","Use FireStrike When Use Once More", "(Damage Affected By AliveFlame)","",ChatColor.BOLD+"4 X "+BigDecimal.valueOf(0.36*(1+fsd.AliveFlame.getOrDefault(p.getUniqueId(),0)*0.034)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 14, FIreskillsinv);
 				itemset("BurningHeart", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage & Armor","Increases Hotbody's Armor Increasement"), 16, FIreskillsinv);
-				itemset("Phoenix Flap", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Flame]","Sneaking + ThrowItem",ChatColor.BOLD+"5 X 3.5D"), 17, FIreskillsinv);
-				
+				itemset("Flapping of Phoenix", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Flame]","Sneaking + num4",ChatColor.BOLD+"5 X 3.5D"), 17, FIreskillsinv);
+
 				itemset("VolcanicStorm", Material.GILDED_BLACKSTONE, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Flame]","Call VolcanicStorm When Use Once More", "(Damage Affected By Ring)","",ChatColor.BOLD+"15 X "+BigDecimal.valueOf(0.25*(1+fsd.Ring.getOrDefault(p.getUniqueId(),0)*0.047)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 19, FIreskillsinv);
 				itemset("MagmaBlock", Material.MAGMA_BLOCK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Flame]","Shot MagmaBlock When Use Once More", "(Damage Affected By FireBall)","",ChatColor.BOLD+"8 X "+BigDecimal.valueOf(0.39*(1+fsd.Fireball.getOrDefault(p.getUniqueId(),0)*0.054)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 20, FIreskillsinv);
 				itemset("LavaBoom", Material.MAGMA_BLOCK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Flame]","Use LavaBoom When Use Once More","(Damage Affected By Breath)","",ChatColor.BOLD+"6 X "+BigDecimal.valueOf(0.24*(1+fsd.Breath.getOrDefault(p.getUniqueId(),0)*0.05)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 22, FIreskillsinv);
 				itemset("SunLightSpear", Material.SHROOMLIGHT, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Flame]","Use SunLightSpear When Use Once More", "(Damage Affected By AliveFlame)","",ChatColor.BOLD+"X "+BigDecimal.valueOf(1.4*(1+fsd.AliveFlame.getOrDefault(p.getUniqueId(),0)*0.05)).setScale(2, RoundingMode.HALF_EVEN)+"D, 6 X "+BigDecimal.valueOf(0.153*(1+fsd.AliveFlame.getOrDefault(p.getUniqueId(),0)*0.015)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 23, FIreskillsinv);
-				itemset("SolarForce", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Damage & Armor","Decreases Phoenix Flap Cooldown"), 25, FIreskillsinv);
-				itemset("New SunRise", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Flame]","Sprinting + ThrowItem","",ChatColor.BOLD+"10 X 2.5D"), 26, FIreskillsinv);
+				itemset("SolarForce", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Damage & Armor","Decreases Flapping of Phoenix Cooldown"), 25, FIreskillsinv);
+				itemset("New SunRise", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Flame]","Sneaking + num5","Explosion Damage is equal to MagmaBlock","",ChatColor.BOLD+"10 X 0.1D + 51*"+demical(0.39*(1+fsd.Fireball.getOrDefault(p.getUniqueId(),0)*0.054))), 26, FIreskillsinv);
 			}
 			itemset("Current Proficiency", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(""+Proficiency.getproexp(p)), 27, FIreskillsinv);
 			itemset("SkillPoints", Material.NETHER_STAR, 0, 1, Arrays.asList(ChatColor.AQUA+"SP."+fsd.SkillPoints.getOrDefault(p.getUniqueId(),0),"","Click if you want to reset your skill's levels"), 35, FIreskillsinv);
-		
+
 		}
-		
+
 		p.openInventory(FIreskillsinv);
 	}
 

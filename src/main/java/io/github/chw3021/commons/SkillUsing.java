@@ -268,7 +268,10 @@ public class SkillUsing implements Listener, Serializable {
 		
 		Engskills.getInstance().ULT(ev);
 		Engskills.getInstance().ULT2(ev);
-		
+
+		Fireskills.getInstance().ULT(ev);
+		Fireskills.getInstance().ULT2(ev);
+
 		Forskills.getInstance().MachineGun(ev);
 
 		Hunskills.getInstance().SuperJump(ev);
@@ -830,8 +833,6 @@ public class SkillUsing implements Listener, Serializable {
 
 		Engskills.getInstance().ThrowCancel(ev);
 
-		Fireskills.getInstance().ULT(ev);
-		Fireskills.getInstance().ULT2(ev);
 		Fireskills.getInstance().ThrowCancel(ev);
 
 		Forskills.getInstance().ULT(ev);
