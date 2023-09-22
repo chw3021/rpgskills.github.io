@@ -22,72 +22,72 @@ import io.github.chw3021.obtains.Obtained;
 import net.md_5.bungee.api.ChatColor;
 
 public class IllSkillsGui extends SkillsGui{
-	
 
-	
+
+
 	public void IllSkillsinv(Player p)
 	{
-        String path = new File("").getAbsolutePath();
+		String path = new File("").getAbsolutePath();
 		IllSkillsData isd = new IllSkillsData(IllSkillsData.loadData(path +"/plugins/RPGskills/IllSkillsData.data"));
 		Inventory Illskillsinv = Bukkit.createInventory(null, 54, "Illskills");
 		Obtained.itemset(p, Illskillsinv);
-		
+
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			itemset("¹Ù²ãÄ¡±â", Material.STICK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+isd.Switch.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","±ÙÁ¢°ø°İ + ¿õÅ©¸®±â", "Master LV.1"), 0, Illskillsinv);
-			itemset("¼ÓÀÓ¼ö", Material.STICK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+isd.Trick.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","ÁÂÅ¬¸¯ + Á¡ÇÁ","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.66*(1+isd.Trick.getOrDefault(p.getUniqueId(),0)*0.0535)).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master LV.50"), 1, Illskillsinv);
-			itemset("Àè¿À·£ÅÏ", Material.JACK_O_LANTERN, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+isd.JackoLantern.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","¼Õ¹Ù²Ù±â","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.68*(1+isd.JackoLantern.getOrDefault(p.getUniqueId(),0)*0.062)).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master LV.50"), 2, Illskillsinv);
-			itemset("¿Ö°î", Material.DEBUG_STICK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+isd.Distortion.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","¿ìÅ¬¸¯","",ChatColor.BOLD+" X "+BigDecimal.valueOf(1.626*(1+isd.Distortion.getOrDefault(p.getUniqueId(),0)*0.0835)).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master LV.50"), 3, Illskillsinv);
-			itemset("¿ª¼³", Material.DEBUG_STICK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+isd.Paradox.getOrDefault(p.getUniqueId(),0),"","¿õÅ©¸®±â + ¿ìÅ¬¸¯","±Ã±Ø±â¸¦ Á¦¿ÜÇÑ ¸ğµç ±â¼úÀÇ","Àç»ç¿ë ´ë±â½Ã°£À» ÃÊ±âÈ­ ÇÕ´Ï´Ù","ÇØ·Î¿î È¿°ú¸¦ ¸ğµÎ Á¦°ÅÇÕ´Ï´Ù","Ã¼·Â°ú Çã±â¸¦ ¸ğµÎ È¸º¹ÇÕ´Ï´Ù", "Master LV.1"), 4, Illskillsinv);
-			itemset("Çã¼ö¾Æºñ", Material.ARMOR_STAND, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+isd.FakeDoll.getOrDefault(p.getUniqueId(),0),"","¼Õ¹Ù²Ù±â + ¿õÅ©¸®±â", "ÁÖº¯ ÀûµéÀ» µµ¹ßÇÕ´Ï´Ù", "0.5ÃÊµ¿¾È ¹«Àû»óÅÂ°¡ µË´Ï´Ù", "Master LV.1"), 5, Illskillsinv);
-			itemset("±ôÂ¦¼î", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+isd.Surprise.getOrDefault(p.getUniqueId(),0),"","Åõ¸íÈ­ »óÅÂÀÏ¶§ °ø°İ·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù","",ChatColor.BOLD+" X "+BigDecimal.valueOf(1+isd.Surprise.getOrDefault(p.getUniqueId(),0)*0.056).setScale(2, RoundingMode.HALF_EVEN)), 7, Illskillsinv);
+			itemset("ë°”ê¿”ì¹˜ê¸°", Material.STICK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+isd.Switch.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ê·¼ì ‘ê³µê²© + ì›…í¬ë¦¬ê¸°", "Master LV.1"), 0, Illskillsinv);
+			itemset("ì†ì„ìˆ˜", Material.STICK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+isd.Trick.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì¢Œí´ë¦­ + ì í”„","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.66*(1+isd.Trick.getOrDefault(p.getUniqueId(),0)*0.0535)).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master LV.50"), 1, Illskillsinv);
+			itemset("ì­ì˜¤ëœí„´", Material.JACK_O_LANTERN, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+isd.JackoLantern.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì†ë°”ê¾¸ê¸°","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.68*(1+isd.JackoLantern.getOrDefault(p.getUniqueId(),0)*0.062)).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master LV.50"), 2, Illskillsinv);
+			itemset("ì™œê³¡", Material.DEBUG_STICK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+isd.Distortion.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ìš°í´ë¦­","",ChatColor.BOLD+" X "+BigDecimal.valueOf(1.626*(1+isd.Distortion.getOrDefault(p.getUniqueId(),0)*0.0835)).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master LV.50"), 3, Illskillsinv);
+			itemset("ì—­ì„¤", Material.DEBUG_STICK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+isd.Paradox.getOrDefault(p.getUniqueId(),0),"","ì›…í¬ë¦¬ê¸° + ìš°í´ë¦­","ê¶ê·¹ê¸°ë¥¼ ì œì™¸í•œ ëª¨ë“  ê¸°ìˆ ì˜","ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ì„ ì´ˆê¸°í™” í•©ë‹ˆë‹¤","í•´ë¡œìš´ íš¨ê³¼ë¥¼ ëª¨ë‘ ì œê±°í•©ë‹ˆë‹¤","ì²´ë ¥ê³¼ í—ˆê¸°ë¥¼ ëª¨ë‘ íšŒë³µí•©ë‹ˆë‹¤", "Master LV.1"), 4, Illskillsinv);
+			itemset("í—ˆìˆ˜ì•„ë¹„", Material.ARMOR_STAND, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+isd.FakeDoll.getOrDefault(p.getUniqueId(),0),"","ì†ë°”ê¾¸ê¸° + ì›…í¬ë¦¬ê¸°", "ì£¼ë³€ ì ë“¤ì„ ë„ë°œí•©ë‹ˆë‹¤", "0.5ì´ˆë™ì•ˆ ë¬´ì ìƒíƒœê°€ ë©ë‹ˆë‹¤", "Master LV.1"), 5, Illskillsinv);
+			itemset("ê¹œì§ì‡¼", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+isd.Surprise.getOrDefault(p.getUniqueId(),0),"","íˆ¬ëª…í™” ìƒíƒœì¼ë•Œ ê³µê²©ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤","",ChatColor.BOLD+" X "+BigDecimal.valueOf(1+isd.Surprise.getOrDefault(p.getUniqueId(),0)*0.056).setScale(2, RoundingMode.HALF_EVEN)), 7, Illskillsinv);
 			if(Proficiency.getpro(p)<1) {
-				itemset("È¥¶õ(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 9, Illskillsinv);
-				itemset("¾ÓÄÚ¸£(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 10, Illskillsinv);
-				itemset("È®´ë(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 11, Illskillsinv);
-				itemset("µÚ¼¯±â(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 12, Illskillsinv);
-				itemset("±â¹Í(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 13, Illskillsinv);
-				itemset("À§Ä¡º¯°æ(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 14, Illskillsinv);
-				itemset("Á¶ÀÛ(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 16, Illskillsinv);
-				itemset("°øÇãÀÇ È¯»ó(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 17, Illskillsinv);
+				itemset("í˜¼ë€(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 9, Illskillsinv);
+				itemset("ì•™ì½”ë¥´(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 10, Illskillsinv);
+				itemset("í™•ëŒ€(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 11, Illskillsinv);
+				itemset("ë’¤ì„ê¸°(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 12, Illskillsinv);
+				itemset("ê¸°ë¯¹(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 13, Illskillsinv);
+				itemset("ìœ„ì¹˜ë³€ê²½(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 14, Illskillsinv);
+				itemset("ì¡°ì‘(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 16, Illskillsinv);
+				itemset("ê³µí—ˆì˜ í™˜ìƒ(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 17, Illskillsinv);
 			}
 			else if(Proficiency.getpro(p)<2 && Proficiency.getpro(p)>=1) {
-				itemset("È¥¶õ", Material.END_PORTAL_FRAME, 0, 1, Arrays.asList("ÀûÀ» Âª°Ô Á¦¾ĞÇÕ´Ï´Ù"), 9, Illskillsinv);
-				itemset("¾ÓÄÚ¸£", Material.CHORUS_FLOWER, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","ÀçÀÔ·Â½Ã ¾ÓÄÚ¸£¸¦ »ç¿ëÇÕ´Ï´Ù","(ÇÇÇØ·®Àº ¼ÓÀÓ¼ö ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.8*(1+isd.Trick.getOrDefault(p.getUniqueId(),0)*0.0535)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 10, Illskillsinv);
-				itemset("È®´ë", Material.COMPARATOR, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","ÀçÀÔ·Â½Ã È®´ë¸¦ »ç¿ëÇÕ´Ï´Ù","(ÇÇÇØ·®Àº Àè¿À·£ÅÏ ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.7*(1+isd.JackoLantern.getOrDefault(p.getUniqueId(),0)*0.062)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 11, Illskillsinv);
-				itemset("µÚ¼¯±â", Material.SKULL_BANNER_PATTERN, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","ÀçÀÔ·Â½Ã µÚ¼¯±â¸¦ »ç¿ëÇÕ´Ï´Ù","(ÇÇÇØ·®Àº ¿Ö°î ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(1.1*(1+isd.Distortion.getOrDefault(p.getUniqueId(),0)*0.05)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 12, Illskillsinv);
-				itemset("±â¹Í", Material.CREEPER_HEAD, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","³²¾ÆÀÖ´Â Çã¼ö¾ÆºñµéÀ» Æø¹ß½ÃÅµ´Ï´Ù","(ÇÇÇØ·®Àº ¼ÓÀÓ¼ö ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.66*(1+isd.Trick.getOrDefault(p.getUniqueId(),0)*0.0535)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 13, Illskillsinv);
-				itemset("À§Ä¡º¯°æ", Material.SKELETON_SKULL, 0, 1, Arrays.asList("ÀçÀÔ·Â½Ã Çã¼ö¾Æºñ¿Í ÀÚ½ÅÀÇ À§Ä¡¸¦ ¹Ù²ß´Ï´Ù", "0.5ÃÊµ¿¾È ¹«Àû»óÅÂ°¡ µË´Ï´Ù"), 14, Illskillsinv);
-				itemset("Á¶ÀÛ", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("°ø°İ·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù","½ºÅ³»ç¿ë½Ã 0.3ÃÊµ¿¾È ¹«Àû»óÅÂ°¡ µË´Ï´Ù"), 16, Illskillsinv);
-				itemset("°øÇãÀÇ È¯»ó", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","¿õÅ©¸®±â + ¾ÆÀÌÅÛ´øÁö±â","",ChatColor.BOLD+" X 15.6D"), 17, Illskillsinv);
+				itemset("í˜¼ë€", Material.END_PORTAL_FRAME, 0, 1, Arrays.asList("ì ì„ ì§§ê²Œ ì œì••í•©ë‹ˆë‹¤"), 9, Illskillsinv);
+				itemset("ì•™ì½”ë¥´", Material.CHORUS_FLOWER, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì¬ì…ë ¥ì‹œ ì•™ì½”ë¥´ë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤","(í”¼í•´ëŸ‰ì€ ì†ì„ìˆ˜ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.8*(1+isd.Trick.getOrDefault(p.getUniqueId(),0)*0.0535)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 10, Illskillsinv);
+				itemset("í™•ëŒ€", Material.COMPARATOR, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì¬ì…ë ¥ì‹œ í™•ëŒ€ë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤","(í”¼í•´ëŸ‰ì€ ì­ì˜¤ëœí„´ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.7*(1+isd.JackoLantern.getOrDefault(p.getUniqueId(),0)*0.062)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 11, Illskillsinv);
+				itemset("ë’¤ì„ê¸°", Material.SKULL_BANNER_PATTERN, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì¬ì…ë ¥ì‹œ ë’¤ì„ê¸°ë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤","(í”¼í•´ëŸ‰ì€ ì™œê³¡ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(1.1*(1+isd.Distortion.getOrDefault(p.getUniqueId(),0)*0.05)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 12, Illskillsinv);
+				itemset("ê¸°ë¯¹", Material.CREEPER_HEAD, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ë‚¨ì•„ìˆëŠ” í—ˆìˆ˜ì•„ë¹„ë“¤ì„ í­ë°œì‹œí‚µë‹ˆë‹¤","(í”¼í•´ëŸ‰ì€ ì†ì„ìˆ˜ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.66*(1+isd.Trick.getOrDefault(p.getUniqueId(),0)*0.0535)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 13, Illskillsinv);
+				itemset("ìœ„ì¹˜ë³€ê²½", Material.SKELETON_SKULL, 0, 1, Arrays.asList("ì¬ì…ë ¥ì‹œ í—ˆìˆ˜ì•„ë¹„ì™€ ìì‹ ì˜ ìœ„ì¹˜ë¥¼ ë°”ê¿‰ë‹ˆë‹¤", "0.5ì´ˆë™ì•ˆ ë¬´ì ìƒíƒœê°€ ë©ë‹ˆë‹¤"), 14, Illskillsinv);
+				itemset("ì¡°ì‘", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("ê³µê²©ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤","ìŠ¤í‚¬ì‚¬ìš©ì‹œ 0.3ì´ˆë™ì•ˆ ë¬´ì ìƒíƒœê°€ ë©ë‹ˆë‹¤"), 16, Illskillsinv);
+				itemset("ê³µí—ˆì˜ í™˜ìƒ", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì›…í¬ë¦¬ê¸° + num4","",ChatColor.BOLD+" X 15.6D"), 17, Illskillsinv);
 
-				itemset("Âø¶õ(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 18, Illskillsinv);
-				itemset("°üÅë(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 19, Illskillsinv);
-				itemset("°î¿¹(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 20, Illskillsinv);
-				itemset("¼¼³ú(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 21, Illskillsinv);
-				itemset("ÃÖ¸é(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 22, Illskillsinv);
-				itemset("ÃÊ°¨°¢ÀûÁö°¢(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 25, Illskillsinv);
-				itemset("ÇÇ³¯·¹(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 26, Illskillsinv);
+				itemset("ì°©ë€(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 18, Illskillsinv);
+				itemset("ê´€í†µ(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 19, Illskillsinv);
+				itemset("ê³¡ì˜ˆ(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 20, Illskillsinv);
+				itemset("ì„¸ë‡Œ(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 21, Illskillsinv);
+				itemset("ìµœë©´(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 22, Illskillsinv);
+				itemset("ì´ˆê°ê°ì ì§€ê°(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 25, Illskillsinv);
+				itemset("í”¼ë‚ ë ˆ(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 26, Illskillsinv);
 			}
 			else {
-				itemset("È¥¶õ", Material.END_PORTAL_FRAME, 0, 1, Arrays.asList("ÀûÀ» Âª°Ô Á¦¾ĞÇÕ´Ï´Ù"), 9, Illskillsinv);
-				itemset("¾ÓÄÚ¸£", Material.CHORUS_FLOWER, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","ÀçÀÔ·Â½Ã ¾ÓÄÚ¸£¸¦ »ç¿ëÇÕ´Ï´Ù","(ÇÇÇØ·®Àº ¼ÓÀÓ¼ö ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.8*(1+isd.Trick.getOrDefault(p.getUniqueId(),0)*0.0535)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 10, Illskillsinv);
-				itemset("È®´ë", Material.COMPARATOR, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","ÀçÀÔ·Â½Ã È®´ë¸¦ »ç¿ëÇÕ´Ï´Ù","(ÇÇÇØ·®Àº Àè¿À·£ÅÏ ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.7*(1+isd.JackoLantern.getOrDefault(p.getUniqueId(),0)*0.062)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 11, Illskillsinv);
-				itemset("µÚ¼¯±â", Material.SKULL_BANNER_PATTERN, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","ÀçÀÔ·Â½Ã µÚ¼¯±â¸¦ »ç¿ëÇÕ´Ï´Ù","(ÇÇÇØ·®Àº ¿Ö°î ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(1.1*(1+isd.Distortion.getOrDefault(p.getUniqueId(),0)*0.05)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 12, Illskillsinv);
-				itemset("±â¹Í", Material.CREEPER_HEAD, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","³²¾ÆÀÖ´Â Çã¼ö¾ÆºñµéÀ» Æø¹ß½ÃÅµ´Ï´Ù","(ÇÇÇØ·®Àº ¼ÓÀÓ¼ö ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.66*(1+isd.Trick.getOrDefault(p.getUniqueId(),0)*0.0535)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 13, Illskillsinv);
-				itemset("À§Ä¡º¯°æ", Material.SKELETON_SKULL, 0, 1, Arrays.asList("ÀçÀÔ·Â½Ã Çã¼ö¾Æºñ¿Í ÀÚ½ÅÀÇ À§Ä¡¸¦ ¹Ù²ß´Ï´Ù", "0.5ÃÊµ¿¾È ¹«Àû»óÅÂ°¡ µË´Ï´Ù"), 14, Illskillsinv);
-				itemset("Á¶ÀÛ", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("°ø°İ·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù","½ºÅ³»ç¿ë½Ã 0.3ÃÊµ¿¾È ¹«Àû»óÅÂ°¡ µË´Ï´Ù"), 16, Illskillsinv);
-				itemset("°øÇãÀÇ È¯»ó", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","¿õÅ©¸®±â + ¾ÆÀÌÅÛ´øÁö±â","",ChatColor.BOLD+" X 15.6D"), 17, Illskillsinv);
+				itemset("í˜¼ë€", Material.END_PORTAL_FRAME, 0, 1, Arrays.asList("ì ì„ ì§§ê²Œ ì œì••í•©ë‹ˆë‹¤"), 9, Illskillsinv);
+				itemset("ì•™ì½”ë¥´", Material.CHORUS_FLOWER, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì¬ì…ë ¥ì‹œ ì•™ì½”ë¥´ë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤","(í”¼í•´ëŸ‰ì€ ì†ì„ìˆ˜ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.8*(1+isd.Trick.getOrDefault(p.getUniqueId(),0)*0.0535)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 10, Illskillsinv);
+				itemset("í™•ëŒ€", Material.COMPARATOR, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì¬ì…ë ¥ì‹œ í™•ëŒ€ë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤","(í”¼í•´ëŸ‰ì€ ì­ì˜¤ëœí„´ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.7*(1+isd.JackoLantern.getOrDefault(p.getUniqueId(),0)*0.062)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 11, Illskillsinv);
+				itemset("ë’¤ì„ê¸°", Material.SKULL_BANNER_PATTERN, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì¬ì…ë ¥ì‹œ ë’¤ì„ê¸°ë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤","(í”¼í•´ëŸ‰ì€ ì™œê³¡ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(1.1*(1+isd.Distortion.getOrDefault(p.getUniqueId(),0)*0.05)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 12, Illskillsinv);
+				itemset("ê¸°ë¯¹", Material.CREEPER_HEAD, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ë‚¨ì•„ìˆëŠ” í—ˆìˆ˜ì•„ë¹„ë“¤ì„ í­ë°œì‹œí‚µë‹ˆë‹¤","(í”¼í•´ëŸ‰ì€ ì†ì„ìˆ˜ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.66*(1+isd.Trick.getOrDefault(p.getUniqueId(),0)*0.0535)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 13, Illskillsinv);
+				itemset("ìœ„ì¹˜ë³€ê²½", Material.SKELETON_SKULL, 0, 1, Arrays.asList("ì¬ì…ë ¥ì‹œ í—ˆìˆ˜ì•„ë¹„ì™€ ìì‹ ì˜ ìœ„ì¹˜ë¥¼ ë°”ê¿‰ë‹ˆë‹¤", "0.5ì´ˆë™ì•ˆ ë¬´ì ìƒíƒœê°€ ë©ë‹ˆë‹¤"), 14, Illskillsinv);
+				itemset("ì¡°ì‘", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("ê³µê²©ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤","ìŠ¤í‚¬ì‚¬ìš©ì‹œ 0.3ì´ˆë™ì•ˆ ë¬´ì ìƒíƒœê°€ ë©ë‹ˆë‹¤"), 16, Illskillsinv);
+				itemset("ê³µí—ˆì˜ í™˜ìƒ", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì›…í¬ë¦¬ê¸° + num4","",ChatColor.BOLD+" X 15.6D"), 17, Illskillsinv);
 
-				itemset("Âø¶õ", Material.CARROT_ON_A_STICK, 0, 1, Arrays.asList("ÁÖº¯ÀûÀÌ ´ë»óÀ» °ø°İÇÕ´Ï´Ù"), 18, Illskillsinv);
-				itemset("°üÅë", Material.GLASS, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","ÀçÀÔ·Â½Ã °üÅëÀ» »ç¿ëÇÕ´Ï´Ù","(ÇÇÇØ·®Àº ¼ÓÀÓ¼ö ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+"21 X "+BigDecimal.valueOf(0.24*(1+isd.Trick.getOrDefault(p.getUniqueId(),0)*0.035)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 19, Illskillsinv);
-				itemset("°î¿¹", Material.CLAY_BALL, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","ÀçÀÔ·Â½Ã °î¿¹¸¦ »ç¿ëÇÕ´Ï´Ù","(ÇÇÇØ·®Àº Àè¿À·£ÅÏ ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+"21 X "+BigDecimal.valueOf(0.15*(1+isd.JackoLantern.getOrDefault(p.getUniqueId(),0)*0.022)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 20, Illskillsinv);
-				itemset("¼¼³ú", Material.BRAIN_CORAL_BLOCK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","ÀçÀÔ·Â½Ã ¼¼³ú¸¦ »ç¿ëÇÕ´Ï´Ù","(ÇÇÇØ·®Àº ¿Ö°î ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(1.1*(1+isd.Distortion.getOrDefault(p.getUniqueId(),0)*0.05)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 21, Illskillsinv);
-				itemset("ÃÖ¸é", Material.CANDLE, 0, 1, Arrays.asList("Çã¼ö¾Æºñ ÁÖº¯ÀÇ ÀûµéÀ» Àç¿ó´Ï´Ù","Àáµç ÀûÀº °ø°İÀ» ¹ŞÀ¸¸é","´õ ¸¹Àº ÇÇÇØ¸¦ ÀÔ°í ±ú¾î³³´Ï´Ù","", "1ÃÊµ¿¾È ¹«Àû»óÅÂ°¡ µË´Ï´Ù"), 22, Illskillsinv);
-				itemset("ÃÊ°¨°¢ÀûÁö°¢", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("°ø°İ·Â°ú ¹æ¾î·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù","°øÇãÀÇ È¯»ó Àç»ç¿ë ´ë±â½Ã°£ÀÌ °¨¼ÒÇÕ´Ï´Ù","","±ôÂ¦¼î°¡ Àº½ÅÀÌ ¾Æ´Ï¿©µµ ¹ßµ¿µË´Ï´Ù"), 25, Illskillsinv);
-				itemset("ÇÇ³¯·¹", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","´Ş¸®±â + ¾ÆÀÌÅÛ´øÁö±â", "¿ª¼³ÀÇ ´ë±â½Ã°£ÀÌ 80% °¨¼ÒÇÕ´Ï´Ù", "±â¼ú»ç¿ë½Ã ÇÇ³¯·¹ È¿°ú°¡ ÁßÃ¸µË´Ï´Ù","8ÁßÃ¸ ´Ş¼º½Ã Ãß°¡ °íÁ¤ÇÇÇØ¸¦ ÀÔÈü´Ï´Ù",ChatColor.BOLD+"ÇÇÇØ·® X (4+0.01XD)%","10ÃÊµ¿¾È Áö¼ÓµË´Ï´Ù"), 26, Illskillsinv);
+				itemset("ì°©ë€", Material.CARROT_ON_A_STICK, 0, 1, Arrays.asList("ì£¼ë³€ì ì´ ëŒ€ìƒì„ ê³µê²©í•©ë‹ˆë‹¤"), 18, Illskillsinv);
+				itemset("ê´€í†µ", Material.GLASS, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì¬ì…ë ¥ì‹œ ê´€í†µì„ ì‚¬ìš©í•©ë‹ˆë‹¤","(í”¼í•´ëŸ‰ì€ ì†ì„ìˆ˜ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+"21 X "+BigDecimal.valueOf(0.24*(1+isd.Trick.getOrDefault(p.getUniqueId(),0)*0.035)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 19, Illskillsinv);
+				itemset("ê³¡ì˜ˆ", Material.CLAY_BALL, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì¬ì…ë ¥ì‹œ ê³¡ì˜ˆë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤","(í”¼í•´ëŸ‰ì€ ì­ì˜¤ëœí„´ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+"21 X "+BigDecimal.valueOf(0.15*(1+isd.JackoLantern.getOrDefault(p.getUniqueId(),0)*0.022)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 20, Illskillsinv);
+				itemset("ì„¸ë‡Œ", Material.BRAIN_CORAL_BLOCK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì¬ì…ë ¥ì‹œ ì„¸ë‡Œë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤","(í”¼í•´ëŸ‰ì€ ì™œê³¡ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(1.1*(1+isd.Distortion.getOrDefault(p.getUniqueId(),0)*0.05)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 21, Illskillsinv);
+				itemset("ìµœë©´", Material.CANDLE, 0, 1, Arrays.asList("í—ˆìˆ˜ì•„ë¹„ ì£¼ë³€ì˜ ì ë“¤ì„ ì¬ì›ë‹ˆë‹¤","ì ë“  ì ì€ ê³µê²©ì„ ë°›ìœ¼ë©´","ë” ë§ì€ í”¼í•´ë¥¼ ì…ê³  ê¹¨ì–´ë‚©ë‹ˆë‹¤","", "1ì´ˆë™ì•ˆ ë¬´ì ìƒíƒœê°€ ë©ë‹ˆë‹¤"), 22, Illskillsinv);
+				itemset("ì´ˆê°ê°ì ì§€ê°", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("ê³µê²©ë ¥ê³¼ ë°©ì–´ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤","ê³µí—ˆì˜ í™˜ìƒ ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ì´ ê°ì†Œí•©ë‹ˆë‹¤","","ê¹œì§ì‡¼ê°€ ì€ì‹ ì´ ì•„ë‹ˆì—¬ë„ ë°œë™ë©ë‹ˆë‹¤"), 25, Illskillsinv);
+				itemset("í”¼ë‚ ë ˆ", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì›…í¬ë¦¬ê¸° + num5", "ì—­ì„¤ì˜ ëŒ€ê¸°ì‹œê°„ì´ 80% ê°ì†Œí•©ë‹ˆë‹¤", "ê¸°ìˆ ì‚¬ìš©ì‹œ í”¼ë‚ ë ˆ íš¨ê³¼ê°€ ì¤‘ì²©ë©ë‹ˆë‹¤","8ì¤‘ì²© ë‹¬ì„±ì‹œ ì¶”ê°€ ê³ ì •í”¼í•´ë¥¼ ì…í™ë‹ˆë‹¤",ChatColor.BOLD+"í”¼í•´ëŸ‰ X (4+0.01XD)%","10ì´ˆë™ì•ˆ ì§€ì†ë©ë‹ˆë‹¤"), 26, Illskillsinv);
 			}
-			itemset("ÇöÀç ¼÷·Ãµµ", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(""+Proficiency.getproexp(p)), 27, Illskillsinv);
-			itemset("½ºÅ³Æ÷ÀÎÆ®", Material.NETHER_STAR, 0, 1, Arrays.asList(ChatColor.AQUA+"SP."+isd.SkillPoints.getOrDefault(p.getUniqueId(),0),"","Å¬¸¯ÇÏ¸é ½ºÅ³Æ÷ÀÎÆ®°¡ ÃÊ±âÈ­ µË´Ï´Ù"), 35, Illskillsinv);
+			itemset("í˜„ì¬ ìˆ™ë ¨ë„", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(""+Proficiency.getproexp(p)), 27, Illskillsinv);
+			itemset("ìŠ¤í‚¬í¬ì¸íŠ¸", Material.NETHER_STAR, 0, 1, Arrays.asList(ChatColor.AQUA+"SP."+isd.SkillPoints.getOrDefault(p.getUniqueId(),0),"","í´ë¦­í•˜ë©´ ìŠ¤í‚¬í¬ì¸íŠ¸ê°€ ì´ˆê¸°í™” ë©ë‹ˆë‹¤"), 35, Illskillsinv);
 		}
 		else {
 			itemset("Switch", Material.STICK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+isd.Switch.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[Wind]","Hit + Sneaking", "Master LV.1"), 0, Illskillsinv);
@@ -115,7 +115,7 @@ public class IllSkillsGui extends SkillsGui{
 				itemset("Gimmick", Material.CREEPER_HEAD, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Explodes Remaining FakeDoll","(Damage Affected By Trick)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.66*(1+isd.Trick.getOrDefault(p.getUniqueId(),0)*0.0535)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 13, Illskillsinv);
 				itemset("Change", Material.SKELETON_SKULL, 0, 1, Arrays.asList("Switchs Pos with FakeDoll When use Once More", "Get invincible state for 0.5s"), 14, Illskillsinv);
 				itemset("Manipulation", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage","Get invincible for 0.3s after using any skill"), 16, Illskillsinv);
-				itemset("The Void", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Sneaking + ThrowItem","",ChatColor.BOLD+" X 15.6D"), 17, Illskillsinv);
+				itemset("The Void", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Sneaking + num4","",ChatColor.BOLD+" X 15.6D"), 17, Illskillsinv);
 
 				itemset("Misdirection(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 18, Illskillsinv);
 				itemset("Penetration(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 19, Illskillsinv);
@@ -133,7 +133,7 @@ public class IllSkillsGui extends SkillsGui{
 				itemset("Gimmick", Material.CREEPER_HEAD, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Explodes Remaining FakeDoll","(Damage Affected By Trick)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.66*(1+isd.Trick.getOrDefault(p.getUniqueId(),0)*0.0535)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 13, Illskillsinv);
 				itemset("Change", Material.SKELETON_SKULL, 0, 1, Arrays.asList("Switchs Pos with FakeDoll When use Once More", "Get invincible state for 0.5s"), 14, Illskillsinv);
 				itemset("Manipulation", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage","Get invincible for 0.3s after using any skill"), 16, Illskillsinv);
-				itemset("The Void", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Sneaking + ThrowItem","",ChatColor.BOLD+" X 15.6D"), 17, Illskillsinv);
+				itemset("The Void", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Sneaking + num4","",ChatColor.BOLD+" X 15.6D"), 17, Illskillsinv);
 
 				itemset("Misdirection", Material.CARROT_ON_A_STICK, 0, 1, Arrays.asList("Near By Enemies will Attack Hit Target"), 18, Illskillsinv);
 				itemset("Penetration", Material.GLASS, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Use MindControl When use Once More","(Damage Affected By JackoLantern)","",ChatColor.BOLD+"21 X "+BigDecimal.valueOf(0.24*(1+isd.Trick.getOrDefault(p.getUniqueId(),0)*0.035)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 19, Illskillsinv);
@@ -141,13 +141,13 @@ public class IllSkillsGui extends SkillsGui{
 				itemset("MindControl", Material.BRAIN_CORAL_BLOCK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Use Juggling When use Once More","(Damage Affected By Distortion)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(1.1*(1+isd.Distortion.getOrDefault(p.getUniqueId(),0)*0.05)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 21, Illskillsinv);
 				itemset("Hypnosis", Material.CANDLE, 0, 1, Arrays.asList("Put the enemies surrounding the doll to sleep","Sleeping Enemies Get More Damage From You","Hit Enemies will wake up", "Get invincible state for 1s"), 22, Illskillsinv);
 				itemset("ESP", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Damage & Armor","Decrease The Void Cooldown","","Surprise Always Activates", "Even If You Aren't Invisible"), 25, Illskillsinv);
-				itemset("Finale", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Sprinting + ThrowItem", "Reduces Paradox's Cooldown 80%", "Stacks Finale effect when you use skills", "If 8 stacks are achieved","Additional absolute damage will be inflicted", ChatColor.BOLD+"Damage X (4+0.01XD)%","Lasts for 10 seconds"), 26, Illskillsinv);
+				itemset("Finale", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Sneaking + num5", "Reduces Paradox's Cooldown 80%", "Stacks Finale effect when you use skills", "If 8 stacks are achieved","Additional absolute damage will be inflicted", ChatColor.BOLD+"Damage X (4+0.01XD)%","Lasts for 10 seconds"), 26, Illskillsinv);
 			}
 			itemset("Current Proficiency", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(""+Proficiency.getproexp(p)), 27, Illskillsinv);
 			itemset("SkillPoints", Material.NETHER_STAR, 0, 1, Arrays.asList(ChatColor.AQUA+"SP."+isd.SkillPoints.getOrDefault(p.getUniqueId(),0),"","Click if you want to reset your skill's levels"), 35, Illskillsinv);
 		}
-		
-	
+
+
 		p.openInventory(Illskillsinv);
 	}
 

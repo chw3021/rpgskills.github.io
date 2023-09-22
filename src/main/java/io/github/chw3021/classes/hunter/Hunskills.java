@@ -810,6 +810,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 						if(!(timer < 0)) // if timer is still more then 0 or 0
 						{
 
+							Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,timer,3,"사냥","Hunting"));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 								p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("사냥 재사용 대기시간이 " + String.valueOf(Math.round(timer*10)/10.0) + "초 남았습니다").create());
 							}
@@ -902,6 +903,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 						double timer = (hucooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d; // geting time in seconds
 						if(!(timer < 0)) // if timer is still more then 0 or 0
 						{
+							Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,timer,3,"사냥","Hunting"));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 								p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("사냥 재사용 대기시간이 " + String.valueOf(Math.round(timer*10)/10.0) + "초 남았습니다").create());
 							}
@@ -1213,6 +1215,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 							if(!(timer < 0)) // if timer is still more then 0 or 0
 							{
 
+								Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,timer,4,"참격","Daze"));
 								if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 									p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("참격 재사용 대기시간이 " + String.valueOf(Math.round(timer*10)/10.0) + "초 남았습니다").create());
 								}
@@ -1367,6 +1370,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 							if(!(timer < 0)) // if timer is still more then 0 or 0
 							{
 
+								Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,timer,5,"두개골분쇄","SkullCrusher"));
 								if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 									p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("두개골분쇄 재사용 대기시간이 " + String.valueOf(Math.round(timer*10)/10.0) + "초 남았습니다").create());
 								}

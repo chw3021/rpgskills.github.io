@@ -272,11 +272,23 @@ public class SkillUsing implements Listener, Serializable {
 		Fireskills.getInstance().ULT(ev);
 		Fireskills.getInstance().ULT2(ev);
 
+		Forskills.getInstance().ULT(ev);
+		Forskills.getInstance().ULT2(ev);
 		Forskills.getInstance().MachineGun(ev);
 
+		Frostskills.getInstance().ULT(ev);
+		Frostskills.getInstance().ULT2(ev);
+
+		Hunskills.getInstance().ULT(ev);
+		Hunskills.getInstance().ULT2(ev);
 		Hunskills.getInstance().SuperJump(ev);
 
+		Illskills.getInstance().ULT(ev);
+		Illskills.getInstance().ULT2(ev);
+
 		Launskills.getInstance().ArrowChange(ev);
+		Launskills.getInstance().ULT(ev);
+		Launskills.getInstance().ULT2(ev);
 
 		Medskills.getInstance().Hideout(ev);
 
@@ -835,24 +847,12 @@ public class SkillUsing implements Listener, Serializable {
 
 		Fireskills.getInstance().ThrowCancel(ev);
 
-		Forskills.getInstance().ULT(ev);
-		Forskills.getInstance().ULT2(ev);
 		Forskills.getInstance().ThrowCancel(ev);
-
-		Frostskills.getInstance().ULT(ev);
-		Frostskills.getInstance().ULT2(ev);
 		Frostskills.getInstance().ThrowCancel(ev);
-
-		Hunskills.getInstance().ULT(ev);
-		Hunskills.getInstance().ULT2(ev);
 		Hunskills.getInstance().ThrowCancel(ev);
 
-		Illskills.getInstance().ULT(ev);
-		Illskills.getInstance().ULT2(ev);
 		Illskills.getInstance().ThrowCancel(ev);
 
-		Launskills.getInstance().ULT(ev);
-		Launskills.getInstance().ULT2(ev);
 		Launskills.getInstance().ThrowCancel(ev);
 
 		Medskills.getInstance().ULT(ev);

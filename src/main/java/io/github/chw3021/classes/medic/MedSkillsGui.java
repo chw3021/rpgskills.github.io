@@ -8,6 +8,7 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import io.github.chw3021.classes.SkillsGui;
 import org.bukkit.entity.Player;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -20,40 +21,9 @@ import io.github.chw3021.classes.Proficiency;
 import io.github.chw3021.obtains.Obtained;
 import net.md_5.bungee.api.ChatColor;
 
-public class MedSkillsGui{
+public class MedSkillsGui extends SkillsGui {
 	
 
-	public void itemset(String display, Material ID, int data, int stack, List<String> Lore, int loc, Inventory inv)
-	{
-		ItemStack item = new ItemStack(ID);
-		ItemMeta items = item.getItemMeta();
-		items.setDisplayName(display);
-		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-		Lore.forEach(l -> {
-			l=ChatColor.RESET+l;
-		});
-		items.setLore(Lore);
-		item.setItemMeta(items);
-		inv.setItem(loc, item);
-	}
-	
-	public void itemset(String display, ItemStack is, int data, int stack, List<String> Lore, int loc, Inventory inv)
-	{
-		ItemStack item = is;
-		ItemMeta items = item.getItemMeta();
-		items.setDisplayName(display);
-		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-		Lore.forEach(l -> {
-			l=ChatColor.RESET+l;
-		});
-		items.setLore(Lore);
-		item.setItemMeta(items);
-		inv.setItem(loc, item);
-	}
 	
 	public void Medskillsinv(Player p)
 	{
@@ -61,148 +31,146 @@ public class MedSkillsGui{
 		MedSkillsData ssd = new MedSkillsData(MedSkillsData.loadData(path +"/plugins/RPGskills/MedskillsData.data"));
 		Inventory Medskillsinv = Bukkit.createInventory(null, 54, "Medskills");
 		Obtained.itemset(p, Medskillsinv);
-		
 
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			
-			itemset("Ä¡À¯·ÎÄÏ", Material.TIPPED_ARROW, 1, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.RemedyingRocket.getOrDefault(p.getUniqueId(),1),"",ChatColor.UNDERLINE+"[¼­¸® °è¿­]","Á¡ÇÁ + ÁÂÅ¬¸¯","",ChatColor.BOLD+" X (0.32D + "+BigDecimal.valueOf(ssd.RemedyingRocket.getOrDefault(p.getUniqueId(),1)*0.316).setScale(2, RoundingMode.HALF_EVEN)+")", "Master LV.50"), 0, Medskillsinv);
-			itemset("Á¦µ¶", Material.TIPPED_ARROW, 2, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.Decontamination.getOrDefault(p.getUniqueId(),1),"",ChatColor.UNDERLINE+"[¼­¸® °è¿­]","¿õÅ©¸®±â + ¼Õ¹Ù²Ù±â","ÇØ·Î¿î È¿°ú¸¦ Á¦°ÅÇÕ´Ï´Ù","",ChatColor.BOLD+"15 X (0.15D + "+BigDecimal.valueOf(ssd.Decontamination.getOrDefault(p.getUniqueId(),1)*0.16).setScale(2, RoundingMode.HALF_EVEN)+")", "Master LV.50"), 1, Medskillsinv);
-			itemset("º¸±ŞÄ«Æ®", Material.TIPPED_ARROW, 3, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.SupplyCart.getOrDefault(p.getUniqueId(),1),"","Á¡ÇÁ + ¼Õ¹Ù²Ù±â",
-					"ÆÄÆ¼¿øµé¿¡°Ô ¼Óµµ,Á¡ÇÁ,Èû È¿°ú¸¦ Áİ´Ï´Ù("+1+ssd.SupplyCart.getOrDefault(p.getUniqueId(),0)/2+"·¹º§, "+(50+50*ssd.SupplyCart.getOrDefault(p.getUniqueId(),0))/20+"ÃÊ", "Master LV.5"), 2, Medskillsinv);
-			itemset("Àº½ÅÃ³", Material.TIPPED_ARROW, 4, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.Hideout.getOrDefault(p.getUniqueId(),1),"","¿õÅ©¸®±â", "Master LV.1"), 3, Medskillsinv);
-			itemset("È­»ìÄ¡·á", Material.TIPPED_ARROW, 5, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.ArrowClinic.getOrDefault(p.getUniqueId(),1),"",
-					"ÀûÁßÇÑ ÆÄÆ¼¿øÀ» Ä¡·áÇÕ´Ï´Ù", "ÃÖ´ëÃ¼·Â X (0.05 + "+BigDecimal.valueOf(0.05+ssd.ArrowClinic.getOrDefault(p.getUniqueId(),1)*0.005+ssd.Medicine.getOrDefault(p.getUniqueId(),1)*0.004).setScale(2, RoundingMode.HALF_EVEN)+")","",
-					ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","È­»ì¿¡ ¸ÂÀº ÀûÀ» ºÎÆĞ½ÃÄÑ" ,"¹Ş´ÂÇÇÇØ°¡ "+BigDecimal.valueOf(0.03*ssd.ArrowClinic.getOrDefault(p.getUniqueId(),1)).setScale(2, RoundingMode.HALF_EVEN)+"¸¸Å­ Áõ°¡ÇÏ°Ô ÇÕ´Ï´Ù (ÃÖ´ë 1.9)", "½ºÅ³·¹º§ÀÌ ¿À¸¦¼ö·Ï ´õ ¸¹ÀÌ ÁßÃ¸µË´Ï´Ù", "Master LV.30"), 4, Medskillsinv);
-			itemset("ÀÚµ¿Á¦¼¼µ¿±â", Material.CROSSBOW, 6, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.AED.getOrDefault(p.getUniqueId(),1),"",ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","¿õÅ©¸®±â + ÁÂÅ¬¸¯","",ChatColor.BOLD+" X (0.3D + "+BigDecimal.valueOf(ssd.AED.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)+")", "Master LV.50"), 5, Medskillsinv);
-			itemset("±¸Á¶", Material.KNOWLEDGE_BOOK, 6, 1, Arrays.asList(ChatColor.AQUA+ "ÆĞ½Ãºê½ºÅ³","","ÆÄÆ¼¿øÀÌ Á×À½¿¡ ´ŞÇÏ´Â ÇÇÇØ¸¦ ÀÔÀ¸¸é,","5ÃÊµ¿¾È ºó»ç »óÅÂ¿¡ ºüÁı´Ï´Ù","ÀÌµ¿¼Óµµ È¿°ú¸¦ ¾ò°í ÀÚµ¿Á¦¼¼µ¿±â ½ºÅ³·Î","ÇØ´ç ÆÄÆ¼¿øÀ» ±¸Á¶ÇÒ¼ö ÀÖ½À´Ï´Ù"), 6, Medskillsinv);
-			itemset("ÀÇÇĞ", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.Medicine.getOrDefault(p.getUniqueId(),1),"","°ø°İ·Â°ú È¸º¹·üÀÌ »ó½ÂÇÕ´Ï´Ù","",ChatColor.BOLD+" + "+BigDecimal.valueOf(ssd.Medicine.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)), 7, Medskillsinv);
-			if(Proficiency.getpro(p)<1) {
-				itemset("Áø°ø(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 9, Medskillsinv);
-				itemset("º¸È£¸·(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 10, Medskillsinv);
-				itemset("Áö¿ø»ç°İ(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 11, Medskillsinv);
-				itemset("ÁøÅëÁ¦(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 12, Medskillsinv);
-				itemset("°¢¼ºÁ¦(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 13, Medskillsinv);
-				itemset("¹Ì¼¼¹Ù´Ã(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 14, Medskillsinv);
-				itemset("ÈÄ¼Û(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 15, Medskillsinv);
-				itemset("ÀÀ±ŞÃ³Ä¡(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 16, Medskillsinv);
-				itemset("Ä«µå¼¼¿ì½º Å¾(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 17, Medskillsinv);
-			}
-			else if(Proficiency.getpro(p)<2 && Proficiency.getpro(p)>=1) {
-				itemset("Áø°ø", Material.LAVA_BUCKET, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","ÁÖº¯ ÀûµéÀ» ¸ğÀ¾´Ï´Ù","(°ø°İ·ÂÀº Ä¡À¯·ÎÄÏ ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+" X (0.4D + "+BigDecimal.valueOf(ssd.RemedyingRocket.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)+")"), 9, Medskillsinv);
-				itemset("º¸È£¸·", Material.SPORE_BLOSSOM, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¼­¸® °è¿­]","ÀçÀÔ·Â½Ã º¸È£¸·À» ¼³Ä¡ÇÕ´Ï´Ù","º¸È£¸·¾È¿¡ ÀÖ´Â ÆÄÆ¼¿øµéÀº ¹«Àû»óÅÂ°¡ µË´Ï´Ù","(°ø°İ·ÂÀº Á¦µ¶ ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+" X (0.4D + "+BigDecimal.valueOf(ssd.RemedyingRocket.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)+")"), 10, Medskillsinv);
-				itemset("Áö¿ø»ç°İ", Material.SPECTRAL_ARROW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","ÀçÀÔ·Â½Ã Áö¿ø»ç°İÀ» ¿äÃ»ÇÕ´Ï´Ù","(°ø°İ·ÂÀº º¸±ŞÄ«Æ® ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+"8 X (1.1D + "+BigDecimal.valueOf(ssd.SupplyCart.getOrDefault(p.getUniqueId(),1)*3.5).setScale(2, RoundingMode.HALF_EVEN)+")"), 11, Medskillsinv);
-				itemset("ÁøÅëÁ¦", Material.CHISELED_QUARTZ_BLOCK, 0, 1, Arrays.asList("ÁÖº¯ ÆÄÆ¼¿øµéÀÇ ¹æ¾î·ÂÀÌ »ó½ÂÇÕ´Ï´Ù"), 12, Medskillsinv);
-				itemset("°¢¼ºÁ¦", Material.BUBBLE_CORAL_BLOCK, 0, 1, Arrays.asList("ÀûÀº Àá½Ã ±âÀı½ÃÅ°°í, ÆÄÆ¼¿ø¿¡°Ô´Â ÀÌµ¿¼Óµµ¸¦ Á¦°øÇÕ´Ï´Ù"), 13, Medskillsinv);
-				itemset("¹Ì¼¼¹Ù´Ã", Material.BOW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","ÀçÀÔ·Â½Ã ¹Ì¼¼¹Ù´ÃÀ» »Ñ¸³´Ï´Ù","(°ø°İ·ÂÀº ÀÚµ¿Á¦¼¼µ¿±â ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+" X (0.43D + "+BigDecimal.valueOf(ssd.AED.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)+")"), 14, Medskillsinv);
-				itemset("ÈÄ¼Û", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("ºó»ç»óÅÂ¿¡ ºüÁø ÆÄÆ¼¿øÀ» ÈÄ¼ÛÇÕ´Ï´Ù"), 15, Medskillsinv);
-				itemset("ÀÀ±ŞÃ³Ä¡", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("°ø°İ·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù", "Á¦µ¶°ú ÀÚµ¿Á¦¼¼µ¿±â°¡ ÆÄÆ¼¿øÀ» Ä¡·áÇÏ°í, ÀûÀº ±âÀı½ÃÅµ´Ï´Ù"), 16, Medskillsinv);
-				itemset("Ä«µå¼¼¿ì½º Å¾", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("¿õÅ©¸®±â + ¾ÆÀÌÅÛ´øÁö±â", BigDecimal.valueOf(20-ssd.Medicine.getOrDefault(p.getUniqueId(),1)*0.3).setScale(2, RoundingMode.HALF_EVEN)+"ÃÊ´ç 1ÀÇ È¸º¹°ú Æ÷¸¸À» Á¦°øÇÕ´Ï´Ù"), 17, Medskillsinv);
 
-				itemset("¸¶Ãë(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 18, Medskillsinv);
-				itemset("È¸º¹ÆßÇÁ(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 19, Medskillsinv);
-				itemset("Áı´ÜÄ¡·á(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 20, Medskillsinv);
-				itemset("È®Àå(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 21, Medskillsinv);
-				itemset("ÃÊÀ½ÆÄ ºĞ¹«±â(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 23, Medskillsinv);
-				itemset("È¯ÀÚ¿î¹İ(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 24, Medskillsinv);
-				itemset("»ı¸íÀÇÀºÀÎ(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 25, Medskillsinv);
-				itemset("³¯°³½´Æ®(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 26, Medskillsinv);
+				itemset("ì¹˜ìœ ë¡œì¼“", Material.TIPPED_ARROW, 1, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.RemedyingRocket.getOrDefault(p.getUniqueId(),1),"",ChatColor.UNDERLINE+"[ì„œë¦¬ ê³„ì—´]","ì í”„ + ì¢Œí´ë¦­","",ChatColor.BOLD+" X (0.32D + "+BigDecimal.valueOf(ssd.RemedyingRocket.getOrDefault(p.getUniqueId(),1)*0.316).setScale(2, RoundingMode.HALF_EVEN)+")", "Master LV.50"), 0, Medskillsinv);
+				itemset("ì œë…", Material.TIPPED_ARROW, 2, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.Decontamination.getOrDefault(p.getUniqueId(),1),"",ChatColor.UNDERLINE+"[ì„œë¦¬ ê³„ì—´]","ì›…í¬ë¦¬ê¸° + ì†ë°”ê¾¸ê¸°","í•´ë¡œìš´ íš¨ê³¼ë¥¼ ì œê±°í•©ë‹ˆë‹¤","",ChatColor.BOLD+"15 X (0.15D + "+BigDecimal.valueOf(ssd.Decontamination.getOrDefault(p.getUniqueId(),1)*0.16).setScale(2, RoundingMode.HALF_EVEN)+")", "Master LV.50"), 1, Medskillsinv);
+				itemset("ë³´ê¸‰ì¹´íŠ¸", Material.TIPPED_ARROW, 3, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.SupplyCart.getOrDefault(p.getUniqueId(),1),"","ì í”„ + ì†ë°”ê¾¸ê¸°",
+						"íŒŒí‹°ì›ë“¤ì—ê²Œ ì†ë„,ì í”„,í˜ íš¨ê³¼ë¥¼ ì¤ë‹ˆë‹¤("+1+ssd.SupplyCart.getOrDefault(p.getUniqueId(),0)/2+"ë ˆë²¨, "+(50+50*ssd.SupplyCart.getOrDefault(p.getUniqueId(),0))/20+"ì´ˆ", "Master LV.5"), 2, Medskillsinv);
+				itemset("ì€ì‹ ì²˜", Material.TIPPED_ARROW, 4, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.Hideout.getOrDefault(p.getUniqueId(),1),"","ì›…í¬ë¦¬ê¸°", "Master LV.1"), 3, Medskillsinv);
+				itemset("í™”ì‚´ì¹˜ë£Œ", Material.TIPPED_ARROW, 5, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.ArrowClinic.getOrDefault(p.getUniqueId(),1),"",
+						"ì ì¤‘í•œ íŒŒí‹°ì›ì„ ì¹˜ë£Œí•©ë‹ˆë‹¤", "ìµœëŒ€ì²´ë ¥ X (0.05 + "+BigDecimal.valueOf(0.05+ssd.ArrowClinic.getOrDefault(p.getUniqueId(),1)*0.005+ssd.Medicine.getOrDefault(p.getUniqueId(),1)*0.004).setScale(2, RoundingMode.HALF_EVEN)+")","",
+						ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","í™”ì‚´ì— ë§ì€ ì ì„ ë¶€íŒ¨ì‹œì¼œ" ,"ë°›ëŠ”í”¼í•´ê°€ "+BigDecimal.valueOf(0.03*ssd.ArrowClinic.getOrDefault(p.getUniqueId(),1)).setScale(2, RoundingMode.HALF_EVEN)+"ë§Œí¼ ì¦ê°€í•˜ê²Œ í•©ë‹ˆë‹¤ (ìµœëŒ€ 1.9)", "ìŠ¤í‚¬ë ˆë²¨ì´ ì˜¤ë¥¼ìˆ˜ë¡ ë” ë§ì´ ì¤‘ì²©ë©ë‹ˆë‹¤", "Master LV.30"), 4, Medskillsinv);
+				itemset("ìë™ì œì„¸ë™ê¸°", Material.CROSSBOW, 6, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.AED.getOrDefault(p.getUniqueId(),1),"",ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì›…í¬ë¦¬ê¸° + ì¢Œí´ë¦­","",ChatColor.BOLD+" X (0.3D + "+BigDecimal.valueOf(ssd.AED.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)+")", "Master LV.50"), 5, Medskillsinv);
+				itemset("êµ¬ì¡°", Material.KNOWLEDGE_BOOK, 6, 1, Arrays.asList(ChatColor.AQUA+ "íŒ¨ì‹œë¸ŒìŠ¤í‚¬","","íŒŒí‹°ì›ì´ ì£½ìŒì— ë‹¬í•˜ëŠ” í”¼í•´ë¥¼ ì…ìœ¼ë©´,","5ì´ˆë™ì•ˆ ë¹ˆì‚¬ ìƒíƒœì— ë¹ ì§‘ë‹ˆë‹¤","ì´ë™ì†ë„ íš¨ê³¼ë¥¼ ì–»ê³  ìë™ì œì„¸ë™ê¸° ìŠ¤í‚¬ë¡œ","í•´ë‹¹ íŒŒí‹°ì›ì„ êµ¬ì¡°í• ìˆ˜ ìˆìŠµë‹ˆë‹¤"), 6, Medskillsinv);
+				itemset("ì˜í•™", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.Medicine.getOrDefault(p.getUniqueId(),1),"","ê³µê²©ë ¥ê³¼ íšŒë³µë¥ ì´ ìƒìŠ¹í•©ë‹ˆë‹¤","",ChatColor.BOLD+" + "+BigDecimal.valueOf(ssd.Medicine.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)), 7, Medskillsinv);
+				if(Proficiency.getpro(p)<1) {
+					itemset("ì§„ê³µ(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 9, Medskillsinv);
+					itemset("ë³´í˜¸ë§‰(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 10, Medskillsinv);
+					itemset("ì§€ì›ì‚¬ê²©(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 11, Medskillsinv);
+					itemset("ì§„í†µì œ(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 12, Medskillsinv);
+					itemset("ê°ì„±ì œ(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 13, Medskillsinv);
+					itemset("ë¯¸ì„¸ë°”ëŠ˜(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 14, Medskillsinv);
+					itemset("í›„ì†¡(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 15, Medskillsinv);
+					itemset("ì‘ê¸‰ì²˜ì¹˜(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 16, Medskillsinv);
+					itemset("ì¹´ë“œì„¸ìš°ìŠ¤ íƒ‘(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 17, Medskillsinv);
+				}
+				else if(Proficiency.getpro(p)<2 && Proficiency.getpro(p)>=1) {
+					itemset("ì§„ê³µ", Material.LAVA_BUCKET, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì£¼ë³€ ì ë“¤ì„ ëª¨ìë‹ˆë‹¤","(ê³µê²©ë ¥ì€ ì¹˜ìœ ë¡œì¼“ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+" X (0.4D + "+BigDecimal.valueOf(ssd.RemedyingRocket.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)+")"), 9, Medskillsinv);
+					itemset("ë³´í˜¸ë§‰", Material.SPORE_BLOSSOM, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ì„œë¦¬ ê³„ì—´]","ì¬ì…ë ¥ì‹œ ë³´í˜¸ë§‰ì„ ì„¤ì¹˜í•©ë‹ˆë‹¤","ë³´í˜¸ë§‰ì•ˆì— ìˆëŠ” íŒŒí‹°ì›ë“¤ì€ ë¬´ì ìƒíƒœê°€ ë©ë‹ˆë‹¤","(ê³µê²©ë ¥ì€ ì œë… ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+" X (0.4D + "+BigDecimal.valueOf(ssd.RemedyingRocket.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)+")"), 10, Medskillsinv);
+					itemset("ì§€ì›ì‚¬ê²©", Material.SPECTRAL_ARROW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì¬ì…ë ¥ì‹œ ì§€ì›ì‚¬ê²©ì„ ìš”ì²­í•©ë‹ˆë‹¤","(ê³µê²©ë ¥ì€ ë³´ê¸‰ì¹´íŠ¸ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+"8 X (1.1D + "+BigDecimal.valueOf(ssd.SupplyCart.getOrDefault(p.getUniqueId(),1)*3.5).setScale(2, RoundingMode.HALF_EVEN)+")"), 11, Medskillsinv);
+					itemset("ì§„í†µì œ", Material.CHISELED_QUARTZ_BLOCK, 0, 1, Arrays.asList("ì£¼ë³€ íŒŒí‹°ì›ë“¤ì˜ ë°©ì–´ë ¥ì´ ìƒìŠ¹í•©ë‹ˆë‹¤"), 12, Medskillsinv);
+					itemset("ê°ì„±ì œ", Material.BUBBLE_CORAL_BLOCK, 0, 1, Arrays.asList("ì ì€ ì ì‹œ ê¸°ì ˆì‹œí‚¤ê³ , íŒŒí‹°ì›ì—ê²ŒëŠ” ì´ë™ì†ë„ë¥¼ ì œê³µí•©ë‹ˆë‹¤"), 13, Medskillsinv);
+					itemset("ë¯¸ì„¸ë°”ëŠ˜", Material.BOW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì¬ì…ë ¥ì‹œ ë¯¸ì„¸ë°”ëŠ˜ì„ ë¿Œë¦½ë‹ˆë‹¤","(ê³µê²©ë ¥ì€ ìë™ì œì„¸ë™ê¸° ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+" X (0.43D + "+BigDecimal.valueOf(ssd.AED.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)+")"), 14, Medskillsinv);
+					itemset("í›„ì†¡", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("ë¹ˆì‚¬ìƒíƒœì— ë¹ ì§„ íŒŒí‹°ì›ì„ í›„ì†¡í•©ë‹ˆë‹¤"), 15, Medskillsinv);
+					itemset("ì‘ê¸‰ì²˜ì¹˜", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("ê³µê²©ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤", "ì œë…ê³¼ ìë™ì œì„¸ë™ê¸°ê°€ íŒŒí‹°ì›ì„ ì¹˜ë£Œí•˜ê³ , ì ì€ ê¸°ì ˆì‹œí‚µë‹ˆë‹¤"), 16, Medskillsinv);
+					itemset("ì¹´ë“œì„¸ìš°ìŠ¤ íƒ‘", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("ì›…í¬ë¦¬ê¸° + num4", BigDecimal.valueOf(20-ssd.Medicine.getOrDefault(p.getUniqueId(),1)*0.3).setScale(2, RoundingMode.HALF_EVEN)+"ì´ˆë‹¹ 1ì˜ íšŒë³µê³¼ í¬ë§Œì„ ì œê³µí•©ë‹ˆë‹¤"), 17, Medskillsinv);
+
+					itemset("ë§ˆì·¨(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 18, Medskillsinv);
+					itemset("íšŒë³µíŒí”„(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 19, Medskillsinv);
+					itemset("ì§‘ë‹¨ì¹˜ë£Œ(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 20, Medskillsinv);
+					itemset("í™•ì¥(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 21, Medskillsinv);
+					itemset("ì´ˆìŒíŒŒ ë¶„ë¬´ê¸°(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 23, Medskillsinv);
+					itemset("í™˜ììš´ë°˜(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 24, Medskillsinv);
+					itemset("ìƒëª…ì˜ì€ì¸(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 25, Medskillsinv);
+					itemset("ë‚ ê°œìŠˆíŠ¸(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 26, Medskillsinv);
+				}
+				else {
+					itemset("ì§„ê³µ", Material.LAVA_BUCKET, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì£¼ë³€ ì ë“¤ì„ ëª¨ìë‹ˆë‹¤","(ê³µê²©ë ¥ì€ ì¹˜ìœ ë¡œì¼“ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+" X (0.4D + "+BigDecimal.valueOf(ssd.RemedyingRocket.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)+")"), 9, Medskillsinv);
+					itemset("ë³´í˜¸ë§‰", Material.SPORE_BLOSSOM, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ì„œë¦¬ ê³„ì—´]","ì¬ì…ë ¥ì‹œ ë³´í˜¸ë§‰ì„ ì„¤ì¹˜í•©ë‹ˆë‹¤","ë³´í˜¸ë§‰ì•ˆì— ìˆëŠ” íŒŒí‹°ì›ë“¤ì€ ë¬´ì ìƒíƒœê°€ ë©ë‹ˆë‹¤","(ê³µê²©ë ¥ì€ ì œë… ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+" X (0.4D + "+BigDecimal.valueOf(ssd.RemedyingRocket.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)+")"), 10, Medskillsinv);
+					itemset("ì§€ì›ì‚¬ê²©", Material.SPECTRAL_ARROW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì¬ì…ë ¥ì‹œ ì§€ì›ì‚¬ê²©ì„ ìš”ì²­í•©ë‹ˆë‹¤","(ê³µê²©ë ¥ì€ ë³´ê¸‰ì¹´íŠ¸ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+"8 X (1.1D + "+BigDecimal.valueOf(ssd.SupplyCart.getOrDefault(p.getUniqueId(),1)*3.5).setScale(2, RoundingMode.HALF_EVEN)+")"), 11, Medskillsinv);
+					itemset("ì§„í†µì œ", Material.CHISELED_QUARTZ_BLOCK, 0, 1, Arrays.asList("ì£¼ë³€ íŒŒí‹°ì›ë“¤ì˜ ë°©ì–´ë ¥ì´ ìƒìŠ¹í•©ë‹ˆë‹¤"), 12, Medskillsinv);
+					itemset("ê°ì„±ì œ", Material.BUBBLE_CORAL_BLOCK, 0, 1, Arrays.asList("ì ì€ ì ì‹œ ê¸°ì ˆì‹œí‚¤ê³ , íŒŒí‹°ì›ì—ê²ŒëŠ” ì´ë™ì†ë„ë¥¼ ì œê³µí•©ë‹ˆë‹¤"), 13, Medskillsinv);
+					itemset("ë¯¸ì„¸ë°”ëŠ˜", Material.BOW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì¬ì…ë ¥ì‹œ ë¯¸ì„¸ë°”ëŠ˜ì„ ë¿Œë¦½ë‹ˆë‹¤","(ê³µê²©ë ¥ì€ ìë™ì œì„¸ë™ê¸° ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+" X (0.43D + "+BigDecimal.valueOf(ssd.AED.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)+")"), 14, Medskillsinv);
+					itemset("í›„ì†¡", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("ë¹ˆì‚¬ìƒíƒœì— ë¹ ì§„ íŒŒí‹°ì›ì„ í›„ì†¡í•©ë‹ˆë‹¤"), 15, Medskillsinv);
+					itemset("ì‘ê¸‰ì²˜ì¹˜", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("ê³µê²©ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤", "ì œë…ê³¼ ìë™ì œì„¸ë™ê¸°ê°€ íŒŒí‹°ì›ì„ ì¹˜ë£Œí•˜ê³ , ì ì€ ê¸°ì ˆì‹œí‚µë‹ˆë‹¤"), 16, Medskillsinv);
+					itemset("ì¹´ë“œì„¸ìš°ìŠ¤ íƒ‘", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("ì›…í¬ë¦¬ê¸° + num4", BigDecimal.valueOf(20-ssd.Medicine.getOrDefault(p.getUniqueId(),1)*0.3).setScale(2, RoundingMode.HALF_EVEN)+"ì´ˆë‹¹ 1ì˜ íšŒë³µê³¼ í¬ë§Œì„ ì œê³µí•©ë‹ˆë‹¤"), 17, Medskillsinv);
+
+					itemset("ë§ˆì·¨", Material.END_CRYSTAL, 0, 1, Arrays.asList("ì ì¤‘í•œ íŒŒí‹°ì›ë“¤ì„ ì ê¹ ë¬´ì ìƒíƒœë¡œ ë§Œë“­ë‹ˆë‹¤","ì ì¤‘í•œ ì ë“¤ì„ ì ê¹ ê¸°ì ˆì‹œí‚µë‹ˆë‹¤"), 18, Medskillsinv);
+					itemset("íšŒë³µíŒí”„", Material.END_CRYSTAL, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ì„œë¦¬ ê³„ì—´]","ì¬ì…ë ¥ì‹œ íšŒë³µíŒí”„ë¥¼ ì„¤ì¹˜í•©ë‹ˆë‹¤", "(ê³µê²©ë ¥ì€ ì œë… ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+"5 X (0.8D + "+BigDecimal.valueOf(ssd.Decontamination.getOrDefault(p.getUniqueId(),1)*0.8).setScale(2, RoundingMode.HALF_EVEN)+")"), 19, Medskillsinv);
+					itemset("ì§‘ë‹¨ì¹˜ë£Œ", Material.END_ROD, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì¬ì…ë ¥ì‹œ ì§‘ë‹¨ì¹˜ë£Œë¥¼ ì‹¤ì‹œí•©ë‹ˆë‹¤", "(ê³µê²©ë ¥ì€ ë³´ê¸‰ì¹´íŠ¸ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+"5 X (1.5D + "+BigDecimal.valueOf(ssd.SupplyCart.getOrDefault(p.getUniqueId(),1)*7.1).setScale(2, RoundingMode.HALF_EVEN)+")"), 20, Medskillsinv);
+					itemset("í™•ì¥", Material.SPLASH_POTION, 0, 1, Arrays.asList("ë²”ìœ„ì™€ ë³´í˜¸ë§‰ëŸ‰ì´ ì¦ê°€í•©ë‹ˆë‹¤"), 21, Medskillsinv);
+					itemset("ì´ˆìŒíŒŒ ë¶„ë¬´ê¸°", Material.BOW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì¬ì…ë ¥ì‹œ ì´ˆìŒíŒŒ ë¶„ë¬´ê¸°ë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤","ë¶€íŒ¨ ì¤‘ì²©ìˆ˜ë¥¼ ì¦ê°€ì‹œí‚µë‹ˆë‹¤","",ChatColor.BOLD+"3 X (0.35D + "+BigDecimal.valueOf(ssd.AED.getOrDefault(p.getUniqueId(),1)*0.45).setScale(2, RoundingMode.HALF_EVEN)+")","(ê³µê²©ë ¥ì€ ìë™ì œì„¸ë™ê¸° ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)"), 23, Medskillsinv);
+					itemset("í™˜ììš´ë°˜", Material.BOW, 0, 1, Arrays.asList("íŒŒí‹°ì›ì´ ë‹¹ì‹ ì—ê²Œ ì›…í¬ë¦¬ê¸°+ìš°í´ë¦­ì„ í•˜ë©´","í•´ë‹¹ íŒŒí‹°ì›ì„ ìš´ë°˜í• ìˆ˜ ìˆìŠµë‹ˆë‹¤","íŒŒí‹°ì›ì€ ì€ì‹ ìƒíƒœê°€ ë©ë‹ˆë‹¤", "í´ë¦­ì‹œ ìš´ë°˜ì´ ì¢…ë£Œë©ë‹ˆë‹¤"), 24, Medskillsinv);
+					itemset("ìƒëª…ì˜ì€ì¸", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("ê³µê²©ë ¥ê³¼ ë°©ì–´ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤","ì¹´ë“œì„¸ìš°ìŠ¤ íƒ‘ ì¬ì‚¬ìš©ëŒ€ê¸°ì‹œê°„ì´ ê°ì†Œí•©ë‹ˆë‹¤"), 25, Medskillsinv);
+					itemset("ë‚ ê°œìŠˆíŠ¸", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("ì›…í¬ë¦¬ê¸° + num5", "ë‚ ê°œìŠˆíŠ¸ê°€ í™œì„±í™”ë˜ì–´ ìˆëŠ”ë™ì•ˆ ê³µê²©ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤(25ì´ˆ)","ì¹˜ìœ ë¡œì¼“ì˜ ëŒ€ê¸°ì‹œê°„ì´ ì—†ì–´ì§‘ë‹ˆë‹¤", "X (1 + 0.007D)"), 26, Medskillsinv);
+				}
+				itemset("í˜„ì¬ ìˆ™ë ¨ë„", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(""+Proficiency.getproexp(p)), 27, Medskillsinv);
+				itemset("ìŠ¤í‚¬í¬ì¸íŠ¸", Material.NETHER_STAR, 0, 1, Arrays.asList(ChatColor.AQUA+"SP."+ssd.SkillPoints.getOrDefault(p.getUniqueId(),1),"","í´ë¦­í•˜ë©´ ìŠ¤í‚¬í¬ì¸íŠ¸ê°€ ì´ˆê¸°í™” ë©ë‹ˆë‹¤"), 35, Medskillsinv);
+
 			}
 			else {
-				itemset("Áø°ø", Material.LAVA_BUCKET, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","ÁÖº¯ ÀûµéÀ» ¸ğÀ¾´Ï´Ù","(°ø°İ·ÂÀº Ä¡À¯·ÎÄÏ ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+" X (0.4D + "+BigDecimal.valueOf(ssd.RemedyingRocket.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)+")"), 9, Medskillsinv);
-				itemset("º¸È£¸·", Material.SPORE_BLOSSOM, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¼­¸® °è¿­]","ÀçÀÔ·Â½Ã º¸È£¸·À» ¼³Ä¡ÇÕ´Ï´Ù","º¸È£¸·¾È¿¡ ÀÖ´Â ÆÄÆ¼¿øµéÀº ¹«Àû»óÅÂ°¡ µË´Ï´Ù","(°ø°İ·ÂÀº Á¦µ¶ ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+" X (0.4D + "+BigDecimal.valueOf(ssd.RemedyingRocket.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)+")"), 10, Medskillsinv);
-				itemset("Áö¿ø»ç°İ", Material.SPECTRAL_ARROW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","ÀçÀÔ·Â½Ã Áö¿ø»ç°İÀ» ¿äÃ»ÇÕ´Ï´Ù","(°ø°İ·ÂÀº º¸±ŞÄ«Æ® ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+"8 X (1.1D + "+BigDecimal.valueOf(ssd.SupplyCart.getOrDefault(p.getUniqueId(),1)*3.5).setScale(2, RoundingMode.HALF_EVEN)+")"), 11, Medskillsinv);
-				itemset("ÁøÅëÁ¦", Material.CHISELED_QUARTZ_BLOCK, 0, 1, Arrays.asList("ÁÖº¯ ÆÄÆ¼¿øµéÀÇ ¹æ¾î·ÂÀÌ »ó½ÂÇÕ´Ï´Ù"), 12, Medskillsinv);
-				itemset("°¢¼ºÁ¦", Material.BUBBLE_CORAL_BLOCK, 0, 1, Arrays.asList("ÀûÀº Àá½Ã ±âÀı½ÃÅ°°í, ÆÄÆ¼¿ø¿¡°Ô´Â ÀÌµ¿¼Óµµ¸¦ Á¦°øÇÕ´Ï´Ù"), 13, Medskillsinv);
-				itemset("¹Ì¼¼¹Ù´Ã", Material.BOW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","ÀçÀÔ·Â½Ã ¹Ì¼¼¹Ù´ÃÀ» »Ñ¸³´Ï´Ù","(°ø°İ·ÂÀº ÀÚµ¿Á¦¼¼µ¿±â ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+" X (0.43D + "+BigDecimal.valueOf(ssd.AED.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)+")"), 14, Medskillsinv);
-				itemset("ÈÄ¼Û", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("ºó»ç»óÅÂ¿¡ ºüÁø ÆÄÆ¼¿øÀ» ÈÄ¼ÛÇÕ´Ï´Ù"), 15, Medskillsinv);
-				itemset("ÀÀ±ŞÃ³Ä¡", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("°ø°İ·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù", "Á¦µ¶°ú ÀÚµ¿Á¦¼¼µ¿±â°¡ ÆÄÆ¼¿øÀ» Ä¡·áÇÏ°í, ÀûÀº ±âÀı½ÃÅµ´Ï´Ù"), 16, Medskillsinv);
-				itemset("Ä«µå¼¼¿ì½º Å¾", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("¿õÅ©¸®±â + ¾ÆÀÌÅÛ´øÁö±â", BigDecimal.valueOf(20-ssd.Medicine.getOrDefault(p.getUniqueId(),1)*0.3).setScale(2, RoundingMode.HALF_EVEN)+"ÃÊ´ç 1ÀÇ È¸º¹°ú Æ÷¸¸À» Á¦°øÇÕ´Ï´Ù"), 17, Medskillsinv);
 
-				itemset("¸¶Ãë", Material.END_CRYSTAL, 0, 1, Arrays.asList("ÀûÁßÇÑ ÆÄÆ¼¿øµéÀ» Àá±ñ ¹«Àû»óÅÂ·Î ¸¸µì´Ï´Ù","ÀûÁßÇÑ ÀûµéÀ» Àá±ñ ±âÀı½ÃÅµ´Ï´Ù"), 18, Medskillsinv);
-				itemset("È¸º¹ÆßÇÁ", Material.END_CRYSTAL, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¼­¸® °è¿­]","ÀçÀÔ·Â½Ã È¸º¹ÆßÇÁ¸¦ ¼³Ä¡ÇÕ´Ï´Ù", "(°ø°İ·ÂÀº Á¦µ¶ ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+"5 X (0.8D + "+BigDecimal.valueOf(ssd.Decontamination.getOrDefault(p.getUniqueId(),1)*0.8).setScale(2, RoundingMode.HALF_EVEN)+")"), 19, Medskillsinv);
-				itemset("Áı´ÜÄ¡·á", Material.END_ROD, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","ÀçÀÔ·Â½Ã Áı´ÜÄ¡·á¸¦ ½Ç½ÃÇÕ´Ï´Ù", "(°ø°İ·ÂÀº º¸±ŞÄ«Æ® ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+"5 X (1.5D + "+BigDecimal.valueOf(ssd.SupplyCart.getOrDefault(p.getUniqueId(),1)*7.1).setScale(2, RoundingMode.HALF_EVEN)+")"), 20, Medskillsinv);
-				itemset("È®Àå", Material.SPLASH_POTION, 0, 1, Arrays.asList("¹üÀ§¿Í º¸È£¸··®ÀÌ Áõ°¡ÇÕ´Ï´Ù"), 21, Medskillsinv);
-				itemset("ÃÊÀ½ÆÄ ºĞ¹«±â", Material.BOW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","ÀçÀÔ·Â½Ã ÃÊÀ½ÆÄ ºĞ¹«±â¸¦ »ç¿ëÇÕ´Ï´Ù","ºÎÆĞ ÁßÃ¸¼ö¸¦ Áõ°¡½ÃÅµ´Ï´Ù","",ChatColor.BOLD+"3 X (0.35D + "+BigDecimal.valueOf(ssd.AED.getOrDefault(p.getUniqueId(),1)*0.45).setScale(2, RoundingMode.HALF_EVEN)+")","(°ø°İ·ÂÀº ÀÚµ¿Á¦¼¼µ¿±â ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)"), 23, Medskillsinv);
-				itemset("È¯ÀÚ¿î¹İ", Material.BOW, 0, 1, Arrays.asList("ÆÄÆ¼¿øÀÌ ´ç½Å¿¡°Ô ¿õÅ©¸®±â+¿ìÅ¬¸¯À» ÇÏ¸é","ÇØ´ç ÆÄÆ¼¿øÀ» ¿î¹İÇÒ¼ö ÀÖ½À´Ï´Ù","ÆÄÆ¼¿øÀº Àº½Å»óÅÂ°¡ µË´Ï´Ù", "Å¬¸¯½Ã ¿î¹İÀÌ Á¾·áµË´Ï´Ù"), 24, Medskillsinv);
-				itemset("»ı¸íÀÇÀºÀÎ", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("°ø°İ·Â°ú ¹æ¾î·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù","Ä«µå¼¼¿ì½º Å¾ Àç»ç¿ë´ë±â½Ã°£ÀÌ °¨¼ÒÇÕ´Ï´Ù"), 25, Medskillsinv);
-				itemset("³¯°³½´Æ®", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("´Ş¸®±â + ¾ÆÀÌÅÛ´øÁö±â", "³¯°³½´Æ®°¡ È°¼ºÈ­µÇ¾î ÀÖ´Âµ¿¾È °ø°İ·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù(25ÃÊ)","Ä¡À¯·ÎÄÏÀÇ ´ë±â½Ã°£ÀÌ ¾ø¾îÁı´Ï´Ù", "X (1 + 0.007D)"), 26, Medskillsinv);
+				itemset("RemedyingRocket", Material.TIPPED_ARROW, 1, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.RemedyingRocket.getOrDefault(p.getUniqueId(),1),"",ChatColor.UNDERLINE+"[Frost]","Jump + LeftClick","",ChatColor.BOLD+" X (0.32D + "+BigDecimal.valueOf(ssd.RemedyingRocket.getOrDefault(p.getUniqueId(),1)*0.316).setScale(2, RoundingMode.HALF_EVEN)+")", "Master LV.50"), 0, Medskillsinv);
+				itemset("Decontamination", Material.TIPPED_ARROW, 2, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.Decontamination.getOrDefault(p.getUniqueId(),1),"",ChatColor.UNDERLINE+"[Frost]","Sneaking + SwapHand","Removes All Negetive Effects","",ChatColor.BOLD+"15 X (0.15D + "+BigDecimal.valueOf(ssd.Decontamination.getOrDefault(p.getUniqueId(),1)*0.16).setScale(2, RoundingMode.HALF_EVEN)+")", "Master LV.50"), 1, Medskillsinv);
+				itemset("SupplyCart", Material.TIPPED_ARROW, 3, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.SupplyCart.getOrDefault(p.getUniqueId(),1),"","Jump + SwapHand",
+						"Give Party Jump, Speed, Strength Effects ("+1+ssd.SupplyCart.getOrDefault(p.getUniqueId(),0)/2+"Lv, "+(50+50*ssd.SupplyCart.getOrDefault(p.getUniqueId(),0))/20+"s", "Master LV.5"), 2, Medskillsinv);
+				itemset("Hideout", Material.TIPPED_ARROW, 4, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.Hideout.getOrDefault(p.getUniqueId(),1),"","Sneaking", "Master LV.1"), 3, Medskillsinv);
+				itemset("ArrowClinic", Material.TIPPED_ARROW, 5, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.ArrowClinic.getOrDefault(p.getUniqueId(),1),"",
+						"Heal Hit party member", "MaxHealth X (0.05 + "+BigDecimal.valueOf(0.05+ssd.ArrowClinic.getOrDefault(p.getUniqueId(),1)*0.005+ssd.Medicine.getOrDefault(p.getUniqueId(),1)*0.004).setScale(2, RoundingMode.HALF_EVEN)+")","",
+						ChatColor.UNDERLINE+"[Wind]","Every time an enemy is hit" ,"The damage the enemy receives increases by "+BigDecimal.valueOf(0.03*ssd.ArrowClinic.getOrDefault(p.getUniqueId(),1)).setScale(2, RoundingMode.HALF_EVEN),"(Max 1.9)", "Higher Skill Levels Can Stack Faster", "Master LV.30"), 4, Medskillsinv);
+				itemset("AED", Material.CROSSBOW, 6, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.AED.getOrDefault(p.getUniqueId(),1),"",ChatColor.UNDERLINE+"[Wind]","Sneaking + LeftClick","",ChatColor.BOLD+" X (0.3D + "+BigDecimal.valueOf(ssd.AED.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)+")", "Master LV.50"), 5, Medskillsinv);
+				itemset("Rescue", Material.KNOWLEDGE_BOOK, 6, 1, Arrays.asList(ChatColor.AQUA+ "Passive","","When Party Member is at death's door,","The Member will be Groggy for 5secs","You'll get speed and be able to Rescue Member","By using AED skill"), 6, Medskillsinv);
+				itemset("Medicine", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.Medicine.getOrDefault(p.getUniqueId(),1),"","Increse Damage and Healing Rate","",ChatColor.BOLD+" + "+BigDecimal.valueOf(ssd.Medicine.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)), 7, Medskillsinv);
+				if(Proficiency.getpro(p)<1) {
+					itemset("Vacuum(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 9, Medskillsinv);
+					itemset("Barrier(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 10, Medskillsinv);
+					itemset("SupportFire(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 11, Medskillsinv);
+					itemset("Anodyne(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 12, Medskillsinv);
+					itemset("Excitometabolic(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 13, Medskillsinv);
+					itemset("FineNeedles(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 14, Medskillsinv);
+					itemset("Evacuation(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 15, Medskillsinv);
+					itemset("FirstAids(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 16, Medskillsinv);
+					itemset("Caduceus Tower(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 17, Medskillsinv);
+				}
+				else if(Proficiency.getpro(p)<2 && Proficiency.getpro(p)>=1) {
+					itemset("Vacuum", Material.LAVA_BUCKET, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Pull Entity to Hit Position","(Damage Affected By RemedyingRocket)","",ChatColor.BOLD+" X (0.4D + "+BigDecimal.valueOf(ssd.RemedyingRocket.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)+")"), 9, Medskillsinv);
+					itemset("Barrier", Material.SPORE_BLOSSOM, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Frost]","Place Barrier When Use Once More","Party inside the Barrier are invulneralbe","(Damage Affected By Decontamination)","",ChatColor.BOLD+" X (0.4D + "+BigDecimal.valueOf(ssd.RemedyingRocket.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)+")"), 10, Medskillsinv);
+					itemset("SupportFire", Material.SPECTRAL_ARROW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Call SupportFire When Use Once More","(Damage Affected By SupplyCart)","",ChatColor.BOLD+"8 X (1.1D + "+BigDecimal.valueOf(ssd.SupplyCart.getOrDefault(p.getUniqueId(),1)*3.5).setScale(2, RoundingMode.HALF_EVEN)+")"), 11, Medskillsinv);
+					itemset("Anodyne", Material.CHISELED_QUARTZ_BLOCK, 0, 1, Arrays.asList("Increases Near by Party's Armor"), 12, Medskillsinv);
+					itemset("Excitometabolic", Material.BUBBLE_CORAL_BLOCK, 0, 1, Arrays.asList("Hold Hit Enemy, Give Speed Effect To Party"), 13, Medskillsinv);
+					itemset("FineNeedles", Material.BOW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Spread FineNeedles When Use Once More","(Damage Affected By AED)","",ChatColor.BOLD+" X (0.43D + "+BigDecimal.valueOf(ssd.AED.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)+")"), 14, Medskillsinv);
+					itemset("Evacuation", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Groggy Party Member Will be Evacuated"), 15, Medskillsinv);
+					itemset("FirstAids", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage", "Decontamination & AED will Heal Party, Hold Enemies"), 16, Medskillsinv);
+					itemset("Caduceus Tower", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("Sneaking + num4", "Give 1 Heal & Saturation Effect Per "+BigDecimal.valueOf(20-ssd.Medicine.getOrDefault(p.getUniqueId(),1)*0.3).setScale(2, RoundingMode.HALF_EVEN)+"Seconds"), 17, Medskillsinv);
+
+					itemset("Anesthetic(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 18, Medskillsinv);
+					itemset("HealingPump(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 19, Medskillsinv);
+					itemset("Mass Treatment(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 20, Medskillsinv);
+					itemset("Expand(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 21, Medskillsinv);
+					itemset("Ultrasonic Nebulizer(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 23, Medskillsinv);
+					itemset("Stretcher(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 24, Medskillsinv);
+					itemset("LifeSaver(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 25, Medskillsinv);
+					itemset("Wing Suit(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 26, Medskillsinv);
+				}
+				else {
+					itemset("Vacuum", Material.LAVA_BUCKET, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Pull Entity to Hit Position","(Damage Affected By RemedyingRocket)","",ChatColor.BOLD+" X (0.4D + "+BigDecimal.valueOf(ssd.RemedyingRocket.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)+")"), 9, Medskillsinv);
+					itemset("Barrier", Material.SPORE_BLOSSOM, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Frost]","Place Barrier When Use Once More","Party inside the Barrier are invulneralbe","(Damage Affected By Decontamination)","",ChatColor.BOLD+" X (0.4D + "+BigDecimal.valueOf(ssd.RemedyingRocket.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)+")"), 10, Medskillsinv);
+					itemset("SupportFire", Material.SPECTRAL_ARROW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Call SupportFire When Use Once More","(Damage Affected By SupplyCart)","",ChatColor.BOLD+"8 X (1.1D + "+BigDecimal.valueOf(ssd.SupplyCart.getOrDefault(p.getUniqueId(),1)*3.5).setScale(2, RoundingMode.HALF_EVEN)+")"), 11, Medskillsinv);
+					itemset("Anodyne", Material.CHISELED_QUARTZ_BLOCK, 0, 1, Arrays.asList("Increases Near by Party's Armor"), 12, Medskillsinv);
+					itemset("Excitometabolic", Material.BUBBLE_CORAL_BLOCK, 0, 1, Arrays.asList("Hold Hit Enemy, Give Speed Effect To Party"), 13, Medskillsinv);
+					itemset("FineNeedles", Material.BOW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Spread FineNeedles When Use Once More","(Damage Affected By AED)","",ChatColor.BOLD+" X (0.43D + "+BigDecimal.valueOf(ssd.AED.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)+")"), 14, Medskillsinv);
+					itemset("Evacuation", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Groggy Party Member Will be Evacuated"), 15, Medskillsinv);
+					itemset("FirstAids", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage", "Decontamination & AED will Heal Party, Hold Enemies"), 16, Medskillsinv);
+					itemset("Caduceus Tower", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("Sneaking + num4", "Give 1 Heal & Saturation Effect Per "+BigDecimal.valueOf(20-ssd.Medicine.getOrDefault(p.getUniqueId(),1)*0.3).setScale(2, RoundingMode.HALF_EVEN)+"Seconds"), 17, Medskillsinv);
+
+					itemset("Anesthetic", Material.END_CRYSTAL, 0, 1, Arrays.asList("Set Hit Party Invulnerable Shortly","Hold Hit Enemies Shortly"), 18, Medskillsinv);
+					itemset("HealingPump", Material.END_CRYSTAL, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Frost]","Place HealingPump When Use Once More", "(Damage Affected By Decontamination)"), 19, Medskillsinv);
+					itemset("Mass Treatment", Material.END_ROD, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","MassTreatment When Use Once More", "(Damage Affected By SupplyCart)","",ChatColor.BOLD+"5 X (0.8D + "+BigDecimal.valueOf(ssd.Decontamination.getOrDefault(p.getUniqueId(),1)*0.8).setScale(2, RoundingMode.HALF_EVEN)+")"), 20, Medskillsinv);
+					itemset("Expand", Material.SPLASH_POTION, 0, 1, Arrays.asList("Increases Range & Absortion Amount"), 21, Medskillsinv);
+					itemset("Ultrasonic Nebulizer", Material.BOW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Use Ultrasonic Nebulizer When Use Once More","Increases Decay Stack","",ChatColor.BOLD+"3 X (0.35D + "+BigDecimal.valueOf(ssd.AED.getOrDefault(p.getUniqueId(),1)*0.45).setScale(2, RoundingMode.HALF_EVEN)+")","(Damage Affected By AED)"), 23, Medskillsinv);
+					itemset("Stretcher", Material.BOW, 0, 1, Arrays.asList("Party Can Carried by You","Using Sneaking+RightClick with Bare Hand","Set Carried Invisible", "Quit Carrying By Click"), 24, Medskillsinv);
+					itemset("LifeSaver", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Damage & Armor","Decrease Caduceus Tower Cooldown"), 25, Medskillsinv);
+					itemset("Wing Suit", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("Sneaking + num5", "Increases Damage While Using Wing Suit(25s)", "Removes Cooldown of RemedyingRocket", "X (1 + 0.007D)"), 26, Medskillsinv);
+				}
+				itemset("Current Proficiency", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(""+Proficiency.getproexp(p)), 27, Medskillsinv);
+				itemset("SkillPoints", Material.NETHER_STAR, 0, 1, Arrays.asList(ChatColor.AQUA+"SP."+ssd.SkillPoints.getOrDefault(p.getUniqueId(),1),"","Click if you want to reset your skill's levels"), 35, Medskillsinv);
+
 			}
-			itemset("ÇöÀç ¼÷·Ãµµ", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(""+Proficiency.getproexp(p)), 27, Medskillsinv);
-			itemset("½ºÅ³Æ÷ÀÎÆ®", Material.NETHER_STAR, 0, 1, Arrays.asList(ChatColor.AQUA+"SP."+ssd.SkillPoints.getOrDefault(p.getUniqueId(),1),"","Å¬¸¯ÇÏ¸é ½ºÅ³Æ÷ÀÎÆ®°¡ ÃÊ±âÈ­ µË´Ï´Ù"), 35, Medskillsinv);
-		
+
+
+			p.openInventory(Medskillsinv);
 		}
-		else {
-			
-			itemset("RemedyingRocket", Material.TIPPED_ARROW, 1, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.RemedyingRocket.getOrDefault(p.getUniqueId(),1),"",ChatColor.UNDERLINE+"[Frost]","Jump + LeftClick","",ChatColor.BOLD+" X (0.32D + "+BigDecimal.valueOf(ssd.RemedyingRocket.getOrDefault(p.getUniqueId(),1)*0.316).setScale(2, RoundingMode.HALF_EVEN)+")", "Master LV.50"), 0, Medskillsinv);
-			itemset("Decontamination", Material.TIPPED_ARROW, 2, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.Decontamination.getOrDefault(p.getUniqueId(),1),"",ChatColor.UNDERLINE+"[Frost]","Sneaking + SwapHand","Removes All Negetive Effects","",ChatColor.BOLD+"15 X (0.15D + "+BigDecimal.valueOf(ssd.Decontamination.getOrDefault(p.getUniqueId(),1)*0.16).setScale(2, RoundingMode.HALF_EVEN)+")", "Master LV.50"), 1, Medskillsinv);
-			itemset("SupplyCart", Material.TIPPED_ARROW, 3, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.SupplyCart.getOrDefault(p.getUniqueId(),1),"","Jump + SwapHand",
-					"Give Party Jump, Speed, Strength Effects ("+1+ssd.SupplyCart.getOrDefault(p.getUniqueId(),0)/2+"Lv, "+(50+50*ssd.SupplyCart.getOrDefault(p.getUniqueId(),0))/20+"s", "Master LV.5"), 2, Medskillsinv);
-			itemset("Hideout", Material.TIPPED_ARROW, 4, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.Hideout.getOrDefault(p.getUniqueId(),1),"","Sneaking", "Master LV.1"), 3, Medskillsinv);
-			itemset("ArrowClinic", Material.TIPPED_ARROW, 5, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.ArrowClinic.getOrDefault(p.getUniqueId(),1),"",
-					"Heal Hit party member", "MaxHealth X (0.05 + "+BigDecimal.valueOf(0.05+ssd.ArrowClinic.getOrDefault(p.getUniqueId(),1)*0.005+ssd.Medicine.getOrDefault(p.getUniqueId(),1)*0.004).setScale(2, RoundingMode.HALF_EVEN)+")","",
-					ChatColor.UNDERLINE+"[Wind]","Every time an enemy is hit" ,"The damage the enemy receives increases by "+BigDecimal.valueOf(0.03*ssd.ArrowClinic.getOrDefault(p.getUniqueId(),1)).setScale(2, RoundingMode.HALF_EVEN),"(Max 1.9)", "Higher Skill Levels Can Stack Faster", "Master LV.30"), 4, Medskillsinv);
-			itemset("AED", Material.CROSSBOW, 6, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.AED.getOrDefault(p.getUniqueId(),1),"",ChatColor.UNDERLINE+"[Wind]","Sneaking + LeftClick","",ChatColor.BOLD+" X (0.3D + "+BigDecimal.valueOf(ssd.AED.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)+")", "Master LV.50"), 5, Medskillsinv);
-			itemset("Rescue", Material.KNOWLEDGE_BOOK, 6, 1, Arrays.asList(ChatColor.AQUA+ "Passive","","When Party Member is at death's door,","The Member will be Groggy for 5secs","You'll get speed and be able to Rescue Member","By using AED skill"), 6, Medskillsinv);
-			itemset("Medicine", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.Medicine.getOrDefault(p.getUniqueId(),1),"","Increse Damage and Healing Rate","",ChatColor.BOLD+" + "+BigDecimal.valueOf(ssd.Medicine.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)), 7, Medskillsinv);
-			if(Proficiency.getpro(p)<1) {
-				itemset("Vacuum(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 9, Medskillsinv);
-				itemset("Barrier(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 10, Medskillsinv);
-				itemset("SupportFire(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 11, Medskillsinv);
-				itemset("Anodyne(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 12, Medskillsinv);
-				itemset("Excitometabolic(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 13, Medskillsinv);
-				itemset("FineNeedles(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 14, Medskillsinv);
-				itemset("Evacuation(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 15, Medskillsinv);
-				itemset("FirstAids(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 16, Medskillsinv);
-				itemset("Caduceus Tower(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 17, Medskillsinv);
-			}
-			else if(Proficiency.getpro(p)<2 && Proficiency.getpro(p)>=1) {
-				itemset("Vacuum", Material.LAVA_BUCKET, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Pull Entity to Hit Position","(Damage Affected By RemedyingRocket)","",ChatColor.BOLD+" X (0.4D + "+BigDecimal.valueOf(ssd.RemedyingRocket.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)+")"), 9, Medskillsinv);
-				itemset("Barrier", Material.SPORE_BLOSSOM, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Frost]","Place Barrier When Use Once More","Party inside the Barrier are invulneralbe","(Damage Affected By Decontamination)","",ChatColor.BOLD+" X (0.4D + "+BigDecimal.valueOf(ssd.RemedyingRocket.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)+")"), 10, Medskillsinv);
-				itemset("SupportFire", Material.SPECTRAL_ARROW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Call SupportFire When Use Once More","(Damage Affected By SupplyCart)","",ChatColor.BOLD+"8 X (1.1D + "+BigDecimal.valueOf(ssd.SupplyCart.getOrDefault(p.getUniqueId(),1)*3.5).setScale(2, RoundingMode.HALF_EVEN)+")"), 11, Medskillsinv);
-				itemset("Anodyne", Material.CHISELED_QUARTZ_BLOCK, 0, 1, Arrays.asList("Increases Near by Party's Armor"), 12, Medskillsinv);
-				itemset("Excitometabolic", Material.BUBBLE_CORAL_BLOCK, 0, 1, Arrays.asList("Hold Hit Enemy, Give Speed Effect To Party"), 13, Medskillsinv);
-				itemset("FineNeedles", Material.BOW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Spread FineNeedles When Use Once More","(Damage Affected By AED)","",ChatColor.BOLD+" X (0.43D + "+BigDecimal.valueOf(ssd.AED.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)+")"), 14, Medskillsinv);
-				itemset("Evacuation", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Groggy Party Member Will be Evacuated"), 15, Medskillsinv);
-				itemset("FirstAids", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage", "Decontamination & AED will Heal Party, Hold Enemies"), 16, Medskillsinv);
-				itemset("Caduceus Tower", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("Sneaking + ThrowItem", "Give 1 Heal & Saturation Effect Per "+BigDecimal.valueOf(20-ssd.Medicine.getOrDefault(p.getUniqueId(),1)*0.3).setScale(2, RoundingMode.HALF_EVEN)+"Seconds"), 17, Medskillsinv);
-
-				itemset("Anesthetic(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 18, Medskillsinv);
-				itemset("HealingPump(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 19, Medskillsinv);
-				itemset("Mass Treatment(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 20, Medskillsinv);
-				itemset("Expand(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 21, Medskillsinv);
-				itemset("Ultrasonic Nebulizer(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 23, Medskillsinv);
-				itemset("Stretcher(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 24, Medskillsinv);
-				itemset("LifeSaver(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 25, Medskillsinv);
-				itemset("Wing Suit(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 26, Medskillsinv);
-			}
-			else {
-				itemset("Vacuum", Material.LAVA_BUCKET, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Pull Entity to Hit Position","(Damage Affected By RemedyingRocket)","",ChatColor.BOLD+" X (0.4D + "+BigDecimal.valueOf(ssd.RemedyingRocket.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)+")"), 9, Medskillsinv);
-				itemset("Barrier", Material.SPORE_BLOSSOM, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Frost]","Place Barrier When Use Once More","Party inside the Barrier are invulneralbe","(Damage Affected By Decontamination)","",ChatColor.BOLD+" X (0.4D + "+BigDecimal.valueOf(ssd.RemedyingRocket.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)+")"), 10, Medskillsinv);
-				itemset("SupportFire", Material.SPECTRAL_ARROW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Call SupportFire When Use Once More","(Damage Affected By SupplyCart)","",ChatColor.BOLD+"8 X (1.1D + "+BigDecimal.valueOf(ssd.SupplyCart.getOrDefault(p.getUniqueId(),1)*3.5).setScale(2, RoundingMode.HALF_EVEN)+")"), 11, Medskillsinv);
-				itemset("Anodyne", Material.CHISELED_QUARTZ_BLOCK, 0, 1, Arrays.asList("Increases Near by Party's Armor"), 12, Medskillsinv);
-				itemset("Excitometabolic", Material.BUBBLE_CORAL_BLOCK, 0, 1, Arrays.asList("Hold Hit Enemy, Give Speed Effect To Party"), 13, Medskillsinv);
-				itemset("FineNeedles", Material.BOW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Spread FineNeedles When Use Once More","(Damage Affected By AED)","",ChatColor.BOLD+" X (0.43D + "+BigDecimal.valueOf(ssd.AED.getOrDefault(p.getUniqueId(),1)*0.4).setScale(2, RoundingMode.HALF_EVEN)+")"), 14, Medskillsinv);
-				itemset("Evacuation", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Groggy Party Member Will be Evacuated"), 15, Medskillsinv);
-				itemset("FirstAids", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage", "Decontamination & AED will Heal Party, Hold Enemies"), 16, Medskillsinv);
-				itemset("Caduceus Tower", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("Sneaking + ThrowItem", "Give 1 Heal & Saturation Effect Per "+BigDecimal.valueOf(20-ssd.Medicine.getOrDefault(p.getUniqueId(),1)*0.3).setScale(2, RoundingMode.HALF_EVEN)+"Seconds"), 17, Medskillsinv);
-
-				itemset("Anesthetic", Material.END_CRYSTAL, 0, 1, Arrays.asList("Set Hit Party Invulnerable Shortly","Hold Hit Enemies Shortly"), 18, Medskillsinv);
-				itemset("HealingPump", Material.END_CRYSTAL, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Frost]","Place HealingPump When Use Once More", "(Damage Affected By Decontamination)"), 19, Medskillsinv);
-				itemset("Mass Treatment", Material.END_ROD, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","MassTreatment When Use Once More", "(Damage Affected By SupplyCart)","",ChatColor.BOLD+"5 X (0.8D + "+BigDecimal.valueOf(ssd.Decontamination.getOrDefault(p.getUniqueId(),1)*0.8).setScale(2, RoundingMode.HALF_EVEN)+")"), 20, Medskillsinv);
-				itemset("Expand", Material.SPLASH_POTION, 0, 1, Arrays.asList("Increases Range & Absortion Amount"), 21, Medskillsinv);
-				itemset("Ultrasonic Nebulizer", Material.BOW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Use Ultrasonic Nebulizer When Use Once More","Increases Decay Stack","",ChatColor.BOLD+"3 X (0.35D + "+BigDecimal.valueOf(ssd.AED.getOrDefault(p.getUniqueId(),1)*0.45).setScale(2, RoundingMode.HALF_EVEN)+")","(Damage Affected By AED)"), 23, Medskillsinv);
-				itemset("Stretcher", Material.BOW, 0, 1, Arrays.asList("Party Can Carried by You","Using Sneaking+RightClick with Bare Hand","Set Carried Invisible", "Quit Carrying By Click"), 24, Medskillsinv);
-				itemset("LifeSaver", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Damage & Armor","Decrease Caduceus Tower Cooldown"), 25, Medskillsinv);
-				itemset("Wing Suit", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("Sprinting + ThrowItem", "Increases Damage While Using Wing Suit(25s)", "Removes Cooldown of RemedyingRocket", "X (1 + 0.007D)"), 26, Medskillsinv);
-			}
-			itemset("Current Proficiency", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(""+Proficiency.getproexp(p)), 27, Medskillsinv);
-			itemset("SkillPoints", Material.NETHER_STAR, 0, 1, Arrays.asList(ChatColor.AQUA+"SP."+ssd.SkillPoints.getOrDefault(p.getUniqueId(),1),"","Click if you want to reset your skill's levels"), 35, Medskillsinv);
-		
-		}
-		
-		
-		p.openInventory(Medskillsinv);
-	}
-
 
 }

@@ -1541,26 +1541,27 @@ public class Frostskills extends Pak implements Listener, Serializable {
 		if(ClassData.pc.get(p.getUniqueId()) == 21){
 			ArrayList<Location> draw = new ArrayList<Location>();
 			AtomicInteger j = new AtomicInteger();
-			Location pl = p.getLocation().clone().add(0, 1, 0);
+			Location pl = le.getLocation().clone().add(0, 1, 0);
 			Vector pv = pl.clone().add(1, 0, 0).toVector().subtract(pl.clone().toVector());
 
-			for(double an = 0; an<Math.PI*2; an+=Math.PI/90) {
-				draw.add(pl.clone().add(pv.rotateAroundY(an).normalize().multiply(1.1)));
-			}
-			draw.forEach(l -> {
+			for(int an = 0; an<cool*20; an++) {
 				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					@Override
 					public void run()
 					{
+						for(double an = 0; an<Math.PI*2; an+=Math.PI/90) {
+							draw.add(pl.clone().add(pv.rotateAroundY(an).normalize().multiply(1.1)));
+						}
+						Location particlel = pl.clone().add(pv.rotateAroundY((Math.PI*2/(cool*20))*j.getAndIncrement()).normalize().multiply(1.1));
 						draw.forEach(l -> {
-							p.spawnParticle(Particle.BLOCK_CRACK, l.clone().add(0, 0.2, 0),5,0.1,0.1,0.1,Material.BLUE_ICE.createBlockData());
+							p.spawnParticle(Particle.BLOCK_CRACK, l.clone().add(0, 0.2, 0),1,Material.SNOW_BLOCK.createBlockData());
 
 						});
-						p.spawnParticle(Particle.BLOCK_CRACK, l.clone().add(0, 0.2, 0),5,0.1,0.1,0.1,Material.BLUE_ICE.createBlockData());
+						p.spawnParticle(Particle.BLOCK_CRACK, particlel.clone().add(0, 0.2, 0),8,0.12,0.12,0.12,Material.BLUE_ICE.createBlockData());
 					}
-				}, (long) (6/cool*j.getAndIncrement()));
+				}, an);
+			}
 
-			});
 		}
 	}
 	public void Frostbite(EntityDamageByEntityEvent d)
