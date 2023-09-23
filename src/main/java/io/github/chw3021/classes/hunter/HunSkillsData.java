@@ -268,7 +268,7 @@ public class HunSkillsData implements Serializable, Listener{
 				{
 					
 					case "TurnOver":
-					case "µÚÁý±â":{
+					case "ë’¤ì§‘ê¸°":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Chain.get(p.getUniqueId()) < 1){
 								Chain.put(p.getUniqueId(), Chain.get(p.getUniqueId()) +1);
@@ -312,7 +312,7 @@ public class HunSkillsData implements Serializable, Listener{
 						break;		}
 						
 					case "Webthrow":
-					case "±×¹°ÅõÃ´":{
+					case "ê·¸ë¬¼íˆ¬ì²™":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Webthrow.get(p.getUniqueId())<1){
 								Webthrow.put(p.getUniqueId(), Webthrow.get(p.getUniqueId()) +1);
@@ -355,7 +355,7 @@ public class HunSkillsData implements Serializable, Listener{
 						}
 						break;		}		
 					case "Dodge":
-					case "È¸ÇÇ":{
+					case "íšŒí”¼":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Dodge.get(p.getUniqueId()) < 1){
 								Dodge.put(p.getUniqueId(), Dodge.get(p.getUniqueId()) +1);
@@ -398,7 +398,7 @@ public class HunSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Daze":
-					case "Âü°Ý":{
+					case "ì°¸ê²©":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Daze.get(p.getUniqueId())<50){
 								Daze.put(p.getUniqueId(), Daze.get(p.getUniqueId()) +1);
@@ -443,7 +443,7 @@ public class HunSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "SkullCrusher":
-					case "µÎ°³°ñºÐ¼â":{
+					case "ë‘ê°œê³¨ë¶„ì‡„":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && SkullCrusher.get(p.getUniqueId())<50){
 								SkullCrusher.put(p.getUniqueId(), SkullCrusher.get(p.getUniqueId()) +1);
@@ -488,7 +488,7 @@ public class HunSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Backattack":
-					case "¾Ï½À":{
+					case "ì•”ìŠµ":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Backattack.get(p.getUniqueId()) < 1){
 								Backattack.put(p.getUniqueId(), Backattack.get(p.getUniqueId()) +1);
@@ -531,7 +531,7 @@ public class HunSkillsData implements Serializable, Listener{
 						}
 						break;	}
 					case "Climbing":
-					case "µî¹Ý":{
+					case "ë“±ë°˜":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Climb.get(p.getUniqueId()) < 1){
 								Climb.put(p.getUniqueId(), Climb.get(p.getUniqueId()) +1);
@@ -574,7 +574,7 @@ public class HunSkillsData implements Serializable, Listener{
 						}
 						break;		}				
 					case "Atrocity":
-					case "±Ø¾Ç¹«µµ":{
+					case "ê·¹ì•…ë¬´ë„":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1){
 								Atrocity.put(p.getUniqueId(), Atrocity.get(p.getUniqueId()) +1);
@@ -609,7 +609,7 @@ public class HunSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Hunting":
-					case "»ç³É":{
+					case "ì‚¬ëƒ¥":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && HuntingStart.get(p.getUniqueId())<50){
 								HuntingStart.put(p.getUniqueId(), HuntingStart.get(p.getUniqueId()) +1);
@@ -654,7 +654,7 @@ public class HunSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "SkillPoints":
-					case "½ºÅ³Æ÷ÀÎÆ®":		{			
+					case "ìŠ¤í‚¬í¬ì¸íŠ¸":		{			
 						Chain.put(p.getUniqueId(), 0);
 						Webthrow.put(p.getUniqueId(), 0);
 						Dodge.put(p.getUniqueId(), 0);

@@ -182,7 +182,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 			SkillBuilder bd = new SkillBuilder()
 					.player(p)
 					.cooldown(sec)
-					.kname("ÈÛ¾µ±â")
+					.kname("íœ©ì“¸ê¸°")
 					.ename("Swipe")
 					.slot(0)
 					.hm(sdcooldown)
@@ -361,13 +361,13 @@ public class Berskills extends Pak implements Listener, Serializable {
 					conv.put(p.getUniqueId(), 0);
 					p.playSound(p, Sound.ENTITY_SKELETON_CONVERTED_TO_STRAY, 0.5f, 1.3f);
 					p.spawnParticle(Particle.CRIT_MAGIC, p.getLocation(), 20, 1, 1, 1);
-					p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{°¥¸Á}").color(ChatColor.RED).create());
+					p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{ê°ˆë§}").color(ChatColor.RED).create());
 					break;
 				case 0:
 					conv.put(p.getUniqueId(), 1);
 					p.playSound(p, Sound.ENTITY_HUSK_CONVERTED_TO_ZOMBIE, 0.5f, 1.3f);
 					p.spawnParticle(Particle.DRAGON_BREATH, p.getLocation(), 20, 1, 1, 1);
-					p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{±¤¶õ}").color(ChatColor.DARK_RED).create());
+					p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{ê´‘ë€}").color(ChatColor.DARK_RED).create());
 					break;
 			}
 		}
@@ -422,7 +422,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
 						.cooldown(sec)
-						.kname("ºĞ»ç")
+						.kname("ë¶„ì‚¬")
 						.ename("Spray")
 						.slot(1)
 						.hm(cdcooldown)
@@ -720,7 +720,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 			SkillBuilder bd = new SkillBuilder()
 					.player(p)
 					.cooldown(sec)
-					.kname("ÈíÀÔ")
+					.kname("í¡ì…")
 					.ename("Inhale")
 					.slot(2)
 					.hm(frcooldown)
@@ -886,7 +886,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 			SkillBuilder bd = new SkillBuilder()
 					.player(p)
 					.cooldown(sec)
-					.kname("ÁøÈ«ºûÀüÁø")
+					.kname("ì§„í™ë¹›ì „ì§„")
 					.ename("CrimsonAdvance")
 					.slot(3)
 					.hm(cacooldown)
@@ -1167,7 +1167,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 			SkillBuilder bd = new SkillBuilder()
 					.player(p)
 					.cooldown(sec)
-					.kname("³­¹«")
+					.kname("ë‚œë¬´")
 					.ename("Flurry")
 					.slot(4)
 					.hm(smcooldown)
@@ -1441,7 +1441,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 							SkillBuilder bd = new SkillBuilder()
 									.player(p1)
 									.cooldown(sec)
-									.kname("ºÒ»ç")
+									.kname("ë¶ˆì‚¬")
 									.ename("Undying")
 									.slot(5)
 									.hm(lncooldown)
@@ -1479,7 +1479,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
 						.cooldown(45/Proficiency.getpro(p)*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d))
-						.kname("µé²ú´Â ½ÉÀå")
+						.kname("ë“¤ë“ëŠ” ì‹¬ì¥")
 						.ename("BloodBoil")
 						.slot(6)
 						.hm(sultcooldown)
@@ -1544,7 +1544,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
 						.cooldown(60*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d))
-						.kname("¸»»ì")
+						.kname("ë§ì‚´")
 						.ename("Genocide")
 						.slot(7)
 						.hm(sult2cooldown)
@@ -1697,7 +1697,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 	                if(!(timer < 0)) // if timer is still more then 0 or 0
 	                {
 		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("ÈíÇ÷ Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
+			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("í¡í˜ˆ ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ì´ " + String.valueOf(Math.round(timer*10)/10.0) + "ì´ˆ ë‚¨ì•˜ìŠµë‹ˆë‹¤").create());
 					    }
 		        		else {
 		                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Vampire").create());
@@ -2046,6 +2046,3 @@ public class Berskills extends Pak implements Listener, Serializable {
 	
 	
 }
-
-
-

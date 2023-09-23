@@ -242,7 +242,7 @@ public class MedSkillsData implements Serializable, Listener{
 				{
 
 					case "ArrowClinic":
-					case "È­»ìÄ¡·á":{
+					case "í™”ì‚´ì¹˜ë£Œ":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && ArrowClinic.get(p.getUniqueId()) < 30){
 								ArrowClinic.put(p.getUniqueId(), ArrowClinic.get(p.getUniqueId()) +1);
@@ -287,7 +287,7 @@ public class MedSkillsData implements Serializable, Listener{
 						break;		}
 						
 					case "AED":
-					case "ÀÚµ¿Á¦¼¼µ¿±â":{
+					case "ìžë™ì œì„¸ë™ê¸°":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && AED.get(p.getUniqueId())<50){
 								AED.put(p.getUniqueId(), AED.get(p.getUniqueId()) +1);
@@ -331,7 +331,7 @@ public class MedSkillsData implements Serializable, Listener{
 						}
 						break;		}		
 					case "Hideout":
-					case "Àº½ÅÃ³":{
+					case "ì€ì‹ ì²˜":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Hideout.get(p.getUniqueId()) < 1){
 								Hideout.put(p.getUniqueId(), Hideout.get(p.getUniqueId()) +1);
@@ -374,7 +374,7 @@ public class MedSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "SupplyCart":
-					case "º¸±ÞÄ«Æ®":{
+					case "ë³´ê¸‰ì¹´íŠ¸":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && SupplyCart.get(p.getUniqueId()) < 5){
 								SupplyCart.put(p.getUniqueId(), SupplyCart.get(p.getUniqueId()) +1);
@@ -418,7 +418,7 @@ public class MedSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Decontamination":
-					case "Á¦µ¶":{
+					case "ì œë…":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Decontamination.get(p.getUniqueId())<50){
 								Decontamination.put(p.getUniqueId(), Decontamination.get(p.getUniqueId()) +1);
@@ -462,7 +462,7 @@ public class MedSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Medicine":
-					case "ÀÇÇÐ":{
+					case "ì˜í•™":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1){
 								Medicine.put(p.getUniqueId(), Medicine.get(p.getUniqueId()) +1);
@@ -497,7 +497,7 @@ public class MedSkillsData implements Serializable, Listener{
 						}
 						break;		}			
 					case "RemedyingRocket":
-					case "Ä¡À¯·ÎÄÏ":{
+					case "ì¹˜ìœ ë¡œì¼“":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && RemedyingRocket.get(p.getUniqueId())<50){
 								RemedyingRocket.put(p.getUniqueId(), RemedyingRocket.get(p.getUniqueId()) +1);
@@ -541,7 +541,7 @@ public class MedSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "SkillPoints":
-					case "½ºÅ³Æ÷ÀÎÆ®":		{			
+					case "ìŠ¤í‚¬í¬ì¸íŠ¸":		{			
 						AED.put(p.getUniqueId(), 0);
 						ArrowClinic.put(p.getUniqueId(), 0);
 						Hideout.put(p.getUniqueId(), 0);

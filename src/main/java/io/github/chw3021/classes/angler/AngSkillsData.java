@@ -246,7 +246,7 @@ public class AngSkillsData implements Serializable, Listener{
 				{
 					
 					case "Bait":
-					case "¹Ì³¢":
+					case "ë¯¸ë¼":
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Bait.get(p.getUniqueId())<50){
 								Bait.put(p.getUniqueId(), Bait.get(p.getUniqueId()) +1);
@@ -293,7 +293,7 @@ public class AngSkillsData implements Serializable, Listener{
 						break;		
 						
 					case "Fishing":
-					case "³¬½Ã":
+					case "ë‚šì‹œ":
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Fishing.get(p.getUniqueId()) < 1){
 								Fishing.put(p.getUniqueId(), Fishing.get(p.getUniqueId()) +1);
@@ -337,7 +337,7 @@ public class AngSkillsData implements Serializable, Listener{
 						break;		
 						
 					case "Whipping":
-					case "³¬½Ã´ë¹ý":
+					case "ë‚šì‹œëŒ€ë²•":
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Whipping.get(p.getUniqueId())<50){
 								Whipping.put(p.getUniqueId(), Whipping.get(p.getUniqueId()) +1);
@@ -382,7 +382,7 @@ public class AngSkillsData implements Serializable, Listener{
 						break;		
 						
 					case "CoralRoots":
-					case "»êÈ£»Ñ¸®":
+					case "ì‚°í˜¸ë¿Œë¦¬":
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && CoralRoots.get(p.getUniqueId())<50){
 								CoralRoots.put(p.getUniqueId(), CoralRoots.get(p.getUniqueId()) +1);
@@ -427,7 +427,7 @@ public class AngSkillsData implements Serializable, Listener{
 						break;		
 						
 					case "DrunkenDance":
-					case "À½ÁÖ°¡¹«":
+					case "ìŒì£¼ê°€ë¬´":
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && DrunkenDance.get(p.getUniqueId())<50){
 								DrunkenDance.put(p.getUniqueId(), DrunkenDance.get(p.getUniqueId()) +1);
@@ -473,7 +473,7 @@ public class AngSkillsData implements Serializable, Listener{
 						break;		
 						
 					case "Technic":
-					case "³ë·ÃÇÔ":
+					case "ë…¸ë ¨í•¨":
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1){
 								Technic.put(p.getUniqueId(), Technic.get(p.getUniqueId()) +1);
@@ -508,7 +508,7 @@ public class AngSkillsData implements Serializable, Listener{
 						}
 						break;			
 					case "CoralLiquor":
-					case "»êÈ£ÁÖ":
+					case "ì‚°í˜¸ì£¼":
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && CoralLiquor.get(p.getUniqueId()) < 20){
 								CoralLiquor.put(p.getUniqueId(), CoralLiquor.get(p.getUniqueId()) +1);
@@ -553,7 +553,7 @@ public class AngSkillsData implements Serializable, Listener{
 						}
 						break;		
 					case "SkillPoints":	
-					case "½ºÅ³Æ÷ÀÎÆ®":	
+					case "ìŠ¤í‚¬í¬ì¸íŠ¸":	
 						Bait.put(p.getUniqueId(), 0);
 						Fishing.put(p.getUniqueId(), 0);
 						Whipping.put(p.getUniqueId(), 0);

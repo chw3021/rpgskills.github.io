@@ -261,7 +261,7 @@ public class MerSkillsData implements Serializable, Listener{
 				{
 					
 					case "Swipe":
-					case "ÈÛ¾µ±â":{
+					case "íœ©ì“¸ê¸°":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Swipe.get(p.getUniqueId())<50){
 								Swipe.put(p.getUniqueId(), Swipe.get(p.getUniqueId()) +1);
@@ -306,7 +306,7 @@ public class MerSkillsData implements Serializable, Listener{
 						break;		}
 						
 					/*case "Drain":
-					case "¹èÃâ":{
+					case "ë°°ì¶œ":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Drain.get(p.getUniqueId())<50){
 								Drain.put(p.getUniqueId(), Drain.get(p.getUniqueId()) +1);
@@ -350,7 +350,7 @@ public class MerSkillsData implements Serializable, Listener{
 						}
 						break;		}		*/
 					case "Spray":
-					case "ºÐ»ç":{
+					case "ë¶„ì‚¬":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Spray.get(p.getUniqueId())<50){
 								Spray.put(p.getUniqueId(), Spray.get(p.getUniqueId()) +1);
@@ -394,7 +394,7 @@ public class MerSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Inhale":
-					case "ÈíÀÔ":{
+					case "í¡ìž…":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Inhale.get(p.getUniqueId())<50){
 								Inhale.put(p.getUniqueId(), Inhale.get(p.getUniqueId()) +1);
@@ -438,7 +438,7 @@ public class MerSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Flurry":
-					case "³­¹«":{
+					case "ë‚œë¬´":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Burstout.get(p.getUniqueId())<50){
 								Burstout.put(p.getUniqueId(), Burstout.get(p.getUniqueId()) +1);
@@ -482,7 +482,7 @@ public class MerSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "CrimsonAdvance":
-					case "ÁøÈ«ºûÀüÁø":{
+					case "ì§„í™ë¹›ì „ì§„":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Undying.get(p.getUniqueId())<50){
 								Undying.put(p.getUniqueId(), Undying.get(p.getUniqueId()) +1);
@@ -526,7 +526,7 @@ public class MerSkillsData implements Serializable, Listener{
 						}
 						break;		}				
 					case "Lunacy":
-					case "±¤±â":{
+					case "ê´‘ê¸°":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1){
 								Lunacy.put(p.getUniqueId(), Lunacy.get(p.getUniqueId()) +1);
@@ -561,7 +561,7 @@ public class MerSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Conversion":
-					case "º¯½Å":{
+					case "ë³€ì‹ ":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Dread.get(p.getUniqueId()) < 1){
 								Dread.put(p.getUniqueId(), Dread.get(p.getUniqueId()) +1);
@@ -604,7 +604,7 @@ public class MerSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "SkillPoints":
-					case "½ºÅ³Æ÷ÀÎÆ®":		{			
+					case "ìŠ¤í‚¬í¬ì¸íŠ¸":		{			
 						Swipe.put(p.getUniqueId(), 0);
 						Drain.put(p.getUniqueId(), 0);
 						Spray.put(p.getUniqueId(), 0);

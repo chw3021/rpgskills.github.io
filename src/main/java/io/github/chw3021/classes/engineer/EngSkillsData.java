@@ -239,7 +239,7 @@ public class EngSkillsData implements Serializable, Listener{
 				{
 					
 					case "Magnetic":
-					case "ÀÚ¼º":{
+					case "ìžì„±":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Magnetic.get(p.getUniqueId()) < 1){
 								Magnetic.put(p.getUniqueId(), Magnetic.get(p.getUniqueId()) +1);
@@ -283,7 +283,7 @@ public class EngSkillsData implements Serializable, Listener{
 						break;		}
 						
 					case "Jetpack":
-					case "Á¦Æ®ÆÑ":{
+					case "ì œíŠ¸íŒ©":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Jetpack.get(p.getUniqueId()) < 1){
 								Jetpack.put(p.getUniqueId(), Jetpack.get(p.getUniqueId()) +1);
@@ -326,7 +326,7 @@ public class EngSkillsData implements Serializable, Listener{
 						}
 						break;		}		
 					case "Graviton":
-					case "Áß·ÂÀÚ":{
+					case "ì¤‘ë ¥ìž":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Graviton.get(p.getUniqueId())<50){
 								Graviton.put(p.getUniqueId(), Graviton.get(p.getUniqueId()) +1);
@@ -370,7 +370,7 @@ public class EngSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "X_ray":
-					case "¿¢½º¼±":{
+					case "ì—‘ìŠ¤ì„ ":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && X_ray.get(p.getUniqueId())<50){
 								X_ray.put(p.getUniqueId(), X_ray.get(p.getUniqueId()) +1);
@@ -414,7 +414,7 @@ public class EngSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Dispenser":
-					case "¹ß»ç±â":{
+					case "ë°œì‚¬ê¸°":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Dispenser.get(p.getUniqueId())<50){
 								Dispenser.put(p.getUniqueId(), Dispenser.get(p.getUniqueId()) +1);
@@ -458,7 +458,7 @@ public class EngSkillsData implements Serializable, Listener{
 						}
 						break;		}				
 					case "CombatSuit":
-					case "ÀüÅõ½´Æ®":{
+					case "ì „íˆ¬ìŠˆíŠ¸":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1){
 								CombatSuit.put(p.getUniqueId(), CombatSuit.get(p.getUniqueId()) +1);
@@ -493,7 +493,7 @@ public class EngSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Electrostatic":
-					case "Á¤Àü±âÀå":{
+					case "ì •ì „ê¸°ìž¥":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Electrostatic.get(p.getUniqueId())<50){
 								Electrostatic.put(p.getUniqueId(), Electrostatic.get(p.getUniqueId()) +1);
@@ -537,7 +537,7 @@ public class EngSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "SkillPoints":
-					case "½ºÅ³Æ÷ÀÎÆ®":		{			
+					case "ìŠ¤í‚¬í¬ì¸íŠ¸":		{			
 						Magnetic.put(p.getUniqueId(), 0);
 						Jetpack.put(p.getUniqueId(), 0);
 						Graviton.put(p.getUniqueId(), 0);

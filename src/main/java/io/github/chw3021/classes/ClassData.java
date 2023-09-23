@@ -210,17 +210,17 @@ public class ClassData implements Serializable, Listener{
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 22) {//Angler
 			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(24);
 		}
-		else if(pc.getOrDefault(p.getUniqueId(),-1) == 23) { // ¿ëº´
+		else if(pc.getOrDefault(p.getUniqueId(),-1) == 23) { // ìš©ë³‘
 			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(36);
 		}
-		else if(pc.getOrDefault(p.getUniqueId(),-1) == 24) { // ´Ü°Ë»ç
+		else if(pc.getOrDefault(p.getUniqueId(),-1) == 24) { // ë‹¨ê²€ì‚¬
 			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
 		}
-		else if(pc.getOrDefault(p.getUniqueId(),-1) == 25) { //¿ø¿¹°¡
+		else if(pc.getOrDefault(p.getUniqueId(),-1) == 25) { //ì›ì˜ˆê°€
 			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(25);
 			
 		}
-		else if(pc.getOrDefault(p.getUniqueId(),-1) == 26) { // ¿¡¼ú°¡
+		else if(pc.getOrDefault(p.getUniqueId(),-1) == 26) { // ì—ìˆ ê°€
 			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(18);
 		}
     }
@@ -244,8 +244,8 @@ public class ClassData implements Serializable, Listener{
             public void run() 
             {
         		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-        			p.sendMessage(ChatColor.GREEN +"/rpg c ¶Ç´Â /rpg class ÀÔ·Â½Ã Á÷¾÷¼±ÅÃÀÌ °¡´ÉÇÕ´Ï´Ù");
-        			p.sendMessage(ChatColor.GREEN +"/rpg ? ¶Ç´Â /rpg help ÀÔ·Â½Ã ¸í·É¾îµéÀÌ ³ª¿É´Ï´Ù");
+        			p.sendMessage(ChatColor.GREEN +"/rpg c ë˜ëŠ” /rpg class ì…ë ¥ì‹œ ì§ì—…ì„ íƒì´ ê°€ëŠ¥í•©ë‹ˆë‹¤");
+        			p.sendMessage(ChatColor.GREEN +"/rpg ? ë˜ëŠ” /rpg help ì…ë ¥ì‹œ ëª…ë ¹ì–´ë“¤ì´ ë‚˜ì˜µë‹ˆë‹¤");
         		}
         		else {
         			p.sendMessage(ChatColor.GREEN +"You Can select your class by typing /rpg c Or /rpg class ");
@@ -332,7 +332,7 @@ public class ClassData implements Serializable, Listener{
 				if(p.getWorld().getName().contains("Raid")) {
 		            p.closeInventory();
 		    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						p.sendMessage(ChatColor.BOLD+"ÀÛÀüÁß¿¡´Â ÀüÁ÷º¯°æÀÌ ºÒ°¡´ÉÇÕ´Ï´Ù");
+						p.sendMessage(ChatColor.BOLD+"ì‘ì „ì¤‘ì—ëŠ” ì „ì§ë³€ê²½ì´ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤");
 		    		}
 		    		else {
 						p.sendMessage(ChatColor.BOLD+"You Can't Change Class While Raiding");
@@ -343,7 +343,7 @@ public class ClassData implements Serializable, Listener{
 				if(cm.isCombat(p)) {
 		            p.closeInventory();
 		    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						p.sendMessage(ChatColor.BOLD+"ÀüÅõÁßÁß¿¡´Â ÀüÁ÷º¯°æÀÌ ºÒ°¡´ÉÇÕ´Ï´Ù");
+						p.sendMessage(ChatColor.BOLD+"ì „íˆ¬ì¤‘ì¤‘ì—ëŠ” ì „ì§ë³€ê²½ì´ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤");
 		    		}
 		    		else {
 						p.sendMessage(ChatColor.BOLD+"You Can't Change Class While you're in battle");
@@ -353,7 +353,7 @@ public class ClassData implements Serializable, Listener{
 				if(Party.hasParty(p)) {
 		            p.closeInventory();
 		    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						p.sendMessage(ChatColor.BOLD+"ÆÄÆ¼Áß¿¡´Â ÀüÁ÷º¯°æÀÌ ºÒ°¡´ÉÇÕ´Ï´Ù");
+						p.sendMessage(ChatColor.BOLD+"íŒŒí‹°ì¤‘ì—ëŠ” ì „ì§ë³€ê²½ì´ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤");
 		    		}
 		    		else {
 						p.sendMessage(ChatColor.BOLD+"You Can't Change Class While you're in party");
@@ -363,8 +363,8 @@ public class ClassData implements Serializable, Listener{
 				else if(Summoned.combo.containsRow(p.getName())) {
 		            p.closeInventory();
 		    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						p.sendMessage(ChatColor.BOLD+"ÀüÅõÁß¿¡´Â ÀüÁ÷º¯°æÀÌ ºÒ°¡´ÉÇÕ´Ï´Ù");
-						p.sendMessage("/rpg escape ¶Ç´Â /rpg es ¸í·É¾î·Î ÀüÅõ¸¦ Á¾·áÇÒ¼ö ÀÖ½À´Ï´Ù.");
+						p.sendMessage(ChatColor.BOLD+"ì „íˆ¬ì¤‘ì—ëŠ” ì „ì§ë³€ê²½ì´ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤");
+						p.sendMessage("/rpg escape ë˜ëŠ” /rpg es ëª…ë ¹ì–´ë¡œ ì „íˆ¬ë¥¼ ì¢…ë£Œí• ìˆ˜ ìˆìŠµë‹ˆë‹¤.");
 		    		}
 		    		else {
 						p.sendMessage(ChatColor.BOLD+"You Can't Change Class While Fighting");
@@ -391,7 +391,7 @@ public class ClassData implements Serializable, Listener{
 					switch (ChatColor.stripColor((e.getCurrentItem().getItemMeta().getDisplayName())))
 					{
 					case"SwordMan":
-					case"°Ë»ç":
+					case"ê²€ì‚¬":
 						playerclass.put(p.getUniqueId(), 0);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
@@ -400,7 +400,7 @@ public class ClassData implements Serializable, Listener{
 						ssg.SwordSkillsinv(p);
 						break;
 					case"Berserker":
-					case"±¤Àü»ç":
+					case"ê´‘ì „ì‚¬":
 						playerclass.put(p.getUniqueId(), 1);
 
 						p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(100);
@@ -411,7 +411,7 @@ public class ClassData implements Serializable, Listener{
 						bsg.Berskillsinv(p);
 						break;
 					case"Hunter":
-					case"»ç³É²Û":
+					case"ì‚¬ëƒ¥ê¾¼":
 						playerclass.put(p.getUniqueId(), 2);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
@@ -420,7 +420,7 @@ public class ClassData implements Serializable, Listener{
 						hsg.Hunskillsinv(p);
 						break;
 					case"Paladin":
-					case"¼º±â»ç":
+					case"ì„±ê¸°ì‚¬":
 						playerclass.put(p.getUniqueId(), 3);
 					    pak.putelmr(p, 9, 0.1);
 			            
@@ -430,7 +430,7 @@ public class ClassData implements Serializable, Listener{
 						psg.PalSkillsinv(p);
 						break;
 					case"Sniper":
-					case"Àú°İ¼ö":
+					case"ì €ê²©ìˆ˜":
 						playerclass.put(p.getUniqueId(), 4);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
@@ -439,7 +439,7 @@ public class ClassData implements Serializable, Listener{
 						l.Snipskillsinv(p);
 						break;
 					case"Launcher":
-					case"¿ø¼Ò¼ú»ç":
+					case"ì›ì†Œìˆ ì‚¬":
 						playerclass.put(p.getUniqueId(), 5);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
@@ -448,7 +448,7 @@ public class ClassData implements Serializable, Listener{
 						lsg.Launskillsinv(p);
 						break;
 					case"Archer":
-					case"±Ã¼ö":
+					case"ê¶ìˆ˜":
 						playerclass.put(p.getUniqueId(), 6);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
@@ -457,7 +457,7 @@ public class ClassData implements Serializable, Listener{
 						asg.Archskillsinv(p);
 						break;
 					case"Medic":
-					case"ÀÇ±Ã":
+					case"ì˜ê¶":
 						playerclass.put(p.getUniqueId(), 61);
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
 						MedSkillsGui msg = new MedSkillsGui();
@@ -465,7 +465,7 @@ public class ClassData implements Serializable, Listener{
 						msg.Medskillsinv(p);
 						break;
 					case"Boxer":
-					case"±Ç»ç":
+					case"ê¶Œì‚¬":
 						playerclass.put(p.getUniqueId(), 7);
 					    pak.putelmr(p, 5, 0.1);
 			            
@@ -475,7 +475,7 @@ public class ClassData implements Serializable, Listener{
 						bxg.BoxSkillsinv(p);
 						break;
 					case"Wrestler":
-					case"À¯¼ú°¡":
+					case"ìœ ìˆ ê°€":
 						playerclass.put(p.getUniqueId(), 8);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
@@ -484,7 +484,7 @@ public class ClassData implements Serializable, Listener{
 						wrg.WreSkillsinv(p);
 						break;
 					case"Tamer":
-					case"Á¶·Ã»ç":
+					case"ì¡°ë ¨ì‚¬":
 						playerclass.put(p.getUniqueId(), 9);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
@@ -493,7 +493,7 @@ public class ClassData implements Serializable, Listener{
 						tsg.TamSkillsinv(p);
 						break;
 					case"Taoist":
-					case"µµ»ç":
+					case"ë„ì‚¬":
 						playerclass.put(p.getUniqueId(), 10);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
@@ -502,7 +502,7 @@ public class ClassData implements Serializable, Listener{
 						tag.TaoSkillsinv(p);
 						break;
 					case"Illusionist":
-					case"È¯¼ú»ç":
+					case"í™˜ìˆ ì‚¬":
 						playerclass.put(p.getUniqueId(), 11);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
@@ -511,7 +511,7 @@ public class ClassData implements Serializable, Listener{
 						ilg.IllSkillsinv(p);
 						break;
 					case"FireMage":
-					case"È­¿°¼ú»ç":
+					case"í™”ì—¼ìˆ ì‚¬":
 						playerclass.put(p.getUniqueId(), 12);
 					    pak.putelmr(p, 10, 0.1);
 			            
@@ -521,7 +521,7 @@ public class ClassData implements Serializable, Listener{
 						fsg.FIreSkillsinv(p);
 						break;
 					case"Witherist":
-					case"À§´õ¸®½ºÆ®":
+					case"ìœ„ë”ë¦¬ìŠ¤íŠ¸":
 						playerclass.put(p.getUniqueId(), 13);
 					    pak.putelmr(p, 8, 0.1);
 			            
@@ -531,7 +531,7 @@ public class ClassData implements Serializable, Listener{
 						wsg.WitSkillsinv(p);
 						break;
 					case"WitchDoctor":
-					case"ºÎµÎ¼ú»ç":
+					case"ë¶€ë‘ìˆ ì‚¬":
 						playerclass.put(p.getUniqueId(), 14);
 					    pak.putelmr(p, 14, 0.1);
 			            
@@ -541,7 +541,7 @@ public class ClassData implements Serializable, Listener{
 						wdg.WdcSkillsinv(p);
 						break;
 					case"Chemist":
-					case"È­ÇĞÀÚ":
+					case"í™”í•™ì":
 						playerclass.put(p.getUniqueId(), 15);
 					    pak.putelmr(p, 11, 0.1);
 					    
@@ -551,7 +551,7 @@ public class ClassData implements Serializable, Listener{
 						chg.CheSkillsinv(p);
 						break;
 					case"Forger":
-					case"¹«±â°ø":
+					case"ë¬´ê¸°ê³µ":
 						playerclass.put(p.getUniqueId(), 16);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
@@ -560,7 +560,7 @@ public class ClassData implements Serializable, Listener{
 						fgg.ForSkillsinv(p);
 						break;
 					case"Engineer":
-					case"°øÇĞÀÚ":
+					case"ê³µí•™ì":
 						playerclass.put(p.getUniqueId(), 17);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
@@ -569,7 +569,7 @@ public class ClassData implements Serializable, Listener{
 						egg.EngSkillsinv(p);
 						break;
 					case"Cook":
-					case"¿ä¸®»ç":
+					case"ìš”ë¦¬ì‚¬":
 						playerclass.put(p.getUniqueId(), 18);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
@@ -578,7 +578,7 @@ public class ClassData implements Serializable, Listener{
 						csg.CookSkillsinv(p);
 						break;
 					case"Nobility":
-					case"±ÍÁ·":
+					case"ê·€ì¡±":
 						playerclass.put(p.getUniqueId(), 19);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
@@ -587,7 +587,7 @@ public class ClassData implements Serializable, Listener{
 						nsg.NobSkillsinv(p);
 						break;
 					case"OceanKnight":
-					case"¹Ù´Ù±â»ç":
+					case"ë°”ë‹¤ê¸°ì‚¬":
 						playerclass.put(p.getUniqueId(), 20);
 					    pak.putelmr(p, 7, 0.1);
 			            
@@ -597,7 +597,7 @@ public class ClassData implements Serializable, Listener{
 						osg.OceSkillsinv(p);
 						break;
 					case"Frostman":
-					case"ºù¼ú»ç":
+					case"ë¹™ìˆ ì‚¬":
 						playerclass.put(p.getUniqueId(), 21);
 					    pak.putelmr(p, 6, 0.1);
 			            
@@ -607,7 +607,7 @@ public class ClassData implements Serializable, Listener{
 						frg.FrostSkillsinv(p);
 						break;
 					case"Angler":
-					case"³¬½Ã²Û":
+					case"ë‚šì‹œê¾¼":
 						playerclass.put(p.getUniqueId(), 22);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
@@ -616,19 +616,19 @@ public class ClassData implements Serializable, Listener{
 						arg.AngSkillsinv(p);
 						break;
 					case"Mercenary":
-					case"¿ëº´":
+					case"ìš©ë³‘":
 						playerclass.put(p.getUniqueId(), 23);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
 						break;
 					case"Daggerist":
-					case"´Ü°Ë»ç":
+					case"ë‹¨ê²€ì‚¬":
 						playerclass.put(p.getUniqueId(), 24);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
 						break;
 					case"Gardener":
-					case"¿ø¿¹°¡":
+					case"ì›ì˜ˆê°€":
 						playerclass.put(p.getUniqueId(), 25);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
@@ -637,7 +637,7 @@ public class ClassData implements Serializable, Listener{
 						brg.BroSkillsinv(p);
 						break;
 					case"Musician":
-					case"¿¹¼ú°¡":
+					case"ì˜ˆìˆ ê°€":
 						playerclass.put(p.getUniqueId(), 26);
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");

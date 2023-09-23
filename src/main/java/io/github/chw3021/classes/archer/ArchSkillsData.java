@@ -251,7 +251,7 @@ public class ArchSkillsData implements Serializable, Listener{
 				{
 					
 					case "TripleShot":
-					case "Æ®¸®ÇÃ¼¦":{
+					case "íŠ¸ë¦¬í”Œìƒ·":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && TripleShot.get(p.getUniqueId())<50){
 								TripleShot.put(p.getUniqueId(), TripleShot.get(p.getUniqueId()) +1);
@@ -296,7 +296,7 @@ public class ArchSkillsData implements Serializable, Listener{
 						break;		}
 						
 					case "HookAndShot":
-					case "ÈÅ¾Ø¼¦":{
+					case "í›…ì•¤ìƒ·":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && HookAndShot.get(p.getUniqueId())<1){
 								HookAndShot.put(p.getUniqueId(), HookAndShot.get(p.getUniqueId()) +1);
@@ -338,7 +338,7 @@ public class ArchSkillsData implements Serializable, Listener{
 						}
 						break;		}		
 					case "MultiShot":
-					case "´ÙÁß»ç°Ý":{
+					case "ë‹¤ì¤‘ì‚¬ê²©":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && MultiShot.get(p.getUniqueId())<50){
 								MultiShot.put(p.getUniqueId(), MultiShot.get(p.getUniqueId()) +1);
@@ -382,7 +382,7 @@ public class ArchSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "RapidFire":
-					case "¼Ó»ç":{
+					case "ì†ì‚¬":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && RapidFire.get(p.getUniqueId())<50){
 								RapidFire.put(p.getUniqueId(), RapidFire.get(p.getUniqueId()) +1);
@@ -425,7 +425,7 @@ public class ArchSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Retrieve":
-					case "È¸¼ö":{
+					case "íšŒìˆ˜":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Retrieve.get(p.getUniqueId()) < 1){
 								Retrieve.put(p.getUniqueId(), Retrieve.get(p.getUniqueId()) +1);
@@ -468,7 +468,7 @@ public class ArchSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Archery":
-					case "±Ã¼ú":{
+					case "ê¶ìˆ ":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1){
 								Archery.put(p.getUniqueId(), Archery.get(p.getUniqueId()) +1);
@@ -503,7 +503,7 @@ public class ArchSkillsData implements Serializable, Listener{
 						}
 						break;		}			
 					case "SpreadingArrows":
-					case "È­»ì»Ñ¸®±â":{
+					case "í™”ì‚´ë¿Œë¦¬ê¸°":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && SpreadingArrows.get(p.getUniqueId()) < 1){
 								SpreadingArrows.put(p.getUniqueId(), SpreadingArrows.get(p.getUniqueId()) +1);
@@ -546,7 +546,7 @@ public class ArchSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "SkillPoints":	
-					case "½ºÅ³Æ÷ÀÎÆ®":	{			
+					case "ìŠ¤í‚¬í¬ì¸íŠ¸":	{			
 						TripleShot.put(p.getUniqueId(), 0);
 						HookAndShot.put(p.getUniqueId(), 0);
 						MultiShot.put(p.getUniqueId(), 0);

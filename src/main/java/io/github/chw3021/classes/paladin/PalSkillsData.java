@@ -249,7 +249,7 @@ public class PalSkillsData implements Serializable, Listener{
 				{
 					
 					case "Thrust":
-					case "Áø¾Ð":{
+					case "ì§„ì••":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Thrust.get(p.getUniqueId())<50){
 								Thrust.put(p.getUniqueId(), Thrust.get(p.getUniqueId()) +1);
@@ -294,7 +294,7 @@ public class PalSkillsData implements Serializable, Listener{
 						break;		}
 						
 					case "Restraint":
-					case "°á¹Ú":{
+					case "ê²°ë°•":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Restraint.get(p.getUniqueId())<50){
 								Restraint.put(p.getUniqueId(), Restraint.get(p.getUniqueId()) +1);
@@ -338,7 +338,7 @@ public class PalSkillsData implements Serializable, Listener{
 						}
 						break;		}		
 					case "Judgement":
-					case "½ÉÆÇ":{
+					case "ì‹¬íŒ":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Judgement.get(p.getUniqueId())<50){
 								Judgement.put(p.getUniqueId(), Judgement.get(p.getUniqueId()) +1);
@@ -382,7 +382,7 @@ public class PalSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Encourge":
-					case "°Ý·Á":{
+					case "ê²©ë ¤":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Encourge.get(p.getUniqueId())<50){
 								Encourge.put(p.getUniqueId(), Encourge.get(p.getUniqueId()) +1);
@@ -426,7 +426,7 @@ public class PalSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Pray":
-					case "±âµµ":{
+					case "ê¸°ë„":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Pray.get(p.getUniqueId())<10){
 								Pray.put(p.getUniqueId(), Pray.get(p.getUniqueId()) +1);
@@ -470,7 +470,7 @@ public class PalSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Faith":
-					case "½Å¾Ó":{
+					case "ì‹ ì•™":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1){
 								Protection.put(p.getUniqueId(), Protection.get(p.getUniqueId()) +1);
@@ -505,7 +505,7 @@ public class PalSkillsData implements Serializable, Listener{
 						}
 						break;		}			
 					case "Punish":
-					case "Â¡¹ú":{
+					case "ì§•ë²Œ":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Punish.get(p.getUniqueId())<50){
 								Punish.put(p.getUniqueId(), Punish.get(p.getUniqueId()) +1);
@@ -549,7 +549,7 @@ public class PalSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "SkillPoints":
-					case "½ºÅ³Æ÷ÀÎÆ®":		{			
+					case "ìŠ¤í‚¬í¬ì¸íŠ¸":		{			
 						Thrust.put(p.getUniqueId(), 0);
 						Restraint.put(p.getUniqueId(), 0);
 						Judgement.put(p.getUniqueId(), 0);

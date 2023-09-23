@@ -244,7 +244,7 @@ public class LaunSkillsData implements Serializable, Listener{
 				{
 					
 					case "ChargingShot":
-					case "ÀÀÁý":{
+					case "ì‘ì§‘":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && ChargingShot.get(p.getUniqueId())<50){
 								ChargingShot.put(p.getUniqueId(), ChargingShot.get(p.getUniqueId()) +1);
@@ -289,7 +289,7 @@ public class LaunSkillsData implements Serializable, Listener{
 						break;		}
 						
 					case "Explosion":
-					case "Æø¹ß":{
+					case "í­ë°œ":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Explosion.get(p.getUniqueId())<50){
 								Explosion.put(p.getUniqueId(), Explosion.get(p.getUniqueId()) +1);
@@ -333,7 +333,7 @@ public class LaunSkillsData implements Serializable, Listener{
 						}
 						break;		}		
 					case "GiantArrow":
-					case "°Å´ëÈ­»ì":{
+					case "ê±°ëŒ€í™”ì‚´":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && GiantArrow.get(p.getUniqueId())<50){
 								GiantArrow.put(p.getUniqueId(), GiantArrow.get(p.getUniqueId()) +1);
@@ -377,7 +377,7 @@ public class LaunSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Discharge":
-					case "¹æÃâ":{
+					case "ë°©ì¶œ":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Discharge.get(p.getUniqueId())<50){
 								Discharge.put(p.getUniqueId(), Discharge.get(p.getUniqueId()) +1);
@@ -421,7 +421,7 @@ public class LaunSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "ArrowRain":
-					case "È­»ì¼¼·Ê":{
+					case "í™”ì‚´ì„¸ë¡€":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && ArrowRain.get(p.getUniqueId())<50){
 								ArrowRain.put(p.getUniqueId(), ArrowRain.get(p.getUniqueId()) +1);
@@ -465,7 +465,7 @@ public class LaunSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "MagicArrow":
-					case "¸¶·Â°­È­":{
+					case "ë§ˆë ¥ê°•í™”":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1){
 								MagicArrow.put(p.getUniqueId(), MagicArrow.get(p.getUniqueId()) +1);
@@ -500,7 +500,7 @@ public class LaunSkillsData implements Serializable, Listener{
 						}
 						break;		}			
 					case "ArrowChange":
-					case "È­»ìº¯°æ":{
+					case "í™”ì‚´ë³€ê²½":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && ArrowChange.get(p.getUniqueId()) < 1){
 								ArrowChange.put(p.getUniqueId(), ArrowChange.get(p.getUniqueId()) +1);
@@ -543,7 +543,7 @@ public class LaunSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "SkillPoints":
-					case "½ºÅ³Æ÷ÀÎÆ®":		{			
+					case "ìŠ¤í‚¬í¬ì¸íŠ¸":		{			
 						ChargingShot.put(p.getUniqueId(), 0);
 						Explosion.put(p.getUniqueId(), 0);
 						GiantArrow.put(p.getUniqueId(), 0);

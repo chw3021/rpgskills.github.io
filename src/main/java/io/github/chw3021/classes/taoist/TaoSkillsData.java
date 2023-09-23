@@ -253,7 +253,7 @@ public class TaoSkillsData implements Serializable, Listener{
 				{
 					
 					case "Charm":
-					case "ºÎÀû":{
+					case "ë¶€ì ":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Charm.get(p.getUniqueId())<50){
 								Charm.put(p.getUniqueId(), Charm.get(p.getUniqueId()) +1);
@@ -298,7 +298,7 @@ public class TaoSkillsData implements Serializable, Listener{
 						break;		}
 						
 					case "Vibe":
-					case "³»°ø":{
+					case "ë‚´ê³µ":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1){
 								Vibe.put(p.getUniqueId(), Vibe.get(p.getUniqueId()) +1);
@@ -333,7 +333,7 @@ public class TaoSkillsData implements Serializable, Listener{
 						}
 						break;		}		
 					case "Wave":
-					case "±â°ø±Ç":{
+					case "ê¸°ê³µê¶Œ":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Wave.get(p.getUniqueId())<50){
 								Wave.put(p.getUniqueId(), Wave.get(p.getUniqueId()) +1);
@@ -377,7 +377,7 @@ public class TaoSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Amplify":
-					case "ÁõÆø":{
+					case "ì¦í­":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Amplify.get(p.getUniqueId())<50){
 								Amplify.put(p.getUniqueId(), Amplify.get(p.getUniqueId()) +1);
@@ -421,7 +421,7 @@ public class TaoSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Flip":
-					case "°øÁßÁ¦ºñ":{
+					case "ê³µì¤‘ì œë¹„":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Flip.get(p.getUniqueId())<50){
 								Flip.put(p.getUniqueId(), Flip.get(p.getUniqueId()) +1);
@@ -465,7 +465,7 @@ public class TaoSkillsData implements Serializable, Listener{
 						}
 						break;		}	
 					case "CombustInside":
-					case "ÀáÇØ¼Òºñ":{
+					case "ìž í•´ì†Œë¹„":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && CombustInside.get(p.getUniqueId())<50){
 								CombustInside.put(p.getUniqueId(), CombustInside.get(p.getUniqueId()) +1);
@@ -509,7 +509,7 @@ public class TaoSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Imagery":
-					case "¿¬»ó":{
+					case "ì—°ìƒ":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Imagery.get(p.getUniqueId())<50){
 								Imagery.put(p.getUniqueId(), Imagery.get(p.getUniqueId()) +1);
@@ -553,7 +553,7 @@ public class TaoSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Aura":
-					case "±â¿î":{
+					case "ê¸°ìš´":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Aura.get(p.getUniqueId()) < 1){
 								Aura.put(p.getUniqueId(), Aura.get(p.getUniqueId()) +1);
@@ -596,7 +596,7 @@ public class TaoSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "SkillPoints":
-					case "½ºÅ³Æ÷ÀÎÆ®":		{			
+					case "ìŠ¤í‚¬í¬ì¸íŠ¸":		{			
 						Charm.put(p.getUniqueId(), 0);
 						Imagery.put(p.getUniqueId(), 0);
 						Vibe.put(p.getUniqueId(), 0);

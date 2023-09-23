@@ -181,7 +181,7 @@ public class Oceskills extends Pak implements Serializable {
 						d.setCancelled(true);
 						p.playSound(p.getLocation(), Sound.ITEM_TRIDENT_RETURN, 0.2f, 0.35f);
 						if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-							p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("[π∞¿«πÊ∫Æ]").color(ChatColor.BOLD).color(ChatColor.AQUA).create());
+							p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("[Î¨ºÏùòÎ∞©Î≤Ω]").color(ChatColor.BOLD).color(ChatColor.AQUA).create());
 						}
 						else {
 							p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("[Barrior]").color(ChatColor.BOLD).color(ChatColor.AQUA).create());
@@ -237,7 +237,7 @@ public class Oceskills extends Pak implements Serializable {
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
 						.cooldown(sec)
-						.kname("π∞¿«πÊ∫Æ")
+						.kname("Î¨ºÏùòÎ∞©Î≤Ω")
 						.ename("WaterBarrier")
 						.slot(0)
 						.hm(rscooldown)
@@ -516,7 +516,7 @@ public class Oceskills extends Pak implements Serializable {
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
 						.cooldown(sec)
-						.kname("«ÿ«≥¬¸")
+						.kname("Ìï¥ÌíçÏ∞∏")
 						.ename("WetSwing")
 						.slot(1)
 						.hm(prcooldown)
@@ -837,7 +837,7 @@ public class Oceskills extends Pak implements Serializable {
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
 						.cooldown(sec)
-						.kname("ø™¡∂")
+						.kname("Ïó≠Ï°∞")
 						.ename("RipCurrent")
 						.slot(2)
 						.hm(jmcooldown)
@@ -895,7 +895,7 @@ public class Oceskills extends Pak implements Serializable {
 					SkillBuilder bd = new SkillBuilder()
 							.player(p)
 							.cooldown(sec)
-							.kname("≈ı√¢")
+							.kname("Ìà¨Ï∞Ω")
 							.ename("Javelin")
 							.slot(3)
 							.hm(eccooldown)
@@ -1125,7 +1125,7 @@ public class Oceskills extends Pak implements Serializable {
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
 						.cooldown(sec)
-						.kname("πŸ¥Ÿ√¢º˙")
+						.kname("Î∞îÎã§Ï∞ΩÏà†")
 						.ename("WaterSpear")
 						.slot(4)
 						.hm(thcooldown)
@@ -1415,7 +1415,7 @@ public class Oceskills extends Pak implements Serializable {
 					SkillBuilder bd = new SkillBuilder()
 							.player(p)
 							.cooldown(sec)
-							.kname("≤Á∂’±‚")
+							.kname("Íø∞Îö´Í∏∞")
 							.ename("OceanCharge")
 							.slot(5)
 							.hm(pncooldown)
@@ -1642,7 +1642,7 @@ public class Oceskills extends Pak implements Serializable {
 	                if(!(timer < 0)) // if timer is still more then 0 or 0
 	                {
 	                	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("«ÿ¿œ ¿ÁªÁøÎ ¥Î±‚Ω√∞£¿Ã " + String.valueOf(Math.round(timer*10)/10.0) + "√  ≥≤æ“Ω¿¥œ¥Ÿ").create());
+	                		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("Ìï¥Ïùº Ïû¨ÏÇ¨Ïö© ÎåÄÍ∏∞ÏãúÍ∞ÑÏù¥ " + String.valueOf(Math.round(timer*10)/10.0) + "Ï¥à ÎÇ®ÏïòÏäµÎãàÎã§").create());
 	                	}
 	                	else {
 		                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Grand Waves").create());
@@ -2119,7 +2119,7 @@ public class Oceskills extends Pak implements Serializable {
 		                }
 		            }, 61); 
 					
-				}, p, sec, "πŸ¥Ÿ¿«∫–≥Î", "Wrath Of Sea",ault2cooldown);
+				}, p, sec, "Î∞îÎã§ÏùòÎ∂ÑÎÖ∏", "Wrath Of Sea",ault2cooldown);
 			}
 		
 	}
@@ -2412,6 +2412,3 @@ public class Oceskills extends Pak implements Serializable {
 		}
 	}
 }
-
-
-

@@ -237,7 +237,7 @@ public class TamSkillsData implements Serializable, Listener{
 				switch (ChatColor.stripColor((e.getCurrentItem().getItemMeta().getDisplayName())))
 				{
 					case "Taming":
-					case "Á¶·Ã":{
+					case "ì¡°ë ¨":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1){
 								Taming.put(p.getUniqueId(), Taming.get(p.getUniqueId()) +1);
@@ -272,7 +272,7 @@ public class TamSkillsData implements Serializable, Listener{
 						}
 						break;		}		
 					case "Spidey":
-					case "½ºÆÄÀÌµð":{
+					case "ìŠ¤íŒŒì´ë””":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Spidey.get(p.getUniqueId())<50){
 								Spidey.put(p.getUniqueId(), Spidey.get(p.getUniqueId()) +1);
@@ -316,7 +316,7 @@ public class TamSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "BeeHive":
-					case "¹úÁý":{
+					case "ë²Œì§‘":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && BeeHive.get(p.getUniqueId())<50){
 								BeeHive.put(p.getUniqueId(), BeeHive.get(p.getUniqueId()) +1);
@@ -360,7 +360,7 @@ public class TamSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "CreepBomb":
-					case "Å©¸®ÆÛÆøÅº":{
+					case "í¬ë¦¬í¼í­íƒ„":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && CreepBomb.get(p.getUniqueId())<50){
 								CreepBomb.put(p.getUniqueId(), CreepBomb.get(p.getUniqueId()) +1);
@@ -404,7 +404,7 @@ public class TamSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Panda":
-					case "ÆÇ´Ù":{
+					case "íŒë‹¤":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && PandaSweep.get(p.getUniqueId())<50){
 								PandaSweep.put(p.getUniqueId(), PandaSweep.get(p.getUniqueId()) +1);
@@ -448,7 +448,7 @@ public class TamSkillsData implements Serializable, Listener{
 						}
 						break;		}				
 					case "PressTheAttack":
-					case "ÁýÁß°ø°Ý":{
+					case "ì§‘ì¤‘ê³µê²©":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && PressTheAttack.get(p.getUniqueId()) < 1){
 								PressTheAttack.put(p.getUniqueId(), PressTheAttack.get(p.getUniqueId()) +1);
@@ -491,7 +491,7 @@ public class TamSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Pets":
-					case "¹Ý·Áµ¿¹°":{
+					case "ë°˜ë ¤ë™ë¬¼":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Pets.get(p.getUniqueId())<50){
 								Pets.put(p.getUniqueId(), Pets.get(p.getUniqueId()) +1);
@@ -535,7 +535,7 @@ public class TamSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "SkillPoints":
-					case "½ºÅ³Æ÷ÀÎÆ®":		{			
+					case "ìŠ¤í‚¬í¬ì¸íŠ¸":		{			
 						Taming.put(p.getUniqueId(), 0);
 						Spidey.put(p.getUniqueId(), 0);
 						Pets.put(p.getUniqueId(), 0);

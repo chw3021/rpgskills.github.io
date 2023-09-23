@@ -234,7 +234,7 @@ public class CheSkillsData implements Serializable, Listener{
 				{
 					
 					case "Extraction":
-					case "ÃßÃâ":
+					case "ì¶”ì¶œ":
 						if(e.getClick().equals(ClickType.LEFT)) {
 						if(SkillPoints.get(p.getUniqueId()) >= 1 && Extraction.get(p.getUniqueId()) < 1){
 							Extraction.put(p.getUniqueId(), Extraction.get(p.getUniqueId()) +1);
@@ -277,7 +277,7 @@ public class CheSkillsData implements Serializable, Listener{
 						break;		
 						
 					case "Charge":
-					case "µ¹Áø":{
+					case "ëŒì§„":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 						if(SkillPoints.get(p.getUniqueId()) >= 1 && Charge.get(p.getUniqueId()) < 50){
 							Charge.put(p.getUniqueId(), Charge.get(p.getUniqueId()) +1);
@@ -320,7 +320,7 @@ public class CheSkillsData implements Serializable, Listener{
 						}
 						break;		}		
 					case "Napalm":
-					case "³×ÀÌÆÊ":{
+					case "ë„¤ì´íŒœ":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 						if(SkillPoints.get(p.getUniqueId()) >= 1 && Coagulation.get(p.getUniqueId()) <50){
 							Coagulation.put(p.getUniqueId(), Coagulation.get(p.getUniqueId()) +1);
@@ -363,7 +363,7 @@ public class CheSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "SlimeBall":
-					case "½½¶óÀÓº¼":{
+					case "ìŠ¬ë¼ìž„ë³¼":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 						if(SkillPoints.get(p.getUniqueId()) >= 1 && SlimeBall.get(p.getUniqueId()) <50){
 							SlimeBall.put(p.getUniqueId(), SlimeBall.get(p.getUniqueId()) +1);
@@ -406,7 +406,7 @@ public class CheSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "MolotovCocktail":
-					case "È­¿°º´":{
+					case "í™”ì—¼ë³‘":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 						if(SkillPoints.get(p.getUniqueId()) >= 1 && MolotovCocktail.get(p.getUniqueId()) <50){
 							MolotovCocktail.put(p.getUniqueId(), MolotovCocktail.get(p.getUniqueId()) +1);
@@ -449,7 +449,7 @@ public class CheSkillsData implements Serializable, Listener{
 						}
 						break;		}				
 					case "Poisonous":
-					case "À¯µ¶¼º":{
+					case "ìœ ë…ì„±":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 						if(SkillPoints.get(p.getUniqueId()) >= 1){
 							Poisonous.put(p.getUniqueId(), Poisonous.get(p.getUniqueId()) +1);
@@ -483,7 +483,7 @@ public class CheSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "AcidCloud":
-					case "»ê¼º±¸¸§":{
+					case "ì‚°ì„±êµ¬ë¦„":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 						if(SkillPoints.get(p.getUniqueId()) >= 1 && AcidCloud.get(p.getUniqueId()) <50){
 							AcidCloud.put(p.getUniqueId(), AcidCloud.get(p.getUniqueId()) +1);
@@ -526,7 +526,7 @@ public class CheSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "SkillPoints":
-					case "½ºÅ³Æ÷ÀÎÆ®":		{			
+					case "ìŠ¤í‚¬í¬ì¸íŠ¸":		{			
 						Extraction.put(p.getUniqueId(), 0);
 						Charge.put(p.getUniqueId(), 0);
 						Coagulation.put(p.getUniqueId(), 0);

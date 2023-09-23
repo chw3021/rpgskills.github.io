@@ -239,7 +239,7 @@ public class ForSkillsData implements Serializable, Listener{
 				{
 					
 					case "Shockwave":
-					case "Ãæ°ÝÆÄ":{
+					case "ì¶©ê²©íŒŒ":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && DoubleBarrel.get(p.getUniqueId()) < 1){
 								DoubleBarrel.put(p.getUniqueId(), DoubleBarrel.get(p.getUniqueId()) +1);
@@ -283,7 +283,7 @@ public class ForSkillsData implements Serializable, Listener{
 						break;		}
 						
 					case "HoneyMissile":
-					case "Á¡Âø¹Ì»çÀÏ":{
+					case "ì ì°©ë¯¸ì‚¬ì¼":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && HoneyMissile.get(p.getUniqueId())<50){
 								HoneyMissile.put(p.getUniqueId(), HoneyMissile.get(p.getUniqueId()) +1);
@@ -327,7 +327,7 @@ public class ForSkillsData implements Serializable, Listener{
 						}
 						break;		}		
 					case "TNTLauncher":
-					case "TNT¹ß»ç±â":{
+					case "TNTë°œì‚¬ê¸°":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && TNTLauncher.get(p.getUniqueId())<50){
 								TNTLauncher.put(p.getUniqueId(), TNTLauncher.get(p.getUniqueId()) +1);
@@ -371,7 +371,7 @@ public class ForSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "LightningCannon":
-					case "ÃµµÕÆ÷":{
+					case "ì²œë‘¥í¬":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && LightningCannon.get(p.getUniqueId())<50){
 								LightningCannon.put(p.getUniqueId(), LightningCannon.get(p.getUniqueId()) +1);
@@ -415,7 +415,7 @@ public class ForSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "MachineGun":
-					case "±â°üÃÑ":{
+					case "ê¸°ê´€ì´":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && MachineGun.get(p.getUniqueId())<50){
 								MachineGun.put(p.getUniqueId(), MachineGun.get(p.getUniqueId()) +1);
@@ -459,7 +459,7 @@ public class ForSkillsData implements Serializable, Listener{
 						}
 						break;		}				
 					case "Development":
-					case "°³¹ß":{
+					case "ê°œë°œ":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1){
 								Development.put(p.getUniqueId(), Development.get(p.getUniqueId()) +1);
@@ -494,7 +494,7 @@ public class ForSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "RailSMG":
-					case "ÀüÀÚ±â°ü´ÜÃÑ":{
+					case "ì „ìžê¸°ê´€ë‹¨ì´":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && RailSMG.get(p.getUniqueId())<50){
 								RailSMG.put(p.getUniqueId(), RailSMG.get(p.getUniqueId()) +1);
@@ -538,7 +538,7 @@ public class ForSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "SkillPoints":
-					case "½ºÅ³Æ÷ÀÎÆ®":		{			
+					case "ìŠ¤í‚¬í¬ì¸íŠ¸":		{			
 						DoubleBarrel.put(p.getUniqueId(), 0);
 						HoneyMissile.put(p.getUniqueId(), 0);
 						TNTLauncher.put(p.getUniqueId(), 0);

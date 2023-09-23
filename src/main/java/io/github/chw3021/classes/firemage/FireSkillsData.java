@@ -245,7 +245,7 @@ public class FireSkillsData implements Serializable, Listener{
 				{
 					
 					case "Eruption":
-					case "ºÐÈ­±¸":{
+					case "ë¶„í™”êµ¬":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && FlowingLava.get(p.getUniqueId())<50){
 								FlowingLava.put(p.getUniqueId(), FlowingLava.get(p.getUniqueId()) +1);
@@ -290,7 +290,7 @@ public class FireSkillsData implements Serializable, Listener{
 						break;		}
 						
 					case "Ring":
-					case "ºÒÀÇ°í¸®":{
+					case "ë¶ˆì˜ê³ ë¦¬":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Ring.get(p.getUniqueId())<50){
 								Ring.put(p.getUniqueId(), Ring.get(p.getUniqueId()) +1);
@@ -334,7 +334,7 @@ public class FireSkillsData implements Serializable, Listener{
 						}
 						break;		}		
 					case "Fireball":
-					case "È­¿°±¸":{
+					case "í™”ì—¼êµ¬":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Fireball.get(p.getUniqueId())<50){
 								Fireball.put(p.getUniqueId(), Fireball.get(p.getUniqueId()) +1);
@@ -378,7 +378,7 @@ public class FireSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Breath":
-					case "È­¿°ÀÇ¼û°á":{
+					case "í™”ì—¼ì˜ìˆ¨ê²°":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Breath.get(p.getUniqueId())<50){
 								Breath.put(p.getUniqueId(), Breath.get(p.getUniqueId()) +1);
@@ -422,7 +422,7 @@ public class FireSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "AliveFlame":
-					case "»ì¾ÆÀÖ´ÂºÒ²É":{
+					case "ì‚´ì•„ìžˆëŠ”ë¶ˆê½ƒ":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && AliveFlame.get(p.getUniqueId())<50){
 								AliveFlame.put(p.getUniqueId(), AliveFlame.get(p.getUniqueId()) +1);
@@ -466,7 +466,7 @@ public class FireSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "HotBody":
-					case "¿­±â":{
+					case "ì—´ê¸°":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1){
 								HotBody.put(p.getUniqueId(), HotBody.get(p.getUniqueId()) +1);
@@ -501,7 +501,7 @@ public class FireSkillsData implements Serializable, Listener{
 						}
 						break;		}			
 					case "Spread":
-					case "È®»ê":{
+					case "í™•ì‚°":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Spread.get(p.getUniqueId())<50){
 								Spread.put(p.getUniqueId(), Spread.get(p.getUniqueId()) +1);
@@ -545,7 +545,7 @@ public class FireSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "SkillPoints":
-					case "½ºÅ³Æ÷ÀÎÆ®":		{			
+					case "ìŠ¤í‚¬í¬ì¸íŠ¸":		{			
 						FlowingLava.put(p.getUniqueId(), 0);
 						Ring.put(p.getUniqueId(), 0);
 						Fireball.put(p.getUniqueId(), 0);

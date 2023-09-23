@@ -239,7 +239,7 @@ public class WdcSkillsData implements Serializable, Listener{
 				{
 					
 					case "Fangs":
-					case "µ¶»çÀÇ¼Û°÷´Ï":{
+					case "ë…ì‚¬ì˜ì†¡ê³³ë‹ˆ":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Fangs.get(p.getUniqueId())<50){
 								Fangs.put(p.getUniqueId(), Fangs.get(p.getUniqueId()) +1);
@@ -284,7 +284,7 @@ public class WdcSkillsData implements Serializable, Listener{
 						break;		}
 						
 					case "Bosou":
-					case "¼öÈ£ÀÇ·Î¾Æ:º¸¼ö":{
+					case "ìˆ˜í˜¸ì˜ë¡œì•„:ë³´ìˆ˜":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Bosou.get(p.getUniqueId())<10){
 								Bosou.put(p.getUniqueId(), Bosou.get(p.getUniqueId()) +1);
@@ -328,7 +328,7 @@ public class WdcSkillsData implements Serializable, Listener{
 						}
 						break;		}		
 					case "Harvest":
-					case "¼öÈ®":{
+					case "ìˆ˜í™•":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Harvest.get(p.getUniqueId())<50){
 								Harvest.put(p.getUniqueId(), Harvest.get(p.getUniqueId()) +1);
@@ -372,7 +372,7 @@ public class WdcSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Incantation":
-					case "ÁÖ¼ú":{
+					case "ì£¼ìˆ ":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Incantation.get(p.getUniqueId()) < 1){
 								Incantation.put(p.getUniqueId(), Incantation.get(p.getUniqueId()) +1);
@@ -415,7 +415,7 @@ public class WdcSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Wraith":
-					case "¸Á·É":{
+					case "ë§ë ¹":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Wraith.get(p.getUniqueId())<50){
 								Wraith.put(p.getUniqueId(), Wraith.get(p.getUniqueId()) +1);
@@ -459,7 +459,7 @@ public class WdcSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Legba":
-					case "ÁßÀçÀÇ·Î¾Æ:·º¹Ù":{
+					case "ì¤‘ìž¬ì˜ë¡œì•„:ë ‰ë°”":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1){
 								Legba.put(p.getUniqueId(), Legba.get(p.getUniqueId()) +1);
@@ -494,7 +494,7 @@ public class WdcSkillsData implements Serializable, Listener{
 						}
 						break;		}			
 					case "AstralProjection":
-					case "À¯Ã¼ÀÌÅ»":{
+					case "ìœ ì²´ì´íƒˆ":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && AstralProjection.get(p.getUniqueId()) < 1){
 								AstralProjection.put(p.getUniqueId(), AstralProjection.get(p.getUniqueId()) +1);
@@ -537,7 +537,7 @@ public class WdcSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "SkillPoints":
-					case "½ºÅ³Æ÷ÀÎÆ®":		{			
+					case "ìŠ¤í‚¬í¬ì¸íŠ¸":		{			
 						Fangs.put(p.getUniqueId(), 0);
 						Bosou.put(p.getUniqueId(), 0);
 						Harvest.put(p.getUniqueId(), 0);

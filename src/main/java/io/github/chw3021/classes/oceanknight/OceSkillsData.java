@@ -246,7 +246,7 @@ public class OceSkillsData implements Serializable, Listener{
 				{
 					
 					case "WaterSpear":
-					case "¹Ù´ÙÃ¢¼ú":{
+					case "ë°”ë‹¤ì°½ìˆ ":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && WaterSpear.get(p.getUniqueId())<50){
 								WaterSpear.put(p.getUniqueId(), WaterSpear.get(p.getUniqueId()) +1);
@@ -291,7 +291,7 @@ public class OceSkillsData implements Serializable, Listener{
 						break;		}
 						
 					case "WaterBarrier":
-					case "¹°ÀÇ¹æº®":{
+					case "ë¬¼ì˜ë°©ë²½":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && WaterBarrier.get(p.getUniqueId())<50){
 								WaterBarrier.put(p.getUniqueId(), WaterBarrier.get(p.getUniqueId()) +1);
@@ -335,7 +335,7 @@ public class OceSkillsData implements Serializable, Listener{
 						}
 						break;		}		
 					case "Javelin":
-					case "ÅõÃ¢":{
+					case "íˆ¬ì°½":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Javelin.get(p.getUniqueId())<50){
 								Javelin.put(p.getUniqueId(), Javelin.get(p.getUniqueId()) +1);
@@ -379,7 +379,7 @@ public class OceSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "OceanCharge":
-					case "»ï¿¬°Ý":{
+					case "ì‚¼ì—°ê²©":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && OceanCharge.get(p.getUniqueId())<50){
 								OceanCharge.put(p.getUniqueId(), OceanCharge.get(p.getUniqueId()) +1);
@@ -423,7 +423,7 @@ public class OceSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "WetSwing":
-					case "ÇØÇ³Âü":{
+					case "í•´í’ì°¸":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && WetSwing.get(p.getUniqueId())<50){
 								WetSwing.put(p.getUniqueId(), WetSwing.get(p.getUniqueId()) +1);
@@ -467,7 +467,7 @@ public class OceSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Splash":
-					case "¹°º¸¶ó":{
+					case "ë¬¼ë³´ë¼":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1){
 								Splash.put(p.getUniqueId(), Splash.get(p.getUniqueId()) +1);
@@ -502,7 +502,7 @@ public class OceSkillsData implements Serializable, Listener{
 						}
 						break;		}			
 					case "RipCurrent":
-					case "¿ªÁ¶":{
+					case "ì—­ì¡°":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && RipCurrent.get(p.getUniqueId()) < 1){
 								RipCurrent.put(p.getUniqueId(), RipCurrent.get(p.getUniqueId()) +1);
@@ -545,7 +545,7 @@ public class OceSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "SkillPoints":
-					case "½ºÅ³Æ÷ÀÎÆ®":		{			
+					case "ìŠ¤í‚¬í¬ì¸íŠ¸":		{			
 						WaterSpear.put(p.getUniqueId(), 0);
 						WaterBarrier.put(p.getUniqueId(), 0);
 						Javelin.put(p.getUniqueId(), 0);

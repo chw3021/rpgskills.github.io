@@ -245,7 +245,7 @@ public class NobSkillsData implements Serializable, Listener{
 				{
 					
 					case "Assault":
-					case "µ¹°Ý":{
+					case "ëŒê²©":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Assault.get(p.getUniqueId())<50){
 								Assault.put(p.getUniqueId(), Assault.get(p.getUniqueId()) +1);
@@ -290,7 +290,7 @@ public class NobSkillsData implements Serializable, Listener{
 						break;		}
 						
 					case "WaterWheel":
-					case "¹°¹ÙÄû":{
+					case "ë¬¼ë°”í€´":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && WaterWheel.get(p.getUniqueId()) < 50){
 								WaterWheel.put(p.getUniqueId(), WaterWheel.get(p.getUniqueId()) +1);
@@ -334,7 +334,7 @@ public class NobSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Storm":
-					case "ÆøÇ³":{
+					case "í­í’":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Storm.get(p.getUniqueId())<50){
 								Storm.put(p.getUniqueId(), Storm.get(p.getUniqueId()) +1);
@@ -378,7 +378,7 @@ public class NobSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Transition":
-					case "ÀüÀÌ":{
+					case "ì „ì´":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Transition.get(p.getUniqueId())<50){
 								Transition.put(p.getUniqueId(), Transition.get(p.getUniqueId()) +1);
@@ -422,7 +422,7 @@ public class NobSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "DolphinSurf":
-					case "µ¹°í·¡Å¸±â":{
+					case "ëŒê³ ëž˜íƒ€ê¸°":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && DolphinSurf.get(p.getUniqueId())<50){
 								DolphinSurf.put(p.getUniqueId(), DolphinSurf.get(p.getUniqueId()) +1);
@@ -466,7 +466,7 @@ public class NobSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "MarkOfSea":
-					case "¹Ù´ÙÀÇÇ¥½Ä":{
+					case "ë°”ë‹¤ì˜í‘œì‹":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1){
 								MarkOfSea.put(p.getUniqueId(), MarkOfSea.get(p.getUniqueId()) +1);
@@ -501,7 +501,7 @@ public class NobSkillsData implements Serializable, Listener{
 						}
 						break;		}			
 					case "GuardianSupport":
-					case "°¡µð¾ðÁö¿ø´ë":{
+					case "ê°€ë””ì–¸ì§€ì›ëŒ€":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && GuardianSupport.get(p.getUniqueId()) < 20){
 								GuardianSupport.put(p.getUniqueId(), GuardianSupport.get(p.getUniqueId()) +1);
@@ -545,7 +545,7 @@ public class NobSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "SkillPoints":
-					case "½ºÅ³Æ÷ÀÎÆ®":		{			
+					case "ìŠ¤í‚¬í¬ì¸íŠ¸":		{			
 						Assault.put(p.getUniqueId(), 0);
 						WaterWheel.put(p.getUniqueId(), 0);
 						Storm.put(p.getUniqueId(), 0);

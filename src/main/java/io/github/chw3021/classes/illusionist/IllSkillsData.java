@@ -242,7 +242,7 @@ public class IllSkillsData implements Serializable, Listener{
 				{
 					
 					case "Switch":
-					case "¹Ù²ãÄ¡±â":{
+					case "ë°”ê¿”ì¹˜ê¸°":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Switch.get(p.getUniqueId())<50){
 								Switch.put(p.getUniqueId(), Switch.get(p.getUniqueId()) +1);
@@ -286,7 +286,7 @@ public class IllSkillsData implements Serializable, Listener{
 						break;		}
 						
 					case "Trick":
-					case "¼ÓÀÓ¼ö":{
+					case "ì†ìž„ìˆ˜":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Trick.get(p.getUniqueId())<50){
 								Trick.put(p.getUniqueId(), Trick.get(p.getUniqueId()) +1);
@@ -330,7 +330,7 @@ public class IllSkillsData implements Serializable, Listener{
 						}
 						break;		}		
 					case "JackoLantern":
-					case "Àè¿À·£ÅÏ":{
+					case "ìž­ì˜¤ëžœí„´":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && JackoLantern.get(p.getUniqueId())<50){
 								JackoLantern.put(p.getUniqueId(), JackoLantern.get(p.getUniqueId()) +1);
@@ -374,7 +374,7 @@ public class IllSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Paradox":
-					case "¿ª¼³":{
+					case "ì—­ì„¤":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Paradox.get(p.getUniqueId()) < 1){
 								Paradox.put(p.getUniqueId(), Paradox.get(p.getUniqueId()) +1);
@@ -417,7 +417,7 @@ public class IllSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "FakeDoll":
-					case "Çã¼ö¾Æºñ":{
+					case "í—ˆìˆ˜ì•„ë¹„":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && FakeDoll.get(p.getUniqueId()) < 1){
 								FakeDoll.put(p.getUniqueId(), FakeDoll.get(p.getUniqueId()) +1);
@@ -460,7 +460,7 @@ public class IllSkillsData implements Serializable, Listener{
 						}
 						break;		}				
 					case "Surprise":
-					case "±ôÂ¦¼î":{
+					case "ê¹œì§ì‡¼":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1){
 								Surprise.put(p.getUniqueId(), Surprise.get(p.getUniqueId()) +1);
@@ -495,7 +495,7 @@ public class IllSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Distortion":
-					case "¿Ö°î":{
+					case "ì™œê³¡":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Distortion.get(p.getUniqueId())<50){
 								Distortion.put(p.getUniqueId(), Distortion.get(p.getUniqueId()) +1);
@@ -539,7 +539,7 @@ public class IllSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "SkillPoints":
-					case "½ºÅ³Æ÷ÀÎÆ®":		{			
+					case "ìŠ¤í‚¬í¬ì¸íŠ¸":		{			
 						Switch.put(p.getUniqueId(), 0);
 						Trick.put(p.getUniqueId(), 0);
 						JackoLantern.put(p.getUniqueId(), 0);

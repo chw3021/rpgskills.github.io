@@ -271,7 +271,7 @@ public class Proficiency implements Serializable, Listener{
 		}
 		if(getproexp(p) >= 29315 && getproexp(p) < 155015 && limit.get(p.getUniqueId(), playerclass.get(p.getUniqueId())) <1) {
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + "Ã¹¹øÂ° ÇÑ°è µ¹ÆÄ") , ChatColor.BOLD +(ChatColor.GOLD +"½ºÅ³µéÀÌ Çâ»óµÇ¾ú½À´Ï´Ù"), 20, 60, 20);
+				p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + "ì²«ë²ˆì§¸ í•œê³„ ëŒíŒŒ") , ChatColor.BOLD +(ChatColor.GOLD +"ìŠ¤í‚¬ë“¤ì´ í–¥ìƒë˜ì—ˆìŠµë‹ˆë‹¤"), 20, 60, 20);
 			}
 			else {
 				p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + "First Limit Broken") , ChatColor.BOLD +(ChatColor.GOLD +"Your skills have improved"), 20, 60, 20);
@@ -283,7 +283,7 @@ public class Proficiency implements Serializable, Listener{
 		}
 		if(getproexp(p) >= 155015 && limit.get(p.getUniqueId(), playerclass.get(p.getUniqueId())) <2) {
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + "µÎ¹øÂ° ÇÑ°è µ¹ÆÄ") , ChatColor.BOLD +(ChatColor.GOLD +"½ºÅ³µéÀÌ Çâ»óµÇ¾ú½À´Ï´Ù"), 20, 60, 20);
+				p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + "ë‘ë²ˆì§¸ í•œê³„ ëŒíŒŒ") , ChatColor.BOLD +(ChatColor.GOLD +"ìŠ¤í‚¬ë“¤ì´ í–¥ìƒë˜ì—ˆìŠµë‹ˆë‹¤"), 20, 60, 20);
 			}
 			else {
 				p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + "Second Limit Broken") , ChatColor.BOLD +(ChatColor.GOLD +"Your skills have improved"), 20, 60, 20);

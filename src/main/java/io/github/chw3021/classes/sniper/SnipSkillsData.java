@@ -256,7 +256,7 @@ public class SnipSkillsData implements Serializable, Listener{
 				{
 					
 					case "Camouflage":
-					case "ÀºÆó":{
+					case "ì€í":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Camouflage.get(p.getUniqueId()) < 1){
 								Camouflage.put(p.getUniqueId(), Camouflage.get(p.getUniqueId()) +1);
@@ -300,7 +300,7 @@ public class SnipSkillsData implements Serializable, Listener{
 						break;		}
 						
 					case "HeadShot":
-					case "Çìµå¼¦":{
+					case "í—¤ë“œìƒ·":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1){
 								HeadShot.put(p.getUniqueId(), HeadShot.get(p.getUniqueId()) +1);
@@ -335,7 +335,7 @@ public class SnipSkillsData implements Serializable, Listener{
 						}
 						break;		}		
 					case "Flare":
-					case "Á¶¸íÁö·Ú":{
+					case "ì¡°ëª…ì§€ë¢°":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Flare.get(p.getUniqueId()) < 1){
 								Flare.put(p.getUniqueId(), Flare.get(p.getUniqueId()) +1);
@@ -378,7 +378,7 @@ public class SnipSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "FlashBomb":
-					case "¼¶±¤Åº":{
+					case "ì„¬ê´‘íƒ„":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && FlashBomb.get(p.getUniqueId())<50){
 								FlashBomb.put(p.getUniqueId(), FlashBomb.get(p.getUniqueId()) +1);
@@ -422,7 +422,7 @@ public class SnipSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "AirStrike":
-					case "°ø½À":{
+					case "ê³µìŠµ":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && AirStrike.get(p.getUniqueId())<50){
 								AirStrike.put(p.getUniqueId(), AirStrike.get(p.getUniqueId()) +1);
@@ -466,7 +466,7 @@ public class SnipSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "ArmourPiercingArrow":
-					case "Ã¶°©È­»ì":{
+					case "ì² ê°‘í™”ì‚´":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && ArmourPiercingArrow.get(p.getUniqueId())<50){
 								ArmourPiercingArrow.put(p.getUniqueId(), ArmourPiercingArrow.get(p.getUniqueId()) +1);
@@ -510,7 +510,7 @@ public class SnipSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Remodeling":
-					case "°³Á¶":{
+					case "ê°œì¡°":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Remodeling.get(p.getUniqueId())<50){
 								Remodeling.put(p.getUniqueId(), Remodeling.get(p.getUniqueId()) +1);
@@ -554,7 +554,7 @@ public class SnipSkillsData implements Serializable, Listener{
 						}
 						break;		}			
 					case "Rope":
-					case "¹åÁÙÅ¸±â":{
+					case "ë°§ì¤„íƒ€ê¸°":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Rope.get(p.getUniqueId()) < 1){
 								Rope.put(p.getUniqueId(), Rope.get(p.getUniqueId()) +1);
@@ -597,7 +597,7 @@ public class SnipSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "SkillPoints":	
-					case "½ºÅ³Æ÷ÀÎÆ®":	{			
+					case "ìŠ¤í‚¬í¬ì¸íŠ¸":	{			
 						Camouflage.put(p.getUniqueId(), 0);
 						AirStrike.put(p.getUniqueId(), 0);
 						HeadShot.put(p.getUniqueId(), 0);

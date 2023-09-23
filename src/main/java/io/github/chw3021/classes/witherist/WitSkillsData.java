@@ -240,7 +240,7 @@ public class WitSkillsData implements Serializable, Listener{
 				{
 					
 					case "WitherScythe":
-					case "±¸¼ÓÀÇ³´":{
+					case "êµ¬ì†ì˜ë‚«":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && WitherScythe.get(p.getUniqueId())<50){
 								WitherScythe.put(p.getUniqueId(), WitherScythe.get(p.getUniqueId()) +1);
@@ -285,7 +285,7 @@ public class WitSkillsData implements Serializable, Listener{
 						break;		}
 						
 					case "Hover":
-					case "ºÎÀ¯":{
+					case "ë¶€ìœ ":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Hover.get(p.getUniqueId()) < 1){
 								Hover.put(p.getUniqueId(), Hover.get(p.getUniqueId()) +1);
@@ -328,7 +328,7 @@ public class WitSkillsData implements Serializable, Listener{
 						}
 						break;		}		
 					case "WitherSkull":
-					case "À§´õÇØ°ñ":{
+					case "ìœ„ë”í•´ê³¨":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && WitherSkull.get(p.getUniqueId())<50){
 								WitherSkull.put(p.getUniqueId(), WitherSkull.get(p.getUniqueId()) +1);
@@ -372,7 +372,7 @@ public class WitSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "ReapingHook":
-					case "¾îµÒÀÇ°¥°í¸®":{
+					case "ì–´ë‘ ì˜ê°ˆê³ ë¦¬":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && ReapingHook.get(p.getUniqueId()) < 1){
 								ReapingHook.put(p.getUniqueId(), ReapingHook.get(p.getUniqueId()) +1);
@@ -415,7 +415,7 @@ public class WitSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Roses":
-					case "À§´õÀå¹Ì":{
+					case "ìœ„ë”ìž¥ë¯¸":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Roses.get(p.getUniqueId())<50){
 								Roses.put(p.getUniqueId(), Roses.get(p.getUniqueId()) +1);
@@ -459,7 +459,7 @@ public class WitSkillsData implements Serializable, Listener{
 						}
 						break;		}				
 					case "Witherize":
-					case "À§´õÈ­":{
+					case "ìœ„ë”í™”":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1){
 								Witherize.put(p.getUniqueId(), Witherize.get(p.getUniqueId()) +1);
@@ -494,7 +494,7 @@ public class WitSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Curse":
-					case "ÀúÁÖ":{
+					case "ì €ì£¼":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Curse.get(p.getUniqueId())<50){
 								Curse.put(p.getUniqueId(), Curse.get(p.getUniqueId()) +1);
@@ -538,7 +538,7 @@ public class WitSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "SkillPoints":
-					case "½ºÅ³Æ÷ÀÎÆ®":		{			
+					case "ìŠ¤í‚¬í¬ì¸íŠ¸":		{			
 						WitherScythe.put(p.getUniqueId(), 0);
 						Hover.put(p.getUniqueId(), 0);
 						WitherSkull.put(p.getUniqueId(), 0);

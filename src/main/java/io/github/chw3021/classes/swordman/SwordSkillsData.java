@@ -247,7 +247,7 @@ public class SwordSkillsData implements Serializable, Listener{
 				{
 					
 					case "SwordDrive":
-					case "ÁöÁø":{
+					case "ì§€ì§„":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && SwordDrive.get(p.getUniqueId())<50){
 								SwordDrive.put(p.getUniqueId(), SwordDrive.get(p.getUniqueId()) +1);
@@ -293,7 +293,7 @@ public class SwordSkillsData implements Serializable, Listener{
 						break;		}
 						
 					case "CriticalDraw":
-					case "¹ßµµ":{
+					case "ë°œë„":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && CriticalDraw.get(p.getUniqueId())<50){
 								CriticalDraw.put(p.getUniqueId(), CriticalDraw.get(p.getUniqueId()) +1);
@@ -338,7 +338,7 @@ public class SwordSkillsData implements Serializable, Listener{
 						ssg.SwordSkillsinv(p);
 						break;		}		
 					case "FlashyRush":
-					case "¼¶°Ý":{
+					case "ì„¬ê²©":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && FlashyRush.get(p.getUniqueId())<50){
 								FlashyRush.put(p.getUniqueId(), FlashyRush.get(p.getUniqueId()) +1);
@@ -383,7 +383,7 @@ public class SwordSkillsData implements Serializable, Listener{
 						ssg.SwordSkillsinv(p);
 						break;		}
 					case "Strike":
-					case "ÀÏ°Ý":{
+					case "ì¼ê²©":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Strike.get(p.getUniqueId())<50){
 								Strike.put(p.getUniqueId(), Strike.get(p.getUniqueId()) +1);
@@ -428,7 +428,7 @@ public class SwordSkillsData implements Serializable, Listener{
 						ssg.SwordSkillsinv(p);
 						break;		}
 					case "Swoop":
-					case "±Þ½À":{
+					case "ê¸‰ìŠµ":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Swoop.get(p.getUniqueId())<50){
 								Swoop.put(p.getUniqueId(), Swoop.get(p.getUniqueId()) +1);
@@ -473,7 +473,7 @@ public class SwordSkillsData implements Serializable, Listener{
 						ssg.SwordSkillsinv(p);
 						break;		}
 					case "Guard":
-					case "¸·±â":{
+					case "ë§‰ê¸°":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Guard.get(p.getUniqueId())<10){
 								Guard.put(p.getUniqueId(), Guard.get(p.getUniqueId()) +1);
@@ -518,7 +518,7 @@ public class SwordSkillsData implements Serializable, Listener{
 						ssg.SwordSkillsinv(p);
 						break;		}				
 					case "Swordsmanship":
-					case "°Ë¼ú":{
+					case "ê²€ìˆ ":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1){
 								Dualbladed.put(p.getUniqueId(), Dualbladed.get(p.getUniqueId()) +1);
@@ -554,7 +554,7 @@ public class SwordSkillsData implements Serializable, Listener{
 						ssg.SwordSkillsinv(p);
 						break;		}
 					case "RisingBlades":
-					case "¿Ã·Áº£±â":{
+					case "ì˜¬ë ¤ë² ê¸°":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Rising.get(p.getUniqueId())<50){
 								Rising.put(p.getUniqueId(), Rising.get(p.getUniqueId()) +1);
@@ -599,7 +599,7 @@ public class SwordSkillsData implements Serializable, Listener{
 						ssg.SwordSkillsinv(p);
 						break;		}
 					case "SkillPoints":
-					case "½ºÅ³Æ÷ÀÎÆ®":		{			
+					case "ìŠ¤í‚¬í¬ì¸íŠ¸":		{			
 						SwordDrive.put(p.getUniqueId(), 0);
 						CriticalDraw.put(p.getUniqueId(), 0);
 						FlashyRush.put(p.getUniqueId(), 0);

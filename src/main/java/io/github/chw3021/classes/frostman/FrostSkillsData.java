@@ -239,7 +239,7 @@ public class FrostSkillsData implements Serializable, Listener{
 				{
 					
 					case "Crack":
-					case "±Õ¿­":{
+					case "ê· ì—´":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Crack.get(p.getUniqueId())<50){
 								Crack.put(p.getUniqueId(), Crack.get(p.getUniqueId()) +1);
@@ -285,7 +285,7 @@ public class FrostSkillsData implements Serializable, Listener{
 						break;		}
 						
 					case "Frostbite":
-					case "µ¿»ó":{
+					case "ë™ìƒ":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1){
 								Frostbite.put(p.getUniqueId(), Frostbite.get(p.getUniqueId()) +1);
@@ -320,7 +320,7 @@ public class FrostSkillsData implements Serializable, Listener{
 						}
 						break;		}		
 					case "IcicleShot":
-					case "°íµå¸§È­»ì":{
+					case "ê³ ë“œë¦„í™”ì‚´":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && IcicleShot.get(p.getUniqueId())<50){
 								IcicleShot.put(p.getUniqueId(), IcicleShot.get(p.getUniqueId()) +1);
@@ -365,7 +365,7 @@ public class FrostSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "IceSpikes":
-					case "°Å´ë°íµå¸§":{
+					case "ê±°ëŒ€ê³ ë“œë¦„":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && IceSpikes.get(p.getUniqueId())<50){
 								IceSpikes.put(p.getUniqueId(), IceSpikes.get(p.getUniqueId()) +1);
@@ -410,7 +410,7 @@ public class FrostSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "SnowBreeze":
-					case "´«¹Ù¶÷":{
+					case "ëˆˆë°”ëžŒ":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && SnowBreeze.get(p.getUniqueId())<1){
 								SnowBreeze.put(p.getUniqueId(), SnowBreeze.get(p.getUniqueId()) +1);
@@ -453,7 +453,7 @@ public class FrostSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "Hailstones":
-					case "¿ì¹Ú":{
+					case "ìš°ë°•":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Hailstones.get(p.getUniqueId())<50){
 								Hailstones.put(p.getUniqueId(), Hailstones.get(p.getUniqueId()) +1);
@@ -498,7 +498,7 @@ public class FrostSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "FrozenCrystal":
-					case "¾óÀ½¼öÁ¤":{
+					case "ì–¼ìŒìˆ˜ì •":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && FrozenCrystal.get(p.getUniqueId())<50){
 								FrozenCrystal.put(p.getUniqueId(), FrozenCrystal.get(p.getUniqueId()) +1);
@@ -543,7 +543,7 @@ public class FrostSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "SkillPoints":
-					case "½ºÅ³Æ÷ÀÎÆ®":		{			
+					case "ìŠ¤í‚¬í¬ì¸íŠ¸":		{			
 						Crack.put(p.getUniqueId(), 0);
 						Frostbite.put(p.getUniqueId(), 0);
 						IcicleShot.put(p.getUniqueId(), 0);

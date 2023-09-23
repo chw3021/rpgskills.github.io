@@ -204,7 +204,7 @@ public class Angskills extends Pak implements Serializable, Listener{
 						SkillBuilder bd = new SkillBuilder()
 								.player(p)
 								.cooldown(sec)
-								.kname("πÃ≥¢")
+								.kname("ÎØ∏ÎÅº")
 								.ename("Bait")
 								.slot(0)
 								.hm(pncooldown)
@@ -321,7 +321,7 @@ public class Angskills extends Pak implements Serializable, Listener{
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
 						.cooldown(sec)
-						.kname("≥¨Ω√")
+						.kname("ÎÇöÏãú")
 						.ename("Fishing")
 						.slot(1)
 						.hm(rscooldown)
@@ -417,7 +417,7 @@ public class Angskills extends Pak implements Serializable, Listener{
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
 						.cooldown(sec)
-						.kname("ªÍ»£ª—∏Æ")
+						.kname("ÏÇ∞Ìò∏ÎøåÎ¶¨")
 						.ename("CoralRoots")
 						.slot(2)
 						.hm(prcooldown)
@@ -736,7 +736,7 @@ public class Angskills extends Pak implements Serializable, Listener{
 		            			d.setCancelled(true);
 		            			p.playSound(p, Sound.BLOCK_CORAL_BLOCK_HIT, 1f, 0.5f);
 		                    	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				                    p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(org.bukkit.ChatColor.YELLOW +"<ªÍ»£ πÊ∫Æ>").create());
+				                    p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(org.bukkit.ChatColor.YELLOW +"<ÏÇ∞Ìò∏ Î∞©Î≤Ω>").create());
 		                    	}
 		                    	else {
 				                    p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(org.bukkit.ChatColor.YELLOW +"<Coral Prison>").create());
@@ -751,7 +751,7 @@ public class Angskills extends Pak implements Serializable, Listener{
         			d.setCancelled(true);
         			p.playSound(p, Sound.BLOCK_CORAL_BLOCK_HIT, 1f, 0.5f);
                 	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                    p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(org.bukkit.ChatColor.YELLOW +"<ªÍ»£ πÊ∫Æ>").create());
+	                    p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(org.bukkit.ChatColor.YELLOW +"<ÏÇ∞Ìò∏ Î∞©Î≤Ω>").create());
                 	}
                 	else {
 	                    p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(org.bukkit.ChatColor.YELLOW +"<Coral Prison>").create());
@@ -787,7 +787,7 @@ public class Angskills extends Pak implements Serializable, Listener{
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
 						.cooldown(sec)
-						.kname("ªÍ»£¡÷")
+						.kname("ÏÇ∞Ìò∏Ï£º")
 						.ename("CoralLiquor")
 						.slot(3)
 						.hm(jmcooldown)
@@ -963,7 +963,7 @@ public class Angskills extends Pak implements Serializable, Listener{
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
 						.cooldown(sec)
-						.kname("¿Ω¡÷∞°π´")
+						.kname("ÏùåÏ£ºÍ∞ÄÎ¨¥")
 						.ename("DrunkenDance")
 						.slot(4)
 						.hm(thcooldown)
@@ -1203,7 +1203,7 @@ public class Angskills extends Pak implements Serializable, Listener{
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
 						.cooldown(sec)
-						.kname("∏∏º±")
+						.kname("ÎßåÏÑ†")
 						.ename("Fully Load")
 						.slot(6)
 						.hm(aultcooldown)
@@ -1464,7 +1464,7 @@ public class Angskills extends Pak implements Serializable, Listener{
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
 						.cooldown(sec)
-						.kname("π∞æ∆¿œ√º")
+						.kname("Î¨ºÏïÑÏùºÏ≤¥")
 						.ename("Self and Other Oneness")
 						.slot(7)
 						.hm(ault2cooldown)
@@ -1700,6 +1700,3 @@ public class Angskills extends Pak implements Serializable, Listener{
 		}
 	}
 }
-
-
-

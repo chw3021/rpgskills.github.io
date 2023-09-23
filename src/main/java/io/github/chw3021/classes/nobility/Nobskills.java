@@ -242,7 +242,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 			            if(!(timer < 0)) // if timer is still more then 0 or 0
 			            {
 			            	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			            		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("ÀüÀÌ Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
+			            		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("ì „ì´ ìž¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ì´ " + String.valueOf(Math.round(timer*10)/10.0) + "ì´ˆ ë‚¨ì•˜ìŠµë‹ˆë‹¤").create());
 			            	}
 			            	else {
 				            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Transition").create());
@@ -972,7 +972,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
                 if(!(timer < 0)) // if timer is still more then 0 or 0
                 {
                 	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-                		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("°¡µð¾ðÀÇÀúÁÖ Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
+                		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("ê°€ë””ì–¸ì˜ì €ì£¼ ìž¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ì´ " + String.valueOf(Math.round(timer*10)/10.0) + "ì´ˆ ë‚¨ì•˜ìŠµë‹ˆë‹¤").create());
                 	}
                 	else {
                         p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use GuardianCurse").create());
@@ -1236,7 +1236,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 		                if(!(timer < 0)) // if timer is still more then 0 or 0
 		                {
 		                	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		                		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("µ¹°í·¡Å¸±â Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
+		                		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("ëŒê³ ëž˜íƒ€ê¸° ìž¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ì´ " + String.valueOf(Math.round(timer*10)/10.0) + "ì´ˆ ë‚¨ì•˜ìŠµë‹ˆë‹¤").create());
 		                	}
 		                	else {
 			                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use DolphinSurf").create());
@@ -1394,7 +1394,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 		                if(!(timer < 0)) // if timer is still more then 0 or 0
 		                {
 		                	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		                		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("µ¹°Ý Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
+		                		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("ëŒê²© ìž¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ì´ " + String.valueOf(Math.round(timer*10)/10.0) + "ì´ˆ ë‚¨ì•˜ìŠµë‹ˆë‹¤").create());
 		                	}
 		                	else {
 			                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Assault").create());
@@ -1869,7 +1869,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 	                if(!(timer < 0)) // if timer is still more then 0 or 0
 	                {
 	                	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("¹°¹ÙÄû Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
+	                		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("ë¬¼ë°”í€´ ìž¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ì´ " + String.valueOf(Math.round(timer*10)/10.0) + "ì´ˆ ë‚¨ì•˜ìŠµë‹ˆë‹¤").create());
 	                	}
 	                	else {
 		                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use WaterWheel").create());
@@ -2379,7 +2379,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 	    					},j.get()+30);
 	                	}
 	                	marked.removeAll(p.getUniqueId());
-					}, p, sec, "ÆøÇ³", "Storm", eccooldown);
+					}, p, sec, "í­í’", "Storm", eccooldown);
 					
 		    					
 				} 
@@ -2514,7 +2514,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 		                    }
 		                }
 		            }, 40); 
-				}, p, 70/Proficiency.getpro(p)*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d), "¹Ù´Ù¼Ò¿ëµ¹ÀÌ", "Whirlpool",aultcooldown);
+				}, p, 70/Proficiency.getpro(p)*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d), "ë°”ë‹¤ì†Œìš©ëŒì´", "Whirlpool",aultcooldown);
 				
 			}	
 			
@@ -2897,7 +2897,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 	    					}, 200);
 			            }
 					}, 20);
-				}, p, 75*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d), "¹Ù´Ù´ëÇàÁø", "OceanMarch",ault2cooldown);
+				}, p, 75*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d), "ë°”ë‹¤ëŒ€í–‰ì§„", "OceanMarch",ault2cooldown);
 			}	
 			
     }
@@ -3084,6 +3084,3 @@ public class Nobskills extends Pak implements Serializable, Listener {
 
 	
 }
-
-
-

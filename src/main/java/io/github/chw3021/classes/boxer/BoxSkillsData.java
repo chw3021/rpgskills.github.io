@@ -249,7 +249,7 @@ public class BoxSkillsData implements Serializable, Listener{
 				{
 					
 					case "DempseyRoll":
-					case "µ©ÇÁ½Ã·Ñ":
+					case "ëŽ€í”„ì‹œë¡¤":
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && DempseyRoll.get(p.getUniqueId())<50){
 								DempseyRoll.put(p.getUniqueId(), DempseyRoll.get(p.getUniqueId()) +1);
@@ -294,7 +294,7 @@ public class BoxSkillsData implements Serializable, Listener{
 						break;		
 						
 					case "Training":
-					case "´Ü·Ã":
+					case "ë‹¨ë ¨":
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1){
 								Training.put(p.getUniqueId(), Training.get(p.getUniqueId()) +1);
@@ -329,7 +329,7 @@ public class BoxSkillsData implements Serializable, Listener{
 						}
 						break;			
 					case "Straight":
-					case "ºØ±Ç":
+					case "ë¶•ê¶Œ":
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Straight.get(p.getUniqueId())<50){
 								Straight.put(p.getUniqueId(), Straight.get(p.getUniqueId()) +1);
@@ -374,7 +374,7 @@ public class BoxSkillsData implements Serializable, Listener{
 						}
 						break;		
 					case "BodyBlow":
-					case "Ã¶»ê°í":
+					case "ì² ì‚°ê³ ":
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && BodyBlow.get(p.getUniqueId())<50){
 								BodyBlow.put(p.getUniqueId(), BodyBlow.get(p.getUniqueId()) +1);
@@ -418,7 +418,7 @@ public class BoxSkillsData implements Serializable, Listener{
 						}
 						break;		
 					case "Counter":
-					case "¹Ý°Ý":
+					case "ë°˜ê²©":
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Counter.get(p.getUniqueId())<50){
 								Counter.put(p.getUniqueId(), Counter.get(p.getUniqueId()) +1);
@@ -462,7 +462,7 @@ public class BoxSkillsData implements Serializable, Listener{
 						}
 						break;		
 					case "FlikerJab":
-					case "ÁúÇ³±Ç":
+					case "ì§ˆí’ê¶Œ":
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Jab.get(p.getUniqueId())<50){
 								Jab.put(p.getUniqueId(), Jab.get(p.getUniqueId()) +1);
@@ -506,7 +506,7 @@ public class BoxSkillsData implements Serializable, Listener{
 						}
 						break;					
 					case "Rest":
-					case "½ÉÈ£Èí":
+					case "ì‹¬í˜¸í¡":
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Rest.get(p.getUniqueId()) < 1){
 								Rest.put(p.getUniqueId(), Rest.get(p.getUniqueId()) +1);
@@ -549,7 +549,7 @@ public class BoxSkillsData implements Serializable, Listener{
 						}
 						break;		
 					case "Adrenaline":
-					case "¾Æµå·¹³¯¸°":
+					case "ì•„ë“œë ˆë‚ ë¦°":
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Parrying.get(p.getUniqueId()) < 1){
 								Parrying.put(p.getUniqueId(), Parrying.get(p.getUniqueId()) +1);
@@ -592,7 +592,7 @@ public class BoxSkillsData implements Serializable, Listener{
 						}
 						break;		
 					case "SkillPoints":		
-					case "½ºÅ³Æ÷ÀÎÆ®":		
+					case "ìŠ¤í‚¬í¬ì¸íŠ¸":		
 						DempseyRoll.put(p.getUniqueId(), 0);
 						Training.put(p.getUniqueId(), 0);
 						Straight.put(p.getUniqueId(), 0);

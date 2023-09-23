@@ -65,18 +65,18 @@ public class Classgui implements Serializable {
 		switch (playerclass.get(p.getUniqueId())) {
 		case 0: {
 			if (p.getLocale().equalsIgnoreCase("ko_kr")) {
-				if (Proficiency.getpro(p) == 1) { // ´ëÁö
-					p.addScoreboardTag(ChatColor.AQUA + "°Ë°´");
-					p.setDisplayName(ChatColor.AQUA + "[[°Ë°´]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.AQUA + "[[°Ë°´]]" + p.getPlayerListName());
+				if (Proficiency.getpro(p) == 1) { // ëŒ€ì§€
+					p.addScoreboardTag(ChatColor.AQUA + "ê²€ê°");
+					p.setDisplayName(ChatColor.AQUA + "[[ê²€ê°]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.AQUA + "[[ê²€ê°]]" + p.getPlayerListName());
 				} else if (Proficiency.getpro(p) == 2) {
-					p.addScoreboardTag(ChatColor.AQUA + "°Ë±Ø");
-					p.setDisplayName(ChatColor.AQUA + "[[[°Ë±Ø]]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.AQUA + "[[[°Ë±Ø]]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.AQUA + "ê²€ê·¹");
+					p.setDisplayName(ChatColor.AQUA + "[[[ê²€ê·¹]]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.AQUA + "[[[ê²€ê·¹]]]" + p.getPlayerListName());
 				} else {
-					p.addScoreboardTag(ChatColor.AQUA + "°Ë»ç");
-					p.setDisplayName(ChatColor.AQUA + "[°Ë»ç]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.AQUA + "[°Ë»ç]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.AQUA + "ê²€ì‚¬");
+					p.setDisplayName(ChatColor.AQUA + "[ê²€ì‚¬]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.AQUA + "[ê²€ì‚¬]" + p.getPlayerListName());
 				}
 				break;
 			} else {
@@ -97,19 +97,19 @@ public class Classgui implements Serializable {
 			break;
 		}
 		case 1: {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) { // ´ëÁö, ºÒ
+			if (p.getLocale().equalsIgnoreCase("ko_kr")) { // ëŒ€ì§€, ë¶ˆ
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-					p.addScoreboardTag(ChatColor.DARK_RED + "ÇĞ»ìÀÚ");
-					p.setDisplayName(ChatColor.DARK_RED + "[[ÇĞ»ìÀÚ]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.DARK_RED + "[[ÇĞ»ìÀÚ]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.DARK_RED + "í•™ì‚´ì");
+					p.setDisplayName(ChatColor.DARK_RED + "[[í•™ì‚´ì]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.DARK_RED + "[[í•™ì‚´ì]]" + p.getPlayerListName());
 				} else if (Proficiency.getpro(p) >= 2) {
-					p.addScoreboardTag(ChatColor.DARK_RED + "¼¶¸ê±Í");
-					p.setDisplayName(ChatColor.DARK_RED + "[[[¼¶¸ê±Í]]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.DARK_RED + "[[[¼¶¸ê±Í]]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.DARK_RED + "ì„¬ë©¸ê·€");
+					p.setDisplayName(ChatColor.DARK_RED + "[[[ì„¬ë©¸ê·€]]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.DARK_RED + "[[[ì„¬ë©¸ê·€]]]" + p.getPlayerListName());
 				} else {
-					p.addScoreboardTag(ChatColor.DARK_RED + "±¤Àü»ç");
-					p.setDisplayName(ChatColor.DARK_RED + "[±¤Àü»ç]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.DARK_RED + "[±¤Àü»ç]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.DARK_RED + "ê´‘ì „ì‚¬");
+					p.setDisplayName(ChatColor.DARK_RED + "[ê´‘ì „ì‚¬]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.DARK_RED + "[ê´‘ì „ì‚¬]" + p.getPlayerListName());
 				}
 			} else {
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
@@ -129,19 +129,19 @@ public class Classgui implements Serializable {
 			break;
 		}
 		case 2: {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ¹Ù¶÷
+			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ë°”ëŒ
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-					p.addScoreboardTag(ChatColor.GREEN + "»ç³É±Í");
-					p.setDisplayName(ChatColor.GREEN + "[[»ç³É±Í]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.GREEN + "[[»ç³É±Í]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.GREEN + "ì‚¬ëƒ¥ê·€");
+					p.setDisplayName(ChatColor.GREEN + "[[ì‚¬ëƒ¥ê·€]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.GREEN + "[[ì‚¬ëƒ¥ê·€]]" + p.getPlayerListName());
 				} else if (Proficiency.getpro(p) >= 2) {
-					p.addScoreboardTag(ChatColor.GREEN + "ÁıÇàÀÚ");
-					p.setDisplayName(ChatColor.GREEN + "[[[ÁıÇàÀÚ]]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.GREEN + "[[[ÁıÇàÀÚ]]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.GREEN + "ì§‘í–‰ì");
+					p.setDisplayName(ChatColor.GREEN + "[[[ì§‘í–‰ì]]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.GREEN + "[[[ì§‘í–‰ì]]]" + p.getPlayerListName());
 				} else {
-					p.addScoreboardTag(ChatColor.GREEN + "»ç³É²Û");
-					p.setDisplayName(ChatColor.GREEN + "[»ç³É²Û]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.GREEN + "[»ç³É²Û]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.GREEN + "ì‚¬ëƒ¥ê¾¼");
+					p.setDisplayName(ChatColor.GREEN + "[ì‚¬ëƒ¥ê¾¼]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.GREEN + "[ì‚¬ëƒ¥ê¾¼]" + p.getPlayerListName());
 				}
 			} else {
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
@@ -161,19 +161,19 @@ public class Classgui implements Serializable {
 			break;
 		}
 		case 3: {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ¹ø°³,ºÒ
+			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ë²ˆê°œ,ë¶ˆ
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-					p.addScoreboardTag(ChatColor.WHITE + "¼öÈ£ÀÚ");
-					p.setDisplayName(ChatColor.WHITE + "[[¼öÈ£ÀÚ]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.WHITE + "[[¼öÈ£ÀÚ]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.WHITE + "ìˆ˜í˜¸ì");
+					p.setDisplayName(ChatColor.WHITE + "[[ìˆ˜í˜¸ì]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.WHITE + "[[ìˆ˜í˜¸ì]]" + p.getPlayerListName());
 				} else if (Proficiency.getpro(p) >= 2) {
-					p.addScoreboardTag(ChatColor.WHITE + "±¸¿øÀÚ");
-					p.setDisplayName(ChatColor.WHITE + "[[[±¸¿øÀÚ]]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.WHITE + "[[[±¸¿øÀÚ]]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.WHITE + "êµ¬ì›ì");
+					p.setDisplayName(ChatColor.WHITE + "[[[êµ¬ì›ì]]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.WHITE + "[[[êµ¬ì›ì]]]" + p.getPlayerListName());
 				} else {
-					p.addScoreboardTag(ChatColor.WHITE + "¼º±â»ç");
-					p.setDisplayName(ChatColor.WHITE + "[¼º±â»ç]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.WHITE + "[¼º±â»ç]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.WHITE + "ì„±ê¸°ì‚¬");
+					p.setDisplayName(ChatColor.WHITE + "[ì„±ê¸°ì‚¬]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.WHITE + "[ì„±ê¸°ì‚¬]" + p.getPlayerListName());
 				}
 				break;
 			}
@@ -193,19 +193,19 @@ public class Classgui implements Serializable {
 			break;
 		}
 		case 4: {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ¹Ù¶÷
+			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ë°”ëŒ
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-					p.addScoreboardTag(ChatColor.getByChar("336600") + "¸í»ç¼ö");
-					p.setDisplayName(ChatColor.getByChar("336600") + "[[¸í»ç¼ö]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.getByChar("336600") + "[[¸í»ç¼ö]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.getByChar("336600") + "ëª…ì‚¬ìˆ˜");
+					p.setDisplayName(ChatColor.getByChar("336600") + "[[ëª…ì‚¬ìˆ˜]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.getByChar("336600") + "[[ëª…ì‚¬ìˆ˜]]" + p.getPlayerListName());
 				} else if (Proficiency.getpro(p) >= 2) {
-					p.addScoreboardTag(ChatColor.getByChar("336600") + "µ¶¾È");
-					p.setDisplayName(ChatColor.getByChar("336600") + "[[[µ¶¾È]]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.getByChar("336600") + "[[[µ¶¾È]]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.getByChar("336600") + "ë…ì•ˆ");
+					p.setDisplayName(ChatColor.getByChar("336600") + "[[[ë…ì•ˆ]]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.getByChar("336600") + "[[[ë…ì•ˆ]]]" + p.getPlayerListName());
 				} else {
-					p.addScoreboardTag(ChatColor.getByChar("336600") + "Àú°İ¼ö");
-					p.setDisplayName(ChatColor.getByChar("336600") + "[Àú°İ¼ö]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.getByChar("336600") + "[Àú°İ¼ö]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.getByChar("336600") + "ì €ê²©ìˆ˜");
+					p.setDisplayName(ChatColor.getByChar("336600") + "[ì €ê²©ìˆ˜]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.getByChar("336600") + "[ì €ê²©ìˆ˜]" + p.getPlayerListName());
 				}
 				break;
 			}
@@ -225,19 +225,19 @@ public class Classgui implements Serializable {
 			break;
 		}
 		case 5: {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ¹°,ºÒ,¹Ù¶÷,Àü±â
+			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ë¬¼,ë¶ˆ,ë°”ëŒ,ì „ê¸°
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-					p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "À¶ÇÕ¼ú»ç");
-					p.setDisplayName(ChatColor.LIGHT_PURPLE + "[[À¶ÇÕ¼ú»ç]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[[À¶ÇÕ¼ú»ç]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "ìœµí•©ìˆ ì‚¬");
+					p.setDisplayName(ChatColor.LIGHT_PURPLE + "[[ìœµí•©ìˆ ì‚¬]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[[ìœµí•©ìˆ ì‚¬]]" + p.getPlayerListName());
 				} else if (Proficiency.getpro(p) >= 2) {
-					p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "½Åºñ¼ú»ç");
-					p.setDisplayName(ChatColor.LIGHT_PURPLE + "[[[½Åºñ¼ú»ç]]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[[[½Åºñ¼ú»ç]]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "ì‹ ë¹„ìˆ ì‚¬");
+					p.setDisplayName(ChatColor.LIGHT_PURPLE + "[[[ì‹ ë¹„ìˆ ì‚¬]]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[[[ì‹ ë¹„ìˆ ì‚¬]]]" + p.getPlayerListName());
 				} else {
-					p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "¿ø¼Ò¼ú»ç");
-					p.setDisplayName(ChatColor.LIGHT_PURPLE + "[¿ø¼Ò¼ú»ç]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[¿ø¼Ò¼ú»ç]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "ì›ì†Œìˆ ì‚¬");
+					p.setDisplayName(ChatColor.LIGHT_PURPLE + "[ì›ì†Œìˆ ì‚¬]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[ì›ì†Œìˆ ì‚¬]" + p.getPlayerListName());
 				}
 				break;
 			}
@@ -257,19 +257,19 @@ public class Classgui implements Serializable {
 			break;
 		}
 		case 6: {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ´ëÁö
+			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ëŒ€ì§€
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-					p.addScoreboardTag(ChatColor.BLUE + "±ÃÀå");
-					p.setDisplayName(ChatColor.BLUE + "[[±ÃÀå]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.BLUE + "[[±ÃÀå]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.BLUE + "ê¶ì¥");
+					p.setDisplayName(ChatColor.BLUE + "[[ê¶ì¥]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.BLUE + "[[ê¶ì¥]]" + p.getPlayerListName());
 				} else if (Proficiency.getpro(p) >= 2) {
-					p.addScoreboardTag(ChatColor.BLUE + "¸í±Ã");
-					p.setDisplayName(ChatColor.BLUE + "[[[¸í±Ã]]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.BLUE + "[[[¸í±Ã]]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.BLUE + "ëª…ê¶");
+					p.setDisplayName(ChatColor.BLUE + "[[[ëª…ê¶]]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.BLUE + "[[[ëª…ê¶]]]" + p.getPlayerListName());
 				} else {
-					p.addScoreboardTag(ChatColor.BLUE + "±Ã¼ö");
-					p.setDisplayName(ChatColor.BLUE + "[±Ã¼ö]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.BLUE + "[±Ã¼ö]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.BLUE + "ê¶ìˆ˜");
+					p.setDisplayName(ChatColor.BLUE + "[ê¶ìˆ˜]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.BLUE + "[ê¶ìˆ˜]" + p.getPlayerListName());
 				}
 				break;
 			}
@@ -289,19 +289,19 @@ public class Classgui implements Serializable {
 			break;
 		}
 		case 61: {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ¹ø°³, µ¶
+			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ë²ˆê°œ, ë…
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-					p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "¼Ò»ıÀÚ");
-					p.setDisplayName(ChatColor.LIGHT_PURPLE + "[[¼Ò»ıÀÚ]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[[¼Ò»ıÀÚ]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "ì†Œìƒì");
+					p.setDisplayName(ChatColor.LIGHT_PURPLE + "[[ì†Œìƒì]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[[ì†Œìƒì]]" + p.getPlayerListName());
 				} else if (Proficiency.getpro(p) >= 2) {
-					p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "¸íÀÇ");
-					p.setDisplayName(ChatColor.LIGHT_PURPLE + "[[[¸íÀÇ]]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[[[¸íÀÇ]]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "ëª…ì˜");
+					p.setDisplayName(ChatColor.LIGHT_PURPLE + "[[[ëª…ì˜]]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[[[ëª…ì˜]]]" + p.getPlayerListName());
 				} else {
-					p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "ÀÇ±Ã");
-					p.setDisplayName(ChatColor.LIGHT_PURPLE + "[ÀÇ±Ã]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[ÀÇ±Ã]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "ì˜ê¶");
+					p.setDisplayName(ChatColor.LIGHT_PURPLE + "[ì˜ê¶]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[ì˜ê¶]" + p.getPlayerListName());
 				}
 				break;
 			}
@@ -321,19 +321,19 @@ public class Classgui implements Serializable {
 			break;
 		}
 		case 7: {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ´ëÁö, ¹ø°³
+			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ëŒ€ì§€, ë²ˆê°œ
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-					p.addScoreboardTag(ChatColor.GRAY + "Ã¶±Ç");
-					p.setDisplayName(ChatColor.GRAY + "[[Ã¶±Ç]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.GRAY + "[[Ã¶±Ç]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.GRAY + "ì² ê¶Œ");
+					p.setDisplayName(ChatColor.GRAY + "[[ì² ê¶Œ]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.GRAY + "[[ì² ê¶Œ]]" + p.getPlayerListName());
 				} else if (Proficiency.getpro(p) >= 2) {
-					p.addScoreboardTag(ChatColor.GRAY + "±İ°­ºÒ±«");
-					p.setDisplayName(ChatColor.GRAY + "[[[±İ°­ºÒ±«]]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.GRAY + "[[[±İ°­ºÒ±«]]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.GRAY + "ê¸ˆê°•ë¶ˆê´´");
+					p.setDisplayName(ChatColor.GRAY + "[[[ê¸ˆê°•ë¶ˆê´´]]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.GRAY + "[[[ê¸ˆê°•ë¶ˆê´´]]]" + p.getPlayerListName());
 				} else {
-					p.addScoreboardTag(ChatColor.GRAY + "±Ç»ç");
-					p.setDisplayName(ChatColor.GRAY + "[±Ç»ç]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.GRAY + "[±Ç»ç]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.GRAY + "ê¶Œì‚¬");
+					p.setDisplayName(ChatColor.GRAY + "[ê¶Œì‚¬]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.GRAY + "[ê¶Œì‚¬]" + p.getPlayerListName());
 				}
 				break;
 			}
@@ -353,19 +353,19 @@ public class Classgui implements Serializable {
 			break;
 		}
 		case 8: {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ¹Ù¶÷
+			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ë°”ëŒ
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-					p.addScoreboardTag(ChatColor.GOLD + "ÀÏ·ù");
-					p.setDisplayName(ChatColor.GOLD + "[[ÀÏ·ù]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.GOLD + "[[ÀÏ·ù]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.GOLD + "ì¼ë¥˜");
+					p.setDisplayName(ChatColor.GOLD + "[[ì¼ë¥˜]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.GOLD + "[[ì¼ë¥˜]]" + p.getPlayerListName());
 				} else if (Proficiency.getpro(p) >= 2) {
-					p.addScoreboardTag(ChatColor.GOLD + "±Ø»ó");
-					p.setDisplayName(ChatColor.GOLD + "[[[±Ø»ó]]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.GOLD + "[[[±Ø»ó]]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.GOLD + "ê·¹ìƒ");
+					p.setDisplayName(ChatColor.GOLD + "[[[ê·¹ìƒ]]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.GOLD + "[[[ê·¹ìƒ]]]" + p.getPlayerListName());
 				} else {
-					p.addScoreboardTag(ChatColor.GOLD + "À¯¼ú°¡");
-					p.setDisplayName(ChatColor.GOLD + "[À¯¼ú°¡]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.GOLD + "[À¯¼ú°¡]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.GOLD + "ìœ ìˆ ê°€");
+					p.setDisplayName(ChatColor.GOLD + "[ìœ ìˆ ê°€]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.GOLD + "[ìœ ìˆ ê°€]" + p.getPlayerListName());
 				}
 				break;
 			}
@@ -385,19 +385,19 @@ public class Classgui implements Serializable {
 			break;
 		}
 		case 9: {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// µ¶, ´ëÁö
+			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ë…, ëŒ€ì§€
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-					p.addScoreboardTag(ChatColor.DARK_GRAY + "ÈÆÀ°»ç");
-					p.setDisplayName(ChatColor.DARK_GRAY + "[[ÈÆÀ°»ç]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.DARK_GRAY + "[[ÈÆÀ°»ç]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.DARK_GRAY + "í›ˆìœ¡ì‚¬");
+					p.setDisplayName(ChatColor.DARK_GRAY + "[[í›ˆìœ¡ì‚¬]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.DARK_GRAY + "[[í›ˆìœ¡ì‚¬]]" + p.getPlayerListName());
 				} else if (Proficiency.getpro(p) >= 2) {
-					p.addScoreboardTag(ChatColor.DARK_GRAY + "±³°¨»ç");
-					p.setDisplayName(ChatColor.DARK_GRAY + "[[[±³°¨»ç]]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.DARK_GRAY + "[[[±³°¨»ç]]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.DARK_GRAY + "êµê°ì‚¬");
+					p.setDisplayName(ChatColor.DARK_GRAY + "[[[êµê°ì‚¬]]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.DARK_GRAY + "[[[êµê°ì‚¬]]]" + p.getPlayerListName());
 				} else {
-					p.addScoreboardTag(ChatColor.DARK_GRAY + "Á¶·Ã»ç");
-					p.setDisplayName(ChatColor.DARK_GRAY + "[Á¶·Ã»ç]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.DARK_GRAY + "[Á¶·Ã»ç]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.DARK_GRAY + "ì¡°ë ¨ì‚¬");
+					p.setDisplayName(ChatColor.DARK_GRAY + "[ì¡°ë ¨ì‚¬]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.DARK_GRAY + "[ì¡°ë ¨ì‚¬]" + p.getPlayerListName());
 				}
 				break;
 			}
@@ -417,19 +417,19 @@ public class Classgui implements Serializable {
 			break;
 		}
 		case 10: {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ¾îµÒ,¼­¸®, ºÒ,¹ø°³
+			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ì–´ë‘ ,ì„œë¦¬, ë¶ˆ,ë²ˆê°œ
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-					p.addScoreboardTag(ChatColor.YELLOW + "¼±ÀÎ");
-					p.setDisplayName(ChatColor.YELLOW + "[[¼±ÀÎ]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.YELLOW + "[[¼±ÀÎ]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.YELLOW + "ì„ ì¸");
+					p.setDisplayName(ChatColor.YELLOW + "[[ì„ ì¸]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.YELLOW + "[[ì„ ì¸]]" + p.getPlayerListName());
 				} else if (Proficiency.getpro(p) >= 2) {
-					p.addScoreboardTag(ChatColor.YELLOW + "½Å¼±");
-					p.setDisplayName(ChatColor.YELLOW + "[[[½Å¼±]]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.YELLOW + "[[[½Å¼±]]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.YELLOW + "ì‹ ì„ ");
+					p.setDisplayName(ChatColor.YELLOW + "[[[ì‹ ì„ ]]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.YELLOW + "[[[ì‹ ì„ ]]]" + p.getPlayerListName());
 				} else {
-					p.addScoreboardTag(ChatColor.YELLOW + "µµ»ç");
-					p.setDisplayName(ChatColor.YELLOW + "[µµ»ç]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.YELLOW + "[µµ»ç]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.YELLOW + "ë„ì‚¬");
+					p.setDisplayName(ChatColor.YELLOW + "[ë„ì‚¬]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.YELLOW + "[ë„ì‚¬]" + p.getPlayerListName());
 				}
 				break;
 			}
@@ -449,19 +449,19 @@ public class Classgui implements Serializable {
 			break;
 		}
 		case 11: {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ¹Ù¶÷
+			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ë°”ëŒ
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-					p.addScoreboardTag(ChatColor.DARK_PURPLE + "¼Ò¸ê·É");
-					p.setDisplayName(ChatColor.DARK_PURPLE + "[[¼Ò¸ê·É]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.DARK_PURPLE + "[[¼Ò¸ê·É]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.DARK_PURPLE + "ì†Œë©¸ë ¹");
+					p.setDisplayName(ChatColor.DARK_PURPLE + "[[ì†Œë©¸ë ¹]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.DARK_PURPLE + "[[ì†Œë©¸ë ¹]]" + p.getPlayerListName());
 				} else if (Proficiency.getpro(p) >= 2) {
-					p.addScoreboardTag(ChatColor.DARK_PURPLE + "È¯¿µ±Í");
-					p.setDisplayName(ChatColor.DARK_PURPLE + "[[[È¯¿µ±Í]]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.DARK_PURPLE + "[[[È¯¿µ±Í]]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.DARK_PURPLE + "í™˜ì˜ê·€");
+					p.setDisplayName(ChatColor.DARK_PURPLE + "[[[í™˜ì˜ê·€]]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.DARK_PURPLE + "[[[í™˜ì˜ê·€]]]" + p.getPlayerListName());
 				} else {
-					p.addScoreboardTag(ChatColor.DARK_PURPLE + "È¯¼ú»ç");
-					p.setDisplayName(ChatColor.DARK_PURPLE + "[È¯¼ú»ç]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.DARK_PURPLE + "[È¯¼ú»ç]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.DARK_PURPLE + "í™˜ìˆ ì‚¬");
+					p.setDisplayName(ChatColor.DARK_PURPLE + "[í™˜ìˆ ì‚¬]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.DARK_PURPLE + "[í™˜ìˆ ì‚¬]" + p.getPlayerListName());
 				}
 				break;
 			}
@@ -481,19 +481,19 @@ public class Classgui implements Serializable {
 			break;
 		}
 		case 12: {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ºÒ
+			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ë¶ˆ
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-					p.addScoreboardTag(ChatColor.RED + "È­½Å");
-					p.setDisplayName(ChatColor.RED + "[[È­½Å]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.RED + "[[È­½Å]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.RED + "í™”ì‹ ");
+					p.setDisplayName(ChatColor.RED + "[[í™”ì‹ ]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.RED + "[[í™”ì‹ ]]" + p.getPlayerListName());
 				} else if (Proficiency.getpro(p) >= 2) {
-					p.addScoreboardTag(ChatColor.RED + "ÅÂ¾ç½Å");
-					p.setDisplayName(ChatColor.RED + "[[[ÅÂ¾ç½Å]]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.RED + "[[[ÅÂ¾ç½Å]]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.RED + "íƒœì–‘ì‹ ");
+					p.setDisplayName(ChatColor.RED + "[[[íƒœì–‘ì‹ ]]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.RED + "[[[íƒœì–‘ì‹ ]]]" + p.getPlayerListName());
 				} else {
-					p.addScoreboardTag(ChatColor.RED + "È­¿°¼ú»ç");
-					p.setDisplayName(ChatColor.RED + "[È­¿°¼ú»ç]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.RED + "[È­¿°¼ú»ç]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.RED + "í™”ì—¼ìˆ ì‚¬");
+					p.setDisplayName(ChatColor.RED + "[í™”ì—¼ìˆ ì‚¬]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.RED + "[í™”ì—¼ìˆ ì‚¬]" + p.getPlayerListName());
 				}
 				break;
 			}
@@ -513,19 +513,19 @@ public class Classgui implements Serializable {
 			break;
 		}
 		case 13: {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ¾îµÒ
+			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ì–´ë‘ 
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-					p.addScoreboardTag(ChatColor.GRAY + "º¹¼öÀÚ");
-					p.setDisplayName(ChatColor.GRAY + "[[º¹¼öÀÚ]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.GRAY + "[[º¹¼öÀÚ]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.GRAY + "ë³µìˆ˜ì");
+					p.setDisplayName(ChatColor.GRAY + "[[ë³µìˆ˜ì]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.GRAY + "[[ë³µìˆ˜ì]]" + p.getPlayerListName());
 				} else if (Proficiency.getpro(p) >= 2) {
-					p.addScoreboardTag(ChatColor.GRAY + "¼±ÁöÀÚ");
-					p.setDisplayName(ChatColor.GRAY + "[[[¼±ÁöÀÚ]]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.GRAY + "[[[¼±ÁöÀÚ]]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.GRAY + "ì„ ì§€ì");
+					p.setDisplayName(ChatColor.GRAY + "[[[ì„ ì§€ì]]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.GRAY + "[[[ì„ ì§€ì]]]" + p.getPlayerListName());
 				} else {
-					p.addScoreboardTag(ChatColor.GRAY + "À§´õ¸®½ºÆ®");
-					p.setDisplayName(ChatColor.GRAY + "[À§´õ¸®½ºÆ®]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.GRAY + "[À§´õ¸®½ºÆ®]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.GRAY + "ìœ„ë”ë¦¬ìŠ¤íŠ¸");
+					p.setDisplayName(ChatColor.GRAY + "[ìœ„ë”ë¦¬ìŠ¤íŠ¸]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.GRAY + "[ìœ„ë”ë¦¬ìŠ¤íŠ¸]" + p.getPlayerListName());
 				}
 				break;
 			}
@@ -545,19 +545,19 @@ public class Classgui implements Serializable {
 			break;
 		}
 		case 14: {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ´ëÁö
+			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ëŒ€ì§€
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-					p.addScoreboardTag(ChatColor.DARK_GREEN + "ºÎÈ°ÀÚ");
-					p.setDisplayName(ChatColor.DARK_GREEN + "[[ºÎÈ°ÀÚ]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.DARK_GREEN + "[[ºÎÈ°ÀÚ]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.DARK_GREEN + "ë¶€í™œì");
+					p.setDisplayName(ChatColor.DARK_GREEN + "[[ë¶€í™œì]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.DARK_GREEN + "[[ë¶€í™œì]]" + p.getPlayerListName());
 				} else if (Proficiency.getpro(p) >= 2) {
-					p.addScoreboardTag(ChatColor.DARK_GREEN + "ºÒ¸êÀÚ");
-					p.setDisplayName(ChatColor.DARK_GREEN + "[[[ºÒ¸êÀÚ]]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.DARK_GREEN + "[[[ºÒ¸êÀÚ]]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.DARK_GREEN + "ë¶ˆë©¸ì");
+					p.setDisplayName(ChatColor.DARK_GREEN + "[[[ë¶ˆë©¸ì]]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.DARK_GREEN + "[[[ë¶ˆë©¸ì]]]" + p.getPlayerListName());
 				} else {
-					p.addScoreboardTag(ChatColor.DARK_GREEN + "ºÎµÎ¼ú»ç");
-					p.setDisplayName(ChatColor.DARK_GREEN + "[ºÎµÎ¼ú»ç]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.DARK_GREEN + "[ºÎµÎ¼ú»ç]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.DARK_GREEN + "ë¶€ë‘ìˆ ì‚¬");
+					p.setDisplayName(ChatColor.DARK_GREEN + "[ë¶€ë‘ìˆ ì‚¬]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.DARK_GREEN + "[ë¶€ë‘ìˆ ì‚¬]" + p.getPlayerListName());
 				}
 				break;
 			}
@@ -577,19 +577,19 @@ public class Classgui implements Serializable {
 			break;
 		}
 		case 15: {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// µ¶,ºÒ
+			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ë…,ë¶ˆ
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-					p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "¿­±¤ÀÚ");
-					p.setDisplayName(ChatColor.LIGHT_PURPLE + "[[¿­±¤ÀÚ]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[[¿­±¤ÀÚ]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "ì—´ê´‘ì");
+					p.setDisplayName(ChatColor.LIGHT_PURPLE + "[[ì—´ê´‘ì]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[[ì—´ê´‘ì]]" + p.getPlayerListName());
 				} else if (Proficiency.getpro(p) >= 2) {
-					p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "¼±±¸ÀÚ");
-					p.setDisplayName(ChatColor.LIGHT_PURPLE + "[[[¼±±¸ÀÚ]]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[[[¼±±¸ÀÚ]]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "ì„ êµ¬ì");
+					p.setDisplayName(ChatColor.LIGHT_PURPLE + "[[[ì„ êµ¬ì]]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[[[ì„ êµ¬ì]]]" + p.getPlayerListName());
 				} else {
-					p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "È­ÇĞÀÚ");
-					p.setDisplayName(ChatColor.LIGHT_PURPLE + "[È­ÇĞÀÚ]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[È­ÇĞÀÚ]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "í™”í•™ì");
+					p.setDisplayName(ChatColor.LIGHT_PURPLE + "[í™”í•™ì]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[í™”í•™ì]" + p.getPlayerListName());
 				}
 				break;
 			}
@@ -609,19 +609,19 @@ public class Classgui implements Serializable {
 			break;
 		}
 		case 16: {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ¹ø°³,´ëÁö
+			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ë²ˆê°œ,ëŒ€ì§€
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-					p.addScoreboardTag(ChatColor.BLUE + "ÀåÀÎ");
-					p.setDisplayName(ChatColor.BLUE + "[[ÀåÀÎ]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.BLUE + "[[ÀåÀÎ]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.BLUE + "ì¥ì¸");
+					p.setDisplayName(ChatColor.BLUE + "[[ì¥ì¸]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.BLUE + "[[ì¥ì¸]]" + p.getPlayerListName());
 				} else if (Proficiency.getpro(p) >= 2) {
-					p.addScoreboardTag(ChatColor.BLUE + "Ã¢Á¶ÀÚ");
-					p.setDisplayName(ChatColor.BLUE + "[[[Ã¢Á¶ÀÚ]]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.BLUE + "[[[Ã¢Á¶ÀÚ]]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.BLUE + "ì°½ì¡°ì");
+					p.setDisplayName(ChatColor.BLUE + "[[[ì°½ì¡°ì]]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.BLUE + "[[[ì°½ì¡°ì]]]" + p.getPlayerListName());
 				} else {
-					p.addScoreboardTag(ChatColor.BLUE + "¹«±â°ø");
-					p.setDisplayName(ChatColor.BLUE + "[¹«±â°ø]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.BLUE + "[¹«±â°ø]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.BLUE + "ë¬´ê¸°ê³µ");
+					p.setDisplayName(ChatColor.BLUE + "[ë¬´ê¸°ê³µ]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.BLUE + "[ë¬´ê¸°ê³µ]" + p.getPlayerListName());
 				}
 				break;
 			}
@@ -641,19 +641,19 @@ public class Classgui implements Serializable {
 			break;
 		}
 		case 17: {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ¹ø°³, ´ëÁö
+			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ë²ˆê°œ, ëŒ€ì§€
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-					p.addScoreboardTag(ChatColor.AQUA + "Á¦¾îÀÚ");
-					p.setDisplayName(ChatColor.AQUA + "[[Á¦¾îÀÚ]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.AQUA + "[[Á¦¾îÀÚ]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.AQUA + "ì œì–´ì");
+					p.setDisplayName(ChatColor.AQUA + "[[ì œì–´ì]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.AQUA + "[[ì œì–´ì]]" + p.getPlayerListName());
 				} else if (Proficiency.getpro(p) >= 2) {
-					p.addScoreboardTag(ChatColor.AQUA + "ÁßÀçÀÚ");
-					p.setDisplayName(ChatColor.AQUA + "[[[ÁßÀçÀÚ]]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.AQUA + "[[[ÁßÀçÀÚ]]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.AQUA + "ì¤‘ì¬ì");
+					p.setDisplayName(ChatColor.AQUA + "[[[ì¤‘ì¬ì]]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.AQUA + "[[[ì¤‘ì¬ì]]]" + p.getPlayerListName());
 				} else {
-					p.addScoreboardTag(ChatColor.AQUA + "°øÇĞÀÚ");
-					p.setDisplayName(ChatColor.AQUA + "[°øÇĞÀÚ]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.AQUA + "[°øÇĞÀÚ]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.AQUA + "ê³µí•™ì");
+					p.setDisplayName(ChatColor.AQUA + "[ê³µí•™ì]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.AQUA + "[ê³µí•™ì]" + p.getPlayerListName());
 				}
 				break;
 			}
@@ -673,19 +673,19 @@ public class Classgui implements Serializable {
 			break;
 		}
 		case 18: {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ºÒ, ´ëÁö
+			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ë¶ˆ, ëŒ€ì§€
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-					p.addScoreboardTag(ChatColor.GOLD + "¼ÎÇÁ");
-					p.setDisplayName(ChatColor.GOLD + "[[¼ÎÇÁ]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.GOLD + "[[¼ÎÇÁ]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.GOLD + "ì…°í”„");
+					p.setDisplayName(ChatColor.GOLD + "[[ì…°í”„]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.GOLD + "[[ì…°í”„]]" + p.getPlayerListName());
 				} else if (Proficiency.getpro(p) >= 2) {
-					p.addScoreboardTag(ChatColor.GOLD + "´ë°¡");
-					p.setDisplayName(ChatColor.GOLD + "[[[´ë°¡]]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.GOLD + "[[[´ë°¡]]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.GOLD + "ëŒ€ê°€");
+					p.setDisplayName(ChatColor.GOLD + "[[[ëŒ€ê°€]]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.GOLD + "[[[ëŒ€ê°€]]]" + p.getPlayerListName());
 				} else {
-					p.addScoreboardTag(ChatColor.GOLD + "¿ä¸®»ç");
-					p.setDisplayName(ChatColor.GOLD + "[¿ä¸®»ç]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.GOLD + "[¿ä¸®»ç]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.GOLD + "ìš”ë¦¬ì‚¬");
+					p.setDisplayName(ChatColor.GOLD + "[ìš”ë¦¬ì‚¬]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.GOLD + "[ìš”ë¦¬ì‚¬]" + p.getPlayerListName());
 				}
 				break;
 			}
@@ -705,19 +705,19 @@ public class Classgui implements Serializable {
 			break;
 		}
 		case 19: {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ¹°
+			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ë¬¼
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-					p.addScoreboardTag(ChatColor.BLUE + "¿ÕÁ·");
-					p.setDisplayName(ChatColor.BLUE + "[[¿ÕÁ·]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.BLUE + "[[¿ÕÁ·]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.BLUE + "ì™•ì¡±");
+					p.setDisplayName(ChatColor.BLUE + "[[ì™•ì¡±]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.BLUE + "[[ì™•ì¡±]]" + p.getPlayerListName());
 				} else if (Proficiency.getpro(p) >= 2) {
-					p.addScoreboardTag(ChatColor.BLUE + "È²Á¦");
-					p.setDisplayName(ChatColor.BLUE + "[[[È²Á¦]]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.BLUE + "[[[È²Á¦]]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.BLUE + "í™©ì œ");
+					p.setDisplayName(ChatColor.BLUE + "[[[í™©ì œ]]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.BLUE + "[[[í™©ì œ]]]" + p.getPlayerListName());
 				} else {
-					p.addScoreboardTag(ChatColor.BLUE + "±ÍÁ·");
-					p.setDisplayName(ChatColor.BLUE + "[±ÍÁ·]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.BLUE + "[±ÍÁ·]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.BLUE + "ê·€ì¡±");
+					p.setDisplayName(ChatColor.BLUE + "[ê·€ì¡±]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.BLUE + "[ê·€ì¡±]" + p.getPlayerListName());
 				}
 				break;
 			}
@@ -737,19 +737,19 @@ public class Classgui implements Serializable {
 			break;
 		}
 		case 20: {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ¹°, ¹Ù¶÷
+			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ë¬¼, ë°”ëŒ
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-					p.addScoreboardTag(ChatColor.DARK_AQUA + "ÁöÈÖ°ü");
-					p.setDisplayName(ChatColor.DARK_AQUA + "[[ÁöÈÖ°ü]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.DARK_AQUA + "[[ÁöÈÖ°ü]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.DARK_AQUA + "ì§€íœ˜ê´€");
+					p.setDisplayName(ChatColor.DARK_AQUA + "[[ì§€íœ˜ê´€]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.DARK_AQUA + "[[ì§€íœ˜ê´€]]" + p.getPlayerListName());
 				} else if (Proficiency.getpro(p) >= 2) {
-					p.addScoreboardTag(ChatColor.DARK_AQUA + "¸íÀå");
-					p.setDisplayName(ChatColor.DARK_AQUA + "[[[¸íÀå]]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.DARK_AQUA + "[[[¸íÀå]]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.DARK_AQUA + "ëª…ì¥");
+					p.setDisplayName(ChatColor.DARK_AQUA + "[[[ëª…ì¥]]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.DARK_AQUA + "[[[ëª…ì¥]]]" + p.getPlayerListName());
 				} else {
-					p.addScoreboardTag(ChatColor.DARK_AQUA + "¹Ù´Ù±â»ç");
-					p.setDisplayName(ChatColor.DARK_AQUA + "[¹Ù´Ù±â»ç]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.DARK_AQUA + "[¹Ù´Ù±â»ç]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.DARK_AQUA + "ë°”ë‹¤ê¸°ì‚¬");
+					p.setDisplayName(ChatColor.DARK_AQUA + "[ë°”ë‹¤ê¸°ì‚¬]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.DARK_AQUA + "[ë°”ë‹¤ê¸°ì‚¬]" + p.getPlayerListName());
 				}
 				break;
 			}
@@ -769,19 +769,19 @@ public class Classgui implements Serializable {
 			break;
 		}
 		case 21: {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ¼­¸®
+			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ì„œë¦¬
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-					p.addScoreboardTag(ChatColor.AQUA + "¸¸³â¼³");
-					p.setDisplayName(ChatColor.AQUA + "[[¸¸³â¼³]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.AQUA + "[[¸¸³â¼³]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.AQUA + "ë§Œë…„ì„¤");
+					p.setDisplayName(ChatColor.AQUA + "[[ë§Œë…„ì„¤]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.AQUA + "[[ë§Œë…„ì„¤]]" + p.getPlayerListName());
 				} else if (Proficiency.getpro(p) >= 2) {
-					p.addScoreboardTag(ChatColor.AQUA + "¼³È­");
-					p.setDisplayName(ChatColor.AQUA + "[[[¼³È­]]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.AQUA + "[[[¼³È­]]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.AQUA + "ì„¤í™”");
+					p.setDisplayName(ChatColor.AQUA + "[[[ì„¤í™”]]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.AQUA + "[[[ì„¤í™”]]]" + p.getPlayerListName());
 				} else {
-					p.addScoreboardTag(ChatColor.AQUA + "ºù¼ú»ç");
-					p.setDisplayName(ChatColor.AQUA + "[ºù¼ú»ç]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.AQUA + "[ºù¼ú»ç]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.AQUA + "ë¹™ìˆ ì‚¬");
+					p.setDisplayName(ChatColor.AQUA + "[ë¹™ìˆ ì‚¬]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.AQUA + "[ë¹™ìˆ ì‚¬]" + p.getPlayerListName());
 				}
 				break;
 			}
@@ -801,19 +801,19 @@ public class Classgui implements Serializable {
 			break;
 		}
 		case 22: {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ¹Ùñ, ¹°
+			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ë°”Â, ë¬¼
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-					p.addScoreboardTag(ChatColor.AQUA + "´ŞÀÎ");
-					p.setDisplayName(ChatColor.AQUA + "[[´ŞÀÎ]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.AQUA + "[[´ŞÀÎ]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.AQUA + "ë‹¬ì¸");
+					p.setDisplayName(ChatColor.AQUA + "[[ë‹¬ì¸]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.AQUA + "[[ë‹¬ì¸]]" + p.getPlayerListName());
 				} else if (Proficiency.getpro(p) >= 2) {
-					p.addScoreboardTag(ChatColor.AQUA + "ÇÑ·®");
-					p.setDisplayName(ChatColor.AQUA + "[[[ÇÑ·®]]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.AQUA + "[[[ÇÑ·®]]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.AQUA + "í•œëŸ‰");
+					p.setDisplayName(ChatColor.AQUA + "[[[í•œëŸ‰]]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.AQUA + "[[[í•œëŸ‰]]]" + p.getPlayerListName());
 				} else {
-					p.addScoreboardTag(ChatColor.AQUA + "³¬½Ã²Û");
-					p.setDisplayName(ChatColor.AQUA + "[³¬½Ã²Û]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.AQUA + "[³¬½Ã²Û]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.AQUA + "ë‚šì‹œê¾¼");
+					p.setDisplayName(ChatColor.AQUA + "[ë‚šì‹œê¾¼]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.AQUA + "[ë‚šì‹œê¾¼]" + p.getPlayerListName());
 				}
 				break;
 			}
@@ -833,19 +833,19 @@ public class Classgui implements Serializable {
 			break;
 		}
 		case 23: {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ´ëÁö,¹°
+			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ëŒ€ì§€,ë¬¼
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-					p.addScoreboardTag(ChatColor.DARK_GREEN + "Á¶¹°ÁÖ");
-					p.setDisplayName(ChatColor.DARK_GREEN + "[[Á¶¹°ÁÖ]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.DARK_GREEN + "[[Á¶¹°ÁÖ]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.DARK_GREEN + "ì¡°ë¬¼ì£¼");
+					p.setDisplayName(ChatColor.DARK_GREEN + "[[ì¡°ë¬¼ì£¼]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.DARK_GREEN + "[[ì¡°ë¬¼ì£¼]]" + p.getPlayerListName());
 				} else if (Proficiency.getpro(p) >= 2) {
-					p.addScoreboardTag(ChatColor.DARK_GREEN + "ÀÚ¿¬½Å");
-					p.setDisplayName(ChatColor.DARK_GREEN + "[[[ÀÚ¿¬½Å]]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.DARK_GREEN + "[[[ÀÚ¿¬½Å]]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.DARK_GREEN + "ìì—°ì‹ ");
+					p.setDisplayName(ChatColor.DARK_GREEN + "[[[ìì—°ì‹ ]]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.DARK_GREEN + "[[[ìì—°ì‹ ]]]" + p.getPlayerListName());
 				} else {
-					p.addScoreboardTag(ChatColor.DARK_GREEN + "¿ø¿¹°¡");
-					p.setDisplayName(ChatColor.DARK_GREEN + "[¿ø¿¹°¡]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.DARK_GREEN + "[¿ø¿¹°¡]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.DARK_GREEN + "ì›ì˜ˆê°€");
+					p.setDisplayName(ChatColor.DARK_GREEN + "[ì›ì˜ˆê°€]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.DARK_GREEN + "[ì›ì˜ˆê°€]" + p.getPlayerListName());
 				}
 				break;
 			}
@@ -865,19 +865,19 @@ public class Classgui implements Serializable {
 			break;
 		}
 		case 24: {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ¾îµÒ, ¹Ù¶÷
+			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ì–´ë‘ , ë°”ëŒ
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-					p.addScoreboardTag(ChatColor.DARK_GRAY + "¾Ï»ìÀÚ");
-					p.setDisplayName(ChatColor.DARK_GRAY + "[[¾Ï»ìÀÚ]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.DARK_GRAY + "[[¾Ï»ìÀÚ]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.DARK_GRAY + "ì•”ì‚´ì");
+					p.setDisplayName(ChatColor.DARK_GRAY + "[[ì•”ì‚´ì]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.DARK_GRAY + "[[ì•”ì‚´ì]]" + p.getPlayerListName());
 				} else if (Proficiency.getpro(p) >= 2) {
-					p.addScoreboardTag(ChatColor.DARK_GRAY + "¾Ï¿µ");
-					p.setDisplayName(ChatColor.DARK_GRAY + "[[[¾Ï¿µ]]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.DARK_GRAY + "[[[¾Ï¿µ]]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.DARK_GRAY + "ì•”ì˜");
+					p.setDisplayName(ChatColor.DARK_GRAY + "[[[ì•”ì˜]]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.DARK_GRAY + "[[[ì•”ì˜]]]" + p.getPlayerListName());
 				} else {
-					p.addScoreboardTag(ChatColor.DARK_GRAY + "´Ü°Ë»ç");
-					p.setDisplayName(ChatColor.DARK_GRAY + "[´Ü°Ë»ç]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.DARK_GRAY + "[´Ü°Ë»ç]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.DARK_GRAY + "ë‹¨ê²€ì‚¬");
+					p.setDisplayName(ChatColor.DARK_GRAY + "[ë‹¨ê²€ì‚¬]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.DARK_GRAY + "[ë‹¨ê²€ì‚¬]" + p.getPlayerListName());
 				}
 				break;
 			}
@@ -897,19 +897,19 @@ public class Classgui implements Serializable {
 			break;
 		}
 		case 25: {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// µ¶,´ëÁö
+			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ë…,ëŒ€ì§€
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-					p.addScoreboardTag(ChatColor.AQUA + "°¨³»ÀÚ");
-					p.setDisplayName(ChatColor.AQUA + "[[°¨³»ÀÚ]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.AQUA + "[[°¨³»ÀÚ]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.AQUA + "ê°ë‚´ì");
+					p.setDisplayName(ChatColor.AQUA + "[[ê°ë‚´ì]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.AQUA + "[[ê°ë‚´ì]]" + p.getPlayerListName());
 				} else if (Proficiency.getpro(p) >= 2) {
-					p.addScoreboardTag(ChatColor.AQUA + "¿ªÀü°¡");
-					p.setDisplayName(ChatColor.AQUA + "[[[¿ªÀü°¡]]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.AQUA + "[[[¿ªÀü°¡]]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.AQUA + "ì—­ì „ê°€");
+					p.setDisplayName(ChatColor.AQUA + "[[[ì—­ì „ê°€]]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.AQUA + "[[[ì—­ì „ê°€]]]" + p.getPlayerListName());
 				} else {
-					p.addScoreboardTag(ChatColor.AQUA + "Åõ»ç");
-					p.setDisplayName(ChatColor.AQUA + "[Åõ»ç]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.AQUA + "[Åõ»ç]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.AQUA + "íˆ¬ì‚¬");
+					p.setDisplayName(ChatColor.AQUA + "[íˆ¬ì‚¬]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.AQUA + "[íˆ¬ì‚¬]" + p.getPlayerListName());
 				}
 				break;
 			}
@@ -929,19 +929,19 @@ public class Classgui implements Serializable {
 			break;
 		}
 		case 26: {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ´ëÁö, ¹ø°³
+			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// ëŒ€ì§€, ë²ˆê°œ
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-					p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "¿¬Ãâ°¡");
-					p.setDisplayName(ChatColor.LIGHT_PURPLE + "[[¿¬Ãâ°¡]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[[¿¬Ãâ°¡]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "ì—°ì¶œê°€");
+					p.setDisplayName(ChatColor.LIGHT_PURPLE + "[[ì—°ì¶œê°€]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[[ì—°ì¶œê°€]]" + p.getPlayerListName());
 				} else if (Proficiency.getpro(p) >= 2) {
-					p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "°ÅÀå");
-					p.setDisplayName(ChatColor.LIGHT_PURPLE + "[[[°ÅÀå]]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[[[°ÅÀå]]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "ê±°ì¥");
+					p.setDisplayName(ChatColor.LIGHT_PURPLE + "[[[ê±°ì¥]]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[[[ê±°ì¥]]]" + p.getPlayerListName());
 				} else {
-					p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "¿¹¼ú°¡");
-					p.setDisplayName(ChatColor.LIGHT_PURPLE + "[¿¹¼ú°¡]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[¿¹¼ú°¡]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "ì˜ˆìˆ ê°€");
+					p.setDisplayName(ChatColor.LIGHT_PURPLE + "[ì˜ˆìˆ ê°€]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[ì˜ˆìˆ ê°€]" + p.getPlayerListName());
 				}
 				break;
 			}
@@ -983,98 +983,98 @@ public class Classgui implements Serializable {
 		Inventory inv = Bukkit.createInventory(null, 54, "Classes");
 		if (p.getLocale().equalsIgnoreCase("ko_kr")) {
 
-			itemset(ChatColor.BLUE + "À¯Çü: Àü»ç", Material.IRON_ORE, 0, 1, Arrays.asList("±ÙÁ¢ ¶Ç´Â ±¤¿ª°ø°İ¿¡ Æ¯È­"), 1, inv);
-			itemset(ChatColor.YELLOW + "À¯Çü: »ç¼ö", Material.EMERALD_ORE, 0, 1, Arrays.asList("¿ø°Å¸® °ø°İ¿¡ Æ¯È­"), 2, inv);
-			itemset(ChatColor.GRAY + "À¯Çü: °İÅõ°¡", Material.COAL_ORE, 0, 1, Arrays.asList("³ôÀº Ã¼·Â, Áö¼Ó°ø°İ¿¡ Æ¯È­"), 3, inv);
-			itemset(ChatColor.LIGHT_PURPLE + "À¯Çü: ¸¶¹ı»ç", Material.GOLD_ORE, 0, 1, Arrays.asList("ÁıÁß°ø°İ¿¡ Æ¯È­"), 4, inv);
-			itemset(ChatColor.GOLD + "À¯Çü: Àü¹®°¡", Material.REDSTONE_ORE, 0, 1, Arrays.asList("Á¦¾Ğ¿¡ Æ¯È­"), 5, inv);
-			itemset(ChatColor.AQUA + "À¯Çü: ÇØ»ó", Material.LAPIS_ORE, 0, 1,
-					Arrays.asList("¼ö¿µ½Ã ¹Ù´Ù°ü·Ã ÀÌ·Î¿î È¿°ú¸¦ ¾ò½À´Ï´Ù", "±¤¿ª °ø°İ¿¡ Æ¯È­"), 6, inv);
-			itemset(ChatColor.DARK_GREEN + "À¯Çü: º¹¼öÀÚ", Material.COPPER_ORE, 0, 1, Arrays.asList("³ôÀº »ıÁ¸¼º°ú ±â´É¼º"), 7, inv);
+			itemset(ChatColor.BLUE + "ìœ í˜•: ì „ì‚¬", Material.IRON_ORE, 0, 1, Arrays.asList("ê·¼ì ‘ ë˜ëŠ” ê´‘ì—­ê³µê²©ì— íŠ¹í™”"), 1, inv);
+			itemset(ChatColor.YELLOW + "ìœ í˜•: ì‚¬ìˆ˜", Material.EMERALD_ORE, 0, 1, Arrays.asList("ì›ê±°ë¦¬ ê³µê²©ì— íŠ¹í™”"), 2, inv);
+			itemset(ChatColor.GRAY + "ìœ í˜•: ê²©íˆ¬ê°€", Material.COAL_ORE, 0, 1, Arrays.asList("ë†’ì€ ì²´ë ¥, ì§€ì†ê³µê²©ì— íŠ¹í™”"), 3, inv);
+			itemset(ChatColor.LIGHT_PURPLE + "ìœ í˜•: ë§ˆë²•ì‚¬", Material.GOLD_ORE, 0, 1, Arrays.asList("ì§‘ì¤‘ê³µê²©ì— íŠ¹í™”"), 4, inv);
+			itemset(ChatColor.GOLD + "ìœ í˜•: ì „ë¬¸ê°€", Material.REDSTONE_ORE, 0, 1, Arrays.asList("ì œì••ì— íŠ¹í™”"), 5, inv);
+			itemset(ChatColor.AQUA + "ìœ í˜•: í•´ìƒ", Material.LAPIS_ORE, 0, 1,
+					Arrays.asList("ìˆ˜ì˜ì‹œ ë°”ë‹¤ê´€ë ¨ ì´ë¡œìš´ íš¨ê³¼ë¥¼ ì–»ìŠµë‹ˆë‹¤", "ê´‘ì—­ ê³µê²©ì— íŠ¹í™”"), 6, inv);
+			itemset(ChatColor.DARK_GREEN + "ìœ í˜•: ë³µìˆ˜ì", Material.COPPER_ORE, 0, 1, Arrays.asList("ë†’ì€ ìƒì¡´ì„±ê³¼ ê¸°ëŠ¥ì„±"), 7, inv);
 
-			itemset(ChatColor.BLUE + "¿ªÇÒ±º: ¹æ¾î", Material.CREEPER_BANNER_PATTERN, 0, 1,
-					Arrays.asList("ÇÇÇØ °¨¼Ò ±â¼úÀ» ¼ÒÀ¯ÇÏ°í ÀÖ½À´Ï´Ù", "°ø°İ¿ªÇÒ±ºº¸´Ù µ¥¹ÌÁö°¡ ³·½À´Ï´Ù"), 9, inv);
-			itemset(ChatColor.RED + "¿ªÇÒ±º: °ø°İ", Material.CREEPER_BANNER_PATTERN, 0, 1,
-					Arrays.asList("º¸½º,¸®´õÇü ¸÷¿¡°Ô Ãß°¡ÇÇÇØ¸¦ Áİ´Ï´Ù", "Å¸¿ªÇÒ±ºº¸´Ù ¹æ¾î·ÂÀÌ ³·½À´Ï´Ù"), 18, inv);
-			itemset(ChatColor.GREEN + "¿ªÇÒ±º: Á¦¾Ğ", Material.CREEPER_BANNER_PATTERN, 0, 1,
-					Arrays.asList("Å¸¿ªÇÒ±ºº¸´Ù Á¦¾Ğ±â¼úÀÌ ¸¹½À´Ï´Ù", "Áö¿ø°¡¸¦ Á¦¿ÜÇÑ Å¸¿ªÇÒ±ºº¸´Ù µ¥¹ÌÁö°¡ ³·½À´Ï´Ù"), 27, inv);
-			itemset(ChatColor.DARK_AQUA + "¿ªÇÒ±º: Áö¿ø", Material.CREEPER_BANNER_PATTERN, 0, 1, Arrays
-					.asList("¹öÇÁ, µğ¹öÇÁ ½ºÅ³À» ¼ÒÀ¯ÇÏ°í ÀÖ½À´Ï´Ù", "Å¸¿ªÇÒ±ºº¸´Ù µ¥¹ÌÁö°¡ ³·½À´Ï´Ù", "ÆÄÆ¼°¡ ¾øÀ»½Ã, µ¥¹ÌÁö°¡ Áõ°¡ÇÕ´Ï´Ù", "(Áõ°¡Ä¡´Â °æÇèÄ¡ ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)"),
+			itemset(ChatColor.BLUE + "ì—­í• êµ°: ë°©ì–´", Material.CREEPER_BANNER_PATTERN, 0, 1,
+					Arrays.asList("í”¼í•´ ê°ì†Œ ê¸°ìˆ ì„ ì†Œìœ í•˜ê³  ìˆìŠµë‹ˆë‹¤", "ê³µê²©ì—­í• êµ°ë³´ë‹¤ ë°ë¯¸ì§€ê°€ ë‚®ìŠµë‹ˆë‹¤"), 9, inv);
+			itemset(ChatColor.RED + "ì—­í• êµ°: ê³µê²©", Material.CREEPER_BANNER_PATTERN, 0, 1,
+					Arrays.asList("ë³´ìŠ¤,ë¦¬ë”í˜• ëª¹ì—ê²Œ ì¶”ê°€í”¼í•´ë¥¼ ì¤ë‹ˆë‹¤", "íƒ€ì—­í• êµ°ë³´ë‹¤ ë°©ì–´ë ¥ì´ ë‚®ìŠµë‹ˆë‹¤"), 18, inv);
+			itemset(ChatColor.GREEN + "ì—­í• êµ°: ì œì••", Material.CREEPER_BANNER_PATTERN, 0, 1,
+					Arrays.asList("íƒ€ì—­í• êµ°ë³´ë‹¤ ì œì••ê¸°ìˆ ì´ ë§ìŠµë‹ˆë‹¤", "ì§€ì›ê°€ë¥¼ ì œì™¸í•œ íƒ€ì—­í• êµ°ë³´ë‹¤ ë°ë¯¸ì§€ê°€ ë‚®ìŠµë‹ˆë‹¤"), 27, inv);
+			itemset(ChatColor.DARK_AQUA + "ì—­í• êµ°: ì§€ì›", Material.CREEPER_BANNER_PATTERN, 0, 1, Arrays
+					.asList("ë²„í”„, ë””ë²„í”„ ìŠ¤í‚¬ì„ ì†Œìœ í•˜ê³  ìˆìŠµë‹ˆë‹¤", "íƒ€ì—­í• êµ°ë³´ë‹¤ ë°ë¯¸ì§€ê°€ ë‚®ìŠµë‹ˆë‹¤", "íŒŒí‹°ê°€ ì—†ì„ì‹œ, ë°ë¯¸ì§€ê°€ ì¦ê°€í•©ë‹ˆë‹¤", "(ì¦ê°€ì¹˜ëŠ” ê²½í—˜ì¹˜ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)"),
 					36, inv);
 
-			itemset(ChatColor.BLUE + "°Ë»ç", Material.IRON_SWORD, 0, 1, Arrays.asList("ÃßÃµ Àåºñ:", "°Ë", "", "°ø°İ: 3.5/5",
-					"¹æ¾î: 4/5", "Á¦¾î: 3/5", "Áö¿ø: 0/5", "¹üÀ§: 5/5", "»ç°Å¸®: 2.5/5", "±âµ¿: 3.5/5", "³­ÀÌµµ: º¸Åë"), 10, inv);
-			itemset(ChatColor.BLUE + "»ç³É²Û", Material.IRON_AXE, 0, 1, Arrays.asList("ÃßÃµ Àåºñ:", "µµ³¢", "", "°ø°İ: 5/5",
-					"¹æ¾î: 2.5/5", "Á¦¾î: 2.5/5", "Áö¿ø: 1/5", "¹üÀ§: 1/5", "»ç°Å¸®: 1/5", "±âµ¿: 5/5", "³­ÀÌµµ: ¾î·Á¿ò"), 19, inv);
-			itemset(ChatColor.BLUE + "Åõ»ç", Material.CHAIN, 0, 1, Arrays.asList("ÃßÃµ Àåºñ:", "°Ë", "", "°ø°İ: 3/5",
-					"¹æ¾î: 2.5/5", "Á¦¾î: 4/5", "Áö¿ø: 1/5", "¹üÀ§: 4/5", "»ç°Å¸®: 2/5", "±âµ¿: 2.5/5", "³­ÀÌµµ: º¸Åë"), 28, inv);
-			itemset(ChatColor.BLUE + "¼º±â»ç", Material.SHIELD, 0, 1, Arrays.asList("ÃßÃµ Àåºñ:", "ÁÖ:µµ³¢, º¸Á¶:¹æÆĞ", "",
-					"°ø°İ: 1.5/5", "¹æ¾î: 5/5", "Á¦¾î: 3/5", "Áö¿ø: 4.5/5", "¹üÀ§: 2/5", "»ç°Å¸®: 2/5", "±âµ¿: 2/5", "³­ÀÌµµ: ½¬¿ò"), 37,
+			itemset(ChatColor.BLUE + "ê²€ì‚¬", Material.IRON_SWORD, 0, 1, Arrays.asList("ì¶”ì²œ ì¥ë¹„:", "ê²€", "", "ê³µê²©: 3.5/5",
+					"ë°©ì–´: 4/5", "ì œì–´: 3/5", "ì§€ì›: 0/5", "ë²”ìœ„: 5/5", "ì‚¬ê±°ë¦¬: 2.5/5", "ê¸°ë™: 3.5/5", "ë‚œì´ë„: ë³´í†µ"), 10, inv);
+			itemset(ChatColor.BLUE + "ì‚¬ëƒ¥ê¾¼", Material.IRON_AXE, 0, 1, Arrays.asList("ì¶”ì²œ ì¥ë¹„:", "ë„ë¼", "", "ê³µê²©: 5/5",
+					"ë°©ì–´: 2.5/5", "ì œì–´: 2.5/5", "ì§€ì›: 1/5", "ë²”ìœ„: 1/5", "ì‚¬ê±°ë¦¬: 1/5", "ê¸°ë™: 5/5", "ë‚œì´ë„: ì–´ë ¤ì›€"), 19, inv);
+			itemset(ChatColor.BLUE + "íˆ¬ì‚¬", Material.CHAIN, 0, 1, Arrays.asList("ì¶”ì²œ ì¥ë¹„:", "ê²€", "", "ê³µê²©: 3/5",
+					"ë°©ì–´: 2.5/5", "ì œì–´: 4/5", "ì§€ì›: 1/5", "ë²”ìœ„: 4/5", "ì‚¬ê±°ë¦¬: 2/5", "ê¸°ë™: 2.5/5", "ë‚œì´ë„: ë³´í†µ"), 28, inv);
+			itemset(ChatColor.BLUE + "ì„±ê¸°ì‚¬", Material.SHIELD, 0, 1, Arrays.asList("ì¶”ì²œ ì¥ë¹„:", "ì£¼:ë„ë¼, ë³´ì¡°:ë°©íŒ¨", "",
+					"ê³µê²©: 1.5/5", "ë°©ì–´: 5/5", "ì œì–´: 3/5", "ì§€ì›: 4.5/5", "ë²”ìœ„: 2/5", "ì‚¬ê±°ë¦¬: 2/5", "ê¸°ë™: 2/5", "ë‚œì´ë„: ì‰¬ì›€"), 37,
 					inv);
 
-			itemset(ChatColor.BLUE + "±Ã¼ö", Material.BOW, 0, 1, Arrays.asList("ÃßÃµ Àåºñ:", "È°", "", "°ø°İ: 4/5", "¹æ¾î: 3.5/5",
-					"Á¦¾î: 2.5/5", "Áö¿ø: 0/5", "¹üÀ§: 2.5/5", "»ç°Å¸®: 3.5/5", "±âµ¿: 3.5/5", "³­ÀÌµµ: º¸Åë"), 11, inv);
-			itemset(ChatColor.BLUE + "Àú°İ¼ö", Material.CROSSBOW, 0, 1, Arrays.asList("ÃßÃµ Àåºñ:", "¼è³ú", "", "°ø°İ: 5/5",
-					"¹æ¾î: 0/5", "Á¦¾î: 1.5/5", "Áö¿ø: 1/5", "¹üÀ§: 2/5", "»ç°Å¸®: 5/5", "±âµ¿: 2.5/5", "³­ÀÌµµ: ¾î·Á¿ò"), 20, inv);
-			itemset(ChatColor.BLUE + "¿ø¼Ò¼ú»ç", Material.FIREWORK_ROCKET, 0, 1, Arrays.asList("ÃßÃµ Àåºñ:", "È°", "", "°ø°İ: 3/5",
-					"¹æ¾î: 2/5", "Á¦¾î: 4/5", "Áö¿ø: 1/5", "¹üÀ§: 3.5/5", "»ç°Å¸®: 4/5", "±âµ¿: 2/5", "³­ÀÌµµ: º¸Åë"), 29, inv);
-			itemset(ChatColor.BLUE + "ÀÇ±Ã", Material.TIPPED_ARROW, 0, 1, Arrays.asList("ÃßÃµ Àåºñ:", "¼è³ú", "", "°ø°İ: 2/5",
-					"¹æ¾î: 3.5/5", "Á¦¾î: 3.5/5", "Áö¿ø: 5/5", "¹üÀ§: 2.5/5", "»ç°Å¸®: 3.5/5", "±âµ¿: 2/5", "³­ÀÌµµ: ¾î·Á¿ò"), 38, inv);
+			itemset(ChatColor.BLUE + "ê¶ìˆ˜", Material.BOW, 0, 1, Arrays.asList("ì¶”ì²œ ì¥ë¹„:", "í™œ", "", "ê³µê²©: 4/5", "ë°©ì–´: 3.5/5",
+					"ì œì–´: 2.5/5", "ì§€ì›: 0/5", "ë²”ìœ„: 2.5/5", "ì‚¬ê±°ë¦¬: 3.5/5", "ê¸°ë™: 3.5/5", "ë‚œì´ë„: ë³´í†µ"), 11, inv);
+			itemset(ChatColor.BLUE + "ì €ê²©ìˆ˜", Material.CROSSBOW, 0, 1, Arrays.asList("ì¶”ì²œ ì¥ë¹„:", "ì‡ ë‡Œ", "", "ê³µê²©: 5/5",
+					"ë°©ì–´: 0/5", "ì œì–´: 1.5/5", "ì§€ì›: 1/5", "ë²”ìœ„: 2/5", "ì‚¬ê±°ë¦¬: 5/5", "ê¸°ë™: 2.5/5", "ë‚œì´ë„: ì–´ë ¤ì›€"), 20, inv);
+			itemset(ChatColor.BLUE + "ì›ì†Œìˆ ì‚¬", Material.FIREWORK_ROCKET, 0, 1, Arrays.asList("ì¶”ì²œ ì¥ë¹„:", "í™œ", "", "ê³µê²©: 3/5",
+					"ë°©ì–´: 2/5", "ì œì–´: 4/5", "ì§€ì›: 1/5", "ë²”ìœ„: 3.5/5", "ì‚¬ê±°ë¦¬: 4/5", "ê¸°ë™: 2/5", "ë‚œì´ë„: ë³´í†µ"), 29, inv);
+			itemset(ChatColor.BLUE + "ì˜ê¶", Material.TIPPED_ARROW, 0, 1, Arrays.asList("ì¶”ì²œ ì¥ë¹„:", "ì‡ ë‡Œ", "", "ê³µê²©: 2/5",
+					"ë°©ì–´: 3.5/5", "ì œì–´: 3.5/5", "ì§€ì›: 5/5", "ë²”ìœ„: 2.5/5", "ì‚¬ê±°ë¦¬: 3.5/5", "ê¸°ë™: 2/5", "ë‚œì´ë„: ì–´ë ¤ì›€"), 38, inv);
 
-			itemset(ChatColor.BLUE + "±Ç»ç", Material.IRON_HELMET, 0, 1, Arrays.asList("ÃßÃµ Àåºñ:", "¾ç¼Õ ³ÊÅ¬", "", "°ø°İ: 3/5",
-					"¹æ¾î: 5/5", "Á¦¾î: 2.5/5", "Áö¿ø: 0/5", "¹üÀ§: 2/5", "»ç°Å¸®: 1.5/5", "±âµ¿: 3/5", "³­ÀÌµµ: ¾î·Á¿ò"), 12, inv);
-			itemset(ChatColor.BLUE + "Á¶·Ã»ç", Material.LEAD, 0, 1, Arrays.asList("ÃßÃµ Àåºñ:", "¾ç¼Õ ³ÊÅ¬", "°ø°İ: 4/5", "¹æ¾î: 1/5",
-					"Á¦¾î: 3/5", "Áö¿ø: 0/5", "¹üÀ§: 3/5", "»ç°Å¸®: 4/5", "±âµ¿: 1/5", "³­ÀÌµµ: º¸Åë"), 21, inv);
-			itemset(ChatColor.BLUE + "À¯¼ú°¡", Material.GOLDEN_CHESTPLATE, 0, 1, Arrays.asList("ÃßÃµ Àåºñ:", "¾ç¼Õ ³ÊÅ¬", "",
-					"°ø°İ: 3/5", "¹æ¾î: 4/5", "Á¦¾î: 4.5/5", "Áö¿ø: 0/5", "¹üÀ§: 2.5/5", "»ç°Å¸®: 2.5/5", "±âµ¿: 2/5", "³­ÀÌµµ: º¸Åë"), 30,
+			itemset(ChatColor.BLUE + "ê¶Œì‚¬", Material.IRON_HELMET, 0, 1, Arrays.asList("ì¶”ì²œ ì¥ë¹„:", "ì–‘ì† ë„ˆí´", "", "ê³µê²©: 3/5",
+					"ë°©ì–´: 5/5", "ì œì–´: 2.5/5", "ì§€ì›: 0/5", "ë²”ìœ„: 2/5", "ì‚¬ê±°ë¦¬: 1.5/5", "ê¸°ë™: 3/5", "ë‚œì´ë„: ì–´ë ¤ì›€"), 12, inv);
+			itemset(ChatColor.BLUE + "ì¡°ë ¨ì‚¬", Material.LEAD, 0, 1, Arrays.asList("ì¶”ì²œ ì¥ë¹„:", "ì–‘ì† ë„ˆí´", "ê³µê²©: 4/5", "ë°©ì–´: 1/5",
+					"ì œì–´: 3/5", "ì§€ì›: 0/5", "ë²”ìœ„: 3/5", "ì‚¬ê±°ë¦¬: 4/5", "ê¸°ë™: 1/5", "ë‚œì´ë„: ë³´í†µ"), 21, inv);
+			itemset(ChatColor.BLUE + "ìœ ìˆ ê°€", Material.GOLDEN_CHESTPLATE, 0, 1, Arrays.asList("ì¶”ì²œ ì¥ë¹„:", "ì–‘ì† ë„ˆí´", "",
+					"ê³µê²©: 3/5", "ë°©ì–´: 4/5", "ì œì–´: 4.5/5", "ì§€ì›: 0/5", "ë²”ìœ„: 2.5/5", "ì‚¬ê±°ë¦¬: 2.5/5", "ê¸°ë™: 2/5", "ë‚œì´ë„: ë³´í†µ"), 30,
 					inv);
-			itemset(ChatColor.BLUE + "µµ»ç", Material.SOUL_CAMPFIRE, 0, 1,
-					Arrays.asList("ÃßÃµ Àåºñ:", "¾ç¼Õ ³ÊÅ¬", "", "°ø°İ: 2.5/5", "¹æ¾î: 2.5/5", "Á¦¾î: 3.5/5", "Áö¿ø: 4/5", "¹üÀ§: 3.5/5",
-							"»ç°Å¸®: 2.5/5", "±âµ¿: 2.5/5", "³­ÀÌµµ: º¸Åë"),
+			itemset(ChatColor.BLUE + "ë„ì‚¬", Material.SOUL_CAMPFIRE, 0, 1,
+					Arrays.asList("ì¶”ì²œ ì¥ë¹„:", "ì–‘ì† ë„ˆí´", "", "ê³µê²©: 2.5/5", "ë°©ì–´: 2.5/5", "ì œì–´: 3.5/5", "ì§€ì›: 4/5", "ë²”ìœ„: 3.5/5",
+							"ì‚¬ê±°ë¦¬: 2.5/5", "ê¸°ë™: 2.5/5", "ë‚œì´ë„: ë³´í†µ"),
 					39, inv);
 
-			itemset(ChatColor.BLUE + "È­¿°¼ú»ç", Material.FIRE_CHARGE, 0, 1, Arrays.asList("ÃßÃµ Àåºñ:", "¿Ïµå", "", "°ø°İ: 4/5",
-					"¹æ¾î: 3.5/5", "Á¦¾î: 2.5/5", "Áö¿ø: 0.5/5", "¹üÀ§: 3/5", "»ç°Å¸®: 3.5/5", "±âµ¿: 2/5", "³­ÀÌµµ: º¸Åë"), 13, inv);
-			itemset(ChatColor.BLUE + "È¯¼ú»ç", Material.JACK_O_LANTERN, 0, 1, Arrays.asList("ÃßÃµ Àåºñ:", "¿Ïµå", "",
-					"°ø°İ: 4.5/5", "¹æ¾î: 1.5/5", "Á¦¾î: 2.5/5", "Áö¿ø: 0/5", "¹üÀ§: 3/5", "»ç°Å¸®: 2/5", "±âµ¿: 4/5", "³­ÀÌµµ: ¾î·Á¿ò"), 22,
+			itemset(ChatColor.BLUE + "í™”ì—¼ìˆ ì‚¬", Material.FIRE_CHARGE, 0, 1, Arrays.asList("ì¶”ì²œ ì¥ë¹„:", "ì™„ë“œ", "", "ê³µê²©: 4/5",
+					"ë°©ì–´: 3.5/5", "ì œì–´: 2.5/5", "ì§€ì›: 0.5/5", "ë²”ìœ„: 3/5", "ì‚¬ê±°ë¦¬: 3.5/5", "ê¸°ë™: 2/5", "ë‚œì´ë„: ë³´í†µ"), 13, inv);
+			itemset(ChatColor.BLUE + "í™˜ìˆ ì‚¬", Material.JACK_O_LANTERN, 0, 1, Arrays.asList("ì¶”ì²œ ì¥ë¹„:", "ì™„ë“œ", "",
+					"ê³µê²©: 4.5/5", "ë°©ì–´: 1.5/5", "ì œì–´: 2.5/5", "ì§€ì›: 0/5", "ë²”ìœ„: 3/5", "ì‚¬ê±°ë¦¬: 2/5", "ê¸°ë™: 4/5", "ë‚œì´ë„: ì–´ë ¤ì›€"), 22,
 					inv);
-			itemset(ChatColor.BLUE + "¿ø¿¹°¡", Material.FLOWERING_AZALEA_LEAVES, 0, 1, Arrays.asList("ÃßÃµ Àåºñ:", "»ğ", "",
-					"°ø°İ: 3.5/5", "¹æ¾î: 2.5/5", "Á¦¾î: 4.5/5", "Áö¿ø: 1/5", "¹üÀ§: 3/5", "»ç°Å¸®: 3/5", "±âµ¿: 1/5", "³­ÀÌµµ: ½¬¿ò"), 31,
+			itemset(ChatColor.BLUE + "ì›ì˜ˆê°€", Material.FLOWERING_AZALEA_LEAVES, 0, 1, Arrays.asList("ì¶”ì²œ ì¥ë¹„:", "ì‚½", "",
+					"ê³µê²©: 3.5/5", "ë°©ì–´: 2.5/5", "ì œì–´: 4.5/5", "ì§€ì›: 1/5", "ë²”ìœ„: 3/5", "ì‚¬ê±°ë¦¬: 3/5", "ê¸°ë™: 1/5", "ë‚œì´ë„: ì‰¬ì›€"), 31,
 					inv);
-			itemset(ChatColor.BLUE + "¿¹¼ú°¡", Material.JUKEBOX, 0, 1, Arrays.asList("ÃßÃµ Àåºñ:", "¿Ïµå", "", "°ø°İ: 3/5",
-					"¹æ¾î: 1/5", "Á¦¾î: 3/5", "Áö¿ø: 4/5", "¹üÀ§: 3.5/5", "»ç°Å¸®: 4/5", "±âµ¿: 2/5", "³­ÀÌµµ: º¸Åë"), 40, inv);
+			itemset(ChatColor.BLUE + "ì˜ˆìˆ ê°€", Material.JUKEBOX, 0, 1, Arrays.asList("ì¶”ì²œ ì¥ë¹„:", "ì™„ë“œ", "", "ê³µê²©: 3/5",
+					"ë°©ì–´: 1/5", "ì œì–´: 3/5", "ì§€ì›: 4/5", "ë²”ìœ„: 3.5/5", "ì‚¬ê±°ë¦¬: 4/5", "ê¸°ë™: 2/5", "ë‚œì´ë„: ë³´í†µ"), 40, inv);
 
-			itemset(ChatColor.BLUE + "È­ÇĞÀÚ", Material.POTION, 0, 1, Arrays.asList("ÃßÃµ Àåºñ:", "°î±ªÀÌ", "", "°ø°İ: 3/5",
-					"¹æ¾î: 4.5/5", "Á¦¾î: 2.5/5", "Áö¿ø: 1/5", "¹üÀ§: 3.5/5", "»ç°Å¸®: 1.5/5", "±âµ¿: 3.5/5", "³­ÀÌµµ: ½¬¿ò"), 14, inv);
-			itemset(ChatColor.BLUE + "¹«±â°ø", Material.BEACON, 0, 1, Arrays.asList("ÃßÃµ Àåºñ:", "°î±ªÀÌ", "", "°ø°İ: 4.5/5",
-					"¹æ¾î: 2/5", "Á¦¾î: 2.5/5", "Áö¿ø: 1/5", "¹üÀ§: 3/5", "»ç°Å¸®: 5/5", "±âµ¿: 1.5/5", "³­ÀÌµµ: º¸Åë"), 23, inv);
-			itemset(ChatColor.BLUE + "°øÇĞÀÚ", Material.IRON_PICKAXE, 0, 1, Arrays.asList("ÃßÃµ Àåºñ:", "°î±ªÀÌ", "", "°ø°İ: 3/5",
-					"¹æ¾î: 4/5", "Á¦¾î: 5/5", "Áö¿ø: 1/5", "¹üÀ§: 2.5/5", "»ç°Å¸®: 2/5", "±âµ¿: 2.5/5", "³­ÀÌµµ: º¸Åë"), 32, inv);
-			itemset(ChatColor.BLUE + "¿ä¸®»ç", Material.COOKED_BEEF, 0, 1, Arrays.asList("ÃßÃµ Àåºñ:", "»ğ", "", "°ø°İ: 2.5/5",
-					"¹æ¾î: 3/5", "Á¦¾î: 3/5", "Áö¿ø: 4/5", "¹üÀ§: 3.5/5", "»ç°Å¸®: 3/5", "±âµ¿: 1/5", "³­ÀÌµµ: ½¬¿ò"), 41, inv);
+			itemset(ChatColor.BLUE + "í™”í•™ì", Material.POTION, 0, 1, Arrays.asList("ì¶”ì²œ ì¥ë¹„:", "ê³¡ê´­ì´", "", "ê³µê²©: 3/5",
+					"ë°©ì–´: 4.5/5", "ì œì–´: 2.5/5", "ì§€ì›: 1/5", "ë²”ìœ„: 3.5/5", "ì‚¬ê±°ë¦¬: 1.5/5", "ê¸°ë™: 3.5/5", "ë‚œì´ë„: ì‰¬ì›€"), 14, inv);
+			itemset(ChatColor.BLUE + "ë¬´ê¸°ê³µ", Material.BEACON, 0, 1, Arrays.asList("ì¶”ì²œ ì¥ë¹„:", "ê³¡ê´­ì´", "", "ê³µê²©: 4.5/5",
+					"ë°©ì–´: 2/5", "ì œì–´: 2.5/5", "ì§€ì›: 1/5", "ë²”ìœ„: 3/5", "ì‚¬ê±°ë¦¬: 5/5", "ê¸°ë™: 1.5/5", "ë‚œì´ë„: ë³´í†µ"), 23, inv);
+			itemset(ChatColor.BLUE + "ê³µí•™ì", Material.IRON_PICKAXE, 0, 1, Arrays.asList("ì¶”ì²œ ì¥ë¹„:", "ê³¡ê´­ì´", "", "ê³µê²©: 3/5",
+					"ë°©ì–´: 4/5", "ì œì–´: 5/5", "ì§€ì›: 1/5", "ë²”ìœ„: 2.5/5", "ì‚¬ê±°ë¦¬: 2/5", "ê¸°ë™: 2.5/5", "ë‚œì´ë„: ë³´í†µ"), 32, inv);
+			itemset(ChatColor.BLUE + "ìš”ë¦¬ì‚¬", Material.COOKED_BEEF, 0, 1, Arrays.asList("ì¶”ì²œ ì¥ë¹„:", "ì‚½", "", "ê³µê²©: 2.5/5",
+					"ë°©ì–´: 3/5", "ì œì–´: 3/5", "ì§€ì›: 4/5", "ë²”ìœ„: 3.5/5", "ì‚¬ê±°ë¦¬: 3/5", "ê¸°ë™: 1/5", "ë‚œì´ë„: ì‰¬ì›€"), 41, inv);
 
-			itemset(ChatColor.BLUE + "¹Ù´Ù±â»ç", Material.TRIDENT, 0, 1, Arrays.asList("ÃßÃµ Àåºñ:", "»ïÁöÃ¢, ¹æÆĞ ", "",
-					"°ø°İ: 3.5/5", "¹æ¾î: 4/5", "Á¦¾î: 2/5", "Áö¿ø: 0/5", "¹üÀ§: 4/5", "»ç°Å¸®: 3.5/5", "±âµ¿: 3.8/5", "³­ÀÌµµ: ¾î·Á¿ò"), 15,
+			itemset(ChatColor.BLUE + "ë°”ë‹¤ê¸°ì‚¬", Material.TRIDENT, 0, 1, Arrays.asList("ì¶”ì²œ ì¥ë¹„:", "ì‚¼ì§€ì°½, ë°©íŒ¨ ", "",
+					"ê³µê²©: 3.5/5", "ë°©ì–´: 4/5", "ì œì–´: 2/5", "ì§€ì›: 0/5", "ë²”ìœ„: 4/5", "ì‚¬ê±°ë¦¬: 3.5/5", "ê¸°ë™: 3.8/5", "ë‚œì´ë„: ì–´ë ¤ì›€"), 15,
 					inv);
-			itemset(ChatColor.BLUE + "±ÍÁ·", Material.HEART_OF_THE_SEA, 0, 1, Arrays.asList("ÃßÃµ Àåºñ:", "»ïÁöÃ¢", "",
-					"°ø°İ: 4.5/5", "¹æ¾î: 2.5/5", "Á¦¾î: 2.5/5", "Áö¿ø: 1/5", "¹üÀ§: 3.5/5", "»ç°Å¸®: 4/5", "±âµ¿: 2/5", "³­ÀÌµµ: º¸Åë"),
+			itemset(ChatColor.BLUE + "ê·€ì¡±", Material.HEART_OF_THE_SEA, 0, 1, Arrays.asList("ì¶”ì²œ ì¥ë¹„:", "ì‚¼ì§€ì°½", "",
+					"ê³µê²©: 4.5/5", "ë°©ì–´: 2.5/5", "ì œì–´: 2.5/5", "ì§€ì›: 1/5", "ë²”ìœ„: 3.5/5", "ì‚¬ê±°ë¦¬: 4/5", "ê¸°ë™: 2/5", "ë‚œì´ë„: ë³´í†µ"),
 					24, inv);
-			itemset(ChatColor.BLUE + "ºù¼ú»ç", Material.PACKED_ICE, 0, 1,
-					Arrays.asList("ÃßÃµ Àåºñ:", "ºñ´Ã(ÇÁ¸®Áî¸Ó¸° Á¶°¢)", "", "°ø°İ: 3.5/5", "¹æ¾î: 2.5/5", "Á¦¾î: 4.5/5", "Áö¿ø: 0/5",
-							"¹üÀ§: 2.5/5", "»ç°Å¸®: 2.5/5", "±âµ¿: 1.5/5", "³­ÀÌµµ: ¾î·Á¿ò"),
+			itemset(ChatColor.BLUE + "ë¹™ìˆ ì‚¬", Material.PACKED_ICE, 0, 1,
+					Arrays.asList("ì¶”ì²œ ì¥ë¹„:", "ë¹„ëŠ˜(í”„ë¦¬ì¦ˆë¨¸ë¦° ì¡°ê°)", "", "ê³µê²©: 3.5/5", "ë°©ì–´: 2.5/5", "ì œì–´: 4.5/5", "ì§€ì›: 0/5",
+							"ë²”ìœ„: 2.5/5", "ì‚¬ê±°ë¦¬: 2.5/5", "ê¸°ë™: 1.5/5", "ë‚œì´ë„: ì–´ë ¤ì›€"),
 					33, inv);
-			itemset(ChatColor.BLUE + "³¬½Ã²Û", Material.FISHING_ROD, 0, 1, Arrays.asList("ÃßÃµ Àåºñ:", "³¬½Ã´ë", "", "°ø°İ: 2.5/5",
-					"¹æ¾î: 3/5", "Á¦¾î: 4/5", "Áö¿ø: 4/5", "¹üÀ§: 2.5/5", "»ç°Å¸®: 3.5/5", "±âµ¿: 2/5", "³­ÀÌµµ: ½¬¿ò"), 42, inv);
+			itemset(ChatColor.BLUE + "ë‚šì‹œê¾¼", Material.FISHING_ROD, 0, 1, Arrays.asList("ì¶”ì²œ ì¥ë¹„:", "ë‚šì‹œëŒ€", "", "ê³µê²©: 2.5/5",
+					"ë°©ì–´: 3/5", "ì œì–´: 4/5", "ì§€ì›: 4/5", "ë²”ìœ„: 2.5/5", "ì‚¬ê±°ë¦¬: 3.5/5", "ê¸°ë™: 2/5", "ë‚œì´ë„: ì‰¬ì›€"), 42, inv);
 
-			itemset(ChatColor.BLUE + "±¤Àü»ç", Material.CRIMSON_ROOTS, 0, 1, Arrays.asList("ÃßÃµ Àåºñ:", "°Ë", "", "°ø°İ: 4/5",
-					"¹æ¾î: 3/5", "Á¦¾î: 3/5", "Áö¿ø: 0/5", "¹üÀ§: 3.5/5", "»ç°Å¸®: 3.5/5", "±âµ¿: 2.5/5", "³­ÀÌµµ: º¸Åë"), 16, inv);
-			itemset(ChatColor.BLUE + "´Ü°Ë»ç", Material.SHEARS, 0, 1, Arrays.asList("ÃßÃµ Àåºñ:", "´Ü°Ë", "", "°ø°İ: 4.75/5",
-					"¹æ¾î: 1.5/5", "Á¦¾î: 2/5", "Áö¿ø: 0/5", "¹üÀ§: 3/5", "»ç°Å¸®: 1.5/5", "±âµ¿: 4.5/5", "³­ÀÌµµ: ¾î·Á¿ò"), 25, inv);
-			itemset(ChatColor.BLUE + "À§´õ¸®½ºÆ®", Material.WITHER_ROSE, 0, 1, Arrays.asList("ÃßÃµ Àåºñ:", "±ªÀÌ", "", "°ø°İ: 3/5",
-					"¹æ¾î: 3/5", "Á¦¾î: 4/5", "Áö¿ø: 2/5", "¹üÀ§: 3/5", "»ç°Å¸®: 4/5", "±âµ¿: 5/5", "³­ÀÌµµ: º¸Åë"), 34, inv);
-			itemset(ChatColor.BLUE + "ºÎµÎ¼ú»ç", Material.TOTEM_OF_UNDYING, 0, 1,
-					Arrays.asList("ÃßÃµ Àåºñ:", "ÁÖ:±ªÀÌ, º¸Á¶:ºÒ»çÀÇÅäÅÛ ", "", "°ø°İ: 2.5/5", "¹æ¾î: 3.5/5", "Á¦¾î: 1.5/5", "Áö¿ø: 4.5/5", "¹üÀ§: 2.5/5",
-							"»ç°Å¸®: 2.5/5", "±âµ¿: 2/5", "³­ÀÌµµ: ¾î·Á¿ò"),
+			itemset(ChatColor.BLUE + "ê´‘ì „ì‚¬", Material.CRIMSON_ROOTS, 0, 1, Arrays.asList("ì¶”ì²œ ì¥ë¹„:", "ê²€", "", "ê³µê²©: 4/5",
+					"ë°©ì–´: 3/5", "ì œì–´: 3/5", "ì§€ì›: 0/5", "ë²”ìœ„: 3.5/5", "ì‚¬ê±°ë¦¬: 3.5/5", "ê¸°ë™: 2.5/5", "ë‚œì´ë„: ë³´í†µ"), 16, inv);
+			itemset(ChatColor.BLUE + "ë‹¨ê²€ì‚¬", Material.SHEARS, 0, 1, Arrays.asList("ì¶”ì²œ ì¥ë¹„:", "ë‹¨ê²€", "", "ê³µê²©: 4.75/5",
+					"ë°©ì–´: 1.5/5", "ì œì–´: 2/5", "ì§€ì›: 0/5", "ë²”ìœ„: 3/5", "ì‚¬ê±°ë¦¬: 1.5/5", "ê¸°ë™: 4.5/5", "ë‚œì´ë„: ì–´ë ¤ì›€"), 25, inv);
+			itemset(ChatColor.BLUE + "ìœ„ë”ë¦¬ìŠ¤íŠ¸", Material.WITHER_ROSE, 0, 1, Arrays.asList("ì¶”ì²œ ì¥ë¹„:", "ê´­ì´", "", "ê³µê²©: 3/5",
+					"ë°©ì–´: 3/5", "ì œì–´: 4/5", "ì§€ì›: 2/5", "ë²”ìœ„: 3/5", "ì‚¬ê±°ë¦¬: 4/5", "ê¸°ë™: 5/5", "ë‚œì´ë„: ë³´í†µ"), 34, inv);
+			itemset(ChatColor.BLUE + "ë¶€ë‘ìˆ ì‚¬", Material.TOTEM_OF_UNDYING, 0, 1,
+					Arrays.asList("ì¶”ì²œ ì¥ë¹„:", "ì£¼:ê´­ì´, ë³´ì¡°:ë¶ˆì‚¬ì˜í† í…œ ", "", "ê³µê²©: 2.5/5", "ë°©ì–´: 3.5/5", "ì œì–´: 1.5/5", "ì§€ì›: 4.5/5", "ë²”ìœ„: 2.5/5",
+							"ì‚¬ê±°ë¦¬: 2.5/5", "ê¸°ë™: 2/5", "ë‚œì´ë„: ì–´ë ¤ì›€"),
 					43, inv);
 
 		} else {
