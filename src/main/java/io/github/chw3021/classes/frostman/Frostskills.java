@@ -41,6 +41,7 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
@@ -1165,7 +1166,7 @@ public class Frostskills extends Pak implements Listener, Serializable {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec =2*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =3.5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 		if(ClassData.pc.get(p.getUniqueId()) == 21&& bsd.IcicleShot.getOrDefault(p.getUniqueId(), 0)>=1) {
 			if(!(p.isSneaking()) && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK))
@@ -1539,25 +1540,17 @@ public class Frostskills extends Pak implements Listener, Serializable {
 
 	final private void frostCool(LivingEntity le, Player p, Double cool){
 		if(ClassData.pc.get(p.getUniqueId()) == 21){
-			ArrayList<Location> draw = new ArrayList<Location>();
 			AtomicInteger j = new AtomicInteger();
-			Location pl = le.getLocation().clone().add(0, 1, 0);
-			Vector pv = pl.clone().add(1, 0, 0).toVector().subtract(pl.clone().toVector());
 
 			for(int an = 0; an<cool*20; an++) {
 				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					@Override
 					public void run()
 					{
-						for(double an = 0; an<Math.PI*2; an+=Math.PI/90) {
-							draw.add(pl.clone().add(pv.rotateAroundY(an).normalize().multiply(1.1)));
-						}
-						Location particlel = pl.clone().add(pv.rotateAroundY((Math.PI*2/(cool*20))*j.getAndIncrement()).normalize().multiply(1.1));
-						draw.forEach(l -> {
-							p.spawnParticle(Particle.BLOCK_CRACK, l.clone().add(0, 0.2, 0),1,Material.SNOW_BLOCK.createBlockData());
-
-						});
-						p.spawnParticle(Particle.BLOCK_CRACK, particlel.clone().add(0, 0.2, 0),8,0.12,0.12,0.12,Material.BLUE_ICE.createBlockData());
+						Location pl = le.getLocation().clone().add(0, 1, 0);
+						Vector pv = pl.clone().add(1, 0, 0).toVector().subtract(pl.clone().toVector());
+						Location particlel = pl.clone().add(pv.rotateAroundY((Math.PI*2/(cool*20))*j.getAndIncrement()).normalize().multiply(1.9));
+						p.spawnParticle(Particle.BLOCK_CRACK, particlel.clone(),1,Material.BLUE_ICE.createBlockData());
 					}
 				}, an);
 			}
@@ -1603,8 +1596,8 @@ public class Frostskills extends Pak implements Listener, Serializable {
 						else // if timer is done
 						{
 							frostcooldown.remove(le.getUniqueId()); // removing player from HashMap
-							frost.computeIfPresent(le.getUniqueId(), (k,v) -> v+1);
-							frost.putIfAbsent(le.getUniqueId(), 0);
+							frost.computeIfPresent(le.getUniqueId(), (k,v) -> ++v);
+							frost.putIfAbsent(le.getUniqueId(), 1);
 							p.playSound(p.getLocation(), Sound.BLOCK_GLASS_HIT, 1f, 2f);
 							frostInd(le,p);
 							if(frost.get(le.getUniqueId())>=3) {
@@ -1621,8 +1614,8 @@ public class Frostskills extends Pak implements Listener, Serializable {
 					}
 					else // if cooldown doesn't have players name in it
 					{
-						frost.computeIfPresent(le.getUniqueId(), (k,v) -> v+1);
-						frost.putIfAbsent(le.getUniqueId(), 0);
+						frost.computeIfPresent(le.getUniqueId(), (k,v) ->++v);
+						frost.putIfAbsent(le.getUniqueId(), 1);
 						p.playSound(p.getLocation(), Sound.BLOCK_GLASS_HIT, 1f, 2f);
 						frostInd(le,p);
 						if(frost.get(le.getUniqueId())>=3) {
@@ -1677,8 +1670,8 @@ public class Frostskills extends Pak implements Listener, Serializable {
 							else // if timer is done
 							{
 								frostcooldown.remove(le.getUniqueId()); // removing player from HashMap
-								frost.computeIfPresent(le.getUniqueId(), (k,v) -> v+1);
-								frost.putIfAbsent(le.getUniqueId(), 0);
+								frost.computeIfPresent(le.getUniqueId(), (k,v) -> ++v);
+								frost.putIfAbsent(le.getUniqueId(), 1);
 								p.playSound(p.getLocation(), Sound.BLOCK_GLASS_HIT, 1f, 2f);
 								frostInd(le,p);
 								if(frost.get(le.getUniqueId())>=3) {
@@ -1695,8 +1688,8 @@ public class Frostskills extends Pak implements Listener, Serializable {
 						}
 						else // if cooldown doesn't have players name in it
 						{
-							frost.computeIfPresent(le.getUniqueId(), (k,v) -> v+1);
-							frost.putIfAbsent(le.getUniqueId(), 0);
+							frost.computeIfPresent(le.getUniqueId(), (k,v) -> ++v);
+							frost.putIfAbsent(le.getUniqueId(), 1);
 							p.playSound(p.getLocation(), Sound.BLOCK_GLASS_HIT, 1f, 2f);
 							frostInd(le,p);
 							if(frost.get(le.getUniqueId())>=3) {
@@ -1812,7 +1805,7 @@ public class Frostskills extends Pak implements Listener, Serializable {
 			return;
 		}
 		ItemStack is = p.getInventory().getItemInMainHand();
-		if(ClassData.pc.get(p.getUniqueId()) == 21 && (is.getType() == Material.PRISMARINE_SHARD && ev.getNewSlot()==4 && p.isSneaking() && Proficiency.getpro(p) >=1))
+		if(ClassData.pc.get(p.getUniqueId()) == 21 && (is.getType() == Material.PRISMARINE_SHARD && ev.getNewSlot()==3 && p.isSneaking() && Proficiency.getpro(p) >=1))
 		{
 			p.setCooldown(CAREFUL, 2);
 			final Location el = gettargetblock(p,6);
@@ -1942,7 +1935,7 @@ public class Frostskills extends Pak implements Listener, Serializable {
 			return;
 		}
 		ItemStack is = p.getInventory().getItemInMainHand();
-		if(ClassData.pc.get(p.getUniqueId()) == 21 && (is.getType() == Material.PRISMARINE_SHARD && ev.getNewSlot()==5 && p.isSneaking() && Proficiency.getpro(p) >=2))
+		if(ClassData.pc.get(p.getUniqueId()) == 21 && (is.getType() == Material.PRISMARINE_SHARD && ev.getNewSlot()==4 && p.isSneaking() && Proficiency.getpro(p) >=2))
 		{
 			p.setCooldown(CAREFUL, 2);
 			ev.setCancelled(true);
@@ -1976,6 +1969,7 @@ public class Frostskills extends Pak implements Listener, Serializable {
 							fallingb.setDropItem(false);
 							fallingb.setHurtEntities(false);
 							fallingb.setGravity(false);
+							fallingb.setVelocity(BlockFace.UP.getDirection().normalize().multiply(0.2));
 							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 								@Override
 								public void run() {
@@ -2005,17 +1999,14 @@ public class Frostskills extends Pak implements Listener, Serializable {
 										public void run()
 										{
 											p.playSound(tl, Sound.BLOCK_SNOW_PLACE, 0.8f, 0.2f);
-											pw.spawnParticle(Particle.BLOCK_MARKER, tl.clone().add(0,3,0),500,7,2,7,1, Material.PACKED_ICE.createBlockData());
-											pw.spawnParticle(Particle.BLOCK_MARKER, tl.clone().add(0,3,0),500,7,2,7,1, Material.BLUE_ICE.createBlockData());
-											pw.spawnParticle(Particle.BLOCK_MARKER, tl.clone().add(0,3,0),500,7,2,7,1, Material.SNOW_BLOCK.createBlockData());
-											pw.spawnParticle(Particle.BLOCK_MARKER, tl.clone().add(0,3,0),500,7,2,7,1, Material.ICE.createBlockData());
+											pw.spawnParticle(Particle.BLOCK_MARKER, tl.clone().add(0,-6.5,0),500,7,0.5,7,1, Material.PACKED_ICE.createBlockData());
+											pw.spawnParticle(Particle.BLOCK_MARKER, tl.clone().add(0,-6.5,0),500,7,0.5,7,1, Material.SNOW_BLOCK.createBlockData());
 
 										}
-									}, i*5);
+									}, i*10);
 								}
 
-								p.playSound(p.getLocation(), Sound.BLOCK_GLASS_BREAK, 0.8f, 2f);
-								p.playSound(p.getLocation(), Sound.BLOCK_GLASS_BREAK, 0.8f, 1f);
+								p.playSound(p.getLocation(), Sound.BLOCK_GLASS_BREAK, 0.2f, 2f);
 								p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_BREAK, 0.8f, 2f);
 								p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_CLUSTER_BREAK, 0.8f, 2f);
 								p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_BREAK, 0.8f, 0f);

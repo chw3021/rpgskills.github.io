@@ -1076,7 +1076,7 @@ public class RedSkills extends Summoned{
 		                	if(e instanceof Player && !e.hasMetadata("fake")) {
 		                		Player pe = (Player) e;
 		    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-			                		pe.sendMessage(ChatColor.BOLD+"ºÓÀº±â»ç: ³»´«À» ºÁ¶ó....");
+			                		pe.sendMessage(ChatColor.BOLD+"ë¶‰ì€ê¸°ì‚¬: ë‚´ëˆˆì„ ë´ë¼....");
 		    					}
 		    					else {
 			                		pe.sendMessage(ChatColor.BOLD+"RedKnight: Look At My Eyes....");
@@ -1113,7 +1113,7 @@ public class RedSkills extends Summoned{
 	                	if(e instanceof Player && !e.hasMetadata("fake")) {
 	                		Player pe = (Player) e;
 	    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-		                		pe.sendMessage(ChatColor.BOLD+"ºÓÀº±â»ç: ³»´«À» ºÁ¶ó....");
+		                		pe.sendMessage(ChatColor.BOLD+"ë¶‰ì€ê¸°ì‚¬: ë‚´ëˆˆì„ ë´ë¼....");
 	    					}
 	    					else {
 		                		pe.sendMessage(ChatColor.BOLD+"RedKnight: Look At My Eyes....");
@@ -1181,7 +1181,7 @@ public class RedSkills extends Summoned{
 		                		Player pe = (Player) e;
 		                		Holding.invur(pe, 40l);
 		    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-			                		pe.sendMessage(ChatColor.BOLD+"ºÓÀº±â»ç: ¿î¸í¿¡ ÀúÇ×ÇÏÁö¸¶¶ó.");
+			                		pe.sendMessage(ChatColor.BOLD+"ë¶‰ì€ê¸°ì‚¬: ìš´ëª…ì— ì €í•­í•˜ì§€ë§ˆë¼.");
 		    					}
 		    					else {
 			                		pe.sendMessage(ChatColor.BOLD+"RedKnight: You can't change your destiny.");
@@ -1351,7 +1351,7 @@ public class RedSkills extends Summoned{
 	                		Player pe = (Player) e;
 	                		Holding.invur(pe, 40l);
 	    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-		                		pe.sendMessage(ChatColor.BOLD+"ºÓÀº±â»ç: ¿î¸í¿¡ ÀúÇ×ÇÏÁö¸¶¶ó.");
+		                		pe.sendMessage(ChatColor.BOLD+"ë¶‰ì€ê¸°ì‚¬: ìš´ëª…ì— ì €í•­í•˜ì§€ë§ˆë¼.");
 	    					}
 	    					else {
 		                		pe.sendMessage(ChatColor.BOLD+"RedKnight: You can't change your destiny.");
@@ -1604,7 +1604,7 @@ public class RedSkills extends Summoned{
         Holding.untouchable(p, 651l);
         for(Player pe : OverworldRaids.getheroes(p)) {
 			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-        		pe.sendMessage(ChatColor.BOLD+"ºÓÀº±â»ç: ½Ã·ÃÀÇ ½Ã°£ÀÌ´Ù.");
+        		pe.sendMessage(ChatColor.BOLD+"ë¶‰ì€ê¸°ì‚¬: ì‹œë ¨ì˜ ì‹œê°„ì´ë‹¤.");
 			}
 			else {
         		pe.sendMessage(ChatColor.BOLD+"RedKnight: Time To Ordeal.");
@@ -1647,7 +1647,7 @@ public class RedSkills extends Summoned{
 						                for(Player pe : OverworldRaids.getheroes(p)) {
 					                		if(pe.getWorld().equals(p.getWorld()) && rl.clone().distance(p.getLocation()) > 20 && pe.getWorld() == p.getWorld()) {
 						    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-							                		pe.sendMessage(ChatColor.BOLD+"ºÓÀº±â»ç: ¿øÀ§Ä¡!");
+							                		pe.sendMessage(ChatColor.BOLD+"ë¶‰ì€ê¸°ì‚¬: ì›ìœ„ì¹˜!");
 						    					}
 						    					else {
 							                		pe.sendMessage(ChatColor.BOLD+"RedKnight: You Can't Get Away!");
@@ -1730,7 +1730,7 @@ public class RedSkills extends Summoned{
 		Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("redknightmagma"+rn)).forEach(e -> e.remove());
         for(Player pe : OverworldRaids.getheroes(p)) {
 			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-        		pe.sendMessage(ChatColor.BOLD+"ºÓÀº±â»ç: ÈûÀÌ ºüÁö´Â±º...");
+        		pe.sendMessage(ChatColor.BOLD+"ë¶‰ì€ê¸°ì‚¬: í˜ì´ ë¹ ì§€ëŠ”êµ°...");
 			}
 			else {
         		pe.sendMessage(ChatColor.BOLD+"RedKnight: I think it's time to go...");
@@ -1799,7 +1799,7 @@ public class RedSkills extends Summoned{
 					p.getWorld().playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 1, 0);
 		            for(Player pe : OverworldRaids.getheroes(p)) {
     					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-	                		pe.sendMessage(ChatColor.BOLD+"ºÓÀº±â»çÀÇ Á¤¼ö (" + redcharge.get(p.getUniqueId()) + " / 20)");
+	                		pe.sendMessage(ChatColor.BOLD+"ë¶‰ì€ê¸°ì‚¬ì˜ ì •ìˆ˜ (" + redcharge.get(p.getUniqueId()) + " / 20)");
     					}
     					else {
 	                		pe.sendMessage(ChatColor.BOLD+"RedKnight's Soul (" + redcharge.get(p.getUniqueId()) + " / 20)");
@@ -1818,7 +1818,7 @@ public class RedSkills extends Summoned{
 		                rb6cooldown.remove(p.getUniqueId());
 		                for(Player pe : OverworldRaids.getheroes(p)) {
 	    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-		                		pe.sendMessage(ChatColor.BOLD+"ºÓÀº±â»ç: ³×³ğµéÀº Àı´ë ÀÌ±æ¼ö ¾ø´Ù.");
+		                		pe.sendMessage(ChatColor.BOLD+"ë¶‰ì€ê¸°ì‚¬: ë„¤ë†ˆë“¤ì€ ì ˆëŒ€ ì´ê¸¸ìˆ˜ ì—†ë‹¤.");
 	    					}
 	    					else {
 		                		pe.sendMessage(ChatColor.BOLD+"RedKnight: You Can Never Beat Me!");

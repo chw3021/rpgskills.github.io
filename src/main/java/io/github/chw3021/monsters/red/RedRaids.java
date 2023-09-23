@@ -133,7 +133,7 @@ public class RedRaids extends Summoned {
 		boots.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
 		boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
 		ItemStack main = new ItemStack(Material.IRON_SWORD);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "∫”¿∫øÎªÁ":"RedWarrior";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "Î∂âÏùÄÏö©ÏÇ¨":"RedWarrior";
 		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.RED+reg + "<"+rn+">", 15000.0, head, chest, leg, boots, main, null, EntityType.SKELETON);
 		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
 		newmob.getEquipment().setBootsDropChance(0);
@@ -191,7 +191,7 @@ public class RedRaids extends Summoned {
 		ItemStack off = new ItemStack(Material.SHIELD);
 		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
 		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "∫”¿∫¥‹¿Â":"RedWarlord";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "Î∂âÏùÄÎã®Ïû•":"RedWarlord";
 		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.RED+reg + "<"+rn+">", 20000.0, head, chest, leg, boots, main, off, EntityType.SKELETON);
 		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
 		
@@ -251,7 +251,7 @@ public class RedRaids extends Summoned {
 		ItemMeta offm = off.getItemMeta();
 		offm.setCustomModelData(4010);
 		off.setItemMeta(offm);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "∫”¿∫ «œºˆ¿Œ":"Red Hunter";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "Î∂âÏùÄ ÌïòÏàòÏù∏":"Red Hunter";
 		Vindicator newmob = (Vindicator) Summon(esl, ChatColor.RED+reg + "<"+rn+">", 17000.0, head, chest, leg, boots, main, off, EntityType.VINDICATOR);
 		newmob.setCanJoinRaid(false);
 		newmob.setPatrolLeader(false);
@@ -310,7 +310,7 @@ public class RedRaids extends Summoned {
 		ItemStack off = new ItemStack(Material.ENCHANTED_BOOK);
 		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
 		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 5);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "∫”¿∫ ¡÷º˙ªÁ":"RedWarlock";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "Î∂âÏùÄ Ï£ºÏà†ÏÇ¨":"RedWarlock";
 		Evoker newmob = (Evoker) Summon(esl, ChatColor.RED+reg + "<"+rn+">", 19000.0, head, chest, leg, boots, main, off, EntityType.EVOKER);
 		newmob.setCanJoinRaid(false);
 		newmob.setPatrolLeader(false);
@@ -366,7 +366,7 @@ public class RedRaids extends Summoned {
 		ItemStack main = new ItemStack(Material.FIRE_CHARGE);
 		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
 		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 5);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "≈◊∂Ûƒ⁄≈∏¡ª∫Ò":"WalkingTerracotta";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ÌÖåÎùºÏΩîÌÉÄÏ¢ÄÎπÑ":"WalkingTerracotta";
 		Husk newmob = (Husk) Summon(esl, ChatColor.RED+reg + "<"+rn+">", 20000.0, head, chest, leg, boots, main, main, EntityType.HUSK);
 		newmob.setAdult();
 		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
@@ -420,7 +420,7 @@ public class RedRaids extends Summoned {
 		ItemStack main = new ItemStack(Material.FIRE_CHARGE);
 		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
 		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 5);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "øÎæœ±´ºˆ":"Lavager";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "Ïö©ÏïîÍ¥¥Ïàò":"Lavager";
 		Ravager newmob = (Ravager) Summon(esl, ChatColor.RED+reg + "<"+rn+">", 21000.0, head, chest, leg, boots, main, main, EntityType.RAVAGER);
 		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
 		newmob.getEquipment().setBootsDropChance(0);
@@ -486,7 +486,7 @@ public class RedRaids extends Summoned {
 		main.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 2);
 		main.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 2);
 		main.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 5);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "±◊¿ª∏∞±√ºˆ":"BurnedArcher";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "Í∑∏ÏùÑÎ¶∞Í∂ÅÏàò":"BurnedArcher";
 		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.RED+reg + "<"+rn+">", 16000.0, head, chest, leg, boots, main, off, EntityType.SKELETON);
 		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
 		
@@ -552,7 +552,7 @@ public class RedRaids extends Summoned {
 		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
 		ItemStack off = new ItemStack(Material.SHIELD);
 		off.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "∫”¿∫±‚ªÁ":"RedKnight";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "Î∂âÏùÄÍ∏∞ÏÇ¨":"RedKnight";
 		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.RED+reg+ "<"+rn+">", 60000.0, head, chest, leg, boots, main, off, EntityType.SKELETON);
 		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
 		newmob.setGlowing(true);

@@ -364,7 +364,7 @@ public class NPCsSpawn extends Mobs implements Serializable, Listener {
 		
 
     	if(st == StructureType.MINESHAFT) {
-			String reg = lang.contains("kr") ? "±æÀÒÀº ±¤ºÎ":"Stray Miner";
+			String reg = lang.contains("kr") ? "ê¸¸ìƒì€ ê´‘ë¶€":"Stray Miner";
     		Villager v = vnpc(w,lel, "mineshaft",reg, Type.DESERT, Profession.ARMORER);
     		if(v != null) {
         		v.getEquipment().setHelmet(new ItemStack(Material.GOLDEN_HELMET));
@@ -388,7 +388,7 @@ public class NPCsSpawn extends Mobs implements Serializable, Listener {
 			bom.setColor(Color.TEAL);
 			boots.setItemMeta(bom);
 
-			String reg = lang.contains("kr") ? "º¸¹° ¼öÈ£·É":"Treasure Ghost";
+			String reg = lang.contains("kr") ? "ë³´ë¬¼ ìˆ˜í˜¸ë ¹":"Treasure Ghost";
     		Skeleton v = (Skeleton) mnpc(w,lel, EntityType.SKELETON, "treasure", reg,head,chest,leg,null,new ItemStack(Material.SOUL_LANTERN),new ItemStack(Material.SOUL_LANTERN));
     		if(v != null) {
         		v.setConversionTime(-1);
@@ -396,7 +396,7 @@ public class NPCsSpawn extends Mobs implements Serializable, Listener {
     		
     	}
     	if(st == StructureType.PILLAGER_OUTPOST) {
-			String reg = lang.contains("kr") ? "¾àÅ»´çÇÑ »óÀÎ":"Looted Trader";
+			String reg = lang.contains("kr") ? "ì•½íƒˆë‹¹í•œ ìƒì¸":"Looted Trader";
     		WanderingTrader v = (WanderingTrader) mnpc(w,lel, EntityType.WANDERING_TRADER, "pillageroutpost", reg);
     		if(v != null) {
         		v.setAdult();
@@ -407,7 +407,7 @@ public class NPCsSpawn extends Mobs implements Serializable, Listener {
     	}
     	if(st == StructureType.STRONGHOLD) {
 
-			String reg = lang.contains("kr") ? "¿ä»õ Ã»¼ÒºÎ":"Stronghold Cleaner";
+			String reg = lang.contains("kr") ? "ìš”ìƒˆ ì²­ì†Œë¶€":"Stronghold Cleaner";
     		Villager v = vnpc(w,lel, "stronghold",reg, Type.SNOW, Profession.BUTCHER);
     		if(v != null) {
         		v.setVillagerLevel(5);
@@ -429,7 +429,7 @@ public class NPCsSpawn extends Mobs implements Serializable, Listener {
     			bom.setColor(Color.TEAL);
     			boots.setItemMeta(bom);
 
-    			String reg = lang.contains("kr") ? "»ç½Å":"Reaper";
+    			String reg = lang.contains("kr") ? "ì‚¬ì‹ ":"Reaper";
     			mnpc(w,lel, EntityType.STRAY, "ruinedportal", reg,head,chest,leg,null,new ItemStack(Material.TOTEM_OF_UNDYING),new ItemStack(Material.NETHERITE_HOE));
         }
 		
@@ -441,7 +441,7 @@ public class NPCsSpawn extends Mobs implements Serializable, Listener {
     				e.remove();
     			}
     		});
-			String reg = lang.contains("kr") ? "º¸¾È°ü":"Sheriff";
+			String reg = lang.contains("kr") ? "ë³´ì•ˆê´€":"Sheriff";
     		Villager v = vnpc(w,lel, "mansion",reg, Type.SWAMP, Profession.CARTOGRAPHER);
     		if(v != null) {
         		v.getEquipment().setHelmet(new ItemStack(Material.NETHERITE_HELMET));
@@ -454,7 +454,7 @@ public class NPCsSpawn extends Mobs implements Serializable, Listener {
 
     	if(st == StructureType.SWAMP_HUT) {
 
-			String reg = lang.contains("kr") ? "¼ºÁ÷ÀÚ":"Priest";
+			String reg = lang.contains("kr") ? "ì„±ì§ì":"Priest";
     		Villager v = vnpc(w,lel, "swamphut",reg, Type.SWAMP, Profession.CLERIC);
     		if(v != null) {
         		v.setVillagerLevel(5);
@@ -477,7 +477,7 @@ public class NPCsSpawn extends Mobs implements Serializable, Listener {
     			bom.setColor(Color.TEAL);
     			boots.setItemMeta(bom);
 
-    			String reg = lang.contains("kr") ? "ÀÌ±Û·ç ´«»ç¶÷":"Igloo Snowman";
+    			String reg = lang.contains("kr") ? "ì´ê¸€ë£¨ ëˆˆì‚¬ëŒ":"Igloo Snowman";
     			Snowman v = (Snowman) mnpc(w,lel, EntityType.SNOWMAN, "igloo", reg,head,chest,leg,boots,null,null);
         		if(v != null) {
             		v.setDerp(true);
@@ -497,7 +497,7 @@ public class NPCsSpawn extends Mobs implements Serializable, Listener {
     			bom.setColor(Color.BLACK);
     			boots.setItemMeta(bom);
 
-    			String reg = lang.contains("kr") ? "Å»ÃâÇÑ ½ÇÇèÃ¼":"Escaped Specimen";
+    			String reg = lang.contains("kr") ? "íƒˆì¶œí•œ ì‹¤í—˜ì²´":"Escaped Specimen";
         		Husk v = (Husk) mnpc(w,lel, EntityType.HUSK, "desertpyramid", reg,head,chest,leg,boots,null,null);
         		if(v != null) {
             		v.setBaby();
@@ -507,7 +507,7 @@ public class NPCsSpawn extends Mobs implements Serializable, Listener {
     	}
     	if(st == StructureType.JUNGLE_PYRAMID) {
 
-			String reg = lang.contains("kr") ? "°í°íÇĞÀÚ":"Archaeologist";
+			String reg = lang.contains("kr") ? "ê³ ê³ í•™ì":"Archaeologist";
     		Villager v = vnpc(w,lel, "junglepyramid" ,reg, Type.JUNGLE, Profession.LIBRARIAN);
     		if(v != null) {
         		v.setVillagerLevel(5);
@@ -520,7 +520,7 @@ public class NPCsSpawn extends Mobs implements Serializable, Listener {
         				e.remove();
         			}
         		});
-    			String reg = lang.contains("kr") ? "¾ÆÈ¦·ÎÆ² ¿ä¿ø":"Agent Axolotl";
+    			String reg = lang.contains("kr") ? "ì•„í™€ë¡œí‹€ ìš”ì›":"Agent Axolotl";
     			Axolotl v = (Axolotl) mnpc(w,lel, EntityType.AXOLOTL, "oceanruin", reg,null,null,null,null, new ItemStack(Material.CLOCK),null);
         		if(v != null) {
             		v.setAdult();
@@ -545,7 +545,7 @@ public class NPCsSpawn extends Mobs implements Serializable, Listener {
     			LeatherArmorMeta bom = (LeatherArmorMeta) boots.getItemMeta();
     			bom.setColor(Color.OLIVE);
     			boots.setItemMeta(bom);
-    			String reg = lang.contains("kr") ? "ÀÍ»çÇÑ ¼±¿ø":"Drowned Sailor";
+    			String reg = lang.contains("kr") ? "ìµì‚¬í•œ ì„ ì›":"Drowned Sailor";
         		Drowned v = (Drowned) mnpc(w,lel, EntityType.DROWNED, "shipwreck", reg ,head,chest,leg,boots,null,null);
         		if(v != null) {
             		v.setAdult();
@@ -559,7 +559,7 @@ public class NPCsSpawn extends Mobs implements Serializable, Listener {
         				e.remove();
         			}
         		});
-    			String reg = lang.contains("kr") ? "°ÅºÏ Æ¯°ø´ë¿ø":"Commando Turtle";
+    			String reg = lang.contains("kr") ? "ê±°ë¶ íŠ¹ê³µëŒ€ì›":"Commando Turtle";
         		Turtle v = (Turtle) mnpc(w,lel, EntityType.TURTLE, "oceanmonument", reg ,null,null,null,null,null,null);
         		if(v != null) {
             		v.setAdult();
@@ -574,7 +574,7 @@ public class NPCsSpawn extends Mobs implements Serializable, Listener {
     			ItemStack leg = new ItemStack(Material.IRON_LEGGINGS);;
     			ItemStack boots = new ItemStack(Material.IRON_BOOTS);
 
-    			String reg = lang.contains("kr") ? "ÇÇ±Û¸° ±â»ç":"Piglin Knight";
+    			String reg = lang.contains("kr") ? "í”¼ê¸€ë¦° ê¸°ì‚¬":"Piglin Knight";
     			Piglin v = (Piglin) mnpc(w,lel, EntityType.PIGLIN, "netherfortress", reg,head,chest,leg,boots,new ItemStack(Material.DIAMOND_AXE),new ItemStack(Material.SHIELD));
         		if(v != null) {
             		v.setImmuneToZombification(true);
@@ -586,7 +586,7 @@ public class NPCsSpawn extends Mobs implements Serializable, Listener {
     			ItemStack leg = new ItemStack(Material.IRON_LEGGINGS);;
     			ItemStack boots = new ItemStack(Material.IRON_BOOTS);
 
-    			String reg = lang.contains("kr") ? "µ¥½º³ªÀÌÆ®":"Death Knight";
+    			String reg = lang.contains("kr") ? "ë°ìŠ¤ë‚˜ì´íŠ¸":"Death Knight";
     			mnpc(w,lel, EntityType.WITHER_SKELETON, "bastionremnant", reg,head,chest,leg,boots,new ItemStack(Material.NETHERITE_SWORD),new ItemStack(Material.SHIELD));
     		
     	}
@@ -605,7 +605,7 @@ public class NPCsSpawn extends Mobs implements Serializable, Listener {
     			bom.setColor(Color.BLACK);
     			boots.setItemMeta(bom);
 
-    			String reg = lang.contains("kr") ? "µå·¡°ï ³ªÀÌÆ®":"Dragon Knight";
+    			String reg = lang.contains("kr") ? "ë“œë˜ê³¤ ë‚˜ì´íŠ¸":"Dragon Knight";
     			mnpc(w,lel, EntityType.STRAY, "endcity", reg,head,chest,leg,boots,new ItemStack(Material.DRAGON_BREATH),new ItemStack(Material.NETHERITE_SWORD));
     		
     	}

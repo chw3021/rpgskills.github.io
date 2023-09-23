@@ -105,7 +105,7 @@ public class OceanRuinsQuest implements Listener {
 		
 		if(factor ==0) {
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendMessage("Äù½ºÆ®°¡ Ãë¼ÒµÇ¾ú½À´Ï´Ù(°Å¸®)");
+    			p.sendMessage("í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤(ê±°ë¦¬)");
 		    }
     		else {
     			p.sendMessage("Quest Canceled!(Too Far Away)");
@@ -113,7 +113,7 @@ public class OceanRuinsQuest implements Listener {
 		}
 		else if (factor == 2) {
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendMessage("Äù½ºÆ®°¡ Ãë¼ÒµÇ¾ú½À´Ï´Ù(»ç¸Á)");
+    			p.sendMessage("í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤(ì‚¬ë§)");
 		    }
     		else {
     			p.sendMessage("Quest Canceled!(Death)");
@@ -121,7 +121,7 @@ public class OceanRuinsQuest implements Listener {
 		}
 		else if (factor == 3) {
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendMessage("Äù½ºÆ®°¡ Ãë¼ÒµÇ¾ú½À´Ï´Ù(Æ÷±â)");
+    			p.sendMessage("í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤(í¬ê¸°)");
 		    }
     		else {
     			p.sendMessage("Quest Canceled!(Given Up)");
@@ -130,8 +130,8 @@ public class OceanRuinsQuest implements Listener {
 		else if (factor == 4) {
     		p.playSound(p.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendTitle(ChatColor.GOLD + "Äù½ºÆ® ¿Ï·á!",ChatColor.GOLD + "ÇØÀú ÆóÇã Àü¸®Ç°À» È¹µæÇß½À´Ï´Ù!",15,35,15);
-            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "¾ÆÈ¦·ÎÆ² ¿ä¿ø°ú °Å·¡¸¦ ÇÒ ¼ö ÀÖ½À´Ï´Ù").create());
+    			p.sendTitle(ChatColor.GOLD + "í€˜ìŠ¤íŠ¸ ì™„ë£Œ!",ChatColor.GOLD + "í•´ì € íí—ˆ ì „ë¦¬í’ˆì„ íšë“í–ˆìŠµë‹ˆë‹¤!",15,35,15);
+            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ì•„í™€ë¡œí‹€ ìš”ì›ê³¼ ê±°ëž˜ë¥¼ í•  ìˆ˜ ìžˆìŠµë‹ˆë‹¤").create());
 		    }
     		else {
     			p.sendTitle(ChatColor.GOLD + "Complete Quest!",ChatColor.GOLD + "You Just Obtained OceanRuins Trophy!",15,35,15);
@@ -169,7 +169,7 @@ public class OceanRuinsQuest implements Listener {
 				if(TrophyLoc.getLocsdata().Locs.containsEntry(p.getUniqueId(), NPCsSpawn.npcloc.get(le.getUniqueId()))) {
 					
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": °í¸¶¿ö¿ä!").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ê³ ë§ˆì›Œìš”!").create());
 	        		}
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Have A Nice Day!").create());
@@ -215,7 +215,7 @@ public class OceanRuinsQuest implements Listener {
 		        		
 
 		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		        			mapm.setDisplayName(ChatColor.ITALIC+"º¸¹° Áöµµ");
+		        			mapm.setDisplayName(ChatColor.ITALIC+"ë³´ë¬¼ ì§€ë„");
 					    }
 		        		else {
 		        			mapm.setDisplayName(ChatColor.ITALIC+"Treasure Map");
@@ -240,7 +240,7 @@ public class OceanRuinsQuest implements Listener {
 				}
 				if(Party.hasParty(p)) {
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÆÄÆ¼¿¡ ¼ÓÇÑ »óÅÂ·Î´Â ÁøÇàÀÌ ºÒ°¡´ÉÇÕ´Ï´Ù").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "íŒŒí‹°ì— ì†í•œ ìƒíƒœë¡œëŠ” ì§„í–‰ì´ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤").create());
 	        		}
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You should leave Your Party").create());
@@ -249,7 +249,7 @@ public class OceanRuinsQuest implements Listener {
 				}
 				if(p.getInventory().firstEmpty() == -1) {
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÀÎº¥Åä¸®¿¡ ºóÄ­ÀÌ ÃÖ¼Ò ÇÑÄ­Àº ÀÖ¾î¾ß ÇÕ´Ï´Ù").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ì¸ë²¤í† ë¦¬ì— ë¹ˆì¹¸ì´ ìµœì†Œ í•œì¹¸ì€ ìžˆì–´ì•¼ í•©ë‹ˆë‹¤").create());
 	        		}
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You should empty inventory least one space").create());
@@ -265,8 +265,8 @@ public class OceanRuinsQuest implements Listener {
             		}
             		asked.remove(p.getUniqueId());
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": °¨»çÇÕ´Ï´Ù.. ·£ÅÏ¸Ç Ã³Áö ÀÛ¾÷À» ÇØ¾ßµÇ´Âµ¥ ¹Ð¸° ¼­·ù°¡ ¸¹¾Æ¼­¿ä..").create());
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": (»ç¸Á, Á¾·á, ¿ìÅ¬¸¯½Ã ¶Ç´Â ³Ê¹« ¸Ö¸® °¡¸é Äù½ºÆ®°¡ Ãë¼ÒµË´Ï´Ù.)").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ê°ì‚¬í•©ë‹ˆë‹¤.. ëžœí„´ë§¨ ì²˜ì§€ ìž‘ì—…ì„ í•´ì•¼ë˜ëŠ”ë° ë°€ë¦° ì„œë¥˜ê°€ ë§Žì•„ì„œìš”..").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": (ì‚¬ë§, ì¢…ë£Œ, ìš°í´ë¦­ì‹œ ë˜ëŠ” ë„ˆë¬´ ë©€ë¦¬ ê°€ë©´ í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë©ë‹ˆë‹¤.)").create());
 				    }
 	        		else {
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Thank You.. I have to get rid of LanternMans").create());
@@ -285,7 +285,7 @@ public class OceanRuinsQuest implements Listener {
     	                {
     	            		qbar.get(p.getName()).setProgress((double)qmobskill.getOrDefault(p.getName(),0) / 15d);
     		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-        	            		qbar.get(p.getName()).setTitle("Ã³Ä¡ ¸ó½ºÅÍ ¼ö: " + qmobskill.getOrDefault(p.getName(),0) + "/" + 15);
+        	            		qbar.get(p.getName()).setTitle("ì²˜ì¹˜ ëª¬ìŠ¤í„° ìˆ˜: " + qmobskill.getOrDefault(p.getName(),0) + "/" + 15);
     					    }
     		        		else {
         	            		qbar.get(p.getName()).setTitle("Killed Monsters: " + qmobskill.getOrDefault(p.getName(),0)  + "/" + 15);
@@ -314,8 +314,8 @@ public class OceanRuinsQuest implements Listener {
     	        	p.setCooldown(Material.RAIL, 10);
 
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ¹Ù»Ú´Ù ¹Ùºü..").create());
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "(¿ìÅ¬¸¯½Ã ¼ö¶ô)").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ë°”ì˜ë‹¤ ë°”ë¹ ..").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "(ìš°í´ë¦­ì‹œ ìˆ˜ë½)").create());
 				    }
 	        		else {
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Too much to do..").create());
@@ -349,7 +349,7 @@ public class OceanRuinsQuest implements Listener {
 		}*/
 		if(d.getEntity().hasMetadata("ocean") && d.getEntity().getKiller() != null) {
 			Player p = d.getEntity().getKiller();
-			if(quested.containsKey(p.getUniqueId())&& (d.getEntity().getName().contains("LanternMan") ||d.getEntity().getName().contains("·£ÅÏ¸Ç")) ) {
+			if(quested.containsKey(p.getUniqueId())&& (d.getEntity().getName().contains("LanternMan") ||d.getEntity().getName().contains("ëžœí„´ë§¨")) ) {
         		p.playSound(p.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
     			qmobskill.computeIfPresent(p.getName(), (k,v) -> v+1);
     			qmobskill.putIfAbsent(p.getName(), 1);

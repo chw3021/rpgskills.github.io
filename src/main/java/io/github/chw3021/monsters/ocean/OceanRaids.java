@@ -126,7 +126,7 @@ public class OceanRaids extends Summoned {
 		boots.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
 		boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
 		ItemStack main = new ItemStack(Material.NETHERITE_SWORD);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "Àá½ÄµÈ ÇØÀû":"Encroached Pirate";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ì ì‹ëœ í•´ì ":"Encroached Pirate";
 		Drowned newmob = (Drowned) Summon(esl, ChatColor.DARK_BLUE+reg + "<"+rn+">", 3000.0, head, chest, leg, boots, main, null, EntityType.DROWNED);
 		newmob.setAdult();
 		newmob.setConversionTime(-1);
@@ -170,7 +170,7 @@ public class OceanRaids extends Summoned {
 		boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
 		ItemStack main = new ItemStack(Material.TRIDENT);
 		ItemStack off = new ItemStack(Material.FLINT_AND_STEEL);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "Àá½ÄµÈ ¼±Àå":"Encroached Captain";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ì ì‹ëœ ì„ ì¥":"Encroached Captain";
 		
 		Drowned newmob = (Drowned) Summon(esl, ChatColor.DARK_BLUE+reg + "<"+rn+">", 3500.0, head, chest, leg, boots, main, off, EntityType.DROWNED);
 		newmob.setAdult();
@@ -218,7 +218,7 @@ public class OceanRaids extends Summoned {
 		boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
 		ItemStack main = new ItemStack(Material.DIAMOND_AXE);
 		ItemStack off = new ItemStack(Material.SHIELD);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "Àá½ÄµÈ ¹Ù´Ù±â»ç":"Encroached OceanKnight";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ì ì‹ëœ ë°”ë‹¤ê¸°ì‚¬":"Encroached OceanKnight";
 		Drowned newmob = (Drowned) Summon(esl, ChatColor.DARK_BLUE+reg + "<"+rn+">", 2500.0, head, chest, leg, boots, main, off, EntityType.DROWNED);
 		newmob.setAdult();
 		newmob.setConversionTime(-1);
@@ -264,7 +264,7 @@ public class OceanRaids extends Summoned {
 		boots.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
 		boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
 		ItemStack main = new ItemStack(Material.NETHERITE_SWORD);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "Àá½ÄµÈ °¡µğ¾ğ":"Encroached Guardian";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ì ì‹ëœ ê°€ë””ì–¸":"Encroached Guardian";
 		Guardian newmob = (Guardian) Summon(esl, ChatColor.DARK_BLUE+reg + "<"+rn+">", 3000.0, head, chest, leg, boots, main, null, EntityType.GUARDIAN);
 		newmob.addPotionEffect(new PotionEffect(PotionEffectType.CONDUIT_POWER, 999999, 255, false, false));
 		newmob.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 999999, 255, false, false));
@@ -286,7 +286,7 @@ public class OceanRaids extends Summoned {
     	double number = (random.nextDouble()+1.5) * 2.5 * (random.nextBoolean() ? -1 : 1);
     	double number2 = (random.nextDouble()+1.5) * 2.5 * (random.nextBoolean() ? -1 : 1);
     	Location esl = spl.clone().add(number, 0, number2);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "Àá½ÄµÈ ¹Ù´Ù¸Á·É":"Encroached OceanPhantom";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ì ì‹ëœ ë°”ë‹¤ë§ë ¹":"Encroached OceanPhantom";
 		Phantom newmob = (Phantom) Summon(esl, ChatColor.DARK_BLUE+reg + "<"+rn+">", 3000.0, null, null, null, null, null, null, EntityType.PHANTOM);
 		newmob.setSize(5);
 		newmob.addPotionEffect(new PotionEffect(PotionEffectType.CONDUIT_POWER, 999999, 255, false, false));
@@ -326,7 +326,7 @@ public class OceanRaids extends Summoned {
 		boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
 		ItemStack main = new ItemStack(Material.CHEST);
 		ItemStack off = new ItemStack(Material.CHEST);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "Àá½ÄµÈ ¹Ì¹Í":"Encroached Mimic";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ì ì‹ëœ ë¯¸ë¯¹":"Encroached Mimic";
 		Drowned newmob = (Drowned) Summon(esl, ChatColor.DARK_BLUE+reg + "<"+rn+">", 3600.0, head, chest, leg, boots, main, off, EntityType.DROWNED);
 		newmob.setAdult();
 		newmob.setConversionTime(-1);
@@ -374,7 +374,7 @@ public class OceanRaids extends Summoned {
 		boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
 		ItemStack main = new ItemStack(Material.DIAMOND_AXE);
 		ItemStack off = new ItemStack(Material.SHIELD);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "Àá½ÄµÈ °¡µğ¾ğ":"Encroached Guardian";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ì ì‹ëœ ê°€ë””ì–¸":"Encroached Guardian";
 		Guardian newmob = (Guardian) Summon(esl, ChatColor.DARK_BLUE+reg + "<"+rn+">", 2500.0, head, chest, leg, boots, main, off, EntityType.GUARDIAN);
 		
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
@@ -396,7 +396,7 @@ public class OceanRaids extends Summoned {
     	Location esl = spl.clone().add(number, 2.5, number2);
 
 
-		String reg = Bukkit.getPlayer(rn).getLocale().equalsIgnoreCase("ko_kr") ? "¿¤´õ°¡µğ¾ğ":"ElderGuardian";
+		String reg = Bukkit.getPlayer(rn).getLocale().equalsIgnoreCase("ko_kr") ? "ì—˜ë”ê°€ë””ì–¸":"ElderGuardian";
 		ElderGuardian newmob = (ElderGuardian) Summon(esl, ChatColor.BLUE+reg + "<"+rn+">", 10000.0, null, null, null, null, null, null, EntityType.ELDER_GUARDIAN);
 		newmob.setGlowing(true);
 		newmob.getEquipment().setBootsDropChance(0);

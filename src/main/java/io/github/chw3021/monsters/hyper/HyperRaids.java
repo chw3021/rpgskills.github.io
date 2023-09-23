@@ -115,7 +115,7 @@ public class HyperRaids extends Summoned {
 		ItemStack boots = new ItemStack(Material.IRON_BOOTS);
 		ItemStack main = new ItemStack(Material.BONE);
 		ItemStack off = new ItemStack(Material.BONE);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "∫Ø¿Ã√ºB":"MutantB";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "Î≥ÄÏù¥Ï≤¥B":"MutantB";
 		Husk newmob = (Husk) Summon(esl, ChatColor.LIGHT_PURPLE+reg + "<"+rn+">", 10000.0, head, chest, leg, boots, main, off, EntityType.HUSK);
 		newmob.setAdult();
 		newmob.setConversionTime(-1);
@@ -143,7 +143,7 @@ public class HyperRaids extends Summoned {
 		ItemStack boots = new ItemStack(Material.NETHERITE_BOOTS);
 		ItemStack main = new ItemStack(Material.NETHERITE_HOE);
 		ItemStack off = new ItemStack(Material.TOTEM_OF_UNDYING);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "∫Ø¿Ã√ºC":"MutantC";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "Î≥ÄÏù¥Ï≤¥C":"MutantC";
 		Husk newmob = (Husk) Summon(esl, ChatColor.LIGHT_PURPLE+reg + "<"+rn+">", 10000.0, head, chest, leg, boots, main, off, EntityType.HUSK);
 		newmob.setAdult();
 		newmob.setConversionTime(-1);
@@ -179,7 +179,7 @@ public class HyperRaids extends Summoned {
 		mm.setCustomModelData(2009);
 		main.setItemMeta(mm);
 		ItemStack off = new ItemStack(Material.BEACON);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "∞≠»≠«¸±§º±±√ºˆ":"ReinforcedRayArcher";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "Í∞ïÌôîÌòïÍ¥ëÏÑ†Í∂ÅÏàò":"ReinforcedRayArcher";
 		Skeleton newmob = (Skeleton) Summon(esl, getelcolor(META) + reg, 10000.0, head, chest, leg, boots, main, off, EntityType.SKELETON);
 		newmob.setConversionTime(-1);
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
@@ -211,7 +211,7 @@ public class HyperRaids extends Summoned {
 		ItemMeta mm = main.getItemMeta();
 		mm.setCustomModelData(3009);
 		main.setItemMeta(mm);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "±§º±∞ÀªÁ":"RayKnight";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "Í¥ëÏÑ†Í≤ÄÏÇ¨":"RayKnight";
 		Skeleton newmob = (Skeleton) Summon(esl, getelcolor(META) + reg, 10000.0, head, chest, leg, boots, main, main, EntityType.SKELETON);
 		newmob.setConversionTime(-1);
 		
@@ -241,7 +241,7 @@ public class HyperRaids extends Summoned {
 		ItemStack boots = new ItemStack(Material.GOLDEN_BOOTS);
 		ItemStack main = new ItemStack(Material.GOLDEN_HOE);
 		ItemStack off = new ItemStack(Material.ENCHANTED_GOLDEN_APPLE);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "∫π¡¶µ»∏∂π˝ªÁ":"ClonedMage";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "Î≥µÏ†úÎêúÎßàÎ≤ïÏÇ¨":"ClonedMage";
 		Evoker newmob = (Evoker) Summon(esl, ChatColor.LIGHT_PURPLE+reg + "<"+rn+">", 10000.0, head, chest, leg, boots, main, off, EntityType.EVOKER);
 
 		newmob.setPatrolLeader(false);
@@ -269,7 +269,7 @@ public class HyperRaids extends Summoned {
 		ItemStack boots = new ItemStack(Material.IRON_BOOTS);
 		ItemStack main = new ItemStack(Material.IRON_BLOCK);
 		ItemStack off = new ItemStack(Material.IRON_BLOCK);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "∫Ø¿Ã√ºA":"MutantA";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "Î≥ÄÏù¥Ï≤¥A":"MutantA";
 		Zombie newmob = (Zombie) Summon(esl, ChatColor.LIGHT_PURPLE+reg + "<"+rn+">", 10000.0, head, chest1, leg, boots, main, off, EntityType.ZOMBIE);
 		newmob.setAdult();
 		newmob.setConversionTime(-1);
@@ -298,7 +298,7 @@ public class HyperRaids extends Summoned {
 		ItemMeta mm = main.getItemMeta();
 		mm.setCustomModelData(3009);
 		main.setItemMeta(mm);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "∞≈Ω≈":"Colossus";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "Í±∞Ïã†":"Colossus";
 		WitherSkeleton newmob = (WitherSkeleton) Summon(esl, ChatColor.LIGHT_PURPLE+reg + "<"+rn+">", 10000.0, head, chest, leg, boots, main, main, EntityType.WITHER_SKELETON);
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
 		
@@ -325,7 +325,7 @@ public class HyperRaids extends Summoned {
 		mm.setCustomModelData(2009);
 		main.setItemMeta(mm);
 
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "¥⁄≈ÕB":"Dr.B";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "Îã•ÌÑ∞B":"Dr.B";
 		Illusioner newmob = (Illusioner) Summon(esl.clone(), ChatColor.DARK_PURPLE+reg + "<"+rn+">", 40000.0, new ItemStack(Material.BLACK_STAINED_GLASS), null, null, null, main, null, EntityType.ILLUSIONER);
 		newmob.setCanJoinRaid(false);
 		newmob.setPatrolTarget(null);

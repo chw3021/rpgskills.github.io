@@ -69,7 +69,7 @@ public class MineshaftQuest {
 		
 		if(factor ==0) {
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendMessage("Äù½ºÆ®°¡ Ãë¼ÒµÇ¾ú½À´Ï´Ù(°Å¸®)");
+    			p.sendMessage("í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤(ê±°ë¦¬)");
 		    }
     		else {
     			p.sendMessage("Quest Canceled!(Too Far Away)");
@@ -77,7 +77,7 @@ public class MineshaftQuest {
 		}
 		else if (factor == 2) {
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendMessage("Äù½ºÆ®°¡ Ãë¼ÒµÇ¾ú½À´Ï´Ù(»ç¸Á)");
+    			p.sendMessage("í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤(ì‚¬ë§)");
 		    }
     		else {
     			p.sendMessage("Quest Canceled!(Death)");
@@ -86,8 +86,8 @@ public class MineshaftQuest {
 		else if (factor == 4) {
     		p.playSound(p.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendTitle(ChatColor.GOLD + "Äù½ºÆ® ¿Ï·á!",ChatColor.GOLD + "Æó±¤ Àü¸®Ç°À» È¹µæÇß½À´Ï´Ù!",15,35,15);
-            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "±æÀÒÀº ±¤ºÎ¿Í °Å·¡¸¦ ÇÒ ¼ö ÀÖ½À´Ï´Ù").create());
+    			p.sendTitle(ChatColor.GOLD + "í€˜ìŠ¤íŠ¸ ì™„ë£Œ!",ChatColor.GOLD + "íê´‘ ì „ë¦¬í’ˆì„ íšë“í–ˆìŠµë‹ˆë‹¤!",15,35,15);
+            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ê¸¸ìƒì€ ê´‘ë¶€ì™€ ê±°ë˜ë¥¼ í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤").create());
 		    }
     		else {
     			p.sendTitle(ChatColor.GOLD + "Complete Quest!",ChatColor.GOLD + "You Just Obtained Mineshaft Trophy!",15,35,15);
@@ -118,7 +118,7 @@ public class MineshaftQuest {
 				}
 				if(TrophyLoc.getLocsdata().Locs.containsEntry(p.getUniqueId(), NPCsSpawn.npcloc.get(le.getUniqueId()))) {
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": °í¸¶¿ö¿ä!").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ê³ ë§ˆì›Œìš”!").create());
 	        		}
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Have A Nice Day!").create());
@@ -160,7 +160,7 @@ public class MineshaftQuest {
 
 				if(Party.hasParty(p)) {
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÆÄÆ¼¿¡ ¼ÓÇÑ »óÅÂ·Î´Â ÁøÇàÀÌ ºÒ°¡´ÉÇÕ´Ï´Ù").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "íŒŒí‹°ì— ì†í•œ ìƒíƒœë¡œëŠ” ì§„í–‰ì´ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤").create());
 	        		}
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You should leave Your Party").create());
@@ -169,7 +169,7 @@ public class MineshaftQuest {
 				}
 				if(p.getInventory().firstEmpty() == -1) {
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÀÎº¥Åä¸®¿¡ ºóÄ­ÀÌ ÃÖ¼Ò ÇÑÄ­Àº ÀÖ¾î¾ß ÇÕ´Ï´Ù").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ì¸ë²¤í† ë¦¬ì— ë¹ˆì¹¸ì´ ìµœì†Œ í•œì¹¸ì€ ìˆì–´ì•¼ í•©ë‹ˆë‹¤").create());
 	        		}
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You should empty inventory least one space").create());
@@ -184,9 +184,9 @@ public class MineshaftQuest {
             		}
             		asked.remove(p.getUniqueId());
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": °¨»çÇÕ´Ï´Ù! ¾î¶² ¸ó½ºÅÍ°¡ Á¦ °î±ªÀÌ¸¦ °¡Á®°£°Í °°¾Æ¿ä").create());
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Ã£¾ÆÁÖ½Ã¸é °¨»çÇÏ°Ú½À´Ï´Ù.").create());
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": (»ç¸Á, Á¾·á½Ã ¶Ç´Â ³Ê¹« ¸Ö¸® °¡¸é Äù½ºÆ®°¡ Ãë¼ÒµË´Ï´Ù.)").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ê°ì‚¬í•©ë‹ˆë‹¤! ì–´ë–¤ ëª¬ìŠ¤í„°ê°€ ì œ ê³¡ê´­ì´ë¥¼ ê°€ì ¸ê°„ê²ƒ ê°™ì•„ìš”").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ì°¾ì•„ì£¼ì‹œë©´ ê°ì‚¬í•˜ê² ìŠµë‹ˆë‹¤.").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": (ì‚¬ë§, ì¢…ë£Œì‹œ ë˜ëŠ” ë„ˆë¬´ ë©€ë¦¬ ê°€ë©´ í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë©ë‹ˆë‹¤.)").create());
 				    }
 	        		else {
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": I think some monster took my pickaxe.").create());
@@ -218,9 +218,9 @@ public class MineshaftQuest {
     	        	p.setCooldown(Material.RAIL, 10);
 
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ¾Æ...È¤½Ã ¹Ù»Ú½Å°¡¿ä?").create());
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ¾È¹Ù»Ú½Ã´Ù¸é È¤½Ã ÀúÁ» µµ¿ÍÁÖ½Ç¼ö ÀÖ³ª¿ä?").create());
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "(¿ìÅ¬¸¯½Ã ¼ö¶ô)").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ì•„...í˜¹ì‹œ ë°”ì˜ì‹ ê°€ìš”?").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ì•ˆë°”ì˜ì‹œë‹¤ë©´ í˜¹ì‹œ ì €ì¢€ ë„ì™€ì£¼ì‹¤ìˆ˜ ìˆë‚˜ìš”?").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "(ìš°í´ë¦­ì‹œ ìˆ˜ë½)").create());
 				    }
 	        		else {
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Ah... Are you busy right now??").create());
@@ -257,7 +257,7 @@ public class MineshaftQuest {
 	        	if(ri <= 30) {
 	        		p.playSound(p.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		        		p.sendTitle(ChatColor.BOLD + "°î±ªÀÌ", ChatColor.BOLD + "(1/1)", 10, 20, 10);
+		        		p.sendTitle(ChatColor.BOLD + "ê³¡ê´­ì´", ChatColor.BOLD + "(1/1)", 10, 20, 10);
 				    }
 	        		else {
 		        		p.sendTitle(ChatColor.BOLD + "Pickaxe", ChatColor.BOLD + "(1/1)", 10, 20, 10);

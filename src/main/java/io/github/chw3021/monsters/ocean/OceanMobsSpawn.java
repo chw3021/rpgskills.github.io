@@ -51,7 +51,7 @@ public class OceanMobsSpawn extends Mobs implements Listener {
 		boots.setItemMeta(bom);
 		ItemStack main = new ItemStack(Material.FISHING_ROD);
 		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 2);
-		String reg = lang.contains("kr") ? "∑£≈œ∏«":"LanternMan";
+		String reg = lang.contains("kr") ? "ÎûúÌÑ¥Îß®":"LanternMan";
 		Drowned newmob = (Drowned) Mobspawn(le, reg, 2500.0, head, chest, leg, boots, main, main, EntityType.DROWNED);
 		newmob.setConversionTime(-1);
 		newmob.setSwimming(true);
@@ -68,7 +68,7 @@ public class OceanMobsSpawn extends Mobs implements Listener {
 
 	final private Stray Mimic(LivingEntity le) {
 		ItemStack head = new ItemStack(Material.TRAPPED_CHEST);
-		String reg = lang.contains("kr") ? "πÃπÕ":"Mimic";
+		String reg = lang.contains("kr") ? "ÎØ∏ÎØπ":"Mimic";
 		Stray newmob = (Stray) Mobspawn(le, reg, 3000.0, head,  new ItemStack(Material.VOID_AIR),  new ItemStack(Material.VOID_AIR),  new ItemStack(Material.VOID_AIR), new ItemStack(Material.VOID_AIR),  new ItemStack(Material.VOID_AIR), EntityType.STRAY);
 		newmob.setSwimming(true);
 		newmob.setGravity(true);
@@ -106,7 +106,7 @@ public class OceanMobsSpawn extends Mobs implements Listener {
 		boots.addUnsafeEnchantment(Enchantment.DEPTH_STRIDER, 3);
 		ItemStack main = new ItemStack(Material.SEAGRASS);
 		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
-		String reg = lang.contains("kr") ? "πŸ¥Ÿº»ƒø":"SeaShulker";
+		String reg = lang.contains("kr") ? "Î∞îÎã§ÏÖúÏª§":"SeaShulker";
 		Shulker newmob = (Shulker) Mobspawn(le, reg, 2000.0, head, chest, leg, boots, main, main, EntityType.SHULKER);
 		newmob.setPeek(0.3f);
 		newmob.setColor(DyeColor.BLUE);
@@ -141,7 +141,7 @@ public class OceanMobsSpawn extends Mobs implements Listener {
 		ItemStack main = new ItemStack(Material.BONE);
 		ItemStack off = new ItemStack(Material.IRON_SWORD);
 		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 2);
-		String reg = lang.contains("kr") ? "∂∞µµ¥¬«ÿ¿˚":"DrownedPirate";
+		String reg = lang.contains("kr") ? "Îñ†ÎèÑÎäîÌï¥Ï†Å":"DrownedPirate";
 		Drowned newmob = (Drowned) Mobspawn(le, reg, 1800.0, head, chest, leg, boots, off, main, EntityType.DROWNED);
 		newmob.setConversionTime(-1);
 		newmob.setSwimming(true);
@@ -173,7 +173,7 @@ public class OceanMobsSpawn extends Mobs implements Listener {
 		ItemStack main = new ItemStack(Material.DIAMOND_SWORD);
 		ItemStack off = new ItemStack(Material.FLINT_AND_STEEL);
 		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 2);
-		String reg = lang.contains("kr") ? "«ÿ¿˚º±¿Â¿«ø¯»•":"DrownedCaptain";
+		String reg = lang.contains("kr") ? "Ìï¥Ï†ÅÏÑ†Ïû•ÏùòÏõêÌòº":"DrownedCaptain";
 		Drowned newmob = (Drowned) Mobspawn(le, reg, 2600.0, head, chest, leg, boots, off, main, EntityType.DROWNED);
 		newmob.setConversionTime(-1);
 		newmob.setSwimming(true);
@@ -197,7 +197,7 @@ public class OceanMobsSpawn extends Mobs implements Listener {
 		ItemStack main = new ItemStack(Material.TRIDENT);
 		ItemStack off = new ItemStack(Material.SHIELD);
 		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 2);
-		String reg = lang.contains("kr") ? "∂∞µµ¥¬√¢±‚∫¥":"DrownedLancer";
+		String reg = lang.contains("kr") ? "Îñ†ÎèÑÎäîÏ∞ΩÍ∏∞Î≥ë":"DrownedLancer";
 		Drowned newmob = (Drowned) Mobspawn(le, reg, 2000.0, head, chest, leg, boots, main, off, EntityType.DROWNED);
 		newmob.setConversionTime(-1);
 		newmob.setSwimming(true);
@@ -213,7 +213,7 @@ public class OceanMobsSpawn extends Mobs implements Listener {
 	}
 	
 	final private Phantom OceanPhantom(LivingEntity le) {
-		String reg = lang.contains("kr") ? "πŸ¥Ÿ∏¡∑…":"OceanPhantom";
+		String reg = lang.contains("kr") ? "Î∞îÎã§ÎßùÎ†π":"OceanPhantom";
 		Phantom newmob = (Phantom) Mobspawn(le, reg, 3000.0, null, null, null, null, null, null, EntityType.PHANTOM);
 		newmob.setSize(20);
 		newmob.setVisualFire(false);
@@ -232,7 +232,7 @@ public class OceanMobsSpawn extends Mobs implements Listener {
 	}
 
 	final private LivingEntity Default(LivingEntity le) {
-		String reg = lang.contains("kr") ? "πŸ¥Ÿ":"Ocean";
+		String reg = lang.contains("kr") ? "Î∞îÎã§":"Ocean";
 		LivingEntity newmob = Mobspawn(le, reg + trans(le), 2000.0, le.getEquipment().getHelmet(),
 				le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
 				le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(),

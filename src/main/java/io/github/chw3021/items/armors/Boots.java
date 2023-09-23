@@ -42,8 +42,8 @@ public class Boots implements Listener {
 			rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 					"generic.armor_toughness", 1, Operation.ADD_NUMBER, EquipmentSlot.FEET));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				rm.setDisplayName("¾ÈÀüÈ­");
-				rm.setLocalizedName("¾ÈÀüÈ­");
+				rm.setDisplayName("ì•ˆì „í™”");
+				rm.setLocalizedName("ì•ˆì „í™”");
 			}
 			else {
 				rm.setDisplayName("Safety Shoes");
@@ -63,8 +63,8 @@ public class Boots implements Listener {
 			rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 					"generic.armor_toughness", 1, Operation.ADD_NUMBER, EquipmentSlot.FEET));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				rm.setDisplayName("¼³»ê ÀåÈ­");
-				rm.setLocalizedName("¼³»ê ÀåÈ­");
+				rm.setDisplayName("ì„¤ì‚° ì¥í™”");
+				rm.setLocalizedName("ì„¤ì‚° ì¥í™”");
 			}
 			else {
 				rm.setDisplayName("Snowy Boots");
@@ -82,8 +82,8 @@ public class Boots implements Listener {
 			rm.addAttributeModifier(Attribute.GENERIC_ARMOR, new AttributeModifier(UUID.randomUUID(),
 					"generic.armor", 2, Operation.ADD_NUMBER, EquipmentSlot.FEET));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				rm.setDisplayName("¿À¸®¹ß");
-				rm.setLocalizedName("¿À¸®¹ß");
+				rm.setDisplayName("ì˜¤ë¦¬ë°œ");
+				rm.setLocalizedName("ì˜¤ë¦¬ë°œ");
 			}
 			else {
 				rm.setDisplayName("Flippers");
@@ -101,8 +101,8 @@ public class Boots implements Listener {
 			rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 					"generic.armor_toughness", 2, Operation.ADD_NUMBER, EquipmentSlot.FEET));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				rm.setDisplayName("ÇÁ¸®Áî¸Ó¸° ½Å¹ß");
-				rm.setLocalizedName("ÇÁ¸®Áî¸Ó¸° ½Å¹ß");
+				rm.setDisplayName("í”„ë¦¬ì¦ˆë¨¸ë¦° ì‹ ë°œ");
+				rm.setLocalizedName("í”„ë¦¬ì¦ˆë¨¸ë¦° ì‹ ë°œ");
 			}
 			else {
 				rm.setDisplayName("Prismarine Boots");
@@ -122,8 +122,8 @@ public class Boots implements Listener {
 			rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 					"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.FEET));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				rm.setDisplayName("Àü¼úÈ­");
-				rm.setLocalizedName("Àü¼úÈ­");
+				rm.setDisplayName("ì „ìˆ í™”");
+				rm.setLocalizedName("ì „ìˆ í™”");
 			}
 			else {
 				rm.setDisplayName("Combat Boots");
@@ -143,8 +143,8 @@ public class Boots implements Listener {
 			im.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 					"generic.armor_toughness", 4, Operation.ADD_NUMBER, EquipmentSlot.FEET));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				im.setDisplayName("ÇÕ±İÈ­");
-				im.setLocalizedName("ÇÕ±İÈ­");
+				im.setDisplayName("í•©ê¸ˆí™”");
+				im.setLocalizedName("í•©ê¸ˆí™”");
 			}
 			else {
 				im.setDisplayName("Alloy Boots");
@@ -178,8 +178,8 @@ public class Boots implements Listener {
 					rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 							"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.FEET));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("´ëÁöÀÇ ºÎÃ÷");
-						rm.setLocalizedName("´ëÁöÀÇ ºÎÃ÷");
+						rm.setDisplayName("ëŒ€ì§€ì˜ ë¶€ì¸ ");
+						rm.setLocalizedName("ëŒ€ì§€ì˜ ë¶€ì¸ ");
 					}
 					else {
 						rm.setDisplayName("Earth Boots");
@@ -208,8 +208,8 @@ public class Boots implements Listener {
 					rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 							"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.FEET));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("¼­¸® ºÎÃ÷");
-						rm.setLocalizedName("¼­¸® ºÎÃ÷");
+						rm.setDisplayName("ì„œë¦¬ ë¶€ì¸ ");
+						rm.setLocalizedName("ì„œë¦¬ ë¶€ì¸ ");
 					}
 					else {
 						rm.setDisplayName("Frost Boots");
@@ -236,8 +236,8 @@ public class Boots implements Listener {
 					rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 							"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.FEET));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("¹Ù´ÙÀÇ ºÎÃ÷");
-						rm.setLocalizedName("¹Ù´ÙÀÇ ºÎÃ÷");
+						rm.setDisplayName("ë°”ë‹¤ì˜ ë¶€ì¸ ");
+						rm.setLocalizedName("ë°”ë‹¤ì˜ ë¶€ì¸ ");
 					}
 					else {
 						rm.setDisplayName("Ocean Boots");
@@ -266,8 +266,8 @@ public class Boots implements Listener {
 					rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 							"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.FEET));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("¾îµÒÀÇ ÀüÅõÈ­");
-						rm.setLocalizedName("¾îµÒÀÇ ÀüÅõÈ­");
+						rm.setDisplayName("ì–´ë‘ ì˜ ì „íˆ¬í™”");
+						rm.setLocalizedName("ì–´ë‘ ì˜ ì „íˆ¬í™”");
 					}
 					else {
 						rm.setDisplayName("Dark Boots");
@@ -296,8 +296,8 @@ public class Boots implements Listener {
 					rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(UUID.randomUUID(),
 							"generic.luck", 6, Operation.ADD_NUMBER, EquipmentSlot.FEET));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("°³Á¶µÈ ºÎÃ÷");
-						rm.setLocalizedName("°³Á¶µÈ ºÎÃ÷");
+						rm.setDisplayName("ê°œì¡°ëœ ë¶€ì¸ ");
+						rm.setLocalizedName("ê°œì¡°ëœ ë¶€ì¸ ");
 					}
 					else {
 						rm.setDisplayName("Hyper Boots");
@@ -326,8 +326,8 @@ public class Boots implements Listener {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
 							"generic.attack_damage", 7, Operation.ADD_NUMBER, EquipmentSlot.FEET));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("ÀÛ¿­ÇÏ´Â ºÎÃ÷");
-						rm.setLocalizedName("ÀÛ¿­ÇÏ´Â ºÎÃ÷");
+						rm.setDisplayName("ì‘ì—´í•˜ëŠ” ë¶€ì¸ ");
+						rm.setLocalizedName("ì‘ì—´í•˜ëŠ” ë¶€ì¸ ");
 					}
 					else {
 						rm.setDisplayName("Burning Boots");
@@ -354,8 +354,8 @@ public class Boots implements Listener {
 					rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 							"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.FEET));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("ÀÚ¿¬ÀÇ ºÎÃ÷");
-						rm.setLocalizedName("ÀÚ¿¬ÀÇ ºÎÃ÷");
+						rm.setDisplayName("ìì—°ì˜ ë¶€ì¸ ");
+						rm.setLocalizedName("ìì—°ì˜ ë¶€ì¸ ");
 					}
 					else {
 						rm.setDisplayName("Natural Boots");
@@ -398,8 +398,8 @@ public class Boots implements Listener {
 							rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 									"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.FEET));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								rm.setDisplayName("´ëÁöÀÇ ºÎÃ÷");
-								rm.setLocalizedName("´ëÁöÀÇ ºÎÃ÷");
+								rm.setDisplayName("ëŒ€ì§€ì˜ ë¶€ì¸ ");
+								rm.setLocalizedName("ëŒ€ì§€ì˜ ë¶€ì¸ ");
 							}
 							else {
 								rm.setDisplayName("Earth Boots");
@@ -428,8 +428,8 @@ public class Boots implements Listener {
 							rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 									"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.FEET));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								rm.setDisplayName("¼­¸® ºÎÃ÷");
-								rm.setLocalizedName("¼­¸® ºÎÃ÷");
+								rm.setDisplayName("ì„œë¦¬ ë¶€ì¸ ");
+								rm.setLocalizedName("ì„œë¦¬ ë¶€ì¸ ");
 							}
 							else {
 								rm.setDisplayName("Frost Boots");
@@ -456,8 +456,8 @@ public class Boots implements Listener {
 							rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 									"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.FEET));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								rm.setDisplayName("¹Ù´ÙÀÇ ºÎÃ÷");
-								rm.setLocalizedName("¹Ù´ÙÀÇ ºÎÃ÷");
+								rm.setDisplayName("ë°”ë‹¤ì˜ ë¶€ì¸ ");
+								rm.setLocalizedName("ë°”ë‹¤ì˜ ë¶€ì¸ ");
 							}
 							else {
 								rm.setDisplayName("Ocean Boots");
@@ -486,8 +486,8 @@ public class Boots implements Listener {
 							rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 									"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.FEET));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								rm.setDisplayName("¾îµÒÀÇ ÀüÅõÈ­");
-								rm.setLocalizedName("¾îµÒÀÇ ÀüÅõÈ­");
+								rm.setDisplayName("ì–´ë‘ ì˜ ì „íˆ¬í™”");
+								rm.setLocalizedName("ì–´ë‘ ì˜ ì „íˆ¬í™”");
 							}
 							else {
 								rm.setDisplayName("Dark Boots");
@@ -516,8 +516,8 @@ public class Boots implements Listener {
 							rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(UUID.randomUUID(),
 									"generic.luck", 6, Operation.ADD_NUMBER, EquipmentSlot.FEET));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								rm.setDisplayName("°³Á¶µÈ ºÎÃ÷");
-								rm.setLocalizedName("°³Á¶µÈ ºÎÃ÷");
+								rm.setDisplayName("ê°œì¡°ëœ ë¶€ì¸ ");
+								rm.setLocalizedName("ê°œì¡°ëœ ë¶€ì¸ ");
 							}
 							else {
 								rm.setDisplayName("Hyper Boots");
@@ -546,8 +546,8 @@ public class Boots implements Listener {
 							rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
 									"generic.attack_damage", 7, Operation.ADD_NUMBER, EquipmentSlot.FEET));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								rm.setDisplayName("ÀÛ¿­ÇÏ´Â ºÎÃ÷");
-								rm.setLocalizedName("ÀÛ¿­ÇÏ´Â ºÎÃ÷");
+								rm.setDisplayName("ì‘ì—´í•˜ëŠ” ë¶€ì¸ ");
+								rm.setLocalizedName("ì‘ì—´í•˜ëŠ” ë¶€ì¸ ");
 							}
 							else {
 								rm.setDisplayName("Burning Boots");
@@ -575,8 +575,8 @@ public class Boots implements Listener {
 							rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 									"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.FEET));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								rm.setDisplayName("ÀÚ¿¬ÀÇ ºÎÃ÷");
-								rm.setLocalizedName("ÀÚ¿¬ÀÇ ºÎÃ÷");
+								rm.setDisplayName("ìì—°ì˜ ë¶€ì¸ ");
+								rm.setLocalizedName("ìì—°ì˜ ë¶€ì¸ ");
 							}
 							else {
 								rm.setDisplayName("Natural Boots");

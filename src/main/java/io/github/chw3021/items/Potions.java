@@ -31,7 +31,7 @@ public class Potions {
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 2400, 2, true,true), false);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.SATURATION, 10, 10, true,true), false);
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				pom.setDisplayName(ChatColor.GRAY + "±¤ºÎÀÇ ¹°¾à");
+				pom.setDisplayName(ChatColor.GRAY + "ê´‘ë¶€ì˜ ë¬¼ì•½");
 			}
 			else {
 				pom.setDisplayName(ChatColor.GRAY + "Potion Of Miner");
@@ -46,7 +46,7 @@ public class Potions {
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 2400, 3, true,true), false);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 3, true,true), false);
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				pom.setDisplayName(ChatColor.GREEN + "¹Ù¶÷ÀÇ ¿µ¾à");
+				pom.setDisplayName(ChatColor.GREEN + "ë°”ëŒì˜ ì˜ì•½");
 			}
 			else {
 				pom.setDisplayName(ChatColor.GREEN + "Wind Elixir");
@@ -61,8 +61,8 @@ public class Potions {
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 2400, 5, true,true), false);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 5, true,true), false);
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				pom.setDisplayName(ChatColor.AQUA + "¹Ù´ÙÀÇ ¿µ¾à");
-				pom.setLore(Arrays.asList("Àü´ŞÃ¼ÀÇ ÈûÀÌ ÀÖÀ¸¸é", "°¡µğ¾ğÀÇ ¹İ»çÇÇÇØ¸¦ ¹«½ÃÇÕ´Ï´Ù"));
+				pom.setDisplayName(ChatColor.AQUA + "ë°”ë‹¤ì˜ ì˜ì•½");
+				pom.setLore(Arrays.asList("ì „ë‹¬ì²´ì˜ í˜ì´ ìˆìœ¼ë©´", "ê°€ë””ì–¸ì˜ ë°˜ì‚¬í”¼í•´ë¥¼ ë¬´ì‹œí•©ë‹ˆë‹¤"));
 			}
 			else {
 				pom.setDisplayName(ChatColor.AQUA + "Ocean Elixir");
@@ -77,7 +77,7 @@ public class Potions {
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 2400, 6, true,true), false);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 6, true,true), false);
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				pom.setDisplayName(ChatColor.DARK_BLUE + "¾îµÒÀÇ ¿µ¾à");
+				pom.setDisplayName(ChatColor.DARK_BLUE + "ì–´ë‘ ì˜ ì˜ì•½");
 			}
 			else {
 				pom.setDisplayName(ChatColor.DARK_BLUE + "Dark Elixir");
@@ -91,7 +91,7 @@ public class Potions {
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 2400, 5, true,true), false);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 5, true,true), false);
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				pom.setDisplayName(ChatColor.RED + "Å¸¿À¸£´Â ¿µ¾à");
+				pom.setDisplayName(ChatColor.RED + "íƒ€ì˜¤ë¥´ëŠ” ì˜ì•½");
 			}
 			else {
 				pom.setDisplayName(ChatColor.RED + "Burning Elixir");
@@ -104,7 +104,7 @@ public class Potions {
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 2400, 5, true,true), false);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 5, true,true), false);
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				pom.setDisplayName(ChatColor.GREEN + "Çà¿îÀÇ ¿µ¾à");
+				pom.setDisplayName(ChatColor.GREEN + "í–‰ìš´ì˜ ì˜ì•½");
 			}
 			else {
 				pom.setDisplayName(ChatColor.GREEN + "Lucky Elixir");
@@ -118,7 +118,7 @@ public class Potions {
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 2400, 5, true,true), false);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 5, true,true), false);
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				pom.setDisplayName(ChatColor.GREEN + "¾ß»ıÀÇ ¿µ¾à");
+				pom.setDisplayName(ChatColor.GREEN + "ì•¼ìƒì˜ ì˜ì•½");
 			}
 			else {
 				pom.setDisplayName(ChatColor.GREEN + "Wild Elixir");

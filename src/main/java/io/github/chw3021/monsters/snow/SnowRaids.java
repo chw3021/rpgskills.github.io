@@ -109,7 +109,7 @@ public class SnowRaids extends Summoned {
 		LeatherArmorMeta bom = (LeatherArmorMeta) boots.getItemMeta();
 		bom.setColor(Color.WHITE);
 		boots.setItemMeta(bom);
-		String reg = lang.contains("kr") ? "øˆ≈∑æ∆¿ÃΩ∫":"WalkingIce";
+		String reg = lang.contains("kr") ? "ÏõåÌÇπÏïÑÏù¥Ïä§":"WalkingIce";
 		Drowned newmob = (Drowned) Summon(esl, ChatColor.AQUA+reg + "<"+rn+">", 800.0, head, chest, leg, boots, new ItemStack(Material.SNOWBALL), new ItemStack(Material.SNOWBALL), EntityType.DROWNED);
 
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
@@ -156,7 +156,7 @@ public class SnowRaids extends Summoned {
 		main.setItemMeta(mm);
 		ItemStack off = new ItemStack(Material.SHIELD);
 		off.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "æÛ¿Ω√¢±‚∫¥":"IceAssault";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ÏñºÏùåÏ∞ΩÍ∏∞Î≥ë":"IceAssault";
 		Drowned newmob = (Drowned) Summon(esl, ChatColor.AQUA+reg + "<"+rn+">", 800.0, head, chest, leg, boots, main, off, EntityType.DROWNED);
 
 		
@@ -202,7 +202,7 @@ public class SnowRaids extends Summoned {
 		ItemMeta mm = main.getItemMeta();
 		mm.setCustomModelData(3006);
 		main.setItemMeta(mm);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "º≥ªÍ∞ÀªÁ":"SnowBlader";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ÏÑ§ÏÇ∞Í≤ÄÏÇ¨":"SnowBlader";
 		Stray newmob = (Stray) Summon(esl, ChatColor.AQUA+reg + "<"+rn+">", 700.0, head, chest, leg, boots, main, null, EntityType.STRAY);
 
 		
@@ -229,7 +229,7 @@ public class SnowRaids extends Summoned {
 		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 5);
 		ItemStack off = new ItemStack(Material.ICE);
 		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 5);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "º≠∏Æ ¡÷º˙ªÁ":"Frost Warlock";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ÏÑúÎ¶¨ Ï£ºÏà†ÏÇ¨":"Frost Warlock";
 		Evoker newmob = (Evoker) Summon(esl, reg, 650.0, head, null, null, null, main, off, EntityType.EVOKER);
 		newmob.setCanJoinRaid(false);
 		newmob.setPatrolLeader(false);
@@ -274,7 +274,7 @@ public class SnowRaids extends Summoned {
 		ItemMeta mm = main.getItemMeta();
 		mm.setCustomModelData(4006);
 		main.setItemMeta(mm);
-		String reg = lang.contains("kr") ? "º≠∏ÆªÁ≥…≤€":"FrostHunter";
+		String reg = lang.contains("kr") ? "ÏÑúÎ¶¨ÏÇ¨ÎÉ•Íæº":"FrostHunter";
 		Stray newmob = (Stray) Summon(esl, reg, 650.0, head, null, null, boots, main,null, EntityType.STRAY);
 
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(),rn));
@@ -296,7 +296,7 @@ public class SnowRaids extends Summoned {
 		Location esl = spl.clone().add(number, 2.5, number2);
 		ItemStack head = new ItemStack(Material.JACK_O_LANTERN);
 		
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "∏∂≥‡¿« ¥´ªÁ∂˜":"Witch's Snowman";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ÎßàÎÖÄÏùò ÎààÏÇ¨Îûå":"Witch's Snowman";
 		Snowman newmob = (Snowman) Summon(esl, ChatColor.AQUA+reg + "<"+rn+">", 550.0, head, null, null, null, null, null, EntityType.SNOWMAN);
 
 		newmob.setMetadata("wsnowman", new FixedMetadataValue(RMain.getInstance(),rn));
@@ -336,7 +336,7 @@ public class SnowRaids extends Summoned {
 		boots.setItemMeta(bom);
 		ItemStack main = new ItemStack(Material.BOW);
 		main.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 3);
-		String reg = lang.contains("kr") ? "º≠∏Æ±√ºˆ":"FrostArcher";
+		String reg = lang.contains("kr") ? "ÏÑúÎ¶¨Í∂ÅÏàò":"FrostArcher";
 		
 		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.AQUA+reg + "<"+rn+">", 650.0, head, chest, leg, boots, main, null, EntityType.SKELETON);
 		
@@ -375,7 +375,7 @@ public class SnowRaids extends Summoned {
 		main.addUnsafeEnchantment(Enchantment.KNOCKBACK, 3);
 		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
 		
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "º≥ªÍ∏∂≥‡":"SnowWitch";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ÏÑ§ÏÇ∞ÎßàÎÖÄ":"SnowWitch";
 		Witch newmob = (Witch) Summon(esl, ChatColor.AQUA+reg + "<"+rn+">", 3000.0, null, null, null, null, main, null, EntityType.WITCH);
 		newmob.setGlowing(true);
 		newmob.setCanJoinRaid(false);

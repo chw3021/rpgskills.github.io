@@ -51,24 +51,24 @@ public class Enchanting implements Listener {
 		if (!im.hasLore()&&!im.hasCustomModelData()) {
 			List<String> lore = new ArrayList<String>();
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				lore.add(ChatColor.YELLOW + "¿øÇÏ´Â ¿É¼ÇÀ» ¼±ÅÃÇÏ¸é ¸¶¹ıºÎ¿©°¡");
-				lore.add(ChatColor.YELLOW + "5ÃÊ µ¿¾È ÁøÇàµÇ°í ÀÏÁ¤È®·ü·Î ¼º°øÇÕ´Ï´Ù");
-				lore.add(ChatColor.YELLOW + "È®·üÀº ÁÖº¯ Ã¥ÀåÀÇ °³¼ö¿¡ ºñ·ÊÇÕ´Ï´Ù");
+				lore.add(ChatColor.YELLOW + "ì›í•˜ëŠ” ì˜µì…˜ì„ ì„ íƒí•˜ë©´ ë§ˆë²•ë¶€ì—¬ê°€");
+				lore.add(ChatColor.YELLOW + "5ì´ˆ ë™ì•ˆ ì§„í–‰ë˜ê³  ì¼ì •í™•ë¥ ë¡œ ì„±ê³µí•©ë‹ˆë‹¤");
+				lore.add(ChatColor.YELLOW + "í™•ë¥ ì€ ì£¼ë³€ ì±…ì¥ì˜ ê°œìˆ˜ì— ë¹„ë¡€í•©ë‹ˆë‹¤");
 				lore.add("");
-				lore.add(ChatColor.DARK_PURPLE + "¹«±âÀÇ °æ¿ì [Âî¸£±â, »ìÃæ, °­Å¸]´Â ÃÖ´ë 10·¹º§");
-				lore.add(ChatColor.DARK_PURPLE + "[¹«ÇÑ È­»ì, ´ÙÁß¹ß»ç]´Â 1·¹º§, [ºü¸¥ ÀåÀü]Àº ÃÖ´ë 3·¹º§");
-				lore.add(ChatColor.DARK_PURPLE + "±× ¿Ü ¸¶¹ıºÎ¿©´Â 255·¹º§±îÁö °¡´ÉÇÕ´Ï´Ù");
+				lore.add(ChatColor.DARK_PURPLE + "ë¬´ê¸°ì˜ ê²½ìš° [ì°Œë¥´ê¸°, ì‚´ì¶©, ê°•íƒ€]ëŠ” ìµœëŒ€ 10ë ˆë²¨");
+				lore.add(ChatColor.DARK_PURPLE + "[ë¬´í•œ í™”ì‚´, ë‹¤ì¤‘ë°œì‚¬]ëŠ” 1ë ˆë²¨, [ë¹ ë¥¸ ì¥ì „]ì€ ìµœëŒ€ 3ë ˆë²¨");
+				lore.add(ChatColor.DARK_PURPLE + "ê·¸ ì™¸ ë§ˆë²•ë¶€ì—¬ëŠ” 255ë ˆë²¨ê¹Œì§€ ê°€ëŠ¥í•©ë‹ˆë‹¤");
 				lore.add("");
-				lore.add(ChatColor.DARK_PURPLE + "È°°ú ¼è³úÀº [Èû], ±× ¿Ü ¹«±âµéÀº [³¯Ä«·Î¿ò]ÀÇ ·¹º§¿¡");
-				lore.add(ChatColor.DARK_PURPLE + "ºñ·ÊÇÏ¿© °ø°İ·ÂÀÌ °ö¿¬»êÀ¸·Î Áõ°¡ÇÕ´Ï´Ù");
-				lore.add(ChatColor.DARK_PURPLE + "[Âî¸£±â, »ìÃæ, °­Å¸]´Â ·¹º§¿¡ ºñ·ÊÇÏ¿©");
-				lore.add(ChatColor.DARK_PURPLE + "ÇØ´ç À¯Çü ¸ó½ºÅÍ¿¡°Ô Ãß°¡ ÇÇÇØ¸¦ Áİ´Ï´Ù");
+				lore.add(ChatColor.DARK_PURPLE + "í™œê³¼ ì‡ ë‡Œì€ [í˜], ê·¸ ì™¸ ë¬´ê¸°ë“¤ì€ [ë‚ ì¹´ë¡œì›€]ì˜ ë ˆë²¨ì—");
+				lore.add(ChatColor.DARK_PURPLE + "ë¹„ë¡€í•˜ì—¬ ê³µê²©ë ¥ì´ ê³±ì—°ì‚°ìœ¼ë¡œ ì¦ê°€í•©ë‹ˆë‹¤");
+				lore.add(ChatColor.DARK_PURPLE + "[ì°Œë¥´ê¸°, ì‚´ì¶©, ê°•íƒ€]ëŠ” ë ˆë²¨ì— ë¹„ë¡€í•˜ì—¬");
+				lore.add(ChatColor.DARK_PURPLE + "í•´ë‹¹ ìœ í˜• ëª¬ìŠ¤í„°ì—ê²Œ ì¶”ê°€ í”¼í•´ë¥¼ ì¤ë‹ˆë‹¤");
 				lore.add("");
-				lore.add(ChatColor.GREEN + "¹æ¾î±¸ÀÇ °æ¿ì [~·ÎºÎÅÍ º¸È£]²ÃÀÇ ¸¶¹ıºÎ¿©¿Í");
-				lore.add(ChatColor.GREEN + "[°¡½Ã]´Â ÃÖ´ë 4·¹º§");
-				lore.add(ChatColor.GREEN + "ºÎÃ÷¿¡ ºÎ¿©µÇ´Â [ÀÌµ¿ °è¿­] ¸¶¹ıºÎ¿©µµ ÃÖ´ë 4·¹º§");
-				lore.add(ChatColor.GREEN + "Åõ±¸¿¡ ºÎ¿©µÇ´Â [¼öÁß °è¿­] ¸¶¹ıºÎ¿©µµ ÃÖ´ë 4·¹º§");
-				lore.add(ChatColor.GREEN + "±×¿Ü ¿É¼ÇÀº 255·¹º§±îÁö °¡´ÉÇÕ´Ï´Ù");
+				lore.add(ChatColor.GREEN + "ë°©ì–´êµ¬ì˜ ê²½ìš° [~ë¡œë¶€í„° ë³´í˜¸]ê¼´ì˜ ë§ˆë²•ë¶€ì—¬ì™€");
+				lore.add(ChatColor.GREEN + "[ê°€ì‹œ]ëŠ” ìµœëŒ€ 4ë ˆë²¨");
+				lore.add(ChatColor.GREEN + "ë¶€ì¸ ì— ë¶€ì—¬ë˜ëŠ” [ì´ë™ ê³„ì—´] ë§ˆë²•ë¶€ì—¬ë„ ìµœëŒ€ 4ë ˆë²¨");
+				lore.add(ChatColor.GREEN + "íˆ¬êµ¬ì— ë¶€ì—¬ë˜ëŠ” [ìˆ˜ì¤‘ ê³„ì—´] ë§ˆë²•ë¶€ì—¬ë„ ìµœëŒ€ 4ë ˆë²¨");
+				lore.add(ChatColor.GREEN + "ê·¸ì™¸ ì˜µì…˜ì€ 255ë ˆë²¨ê¹Œì§€ ê°€ëŠ¥í•©ë‹ˆë‹¤");
 			}
 			else {
 				lore.add(ChatColor.YELLOW + "Enchanting will proceed for 5 seconds");
@@ -125,8 +125,8 @@ public class Enchanting implements Listener {
 			chance = chance* 0.8;
 		}
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			im.setDisplayName(ChatColor.LIGHT_PURPLE+"¸¶¹ıºÎ¿© ½ÃÀÛ..");
-			List<String> lore = Arrays.asList(ChatColor.BLUE+"È®·ü: " +  chance ,ChatColor.YELLOW+(ChatColor.UNDERLINE+"ÇØ´ç ¸¶¹ıºÎ¿© ·¹º§ÀÌ 30ÀÌ»óÀÏ °æ¿ì"), ChatColor.YELLOW+(ChatColor.UNDERLINE+"¸¶¹ıºÎ¿©°¡ ½ÇÆĞÇÏ¸é ·¹º§ÀÌ ÃÊ±âÈ­ µË´Ï´Ù."), "¿Ï·áÀü Ã¢À» ´İÀ¸¸é Ãë¼ÒµË´Ï´Ù","",ChatColor.BLUE+"ÃÖ´ë ·¹º§Àº 256ÀÔ´Ï´Ù");
+			im.setDisplayName(ChatColor.LIGHT_PURPLE+"ë§ˆë²•ë¶€ì—¬ ì‹œì‘..");
+			List<String> lore = Arrays.asList(ChatColor.BLUE+"í™•ë¥ : " +  chance ,ChatColor.YELLOW+(ChatColor.UNDERLINE+"í•´ë‹¹ ë§ˆë²•ë¶€ì—¬ ë ˆë²¨ì´ 30ì´ìƒì¼ ê²½ìš°"), ChatColor.YELLOW+(ChatColor.UNDERLINE+"ë§ˆë²•ë¶€ì—¬ê°€ ì‹¤íŒ¨í•˜ë©´ ë ˆë²¨ì´ ì´ˆê¸°í™” ë©ë‹ˆë‹¤."), "ì™„ë£Œì „ ì°½ì„ ë‹«ìœ¼ë©´ ì·¨ì†Œë©ë‹ˆë‹¤","",ChatColor.BLUE+"ìµœëŒ€ ë ˆë²¨ì€ 256ì…ë‹ˆë‹¤");
 			im.setLore(lore);
 		}
 		else {
@@ -202,7 +202,7 @@ public class Enchanting implements Listener {
                 	if(ri <= chance) {
 
             			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-            				p.sendTitle(ChatColor.GOLD+"¸¶¹ıºÎ¿© ¼º°ø!", "", 15, 35, 15);
+            				p.sendTitle(ChatColor.GOLD+"ë§ˆë²•ë¶€ì—¬ ì„±ê³µ!", "", 15, 35, 15);
             			}
             			else {
             				p.sendTitle(ChatColor.GOLD+"Enchant Success!", "", 15, 35, 15);
@@ -222,7 +222,7 @@ public class Enchanting implements Listener {
         				p.playSound(p.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE, 1, 1.8f);
         				p.playSound(p.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1, 0);
             			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-            				p.sendTitle(ChatColor.DARK_GRAY+"¸¶¹ıºÎ¿© ½ÇÆĞ", "", 15, 35, 15);
+            				p.sendTitle(ChatColor.DARK_GRAY+"ë§ˆë²•ë¶€ì—¬ ì‹¤íŒ¨", "", 15, 35, 15);
             			}
             			else {
             				p.sendTitle(ChatColor.DARK_GRAY+"Enchanting Failed", "", 15, 35, 15);

@@ -78,7 +78,7 @@ public class OceanMonumentQuest implements Listener {
 
 		if(factor ==0) {
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendMessage("Äù½ºÆ®°¡ Ãë¼ÒµÇ¾ú½À´Ï´Ù(°Å¸®)");
+    			p.sendMessage("í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤(ê±°ë¦¬)");
 		    }
     		else {
     			p.sendMessage("Quest Canceled!(Too Far Away)");
@@ -86,7 +86,7 @@ public class OceanMonumentQuest implements Listener {
 		}
 		else if (factor == 2) {
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendMessage("Äù½ºÆ®°¡ Ãë¼ÒµÇ¾ú½À´Ï´Ù(»ç¸Á)");
+    			p.sendMessage("í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤(ì‚¬ë§)");
 		    }
     		else {
     			p.sendMessage("Quest Canceled!(Death)");
@@ -94,7 +94,7 @@ public class OceanMonumentQuest implements Listener {
 		}
 		else if (factor == 3) {
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendMessage("Äù½ºÆ®°¡ Ãë¼ÒµÇ¾ú½À´Ï´Ù(Æ÷±â)");
+    			p.sendMessage("í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤(í¬ê¸°)");
 		    }
     		else {
     			p.sendMessage("Quest Canceled!(Given Up)");
@@ -103,8 +103,8 @@ public class OceanMonumentQuest implements Listener {
 		else if (factor == 4) {
     		p.playSound(p.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendTitle(ChatColor.GOLD + "Äù½ºÆ® ¿Ï·á!",ChatColor.GOLD + "ÇØÀú À¯Àû Àü¸®Ç°À» È¹µæÇß½À´Ï´Ù!",15,35,15);
-            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "°ÅºÏ Æ¯°ø´ë¿ø°ú °Å·¡¸¦ ÇÒ ¼ö ÀÖ½À´Ï´Ù").create());
+    			p.sendTitle(ChatColor.GOLD + "í€˜ìŠ¤íŠ¸ ì™„ë£Œ!",ChatColor.GOLD + "í•´ì € ìœ ì  ì „ë¦¬í’ˆì„ íšë“í–ˆìŠµë‹ˆë‹¤!",15,35,15);
+            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ê±°ë¶ íŠ¹ê³µëŒ€ì›ê³¼ ê±°ë˜ë¥¼ í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤").create());
 		    }
     		else {
     			p.sendTitle(ChatColor.GOLD + "Complete Quest!",ChatColor.GOLD + "You Just Obtained Ocean Monument Trophy!",15,35,15);
@@ -142,7 +142,7 @@ public class OceanMonumentQuest implements Listener {
 				if(TrophyLoc.getLocsdata().Locs.containsEntry(p.getUniqueId(), NPCsSpawn.npcloc.get(le.getUniqueId()))) {
 					
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": °¨»çÇÕ´Ï´Ù.").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ê°ì‚¬í•©ë‹ˆë‹¤.").create());
 	        		}
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Thank you.").create());
@@ -197,7 +197,7 @@ public class OceanMonumentQuest implements Listener {
 		        		
 
 		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		        			mapm.setDisplayName(ChatColor.ITALIC+"±Ù°ÅÁö Áöµµ");
+		        			mapm.setDisplayName(ChatColor.ITALIC+"ê·¼ê±°ì§€ ì§€ë„");
 					    }
 		        		else {
 		        			mapm.setDisplayName(ChatColor.ITALIC+"Stronghold Map");
@@ -223,7 +223,7 @@ public class OceanMonumentQuest implements Listener {
 
 				if(Party.hasParty(p)) {
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÆÄÆ¼¿¡ ¼ÓÇÑ »óÅÂ·Î´Â ÁøÇàÀÌ ºÒ°¡´ÉÇÕ´Ï´Ù").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "íŒŒí‹°ì— ì†í•œ ìƒíƒœë¡œëŠ” ì§„í–‰ì´ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤").create());
 	        		}
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You should leave Your Party").create());
@@ -232,7 +232,7 @@ public class OceanMonumentQuest implements Listener {
 				}
 				if(p.getInventory().firstEmpty() == -1) {
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÀÎº¥Åä¸®¿¡ ºóÄ­ÀÌ ÃÖ¼Ò ÇÑÄ­Àº ÀÖ¾î¾ß ÇÕ´Ï´Ù").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ì¸ë²¤í† ë¦¬ì— ë¹ˆì¹¸ì´ ìµœì†Œ í•œì¹¸ì€ ìˆì–´ì•¼ í•©ë‹ˆë‹¤").create());
 	        		}
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You should empty inventory least one space").create());
@@ -247,9 +247,9 @@ public class OceanMonumentQuest implements Listener {
             		}
             		asked.remove(p.getUniqueId());
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": °¨»çÇÕ´Ï´Ù! ÀúÈñ ºÎ´ë¿¡¼± °¡µğ¾ğµéÀÇ ÀÌ»óÂ¡ÈÄ¿¡ ´ëÇØ Á¶»çÁßÀÔ´Ï´Ù.").create());
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ±ÙÃ³ °¡µğ¾ğµéÇÑÅ× [°¡µğ¾ğÀÇ ½Å°æ¼¼Æ÷]¸¦ 5°³ Á¤µµ ¾ò¾î´Ù ÁÖ½Ç¼ö ÀÖ³ª¿ä?").create());
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": (»ç¸Á, Á¾·á, ¿ìÅ¬¸¯½Ã ¶Ç´Â ³Ê¹« ¸Ö¸® °¡¸é Äù½ºÆ®°¡ Ãë¼ÒµË´Ï´Ù.)").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ê°ì‚¬í•©ë‹ˆë‹¤! ì €í¬ ë¶€ëŒ€ì—ì„  ê°€ë””ì–¸ë“¤ì˜ ì´ìƒì§•í›„ì— ëŒ€í•´ ì¡°ì‚¬ì¤‘ì…ë‹ˆë‹¤.").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ê·¼ì²˜ ê°€ë””ì–¸ë“¤í•œí…Œ [ê°€ë””ì–¸ì˜ ì‹ ê²½ì„¸í¬]ë¥¼ 5ê°œ ì •ë„ ì–»ì–´ë‹¤ ì£¼ì‹¤ìˆ˜ ìˆë‚˜ìš”?").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": (ì‚¬ë§, ì¢…ë£Œ, ìš°í´ë¦­ì‹œ ë˜ëŠ” ë„ˆë¬´ ë©€ë¦¬ ê°€ë©´ í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë©ë‹ˆë‹¤.)").create());
 				    }
 	        		else {
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Thank you so much! Our unit is investigating the abnormalities of the Guardians.").create());
@@ -282,8 +282,8 @@ public class OceanMonumentQuest implements Listener {
     	        	p.setCooldown(Material.RAIL, 10);
 
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ÀÏÀÌ ³¡µµ ¾ø´Ù..").create());
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "(¿ìÅ¬¸¯½Ã ¼ö¶ô)").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ì¼ì´ ëë„ ì—†ë‹¤..").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "(ìš°í´ë¦­ì‹œ ìˆ˜ë½)").create());
 				    }
 	        		else {
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": We are shorthanded..").create());
@@ -319,7 +319,7 @@ public class OceanMonumentQuest implements Listener {
 		        		clearable.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
 		        		clearable.putIfAbsent(p.getUniqueId(), 1);
 		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			        		p.sendTitle(ChatColor.BOLD + "°¡µğ¾ğÀÇ ½Å°æ¼¼Æ÷", ChatColor.BOLD + "("+ clearable.get(p.getUniqueId())+ "/5)", 10, 20, 10);
+			        		p.sendTitle(ChatColor.BOLD + "ê°€ë””ì–¸ì˜ ì‹ ê²½ì„¸í¬", ChatColor.BOLD + "("+ clearable.get(p.getUniqueId())+ "/5)", 10, 20, 10);
 					    }
 		        		else {
 			        		p.sendTitle(ChatColor.BOLD + "Guardian's Nerve Cells", ChatColor.BOLD + "("+ clearable.get(p.getUniqueId())+ "/5)", 10, 20, 10);

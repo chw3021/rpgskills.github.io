@@ -80,7 +80,7 @@ public class IglooQuest extends Mobs {
     	
     	p.playSound(p.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_SET_SPAWN, 0.1f, 2f);
 
-		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "¼­¸®¸¶³à ("+p.getName()+")":"FrostWitch ("+p.getName()+")";
+		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "ì„œë¦¬ë§ˆë…€ ("+p.getName()+")":"FrostWitch ("+p.getName()+")";
 		Witch newmob = (Witch) MobspawnLoc(esl, reg, p.getLevel()*100.0, head, null, null, null, main, main, EntityType.WITCH);
 		newmob.setCanJoinRaid(false);
 		newmob.setPatrolLeader(false);
@@ -126,7 +126,7 @@ public class IglooQuest extends Mobs {
 		
 		if(factor ==0) {
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendMessage("Äù½ºÆ®°¡ Ãë¼ÒµÇ¾ú½À´Ï´Ù(°Å¸®)");
+    			p.sendMessage("í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤(ê±°ë¦¬)");
 		    }
     		else {
     			p.sendMessage("Quest Canceled!(Too Far Away)");
@@ -134,7 +134,7 @@ public class IglooQuest extends Mobs {
 		}
 		else if (factor == 2) {
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendMessage("Äù½ºÆ®°¡ Ãë¼ÒµÇ¾ú½À´Ï´Ù(»ç¸Á)");
+    			p.sendMessage("í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤(ì‚¬ë§)");
 		    }
     		else {
     			p.sendMessage("Quest Canceled!(Death)");
@@ -142,7 +142,7 @@ public class IglooQuest extends Mobs {
 		}
 		else if (factor == 3) {
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendMessage("Äù½ºÆ®°¡ Ãë¼ÒµÇ¾ú½À´Ï´Ù(Æ÷±â)");
+    			p.sendMessage("í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤(í¬ê¸°)");
 		    }
     		else {
     			p.sendMessage("Quest Canceled!(Given Up)");
@@ -151,8 +151,8 @@ public class IglooQuest extends Mobs {
 		else if (factor == 4) {
     		p.playSound(p.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendTitle(ChatColor.GOLD + "Äù½ºÆ® ¿Ï·á!",ChatColor.GOLD + "ÀÌ±Û·ç Àü¸®Ç°À» È¹µæÇß½À´Ï´Ù!",15,35,15);
-            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÀÌ±Û·ç ´«»ç¶÷°ú °Å·¡¸¦ ÇÒ ¼ö ÀÖ½À´Ï´Ù").create());
+    			p.sendTitle(ChatColor.GOLD + "í€˜ìŠ¤íŠ¸ ì™„ë£Œ!",ChatColor.GOLD + "ì´ê¸€ë£¨ ì „ë¦¬í’ˆì„ íšë“í–ˆìŠµë‹ˆë‹¤!",15,35,15);
+            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ì´ê¸€ë£¨ ëˆˆì‚¬ëŒê³¼ ê±°ë˜ë¥¼ í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤").create());
 		    }
     		else {
     			p.sendTitle(ChatColor.GOLD + "Complete Quest!",ChatColor.GOLD + "You Just Obtained Igloo Trophy!",15,35,15);
@@ -189,7 +189,7 @@ public class IglooQuest extends Mobs {
 				}
 				if(TrophyLoc.getLocsdata().Locs.containsEntry(p.getUniqueId(), NPCsSpawn.npcloc.get(le.getUniqueId()))) {
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": °í¸¶¿ö¿ä!").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ê³ ë§ˆì›Œìš”!").create());
 	        		}
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Have A Nice Day!").create());
@@ -237,7 +237,7 @@ public class IglooQuest extends Mobs {
 
 				if(Party.hasParty(p)) {
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÆÄÆ¼¿¡ ¼ÓÇÑ »óÅÂ·Î´Â ÁøÇàÀÌ ºÒ°¡´ÉÇÕ´Ï´Ù").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "íŒŒí‹°ì— ì†í•œ ìƒíƒœë¡œëŠ” ì§„í–‰ì´ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤").create());
 	        		}
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You should leave Your Party").create());
@@ -246,7 +246,7 @@ public class IglooQuest extends Mobs {
 				}
 				if(p.getInventory().firstEmpty() == -1) {
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÀÎº¥Åä¸®¿¡ ºóÄ­ÀÌ ÃÖ¼Ò ÇÑÄ­Àº ÀÖ¾î¾ß ÇÕ´Ï´Ù").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ì¸ë²¤í† ë¦¬ì— ë¹ˆì¹¸ì´ ìµœì†Œ í•œì¹¸ì€ ìˆì–´ì•¼ í•©ë‹ˆë‹¤").create());
 	        		}
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You should empty inventory least one space").create());
@@ -261,9 +261,9 @@ public class IglooQuest extends Mobs {
             		}
             		asked.remove(p.getUniqueId());
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Á¦ ¸öÀÌ Á¡Á¡ ³ì°í ÀÖ´Â °Í °°¾Æ¿ä..").create());
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": È¤½Ã ¼­¸®¸¶³à ÇÑÅ×¼­ ³Ã±âÀÇ Æ÷¼ÇÀ» ±¸ÇØÁÖ½Ç¼ö ÀÖ³ª¿ä?").create());
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": (»ç¸Á, Á¾·á½Ã ¶Ç´Â ³Ê¹« ¸Ö¸® °¡¸é Äù½ºÆ®°¡ Ãë¼ÒµË´Ï´Ù.)").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ì œ ëª¸ì´ ì ì  ë…¹ê³  ìˆëŠ” ê²ƒ ê°™ì•„ìš”..").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": í˜¹ì‹œ ì„œë¦¬ë§ˆë…€ í•œí…Œì„œ ëƒ‰ê¸°ì˜ í¬ì…˜ì„ êµ¬í•´ì£¼ì‹¤ìˆ˜ ìˆë‚˜ìš”?").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": (ì‚¬ë§, ì¢…ë£Œì‹œ ë˜ëŠ” ë„ˆë¬´ ë©€ë¦¬ ê°€ë©´ í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë©ë‹ˆë‹¤.)").create());
 				    }
 	        		else {
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": I think my body is melting..").create());
@@ -299,8 +299,8 @@ public class IglooQuest extends Mobs {
     	        	p.setCooldown(Material.RAIL, 10);
 
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ³Ã±â°¡ ºÎÁ·ÇØ..").create());
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "(¿ìÅ¬¸¯½Ã ¼ö¶ô)").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ëƒ‰ê¸°ê°€ ë¶€ì¡±í•´..").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "(ìš°í´ë¦­ì‹œ ìˆ˜ë½)").create());
 				    }
 	        		else {
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": I'm Melting..").create());
@@ -328,7 +328,7 @@ public class IglooQuest extends Mobs {
 			Player p = Bukkit.getPlayerExact(d.getEntity().getMetadata("iglooquest").get(0).asString());
     		p.playSound(p.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-        		p.sendTitle(ChatColor.BOLD + "³Ã±âÀÇ Æ÷¼Ç", ChatColor.BOLD + "(1/1)", 10, 20, 10);
+        		p.sendTitle(ChatColor.BOLD + "ëƒ‰ê¸°ì˜ í¬ì…˜", ChatColor.BOLD + "(1/1)", 10, 20, 10);
     		}
     		else {
         		p.sendTitle(ChatColor.BOLD + "ColdPotion", ChatColor.BOLD + "(1/1)", 10, 20, 10);

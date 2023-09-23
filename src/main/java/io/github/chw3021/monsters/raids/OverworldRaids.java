@@ -262,7 +262,7 @@ public class OverworldRaids extends Summoned implements Listener {
         			RaidDifficulties.saver(p, RaidCategory.OVERWORLD, difen.get(rn)+2);
     			}
     			
-        		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "Ω¬∏Æ":"Victory!";
+        		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "ÏäπÎ¶¨":"Victory!";
         		p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + reg), null, 5, 60, 5);
         		p.playSound(spl, Sound.ENTITY_VILLAGER_CELEBRATE, 1, 1);
         		p.playSound(spl, Sound.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
@@ -306,7 +306,7 @@ public class OverworldRaids extends Summoned implements Listener {
         			if(p.getWorld().equals(rl.getWorld()) && p.getLocation().clone().distance(rl) >90) {
         				p.teleport(rl.clone().add(1, 1, 0));
         				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-							p.sendMessage("≥ π´ ∏÷∏Æø‘Ω¿¥œ¥Ÿ");
+							p.sendMessage("ÎÑàÎ¨¥ Î©ÄÎ¶¨ÏôîÏäµÎãàÎã§");
         				}
         				else {
 							p.sendMessage("Too Far");
@@ -393,7 +393,7 @@ public class OverworldRaids extends Summoned implements Listener {
 			main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
 			ItemStack off = new ItemStack(Material.STONE);
 			off.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
-    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "Ω∫≈Ê∞Ò∑Ω":"StoneGolem";
+    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "Ïä§ÌÜ§Í≥®Î†ò":"StoneGolem";
 			IronGolem newmob = (IronGolem) MobspawnLoc(esl, ChatColor.GRAY + reg, dif1, null,
 					null, null, null, main, off, EntityType.IRON_GOLEM);
 			newmob.setGlowing(true);
@@ -445,7 +445,7 @@ public class OverworldRaids extends Summoned implements Listener {
     		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
     		ItemStack off = new ItemStack(Material.ICE);
     		off.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
-    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "º≥ªÍ∏∂≥‡":"SnowWitch";
+    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "ÏÑ§ÏÇ∞ÎßàÎÖÄ":"SnowWitch";
     		Witch newmob = (Witch) MobspawnLoc(esl, ChatColor.BLUE+reg, dif1, null, null, null, boots, main, off, EntityType.WITCH);
     		newmob.setGlowing(true);
     		newmob.getEquipment().setBootsDropChance(0);
@@ -489,7 +489,7 @@ public class OverworldRaids extends Summoned implements Listener {
     		inhb.getEquipment().setHelmet(new ItemStack(Material.BEACON));
     		inhb.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(dif1);;
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-        		inhb.setCustomName(rn + " ø§¥ı∞°µæ æÔ¡¶±‚");
+        		inhb.setCustomName(rn + " ÏóòÎçîÍ∞ÄÎîîÏñ∏ ÏñµÏ†úÍ∏∞");
 			}
 			else {
         		inhb.setCustomName(rn + "'s ElderGuardian Inhibitor");
@@ -540,7 +540,7 @@ public class OverworldRaids extends Summoned implements Listener {
 			mm.setCustomModelData(8008);
 			main.setItemMeta(mm);
 			
-    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "π„¿«±∫¥‹¿Â":"NightCorpsCommander";
+    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "Î∞§ÏùòÍµ∞Îã®Ïû•":"NightCorpsCommander";
     		Skeleton newmob = (Skeleton) MobspawnLoc(esl, ChatColor.GRAY+reg, dif1, pe, chest, leg, boots, main, null, EntityType.SKELETON);
 
     		newmob.setConversionTime(-1);
@@ -572,7 +572,7 @@ public class OverworldRaids extends Summoned implements Listener {
 			mm.setCustomModelData(2009);
 			main.setItemMeta(mm);
 
-    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "¥⁄≈ÕB":"Dr.B";
+    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "Îã•ÌÑ∞B":"Dr.B";
     		Illusioner newmob = (Illusioner) MobspawnLoc(esl, ChatColor.DARK_PURPLE+reg, dif1, new ItemStack(Material.BLACK_STAINED_GLASS), null, null, null, main, null, EntityType.ILLUSIONER);
 			newmob.setCanJoinRaid(false);
 			newmob.setPatrolTarget(null);
@@ -635,7 +635,7 @@ public class OverworldRaids extends Summoned implements Listener {
     		ItemStack off = new ItemStack(Material.SHIELD);
     		off.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
     		off.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
-    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "∫”¿∫±‚ªÁ":"RedKnight";
+    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "Î∂âÏùÄÍ∏∞ÏÇ¨":"RedKnight";
     		Skeleton newmob = (Skeleton) MobspawnLoc(esl, ChatColor.RED+reg, dif1, head, chest, leg, boots, main, off, EntityType.SKELETON);
     		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
     		newmob.setGlowing(true);
@@ -686,7 +686,7 @@ public class OverworldRaids extends Summoned implements Listener {
 			mm.setCustomModelData(2011);
 			main.setItemMeta(mm);
 			
-    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "≈◊∑Ø∏ÆΩ∫∆Æ":"Terrorist";
+    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "ÌÖåÎü¨Î¶¨Ïä§Ìä∏":"Terrorist";
     		Skeleton newmob = (Skeleton) MobspawnLoc(esl, ChatColor.DARK_GREEN+reg, dif1, pe, pe1, leg, pe11, main, null, EntityType.SKELETON);
 
     		newmob.setConversionTime(-1);
@@ -748,7 +748,7 @@ public class OverworldRaids extends Summoned implements Listener {
 			if(Party.hasParty(p)) {
 				if(Party.isOwner(p)) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						OverworldRaidFinish(getheroname(p), "≈ª¡÷","∆ƒ∆º¿Â¿Ã ∂∞≥µΩ¿¥œ¥Ÿ",0);
+						OverworldRaidFinish(getheroname(p), "ÌÉàÏ£º","ÌååÌã∞Ïû•Ïù¥ Îñ†ÎÇ¨ÏäµÎãàÎã§",0);
 					}
 					else {
 						OverworldRaidFinish(getheroname(p), "Escaped","Party Owner Left",0);
@@ -763,7 +763,7 @@ public class OverworldRaids extends Summoned implements Listener {
 			}
 			else {
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					OverworldRaidFinish(getheroname(p), "≈ª¡÷","∆ƒ∆º¿Â¿Ã ∂∞≥µΩ¿¥œ¥Ÿ",0);
+					OverworldRaidFinish(getheroname(p), "ÌÉàÏ£º","ÌååÌã∞Ïû•Ïù¥ Îñ†ÎÇ¨ÏäµÎãàÎã§",0);
 				}
 				else {
 					OverworldRaidFinish(getheroname(p), "Escaped","Party Owner Left",0);
@@ -790,7 +790,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	            if(!(timer < 0))
 	            {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder("¥Ÿ¿Ω ∫∏Ω∫ ƒß∞¯¿€¿¸ ¿‘¿Â±Ó¡ˆ " + timer + "√  ±‚¥Ÿ∑¡æﬂ µÀ¥œ¥Ÿ").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder("Îã§Ïùå Î≥¥Ïä§ Ïπ®Í≥µÏûëÏ†Ñ ÏûÖÏû•ÍπåÏßÄ " + timer + "Ï¥à Í∏∞Îã§Î†§Ïïº Îê©ÎãàÎã§").create());
 					}
 					else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder("You have to wait for " + timer + " seconds to Start Next Boss Raid").create());
@@ -799,7 +799,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	            }
 	            else { 
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder("¿Ã¡¶ ∫∏Ω∫ ƒß∞¯¿€¿¸ø° ¿‘¿Â«œΩ«ºˆ ¿÷Ω¿¥œ¥Ÿ").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder("Ïù¥Ï†ú Î≥¥Ïä§ Ïπ®Í≥µÏûëÏ†ÑÏóê ÏûÖÏû•ÌïòÏã§Ïàò ÏûàÏäµÎãàÎã§").create());
 					}
 					else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder("Now You Can Start Boss Raid").create());
@@ -830,7 +830,7 @@ public class OverworldRaids extends Summoned implements Listener {
 					Party.getMembers(Party.getParty(p)).forEach(pu -> {
 						if(Bukkit.getPlayer(pu).getInventory().firstEmpty() == -1) {
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder("¿Œ∫•≈‰∏Æø° ∫Ûƒ≠¿Ã æ¯¥¬ ∆ƒ∆ºø¯¿Ã ¿÷Ω¿¥œ¥Ÿ").create());
+				            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder("Ïù∏Î≤§ÌÜ†Î¶¨Ïóê ÎπàÏπ∏Ïù¥ ÏóÜÎäî ÌååÌã∞ÏõêÏù¥ ÏûàÏäµÎãàÎã§").create());
 							}
 							else {
 				            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder("Players should empty inventory least one space").create());
@@ -848,7 +848,7 @@ public class OverworldRaids extends Summoned implements Listener {
 				}
 				else {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						p.sendMessage("∆ƒ∆º¿Â∏∏ ∞°¥…«’¥œ¥Ÿ");
+						p.sendMessage("ÌååÌã∞Ïû•Îßå Í∞ÄÎä•Ìï©ÎãàÎã§");
 					}
 					else {
 						p.sendMessage("You Should Be Owner");
@@ -859,7 +859,7 @@ public class OverworldRaids extends Summoned implements Listener {
 			else {
 				if(p.getInventory().firstEmpty() == -1) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder("¿Œ∫•≈‰∏Æø° ∫Ûƒ≠¿Ã æ¯Ω¿¥œ¥Ÿ").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder("Ïù∏Î≤§ÌÜ†Î¶¨Ïóê ÎπàÏπ∏Ïù¥ ÏóÜÏäµÎãàÎã§").create());
 					}
 					else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder("You should empty inventory least one space").create());
@@ -883,7 +883,7 @@ public class OverworldRaids extends Summoned implements Listener {
     		portal.setGravity(false);
     		
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-        		portal.setCustomName(rn + "∆ƒ∆º¿« √‚±∏ (øı≈©∏∞ªÛ≈¬ø°º≠ ∏«º’¿∏∑Œ ∞°∞›)");
+        		portal.setCustomName(rn + "ÌååÌã∞Ïùò Ï∂úÍµ¨ (ÏõÖÌÅ¨Î¶∞ÏÉÅÌÉúÏóêÏÑú Îß®ÏÜêÏúºÎ°ú Í∞ÄÍ≤©)");
         		language.put(rn, p.getLocale());
 			}
 			else {
@@ -909,7 +909,7 @@ public class OverworldRaids extends Summoned implements Listener {
     		v.setHealth(4000);
     		v.setRemoveWhenFarAway(false);
     		v.setGlowing(true);
-    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? rn + " ∞Ì∞Ì«–¿⁄":rn + "'s Archaeologist";
+    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? rn + " Í≥†Í≥†ÌïôÏûê":rn + "'s Archaeologist";
     		v.setVillagerType(Type.JUNGLE);
     		v.setProfession(Profession.LIBRARIAN);
     		v.setCustomName(reg);
@@ -921,8 +921,8 @@ public class OverworldRaids extends Summoned implements Listener {
     		if(Party.hasParty(p)) {
 				if(Party.isOwner(p)) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "≥≠¿Ãµµ∏¶ ¿‘∑¬«œººø‰ (√÷º“: 0, √÷¥Î: "+RaidDifficulties.getMaxDifficulty(p, RaidCategory.OVERWORLD)+")").create());
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BLUE + "5√ æ»ø° πÃ¿‘∑¬ ∂«¥¬ ø√πŸ∏• ¿‘∑¬¿Ã æ∆¥“ Ω√ µµ¿¸ ∞°¥…«— ∞°¿Â ≥Ù¿∫ ≥≠¿Ãµµ∑Œ ¿⁄µø º≥¡§µÀ¥œ¥Ÿ").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "ÎÇúÏù¥ÎèÑÎ•º ÏûÖÎ†•ÌïòÏÑ∏Ïöî (ÏµúÏÜå: 0, ÏµúÎåÄ: "+RaidDifficulties.getMaxDifficulty(p, RaidCategory.OVERWORLD)+")").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BLUE + "5Ï¥àÏïàÏóê ÎØ∏ÏûÖÎ†• ÎòêÎäî Ïò¨Î∞îÎ•∏ ÏûÖÎ†•Ïù¥ ÏïÑÎãê Ïãú ÎèÑÏ†Ñ Í∞ÄÎä•Ìïú Í∞ÄÏû• ÎÜíÏùÄ ÎÇúÏù¥ÎèÑÎ°ú ÏûêÎèô ÏÑ§Ï†ïÎê©ÎãàÎã§").create());
 					}
 					else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "Enter difficulty level (min: 0, MAX: "+RaidDifficulties.getMaxDifficulty(p, RaidCategory.OVERWORLD)+")").create());
@@ -943,7 +943,7 @@ public class OverworldRaids extends Summoned implements Listener {
 
 					Party.getMembers(Party.getParty(p)).forEach(pu -> {
 						if(Bukkit.getPlayer(pu).getLocale().equalsIgnoreCase("ko_kr")) {
-							Bukkit.getPlayer(pu).spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "∆ƒ∆º¿Â¿Ã ≥≠¿Ãµµ∏¶ º±≈√¡ﬂ¿‘¥œ¥Ÿ").create());
+							Bukkit.getPlayer(pu).spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "ÌååÌã∞Ïû•Ïù¥ ÎÇúÏù¥ÎèÑÎ•º ÏÑ†ÌÉùÏ§ëÏûÖÎãàÎã§").create());
 						}
 						else {
 							Bukkit.getPlayer(pu).spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "Owner is selecting difficulty now").create());
@@ -953,8 +953,8 @@ public class OverworldRaids extends Summoned implements Listener {
 			}
 			else {
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "≥≠¿Ãµµ∏¶ ¿‘∑¬«œººø‰ (√÷º“: 0, √÷¥Î: "+RaidDifficulties.getMaxDifficulty(p, RaidCategory.OVERWORLD)+")").create());
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BLUE + "5√ æ»ø° πÃ¿‘∑¬ ∂«¥¬ ø√πŸ∏• ¿‘∑¬¿Ã æ∆¥“ Ω√ µµ¿¸ ∞°¥…«— ∞°¿Â ≥Ù¿∫ ≥≠¿Ãµµ∑Œ ¿⁄µø º≥¡§µÀ¥œ¥Ÿ").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "ÎÇúÏù¥ÎèÑÎ•º ÏûÖÎ†•ÌïòÏÑ∏Ïöî (ÏµúÏÜå: 0, ÏµúÎåÄ: "+RaidDifficulties.getMaxDifficulty(p, RaidCategory.OVERWORLD)+")").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BLUE + "5Ï¥àÏïàÏóê ÎØ∏ÏûÖÎ†• ÎòêÎäî Ïò¨Î∞îÎ•∏ ÏûÖÎ†•Ïù¥ ÏïÑÎãê Ïãú ÎèÑÏ†Ñ Í∞ÄÎä•Ìïú Í∞ÄÏû• ÎÜíÏùÄ ÎÇúÏù¥ÎèÑÎ°ú ÏûêÎèô ÏÑ§Ï†ïÎê©ÎãàÎã§").create());
 				}
 				else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "Enter difficulty level (min: 0, MAX: "+RaidDifficulties.getMaxDifficulty(p, RaidCategory.OVERWORLD)+")").create());
@@ -986,7 +986,7 @@ public class OverworldRaids extends Summoned implements Listener {
 			if(Party.isOwner(p)) {
 				Party.getMembers(Party.getParty(p)).forEach(pu -> {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		        		Bukkit.getPlayer(pu).sendMessage(ChatColor.AQUA + "≥≠¿Ãµµ∞° "+endif+"∑Œ º≥¡§ µ«æ˙Ω¿¥œ¥Ÿ");
+		        		Bukkit.getPlayer(pu).sendMessage(ChatColor.AQUA + "ÎÇúÏù¥ÎèÑÍ∞Ä "+endif+"Î°ú ÏÑ§Ï†ï ÎêòÏóàÏäµÎãàÎã§");
 					}
 					else {
 		        		Bukkit.getPlayer(pu).sendMessage(ChatColor.AQUA + "Difficulty level set to "+endif);
@@ -996,7 +996,7 @@ public class OverworldRaids extends Summoned implements Listener {
 		}
 		else {
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-        		p.sendMessage(ChatColor.AQUA + "≥≠¿Ãµµ∞° "+endif+"∑Œ º≥¡§ µ«æ˙Ω¿¥œ¥Ÿ");
+        		p.sendMessage(ChatColor.AQUA + "ÎÇúÏù¥ÎèÑÍ∞Ä "+endif+"Î°ú ÏÑ§Ï†ï ÎêòÏóàÏäµÎãàÎã§");
 			}
 			else {
         		p.sendMessage(ChatColor.AQUA + "Difficulty level set to "+endif);
@@ -1008,7 +1008,7 @@ public class OverworldRaids extends Summoned implements Listener {
 			if(Party.isOwner(p)) {
 				Party.getMembers(Party.getParty(p)).forEach(pu -> {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		        		Bukkit.getPlayer(pu).sendTitle(ChatColor.GRAY + "¿€¿¸¿Ã Ω√¿€µÀ¥œ¥Ÿ", "¡÷πŒ¿ª ∫∏»£«œ∞Ì ¿˚¿ª ∏µŒ º∂∏Í«œΩ Ω√ø¿", 5, 69, 5);
+		        		Bukkit.getPlayer(pu).sendTitle(ChatColor.GRAY + "ÏûëÏ†ÑÏù¥ ÏãúÏûëÎê©ÎãàÎã§", "Ï£ºÎØºÏùÑ Î≥¥Ìò∏ÌïòÍ≥† Ï†ÅÏùÑ Î™®Îëê ÏÑ¨Î©∏ÌïòÏã≠ÏãúÏò§", 5, 69, 5);
 					}
 					else {
 		        		Bukkit.getPlayer(pu).sendTitle(ChatColor.GRAY + "Raid Will Start", "Protect Villager & Sweep All Enemies", 5, 69, 5);
@@ -1018,7 +1018,7 @@ public class OverworldRaids extends Summoned implements Listener {
 		}
 		else {
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-        		p.sendTitle(ChatColor.GRAY + "¿€¿¸¿Ã Ω√¿€µÀ¥œ¥Ÿ", "¡÷πŒ¿ª ∫∏»£«œ∞Ì ¿˚¿ª ∏µŒ º∂∏Í«œΩ Ω√ø¿", 5, 69, 5);
+        		p.sendTitle(ChatColor.GRAY + "ÏûëÏ†ÑÏù¥ ÏãúÏûëÎê©ÎãàÎã§", "Ï£ºÎØºÏùÑ Î≥¥Ìò∏ÌïòÍ≥† Ï†ÅÏùÑ Î™®Îëê ÏÑ¨Î©∏ÌïòÏã≠ÏãúÏò§", 5, 69, 5);
 			}
 			else {
         		p.sendTitle(ChatColor.GRAY + "Raid Will Start", "Protect Villager & Sweep All Enemies", 5, 69, 5);
@@ -1048,9 +1048,9 @@ public class OverworldRaids extends Summoned implements Listener {
 		                	heroes.get(rn).forEach(pu -> {
 		                		Player pa = Bukkit.getPlayer(pu);
 								if(pa.getLocale().equalsIgnoreCase("ko_kr")) {
-    		                		pa.sendTitle(ChatColor.GRAY + "¿€¿¸ Ω√¿€", null, 5, 69, 5);
+    		                		pa.sendTitle(ChatColor.GRAY + "ÏûëÏ†Ñ ÏãúÏûë", null, 5, 69, 5);
     				        		pa.playSound(spl, Sound.EVENT_RAID_HORN, 1, 1);
-    		                		pa.sendMessage("≥≤¿∫ ∏Òº˚: " +ChatColor.BOLD + String.valueOf(lives.get(rn)));
+    		                		pa.sendMessage("ÎÇ®ÏùÄ Î™©Ïà®: " +ChatColor.BOLD + String.valueOf(lives.get(rn)));
 								}
 								else {
     		                		pa.sendTitle(ChatColor.GRAY + "Raid Start", null, 5, 69, 5);
@@ -1061,7 +1061,7 @@ public class OverworldRaids extends Summoned implements Listener {
 
 	        	    		targeting(rn);
 
-		        			String t = p.getLocale().equalsIgnoreCase("ko_kr") ? "≥≤¿∫Ω√∞£ - ":"TimeLeft - ";
+		        			String t = p.getLocale().equalsIgnoreCase("ko_kr") ? "ÎÇ®ÏùÄÏãúÍ∞Ñ - ":"TimeLeft - ";
 	        	    		BossBar	timeb = Bukkit.getServer().createBossBar(new NamespacedKey(RMain.getInstance(), rn+"OverworldRaidTime"),t + String.valueOf((int)timeout.get(rn)/20/60) + ":" + String.valueOf((int)(timeout.get(rn)/20)%60), BarColor.WHITE, BarStyle.SEGMENTED_6);
 	        	    		timeb.setVisible(true);
 	        	    		timebar.put(rn, timeb);
@@ -1081,7 +1081,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	        	            		if(timeout.get(rn) <=0) {
 
 	    								if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    	        	            			OverworldRaidFinish(rn,"∆–πË..", "Ω√∞£√ ∞˙",0);
+    	        	            			OverworldRaidFinish(rn,"Ìå®Î∞∞..", "ÏãúÍ∞ÑÏ¥àÍ≥º",0);
 	    								}
 	    								else {
     	        	            			OverworldRaidFinish(rn,"Defeated..", "TimeOut",0);
@@ -1156,7 +1156,7 @@ public class OverworldRaids extends Summoned implements Listener {
 			String rn = le.getMetadata("raidvil").get(0).asString();
 
 			if(language.get(rn).equalsIgnoreCase("ko_kr")) {
-				OverworldRaidFinish(rn, "∆–πË..", "¡÷πŒ ∫∏»£ Ω«∆–",0);
+				OverworldRaidFinish(rn, "Ìå®Î∞∞..", "Ï£ºÎØº Î≥¥Ìò∏ Ïã§Ìå®",0);
 			}
 			else {
 				OverworldRaidFinish(rn, "Defeated..", "Fail to Protect the Villager",0);
@@ -1178,7 +1178,7 @@ public class OverworldRaids extends Summoned implements Listener {
         	if(lives.getOrDefault(rn, 0)<=0) {
 
     			if(language.get(rn).equalsIgnoreCase("ko_kr")) {
-    				OverworldRaidFinish(rn, "∆–πË..", "∏µÁ ∏Òº˚ º“¡¯",0);
+    				OverworldRaidFinish(rn, "Ìå®Î∞∞..", "Î™®Îì† Î™©Ïà® ÏÜåÏßÑ",0);
     			}
     			else {
                 	OverworldRaidFinish(rn, "Defeated..", "All Lives Exhausted", 0);
@@ -1202,7 +1202,7 @@ public class OverworldRaids extends Summoned implements Listener {
 					if(Party.hasParty(p)) {
 						if(Party.isOwner(p)) {
 			    			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								OverworldRaidFinish(getheroname(p), "«◊∫π","",0);
+								OverworldRaidFinish(getheroname(p), "Ìï≠Î≥µ","",0);
 			    			}
 			    			else {
 								OverworldRaidFinish(getheroname(p), "Surrender","",0);
@@ -1210,7 +1210,7 @@ public class OverworldRaids extends Summoned implements Listener {
 						}
 						else {
 			    			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								p.sendMessage("∆ƒ∆º¿Â∏∏ ∞°¥…«’¥œ¥Ÿ");
+								p.sendMessage("ÌååÌã∞Ïû•Îßå Í∞ÄÎä•Ìï©ÎãàÎã§");
 			    			}
 			    			else {
 								p.sendMessage("You Should Be Owner");
@@ -1220,7 +1220,7 @@ public class OverworldRaids extends Summoned implements Listener {
 					}
 					else {
 		    			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-							OverworldRaidFinish(getheroname(p), "«◊∫π","",0);
+							OverworldRaidFinish(getheroname(p), "Ìï≠Î≥µ","",0);
 		    			}
 		    			else {
 							OverworldRaidFinish(getheroname(p), "Surrender","",0);
@@ -1529,7 +1529,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	                	Location esl = d.getEntity().getLocation().clone().add(0,0.5, 0);
 	
 	    	    		
-		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "∫–≥Î«—∞Ò∑Ω":"OutragedGolem";
+		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "Î∂ÑÎÖ∏ÌïúÍ≥®Î†ò":"OutragedGolem";
 		        		IronGolem newmob = (IronGolem) MobspawnLoc(esl, ChatColor.RED+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, null, null, null, null, null, null, EntityType.IRON_GOLEM);
 		        		newmob.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 999999, 1, false, false));
 	    	    		newmob.setGlowing(true);
@@ -1562,9 +1562,9 @@ public class OverworldRaids extends Summoned implements Listener {
 	            		
 	                	heroes.get(rn).forEach(pu -> {
 							if(Bukkit.getPlayer(pu).getLocale().equalsIgnoreCase("ko_kr")) {
-		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "≈‰π˙¿€¿¸ 2¥‹∞Ë"), null, 5, 69, 5);
+		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "ÌÜ†Î≤åÏûëÏ†Ñ 2Îã®Í≥Ñ"), null, 5, 69, 5);
 				        		Bukkit.getPlayer(pu).playSound(spl, Sound.EVENT_RAID_HORN, 1, 1);
-					    		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + "≥≤¿∫ ∏Òº˚ "+ String.valueOf(lives.getOrDefault(rn, 0)));
+					    		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + "ÎÇ®ÏùÄ Î™©Ïà® "+ String.valueOf(lives.getOrDefault(rn, 0)));
 							}
 							else {
 		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "PHASE 2"), null, 5, 69, 5);
@@ -1606,7 +1606,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	                	Location esl = d.getEntity().getLocation().clone().add(0,0.5, 0);
 	
 	    	    		
-		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "¬˜∞°øÓΩ…¿Â¿«∏∂≥‡":"FrozenHeart";
+		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "Ï∞®Í∞ÄÏö¥Ïã¨Ïû•ÏùòÎßàÎÖÄ":"FrozenHeart";
 		        		Witch newmob = (Witch) MobspawnLoc(esl, ChatColor.RED+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, null, null, null, null, null, null, EntityType.WITCH);
 	    	    		newmob.setGlowing(true);
 	    	    		newmob.getEquipment().setBootsDropChance(0);
@@ -1639,9 +1639,9 @@ public class OverworldRaids extends Summoned implements Listener {
 	            		
 	                	heroes.get(rn).forEach(pu -> {
 							if(Bukkit.getPlayer(pu).getLocale().equalsIgnoreCase("ko_kr")) {
-		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "≈‰π˙¿€¿¸ 2¥‹∞Ë"), null, 5, 69, 5);
+		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "ÌÜ†Î≤åÏûëÏ†Ñ 2Îã®Í≥Ñ"), null, 5, 69, 5);
 				        		Bukkit.getPlayer(pu).playSound(spl, Sound.EVENT_RAID_HORN, 1, 1);
-					    		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + "≥≤¿∫ ∏Òº˚ "+ String.valueOf(lives.getOrDefault(rn, 0)));
+					    		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + "ÎÇ®ÏùÄ Î™©Ïà® "+ String.valueOf(lives.getOrDefault(rn, 0)));
 							}
 							else {
 		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "PHASE 2"), null, 5, 69, 5);
@@ -1716,7 +1716,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	    		}
 	    		
 				if(Bukkit.getPlayer(pu).getLocale().equalsIgnoreCase("ko_kr")) {
-	        		Bukkit.getPlayer(pu).sendTitle(ChatColor.BLUE + "æÔ¡¶±‚∞° ∆ƒ±´µ«æ˙Ω¿¥œ¥Ÿ.", "ø§¥ı∞°µæ¿Ã ±˙æÓ≥≥¥œ¥Ÿ.", 5, 69, 5);
+	        		Bukkit.getPlayer(pu).sendTitle(ChatColor.BLUE + "ÏñµÏ†úÍ∏∞Í∞Ä ÌååÍ¥¥ÎêòÏóàÏäµÎãàÎã§.", "ÏóòÎçîÍ∞ÄÎîîÏñ∏Ïù¥ Íπ®Ïñ¥ÎÇ©ÎãàÎã§.", 5, 69, 5);
 				}
 				else {
 	        		Bukkit.getPlayer(pu).sendTitle(ChatColor.BLUE + "Inhibitor Destroyed", "ElderGuardian will Wake up", 5, 69, 5);
@@ -1734,7 +1734,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	            	double number2 = (random.nextDouble()+1.5) * 5 * (random.nextBoolean() ? -1 : 1);
 	            	Location esl = spl.clone().add(number, -10, number2);
 	
-	        		String reg = lang.equalsIgnoreCase("ko_kr") ? "ø§¥ı∞°µæ":"ElderGuardian";
+	        		String reg = lang.equalsIgnoreCase("ko_kr") ? "ÏóòÎçîÍ∞ÄÎîîÏñ∏":"ElderGuardian";
 	        		ElderGuardian newmob = (ElderGuardian) MobspawnLoc(esl, ChatColor.BLUE+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, null, null, null, null, null, null, EntityType.ELDER_GUARDIAN);
 		    		newmob.setGlowing(true);
 		    		newmob.getEquipment().setBootsDropChance(0);
@@ -1761,9 +1761,9 @@ public class OverworldRaids extends Summoned implements Listener {
 	        		
 	            	heroes.get(rn).forEach(pu -> {
 						if(Bukkit.getPlayer(pu).getLocale().equalsIgnoreCase("ko_kr")) {
-	                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.GRAY + "∫∏Ω∫ ¥‹∞Ë"), null, 5, 69, 5);
+	                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.GRAY + "Î≥¥Ïä§ Îã®Í≥Ñ"), null, 5, 69, 5);
 			        		Bukkit.getPlayer(pu).playSound(spl, Sound.EVENT_RAID_HORN, 1, 1);
-				    		Bukkit.getPlayer(pu).sendMessage("≥≤¿∫ ∏Òº˚ "+ ChatColor.BOLD + String.valueOf(lives.getOrDefault(rn, 0)));
+				    		Bukkit.getPlayer(pu).sendMessage("ÎÇ®ÏùÄ Î™©Ïà® "+ ChatColor.BOLD + String.valueOf(lives.getOrDefault(rn, 0)));
 						}
 						else {
 	                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.GRAY + "BOSS WAVE"), null, 5, 69, 5);
@@ -1805,7 +1805,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	                	Location esl = lel.clone().add(0, -10, 0);
 	
 	    	    		
-		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "¿·Ωƒµ» ø§¥ı∞°µæ":"Encroached ElderGuardian";
+		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "Ïû†ÏãùÎêú ÏóòÎçîÍ∞ÄÎîîÏñ∏":"Encroached ElderGuardian";
 		        		ElderGuardian newmob = (ElderGuardian) MobspawnLoc(esl, ChatColor.BLUE+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, null, null, null, null, null, null, EntityType.ELDER_GUARDIAN);
 	    	    		newmob.setGlowing(true);
 	    	    		newmob.getEquipment().setBootsDropChance(0);
@@ -1834,9 +1834,9 @@ public class OverworldRaids extends Summoned implements Listener {
 	            		
 	                	heroes.get(rn).forEach(pu -> {
 							if(Bukkit.getPlayer(pu).getLocale().equalsIgnoreCase("ko_kr")) {
-		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.BLUE + "≈‰π˙¿€¿¸ 2¥‹∞Ë"), null, 5, 69, 5);
+		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.BLUE + "ÌÜ†Î≤åÏûëÏ†Ñ 2Îã®Í≥Ñ"), null, 5, 69, 5);
 				        		Bukkit.getPlayer(pu).playSound(spl, Sound.EVENT_RAID_HORN, 1, 1);
-					    		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + "≥≤¿∫ ∏Òº˚ "+ String.valueOf(lives.getOrDefault(rn, 0)));
+					    		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + "ÎÇ®ÏùÄ Î™©Ïà® "+ String.valueOf(lives.getOrDefault(rn, 0)));
 							}
 							else {
 		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.BLUE + "PHASE 2"), null, 5, 69, 5);
@@ -1886,7 +1886,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	        			ItemMeta mm = main.getItemMeta();
 	        			mm.setCustomModelData(8008);
 	        			main.setItemMeta(mm);
-		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "æ«∏˘¿««¸ªÛ":"NightMare";
+		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "ÏïÖÎ™ΩÏùòÌòïÏÉÅ":"NightMare";
 	        			
 	            		Skeleton newmob = (Skeleton) MobspawnLoc(le.getLocation(), ChatColor.GRAY+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, pe, null, null, null, main, null, EntityType.SKELETON);
 	            		
@@ -1918,9 +1918,9 @@ public class OverworldRaids extends Summoned implements Listener {
 	            		
 	                	heroes.get(rn).forEach(pu -> {
 							if(Bukkit.getPlayer(pu).getLocale().equalsIgnoreCase("ko_kr")) {
-		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "≈‰π˙¿€¿¸ 2¥‹∞Ë"), null, 5, 69, 5);
+		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "ÌÜ†Î≤åÏûëÏ†Ñ 2Îã®Í≥Ñ"), null, 5, 69, 5);
 				        		Bukkit.getPlayer(pu).playSound(spl, Sound.EVENT_RAID_HORN, 1, 1);
-					    		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + "≥≤¿∫ ∏Òº˚ "+ String.valueOf(lives.getOrDefault(rn, 0)));
+					    		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + "ÎÇ®ÏùÄ Î™©Ïà® "+ String.valueOf(lives.getOrDefault(rn, 0)));
 							}
 							else {
 		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "PHASE 2"), null, 5, 69, 5);
@@ -1961,7 +1961,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	        			ItemMeta mm = main.getItemMeta();
 	        			mm.setCustomModelData(7009);
 	        			main.setItemMeta(mm);
-		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "¥ı∫ÒΩ∫∆Æ":"TheBeast";
+		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "ÎçîÎπÑÏä§Ìä∏":"TheBeast";
 		        		Husk newmob = (Husk) MobspawnLoc(le.getLocation().clone().add(0, 0.5, 0), ChatColor.DARK_PURPLE+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2,  head, null, null, null, main, null, EntityType.HUSK);
 	    	    		newmob.setGlowing(true);
 	    	    		newmob.setMetadata("hyperboss", new FixedMetadataValue(RMain.getInstance(), true));
@@ -1989,9 +1989,9 @@ public class OverworldRaids extends Summoned implements Listener {
 	            		
 	                	heroes.get(rn).forEach(pu -> {
 							if(Bukkit.getPlayer(pu).getLocale().equalsIgnoreCase("ko_kr")) {
-		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "≈‰π˙¿€¿¸ 2¥‹∞Ë"), null, 5, 69, 5);
+		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "ÌÜ†Î≤åÏûëÏ†Ñ 2Îã®Í≥Ñ"), null, 5, 69, 5);
 				        		Bukkit.getPlayer(pu).playSound(spl, Sound.EVENT_RAID_HORN, 1, 1);
-					    		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + "≥≤¿∫ ∏Òº˚ "+ String.valueOf(lives.getOrDefault(rn, 0)));
+					    		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + "ÎÇ®ÏùÄ Î™©Ïà® "+ String.valueOf(lives.getOrDefault(rn, 0)));
 							}
 							else {
 		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "PHASE 2"), null, 5, 69, 5);
@@ -2042,7 +2042,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
 	    	    		ItemStack off = new ItemStack(Material.SHIELD);
 	    	    		off.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
-		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "∏Ù∂Ù«— ∫”¿∫±‚ªÁ":"Ruined RedKnight";
+		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "Î™∞ÎùΩÌïú Î∂âÏùÄÍ∏∞ÏÇ¨":"Ruined RedKnight";
 	    	    		Stray newmob = (Stray) MobspawnLoc(esl, ChatColor.RED+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, head, chest, leg, boots, main, main, EntityType.STRAY);
 	    	    		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
 	    	    		newmob.setGlowing(true);
@@ -2073,9 +2073,9 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		targeting(rn);
 	                	heroes.get(rn).forEach(pu -> {
 							if(Bukkit.getPlayer(pu).getLocale().equalsIgnoreCase("ko_kr")) {
-		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.RED + "≈‰π˙¿€¿¸ 2¥‹∞Ë"), null, 5, 69, 5);
+		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.RED + "ÌÜ†Î≤åÏûëÏ†Ñ 2Îã®Í≥Ñ"), null, 5, 69, 5);
 				        		Bukkit.getPlayer(pu).playSound(spl, Sound.EVENT_RAID_HORN, 1, 1);
-					    		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + "≥≤¿∫ ∏Òº˚ "+ String.valueOf(lives.getOrDefault(rn, 0)));
+					    		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + "ÎÇ®ÏùÄ Î™©Ïà® "+ String.valueOf(lives.getOrDefault(rn, 0)));
 							}
 							else {
 		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.RED + "PHASE 2"), null, 5, 69, 5);
@@ -2132,7 +2132,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	        			mm.setCustomModelData(8008);
 	        			main.setItemMeta(mm);
 	        			
-	            		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "¡æ∏ª∑–¿⁄":"TheApocalyptic";
+	            		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "Ï¢ÖÎßêÎ°†Ïûê":"TheApocalyptic";
 	            		Skeleton newmob = (Skeleton) MobspawnLoc(le.getLocation().clone().add(0, 0.5, 0), ChatColor.DARK_GREEN+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, pe, pe1, leg, pe11, main, null, EntityType.SKELETON);
 	            		
 	    	    		newmob.setGlowing(true);
@@ -2160,9 +2160,9 @@ public class OverworldRaids extends Summoned implements Listener {
 	            		
 	                	heroes.get(rn).forEach(pu -> {
 							if(Bukkit.getPlayer(pu).getLocale().equalsIgnoreCase("ko_kr")) {
-		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "≈‰π˙¿€¿¸ 2¥‹∞Ë"), null, 5, 69, 5);
+		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "ÌÜ†Î≤åÏûëÏ†Ñ 2Îã®Í≥Ñ"), null, 5, 69, 5);
 				        		Bukkit.getPlayer(pu).playSound(spl, Sound.EVENT_RAID_HORN, 1, 1);
-					    		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + "≥≤¿∫ ∏Òº˚ "+ String.valueOf(lives.getOrDefault(rn, 0)));
+					    		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + "ÎÇ®ÏùÄ Î™©Ïà® "+ String.valueOf(lives.getOrDefault(rn, 0)));
 							}
 							else {
 		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "PHASE 2"), null, 5, 69, 5);

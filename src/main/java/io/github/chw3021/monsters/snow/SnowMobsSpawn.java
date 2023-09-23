@@ -50,7 +50,7 @@ public class SnowMobsSpawn extends Mobs implements Listener {
 		LeatherArmorMeta bom = (LeatherArmorMeta) boots.getItemMeta();
 		bom.setColor(Color.WHITE);
 		boots.setItemMeta(bom);
-		String reg = lang.contains("kr") ? "øˆ≈∑æ∆¿ÃΩ∫":"WalkingIce";
+		String reg = lang.contains("kr") ? "ÏõåÌÇπÏïÑÏù¥Ïä§":"WalkingIce";
 		Drowned newmob = (Drowned) Mobspawn(le, reg, 900.0, head, chest, leg, boots, new ItemStack(Material.SNOWBALL), new ItemStack(Material.SNOWBALL), EntityType.DROWNED);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("snowy", new FixedMetadataValue(RMain.getInstance(), true));
@@ -76,7 +76,7 @@ public class SnowMobsSpawn extends Mobs implements Listener {
 		boots.setItemMeta(bom);
 		ItemStack main = new ItemStack(Material.BOW);
 		main.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 3);
-		String reg = lang.contains("kr") ? "º≠∏Æ«ÿ∞Ò":"FrostSkull";
+		String reg = lang.contains("kr") ? "ÏÑúÎ¶¨Ìï¥Í≥®":"FrostSkull";
 		Stray newmob = (Stray) Mobspawn(le, reg, 800.0, head, chest, leg, boots, main, null, EntityType.STRAY);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("snowy", new FixedMetadataValue(RMain.getInstance(), true));
@@ -102,7 +102,7 @@ public class SnowMobsSpawn extends Mobs implements Listener {
 		boots.setItemMeta(bom);
 		ItemStack main = new ItemStack(Material.DIAMOND_AXE);
 		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 2);
-		String reg = lang.contains("kr") ? "º≠∏ÆªÁ≥…≤€":"FrostHunter";
+		String reg = lang.contains("kr") ? "ÏÑúÎ¶¨ÏÇ¨ÎÉ•Íæº":"FrostHunter";
 		Stray newmob = (Stray) Mobspawn(le, reg, 650.0, head, null, null, boots, main,null, EntityType.STRAY);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("snowy", new FixedMetadataValue(RMain.getInstance(), true));
@@ -128,7 +128,7 @@ public class SnowMobsSpawn extends Mobs implements Listener {
 		boots.setItemMeta(bom);
 		ItemStack main = new ItemStack(Material.BLUE_ICE);
 		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
-		String reg = lang.contains("kr") ? "º≠∏Æ∏∂π˝ªÁ":"FrozenMage";
+		String reg = lang.contains("kr") ? "ÏÑúÎ¶¨ÎßàÎ≤ïÏÇ¨":"FrozenMage";
 		Stray newmob = (Stray) Mobspawn(le, reg, 600.0, null, chest, leg, boots, main, main, EntityType.STRAY);
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.2);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
@@ -139,7 +139,7 @@ public class SnowMobsSpawn extends Mobs implements Listener {
 
 	final private Witch FrostWitch(LivingEntity le) {
 		ItemStack head = new ItemStack(Material.SMOKER);
-		String reg = lang.contains("kr") ? "º≠∏Æ∏∂≥‡":"FrostWitch";
+		String reg = lang.contains("kr") ? "ÏÑúÎ¶¨ÎßàÎÖÄ":"FrostWitch";
 		Witch newmob = (Witch) Mobspawn(le, reg, 650.0, head, null, null, null, null, null, EntityType.WITCH);
 		newmob.setCanJoinRaid(false);
 		newmob.setPatrolLeader(false);
@@ -151,7 +151,7 @@ public class SnowMobsSpawn extends Mobs implements Listener {
 	}
 	
 	final private Spider IceSpider(LivingEntity le) {
-		String reg = lang.contains("kr") ? "æÛ¿Ω∞≈πÃ":"IceSpider";
+		String reg = lang.contains("kr") ? "ÏñºÏùåÍ±∞ÎØ∏":"IceSpider";
 		Spider newmob = (Spider) Mobspawn(le, reg, 580.0,null, null, null, null, null, null, EntityType.SPIDER);
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.25);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
@@ -161,7 +161,7 @@ public class SnowMobsSpawn extends Mobs implements Listener {
 	
 	final private Creeper ColdCreeper(LivingEntity le) {
 
-		String reg = lang.contains("kr") ? "≥√±‚≈©∏Æ∆€":"ColdCreeper";
+		String reg = lang.contains("kr") ? "ÎÉâÍ∏∞ÌÅ¨Î¶¨Ìçº":"ColdCreeper";
 		Creeper newmob = (Creeper) Mobspawn(le, reg, 600.0, null, null, null, null, null, null, EntityType.CREEPER);
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.18);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
@@ -170,7 +170,7 @@ public class SnowMobsSpawn extends Mobs implements Listener {
 	}
 
 	final private Enderman IceMan(LivingEntity le) {
-		String reg = lang.contains("kr") ? "æ∆¿ÃΩ∫∏«":"IceMan";
+		String reg = lang.contains("kr") ? "ÏïÑÏù¥Ïä§Îß®":"IceMan";
 		Enderman newmob = (Enderman) Mobspawn(le, reg, 700.0, null, null, null, null, null, null, EntityType.ENDERMAN);
 		
 		newmob.setCarriedBlock(Material.ICE.createBlockData());
@@ -180,7 +180,7 @@ public class SnowMobsSpawn extends Mobs implements Listener {
 		return newmob;
 	}
 	final private Guardian IceGuardian(LivingEntity le) {
-		String reg = lang.contains("kr") ? "æ∆¿ÃΩ∫∞°µæ":"IceGuardian";
+		String reg = lang.contains("kr") ? "ÏïÑÏù¥Ïä§Í∞ÄÎîîÏñ∏":"IceGuardian";
 		Guardian newmob = (Guardian) Mobspawn(le, reg, 1000.0, null, null, null, null, null, null, EntityType.GUARDIAN);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("snowy", new FixedMetadataValue(RMain.getInstance(), true));
@@ -189,7 +189,7 @@ public class SnowMobsSpawn extends Mobs implements Listener {
 
 
 	final private LivingEntity Default(LivingEntity le) {
-		String reg = lang.contains("kr") ? "º≥ªÍ":"Snowy";
+		String reg = lang.contains("kr") ? "ÏÑ§ÏÇ∞":"Snowy";
 		LivingEntity newmob = Mobspawn(le, reg + trans(le), 500.0, le.getEquipment().getHelmet(), le.getEquipment().getChestplate(), le.getEquipment().getLeggings(), le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(), le.getEquipment().getItemInOffHand(), le.getType());
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("unmodified", new FixedMetadataValue(RMain.getInstance(), true));

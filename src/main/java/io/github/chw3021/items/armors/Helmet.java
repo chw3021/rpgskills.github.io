@@ -42,8 +42,8 @@ public class Helmet implements Listener {
 			rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 					"generic.armor_toughness", 1, Operation.ADD_NUMBER, EquipmentSlot.HEAD));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				rm.setDisplayName("±¤ºÎÀÇ ¸ğÀÚ");
-				rm.setLocalizedName("±¤ºÎÀÇ ¸ğÀÚ");
+				rm.setDisplayName("ê´‘ë¶€ì˜ ëª¨ì");
+				rm.setLocalizedName("ê´‘ë¶€ì˜ ëª¨ì");
 			}
 			else {
 				rm.setDisplayName("Miner Helmet");
@@ -62,8 +62,8 @@ public class Helmet implements Listener {
 			rm.addAttributeModifier(Attribute.GENERIC_MOVEMENT_SPEED, new AttributeModifier(UUID.randomUUID(),
 					"generic.movement_speed", 0.11, Operation.ADD_SCALAR, EquipmentSlot.HEAD));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				rm.setDisplayName("¼³»ê Çï¸ä");
-				rm.setLocalizedName("¼³»ê Çï¸ä");
+				rm.setDisplayName("ì„¤ì‚° í—¬ë©§");
+				rm.setLocalizedName("ì„¤ì‚° í—¬ë©§");
 			}
 			else {
 				rm.setDisplayName("Snowy Helmet");
@@ -82,8 +82,8 @@ public class Helmet implements Listener {
 			rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 					"generic.armor_toughness", 1, Operation.ADD_NUMBER, EquipmentSlot.HEAD));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				rm.setDisplayName("Àá¼öÇï¸ä");
-				rm.setLocalizedName("Àá¼öÇï¸ä");
+				rm.setDisplayName("ì ìˆ˜í—¬ë©§");
+				rm.setLocalizedName("ì ìˆ˜í—¬ë©§");
 			}
 			else {
 				rm.setDisplayName("Scuba");
@@ -102,8 +102,8 @@ public class Helmet implements Listener {
 			rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 					"generic.armor_toughness", 2, Operation.ADD_NUMBER, EquipmentSlot.HEAD));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				rm.setDisplayName("ÇÁ¸®Áî¸Ó¸° Åõ±¸");
-				rm.setLocalizedName("ÇÁ¸®Áî¸Ó¸° Åõ±¸");
+				rm.setDisplayName("í”„ë¦¬ì¦ˆë¨¸ë¦° íˆ¬êµ¬");
+				rm.setLocalizedName("í”„ë¦¬ì¦ˆë¨¸ë¦° íˆ¬êµ¬");
 			}
 			else {
 				rm.setDisplayName("Prismarine Helmet");
@@ -121,8 +121,8 @@ public class Helmet implements Listener {
 			rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 					"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.HEAD));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				rm.setDisplayName("¹æÅº¸ğ");
-				rm.setLocalizedName("¹æÅº¸ğ");
+				rm.setDisplayName("ë°©íƒ„ëª¨");
+				rm.setLocalizedName("ë°©íƒ„ëª¨");
 			}
 			else {
 				rm.setDisplayName("Bulletproof Helmet");
@@ -142,8 +142,8 @@ public class Helmet implements Listener {
 			im.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 					"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.HEAD));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				im.setDisplayName("ÇÕ±İ Çï¸ä");
-				im.setLocalizedName("ÇÕ±İ Çï¸ä");
+				im.setDisplayName("í•©ê¸ˆ í—¬ë©§");
+				im.setLocalizedName("í•©ê¸ˆ í—¬ë©§");
 			}
 			else {
 				im.setDisplayName("Alloy Helmet");
@@ -177,8 +177,8 @@ public class Helmet implements Listener {
 					rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 							"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.HEAD));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("´ëÁöÀÇ Åõ±¸");
-						rm.setLocalizedName("´ëÁöÀÇ Åõ±¸");
+						rm.setDisplayName("ëŒ€ì§€ì˜ íˆ¬êµ¬");
+						rm.setLocalizedName("ëŒ€ì§€ì˜ íˆ¬êµ¬");
 					}
 					else {
 						rm.setDisplayName("Earth Helmet");
@@ -207,8 +207,8 @@ public class Helmet implements Listener {
 					rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 							"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.HEAD));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("¼­¸® Åõ±¸");
-						rm.setLocalizedName("¼­¸® Åõ±¸");
+						rm.setDisplayName("ì„œë¦¬ íˆ¬êµ¬");
+						rm.setLocalizedName("ì„œë¦¬ íˆ¬êµ¬");
 					}
 					else {
 						rm.setDisplayName("Frost Helmet");
@@ -235,8 +235,8 @@ public class Helmet implements Listener {
 					rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 							"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.HEAD));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("¹Ù´ÙÀÇ Åõ±¸");
-						rm.setLocalizedName("¹Ù´ÙÀÇ Åõ±¸");
+						rm.setDisplayName("ë°”ë‹¤ì˜ íˆ¬êµ¬");
+						rm.setLocalizedName("ë°”ë‹¤ì˜ íˆ¬êµ¬");
 					}
 					else {
 						rm.setDisplayName("Ocean Helmet");
@@ -265,8 +265,8 @@ public class Helmet implements Listener {
 					rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 							"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.HEAD));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("¾îµÒÀÇ ¹æÅº¸ğ");
-						rm.setLocalizedName("¾îµÒÀÇ ¹æÅº¸ğ");
+						rm.setDisplayName("ì–´ë‘ ì˜ ë°©íƒ„ëª¨");
+						rm.setLocalizedName("ì–´ë‘ ì˜ ë°©íƒ„ëª¨");
 					}
 					else {
 						rm.setDisplayName("Dark Helmet");
@@ -295,8 +295,8 @@ public class Helmet implements Listener {
 					rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(UUID.randomUUID(),
 							"generic.luck", 5, Operation.ADD_NUMBER, EquipmentSlot.HEAD));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("°³Á¶µÈ Åõ±¸");
-						rm.setLocalizedName("°³Á¶µÈ Åõ±¸");
+						rm.setDisplayName("ê°œì¡°ëœ íˆ¬êµ¬");
+						rm.setLocalizedName("ê°œì¡°ëœ íˆ¬êµ¬");
 					}
 					else {
 						rm.setDisplayName("Hyper Helmet");
@@ -325,8 +325,8 @@ public class Helmet implements Listener {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
 							"generic.attack_damage", 7, Operation.ADD_NUMBER, EquipmentSlot.HEAD));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("ÀÛ¿­ÇÏ´Â Åõ±¸");
-						rm.setLocalizedName("ÀÛ¿­ÇÏ´Â Åõ±¸");
+						rm.setDisplayName("ì‘ì—´í•˜ëŠ” íˆ¬êµ¬");
+						rm.setLocalizedName("ì‘ì—´í•˜ëŠ” íˆ¬êµ¬");
 					}
 					else {
 						rm.setDisplayName("Burning Helmet");
@@ -353,8 +353,8 @@ public class Helmet implements Listener {
 					rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 							"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.HEAD));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("ÀÚ¿¬ÀÇ Åõ±¸");
-						rm.setLocalizedName("ÀÚ¿¬ÀÇ Åõ±¸");
+						rm.setDisplayName("ìì—°ì˜ íˆ¬êµ¬");
+						rm.setLocalizedName("ìì—°ì˜ íˆ¬êµ¬");
 					}
 					else {
 						rm.setDisplayName("Natural Helmet");
@@ -397,8 +397,8 @@ public class Helmet implements Listener {
 							rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 									"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.HEAD));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								rm.setDisplayName("´ëÁöÀÇ Åõ±¸");
-								rm.setLocalizedName("´ëÁöÀÇ Åõ±¸");
+								rm.setDisplayName("ëŒ€ì§€ì˜ íˆ¬êµ¬");
+								rm.setLocalizedName("ëŒ€ì§€ì˜ íˆ¬êµ¬");
 							}
 							else {
 								rm.setDisplayName("Earth Helmet");
@@ -427,8 +427,8 @@ public class Helmet implements Listener {
 							rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 									"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.HEAD));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								rm.setDisplayName("¼­¸® Åõ±¸");
-								rm.setLocalizedName("¼­¸® Åõ±¸");
+								rm.setDisplayName("ì„œë¦¬ íˆ¬êµ¬");
+								rm.setLocalizedName("ì„œë¦¬ íˆ¬êµ¬");
 							}
 							else {
 								rm.setDisplayName("Frost Helmet");
@@ -455,8 +455,8 @@ public class Helmet implements Listener {
 							rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 									"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.HEAD));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								rm.setDisplayName("¹Ù´ÙÀÇ Åõ±¸");
-								rm.setLocalizedName("¹Ù´ÙÀÇ Åõ±¸");
+								rm.setDisplayName("ë°”ë‹¤ì˜ íˆ¬êµ¬");
+								rm.setLocalizedName("ë°”ë‹¤ì˜ íˆ¬êµ¬");
 							}
 							else {
 								rm.setDisplayName("Ocean Helmet");
@@ -485,8 +485,8 @@ public class Helmet implements Listener {
 							rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 									"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.HEAD));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								rm.setDisplayName("¾îµÒÀÇ ¹æÅº¸ğ");
-								rm.setLocalizedName("¾îµÒÀÇ ¹æÅº¸ğ");
+								rm.setDisplayName("ì–´ë‘ ì˜ ë°©íƒ„ëª¨");
+								rm.setLocalizedName("ì–´ë‘ ì˜ ë°©íƒ„ëª¨");
 							}
 							else {
 								rm.setDisplayName("Dark Helmet");
@@ -515,8 +515,8 @@ public class Helmet implements Listener {
 							rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(UUID.randomUUID(),
 									"generic.luck", 5, Operation.ADD_NUMBER, EquipmentSlot.HEAD));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								rm.setDisplayName("°³Á¶µÈ Åõ±¸");
-								rm.setLocalizedName("°³Á¶µÈ Åõ±¸");
+								rm.setDisplayName("ê°œì¡°ëœ íˆ¬êµ¬");
+								rm.setLocalizedName("ê°œì¡°ëœ íˆ¬êµ¬");
 							}
 							else {
 								rm.setDisplayName("Hyper Helmet");
@@ -545,8 +545,8 @@ public class Helmet implements Listener {
 							rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
 									"generic.attack_damage", 7, Operation.ADD_NUMBER, EquipmentSlot.HEAD));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								rm.setDisplayName("ÀÛ¿­ÇÏ´Â Åõ±¸");
-								rm.setLocalizedName("ÀÛ¿­ÇÏ´Â Åõ±¸");
+								rm.setDisplayName("ì‘ì—´í•˜ëŠ” íˆ¬êµ¬");
+								rm.setLocalizedName("ì‘ì—´í•˜ëŠ” íˆ¬êµ¬");
 							}
 							else {
 								rm.setDisplayName("Burning Helmet");
@@ -573,8 +573,8 @@ public class Helmet implements Listener {
 							rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 									"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.HEAD));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								rm.setDisplayName("ÀÚ¿¬ÀÇ Åõ±¸");
-								rm.setLocalizedName("ÀÚ¿¬ÀÇ Åõ±¸");
+								rm.setDisplayName("ìì—°ì˜ íˆ¬êµ¬");
+								rm.setLocalizedName("ìì—°ì˜ íˆ¬êµ¬");
 							}
 							else {
 								rm.setDisplayName("Natural Helmet");

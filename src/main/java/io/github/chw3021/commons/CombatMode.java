@@ -149,7 +149,7 @@ public class CombatMode implements Serializable{
 			}
 			if (p.getLocale().equalsIgnoreCase("ko_kr")) {
 				p.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-						new ComponentBuilder(ChatColor.BLUE + "ºñÀüÅõ »óÅÂ").create());
+						new ComponentBuilder(ChatColor.BLUE + "ë¹„ì „íˆ¬ ìƒíƒœ").create());
 			} else {
 				p.spigot().sendMessage(ChatMessageType.ACTION_BAR,
 						new ComponentBuilder(ChatColor.BLUE + "Normal Mode").create());
@@ -175,7 +175,7 @@ public class CombatMode implements Serializable{
 
 	public void classinv(InventoryClickEvent d) {
 		Player p = (Player) d.getWhoClicked();
-		if (mode.containsKey(p.getUniqueId()) && !(d.getView().getTitle().equals(p.getName() + "'s Backpack") || d.getView().getTitle().equals(p.getName() + "ÀÇ ¹è³¶"))) {
+		if (mode.containsKey(p.getUniqueId()) && !(d.getView().getTitle().equals(p.getName() + "'s Backpack") || d.getView().getTitle().equals(p.getName() + "ì˜ ë°°ë‚­"))) {
 			d.setCancelled(true);
 		}
 	}
@@ -251,7 +251,7 @@ public class CombatMode implements Serializable{
 				mode.put(p.getUniqueId(), true);
 				if (p.getLocale().equalsIgnoreCase("ko_kr")) {
 					p.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-							new ComponentBuilder(ChatColor.RED + "ÀüÅõ »óÅÂ").create());
+							new ComponentBuilder(ChatColor.RED + "ì „íˆ¬ ìƒíƒœ").create());
 				} else {
 					p.spigot().sendMessage(ChatMessageType.ACTION_BAR,
 							new ComponentBuilder(ChatColor.RED + "Combat Mode").create());
@@ -272,11 +272,11 @@ public class CombatMode implements Serializable{
 					for (int i = 0; i < 8; i++) {
 						skillcool.setItemMeta(smet);
 						skillcool.setType(mas[i]);
-						itemset(ChatColor.BLUE + "±â¼ú [" + i + "]", skillcool, 0, 1, Arrays.asList(""),
+						itemset(ChatColor.BLUE + "ê¸°ìˆ  [" + i + "]", skillcool, 0, 1, Arrays.asList(""),
 								i, p.getInventory());
-						smet.setDisplayName(ChatColor.BLUE + "±â¼ú [" + i + "]");
+						smet.setDisplayName(ChatColor.BLUE + "ê¸°ìˆ  [" + i + "]");
 					}
-					itemset(ChatColor.GOLD + "¹è³¶", new ItemStack(Material.BARREL), 0, 1, Arrays.asList("Å¬¸¯½Ã ¹è³¶À» ¿±´Ï´Ù","ÀüÅõ»óÅÂÁß È¹µæÇÑ ¾ÆÀÌÅÛÀº ¹è³¶¿¡ ÀúÀåµË´Ï´Ù"),
+					itemset(ChatColor.GOLD + "ë°°ë‚­", new ItemStack(Material.BARREL), 0, 1, Arrays.asList("í´ë¦­ì‹œ ë°°ë‚­ì„ ì—½ë‹ˆë‹¤","ì „íˆ¬ìƒíƒœì¤‘ íšë“í•œ ì•„ì´í…œì€ ë°°ë‚­ì— ì €ì¥ë©ë‹ˆë‹¤"),
 							9, p.getInventory());
 				}
 				else {
@@ -334,7 +334,7 @@ public class CombatMode implements Serializable{
 	                hm.remove(p.getName());
 	    			if (p.getLocale().equalsIgnoreCase("ko_kr")) {
 	    				p.spigot().sendMessage(ChatMessageType.CHAT,
-	    						new ComponentBuilder(ChatColor.BLUE + "[¿õÅ©¸®±â + ¾ÆÀÌÅÛ¹ö¸®±â]·Î ÀüÅõ¸ğµå·Î ÀüÈ¯ÇÒ¼ö ÀÖ½À´Ï´Ù.").create());
+	    						new ComponentBuilder(ChatColor.BLUE + "[ì›…í¬ë¦¬ê¸° + ì•„ì´í…œë²„ë¦¬ê¸°]ë¡œ ì „íˆ¬ëª¨ë“œë¡œ ì „í™˜í• ìˆ˜ ìˆìŠµë‹ˆë‹¤.").create());
 	    			} else {
 	    				p.spigot().sendMessage(ChatMessageType.CHAT,
 	    						new ComponentBuilder(ChatColor.BLUE + "You can use CombatMode by [Sneaking + Dropping Item]").create());

@@ -1007,7 +1007,7 @@ public class HyperSkills extends Summoned{
 		                	p.playEffect(EntityEffect.HURT);
 			                for(Player pe : OverworldRaids.getheroes(p)) {
 		    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-			                		pe.sendMessage(ChatColor.BOLD+"Å¸°İÈ½¼ö: "+(10-guud.getOrDefault(p.getUniqueId(),0) + "/10"));
+			                		pe.sendMessage(ChatColor.BOLD+"íƒ€ê²©íšŸìˆ˜: "+(10-guud.getOrDefault(p.getUniqueId(),0) + "/10"));
 		    					}
 		    					else {
 			                		pe.sendMessage(ChatColor.BOLD+"Hit: "+(10-guud.getOrDefault(p.getUniqueId(),0) + "/10"));
@@ -1029,7 +1029,7 @@ public class HyperSkills extends Summoned{
 		    		            rb6cooldown.put(p.getUniqueId(), System.currentTimeMillis());
 				                for(Player pe : OverworldRaids.getheroes(p)) {
 			    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-				                		pe.sendMessage(ChatColor.BOLD+"´õºñ½ºÆ®: ÀÌ·± °Ç¹æÁø °Íµé!");
+				                		pe.sendMessage(ChatColor.BOLD+"ë”ë¹„ìŠ¤íŠ¸: ì´ëŸ° ê±´ë°©ì§„ ê²ƒë“¤!");
 			    					}
 			    					else {
 				                		pe.sendMessage(ChatColor.BOLD+"TheBeast: How dare are you!");
@@ -1102,7 +1102,7 @@ public class HyperSkills extends Summoned{
 		                		Player pe = (Player) e;
 		                		Holding.invur(pe, 40l);
 		    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-			                		pe.sendMessage(ChatColor.BOLD+"´õºñ½ºÆ®: ÀÌ°Íµµ ¸·¾Æº¸¾Æ¶ó!");
+			                		pe.sendMessage(ChatColor.BOLD+"ë”ë¹„ìŠ¤íŠ¸: ì´ê²ƒë„ ë§‰ì•„ë³´ì•„ë¼!");
 		    					}
 		    					else {
 			                		pe.sendMessage(ChatColor.BOLD+"TheBeast: You can't stop me!");
@@ -1128,7 +1128,7 @@ public class HyperSkills extends Summoned{
 							                for(Player pe : OverworldRaids.getheroes(p)) {
 						                		if(pe.getWorld().equals(p.getWorld()) && rl.clone().distance(p.getLocation()) > 30 && pe.getWorld() == p.getWorld()) {
 							    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-								                		pe.sendMessage(ChatColor.BOLD+"´õºñ½ºÆ®: ¿øÀ§Ä¡!");
+								                		pe.sendMessage(ChatColor.BOLD+"ë”ë¹„ìŠ¤íŠ¸: ì›ìœ„ì¹˜!");
 							    					}
 							    					else {
 								                		pe.sendMessage(ChatColor.BOLD+"TheBeast: You Can't Get Away!");
@@ -1188,7 +1188,7 @@ public class HyperSkills extends Summoned{
 				                for(Player pe : OverworldRaids.getheroes(p)) {
 			                		if(pe.getWorld().equals(p.getWorld()) && pe.getWorld() == p.getWorld()) {
 				    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-					                		pe.sendMessage(ChatColor.BOLD+"´õºñ½ºÆ®: ÁøÈ­´Â ÇÊ¿¬ÀûÀÎ °ÍÀÌ´Ù..");
+					                		pe.sendMessage(ChatColor.BOLD+"ë”ë¹„ìŠ¤íŠ¸: ì§„í™”ëŠ” í•„ì—°ì ì¸ ê²ƒì´ë‹¤..");
 				    					}
 				    					else {
 					                		pe.sendMessage(ChatColor.BOLD+"TheBeast: Evolution is inevitable..");
@@ -1247,7 +1247,7 @@ public class HyperSkills extends Summoned{
 	                		Player pe = (Player) e;
 	                		Holding.invur(pe, 40l);
 	    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-		                		pe.sendMessage(ChatColor.BOLD+"´õºñ½ºÆ®: ÀÌ°Íµµ ¸·¾Æº¸¾Æ¶ó!");
+		                		pe.sendMessage(ChatColor.BOLD+"ë”ë¹„ìŠ¤íŠ¸: ì´ê²ƒë„ ë§‰ì•„ë³´ì•„ë¼!");
 	    					}
 	    					else {
 		                		pe.sendMessage(ChatColor.BOLD+"TheBeast: You can't stop me!");
@@ -1273,7 +1273,7 @@ public class HyperSkills extends Summoned{
 						                for(Player pe : OverworldRaids.getheroes(p)) {
 					                		if(pe.getWorld().equals(p.getWorld()) && rl.clone().distance(p.getLocation()) > 30 && pe.getWorld() == p.getWorld()) {
 						    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-							                		pe.sendMessage(ChatColor.BOLD+"´õºñ½ºÆ®: ¿øÀ§Ä¡!");
+							                		pe.sendMessage(ChatColor.BOLD+"ë”ë¹„ìŠ¤íŠ¸: ì›ìœ„ì¹˜!");
 						    					}
 						    					else {
 							                		pe.sendMessage(ChatColor.BOLD+"TheBeast: You Can't Get Away!");
@@ -1333,7 +1333,7 @@ public class HyperSkills extends Summoned{
 			                for(Player pe : OverworldRaids.getheroes(p)) {
 		                		if(pe.getWorld().equals(p.getWorld()) && pe.getWorld() == p.getWorld()) {
 			    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-				                		pe.sendMessage(ChatColor.BOLD+"´õºñ½ºÆ®: ÁøÈ­´Â ÇÊ¿¬ÀûÀÎ °ÍÀÌ´Ù..");
+				                		pe.sendMessage(ChatColor.BOLD+"ë”ë¹„ìŠ¤íŠ¸: ì§„í™”ëŠ” í•„ì—°ì ì¸ ê²ƒì´ë‹¤..");
 			    					}
 			    					else {
 				                		pe.sendMessage(ChatColor.BOLD+"TheBeast: Evolution is inevitable..");

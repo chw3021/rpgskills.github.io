@@ -171,7 +171,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -184,7 +184,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -197,7 +197,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -210,7 +210,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -223,7 +223,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -236,7 +236,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -249,7 +249,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -262,7 +262,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -275,7 +275,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -288,7 +288,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -301,7 +301,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -314,7 +314,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -327,7 +327,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -340,7 +340,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -353,7 +353,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -366,7 +366,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -379,7 +379,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -392,7 +392,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -443,7 +443,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -456,7 +456,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -469,7 +469,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -482,7 +482,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -495,7 +495,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -508,7 +508,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -521,7 +521,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -534,7 +534,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -547,7 +547,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -560,7 +560,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -573,7 +573,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -586,7 +586,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -599,7 +599,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -612,7 +612,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -625,7 +625,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -638,7 +638,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -651,7 +651,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -664,7 +664,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÇØ´ç ±¸Á¶¹°ÀÇ Àü¸®Ç°Àº ¸ğµÎ È¹µæÇß½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "í•´ë‹¹ êµ¬ì¡°ë¬¼ì˜ ì „ë¦¬í’ˆì€ ëª¨ë‘ íšë“í–ˆìŠµë‹ˆë‹¤").create());
 	    		}
 	    		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
@@ -770,191 +770,191 @@ public class Obtained implements Serializable, Listener {
 		ph.addUnsafeEnchantment(Enchantment.DAMAGE_UNDEAD, 1);
 	
 		if (p.getLocale().equalsIgnoreCase("ko_kr")) {
-			itemset(ChatColor.GOLD + "¾²·¹±âÅë", new ItemStack(Material.COMPOSTER), 0, 1, Arrays.asList("Å¬¸¯½Ã ¾²·¹±âÅëÀ» ¿±´Ï´Ù"),
+			itemset(ChatColor.GOLD + "ì“°ë ˆê¸°í†µ", new ItemStack(Material.COMPOSTER), 0, 1, Arrays.asList("í´ë¦­ì‹œ ì“°ë ˆê¸°í†µì„ ì—½ë‹ˆë‹¤"),
 					30, inv);
-			itemset(ChatColor.GOLD + "º¸Á¶Àåºñ °ü¸®", new ItemStack(Material.AMETHYST_SHARD), 0, 1, Arrays.asList("Å¬¸¯½Ã º¸Á¶Àåºñ °ü¸® Ã¢À» ¿±´Ï´Ù"),
+			itemset(ChatColor.GOLD + "ë³´ì¡°ì¥ë¹„ ê´€ë¦¬", new ItemStack(Material.AMETHYST_SHARD), 0, 1, Arrays.asList("í´ë¦­ì‹œ ë³´ì¡°ì¥ë¹„ ê´€ë¦¬ ì°½ì„ ì—½ë‹ˆë‹¤"),
 					31, inv);
-			itemset(ChatColor.GOLD + "¼ÈÄ¿ °¡¹æ", new ItemStack(Material.SHULKER_BOX), 0, 1, Arrays.asList("[¿õÅ©¸®±â + ¼³Ä¡]·Î ¼ÈÄ¿»óÀÚ¸¦ °¡¹æÃ³·³ »ç¿ëÇÒ¼ö ÀÖ½À´Ï´Ù"),
+			itemset(ChatColor.GOLD + "ì…œì»¤ ê°€ë°©", new ItemStack(Material.SHULKER_BOX), 0, 1, Arrays.asList("[ì›…í¬ë¦¬ê¸° + ì„¤ì¹˜]ë¡œ ì…œì»¤ìƒìë¥¼ ê°€ë°©ì²˜ëŸ¼ ì‚¬ìš©í• ìˆ˜ ìˆìŠµë‹ˆë‹¤"),
 					32, inv);
-			itemset(ChatColor.GOLD + "¹è³¶", new ItemStack(Material.BARREL), 0, 1, Arrays.asList("Å¬¸¯½Ã ¹è³¶À» ¿±´Ï´Ù"),
+			itemset(ChatColor.GOLD + "ë°°ë‚­", new ItemStack(Material.BARREL), 0, 1, Arrays.asList("í´ë¦­ì‹œ ë°°ë‚­ì„ ì—½ë‹ˆë‹¤"),
 					33, inv);
 			
 			if (od.Mineshaft.getOrDefault(p.getUniqueId(), 0) >= 2) {
-				itemset(ChatColor.GOLD + "Æä±¤ Àü¸®Ç°", ms, 0, 1, Arrays.asList("°ø°İ·Â°ú ¹æ¾î·ÂÀÌ 2% Áõ°¡ÇÕ´Ï´Ù", "°æÇèÄ¡ È¹µæ·®ÀÌ 5% Áõ°¡ÇÕ´Ï´Ù"),
+				itemset(ChatColor.GOLD + "í˜ê´‘ ì „ë¦¬í’ˆ", ms, 0, 1, Arrays.asList("ê³µê²©ë ¥ê³¼ ë°©ì–´ë ¥ì´ 2% ì¦ê°€í•©ë‹ˆë‹¤", "ê²½í—˜ì¹˜ íšë“ëŸ‰ì´ 5% ì¦ê°€í•©ë‹ˆë‹¤"),
 						36, inv);
 			} else {
-				itemset(ChatColor.GOLD + "Æä±¤ Àü¸®Ç°(¾ÆÁ÷ ¸ğµÎ È¹µæÇÏÁö ¸øÇÔ)", Material.POWERED_RAIL, 0, 1,
-						Arrays.asList(ChatColor.GOLD + "" + od.Mineshaft.getOrDefault(p.getUniqueId(), 0) + "/2 È¹µæÇÔ"),
+				itemset(ChatColor.GOLD + "í˜ê´‘ ì „ë¦¬í’ˆ(ì•„ì§ ëª¨ë‘ íšë“í•˜ì§€ ëª»í•¨)", Material.POWERED_RAIL, 0, 1,
+						Arrays.asList(ChatColor.GOLD + "" + od.Mineshaft.getOrDefault(p.getUniqueId(), 0) + "/2 íšë“í•¨"),
 						36, inv);
 			}
 	
 			
 			if (od.Mineshaft.getOrDefault(p.getUniqueId(), 0) >= 2) {
-				itemset(ChatColor.GOLD + "Æä±¤ Àü¸®Ç°", ms, 0, 1, Arrays.asList("°ø°İ·Â°ú ¹æ¾î·ÂÀÌ 2% Áõ°¡ÇÕ´Ï´Ù", "°æÇèÄ¡ È¹µæ·®ÀÌ 5% Áõ°¡ÇÕ´Ï´Ù"),
+				itemset(ChatColor.GOLD + "í˜ê´‘ ì „ë¦¬í’ˆ", ms, 0, 1, Arrays.asList("ê³µê²©ë ¥ê³¼ ë°©ì–´ë ¥ì´ 2% ì¦ê°€í•©ë‹ˆë‹¤", "ê²½í—˜ì¹˜ íšë“ëŸ‰ì´ 5% ì¦ê°€í•©ë‹ˆë‹¤"),
 						36, inv);
 			} else {
-				itemset(ChatColor.GOLD + "Æä±¤ Àü¸®Ç°(¾ÆÁ÷ ¸ğµÎ È¹µæÇÏÁö ¸øÇÔ)", Material.POWERED_RAIL, 0, 1,
-						Arrays.asList(ChatColor.GOLD + "" + od.Mineshaft.getOrDefault(p.getUniqueId(), 0) + "/2 È¹µæÇÔ"),
+				itemset(ChatColor.GOLD + "í˜ê´‘ ì „ë¦¬í’ˆ(ì•„ì§ ëª¨ë‘ íšë“í•˜ì§€ ëª»í•¨)", Material.POWERED_RAIL, 0, 1,
+						Arrays.asList(ChatColor.GOLD + "" + od.Mineshaft.getOrDefault(p.getUniqueId(), 0) + "/2 íšë“í•¨"),
 						36, inv);
 			}
 	
 			if (od.BuriedTreasure.getOrDefault(p.getUniqueId(), 0) >= 2) {
-				itemset(ChatColor.GOLD + "ÆÄ¹¯Èù º¸¹° Àü¸®Ç°", mp, 0, 1,
-						Arrays.asList("°ø°İ·Â°ú ¹æ¾î·ÂÀÌ 3% Áõ°¡ÇÕ´Ï´Ù", "°æÇèÄ¡ È¹µæ·®ÀÌ 5% Áõ°¡ÇÕ´Ï´Ù"), 37, inv);
+				itemset(ChatColor.GOLD + "íŒŒë¬»íŒ ë³´ë¬¼ ì „ë¦¬í’ˆ", mp, 0, 1,
+						Arrays.asList("ê³µê²©ë ¥ê³¼ ë°©ì–´ë ¥ì´ 3% ì¦ê°€í•©ë‹ˆë‹¤", "ê²½í—˜ì¹˜ íšë“ëŸ‰ì´ 5% ì¦ê°€í•©ë‹ˆë‹¤"), 37, inv);
 			} else {
-				itemset(ChatColor.GOLD + "ÆÄ¹¯Èù º¸¹° Àü¸®Ç°(¾ÆÁ÷ ¸ğµÎ È¹µæÇÏÁö ¸øÇÔ)", Material.CHEST, 0, 1,
+				itemset(ChatColor.GOLD + "íŒŒë¬»íŒ ë³´ë¬¼ ì „ë¦¬í’ˆ(ì•„ì§ ëª¨ë‘ íšë“í•˜ì§€ ëª»í•¨)", Material.CHEST, 0, 1,
 						Arrays.asList(
-								ChatColor.GOLD + "" + od.BuriedTreasure.getOrDefault(p.getUniqueId(), 0) + "/2 È¹µæÇÔ"),
+								ChatColor.GOLD + "" + od.BuriedTreasure.getOrDefault(p.getUniqueId(), 0) + "/2 íšë“í•¨"),
 						37, inv);
 			}
 	
 			if (od.Igloo.getOrDefault(p.getUniqueId(), 0) >= 2) {
-				itemset(ChatColor.GOLD + "ÀÌ±Û·ç Àü¸®Ç°", sb, 0, 1,
-						Arrays.asList("°ø°İ·Â°ú ¹æ¾î·ÂÀÌ 2.5% Áõ°¡ÇÕ´Ï´Ù", "°æÇèÄ¡ È¹µæ·®ÀÌ 5% Áõ°¡ÇÕ´Ï´Ù", "µĞÈ­¿¡ ¸é¿ªÀÌ µË´Ï´Ù"), 38, inv);
+				itemset(ChatColor.GOLD + "ì´ê¸€ë£¨ ì „ë¦¬í’ˆ", sb, 0, 1,
+						Arrays.asList("ê³µê²©ë ¥ê³¼ ë°©ì–´ë ¥ì´ 2.5% ì¦ê°€í•©ë‹ˆë‹¤", "ê²½í—˜ì¹˜ íšë“ëŸ‰ì´ 5% ì¦ê°€í•©ë‹ˆë‹¤", "ë‘”í™”ì— ë©´ì—­ì´ ë©ë‹ˆë‹¤"), 38, inv);
 			} else {
-				itemset(ChatColor.GOLD + "ÀÌ±Û·ç Àü¸®Ç°(¾ÆÁ÷ ¸ğµÎ È¹µæÇÏÁö ¸øÇÔ)", Material.POWDER_SNOW_BUCKET, 0, 1,
-						Arrays.asList(ChatColor.GOLD + "" + od.Igloo.getOrDefault(p.getUniqueId(), 0) + "/2 È¹µæÇÔ"), 38,
+				itemset(ChatColor.GOLD + "ì´ê¸€ë£¨ ì „ë¦¬í’ˆ(ì•„ì§ ëª¨ë‘ íšë“í•˜ì§€ ëª»í•¨)", Material.POWDER_SNOW_BUCKET, 0, 1,
+						Arrays.asList(ChatColor.GOLD + "" + od.Igloo.getOrDefault(p.getUniqueId(), 0) + "/2 íšë“í•¨"), 38,
 						inv);
 			}
 	
 			if (od.OceanRuins.getOrDefault(p.getUniqueId(), 0) >= 3) {
-				itemset(ChatColor.GOLD + "ÇØÀú ÆóÇã Àü¸®Ç°", pc, 0, 1, Arrays.asList("¹æ¾î·ÂÀÌ 5% Áõ°¡ÇÕ´Ï´Ù", "ÀÍ»ç¿¡ ¸é¿ªÀÌ µË´Ï´Ù"), 39, inv);
+				itemset(ChatColor.GOLD + "í•´ì € íí—ˆ ì „ë¦¬í’ˆ", pc, 0, 1, Arrays.asList("ë°©ì–´ë ¥ì´ 5% ì¦ê°€í•©ë‹ˆë‹¤", "ìµì‚¬ì— ë©´ì—­ì´ ë©ë‹ˆë‹¤"), 39, inv);
 			} else {
-				itemset(ChatColor.GOLD + "ÇØÀú ÆóÇã Àü¸®Ç°(¾ÆÁ÷ ¸ğµÎ È¹µæÇÏÁö ¸øÇÔ)", Material.PRISMARINE_CRYSTALS, 0, 1,
-						Arrays.asList(ChatColor.GOLD + "" + od.OceanRuins.getOrDefault(p.getUniqueId(), 0) + "/3 È¹µæÇÔ"),
+				itemset(ChatColor.GOLD + "í•´ì € íí—ˆ ì „ë¦¬í’ˆ(ì•„ì§ ëª¨ë‘ íšë“í•˜ì§€ ëª»í•¨)", Material.PRISMARINE_CRYSTALS, 0, 1,
+						Arrays.asList(ChatColor.GOLD + "" + od.OceanRuins.getOrDefault(p.getUniqueId(), 0) + "/3 íšë“í•¨"),
 						39, inv);
 			}
 	
 			if (od.WoodlandMansion.getOrDefault(p.getUniqueId(), 0) >= 1) {
-				itemset(ChatColor.GOLD + "»ï¸² ´ëÀúÅÃ Àü¸®Ç°", ds, 0, 1, Arrays.asList("°ø°İ·ÂÀÌ 3% Áõ°¡ÇÕ´Ï´Ù", "¹æ¾î·ÂÀÌ 5% Áõ°¡ÇÕ´Ï´Ù"), 40,
+				itemset(ChatColor.GOLD + "ì‚¼ë¦¼ ëŒ€ì €íƒ ì „ë¦¬í’ˆ", ds, 0, 1, Arrays.asList("ê³µê²©ë ¥ì´ 3% ì¦ê°€í•©ë‹ˆë‹¤", "ë°©ì–´ë ¥ì´ 5% ì¦ê°€í•©ë‹ˆë‹¤"), 40,
 						inv);
 			} else {
-				itemset(ChatColor.GOLD + "»ï¸² ´ëÀúÅÃ Àü¸®Ç°(¾ÆÁ÷ ¸ğµÎ È¹µæÇÏÁö ¸øÇÔ)", Material.DARK_OAK_SIGN, 0, 1,
+				itemset(ChatColor.GOLD + "ì‚¼ë¦¼ ëŒ€ì €íƒ ì „ë¦¬í’ˆ(ì•„ì§ ëª¨ë‘ íšë“í•˜ì§€ ëª»í•¨)", Material.DARK_OAK_SIGN, 0, 1,
 						Arrays.asList(
-								ChatColor.GOLD + "" + od.WoodlandMansion.getOrDefault(p.getUniqueId(), 0) + "/3 È¹µæÇÔ"),
+								ChatColor.GOLD + "" + od.WoodlandMansion.getOrDefault(p.getUniqueId(), 0) + "/3 íšë“í•¨"),
 						40, inv);
 			}
 	
 			if (od.Shipwreck.getOrDefault(p.getUniqueId(), 0) >= 3) {
-				itemset(ChatColor.GOLD + "³­ÆÄ¼± Àü¸®Ç°", bb, 0, 1, Arrays.asList("°ø°İ·Â°ú ¹æ¾î·ÂÀÌ 3% Áõ°¡ÇÕ´Ï´Ù", "°æÇèÄ¡ È¹µæ·®ÀÌ 5% Áõ°¡ÇÕ´Ï´Ù"),
+				itemset(ChatColor.GOLD + "ë‚œíŒŒì„  ì „ë¦¬í’ˆ", bb, 0, 1, Arrays.asList("ê³µê²©ë ¥ê³¼ ë°©ì–´ë ¥ì´ 3% ì¦ê°€í•©ë‹ˆë‹¤", "ê²½í—˜ì¹˜ íšë“ëŸ‰ì´ 5% ì¦ê°€í•©ë‹ˆë‹¤"),
 						41, inv);
 			} else {
-				itemset(ChatColor.GOLD + "³­ÆÄ¼± Àü¸®Ç°(¾ÆÁ÷ ¸ğµÎ È¹µæÇÏÁö ¸øÇÔ)", Material.BIRCH_BOAT, 0, 1,
-						Arrays.asList(ChatColor.GOLD + "" + od.Shipwreck.getOrDefault(p.getUniqueId(), 0) + "/3 È¹µæÇÔ"),
+				itemset(ChatColor.GOLD + "ë‚œíŒŒì„  ì „ë¦¬í’ˆ(ì•„ì§ ëª¨ë‘ íšë“í•˜ì§€ ëª»í•¨)", Material.BIRCH_BOAT, 0, 1,
+						Arrays.asList(ChatColor.GOLD + "" + od.Shipwreck.getOrDefault(p.getUniqueId(), 0) + "/3 íšë“í•¨"),
 						41, inv);
 			}
 	
 			if (od.OceanMonument.getOrDefault(p.getUniqueId(), 0) >= 1) {
-				itemset(ChatColor.GOLD + "ÇØÀú À¯Àû Àü¸®Ç°", hs, 0, 1, Arrays.asList("°ø°İ·Â°ú ¹æ¾î·ÂÀÌ 3% Áõ°¡ÇÕ´Ï´Ù", "¼ö¿µ½Ã ÀüµµÃ¼ÀÇ ÈûÀ» ¾ò½À´Ï´Ù"),
+				itemset(ChatColor.GOLD + "í•´ì € ìœ ì  ì „ë¦¬í’ˆ", hs, 0, 1, Arrays.asList("ê³µê²©ë ¥ê³¼ ë°©ì–´ë ¥ì´ 3% ì¦ê°€í•©ë‹ˆë‹¤", "ìˆ˜ì˜ì‹œ ì „ë„ì²´ì˜ í˜ì„ ì–»ìŠµë‹ˆë‹¤"),
 						42, inv);
 			} else {
-				itemset(ChatColor.GOLD + "ÇØÀú À¯Àû Àü¸®Ç°(¾ÆÁ÷ ¸ğµÎ È¹µæÇÏÁö ¸øÇÔ)", Material.HEART_OF_THE_SEA, 0, 1,
+				itemset(ChatColor.GOLD + "í•´ì € ìœ ì  ì „ë¦¬í’ˆ(ì•„ì§ ëª¨ë‘ íšë“í•˜ì§€ ëª»í•¨)", Material.HEART_OF_THE_SEA, 0, 1,
 						Arrays.asList(
-								ChatColor.GOLD + "" + od.OceanMonument.getOrDefault(p.getUniqueId(), 0) + "/1 È¹µæÇÔ"),
+								ChatColor.GOLD + "" + od.OceanMonument.getOrDefault(p.getUniqueId(), 0) + "/1 íšë“í•¨"),
 						42, inv);
 			}
 	
 			if (od.JungleTemple.getOrDefault(p.getUniqueId(), 0) >= 1) {
-				itemset(ChatColor.GOLD + "Á¤±Û »ç¿ø Àü¸®Ç°", jp, 0, 1,
-						Arrays.asList("°ø°İ·Â°ú ¹æ¾î·ÂÀÌ 4% Áõ°¡ÇÕ´Ï´Ù", "±Ã±Ø±âÀÇ Àç»ç¿ë ´ë±â½Ã°£ÀÌ 10% °¨¼ÒÇÕ´Ï´Ù"), 43, inv);
+				itemset(ChatColor.GOLD + "ì •ê¸€ ì‚¬ì› ì „ë¦¬í’ˆ", jp, 0, 1,
+						Arrays.asList("ê³µê²©ë ¥ê³¼ ë°©ì–´ë ¥ì´ 4% ì¦ê°€í•©ë‹ˆë‹¤", "ê¶ê·¹ê¸°ì˜ ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ì´ 10% ê°ì†Œí•©ë‹ˆë‹¤"), 43, inv);
 			} else {
-				itemset(ChatColor.GOLD + "Á¤±Û »ç¿ø Àü¸®Ç°(¾ÆÁ÷ ¸ğµÎ È¹µæÇÏÁö ¸øÇÔ)", Material.MOSSY_STONE_BRICKS, 0, 1,
+				itemset(ChatColor.GOLD + "ì •ê¸€ ì‚¬ì› ì „ë¦¬í’ˆ(ì•„ì§ ëª¨ë‘ íšë“í•˜ì§€ ëª»í•¨)", Material.MOSSY_STONE_BRICKS, 0, 1,
 						Arrays.asList(
-								ChatColor.GOLD + "" + od.JungleTemple.getOrDefault(p.getUniqueId(), 0) + "/1 È¹µæÇÔ"),
+								ChatColor.GOLD + "" + od.JungleTemple.getOrDefault(p.getUniqueId(), 0) + "/1 íšë“í•¨"),
 						43, inv);
 			}
 	
 			if (od.PillagerOutpost.getOrDefault(p.getUniqueId(), 0) >= 2) {
 				pe.addUnsafeEnchantment(Enchantment.DAMAGE_UNDEAD, 1);
-				itemset(ChatColor.GOLD + "¾àÅ»ÀÚ ÀüÃÊ±âÁö Àü¸®Ç°", pe, 0, 1, Arrays.asList("¹æ¾î·ÂÀÌ 6% Áõ°¡ÇÕ´Ï´Ù"), 44, inv);
+				itemset(ChatColor.GOLD + "ì•½íƒˆì ì „ì´ˆê¸°ì§€ ì „ë¦¬í’ˆ", pe, 0, 1, Arrays.asList("ë°©ì–´ë ¥ì´ 6% ì¦ê°€í•©ë‹ˆë‹¤"), 44, inv);
 			} else {
-				itemset(ChatColor.GOLD + "¾àÅ»ÀÚ ÀüÃÊ±âÁö Àü¸®Ç°(¾ÆÁ÷ ¸ğµÎ È¹µæÇÏÁö ¸øÇÔ)", pe, 0, 1,
+				itemset(ChatColor.GOLD + "ì•½íƒˆì ì „ì´ˆê¸°ì§€ ì „ë¦¬í’ˆ(ì•„ì§ ëª¨ë‘ íšë“í•˜ì§€ ëª»í•¨)", pe, 0, 1,
 						Arrays.asList(
-								ChatColor.GOLD + "" + od.PillagerOutpost.getOrDefault(p.getUniqueId(), 0) + "/2 È¹µæÇÔ"),
+								ChatColor.GOLD + "" + od.PillagerOutpost.getOrDefault(p.getUniqueId(), 0) + "/2 íšë“í•¨"),
 						44, inv);
 			}
 	
 			if (od.DesertPyramid.getOrDefault(p.getUniqueId(), 0) >= 1) {
-				itemset(ChatColor.GOLD + "»ç¸· ÇÇ¶ó¹Ìµå Àü¸®Ç°", cs, 0, 1,
-						Arrays.asList("°ø°İ·ÂÀÌ 2% Áõ°¡ÇÕ´Ï´Ù", "ÀÏ¹İ±â¼úµéÀÇ Àç»ç¿ë ´ë±â½Ã°£ÀÌ 10% °¨¼ÒÇÕ´Ï´Ù"), 45, inv);
+				itemset(ChatColor.GOLD + "ì‚¬ë§‰ í”¼ë¼ë¯¸ë“œ ì „ë¦¬í’ˆ", cs, 0, 1,
+						Arrays.asList("ê³µê²©ë ¥ì´ 2% ì¦ê°€í•©ë‹ˆë‹¤", "ì¼ë°˜ê¸°ìˆ ë“¤ì˜ ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ì´ 10% ê°ì†Œí•©ë‹ˆë‹¤"), 45, inv);
 			} else {
-				itemset(ChatColor.GOLD + "»ç¸· ÇÇ¶ó¹Ìµå Àü¸®Ç°(¾ÆÁ÷ ¸ğµÎ È¹µæÇÏÁö ¸øÇÔ)", Material.CHISELED_SANDSTONE, 0, 1,
+				itemset(ChatColor.GOLD + "ì‚¬ë§‰ í”¼ë¼ë¯¸ë“œ ì „ë¦¬í’ˆ(ì•„ì§ ëª¨ë‘ íšë“í•˜ì§€ ëª»í•¨)", Material.CHISELED_SANDSTONE, 0, 1,
 						Arrays.asList(
-								ChatColor.GOLD + "" + od.DesertPyramid.getOrDefault(p.getUniqueId(), 0) + "/1 È¹µæÇÔ"),
+								ChatColor.GOLD + "" + od.DesertPyramid.getOrDefault(p.getUniqueId(), 0) + "/1 íšë“í•¨"),
 						45, inv);
 			}
 	
 			if (od.Stronghold.getOrDefault(p.getUniqueId(), 0) >= 1) {
-				itemset(ChatColor.GOLD + "±Ù°ÅÁö Àü¸®Ç°", ef, 0, 1,
-						Arrays.asList("°ø°İ·Â°ú ¹æ¾î·ÂÀÌ 3% Áõ°¡ÇÕ´Ï´Ù", "ÀÏ¹İ±â¼úµéÀÇ Àç»ç¿ë ´ë±â½Ã°£ÀÌ 10% °¨¼ÒÇÕ´Ï´Ù"), 46, inv);
+				itemset(ChatColor.GOLD + "ê·¼ê±°ì§€ ì „ë¦¬í’ˆ", ef, 0, 1,
+						Arrays.asList("ê³µê²©ë ¥ê³¼ ë°©ì–´ë ¥ì´ 3% ì¦ê°€í•©ë‹ˆë‹¤", "ì¼ë°˜ê¸°ìˆ ë“¤ì˜ ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ì´ 10% ê°ì†Œí•©ë‹ˆë‹¤"), 46, inv);
 			} else {
-				itemset(ChatColor.GOLD + "±Ù°ÅÁö Àü¸®Ç°(¾ÆÁ÷ ¸ğµÎ È¹µæÇÏÁö ¸øÇÔ)", Material.END_PORTAL_FRAME, 0, 1,
-						Arrays.asList(ChatColor.GOLD + "" + od.Stronghold.getOrDefault(p.getUniqueId(), 0) + "/1 È¹µæÇÔ"),
+				itemset(ChatColor.GOLD + "ê·¼ê±°ì§€ ì „ë¦¬í’ˆ(ì•„ì§ ëª¨ë‘ íšë“í•˜ì§€ ëª»í•¨)", Material.END_PORTAL_FRAME, 0, 1,
+						Arrays.asList(ChatColor.GOLD + "" + od.Stronghold.getOrDefault(p.getUniqueId(), 0) + "/1 íšë“í•¨"),
 						46, inv);
 			}
 	
 			if (od.SwampHut.getOrDefault(p.getUniqueId(), 0) >= 2) {
-				itemset(ChatColor.GOLD + "´ËÁö ¿ÀµÎ¸·", my, 0, 1, Arrays.asList("¹æ¾î·ÂÀÌ 8% Áõ°¡ÇÕ´Ï´Ù", "µ¶¿¡ ¸é¿ªÀÌ µË´Ï´Ù"), 47, inv);
+				itemset(ChatColor.GOLD + "ëŠªì§€ ì˜¤ë‘ë§‰", my, 0, 1, Arrays.asList("ë°©ì–´ë ¥ì´ 8% ì¦ê°€í•©ë‹ˆë‹¤", "ë…ì— ë©´ì—­ì´ ë©ë‹ˆë‹¤"), 47, inv);
 			} else {
-				itemset(ChatColor.GOLD + "´ËÁö ¿ÀµÎ¸·(¾ÆÁ÷ ¸ğµÎ È¹µæÇÏÁö ¸øÇÔ)", Material.MYCELIUM, 0, 1,
-						Arrays.asList(ChatColor.GOLD + "" + od.SwampHut.getOrDefault(p.getUniqueId(), 0) + "/2 È¹µæÇÔ"),
+				itemset(ChatColor.GOLD + "ëŠªì§€ ì˜¤ë‘ë§‰(ì•„ì§ ëª¨ë‘ íšë“í•˜ì§€ ëª»í•¨)", Material.MYCELIUM, 0, 1,
+						Arrays.asList(ChatColor.GOLD + "" + od.SwampHut.getOrDefault(p.getUniqueId(), 0) + "/2 íšë“í•¨"),
 						47, inv);
 			}
 	
 			if (od.Village.getOrDefault(p.getUniqueId(), 0) >= 5) {
-				itemset(ChatColor.GOLD + "¸¶À» Àü¸®Ç°", be, 0, 1,
-						Arrays.asList("°ø°İ·Â°ú ¹æ¾î·ÂÀÌ 2.5% Áõ°¡ÇÕ´Ï´Ù", "°æÇèÄ¡ È¹µæ·®ÀÌ 10% Áõ°¡ÇÕ´Ï´Ù", "ÀÏ¹İ±â¼úµéÀÇ Àç»ç¿ë ´ë±â½Ã°£ÀÌ 10% °¨¼ÒÇÕ´Ï´Ù"), 48,
+				itemset(ChatColor.GOLD + "ë§ˆì„ ì „ë¦¬í’ˆ", be, 0, 1,
+						Arrays.asList("ê³µê²©ë ¥ê³¼ ë°©ì–´ë ¥ì´ 2.5% ì¦ê°€í•©ë‹ˆë‹¤", "ê²½í—˜ì¹˜ íšë“ëŸ‰ì´ 10% ì¦ê°€í•©ë‹ˆë‹¤", "ì¼ë°˜ê¸°ìˆ ë“¤ì˜ ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ì´ 10% ê°ì†Œí•©ë‹ˆë‹¤"), 48,
 						inv);
 			} else {
-				itemset(ChatColor.GOLD + "¸¶À» Àü¸®Ç°(¾ÆÁ÷ ¸ğµÎ È¹µæÇÏÁö ¸øÇÔ)", Material.BELL, 0, 1,
-						Arrays.asList(ChatColor.GOLD + "" + od.Village.getOrDefault(p.getUniqueId(), 0) + "/5 È¹µæÇÔ"), 48,
+				itemset(ChatColor.GOLD + "ë§ˆì„ ì „ë¦¬í’ˆ(ì•„ì§ ëª¨ë‘ íšë“í•˜ì§€ ëª»í•¨)", Material.BELL, 0, 1,
+						Arrays.asList(ChatColor.GOLD + "" + od.Village.getOrDefault(p.getUniqueId(), 0) + "/5 íšë“í•¨"), 48,
 						inv);
 			}
 	
 			if (od.RuinedPortal.getOrDefault(p.getUniqueId(), 0) >= 4) {
-				itemset(ChatColor.GOLD + "¹«³ÊÁø Â÷¿ø¹® Àü¸®Ç°", co, 0, 1,
-						Arrays.asList("°ø°İ·Â°ú ¹æ¾î·ÂÀÌ 5% Áõ°¡ÇÕ´Ï´Ù", "±Ã±Ø±âÀÇ Àç»ç¿ë ´ë±â½Ã°£ÀÌ 10% °¨¼ÒÇÕ´Ï´Ù"), 49, inv);
+				itemset(ChatColor.GOLD + "ë¬´ë„ˆì§„ ì°¨ì›ë¬¸ ì „ë¦¬í’ˆ", co, 0, 1,
+						Arrays.asList("ê³µê²©ë ¥ê³¼ ë°©ì–´ë ¥ì´ 5% ì¦ê°€í•©ë‹ˆë‹¤", "ê¶ê·¹ê¸°ì˜ ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ì´ 10% ê°ì†Œí•©ë‹ˆë‹¤"), 49, inv);
 			} else {
-				itemset(ChatColor.GOLD + "¹«³ÊÁø Â÷¿ø¹® Àü¸®Ç°(¾ÆÁ÷ ¸ğµÎ È¹µæÇÏÁö ¸øÇÔ)", Material.CRYING_OBSIDIAN, 0, 1,
+				itemset(ChatColor.GOLD + "ë¬´ë„ˆì§„ ì°¨ì›ë¬¸ ì „ë¦¬í’ˆ(ì•„ì§ ëª¨ë‘ íšë“í•˜ì§€ ëª»í•¨)", Material.CRYING_OBSIDIAN, 0, 1,
 						Arrays.asList(
-								ChatColor.GOLD + "" + od.RuinedPortal.getOrDefault(p.getUniqueId(), 0) + "/4 È¹µæÇÔ"),
+								ChatColor.GOLD + "" + od.RuinedPortal.getOrDefault(p.getUniqueId(), 0) + "/4 íšë“í•¨"),
 						49, inv);
 			}
 	
 			if (od.NetherFortress.getOrDefault(p.getUniqueId(), 0) >= 2) {
-				itemset(ChatColor.GOLD + "³×´õ ¿ä»õ Àü¸®Ç°", nq, 0, 1, Arrays.asList("°ø°İ·Â°ú ¹æ¾î·ÂÀÌ 8% Áõ°¡ÇÕ´Ï´Ù"), 50, inv);
+				itemset(ChatColor.GOLD + "ë„¤ë” ìš”ìƒˆ ì „ë¦¬í’ˆ", nq, 0, 1, Arrays.asList("ê³µê²©ë ¥ê³¼ ë°©ì–´ë ¥ì´ 8% ì¦ê°€í•©ë‹ˆë‹¤"), 50, inv);
 			} else {
-				itemset(ChatColor.GOLD + "³×´õ ¿ä»õ Àü¸®Ç°(¾ÆÁ÷ ¸ğµÎ È¹µæÇÏÁö ¸øÇÔ)", Material.NETHER_QUARTZ_ORE, 0, 1,
+				itemset(ChatColor.GOLD + "ë„¤ë” ìš”ìƒˆ ì „ë¦¬í’ˆ(ì•„ì§ ëª¨ë‘ íšë“í•˜ì§€ ëª»í•¨)", Material.NETHER_QUARTZ_ORE, 0, 1,
 						Arrays.asList(
-								ChatColor.GOLD + "" + od.NetherFortress.getOrDefault(p.getUniqueId(), 0) + "/2 È¹µæÇÔ"),
+								ChatColor.GOLD + "" + od.NetherFortress.getOrDefault(p.getUniqueId(), 0) + "/2 íšë“í•¨"),
 						50, inv);
 			}
 	
 			if (od.BastionRemnant.getOrDefault(p.getUniqueId(), 0) >= 2) {
-				itemset(ChatColor.GOLD + "º¸·ç ÀÜÇØ Àü¸®Ç°", ba, 0, 1,
-						Arrays.asList("°ø°İ·Â°ú ¹æ¾î·ÂÀÌ 6% Áõ°¡ÇÕ´Ï´Ù", "ÀÏ¹İ±â¼úµéÀÇ Àç»ç¿ë ´ë±â½Ã°£ÀÌ 6% °¨¼ÒÇÕ´Ï´Ù"), 51, inv);
+				itemset(ChatColor.GOLD + "ë³´ë£¨ ì”í•´ ì „ë¦¬í’ˆ", ba, 0, 1,
+						Arrays.asList("ê³µê²©ë ¥ê³¼ ë°©ì–´ë ¥ì´ 6% ì¦ê°€í•©ë‹ˆë‹¤", "ì¼ë°˜ê¸°ìˆ ë“¤ì˜ ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ì´ 6% ê°ì†Œí•©ë‹ˆë‹¤"), 51, inv);
 			} else {
-				itemset(ChatColor.GOLD + "º¸·ç ÀÜÇØ Àü¸®Ç°(¾ÆÁ÷ ¸ğµÎ È¹µæÇÏÁö ¸øÇÔ)", Material.BASALT, 0, 1,
+				itemset(ChatColor.GOLD + "ë³´ë£¨ ì”í•´ ì „ë¦¬í’ˆ(ì•„ì§ ëª¨ë‘ íšë“í•˜ì§€ ëª»í•¨)", Material.BASALT, 0, 1,
 						Arrays.asList(
-								ChatColor.GOLD + "" + od.BastionRemnant.getOrDefault(p.getUniqueId(), 0) + "/2 È¹µæÇÔ"),
+								ChatColor.GOLD + "" + od.BastionRemnant.getOrDefault(p.getUniqueId(), 0) + "/2 íšë“í•¨"),
 						51, inv);
 			}
 	
 			if (od.EnderDragon.getOrDefault(p.getUniqueId(), 0) >= 1) {
-				itemset(ChatColor.GOLD + "¿£´õ µå·¡°ï Àü¸®Ç°", ms, 0, 1,
-						Arrays.asList(ChatColor.GOLD + "ÀÏ¹İ±â¼úµéÀÇ Àç»ç¿ë ´ë±â½Ã°£ÀÌ 10% °¨¼ÒÇÕ´Ï´Ù", "±Ã±Ø±âÀÇ Àç»ç¿ë ´ë±â½Ã°£ÀÌ 10% °¨¼ÒÇÕ´Ï´Ù", ""),
+				itemset(ChatColor.GOLD + "ì—”ë” ë“œë˜ê³¤ ì „ë¦¬í’ˆ", ms, 0, 1,
+						Arrays.asList(ChatColor.GOLD + "ì¼ë°˜ê¸°ìˆ ë“¤ì˜ ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ì´ 10% ê°ì†Œí•©ë‹ˆë‹¤", "ê¶ê·¹ê¸°ì˜ ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ì´ 10% ê°ì†Œí•©ë‹ˆë‹¤", ""),
 						52, inv);
 			} else {
-				itemset(ChatColor.GOLD + "¿£´õ µå·¡°ï Àü¸®Ç°(¾ÆÁ÷ ¸ğµÎ È¹µæÇÏÁö ¸øÇÔ)", Material.DRAGON_HEAD, 0, 1,
-						Arrays.asList(ChatColor.GOLD + "" + od.EnderDragon.getOrDefault(p.getUniqueId(), 0) + "/1 È¹µæÇÔ"),
+				itemset(ChatColor.GOLD + "ì—”ë” ë“œë˜ê³¤ ì „ë¦¬í’ˆ(ì•„ì§ ëª¨ë‘ íšë“í•˜ì§€ ëª»í•¨)", Material.DRAGON_HEAD, 0, 1,
+						Arrays.asList(ChatColor.GOLD + "" + od.EnderDragon.getOrDefault(p.getUniqueId(), 0) + "/1 íšë“í•¨"),
 						52, inv);
 			}
 	
 			if (od.EndCity.getOrDefault(p.getUniqueId(), 0) >= 1) {
-				itemset(ChatColor.GOLD + "¿£µå µµ½Ã Àü¸®Ç°", ed, 0, 1, Arrays.asList("°ø°İ·Â°ú ¹æ¾î·ÂÀÌ 11% Áõ°¡ÇÕ´Ï´Ù"), 53, inv);
+				itemset(ChatColor.GOLD + "ì—”ë“œ ë„ì‹œ ì „ë¦¬í’ˆ", ed, 0, 1, Arrays.asList("ê³µê²©ë ¥ê³¼ ë°©ì–´ë ¥ì´ 11% ì¦ê°€í•©ë‹ˆë‹¤"), 53, inv);
 			} else {
-				itemset(ChatColor.GOLD + "¿£µå µµ½Ã Àü¸®Ç°(¾ÆÁ÷ ¸ğµÎ È¹µæÇÏÁö ¸øÇÔ)", Material.END_STONE_BRICKS, 0, 1,
-						Arrays.asList(ChatColor.GOLD + "" + od.EndCity.getOrDefault(p.getUniqueId(), 0) + "/1 È¹µæÇÔ"), 53,
+				itemset(ChatColor.GOLD + "ì—”ë“œ ë„ì‹œ ì „ë¦¬í’ˆ(ì•„ì§ ëª¨ë‘ íšë“í•˜ì§€ ëª»í•¨)", Material.END_STONE_BRICKS, 0, 1,
+						Arrays.asList(ChatColor.GOLD + "" + od.EndCity.getOrDefault(p.getUniqueId(), 0) + "/1 íšë“í•¨"), 53,
 						inv);
 			}
 		} else {
@@ -985,7 +985,7 @@ public class Obtained implements Serializable, Listener {
 			} else {
 				itemset(ChatColor.GOLD + "Trophy Of BuriedTreasure(Not Obtained All Yet)", Material.SPAWNER, 0, 1,
 						Arrays.asList(
-								ChatColor.GOLD + "" + od.BuriedTreasure.getOrDefault(p.getUniqueId(), 0) + "/2 È¹µæÇÔ"),
+								ChatColor.GOLD + "" + od.BuriedTreasure.getOrDefault(p.getUniqueId(), 0) + "/2 íšë“í•¨"),
 						37, inv);
 			}
 	
@@ -1139,7 +1139,7 @@ public class Obtained implements Serializable, Listener {
 						52, inv);
 			} else {
 				itemset(ChatColor.GOLD + "Trophy Of EnderDragon(Not Obtained All Yet)", Material.DRAGON_HEAD, 0, 1,
-						Arrays.asList(ChatColor.GOLD + "" + od.EnderDragon.getOrDefault(p.getUniqueId(), 0) + "/1 È¹µæÇÔ"),
+						Arrays.asList(ChatColor.GOLD + "" + od.EnderDragon.getOrDefault(p.getUniqueId(), 0) + "/1 íšë“í•¨"),
 						52, inv);
 			}
 	

@@ -1218,7 +1218,7 @@ public class DarkSkills extends Summoned{
 		            	Holding.ale(p).setMetadata("failed", new FixedMetadataValue(RMain.getInstance(),true));
 		                for(Player pe : OverworldRaids.getheroes(p)) {
 							if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-		                		pe.sendMessage(ChatColor.BLUE+"¾Ç¸ùÀÇ Çü»ó: ³» ¾îµÒÀÌ..");
+		                		pe.sendMessage(ChatColor.BLUE+"ì•…ëª½ì˜ í˜•ìƒ: ë‚´ ì–´ë‘ ì´..");
 							}
 							else {
 		                		pe.sendMessage(ChatColor.BLUE+"NightMare: My Darkness..");
@@ -1251,7 +1251,7 @@ public class DarkSkills extends Summoned{
                 		if(pe.getWorld().equals(p.getWorld()) && pe.getWorld() == p.getWorld()) {
                 			count.remove(p.getUniqueId());
 	    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-		                		pe.sendMessage(ChatColor.BOLD+"¾Ç¸ùÀÇ Çü»ó: ºûÀº ¾îµÒÀ» ÀÌ±æ ¼ö ¾ø´Ù..");
+		                		pe.sendMessage(ChatColor.BOLD+"ì•…ëª½ì˜ í˜•ìƒ: ë¹›ì€ ì–´ë‘ ì„ ì´ê¸¸ ìˆ˜ ì—†ë‹¤..");
 	    					}
 	    					else {
 		                		pe.sendMessage(ChatColor.BOLD+"NightMare: Light can't beat darkness..");
@@ -1306,11 +1306,11 @@ public class DarkSkills extends Summoned{
         OverworldRaids.getheroes(p).forEach(pe ->{
         	Holding.invur(pe, 60l);
 			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-        		pe.sendTitle(ChatColor.DARK_GRAY + (ChatColor.MAGIC + "123456"), ChatColor.DARK_GRAY + "¾îµÒÀ» ¸ÂÀÌÇØ¶ó...", 20, 35, 20);
+        		pe.sendTitle(ChatColor.DARK_GRAY + (ChatColor.MAGIC + "123456"), ChatColor.DARK_GRAY + "ì–´ë‘ ì„ ë§ì´í•´ë¼...", 20, 35, 20);
  				Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	                @Override
 	                public void run() {	
-                		pe.sendMessage(ChatColor.BOLD+"Å¸ÀÌ¹Ö¿¡ ¸ÂÃç ÀûÀ» °ø°İÇÏ¼¼¿ä");
+                		pe.sendMessage(ChatColor.BOLD+"íƒ€ì´ë°ì— ë§ì¶° ì ì„ ê³µê²©í•˜ì„¸ìš”");
 	                }
 	            }, 20); 
 			}
@@ -1353,7 +1353,7 @@ public class DarkSkills extends Summoned{
                 for(Player pe : OverworldRaids.getheroes(p)) {
             		if(pe.getWorld().equals(p.getWorld()) && pe.getWorld() == p.getWorld()) {
     					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-	                		pe.sendMessage(ChatColor.BOLD+"¾Ç¸ùÀÇ Çü»ó: ºûÀº ¾îµÒÀ» ÀÌ±æ ¼ö ¾ø´Ù..");
+	                		pe.sendMessage(ChatColor.BOLD+"ì•…ëª½ì˜ í˜•ìƒ: ë¹›ì€ ì–´ë‘ ì„ ì´ê¸¸ ìˆ˜ ì—†ë‹¤..");
     					}
     					else {
 	                		pe.sendMessage(ChatColor.BOLD+"NightMare: Light can't beat darkness..");

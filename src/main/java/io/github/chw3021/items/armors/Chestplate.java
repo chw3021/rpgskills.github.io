@@ -43,8 +43,8 @@ public class Chestplate implements Listener {
 			rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 					"generic.armor_toughness", 2, Operation.ADD_NUMBER, EquipmentSlot.CHEST));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				rm.setDisplayName("ÀÛ¾÷º¹ »óÀÇ");
-				rm.setLocalizedName("ÀÛ¾÷º¹ »óÀÇ");
+				rm.setDisplayName("ì‘ì—…ë³µ ìƒì˜");
+				rm.setLocalizedName("ì‘ì—…ë³µ ìƒì˜");
 			}
 			else {
 				rm.setDisplayName("Miner Jacket");
@@ -63,8 +63,8 @@ public class Chestplate implements Listener {
 			rm.addAttributeModifier(Attribute.GENERIC_MOVEMENT_SPEED, new AttributeModifier(UUID.randomUUID(),
 					"generic.movement_speed", 0.15, Operation.ADD_SCALAR, EquipmentSlot.CHEST));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				rm.setDisplayName("¼³»ê ÄÚÆ®");
-				rm.setLocalizedName("¼³»ê ÄÚÆ®");
+				rm.setDisplayName("ì„¤ì‚° ì½”íŠ¸");
+				rm.setLocalizedName("ì„¤ì‚° ì½”íŠ¸");
 			}
 			else {
 				rm.setDisplayName("Snowy Coat");
@@ -81,8 +81,8 @@ public class Chestplate implements Listener {
 			rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 					"generic.armor_toughness", 2, Operation.ADD_NUMBER, EquipmentSlot.CHEST));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				rm.setDisplayName("ÇÁ¸®Áî¸Ó¸° Èä°©");
-				rm.setLocalizedName("ÇÁ¸®Áî¸Ó¸° Èä°©");
+				rm.setDisplayName("í”„ë¦¬ì¦ˆë¨¸ë¦° í‰ê°‘");
+				rm.setLocalizedName("í”„ë¦¬ì¦ˆë¨¸ë¦° í‰ê°‘");
 			}
 			else {
 				rm.setDisplayName("Prismarine ChestPlate");
@@ -101,8 +101,8 @@ public class Chestplate implements Listener {
 			rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 					"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.CHEST));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				rm.setDisplayName("¹æÅº ¾ß»ó");
-				rm.setLocalizedName("¹æÅº ¾ß»ó");
+				rm.setDisplayName("ë°©íƒ„ ì•¼ìƒ");
+				rm.setLocalizedName("ë°©íƒ„ ì•¼ìƒ");
 			}
 			else {
 				rm.setDisplayName("Flak jacket");
@@ -123,8 +123,8 @@ public class Chestplate implements Listener {
 			im.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 					"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.CHEST));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				im.setDisplayName("ÇÕ±İ Èä°©");
-				im.setLocalizedName("ÇÕ±İ Èä°©");
+				im.setDisplayName("í•©ê¸ˆ í‰ê°‘");
+				im.setLocalizedName("í•©ê¸ˆ í‰ê°‘");
 			}
 			else {
 				im.setDisplayName("Alloy Chestplate");
@@ -157,8 +157,8 @@ public class Chestplate implements Listener {
 					rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 							"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.CHEST));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("´ëÁöÀÇ Èä°©");
-						rm.setLocalizedName("´ëÁöÀÇ Èä°©");
+						rm.setDisplayName("ëŒ€ì§€ì˜ í‰ê°‘");
+						rm.setLocalizedName("ëŒ€ì§€ì˜ í‰ê°‘");
 					}
 					else {
 						rm.setDisplayName("Earth Chestplate");
@@ -187,8 +187,8 @@ public class Chestplate implements Listener {
 					rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 							"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.CHEST));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("¼­¸® Èä°©");
-						rm.setLocalizedName("¼­¸® Èä°©");
+						rm.setDisplayName("ì„œë¦¬ í‰ê°‘");
+						rm.setLocalizedName("ì„œë¦¬ í‰ê°‘");
 					}
 					else {
 						rm.setDisplayName("Frost Chestplate");
@@ -215,8 +215,8 @@ public class Chestplate implements Listener {
 					rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 							"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.CHEST));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("¹Ù´ÙÀÇ Èä°©");
-						rm.setLocalizedName("¹Ù´ÙÀÇ Èä°©");
+						rm.setDisplayName("ë°”ë‹¤ì˜ í‰ê°‘");
+						rm.setLocalizedName("ë°”ë‹¤ì˜ í‰ê°‘");
 					}
 					else {
 						rm.setDisplayName("Ocean Chestplate");
@@ -244,8 +244,8 @@ public class Chestplate implements Listener {
 					rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 							"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.CHEST));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("¾îµÒ ÀüÅõº¹ »óÀÇ");
-						rm.setLocalizedName("¾îµÒ ÀüÅõº¹ »óÀÇ");
+						rm.setDisplayName("ì–´ë‘  ì „íˆ¬ë³µ ìƒì˜");
+						rm.setLocalizedName("ì–´ë‘  ì „íˆ¬ë³µ ìƒì˜");
 					}
 					else {
 						rm.setDisplayName("Dark Chestplate");
@@ -274,8 +274,8 @@ public class Chestplate implements Listener {
 					rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(UUID.randomUUID(),
 							"generic.luck", 10, Operation.ADD_NUMBER, EquipmentSlot.CHEST));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("°³Á¶µÈ Èä°©");
-						rm.setLocalizedName("°³Á¶µÈ Èä°©");
+						rm.setDisplayName("ê°œì¡°ëœ í‰ê°‘");
+						rm.setLocalizedName("ê°œì¡°ëœ í‰ê°‘");
 					}
 					else {
 						rm.setDisplayName("Hyper Chestplate");
@@ -304,8 +304,8 @@ public class Chestplate implements Listener {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
 							"generic.attack_damage", 10, Operation.ADD_NUMBER, EquipmentSlot.CHEST));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("ÀÛ¿­ÇÏ´Â Èä°©");
-						rm.setLocalizedName("ÀÛ¿­ÇÏ´Â Èä°©");
+						rm.setDisplayName("ì‘ì—´í•˜ëŠ” í‰ê°‘");
+						rm.setLocalizedName("ì‘ì—´í•˜ëŠ” í‰ê°‘");
 					}
 					else {
 						rm.setDisplayName("Burning Chestplate");
@@ -332,8 +332,8 @@ public class Chestplate implements Listener {
 					rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 							"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.CHEST));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("ÀÚ¿¬ÀÇ Èä°©");
-						rm.setLocalizedName("ÀÚ¿¬ÀÇ Èä°©");
+						rm.setDisplayName("ìì—°ì˜ í‰ê°‘");
+						rm.setLocalizedName("ìì—°ì˜ í‰ê°‘");
 					}
 					else {
 						rm.setDisplayName("Natural Chestplate");
@@ -376,8 +376,8 @@ public class Chestplate implements Listener {
 							rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 									"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.CHEST));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								rm.setDisplayName("´ëÁöÀÇ Èä°©");
-								rm.setLocalizedName("´ëÁöÀÇ Èä°©");
+								rm.setDisplayName("ëŒ€ì§€ì˜ í‰ê°‘");
+								rm.setLocalizedName("ëŒ€ì§€ì˜ í‰ê°‘");
 							}
 							else {
 								rm.setDisplayName("Earth Chestplate");
@@ -406,8 +406,8 @@ public class Chestplate implements Listener {
 							rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 									"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.CHEST));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								rm.setDisplayName("¼­¸® Èä°©");
-								rm.setLocalizedName("¼­¸® Èä°©");
+								rm.setDisplayName("ì„œë¦¬ í‰ê°‘");
+								rm.setLocalizedName("ì„œë¦¬ í‰ê°‘");
 							}
 							else {
 								rm.setDisplayName("Frost Chestplate");
@@ -434,8 +434,8 @@ public class Chestplate implements Listener {
 							rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 									"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.CHEST));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								rm.setDisplayName("¹Ù´ÙÀÇ Èä°©");
-								rm.setLocalizedName("¹Ù´ÙÀÇ Èä°©");
+								rm.setDisplayName("ë°”ë‹¤ì˜ í‰ê°‘");
+								rm.setLocalizedName("ë°”ë‹¤ì˜ í‰ê°‘");
 							}
 							else {
 								rm.setDisplayName("Ocean Chestplate");
@@ -464,8 +464,8 @@ public class Chestplate implements Listener {
 							rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 									"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.CHEST));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								rm.setDisplayName("ÀüÅõº¹ »óÀÇ");
-								rm.setLocalizedName("ÀüÅõº¹ »óÀÇ");
+								rm.setDisplayName("ì „íˆ¬ë³µ ìƒì˜");
+								rm.setLocalizedName("ì „íˆ¬ë³µ ìƒì˜");
 							}
 							else {
 								rm.setDisplayName("Dark Chestplate");
@@ -494,8 +494,8 @@ public class Chestplate implements Listener {
 							rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(UUID.randomUUID(),
 									"generic.luck", 10, Operation.ADD_NUMBER, EquipmentSlot.CHEST));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								rm.setDisplayName("°³Á¶µÈ Èä°©");
-								rm.setLocalizedName("°³Á¶µÈ Èä°©");
+								rm.setDisplayName("ê°œì¡°ëœ í‰ê°‘");
+								rm.setLocalizedName("ê°œì¡°ëœ í‰ê°‘");
 							}
 							else {
 								rm.setDisplayName("Hyper Chestplate");
@@ -524,8 +524,8 @@ public class Chestplate implements Listener {
 							rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
 									"generic.attack_damage", 10, Operation.ADD_NUMBER, EquipmentSlot.CHEST));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								rm.setDisplayName("ÀÛ¿­ÇÏ´Â Èä°©");
-								rm.setLocalizedName("ÀÛ¿­ÇÏ´Â Èä°©");
+								rm.setDisplayName("ì‘ì—´í•˜ëŠ” í‰ê°‘");
+								rm.setLocalizedName("ì‘ì—´í•˜ëŠ” í‰ê°‘");
 							}
 							else {
 								rm.setDisplayName("Burning Chestplate");
@@ -553,8 +553,8 @@ public class Chestplate implements Listener {
 							rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 									"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.CHEST));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								rm.setDisplayName("ÀÚ¿¬ÀÇ Èä°©");
-								rm.setLocalizedName("ÀÚ¿¬ÀÇ Èä°©");
+								rm.setDisplayName("ìì—°ì˜ í‰ê°‘");
+								rm.setLocalizedName("ìì—°ì˜ í‰ê°‘");
 							}
 							else {
 								rm.setDisplayName("Natural Chestplate");

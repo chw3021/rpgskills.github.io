@@ -152,7 +152,7 @@ public class DarkRaids extends Summoned {
 		mm.setCustomModelData(2008);
 		main.setItemMeta(mm);
 		ItemStack off = new ItemStack(Material.OBSIDIAN);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "π„¿«±∫¥‹±√ºˆ":"NightCorpsArcher";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "Î∞§ÏùòÍµ∞Îã®Í∂ÅÏàò":"NightCorpsArcher";
 		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 6000.0, head, chest, leg, boots, main, off, EntityType.SKELETON);
 		
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
@@ -201,7 +201,7 @@ public class DarkRaids extends Summoned {
 
 		ItemStack off = new ItemStack(Material.SHIELD);
 
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "π„¿«±∫¥‹±‚ªÁ":"NightCorpsKnight";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "Î∞§ÏùòÍµ∞Îã®Í∏∞ÏÇ¨":"NightCorpsKnight";
 		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 6500.0, head, chest, leg, boots, main, off, EntityType.SKELETON);
 		
 		
@@ -252,7 +252,7 @@ public class DarkRaids extends Summoned {
 		mm.setCustomModelData(9008);
 		main.setItemMeta(mm);
 		
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "π„¿«±∫¥‹º“»ØªÁ":"NightCorpsEvoker";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "Î∞§ÏùòÍµ∞Îã®ÏÜåÌôòÏÇ¨":"NightCorpsEvoker";
 		Evoker newmob = (Evoker) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 7000.0, head, chest, leg, boots, main, null, EntityType.EVOKER);
 
 		newmob.setCanJoinRaid(false);
@@ -275,7 +275,7 @@ public class DarkRaids extends Summoned {
     	double number2 = (random.nextDouble()+1.5) * 2.5 * (random.nextBoolean() ? -1 : 1);
     	Location esl = spl.clone().add(number, 2.5, number2);
 		
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "π„¿«±∫¥‹∏∂≥‡":"NightCorpsWitch";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "Î∞§ÏùòÍµ∞Îã®ÎßàÎÖÄ":"NightCorpsWitch";
 		Witch newmob = (Witch) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 6000.0, null, null, null, null, null, null, EntityType.WITCH);
 		newmob.setCanJoinRaid(false);
 		newmob.setPatrolLeader(false);
@@ -323,7 +323,7 @@ public class DarkRaids extends Summoned {
 		mm.setCustomModelData(4008);
 		main.setItemMeta(mm);
 		
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "π„¿«±∫¥‹ªÁ≥…≤€":"NightCorpsHunter";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "Î∞§ÏùòÍµ∞Îã®ÏÇ¨ÎÉ•Íæº":"NightCorpsHunter";
 		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 5500.0, head, chest, leg, boots, main, null, EntityType.SKELETON);
 		newmob.setConversionTime(-1);
 		
@@ -346,7 +346,7 @@ public class DarkRaids extends Summoned {
     	
 		ItemStack head = headflag();
 		
-		String reg = lang.contains("kr") ? "π„¿«∏¡∑…":"NightPhantom";
+		String reg = lang.contains("kr") ? "Î∞§ÏùòÎßùÎ†π":"NightPhantom";
 		Phantom newmob = (Phantom) Summon(esl, reg, 6500.0, head, null, null, null, null,
 				null, EntityType.PHANTOM);
 		newmob.setFireTicks(0);
@@ -381,7 +381,7 @@ public class DarkRaids extends Summoned {
 		mm.setCustomModelData(1008);
 		main.setItemMeta(mm);
 		
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "π„¿«±∫¥‹µπ∞›∫¥":"NightCorpsAssault";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "Î∞§ÏùòÍµ∞Îã®ÎèåÍ≤©Î≥ë":"NightCorpsAssault";
 		Vindicator newmob = (Vindicator) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 7000.0, head, null, null, null, main, main, EntityType.VINDICATOR);
 		newmob.setCanJoinRaid(false);
 		newmob.setPatrolLeader(false);
@@ -431,7 +431,7 @@ public class DarkRaids extends Summoned {
 		main.setItemMeta(mm);
 
 		
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "π„¿«±∫¥‹¿Â":"NightCorpsCommander";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "Î∞§ÏùòÍµ∞Îã®Ïû•":"NightCorpsCommander";
 		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.DARK_GRAY + reg+ "<"+rn+">", 25000.0, head,
 				chest, leg, boots, main, null, EntityType.SKELETON);
 

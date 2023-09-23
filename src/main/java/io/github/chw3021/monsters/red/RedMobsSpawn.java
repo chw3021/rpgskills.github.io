@@ -54,7 +54,7 @@ public class RedMobsSpawn extends Mobs implements Listener {
 		LeatherArmorMeta bom = (LeatherArmorMeta) boots.getItemMeta();
 		bom.setColor(Color.RED);
 		boots.setItemMeta(bom);
-		String reg = lang.contains("kr") ? "øˆ≈∑∑πµÂª˜µÂ":"WalkingRedSand";
+		String reg = lang.contains("kr") ? "ÏõåÌÇπÎ†àÎìúÏÉåÎìú":"WalkingRedSand";
 		Husk newmob = (Husk) Mobspawn(le, reg, 15000.0, head, chest, leg, boots, new ItemStack(Material.CAMPFIRE), new ItemStack(Material.CAMPFIRE), EntityType.HUSK);
 		newmob.setConversionTime(-1);
 		newmob.getAttribute(Attribute.GENERIC_FOLLOW_RANGE).setBaseValue(20);
@@ -86,7 +86,7 @@ public class RedMobsSpawn extends Mobs implements Listener {
 		ItemStack main = new ItemStack(Material.BOW);
 		main.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 2);
 		main.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 3);
-		String reg = lang.contains("kr") ? "±◊¿ª∏∞«ÿ∞Ò":"BurnedSkull";
+		String reg = lang.contains("kr") ? "Í∑∏ÏùÑÎ¶∞Ìï¥Í≥®":"BurnedSkull";
 		Skeleton newmob = (Skeleton) Mobspawn(le, reg, 12000.0, null, chest, leg, boots, main, null, EntityType.SKELETON);
 		newmob.setConversionTime(-1);
 		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
@@ -114,7 +114,7 @@ public class RedMobsSpawn extends Mobs implements Listener {
 		ItemStack main = new ItemStack(Material.FIRE_CHARGE);
 		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 2);
 		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 5);
-		String reg = lang.contains("kr") ? "±◊¿ª∏∞∏∂π˝ªÁ":"BurnedMage";
+		String reg = lang.contains("kr") ? "Í∑∏ÏùÑÎ¶∞ÎßàÎ≤ïÏÇ¨":"BurnedMage";
 		Illusioner newmob = (Illusioner) Mobspawn(le, reg, 10500.0, head, chest, leg, boots, main,main, EntityType.ILLUSIONER);
 		newmob.setCanJoinRaid(false);
 		newmob.setPatrolLeader(false);
@@ -148,7 +148,7 @@ public class RedMobsSpawn extends Mobs implements Listener {
 		ItemStack main = new ItemStack(Material.IRON_SWORD);
 		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 2);
 		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
-		String reg = lang.contains("kr") ? "∫”¿∫¿¸ªÁ":"RedBruise";
+		String reg = lang.contains("kr") ? "Î∂âÏùÄÏ†ÑÏÇ¨":"RedBruise";
 		Skeleton newmob = (Skeleton) Mobspawn(le, reg, 12000.0, head, chest, leg, boots, main, main, EntityType.SKELETON);
 		newmob.setConversionTime(-1);
 		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
@@ -161,7 +161,7 @@ public class RedMobsSpawn extends Mobs implements Listener {
 	}
 
 	final private Spider BurningSpider(LivingEntity le) {
-		String reg = lang.contains("kr") ? "∫“∞≈πÃ":"BurningSpider";
+		String reg = lang.contains("kr") ? "Î∂àÍ±∞ÎØ∏":"BurningSpider";
 		Spider newmob = (Spider) Mobspawn(le, reg, 10000.0,null, null, null, null, new ItemStack(Material.CAMPFIRE), new ItemStack(Material.CAMPFIRE), EntityType.SPIDER);
 		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
 		
@@ -173,7 +173,7 @@ public class RedMobsSpawn extends Mobs implements Listener {
 	}
 	
 	final private Creeper HotCreeper(LivingEntity le) {
-		String reg = lang.contains("kr") ? "ø≠±‚≈©∏Æ∆€":"HotCreeper";
+		String reg = lang.contains("kr") ? "Ïó¥Í∏∞ÌÅ¨Î¶¨Ìçº":"HotCreeper";
 		Creeper newmob = (Creeper) Mobspawn(le, reg, 10000.0, null, null, null, null, new ItemStack(Material.CAMPFIRE), new ItemStack(Material.CAMPFIRE), EntityType.CREEPER);
 		newmob.setPowered(true);
 		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
@@ -186,7 +186,7 @@ public class RedMobsSpawn extends Mobs implements Listener {
 	}
 
 	final private Enderman RedMan(LivingEntity le) {
-		String reg = lang.contains("kr") ? "∑πµÂ∏«":"RedMan";
+		String reg = lang.contains("kr") ? "Î†àÎìúÎß®":"RedMan";
 		Enderman newmob = (Enderman) Mobspawn(le, reg, 15000.0, new ItemStack(Material.MAGMA_BLOCK), null, null, null, new ItemStack(Material.MAGMA_BLOCK), new ItemStack(Material.MAGMA_BLOCK), EntityType.ENDERMAN);
 		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
 		newmob.setCarriedBlock(Material.MAGMA_BLOCK.createBlockData());
@@ -198,7 +198,7 @@ public class RedMobsSpawn extends Mobs implements Listener {
 	}
 
 	final private LivingEntity Default(LivingEntity le) {
-		String reg = lang.contains("kr") ? "æ«¡ˆ":"BadLands";
+		String reg = lang.contains("kr") ? "ÏïÖÏßÄ":"BadLands";
 		LivingEntity newmob = Mobspawn(le, reg +trans(le), 12000.0, le.getEquipment().getHelmet(), le.getEquipment().getChestplate(), le.getEquipment().getLeggings(), le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(), le.getEquipment().getItemInOffHand(), le.getType());
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("red", new FixedMetadataValue(RMain.getInstance(), true));

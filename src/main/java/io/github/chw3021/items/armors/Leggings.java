@@ -42,8 +42,8 @@ public class Leggings implements Listener {
 			rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 					"generic.armor_toughness", 2, Operation.ADD_NUMBER, EquipmentSlot.LEGS));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				rm.setDisplayName("ÀÛ¾÷¿ë ¹ÙÁö");
-				rm.setLocalizedName("ÀÛ¾÷¿ë ¹ÙÁö");
+				rm.setDisplayName("ì‘ì—…ìš© ë°”ì§€");
+				rm.setLocalizedName("ì‘ì—…ìš© ë°”ì§€");
 			}
 			else {
 				rm.setDisplayName("Miner Pants");
@@ -63,8 +63,8 @@ public class Leggings implements Listener {
 			rm.addAttributeModifier(Attribute.GENERIC_MOVEMENT_SPEED, new AttributeModifier(UUID.randomUUID(),
 					"generic.movement_speed", 0.15, Operation.ADD_SCALAR, EquipmentSlot.LEGS));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				rm.setDisplayName("¼³»ê ¹ÙÁö");
-				rm.setLocalizedName("¼³»ê ¹ÙÁö");
+				rm.setDisplayName("ì„¤ì‚° ë°”ì§€");
+				rm.setLocalizedName("ì„¤ì‚° ë°”ì§€");
 			}
 			else {
 				rm.setDisplayName("Snowy Pants");
@@ -81,8 +81,8 @@ public class Leggings implements Listener {
 			rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 					"generic.armor_toughness", 2, Operation.ADD_NUMBER, EquipmentSlot.LEGS));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				rm.setDisplayName("ÇÁ¸®Áî¸Ó¸° ·¹±ë½º");
-				rm.setLocalizedName("ÇÁ¸®Áî¸Ó¸° ·¹±ë½º");
+				rm.setDisplayName("í”„ë¦¬ì¦ˆë¨¸ë¦° ë ˆê¹…ìŠ¤");
+				rm.setLocalizedName("í”„ë¦¬ì¦ˆë¨¸ë¦° ë ˆê¹…ìŠ¤");
 			}
 			else {
 				rm.setDisplayName("Prismarine Leggings");
@@ -101,8 +101,8 @@ public class Leggings implements Listener {
 			rm.addAttributeModifier(Attribute.GENERIC_MOVEMENT_SPEED, new AttributeModifier(UUID.randomUUID(),
 					"generic.movement_speed", -0.05, Operation.ADD_SCALAR, EquipmentSlot.LEGS));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				rm.setDisplayName("¹æÅº ·¹±ë½º");
-				rm.setLocalizedName("¹æÅº ·¹±ë½º");
+				rm.setDisplayName("ë°©íƒ„ ë ˆê¹…ìŠ¤");
+				rm.setLocalizedName("ë°©íƒ„ ë ˆê¹…ìŠ¤");
 			}
 			else {
 				rm.setDisplayName("Bulletproof Leggings");
@@ -123,8 +123,8 @@ public class Leggings implements Listener {
 			im.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 					"generic.armor_toughness", 4, Operation.ADD_NUMBER, EquipmentSlot.LEGS));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				im.setDisplayName("ÇÕ±İ ·¹±ë½º");
-				im.setLocalizedName("ÇÕ±İ ·¹±ë½º");
+				im.setDisplayName("í•©ê¸ˆ ë ˆê¹…ìŠ¤");
+				im.setLocalizedName("í•©ê¸ˆ ë ˆê¹…ìŠ¤");
 			}
 			else {
 				im.setDisplayName("Alloy Leggings");
@@ -157,8 +157,8 @@ public class Leggings implements Listener {
 					rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 							"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.LEGS));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("´ëÁöÀÇ ·¹±ë½º");
-						rm.setLocalizedName("´ëÁöÀÇ ·¹±ë½º");
+						rm.setDisplayName("ëŒ€ì§€ì˜ ë ˆê¹…ìŠ¤");
+						rm.setLocalizedName("ëŒ€ì§€ì˜ ë ˆê¹…ìŠ¤");
 					}
 					else {
 						rm.setDisplayName("Earth Leggings");
@@ -187,8 +187,8 @@ public class Leggings implements Listener {
 					rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 							"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.LEGS));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("¼­¸® ·¹±ë½º");
-						rm.setLocalizedName("¼­¸® ·¹±ë½º");
+						rm.setDisplayName("ì„œë¦¬ ë ˆê¹…ìŠ¤");
+						rm.setLocalizedName("ì„œë¦¬ ë ˆê¹…ìŠ¤");
 					}
 					else {
 						rm.setDisplayName("Frost Leggings");
@@ -215,8 +215,8 @@ public class Leggings implements Listener {
 					rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 							"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.LEGS));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("¹Ù´ÙÀÇ ·¹±ë½º");
-						rm.setLocalizedName("¹Ù´ÙÀÇ ·¹±ë½º");
+						rm.setDisplayName("ë°”ë‹¤ì˜ ë ˆê¹…ìŠ¤");
+						rm.setLocalizedName("ë°”ë‹¤ì˜ ë ˆê¹…ìŠ¤");
 					}
 					else {
 						rm.setDisplayName("Ocean Leggings");
@@ -245,8 +245,8 @@ public class Leggings implements Listener {
 					rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 							"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.LEGS));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("¾îµÒ ÀüÅõº¹ ÇÏÀÇ");
-						rm.setLocalizedName("¾îµÒ ÀüÅõº¹ ÇÏÀÇ");
+						rm.setDisplayName("ì–´ë‘  ì „íˆ¬ë³µ í•˜ì˜");
+						rm.setLocalizedName("ì–´ë‘  ì „íˆ¬ë³µ í•˜ì˜");
 					}
 					else {
 						rm.setDisplayName("Dark Leggings");
@@ -275,8 +275,8 @@ public class Leggings implements Listener {
 					rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(UUID.randomUUID(),
 							"generic.luck", 7, Operation.ADD_NUMBER, EquipmentSlot.LEGS));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("°³Á¶µÈ ·¹±ë½º");
-						rm.setLocalizedName("°³Á¶µÈ ·¹±ë½º");
+						rm.setDisplayName("ê°œì¡°ëœ ë ˆê¹…ìŠ¤");
+						rm.setLocalizedName("ê°œì¡°ëœ ë ˆê¹…ìŠ¤");
 					}
 					else {
 						rm.setDisplayName("Hyper Leggings");
@@ -305,8 +305,8 @@ public class Leggings implements Listener {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
 							"generic.attack_damage", 8, Operation.ADD_NUMBER, EquipmentSlot.LEGS));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("ÀÛ¿­ÇÏ´Â ·¹±ë½º");
-						rm.setLocalizedName("ÀÛ¿­ÇÏ´Â ·¹±ë½º");
+						rm.setDisplayName("ì‘ì—´í•˜ëŠ” ë ˆê¹…ìŠ¤");
+						rm.setLocalizedName("ì‘ì—´í•˜ëŠ” ë ˆê¹…ìŠ¤");
 					}
 					else {
 						rm.setDisplayName("Burning Leggings");
@@ -333,8 +333,8 @@ public class Leggings implements Listener {
 					rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 							"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.LEGS));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("ÀÚ¿¬ÀÇ ·¹±ë½º");
-						rm.setLocalizedName("ÀÚ¿¬ÀÇ ·¹±ë½º");
+						rm.setDisplayName("ìì—°ì˜ ë ˆê¹…ìŠ¤");
+						rm.setLocalizedName("ìì—°ì˜ ë ˆê¹…ìŠ¤");
 					}
 					else {
 						rm.setDisplayName("Natural Leggings");
@@ -377,8 +377,8 @@ public class Leggings implements Listener {
 							rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 									"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.LEGS));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								rm.setDisplayName("´ëÁöÀÇ ·¹±ë½º");
-								rm.setLocalizedName("´ëÁöÀÇ ·¹±ë½º");
+								rm.setDisplayName("ëŒ€ì§€ì˜ ë ˆê¹…ìŠ¤");
+								rm.setLocalizedName("ëŒ€ì§€ì˜ ë ˆê¹…ìŠ¤");
 							}
 							else {
 								rm.setDisplayName("Earth Leggings");
@@ -407,8 +407,8 @@ public class Leggings implements Listener {
 							rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 									"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.LEGS));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								rm.setDisplayName("¼­¸® ·¹±ë½º");
-								rm.setLocalizedName("¼­¸® ·¹±ë½º");
+								rm.setDisplayName("ì„œë¦¬ ë ˆê¹…ìŠ¤");
+								rm.setLocalizedName("ì„œë¦¬ ë ˆê¹…ìŠ¤");
 							}
 							else {
 								rm.setDisplayName("Frost Leggings");
@@ -435,8 +435,8 @@ public class Leggings implements Listener {
 							rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 									"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.LEGS));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								rm.setDisplayName("¹Ù´ÙÀÇ ·¹±ë½º");
-								rm.setLocalizedName("¹Ù´ÙÀÇ ·¹±ë½º");
+								rm.setDisplayName("ë°”ë‹¤ì˜ ë ˆê¹…ìŠ¤");
+								rm.setLocalizedName("ë°”ë‹¤ì˜ ë ˆê¹…ìŠ¤");
 							}
 							else {
 								rm.setDisplayName("Ocean Leggings");
@@ -465,8 +465,8 @@ public class Leggings implements Listener {
 							rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 									"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.LEGS));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								rm.setDisplayName("ÀüÅõº¹ ÇÏÀÇ");
-								rm.setLocalizedName("ÀüÅõº¹ ÇÏÀÇ");
+								rm.setDisplayName("ì „íˆ¬ë³µ í•˜ì˜");
+								rm.setLocalizedName("ì „íˆ¬ë³µ í•˜ì˜");
 							}
 							else {
 								rm.setDisplayName("Dark Leggings");
@@ -495,8 +495,8 @@ public class Leggings implements Listener {
 							rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(UUID.randomUUID(),
 									"generic.luck", 7, Operation.ADD_NUMBER, EquipmentSlot.LEGS));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								rm.setDisplayName("°³Á¶µÈ ·¹±ë½º");
-								rm.setLocalizedName("°³Á¶µÈ ·¹±ë½º");
+								rm.setDisplayName("ê°œì¡°ëœ ë ˆê¹…ìŠ¤");
+								rm.setLocalizedName("ê°œì¡°ëœ ë ˆê¹…ìŠ¤");
 							}
 							else {
 								rm.setDisplayName("Hyper Leggings");
@@ -525,8 +525,8 @@ public class Leggings implements Listener {
 							rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
 									"generic.attack_damage", 8, Operation.ADD_NUMBER, EquipmentSlot.LEGS));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								rm.setDisplayName("ÀÛ¿­ÇÏ´Â ·¹±ë½º");
-								rm.setLocalizedName("ÀÛ¿­ÇÏ´Â ·¹±ë½º");
+								rm.setDisplayName("ì‘ì—´í•˜ëŠ” ë ˆê¹…ìŠ¤");
+								rm.setLocalizedName("ì‘ì—´í•˜ëŠ” ë ˆê¹…ìŠ¤");
 							}
 							else {
 								rm.setDisplayName("Burning Leggings");
@@ -553,8 +553,8 @@ public class Leggings implements Listener {
 							rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
 									"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlot.LEGS));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								rm.setDisplayName("ÀÚ¿¬ÀÇ ·¹±ë½º");
-								rm.setLocalizedName("ÀÚ¿¬ÀÇ ·¹±ë½º");
+								rm.setDisplayName("ìì—°ì˜ ë ˆê¹…ìŠ¤");
+								rm.setLocalizedName("ìì—°ì˜ ë ˆê¹…ìŠ¤");
 							}
 							else {
 								rm.setDisplayName("Natural Leggings");

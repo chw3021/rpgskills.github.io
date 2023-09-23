@@ -512,7 +512,7 @@ public class OceanSkills extends Summoned{
 		                	if(e instanceof Player) {
 		                		Player pe = (Player) e;
 		    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-			                		pe.sendMessage(ChatColor.BOLD+"¿¤´õ°¡µğ¾ğ: Çã¿µÀº ÆÄ¸êÀ» ºÎ¸¦ °ÍÀÌ´Ù.");
+			                		pe.sendMessage(ChatColor.BOLD+"ì—˜ë”ê°€ë””ì–¸: í—ˆì˜ì€ íŒŒë©¸ì„ ë¶€ë¥¼ ê²ƒì´ë‹¤.");
 		    					}
 		    					else {
 			                		pe.sendMessage(ChatColor.BOLD+"ElderGuardian: The pomps and vanities will bring the destruction.");
@@ -544,7 +544,7 @@ public class OceanSkills extends Summoned{
 	                	if(e instanceof Player) {
 	                		Player pe = (Player) e;
 	    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-		                		pe.sendMessage(ChatColor.BOLD+"¿¤´õ°¡µğ¾ğ: Çã¿µÀº ÆÄ¸êÀ» ºÎ¸¦ °ÍÀÌ´Ù.");
+		                		pe.sendMessage(ChatColor.BOLD+"ì—˜ë”ê°€ë””ì–¸: í—ˆì˜ì€ íŒŒë©¸ì„ ë¶€ë¥¼ ê²ƒì´ë‹¤.");
 	    					}
 	    					else {
 		                		pe.sendMessage(ChatColor.BOLD+"ElderGuardian: The pomps and vanities will bring the destruction.");
@@ -610,7 +610,7 @@ public class OceanSkills extends Summoned{
 			                		Player pe = (Player) e1;
 				                	Holding.superholding(pe, Holding.ale(p), 300l);
 			    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-				                		pe.sendMessage(ChatColor.BOLD+"¿¤´õ°¡µğ¾ğ: ÀÌ·± °Ç¹æÁø!..");
+				                		pe.sendMessage(ChatColor.BOLD+"ì—˜ë”ê°€ë””ì–¸: ì´ëŸ° ê±´ë°©ì§„!..");
 			    					}
 			    					else {
 				                		pe.sendMessage(ChatColor.BOLD+"ElderGuardian: How dare are You!...");
@@ -638,7 +638,7 @@ public class OceanSkills extends Summoned{
 			                	if(e1 instanceof Player) {
 			                		Player pe = (Player) e1;
 			    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-				                		pe.sendMessage(ChatColor.BOLD+"¿¤´õ°¡µğ¾ğ: ¸ğµç°ÍÀº ±×ºĞ ¶æ´ë·Î...");
+				                		pe.sendMessage(ChatColor.BOLD+"ì—˜ë”ê°€ë””ì–¸: ëª¨ë“ ê²ƒì€ ê·¸ë¶„ ëœ»ëŒ€ë¡œ...");
 			    					}
 			    					else {
 				                		pe.sendMessage(ChatColor.BOLD+"ElderGuardian: Everything is up to him..");
@@ -690,7 +690,7 @@ public class OceanSkills extends Summoned{
 		                	if(e instanceof Player) {
 		                		Player pe = (Player) e;
 		    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-			                		pe.sendMessage(ChatColor.BOLD+"¿¤´õ°¡µğ¾ğ: "+tar.getName()+"! ³×³ğºÎÅÍ Ã³¸®ÇØÁÖ°Ú´Ù!");
+			                		pe.sendMessage(ChatColor.BOLD+"ì—˜ë”ê°€ë””ì–¸: "+tar.getName()+"! ë„¤ë†ˆë¶€í„° ì²˜ë¦¬í•´ì£¼ê² ë‹¤!");
 		    					}
 		    					else {
 			                		pe.sendMessage(ChatColor.BOLD+"ElderGuardian: "+tar.getName()+"! I'll kill you first!");
@@ -724,7 +724,7 @@ public class OceanSkills extends Summoned{
 	                	if(e instanceof Player) {
 	                		Player pe = (Player) e;
 	    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-		                		pe.sendMessage(ChatColor.BOLD+"¿¤´õ°¡µğ¾ğ: "+tar.getName()+"! ³×³ğºÎÅÍ Ã³¸®ÇØÁÖ°Ú´Ù!");
+		                		pe.sendMessage(ChatColor.BOLD+"ì—˜ë”ê°€ë””ì–¸: "+tar.getName()+"! ë„¤ë†ˆë¶€í„° ì²˜ë¦¬í•´ì£¼ê² ë‹¤!");
 	    					}
 	    					else {
 		                		pe.sendMessage(ChatColor.BOLD+"ElderGuardian: "+tar.getName()+"! I'll kill you first!");

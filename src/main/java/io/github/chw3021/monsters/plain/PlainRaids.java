@@ -127,7 +127,7 @@ public class PlainRaids extends Summoned {
 		boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
 		ItemStack main = new ItemStack(Material.WOODEN_AXE);
 		ItemStack off = new ItemStack(Material.SHIELD);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "«ÆπÁ±‚ªÁ":"GrassKnight";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ÌíÄÎ∞≠Í∏∞ÏÇ¨":"GrassKnight";
 		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 25.0, head, chest, leg, boots, main, off, EntityType.SKELETON);
 		
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
@@ -163,7 +163,7 @@ public class PlainRaids extends Summoned {
 		main.addUnsafeEnchantment(Enchantment.QUICK_CHARGE, 2);
 		main.addUnsafeEnchantment(Enchantment.MULTISHOT, 1);
 
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "π˙∆«ªÁºˆ":"GardenShooter";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "Î≤åÌåêÏÇ¨Ïàò":"GardenShooter";
 		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 18.0, head, chest, leg, boots, main, new ItemStack(Material.SPYGLASS), EntityType.SKELETON);
 		
 		
@@ -211,7 +211,7 @@ public class PlainRaids extends Summoned {
 		boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
 		ItemStack main = new ItemStack(Material.STICK);
 		ItemStack off = new ItemStack(Material.DARK_OAK_SAPLING);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "¥Î¡ˆø‰¡§":"EarthFairy";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ÎåÄÏßÄÏöîÏ†ï":"EarthFairy";
 		Vex newmob = (Vex) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 20.0, head, chest, leg, boots, main, off, EntityType.VEX);
 		
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
@@ -246,7 +246,7 @@ public class PlainRaids extends Summoned {
 		boots.setItemMeta(bom);
 		ItemStack main = new ItemStack(Material.SUNFLOWER);
 		
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "øˆ≈∑º±«√∂Ûøˆ":"WalkingSunflower";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ÏõåÌÇπÏÑ†ÌîåÎùºÏõå":"WalkingSunflower";
 		Husk newmob = (Husk) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 20.0, head, chest, leg, boots, main, main, EntityType.HUSK);
 		newmob.setConversionTime(-1);
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(),rn));
@@ -278,7 +278,7 @@ public class PlainRaids extends Summoned {
 		bom.setColor(Color.GREEN);
 		boots.setItemMeta(bom);
 		ItemStack main = new ItemStack(Material.WOODEN_AXE);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "¿‚√ ≤€":"Grasser";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "Ïû°Ï¥àÍæº":"Grasser";
 		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 20.0, head, chest, leg, boots, main, null, EntityType.SKELETON);
 		newmob.setConversionTime(-1);
 		
@@ -315,7 +315,7 @@ public class PlainRaids extends Summoned {
 		ItemStack main = new ItemStack(Material.CROSSBOW);
 		main.addUnsafeEnchantment(Enchantment.QUICK_CHARGE, 2);
 		main.addUnsafeEnchantment(Enchantment.MULTISHOT, 1);
-		String reg = lang.contains("kr") ? "≤…¿˙∞›ºˆ":"FlowerSniper";
+		String reg = lang.contains("kr") ? "ÍΩÉÏ†ÄÍ≤©Ïàò":"FlowerSniper";
 		Pillager newmob = (Pillager) Summon(esl, reg, 16.0, head, leg, chest, boots, main,
 				null, EntityType.PILLAGER);
 		newmob.setCanJoinRaid(false);
@@ -357,7 +357,7 @@ public class PlainRaids extends Summoned {
 		boots.setItemMeta(bom);
 		ItemStack main = new ItemStack(Material.FLOWERING_AZALEA);
 		
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "«√∂ÛΩ√æ∆":"Flosia";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ÌîåÎùºÏãúÏïÑ":"Flosia";
 		Zombie newmob = (Zombie) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 25.0, head, chest, leg, boots, main, main, EntityType.ZOMBIE);
 		newmob.setConversionTime(-1);
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(),rn));
@@ -382,7 +382,7 @@ public class PlainRaids extends Summoned {
 		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
 		ItemStack off = new ItemStack(Material.STONE);
 		off.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "¿Â∑Œ≈©∏Æ∆€":"ElderCreeper";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "Ïû•Î°úÌÅ¨Î¶¨Ìçº":"ElderCreeper";
 		Creeper newmob = (Creeper) Summon(esl, ChatColor.GREEN + reg, 200.0, null,
 				null, null, null, main, off, EntityType.CREEPER);
 

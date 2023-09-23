@@ -122,7 +122,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
             if(!(timer < 0)) // if timer is still more then 0 or 0
             {
             	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-            		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(kname+" ¿ÁªÁøÎ ¥Î±‚Ω√∞£¿Ã " + String.valueOf(Math.round(timer*10)/10.0) + "√  ≥≤æ“Ω¿¥œ¥Ÿ").create());
+            		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(kname+" Ïû¨ÏÇ¨Ïö© ÎåÄÍ∏∞ÏãúÍ∞ÑÏù¥ " + String.valueOf(Math.round(timer*10)/10.0) + "Ï¥à ÎÇ®ÏïòÏäµÎãàÎã§").create());
             	}
             	else {
                 	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use "+ename).create());
@@ -706,14 +706,14 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[πŸ∂˜ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î∞îÎûå Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Wind]>"));
-					lore.add(ChatColor.GRAY + "<[πŸ∂˜ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.GREEN + "<[¥Î¡ˆ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
-					lore.add(ChatColor.BOLD + "∏µÁ Ω∫≈≥ø° πŸ∂˜«««ÿ∞° √ﬂ∞°∑Œ ¿˚øÎµÀ¥œ¥Ÿ");
+					lore.add(ChatColor.GRAY + "<[Î∞îÎûå Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.GREEN + "<[ÎåÄÏßÄ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BOLD + "Î™®Îì† Ïä§ÌÇ¨Ïóê Î∞îÎûåÌîºÌï¥Í∞Ä Ï∂îÍ∞ÄÎ°ú Ï†ÅÏö©Îê©ÎãàÎã§");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[πŸ∂˜ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î∞îÎûå Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Wind]>"));
 					lore.add(ChatColor.GRAY + "<[Power Of Wind]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
 							+ ChatColor.GREEN + "<[Power Of Earth]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -723,14 +723,14 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[πŸ∂˜ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î∞îÎûå Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Wind]>"));
-					lore.add(ChatColor.GRAY + "<[πŸ∂˜ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.GREEN + "<[¥Î¡ˆ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
-					lore.add(ChatColor.BOLD + "∏µÁ Ω∫≈≥ø° πŸ∂˜«««ÿ∞° √ﬂ∞°∑Œ ¿˚øÎµÀ¥œ¥Ÿ");
+					lore.add(ChatColor.GRAY + "<[Î∞îÎûå Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.GREEN + "<[ÎåÄÏßÄ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BOLD + "Î™®Îì† Ïä§ÌÇ¨Ïóê Î∞îÎûåÌîºÌï¥Í∞Ä Ï∂îÍ∞ÄÎ°ú Ï†ÅÏö©Îê©ÎãàÎã§");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[πŸ∂˜ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î∞îÎûå Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Wind]>"));
 					lore.add(ChatColor.GRAY + "<[Power Of Wind]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
 							+ ChatColor.GREEN + "<[Power Of Earth]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -745,14 +745,14 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[¥Î¡ˆ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÎåÄÏßÄ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Earth]>"));
-					lore.add(ChatColor.GRAY + "<[πŸ∂˜ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.GREEN + "<[¥Î¡ˆ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
-					lore.add(ChatColor.BOLD + "∏µÁ Ω∫≈≥ø° ¥Î¡ˆ «««ÿ∞° √ﬂ∞°∑Œ ¿˚øÎµÀ¥œ¥Ÿ");
+					lore.add(ChatColor.GRAY + "<[Î∞îÎûå Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.GREEN + "<[ÎåÄÏßÄ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BOLD + "Î™®Îì† Ïä§ÌÇ¨Ïóê ÎåÄÏßÄ ÌîºÌï¥Í∞Ä Ï∂îÍ∞ÄÎ°ú Ï†ÅÏö©Îê©ÎãàÎã§");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[¥Î¡ˆ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÎåÄÏßÄ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Earth]>"));
 					lore.add(ChatColor.GRAY + "<[Power Of Wind]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
 							+ ChatColor.GREEN + "<[Power Of Earth]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -762,14 +762,14 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[¥Î¡ˆ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÎåÄÏßÄ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Earth]>"));
-					lore.add(ChatColor.GRAY + "<[πŸ∂˜ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.GREEN + "<[¥Î¡ˆ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
-					lore.add(ChatColor.BOLD + "∏µÁ Ω∫≈≥ø° ¥Î¡ˆ «««ÿ∞° √ﬂ∞°∑Œ ¿˚øÎµÀ¥œ¥Ÿ");
+					lore.add(ChatColor.GRAY + "<[Î∞îÎûå Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.GREEN + "<[ÎåÄÏßÄ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BOLD + "Î™®Îì† Ïä§ÌÇ¨Ïóê ÎåÄÏßÄ ÌîºÌï¥Í∞Ä Ï∂îÍ∞ÄÎ°ú Ï†ÅÏö©Îê©ÎãàÎã§");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[¥Î¡ˆ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÎåÄÏßÄ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Earth]>"));
 					lore.add(ChatColor.GRAY + "<[Power Of Wind]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
 							+ ChatColor.GREEN + "<[Power Of Earth]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -784,14 +784,14 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[º≠∏Æ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Frost]>"));
-					lore.add(ChatColor.AQUA + "<[º≠∏Æ ∞Ëø≠ ∞¯∞›∑¬]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.DARK_GREEN + "<[∏Õµ∂ ∞Ëø≠ ∞¯∞›∑¬]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
-					lore.add(ChatColor.BOLD + "∏µÁ Ω∫≈≥ø° º≠∏Æ «««ÿ∞° √ﬂ∞°∑Œ ¿˚øÎµÀ¥œ¥Ÿ");
+					lore.add(ChatColor.AQUA + "<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.DARK_GREEN + "<[ÎßπÎèÖ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BOLD + "Î™®Îì† Ïä§ÌÇ¨Ïóê ÏÑúÎ¶¨ ÌîºÌï¥Í∞Ä Ï∂îÍ∞ÄÎ°ú Ï†ÅÏö©Îê©ÎãàÎã§");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[º≠∏Æ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Frost]>"));
 					lore.add(ChatColor.AQUA + "<[Power Of Frost]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.DARK_GREEN + "<[Power Of Poison]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -801,14 +801,14 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[º≠∏Æ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Frost]>"));
-					lore.add(ChatColor.AQUA + "<[º≠∏Æ ∞Ëø≠ ∞¯∞›∑¬]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.DARK_GREEN + "<[∏Õµ∂ ∞Ëø≠ ∞¯∞›∑¬]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
-					lore.add(ChatColor.BOLD + "∏µÁ Ω∫≈≥ø° º≠∏Æ «««ÿ∞° √ﬂ∞°∑Œ ¿˚øÎµÀ¥œ¥Ÿ");
+					lore.add(ChatColor.AQUA + "<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.DARK_GREEN + "<[ÎßπÎèÖ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BOLD + "Î™®Îì† Ïä§ÌÇ¨Ïóê ÏÑúÎ¶¨ ÌîºÌï¥Í∞Ä Ï∂îÍ∞ÄÎ°ú Ï†ÅÏö©Îê©ÎãàÎã§");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[º≠∏Æ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Frost]>"));
 					lore.add(ChatColor.AQUA + "<[Power Of Frost]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.DARK_GREEN + "<[Power Of Poison]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -823,14 +823,14 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[π∞ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î¨º Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Water]>"));
-					lore.add(ChatColor.BLUE + "<[π∞ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.RED + "<[»≠ø∞ ∞Ëø≠ ∞¯∞›∑¬]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
-					lore.add(ChatColor.BOLD + "∏µÁ Ω∫≈≥ø° π∞ «««ÿ∞° √ﬂ∞°∑Œ ¿˚øÎµÀ¥œ¥Ÿ");
+					lore.add(ChatColor.BLUE + "<[Î¨º Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.RED + "<[ÌôîÏóº Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BOLD + "Î™®Îì† Ïä§ÌÇ¨Ïóê Î¨º ÌîºÌï¥Í∞Ä Ï∂îÍ∞ÄÎ°ú Ï†ÅÏö©Îê©ÎãàÎã§");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[π∞ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î¨º Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Water]>"));
 					lore.add(ChatColor.BLUE + "<[Power Of Water]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.RED + "<[Power Of Flame]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -840,14 +840,14 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[π∞ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î¨º Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Water]>"));
-					lore.add(ChatColor.BLUE + "<[π∞ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.RED + "<[»≠ø∞ ∞Ëø≠ ∞¯∞›∑¬]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
-					lore.add(ChatColor.BOLD + "∏µÁ Ω∫≈≥ø° π∞ «««ÿ∞° √ﬂ∞°∑Œ ¿˚øÎµÀ¥œ¥Ÿ");
+					lore.add(ChatColor.BLUE + "<[Î¨º Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.RED + "<[ÌôîÏóº Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BOLD + "Î™®Îì† Ïä§ÌÇ¨Ïóê Î¨º ÌîºÌï¥Í∞Ä Ï∂îÍ∞ÄÎ°ú Ï†ÅÏö©Îê©ÎãàÎã§");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[π∞ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î¨º Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Water]>"));
 					lore.add(ChatColor.BLUE + "<[Power Of Water]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.RED + "<[Power Of Flame]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -862,14 +862,14 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[æÓµ“ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Ïñ¥Îë† Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Darkness]>"));
-					lore.add(ChatColor.DARK_GRAY + "<[æÓµ“ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.YELLOW + "<[π¯∞≥ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
-					lore.add(ChatColor.BOLD + "∏µÁ Ω∫≈≥ø° æÓµ“ «««ÿ∞° √ﬂ∞°∑Œ ¿˚øÎµÀ¥œ¥Ÿ");
+					lore.add(ChatColor.DARK_GRAY + "<[Ïñ¥Îë† Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.YELLOW + "<[Î≤àÍ∞ú Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BOLD + "Î™®Îì† Ïä§ÌÇ¨Ïóê Ïñ¥Îë† ÌîºÌï¥Í∞Ä Ï∂îÍ∞ÄÎ°ú Ï†ÅÏö©Îê©ÎãàÎã§");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[æÓµ“ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Ïñ¥Îë† Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Darkness]>"));
 					lore.add(ChatColor.DARK_GRAY + "<[Power Of Darkness]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.YELLOW + "<[Power Of Lightning]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -879,14 +879,14 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[æÓµ“ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Ïñ¥Îë† Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Darkness]>"));
-					lore.add(ChatColor.DARK_GRAY + "<[æÓµ“ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.YELLOW + "<[π¯∞≥ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
-					lore.add(ChatColor.BOLD + "∏µÁ Ω∫≈≥ø° æÓµ“ «««ÿ∞° √ﬂ∞°∑Œ ¿˚øÎµÀ¥œ¥Ÿ");
+					lore.add(ChatColor.DARK_GRAY + "<[Ïñ¥Îë† Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.YELLOW + "<[Î≤àÍ∞ú Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BOLD + "Î™®Îì† Ïä§ÌÇ¨Ïóê Ïñ¥Îë† ÌîºÌï¥Í∞Ä Ï∂îÍ∞ÄÎ°ú Ï†ÅÏö©Îê©ÎãàÎã§");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[æÓµ“ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Ïñ¥Îë† Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Darkness]>"));
 					lore.add(ChatColor.DARK_GRAY + "<[Power Of Darkness]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.YELLOW + "<[Power Of Lightning]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -901,14 +901,14 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[π¯∞≥ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î≤àÍ∞ú Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Lightning]>"));
-					lore.add(ChatColor.DARK_GRAY + "<[æÓµ“ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.YELLOW + "<[π¯∞≥ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
-					lore.add(ChatColor.BOLD + "∏µÁ Ω∫≈≥ø° π¯∞≥ «««ÿ∞° √ﬂ∞°∑Œ ¿˚øÎµÀ¥œ¥Ÿ");
+					lore.add(ChatColor.DARK_GRAY + "<[Ïñ¥Îë† Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.YELLOW + "<[Î≤àÍ∞ú Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BOLD + "Î™®Îì† Ïä§ÌÇ¨Ïóê Î≤àÍ∞ú ÌîºÌï¥Í∞Ä Ï∂îÍ∞ÄÎ°ú Ï†ÅÏö©Îê©ÎãàÎã§");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[π¯∞≥ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î≤àÍ∞ú Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Lightning]>"));
 					lore.add(ChatColor.DARK_GRAY + "<[Power Of Darkness]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.YELLOW + "<[Power Of Lightning]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -918,14 +918,14 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[π¯∞≥ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î≤àÍ∞ú Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Lightning]>"));
-					lore.add(ChatColor.DARK_GRAY + "<[æÓµ“ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.YELLOW + "<[π¯∞≥ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
-					lore.add(ChatColor.BOLD + "∏µÁ Ω∫≈≥ø° π¯∞≥ «««ÿ∞° √ﬂ∞°∑Œ ¿˚øÎµÀ¥œ¥Ÿ");
+					lore.add(ChatColor.DARK_GRAY + "<[Ïñ¥Îë† Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.YELLOW + "<[Î≤àÍ∞ú Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BOLD + "Î™®Îì† Ïä§ÌÇ¨Ïóê Î≤àÍ∞ú ÌîºÌï¥Í∞Ä Ï∂îÍ∞ÄÎ°ú Ï†ÅÏö©Îê©ÎãàÎã§");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[π¯∞≥ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î≤àÍ∞ú Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Lightning]>"));
 					lore.add(ChatColor.DARK_GRAY + "<[Power Of Darkness]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.YELLOW + "<[Power Of Lightning]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -940,14 +940,14 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[»≠ø∞ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÌôîÏóº Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Flame]>"));
-					lore.add(ChatColor.BLUE + "<[π∞ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.RED + "<[»≠ø∞ ∞Ëø≠ ∞¯∞›∑¬]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
-					lore.add(ChatColor.BOLD + "∏µÁ Ω∫≈≥ø° »≠ø∞ «««ÿ∞° √ﬂ∞°∑Œ ¿˚øÎµÀ¥œ¥Ÿ");
+					lore.add(ChatColor.BLUE + "<[Î¨º Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.RED + "<[ÌôîÏóº Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BOLD + "Î™®Îì† Ïä§ÌÇ¨Ïóê ÌôîÏóº ÌîºÌï¥Í∞Ä Ï∂îÍ∞ÄÎ°ú Ï†ÅÏö©Îê©ÎãàÎã§");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[»≠ø∞ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÌôîÏóº Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Flame]>"));
 					lore.add(ChatColor.BLUE + "<[Power Of Water]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.RED + "<[Power Of Flame]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -957,14 +957,14 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[»≠ø∞ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÌôîÏóº Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Flame]>"));
-					lore.add(ChatColor.BLUE + "<[π∞ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.RED + "<[»≠ø∞ ∞Ëø≠ ∞¯∞›∑¬]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
-					lore.add(ChatColor.BOLD + "∏µÁ Ω∫≈≥ø° »≠ø∞ «««ÿ∞° √ﬂ∞°∑Œ ¿˚øÎµÀ¥œ¥Ÿ");
+					lore.add(ChatColor.BLUE + "<[Î¨º Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.RED + "<[ÌôîÏóº Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BOLD + "Î™®Îì† Ïä§ÌÇ¨Ïóê ÌôîÏóº ÌîºÌï¥Í∞Ä Ï∂îÍ∞ÄÎ°ú Ï†ÅÏö©Îê©ÎãàÎã§");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[πŸ∂˜ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î∞îÎûå Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Flame]>"));
 					lore.add(ChatColor.BLUE + "<[Power Of Water]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.RED + "<[Power Of Flame]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -979,14 +979,14 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[∏Õµ∂ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÎßπÎèÖ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Poison]>"));
-					lore.add(ChatColor.AQUA + "<[º≠∏Æ ∞Ëø≠ ∞¯∞›∑¬]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.DARK_GREEN + "<[∏Õµ∂ ∞Ëø≠ ∞¯∞›∑¬]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
-					lore.add(ChatColor.BOLD + "∏µÁ Ω∫≈≥ø° ∏Õµ∂ «««ÿ∞° √ﬂ∞°∑Œ ¿˚øÎµÀ¥œ¥Ÿ");
+					lore.add(ChatColor.AQUA + "<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.DARK_GREEN + "<[ÎßπÎèÖ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BOLD + "Î™®Îì† Ïä§ÌÇ¨Ïóê ÎßπÎèÖ ÌîºÌï¥Í∞Ä Ï∂îÍ∞ÄÎ°ú Ï†ÅÏö©Îê©ÎãàÎã§");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[∏Õµ∂ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÎßπÎèÖ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Poison]>"));
 					lore.add(ChatColor.AQUA + "<[Power Of Frost]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.DARK_GREEN + "<[Power Of Poison]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -996,14 +996,14 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[∏Õµ∂ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÎßπÎèÖ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Poison]>"));
-					lore.add(ChatColor.AQUA + "<[º≠∏Æ ∞Ëø≠ ∞¯∞›∑¬]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.DARK_GREEN + "<[∏Õµ∂ ∞Ëø≠ ∞¯∞›∑¬]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
-					lore.add(ChatColor.BOLD + "∏µÁ Ω∫≈≥ø° ∏Õµ∂ «««ÿ∞° √ﬂ∞°∑Œ ¿˚øÎµÀ¥œ¥Ÿ");
+					lore.add(ChatColor.AQUA + "<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.DARK_GREEN + "<[ÎßπÎèÖ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BOLD + "Î™®Îì† Ïä§ÌÇ¨Ïóê ÎßπÎèÖ ÌîºÌï¥Í∞Ä Ï∂îÍ∞ÄÎ°ú Ï†ÅÏö©Îê©ÎãàÎã§");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[∏Õµ∂ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÎßπÎèÖ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Poison]>"));
 					lore.add(ChatColor.AQUA + "<[Power Of Frost]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.DARK_GREEN + "<[Power Of Poison]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1026,13 +1026,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[πŸ∂˜ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î∞îÎûå Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Wind]>"));
-					lore.add(ChatColor.GRAY + "<[πŸ∂˜ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.GREEN + "<[¥Î¡ˆ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.GRAY + "<[Î∞îÎûå Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.GREEN + "<[ÎåÄÏßÄ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[πŸ∂˜ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î∞îÎûå Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Wind]>"));
 					lore.add(ChatColor.GRAY + "<[Power Of Wind]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
 							+ ChatColor.GREEN + "<[Power Of Earth]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1041,13 +1041,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[πŸ∂˜ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î∞îÎûå Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Wind]>"));
-					lore.add(ChatColor.GRAY + "<[πŸ∂˜ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.GREEN + "<[¥Î¡ˆ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.GRAY + "<[Î∞îÎûå Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.GREEN + "<[ÎåÄÏßÄ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[πŸ∂˜ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î∞îÎûå Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Wind]>"));
 					lore.add(ChatColor.GRAY + "<[Power Of Wind]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
 							+ ChatColor.GREEN + "<[Power Of Earth]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1060,13 +1060,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[πŸ∂˜ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î∞îÎûå Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Wind]>"));
-					lore.add(ChatColor.GRAY + "<[πŸ∂˜ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.GREEN + "<[¥Î¡ˆ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.GRAY + "<[Î∞îÎûå Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.GREEN + "<[ÎåÄÏßÄ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[πŸ∂˜ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î∞îÎûå Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Wind]>"));
 					lore.add(ChatColor.GRAY + "<[Power Of Wind]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
 							+ ChatColor.GREEN + "<[Power Of Earth]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1075,13 +1075,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[πŸ∂˜ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î∞îÎûå Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Wind]>"));
-					lore.add(ChatColor.GRAY + "<[πŸ∂˜ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.GREEN + "<[¥Î¡ˆ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.GRAY + "<[Î∞îÎûå Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.GREEN + "<[ÎåÄÏßÄ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[πŸ∂˜ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î∞îÎûå Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Wind]>"));
 					lore.add(ChatColor.GRAY + "<[Power Of Wind]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
 							+ ChatColor.GREEN + "<[Power Of Earth]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1094,13 +1094,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[º≠∏Æ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Frost]>"));
-					lore.add(ChatColor.AQUA + "<[º≠∏Æ ∞Ëø≠ ∞¯∞›∑¬]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.DARK_GREEN + "<[∏Õµ∂ ∞Ëø≠ ∞¯∞›∑¬]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.AQUA + "<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.DARK_GREEN + "<[ÎßπÎèÖ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[º≠∏Æ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Frost]>"));
 					lore.add(ChatColor.AQUA + "<[Power Of Frost]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.DARK_GREEN + "<[Power Of Poison]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1109,13 +1109,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[º≠∏Æ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Frost]>"));
-					lore.add(ChatColor.AQUA + "<[º≠∏Æ ∞Ëø≠ ∞¯∞›∑¬]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.DARK_GREEN + "<[∏Õµ∂ ∞Ëø≠ ∞¯∞›∑¬]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.AQUA + "<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.DARK_GREEN + "<[ÎßπÎèÖ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[º≠∏Æ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Frost]>"));
 					lore.add(ChatColor.AQUA + "<[Power Of Frost]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.DARK_GREEN + "<[Power Of Poison]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1128,13 +1128,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[π∞ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î¨º Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Water]>"));
-					lore.add(ChatColor.BLUE + "<[π∞ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.RED + "<[»≠ø∞ ∞Ëø≠ ∞¯∞›∑¬]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BLUE + "<[Î¨º Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.RED + "<[ÌôîÏóº Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[π∞ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î¨º Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Water]>"));
 					lore.add(ChatColor.BLUE + "<[Power Of Water]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.RED + "<[Power Of Flame]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1143,13 +1143,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[π∞ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î¨º Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Water]>"));
-					lore.add(ChatColor.BLUE + "<[π∞ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.RED + "<[»≠ø∞ ∞Ëø≠ ∞¯∞›∑¬]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BLUE + "<[Î¨º Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.RED + "<[ÌôîÏóº Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[π∞ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î¨º Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Water]>"));
 					lore.add(ChatColor.BLUE + "<[Power Of Water]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.RED + "<[Power Of Flame]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1162,13 +1162,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[æÓµ“ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Ïñ¥Îë† Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Darkness]>"));
-					lore.add(ChatColor.DARK_GRAY + "<[æÓµ“ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.YELLOW + "<[π¯∞≥ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.DARK_GRAY + "<[Ïñ¥Îë† Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.YELLOW + "<[Î≤àÍ∞ú Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[æÓµ“ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Ïñ¥Îë† Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Darkness]>"));
 					lore.add(ChatColor.DARK_GRAY + "<[Power Of Darkness]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.YELLOW + "<[Power Of Lightning]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1177,13 +1177,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[æÓµ“ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Ïñ¥Îë† Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Darkness]>"));
-					lore.add(ChatColor.DARK_GRAY + "<[æÓµ“ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.YELLOW + "<[π¯∞≥ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.DARK_GRAY + "<[Ïñ¥Îë† Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.YELLOW + "<[Î≤àÍ∞ú Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[æÓµ“ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Ïñ¥Îë† Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Darkness]>"));
 					lore.add(ChatColor.DARK_GRAY + "<[Power Of Darkness]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.YELLOW + "<[Power Of Lightning]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1196,13 +1196,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[æÓµ“ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Ïñ¥Îë† Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Darkness]>"));
-					lore.add(ChatColor.DARK_GRAY + "<[æÓµ“ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.YELLOW + "<[π¯∞≥ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.DARK_GRAY + "<[Ïñ¥Îë† Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.YELLOW + "<[Î≤àÍ∞ú Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[æÓµ“ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Ïñ¥Îë† Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Darkness]>"));
 					lore.add(ChatColor.DARK_GRAY + "<[Power Of Darkness]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.YELLOW + "<[Power Of Lightning]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1211,13 +1211,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[æÓµ“ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Ïñ¥Îë† Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Darkness]>"));
-					lore.add(ChatColor.DARK_GRAY + "<[æÓµ“ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.YELLOW + "<[π¯∞≥ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.DARK_GRAY + "<[Ïñ¥Îë† Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.YELLOW + "<[Î≤àÍ∞ú Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[æÓµ“ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Ïñ¥Îë† Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Darkness]>"));
 					lore.add(ChatColor.DARK_GRAY + "<[Power Of Darkness]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.YELLOW + "<[Power Of Lightning]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1230,13 +1230,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[π∞ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î¨º Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Water]>"));
-					lore.add(ChatColor.BLUE + "<[π∞ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.RED + "<[»≠ø∞ ∞Ëø≠ ∞¯∞›∑¬]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BLUE + "<[Î¨º Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.RED + "<[ÌôîÏóº Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[π∞ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î¨º Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Water]>"));
 					lore.add(ChatColor.BLUE + "<[Power Of Water]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.RED + "<[Power Of Flame]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1245,13 +1245,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[π∞ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î¨º Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Water]>"));
-					lore.add(ChatColor.BLUE + "<[π∞ ∞Ëø≠ ∞¯∞›∑¬]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.RED + "<[»≠ø∞ ∞Ëø≠ ∞¯∞›∑¬]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BLUE + "<[Î¨º Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.RED + "<[ÌôîÏóº Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[π∞ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î¨º Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Water]>"));
 					lore.add(ChatColor.BLUE + "<[Power Of Water]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.RED + "<[Power Of Flame]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1264,13 +1264,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[º≠∏Æ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Frost]>"));
-					lore.add(ChatColor.AQUA + "<[º≠∏Æ ∞Ëø≠ ∞¯∞›∑¬]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.DARK_GREEN + "<[∏Õµ∂ ∞Ëø≠ ∞¯∞›∑¬]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.AQUA + "<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.DARK_GREEN + "<[ÎßπÎèÖ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[º≠∏Æ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Frost]>"));
 					lore.add(ChatColor.AQUA + "<[Power Of Frost]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.DARK_GREEN + "<[Power Of Poison]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1279,13 +1279,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[º≠∏Æ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Frost]>"));
-					lore.add(ChatColor.AQUA + "<[º≠∏Æ ∞Ëø≠ ∞¯∞›∑¬]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.DARK_GREEN + "<[∏Õµ∂ ∞Ëø≠ ∞¯∞›∑¬]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.AQUA + "<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.DARK_GREEN + "<[ÎßπÎèÖ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[º≠∏Æ ∞Ëø≠ ∞¯∞›∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Í≥µÍ≤©Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Frost]>"));
 					lore.add(ChatColor.AQUA + "<[Power Of Frost]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.DARK_GREEN + "<[Power Of Poison]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1304,13 +1304,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[πŸ∂˜ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î∞îÎûå Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Wind]>"));
-					lore.add(ChatColor.GRAY + "<[πŸ∂˜ ∞Ëø≠ ¿˙«◊∑¬]> +" +  Math.round(isp.getOrDefault(windyrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " +
-							ChatColor.GREEN + "<[¥Î¡ˆ ∞Ëø≠ ¿˙«◊∑¬]> +" +  Math.round(isp.getOrDefault(earthrn, PersistentDataType.DOUBLE,0d)*100.0) + "%" );
+					lore.add(ChatColor.GRAY + "<[Î∞îÎûå Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" +  Math.round(isp.getOrDefault(windyrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " +
+							ChatColor.GREEN + "<[ÎåÄÏßÄ Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" +  Math.round(isp.getOrDefault(earthrn, PersistentDataType.DOUBLE,0d)*100.0) + "%" );
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[πŸ∂˜ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î∞îÎûå Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Wind]>"));
 					lore.add(ChatColor.GRAY + "<[Resistance To Wind]> +" +  Math.round(isp.getOrDefault(windyrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " +
 							ChatColor.GREEN + "<[Resistance To Earth]> +" +  Math.round(isp.getOrDefault(earthrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1319,13 +1319,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[πŸ∂˜ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î∞îÎûå Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Wind]>"));
-					lore.add(ChatColor.GRAY + "<[πŸ∂˜ ∞Ëø≠ ¿˙«◊∑¬]> +" +  Math.round(isp.getOrDefault(windyrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " +
-							ChatColor.GREEN + "<[¥Î¡ˆ ∞Ëø≠ ¿˙«◊∑¬]> +" +  Math.round(isp.getOrDefault(earthrn, PersistentDataType.DOUBLE,0d)*100.0) + "%" );
+					lore.add(ChatColor.GRAY + "<[Î∞îÎûå Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" +  Math.round(isp.getOrDefault(windyrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " +
+							ChatColor.GREEN + "<[ÎåÄÏßÄ Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" +  Math.round(isp.getOrDefault(earthrn, PersistentDataType.DOUBLE,0d)*100.0) + "%" );
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[πŸ∂˜ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î∞îÎûå Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Wind]>"));
 					lore.add(ChatColor.GRAY + "<[Resistance To Wind]> +" +  Math.round(isp.getOrDefault(windyrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " +
 							ChatColor.GREEN + "<[Resistance To Earth]> +" +  Math.round(isp.getOrDefault(earthrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1338,13 +1338,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[¥Î¡ˆ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÎåÄÏßÄ Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Earth]>"));
-					lore.add(ChatColor.GRAY + "<[πŸ∂˜ ∞Ëø≠ ¿˙«◊∑¬]> +" +  Math.round(isp.getOrDefault(windyrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " +
-							ChatColor.GREEN + "<[¥Î¡ˆ ∞Ëø≠ ¿˙«◊∑¬]> +" +  Math.round(isp.getOrDefault(earthrn, PersistentDataType.DOUBLE,0d)*100.0) + "%" );
+					lore.add(ChatColor.GRAY + "<[Î∞îÎûå Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" +  Math.round(isp.getOrDefault(windyrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " +
+							ChatColor.GREEN + "<[ÎåÄÏßÄ Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" +  Math.round(isp.getOrDefault(earthrn, PersistentDataType.DOUBLE,0d)*100.0) + "%" );
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[¥Î¡ˆ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÎåÄÏßÄ Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Earth]>"));
 					lore.add(ChatColor.GRAY + "<[Resistance To Wind]> +" +  Math.round(isp.getOrDefault(windyrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " +
 							ChatColor.GREEN + "<[Resistance To Earth]> +" +  Math.round(isp.getOrDefault(earthrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1353,13 +1353,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[¥Î¡ˆ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÎåÄÏßÄ Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Earth]>"));
-					lore.add(ChatColor.GRAY + "<[πŸ∂˜ ∞Ëø≠ ¿˙«◊∑¬]> +" +  Math.round(isp.getOrDefault(windyrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " +
-							ChatColor.GREEN + "<[¥Î¡ˆ ∞Ëø≠ ¿˙«◊∑¬]> +" +  Math.round(isp.getOrDefault(earthrn, PersistentDataType.DOUBLE,0d)*100.0) + "%" );
+					lore.add(ChatColor.GRAY + "<[Î∞îÎûå Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" +  Math.round(isp.getOrDefault(windyrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " +
+							ChatColor.GREEN + "<[ÎåÄÏßÄ Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" +  Math.round(isp.getOrDefault(earthrn, PersistentDataType.DOUBLE,0d)*100.0) + "%" );
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[¥Î¡ˆ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÎåÄÏßÄ Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Earth]>"));
 					lore.add(ChatColor.GRAY + "<[Resistance To Wind]> +" +  Math.round(isp.getOrDefault(windyrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " +
 							ChatColor.GREEN + "<[Resistance To Earth]> +" +  Math.round(isp.getOrDefault(earthrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1372,13 +1372,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[º≠∏Æ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Frost]>"));
-					lore.add(ChatColor.AQUA + "<[º≠∏Æ ∞Ëø≠ ¿˙«◊∑¬]> +" + Math.round(isp.getOrDefault(frostrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
-							+ChatColor.DARK_GREEN + "<[∏Õµ∂ ∞Ëø≠ ¿˙«◊∑¬]> +" + Math.round(isp.getOrDefault(poisonrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.AQUA + "<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" + Math.round(isp.getOrDefault(frostrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
+							+ChatColor.DARK_GREEN + "<[ÎßπÎèÖ Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" + Math.round(isp.getOrDefault(poisonrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[º≠∏Æ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Frost]>"));
 					lore.add(ChatColor.AQUA + "<[Resistance To Frost]> +" + Math.round(isp.getOrDefault(frostrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
 							+ChatColor.DARK_GREEN + "<[Resistance To Poison]> +" + Math.round(isp.getOrDefault(poisonrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1387,13 +1387,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[º≠∏Æ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Frost]>"));
-					lore.add(ChatColor.AQUA + "<[º≠∏Æ ∞Ëø≠ ¿˙«◊∑¬]> +" + Math.round(isp.getOrDefault(frostrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
-							+ChatColor.DARK_GREEN + "<[∏Õµ∂ ∞Ëø≠ ¿˙«◊∑¬]> +" + Math.round(isp.getOrDefault(poisonrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.AQUA + "<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" + Math.round(isp.getOrDefault(frostrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
+							+ChatColor.DARK_GREEN + "<[ÎßπÎèÖ Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" + Math.round(isp.getOrDefault(poisonrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[º≠∏Æ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Frost]>"));
 					lore.add(ChatColor.AQUA + "<[Resistance To Frost]> +" + Math.round(isp.getOrDefault(frostrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
 							+ChatColor.DARK_GREEN + "<[Resistance To Poison]> +" + Math.round(isp.getOrDefault(poisonrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1406,31 +1406,31 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[π∞ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î¨º Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Water]>"));
-					lore.add(ChatColor.BLUE + "<[π∞ ∞Ëø≠ ¿˙«◊∑¬]> +" +  Math.round(isp.getOrDefault(waterrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
-							+ChatColor.RED + "<[»≠ø∞ ∞Ëø≠ ¿˙«◊∑¬]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BLUE + "<[Î¨º Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" +  Math.round(isp.getOrDefault(waterrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
+							+ChatColor.RED + "<[ÌôîÏóº Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[π∞ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î¨º Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Water]>"));
 					lore.add(ChatColor.BLUE + "<[Resistance To Water]> +" +  Math.round(isp.getOrDefault(waterrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
-							+ChatColor.RED + "<[»≠ø∞ ∞Ëø≠ ¿˙«◊∑¬]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+							+ChatColor.RED + "<[ÌôîÏóº Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				rm.setLore(lore);
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[π∞ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î¨º Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Water]>"));
-					lore.add(ChatColor.BLUE + "<[π∞ ∞Ëø≠ ¿˙«◊∑¬]> +" +  Math.round(isp.getOrDefault(waterrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
-							+ChatColor.RED + "<[»≠ø∞ ∞Ëø≠ ¿˙«◊∑¬]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BLUE + "<[Î¨º Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" +  Math.round(isp.getOrDefault(waterrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
+							+ChatColor.RED + "<[ÌôîÏóº Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[π∞ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î¨º Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Water]>"));
 					lore.add(ChatColor.BLUE + "<[Resistance To Water]> +" +  Math.round(isp.getOrDefault(waterrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
-							+ChatColor.RED + "<[»≠ø∞ ∞Ëø≠ ¿˙«◊∑¬]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+							+ChatColor.RED + "<[ÌôîÏóº Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				rm.setLore(lore);
 			}
@@ -1440,13 +1440,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[æÓµ“ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Ïñ¥Îë† Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Darkness]>"));
-					lore.add(ChatColor.DARK_GRAY + "<[æÓµ“ ∞Ëø≠ ¿˙«◊∑¬]> +" +  Math.round(isp.getOrDefault(darkrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.YELLOW + "<[π¯∞≥ ∞Ëø≠ ¿˙«◊∑¬]> +" +  Math.round(isp.getOrDefault(lightningrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.DARK_GRAY + "<[Ïñ¥Îë† Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" +  Math.round(isp.getOrDefault(darkrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.YELLOW + "<[Î≤àÍ∞ú Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" +  Math.round(isp.getOrDefault(lightningrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[æÓµ“ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Ïñ¥Îë† Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Darkness]>"));
 					lore.add(ChatColor.DARK_GRAY + "<[Resistance To Darkness]> +" +  Math.round(isp.getOrDefault(darkrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.YELLOW + "<[Resistance To Lightning]> +" +  Math.round(isp.getOrDefault(lightningrn, PersistentDataType.DOUBLE,0d)*100.0) + "%" );
@@ -1455,13 +1455,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[æÓµ“ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Ïñ¥Îë† Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Darkness]>"));
-					lore.add(ChatColor.DARK_GRAY + "<[æÓµ“ ∞Ëø≠ ¿˙«◊∑¬]> +" +  Math.round(isp.getOrDefault(darkrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.YELLOW + "<[π¯∞≥ ∞Ëø≠ ¿˙«◊∑¬]> +" +  Math.round(isp.getOrDefault(lightningrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.DARK_GRAY + "<[Ïñ¥Îë† Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" +  Math.round(isp.getOrDefault(darkrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.YELLOW + "<[Î≤àÍ∞ú Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" +  Math.round(isp.getOrDefault(lightningrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[æÓµ“ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Ïñ¥Îë† Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Darkness]>"));
 					lore.add(ChatColor.DARK_GRAY + "<[Resistance To Darkness]> +" +  Math.round(isp.getOrDefault(darkrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.YELLOW + "<[Resistance To Lightning]> +" +  Math.round(isp.getOrDefault(lightningrn, PersistentDataType.DOUBLE,0d)*100.0) + "%" );
@@ -1474,13 +1474,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[æÓµ“ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Ïñ¥Îë† Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Darkness]>"));
-					lore.add(ChatColor.DARK_GRAY + "<[æÓµ“ ∞Ëø≠ ¿˙«◊∑¬]> +" +  Math.round(isp.getOrDefault(darkrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.YELLOW + "<[π¯∞≥ ∞Ëø≠ ¿˙«◊∑¬]> +" +  Math.round(isp.getOrDefault(lightningrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.DARK_GRAY + "<[Ïñ¥Îë† Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" +  Math.round(isp.getOrDefault(darkrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.YELLOW + "<[Î≤àÍ∞ú Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" +  Math.round(isp.getOrDefault(lightningrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[æÓµ“ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Ïñ¥Îë† Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Darkness]>"));
 					lore.add(ChatColor.DARK_GRAY + "<[Resistance To Darkness]> +" +  Math.round(isp.getOrDefault(darkrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.YELLOW + "<[Resistance To Lightning]> +" +  Math.round(isp.getOrDefault(lightningrn, PersistentDataType.DOUBLE,0d)*100.0) + "%" );
@@ -1489,13 +1489,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[æÓµ“ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Ïñ¥Îë† Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Darkness]>"));
-					lore.add(ChatColor.DARK_GRAY + "<[æÓµ“ ∞Ëø≠ ¿˙«◊∑¬]> +" +  Math.round(isp.getOrDefault(darkrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.YELLOW + "<[π¯∞≥ ∞Ëø≠ ¿˙«◊∑¬]> +" +  Math.round(isp.getOrDefault(lightningrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.DARK_GRAY + "<[Ïñ¥Îë† Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" +  Math.round(isp.getOrDefault(darkrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.YELLOW + "<[Î≤àÍ∞ú Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" +  Math.round(isp.getOrDefault(lightningrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[æÓµ“ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Ïñ¥Îë† Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Darkness]>"));
 					lore.add(ChatColor.DARK_GRAY + "<[Resistance To Darkness]> +" +  Math.round(isp.getOrDefault(darkrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.YELLOW + "<[Resistance To Lightning]> +" +  Math.round(isp.getOrDefault(lightningrn, PersistentDataType.DOUBLE,0d)*100.0) + "%" );
@@ -1508,31 +1508,31 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[π∞ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î¨º Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Water]>"));
-					lore.add(ChatColor.BLUE + "<[π∞ ∞Ëø≠ ¿˙«◊∑¬]> +" +  Math.round(isp.getOrDefault(waterrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
-							+ChatColor.RED + "<[»≠ø∞ ∞Ëø≠ ¿˙«◊∑¬]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BLUE + "<[Î¨º Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" +  Math.round(isp.getOrDefault(waterrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
+							+ChatColor.RED + "<[ÌôîÏóº Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[π∞ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î¨º Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Water]>"));
 					lore.add(ChatColor.BLUE + "<[Resistance To Water]> +" +  Math.round(isp.getOrDefault(waterrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
-							+ChatColor.RED + "<[»≠ø∞ ∞Ëø≠ ¿˙«◊∑¬]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+							+ChatColor.RED + "<[ÌôîÏóº Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				rm.setLore(lore);
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[π∞ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î¨º Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Water]>"));
-					lore.add(ChatColor.BLUE + "<[π∞ ∞Ëø≠ ¿˙«◊∑¬]> +" +  Math.round(isp.getOrDefault(waterrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
-							+ChatColor.RED + "<[»≠ø∞ ∞Ëø≠ ¿˙«◊∑¬]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BLUE + "<[Î¨º Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" +  Math.round(isp.getOrDefault(waterrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
+							+ChatColor.RED + "<[ÌôîÏóº Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[π∞ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[Î¨º Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Water]>"));
 					lore.add(ChatColor.BLUE + "<[Resistance To Water]> +" +  Math.round(isp.getOrDefault(waterrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
-							+ChatColor.RED + "<[»≠ø∞ ∞Ëø≠ ¿˙«◊∑¬]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+							+ChatColor.RED + "<[ÌôîÏóº Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				rm.setLore(lore);
 			}
@@ -1542,13 +1542,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[º≠∏Æ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Frost]>"));
-					lore.add(ChatColor.AQUA + "<[º≠∏Æ ∞Ëø≠ ¿˙«◊∑¬]> +" + Math.round(isp.getOrDefault(frostrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
-							+ChatColor.DARK_GREEN + "<[∏Õµ∂ ∞Ëø≠ ¿˙«◊∑¬]> +" + Math.round(isp.getOrDefault(poisonrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.AQUA + "<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" + Math.round(isp.getOrDefault(frostrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
+							+ChatColor.DARK_GREEN + "<[ÎßπÎèÖ Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" + Math.round(isp.getOrDefault(poisonrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[º≠∏Æ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Frost]>"));
 					lore.add(ChatColor.AQUA + "<[Resistance To Frost]> +" + Math.round(isp.getOrDefault(frostrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
 							+ChatColor.DARK_GREEN + "<[Resistance To Poison]> +" + Math.round(isp.getOrDefault(poisonrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1557,13 +1557,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[º≠∏Æ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Frost]>"));
-					lore.add(ChatColor.AQUA + "<[º≠∏Æ ∞Ëø≠ ¿˙«◊∑¬]> +" + Math.round(isp.getOrDefault(frostrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
-							+ChatColor.DARK_GREEN + "<[∏Õµ∂ ∞Ëø≠ ¿˙«◊∑¬]> +" + Math.round(isp.getOrDefault(poisonrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.AQUA + "<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" + Math.round(isp.getOrDefault(frostrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
+							+ChatColor.DARK_GREEN + "<[ÎßπÎèÖ Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]> +" + Math.round(isp.getOrDefault(poisonrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[º≠∏Æ ∞Ëø≠ ¿˙«◊∑¬]>"));
+					lore.removeIf(l -> l.contains("<[ÏÑúÎ¶¨ Í≥ÑÏó¥ Ï†ÄÌï≠Î†•]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Frost]>"));
 					lore.add(ChatColor.AQUA + "<[Resistance To Frost]> +" + Math.round(isp.getOrDefault(frostrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
 							+ChatColor.DARK_GREEN + "<[Resistance To Poison]> +" + Math.round(isp.getOrDefault(poisonrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1941,14 +1941,14 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	final public void eldmes(Player p) {
 
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			p.sendMessage("πŸ∂˜ ∞Ëø≠ - ∞¯∞›∑¬: " +windyd.getOrDefault(p.getUniqueId(),0d) + " | ¿˙«◊∑¬: "+windyr.getOrDefault(p.getUniqueId(),0d));
-			p.sendMessage("¥Î¡ˆ ∞Ëø≠ - ∞¯∞›∑¬:" +earthd.getOrDefault(p.getUniqueId(),0d)+ " | ¿˙«◊∑¬: "+earthr.getOrDefault(p.getUniqueId(),0d));
-			p.sendMessage("º≠∏Æ ∞Ëø≠ - ∞¯∞›∑¬:" +frostd.getOrDefault(p.getUniqueId(),0d)+ " | ¿˙«◊∑¬: "+frostr.getOrDefault(p.getUniqueId(),0d));
-			p.sendMessage("π∞ ∞Ëø≠ - ∞¯∞›∑¬:" +waterd.getOrDefault(p.getUniqueId(),0d)+ " | ¿˙«◊∑¬: "+waterr.getOrDefault(p.getUniqueId(),0d));
-			p.sendMessage("æÓµ“ ∞Ëø≠ - ∞¯∞›∑¬:" +darkd.getOrDefault(p.getUniqueId(),0d)+ " | ¿˙«◊∑¬: "+darkr.getOrDefault(p.getUniqueId(),0d));
-			p.sendMessage("π¯∞≥ ∞Ëø≠ - ∞¯∞›∑¬:" +lightningd.getOrDefault(p.getUniqueId(),0d)+ " | ¿˙«◊∑¬: "+lightningr.getOrDefault(p.getUniqueId(),0d));
-			p.sendMessage("»≠ø∞ ∞Ëø≠ - ∞¯∞›∑¬:" +flamed.getOrDefault(p.getUniqueId(),0d)+ " | ¿˙«◊∑¬: "+flamer.getOrDefault(p.getUniqueId(),0d));
-			p.sendMessage("µ∂ ∞Ëø≠ - ∞¯∞›∑¬:" +poisond.getOrDefault(p.getUniqueId(),0d)+ " | ¿˙«◊∑¬: "+poisonr.getOrDefault(p.getUniqueId(),0d));
+			p.sendMessage("Î∞îÎûå Í≥ÑÏó¥ - Í≥µÍ≤©Î†•: " +windyd.getOrDefault(p.getUniqueId(),0d) + " | Ï†ÄÌï≠Î†•: "+windyr.getOrDefault(p.getUniqueId(),0d));
+			p.sendMessage("ÎåÄÏßÄ Í≥ÑÏó¥ - Í≥µÍ≤©Î†•:" +earthd.getOrDefault(p.getUniqueId(),0d)+ " | Ï†ÄÌï≠Î†•: "+earthr.getOrDefault(p.getUniqueId(),0d));
+			p.sendMessage("ÏÑúÎ¶¨ Í≥ÑÏó¥ - Í≥µÍ≤©Î†•:" +frostd.getOrDefault(p.getUniqueId(),0d)+ " | Ï†ÄÌï≠Î†•: "+frostr.getOrDefault(p.getUniqueId(),0d));
+			p.sendMessage("Î¨º Í≥ÑÏó¥ - Í≥µÍ≤©Î†•:" +waterd.getOrDefault(p.getUniqueId(),0d)+ " | Ï†ÄÌï≠Î†•: "+waterr.getOrDefault(p.getUniqueId(),0d));
+			p.sendMessage("Ïñ¥Îë† Í≥ÑÏó¥ - Í≥µÍ≤©Î†•:" +darkd.getOrDefault(p.getUniqueId(),0d)+ " | Ï†ÄÌï≠Î†•: "+darkr.getOrDefault(p.getUniqueId(),0d));
+			p.sendMessage("Î≤àÍ∞ú Í≥ÑÏó¥ - Í≥µÍ≤©Î†•:" +lightningd.getOrDefault(p.getUniqueId(),0d)+ " | Ï†ÄÌï≠Î†•: "+lightningr.getOrDefault(p.getUniqueId(),0d));
+			p.sendMessage("ÌôîÏóº Í≥ÑÏó¥ - Í≥µÍ≤©Î†•:" +flamed.getOrDefault(p.getUniqueId(),0d)+ " | Ï†ÄÌï≠Î†•: "+flamer.getOrDefault(p.getUniqueId(),0d));
+			p.sendMessage("ÎèÖ Í≥ÑÏó¥ - Í≥µÍ≤©Î†•:" +poisond.getOrDefault(p.getUniqueId(),0d)+ " | Ï†ÄÌï≠Î†•: "+poisonr.getOrDefault(p.getUniqueId(),0d));
 		}
 		else {
 			p.sendMessage("Wind - Power: " +windyd.getOrDefault(p.getUniqueId(),0d) + " | Resistance: "+windyr.getOrDefault(p.getUniqueId(),0d));

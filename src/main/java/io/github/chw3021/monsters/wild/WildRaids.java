@@ -114,7 +114,7 @@ public class WildRaids extends Summoned {
 		ItemStack chest = mobchest();
 		ItemStack leg = new ItemStack(Material.NETHERITE_LEGGINGS);
 		ItemStack boots = mobboots();
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "°í´ëÀÇ»ç¼ö":"AncientShooter";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ê³ ëŒ€ì˜ì‚¬ìˆ˜":"AncientShooter";
 		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 35000.0, head, chest, leg, boots, null, null, EntityType.SKELETON);
 		
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
@@ -141,7 +141,7 @@ public class WildRaids extends Summoned {
 
 		ItemStack off = new ItemStack(Material.SHIELD);
 
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "°í´ëÀÇÀü»ç":"AncientWarrior";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ê³ ëŒ€ì˜ì „ì‚¬":"AncientWarrior";
 		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 40000.0, head, chest, leg, boots, main, off, EntityType.SKELETON);
 		
 		
@@ -171,7 +171,7 @@ public class WildRaids extends Summoned {
 		ItemStack boots = mobboots();
 		ItemStack main = new ItemStack(Material.BOOK);
 		
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "°í´ëÀÇ¸¶¹ı»ç":"AncientMage";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ê³ ëŒ€ì˜ë§ˆë²•ì‚¬":"AncientMage";
 		Evoker newmob = (Evoker) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 35000.0, head, chest, leg, boots, main, null, EntityType.EVOKER);
 
 		newmob.setCanJoinRaid(false);
@@ -194,7 +194,7 @@ public class WildRaids extends Summoned {
     	double number2 = (random.nextDouble()+1.5) * 2.5 * (random.nextBoolean() ? -1 : 1);
     	Location esl = spl.clone().add(number, 2.5, number2);
 		
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "°í´ëÀÇ°úÇĞÀÚ":"AncientScientist";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ê³ ëŒ€ì˜ê³¼í•™ì":"AncientScientist";
 		Witch newmob = (Witch) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 38000.0, null, null, null, null, null, null, EntityType.WITCH);
 		newmob.setCanJoinRaid(false);
 		newmob.setPatrolLeader(false);
@@ -222,7 +222,7 @@ public class WildRaids extends Summoned {
 		
 		ItemStack off = new ItemStack(Material.SHIELD);
 		
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "°í´ëÀÇ¹Ù´ÙÀü»ç":"AncientMarine";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ê³ ëŒ€ì˜ë°”ë‹¤ì „ì‚¬":"AncientMarine";
 		Drowned newmob = (Drowned) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 42000.0, head, chest, leg, boots, null, off, EntityType.DROWNED);
 		newmob.setConversionTime(-1);
 		
@@ -250,7 +250,7 @@ public class WildRaids extends Summoned {
 		
 		ItemStack main = new ItemStack(Material.NETHERITE_HOE);
 		
-		String reg = lang.contains("kr") ? "°í´ëÀÇº¹¼öÀÚ":"AncientAvenger";
+		String reg = lang.contains("kr") ? "ê³ ëŒ€ì˜ë³µìˆ˜ì":"AncientAvenger";
 		Husk newmob = (Husk) Summon(esl, reg, 35000.0, head, chest, leg, boots, main,
 				null, EntityType.HUSK);
 		newmob.setConversionTime(-1);
@@ -282,7 +282,7 @@ public class WildRaids extends Summoned {
 		main.setItemMeta(offm);
 		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
 		
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "°í´ëÀÇ°İÅõ°¡":"AncientFighter";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ê³ ëŒ€ì˜ê²©íˆ¬ê°€":"AncientFighter";
 		Vindicator newmob = (Vindicator) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 27000.0, head, null, null, null, main, main, EntityType.VINDICATOR);
 		newmob.setCanJoinRaid(false);
 		newmob.setPatrolLeader(false);

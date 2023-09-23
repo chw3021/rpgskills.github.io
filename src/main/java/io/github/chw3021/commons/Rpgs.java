@@ -181,15 +181,15 @@ public class Rpgs extends Summoned implements CommandExecutor, Serializable, Lis
 
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 			p.sendMessage(ChatColor.GREEN +"[Made By chw3021]");
-			p.sendMessage(ChatColor.GREEN +"---Rpg ¸í·É¾î---");
-			p.sendMessage(ChatColor.GREEN +"/rpg dam (/rpg d, /rpg damage) -> ÇöÀç µ¥¹ÌÁö¸¦ Ç¥½ÃÇÕ´Ï´Ù");
-			p.sendMessage(ChatColor.GREEN +"/rpg element (/rpg el) -> ÇöÀç ¿ø¼Ò °è¿­ °ø°İ·Â, ÀúÇ×·ÂÀ» Ç¥½ÃÇÕ´Ï´Ù");
-			p.sendMessage(ChatColor.GREEN +"/rpg escape (/rpg es) -> ÇöÀç ÁøÇàÁßÀÎ ÀüÅõ¸¦ Á¾·áÇÕ´Ï´Ù");
-			p.sendMessage(ChatColor.GREEN +"/rpg skill (/rpg s) -> ½ºÅ³Ã¢À» ¿±´Ï´Ù");
-			p.sendMessage(ChatColor.GREEN +"/rpg class (/rpg c) -> Á÷¾÷ ¼±ÅÃÃ¢À» ¿±´Ï´Ù");
-			p.sendMessage(ChatColor.GREEN +"/rpg rank (/rpg r) -> ÀÚ½ÅÀÇ Á÷¾÷ÀÇ ¼÷·Ãµµ 10¼øÀ§¸¦ Ç¥½ÃÇÕ´Ï´Ù");
-			p.sendMessage(ChatColor.GREEN +"/rpg graph (/rpg g) -> Àûµé¿¡°Ô ÀÔÈù ÇÇÇØ·®À» Ç¥½ÃÇÕ´Ï´Ù");
-			p.sendMessage(ChatColor.GREEN +"/rpg gclear (/rpg gc) -> ±â·ÏµÈ ÇÇÇØ·®µéÀ» ¸ğµÎ Áö¿ó´Ï´Ù");
+			p.sendMessage(ChatColor.GREEN +"---Rpg ëª…ë ¹ì–´---");
+			p.sendMessage(ChatColor.GREEN +"/rpg dam (/rpg d, /rpg damage) -> í˜„ì¬ ë°ë¯¸ì§€ë¥¼ í‘œì‹œí•©ë‹ˆë‹¤");
+			p.sendMessage(ChatColor.GREEN +"/rpg element (/rpg el) -> í˜„ì¬ ì›ì†Œ ê³„ì—´ ê³µê²©ë ¥, ì €í•­ë ¥ì„ í‘œì‹œí•©ë‹ˆë‹¤");
+			p.sendMessage(ChatColor.GREEN +"/rpg escape (/rpg es) -> í˜„ì¬ ì§„í–‰ì¤‘ì¸ ì „íˆ¬ë¥¼ ì¢…ë£Œí•©ë‹ˆë‹¤");
+			p.sendMessage(ChatColor.GREEN +"/rpg skill (/rpg s) -> ìŠ¤í‚¬ì°½ì„ ì—½ë‹ˆë‹¤");
+			p.sendMessage(ChatColor.GREEN +"/rpg class (/rpg c) -> ì§ì—… ì„ íƒì°½ì„ ì—½ë‹ˆë‹¤");
+			p.sendMessage(ChatColor.GREEN +"/rpg rank (/rpg r) -> ìì‹ ì˜ ì§ì—…ì˜ ìˆ™ë ¨ë„ 10ìˆœìœ„ë¥¼ í‘œì‹œí•©ë‹ˆë‹¤");
+			p.sendMessage(ChatColor.GREEN +"/rpg graph (/rpg g) -> ì ë“¤ì—ê²Œ ì…íŒ í”¼í•´ëŸ‰ì„ í‘œì‹œí•©ë‹ˆë‹¤");
+			p.sendMessage(ChatColor.GREEN +"/rpg gclear (/rpg gc) -> ê¸°ë¡ëœ í”¼í•´ëŸ‰ë“¤ì„ ëª¨ë‘ ì§€ì›ë‹ˆë‹¤");
 			if(p.isOp())
 			{
 				p.sendMessage(ChatColor.RED +"/rpg exp [amounts]-> give player amounts of exp");
@@ -199,15 +199,15 @@ public class Rpgs extends Summoned implements CommandExecutor, Serializable, Lis
 				p.sendMessage(ChatColor.RED +"/rpg elements(/rpg elm) -> open Elements Inventory");
 			}
 			p.sendMessage(ChatColor.GREEN +" ");
-			p.sendMessage(ChatColor.LIGHT_PURPLE +"---ÆÄÆ¼ ¸í·É¾î---");
-			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party create <ÆÄÆ¼¸í>: ÆÄÆ¼¸¦ »ı¼ºÇÏ°í ÆÄÆ¼ÀåÀÌ µË´Ï´Ù");
-			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party join <ÆÄÆ¼¸í>: ÇØ´ç ÆÄÆ¼¿¡ Âü°¡ÇÕ´Ï´Ù");
-			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party password <ºñ¹Ğ¹øÈ£>: ÆÄÆ¼¸¦ ÇØ´ç ºñ¹Ğ¹øÈ£·Î Àá±Å¼­, ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇØ¾ß ÆÄÆ¼¸¦ Âü°¡ÇÒ¼ö ÀÖ°ÔÇÕ´Ï´Ù");
-			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party invite <ÆÄÆ¼¸í>: (ÆÄÆ¼Àå¸¸ °¡´É) ÇØ´ç ÇÃ·¹ÀÌ¾î¸¦ ÃÊ´ëÇÕ´Ï´Ù");
-			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party kick <ÇÃ·¹ÀÌ¾î ÀÌ¸§>: (ÆÄÆ¼Àå¸¸ °¡´É) ÇØ´ç ÇÃ·¹ÀÌ¾î¸¦ °­ÅğÇÕ´Ï´Ù");
-			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party leave: ÆÄÆ¼¸¦ ¶°³³´Ï´Ù");
-			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party assemble: (ÆÄÆ¼Àå¸¸ °¡´É) ÆÄÆ¼¿øµéÀ» ÀÚ½ÅÀÇ À§Ä¡·Î ÀÌµ¿½ÃÅµ´Ï´Ù");
-			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party list: ÇöÀç »ı¼ºµÇ¾îÀÖ´Â ÆÄÆ¼µéÀÇ ¸ñ·ÏÀ» Ç¥½ÃÇÕ´Ï´Ù");
+			p.sendMessage(ChatColor.LIGHT_PURPLE +"---íŒŒí‹° ëª…ë ¹ì–´---");
+			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party create <íŒŒí‹°ëª…>: íŒŒí‹°ë¥¼ ìƒì„±í•˜ê³  íŒŒí‹°ì¥ì´ ë©ë‹ˆë‹¤");
+			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party join <íŒŒí‹°ëª…>: í•´ë‹¹ íŒŒí‹°ì— ì°¸ê°€í•©ë‹ˆë‹¤");
+			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party password <ë¹„ë°€ë²ˆí˜¸>: íŒŒí‹°ë¥¼ í•´ë‹¹ ë¹„ë°€ë²ˆí˜¸ë¡œ ì ê¶ˆì„œ, ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•´ì•¼ íŒŒí‹°ë¥¼ ì°¸ê°€í• ìˆ˜ ìˆê²Œí•©ë‹ˆë‹¤");
+			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party invite <íŒŒí‹°ëª…>: (íŒŒí‹°ì¥ë§Œ ê°€ëŠ¥) í•´ë‹¹ í”Œë ˆì´ì–´ë¥¼ ì´ˆëŒ€í•©ë‹ˆë‹¤");
+			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party kick <í”Œë ˆì´ì–´ ì´ë¦„>: (íŒŒí‹°ì¥ë§Œ ê°€ëŠ¥) í•´ë‹¹ í”Œë ˆì´ì–´ë¥¼ ê°•í‡´í•©ë‹ˆë‹¤");
+			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party leave: íŒŒí‹°ë¥¼ ë– ë‚©ë‹ˆë‹¤");
+			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party assemble: (íŒŒí‹°ì¥ë§Œ ê°€ëŠ¥) íŒŒí‹°ì›ë“¤ì„ ìì‹ ì˜ ìœ„ì¹˜ë¡œ ì´ë™ì‹œí‚µë‹ˆë‹¤");
+			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party list: í˜„ì¬ ìƒì„±ë˜ì–´ìˆëŠ” íŒŒí‹°ë“¤ì˜ ëª©ë¡ì„ í‘œì‹œí•©ë‹ˆë‹¤");
 		}
 		else {
 			p.sendMessage(ChatColor.GREEN +"[Made By chw3021]");
@@ -281,7 +281,7 @@ public class Rpgs extends Summoned implements CommandExecutor, Serializable, Lis
 				else if(args[0].equalsIgnoreCase("escape")||args[0].equalsIgnoreCase("es"))
 				{
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						RaidFinish(getheroname(p), "Å»ÁÖ","¸ó½ºÅÍµéÀÌ ¶°³µ½À´Ï´Ù",0);
+						RaidFinish(getheroname(p), "íƒˆì£¼","ëª¬ìŠ¤í„°ë“¤ì´ ë– ë‚¬ìŠµë‹ˆë‹¤",0);
 					}
 					else {
 						RaidFinish(getheroname(p), "Escaped","Monsters Left",0);
@@ -370,7 +370,7 @@ public class Rpgs extends Summoned implements CommandExecutor, Serializable, Lis
 				}
 				else if(args[0].equalsIgnoreCase("graph") || args[0].equalsIgnoreCase("g"))
 				{
-					p.sendMessage(ChatColor.AQUA+"¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á");
+					p.sendMessage(ChatColor.AQUA+"â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– ");
 					if(damagedsdam.containsRow(p.getUniqueId())) {
 						damagedsdam.row(p.getUniqueId()).forEach((k,v) ->{
 							p.sendMessage(ChatColor.AQUA+"=================================");
@@ -378,7 +378,7 @@ public class Rpgs extends Summoned implements CommandExecutor, Serializable, Lis
 						});
 					}
 					p.sendMessage(ChatColor.AQUA+"=================================");
-					p.sendMessage(ChatColor.AQUA+"¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á¡á");
+					p.sendMessage(ChatColor.AQUA+"â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– â– ");
 				}
 				else if(args[0].equalsIgnoreCase("gclear") || args[0].equalsIgnoreCase("gc"))
 				{

@@ -127,7 +127,7 @@ public class MountainsRaids extends Summoned {
 		boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
 		ItemStack main = new ItemStack(Material.STONE_SWORD);
 		ItemStack off = new ItemStack(Material.SHIELD);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "Á¶¾àµ¹±â»ç":"CobbleKnight";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ì¡°ì•½ëŒê¸°ì‚¬":"CobbleKnight";
 		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 150.0, head, chest, leg, boots, main, off, EntityType.SKELETON);
 		
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
@@ -164,7 +164,7 @@ public class MountainsRaids extends Summoned {
 		main.addUnsafeEnchantment(Enchantment.QUICK_CHARGE, 2);
 		main.addUnsafeEnchantment(Enchantment.MULTISHOT, 1);
 
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "¸í»ç¼ö":"SharpShooter";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ëª…ì‚¬ìˆ˜":"SharpShooter";
 		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 180.0, head, chest, leg, boots, main, new ItemStack(Material.SPYGLASS), EntityType.SKELETON);
 		
 		
@@ -213,7 +213,7 @@ public class MountainsRaids extends Summoned {
 		boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
 		ItemStack main = new ItemStack(Material.STICK);
 		ItemStack off = new ItemStack(Material.DARK_OAK_SAPLING);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "¹Ù¶÷¿äÁ¤":"WindFairy";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ë°”ëŒìš”ì •":"WindFairy";
 		Vex newmob = (Vex) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 100.0, head, chest, leg, boots, main, off, EntityType.VEX);
 		
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
@@ -248,7 +248,7 @@ public class MountainsRaids extends Summoned {
 		boots.setItemMeta(bom);
 		ItemStack main = new ItemStack(Material.HONEYCOMB);
 		
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "²ÜÁßµ¶ÀÚ":"HoneyWalker";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ê¿€ì¤‘ë…ì":"HoneyWalker";
 		Husk newmob = (Husk) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 150.0, head, chest, leg, boots, main, main, EntityType.HUSK);
 		newmob.setConversionTime(-1);
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(),rn));
@@ -280,7 +280,7 @@ public class MountainsRaids extends Summoned {
 		bom.setColor(Color.YELLOW);
 		boots.setItemMeta(bom);
 		ItemStack main = new ItemStack(Material.GOLDEN_AXE);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "¹ú²Ü¾àÅ»²Û":"HoneyHunter";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ë²Œê¿€ì•½íƒˆê¾¼":"HoneyHunter";
 		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 200.0, head, chest, leg, boots, main, null, EntityType.SKELETON);
 		newmob.setConversionTime(-1);
 		
@@ -319,7 +319,7 @@ public class MountainsRaids extends Summoned {
 		ItemStack main = new ItemStack(Material.CROSSBOW);
 		main.addUnsafeEnchantment(Enchantment.QUICK_CHARGE, 2);
 		main.addUnsafeEnchantment(Enchantment.MULTISHOT, 1);
-		String reg = lang.contains("kr") ? "ÀÚ°¥Àú°İ¼ö":"GravelSniper";
+		String reg = lang.contains("kr") ? "ìê°ˆì €ê²©ìˆ˜":"GravelSniper";
 		Pillager newmob = (Pillager) Summon(esl, reg, 80.0, head, leg, chest, boots, main,
 				null, EntityType.PILLAGER);
 		newmob.setCanJoinRaid(false);
@@ -359,7 +359,7 @@ public class MountainsRaids extends Summoned {
 		boots.setItemMeta(bom);
 		ItemStack main = new ItemStack(Material.BOW);
 		
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "À©µå¼­ÆÛ":"WindSurfer";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ìœˆë“œì„œí¼":"WindSurfer";
 		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 150.0, head, chest, leg, boots, main, main, EntityType.SKELETON);
 		newmob.setConversionTime(-1);
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(),rn));
@@ -391,7 +391,7 @@ public class MountainsRaids extends Summoned {
 		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
 		ItemStack off = new ItemStack(Material.STONE);
 		off.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "½ºÅæ°ñ·½":"StoneGolem";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ìŠ¤í†¤ê³¨ë ˜":"StoneGolem";
 		IronGolem newmob = (IronGolem) Summon(esl, ChatColor.GRAY + reg, 1000.0, null,
 				null, null, null, main, off, EntityType.IRON_GOLEM);
 		

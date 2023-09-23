@@ -107,7 +107,7 @@ public class WoodlandMansionQuest extends Mobs implements Listener {
     	double number2 = (random.nextDouble()+1.5) * 6 * (random.nextBoolean() ? -1 : 1);
     	Location esl = BlockFinder(l.clone().add(number, -25, number2)).clone().add(0, -19.5, 0);
 
-		String reg = lang.contains("kr") ? "º¯¸íÀÚ":"Vindicator";
+		String reg = lang.contains("kr") ? "ë³€ëª…ì":"Vindicator";
 	    	Vindicator newmob = (Vindicator) MobspawnLoc(esl, reg, 6000.0, null, null, null, null, null, null, EntityType.VINDICATOR);
 			newmob.setCanJoinRaid(false);
 			newmob.setPatrolLeader(false);
@@ -124,7 +124,7 @@ public class WoodlandMansionQuest extends Mobs implements Listener {
 			newmob.setRemoveWhenFarAway(true);
 			newmob.setLootTable(LootTables.EMPTY.getLootTable());
 
-			String reg1 = lang.contains("kr") ? "¼ÒÈ¯»ç":"Evoker";
+			String reg1 = lang.contains("kr") ? "ì†Œí™˜ì‚¬":"Evoker";
 			Evoker newmob1 = (Evoker) MobspawnLoc(esl, reg1, 5000.0, null, null, null, null, null, null, EntityType.EVOKER);
 			newmob1.setCanJoinRaid(false);
 			newmob1.setPatrolLeader(false);
@@ -162,7 +162,7 @@ public class WoodlandMansionQuest extends Mobs implements Listener {
 
 		if(factor ==0) {
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendMessage("Äù½ºÆ®°¡ Ãë¼ÒµÇ¾ú½À´Ï´Ù(°Å¸®)");
+    			p.sendMessage("í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤(ê±°ë¦¬)");
 		    }
     		else {
     			p.sendMessage("Quest Canceled!(Too Far Away)");
@@ -170,7 +170,7 @@ public class WoodlandMansionQuest extends Mobs implements Listener {
 		}
 		else if (factor == 2) {
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendMessage("Äù½ºÆ®°¡ Ãë¼ÒµÇ¾ú½À´Ï´Ù(»ç¸Á)");
+    			p.sendMessage("í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤(ì‚¬ë§)");
 		    }
     		else {
     			p.sendMessage("Quest Canceled!(Death)");
@@ -178,7 +178,7 @@ public class WoodlandMansionQuest extends Mobs implements Listener {
 		}
 		else if (factor == 3) {
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendMessage("Äù½ºÆ®°¡ Ãë¼ÒµÇ¾ú½À´Ï´Ù(Æ÷±â)");
+    			p.sendMessage("í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤(í¬ê¸°)");
 		    }
     		else {
     			p.sendMessage("Quest Canceled!(Given Up)");
@@ -187,8 +187,8 @@ public class WoodlandMansionQuest extends Mobs implements Listener {
 		else if (factor == 4) {
     		p.playSound(p.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendTitle(ChatColor.GOLD + "Äù½ºÆ® ¿Ï·á!",ChatColor.GOLD + "»ï¸² ´ëÀúÅÃ Àü¸®Ç°À» È¹µæÇß½À´Ï´Ù!",15,35,15);
-            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "º¸¾È°ü°ú °Å·¡¸¦ ÇÒ ¼ö ÀÖ½À´Ï´Ù").create());
+    			p.sendTitle(ChatColor.GOLD + "í€˜ìŠ¤íŠ¸ ì™„ë£Œ!",ChatColor.GOLD + "ì‚¼ë¦¼ ëŒ€ì €íƒ ì „ë¦¬í’ˆì„ íšë“í–ˆìŠµë‹ˆë‹¤!",15,35,15);
+            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ë³´ì•ˆê´€ê³¼ ê±°ë˜ë¥¼ í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤").create());
 		    }
     		else {
     			p.sendTitle(ChatColor.GOLD + "Complete Quest!",ChatColor.GOLD + "You Just Obtained Woodland Mansion Trophy!",15,35,15);
@@ -226,7 +226,7 @@ public class WoodlandMansionQuest extends Mobs implements Listener {
 				if(TrophyLoc.getLocsdata().Locs.containsEntry(p.getUniqueId(), NPCsSpawn.npcloc.get(le.getUniqueId()))) {
 					
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": °í¸¿³×.").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ê³ ë§™ë„¤.").create());
 	        		}
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Thank you.").create());
@@ -279,7 +279,7 @@ public class WoodlandMansionQuest extends Mobs implements Listener {
 		        		
 
 		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		        			mapm.setDisplayName(ChatColor.ITALIC+"´ËÁö ¿ÀµÎ¸· Áöµµ");
+		        			mapm.setDisplayName(ChatColor.ITALIC+"ëŠªì§€ ì˜¤ë‘ë§‰ ì§€ë„");
 					    }
 		        		else {
 		        			mapm.setDisplayName(ChatColor.ITALIC+"Swamp Hut Map");
@@ -305,7 +305,7 @@ public class WoodlandMansionQuest extends Mobs implements Listener {
 
 				if(Party.hasParty(p)) {
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÆÄÆ¼¿¡ ¼ÓÇÑ »óÅÂ·Î´Â ÁøÇàÀÌ ºÒ°¡´ÉÇÕ´Ï´Ù").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "íŒŒí‹°ì— ì†í•œ ìƒíƒœë¡œëŠ” ì§„í–‰ì´ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤").create());
 	        		}
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You should leave Your Party").create());
@@ -314,7 +314,7 @@ public class WoodlandMansionQuest extends Mobs implements Listener {
 				}
 				if(p.getInventory().firstEmpty() == -1) {
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÀÎº¥Åä¸®¿¡ ºóÄ­ÀÌ ÃÖ¼Ò ÇÑÄ­Àº ÀÖ¾î¾ß ÇÕ´Ï´Ù").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ì¸ë²¤í† ë¦¬ì— ë¹ˆì¹¸ì´ ìµœì†Œ í•œì¹¸ì€ ìˆì–´ì•¼ í•©ë‹ˆë‹¤").create());
 	        		}
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You should empty inventory least one space").create());
@@ -329,8 +329,8 @@ public class WoodlandMansionQuest extends Mobs implements Listener {
             		}
             		asked.remove(p.getUniqueId());
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": °í¸¿³×. ´ëÀúÅÃ¾È¿¡ ÀÖ´Â ³à¼®µéÇÑÅ×¼­ ÀÛÀüÁöµµ¸¦ ±¸ÇØ´Ù ÁÙ ¼ö ÀÖ³ª?").create());
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": (»ç¸Á, Á¾·á, ¿ìÅ¬¸¯½Ã ¶Ç´Â ³Ê¹« ¸Ö¸® °¡¸é Äù½ºÆ®°¡ Ãë¼ÒµË´Ï´Ù.)").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ê³ ë§™ë„¤. ëŒ€ì €íƒì•ˆì— ìˆëŠ” ë…€ì„ë“¤í•œí…Œì„œ ì‘ì „ì§€ë„ë¥¼ êµ¬í•´ë‹¤ ì¤„ ìˆ˜ ìˆë‚˜?").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": (ì‚¬ë§, ì¢…ë£Œ, ìš°í´ë¦­ì‹œ ë˜ëŠ” ë„ˆë¬´ ë©€ë¦¬ ê°€ë©´ í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë©ë‹ˆë‹¤.)").create());
 				    }
 	        		else {
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Thanks. Could You Bring me the Operation Map From The guys in the mansion?").create());
@@ -376,8 +376,8 @@ public class WoodlandMansionQuest extends Mobs implements Listener {
     	        	p.setCooldown(Material.RAIL, 10);
 
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ÀÏ¼ÕÀÌ ºÎÁ·ÇØ..").create());
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "(¿ìÅ¬¸¯½Ã ¼ö¶ô)").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ì¼ì†ì´ ë¶€ì¡±í•´..").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "(ìš°í´ë¦­ì‹œ ìˆ˜ë½)").create());
 				    }
 	        		else {
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": We are shorthanded..").create());
@@ -412,7 +412,7 @@ public class WoodlandMansionQuest extends Mobs implements Listener {
 		        	if(ri <= 20) {
 		        		p.playSound(p.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
 		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			        		p.sendTitle(ChatColor.BOLD + "ÀÛÀü Áöµµ", ChatColor.BOLD + "(1/1)", 10, 20, 10);
+			        		p.sendTitle(ChatColor.BOLD + "ì‘ì „ ì§€ë„", ChatColor.BOLD + "(1/1)", 10, 20, 10);
 					    }
 		        		else {
 			        		p.sendTitle(ChatColor.BOLD + "Operation Map", ChatColor.BOLD + "(1/1)", 10, 20, 10);

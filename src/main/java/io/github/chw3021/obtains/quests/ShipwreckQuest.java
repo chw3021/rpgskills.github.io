@@ -113,7 +113,7 @@ public class ShipwreckQuest extends Mobs implements Listener  {
 		
 		if(factor ==0) {
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendMessage("Äù½ºÆ®°¡ Ãë¼ÒµÇ¾ú½À´Ï´Ù(°Å¸®)");
+    			p.sendMessage("í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤(ê±°ë¦¬)");
 		    }
     		else {
     			p.sendMessage("Quest Canceled!(Too Far Away)");
@@ -121,7 +121,7 @@ public class ShipwreckQuest extends Mobs implements Listener  {
 		}
 		else if (factor == 2) {
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendMessage("Äù½ºÆ®°¡ Ãë¼ÒµÇ¾ú½À´Ï´Ù(»ç¸Á)");
+    			p.sendMessage("í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤(ì‚¬ë§)");
 		    }
     		else {
     			p.sendMessage("Quest Canceled!(Death)");
@@ -129,7 +129,7 @@ public class ShipwreckQuest extends Mobs implements Listener  {
 		}
 		else if (factor == 3) {
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendMessage("Äù½ºÆ®°¡ Ãë¼ÒµÇ¾ú½À´Ï´Ù(Æ÷±â)");
+    			p.sendMessage("í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤(í¬ê¸°)");
 		    }
     		else {
     			p.sendMessage("Quest Canceled!(Given Up)");
@@ -138,8 +138,8 @@ public class ShipwreckQuest extends Mobs implements Listener  {
 		else if (factor == 4) {
     		p.playSound(p.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendTitle(ChatColor.BOLD + (ChatColor.GOLD + "Äù½ºÆ® ¿Ï·á!"),ChatColor.BOLD + (ChatColor.GOLD + "³­ÆÄ¼± Àü¸®Ç°À» È¹µæÇß½À´Ï´Ù!"),15,35,15);
-            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÀÍ»çÇÑ ¼±¿ø°ú °Å·¡¸¦ ÇÒ ¼ö ÀÖ½À´Ï´Ù").create());
+    			p.sendTitle(ChatColor.BOLD + (ChatColor.GOLD + "í€˜ìŠ¤íŠ¸ ì™„ë£Œ!"),ChatColor.BOLD + (ChatColor.GOLD + "ë‚œíŒŒì„  ì „ë¦¬í’ˆì„ íšë“í–ˆìŠµë‹ˆë‹¤!"),15,35,15);
+            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ìµì‚¬í•œ ì„ ì›ê³¼ ê±°ë˜ë¥¼ í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤").create());
 		    }
     		else {
     			p.sendTitle(ChatColor.GOLD + "Complete Quest!",ChatColor.GOLD + "You Just Obtained Shipwreck Trophy!",15,35,15);
@@ -173,7 +173,7 @@ public class ShipwreckQuest extends Mobs implements Listener  {
     	
     	p.playSound(p.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_SET_SPAWN, 0.1f, 2f);
 
-		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "³­ÆÄ¼± ¿ø±Í ("+p.getName()+")":"Ship Phantom ("+p.getName()+")";
+		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "ë‚œíŒŒì„  ì›ê·€ ("+p.getName()+")":"Ship Phantom ("+p.getName()+")";
 		Phantom newmob = (Phantom) MobspawnLoc(esl, reg, p.getLevel()*45.0, null, null, null, null, null, null, EntityType.PHANTOM);
 		newmob.setSize(10);
 		newmob.addPotionEffect(new PotionEffect(PotionEffectType.CONDUIT_POWER, 999999, 4, false, false));
@@ -212,7 +212,7 @@ public class ShipwreckQuest extends Mobs implements Listener  {
 				}
 				if(TrophyLoc.getLocsdata().Locs.containsEntry(p.getUniqueId(), NPCsSpawn.npcloc.get(le.getUniqueId()))) {
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": °í¸¶¿ö¿ä!").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ê³ ë§ˆì›Œìš”!").create());
 	        		}
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Thanks!").create());
@@ -233,7 +233,7 @@ public class ShipwreckQuest extends Mobs implements Listener  {
 					EnchantmentStorageMeta enchmeta = (EnchantmentStorageMeta) enchbook.getItemMeta();
 					enchmeta.addStoredEnchant(Enchantment.DEPTH_STRIDER, 10, true);
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	        			enchmeta.setDisplayName("¹°°¥Äû 10LV");
+	        			enchmeta.setDisplayName("ë¬¼ê°ˆí€´ 10LV");
 				    }
 	        		else {
 	        			enchmeta.setDisplayName("Depth Strider 10LV");
@@ -254,7 +254,7 @@ public class ShipwreckQuest extends Mobs implements Listener  {
 		        		
 
 		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		        			mapm.setDisplayName(ChatColor.ITALIC+"º¸¹° Áöµµ");
+		        			mapm.setDisplayName(ChatColor.ITALIC+"ë³´ë¬¼ ì§€ë„");
 					    }
 		        		else {
 		        			mapm.setDisplayName(ChatColor.ITALIC+"Treasure Map");
@@ -281,7 +281,7 @@ public class ShipwreckQuest extends Mobs implements Listener  {
 
 				if(Party.hasParty(p)) {
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÆÄÆ¼¿¡ ¼ÓÇÑ »óÅÂ·Î´Â ÁøÇàÀÌ ºÒ°¡´ÉÇÕ´Ï´Ù").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "íŒŒí‹°ì— ì†í•œ ìƒíƒœë¡œëŠ” ì§„í–‰ì´ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤").create());
 	        		}
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You should leave Your Party").create());
@@ -290,7 +290,7 @@ public class ShipwreckQuest extends Mobs implements Listener  {
 				}
 				if(p.getInventory().firstEmpty() == -1) {
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÀÎº¥Åä¸®¿¡ ºóÄ­ÀÌ ÃÖ¼Ò ÇÑÄ­Àº ÀÖ¾î¾ß ÇÕ´Ï´Ù").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ì¸ë²¤í† ë¦¬ì— ë¹ˆì¹¸ì´ ìµœì†Œ í•œì¹¸ì€ ìˆì–´ì•¼ í•©ë‹ˆë‹¤").create());
 	        		}
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You should empty inventory least one space").create());
@@ -305,8 +305,8 @@ public class ShipwreckQuest extends Mobs implements Listener  {
             		}
             		asked.remove(p.getUniqueId());
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": °¨»çÇÕ´Ï´Ù. Á×°í ³ª¼­µµ ¿ø±ÍµéÀÇ ±«·ÓÈûÀÌ ³¡ÀÌ ¾ø³×¿ä..").create());
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": (»ç¸Á, Á¾·á½Ã ¶Ç´Â ³Ê¹« ¸Ö¸® °¡¸é Äù½ºÆ®°¡ Ãë¼ÒµË´Ï´Ù.)").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ê°ì‚¬í•©ë‹ˆë‹¤. ì£½ê³  ë‚˜ì„œë„ ì›ê·€ë“¤ì˜ ê´´ë¡­í˜ì´ ëì´ ì—†ë„¤ìš”..").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": (ì‚¬ë§, ì¢…ë£Œì‹œ ë˜ëŠ” ë„ˆë¬´ ë©€ë¦¬ ê°€ë©´ í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë©ë‹ˆë‹¤.)").create());
 				    }
 	        		else {
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Thanks So Much. Even after I die, phantoms continue to bully me..").create());
@@ -324,7 +324,7 @@ public class ShipwreckQuest extends Mobs implements Listener  {
     	                {
     	            		qbar.get(p.getName()).setProgress((double)qmobskill.getOrDefault(p.getName(),0) / 20d);
     		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-        	            		qbar.get(p.getName()).setTitle("Ã³Ä¡ ¸ó½ºÅÍ ¼ö: " + qmobskill.getOrDefault(p.getName(),0) + "/" + 20);
+        	            		qbar.get(p.getName()).setTitle("ì²˜ì¹˜ ëª¬ìŠ¤í„° ìˆ˜: " + qmobskill.getOrDefault(p.getName(),0) + "/" + 20);
     					    }
     		        		else {
         	            		qbar.get(p.getName()).setTitle("Killed Monsters: " + qmobskill.getOrDefault(p.getName(),0)  + "/" + 20);
@@ -352,8 +352,8 @@ public class ShipwreckQuest extends Mobs implements Listener  {
     	        	p.setCooldown(Material.RAIL, 10);
 
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": À¸À¸.. ¹ÌÄ¡°Ú´Ù!..").create());
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "(¿ìÅ¬¸¯½Ã ¼ö¶ô)").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ìœ¼ìœ¼.. ë¯¸ì¹˜ê² ë‹¤!..").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "(ìš°í´ë¦­ì‹œ ìˆ˜ë½)").create());
 				    }
 	        		else {
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": They're Driving Me Crazy!..").create());

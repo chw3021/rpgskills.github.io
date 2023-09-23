@@ -60,7 +60,7 @@ public class PoisonMobsSpawn extends Mobs implements Listener {
 		ItemStack main = new ItemStack(Material.POTION);
 		ItemStack off = new ItemStack(Material.BREWING_STAND);
 		off.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 2);
-		String reg = lang.contains("kr") ? "æ‡π∞¡ﬂµ∂¿⁄":"DrugAddict";
+		String reg = lang.contains("kr") ? "ÏïΩÎ¨ºÏ§ëÎèÖÏûê":"DrugAddict";
 		Zombie newmob = (Zombie) Mobspawn(le, reg, 25000.0, head, chest, leg, boots, main, off, EntityType.ZOMBIE);
 		newmob.setConversionTime(-1);
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.43);
@@ -85,7 +85,7 @@ public class PoisonMobsSpawn extends Mobs implements Listener {
 		bom.setColor(Color.BLACK);
 		boots.setItemMeta(bom);
 		ItemStack main = new ItemStack(Material.BOW);
-		String reg = lang.contains("kr") ? "∫∏√ ∫¥":"Patrol";
+		String reg = lang.contains("kr") ? "Î≥¥Ï¥àÎ≥ë":"Patrol";
 		Skeleton newmob = (Skeleton) Mobspawn(le, reg, 23000.0, head, chest, leg, boots, main, null, EntityType.SKELETON);
 		newmob.setConversionTime(-1);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
@@ -97,7 +97,7 @@ public class PoisonMobsSpawn extends Mobs implements Listener {
 		ItemStack head = new ItemStack(Material.MANGROVE_LEAVES);
 		head.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 3);
 		
-		String reg = lang.contains("kr") ? "∞≈¥ÎΩΩ∂Û¿”":"GiantSlime";
+		String reg = lang.contains("kr") ? "Í±∞ÎåÄÏä¨ÎùºÏûÑ":"GiantSlime";
 		Slime newmob = (Slime) Mobspawn(le, reg, 20000.0, head, null, null, null, null, null, EntityType.SLIME);
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.33);
 		newmob.setSize(10);
@@ -107,7 +107,7 @@ public class PoisonMobsSpawn extends Mobs implements Listener {
 		return newmob;
 	}
 	final private Witch Mob4(LivingEntity le) {
-		String reg = lang.contains("kr") ? "√¥≈∫∫¥":"Grenadier";
+		String reg = lang.contains("kr") ? "Ï≤ôÌÉÑÎ≥ë":"Grenadier";
 		Witch newmob = (Witch) Mobspawn(le, reg, 20000.0, null, null, null, null, null, null, EntityType.WITCH);
 		newmob.setCanJoinRaid(false);
 		newmob.setPatrolLeader(false);
@@ -118,7 +118,7 @@ public class PoisonMobsSpawn extends Mobs implements Listener {
 		return newmob;
 	}
 	final private Spider SpiderV(LivingEntity le) {
-		String reg = lang.contains("kr") ? "∏Õµ∂∞≈πÃ":"VenomSpider";
+		String reg = lang.contains("kr") ? "ÎßπÎèÖÍ±∞ÎØ∏":"VenomSpider";
 		Spider newmob = (Spider) Mobspawn(le, reg, 18000.0, null, null, null, null, null, null, EntityType.CAVE_SPIDER);
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.43);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
@@ -126,7 +126,7 @@ public class PoisonMobsSpawn extends Mobs implements Listener {
 		return newmob;
 	}
 	final private Creeper CreeperV(LivingEntity le) {
-		String reg = lang.contains("kr") ? "¿⁄∆¯±‚":"AutoNuker";
+		String reg = lang.contains("kr") ? "ÏûêÌè≠Í∏∞":"AutoNuker";
 		Creeper newmob = (Creeper) Mobspawn(le, reg, 20000.0, null, null, null, null, null, null, EntityType.CREEPER);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("poison", new FixedMetadataValue(RMain.getInstance(), true));
@@ -134,14 +134,14 @@ public class PoisonMobsSpawn extends Mobs implements Listener {
 		return newmob;
 	}
 	final private Enderman EndermanV(LivingEntity le) {
-		String reg = lang.contains("kr") ? "√¥»ƒ∫¥":"Scout";
+		String reg = lang.contains("kr") ? "Ï≤ôÌõÑÎ≥ë":"Scout";
 		Enderman newmob = (Enderman) Mobspawn(le, reg, 25000.0, null, null, null, null, null, null, EntityType.ENDERMAN);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("poison", new FixedMetadataValue(RMain.getInstance(), true));
 		return newmob;
 	}
 	final private LivingEntity Default(LivingEntity le) {
-		String reg = lang.contains("kr") ? "¥À¡ˆ¥Î":"Swamp";
+		String reg = lang.contains("kr") ? "Îä™ÏßÄÎåÄ":"Swamp";
 		LivingEntity newmob = Mobspawn(le, reg + trans(le), 24000.0, le.getEquipment().getHelmet(),
 				le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
 				le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(),

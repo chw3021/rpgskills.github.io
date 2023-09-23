@@ -644,7 +644,7 @@ public class Summoned extends Mobs implements Serializable{
 		p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 300, 5, false, false));
     	p.setSaturation(1f);
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    		p.sendMessage("15ÃÊ°£ ÀÌ·Î¿î»óÅÂµéÀ» È¹µæÇÕ´Ï´Ù");
+    		p.sendMessage("15ì´ˆê°„ ì´ë¡œìš´ìƒíƒœë“¤ì„ íšë“í•©ë‹ˆë‹¤");
 		}
 		else {
     		p.sendMessage("Get Positive Effects 15 seconds");
@@ -721,9 +721,9 @@ public class Summoned extends Mobs implements Serializable{
 	        	p.giveExp(exp);
 				Bukkit.getServer().getPluginManager().callEvent(new PlayerExpChangeEvent(p,exp));
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					p.sendMessage(ChatColor.GOLD + "" + exp + " °æÇèÄ¡¸¦ È¹µæÇß½À´Ï´Ù");
+					p.sendMessage(ChatColor.GOLD + "" + exp + " ê²½í—˜ì¹˜ë¥¼ íšë“í–ˆìŠµë‹ˆë‹¤");
 		        	Effect(p);
-					p.sendMessage(ChatColor.GOLD + "º¸½º Ã³Ä¡ º¸»óÀÌ Áö±ŞµÇ¾ú½À´Ï´Ù");
+					p.sendMessage(ChatColor.GOLD + "ë³´ìŠ¤ ì²˜ì¹˜ ë³´ìƒì´ ì§€ê¸‰ë˜ì—ˆìŠµë‹ˆë‹¤");
 				}
 				else {
 					p.sendMessage(ChatColor.GOLD + "You've got " + exp + " experience point");
@@ -736,8 +736,8 @@ public class Summoned extends Mobs implements Serializable{
 	        	p.giveExp(exp);
 				Bukkit.getServer().getPluginManager().callEvent(new PlayerExpChangeEvent(p,exp));
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					p.sendMessage(ChatColor.GOLD + "" + exp + " °æÇèÄ¡¸¦ È¹µæÇß½À´Ï´Ù");
-					p.sendMessage(ChatColor.GOLD + "" + com + " ÄŞº¸ º¸»óÀÌ Áö±ŞµÇ¾ú½À´Ï´Ù");
+					p.sendMessage(ChatColor.GOLD + "" + exp + " ê²½í—˜ì¹˜ë¥¼ íšë“í–ˆìŠµë‹ˆë‹¤");
+					p.sendMessage(ChatColor.GOLD + "" + com + " ì½¤ë³´ ë³´ìƒì´ ì§€ê¸‰ë˜ì—ˆìŠµë‹ˆë‹¤");
 				}
 				else {
 					p.sendMessage(ChatColor.GOLD + "You've got " + exp + " experience point");
@@ -749,8 +749,8 @@ public class Summoned extends Mobs implements Serializable{
 	        	p.giveExp(exp);
 				Bukkit.getServer().getPluginManager().callEvent(new PlayerExpChangeEvent(p,exp));
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					p.sendMessage(ChatColor.GOLD + "" + exp + " °æÇèÄ¡¸¦ È¹µæÇß½À´Ï´Ù");
-					p.sendMessage(ChatColor.GOLD + "" + com + " ÄŞº¸ º¸»óÀÌ Áö±ŞµÇ¾ú½À´Ï´Ù");
+					p.sendMessage(ChatColor.GOLD + "" + exp + " ê²½í—˜ì¹˜ë¥¼ íšë“í–ˆìŠµë‹ˆë‹¤");
+					p.sendMessage(ChatColor.GOLD + "" + com + " ì½¤ë³´ ë³´ìƒì´ ì§€ê¸‰ë˜ì—ˆìŠµë‹ˆë‹¤");
 				}
 				else {
 					p.sendMessage(ChatColor.GOLD + "You've got " + exp + " experience point");
@@ -795,9 +795,9 @@ public class Summoned extends Mobs implements Serializable{
 				if(com>MAXCOMBO) {
 					int exp = 2*getelexp(meta)*MAXCOMBO;
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						p.sendMessage(ChatColor.GOLD + "" + exp + " °æÇèÄ¡¸¦ È¹µæÇß½À´Ï´Ù");
+						p.sendMessage(ChatColor.GOLD + "" + exp + " ê²½í—˜ì¹˜ë¥¼ íšë“í–ˆìŠµë‹ˆë‹¤");
 			        	Effect(p);
-						p.sendMessage(ChatColor.GOLD + "º¸½º Ã³Ä¡ º¸»óÀÌ Áö±ŞµÇ¾ú½À´Ï´Ù");
+						p.sendMessage(ChatColor.GOLD + "ë³´ìŠ¤ ì²˜ì¹˜ ë³´ìƒì´ ì§€ê¸‰ë˜ì—ˆìŠµë‹ˆë‹¤");
 					}
 					else {
 						p.sendMessage(ChatColor.GOLD + "You've got " + exp + " experience point");
@@ -808,8 +808,8 @@ public class Summoned extends Mobs implements Serializable{
 				else if(com>=MINCOMBO){
 					int exp = getelexp(meta)*MAXCOMBO/2/(2+MAXCOMBO-com);;
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						p.sendMessage(ChatColor.GOLD + "" + exp + " °æÇèÄ¡¸¦ È¹µæÇß½À´Ï´Ù");
-						p.sendMessage(ChatColor.GOLD + "" + com + " ÄŞº¸ º¸»óÀÌ Áö±ŞµÇ¾ú½À´Ï´Ù");
+						p.sendMessage(ChatColor.GOLD + "" + exp + " ê²½í—˜ì¹˜ë¥¼ íšë“í–ˆìŠµë‹ˆë‹¤");
+						p.sendMessage(ChatColor.GOLD + "" + com + " ì½¤ë³´ ë³´ìƒì´ ì§€ê¸‰ë˜ì—ˆìŠµë‹ˆë‹¤");
 					}
 					else {
 						p.sendMessage(ChatColor.GOLD + "You've got " + exp + " experience point");
@@ -889,9 +889,9 @@ public class Summoned extends Mobs implements Serializable{
 		if(getherotype(rn) instanceof Player) {
 			Player p = (Player) getherotype(rn);
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				as.setCustomName(ChatColor.DARK_RED +"¿ìÅ¬¸¯(¸Ç¼Õ)À¸·Î ÀÔÀåÀÌ °¡´ÉÇÕ´Ï´Ù");
-				p.sendTitle(ChatColor.RED +"°í´ëÀÇ Æ÷Å» ¼ÒÈ¯", ChatColor.DARK_RED +"¿ìÅ¬¸¯(¸Ç¼Õ)À¸·Î ÀÔÀåÀÌ °¡´ÉÇÕ´Ï´Ù", 10,35, 10);
-				p.sendMessage(ChatColor.RED +"°í´ëÀÇ Æ÷Å» ¼ÒÈ¯", ChatColor.DARK_RED +"¿ìÅ¬¸¯(¸Ç¼Õ)À¸·Î ÀÔÀåÀÌ °¡´ÉÇÕ´Ï´Ù");
+				as.setCustomName(ChatColor.DARK_RED +"ìš°í´ë¦­(ë§¨ì†)ìœ¼ë¡œ ì…ì¥ì´ ê°€ëŠ¥í•©ë‹ˆë‹¤");
+				p.sendTitle(ChatColor.RED +"ê³ ëŒ€ì˜ í¬íƒˆ ì†Œí™˜", ChatColor.DARK_RED +"ìš°í´ë¦­(ë§¨ì†)ìœ¼ë¡œ ì…ì¥ì´ ê°€ëŠ¥í•©ë‹ˆë‹¤", 10,35, 10);
+				p.sendMessage(ChatColor.RED +"ê³ ëŒ€ì˜ í¬íƒˆ ì†Œí™˜", ChatColor.DARK_RED +"ìš°í´ë¦­(ë§¨ì†)ìœ¼ë¡œ ì…ì¥ì´ ê°€ëŠ¥í•©ë‹ˆë‹¤");
 			}
 			else {
 				as.setCustomName(ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
@@ -903,9 +903,9 @@ public class Summoned extends Mobs implements Serializable{
 			HashSet<Player> par = (HashSet<Player>) getherotype(rn);
 			par.forEach(p ->{
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					as.setCustomName(ChatColor.DARK_RED +"¿ìÅ¬¸¯(¸Ç¼Õ)À¸·Î ÀÔÀåÀÌ °¡´ÉÇÕ´Ï´Ù");
-					p.sendTitle(ChatColor.RED +"°í´ëÀÇ Æ÷Å» ¼ÒÈ¯", ChatColor.DARK_RED +"¿ìÅ¬¸¯(¸Ç¼Õ)À¸·Î ÀÔÀåÀÌ °¡´ÉÇÕ´Ï´Ù", 10,35, 10);
-					p.sendMessage(ChatColor.RED +"°í´ëÀÇ Æ÷Å» ¼ÒÈ¯", ChatColor.DARK_RED +"¿ìÅ¬¸¯(¸Ç¼Õ)À¸·Î ÀÔÀåÀÌ °¡´ÉÇÕ´Ï´Ù");
+					as.setCustomName(ChatColor.DARK_RED +"ìš°í´ë¦­(ë§¨ì†)ìœ¼ë¡œ ì…ì¥ì´ ê°€ëŠ¥í•©ë‹ˆë‹¤");
+					p.sendTitle(ChatColor.RED +"ê³ ëŒ€ì˜ í¬íƒˆ ì†Œí™˜", ChatColor.DARK_RED +"ìš°í´ë¦­(ë§¨ì†)ìœ¼ë¡œ ì…ì¥ì´ ê°€ëŠ¥í•©ë‹ˆë‹¤", 10,35, 10);
+					p.sendMessage(ChatColor.RED +"ê³ ëŒ€ì˜ í¬íƒˆ ì†Œí™˜", ChatColor.DARK_RED +"ìš°í´ë¦­(ë§¨ì†)ìœ¼ë¡œ ì…ì¥ì´ ê°€ëŠ¥í•©ë‹ˆë‹¤");
 				}
 				else {
 					as.setCustomName(ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
@@ -925,7 +925,7 @@ public class Summoned extends Mobs implements Serializable{
 			if(getherotype(rn) instanceof Player) {
 				Player p = (Player) getherotype(rn);
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					p.sendMessage(ChatColor.RED +""+ combo + "ÄŞº¸ ´Ş¼º!", ChatColor.DARK_RED +"º¸½º¸÷ÀÌ ¼ÒÈ¯µË´Ï´Ù");
+					p.sendMessage(ChatColor.RED +""+ combo + "ì½¤ë³´ ë‹¬ì„±!", ChatColor.DARK_RED +"ë³´ìŠ¤ëª¹ì´ ì†Œí™˜ë©ë‹ˆë‹¤");
 				}
 				else {
 					p.sendMessage(ChatColor.RED +""+ combo + "Combo!", ChatColor.DARK_RED +"Boss Monster will be Summoned");
@@ -935,7 +935,7 @@ public class Summoned extends Mobs implements Serializable{
 				HashSet<Player> par = (HashSet<Player>) getherotype(rn);
 				par.forEach(p ->{
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						p.sendMessage(ChatColor.RED +""+ combo + "ÄŞº¸ ´Ş¼º!", ChatColor.DARK_RED +"º¸½º¸÷ÀÌ ¼ÒÈ¯µË´Ï´Ù");
+						p.sendMessage(ChatColor.RED +""+ combo + "ì½¤ë³´ ë‹¬ì„±!", ChatColor.DARK_RED +"ë³´ìŠ¤ëª¹ì´ ì†Œí™˜ë©ë‹ˆë‹¤");
 					}
 					else {
 						p.sendMessage(ChatColor.RED +""+ combo + "Combo!", ChatColor.DARK_RED +"Boss Monster will be Summoned");
@@ -947,7 +947,7 @@ public class Summoned extends Mobs implements Serializable{
 			if(getherotype(rn) instanceof Player) {
 				Player p = (Player) getherotype(rn);
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					p.sendMessage(ChatColor.RED +""+ combo + "ÄŞº¸ ´Ş¼º!", ChatColor.DARK_RED +"¸ó½ºÅÍµéÀÌ ¼ÒÈ¯µË´Ï´Ù");
+					p.sendMessage(ChatColor.RED +""+ combo + "ì½¤ë³´ ë‹¬ì„±!", ChatColor.DARK_RED +"ëª¬ìŠ¤í„°ë“¤ì´ ì†Œí™˜ë©ë‹ˆë‹¤");
 				}
 				else {
 					p.sendMessage(ChatColor.RED +""+ combo + "Combo!", ChatColor.DARK_RED +"Monster will be Summoned");
@@ -957,7 +957,7 @@ public class Summoned extends Mobs implements Serializable{
 				HashSet<Player> par = (HashSet<Player>) getherotype(rn);
 				par.forEach(p ->{
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						p.sendMessage(ChatColor.RED +""+ combo + "ÄŞº¸ ´Ş¼º!", ChatColor.DARK_RED +"¸ó½ºÅÍµéÀÌ ¼ÒÈ¯µË´Ï´Ù");
+						p.sendMessage(ChatColor.RED +""+ combo + "ì½¤ë³´ ë‹¬ì„±!", ChatColor.DARK_RED +"ëª¬ìŠ¤í„°ë“¤ì´ ì†Œí™˜ë©ë‹ˆë‹¤");
 					}
 					else {
 						p.sendMessage(ChatColor.RED +""+ combo + "Combo!", ChatColor.DARK_RED +"Monster will be Summoned");
@@ -1075,7 +1075,7 @@ public class Summoned extends Mobs implements Serializable{
 			Player fp = (Player) getherotype(rn);
 			
 			if(fp.getLocale().equalsIgnoreCase("ko_kr")) {
-	    		fp.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + "¼û°ÜÁø º¸¹° ¹ß°ß!"), ChatColor.BOLD +"ÀÎº¥Åä¸®¿¡ Áö±ŞµÇ¾ú½À´Ï´Ù", 5, 60, 5);
+	    		fp.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + "ìˆ¨ê²¨ì§„ ë³´ë¬¼ ë°œê²¬!"), ChatColor.BOLD +"ì¸ë²¤í† ë¦¬ì— ì§€ê¸‰ë˜ì—ˆìŠµë‹ˆë‹¤", 5, 60, 5);
 			}
 			else {
 	    		fp.sendTitle(ChatColor.BOLD +(ChatColor.GOLD  + "Hidden Treasure!"), ChatColor.BOLD +"Given to Your Inventory", 5, 60, 5);
@@ -1090,7 +1090,7 @@ public class Summoned extends Mobs implements Serializable{
     		
 			par.forEach(p ->{
 				if(fp.getLocale().equalsIgnoreCase("ko_kr")) {
-		    		fp.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + "¼û°ÜÁø º¸¹° ¹ß°ß!"), ChatColor.BOLD +"ÀÎº¥Åä¸®¿¡ Áö±ŞµÇ¾ú½À´Ï´Ù", 5, 60, 5);
+		    		fp.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + "ìˆ¨ê²¨ì§„ ë³´ë¬¼ ë°œê²¬!"), ChatColor.BOLD +"ì¸ë²¤í† ë¦¬ì— ì§€ê¸‰ë˜ì—ˆìŠµë‹ˆë‹¤", 5, 60, 5);
 				}
 				else {
 		    		fp.sendTitle(ChatColor.BOLD +(ChatColor.GOLD  + "Hidden Treasure!"), ChatColor.BOLD +"Given to Your Inventory", 5, 60, 5);
@@ -1123,8 +1123,8 @@ public class Summoned extends Mobs implements Serializable{
 				if(factor == 1) {
 	            	
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			    		p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + "½Â¸®!"), ChatColor.BOLD +"º¸½º¸÷À» ¹°¸®ÃÆ½À´Ï´Ù", 5, 60, 5);
-			    		p.sendMessage("15ÃÊ°£ ÀÌ·Î¿î»óÅÂµéÀ» È¹µæÇÕ´Ï´Ù");
+			    		p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + "ìŠ¹ë¦¬!"), ChatColor.BOLD +"ë³´ìŠ¤ëª¹ì„ ë¬¼ë¦¬ì³¤ìŠµë‹ˆë‹¤", 5, 60, 5);
+			    		p.sendMessage("15ì´ˆê°„ ì´ë¡œìš´ìƒíƒœë“¤ì„ íšë“í•©ë‹ˆë‹¤");
 					}
 					else {
 			    		p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD  + "Victory!"), ChatColor.BOLD +"Defeated Boss Monster", 5, 60, 5);
@@ -1142,8 +1142,8 @@ public class Summoned extends Mobs implements Serializable{
 					if(factor == 1) {
 		            	
 						if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				    		p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + "½Â¸®!"), ChatColor.BOLD +"º¸½º¸÷À» ¹°¸®ÃÆ½À´Ï´Ù", 5, 60, 5);
-				    		p.sendMessage("15ÃÊ°£ ÀÌ·Î¿î»óÅÂµéÀ» È¹µæÇÕ´Ï´Ù");
+				    		p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + "ìŠ¹ë¦¬!"), ChatColor.BOLD +"ë³´ìŠ¤ëª¹ì„ ë¬¼ë¦¬ì³¤ìŠµë‹ˆë‹¤", 5, 60, 5);
+				    		p.sendMessage("15ì´ˆê°„ ì´ë¡œìš´ìƒíƒœë“¤ì„ íšë“í•©ë‹ˆë‹¤");
 						}
 						else {
 				    		p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD  + "Victory!"), ChatColor.BOLD +"Defeated Boss Monster", 5, 60, 5);
@@ -1288,7 +1288,7 @@ public class Summoned extends Mobs implements Serializable{
 				Player p = (Player) getherotype(rn);
 				if(factor == 1) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			    		p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + "½Â¸®!"), ChatColor.BOLD +"º¸½º¸÷À» ¹°¸®ÃÆ½À´Ï´Ù", 5, 60, 5);
+			    		p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + "ìŠ¹ë¦¬!"), ChatColor.BOLD +"ë³´ìŠ¤ëª¹ì„ ë¬¼ë¦¬ì³¤ìŠµë‹ˆë‹¤", 5, 60, 5);
 					}
 					else {
 			    		p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD  + "Victory!"), ChatColor.BOLD +"Defeated Boss Monster", 5, 60, 5);
@@ -1303,7 +1303,7 @@ public class Summoned extends Mobs implements Serializable{
 				par.forEach(p ->{
 					if(factor == 1) {
 						if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				    		p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + "½Â¸®!"), ChatColor.BOLD +"º¸½º¸÷À» ¹°¸®ÃÆ½À´Ï´Ù", 5, 60, 5);
+				    		p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + "ìŠ¹ë¦¬!"), ChatColor.BOLD +"ë³´ìŠ¤ëª¹ì„ ë¬¼ë¦¬ì³¤ìŠµë‹ˆë‹¤", 5, 60, 5);
 						}
 						else {
 				    		p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD  + "Victory!"), ChatColor.BOLD +"Defeated Boss Monster", 5, 60, 5);
@@ -1345,8 +1345,8 @@ public class Summoned extends Mobs implements Serializable{
 			{
 				ev.setCancelled(true);
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					p.sendMessage("ÀüÅõÁß¿¡´Â ¾ÆÀÌÅÛÀ» ¹ö¸±¼ö ¾ø½À´Ï´Ù");
-					p.sendMessage("/rpg escape ¶Ç´Â /rpg es ¸í·É¾î·Î ÀüÅõ¸¦ Á¾·áÇÒ¼ö ÀÖ½À´Ï´Ù.");
+					p.sendMessage("ì „íˆ¬ì¤‘ì—ëŠ” ì•„ì´í…œì„ ë²„ë¦´ìˆ˜ ì—†ìŠµë‹ˆë‹¤");
+					p.sendMessage("/rpg escape ë˜ëŠ” /rpg es ëª…ë ¹ì–´ë¡œ ì „íˆ¬ë¥¼ ì¢…ë£Œí• ìˆ˜ ìˆìŠµë‹ˆë‹¤.");
 				}
 				else {
 					p.sendMessage("You Can't Drop Items While Fightning");
@@ -1363,8 +1363,8 @@ public class Summoned extends Mobs implements Serializable{
 		{
 			ev.setCancelled(true);
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				p.sendMessage("ÀüÅõÁß¿¡´Â ÆÄÆ¼»ı¼ºÀÌ ºÒ°¡´É ÇÕ´Ï´Ù");
-				p.sendMessage("/rpg escape ¶Ç´Â /rpg es ¸í·É¾î·Î ÀüÅõ¸¦ Á¾·áÇÒ¼ö ÀÖ½À´Ï´Ù.");
+				p.sendMessage("ì „íˆ¬ì¤‘ì—ëŠ” íŒŒí‹°ìƒì„±ì´ ë¶ˆê°€ëŠ¥ í•©ë‹ˆë‹¤");
+				p.sendMessage("/rpg escape ë˜ëŠ” /rpg es ëª…ë ¹ì–´ë¡œ ì „íˆ¬ë¥¼ ì¢…ë£Œí• ìˆ˜ ìˆìŠµë‹ˆë‹¤.");
 			}
 			else {
 				p.sendMessage("You Can't Create Party While Fightning");
@@ -1380,8 +1380,8 @@ public class Summoned extends Mobs implements Serializable{
 		{
 			ev.setCancelled(true);
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				p.sendMessage("ÀüÅõÁß¿¡´Â ÆÄÆ¼¿ø Ãß°¡°¡ ºÒ°¡´É ÇÕ´Ï´Ù");
-				p.sendMessage("/rpg escape ¶Ç´Â /rpg es ¸í·É¾î·Î ÀüÅõ¸¦ Á¾·áÇÒ¼ö ÀÖ½À´Ï´Ù.");
+				p.sendMessage("ì „íˆ¬ì¤‘ì—ëŠ” íŒŒí‹°ì› ì¶”ê°€ê°€ ë¶ˆê°€ëŠ¥ í•©ë‹ˆë‹¤");
+				p.sendMessage("/rpg escape ë˜ëŠ” /rpg es ëª…ë ¹ì–´ë¡œ ì „íˆ¬ë¥¼ ì¢…ë£Œí• ìˆ˜ ìˆìŠµë‹ˆë‹¤.");
 			}
 			else {
 				p.sendMessage("You Can't Add member while fighting");
@@ -1395,7 +1395,7 @@ public class Summoned extends Mobs implements Serializable{
 		Player p = ev.getPlayer();
 		
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			RaidFinish(ev.getpartyname(), "Å»ÁÖ","¸ó½ºÅÍµéÀÌ ¶°³µ½À´Ï´Ù",0);
+			RaidFinish(ev.getpartyname(), "íƒˆì£¼","ëª¬ìŠ¤í„°ë“¤ì´ ë– ë‚¬ìŠµë‹ˆë‹¤",0);
 		}
 		else {
 			RaidFinish(ev.getpartyname(), "Escaped","Monsters Left",0);
@@ -1414,7 +1414,7 @@ public class Summoned extends Mobs implements Serializable{
 		Player p = ev.getPlayer();
 		
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			RaidFinish(getheroname(p), "Å»ÁÖ","¸ó½ºÅÍµéÀÌ ¶°³µ½À´Ï´Ù",0);
+			RaidFinish(getheroname(p), "íƒˆì£¼","ëª¬ìŠ¤í„°ë“¤ì´ ë– ë‚¬ìŠµë‹ˆë‹¤",0);
 		}
 		else {
 			RaidFinish(getheroname(p), "Escaped","Monsters Left",0);
@@ -1426,7 +1426,7 @@ public class Summoned extends Mobs implements Serializable{
 	{
 		Player p = ev.getEntity();
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			RaidFinish(getheroname(p), "»ç¸Á","¸ó½ºÅÍµéÀÌ ¶°³µ½À´Ï´Ù",0);
+			RaidFinish(getheroname(p), "ì‚¬ë§","ëª¬ìŠ¤í„°ë“¤ì´ ë– ë‚¬ìŠµë‹ˆë‹¤",0);
 		}
 		else {
 			RaidFinish(getheroname(p), "Death","Monsters Left",0);
@@ -1442,7 +1442,7 @@ public class Summoned extends Mobs implements Serializable{
 			Player p = (Player)sender;
 			if(args[0].equalsIgnoreCase("escape")  || args[0].equalsIgnoreCase("es"))
 			{
-				RaidFinish(getheroname(p), "Å»ÁÖ","¸ó½ºÅÍµéÀÌ ¶°³µ½À´Ï´Ù",0);
+				RaidFinish(getheroname(p), "íƒˆì£¼","ëª¬ìŠ¤í„°ë“¤ì´ ë– ë‚¬ìŠµë‹ˆë‹¤",0);
 			}
 		}
     }

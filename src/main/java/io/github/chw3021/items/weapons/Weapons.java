@@ -56,10 +56,10 @@ public class Weapons {
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 					if (rm.hasLore()) {
 						List<String> lore = rm.getLore();
-						lore.add(ChatColor.WHITE + "[³×´õ] ¿µÈ¥ ÀÀÃà¹° ºÎ¿©");
+						lore.add(ChatColor.WHITE + "[ë„¤ë”] ì˜í˜¼ ì‘ì¶•ë¬¼ ë¶€ì—¬");
 						rm.setLore(lore);
 					} else {
-						rm.setLore(Arrays.asList(ChatColor.WHITE + "[³×´õ] ¿µÈ¥ ÀÀÃà¹° ºÎ¿©"));
+						rm.setLore(Arrays.asList(ChatColor.WHITE + "[ë„¤ë”] ì˜í˜¼ ì‘ì¶•ë¬¼ ë¶€ì—¬"));
 					}
 				}
 				else {
@@ -83,10 +83,10 @@ public class Weapons {
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 					if (rm.hasLore()) {
 						List<String> lore = rm.getLore();
-						lore.add(ChatColor.RED + "[³×´õ] ÁøÈ«ºû ÇÙ ºÎ¿©");
+						lore.add(ChatColor.RED + "[ë„¤ë”] ì§„í™ë¹› í•µ ë¶€ì—¬");
 						rm.setLore(lore);
 					} else {
-						rm.setLore(Arrays.asList(ChatColor.RED + "[³×´õ] ÁøÈ«ºû ÇÙ ºÎ¿©"));
+						rm.setLore(Arrays.asList(ChatColor.RED + "[ë„¤ë”] ì§„í™ë¹› í•µ ë¶€ì—¬"));
 					}
 				}
 				else {
@@ -110,10 +110,10 @@ public class Weapons {
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 					if (rm.hasLore()) {
 						List<String> lore = rm.getLore();
-						lore.add(ChatColor.AQUA + "[³×´õ] µÚÆ²¸° ÇÙ ºÎ¿©");
+						lore.add(ChatColor.AQUA + "[ë„¤ë”] ë’¤í‹€ë¦° í•µ ë¶€ì—¬");
 						rm.setLore(lore);
 					} else {
-						rm.setLore(Arrays.asList(ChatColor.AQUA + "[³×´õ] µÚÆ²¸° ÇÙ ºÎ¿©"));
+						rm.setLore(Arrays.asList(ChatColor.AQUA + "[ë„¤ë”] ë’¤í‹€ë¦° í•µ ë¶€ì—¬"));
 					}
 				}
 				else {
@@ -137,10 +137,10 @@ public class Weapons {
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 					if (rm.hasLore()) {
 						List<String> lore = rm.getLore();
-						lore.add(ChatColor.DARK_RED + "[³×´õ] È­»êÀÇ ÇÙ ºÎ¿©");
+						lore.add(ChatColor.DARK_RED + "[ë„¤ë”] í™”ì‚°ì˜ í•µ ë¶€ì—¬");
 						rm.setLore(lore);
 					} else {
-						rm.setLore(Arrays.asList(ChatColor.DARK_RED + "[³×´õ] È­»êÀÇ ÇÙ ºÎ¿©"));
+						rm.setLore(Arrays.asList(ChatColor.DARK_RED + "[ë„¤ë”] í™”ì‚°ì˜ í•µ ë¶€ì—¬"));
 					}
 				}
 				else {
@@ -174,10 +174,10 @@ public class Weapons {
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 					if (rm.hasLore()) {
 						List<String> lore = rm.getLore();
-						lore.add(ChatColor.WHITE + "[³×´õ] ¿µÈ¥ ÀÀÃà¹° ºÎ¿©");
+						lore.add(ChatColor.WHITE + "[ë„¤ë”] ì˜í˜¼ ì‘ì¶•ë¬¼ ë¶€ì—¬");
 						rm.setLore(lore);
 					} else {
-						rm.setLore(Arrays.asList(ChatColor.WHITE + "[³×´õ] ¿µÈ¥ ÀÀÃà¹° ºÎ¿©"));
+						rm.setLore(Arrays.asList(ChatColor.WHITE + "[ë„¤ë”] ì˜í˜¼ ì‘ì¶•ë¬¼ ë¶€ì—¬"));
 					}
 				}
 				else {
@@ -206,10 +206,10 @@ public class Weapons {
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 					if (rm.hasLore()) {
 						List<String> lore = rm.getLore();
-						lore.add(ChatColor.RED + "[³×´õ] ÁøÈ«ºû ÇÙ ºÎ¿©");
+						lore.add(ChatColor.RED + "[ë„¤ë”] ì§„í™ë¹› í•µ ë¶€ì—¬");
 						rm.setLore(lore);
 					} else {
-						rm.setLore(Arrays.asList(ChatColor.RED + "[³×´õ] ÁøÈ«ºû ÇÙ ºÎ¿©"));
+						rm.setLore(Arrays.asList(ChatColor.RED + "[ë„¤ë”] ì§„í™ë¹› í•µ ë¶€ì—¬"));
 					}
 				}
 				else {
@@ -238,10 +238,10 @@ public class Weapons {
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 					if (rm.hasLore()) {
 						List<String> lore = rm.getLore();
-						lore.add(ChatColor.AQUA + "[³×´õ] µÚÆ²¸° ÇÙ ºÎ¿©");
+						lore.add(ChatColor.AQUA + "[ë„¤ë”] ë’¤í‹€ë¦° í•µ ë¶€ì—¬");
 						rm.setLore(lore);
 					} else {
-						rm.setLore(Arrays.asList(ChatColor.AQUA + "[³×´õ] µÚÆ²¸° ÇÙ ºÎ¿©"));
+						rm.setLore(Arrays.asList(ChatColor.AQUA + "[ë„¤ë”] ë’¤í‹€ë¦° í•µ ë¶€ì—¬"));
 					}
 				}
 				else {
@@ -270,10 +270,10 @@ public class Weapons {
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 					if (rm.hasLore()) {
 						List<String> lore = rm.getLore();
-						lore.add(ChatColor.DARK_RED + "[³×´õ] È­»êÀÇ ÇÙ ºÎ¿©");
+						lore.add(ChatColor.DARK_RED + "[ë„¤ë”] í™”ì‚°ì˜ í•µ ë¶€ì—¬");
 						rm.setLore(lore);
 					} else {
-						rm.setLore(Arrays.asList(ChatColor.DARK_RED + "[³×´õ] È­»êÀÇ ÇÙ ºÎ¿©"));
+						rm.setLore(Arrays.asList(ChatColor.DARK_RED + "[ë„¤ë”] í™”ì‚°ì˜ í•µ ë¶€ì—¬"));
 					}
 				}
 				else {
@@ -307,10 +307,10 @@ public class Weapons {
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 					if (rm.hasLore()) {
 						List<String> lore = rm.getLore();
-						lore.add(ChatColor.DARK_GRAY + "[¿£´õ] ¿£´õ ÇÙ ºÎ¿©");
+						lore.add(ChatColor.DARK_GRAY + "[ì—”ë”] ì—”ë” í•µ ë¶€ì—¬");
 						rm.setLore(lore);
 					} else {
-						rm.setLore(Arrays.asList(ChatColor.DARK_GRAY + "[¿£´õ] ¿£´õ ÇÙ ºÎ¿©"));
+						rm.setLore(Arrays.asList(ChatColor.DARK_GRAY + "[ì—”ë”] ì—”ë” í•µ ë¶€ì—¬"));
 					}
 				}
 				else {
@@ -335,10 +335,10 @@ public class Weapons {
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 					if (rm.hasLore()) {
 						List<String> lore = rm.getLore();
-						lore.add(ChatColor.DARK_GRAY + "[¿£´õ] °øÇãÀÇ ÇÙ ºÎ¿©");
+						lore.add(ChatColor.DARK_GRAY + "[ì—”ë”] ê³µí—ˆì˜ í•µ ë¶€ì—¬");
 						rm.setLore(lore);
 					} else {
-						rm.setLore(Arrays.asList(ChatColor.DARK_GRAY + "[¿£´õ] °øÇãÀÇ ÇÙ ºÎ¿©"));
+						rm.setLore(Arrays.asList(ChatColor.DARK_GRAY + "[ì—”ë”] ê³µí—ˆì˜ í•µ ë¶€ì—¬"));
 					}
 				}
 				else {
@@ -372,10 +372,10 @@ public class Weapons {
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 					if (rm.hasLore()) {
 						List<String> lore = rm.getLore();
-						lore.add(ChatColor.DARK_GRAY + "[¿£´õ] ¿£´õ ÇÙ ºÎ¿©");
+						lore.add(ChatColor.DARK_GRAY + "[ì—”ë”] ì—”ë” í•µ ë¶€ì—¬");
 						rm.setLore(lore);
 					} else {
-						rm.setLore(Arrays.asList(ChatColor.DARK_GRAY + "[¿£´õ] ¿£´õ ÇÙ ºÎ¿©"));
+						rm.setLore(Arrays.asList(ChatColor.DARK_GRAY + "[ì—”ë”] ì—”ë” í•µ ë¶€ì—¬"));
 					}
 				}
 				else {
@@ -405,10 +405,10 @@ public class Weapons {
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 					if (rm.hasLore()) {
 						List<String> lore = rm.getLore();
-						lore.add(ChatColor.DARK_GRAY + "[¿£´õ] °øÇãÀÇ ÇÙ ºÎ¿©");
+						lore.add(ChatColor.DARK_GRAY + "[ì—”ë”] ê³µí—ˆì˜ í•µ ë¶€ì—¬");
 						rm.setLore(lore);
 					} else {
-						rm.setLore(Arrays.asList(ChatColor.DARK_GRAY + "[¿£´õ] °øÇãÀÇ ÇÙ ºÎ¿©"));
+						rm.setLore(Arrays.asList(ChatColor.DARK_GRAY + "[ì—”ë”] ê³µí—ˆì˜ í•µ ë¶€ì—¬"));
 					}
 				}
 				else {
@@ -441,10 +441,10 @@ public class Weapons {
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 					if (rm.hasLore()) {
 						List<String> lore = rm.getLore();
-						lore.add(ChatColor.GOLD + "[¿µ¿õ] ¿µ¿õÀÇ »óÂ¡ ºÎ¿©");
+						lore.add(ChatColor.GOLD + "[ì˜ì›…] ì˜ì›…ì˜ ìƒì§• ë¶€ì—¬");
 						rm.setLore(lore);
 					} else {
-						rm.setLore(Arrays.asList(ChatColor.GOLD + "[¿µ¿õ] ¿µ¿õÀÇ »óÂ¡ ºÎ¿©"));
+						rm.setLore(Arrays.asList(ChatColor.GOLD + "[ì˜ì›…] ì˜ì›…ì˜ ìƒì§• ë¶€ì—¬"));
 					}
 				}
 				else {
@@ -478,10 +478,10 @@ public class Weapons {
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 					if (rm.hasLore()) {
 						List<String> lore = rm.getLore();
-						lore.add(ChatColor.GOLD + "[¿µ¿õ] ¿µ¿õÀÇ »óÂ¡ ºÎ¿©");
+						lore.add(ChatColor.GOLD + "[ì˜ì›…] ì˜ì›…ì˜ ìƒì§• ë¶€ì—¬");
 						rm.setLore(lore);
 					} else {
-						rm.setLore(Arrays.asList(ChatColor.GOLD + "[¿µ¿õ] ¿µ¿õÀÇ »óÂ¡ ºÎ¿©"));
+						rm.setLore(Arrays.asList(ChatColor.GOLD + "[ì˜ì›…] ì˜ì›…ì˜ ìƒì§• ë¶€ì—¬"));
 					}
 				}
 				else {
@@ -575,15 +575,15 @@ public class Weapons {
 				
 
 		if(m == Material.GLOBE_BANNER_PATTERN) {
-			kname = "³ÊÅ¬";
+			kname = "ë„ˆí´";
 			ename = "Knuckle";
 			if(p.getLocale().contains("kr")){
 				if (rm.hasLore()) {
 					List<String> lore = rm.getLore();
-					lore.add( "¼Õ±³Ã¼½Ã ÀåÂø");
+					lore.add( "ì†êµì²´ì‹œ ì¥ì°©");
 					rm.setLore(lore);
 				} else {
-					rm.setLore(Arrays.asList("¼Õ±³Ã¼½Ã ÀåÂø"));
+					rm.setLore(Arrays.asList("ì†êµì²´ì‹œ ì¥ì°©"));
 				}
 			}
 			else {
@@ -611,7 +611,7 @@ public class Weapons {
 							Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
 		}
 		else if(m == Material.BOW) {
-			kname = "È°";
+			kname = "í™œ";
 			ename = "Bow";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", dm,
@@ -621,7 +621,7 @@ public class Weapons {
 							Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		}
 		else if(m== Material.NETHERITE_SWORD) {
-			kname = "°Ë";
+			kname = "ê²€";
 			ename = "Sword";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", dm,
@@ -631,7 +631,7 @@ public class Weapons {
 							Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		}
 		else if(m == Material.NETHERITE_AXE) {
-			kname = "µµ³¢";
+			kname = "ë„ë¼";
 			ename = "Axe";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", dm+3,
@@ -641,7 +641,7 @@ public class Weapons {
 							Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		}
 		else if(m == Material.CROSSBOW) {
-			kname = "¼è³ú";
+			kname = "ì‡ ë‡Œ";
 			ename = "Crossbow";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", dm+2,
@@ -651,7 +651,7 @@ public class Weapons {
 							Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		}
 		else if(m== Material.NETHERITE_SHOVEL) {
-			kname = "»ğ";
+			kname = "ì‚½";
 			ename = "Shovel";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", dm-2,
@@ -661,7 +661,7 @@ public class Weapons {
 							Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		}
 		else if(m == Material.NETHERITE_PICKAXE) {
-			kname = "°î±ªÀÌ";
+			kname = "ê³¡ê´­ì´";
 			ename = "Pickaxe";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", dm-2,
@@ -671,7 +671,7 @@ public class Weapons {
 							Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		}
 		else if(m == Material.NETHERITE_HOE) {
-			kname = "±ªÀÌ";
+			kname = "ê´­ì´";
 			ename = "Hoe";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 					new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", dm-3,
@@ -682,7 +682,7 @@ public class Weapons {
 							Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		}
 		else if(m == Material.BLAZE_ROD) {
-			kname = "¿Ïµå";
+			kname = "ì™„ë“œ";
 			ename = "Wand";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", dm+2,
@@ -692,7 +692,7 @@ public class Weapons {
 							Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		}
 		else if(m == Material.TRIDENT) {
-			kname = "»ïÁöÃ¢";
+			kname = "ì‚¼ì§€ì°½";
 			ename = "Trident";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 					new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", dm,
@@ -709,7 +709,7 @@ public class Weapons {
 							Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
 		}
 		else if(m == Material.PRISMARINE_SHARD) {
-			kname = "ºñ´Ã";
+			kname = "ë¹„ëŠ˜";
 			ename = "Shard";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", dm,
@@ -719,7 +719,7 @@ public class Weapons {
 							Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		}
 		else if(m == Material.FISHING_ROD) {
-			kname = "³¬½Ã´ë";
+			kname = "ë‚šì‹œëŒ€";
 			ename = "FishingRod";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", dm-1,
@@ -738,7 +738,7 @@ public class Weapons {
 		
 		if(cmdt == 12) {
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				sb.append("ÀÚ¿¬ÀÇ ");
+				sb.append("ìì—°ì˜ ");
 				sb.append(kname);
 				
 				sbe.append("Natural ");
@@ -755,11 +755,11 @@ public class Weapons {
 		}
 		else {
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				sb.append("¿ø¼Ò±â¿îÀÇ ");
+				sb.append("ì›ì†Œê¸°ìš´ì˜ ");
 				sb.append(kname);
 				sb.append(" - ");
 				sb.append(lev);
-				sb.append("´Ü°è");
+				sb.append("ë‹¨ê³„");
 				
 				sbe.append("Aura ");
 				sbe.append(ename);
@@ -802,15 +802,15 @@ public class Weapons {
 		final Integer wn = getwn(r.getType());
 		
 		if(m.contains("_BANNER")) {
-			kname = "³ÊÅ¬";
+			kname = "ë„ˆí´";
 			ename = "Knuckle";
 			if(p.getLocale().contains("kr")){
 				if (rm.hasLore()) {
 					List<String> lore = rm.getLore();
-					lore.add( "¼Õ±³Ã¼½Ã ÀåÂø");
+					lore.add( "ì†êµì²´ì‹œ ì¥ì°©");
 					rm.setLore(lore);
 				} else {
-					rm.setLore(Arrays.asList("¼Õ±³Ã¼½Ã ÀåÂø"));
+					rm.setLore(Arrays.asList("ì†êµì²´ì‹œ ì¥ì°©"));
 				}
 			}
 			else {
@@ -836,7 +836,7 @@ public class Weapons {
 							Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
 		}
 		else if(m.equals("BOW")) {
-			kname = "È°";
+			kname = "í™œ";
 			ename = "Bow";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 27,
@@ -846,7 +846,7 @@ public class Weapons {
 							Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		}
 		else if(m.contains("SWORD")) {
-			kname = "°Ë";
+			kname = "ê²€";
 			ename = "Sword";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 27,
@@ -856,7 +856,7 @@ public class Weapons {
 							Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		}
 		else if(m.contains("_AXE")) {
-			kname = "µµ³¢";
+			kname = "ë„ë¼";
 			ename = "Axe";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 30,
@@ -866,7 +866,7 @@ public class Weapons {
 							Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		}
 		else if(m.equals("CROSSBOW")) {
-			kname = "¼è³ú";
+			kname = "ì‡ ë‡Œ";
 			ename = "Crossbow";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 29,
@@ -876,7 +876,7 @@ public class Weapons {
 							Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		}
 		else if(m.contains("SHOVEL")) {
-			kname = "»ğ";
+			kname = "ì‚½";
 			ename = "Shovel";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 25,
@@ -886,7 +886,7 @@ public class Weapons {
 							Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		}
 		else if(m.contains("PICKAXE")) {
-			kname = "°î±ªÀÌ";
+			kname = "ê³¡ê´­ì´";
 			ename = "Pickaxe";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 25,
@@ -896,7 +896,7 @@ public class Weapons {
 							Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		}
 		else if(m.contains("HOE")) {
-			kname = "±ªÀÌ";
+			kname = "ê´­ì´";
 			ename = "Hoe";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 					new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 24,
@@ -907,7 +907,7 @@ public class Weapons {
 							Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		}
 		else if(m.contains("BLAZE_ROD")) {
-			kname = "¿Ïµå";
+			kname = "ì™„ë“œ";
 			ename = "Wand";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 29,
@@ -917,7 +917,7 @@ public class Weapons {
 							Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		}
 		else if(m.contains("TRIDENT")) {
-			kname = "»ïÁöÃ¢";
+			kname = "ì‚¼ì§€ì°½";
 			ename = "Trident";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 					new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 27,
@@ -941,7 +941,7 @@ public class Weapons {
 							Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
 		}
 		else if(m.contains("SHARD")) {
-			kname = "ºñ´Ã";
+			kname = "ë¹„ëŠ˜";
 			ename = "Shard";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 27,
@@ -951,7 +951,7 @@ public class Weapons {
 							Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		}
 		else if(m.contains("FISHING_ROD")) {
-			kname = "³¬½Ã´ë";
+			kname = "ë‚šì‹œëŒ€";
 			ename = "FishingRod";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 26,
@@ -969,7 +969,7 @@ public class Weapons {
 	
 		if (cmdt == 214) {
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				rm.setDisplayName(ChatColor.GOLD +"´ëÁöÀÇ "+kname);
+				rm.setDisplayName(ChatColor.GOLD +"ëŒ€ì§€ì˜ "+kname);
 				rm.setLocalizedName(ChatColor.GOLD +"Earth "+ename);
 			}
 			else {
@@ -982,7 +982,7 @@ public class Weapons {
 		}
 		else if (cmdt == 205) {
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				rm.setDisplayName(ChatColor.GOLD +"¹Ù¶÷ÀÇ "+kname);
+				rm.setDisplayName(ChatColor.GOLD +"ë°”ëŒì˜ "+kname);
 				rm.setLocalizedName(ChatColor.GOLD +"Windy "+ename);
 			}
 			else {
@@ -993,7 +993,7 @@ public class Weapons {
 			return r;
 		} else if (cmdt == 206) {
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				rm.setDisplayName(ChatColor.GOLD +"¼­¸®ÀÇ "+kname);
+				rm.setDisplayName(ChatColor.GOLD +"ì„œë¦¬ì˜ "+kname);
 				rm.setLocalizedName(ChatColor.GOLD +"Frost "+ename);
 			}
 			else {
@@ -1004,7 +1004,7 @@ public class Weapons {
 			return r;
 		} else if (cmdt == 207) {
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				rm.setDisplayName(ChatColor.GOLD +"¹Ù´ÙÀÇ "+kname);
+				rm.setDisplayName(ChatColor.GOLD +"ë°”ë‹¤ì˜ "+kname);
 				rm.setLocalizedName(ChatColor.GOLD +"Ocean "+ename);
 			}
 			else {
@@ -1015,7 +1015,7 @@ public class Weapons {
 			return r;
 		} else if (cmdt == 208) {
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				rm.setDisplayName(ChatColor.GOLD +"¾îµÒÀÇ "+kname);
+				rm.setDisplayName(ChatColor.GOLD +"ì–´ë‘ ì˜ "+kname);
 				rm.setLocalizedName(ChatColor.GOLD +"Dark "+ename);
 			}
 			else {
@@ -1026,7 +1026,7 @@ public class Weapons {
 			return r;
 		} else if (cmdt == 209) {
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				rm.setDisplayName(ChatColor.GOLD +"°³Á¶µÈ "+kname);
+				rm.setDisplayName(ChatColor.GOLD +"ê°œì¡°ëœ "+kname);
 				rm.setLocalizedName(ChatColor.GOLD +"Hyper "+ename);
 			}
 			else {
@@ -1037,7 +1037,7 @@ public class Weapons {
 			return r;
 		} else if (cmdt == 210) {
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				rm.setDisplayName(ChatColor.GOLD +"ÀÛ¿­ÇÏ´Â "+kname);
+				rm.setDisplayName(ChatColor.GOLD +"ì‘ì—´í•˜ëŠ” "+kname);
 				rm.setLocalizedName(ChatColor.GOLD +"Burning "+ename);
 			}
 			else {
@@ -1048,7 +1048,7 @@ public class Weapons {
 			return r;
 		} else if (cmdt == 211) {
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				rm.setDisplayName(ChatColor.GOLD +"¸Íµ¶ "+kname);
+				rm.setDisplayName(ChatColor.GOLD +"ë§¹ë… "+kname);
 				rm.setLocalizedName(ChatColor.GOLD +"Poison "+ename);
 			}
 			else {
@@ -1732,35 +1732,35 @@ public class Weapons {
 			List<String> lore = im.getLore();
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 				
-				lore.removeIf(l -> l.contains("<[°ø°İ·Â]>"));
+				lore.removeIf(l -> l.contains("<[ê³µê²©ë ¥]>"));
 				lore.removeIf(l -> l.contains("<[Damage]>"));
-				lore.add(ChatColor.RED + "<[°ø°İ·Â]> {ÁÖ}[" + caculd(im.getAttributeModifiers(EquipmentSlot.HAND).get(Attribute.GENERIC_ATTACK_DAMAGE), is,0, p)+"] | "
-						+ "{º¸Á¶}[" + caculd(im.getAttributeModifiers(EquipmentSlot.OFF_HAND).get(Attribute.GENERIC_ATTACK_DAMAGE), is,1, p)+"]");
+				lore.add(ChatColor.RED + "<[ê³µê²©ë ¥]> {ì£¼}[" + caculd(im.getAttributeModifiers(EquipmentSlot.HAND).get(Attribute.GENERIC_ATTACK_DAMAGE), is,0, p)+"] | "
+						+ "{ë³´ì¡°}[" + caculd(im.getAttributeModifiers(EquipmentSlot.OFF_HAND).get(Attribute.GENERIC_ATTACK_DAMAGE), is,1, p)+"]");
 
-				lore.removeIf(l -> l.contains("<[Çà¿î]>"));
+				lore.removeIf(l -> l.contains("<[í–‰ìš´]>"));
 				lore.removeIf(l -> l.contains("<[Luck]>"));
-				lore.add(ChatColor.GREEN + "<[Çà¿î]> {ÁÖ}[" + cacull(im.getAttributeModifiers(EquipmentSlot.HAND).get(Attribute.GENERIC_LUCK), is,0, p)+"] | "
-						 + "{º¸Á¶}[" + cacull(im.getAttributeModifiers(EquipmentSlot.OFF_HAND).get(Attribute.GENERIC_LUCK), is,1, p)+"]");
+				lore.add(ChatColor.GREEN + "<[í–‰ìš´]> {ì£¼}[" + cacull(im.getAttributeModifiers(EquipmentSlot.HAND).get(Attribute.GENERIC_LUCK), is,0, p)+"] | "
+						 + "{ë³´ì¡°}[" + cacull(im.getAttributeModifiers(EquipmentSlot.OFF_HAND).get(Attribute.GENERIC_LUCK), is,1, p)+"]");
 				
-				lore.removeIf(l -> l.contains("<[°ø°İ¼Óµµ]>"));
+				lore.removeIf(l -> l.contains("<[ê³µê²©ì†ë„]>"));
 				lore.removeIf(l -> l.contains("<[Haste]>"));
-				lore.add(ChatColor.AQUA + "<[°ø°İ¼Óµµ]> {ÁÖ}[" + caculs(im.getAttributeModifiers(EquipmentSlot.HAND).get(Attribute.GENERIC_ATTACK_SPEED), is,0, p)+"] | "
-						 + "{º¸Á¶}[" + caculs(im.getAttributeModifiers(EquipmentSlot.OFF_HAND).get(Attribute.GENERIC_ATTACK_SPEED), is,1, p)+"]");
+				lore.add(ChatColor.AQUA + "<[ê³µê²©ì†ë„]> {ì£¼}[" + caculs(im.getAttributeModifiers(EquipmentSlot.HAND).get(Attribute.GENERIC_ATTACK_SPEED), is,0, p)+"] | "
+						 + "{ë³´ì¡°}[" + caculs(im.getAttributeModifiers(EquipmentSlot.OFF_HAND).get(Attribute.GENERIC_ATTACK_SPEED), is,1, p)+"]");
 				
 			}
 			else {
 				
-				lore.removeIf(l -> l.contains("<[°ø°İ·Â]>"));
+				lore.removeIf(l -> l.contains("<[ê³µê²©ë ¥]>"));
 				lore.removeIf(l -> l.contains("<[Damage]>"));
 				lore.add(ChatColor.RED + "<[Damage]> {Main}[" + caculd(im.getAttributeModifiers(EquipmentSlot.HAND).get(Attribute.GENERIC_ATTACK_DAMAGE), is,0, p)+"] | "
 						+ "{Off}[" + caculd(im.getAttributeModifiers(EquipmentSlot.OFF_HAND).get(Attribute.GENERIC_ATTACK_DAMAGE), is,1, p)+"]");
 
-				lore.removeIf(l -> l.contains("<[Çà¿î]>"));
+				lore.removeIf(l -> l.contains("<[í–‰ìš´]>"));
 				lore.removeIf(l -> l.contains("<[Luck]>"));
 				lore.add(ChatColor.GREEN + "<[Luck]> {Main}[" + cacull(im.getAttributeModifiers(EquipmentSlot.HAND).get(Attribute.GENERIC_LUCK), is,0, p)+"] | "
 						 + "{Off}[" + cacull(im.getAttributeModifiers(EquipmentSlot.OFF_HAND).get(Attribute.GENERIC_LUCK), is,1, p)+"]");
 				
-				lore.removeIf(l -> l.contains("<[°ø°İ¼Óµµ]>"));
+				lore.removeIf(l -> l.contains("<[ê³µê²©ì†ë„]>"));
 				lore.removeIf(l -> l.contains("<[Haste]>"));
 				lore.add(ChatColor.AQUA + "<[Haste]> {Main}[" + caculs(im.getAttributeModifiers(EquipmentSlot.HAND).get(Attribute.GENERIC_ATTACK_SPEED), is,0, p)+"] | "
 						 + "{Off}[" + caculs(im.getAttributeModifiers(EquipmentSlot.OFF_HAND).get(Attribute.GENERIC_ATTACK_SPEED), is,1, p)+"]");
@@ -1771,35 +1771,35 @@ public class Weapons {
 			List<String> lore = new ArrayList<>();
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 				
-				lore.removeIf(l -> l.contains("<[°ø°İ·Â]>"));
+				lore.removeIf(l -> l.contains("<[ê³µê²©ë ¥]>"));
 				lore.removeIf(l -> l.contains("<[Damage]>"));
-				lore.add(ChatColor.RED + "<[°ø°İ·Â]> {ÁÖ}[" + caculd(im.getAttributeModifiers(EquipmentSlot.HAND).get(Attribute.GENERIC_ATTACK_DAMAGE), is,0, p)+"] | "
-						+ "{º¸Á¶}[" + caculd(im.getAttributeModifiers(EquipmentSlot.OFF_HAND).get(Attribute.GENERIC_ATTACK_DAMAGE), is,1, p)+"]");
+				lore.add(ChatColor.RED + "<[ê³µê²©ë ¥]> {ì£¼}[" + caculd(im.getAttributeModifiers(EquipmentSlot.HAND).get(Attribute.GENERIC_ATTACK_DAMAGE), is,0, p)+"] | "
+						+ "{ë³´ì¡°}[" + caculd(im.getAttributeModifiers(EquipmentSlot.OFF_HAND).get(Attribute.GENERIC_ATTACK_DAMAGE), is,1, p)+"]");
 
-				lore.removeIf(l -> l.contains("<[Çà¿î]>"));
+				lore.removeIf(l -> l.contains("<[í–‰ìš´]>"));
 				lore.removeIf(l -> l.contains("<[Luck]>"));
-				lore.add(ChatColor.GREEN + "<[Çà¿î]> {ÁÖ}[" + cacull(im.getAttributeModifiers(EquipmentSlot.HAND).get(Attribute.GENERIC_LUCK), is,0, p)+"] | "
-						 + "{º¸Á¶}[" + cacull(im.getAttributeModifiers(EquipmentSlot.OFF_HAND).get(Attribute.GENERIC_LUCK), is,1, p)+"]");
+				lore.add(ChatColor.GREEN + "<[í–‰ìš´]> {ì£¼}[" + cacull(im.getAttributeModifiers(EquipmentSlot.HAND).get(Attribute.GENERIC_LUCK), is,0, p)+"] | "
+						 + "{ë³´ì¡°}[" + cacull(im.getAttributeModifiers(EquipmentSlot.OFF_HAND).get(Attribute.GENERIC_LUCK), is,1, p)+"]");
 				
-				lore.removeIf(l -> l.contains("<[°ø°İ¼Óµµ]>"));
+				lore.removeIf(l -> l.contains("<[ê³µê²©ì†ë„]>"));
 				lore.removeIf(l -> l.contains("<[Haste]>"));
-				lore.add(ChatColor.AQUA + "<[°ø°İ¼Óµµ]> {ÁÖ}[" + caculs(im.getAttributeModifiers(EquipmentSlot.HAND).get(Attribute.GENERIC_ATTACK_SPEED), is,0, p)+"] | "
-						 + "{º¸Á¶}[" + caculs(im.getAttributeModifiers(EquipmentSlot.OFF_HAND).get(Attribute.GENERIC_ATTACK_SPEED), is,1, p)+"]");
+				lore.add(ChatColor.AQUA + "<[ê³µê²©ì†ë„]> {ì£¼}[" + caculs(im.getAttributeModifiers(EquipmentSlot.HAND).get(Attribute.GENERIC_ATTACK_SPEED), is,0, p)+"] | "
+						 + "{ë³´ì¡°}[" + caculs(im.getAttributeModifiers(EquipmentSlot.OFF_HAND).get(Attribute.GENERIC_ATTACK_SPEED), is,1, p)+"]");
 				
 			}
 			else {
 				
-				lore.removeIf(l -> l.contains("<[°ø°İ·Â]>"));
+				lore.removeIf(l -> l.contains("<[ê³µê²©ë ¥]>"));
 				lore.removeIf(l -> l.contains("<[Damage]>"));
 				lore.add(ChatColor.RED + "<[Damage]> {Main}[" + caculd(im.getAttributeModifiers(EquipmentSlot.HAND).get(Attribute.GENERIC_ATTACK_DAMAGE), is,0, p)+"] | "
 						+ "{Off}[" + caculd(im.getAttributeModifiers(EquipmentSlot.OFF_HAND).get(Attribute.GENERIC_ATTACK_DAMAGE), is,1, p)+"]");
 
-				lore.removeIf(l -> l.contains("<[Çà¿î]>"));
+				lore.removeIf(l -> l.contains("<[í–‰ìš´]>"));
 				lore.removeIf(l -> l.contains("<[Luck]>"));
 				lore.add(ChatColor.GREEN + "<[Luck]> {Main}[" + cacull(im.getAttributeModifiers(EquipmentSlot.HAND).get(Attribute.GENERIC_LUCK), is,0, p)+"] | "
 						 + "{Off}[" + cacull(im.getAttributeModifiers(EquipmentSlot.OFF_HAND).get(Attribute.GENERIC_LUCK), is,1, p)+"]");
 				
-				lore.removeIf(l -> l.contains("<[°ø°İ¼Óµµ]>"));
+				lore.removeIf(l -> l.contains("<[ê³µê²©ì†ë„]>"));
 				lore.removeIf(l -> l.contains("<[Haste]>"));
 				lore.add(ChatColor.AQUA + "<[Haste]> {Main}[" + caculs(im.getAttributeModifiers(EquipmentSlot.HAND).get(Attribute.GENERIC_ATTACK_SPEED), is,0, p)+"] | "
 						 + "{Off}[" + caculs(im.getAttributeModifiers(EquipmentSlot.OFF_HAND).get(Attribute.GENERIC_ATTACK_SPEED), is,1, p)+"]");

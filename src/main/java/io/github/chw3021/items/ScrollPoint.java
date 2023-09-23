@@ -118,7 +118,7 @@ public class ScrollPoint implements Serializable, Listener{
 					p.getInventory().getItemInMainHand().setAmount(0);
 
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		        		p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + "µÎ·ç¸¶¸®¸¦ »ç¿ëÇß½À´Ï´Ù"), ChatColor.BOLD +"½ºÅ³Æ÷ÀÎÆ®°¡ 1 »ó½ÂÇß½À´Ï´Ù", 5, 60, 5);
+		        		p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + "ë‘ë£¨ë§ˆë¦¬ë¥¼ ì‚¬ìš©í–ˆìŠµë‹ˆë‹¤"), ChatColor.BOLD +"ìŠ¤í‚¬í¬ì¸íŠ¸ê°€ 1 ìƒìŠ¹í–ˆìŠµë‹ˆë‹¤", 5, 60, 5);
 					}
 					else {
 		        		p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + "The Scroll Used"), ChatColor.BOLD +"Increase 1 Skill Point", 5, 60, 5);

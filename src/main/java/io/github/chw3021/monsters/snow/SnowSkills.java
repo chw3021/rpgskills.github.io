@@ -787,7 +787,7 @@ public class SnowSkills extends Summoned implements Listener{
 				                	if(ne instanceof Player) {
 				                		Player pe = (Player) ne;
 				    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-					                		pe.sendMessage(ChatColor.BOLD+"ÀÌ¸® ¿À³Ê¶ó!");
+					                		pe.sendMessage(ChatColor.BOLD+"ì´ë¦¬ ì˜¤ë„ˆë¼!");
 				    					}
 				    					else {
 					                		pe.sendMessage(ChatColor.BOLD+"Come Here!");
@@ -849,7 +849,7 @@ public class SnowSkills extends Summoned implements Listener{
 			                	if(ne instanceof Player) {
 			                		Player pe = (Player) ne;
 			    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-				                		pe.sendMessage(ChatColor.BOLD+"ÀÌ¸® ¿À³Ê¶ó!");
+				                		pe.sendMessage(ChatColor.BOLD+"ì´ë¦¬ ì˜¤ë„ˆë¼!");
 			    					}
 			    					else {
 				                		pe.sendMessage(ChatColor.BOLD+"Come Here!");
@@ -915,7 +915,7 @@ public class SnowSkills extends Summoned implements Listener{
         		Player pe = (Player) e;
         		Holding.invur(pe, 40l);
 				if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-            		pe.sendMessage(ChatColor.BOLD+"Â÷°¡¿î ½ÉÀåÀÇ ¸¶³à: ¿î¸í¿¡ ÀúÇ×ÇÏÁö¸¶¶ó.");
+            		pe.sendMessage(ChatColor.BOLD+"ì°¨ê°€ìš´ ì‹¬ì¥ì˜ ë§ˆë…€: ìš´ëª…ì— ì €í•­í•˜ì§€ë§ˆë¼.");
 				}
 				else {
             		pe.sendMessage(ChatColor.BOLD+"FrozenHeart: You can't change your destiny.");
@@ -1123,7 +1123,7 @@ public class SnowSkills extends Summoned implements Listener{
         		}
                 for(Player pe : OverworldRaids.getheroes(p)) {
 					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-                		pe.sendMessage(ChatColor.BOLD+"¸ÛÃ»ÇÑ °Íµé!");
+                		pe.sendMessage(ChatColor.BOLD+"ë©ì²­í•œ ê²ƒë“¤!");
 					}
 					else {
                 		pe.sendMessage(ChatColor.BOLD+"That's pathetic!");
@@ -1162,7 +1162,7 @@ public class SnowSkills extends Summoned implements Listener{
 	            	Holding.ale(p).setMetadata("failed", new FixedMetadataValue(RMain.getInstance(),true));
 	                for(Player pe : OverworldRaids.getheroes(p)) {
 						if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-	                		pe.sendMessage(ChatColor.BLUE+"³×³ğ µûÀ§µéÀÌ ¾î¶»°Ô..");
+	                		pe.sendMessage(ChatColor.BLUE+"ë„¤ë†ˆ ë”°ìœ„ë“¤ì´ ì–´ë–»ê²Œ..");
 						}
 						else {
 	                		pe.sendMessage(ChatColor.BLUE+"How did You do that..");
@@ -1246,7 +1246,7 @@ public class SnowSkills extends Summoned implements Listener{
         		}
                 for(Player pe : OverworldRaids.getheroes(p)) {
 					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-                		pe.sendMessage(ChatColor.BOLD+"¸ÛÃ»ÇÑ °Íµé!");
+                		pe.sendMessage(ChatColor.BOLD+"ë©ì²­í•œ ê²ƒë“¤!");
 					}
 					else {
                 		pe.sendMessage(ChatColor.BOLD+"That's pathetic!");
@@ -1281,7 +1281,7 @@ public class SnowSkills extends Summoned implements Listener{
 		
         for(Player pe : OverworldRaids.getheroes(p)) {
 			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-        		pe.sendMessage(ChatColor.BLUE+"ÇÑ¹ø Ã£¾Æº¸½ÃÁö!");
+        		pe.sendMessage(ChatColor.BLUE+"í•œë²ˆ ì°¾ì•„ë³´ì‹œì§€!");
 			}
 			else {
         		pe.sendMessage(ChatColor.BLUE+"Look it up!");

@@ -41,14 +41,14 @@ public class Elements implements Listener {
 	    	p.getInventory().addItem(is);
 	    	if(p.getInventory().firstEmpty() == -1 && is != null && is.getAmount() >0) {
 	    		p.getWorld().dropItem(p.getLocation(), is);
-	    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "ÀÎº¥Åä¸®°¡ ²ËÃ¡½À´Ï´Ù":"Your Inventory Is Fulled!";
+	    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "ì¸ë²¤í† ë¦¬ê°€ ê½‰ì°¼ìŠµë‹ˆë‹¤":"Your Inventory Is Fulled!";
 	    		p.sendMessage(ChatColor.RED + reg);
 	    	}
 		}
 		
 		
     	//final String in = m.name();
-		//String gived = p.getLocale().equalsIgnoreCase("ko_kr") ? in + " " + count + "°³¸¦ È¹µæÇß½À´Ï´Ù":"You've Got " + count +" "+in;
+		//String gived = p.getLocale().equalsIgnoreCase("ko_kr") ? in + " " + count + "ê°œë¥¼ íšë“í–ˆìŠµë‹ˆë‹¤":"You've Got " + count +" "+in;
 		//p.sendMessage(ChatColor.GOLD + gived);
 		
     	return is;
@@ -63,11 +63,11 @@ public class Elements implements Listener {
 		else {
 	    	p.getInventory().addItem(is);
 	    	final String in = is.getItemMeta().getDisplayName();
-			String gived = p.getLocale().equalsIgnoreCase("ko_kr") ? in + " " + count + "°³¸¦ È¹µæÇß½À´Ï´Ù":"You've Got " + count +" "+in;
+			String gived = p.getLocale().equalsIgnoreCase("ko_kr") ? in + " " + count + "ê°œë¥¼ íšë“í–ˆìŠµë‹ˆë‹¤":"You've Got " + count +" "+in;
 			p.sendMessage(ChatColor.GOLD + gived);
 	    	if(p.getInventory().firstEmpty() == -1 && is != null && is.getAmount() >0) {
 	    		p.getWorld().dropItem(p.getLocation(), is);
-	    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "ÀÎº¥Åä¸®°¡ ²ËÃ¡½À´Ï´Ù":"Your Inventory Is Fulled!";
+	    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "ì¸ë²¤í† ë¦¬ê°€ ê½‰ì°¼ìŠµë‹ˆë‹¤":"Your Inventory Is Fulled!";
 	    		p.sendMessage(ChatColor.RED + reg);
 	    	}
 		}
@@ -80,80 +80,80 @@ public class Elements implements Listener {
 		ItemStack ii = new ItemStack(Material.RED_STAINED_GLASS);
 		ItemMeta imeta = ii.getItemMeta();
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			imeta.setLore(Arrays.asList(ChatColor.BOLD +"ÇÑ¹ø ¼³Ä¡ÇÏ¸é È¸¼öÇÒ¼ö ¾ø½À´Ï´Ù","¿ìÅ¬¸¯½Ã Ä§°øÀÛÀüÀÌ ½ÃÀÛµË´Ï´Ù", "ÀÛÀü ½ÃÀÛ½Ã ÇØ´ç ºí·°Àº »ç¶óÁı´Ï´Ù"));
+			imeta.setLore(Arrays.asList(ChatColor.BOLD +"í•œë²ˆ ì„¤ì¹˜í•˜ë©´ íšŒìˆ˜í• ìˆ˜ ì—†ìŠµë‹ˆë‹¤","ìš°í´ë¦­ì‹œ ì¹¨ê³µì‘ì „ì´ ì‹œì‘ë©ë‹ˆë‹¤", "ì‘ì „ ì‹œì‘ì‹œ í•´ë‹¹ ë¸”ëŸ­ì€ ì‚¬ë¼ì§‘ë‹ˆë‹¤"));
 			if(i == 4) {
 				ii.setType(Material.GREEN_STAINED_GLASS);
-				imeta.setDisplayName(ChatColor.BLUE +"¿¤´õÅ©¸®ÆÛ Ä§°øÀÛÀü ¼ø°£ÀÌµ¿±â");
+				imeta.setDisplayName(ChatColor.BLUE +"ì—˜ë”í¬ë¦¬í¼ ì¹¨ê³µì‘ì „ ìˆœê°„ì´ë™ê¸°");
 				imeta.setLocalizedName(ChatColor.BLUE +"ElderCreeper Raid Teleporter");
 			}
 			else if(i == 5) {
 				ii.setType(Material.LIGHT_GRAY_STAINED_GLASS);
-				imeta.setDisplayName(ChatColor.BLUE +"½ºÅæ°ñ·½ Ä§°øÀÛÀü ¼ø°£ÀÌµ¿±â");
+				imeta.setDisplayName(ChatColor.BLUE +"ìŠ¤í†¤ê³¨ë ˜ ì¹¨ê³µì‘ì „ ìˆœê°„ì´ë™ê¸°");
 				imeta.setLocalizedName(ChatColor.BLUE +"StoneGolem Raid Teleporter");
 			}
 			else if(i == 6) {
 				ii.setType(Material.WHITE_STAINED_GLASS);
-				imeta.setDisplayName(ChatColor.BLUE +"¼³»ê¸¶³à Ä§°øÀÛÀü ¼ø°£ÀÌµ¿±â");
+				imeta.setDisplayName(ChatColor.BLUE +"ì„¤ì‚°ë§ˆë…€ ì¹¨ê³µì‘ì „ ìˆœê°„ì´ë™ê¸°");
 				imeta.setLocalizedName(ChatColor.BLUE +"SnowWitch Raid Teleporter");
 			}
 			else if(i == 7) {
 				ii.setType(Material.BLUE_STAINED_GLASS);
-				imeta.setDisplayName(ChatColor.BLUE +"¿¤´õ°¡µğ¾ğ Ä§°øÀÛÀü ¼ø°£ÀÌµ¿±â");
+				imeta.setDisplayName(ChatColor.BLUE +"ì—˜ë”ê°€ë””ì–¸ ì¹¨ê³µì‘ì „ ìˆœê°„ì´ë™ê¸°");
 				imeta.setLocalizedName(ChatColor.BLUE +"ElderGuardian Raid Teleporter");
 			}
 			else if(i == 8) {
 				ii.setType(Material.BROWN_STAINED_GLASS);
-				imeta.setDisplayName(ChatColor.BLUE +"Èæ¸¶¹ı»ç Ä§°øÀÛÀü ¼ø°£ÀÌµ¿±â");
+				imeta.setDisplayName(ChatColor.BLUE +"í‘ë§ˆë²•ì‚¬ ì¹¨ê³µì‘ì „ ìˆœê°„ì´ë™ê¸°");
 				imeta.setLocalizedName(ChatColor.BLUE +"DarkMage Raid Teleporter");
 			}
 			else if(i == 9) {
 				ii.setType(Material.MAGENTA_STAINED_GLASS);
-				imeta.setDisplayName(ChatColor.BLUE +"´ÚÅÍB Ä§°øÀÛÀü ¼ø°£ÀÌµ¿±â");
+				imeta.setDisplayName(ChatColor.BLUE +"ë‹¥í„°B ì¹¨ê³µì‘ì „ ìˆœê°„ì´ë™ê¸°");
 				imeta.setLocalizedName(ChatColor.BLUE +"DrB Raid Teleporter");
 			}
 			else if(i == 10) {
 				ii.setType(Material.RED_STAINED_GLASS);
-				imeta.setDisplayName(ChatColor.BLUE +"ºÓÀº±â»ç Ä§°øÀÛÀü ¼ø°£ÀÌµ¿±â");
+				imeta.setDisplayName(ChatColor.BLUE +"ë¶‰ì€ê¸°ì‚¬ ì¹¨ê³µì‘ì „ ìˆœê°„ì´ë™ê¸°");
 				imeta.setLocalizedName(ChatColor.BLUE +"RedKnight Raid Teleporter");
 			}
 			else if(i == 12) {
 				ii.setType(Material.YELLOW_STAINED_GLASS);
-				imeta.setDisplayName(ChatColor.BLUE +"ÀØÇôÁø »çÁ¦ Ä§°øÀÛÀü ¼ø°£ÀÌµ¿±â");
+				imeta.setDisplayName(ChatColor.BLUE +"ìŠí˜€ì§„ ì‚¬ì œ ì¹¨ê³µì‘ì „ ìˆœê°„ì´ë™ê¸°");
 				imeta.setLocalizedName(ChatColor.BLUE +"LostTemplar Raid Teleporter");//wild
 			}
 			else if(i == -2) {
 				ii.setType(Material.ORANGE_STAINED_GLASS);
-				imeta.setDisplayName(ChatColor.BLUE +"¼öÈ®ÀÚ Ä§°øÀÛÀü ¼ø°£ÀÌµ¿±â");
+				imeta.setDisplayName(ChatColor.BLUE +"ìˆ˜í™•ì ì¹¨ê³µì‘ì „ ìˆœê°„ì´ë™ê¸°");
 				imeta.setLocalizedName(ChatColor.BLUE +"Harvester Raid Teleporter");//soul
 			}
 			else if(i == -3) {
 				ii.setType(Material.MAGENTA_STAINED_GLASS);
-				imeta.setDisplayName(ChatColor.BLUE +"ÇĞ»ìÀÚ Ä§°øÀÛÀü ¼ø°£ÀÌµ¿±â");
+				imeta.setDisplayName(ChatColor.BLUE +"í•™ì‚´ì ì¹¨ê³µì‘ì „ ìˆœê°„ì´ë™ê¸°");
 				imeta.setLocalizedName(ChatColor.BLUE +"Slaughter Raid Teleporter");//crimson
 			}
 			else if(i == -4) {
 				ii.setType(Material.CYAN_STAINED_GLASS);
-				imeta.setDisplayName(ChatColor.BLUE +"°Å´ëÆÒÅÒ Ä§°øÀÛÀü ¼ø°£ÀÌµ¿±â");
+				imeta.setDisplayName(ChatColor.BLUE +"ê±°ëŒ€íŒ¬í…€ ì¹¨ê³µì‘ì „ ìˆœê°„ì´ë™ê¸°");
 				imeta.setLocalizedName(ChatColor.BLUE +"GiantPhantom Raid Teleporter");//warp
 			}
 			else if(i == -5) {
 				ii.setType(Material.PINK_STAINED_GLASS);
-				imeta.setDisplayName(ChatColor.BLUE +"ÇÇ±Û¸°¿ä¸®»ç Ä§°øÀÛÀü ¼ø°£ÀÌµ¿±â");
+				imeta.setDisplayName(ChatColor.BLUE +"í”¼ê¸€ë¦°ìš”ë¦¬ì‚¬ ì¹¨ê³µì‘ì „ ìˆœê°„ì´ë™ê¸°");
 				imeta.setLocalizedName(ChatColor.BLUE +"PiglinCook Raid Teleporter");//volcanic
 			}
 			else if(i == -6) {
 				ii.setType(Material.GRAY_STAINED_GLASS);
-				imeta.setDisplayName(ChatColor.BLUE +"´ë·®¿£´õ¸Ç Ä§°øÀÛÀü ¼ø°£ÀÌµ¿±â");
+				imeta.setDisplayName(ChatColor.BLUE +"ëŒ€ëŸ‰ì—”ë”ë§¨ ì¹¨ê³µì‘ì „ ìˆœê°„ì´ë™ê¸°");
 				imeta.setLocalizedName(ChatColor.BLUE +"MassEndermans Raid Teleporter");//ender
 			}
 			else if(i == -7) {
 				ii.setType(Material.PURPLE_STAINED_GLASS);
-				imeta.setDisplayName(ChatColor.BLUE +"Â÷¿ø ÈÑ¹æ²Û Ä§°øÀÛÀü ¼ø°£ÀÌµ¿±â");
+				imeta.setDisplayName(ChatColor.BLUE +"ì°¨ì› í›¼ë°©ê¾¼ ì¹¨ê³µì‘ì „ ìˆœê°„ì´ë™ê¸°");
 				imeta.setLocalizedName(ChatColor.BLUE +"Disrupter Raid Teleporter");//void
 			}
 			else if(i == -8) {
 				ii.setType(Material.BLACK_STAINED_GLASS);
-				imeta.setDisplayName(ChatColor.BLUE +"À§´õ Ä§°øÀÛÀü ¼ø°£ÀÌµ¿±â");
+				imeta.setDisplayName(ChatColor.BLUE +"ìœ„ë” ì¹¨ê³µì‘ì „ ìˆœê°„ì´ë™ê¸°");
 				imeta.setLocalizedName(ChatColor.BLUE +"Wither Raid Teleporter");
 			}
 			ii.setItemMeta(imeta);
@@ -248,133 +248,133 @@ public class Elements implements Listener {
 		ItemMeta imeta = ii.getItemMeta();
 		imeta.setCustomModelData(100*(i>0?1:-1) + i);
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			imeta.setLore(Arrays.asList("64°³¸¦ Á¶ÇÕ½Ã ¹«±â¸¦ °­È­ÇÒ¼ö ÀÖ´Â ÇÙÀ» È¹µæÇÕ´Ï´Ù"));
+			imeta.setLore(Arrays.asList("64ê°œë¥¼ ì¡°í•©ì‹œ ë¬´ê¸°ë¥¼ ê°•í™”í• ìˆ˜ ìˆëŠ” í•µì„ íšë“í•©ë‹ˆë‹¤"));
 			if(i == 5) {
 				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[Áö»ó ¿ø¼ÒÇÙ °­È­ ¼ø¼­, È¹µæ °¡´ÉÇÑ ±º°è]",ChatColor.AQUA + "³×´õ¶óÀÌÆ®-´ëÁö(Æò¿ø)-¹Ù¶÷(»ê)-¼­¸®(¾óÀ½)-¹Ù´Ù",ChatColor.AQUA + "¾îµÒ(½£)-°³Á¶(»ç¸·)-ÀÛ¿­(¾ÇÁö)-¸Íµ¶(´Ë)-¾ß»ı(Á¤±Û)" ));
-				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "¹Ù¶÷ÀÇ ÇÙÀ¸·Î [¿ø¼Ò±â¿îÀÇ ¹«±â-1´Ü°è]¸¦ °­È­½Ã", ChatColor.LIGHT_PURPLE + "[¿ø¼Ò±â¿îÀÇ ¹«±â-2´Ü°è]¸¦ È¹µæÇÕ´Ï´Ù"));
+				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[ì§€ìƒ ì›ì†Œí•µ ê°•í™” ìˆœì„œ, íšë“ ê°€ëŠ¥í•œ êµ°ê³„]",ChatColor.AQUA + "ë„¤ë”ë¼ì´íŠ¸-ëŒ€ì§€(í‰ì›)-ë°”ëŒ(ì‚°)-ì„œë¦¬(ì–¼ìŒ)-ë°”ë‹¤",ChatColor.AQUA + "ì–´ë‘ (ìˆ²)-ê°œì¡°(ì‚¬ë§‰)-ì‘ì—´(ì•…ì§€)-ë§¹ë…(ëŠª)-ì•¼ìƒ(ì •ê¸€)" ));
+				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "ë°”ëŒì˜ í•µìœ¼ë¡œ [ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-1ë‹¨ê³„]ë¥¼ ê°•í™”ì‹œ", ChatColor.LIGHT_PURPLE + "[ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-2ë‹¨ê³„]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
 				imeta.setLore(lore);
 				ii.setType(Material.DIORITE);
-				imeta.setDisplayName(ChatColor.BLUE +"¹Ù¶÷ÀÇ ÆÄÆí");
-				imeta.setLocalizedName(ChatColor.BLUE +"¹Ù¶÷ÀÇ ÆÄÆí");
+				imeta.setDisplayName(ChatColor.BLUE +"ë°”ëŒì˜ íŒŒí¸");
+				imeta.setLocalizedName(ChatColor.BLUE +"ë°”ëŒì˜ íŒŒí¸");
 			}
 			else if(i == 14) {
 				ii.setType(Material.WHITE_TULIP);
 				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[Áö»ó ¿ø¼ÒÇÙ °­È­ ¼ø¼­, È¹µæ °¡´ÉÇÑ ±º°è]",ChatColor.AQUA + "³×´õ¶óÀÌÆ®-´ëÁö(Æò¿ø)-¹Ù¶÷(»ê)-¼­¸®(¾óÀ½)-¹Ù´Ù",ChatColor.AQUA + "¾îµÒ(½£)-°³Á¶(»ç¸·)-ÀÛ¿­(¾ÇÁö)-¸Íµ¶(´Ë)-¾ß»ı(Á¤±Û)" ));
-				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "¹Ù¶÷ÀÇ ÇÙÀ¸·Î [³×´õ¶óÀÌÆ® ¹«±â]¸¦ °­È­½Ã", ChatColor.LIGHT_PURPLE + "[¿ø¼Ò±â¿îÀÇ ¹«±â-1´Ü°è]¸¦ È¹µæÇÕ´Ï´Ù"));
+				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[ì§€ìƒ ì›ì†Œí•µ ê°•í™” ìˆœì„œ, íšë“ ê°€ëŠ¥í•œ êµ°ê³„]",ChatColor.AQUA + "ë„¤ë”ë¼ì´íŠ¸-ëŒ€ì§€(í‰ì›)-ë°”ëŒ(ì‚°)-ì„œë¦¬(ì–¼ìŒ)-ë°”ë‹¤",ChatColor.AQUA + "ì–´ë‘ (ìˆ²)-ê°œì¡°(ì‚¬ë§‰)-ì‘ì—´(ì•…ì§€)-ë§¹ë…(ëŠª)-ì•¼ìƒ(ì •ê¸€)" ));
+				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "ë°”ëŒì˜ í•µìœ¼ë¡œ [ë„¤ë”ë¼ì´íŠ¸ ë¬´ê¸°]ë¥¼ ê°•í™”ì‹œ", ChatColor.LIGHT_PURPLE + "[ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-1ë‹¨ê³„]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
 				imeta.setLore(lore);
-				imeta.setDisplayName(ChatColor.BLUE +"´ëÁöÀÇ ÆÄÆí");
-				imeta.setLocalizedName(ChatColor.BLUE +"´ëÁöÀÇ ÆÄÆí");
+				imeta.setDisplayName(ChatColor.BLUE +"ëŒ€ì§€ì˜ íŒŒí¸");
+				imeta.setLocalizedName(ChatColor.BLUE +"ëŒ€ì§€ì˜ íŒŒí¸");
 			}
 			else if(i == 6) {
 				ii.setType(Material.BLUE_ICE);
 				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[Áö»ó ¿ø¼ÒÇÙ °­È­ ¼ø¼­, È¹µæ °¡´ÉÇÑ ±º°è]",ChatColor.AQUA + "³×´õ¶óÀÌÆ®-´ëÁö(Æò¿ø)-¹Ù¶÷(»ê)-¼­¸®(¾óÀ½)-¹Ù´Ù",ChatColor.AQUA + "¾îµÒ(½£)-°³Á¶(»ç¸·)-ÀÛ¿­(¾ÇÁö)-¸Íµ¶(´Ë)-¾ß»ı(Á¤±Û)" ));
-				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "¼­¸®ÀÇ ÇÙÀ¸·Î [¿ø¼Ò±â¿îÀÇ ¹«±â-2´Ü°è]¸¦ °­È­½Ã", ChatColor.LIGHT_PURPLE + "[¿ø¼Ò±â¿îÀÇ ¹«±â-3´Ü°è]¸¦ È¹µæÇÕ´Ï´Ù"));
+				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[ì§€ìƒ ì›ì†Œí•µ ê°•í™” ìˆœì„œ, íšë“ ê°€ëŠ¥í•œ êµ°ê³„]",ChatColor.AQUA + "ë„¤ë”ë¼ì´íŠ¸-ëŒ€ì§€(í‰ì›)-ë°”ëŒ(ì‚°)-ì„œë¦¬(ì–¼ìŒ)-ë°”ë‹¤",ChatColor.AQUA + "ì–´ë‘ (ìˆ²)-ê°œì¡°(ì‚¬ë§‰)-ì‘ì—´(ì•…ì§€)-ë§¹ë…(ëŠª)-ì•¼ìƒ(ì •ê¸€)" ));
+				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "ì„œë¦¬ì˜ í•µìœ¼ë¡œ [ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-2ë‹¨ê³„]ë¥¼ ê°•í™”ì‹œ", ChatColor.LIGHT_PURPLE + "[ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-3ë‹¨ê³„]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
 				imeta.setLore(lore);
-				imeta.setDisplayName(ChatColor.BLUE +"¼­¸®ÀÇ ÆÄÆí");
-				imeta.setLocalizedName(ChatColor.BLUE +"¼­¸®ÀÇ ÆÄÆí");
+				imeta.setDisplayName(ChatColor.BLUE +"ì„œë¦¬ì˜ íŒŒí¸");
+				imeta.setLocalizedName(ChatColor.BLUE +"ì„œë¦¬ì˜ íŒŒí¸");
 			}
 			else if(i == 7) {
 				ii.setType(Material.PRISMARINE_CRYSTALS);
 				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[Áö»ó ¿ø¼ÒÇÙ °­È­ ¼ø¼­, È¹µæ °¡´ÉÇÑ ±º°è]",ChatColor.AQUA + "³×´õ¶óÀÌÆ®-´ëÁö(Æò¿ø)-¹Ù¶÷(»ê)-¼­¸®(¾óÀ½)-¹Ù´Ù",ChatColor.AQUA + "¾îµÒ(½£)-°³Á¶(»ç¸·)-ÀÛ¿­(¾ÇÁö)-¸Íµ¶(´Ë)-¾ß»ı(Á¤±Û)" ));
-				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "¹Ù´ÙÀÇ ÇÙÀ¸·Î [¿ø¼Ò±â¿îÀÇ ¹«±â-3´Ü°è]¸¦ °­È­½Ã", ChatColor.LIGHT_PURPLE + "[¿ø¼Ò±â¿îÀÇ ¹«±â-4´Ü°è]¸¦ È¹µæÇÕ´Ï´Ù"));
+				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[ì§€ìƒ ì›ì†Œí•µ ê°•í™” ìˆœì„œ, íšë“ ê°€ëŠ¥í•œ êµ°ê³„]",ChatColor.AQUA + "ë„¤ë”ë¼ì´íŠ¸-ëŒ€ì§€(í‰ì›)-ë°”ëŒ(ì‚°)-ì„œë¦¬(ì–¼ìŒ)-ë°”ë‹¤",ChatColor.AQUA + "ì–´ë‘ (ìˆ²)-ê°œì¡°(ì‚¬ë§‰)-ì‘ì—´(ì•…ì§€)-ë§¹ë…(ëŠª)-ì•¼ìƒ(ì •ê¸€)" ));
+				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "ë°”ë‹¤ì˜ í•µìœ¼ë¡œ [ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-3ë‹¨ê³„]ë¥¼ ê°•í™”ì‹œ", ChatColor.LIGHT_PURPLE + "[ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-4ë‹¨ê³„]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
 				imeta.setLore(lore);
-				imeta.setDisplayName(ChatColor.BLUE +"¹Ù´ÙÀÇ ÆÄÆí");
-				imeta.setLocalizedName(ChatColor.BLUE +"¹Ù´ÙÀÇ ÆÄÆí");
+				imeta.setDisplayName(ChatColor.BLUE +"ë°”ë‹¤ì˜ íŒŒí¸");
+				imeta.setLocalizedName(ChatColor.BLUE +"ë°”ë‹¤ì˜ íŒŒí¸");
 			}
 			else if(i == 8) {
 				ii.setType(Material.STRIPPED_DARK_OAK_WOOD);
 				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[Áö»ó ¿ø¼ÒÇÙ °­È­ ¼ø¼­, È¹µæ °¡´ÉÇÑ ±º°è]",ChatColor.AQUA + "³×´õ¶óÀÌÆ®-´ëÁö(Æò¿ø)-¹Ù¶÷(»ê)-¼­¸®(¾óÀ½)-¹Ù´Ù",ChatColor.AQUA + "¾îµÒ(½£)-°³Á¶(»ç¸·)-ÀÛ¿­(¾ÇÁö)-¸Íµ¶(´Ë)-¾ß»ı(Á¤±Û)" ));
-				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "¾îµÒÀÇ ÇÙÀ¸·Î [¿ø¼Ò±â¿îÀÇ ¹«±â-4´Ü°è]¸¦ °­È­½Ã", ChatColor.LIGHT_PURPLE + "[¿ø¼Ò±â¿îÀÇ ¹«±â-5´Ü°è]¸¦ È¹µæÇÕ´Ï´Ù"));
+				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[ì§€ìƒ ì›ì†Œí•µ ê°•í™” ìˆœì„œ, íšë“ ê°€ëŠ¥í•œ êµ°ê³„]",ChatColor.AQUA + "ë„¤ë”ë¼ì´íŠ¸-ëŒ€ì§€(í‰ì›)-ë°”ëŒ(ì‚°)-ì„œë¦¬(ì–¼ìŒ)-ë°”ë‹¤",ChatColor.AQUA + "ì–´ë‘ (ìˆ²)-ê°œì¡°(ì‚¬ë§‰)-ì‘ì—´(ì•…ì§€)-ë§¹ë…(ëŠª)-ì•¼ìƒ(ì •ê¸€)" ));
+				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "ì–´ë‘ ì˜ í•µìœ¼ë¡œ [ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-4ë‹¨ê³„]ë¥¼ ê°•í™”ì‹œ", ChatColor.LIGHT_PURPLE + "[ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-5ë‹¨ê³„]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
 				imeta.setLore(lore);
-				imeta.setDisplayName(ChatColor.BLUE +"¾îµÒÀÇ ÆÄÆí");
-				imeta.setLocalizedName(ChatColor.BLUE +"¾îµÒÀÇ ÆÄÆí");
+				imeta.setDisplayName(ChatColor.BLUE +"ì–´ë‘ ì˜ íŒŒí¸");
+				imeta.setLocalizedName(ChatColor.BLUE +"ì–´ë‘ ì˜ íŒŒí¸");
 			}
 			else if(i == 9) {
 				ii.setType(Material.FIREWORK_STAR);
 				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[Áö»ó ¿ø¼ÒÇÙ °­È­ ¼ø¼­, È¹µæ °¡´ÉÇÑ ±º°è]",ChatColor.AQUA + "³×´õ¶óÀÌÆ®-´ëÁö(Æò¿ø)-¹Ù¶÷(»ê)-¼­¸®(¾óÀ½)-¹Ù´Ù",ChatColor.AQUA + "¾îµÒ(½£)-°³Á¶(»ç¸·)-ÀÛ¿­(¾ÇÁö)-¸Íµ¶(´Ë)-¾ß»ı(Á¤±Û)" ));
-				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "ÇÏÀÌÆÛ ¿£ÁøÀ¸·Î [¿ø¼Ò±â¿îÀÇ ¹«±â-5´Ü°è]¸¦ °­È­½Ã", ChatColor.LIGHT_PURPLE + "[¿ø¼Ò±â¿îÀÇ ¹«±â-6´Ü°è]¸¦ È¹µæÇÕ´Ï´Ù"));
+				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[ì§€ìƒ ì›ì†Œí•µ ê°•í™” ìˆœì„œ, íšë“ ê°€ëŠ¥í•œ êµ°ê³„]",ChatColor.AQUA + "ë„¤ë”ë¼ì´íŠ¸-ëŒ€ì§€(í‰ì›)-ë°”ëŒ(ì‚°)-ì„œë¦¬(ì–¼ìŒ)-ë°”ë‹¤",ChatColor.AQUA + "ì–´ë‘ (ìˆ²)-ê°œì¡°(ì‚¬ë§‰)-ì‘ì—´(ì•…ì§€)-ë§¹ë…(ëŠª)-ì•¼ìƒ(ì •ê¸€)" ));
+				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "í•˜ì´í¼ ì—”ì§„ìœ¼ë¡œ [ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-5ë‹¨ê³„]ë¥¼ ê°•í™”ì‹œ", ChatColor.LIGHT_PURPLE + "[ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-6ë‹¨ê³„]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
 				imeta.setLore(lore);
-				imeta.setDisplayName(ChatColor.BLUE +"½ÇÇèÃ¼ ºÎÇ°");
-				imeta.setLocalizedName(ChatColor.BLUE +"½ÇÇèÃ¼ ºÎÇ°");
+				imeta.setDisplayName(ChatColor.BLUE +"ì‹¤í—˜ì²´ ë¶€í’ˆ");
+				imeta.setLocalizedName(ChatColor.BLUE +"ì‹¤í—˜ì²´ ë¶€í’ˆ");
 			}
 			else if(i == 10) {
 				ii.setType(Material.RED_SAND);
 				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[Áö»ó ¿ø¼ÒÇÙ °­È­ ¼ø¼­, È¹µæ °¡´ÉÇÑ ±º°è]",ChatColor.AQUA + "³×´õ¶óÀÌÆ®-´ëÁö(Æò¿ø)-¹Ù¶÷(»ê)-¼­¸®(¾óÀ½)-¹Ù´Ù",ChatColor.AQUA + "¾îµÒ(½£)-°³Á¶(»ç¸·)-ÀÛ¿­(¾ÇÁö)-¸Íµ¶(´Ë)-¾ß»ı(Á¤±Û)" ));
-				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "Å¸¿À¸£´Â ½ÉÀåÀ¸·Î [¿ø¼Ò±â¿îÀÇ ¹«±â-6´Ü°è]¸¦ °­È­½Ã", ChatColor.LIGHT_PURPLE + "[¿ø¼Ò±â¿îÀÇ ¹«±â-7´Ü°è]¸¦ È¹µæÇÕ´Ï´Ù"));
+				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[ì§€ìƒ ì›ì†Œí•µ ê°•í™” ìˆœì„œ, íšë“ ê°€ëŠ¥í•œ êµ°ê³„]",ChatColor.AQUA + "ë„¤ë”ë¼ì´íŠ¸-ëŒ€ì§€(í‰ì›)-ë°”ëŒ(ì‚°)-ì„œë¦¬(ì–¼ìŒ)-ë°”ë‹¤",ChatColor.AQUA + "ì–´ë‘ (ìˆ²)-ê°œì¡°(ì‚¬ë§‰)-ì‘ì—´(ì•…ì§€)-ë§¹ë…(ëŠª)-ì•¼ìƒ(ì •ê¸€)" ));
+				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "íƒ€ì˜¤ë¥´ëŠ” ì‹¬ì¥ìœ¼ë¡œ [ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-6ë‹¨ê³„]ë¥¼ ê°•í™”ì‹œ", ChatColor.LIGHT_PURPLE + "[ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-7ë‹¨ê³„]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
 				imeta.setLore(lore);
-				imeta.setDisplayName(ChatColor.BLUE +"Àû»ö ÆÄÆí");
-				imeta.setLocalizedName(ChatColor.BLUE +"Àû»ö ÆÄÆí");
+				imeta.setDisplayName(ChatColor.BLUE +"ì ìƒ‰ íŒŒí¸");
+				imeta.setLocalizedName(ChatColor.BLUE +"ì ìƒ‰ íŒŒí¸");
 			}
 			else if(i == 11) {
 				ii.setType(Material.GREEN_CONCRETE_POWDER);
 				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[Áö»ó ¿ø¼ÒÇÙ °­È­ ¼ø¼­, È¹µæ °¡´ÉÇÑ ±º°è]",ChatColor.AQUA + "³×´õ¶óÀÌÆ®-´ëÁö(Æò¿ø)-¹Ù¶÷(»ê)-¼­¸®(¾óÀ½)-¹Ù´Ù",ChatColor.AQUA + "¾îµÒ(½£)-°³Á¶(»ç¸·)-ÀÛ¿­(¾ÇÁö)-¸Íµ¶(´Ë)-¾ß»ı(Á¤±Û)" ));
-				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "¸Íµ¶ÀÇ ÇÙÀ¸·Î [¿ø¼Ò±â¿îÀÇ ¹«±â-7´Ü°è]¸¦ °­È­½Ã", ChatColor.LIGHT_PURPLE + "[¿ø¼Ò±â¿îÀÇ ¹«±â-8´Ü°è]¸¦ È¹µæÇÕ´Ï´Ù"));
+				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[ì§€ìƒ ì›ì†Œí•µ ê°•í™” ìˆœì„œ, íšë“ ê°€ëŠ¥í•œ êµ°ê³„]",ChatColor.AQUA + "ë„¤ë”ë¼ì´íŠ¸-ëŒ€ì§€(í‰ì›)-ë°”ëŒ(ì‚°)-ì„œë¦¬(ì–¼ìŒ)-ë°”ë‹¤",ChatColor.AQUA + "ì–´ë‘ (ìˆ²)-ê°œì¡°(ì‚¬ë§‰)-ì‘ì—´(ì•…ì§€)-ë§¹ë…(ëŠª)-ì•¼ìƒ(ì •ê¸€)" ));
+				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "ë§¹ë…ì˜ í•µìœ¼ë¡œ [ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-7ë‹¨ê³„]ë¥¼ ê°•í™”ì‹œ", ChatColor.LIGHT_PURPLE + "[ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-8ë‹¨ê³„]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
 				imeta.setLore(lore);
-				imeta.setDisplayName(ChatColor.BLUE +"¸Íµ¶ÀÇ ÆÄÆí");
-				imeta.setLocalizedName(ChatColor.BLUE +"¸Íµ¶ÀÇ ÆÄÆí");
+				imeta.setDisplayName(ChatColor.BLUE +"ë§¹ë…ì˜ íŒŒí¸");
+				imeta.setLocalizedName(ChatColor.BLUE +"ë§¹ë…ì˜ íŒŒí¸");
 			}
 			else if(i == 12) {
 				ii.setType(Material.JUNGLE_SAPLING);
 				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[Áö»ó ¿ø¼ÒÇÙ °­È­ ¼ø¼­, È¹µæ °¡´ÉÇÑ ±º°è]",ChatColor.AQUA + "³×´õ¶óÀÌÆ®-´ëÁö(Æò¿ø)-¹Ù¶÷(»ê)-¼­¸®(¾óÀ½)-¹Ù´Ù",ChatColor.AQUA + "¾îµÒ(½£)-°³Á¶(»ç¸·)-ÀÛ¿­(¾ÇÁö)-¸Íµ¶(´Ë)-¾ß»ı(Á¤±Û)" ));
-				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "¾ß»ıÀÇ ÇÙÀ¸·Î [¿ø¼Ò±â¿îÀÇ ¹«±â-8´Ü°è]¸¦ °­È­½Ã", ChatColor.LIGHT_PURPLE + "[ÀÚ¿¬ÀÇ ¹«±â]¸¦ È¹µæÇÕ´Ï´Ù"));
-				lore.addAll(Arrays.asList("",ChatColor.GOLD + "ÀÚ¿¬ÀÇ ¹«±â¸¦ [°­·ÂÇÑ ¿ø¼ÒÀÇ ±â¿î]À¸·Î °­È­½Ã", ChatColor.GOLD + "ÇØ´ç ¼Ó¼ºÀÇ ¹«±â¸¦ Á¦ÀÛÇÒ¼ö ÀÖ½À´Ï´Ù", ChatColor.GOLD + "[°­·ÂÇÑ ¿ø¼ÒÀÇ ±â¿î]Àº º¸½º Ä§°ø¿¡¼­ È¹µæ°¡´É"));
-				imeta.setDisplayName(ChatColor.BLUE +"¾ß»ıÀÇ ÆÄÆí");
-				imeta.setLocalizedName(ChatColor.BLUE +"¾ß»ıÀÇ ÆÄÆí");
+				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[ì§€ìƒ ì›ì†Œí•µ ê°•í™” ìˆœì„œ, íšë“ ê°€ëŠ¥í•œ êµ°ê³„]",ChatColor.AQUA + "ë„¤ë”ë¼ì´íŠ¸-ëŒ€ì§€(í‰ì›)-ë°”ëŒ(ì‚°)-ì„œë¦¬(ì–¼ìŒ)-ë°”ë‹¤",ChatColor.AQUA + "ì–´ë‘ (ìˆ²)-ê°œì¡°(ì‚¬ë§‰)-ì‘ì—´(ì•…ì§€)-ë§¹ë…(ëŠª)-ì•¼ìƒ(ì •ê¸€)" ));
+				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "ì•¼ìƒì˜ í•µìœ¼ë¡œ [ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-8ë‹¨ê³„]ë¥¼ ê°•í™”ì‹œ", ChatColor.LIGHT_PURPLE + "[ìì—°ì˜ ë¬´ê¸°]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
+				lore.addAll(Arrays.asList("",ChatColor.GOLD + "ìì—°ì˜ ë¬´ê¸°ë¥¼ [ê°•ë ¥í•œ ì›ì†Œì˜ ê¸°ìš´]ìœ¼ë¡œ ê°•í™”ì‹œ", ChatColor.GOLD + "í•´ë‹¹ ì†ì„±ì˜ ë¬´ê¸°ë¥¼ ì œì‘í• ìˆ˜ ìˆìŠµë‹ˆë‹¤", ChatColor.GOLD + "[ê°•ë ¥í•œ ì›ì†Œì˜ ê¸°ìš´]ì€ ë³´ìŠ¤ ì¹¨ê³µì—ì„œ íšë“ê°€ëŠ¥"));
+				imeta.setDisplayName(ChatColor.BLUE +"ì•¼ìƒì˜ íŒŒí¸");
+				imeta.setLocalizedName(ChatColor.BLUE +"ì•¼ìƒì˜ íŒŒí¸");
 			}
 			else if(i == -2) {
 				ii.setType(Material.GHAST_TEAR);
-				imeta.setLore(Arrays.asList("¿µÈ¥ÀÇ ÇÙÀ» Á¦ÀÛÇÏ´Âµ¥ »ç¿ëµË´Ï´Ù", "¿µÈ¥ÀÇ ÇÙÀº ¹«±â¸¦ °­È­ÇÒ¶§ »ç¿ëµË´Ï´Ù"
-						,"",ChatColor.LIGHT_PURPLE +"³×´õÁö¿ªÀÇ 4°¡Áö ÇÙÀ» Á¶ÇÕÇÏ¿© ¾ò´Â", ChatColor.LIGHT_PURPLE +"À¶ÇÕµÈ ³×´õÀÇ ÇÙÀ» ÅëÇØ",  ChatColor.LIGHT_PURPLE +"Çï¸ä,°©¿Ê °­È­°¡ °¡´ÉÇÕ´Ï´Ù"));
-				imeta.setDisplayName(ChatColor.BLUE +"¿µÈ¥ÀÇ ÆÄÆí");
-				imeta.setLocalizedName(ChatColor.BLUE +"¿µÈ¥ÀÇ ÆÄÆí");
+				imeta.setLore(Arrays.asList("ì˜í˜¼ì˜ í•µì„ ì œì‘í•˜ëŠ”ë° ì‚¬ìš©ë©ë‹ˆë‹¤", "ì˜í˜¼ì˜ í•µì€ ë¬´ê¸°ë¥¼ ê°•í™”í• ë•Œ ì‚¬ìš©ë©ë‹ˆë‹¤"
+						,"",ChatColor.LIGHT_PURPLE +"ë„¤ë”ì§€ì—­ì˜ 4ê°€ì§€ í•µì„ ì¡°í•©í•˜ì—¬ ì–»ëŠ”", ChatColor.LIGHT_PURPLE +"ìœµí•©ëœ ë„¤ë”ì˜ í•µì„ í†µí•´",  ChatColor.LIGHT_PURPLE +"í—¬ë©§,ê°‘ì˜· ê°•í™”ê°€ ê°€ëŠ¥í•©ë‹ˆë‹¤"));
+				imeta.setDisplayName(ChatColor.BLUE +"ì˜í˜¼ì˜ íŒŒí¸");
+				imeta.setLocalizedName(ChatColor.BLUE +"ì˜í˜¼ì˜ íŒŒí¸");
 			}
 			else if(i == -3) {
 				ii.setType(Material.CRIMSON_FUNGUS);
-				imeta.setLore(Arrays.asList("ÁøÈ«ºû ÇÙÀ» Á¦ÀÛÇÏ´Âµ¥ »ç¿ëµË´Ï´Ù", "ÁøÈ«ºû ÇÙÀº ¹«±â¸¦ °­È­ÇÒ¶§ »ç¿ëµË´Ï´Ù"
-						,"",ChatColor.LIGHT_PURPLE +"³×´õÁö¿ªÀÇ 4°¡Áö ÇÙÀ» Á¶ÇÕÇÏ¿© ¾ò´Â", ChatColor.LIGHT_PURPLE +"À¶ÇÕµÈ ³×´õÀÇ ÇÙÀ» ÅëÇØ",  ChatColor.LIGHT_PURPLE +"Çï¸ä,°©¿Ê °­È­°¡ °¡´ÉÇÕ´Ï´Ù"));
-				imeta.setDisplayName(ChatColor.BLUE +"ÁøÈ«ºû ÆÄÆí");
-				imeta.setLocalizedName(ChatColor.BLUE +"ÁøÈ«ºû ÆÄÆí");
+				imeta.setLore(Arrays.asList("ì§„í™ë¹› í•µì„ ì œì‘í•˜ëŠ”ë° ì‚¬ìš©ë©ë‹ˆë‹¤", "ì§„í™ë¹› í•µì€ ë¬´ê¸°ë¥¼ ê°•í™”í• ë•Œ ì‚¬ìš©ë©ë‹ˆë‹¤"
+						,"",ChatColor.LIGHT_PURPLE +"ë„¤ë”ì§€ì—­ì˜ 4ê°€ì§€ í•µì„ ì¡°í•©í•˜ì—¬ ì–»ëŠ”", ChatColor.LIGHT_PURPLE +"ìœµí•©ëœ ë„¤ë”ì˜ í•µì„ í†µí•´",  ChatColor.LIGHT_PURPLE +"í—¬ë©§,ê°‘ì˜· ê°•í™”ê°€ ê°€ëŠ¥í•©ë‹ˆë‹¤"));
+				imeta.setDisplayName(ChatColor.BLUE +"ì§„í™ë¹› íŒŒí¸");
+				imeta.setLocalizedName(ChatColor.BLUE +"ì§„í™ë¹› íŒŒí¸");
 			}
 			else if(i == -4) {
 				ii.setType(Material.WARPED_FUNGUS);
-				imeta.setLore(Arrays.asList("µÚÆ²¸° ÇÙÀ» Á¦ÀÛÇÏ´Âµ¥ »ç¿ëµË´Ï´Ù", "µÚÆ²¸° ÇÙÀº ¹«±â¸¦ °­È­ÇÒ¶§ »ç¿ëµË´Ï´Ù"
-						,"",ChatColor.LIGHT_PURPLE +"³×´õÁö¿ªÀÇ 4°¡Áö ÇÙÀ» Á¶ÇÕÇÏ¿© ¾ò´Â", ChatColor.LIGHT_PURPLE +"À¶ÇÕµÈ ³×´õÀÇ ÇÙÀ» ÅëÇØ",  ChatColor.LIGHT_PURPLE +"Çï¸ä,°©¿Ê °­È­°¡ °¡´ÉÇÕ´Ï´Ù"));
-				imeta.setDisplayName(ChatColor.BLUE +"µÚÆ²¸° ÆÄÆí");
-				imeta.setLocalizedName(ChatColor.BLUE +"µÚÆ²¸° ÆÄÆí");
+				imeta.setLore(Arrays.asList("ë’¤í‹€ë¦° í•µì„ ì œì‘í•˜ëŠ”ë° ì‚¬ìš©ë©ë‹ˆë‹¤", "ë’¤í‹€ë¦° í•µì€ ë¬´ê¸°ë¥¼ ê°•í™”í• ë•Œ ì‚¬ìš©ë©ë‹ˆë‹¤"
+						,"",ChatColor.LIGHT_PURPLE +"ë„¤ë”ì§€ì—­ì˜ 4ê°€ì§€ í•µì„ ì¡°í•©í•˜ì—¬ ì–»ëŠ”", ChatColor.LIGHT_PURPLE +"ìœµí•©ëœ ë„¤ë”ì˜ í•µì„ í†µí•´",  ChatColor.LIGHT_PURPLE +"í—¬ë©§,ê°‘ì˜· ê°•í™”ê°€ ê°€ëŠ¥í•©ë‹ˆë‹¤"));
+				imeta.setDisplayName(ChatColor.BLUE +"ë’¤í‹€ë¦° íŒŒí¸");
+				imeta.setLocalizedName(ChatColor.BLUE +"ë’¤í‹€ë¦° íŒŒí¸");
 			}
 			else if(i == -5) {
 				ii.setType(Material.BASALT);
-				imeta.setLore(Arrays.asList("È­»êÀÇ ÇÙÀ» Á¦ÀÛÇÏ´Âµ¥ »ç¿ëµË´Ï´Ù", "È­»êÀÇ ÇÙÀº ¹«±â¸¦ °­È­ÇÒ¶§ »ç¿ëµË´Ï´Ù"
-						,"",ChatColor.LIGHT_PURPLE +"³×´õÁö¿ªÀÇ 4°¡Áö ÇÙÀ» Á¶ÇÕÇÏ¿© ¾ò´Â", ChatColor.LIGHT_PURPLE +"À¶ÇÕµÈ ³×´õÀÇ ÇÙÀ» ÅëÇØ",  ChatColor.LIGHT_PURPLE +"Çï¸ä,°©¿Ê °­È­°¡ °¡´ÉÇÕ´Ï´Ù"));
-				imeta.setDisplayName(ChatColor.BLUE +"È­»êÀÇ ÆÄÆí");
-				imeta.setLocalizedName(ChatColor.BLUE +"È­»êÀÇ ÆÄÆí");
+				imeta.setLore(Arrays.asList("í™”ì‚°ì˜ í•µì„ ì œì‘í•˜ëŠ”ë° ì‚¬ìš©ë©ë‹ˆë‹¤", "í™”ì‚°ì˜ í•µì€ ë¬´ê¸°ë¥¼ ê°•í™”í• ë•Œ ì‚¬ìš©ë©ë‹ˆë‹¤"
+						,"",ChatColor.LIGHT_PURPLE +"ë„¤ë”ì§€ì—­ì˜ 4ê°€ì§€ í•µì„ ì¡°í•©í•˜ì—¬ ì–»ëŠ”", ChatColor.LIGHT_PURPLE +"ìœµí•©ëœ ë„¤ë”ì˜ í•µì„ í†µí•´",  ChatColor.LIGHT_PURPLE +"í—¬ë©§,ê°‘ì˜· ê°•í™”ê°€ ê°€ëŠ¥í•©ë‹ˆë‹¤"));
+				imeta.setDisplayName(ChatColor.BLUE +"í™”ì‚°ì˜ íŒŒí¸");
+				imeta.setLocalizedName(ChatColor.BLUE +"í™”ì‚°ì˜ íŒŒí¸");
 			}
 			else if(i == -6) {
 				ii.setType(Material.END_STONE);
-				imeta.setLore(Arrays.asList("¿£´õ ÇÙÀ» Á¦ÀÛÇÏ´Âµ¥ »ç¿ëµË´Ï´Ù", "¿£´õ ÇÙÀº ¹«±â¸¦ °­È­ÇÒ¶§ »ç¿ëµË´Ï´Ù","",ChatColor.LIGHT_PURPLE +"¿£´õÁö¿ªÀÇ 2°¡Áö ÇÙÀ» Á¶ÇÕÇÏ¿© ¾ò´Â", ChatColor.LIGHT_PURPLE +"À¶ÇÕµÈ ¿£´õÀÇ ÇÙÀ» ÅëÇØ",  ChatColor.LIGHT_PURPLE +"·¹±ë½º,ºÎÃ÷ °­È­°¡ °¡´ÉÇÕ´Ï´Ù"));
-				imeta.setDisplayName(ChatColor.BLUE +"¿£´õ ÆÄÆí");
-				imeta.setLocalizedName(ChatColor.BLUE +"¿£´õ ÆÄÆí");
+				imeta.setLore(Arrays.asList("ì—”ë” í•µì„ ì œì‘í•˜ëŠ”ë° ì‚¬ìš©ë©ë‹ˆë‹¤", "ì—”ë” í•µì€ ë¬´ê¸°ë¥¼ ê°•í™”í• ë•Œ ì‚¬ìš©ë©ë‹ˆë‹¤","",ChatColor.LIGHT_PURPLE +"ì—”ë”ì§€ì—­ì˜ 2ê°€ì§€ í•µì„ ì¡°í•©í•˜ì—¬ ì–»ëŠ”", ChatColor.LIGHT_PURPLE +"ìœµí•©ëœ ì—”ë”ì˜ í•µì„ í†µí•´",  ChatColor.LIGHT_PURPLE +"ë ˆê¹…ìŠ¤,ë¶€ì¸  ê°•í™”ê°€ ê°€ëŠ¥í•©ë‹ˆë‹¤"));
+				imeta.setDisplayName(ChatColor.BLUE +"ì—”ë” íŒŒí¸");
+				imeta.setLocalizedName(ChatColor.BLUE +"ì—”ë” íŒŒí¸");
 			}
 			else if(i == -7) {
 				ii.setType(Material.STRUCTURE_VOID);
-				imeta.setLore(Arrays.asList("°øÇãÀÇ ÇÙÀ» Á¦ÀÛÇÏ´Âµ¥ »ç¿ëµË´Ï´Ù", "°øÇãÀÇ ÇÙÀº ¹«±â¸¦ °­È­ÇÒ¶§ »ç¿ëµË´Ï´Ù","",ChatColor.LIGHT_PURPLE +"¿£´õÁö¿ªÀÇ 2°¡Áö ÇÙÀ» Á¶ÇÕÇÏ¿© ¾ò´Â", ChatColor.LIGHT_PURPLE +"À¶ÇÕµÈ ¿£´õÀÇ ÇÙÀ» ÅëÇØ",  ChatColor.LIGHT_PURPLE +"·¹±ë½º,ºÎÃ÷ °­È­°¡ °¡´ÉÇÕ´Ï´Ù"));
-				imeta.setDisplayName(ChatColor.BLUE +"°øÇãÀÇ ÆÄÆí");
-				imeta.setLocalizedName(ChatColor.BLUE +"°øÇãÀÇ ÆÄÆí");
+				imeta.setLore(Arrays.asList("ê³µí—ˆì˜ í•µì„ ì œì‘í•˜ëŠ”ë° ì‚¬ìš©ë©ë‹ˆë‹¤", "ê³µí—ˆì˜ í•µì€ ë¬´ê¸°ë¥¼ ê°•í™”í• ë•Œ ì‚¬ìš©ë©ë‹ˆë‹¤","",ChatColor.LIGHT_PURPLE +"ì—”ë”ì§€ì—­ì˜ 2ê°€ì§€ í•µì„ ì¡°í•©í•˜ì—¬ ì–»ëŠ”", ChatColor.LIGHT_PURPLE +"ìœµí•©ëœ ì—”ë”ì˜ í•µì„ í†µí•´",  ChatColor.LIGHT_PURPLE +"ë ˆê¹…ìŠ¤,ë¶€ì¸  ê°•í™”ê°€ ê°€ëŠ¥í•©ë‹ˆë‹¤"));
+				imeta.setDisplayName(ChatColor.BLUE +"ê³µí—ˆì˜ íŒŒí¸");
+				imeta.setLocalizedName(ChatColor.BLUE +"ê³µí—ˆì˜ íŒŒí¸");
 			}
 			else if(i == -8) {
 				ii.setType(Material.NETHER_STAR);
-				imeta.setLore(Arrays.asList("¿µ¿õÀÇ »óÂ¡À» Á¦ÀÛÇÏ´Âµ¥ »ç¿ëµË´Ï´Ù", "¿µ¿õÀÇ »óÂ¡Àº ¹«±â¸¦ °­È­ÇÒ¶§ »ç¿ëµË´Ï´Ù"));
-				imeta.setDisplayName(ChatColor.BLUE +"¼­»çÀÇ ÆÄÆí");
-				imeta.setLocalizedName(ChatColor.BLUE +"¼­»çÀÇ ÆÄÆí");
+				imeta.setLore(Arrays.asList("ì˜ì›…ì˜ ìƒì§•ì„ ì œì‘í•˜ëŠ”ë° ì‚¬ìš©ë©ë‹ˆë‹¤", "ì˜ì›…ì˜ ìƒì§•ì€ ë¬´ê¸°ë¥¼ ê°•í™”í• ë•Œ ì‚¬ìš©ë©ë‹ˆë‹¤"));
+				imeta.setDisplayName(ChatColor.BLUE +"ì„œì‚¬ì˜ íŒŒí¸");
+				imeta.setLocalizedName(ChatColor.BLUE +"ì„œì‚¬ì˜ íŒŒí¸");
 			}
 			ii.setItemMeta(imeta);
 			
@@ -516,133 +516,133 @@ public class Elements implements Listener {
 		ItemMeta imeta = ii.getItemMeta();
 		imeta.setCustomModelData(i);
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			imeta.setLore(Arrays.asList("¹«±â¸¦ °­È­ÇÒ¶§ »ç¿ëÇÕ´Ï´Ù"));
+			imeta.setLore(Arrays.asList("ë¬´ê¸°ë¥¼ ê°•í™”í• ë•Œ ì‚¬ìš©í•©ë‹ˆë‹¤"));
 			if(i == 5) {
 				ii.setType(Material.GREEN_GLAZED_TERRACOTTA);
 				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "[¿ø¼Ò±â¿îÀÇ ¹«±â-1´Ü°è]¸¦ °­È­½Ã", ChatColor.LIGHT_PURPLE + "[¿ø¼Ò±â¿îÀÇ ¹«±â-2´Ü°è]¸¦ È¹µæÇÕ´Ï´Ù"));
+				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "[ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-1ë‹¨ê³„]ë¥¼ ê°•í™”ì‹œ", ChatColor.LIGHT_PURPLE + "[ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-2ë‹¨ê³„]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
 				imeta.setLore(lore);
-				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"¹Ù¶÷ÀÇ ÇÙ");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"¹Ù¶÷ÀÇ ÇÙ");
+				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"ë°”ëŒì˜ í•µ");
+				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"ë°”ëŒì˜ í•µ");
 			}
 			else if(i == 14) {
 				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "[³×´õ¶óÀÌÆ® ¹«±â]¸¦ °­È­½Ã", ChatColor.LIGHT_PURPLE + "[¿ø¼Ò±â¿îÀÇ ¹«±â-1´Ü°è]¸¦ È¹µæÇÕ´Ï´Ù"));
+				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "[ë„¤ë”ë¼ì´íŠ¸ ë¬´ê¸°]ë¥¼ ê°•í™”ì‹œ", ChatColor.LIGHT_PURPLE + "[ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-1ë‹¨ê³„]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
 				imeta.setLore(lore);
 				ii.setType(Material.LIGHT_GRAY_GLAZED_TERRACOTTA);
-				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"´ëÁöÀÇ ÇÙ");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"´ëÁöÀÇ ÇÙ");
+				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"ëŒ€ì§€ì˜ í•µ");
+				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"ëŒ€ì§€ì˜ í•µ");
 			}
 			else if(i == 6) {
 				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "[¿ø¼Ò±â¿îÀÇ ¹«±â-2´Ü°è]¸¦ °­È­½Ã", ChatColor.LIGHT_PURPLE + "[¿ø¼Ò±â¿îÀÇ ¹«±â-3´Ü°è]¸¦ È¹µæÇÕ´Ï´Ù"));
+				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "[ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-2ë‹¨ê³„]ë¥¼ ê°•í™”ì‹œ", ChatColor.LIGHT_PURPLE + "[ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-3ë‹¨ê³„]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
 				imeta.setLore(lore);
 				ii.setType(Material.LIGHT_BLUE_GLAZED_TERRACOTTA);
-				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"¼­¸®ÀÇ ÇÙ");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"¼­¸®ÀÇ ÇÙ");
+				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"ì„œë¦¬ì˜ í•µ");
+				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì„œë¦¬ì˜ í•µ");
 			}
 			else if(i == 7) {
 				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "[¿ø¼Ò±â¿îÀÇ ¹«±â-3´Ü°è]¸¦ °­È­½Ã", ChatColor.LIGHT_PURPLE + "[¿ø¼Ò±â¿îÀÇ ¹«±â-4´Ü°è]¸¦ È¹µæÇÕ´Ï´Ù"));
+				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "[ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-3ë‹¨ê³„]ë¥¼ ê°•í™”ì‹œ", ChatColor.LIGHT_PURPLE + "[ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-4ë‹¨ê³„]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
 				imeta.setLore(lore);
 				ii.setType(Material.BLUE_GLAZED_TERRACOTTA);
-				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"¹Ù´ÙÀÇ ÇÙ");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"¹Ù´ÙÀÇ ÇÙ");
+				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"ë°”ë‹¤ì˜ í•µ");
+				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"ë°”ë‹¤ì˜ í•µ");
 			}
 			else if(i == 8) {
 				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "[¿ø¼Ò±â¿îÀÇ ¹«±â-4´Ü°è]¸¦ °­È­½Ã", ChatColor.LIGHT_PURPLE + "[¿ø¼Ò±â¿îÀÇ ¹«±â-5´Ü°è]¸¦ È¹µæÇÕ´Ï´Ù"));
+				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "[ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-4ë‹¨ê³„]ë¥¼ ê°•í™”ì‹œ", ChatColor.LIGHT_PURPLE + "[ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-5ë‹¨ê³„]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
 				imeta.setLore(lore);
 				ii.setType(Material.BROWN_GLAZED_TERRACOTTA);
-				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"¾îµÒÀÇ ÇÙ");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"¾îµÒÀÇ ÇÙ");
+				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"ì–´ë‘ ì˜ í•µ");
+				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì–´ë‘ ì˜ í•µ");
 			}
 			else if(i == 9) {
 				ii.setType(Material.WHITE_GLAZED_TERRACOTTA);
 				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "[¿ø¼Ò±â¿îÀÇ ¹«±â-5´Ü°è]¸¦ °­È­½Ã", ChatColor.LIGHT_PURPLE + "[¿ø¼Ò±â¿îÀÇ ¹«±â-6´Ü°è]¸¦ È¹µæÇÕ´Ï´Ù"));
+				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "[ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-5ë‹¨ê³„]ë¥¼ ê°•í™”ì‹œ", ChatColor.LIGHT_PURPLE + "[ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-6ë‹¨ê³„]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
 				imeta.setLore(lore);
-				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"ÇÏÀÌÆÛ ¿£Áø");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"ÇÏÀÌÆÛ ¿£Áø");
+				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"í•˜ì´í¼ ì—”ì§„");
+				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"í•˜ì´í¼ ì—”ì§„");
 			}
 			else if(i == 10) {
 				ii.setType(Material.RED_GLAZED_TERRACOTTA);
 				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "[¿ø¼Ò±â¿îÀÇ ¹«±â-6´Ü°è]¸¦ °­È­½Ã", ChatColor.LIGHT_PURPLE + "[¿ø¼Ò±â¿îÀÇ ¹«±â-7´Ü°è]¸¦ È¹µæÇÕ´Ï´Ù"));
+				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "[ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-6ë‹¨ê³„]ë¥¼ ê°•í™”ì‹œ", ChatColor.LIGHT_PURPLE + "[ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-7ë‹¨ê³„]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
 				imeta.setLore(lore);
-				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"ÀÛ¿­ÇÏ´Â ½ÉÀå");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"ÀÛ¿­ÇÏ´Â ½ÉÀå");
+				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"ì‘ì—´í•˜ëŠ” ì‹¬ì¥");
+				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì‘ì—´í•˜ëŠ” ì‹¬ì¥");
 			}
 			else if(i == 11) {
 				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "[¿ø¼Ò±â¿îÀÇ ¹«±â-7´Ü°è]¸¦ °­È­½Ã", ChatColor.LIGHT_PURPLE + "[¿ø¼Ò±â¿îÀÇ ¹«±â-8´Ü°è]¸¦ È¹µæÇÕ´Ï´Ù"));
+				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "[ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-7ë‹¨ê³„]ë¥¼ ê°•í™”ì‹œ", ChatColor.LIGHT_PURPLE + "[ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-8ë‹¨ê³„]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
 				imeta.setLore(lore);
 				ii.setType(Material.LIME_GLAZED_TERRACOTTA);
-				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"¸Íµ¶ÀÇ ÇÙ");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"¸Íµ¶ÀÇ ÇÙ");
+				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"ë§¹ë…ì˜ í•µ");
+				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"ë§¹ë…ì˜ í•µ");
 			}
 			else if(i == 12) {
 				ii.setType(Material.ORANGE_GLAZED_TERRACOTTA);
 				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "[¿ø¼Ò±â¿îÀÇ ¹«±â-8´Ü°è]¸¦ °­È­½Ã", ChatColor.LIGHT_PURPLE + "[ÀÚ¿¬ÀÇ ¹«±â]¸¦ È¹µæÇÕ´Ï´Ù"));
-				lore.addAll(Arrays.asList("",ChatColor.GOLD + "ÀÚ¿¬ÀÇ ¹«±â¸¦ [°­·ÂÇÑ ¿ø¼ÒÀÇ ±â¿î]À¸·Î °­È­½Ã", ChatColor.GOLD + "ÇØ´ç ¼Ó¼ºÀÇ ¹«±â¸¦ Á¦ÀÛÇÒ¼ö ÀÖ½À´Ï´Ù", ChatColor.GOLD + "[°­·ÂÇÑ ¿ø¼ÒÀÇ ±â¿î]Àº º¸½º Ä§ ¿¡¼­ È¹µæ",ChatColor.GOLD +"¶Ç´Â °í°íÇĞÀÚ¿¡°Ô ±¸¸Å °¡´ÉÇÕ´Ï´Ù",ChatColor.GOLD +"°í°íÇĞÀÚ´Â Á¤±ÛÇÇ¶ó¹Ìµå¿¡¼­ Ã£À»¼ö ÀÖ½À´Ï´Ù"));
+				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "[ì›ì†Œê¸°ìš´ì˜ ë¬´ê¸°-8ë‹¨ê³„]ë¥¼ ê°•í™”ì‹œ", ChatColor.LIGHT_PURPLE + "[ìì—°ì˜ ë¬´ê¸°]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
+				lore.addAll(Arrays.asList("",ChatColor.GOLD + "ìì—°ì˜ ë¬´ê¸°ë¥¼ [ê°•ë ¥í•œ ì›ì†Œì˜ ê¸°ìš´]ìœ¼ë¡œ ê°•í™”ì‹œ", ChatColor.GOLD + "í•´ë‹¹ ì†ì„±ì˜ ë¬´ê¸°ë¥¼ ì œì‘í• ìˆ˜ ìˆìŠµë‹ˆë‹¤", ChatColor.GOLD + "[ê°•ë ¥í•œ ì›ì†Œì˜ ê¸°ìš´]ì€ ë³´ìŠ¤ ì¹¨ ì—ì„œ íšë“",ChatColor.GOLD +"ë˜ëŠ” ê³ ê³ í•™ìì—ê²Œ êµ¬ë§¤ ê°€ëŠ¥í•©ë‹ˆë‹¤",ChatColor.GOLD +"ê³ ê³ í•™ìëŠ” ì •ê¸€í”¼ë¼ë¯¸ë“œì—ì„œ ì°¾ì„ìˆ˜ ìˆìŠµë‹ˆë‹¤"));
 				imeta.setLore(lore);
-				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"¾ß»ıÀÇ ÇÙ");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"¾ß»ıÀÇ ÇÙ");
+				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"ì•¼ìƒì˜ í•µ");
+				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì•¼ìƒì˜ í•µ");
 			}
 			else if(i == -2) {
 				ii.setType(Material.SOUL_SOIL);
-				imeta.setLore(Arrays.asList("¹«±â °­È­, À¶ÇÕµÈ ³×´õÀÇ ÇÙ Á¦ÀÛ¿¡ »ç¿ëµË´Ï´Ù","",ChatColor.GOLD +"À¶ÇÕµÈ ³×´õÀÇ ÇÙÀº ³×´õÁö¿ª¿¡¼­ ¾òÀº",ChatColor.GOLD +"³×°¡Áö ÇÙµéÀ» Á¶ÇÕÇÏ¸é È¹µæ°¡´ÉÇÕ´Ï´Ù",ChatColor.GOLD +"À¶ÇÕµÈ ³×´õÀÇ ÇÙÀ¸·Î Çï¸ä ¶Ç´Â °©¿Ê °­È­½Ã",ChatColor.GOLD +"¸ğµç ´É·ÂÄ¡°¡ »ó½ÂÇÕ´Ï´Ù(¹æ¾î±¸´ç ÇÑ¹ø¸¸ °¡´É)","",
-						ChatColor.GRAY +"¹«±â°­È­½Ã ³×´õÁö¿ª ÇÙÀº",ChatColor.GRAY +"ÇÑ°¡Áö¸¸ ºÎ¿© °¡´ÉÇÕ´Ï´Ù", ChatColor.GRAY +"+50% ÀÏ¹İ°ø°İ·Â, +15 Çà¿î", ChatColor.GRAY +"¹°,¹Ù¶÷,¾îµÒ,¼­¸® °è¿­ °ø°İ·Â +25%", "Çà¿îÀº ±Ã±Ø±â¸¦ Á¦¿ÜÇÑ ÀÏ¹İ±â¼úµéÀÇ", "Àç»ç¿ë ´ë±â½Ã°£ °¨¼Ò¿¡ ¿µÇâÀ» Áİ´Ï´Ù"
-						,"", ChatColor.AQUA +"Á¦ÀÛ´ë¿¡¼­ [ÁøÈ«ºû ÇÙ]À¸·Î ±³È¯°¡´É"));
-				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"¿µÈ¥ ÀÀÃà¹°");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿µÈ¥ ÀÀÃà¹°");
+				imeta.setLore(Arrays.asList("ë¬´ê¸° ê°•í™”, ìœµí•©ëœ ë„¤ë”ì˜ í•µ ì œì‘ì— ì‚¬ìš©ë©ë‹ˆë‹¤","",ChatColor.GOLD +"ìœµí•©ëœ ë„¤ë”ì˜ í•µì€ ë„¤ë”ì§€ì—­ì—ì„œ ì–»ì€",ChatColor.GOLD +"ë„¤ê°€ì§€ í•µë“¤ì„ ì¡°í•©í•˜ë©´ íšë“ê°€ëŠ¥í•©ë‹ˆë‹¤",ChatColor.GOLD +"ìœµí•©ëœ ë„¤ë”ì˜ í•µìœ¼ë¡œ í—¬ë©§ ë˜ëŠ” ê°‘ì˜· ê°•í™”ì‹œ",ChatColor.GOLD +"ëª¨ë“  ëŠ¥ë ¥ì¹˜ê°€ ìƒìŠ¹í•©ë‹ˆë‹¤(ë°©ì–´êµ¬ë‹¹ í•œë²ˆë§Œ ê°€ëŠ¥)","",
+						ChatColor.GRAY +"ë¬´ê¸°ê°•í™”ì‹œ ë„¤ë”ì§€ì—­ í•µì€",ChatColor.GRAY +"í•œê°€ì§€ë§Œ ë¶€ì—¬ ê°€ëŠ¥í•©ë‹ˆë‹¤", ChatColor.GRAY +"+50% ì¼ë°˜ê³µê²©ë ¥, +15 í–‰ìš´", ChatColor.GRAY +"ë¬¼,ë°”ëŒ,ì–´ë‘ ,ì„œë¦¬ ê³„ì—´ ê³µê²©ë ¥ +25%", "í–‰ìš´ì€ ê¶ê·¹ê¸°ë¥¼ ì œì™¸í•œ ì¼ë°˜ê¸°ìˆ ë“¤ì˜", "ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ ê°ì†Œì— ì˜í–¥ì„ ì¤ë‹ˆë‹¤"
+						,"", ChatColor.AQUA +"ì œì‘ëŒ€ì—ì„œ [ì§„í™ë¹› í•µ]ìœ¼ë¡œ êµí™˜ê°€ëŠ¥"));
+				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"ì˜í˜¼ ì‘ì¶•ë¬¼");
+				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì˜í˜¼ ì‘ì¶•ë¬¼");
 			}
 			else if(i == -3) {
 				ii.setType(Material.CRIMSON_HYPHAE);
-				imeta.setLore(Arrays.asList("¹«±â °­È­, À¶ÇÕµÈ ³×´õÀÇ ÇÙ Á¦ÀÛ¿¡ »ç¿ëµË´Ï´Ù","",ChatColor.GOLD +"À¶ÇÕµÈ ³×´õÀÇ ÇÙÀº ³×´õÁö¿ª¿¡¼­ ¾òÀº",ChatColor.GOLD +"³×°¡Áö ÇÙµéÀ» Á¶ÇÕÇÏ¸é È¹µæ°¡´ÉÇÕ´Ï´Ù",ChatColor.GOLD +"À¶ÇÕµÈ ³×´õÀÇ ÇÙÀ¸·Î Çï¸ä ¶Ç´Â °©¿Ê °­È­½Ã",ChatColor.GOLD +"¸ğµç ´É·ÂÄ¡°¡ »ó½ÂÇÕ´Ï´Ù(¹æ¾î±¸´ç ÇÑ¹ø¸¸ °¡´É)","",
-						ChatColor.GRAY +"¹«±â°­È­½Ã ³×´õÁö¿ª ÇÙÀº",ChatColor.GRAY +"ÇÑ°¡Áö¸¸ ºÎ¿© °¡´ÉÇÕ´Ï´Ù", ChatColor.GRAY +"+50% ÀÏ¹İ°ø°İ·Â, +15 Çà¿î", ChatColor.GRAY +"ºÒ,´ëÁö,¹ø°³,µ¶ °è¿­ °ø°İ·Â +25%", "Çà¿îÀº ±Ã±Ø±â¸¦ Á¦¿ÜÇÑ ÀÏ¹İ±â¼úµéÀÇ", "Àç»ç¿ë ´ë±â½Ã°£ °¨¼Ò¿¡ ¿µÇâÀ» Áİ´Ï´Ù"
-						,"", ChatColor.AQUA +"Á¦ÀÛ´ë¿¡¼­ [µÚÆ²¸° ÇÙ]À¸·Î ±³È¯°¡´É"));
-				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"ÁøÈ«ºû ÇÙ");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"ÁøÈ«ºû ÇÙ");
+				imeta.setLore(Arrays.asList("ë¬´ê¸° ê°•í™”, ìœµí•©ëœ ë„¤ë”ì˜ í•µ ì œì‘ì— ì‚¬ìš©ë©ë‹ˆë‹¤","",ChatColor.GOLD +"ìœµí•©ëœ ë„¤ë”ì˜ í•µì€ ë„¤ë”ì§€ì—­ì—ì„œ ì–»ì€",ChatColor.GOLD +"ë„¤ê°€ì§€ í•µë“¤ì„ ì¡°í•©í•˜ë©´ íšë“ê°€ëŠ¥í•©ë‹ˆë‹¤",ChatColor.GOLD +"ìœµí•©ëœ ë„¤ë”ì˜ í•µìœ¼ë¡œ í—¬ë©§ ë˜ëŠ” ê°‘ì˜· ê°•í™”ì‹œ",ChatColor.GOLD +"ëª¨ë“  ëŠ¥ë ¥ì¹˜ê°€ ìƒìŠ¹í•©ë‹ˆë‹¤(ë°©ì–´êµ¬ë‹¹ í•œë²ˆë§Œ ê°€ëŠ¥)","",
+						ChatColor.GRAY +"ë¬´ê¸°ê°•í™”ì‹œ ë„¤ë”ì§€ì—­ í•µì€",ChatColor.GRAY +"í•œê°€ì§€ë§Œ ë¶€ì—¬ ê°€ëŠ¥í•©ë‹ˆë‹¤", ChatColor.GRAY +"+50% ì¼ë°˜ê³µê²©ë ¥, +15 í–‰ìš´", ChatColor.GRAY +"ë¶ˆ,ëŒ€ì§€,ë²ˆê°œ,ë… ê³„ì—´ ê³µê²©ë ¥ +25%", "í–‰ìš´ì€ ê¶ê·¹ê¸°ë¥¼ ì œì™¸í•œ ì¼ë°˜ê¸°ìˆ ë“¤ì˜", "ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ ê°ì†Œì— ì˜í–¥ì„ ì¤ë‹ˆë‹¤"
+						,"", ChatColor.AQUA +"ì œì‘ëŒ€ì—ì„œ [ë’¤í‹€ë¦° í•µ]ìœ¼ë¡œ êµí™˜ê°€ëŠ¥"));
+				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"ì§„í™ë¹› í•µ");
+				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì§„í™ë¹› í•µ");
 			}
 			else if(i == -4) {
 				ii.setType(Material.WARPED_HYPHAE);
-				imeta.setLore(Arrays.asList("¹«±â °­È­, À¶ÇÕµÈ ³×´õÀÇ ÇÙ Á¦ÀÛ¿¡ »ç¿ëµË´Ï´Ù","",ChatColor.GOLD +"À¶ÇÕµÈ ³×´õÀÇ ÇÙÀº ³×´õÁö¿ª¿¡¼­ ¾òÀº",ChatColor.GOLD +"³×°¡Áö ÇÙµéÀ» Á¶ÇÕÇÏ¸é È¹µæ°¡´ÉÇÕ´Ï´Ù",ChatColor.GOLD +"À¶ÇÕµÈ ³×´õÀÇ ÇÙÀ¸·Î Çï¸ä ¶Ç´Â °©¿Ê °­È­½Ã",ChatColor.GOLD +"¸ğµç ´É·ÂÄ¡°¡ »ó½ÂÇÕ´Ï´Ù(¹æ¾î±¸´ç ÇÑ¹ø¸¸ °¡´É)","",
-						ChatColor.GRAY +"¹«±â°­È­½Ã ³×´õÁö¿ª ÇÙÀº",ChatColor.GRAY +"ÇÑ°¡Áö¸¸ ºÎ¿© °¡´ÉÇÕ´Ï´Ù", ChatColor.GRAY +"+25% ÀÏ¹İ°ø°İ·Â, +50 Çà¿î", ChatColor.GRAY +"¹°,¹Ù¶÷,¾îµÒ,¼­¸® °è¿­ °ø°İ·Â +25%", "Çà¿îÀº ±Ã±Ø±â¸¦ Á¦¿ÜÇÑ ÀÏ¹İ±â¼úµéÀÇ", "Àç»ç¿ë ´ë±â½Ã°£ °¨¼Ò¿¡ ¿µÇâÀ» Áİ´Ï´Ù"
-						,"", ChatColor.AQUA +"Á¦ÀÛ´ë¿¡¼­ [È­»êÀÇ ÇÙ]À¸·Î ±³È¯°¡´É"));
-				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"µÚÆ²¸° ÇÙ");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"µÚÆ²¸° ÇÙ");
+				imeta.setLore(Arrays.asList("ë¬´ê¸° ê°•í™”, ìœµí•©ëœ ë„¤ë”ì˜ í•µ ì œì‘ì— ì‚¬ìš©ë©ë‹ˆë‹¤","",ChatColor.GOLD +"ìœµí•©ëœ ë„¤ë”ì˜ í•µì€ ë„¤ë”ì§€ì—­ì—ì„œ ì–»ì€",ChatColor.GOLD +"ë„¤ê°€ì§€ í•µë“¤ì„ ì¡°í•©í•˜ë©´ íšë“ê°€ëŠ¥í•©ë‹ˆë‹¤",ChatColor.GOLD +"ìœµí•©ëœ ë„¤ë”ì˜ í•µìœ¼ë¡œ í—¬ë©§ ë˜ëŠ” ê°‘ì˜· ê°•í™”ì‹œ",ChatColor.GOLD +"ëª¨ë“  ëŠ¥ë ¥ì¹˜ê°€ ìƒìŠ¹í•©ë‹ˆë‹¤(ë°©ì–´êµ¬ë‹¹ í•œë²ˆë§Œ ê°€ëŠ¥)","",
+						ChatColor.GRAY +"ë¬´ê¸°ê°•í™”ì‹œ ë„¤ë”ì§€ì—­ í•µì€",ChatColor.GRAY +"í•œê°€ì§€ë§Œ ë¶€ì—¬ ê°€ëŠ¥í•©ë‹ˆë‹¤", ChatColor.GRAY +"+25% ì¼ë°˜ê³µê²©ë ¥, +50 í–‰ìš´", ChatColor.GRAY +"ë¬¼,ë°”ëŒ,ì–´ë‘ ,ì„œë¦¬ ê³„ì—´ ê³µê²©ë ¥ +25%", "í–‰ìš´ì€ ê¶ê·¹ê¸°ë¥¼ ì œì™¸í•œ ì¼ë°˜ê¸°ìˆ ë“¤ì˜", "ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ ê°ì†Œì— ì˜í–¥ì„ ì¤ë‹ˆë‹¤"
+						,"", ChatColor.AQUA +"ì œì‘ëŒ€ì—ì„œ [í™”ì‚°ì˜ í•µ]ìœ¼ë¡œ êµí™˜ê°€ëŠ¥"));
+				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"ë’¤í‹€ë¦° í•µ");
+				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"ë’¤í‹€ë¦° í•µ");
 			}
 			else if(i == -5) {
 				ii.setType(Material.GILDED_BLACKSTONE);
-				imeta.setLore(Arrays.asList("¹«±â °­È­, À¶ÇÕµÈ ³×´õÀÇ ÇÙ Á¦ÀÛ¿¡ »ç¿ëµË´Ï´Ù","",ChatColor.GOLD +"À¶ÇÕµÈ ³×´õÀÇ ÇÙÀº ³×´õÁö¿ª¿¡¼­ ¾òÀº",ChatColor.GOLD +"³×°¡Áö ÇÙµéÀ» Á¶ÇÕÇÏ¸é È¹µæ°¡´ÉÇÕ´Ï´Ù",ChatColor.GOLD +"À¶ÇÕµÈ ³×´õÀÇ ÇÙÀ¸·Î Çï¸ä ¶Ç´Â °©¿Ê °­È­½Ã",ChatColor.GOLD +"¸ğµç ´É·ÂÄ¡°¡ »ó½ÂÇÕ´Ï´Ù(¹æ¾î±¸´ç ÇÑ¹ø¸¸ °¡´É)","",
-						ChatColor.GRAY +"¹«±â°­È­½Ã ³×´õÁö¿ª ÇÙÀº",ChatColor.GRAY +"ÇÑ°¡Áö¸¸ ºÎ¿© °¡´ÉÇÕ´Ï´Ù", ChatColor.GRAY +"+25% ÀÏ¹İ°ø°İ·Â, +50 Çà¿î", ChatColor.GRAY +"ºÒ,´ëÁö,¹ø°³,µ¶ °è¿­ °ø°İ·Â +25%", "Çà¿îÀº ±Ã±Ø±â¸¦ Á¦¿ÜÇÑ ÀÏ¹İ±â¼úµéÀÇ", "Àç»ç¿ë ´ë±â½Ã°£ °¨¼Ò¿¡ ¿µÇâÀ» Áİ´Ï´Ù"
-						,"", ChatColor.AQUA +"Á¦ÀÛ´ë¿¡¼­ [¿µÈ¥ ÀÀÃà¹°]À¸·Î ±³È¯°¡´É"));
-				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"È­»êÀÇ ÇÙ");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"È­»êÀÇ ÇÙ");
+				imeta.setLore(Arrays.asList("ë¬´ê¸° ê°•í™”, ìœµí•©ëœ ë„¤ë”ì˜ í•µ ì œì‘ì— ì‚¬ìš©ë©ë‹ˆë‹¤","",ChatColor.GOLD +"ìœµí•©ëœ ë„¤ë”ì˜ í•µì€ ë„¤ë”ì§€ì—­ì—ì„œ ì–»ì€",ChatColor.GOLD +"ë„¤ê°€ì§€ í•µë“¤ì„ ì¡°í•©í•˜ë©´ íšë“ê°€ëŠ¥í•©ë‹ˆë‹¤",ChatColor.GOLD +"ìœµí•©ëœ ë„¤ë”ì˜ í•µìœ¼ë¡œ í—¬ë©§ ë˜ëŠ” ê°‘ì˜· ê°•í™”ì‹œ",ChatColor.GOLD +"ëª¨ë“  ëŠ¥ë ¥ì¹˜ê°€ ìƒìŠ¹í•©ë‹ˆë‹¤(ë°©ì–´êµ¬ë‹¹ í•œë²ˆë§Œ ê°€ëŠ¥)","",
+						ChatColor.GRAY +"ë¬´ê¸°ê°•í™”ì‹œ ë„¤ë”ì§€ì—­ í•µì€",ChatColor.GRAY +"í•œê°€ì§€ë§Œ ë¶€ì—¬ ê°€ëŠ¥í•©ë‹ˆë‹¤", ChatColor.GRAY +"+25% ì¼ë°˜ê³µê²©ë ¥, +50 í–‰ìš´", ChatColor.GRAY +"ë¶ˆ,ëŒ€ì§€,ë²ˆê°œ,ë… ê³„ì—´ ê³µê²©ë ¥ +25%", "í–‰ìš´ì€ ê¶ê·¹ê¸°ë¥¼ ì œì™¸í•œ ì¼ë°˜ê¸°ìˆ ë“¤ì˜", "ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ ê°ì†Œì— ì˜í–¥ì„ ì¤ë‹ˆë‹¤"
+						,"", ChatColor.AQUA +"ì œì‘ëŒ€ì—ì„œ [ì˜í˜¼ ì‘ì¶•ë¬¼]ìœ¼ë¡œ êµí™˜ê°€ëŠ¥"));
+				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"í™”ì‚°ì˜ í•µ");
+				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"í™”ì‚°ì˜ í•µ");
 			}
 			else if(i == -6) {
 				ii.setType(Material.END_STONE_BRICKS);
-				imeta.setLore(Arrays.asList("¹«±â °­È­, À¶ÇÕµÈ ¿£´õÀÇ ÇÙ Á¦ÀÛ¿¡ »ç¿ëµË´Ï´Ù","",ChatColor.GOLD +"À¶ÇÕµÈ ¿£´õÀÇ ÇÙÀº ¿£´õÁö¿ª¿¡¼­ ¾òÀº",ChatColor.GOLD +"µÎ°¡Áö ÇÙµéÀ» Á¶ÇÕÇÏ¸é È¹µæ°¡´ÉÇÕ´Ï´Ù",ChatColor.GOLD +"À¶ÇÕµÈ ¿£´õÀÇ ÇÙÀ¸·Î ·¹±ë½º ¶Ç´Â ºÎÃ÷ °­È­½Ã",ChatColor.GOLD +"¸ğµç ´É·ÂÄ¡°¡ »ó½ÂÇÕ´Ï´Ù(¹æ¾î±¸´ç ÇÑ¹ø¸¸ °¡´É)","",
-						ChatColor.GRAY +"¹«±â°­È­½Ã ¿£´õÁö¿ª ÇÙÀº",ChatColor.GRAY +"ÇÑ°¡Áö¸¸ ºÎ¿© °¡´ÉÇÕ´Ï´Ù", ChatColor.GRAY +"+80% ÀÏ¹İ°ø°İ·Â, +30% Çà¿î", ChatColor.GRAY +"¸ğµç ¿ø¼Ò °è¿­ °ø°İ·Â +35%", "Çà¿îÀº ±Ã±Ø±â¸¦ Á¦¿ÜÇÑ ÀÏ¹İ±â¼úµéÀÇ", "Àç»ç¿ë ´ë±â½Ã°£ °¨¼Ò¿¡ ¿µÇâÀ» Áİ´Ï´Ù"
-						,"", ChatColor.AQUA +"Á¦ÀÛ´ë¿¡¼­ [°øÇãÀÇ ÇÙ]À¸·Î ±³È¯°¡´É"));
-				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"¿£´õ ÇÙ");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿£´õ ÇÙ");
+				imeta.setLore(Arrays.asList("ë¬´ê¸° ê°•í™”, ìœµí•©ëœ ì—”ë”ì˜ í•µ ì œì‘ì— ì‚¬ìš©ë©ë‹ˆë‹¤","",ChatColor.GOLD +"ìœµí•©ëœ ì—”ë”ì˜ í•µì€ ì—”ë”ì§€ì—­ì—ì„œ ì–»ì€",ChatColor.GOLD +"ë‘ê°€ì§€ í•µë“¤ì„ ì¡°í•©í•˜ë©´ íšë“ê°€ëŠ¥í•©ë‹ˆë‹¤",ChatColor.GOLD +"ìœµí•©ëœ ì—”ë”ì˜ í•µìœ¼ë¡œ ë ˆê¹…ìŠ¤ ë˜ëŠ” ë¶€ì¸  ê°•í™”ì‹œ",ChatColor.GOLD +"ëª¨ë“  ëŠ¥ë ¥ì¹˜ê°€ ìƒìŠ¹í•©ë‹ˆë‹¤(ë°©ì–´êµ¬ë‹¹ í•œë²ˆë§Œ ê°€ëŠ¥)","",
+						ChatColor.GRAY +"ë¬´ê¸°ê°•í™”ì‹œ ì—”ë”ì§€ì—­ í•µì€",ChatColor.GRAY +"í•œê°€ì§€ë§Œ ë¶€ì—¬ ê°€ëŠ¥í•©ë‹ˆë‹¤", ChatColor.GRAY +"+80% ì¼ë°˜ê³µê²©ë ¥, +30% í–‰ìš´", ChatColor.GRAY +"ëª¨ë“  ì›ì†Œ ê³„ì—´ ê³µê²©ë ¥ +35%", "í–‰ìš´ì€ ê¶ê·¹ê¸°ë¥¼ ì œì™¸í•œ ì¼ë°˜ê¸°ìˆ ë“¤ì˜", "ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ ê°ì†Œì— ì˜í–¥ì„ ì¤ë‹ˆë‹¤"
+						,"", ChatColor.AQUA +"ì œì‘ëŒ€ì—ì„œ [ê³µí—ˆì˜ í•µ]ìœ¼ë¡œ êµí™˜ê°€ëŠ¥"));
+				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"ì—”ë” í•µ");
+				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì—”ë” í•µ");
 			}
 			else if(i == -7) {
 				ii.setType(Material.PURPUR_PILLAR);
-				imeta.setLore(Arrays.asList("¹«±â °­È­, À¶ÇÕµÈ ¿£´õÀÇ ÇÙ Á¦ÀÛ¿¡ »ç¿ëµË´Ï´Ù","",ChatColor.GOLD +"À¶ÇÕµÈ ¿£´õÀÇ ÇÙÀº ¿£´õÁö¿ª¿¡¼­ ¾òÀº",ChatColor.GOLD +"µÎ°¡Áö ÇÙµéÀ» Á¶ÇÕÇÏ¸é È¹µæ°¡´ÉÇÕ´Ï´Ù",ChatColor.GOLD +"À¶ÇÕµÈ ¿£´õÀÇ ÇÙÀ¸·Î ·¹±ë½º ¶Ç´Â ºÎÃ÷ °­È­½Ã",ChatColor.GOLD +"¸ğµç ´É·ÂÄ¡°¡ »ó½ÂÇÕ´Ï´Ù(¹æ¾î±¸´ç ÇÑ¹ø¸¸ °¡´É)","",
-						ChatColor.GRAY +"¹«±â°­È­½Ã ¿£´õÁö¿ª ÇÙÀº",ChatColor.GRAY +"ÇÑ°¡Áö¸¸ ºÎ¿© °¡´ÉÇÕ´Ï´Ù", ChatColor.GRAY +"+40% ÀÏ¹İ°ø°İ·Â, +60% Çà¿î", ChatColor.GRAY +"¸ğµç ¿ø¼Ò °è¿­ °ø°İ·Â +35%", "Çà¿îÀº ±Ã±Ø±â¸¦ Á¦¿ÜÇÑ ÀÏ¹İ±â¼úµéÀÇ", "Àç»ç¿ë ´ë±â½Ã°£ °¨¼Ò¿¡ ¿µÇâÀ» Áİ´Ï´Ù"
-						,"", ChatColor.AQUA +"Á¦ÀÛ´ë¿¡¼­ [¿£´õ ÇÙ]À¸·Î ±³È¯°¡´É"));
-				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"°øÇãÀÇ ÇÙ");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"°øÇãÀÇ ÇÙ");
+				imeta.setLore(Arrays.asList("ë¬´ê¸° ê°•í™”, ìœµí•©ëœ ì—”ë”ì˜ í•µ ì œì‘ì— ì‚¬ìš©ë©ë‹ˆë‹¤","",ChatColor.GOLD +"ìœµí•©ëœ ì—”ë”ì˜ í•µì€ ì—”ë”ì§€ì—­ì—ì„œ ì–»ì€",ChatColor.GOLD +"ë‘ê°€ì§€ í•µë“¤ì„ ì¡°í•©í•˜ë©´ íšë“ê°€ëŠ¥í•©ë‹ˆë‹¤",ChatColor.GOLD +"ìœµí•©ëœ ì—”ë”ì˜ í•µìœ¼ë¡œ ë ˆê¹…ìŠ¤ ë˜ëŠ” ë¶€ì¸  ê°•í™”ì‹œ",ChatColor.GOLD +"ëª¨ë“  ëŠ¥ë ¥ì¹˜ê°€ ìƒìŠ¹í•©ë‹ˆë‹¤(ë°©ì–´êµ¬ë‹¹ í•œë²ˆë§Œ ê°€ëŠ¥)","",
+						ChatColor.GRAY +"ë¬´ê¸°ê°•í™”ì‹œ ì—”ë”ì§€ì—­ í•µì€",ChatColor.GRAY +"í•œê°€ì§€ë§Œ ë¶€ì—¬ ê°€ëŠ¥í•©ë‹ˆë‹¤", ChatColor.GRAY +"+40% ì¼ë°˜ê³µê²©ë ¥, +60% í–‰ìš´", ChatColor.GRAY +"ëª¨ë“  ì›ì†Œ ê³„ì—´ ê³µê²©ë ¥ +35%", "í–‰ìš´ì€ ê¶ê·¹ê¸°ë¥¼ ì œì™¸í•œ ì¼ë°˜ê¸°ìˆ ë“¤ì˜", "ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ ê°ì†Œì— ì˜í–¥ì„ ì¤ë‹ˆë‹¤"
+						,"", ChatColor.AQUA +"ì œì‘ëŒ€ì—ì„œ [ì—”ë” í•µ]ìœ¼ë¡œ êµí™˜ê°€ëŠ¥"));
+				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"ê³µí—ˆì˜ í•µ");
+				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"ê³µí—ˆì˜ í•µ");
 			}
 			else if(i == -8) {
 				ii.setType(Material.CRYING_OBSIDIAN);
-				imeta.setLore(Arrays.asList("¹«±â °­È­½Ã »ç¿ëµË´Ï´Ù", "+110% ÀÏ¹İ°ø°İ·Â, +80% Çà¿î", "¸ğµç ¿ø¼Ò °è¿­ °ø°İ·Â +55%", "Çà¿îÀº ±Ã±Ø±â¸¦ Á¦¿ÜÇÑ ÀÏ¹İ±â¼úµéÀÇ", "Àç»ç¿ë ´ë±â½Ã°£ °¨¼Ò¿¡ ¿µÇâÀ» Áİ´Ï´Ù"));
-				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"¿µ¿õÀÇ »óÂ¡");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿µ¿õÀÇ »óÂ¡");
+				imeta.setLore(Arrays.asList("ë¬´ê¸° ê°•í™”ì‹œ ì‚¬ìš©ë©ë‹ˆë‹¤", "+110% ì¼ë°˜ê³µê²©ë ¥, +80% í–‰ìš´", "ëª¨ë“  ì›ì†Œ ê³„ì—´ ê³µê²©ë ¥ +55%", "í–‰ìš´ì€ ê¶ê·¹ê¸°ë¥¼ ì œì™¸í•œ ì¼ë°˜ê¸°ìˆ ë“¤ì˜", "ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ ê°ì†Œì— ì˜í–¥ì„ ì¤ë‹ˆë‹¤"));
+				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"ì˜ì›…ì˜ ìƒì§•");
+				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì˜ì›…ì˜ ìƒì§•");
 			}
 			imeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 			ii.setItemMeta(imeta);
@@ -790,107 +790,107 @@ public class Elements implements Listener {
 		ItemStack ii = new ItemStack(Material.GRASS);
 		ItemMeta imeta = ii.getItemMeta();
 		imeta.setCustomModelData(200*(i>0?1:-1) + i);
-		imeta.setLore(Arrays.asList("°í°íÇĞÀÚ¿¡°Ô ±¸¸Å °¡´ÉÇÕ´Ï´Ù","°í°íÇĞÀÚ´Â Á¤±ÛÇÇ¶ó¹Ìµå¿¡¼­ Ã£À»¼ö ÀÖ½À´Ï´Ù"));
+		imeta.setLore(Arrays.asList("ê³ ê³ í•™ìì—ê²Œ êµ¬ë§¤ ê°€ëŠ¥í•©ë‹ˆë‹¤","ê³ ê³ í•™ìëŠ” ì •ê¸€í”¼ë¼ë¯¸ë“œì—ì„œ ì°¾ì„ìˆ˜ ìˆìŠµë‹ˆë‹¤"));
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 			if(i == 5) {
 				ii.setType(Material.GREEN_GLAZED_TERRACOTTA);
 				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[ÀÚ¿¬ÀÇ ¹«±â]¸¦ °­È­½Ã", ChatColor.GOLD + "[¹Ù¶÷ÀÇ ¹«±â]¸¦ È¹µæÇÕ´Ï´Ù"));
-				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[°í´ëÀÇ ¹æ¾î±¸]¸¦ °­È­½Ã", ChatColor.GOLD + "[¹Ù¶÷ÀÇ ¹æ¾î±¸]¸¦ È¹µæÇÕ´Ï´Ù"));
-				lore.addAll(Arrays.asList("",ChatColor.RED + "[°í´ëÀÇ ¹æ¾î±¸]´Â ³×´õ º¸½º ¸ó½ºÅÍµå¶ø", ChatColor.RED + "¶Ç´Â »ç½Å npc¿¡°Ô ±¸¸Å°¡´ÉÇÕ´Ï´Ù"));
+				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[ìì—°ì˜ ë¬´ê¸°]ë¥¼ ê°•í™”ì‹œ", ChatColor.GOLD + "[ë°”ëŒì˜ ë¬´ê¸°]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
+				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[ê³ ëŒ€ì˜ ë°©ì–´êµ¬]ë¥¼ ê°•í™”ì‹œ", ChatColor.GOLD + "[ë°”ëŒì˜ ë°©ì–´êµ¬]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
+				lore.addAll(Arrays.asList("",ChatColor.RED + "[ê³ ëŒ€ì˜ ë°©ì–´êµ¬]ëŠ” ë„¤ë” ë³´ìŠ¤ ëª¬ìŠ¤í„°ë“œë", ChatColor.RED + "ë˜ëŠ” ì‚¬ì‹  npcì—ê²Œ êµ¬ë§¤ê°€ëŠ¥í•©ë‹ˆë‹¤"));
 				imeta.setLore(lore);
-				imeta.setDisplayName(ChatColor.GOLD +"ÆøÇ³ÀÇ ÇÙ");
-				imeta.setLocalizedName(ChatColor.GOLD +"ÆøÇ³ÀÇ ÇÙ");
+				imeta.setDisplayName(ChatColor.GOLD +"í­í’ì˜ í•µ");
+				imeta.setLocalizedName(ChatColor.GOLD +"í­í’ì˜ í•µ");
 			}
 			else if(i == 14) {
 				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[ÀÚ¿¬ÀÇ ¹«±â]¸¦ °­È­½Ã", ChatColor.GOLD + "[´ëÁöÀÇ ¹«±â]¸¦ È¹µæÇÕ´Ï´Ù"));
-				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[°í´ëÀÇ ¹æ¾î±¸]¸¦ °­È­½Ã", ChatColor.GOLD + "[´ëÁöÀÇ ¹æ¾î±¸]¸¦ È¹µæÇÕ´Ï´Ù"));
-				lore.addAll(Arrays.asList("",ChatColor.RED + "[°í´ëÀÇ ¹æ¾î±¸]´Â ³×´õ º¸½º ¸ó½ºÅÍµå¶ø", ChatColor.RED + "¶Ç´Â »ç½Å npc¿¡°Ô ±¸¸Å°¡´ÉÇÕ´Ï´Ù"));
+				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[ìì—°ì˜ ë¬´ê¸°]ë¥¼ ê°•í™”ì‹œ", ChatColor.GOLD + "[ëŒ€ì§€ì˜ ë¬´ê¸°]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
+				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[ê³ ëŒ€ì˜ ë°©ì–´êµ¬]ë¥¼ ê°•í™”ì‹œ", ChatColor.GOLD + "[ëŒ€ì§€ì˜ ë°©ì–´êµ¬]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
+				lore.addAll(Arrays.asList("",ChatColor.RED + "[ê³ ëŒ€ì˜ ë°©ì–´êµ¬]ëŠ” ë„¤ë” ë³´ìŠ¤ ëª¬ìŠ¤í„°ë“œë", ChatColor.RED + "ë˜ëŠ” ì‚¬ì‹  npcì—ê²Œ êµ¬ë§¤ê°€ëŠ¥í•©ë‹ˆë‹¤"));
 				imeta.setLore(lore);
 				ii.setType(Material.LIGHT_GRAY_GLAZED_TERRACOTTA);
-				imeta.setDisplayName(ChatColor.GOLD +"±¤¾ßÀÇ ÇÙ");
-				imeta.setLocalizedName(ChatColor.GOLD +"±¤¾ßÀÇ ÇÙ");
+				imeta.setDisplayName(ChatColor.GOLD +"ê´‘ì•¼ì˜ í•µ");
+				imeta.setLocalizedName(ChatColor.GOLD +"ê´‘ì•¼ì˜ í•µ");
 			}
 			else if(i == 6) {
 				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[ÀÚ¿¬ÀÇ ¹«±â]¸¦ °­È­½Ã", ChatColor.GOLD + "[¼­¸®ÀÇ ¹«±â]¸¦ È¹µæÇÕ´Ï´Ù"));
-				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[°í´ëÀÇ ¹æ¾î±¸]¸¦ °­È­½Ã", ChatColor.GOLD + "[¼­¸®ÀÇ ¹æ¾î±¸]¸¦ È¹µæÇÕ´Ï´Ù"));
-				lore.addAll(Arrays.asList("",ChatColor.RED + "[°í´ëÀÇ ¹æ¾î±¸]´Â ³×´õ º¸½º ¸ó½ºÅÍµå¶ø", ChatColor.RED + "¶Ç´Â »ç½Å npc¿¡°Ô ±¸¸Å°¡´ÉÇÕ´Ï´Ù"));
+				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[ìì—°ì˜ ë¬´ê¸°]ë¥¼ ê°•í™”ì‹œ", ChatColor.GOLD + "[ì„œë¦¬ì˜ ë¬´ê¸°]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
+				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[ê³ ëŒ€ì˜ ë°©ì–´êµ¬]ë¥¼ ê°•í™”ì‹œ", ChatColor.GOLD + "[ì„œë¦¬ì˜ ë°©ì–´êµ¬]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
+				lore.addAll(Arrays.asList("",ChatColor.RED + "[ê³ ëŒ€ì˜ ë°©ì–´êµ¬]ëŠ” ë„¤ë” ë³´ìŠ¤ ëª¬ìŠ¤í„°ë“œë", ChatColor.RED + "ë˜ëŠ” ì‚¬ì‹  npcì—ê²Œ êµ¬ë§¤ê°€ëŠ¥í•©ë‹ˆë‹¤"));
 				imeta.setLore(lore);
 				ii.setType(Material.LIGHT_BLUE_GLAZED_TERRACOTTA);
-				imeta.setDisplayName(ChatColor.GOLD +"¸¸³â¼­¸®ÀÇ ÇÙ");
-				imeta.setLocalizedName(ChatColor.GOLD +"¸¸³â¼­¸®ÀÇ ÇÙ");
+				imeta.setDisplayName(ChatColor.GOLD +"ë§Œë…„ì„œë¦¬ì˜ í•µ");
+				imeta.setLocalizedName(ChatColor.GOLD +"ë§Œë…„ì„œë¦¬ì˜ í•µ");
 			}
 			else if(i == 7) {
 				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[ÀÚ¿¬ÀÇ ¹«±â]¸¦ °­È­½Ã", ChatColor.GOLD + "[¹Ù´ÙÀÇ ¹«±â]¸¦ È¹µæÇÕ´Ï´Ù"));
-				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[°í´ëÀÇ ¹æ¾î±¸]¸¦ °­È­½Ã", ChatColor.GOLD + "[¹Ù´ÙÀÇ ¹æ¾î±¸]¸¦ È¹µæÇÕ´Ï´Ù"));
-				lore.addAll(Arrays.asList("",ChatColor.RED + "[°í´ëÀÇ ¹æ¾î±¸]´Â ³×´õ º¸½º ¸ó½ºÅÍµå¶ø", ChatColor.RED + "¶Ç´Â »ç½Å npc¿¡°Ô ±¸¸Å°¡´ÉÇÕ´Ï´Ù"));
+				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[ìì—°ì˜ ë¬´ê¸°]ë¥¼ ê°•í™”ì‹œ", ChatColor.GOLD + "[ë°”ë‹¤ì˜ ë¬´ê¸°]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
+				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[ê³ ëŒ€ì˜ ë°©ì–´êµ¬]ë¥¼ ê°•í™”ì‹œ", ChatColor.GOLD + "[ë°”ë‹¤ì˜ ë°©ì–´êµ¬]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
+				lore.addAll(Arrays.asList("",ChatColor.RED + "[ê³ ëŒ€ì˜ ë°©ì–´êµ¬]ëŠ” ë„¤ë” ë³´ìŠ¤ ëª¬ìŠ¤í„°ë“œë", ChatColor.RED + "ë˜ëŠ” ì‚¬ì‹  npcì—ê²Œ êµ¬ë§¤ê°€ëŠ¥í•©ë‹ˆë‹¤"));
 				imeta.setLore(lore);
 				ii.setType(Material.BLUE_GLAZED_TERRACOTTA);
-				imeta.setDisplayName(ChatColor.GOLD +"´ë¾çÀÇ ÇÙ");
-				imeta.setLocalizedName(ChatColor.GOLD +"´ë¾çÀÇ ÇÙ");
+				imeta.setDisplayName(ChatColor.GOLD +"ëŒ€ì–‘ì˜ í•µ");
+				imeta.setLocalizedName(ChatColor.GOLD +"ëŒ€ì–‘ì˜ í•µ");
 			}
 			else if(i == 8) {
 				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[ÀÚ¿¬ÀÇ ¹«±â]¸¦ °­È­½Ã", ChatColor.GOLD + "[¾îµÒÀÇ ¹«±â]¸¦ È¹µæÇÕ´Ï´Ù"));
-				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[°í´ëÀÇ ¹æ¾î±¸]¸¦ °­È­½Ã", ChatColor.GOLD + "[¾îµÒÀÇ ¹æ¾î±¸]¸¦ È¹µæÇÕ´Ï´Ù"));
-				lore.addAll(Arrays.asList("",ChatColor.RED + "[°í´ëÀÇ ¹æ¾î±¸]´Â ³×´õ º¸½º ¸ó½ºÅÍµå¶ø", ChatColor.RED + "¶Ç´Â »ç½Å npc¿¡°Ô ±¸¸Å°¡´ÉÇÕ´Ï´Ù"));
+				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[ìì—°ì˜ ë¬´ê¸°]ë¥¼ ê°•í™”ì‹œ", ChatColor.GOLD + "[ì–´ë‘ ì˜ ë¬´ê¸°]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
+				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[ê³ ëŒ€ì˜ ë°©ì–´êµ¬]ë¥¼ ê°•í™”ì‹œ", ChatColor.GOLD + "[ì–´ë‘ ì˜ ë°©ì–´êµ¬]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
+				lore.addAll(Arrays.asList("",ChatColor.RED + "[ê³ ëŒ€ì˜ ë°©ì–´êµ¬]ëŠ” ë„¤ë” ë³´ìŠ¤ ëª¬ìŠ¤í„°ë“œë", ChatColor.RED + "ë˜ëŠ” ì‚¬ì‹  npcì—ê²Œ êµ¬ë§¤ê°€ëŠ¥í•©ë‹ˆë‹¤"));
 				imeta.setLore(lore);
 				ii.setType(Material.BROWN_GLAZED_TERRACOTTA);
-				imeta.setDisplayName(ChatColor.GOLD +"¹ãÀÇ ÇÙ");
-				imeta.setLocalizedName(ChatColor.GOLD +"¹ãÀÇ ÇÙ");
+				imeta.setDisplayName(ChatColor.GOLD +"ë°¤ì˜ í•µ");
+				imeta.setLocalizedName(ChatColor.GOLD +"ë°¤ì˜ í•µ");
 			}
 			else if(i == 9) {
 				ii.setType(Material.WHITE_GLAZED_TERRACOTTA);
 				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[ÀÚ¿¬ÀÇ ¹«±â]¸¦ °­È­½Ã", ChatColor.GOLD + "[°³Á¶µÈ ¹«±â]¸¦ È¹µæÇÕ´Ï´Ù"));
-				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[°í´ëÀÇ ¹æ¾î±¸]¸¦ °­È­½Ã", ChatColor.GOLD + "[°³Á¶µÈ ¹æ¾î±¸]¸¦ È¹µæÇÕ´Ï´Ù"));
-				lore.addAll(Arrays.asList("",ChatColor.RED + "[°í´ëÀÇ ¹æ¾î±¸]´Â ³×´õ º¸½º ¸ó½ºÅÍµå¶ø", ChatColor.RED + "¶Ç´Â »ç½Å npc¿¡°Ô ±¸¸Å°¡´ÉÇÕ´Ï´Ù"));
+				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[ìì—°ì˜ ë¬´ê¸°]ë¥¼ ê°•í™”ì‹œ", ChatColor.GOLD + "[ê°œì¡°ëœ ë¬´ê¸°]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
+				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[ê³ ëŒ€ì˜ ë°©ì–´êµ¬]ë¥¼ ê°•í™”ì‹œ", ChatColor.GOLD + "[ê°œì¡°ëœ ë°©ì–´êµ¬]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
+				lore.addAll(Arrays.asList("",ChatColor.RED + "[ê³ ëŒ€ì˜ ë°©ì–´êµ¬]ëŠ” ë„¤ë” ë³´ìŠ¤ ëª¬ìŠ¤í„°ë“œë", ChatColor.RED + "ë˜ëŠ” ì‚¬ì‹  npcì—ê²Œ êµ¬ë§¤ê°€ëŠ¥í•©ë‹ˆë‹¤"));
 				imeta.setLore(lore);
-				imeta.setDisplayName(ChatColor.GOLD +"°­È­Çü ÇÏÀÌÆÛ ¿£Áø");
-				imeta.setLocalizedName(ChatColor.GOLD +"°­È­Çü ÇÏÀÌÆÛ ¿£Áø");
+				imeta.setDisplayName(ChatColor.GOLD +"ê°•í™”í˜• í•˜ì´í¼ ì—”ì§„");
+				imeta.setLocalizedName(ChatColor.GOLD +"ê°•í™”í˜• í•˜ì´í¼ ì—”ì§„");
 			}
 			else if(i == 10) {
 				ii.setType(Material.RED_GLAZED_TERRACOTTA);
 				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[ÀÚ¿¬ÀÇ ¹«±â]¸¦ °­È­½Ã", ChatColor.GOLD + "[ÀÛ¿­ÇÏ´Â ¹«±â]¸¦ È¹µæÇÕ´Ï´Ù"));
-				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[°í´ëÀÇ ¹æ¾î±¸]¸¦ °­È­½Ã", ChatColor.GOLD + "[ÀÛ¿­ÇÏ´Â ¹æ¾î±¸]¸¦ È¹µæÇÕ´Ï´Ù"));
-				lore.addAll(Arrays.asList("",ChatColor.RED + "[°í´ëÀÇ ¹æ¾î±¸]´Â ³×´õ º¸½º ¸ó½ºÅÍµå¶ø", ChatColor.RED + "¶Ç´Â »ç½Å npc¿¡°Ô ±¸¸Å°¡´ÉÇÕ´Ï´Ù"));
+				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[ìì—°ì˜ ë¬´ê¸°]ë¥¼ ê°•í™”ì‹œ", ChatColor.GOLD + "[ì‘ì—´í•˜ëŠ” ë¬´ê¸°]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
+				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[ê³ ëŒ€ì˜ ë°©ì–´êµ¬]ë¥¼ ê°•í™”ì‹œ", ChatColor.GOLD + "[ì‘ì—´í•˜ëŠ” ë°©ì–´êµ¬]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
+				lore.addAll(Arrays.asList("",ChatColor.RED + "[ê³ ëŒ€ì˜ ë°©ì–´êµ¬]ëŠ” ë„¤ë” ë³´ìŠ¤ ëª¬ìŠ¤í„°ë“œë", ChatColor.RED + "ë˜ëŠ” ì‚¬ì‹  npcì—ê²Œ êµ¬ë§¤ê°€ëŠ¥í•©ë‹ˆë‹¤"));
 				imeta.setLore(lore);
-				imeta.setDisplayName(ChatColor.GOLD +"ÅÂ¾çÀÇ ½ÉÀå");
-				imeta.setLocalizedName(ChatColor.GOLD +"ÅÂ¾çÀÇ ½ÉÀå");
+				imeta.setDisplayName(ChatColor.GOLD +"íƒœì–‘ì˜ ì‹¬ì¥");
+				imeta.setLocalizedName(ChatColor.GOLD +"íƒœì–‘ì˜ ì‹¬ì¥");
 			}
 			else if(i == 11) {
 				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[ÀÚ¿¬ÀÇ ¹«±â]¸¦ °­È­½Ã", ChatColor.GOLD + "[¸Íµ¶ÀÇ ¹«±â]¸¦ È¹µæÇÕ´Ï´Ù"));
-				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[°í´ëÀÇ ¹æ¾î±¸]¸¦ °­È­½Ã", ChatColor.GOLD + "[¸Íµ¶ÀÇ ¹æ¾î±¸]¸¦ È¹µæÇÕ´Ï´Ù"));
-				lore.addAll(Arrays.asList("",ChatColor.RED + "[°í´ëÀÇ ¹æ¾î±¸]´Â ³×´õ º¸½º ¸ó½ºÅÍµå¶ø", ChatColor.RED + "¶Ç´Â »ç½Å npc¿¡°Ô ±¸¸Å°¡´ÉÇÕ´Ï´Ù"));
+				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[ìì—°ì˜ ë¬´ê¸°]ë¥¼ ê°•í™”ì‹œ", ChatColor.GOLD + "[ë§¹ë…ì˜ ë¬´ê¸°]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
+				lore.addAll(Arrays.asList("",ChatColor.GOLD + "[ê³ ëŒ€ì˜ ë°©ì–´êµ¬]ë¥¼ ê°•í™”ì‹œ", ChatColor.GOLD + "[ë§¹ë…ì˜ ë°©ì–´êµ¬]ë¥¼ íšë“í•©ë‹ˆë‹¤"));
+				lore.addAll(Arrays.asList("",ChatColor.RED + "[ê³ ëŒ€ì˜ ë°©ì–´êµ¬]ëŠ” ë„¤ë” ë³´ìŠ¤ ëª¬ìŠ¤í„°ë“œë", ChatColor.RED + "ë˜ëŠ” ì‚¬ì‹  npcì—ê²Œ êµ¬ë§¤ê°€ëŠ¥í•©ë‹ˆë‹¤"));
 				imeta.setLore(lore);
 				ii.setType(Material.LIME_GLAZED_TERRACOTTA);
-				imeta.setDisplayName(ChatColor.GOLD +"°­·ÂÇÑ ¸Íµ¶ÀÇ ÇÙ");
-				imeta.setLocalizedName(ChatColor.GOLD +"°­·ÂÇÑ ¸Íµ¶ÀÇ ÇÙ");
+				imeta.setDisplayName(ChatColor.GOLD +"ê°•ë ¥í•œ ë§¹ë…ì˜ í•µ");
+				imeta.setLocalizedName(ChatColor.GOLD +"ê°•ë ¥í•œ ë§¹ë…ì˜ í•µ");
 			}
 			else if(i == 12) {
 				ii.setType(Material.BLACK_GLAZED_TERRACOTTA);
-				imeta.setLore(Arrays.asList("°í°íÇĞÀÚ¿¡°Ô °­·ÂÇÑ ¿ø¼ÒÇÙÀ» ±¸¸ÅÇÒ ¼ö ÀÖ½À´Ï´Ù","°í°íÇĞÀÚ´Â Á¤±ÛÇÇ¶ó¹Ìµå¿¡¼­ Ã£À»¼ö ÀÖ½À´Ï´Ù"));
-				imeta.setDisplayName(ChatColor.GOLD +"°­·ÂÇÑ ¿ø¼ÒÀÇ ±â¿î");
-				imeta.setLocalizedName(ChatColor.GOLD +"°­·ÂÇÑ ¿ø¼ÒÀÇ ±â¿î");
+				imeta.setLore(Arrays.asList("ê³ ê³ í•™ìì—ê²Œ ê°•ë ¥í•œ ì›ì†Œí•µì„ êµ¬ë§¤í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤","ê³ ê³ í•™ìëŠ” ì •ê¸€í”¼ë¼ë¯¸ë“œì—ì„œ ì°¾ì„ìˆ˜ ìˆìŠµë‹ˆë‹¤"));
+				imeta.setDisplayName(ChatColor.GOLD +"ê°•ë ¥í•œ ì›ì†Œì˜ ê¸°ìš´");
+				imeta.setLocalizedName(ChatColor.GOLD +"ê°•ë ¥í•œ ì›ì†Œì˜ ê¸°ìš´");
 			}
 			else if(i == -2 || i== -3 || i == -4 || i == -5) {
 				ii.setType(Material.ANCIENT_DEBRIS);
-				imeta.setLore(Arrays.asList("Åõ±¸, °©¿Ê °­È­¿¡ »ç¿ëµË´Ï´Ù(¹æ¾î±¸´ç ÇÑ¹ø¸¸ °¡´É)","",
-						ChatColor.GRAY +"+15% °ø°İ·Â, +10 Çà¿î", "", "Çà¿îÀº ±Ã±Ø±â¸¦ Á¦¿ÜÇÑ ÀÏ¹İ±â¼úµéÀÇ", "Àç»ç¿ë ´ë±â½Ã°£ °¨¼Ò¿¡ ¿µÇâÀ» Áİ´Ï´Ù"));
-				imeta.setDisplayName(ChatColor.GOLD +"À¶ÇÕµÈ ³×´õÀÇ ÇÙ");
-				imeta.setLocalizedName(ChatColor.GOLD +"À¶ÇÕµÈ ³×´õÀÇ ÇÙ");
+				imeta.setLore(Arrays.asList("íˆ¬êµ¬, ê°‘ì˜· ê°•í™”ì— ì‚¬ìš©ë©ë‹ˆë‹¤(ë°©ì–´êµ¬ë‹¹ í•œë²ˆë§Œ ê°€ëŠ¥)","",
+						ChatColor.GRAY +"+15% ê³µê²©ë ¥, +10 í–‰ìš´", "", "í–‰ìš´ì€ ê¶ê·¹ê¸°ë¥¼ ì œì™¸í•œ ì¼ë°˜ê¸°ìˆ ë“¤ì˜", "ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ ê°ì†Œì— ì˜í–¥ì„ ì¤ë‹ˆë‹¤"));
+				imeta.setDisplayName(ChatColor.GOLD +"ìœµí•©ëœ ë„¤ë”ì˜ í•µ");
+				imeta.setLocalizedName(ChatColor.GOLD +"ìœµí•©ëœ ë„¤ë”ì˜ í•µ");
 			}
 			else if(i == -6 || i ==7) {
 				ii.setType(Material.END_CRYSTAL);
-				imeta.setLore(Arrays.asList("·¹±ë½º, ºÎÃ÷ °­È­¿¡ »ç¿ëµË´Ï´Ù(¹æ¾î±¸´ç ÇÑ¹ø¸¸ °¡´É)","",
-						ChatColor.GRAY +"+20% °ø°İ·Â, +15 Çà¿î, +20% ¼Óµµ", "", "Çà¿îÀº ±Ã±Ø±â¸¦ Á¦¿ÜÇÑ ÀÏ¹İ±â¼úµéÀÇ", "Àç»ç¿ë ´ë±â½Ã°£ °¨¼Ò¿¡ ¿µÇâÀ» Áİ´Ï´Ù"));
-				imeta.setDisplayName(ChatColor.GOLD +"À¶ÇÕµÈ ¿£´õ ÇÙ");
-				imeta.setLocalizedName(ChatColor.GOLD +"À¶ÇÕµÈ ¿£´õ ÇÙ");
+				imeta.setLore(Arrays.asList("ë ˆê¹…ìŠ¤, ë¶€ì¸  ê°•í™”ì— ì‚¬ìš©ë©ë‹ˆë‹¤(ë°©ì–´êµ¬ë‹¹ í•œë²ˆë§Œ ê°€ëŠ¥)","",
+						ChatColor.GRAY +"+20% ê³µê²©ë ¥, +15 í–‰ìš´, +20% ì†ë„", "", "í–‰ìš´ì€ ê¶ê·¹ê¸°ë¥¼ ì œì™¸í•œ ì¼ë°˜ê¸°ìˆ ë“¤ì˜", "ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ ê°ì†Œì— ì˜í–¥ì„ ì¤ë‹ˆë‹¤"));
+				imeta.setDisplayName(ChatColor.GOLD +"ìœµí•©ëœ ì—”ë” í•µ");
+				imeta.setLocalizedName(ChatColor.GOLD +"ìœµí•©ëœ ì—”ë” í•µ");
 			}
 			imeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 			ii.setItemMeta(imeta);
@@ -981,8 +981,8 @@ public class Elements implements Listener {
 			else if(i == 12) {
 				ii.setType(Material.BLACK_GLAZED_TERRACOTTA);
 				imeta.setLore(Arrays.asList("You can buy Strong Core from [Archaeologist]","(Archaeologist Locates on the Jungle Pyramid)"));
-				imeta.setDisplayName(ChatColor.GOLD +"°­·ÂÇÑ ¿ø¼ÒÀÇ ±â¿î");
-				imeta.setLocalizedName(ChatColor.GOLD +"°­·ÂÇÑ ¿ø¼ÒÀÇ ±â¿î");
+				imeta.setDisplayName(ChatColor.GOLD +"ê°•ë ¥í•œ ì›ì†Œì˜ ê¸°ìš´");
+				imeta.setLocalizedName(ChatColor.GOLD +"ê°•ë ¥í•œ ì›ì†Œì˜ ê¸°ìš´");
 			}
 			else if(i == -2 || i == -3 || 3==-4||i==-5) {
 				ii.setType(Material.ANCIENT_DEBRIS);
@@ -1015,8 +1015,8 @@ public class Elements implements Listener {
 		imeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		imeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			imeta.setLore(Arrays.asList(ChatColor.BOLD +"¿ìÅ¬¸¯½Ã ½ºÅ³Æ÷ÀÎÆ® 1À» È¹µæÇÕ´Ï´Ù"));
-			imeta.setDisplayName(ChatColor.GOLD +"½Åºñ·Î¿î µÎ·ç¸¶¸®");
+			imeta.setLore(Arrays.asList(ChatColor.BOLD +"ìš°í´ë¦­ì‹œ ìŠ¤í‚¬í¬ì¸íŠ¸ 1ì„ íšë“í•©ë‹ˆë‹¤"));
+			imeta.setDisplayName(ChatColor.GOLD +"ì‹ ë¹„ë¡œìš´ ë‘ë£¨ë§ˆë¦¬");
 			imeta.setLocalizedName(ChatColor.GOLD +"Mysterious scroll");
 		}
 		else {
@@ -1031,7 +1031,7 @@ public class Elements implements Listener {
 	private void bedcheck(ItemStack bc, Block b, Player p) {
 		if((p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasLocalizedName())){
 			final String ln = p.getInventory().getItemInMainHand().getItemMeta().getLocalizedName();
-			if(ln.contains("Teleporter") || ln.contains("¼ø°£ÀÌµ¿±â")){
+			if(ln.contains("Teleporter") || ln.contains("ìˆœê°„ì´ë™ê¸°")){
 				ItemMeta bm =  p.getInventory().getItemInMainHand().getItemMeta();
 				String ll = bm.getLocalizedName().split(" ")[0];
 				b.setMetadata(ChatColor.stripColor(ll) +"RaidPortal", new FixedMetadataValue(RMain.getInstance(), true));

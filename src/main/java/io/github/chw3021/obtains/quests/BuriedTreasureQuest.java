@@ -196,7 +196,7 @@ public class BuriedTreasureQuest extends Mobs implements Serializable  {
 				}
 				else {
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "³Í ¾ÆÁ÷ ÀÚ°İÀÌ ¾ø´Ù.").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ë„Œ ì•„ì§ ìê²©ì´ ì—†ë‹¤.").create());
 	        		}
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You don't deserve it yet").create());
@@ -230,7 +230,7 @@ public class BuriedTreasureQuest extends Mobs implements Serializable  {
 			if(c.getWorld().getNearbyEntities(c.getLocation(),10,10,10).stream().anyMatch(e -> e.hasMetadata("treasure"))) {
 				d.setCancelled(true);
         		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "º¸¹° ±ÙÃ³¿¡´Â Ã¢°í¸¦ ¼³Ä¡ ÇÒ ¼ö ¾ø½À´Ï´Ù").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ë³´ë¬¼ ê·¼ì²˜ì—ëŠ” ì°½ê³ ë¥¼ ì„¤ì¹˜ í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤").create());
         		}
         		else {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You can't Place Chest Near By Treasure").create());
@@ -281,7 +281,7 @@ public class BuriedTreasureQuest extends Mobs implements Serializable  {
 		
 		if(factor ==0) {
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendMessage("Äù½ºÆ®°¡ Ãë¼ÒµÇ¾ú½À´Ï´Ù(°Å¸®)");
+    			p.sendMessage("í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤(ê±°ë¦¬)");
 		    }
     		else {
     			p.sendMessage("Quest Canceled!(Too Far Away)");
@@ -289,7 +289,7 @@ public class BuriedTreasureQuest extends Mobs implements Serializable  {
 		}
 		else if (factor == 2) {
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendMessage("Äù½ºÆ®°¡ Ãë¼ÒµÇ¾ú½À´Ï´Ù(»ç¸Á)");
+    			p.sendMessage("í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤(ì‚¬ë§)");
 		    }
     		else {
     			p.sendMessage("Quest Canceled!(Death)");
@@ -297,7 +297,7 @@ public class BuriedTreasureQuest extends Mobs implements Serializable  {
 		}
 		else if (factor == 3) {
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendMessage("Äù½ºÆ®°¡ Ãë¼ÒµÇ¾ú½À´Ï´Ù(Æ÷±â)");
+    			p.sendMessage("í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤(í¬ê¸°)");
 		    }
     		else {
     			p.sendMessage("Quest Canceled!(Given Up)");
@@ -306,8 +306,8 @@ public class BuriedTreasureQuest extends Mobs implements Serializable  {
 		else if (factor == 4) {
     		p.playSound(p.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendTitle(ChatColor.BOLD + (ChatColor.GOLD + "Äù½ºÆ® ¿Ï·á!"),ChatColor.BOLD + (ChatColor.GOLD + "ÆÄ¹¯Èù º¸¹° Àü¸®Ç°À» È¹µæÇß½À´Ï´Ù!"),15,35,15);
-            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "º¸¹°»óÀÚ¸¦ ¿­¼ö ÀÖ½À´Ï´Ù").create());
+    			p.sendTitle(ChatColor.BOLD + (ChatColor.GOLD + "í€˜ìŠ¤íŠ¸ ì™„ë£Œ!"),ChatColor.BOLD + (ChatColor.GOLD + "íŒŒë¬»íŒ ë³´ë¬¼ ì „ë¦¬í’ˆì„ íšë“í–ˆìŠµë‹ˆë‹¤!"),15,35,15);
+            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ë³´ë¬¼ìƒìë¥¼ ì—´ìˆ˜ ìˆìŠµë‹ˆë‹¤").create());
 		    }
     		else {
     			p.sendTitle(ChatColor.GOLD + "Complete Quest!",ChatColor.GOLD + "You Just Obtained Buried Treasure Trophy!",15,35,15);
@@ -358,7 +358,7 @@ public class BuriedTreasureQuest extends Mobs implements Serializable  {
     	p.playSound(p.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_SET_SPAWN, 0.1f, 2f);
     	
 		if(factor ==0) {
-			String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "º¸¹°¸Á·É ("+p.getName()+")":"TreasureVex ("+p.getName()+")";
+			String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "ë³´ë¬¼ë§ë ¹ ("+p.getName()+")":"TreasureVex ("+p.getName()+")";
     		Vex newmob = (Vex) MobspawnLoc(esl, reg, p.getLevel()*30.0, head, chest, leg, boots, main, main, EntityType.VEX);
     		newmob.setCharging(true);
     		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
@@ -377,7 +377,7 @@ public class BuriedTreasureQuest extends Mobs implements Serializable  {
     		qmobs.put(p.getName(), newmob.getUniqueId());
 		}
 		else {
-			String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "¹Ì¹Í ("+p.getName()+")":"Mimic ("+p.getName()+")";
+			String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "ë¯¸ë¯¹ ("+p.getName()+")":"Mimic ("+p.getName()+")";
 			Drowned newmob = (Drowned) MobspawnLoc(esl, reg, p.getLevel()*30.0, head, chest, leg, boots, main, main, EntityType.DROWNED);
     		newmob.setConversionTime(-1);
     		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
@@ -415,7 +415,7 @@ public class BuriedTreasureQuest extends Mobs implements Serializable  {
 				}
 				if(!quested.isEmpty()) {
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÀÌ¹Ì ´Ù¸¥ ÇÃ·¹ÀÌ¾î°¡ Äù½ºÆ®¸¦ ÁøÇàÁßÀÔ´Ï´Ù.(Äù½ºÆ®¸¦ µµ¿ÍÁÙ¼ö ÀÖ½À´Ï´Ù) ").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ì´ë¯¸ ë‹¤ë¥¸ í”Œë ˆì´ì–´ê°€ í€˜ìŠ¤íŠ¸ë¥¼ ì§„í–‰ì¤‘ì…ë‹ˆë‹¤.(í€˜ìŠ¤íŠ¸ë¥¼ ë„ì™€ì¤„ìˆ˜ ìˆìŠµë‹ˆë‹¤) ").create());
 	        		}
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Should Wait(Or Assist) until Test End. ").create());
@@ -424,7 +424,7 @@ public class BuriedTreasureQuest extends Mobs implements Serializable  {
 				}
 				if(TrophyLoc.getLocsdata().Locs.containsEntry(p.getUniqueId(), NPCsSpawn.npcloc.get(le.getUniqueId()))) {
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ÀÚ°İÀ» °®Ãß¾ú±º.").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ìê²©ì„ ê°–ì¶”ì—ˆêµ°.").create());
 	        		}
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": You've been proven.").create());
@@ -435,7 +435,7 @@ public class BuriedTreasureQuest extends Mobs implements Serializable  {
 
 				if(Party.hasParty(p)) {
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÆÄÆ¼¿¡ ¼ÓÇÑ »óÅÂ·Î´Â ÁøÇàÀÌ ºÒ°¡´ÉÇÕ´Ï´Ù").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "íŒŒí‹°ì— ì†í•œ ìƒíƒœë¡œëŠ” ì§„í–‰ì´ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤").create());
 	        		}
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You should leave Your Party").create());
@@ -444,7 +444,7 @@ public class BuriedTreasureQuest extends Mobs implements Serializable  {
 				}
 				if(p.getInventory().firstEmpty() == -1) {
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÀÎº¥Åä¸®¿¡ ºóÄ­ÀÌ ÃÖ¼Ò ÇÑÄ­Àº ÀÖ¾î¾ß ÇÕ´Ï´Ù").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ì¸ë²¤í† ë¦¬ì— ë¹ˆì¹¸ì´ ìµœì†Œ í•œì¹¸ì€ ìˆì–´ì•¼ í•©ë‹ˆë‹¤").create());
 	        		}
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You should empty inventory least one space").create());
@@ -459,8 +459,8 @@ public class BuriedTreasureQuest extends Mobs implements Serializable  {
             		}
             		asked.remove(p.getUniqueId());
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ½ÃÇèÀº ½ÃÀÛµÇ¾ú´Ù.").create());
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": (»ç¸Á, Á¾·á½Ã ¶Ç´Â ³Ê¹« ¸Ö¸® °¡¸é Äù½ºÆ®°¡ Ãë¼ÒµË´Ï´Ù.)").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ì‹œí—˜ì€ ì‹œì‘ë˜ì—ˆë‹¤.").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": (ì‚¬ë§, ì¢…ë£Œì‹œ ë˜ëŠ” ë„ˆë¬´ ë©€ë¦¬ ê°€ë©´ í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë©ë‹ˆë‹¤.)").create());
 				    }
 	        		else {
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Overcome the ordeal.").create());
@@ -478,7 +478,7 @@ public class BuriedTreasureQuest extends Mobs implements Serializable  {
     	                {
     	            		qbar.get(p.getName()).setProgress((double)qmobskill.getOrDefault(p.getName(),0) / 20d);
     		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-        	            		qbar.get(p.getName()).setTitle("Ã³Ä¡ ¸ó½ºÅÍ ¼ö: " + qmobskill.getOrDefault(p.getName(),0) + "/" + 20);
+        	            		qbar.get(p.getName()).setTitle("ì²˜ì¹˜ ëª¬ìŠ¤í„° ìˆ˜: " + qmobskill.getOrDefault(p.getName(),0) + "/" + 20);
     					    }
     		        		else {
         	            		qbar.get(p.getName()).setTitle("Killed Monsters: " + qmobskill.getOrDefault(p.getName(),0)  + "/" + 20);
@@ -506,9 +506,9 @@ public class BuriedTreasureQuest extends Mobs implements Serializable  {
     	        	p.setCooldown(Material.RAIL, 10);
 
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": »õ·Î¿î µµÀüÀÚÀÎ°¡...").create());
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ÀÚ°İÀ» ½ÃÇèÇÏ°Ú´Ù..").create());
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "(¿ìÅ¬¸¯½Ã ¼ö¶ô)").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ìƒˆë¡œìš´ ë„ì „ìì¸ê°€...").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ìê²©ì„ ì‹œí—˜í•˜ê² ë‹¤..").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "(ìš°í´ë¦­ì‹œ ìˆ˜ë½)").create());
 				    }
 	        		else {
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": New Challenger..").create());

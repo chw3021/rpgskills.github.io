@@ -87,7 +87,7 @@ public class PillagerOutpostQuest implements Listener {
 		
 		if(factor ==0) {
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendMessage("Äù½ºÆ®°¡ Ãë¼ÒµÇ¾ú½À´Ï´Ù(°Å¸®)");
+    			p.sendMessage("í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤(ê±°ë¦¬)");
 		    }
     		else {
     			p.sendMessage("Quest Canceled!(Too Far Away)");
@@ -95,7 +95,7 @@ public class PillagerOutpostQuest implements Listener {
 		}
 		else if (factor == 2) {
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendMessage("Äù½ºÆ®°¡ Ãë¼ÒµÇ¾ú½À´Ï´Ù(»ç¸Á)");
+    			p.sendMessage("í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤(ì‚¬ë§)");
 		    }
     		else {
     			p.sendMessage("Quest Canceled!(Death)");
@@ -103,7 +103,7 @@ public class PillagerOutpostQuest implements Listener {
 		}
 		else if (factor == 3) {
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendMessage("Äù½ºÆ®°¡ Ãë¼ÒµÇ¾ú½À´Ï´Ù(Æ÷±â)");
+    			p.sendMessage("í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤(í¬ê¸°)");
 		    }
     		else {
     			p.sendMessage("Quest Canceled!(Given Up)");
@@ -112,8 +112,8 @@ public class PillagerOutpostQuest implements Listener {
 		else if (factor == 4) {
     		p.playSound(p.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendTitle(ChatColor.GOLD + "Äù½ºÆ® ¿Ï·á!",ChatColor.GOLD + "¾àÅ»ÀÚ ÀüÃÊ±âÁö Àü¸®Ç°À» È¹µæÇß½À´Ï´Ù!",15,35,15);
-            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "¾àÅ»´çÇÑ »óÀÎ°ú °Å·¡¸¦ ÇÒ ¼ö ÀÖ½À´Ï´Ù").create());
+    			p.sendTitle(ChatColor.GOLD + "í€˜ìŠ¤íŠ¸ ì™„ë£Œ!",ChatColor.GOLD + "ì•½íƒˆì ì „ì´ˆê¸°ì§€ ì „ë¦¬í’ˆì„ íšë“í–ˆìŠµë‹ˆë‹¤!",15,35,15);
+            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ì•½íƒˆë‹¹í•œ ìƒì¸ê³¼ ê±°ë˜ë¥¼ í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤").create());
 		    }
     		else {
     			p.sendTitle(ChatColor.GOLD + "Complete Quest!",ChatColor.GOLD + "You Just Obtained PillagerOutpost Trophy!",15,35,15);
@@ -149,7 +149,7 @@ public class PillagerOutpostQuest implements Listener {
 				}
 				if(TrophyLoc.getLocsdata().Locs.containsEntry(p.getUniqueId(), NPCsSpawn.npcloc.get(le.getUniqueId()))) {
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": °í¸¶¿ö¿ä!").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ê³ ë§ˆì›Œìš”!").create());
 	        		}
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Have A Nice Day!").create());
@@ -197,7 +197,7 @@ public class PillagerOutpostQuest implements Listener {
 		        		
 
 		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		        			mapm.setDisplayName(ChatColor.ITALIC+"»ê¸² ´ëÀúÅÃ ±âÁö Áöµµ");
+		        			mapm.setDisplayName(ChatColor.ITALIC+"ì‚°ë¦¼ ëŒ€ì €íƒ ê¸°ì§€ ì§€ë„");
 					    }
 		        		else {
 		        			mapm.setDisplayName(ChatColor.ITALIC+"Woodland Mansion Map");
@@ -223,7 +223,7 @@ public class PillagerOutpostQuest implements Listener {
 				}
 				if(Party.hasParty(p)) {
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÆÄÆ¼¿¡ ¼ÓÇÑ »óÅÂ·Î´Â ÁøÇàÀÌ ºÒ°¡´ÉÇÕ´Ï´Ù").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "íŒŒí‹°ì— ì†í•œ ìƒíƒœë¡œëŠ” ì§„í–‰ì´ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤").create());
 	        		}
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You should leave Your Party").create());
@@ -232,7 +232,7 @@ public class PillagerOutpostQuest implements Listener {
 				}
 				if(p.getInventory().firstEmpty() == -1) {
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÀÎº¥Åä¸®¿¡ ºóÄ­ÀÌ ÃÖ¼Ò ÇÑÄ­Àº ÀÖ¾î¾ß ÇÕ´Ï´Ù").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ì¸ë²¤í† ë¦¬ì— ë¹ˆì¹¸ì´ ìµœì†Œ í•œì¹¸ì€ ìˆì–´ì•¼ í•©ë‹ˆë‹¤").create());
 	        		}
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You should empty inventory least one space").create());
@@ -248,9 +248,9 @@ public class PillagerOutpostQuest implements Listener {
             		}
             		asked.remove(p.getUniqueId());
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": °¨»çÇÕ´Ï´Ù.. Á¤¸» °¨»çÇÕ´Ï´Ù.. ¾àÅ»ÀÚµéÀÌ Á¦ ÀüÀç»êÀÌ³ª ´Ù¸§¾ø´Â °¡¹æÀ» °¡Á®°¬¾î¿ä..").create());
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ±âÁö¾È¿¡ Ã¢°í¿¡´Ù º¸°üÁßÀÎ°Å °°Àºµ¥..È¤½Ã ±¸ÇØ´Ù ÁÖ½Ç¼öÀÖ³ª¿ä?").create());
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": (»ç¸Á, Á¾·á½Ã ¶Ç´Â ³Ê¹« ¸Ö¸® °¡¸é Äù½ºÆ®°¡ Ãë¼ÒµË´Ï´Ù.)").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ê°ì‚¬í•©ë‹ˆë‹¤.. ì •ë§ ê°ì‚¬í•©ë‹ˆë‹¤.. ì•½íƒˆìë“¤ì´ ì œ ì „ì¬ì‚°ì´ë‚˜ ë‹¤ë¦„ì—†ëŠ” ê°€ë°©ì„ ê°€ì ¸ê°”ì–´ìš”..").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ê¸°ì§€ì•ˆì— ì°½ê³ ì—ë‹¤ ë³´ê´€ì¤‘ì¸ê±° ê°™ì€ë°..í˜¹ì‹œ êµ¬í•´ë‹¤ ì£¼ì‹¤ìˆ˜ìˆë‚˜ìš”?").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": (ì‚¬ë§, ì¢…ë£Œì‹œ ë˜ëŠ” ë„ˆë¬´ ë©€ë¦¬ ê°€ë©´ í€˜ìŠ¤íŠ¸ê°€ ì·¨ì†Œë©ë‹ˆë‹¤.)").create());
 				    }
 	        		else {
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": I thank you very much. The Pillagers took the same bag as my entire fortune.").create());
@@ -284,8 +284,8 @@ public class PillagerOutpostQuest implements Listener {
     	        	p.setCooldown(Material.RAIL, 10);
 
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": ÇÏ..ÀÌÁ¦ ¹¹¸Ô°í »ìÁö..").create());
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "(¿ìÅ¬¸¯½Ã ¼ö¶ô)").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": í•˜..ì´ì œ ë­ë¨¹ê³  ì‚´ì§€..").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "(ìš°í´ë¦­ì‹œ ìˆ˜ë½)").create());
 				    }
 	        		else {
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": They stole everything...").create());
@@ -318,7 +318,7 @@ public class PillagerOutpostQuest implements Listener {
 			if(NPCsSpawn.pil.get(quested.get(p.getUniqueId())).equals(l)) {
 	    		p.playSound(p.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	        		p.sendTitle(ChatColor.BOLD + "»óÀÎÀÇ °¡¹æ", ChatColor.BOLD + "(1/1)", 10, 20, 10);
+	        		p.sendTitle(ChatColor.BOLD + "ìƒì¸ì˜ ê°€ë°©", ChatColor.BOLD + "(1/1)", 10, 20, 10);
 	    		}
 	    		else {
 	        		p.sendTitle(ChatColor.BOLD + "Trader's Bag", ChatColor.BOLD + "(1/1)", 10, 20, 10);
@@ -337,7 +337,7 @@ public class PillagerOutpostQuest implements Listener {
 				if(c.getLocation().distance(k)<60) {
 					d.setCancelled(true);
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ÀüÃÊ±âÁö ±ÙÃ³¿¡´Â Ã¢°í¸¦ ¼³Ä¡ ÇÒ ¼ö ¾ø½À´Ï´Ù").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "ì „ì´ˆê¸°ì§€ ê·¼ì²˜ì—ëŠ” ì°½ê³ ë¥¼ ì„¤ì¹˜ í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤").create());
 	        		}
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You can't Place Chest Near By PillagerOutPost").create());

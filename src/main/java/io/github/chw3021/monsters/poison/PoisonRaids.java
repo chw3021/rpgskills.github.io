@@ -155,7 +155,7 @@ public class PoisonRaids extends Summoned {
 		mm.setCustomModelData(2011);
 		main.setItemMeta(mm);
 		ItemStack off = new ItemStack(Material.OBSIDIAN);
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "°­È­Çü¼ÒÃÑ¼ö":"VenomRifleman";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ê°•í™”í˜•ì†Œì´ìˆ˜":"VenomRifleman";
 		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.DARK_GREEN+reg + "<"+rn+">", 26000.0, head, chest, leg, boots, main, off, EntityType.SKELETON);
 		
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
@@ -187,7 +187,7 @@ public class PoisonRaids extends Summoned {
 
 		ItemStack off = new ItemStack(Material.SHIELD);
 
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "°­È­ÇüÀü»ç":"VenomSoldier";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ê°•í™”í˜•ì „ì‚¬":"VenomSoldier";
 		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.DARK_GREEN+reg + "<"+rn+">", 26500.0, head, chest, leg, boots, main, off, EntityType.SKELETON);
 		
 		
@@ -218,7 +218,7 @@ public class PoisonRaids extends Summoned {
 		ItemStack main = new ItemStack(Material.FLINT_AND_STEEL);
 		ItemStack off = new ItemStack(Material.TORCH);
 		
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "¹æÈ­¹ü":"Arsonist";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ë°©í™”ë²”":"Arsonist";
 		Evoker newmob = (Evoker) Summon(esl, ChatColor.DARK_GREEN+reg + "<"+rn+">", 27000.0, head, chest, leg, boots, main, off, EntityType.EVOKER);
 
 		newmob.setCanJoinRaid(false);
@@ -242,7 +242,7 @@ public class PoisonRaids extends Summoned {
     	double number2 = (random.nextDouble()+1.5) * 2.5 * (random.nextBoolean() ? -1 : 1);
     	Location esl = spl.clone().add(number, 2.5, number2);
 		
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "¸Íµ¶ÆøÅºÅõÃ´º´":"PoisonBomber";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ë§¹ë…í­íƒ„íˆ¬ì²™ë³‘":"PoisonBomber";
 		Witch newmob = (Witch) Summon(esl, ChatColor.DARK_GREEN+reg + "<"+rn+">", 26000.0, null, null, null, null, null, null, EntityType.WITCH);
 		newmob.setCanJoinRaid(false);
 		newmob.setPatrolLeader(false);
@@ -276,7 +276,7 @@ public class PoisonRaids extends Summoned {
 		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
 		ItemStack off = new ItemStack(Material.DEEPSLATE_IRON_ORE);
 		
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "±â°üÃÑ³­»ç¹ü":"MachineGunman";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ê¸°ê´€ì´ë‚œì‚¬ë²”":"MachineGunman";
 		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.DARK_GREEN+reg + "<"+rn+">", 25500.0, head, chest, leg, boots, main, off, EntityType.SKELETON);
 		newmob.setConversionTime(-1);
 		
@@ -300,7 +300,7 @@ public class PoisonRaids extends Summoned {
 
     	ItemStack head = mobhead();
 		
-		String reg = lang.contains("kr") ? "µ¶°¡½º»ìÆ÷º´":"GasSprayer";
+		String reg = lang.contains("kr") ? "ë…ê°€ìŠ¤ì‚´í¬ë³‘":"GasSprayer";
 		Illusioner newmob = (Illusioner) Summon(esl, reg, 26500.0, head, null, null, null, null,
 				null, EntityType.ILLUSIONER);
 		newmob.setCanJoinRaid(false);
@@ -330,7 +330,7 @@ public class PoisonRaids extends Summoned {
     	
 		ItemStack main = new ItemStack(Material.NETHERITE_AXE);
 		
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "°­È­Çüµ¹°İº´":"VenomCharger";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "ê°•í™”í˜•ëŒê²©ë³‘":"VenomCharger";
 		Vindicator newmob = (Vindicator) Summon(esl, ChatColor.DARK_GREEN+reg + "<"+rn+">", 27000.0, head, null, null, null, main, main, EntityType.VINDICATOR);
 		newmob.setCanJoinRaid(false);
 		newmob.setPatrolLeader(false);
@@ -365,7 +365,7 @@ public class PoisonRaids extends Summoned {
 		ItemStack off = new ItemStack(Material.BREWING_STAND);
 
 		
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "Å×·¯¸®½ºÆ®":"Terrorist";
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "í…ŒëŸ¬ë¦¬ìŠ¤íŠ¸":"Terrorist";
 		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.DARK_GREEN + reg, 100000.0, head,
 				chest, leg, boots, main, off, EntityType.SKELETON);
 

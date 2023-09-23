@@ -92,232 +92,232 @@ public class MobsSkillsEvents implements Listener, Serializable {
 		if(lang.contains("kr")) {
 			EntityType t = le.getType();
 			if(t== EntityType.AXOLOTL) {
-				return "¾ÆÈ¦·ÎÆ²";
+				return "ì•„í™€ë¡œí‹€";
 			}
 			else if(t== EntityType.ALLAY) {
-				return "¾Ë·¹ÀÌ";
+				return "ì•Œë ˆì´";
 			}
 			else if(t== EntityType.FROG) {
-				return "°³±¸¸®";
+				return "ê°œêµ¬ë¦¬";
 			}
 			else if(t== EntityType.TADPOLE) {
-				return "¿ÃÃ¬ÀÌ";
+				return "ì˜¬ì±™ì´";
 			}
 			else if(t== EntityType.WARDEN) {
-				return "¿Íµç";
+				return "ì™€ë“ ";
 			}
 			else if(t== EntityType.BAT) {
-				return "¹ÚÁã";
+				return "ë°•ì¥";
 			}
 			else if(t== EntityType.BEE) {
-				return "²Ü¹ú";
+				return "ê¿€ë²Œ";
 			}
 			else if(t== EntityType.BLAZE) {
-				return "ºí·¹ÀÌÁî";
+				return "ë¸”ë ˆì´ì¦ˆ";
 			}
 			else if(t== EntityType.CAT) {
-				return "°í¾çÀÌ";
+				return "ê³ ì–‘ì´";
 			}
 			else if(t== EntityType.CAVE_SPIDER) {
-				return "µ¿±¼°Å¹Ì";
+				return "ë™êµ´ê±°ë¯¸";
 			}
 			else if(t== EntityType.CHICKEN) {
-				return "´ß";
+				return "ë‹­";
 			}
 			else if(t== EntityType.COD) {
-				return "´ë±¸";
+				return "ëŒ€êµ¬";
 			}
 			else if(t== EntityType.COW) {
-				return "¼Ò";
+				return "ì†Œ";
 			}
 			else if(t== EntityType.CREEPER) {
-				return "Å©¸®ÆÛ";
+				return "í¬ë¦¬í¼";
 			}
 			else if(t== EntityType.DOLPHIN) {
-				return "µ¹°í·¡";
+				return "ëŒê³ ë˜";
 			}
 			else if(t== EntityType.DONKEY) {
-				return "´ç³ª±Í";
+				return "ë‹¹ë‚˜ê·€";
 			}
 			else if(t== EntityType.DROWNED) {
-				return "µå¶ó¿îµå";
+				return "ë“œë¼ìš´ë“œ";
 			}
 			else if(t== EntityType.ELDER_GUARDIAN) {
-				return "¿¤´õ°¡µğ¾ğ";
+				return "ì—˜ë”ê°€ë””ì–¸";
 			}
 			else if(t== EntityType.ENDER_DRAGON) {
-				return "¿£´õµå·¡°ï";
+				return "ì—”ë”ë“œë˜ê³¤";
 			}
 			else if(t== EntityType.ENDERMAN) {
-				return "¿£´õ¸Ç";
+				return "ì—”ë”ë§¨";
 			}
 			else if(t== EntityType.ENDERMITE) {
-				return "¿£´õ¸¶ÀÌÆ®";
+				return "ì—”ë”ë§ˆì´íŠ¸";
 			}
 			else if(t== EntityType.EVOKER) {
-				return "¼ÒÈ¯»ç";
+				return "ì†Œí™˜ì‚¬";
 			}
 			else if(t== EntityType.FOX) {
-				return "¿©¿ì";
+				return "ì—¬ìš°";
 			}
 			else if(t== EntityType.GHAST) {
-				return "°¡½ºÆ®";
+				return "ê°€ìŠ¤íŠ¸";
 			}
 			else if(t== EntityType.GLOW_SQUID) {
-				return "¹ß±¤¿ÀÂ¡¾î";
+				return "ë°œê´‘ì˜¤ì§•ì–´";
 			}
 			else if(t== EntityType.GOAT) {
-				return "¿°¼Ò";
+				return "ì—¼ì†Œ";
 			}
 			else if(t== EntityType.GUARDIAN) {
-				return "°¡µğ¾ğ";
+				return "ê°€ë””ì–¸";
 			}
 			else if(t== EntityType.HOGLIN) {
-				return "È£±Û¸°";
+				return "í˜¸ê¸€ë¦°";
 			}
 			else if(t== EntityType.HORSE) {
-				return "¸»";
+				return "ë§";
 			}
 			else if(t== EntityType.HUSK) {
-				return "Çã½ºÅ©";
+				return "í—ˆìŠ¤í¬";
 			}
 			else if(t== EntityType.ILLUSIONER) {
-				return "È¯¼ú»ç";
+				return "í™˜ìˆ ì‚¬";
 			}
 			else if(t== EntityType.IRON_GOLEM) {
-				return "Ã¶°ñ·½";
+				return "ì² ê³¨ë ˜";
 			}
 			else if(t== EntityType.LLAMA) {
-				return "¶ó¸¶";
+				return "ë¼ë§ˆ";
 			}
 			else if(t== EntityType.MAGMA_CUBE) {
-				return "¸¶±×¸¶Å¥ºê";
+				return "ë§ˆê·¸ë§ˆíë¸Œ";
 			}
 			else if(t== EntityType.MULE) {
-				return "³ë»õ";
+				return "ë…¸ìƒˆ";
 			}
 			else if(t== EntityType.MUSHROOM_COW) {
-				return "¹«½Ã·ë";
+				return "ë¬´ì‹œë£¸";
 			}
 			else if(t== EntityType.OCELOT) {
-				return "¿À¼¿·Ô";
+				return "ì˜¤ì…€ë¡¯";
 			}
 			else if(t== EntityType.PANDA) {
-				return "ÆÇ´Ù";
+				return "íŒë‹¤";
 			}
 			else if(t== EntityType.PARROT) {
-				return "¾Ş¹«»õ";
+				return "ì•µë¬´ìƒˆ";
 			}
 			else if(t== EntityType.PHANTOM) {
-				return "¸Á·É";
+				return "ë§ë ¹";
 			}
 			else if(t== EntityType.PIG) {
-				return "¶×¶òÈÆ";
+				return "ëš±ëµí›ˆ";
 			}
 			else if(t== EntityType.PIGLIN) {
-				return "ÇÇ±Û¸°";
+				return "í”¼ê¸€ë¦°";
 			}
 			else if(t== EntityType.PIGLIN_BRUTE) {
-				return "ÇÇ±Û¸°±«¼ö";
+				return "í”¼ê¸€ë¦°ê´´ìˆ˜";
 			}
 			else if(t== EntityType.PILLAGER) {
-				return "¾àÅ»ÀÚ";
+				return "ì•½íƒˆì";
 			}
 			else if(t== EntityType.POLAR_BEAR) {
-				return "ºÏ±Ø°õ";
+				return "ë¶ê·¹ê³°";
 			}
 			else if(t== EntityType.PUFFERFISH) {
-				return "º¹¾î";
+				return "ë³µì–´";
 			}
 			else if(t== EntityType.RABBIT) {
-				return "Åä³¢";
+				return "í† ë¼";
 			}
 			else if(t== EntityType.RAVAGER) {
-				return "ÆÄ±«¼ö";
+				return "íŒŒê´´ìˆ˜";
 			}
 			else if(t== EntityType.SALMON) {
-				return "¿¬¾î";
+				return "ì—°ì–´";
 			}
 			else if(t== EntityType.SHEEP) {
-				return "¾ç";
+				return "ì–‘";
 			}
 			else if(t== EntityType.SHULKER) {
-				return "¼ÈÄ¿";
+				return "ì…œì»¤";
 			}
 			else if(t== EntityType.SILVERFISH) {
-				return "Á»¹ú·¹";
+				return "ì¢€ë²Œë ˆ";
 			}
 			else if(t== EntityType.SKELETON) {
-				return "½ºÄÌ·¹Åæ";
+				return "ìŠ¤ì¼ˆë ˆí†¤";
 			}
 			else if(t== EntityType.SKELETON_HORSE) {
-				return "½ºÄÌ·¹Åæ¸»";
+				return "ìŠ¤ì¼ˆë ˆí†¤ë§";
 			}
 			else if(t== EntityType.SLIME) {
-				return "½½¶óÀÓ";
+				return "ìŠ¬ë¼ì„";
 			}
 			else if(t== EntityType.SNOWMAN) {
-				return "´«»ç¶÷";
+				return "ëˆˆì‚¬ëŒ";
 			}
 			else if(t== EntityType.SPIDER) {
-				return "°Å¹Ì";
+				return "ê±°ë¯¸";
 			}
 			else if(t== EntityType.SQUID) {
-				return "¿ÀÂ¡¾î";
+				return "ì˜¤ì§•ì–´";
 			}
 			else if(t== EntityType.STRAY) {
-				return "½ºÆ®·¹ÀÌ";
+				return "ìŠ¤íŠ¸ë ˆì´";
 			}
 			else if(t== EntityType.STRIDER) {
-				return "½ºÆ®¶óÀÌ´õ";
+				return "ìŠ¤íŠ¸ë¼ì´ë”";
 			}
 			else if(t== EntityType.TRADER_LLAMA) {
-				return "»óÀÎ¶ó¸¶";
+				return "ìƒì¸ë¼ë§ˆ";
 			}
 			else if(t== EntityType.TROPICAL_FISH) {
-				return "¿­´ë¾î";
+				return "ì—´ëŒ€ì–´";
 			}
 			else if(t== EntityType.TURTLE) {
-				return "°ÅºÏ";
+				return "ê±°ë¶";
 			}
 			else if(t== EntityType.VEX) {
-				return "º¤½º";
+				return "ë²¡ìŠ¤";
 			}
 			else if(t== EntityType.VILLAGER) {
-				return "ÁÖ¹Î";
+				return "ì£¼ë¯¼";
 			}
 			else if(t== EntityType.VINDICATOR) {
-				return "º¯¸íÀÚ";
+				return "ë³€ëª…ì";
 			}
 			else if(t== EntityType.WANDERING_TRADER) {
-				return "¶°µ¹ÀÌ»óÀÎ";
+				return "ë– ëŒì´ìƒì¸";
 			}
 			else if(t== EntityType.WITCH) {
-				return "¸¶³à";
+				return "ë§ˆë…€";
 			}
 			else if(t== EntityType.WITHER) {
-				return "À§´õ";
+				return "ìœ„ë”";
 			}
 			else if(t== EntityType.WITHER_SKELETON) {
-				return "À§´õ½ºÄÌ·¹Åæ";
+				return "ìœ„ë”ìŠ¤ì¼ˆë ˆí†¤";
 			}
 			else if(t== EntityType.WOLF) {
-				return "´Á´ë";
+				return "ëŠ‘ëŒ€";
 			}
 			else if(t== EntityType.ZOGLIN) {
-				return "Á¶±Û¸°";
+				return "ì¡°ê¸€ë¦°";
 			}
 			else if(t== EntityType.ZOMBIE) {
-				return "Á»ºñ";
+				return "ì¢€ë¹„";
 			}
 			else if(t== EntityType.ZOMBIE_HORSE) {
-				return "Á»ºñ¸»";
+				return "ì¢€ë¹„ë§";
 			}
 			else if(t== EntityType.ZOMBIE_VILLAGER) {
-				return "Á»ºñÁÖ¹Î";
+				return "ì¢€ë¹„ì£¼ë¯¼";
 			}
 			else if(t== EntityType.ZOMBIFIED_PIGLIN) {
-				return "Á»ºñÈ­ÇÇ±Û¸°";
+				return "ì¢€ë¹„í™”í”¼ê¸€ë¦°";
 			}
 			else {
 				return le.getName();
@@ -394,7 +394,7 @@ public class MobsSkillsEvents implements Listener, Serializable {
     			Random random = new Random();
     			int ri = random.nextInt(200);
     			if (ri == 0) {
-					String reg = lang.contains("kr") ? "º¸¹°µÅÁö":"TreasurePig";
+					String reg = lang.contains("kr") ? "ë³´ë¬¼ë¼ì§€":"TreasurePig";
 					LivingEntity newmob = mobs.Mobspawn(le, reg, 1d, null,	null, null,	null, null,	null, EntityType.PIG);
 					newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 					newmob.setMetadata("treasurepig", new FixedMetadataValue(RMain.getInstance(), true));
@@ -423,7 +423,7 @@ public class MobsSkillsEvents implements Listener, Serializable {
 				
 				else if ((b.name().contains("WARPED"))
 						&& le.getLocation().getWorld().getEnvironment() == Environment.NETHER) {
-					String reg = lang.contains("kr") ? "µÚÆ²¸°":"Warped";
+					String reg = lang.contains("kr") ? "ë’¤í‹€ë¦°":"Warped";
 					LivingEntity newmob = mobs.Mobspawn(le, reg + trans(le), 40000.0, le.getEquipment().getHelmet(),
 							le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
 							le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(),
@@ -435,7 +435,7 @@ public class MobsSkillsEvents implements Listener, Serializable {
 				
 				else if ((b.name().contains("CRIMSON"))
 						&& le.getLocation().getWorld().getEnvironment() == Environment.NETHER) {
-					String reg = lang.contains("kr") ? "ÁøÈ«ºû":"Crimson";
+					String reg = lang.contains("kr") ? "ì§„í™ë¹›":"Crimson";
 					LivingEntity newmob = mobs.Mobspawn(le, reg + trans(le), 40000.0, le.getEquipment().getHelmet(),
 							le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
 							le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(),
@@ -447,7 +447,7 @@ public class MobsSkillsEvents implements Listener, Serializable {
 				
 				else if ((b.name().contains("SOUL"))
 						&& le.getLocation().getWorld().getEnvironment() == Environment.NETHER) {
-					String reg = lang.contains("kr") ? "¿µÈ¥ÀÇ":"Soul";
+					String reg = lang.contains("kr") ? "ì˜í˜¼ì˜":"Soul";
 					LivingEntity newmob = mobs.Mobspawn(le, reg + trans(le), 40000.0, le.getEquipment().getHelmet(),
 							le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
 							le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(),
@@ -459,7 +459,7 @@ public class MobsSkillsEvents implements Listener, Serializable {
 				
 				else if ((b.name().contains("BASALT"))
 						&& le.getLocation().getWorld().getEnvironment() == Environment.NETHER) {
-					String reg = lang.contains("kr") ? "È­»êÁö´ë":"Volcanic";
+					String reg = lang.contains("kr") ? "í™”ì‚°ì§€ëŒ€":"Volcanic";
 					LivingEntity newmob = mobs.Mobspawn(le, reg+ trans(le), 40000.0,
 							le.getEquipment().getHelmet(), le.getEquipment().getChestplate(),
 							le.getEquipment().getLeggings(), le.getEquipment().getBoots(),
@@ -477,7 +477,7 @@ public class MobsSkillsEvents implements Listener, Serializable {
 					newmob.setMetadata("ender", new FixedMetadataValue(RMain.getInstance(), true));
 				} else if (b != Biome.THE_END
 						&& le.getLocation().getWorld().getEnvironment() == Environment.THE_END) {
-					String reg = lang.contains("kr") ? "°øÇã":"Void";
+					String reg = lang.contains("kr") ? "ê³µí—ˆ":"Void";
 					LivingEntity newmob = mobs.Mobspawn(le, reg + trans(le), 80000.0, le.getEquipment().getHelmet(),
 							le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
 							le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(),
@@ -842,6 +842,3 @@ public class MobsSkillsEvents implements Listener, Serializable {
 		}
 	}
 }
-
-
-

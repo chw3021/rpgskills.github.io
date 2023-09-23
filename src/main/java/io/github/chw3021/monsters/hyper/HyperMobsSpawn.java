@@ -60,7 +60,7 @@ public class HyperMobsSpawn extends Mobs implements Listener {
 		main.setItemMeta(mm);
 		ItemStack off = new ItemStack(Material.END_ROD);
 		off.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 2);
-		String reg = lang.contains("kr") ? "√ﬂ¿˚¿⁄":"Stalker";
+		String reg = lang.contains("kr") ? "Ï∂îÏ†ÅÏûê":"Stalker";
 		Husk newmob = (Husk) Mobspawn(le, reg, 12000.0, head, chest, leg, boots, main, off, EntityType.HUSK);
 		newmob.setConversionTime(-1);
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.33);
@@ -92,7 +92,7 @@ public class HyperMobsSpawn extends Mobs implements Listener {
 		main.setItemMeta(mm);
 		ItemStack off = new ItemStack(Material.BEACON);
 		off.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 2);
-		String reg = lang.contains("kr") ? "±§º±±√∫¥":"RayArcher";
+		String reg = lang.contains("kr") ? "Í¥ëÏÑ†Í∂ÅÎ≥ë":"RayArcher";
 		Skeleton newmob = (Skeleton) Mobspawn(le, reg, 9000.0, head, chest, leg, boots, main, off, EntityType.SKELETON);
 		newmob.setConversionTime(-1);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
@@ -119,7 +119,7 @@ public class HyperMobsSpawn extends Mobs implements Listener {
 		ItemStack main = new ItemStack(Material.SHIELD);
 		ItemStack off = new ItemStack(Material.SHIELD);
 		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
-		String reg = lang.contains("kr") ? "∞Ê∫Ò∑Œ∫ø":"SecurityRobot";
+		String reg = lang.contains("kr") ? "Í≤ΩÎπÑÎ°úÎ¥á":"SecurityRobot";
 		Vindicator newmob = (Vindicator) Mobspawn(le, reg, 10000.0, head, null, null, null, main, off, EntityType.VINDICATOR);
 		newmob.setSilent(true);
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.33);
@@ -134,7 +134,7 @@ public class HyperMobsSpawn extends Mobs implements Listener {
 
 	
 	final private Witch Grenadier(LivingEntity le) {
-		String reg = lang.contains("kr") ? "πÃƒ£∞˙«–¿⁄":"MadScientist";
+		String reg = lang.contains("kr") ? "ÎØ∏ÏπúÍ≥ºÌïôÏûê":"MadScientist";
 		Witch newmob = (Witch) Mobspawn(le, reg, 8500.0, null, null, null, null, null, null, EntityType.WITCH);
 		newmob.setCanJoinRaid(false);
 		newmob.setPatrolLeader(false);
@@ -146,7 +146,7 @@ public class HyperMobsSpawn extends Mobs implements Listener {
 	}
 	
 	final private Spider ScoutSpider(LivingEntity le) {
-		String reg = lang.contains("kr") ? "¡§¬˚øÎ∞≈πÃ":"ScoutSpider";
+		String reg = lang.contains("kr") ? "Ï†ïÏ∞∞Ïö©Í±∞ÎØ∏":"ScoutSpider";
 		Spider newmob = (Spider) Mobspawn(le, reg, 9000.0, null, null, null, null, null, null, EntityType.SPIDER);
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.43);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
@@ -156,7 +156,7 @@ public class HyperMobsSpawn extends Mobs implements Listener {
 
 	
 	final private Creeper CreepJumper(LivingEntity le) {
-		String reg = lang.contains("kr") ? "≈©∏≥¡°∆€":"CreepJumper";
+		String reg = lang.contains("kr") ? "ÌÅ¨Î¶ΩÏ†êÌçº":"CreepJumper";
 		Creeper newmob = (Creeper) Mobspawn(le, reg, 6000.0, null, null, null, null, null, null, EntityType.CREEPER);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("hyper", new FixedMetadataValue(RMain.getInstance(), true));
@@ -165,7 +165,7 @@ public class HyperMobsSpawn extends Mobs implements Listener {
 	}
 	
 	final private Enderman Watcher(LivingEntity le) {
-		String reg = lang.contains("kr") ? "∞®Ω√¿⁄":"Watcher";
+		String reg = lang.contains("kr") ? "Í∞êÏãúÏûê":"Watcher";
 		Enderman newmob = (Enderman) Mobspawn(le, reg, 12000.0, null, null, null, null, null, null, EntityType.ENDERMAN);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("hyper", new FixedMetadataValue(RMain.getInstance(), true));
@@ -173,7 +173,7 @@ public class HyperMobsSpawn extends Mobs implements Listener {
 	}
 
 	final private LivingEntity Default(LivingEntity le) {
-		String reg = lang.contains("kr") ? "ªÁ∏∑¡ˆ¥Î":"Desert";
+		String reg = lang.contains("kr") ? "ÏÇ¨ÎßâÏßÄÎåÄ":"Desert";
 		LivingEntity newmob = Mobspawn(le, reg + trans(le), 9000.0, le.getEquipment().getHelmet(),
 				le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
 				le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(),

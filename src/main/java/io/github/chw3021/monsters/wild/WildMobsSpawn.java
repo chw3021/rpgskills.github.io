@@ -45,7 +45,7 @@ public class WildMobsSpawn extends Mobs implements Listener {
 		ItemStack head = new ItemStack(Material.MOSSY_COBBLESTONE);
 		head.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 3);
 		ItemStack main = new ItemStack(Material.NETHERITE_SWORD);
-		String reg = lang.contains("kr") ? "∞Ì¥Î¡ª∫Ò":"AncientZombie";
+		String reg = lang.contains("kr") ? "Í≥†ÎåÄÏ¢ÄÎπÑ":"AncientZombie";
 		Zombie newmob = (Zombie) Mobspawn(le, reg, 35000.0, head, null, null, null, main, null, EntityType.ZOMBIE);
 		newmob.setConversionTime(-1);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
@@ -56,7 +56,7 @@ public class WildMobsSpawn extends Mobs implements Listener {
 	final private Skeleton Mob2(LivingEntity le) {
 		ItemStack head = new ItemStack(Material.JUNGLE_LEAVES);
 		head.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 3);
-		String reg = lang.contains("kr") ? "∞Ì¥ÎΩ∫ƒÃ∑π≈Ê":"AncientSkeleton";
+		String reg = lang.contains("kr") ? "Í≥†ÎåÄÏä§ÏºàÎ†àÌÜ§":"AncientSkeleton";
 		Skeleton newmob = (Skeleton) Mobspawn(le, reg, 33000.0, head, null, null, null, null, null, EntityType.SKELETON);
 		newmob.setConversionTime(-1);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
@@ -68,7 +68,7 @@ public class WildMobsSpawn extends Mobs implements Listener {
 		ItemStack head = new ItemStack(Material.MANGROVE_LEAVES);
 		head.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 3);
 		
-		String reg = lang.contains("kr") ? "∞Ì¥ÎΩΩ∂Û¿”":"AncientSlime";
+		String reg = lang.contains("kr") ? "Í≥†ÎåÄÏä¨ÎùºÏûÑ":"AncientSlime";
 		Slime newmob = (Slime) Mobspawn(le, reg, 20000.0, head, null, null, null, null, null, EntityType.SLIME);
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.33);
 		newmob.setSize(6);
@@ -79,7 +79,7 @@ public class WildMobsSpawn extends Mobs implements Listener {
 	}
 	final private Vindicator Mob4(LivingEntity le) {
 		ItemStack head = new ItemStack(Material.MOSSY_COBBLESTONE);
-		String reg = lang.contains("kr") ? "µµ±º≤€":"GraveRobber";
+		String reg = lang.contains("kr") ? "ÎèÑÍµ¥Íæº":"GraveRobber";
 		Vindicator newmob = (Vindicator) Mobspawn(le, reg, 32000.0, head, null, null, null, null, null, EntityType.VINDICATOR);
 		newmob.setCanJoinRaid(false);
 		newmob.setPatrolLeader(false);
@@ -89,7 +89,7 @@ public class WildMobsSpawn extends Mobs implements Listener {
 		return newmob;
 	}
 	final private Spider SpiderV(LivingEntity le) {
-		String reg = lang.contains("kr") ? "∞Ì¥Î∞≈πÃ":"AncientSpider";
+		String reg = lang.contains("kr") ? "Í≥†ÎåÄÍ±∞ÎØ∏":"AncientSpider";
 		Spider newmob = (Spider) Mobspawn(le, reg, 27500.0, null, null, null, null, null, null, EntityType.CAVE_SPIDER);
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.43);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
@@ -97,7 +97,7 @@ public class WildMobsSpawn extends Mobs implements Listener {
 		return newmob;
 	}
 	final private Creeper CreeperV(LivingEntity le) {
-		String reg = lang.contains("kr") ? "∞Ì¥Î≈©∏Æ∆€":"AncientCreeper";
+		String reg = lang.contains("kr") ? "Í≥†ÎåÄÌÅ¨Î¶¨Ìçº":"AncientCreeper";
 		Creeper newmob = (Creeper) Mobspawn(le, reg, 28000.0, null, null, null, null, null, null, EntityType.CREEPER);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("wild", new FixedMetadataValue(RMain.getInstance(), true));
@@ -105,14 +105,14 @@ public class WildMobsSpawn extends Mobs implements Listener {
 		return newmob;
 	}
 	final private Enderman EndermanV(LivingEntity le) {
-		String reg = lang.contains("kr") ? "∞Ì¥Îø£¥ı∏«":"AncientEnderman";
+		String reg = lang.contains("kr") ? "Í≥†ÎåÄÏóîÎçîÎß®":"AncientEnderman";
 		Enderman newmob = (Enderman) Mobspawn(le, reg, 38000.0, null, null, null, null, null, null, EntityType.ENDERMAN);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("wild", new FixedMetadataValue(RMain.getInstance(), true));
 		return newmob;
 	}
 	final private Bee Hammy(LivingEntity le) {
-		String reg = lang.contains("kr") ? "≥Ø«‹Ω∫≈Õ":"Hammy";
+		String reg = lang.contains("kr") ? "ÎÇ†ÌñÑÏä§ÌÑ∞":"Hammy";
 		Bee newmob = (Bee) Mobspawn(le, reg, 30000.0, le.getEquipment().getHelmet(),
 				le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
 				le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(),
@@ -123,7 +123,7 @@ public class WildMobsSpawn extends Mobs implements Listener {
 		return newmob;
 	}
 	final private LivingEntity Default(LivingEntity le) {
-		String reg = lang.contains("kr") ? "æﬂª˝":"Wild";
+		String reg = lang.contains("kr") ? "ÏïºÏÉù":"Wild";
 		LivingEntity newmob = Mobspawn(le, reg + trans(le), 30000.0, le.getEquipment().getHelmet(),
 				le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
 				le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(),

@@ -60,7 +60,7 @@ public class DarkMobsSpawn extends Mobs implements Listener {
 		main.setItemMeta(mm);
 		ItemStack off = new ItemStack(Material.SHIELD);
 		off.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 2);
-		String reg = lang.contains("kr") ? "Àá½ÄµÈ±â»ç":"ErodedKnight";
+		String reg = lang.contains("kr") ? "ì ì‹ëœê¸°ì‚¬":"ErodedKnight";
 		Zombie newmob = (Zombie) Mobspawn(le, reg, 6000.0, head, chest, leg, boots, main, off, EntityType.ZOMBIE);
 		newmob.setConversionTime(-1);
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.33);
@@ -88,7 +88,7 @@ public class DarkMobsSpawn extends Mobs implements Listener {
 		ItemMeta mm = main.getItemMeta();
 		mm.setCustomModelData(2008);
 		main.setItemMeta(mm);
-		String reg = lang.contains("kr") ? "¹ãÀÇ»ç¼ö":"NightArcher";
+		String reg = lang.contains("kr") ? "ë°¤ì˜ì‚¬ìˆ˜":"NightArcher";
 		Skeleton newmob = (Skeleton) Mobspawn(le, reg, 5000.0, head, chest, leg, boots, main, null, EntityType.SKELETON);
 		newmob.setConversionTime(-1);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
@@ -100,7 +100,7 @@ public class DarkMobsSpawn extends Mobs implements Listener {
 		ItemStack head = new ItemStack(Material.STRIPPED_DARK_OAK_LOG);
 		head.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 3);
 		
-		String reg = lang.contains("kr") ? "Àá½ÄµÈ¾àÅ»ÀÚ":"ErodedPillager";
+		String reg = lang.contains("kr") ? "ì ì‹ëœì•½íƒˆì":"ErodedPillager";
 		Pillager newmob = (Pillager) Mobspawn(le, reg, 5000.0, head, null, null, null, null, null, EntityType.PILLAGER);
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.33);
 		newmob.setCanJoinRaid(false);
@@ -111,7 +111,7 @@ public class DarkMobsSpawn extends Mobs implements Listener {
 		return newmob;
 	}
 	final private Witch Mob4(LivingEntity le) {
-		String reg = lang.contains("kr") ? "¹ãÀÇ¸¶³à":"NightWitch";
+		String reg = lang.contains("kr") ? "ë°¤ì˜ë§ˆë…€":"NightWitch";
 		Witch newmob = (Witch) Mobspawn(le, reg, 5000.0, null, null, null, null, null, null, EntityType.WITCH);
 		newmob.setCanJoinRaid(false);
 		newmob.setPatrolLeader(false);
@@ -122,7 +122,7 @@ public class DarkMobsSpawn extends Mobs implements Listener {
 		return newmob;
 	}
 	final private Spider SpiderV(LivingEntity le) {
-		String reg = lang.contains("kr") ? "¹ã°Å¹Ì":"NightSpider";
+		String reg = lang.contains("kr") ? "ë°¤ê±°ë¯¸":"NightSpider";
 		Spider newmob = (Spider) Mobspawn(le, reg, 4000.0, null, null, null, null, null, null, EntityType.CAVE_SPIDER);
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.43);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
@@ -130,7 +130,7 @@ public class DarkMobsSpawn extends Mobs implements Listener {
 		return newmob;
 	}
 	final private Creeper CreeperV(LivingEntity le) {
-		String reg = lang.contains("kr") ? "´ÙÅ©Å©¸®ÆÛ":"DarkCreeper";
+		String reg = lang.contains("kr") ? "ë‹¤í¬í¬ë¦¬í¼":"DarkCreeper";
 		Creeper newmob = (Creeper) Mobspawn(le, reg, 4500.0, null, null, null, null, null, null, EntityType.CREEPER);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("dark", new FixedMetadataValue(RMain.getInstance(), true));
@@ -138,14 +138,14 @@ public class DarkMobsSpawn extends Mobs implements Listener {
 		return newmob;
 	}
 	final private Enderman EndermanV(LivingEntity le) {
-		String reg = lang.contains("kr") ? "±Û·ç¹Ì¸Ç":"GloomyMan";
+		String reg = lang.contains("kr") ? "ê¸€ë£¨ë¯¸ë§¨":"GloomyMan";
 		Enderman newmob = (Enderman) Mobspawn(le, reg, 6000.0, null, null, null, null, null, null, EntityType.ENDERMAN);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("dark", new FixedMetadataValue(RMain.getInstance(), true));
 		return newmob;
 	}
 	final private LivingEntity Default(LivingEntity le) {
-		String reg = lang.contains("kr") ? "¾ÏÈæÁö´ë":"DarkField";
+		String reg = lang.contains("kr") ? "ì•”í‘ì§€ëŒ€":"DarkField";
 		LivingEntity newmob = Mobspawn(le, reg + trans(le), 5000.0, le.getEquipment().getHelmet(),
 				le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
 				le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(),

@@ -653,7 +653,7 @@ public class MountainsSkills extends Summoned implements Listener{
 		                strong.put(p.getUniqueId(), 4*OverworldRaids.getheroes(p).size());
 						for(Player pe : OverworldRaids.getheroes(p)) {
 	    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-		                		pe.sendMessage(ChatColor.BOLD+"Á×Áö ¾Ê´Â´Ù!");
+		                		pe.sendMessage(ChatColor.BOLD+"ì£½ì§€ ì•ŠëŠ”ë‹¤!");
 	    					}
 	    					else {
 		                		pe.sendMessage(ChatColor.BOLD+"I don't die!");
@@ -681,7 +681,7 @@ public class MountainsSkills extends Summoned implements Listener{
 	                strong.put(p.getUniqueId(), 4*OverworldRaids.getheroes(p).size());
 					for(Player pe : OverworldRaids.getheroes(p)) {
     					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-	                		pe.sendMessage(ChatColor.BOLD+"³ª´Â Á×Áö ¾Ê´Â´Ù!");
+	                		pe.sendMessage(ChatColor.BOLD+"ë‚˜ëŠ” ì£½ì§€ ì•ŠëŠ”ë‹¤!");
     					}
     					else {
 	                		pe.sendMessage(ChatColor.BOLD+"I will never die!");
@@ -891,7 +891,7 @@ public class MountainsSkills extends Summoned implements Listener{
 			            	Holding.ale(p).setMetadata("failed", new FixedMetadataValue(RMain.getInstance(),true));
 			                for(Player pe : OverworldRaids.getheroes(p)) {
 								if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-			                		pe.sendMessage(ChatColor.BLUE+"°ñ·½: Å©¾Æ¾Æ¾Ç..¸Ó¸® ¾ÆÇÁ´Ù!");
+			                		pe.sendMessage(ChatColor.BLUE+"ê³¨ë ˜: í¬ì•„ì•„ì•…..ë¨¸ë¦¬ ì•„í”„ë‹¤!");
 								}
 								else {
 			                		pe.sendMessage(ChatColor.BLUE+"Golem: My Head!!!");
@@ -924,7 +924,7 @@ public class MountainsSkills extends Summoned implements Listener{
                 			pe.setVelocity(BlockFace.NORTH_NORTH_WEST.getDirection().normalize().multiply(2.5));
                 			pe.setVelocity(BlockFace.UP.getDirection().normalize().multiply(1.5));
         					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-    	                		pe.sendMessage(ChatColor.BOLD+"¾àÇØ...");
+    	                		pe.sendMessage(ChatColor.BOLD+"ì•½í•´...");
         					}
         					else {
     	                		pe.sendMessage(ChatColor.BOLD+"Weak...");
@@ -958,11 +958,11 @@ public class MountainsSkills extends Summoned implements Listener{
         OverworldRaids.getheroes(p).forEach(pe ->{
         	Holding.invur(pe, 60l);
 			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-        		pe.sendTitle(ChatColor.DARK_GRAY + (ChatColor.MAGIC + "123456"), ChatColor.DARK_GRAY + "ÀüºÎ Á×ÀÎ´Ù!!", 20, 35, 20);
+        		pe.sendTitle(ChatColor.DARK_GRAY + (ChatColor.MAGIC + "123456"), ChatColor.DARK_GRAY + "ì „ë¶€ ì£½ì¸ë‹¤!!", 20, 35, 20);
  				Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	                @Override
 	                public void run() {	
-                		pe.sendMessage(ChatColor.BOLD+"³«ÇÏ °ø°İÀ¸·Î ÀûÀÇ ¸Ó¸®¸¦ °ø°İÇÏ¼¼¿ä");
+                		pe.sendMessage(ChatColor.BOLD+"ë‚™í•˜ ê³µê²©ìœ¼ë¡œ ì ì˜ ë¨¸ë¦¬ë¥¼ ê³µê²©í•˜ì„¸ìš”");
 	                }
 	            }, 20); 
 			}
@@ -1000,7 +1000,7 @@ public class MountainsSkills extends Summoned implements Listener{
                 for(Player pe : OverworldRaids.getheroes(p)) {
             		if(pe.getWorld().equals(p.getWorld()) && pe.getWorld() == p.getWorld()) {
     					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-	                		pe.sendMessage(ChatColor.BOLD+"°ñ·½: Á×¾î¶ó!");
+	                		pe.sendMessage(ChatColor.BOLD+"ê³¨ë ˜: ì£½ì–´ë¼!");
     					}
     					else {
 	                		pe.sendMessage(ChatColor.BOLD+"Golem: Die!");

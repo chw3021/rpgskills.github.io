@@ -52,7 +52,7 @@ public class MountainsMobsSpawn extends Mobs implements Listener {
 		LeatherArmorMeta bom = (LeatherArmorMeta) boots.getItemMeta();
 		bom.setColor(Color.GRAY);
 		boots.setItemMeta(bom);
-		String reg = lang.contains("kr") ? "øˆ≈∑Ω∫≈Ê":"WalkingStone";
+		String reg = lang.contains("kr") ? "ÏõåÌÇπÏä§ÌÜ§":"WalkingStone";
 		Zombie newmob = (Zombie) Mobspawn(le, reg, 160.0, head, chest, leg, boots,
 				new ItemStack(Material.STONE), new ItemStack(Material.STONE), EntityType.ZOMBIE);
 		newmob.setConversionTime(-1);
@@ -77,7 +77,7 @@ public class MountainsMobsSpawn extends Mobs implements Listener {
 		boots.setItemMeta(bom);
 		ItemStack main = new ItemStack(Material.BOW);
 		main.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 3);
-		String reg = lang.contains("kr") ? "¿⁄∞•±√ºˆ":"GravelArcher";
+		String reg = lang.contains("kr") ? "ÏûêÍ∞àÍ∂ÅÏàò":"GravelArcher";
 		Skeleton newmob = (Skeleton) Mobspawn(le, reg, 100.0, head, chest, leg, boots, main,
 				null, EntityType.SKELETON);
 		newmob.setConversionTime(-1);
@@ -103,7 +103,7 @@ public class MountainsMobsSpawn extends Mobs implements Listener {
 		ItemStack main = new ItemStack(Material.CROSSBOW);
 		main.addUnsafeEnchantment(Enchantment.QUICK_CHARGE, 2);
 		main.addUnsafeEnchantment(Enchantment.MULTISHOT, 1);
-		String reg = lang.contains("kr") ? "ªÍæ«¿˙∞›ºˆ":"MountainSniper";
+		String reg = lang.contains("kr") ? "ÏÇ∞ÏïÖÏ†ÄÍ≤©Ïàò":"MountainSniper";
 		Pillager newmob = (Pillager) Mobspawn(le, reg, 80.0, head, leg, chest, boots, main,
 				null, EntityType.PILLAGER);
 		newmob.setCanJoinRaid(false);
@@ -142,7 +142,7 @@ public class MountainsMobsSpawn extends Mobs implements Listener {
 		boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
 		ItemStack main = new ItemStack(Material.DANDELION);
 		ItemStack off = new ItemStack(Material.SUNFLOWER);
-		String reg = lang.contains("kr") ? "≤…ø‰¡§":"FlowerFairy";
+		String reg = lang.contains("kr") ? "ÍΩÉÏöîÏ†ï":"FlowerFairy";
 		Vex newmob = (Vex) Mobspawn(le,reg, 45.0, head, chest, leg, boots, main, off, EntityType.VEX);
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
@@ -151,7 +151,7 @@ public class MountainsMobsSpawn extends Mobs implements Listener {
 	}
 
 	final private Spider StoneSpider(LivingEntity le) {
-		String reg = lang.contains("kr") ? "µπ∞≈πÃ":"StoneSpider";
+		String reg = lang.contains("kr") ? "ÎèåÍ±∞ÎØ∏":"StoneSpider";
 		Spider newmob = (Spider) Mobspawn(le, reg, 100.0, null, null, null, null, null, null,
 				EntityType.SPIDER);
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.25);
@@ -162,7 +162,7 @@ public class MountainsMobsSpawn extends Mobs implements Listener {
 	}
 	
 	final private Creeper WoodCreeper(LivingEntity le) {
-		String reg = lang.contains("kr") ? "≥™π´≈©∏Æ∆€":"WoodCreeper";
+		String reg = lang.contains("kr") ? "ÎÇòÎ¨¥ÌÅ¨Î¶¨Ìçº":"WoodCreeper";
 		Creeper newmob = (Creeper) Mobspawn(le, reg, 100.0, null, null, null, null, null, null,
 				EntityType.CREEPER);
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.18);
@@ -172,7 +172,7 @@ public class MountainsMobsSpawn extends Mobs implements Listener {
 	}
 
 	final private Enderman TreeMan(LivingEntity le) {
-		String reg = lang.contains("kr") ? "∆Æ∏Æ∏«":"TreeMan";
+		String reg = lang.contains("kr") ? "Ìä∏Î¶¨Îß®":"TreeMan";
 		Enderman newmob = (Enderman) Mobspawn(le,  reg, 150.0, null, null, null, null, null, null,
 				EntityType.ENDERMAN);
 
@@ -185,7 +185,7 @@ public class MountainsMobsSpawn extends Mobs implements Listener {
 
 
 	final private LivingEntity Default(LivingEntity le) {
-		String reg = lang.contains("kr") ? "ªÍæ«¡ˆ¥Î":"Mountains";
+		String reg = lang.contains("kr") ? "ÏÇ∞ÏïÖÏßÄÎåÄ":"Mountains";
 		LivingEntity newmob = Mobspawn(le, reg + trans(le), 120.0,
 				le.getEquipment().getHelmet(), le.getEquipment().getChestplate(),
 				le.getEquipment().getLeggings(), le.getEquipment().getBoots(),
