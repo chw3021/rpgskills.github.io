@@ -1792,7 +1792,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
 						.kname("두번째 태양")
 						.ename("New SunRise")
 						.slot(7)
-						.hm(prcooldown)
+						.hm(ault2cooldown)
 						.skillUse(() -> {
 							Casting(p);
 
@@ -1814,7 +1814,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
 							for(int ix = -4; ix<4; ix++) {
 								for(int iy = -4; iy<4; iy++) {
 									for(int iz = -4; iz<4; iz++) {
-										if((ix*ix + iy*iy + iz*iz<=16) && ix*ix + iy*iy + iz*iz>=14){
+										if((ix*ix + iy*iy + iz*iz)<=16 && (ix*ix + iy*iy + iz*iz)>=14){
 											spl.add(tl.clone().add(ix, iy, iz));
 										}
 									}
@@ -1840,6 +1840,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
 								}, 120);
 							});
 
+							System.out.println(spl.size());
 							for(int i = 0; i <10; i++) {
 								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 									@Override
@@ -1865,6 +1866,8 @@ public class Fireskills extends Pak implements Serializable, Listener {
 										}
 										pl.getWorld().spawnParticle(Particle.FLAME, pl, 2000, 20,20,20,1);
 										pl.getWorld().spawnParticle(Particle.WAX_ON, pl, 500, 20,20,20,1);
+										pl.getWorld().spawnParticle(Particle.FLAME, tl, 500, 1,1,1,1);
+										pl.getWorld().spawnParticle(Particle.FLASH, tl, 10, 5,5,5,1);
 
 										p.playSound(pl, Sound.ITEM_FIRECHARGE_USE, 1, 0);
 										p.playSound(pl, Sound.ENTITY_PHANTOM_FLAP, 1.0f, 0f);

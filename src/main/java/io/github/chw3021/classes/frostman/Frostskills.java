@@ -972,7 +972,7 @@ public class Frostskills extends Pak implements Listener, Serializable {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec =5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =4.5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 		if(ClassData.pc.get(p.getUniqueId()) == 21&& bsd.SnowBreeze.getOrDefault(p.getUniqueId(), 0)>=1) {
 			final Location l = p.getLocation().clone();
 			if(p.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD &&!p.isSneaking()&& !p.isOnGround() &&!p.hasCooldown(CAREFUL))
@@ -1089,7 +1089,7 @@ public class Frostskills extends Pak implements Listener, Serializable {
 
 					ArrayList<Location> br = new ArrayList<>();
 					AtomicInteger j = new AtomicInteger();
-					Holding.invur(p, 20l);
+					Holding.invur(p, 40l);
 					for(double d = 0; d<7 ; d+=0.3) {
 						br.add(hpl.clone().add(tl.toVector().subtract(hpl.toVector()).normalize().multiply(d)));
 					}
@@ -1549,8 +1549,9 @@ public class Frostskills extends Pak implements Listener, Serializable {
 					{
 						Location pl = le.getLocation().clone().add(0, 1, 0);
 						Vector pv = pl.clone().add(1, 0, 0).toVector().subtract(pl.clone().toVector());
-						Location particlel = pl.clone().add(pv.rotateAroundY((Math.PI*2/(cool*20))*j.getAndIncrement()).normalize().multiply(1.9));
-						p.spawnParticle(Particle.BLOCK_CRACK, particlel.clone(),1,Material.BLUE_ICE.createBlockData());
+						Location particlel = pl.clone().add(pv.clone().rotateAroundY((Math.PI*2/(cool*20))*j.getAndIncrement()).normalize().multiply(1.9));
+						p.spawnParticle(Particle.BLOCK_CRACK, particlel.clone(),1,Material.SNOW_BLOCK.createBlockData());
+						p.spawnParticle(Particle.BLOCK_CRACK, pl.clone().add(pv.clone().normalize().multiply(1.9)),1,Material.SNOW_BLOCK.createBlockData());
 					}
 				}, an);
 			}
@@ -1977,7 +1978,7 @@ public class Frostskills extends Pak implements Listener, Serializable {
 								}
 							}, 20);
 						});
-						Holding.invur(p, 120l);
+						Holding.invur(p, 200l);
 						p.playSound(p.getLocation(), Sound.WEATHER_RAIN, 1, 0);
 						p.playSound(p.getLocation(), Sound.ENTITY_SNOW_GOLEM_SHEAR, 0.8f, 2f);
 						p.playSound(p.getLocation(), Sound.ENTITY_SNOW_GOLEM_AMBIENT, 0.8f, 2f);
@@ -2029,8 +2030,14 @@ public class Frostskills extends Pak implements Listener, Serializable {
 
 										atk0(28.5, 0d, p, le);
 
-										Holding.holding(p, le, 200l);
-										frosted.put(p.getUniqueId(),le.getUniqueId());
+										Holding.holding(p, le, 100l);
+										frosted.put(le.getUniqueId(),p.getUniqueId());
+										Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+											@Override
+											public void run() {
+												frosted.remove(le.getUniqueId());
+											}
+										}, 300);
 									}
 								}
 							}

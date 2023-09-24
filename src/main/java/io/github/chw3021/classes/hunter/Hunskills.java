@@ -1545,7 +1545,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 		}
 		ItemStack is = p.getInventory().getItemInMainHand();
 
-		if(ClassData.pc.get(p.getUniqueId()) == 2 && (is.getType().name().contains("_AXE"))&& !p.getInventory().getItemInMainHand().getType().name().contains("PICK") && ev.getNewSlot()==4 && p.isSneaking()&& Proficiency.getpro(p) >=1)
+		if(ClassData.pc.get(p.getUniqueId()) == 2 && (is.getType().name().contains("_AXE"))&& !p.getInventory().getItemInMainHand().getType().name().contains("PICK") && ev.getNewSlot()==3 && p.isSneaking()&& Proficiency.getpro(p) >=1)
 		{
 			ev.setCancelled(true);
 			p.setCooldown(CAREFUL, 3);
@@ -1691,7 +1691,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 		}
 		ItemStack is = p.getInventory().getItemInMainHand();
 
-		if(ClassData.pc.get(p.getUniqueId()) == 2 && (is.getType().name().contains("_AXE")) && ev.getNewSlot()==5&& !p.getInventory().getItemInMainHand().getType().name().contains("PICK") && p.isSneaking()&& Proficiency.getpro(p) >=2)
+		if(ClassData.pc.get(p.getUniqueId()) == 2 && (is.getType().name().contains("_AXE")) && ev.getNewSlot()==4&& !p.getInventory().getItemInMainHand().getType().name().contains("PICK") && p.isSneaking()&& Proficiency.getpro(p) >=2)
 		{
 			ev.setCancelled(true);
 			p.setCooldown(CAREFUL, 3);

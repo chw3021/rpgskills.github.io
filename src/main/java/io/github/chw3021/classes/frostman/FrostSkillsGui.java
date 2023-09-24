@@ -216,7 +216,7 @@ public class FrostSkillsGui extends SkillsGui {
 						Arrays.asList("공격력과 방어력이 증가합니다", "서리폭풍 재사용대기시간이 감소합니다", "동상의 경직지속시간이 증가합니다"), 25,
 						Frostskillsinv);
 				itemset("빙하시대", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE + "[서리 계열]",
-						"웅크리기+ num5", "타격당한 적은 10초동안","동상 대기시간이 없어집니다", "", ChatColor.BOLD + "28.5D"), 26, Frostskillsinv);
+						"웅크리기+ num5", "타격당한 적은 15초동안","동상 대기시간이 없어집니다", "", ChatColor.BOLD + "28.5D"), 26, Frostskillsinv);
 			}
 			itemset("현재 숙련도", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("" + Proficiency.getproexp(p)), 27,
 					Frostskillsinv);
@@ -449,7 +449,7 @@ public class FrostSkillsGui extends SkillsGui {
 				itemset("AbsoluteZero", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Damage & Armor",
 						"Decrease Blizzard Cooldown", "Increases Frostbite Duration"), 25, Frostskillsinv);
 				itemset("Ice Age", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE + "[Frost]",
-						"Sneaking + num5", "", ChatColor.BOLD + "10 X 1.0D, 10D"), 26, Frostskillsinv);
+						"Sneaking + num5","Removes Frostbite Cd of hit enemies(15s)", "", ChatColor.BOLD + "10 X 1.0D, 10D"), 26, Frostskillsinv);
 			}
 			itemset("Current Proficiency", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("" + Proficiency.getproexp(p)),
 					27, Frostskillsinv);

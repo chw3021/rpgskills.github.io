@@ -1394,9 +1394,6 @@ public class Forskills extends Pak implements Serializable {
 			if(rayt1.containsKey(p.getUniqueId())){
 				ult2ActivateReady(p,raygm.get(p.getUniqueId()), rayfl.get(p.getUniqueId()));
 				ult2Activate(p);
-				Bukkit.getScheduler().cancelTask(rayt1.remove(p.getUniqueId()));
-				Bukkit.getScheduler().cancelTask(rayt2.remove(p.getUniqueId()));
-				Bukkit.getScheduler().cancelTask(rayt3.remove(p.getUniqueId()));
 				return;
 			}
 			if((!p.isSneaking())&& !p.isOnGround() && (ac == Action.LEFT_CLICK_AIR || ac== Action.LEFT_CLICK_BLOCK))
@@ -1670,7 +1667,7 @@ public class Forskills extends Pak implements Serializable {
 			return;
 		}
 		ItemStack is = p.getInventory().getItemInMainHand();
-		if(ClassData.pc.get(p.getUniqueId()) == 16 && ((is.getType().name().contains("PICKAXE"))) && ev.getNewSlot()==4 && p.isSneaking()&& Proficiency.getpro(p) >=1)
+		if(ClassData.pc.get(p.getUniqueId()) == 16 && ((is.getType().name().contains("PICKAXE"))) && ev.getNewSlot()==3 && p.isSneaking()&& Proficiency.getpro(p) >=1)
 		{
 			ev.setCancelled(true);
 			p.setCooldown(CAREFUL, 2);
@@ -1749,6 +1746,7 @@ public class Forskills extends Pak implements Serializable {
 
 	final private void ult2ActivateReady(Player p,GameMode pgm, Location fl) {
 
+		Bukkit.getScheduler().cancelTask(rayt1.remove(p.getUniqueId()));
 		p.setGameMode(pgm);
 		p.teleport(fl);
 		p.playSound(p.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 1.0f, 0f);
@@ -1772,9 +1770,8 @@ public class Forskills extends Pak implements Serializable {
 	}
 	final private void ult2Activate(Player p) {
 
+		p.setCooldown(CAREFUL, 10);
 		final Location rayloc = rayLoc.get(p.getUniqueId()).clone();
-		p.getWorld().spawnParticle(Particle.FLASH, rayloc.clone(), 6000, 6, 300, 6);
-		rayLoc.remove(p.getUniqueId());
 		for(int i=0; i<50; i++) {
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 				@Override
@@ -1782,7 +1779,8 @@ public class Forskills extends Pak implements Serializable {
 				{
 					p.playSound(rayloc, Sound.BLOCK_BEACON_ACTIVATE, 0.1f, 2f);
 					p.playSound(rayloc, Sound.BLOCK_NOTE_BLOCK_BASS, 0.1f, 0f);
-					ult2cir(p,1);
+					p.getWorld().spawnParticle(Particle.FLASH, rayloc, 6000, 6, 200, 6);
+					ult2cir(p,1, rayloc);
 					for(Entity e: p.getWorld().getNearbyEntities(rayloc.clone(),6,300,6)) {
 						if (e instanceof Player)
 						{
@@ -1805,6 +1803,9 @@ public class Forskills extends Pak implements Serializable {
 		}
 		rayfl.remove(p.getUniqueId());
 		raygm.remove(p.getUniqueId());
+		rayLoc.remove(p.getUniqueId());
+		Bukkit.getScheduler().cancelTask(rayt2.remove(p.getUniqueId()));
+		Bukkit.getScheduler().cancelTask(rayt3.remove(p.getUniqueId()));
 	}
 
 	final private Location floorFinder(Location inloc){
@@ -1824,23 +1825,24 @@ public class Forskills extends Pak implements Serializable {
 
 	}
 
-	final private ArrayList<Location> ult2cir(Player p, Integer parm) {
+	final private ArrayList<Location> ult2cir(Player p, Integer parm, Location rayloc) {
 
 		ArrayList<Location> draw = new ArrayList<Location>();
 		Location pl = p.getLocation().clone().add(0, 1, 0);
 		Vector pv = pl.clone().add(1, 0, 0).toVector().subtract(pl.clone().toVector());
 
 		for(double an = 0; an<Math.PI*2; an+=Math.PI/90) {
-			Location inloc = pl.clone().add(pv.rotateAroundY(an).normalize().multiply(6));
-			draw.add(floorFinder(inloc));
+			if(parm==0) {
+				Location inloc = pl.clone().add(pv.rotateAroundY(an).normalize().multiply(6));
+				draw.add(floorFinder(inloc));
+			}
+			else {
+				Location inloc = rayloc.clone().add(pv.rotateAroundY(an).normalize().multiply(6));
+				draw.add(floorFinder(inloc));
+			}
 		}
 		draw.forEach(l -> {
-			if(parm == 0){
-				p.spawnParticle(Particle.REDSTONE, l.clone().add(0, 0.5, 0),1, new Particle.DustOptions(Color.GREEN, 1) );
-			}
-			else{
-				p.getWorld().spawnParticle(Particle.FLAME, l.clone().add(0, 0.5, 0),1,1,1,1,0);
-			}
+			p.spawnParticle(Particle.REDSTONE, l.clone().add(0, 0.5, 0),1, new Particle.DustOptions(Color.LIME, 1) );
 		});
 		return draw;
 	}
@@ -1853,7 +1855,7 @@ public class Forskills extends Pak implements Serializable {
 		}
 		ItemStack is = p.getInventory().getItemInMainHand();
 
-		if(ClassData.pc.get(p.getUniqueId()) == 16 && ((is.getType().name().contains("PICKAXE"))) && p.isSneaking() && ev.getNewSlot()==5&& Proficiency.getpro(p) >=2)
+		if(ClassData.pc.get(p.getUniqueId()) == 16 && ((is.getType().name().contains("PICKAXE"))) && p.isSneaking() && ev.getNewSlot()==4&& Proficiency.getpro(p) >=2)
 		{
 			p.setCooldown(CAREFUL, 2);
 			ev.setCancelled(true);
@@ -1888,7 +1890,7 @@ public class Forskills extends Pak implements Serializable {
 								else {
 									p.sendTitle(org.bukkit.ChatColor.RED+"Click to Call",j.incrementAndGet()*2 +"%", 5, 5, 5);
 								}
-								ult2cir(p,0);
+								ult2cir(p,0,null);
 								rayLoc.put(p.getUniqueId(),p.getLocation().clone());
 							}
 						}, 0,1);

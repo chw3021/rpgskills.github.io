@@ -1997,7 +1997,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 		}
 		ItemStack is = p.getInventory().getItemInMainHand();
 
-		if(ClassData.pc.get(p.getUniqueId()) == 61  && ev.getNewSlot()==4 && (is.getType().name().equals("CROSSBOW")) && p.isSneaking()&& Proficiency.getpro(p) >=1)
+		if(ClassData.pc.get(p.getUniqueId()) == 61  && ev.getNewSlot()==3 && (is.getType().name().equals("CROSSBOW")) && p.isSneaking()&& Proficiency.getpro(p) >=1)
 		{
 			ev.setCancelled(true);
 			p.setCooldown(Material.ARROW, 1);
@@ -2171,7 +2171,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 
 
 
-		if(ClassData.pc.get(p.getUniqueId()) == 61 && (is.getType().name().equals("CROSSBOW"))  && ev.getNewSlot()==5 && !p.isSneaking()&& p.isSprinting()&& Proficiency.getpro(p) >=2)
+		if(ClassData.pc.get(p.getUniqueId()) == 61 && (is.getType().name().equals("CROSSBOW"))  && ev.getNewSlot()==4 && !p.isSneaking()&& p.isSprinting()&& Proficiency.getpro(p) >=2)
 		{
 			ev.setCancelled(true);
 			p.setCooldown(Material.ARROW, 1);

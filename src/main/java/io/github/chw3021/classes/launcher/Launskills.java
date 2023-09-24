@@ -2116,7 +2116,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 		ItemStack is = p.getInventory().getItemInMainHand();
 
 
-		if(ClassData.pc.get(p.getUniqueId()) == 5 && (is.getType().name().equals("BOW"))  && ev.getNewSlot()==4 && p.isSneaking()&& Proficiency.getpro(p) >=1)
+		if(ClassData.pc.get(p.getUniqueId()) == 5 && (is.getType().name().equals("BOW"))  && ev.getNewSlot()==3 && p.isSneaking()&& Proficiency.getpro(p) >=1)
 		{
 			ev.setCancelled(true);
 			p.setCooldown(Material.FIREWORK_STAR, 1);
@@ -2323,7 +2323,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 		}
 		ItemStack is = p.getInventory().getItemInMainHand();
 
-		if(ClassData.pc.get(p.getUniqueId()) == 5 && (is.getType().name().equals("BOW")) && p.isSneaking()  && ev.getNewSlot()==5&& Proficiency.getpro(p) >=2 )
+		if(ClassData.pc.get(p.getUniqueId()) == 5 && (is.getType().name().equals("BOW")) && p.isSneaking()  && ev.getNewSlot()==4&& Proficiency.getpro(p) >=2 )
 		{
 			ev.setCancelled(true);
 			p.setCooldown(Material.FIREWORK_STAR, 1);

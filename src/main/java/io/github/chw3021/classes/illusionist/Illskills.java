@@ -1453,7 +1453,7 @@ public class Illskills extends Pak implements Serializable {
 		}
 		ItemStack is = p.getInventory().getItemInMainHand();
 
-		if(ClassData.pc.get(p.getUniqueId()) == 11 && ev.getNewSlot()==4 && (is.getType() == Material.BLAZE_ROD) && p.isSneaking()&& Proficiency.getpro(p) >=1)
+		if(ClassData.pc.get(p.getUniqueId()) == 11 && ev.getNewSlot()==3 && (is.getType() == Material.BLAZE_ROD) && p.isSneaking()&& Proficiency.getpro(p) >=1)
 		{
 			p.setCooldown(CAREFUL, 2);
 			ev.setCancelled(true);
@@ -1544,7 +1544,7 @@ public class Illskills extends Pak implements Serializable {
 		}
 		ItemStack is = p.getInventory().getItemInMainHand();
 
-		if(ClassData.pc.get(p.getUniqueId()) == 11 && (is.getType() == Material.BLAZE_ROD) && p.isSneaking()&& Proficiency.getpro(p) >=2 && ev.getNewSlot()==5)
+		if(ClassData.pc.get(p.getUniqueId()) == 11 && (is.getType() == Material.BLAZE_ROD) && p.isSneaking()&& Proficiency.getpro(p) >=2 && ev.getNewSlot()==4)
 		{
 			p.setCooldown(CAREFUL, 2);
 			ev.setCancelled(true);
