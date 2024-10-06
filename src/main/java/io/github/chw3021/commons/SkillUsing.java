@@ -302,6 +302,9 @@ public class SkillUsing implements Listener, Serializable {
 		Nobskills.getInstance().GuardianSupport(ev);
 		Nobskills.getInstance().ULT(ev);
 		Nobskills.getInstance().ULT2(ev);
+		
+		Palskills.getInstance().ULT(ev);
+		Palskills.getInstance().ULT2(ev);
 
 		Snipskills.getInstance().Camouflage(ev);
 		
@@ -872,8 +875,6 @@ public class SkillUsing implements Listener, Serializable {
 
 		Nobskills.getInstance().ThrowCancel(ev);
 
-		Palskills.getInstance().ULT(ev);
-		Palskills.getInstance().ULT2(ev);
 		Palskills.getInstance().ThrowCancel(ev);
 
 		Snipskills.getInstance().ULT(ev);
