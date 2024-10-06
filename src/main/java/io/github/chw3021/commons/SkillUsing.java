@@ -294,6 +294,8 @@ public class SkillUsing implements Listener, Serializable {
 		Medskills.getInstance().ULT(ev);
 		Medskills.getInstance().ULT2(ev);
 
+		Oceskills.getInstance().ULT(ev);
+		Oceskills.getInstance().ULT2(ev);
 		Oceskills.getInstance().Shield(ev);
 
 		Nobskills.getInstance().GuardianCurse(ev);
@@ -866,8 +868,6 @@ public class SkillUsing implements Listener, Serializable {
 
 		Medskills.getInstance().ThrowCancel(ev);
 
-		Oceskills.getInstance().ULT(ev);
-		Oceskills.getInstance().ULT2(ev);
 		Oceskills.getInstance().ThrowCancel(ev);
 
 		Nobskills.getInstance().ThrowCancel(ev);
