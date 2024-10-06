@@ -198,7 +198,7 @@ public class Archskills extends Pak implements Serializable, Listener{
 										AbstractArrow ar = p.launchProjectile(far.getClass(),far.getVelocity().multiply(0.9));
 										ar.setShooter(p);
 
-										ar.setBounce(false);
+										
 										p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1f, 1.6f);
 										ar.setCritical(true);
 										ar2(ar, p, far.getDamage()*0.62 , 0.015);
@@ -223,7 +223,7 @@ public class Archskills extends Pak implements Serializable, Listener{
 										AbstractArrow ar = p.launchProjectile(far.getClass(),far.getVelocity().multiply(0.9));
 										ar.setShooter(p);
 
-										ar.setBounce(false);
+										
 										p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1f, 1.6f);
 										ar.setCritical(true);
 										ar2(ar, p, far.getDamage()*0.62 , 0.015);
@@ -248,7 +248,6 @@ public class Archskills extends Pak implements Serializable, Listener{
 										AbstractArrow ar = p.launchProjectile(far.getClass(),far.getVelocity().multiply(0.9));
 										ar.setShooter(p);
 
-										ar.setBounce(false);
 										p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1f, 1.6f);
 										ar.setCritical(true);
 										ar2(ar, p, far.getDamage()*0.62 , 0.015);
@@ -599,7 +598,7 @@ public class Archskills extends Pak implements Serializable, Listener{
 		Vector v = pl.clone().toVector().subtract(lel.clone().toVector()).normalize();
 		Arrow ar = p.getWorld().spawnArrow(lel, v, 2, 1);
 		ar.setCritical(false);
-		ar.setBounce(false);
+		
 		ar.setDamage(0);
 		ar.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 		ar.setPickupStatus(PickupStatus.DISALLOWED);
@@ -652,7 +651,7 @@ public class Archskills extends Pak implements Serializable, Listener{
 													public void run()
 													{
 														atk1(0.5*(1+arc*0.23)*(asd.Retrieve.get(p.getUniqueId())), p, le,5);
-														le.getWorld().spawnParticle(Particle.BLOCK_CRACK, le.getLocation(), 40, Material.REDSTONE_BLOCK.createBlockData());
+														le.getWorld().spawnParticle(Particle.BLOCK, le.getLocation(), 40, Material.REDSTONE_BLOCK.createBlockData());
 														Holding.holding(p, le, 10l);
 													}
 												}, 10);
@@ -900,7 +899,7 @@ public class Archskills extends Pak implements Serializable, Listener{
 														ar.setShooter(p);
 														ar.setKnockbackStrength(0);
 														ar.setCritical(true);
-														ar.setBounce(false);
+														
 														ar1(ar, p, 0.01*(1+asd.MultiShot.get(p.getUniqueId())*0.0065));
 														p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 0.1f, 1.6f);
 														p.playSound(p.getLocation(), Sound.BLOCK_DISPENSER_LAUNCH, 0.1f, 1.6f);
@@ -917,7 +916,7 @@ public class Archskills extends Pak implements Serializable, Listener{
 											ar.setShooter(p);
 											ar.setKnockbackStrength(0);
 											ar.setCritical(true);
-											ar.setBounce(false);
+											
 											ar1(ar, p, 0.01*(1+asd.MultiShot.get(p.getUniqueId())*0.0065));
 											p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 0.1f, 1.6f);
 											p.playSound(p.getLocation(), Sound.BLOCK_DISPENSER_LAUNCH, 0.1f, 1.6f);
@@ -1036,7 +1035,7 @@ public class Archskills extends Pak implements Serializable, Listener{
 			if(ClassData.pc.get(p.getUniqueId()) == 6) {
 
 				LivingEntity e = grabbed.get(p);
-				p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 40, 1, false, false));
+				p.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 40, 1, false, false));
 				e.setCollidable(true);
 				Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 40, 0);
 				ar.setShooter(p);
@@ -1096,7 +1095,7 @@ public class Archskills extends Pak implements Serializable, Listener{
 						firstarrow.setDamage(0);
 						firstarrow.remove();
 						p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_SHOOT, 0.3f, 0.3f);
-						p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 70, 3, false,false));
+						p.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 70, 3, false,false));
 						ArrayList<AbstractArrow> arar = new ArrayList<>();
 						for(int i1 =0; i1<20; i1++) {
 							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -1111,7 +1110,7 @@ public class Archskills extends Pak implements Serializable, Listener{
 											ar.setKnockbackStrength(0);
 											ar.setPickupStatus(PickupStatus.DISALLOWED);
 											ar.setCritical(true);
-											ar.setBounce(false);
+											
 											p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 0.05f, 1.6f);
 											ar1(ar, p, 0.028);
 											arar.add(ar);
@@ -1122,7 +1121,7 @@ public class Archskills extends Pak implements Serializable, Listener{
 											ar.setKnockbackStrength(0);
 											ar.setPickupStatus(PickupStatus.DISALLOWED);
 											ar.setCritical(true);
-											ar.setBounce(false);
+											
 											p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 0.05f, 1.6f);
 											ar1(ar, p, 0.028);
 											arar.add(ar);
@@ -1178,9 +1177,9 @@ public class Archskills extends Pak implements Serializable, Listener{
 						firstarrow.remove();
 						p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_SHOOT, 0.3f, 0.3f);
 						p.playSound(p.getLocation(), Sound.AMBIENT_BASALT_DELTAS_ADDITIONS, 0.3f, 1.3f);
-						p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 70, 5, false,false));
+						p.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 70, 5, false,false));
 						p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 70, 2, false,false));
-						p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 70, 2, false,false));
+						p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 70, 2, false,false));
 						for(int i1 =2; i1<60; i1++) {
 							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 								@Override

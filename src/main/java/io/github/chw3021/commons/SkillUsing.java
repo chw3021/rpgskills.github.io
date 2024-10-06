@@ -298,12 +298,17 @@ public class SkillUsing implements Listener, Serializable {
 
 		Nobskills.getInstance().GuardianCurse(ev);
 		Nobskills.getInstance().GuardianSupport(ev);
+		Nobskills.getInstance().ULT(ev);
+		Nobskills.getInstance().ULT2(ev);
 
 		Snipskills.getInstance().Camouflage(ev);
 		
 		Taoskills.getInstance().Aura(ev);
 		
 		Tamskills.getInstance().Recall(ev);
+		Tamskills.getInstance().ULT(ev);
+		Tamskills.getInstance().ULT2(ev);
+		Tamskills.getInstance().Smash(ev);
 	}
 
 	@EventHandler
@@ -445,9 +450,9 @@ public class SkillUsing implements Listener, Serializable {
 		Taoskills.getInstance().Ascension(ev);
 		Taoskills.getInstance().Blast(ev);
 		Taoskills.getInstance().Charm(ev);
-		Taoskills.getInstance().EarthlyGrasp(ev);
+		Taoskills.getInstance().BindingFormation(ev);
 		Taoskills.getInstance().Imagery(ev);
-		Taoskills.getInstance().KarmaBreath(ev);
+		Taoskills.getInstance().EnergyBlast(ev);
 
 		Wdcskills.getInstance().Fangs(ev);
 		Wdcskills.getInstance().FangsRush(ev);
@@ -595,6 +600,9 @@ public class SkillUsing implements Listener, Serializable {
 
 		Oceskills.getInstance().Javelin(ev);
 		Oceskills.getInstance().Torrent(ev);
+		Oceskills.getInstance().OceanCharge(ev);
+		Oceskills.getInstance().TridentExplosion(ev);
+		Oceskills.getInstance().Impale(ev);
 
 		Nobskills.getInstance().Dolphinleft(ev);
 		Nobskills.getInstance().DolphinSurf(ev);
@@ -736,7 +744,6 @@ public class SkillUsing implements Listener, Serializable {
 		Medskills.getInstance().Grogi(d);
 		Medskills.getInstance().RemedyingRocket(d);
 
-		Oceskills.getInstance().Impale(d);
 		Oceskills.getInstance().Splash(d);
 
 		Nobskills.getInstance().Damagegetter(d);
@@ -863,8 +870,6 @@ public class SkillUsing implements Listener, Serializable {
 		Oceskills.getInstance().ULT2(ev);
 		Oceskills.getInstance().ThrowCancel(ev);
 
-		Nobskills.getInstance().ULT(ev);
-		Nobskills.getInstance().ULT2(ev);
 		Nobskills.getInstance().ThrowCancel(ev);
 
 		Palskills.getInstance().ULT(ev);
@@ -879,9 +884,6 @@ public class SkillUsing implements Listener, Serializable {
 		Swordskills.getInstance().ULT2(ev);
 		Swordskills.getInstance().ThrowCancel(ev);
 
-		Tamskills.getInstance().ULT(ev);
-		Tamskills.getInstance().Smash(ev);
-		Tamskills.getInstance().ULT2(ev);
 		Tamskills.getInstance().ThrowCancel(ev);
 
 		Taoskills.getInstance().ULT(ev);

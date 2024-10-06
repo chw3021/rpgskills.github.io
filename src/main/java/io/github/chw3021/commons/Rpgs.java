@@ -7,15 +7,14 @@ import java.util.HashSet;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Registry;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -29,8 +28,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.HashMultimap;
-
 import io.github.chw3021.classes.ClassData;
 import io.github.chw3021.classes.Classgui;
 import io.github.chw3021.classes.Proficiency;
@@ -334,17 +331,17 @@ public class Rpgs extends Summoned implements CommandExecutor, Serializable, Lis
 				else if(args[0].equalsIgnoreCase("god") && p.isOp()&& !args[1].isEmpty())
 				{
 					p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 999999, Integer.parseInt(args[1]), false, false));
-					p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 999999, Integer.parseInt(args[1]), false, false));
+					p.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 999999, Integer.parseInt(args[1]), false, false));
 					p.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 999999, Integer.parseInt(args[1]), false, false));
 					p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, Integer.parseInt(args[1]), false, false));
-					p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 999999, Integer.parseInt(args[1]), false, false));
+					p.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 999999, Integer.parseInt(args[1]), false, false));
 					p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 999999, Integer.parseInt(args[1]), false, false));
 					p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 999999, Integer.parseInt(args[1]), false, false));
 				}
 				else if(args[0].equalsIgnoreCase("speed") && p.isOp()&& !args[1].isEmpty())
 				{
 					p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, Integer.parseInt(args[1]), false, false));
-					p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999, Integer.parseInt(args[1]), false, false));
+					p.addPotionEffect(new PotionEffect(PotionEffectType.HASTE, 999999, Integer.parseInt(args[1]), false, false));
 					p.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 999999, Integer.parseInt(args[1]), false, false));
 					p.addPotionEffect(new PotionEffect(PotionEffectType.CONDUIT_POWER, 999999, Integer.parseInt(args[1]), false, false));
 				}
@@ -361,7 +358,7 @@ public class Rpgs extends Summoned implements CommandExecutor, Serializable, Lis
 						return true;
 					}
 					else if(!args[2].isEmpty()) {
-						p.getEquipment().getItemInMainHand().addUnsafeEnchantment(Enchantment.getByKey(NamespacedKey.fromString(args[1])), Integer.parseInt(args[2]));
+						p.getEquipment().getItemInMainHand().addUnsafeEnchantment(Registry.ENCHANTMENT.get(NamespacedKey.fromString(args[1])), Integer.parseInt(args[2]));
 					}
 				}
 				else if(args[0].equalsIgnoreCase("dam") || args[0].equalsIgnoreCase("d") || args[0].equalsIgnoreCase("damage"))

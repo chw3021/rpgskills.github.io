@@ -11,4 +11,4 @@ commands:
    party:
       description: plugin
       
-api-version: 1.19
+api-version: 1.21

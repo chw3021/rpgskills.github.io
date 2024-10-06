@@ -62,8 +62,8 @@ public class CrossBow extends Weapons implements Listener {
 								Operation.ADD_NUMBER, EquipmentSlot.HAND));
 				if (cmdt == 14) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¹Ù¶÷ÀÇ ¼è³ú");
-						rm.setLocalizedName(ChatColor.GOLD +"¹Ù¶÷ÀÇ ¼è³ú");
+						rm.setDisplayName(ChatColor.GOLD +"ë°”ëŒì˜ ì‡ ë‡Œ");
+						rm.setLocalizedName(ChatColor.GOLD +"ë°”ëŒì˜ ì‡ ë‡Œ");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Windy CrossBow");
@@ -75,8 +75,8 @@ public class CrossBow extends Weapons implements Listener {
 				}
 				else if (cmdt == 5) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"´ëÁöÀÇ ¼è³ú");
-						rm.setLocalizedName(ChatColor.GOLD +"´ëÁöÀÇ ¼è³ú");
+						rm.setDisplayName(ChatColor.GOLD +"ëŒ€ì§€ì˜ ì‡ ë‡Œ");
+						rm.setLocalizedName(ChatColor.GOLD +"ëŒ€ì§€ì˜ ì‡ ë‡Œ");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Earth CrossBow");
@@ -86,8 +86,8 @@ public class CrossBow extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 6) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¼­¸®ÀÇ ¼è³ú");
-						rm.setLocalizedName(ChatColor.GOLD +"¼­¸®ÀÇ ¼è³ú");
+						rm.setDisplayName(ChatColor.GOLD +"ì„œë¦¬ì˜ ì‡ ë‡Œ");
+						rm.setLocalizedName(ChatColor.GOLD +"ì„œë¦¬ì˜ ì‡ ë‡Œ");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Frost CrossBow");
@@ -97,8 +97,8 @@ public class CrossBow extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 7) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¹Ù´ÙÀÇ ¼è³ú");
-						rm.setLocalizedName(ChatColor.GOLD +"¹Ù´ÙÀÇ ¼è³ú");
+						rm.setDisplayName(ChatColor.GOLD +"ë°”ë‹¤ì˜ ì‡ ë‡Œ");
+						rm.setLocalizedName(ChatColor.GOLD +"ë°”ë‹¤ì˜ ì‡ ë‡Œ");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Ocean CrossBow");
@@ -108,8 +108,8 @@ public class CrossBow extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 8) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¾îµÒÀÇ ¼è³ú");
-						rm.setLocalizedName(ChatColor.GOLD +"¾îµÒÀÇ ¼è³ú");
+						rm.setDisplayName(ChatColor.GOLD +"ì–´ë‘ ì˜ ì‡ ë‡Œ");
+						rm.setLocalizedName(ChatColor.GOLD +"ì–´ë‘ ì˜ ì‡ ë‡Œ");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Dark CrossBow");
@@ -119,8 +119,8 @@ public class CrossBow extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 9) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"°³Á¶µÈ ¼è³ú");
-						rm.setLocalizedName(ChatColor.GOLD +"°³Á¶µÈ ¼è³ú");
+						rm.setDisplayName(ChatColor.GOLD +"ê°œì¡°ëœ ì‡ ë‡Œ");
+						rm.setLocalizedName(ChatColor.GOLD +"ê°œì¡°ëœ ì‡ ë‡Œ");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Hyper CrossBow");
@@ -130,8 +130,8 @@ public class CrossBow extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 10) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"ÀÛ¿­ÇÏ´Â ¼è³ú");
-						rm.setLocalizedName(ChatColor.GOLD +"ÀÛ¿­ÇÏ´Â ¼è³ú");
+						rm.setDisplayName(ChatColor.GOLD +"ì‘ì—´í•˜ëŠ” ì‡ ë‡Œ");
+						rm.setLocalizedName(ChatColor.GOLD +"ì‘ì—´í•˜ëŠ” ì‡ ë‡Œ");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Burning CrossBow");
@@ -141,8 +141,8 @@ public class CrossBow extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 11) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¸Íµ¶ ¼è³ú");
-						rm.setLocalizedName(ChatColor.GOLD +"¸Íµ¶ ¼è³ú");
+						rm.setDisplayName(ChatColor.GOLD +"ë§¹ë… ì‡ ë‡Œ");
+						rm.setLocalizedName(ChatColor.GOLD +"ë§¹ë… ì‡ ë‡Œ");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Poison CrossBow");
@@ -167,8 +167,8 @@ public class CrossBow extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 29,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"ÀÚ¿¬ÀÇ ¼è³ú");
-						rm.setLocalizedName(ChatColor.GOLD +"ÀÚ¿¬ÀÇ ¼è³ú");
+						rm.setDisplayName(ChatColor.GOLD +"ìì—°ì˜ ì‡ ë‡Œ");
+						rm.setLocalizedName(ChatColor.GOLD +"ìì—°ì˜ ì‡ ë‡Œ");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Natural CrossBow");
@@ -192,8 +192,8 @@ public class CrossBow extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 12,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¼è³ú - 1´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¼è³ú - 1´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‡ ë‡Œ - 1ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‡ ë‡Œ - 1ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.1");
@@ -217,8 +217,8 @@ public class CrossBow extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 14,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¼è³ú - 2´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¼è³ú - 2´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‡ ë‡Œ - 2ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‡ ë‡Œ - 2ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.2");
@@ -232,8 +232,8 @@ public class CrossBow extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 16,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¼è³ú - 3´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¼è³ú - 3´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‡ ë‡Œ - 3ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‡ ë‡Œ - 3ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.3");
@@ -247,8 +247,8 @@ public class CrossBow extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 18,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¼è³ú - 4´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¼è³ú - 4´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‡ ë‡Œ - 4ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‡ ë‡Œ - 4ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.4");
@@ -262,8 +262,8 @@ public class CrossBow extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 20,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¼è³ú - 5´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¼è³ú - 5´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‡ ë‡Œ - 5ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‡ ë‡Œ - 5ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.5");
@@ -277,8 +277,8 @@ public class CrossBow extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 22,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¼è³ú - 6´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¼è³ú - 6´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‡ ë‡Œ - 6ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‡ ë‡Œ - 6ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.6");
@@ -292,8 +292,8 @@ public class CrossBow extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 24,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¼è³ú - 7´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¼è³ú - 7´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‡ ë‡Œ - 7ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‡ ë‡Œ - 7ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.7");
@@ -307,8 +307,8 @@ public class CrossBow extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 26,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¼è³ú - 8´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¼è³ú - 8´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‡ ë‡Œ - 8ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‡ ë‡Œ - 8ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.8");
@@ -748,8 +748,8 @@ public class CrossBow extends Weapons implements Listener {
 				"generic.attackDamage", 4, Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		meta.setCustomModelData(5000 + 1);
 		if(lang.contains("kr")){
-			meta.setDisplayName("µ¹ ¼è³ú");
-			meta.setLocalizedName("µ¹ ¼è³ú");
+			meta.setDisplayName("ëŒ ì‡ ë‡Œ");
+			meta.setLocalizedName("ëŒ ì‡ ë‡Œ");
 		}
 		else {
 			meta.setDisplayName("Stone CrossBow");
@@ -774,8 +774,8 @@ public class CrossBow extends Weapons implements Listener {
 				"generic.attackDamage", 6, Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		meta.setCustomModelData(5000 +2);
 		if(lang.contains("kr")){
-			meta.setDisplayName("±İ ¼è³ú");
-			meta.setLocalizedName("±İ ¼è³ú");
+			meta.setDisplayName("ê¸ˆ ì‡ ë‡Œ");
+			meta.setLocalizedName("ê¸ˆ ì‡ ë‡Œ");
 		}
 		else {
 			meta.setDisplayName("Gold CrossBow");
@@ -800,8 +800,8 @@ public class CrossBow extends Weapons implements Listener {
 				"generic.attackDamage", 8, Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		meta.setCustomModelData(5000 + 3 );
 		if(lang.contains("kr")){
-			meta.setDisplayName("Ã¶ ¼è³ú");
-			meta.setLocalizedName("Ã¶ ¼è³ú");
+			meta.setDisplayName("ì²  ì‡ ë‡Œ");
+			meta.setLocalizedName("ì²  ì‡ ë‡Œ");
 		}
 		else {
 			meta.setDisplayName("Iron CrossBow");
@@ -826,8 +826,8 @@ public class CrossBow extends Weapons implements Listener {
 				"generic.attackDamage", 10, Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		meta.setCustomModelData(5000 + 4);
 		if(lang.contains("kr")){
-			meta.setDisplayName("´ÙÀÌ¾Æ¸óµå ¼è³ú");
-			meta.setLocalizedName("´ÙÀÌ¾Æ¸óµå ¼è³ú");
+			meta.setDisplayName("ë‹¤ì´ì•„ëª¬ë“œ ì‡ ë‡Œ");
+			meta.setLocalizedName("ë‹¤ì´ì•„ëª¬ë“œ ì‡ ë‡Œ");
 		}
 		else {
 			meta.setDisplayName("Diamond CrossBow");
@@ -854,8 +854,8 @@ public class CrossBow extends Weapons implements Listener {
 		
 		Player p = (Player) d.getView().getPlayer();
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			rm.setDisplayName("³×´õ¶óÀÌÆ® ¼è³ú");
-			rm.setLocalizedName("³×´õ¶óÀÌÆ® ¼è³ú");
+			rm.setDisplayName("ë„¤ë”ë¼ì´íŠ¸ ì‡ ë‡Œ");
+			rm.setLocalizedName("ë„¤ë”ë¼ì´íŠ¸ ì‡ ë‡Œ");
 		}
 		else {
 			rm.setDisplayName("Netherite CrossBow");
@@ -907,8 +907,8 @@ public class CrossBow extends Weapons implements Listener {
 							"generic.attackDamage", 10, Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					rm.setCustomModelData(5000 +60);
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("³×´õ¶óÀÌÆ® ¼è³ú");
-						rm.setLocalizedName("³×´õ¶óÀÌÆ® ¼è³ú");
+						rm.setDisplayName("ë„¤ë”ë¼ì´íŠ¸ ì‡ ë‡Œ");
+						rm.setLocalizedName("ë„¤ë”ë¼ì´íŠ¸ ì‡ ë‡Œ");
 					}
 					else {
 						rm.setDisplayName("Netherite CrossBow");

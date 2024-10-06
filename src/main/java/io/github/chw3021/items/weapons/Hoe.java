@@ -1,3 +1,4 @@
+
 package io.github.chw3021.items.weapons;
 
 import java.util.UUID;
@@ -63,8 +64,8 @@ public class Hoe extends Weapons implements Listener {
 								Operation.ADD_NUMBER, EquipmentSlot.HAND));
 				if (cmdt == 14) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¹Ù¶÷ÀÇ ±ªÀÌ");
-						rm.setLocalizedName(ChatColor.GOLD +"¹Ù¶÷ÀÇ ±ªÀÌ");
+						rm.setDisplayName(ChatColor.GOLD +"ë°”ëŒì˜ ê´­ì´");
+						rm.setLocalizedName(ChatColor.GOLD +"ë°”ëŒì˜ ê´­ì´");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Windy Hoe");
@@ -76,8 +77,8 @@ public class Hoe extends Weapons implements Listener {
 				}
 				else if (cmdt == 5) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"´ëÁöÀÇ ±ªÀÌ");
-						rm.setLocalizedName(ChatColor.GOLD +"´ëÁöÀÇ ±ªÀÌ");
+						rm.setDisplayName(ChatColor.GOLD +"ëŒ€ì§€ì˜ ê´­ì´");
+						rm.setLocalizedName(ChatColor.GOLD +"ëŒ€ì§€ì˜ ê´­ì´");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Earth Hoe");
@@ -87,8 +88,8 @@ public class Hoe extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 6) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¼­¸®ÀÇ ±ªÀÌ");
-						rm.setLocalizedName(ChatColor.GOLD +"¼­¸®ÀÇ ±ªÀÌ");
+						rm.setDisplayName(ChatColor.GOLD +"ì„œë¦¬ì˜ ê´­ì´");
+						rm.setLocalizedName(ChatColor.GOLD +"ì„œë¦¬ì˜ ê´­ì´");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Frost Hoe");
@@ -98,8 +99,8 @@ public class Hoe extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 7) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¹Ù´ÙÀÇ ±ªÀÌ");
-						rm.setLocalizedName(ChatColor.GOLD +"¹Ù´ÙÀÇ ±ªÀÌ");
+						rm.setDisplayName(ChatColor.GOLD +"ë°”ë‹¤ì˜ ê´­ì´");
+						rm.setLocalizedName(ChatColor.GOLD +"ë°”ë‹¤ì˜ ê´­ì´");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Ocean Hoe");
@@ -109,8 +110,8 @@ public class Hoe extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 8) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¾îµÒÀÇ ±ªÀÌ");
-						rm.setLocalizedName(ChatColor.GOLD +"¾îµÒÀÇ ±ªÀÌ");
+						rm.setDisplayName(ChatColor.GOLD +"ì–´ë‘ ì˜ ê´­ì´");
+						rm.setLocalizedName(ChatColor.GOLD +"ì–´ë‘ ì˜ ê´­ì´");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Dark Hoe");
@@ -120,8 +121,8 @@ public class Hoe extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 9) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"°³Á¶µÈ ±ªÀÌ");
-						rm.setLocalizedName(ChatColor.GOLD +"°³Á¶µÈ ±ªÀÌ");
+						rm.setDisplayName(ChatColor.GOLD +"ê°œì¡°ëœ ê´­ì´");
+						rm.setLocalizedName(ChatColor.GOLD +"ê°œì¡°ëœ ê´­ì´");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Hyper Hoe");
@@ -131,8 +132,8 @@ public class Hoe extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 10) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"ÀÛ¿­ÇÏ´Â ±ªÀÌ");
-						rm.setLocalizedName(ChatColor.GOLD +"ÀÛ¿­ÇÏ´Â ±ªÀÌ");
+						rm.setDisplayName(ChatColor.GOLD +"ì‘ì—´í•˜ëŠ” ê´­ì´");
+						rm.setLocalizedName(ChatColor.GOLD +"ì‘ì—´í•˜ëŠ” ê´­ì´");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Burning Hoe");
@@ -142,8 +143,8 @@ public class Hoe extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 11) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¸Íµ¶ ±ªÀÌ");
-						rm.setLocalizedName(ChatColor.GOLD +"¸Íµ¶ ±ªÀÌ");
+						rm.setDisplayName(ChatColor.GOLD +"ë§¹ë… ê´­ì´");
+						rm.setLocalizedName(ChatColor.GOLD +"ë§¹ë… ê´­ì´");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Poison Hoe");
@@ -171,8 +172,8 @@ public class Hoe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 4,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"ÀÚ¿¬ÀÇ ±ªÀÌ");
-						rm.setLocalizedName(ChatColor.GOLD +"ÀÚ¿¬ÀÇ ±ªÀÌ");
+						rm.setDisplayName(ChatColor.GOLD +"ìì—°ì˜ ê´­ì´");
+						rm.setLocalizedName(ChatColor.GOLD +"ìì—°ì˜ ê´­ì´");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Natural Hoe");
@@ -199,8 +200,8 @@ public class Hoe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 4,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ±ªÀÌ - 1´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ±ªÀÌ - 1´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê´­ì´ - 1ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê´­ì´ - 1ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Hoe - Lv.1");
@@ -227,8 +228,8 @@ public class Hoe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 4,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ±ªÀÌ - 2´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ±ªÀÌ - 2´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê´­ì´ - 2ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê´­ì´ - 2ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Hoe - Lv.2");
@@ -245,8 +246,8 @@ public class Hoe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 4,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ±ªÀÌ - 3´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ±ªÀÌ - 3´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê´­ì´ - 3ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê´­ì´ - 3ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Hoe - Lv.3");
@@ -263,8 +264,8 @@ public class Hoe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 4,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ±ªÀÌ - 4´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ±ªÀÌ - 4´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê´­ì´ - 4ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê´­ì´ - 4ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Hoe - Lv.4");
@@ -281,8 +282,8 @@ public class Hoe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 4,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ±ªÀÌ - 5´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ±ªÀÌ - 5´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê´­ì´ - 5ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê´­ì´ - 5ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Hoe - Lv.5");
@@ -299,8 +300,8 @@ public class Hoe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 4,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ±ªÀÌ - 6´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ±ªÀÌ - 6´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê´­ì´ - 6ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê´­ì´ - 6ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Hoe - Lv.6");
@@ -317,8 +318,8 @@ public class Hoe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 4,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ±ªÀÌ - 7´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ±ªÀÌ - 7´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê´­ì´ - 7ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê´­ì´ - 7ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Hoe - Lv.7");
@@ -335,8 +336,8 @@ public class Hoe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 4,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ±ªÀÌ - 8´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ±ªÀÌ - 8´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê´­ì´ - 8ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê´­ì´ - 8ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Hoe - Lv.8");

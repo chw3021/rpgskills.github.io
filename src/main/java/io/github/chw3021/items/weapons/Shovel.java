@@ -60,8 +60,8 @@ public class Shovel extends Weapons implements Listener {
 								Operation.ADD_NUMBER, EquipmentSlot.HAND));
 				if (cmdt == 14) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¹Ù¶÷ÀÇ »ğ");
-						rm.setLocalizedName(ChatColor.GOLD +"¹Ù¶÷ÀÇ »ğ");
+						rm.setDisplayName(ChatColor.GOLD +"ë°”ëŒì˜ ì‚½");
+						rm.setLocalizedName(ChatColor.GOLD +"ë°”ëŒì˜ ì‚½");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Windy Shovel");
@@ -73,8 +73,8 @@ public class Shovel extends Weapons implements Listener {
 				}
 				else if (cmdt == 5) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"´ëÁöÀÇ »ğ");
-						rm.setLocalizedName(ChatColor.GOLD +"´ëÁöÀÇ »ğ");
+						rm.setDisplayName(ChatColor.GOLD +"ëŒ€ì§€ì˜ ì‚½");
+						rm.setLocalizedName(ChatColor.GOLD +"ëŒ€ì§€ì˜ ì‚½");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Earth Shovel");
@@ -84,8 +84,8 @@ public class Shovel extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 6) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¼­¸®ÀÇ »ğ");
-						rm.setLocalizedName(ChatColor.GOLD +"¼­¸®ÀÇ »ğ");
+						rm.setDisplayName(ChatColor.GOLD +"ì„œë¦¬ì˜ ì‚½");
+						rm.setLocalizedName(ChatColor.GOLD +"ì„œë¦¬ì˜ ì‚½");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Frost Shovel");
@@ -95,8 +95,8 @@ public class Shovel extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 7) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¹Ù´ÙÀÇ »ğ");
-						rm.setLocalizedName(ChatColor.GOLD +"¹Ù´ÙÀÇ »ğ");
+						rm.setDisplayName(ChatColor.GOLD +"ë°”ë‹¤ì˜ ì‚½");
+						rm.setLocalizedName(ChatColor.GOLD +"ë°”ë‹¤ì˜ ì‚½");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Ocean Shovel");
@@ -106,8 +106,8 @@ public class Shovel extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 8) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¾îµÒÀÇ »ğ");
-						rm.setLocalizedName(ChatColor.GOLD +"¾îµÒÀÇ »ğ");
+						rm.setDisplayName(ChatColor.GOLD +"ì–´ë‘ ì˜ ì‚½");
+						rm.setLocalizedName(ChatColor.GOLD +"ì–´ë‘ ì˜ ì‚½");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Dark Shovel");
@@ -117,8 +117,8 @@ public class Shovel extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 9) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"°³Á¶µÈ »ğ");
-						rm.setLocalizedName(ChatColor.GOLD +"°³Á¶µÈ »ğ");
+						rm.setDisplayName(ChatColor.GOLD +"ê°œì¡°ëœ ì‚½");
+						rm.setLocalizedName(ChatColor.GOLD +"ê°œì¡°ëœ ì‚½");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Hyper Shovel");
@@ -128,8 +128,8 @@ public class Shovel extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 10) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"ÀÛ¿­ÇÏ´Â »ğ");
-						rm.setLocalizedName(ChatColor.GOLD +"ÀÛ¿­ÇÏ´Â »ğ");
+						rm.setDisplayName(ChatColor.GOLD +"ì‘ì—´í•˜ëŠ” ì‚½");
+						rm.setLocalizedName(ChatColor.GOLD +"ì‘ì—´í•˜ëŠ” ì‚½");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Burning Shovel");
@@ -139,8 +139,8 @@ public class Shovel extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 11) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¸Íµ¶ »ğ");
-						rm.setLocalizedName(ChatColor.GOLD +"¸Íµ¶ »ğ");
+						rm.setDisplayName(ChatColor.GOLD +"ë§¹ë… ì‚½");
+						rm.setLocalizedName(ChatColor.GOLD +"ë§¹ë… ì‚½");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Poison Shovel");
@@ -165,8 +165,8 @@ public class Shovel extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 25,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"ÀÚ¿¬ÀÇ »ğ");
-						rm.setLocalizedName(ChatColor.GOLD +"ÀÚ¿¬ÀÇ »ğ");
+						rm.setDisplayName(ChatColor.GOLD +"ìì—°ì˜ ì‚½");
+						rm.setLocalizedName(ChatColor.GOLD +"ìì—°ì˜ ì‚½");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Natural Shovel");
@@ -190,8 +190,8 @@ public class Shovel extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 8,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ »ğ - 1´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ »ğ - 1´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‚½ - 1ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‚½ - 1ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Shovel - Lv.1");
@@ -215,8 +215,8 @@ public class Shovel extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 10,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ »ğ - 2´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ »ğ - 2´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‚½ - 2ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‚½ - 2ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Shovel - Lv.2");
@@ -230,8 +230,8 @@ public class Shovel extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 12,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ »ğ - 3´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ »ğ - 3´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‚½ - 3ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‚½ - 3ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Shovel - Lv.3");
@@ -245,8 +245,8 @@ public class Shovel extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 14,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ »ğ - 4´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ »ğ - 4´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‚½ - 4ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‚½ - 4ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Shovel - Lv.4");
@@ -260,8 +260,8 @@ public class Shovel extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 16,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ »ğ - 5´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ »ğ - 5´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‚½ - 5ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‚½ - 5ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Shovel - Lv.5");
@@ -275,8 +275,8 @@ public class Shovel extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 18,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ »ğ - 6´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ »ğ - 6´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‚½ - 6ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‚½ - 6ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Shovel - Lv.6");
@@ -290,8 +290,8 @@ public class Shovel extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 20,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ »ğ - 7´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ »ğ - 7´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‚½ - 7ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‚½ - 7ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Shovel - Lv.7");
@@ -305,8 +305,8 @@ public class Shovel extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 22,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ »ğ - 8´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ »ğ - 8´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‚½ - 8ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì‚½ - 8ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Shovel - Lv.8");

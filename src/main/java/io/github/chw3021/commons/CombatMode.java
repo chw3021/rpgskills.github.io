@@ -54,54 +54,54 @@ public class CombatMode implements Serializable{
 		final int classnum = ClassData.pc.getOrDefault(p.getUniqueId(), -1);
 
 		switch (classnum) {
-		case 0,1,23:
+		case 0: case 1: case 23:
 			if (mi.getType().name().contains("SWORD")) {
 				return true;
 			}
 			break;
-		case 2, 3:
+		case 2: case 3:
 			if (mi.getType().name().contains("_AXE")
 					&& !p.getInventory().getItemInMainHand().getType().name().contains("PICK")) {
 				return true;
 			}
 			break;
-		case 4, 61:
+		case 4: case 61:
 			if (mi.getType() == Material.CROSSBOW) {
 				return true;
 			}
 			break;
-		case 5, 6:
+		case 5: case 6:
 			if (mi.getType() == Material.BOW) {
 				return true;
 			}
 			break;
-		case 7, 8, 9, 10:
+		case 7: case 8: case 9: case 10:
 			if (mi.getType().name().contains("BANNER_PATTERN") && mi.hasItemMeta()
 					&& mi.getItemMeta().hasCustomModelData()) {
 				return true;
 			}
 			break;
-		case 11, 12, 26:
+		case 11: case 12: case 26:
 			if (mi.getType() == Material.BLAZE_ROD && mi.hasItemMeta() && mi.getItemMeta().hasCustomModelData()) {
 				return true;
 			}
 			break;
-		case 13, 14:
+		case 13: case 14:
 			if (mi.getType().name().contains("HOE")) {
 				return true;
 			}
 			break;
-		case 15, 16, 17:
+		case 15: case 16: case 17:
 			if (mi.getType().name().contains("_PICKAXE")) {
 				return true;
 			}
 			break;
-		case 18, 25:
+		case 18: case 25:
 			if (mi.getType().name().contains("SHOVEL")) {
 				return true;
 			}
 			break;
-		case 19, 20:
+		case 19: case 20:
 			if (mi.getType() == Material.TRIDENT) {
 				return true;
 			}
@@ -214,7 +214,7 @@ public class CombatMode implements Serializable{
 		items.setDisplayName(display);
 		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+		items.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 		items.setLore(Lore);
 		item.setItemMeta(items);
 		inv.setItem(loc, item);

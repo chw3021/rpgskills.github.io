@@ -23,7 +23,6 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -192,9 +191,9 @@ public class Boxskills extends Pak implements Listener, Serializable {
 				            	fistforcet.remove(p.getUniqueId());
 			            	}
 							p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20,0,false,false));
-							p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20,20,false,false));
-							p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20,20,false,false));
-							p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 20,20,false,false));
+							p.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 20,20,false,false));
+							p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 20,20,false,false));
+							p.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 20,20,false,false));
 							p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 20,20,false,false));
 							p.getWorld().spawnParticle(Particle.WHITE_ASH, p.getEyeLocation(), 40, 1, 1, 1);
 							p.getWorld().playSound(p.getLocation(),Sound.BLOCK_BEACON_ACTIVATE, 1,0.8f);
@@ -202,7 +201,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 				                @Override
 				                public void run() 
 				                {
-				                	final Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 3).getLocation();
+				                	final Location l =gettargetblock(p,3).clone();
 				    				p.getWorld().spawnParticle(Particle.FLASH, l, 30, 2, 2, 2);
 									p.getWorld().spawnParticle(Particle.COMPOSTER, l, 600, 4, 4, 4);
 									p.getWorld().spawnParticle(Particle.CRIT, l, 600, 4, 4, 4);
@@ -263,9 +262,9 @@ public class Boxskills extends Pak implements Listener, Serializable {
 			                public void run() 
 			                {
 								p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 40, 1, false, false));
-								p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 40, 1, false, false));
+								p.addPotionEffect(new PotionEffect(PotionEffectType.HASTE, 40, 1, false, false));
 								p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 40, 1, false, false));
-								p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 40, 1, false, false));	
+								p.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 40, 1, false, false));	
 								p.getWorld().spawnParticle(Particle.WARPED_SPORE, p.getLocation(), 10, 0.1, 1, 0.1);
 							}
 			            }, 3,3); 
@@ -342,7 +341,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 	                	
 	                	
 		        		Location str = p.getEyeLocation().clone().add(p.getLocation().getDirection().clone().normalize().multiply(2));
-						p.setCooldown(Material.TORCH, 3); p.swingMainHand();
+						p.setCooldown(CAREFUL, 3); p.swingMainHand();
 						parrying.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
 						parrying.putIfAbsent(p.getUniqueId(), 0);
 						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -360,7 +359,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 						}
 						p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 0.7f, 0f);
 						p.playSound(p.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1f, 0f);
-						p.getWorld().spawnParticle(Particle.CRIT_MAGIC, p.getLocation(), 20, 1, 1, 1);
+						p.getWorld().spawnParticle(Particle.ENCHANTED_HIT, p.getLocation(), 20, 1, 1, 1);
 						p.getWorld().spawnParticle(Particle.CRIT, p.getLocation(), 20, 1, 1, 1);
 	                	for (Entity e : p.getWorld().getNearbyEntities(str, 3.4, 3, 3.4))
 						{
@@ -370,8 +369,8 @@ public class Boxskills extends Pak implements Listener, Serializable {
 									{
 										atk1(0.55*(1+ bsd.BodyBlow.get(p.getUniqueId())*0.035), p, le);
 										
-										le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 40, 0, false, false));
-										le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 40, 0, false, false));
+										le.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 40, 0, false, false));
+										le.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 40, 0, false, false));
 										p.playSound(p.getLocation(), Sound.BLOCK_METAL_HIT, 0.2f, 0f);
 										p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 0.2f, 2f);
 										p.getWorld().spawnParticle(Particle.ASH, e.getLocation(), 20, 1, 1, 1);
@@ -490,7 +489,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 						atk1(0.5*(1+ bsd.BodyBlow.get(p.getUniqueId())*0.035), p, le);
 	                    le.teleport(tl);
 						Holding.superholding(p, le, 10l);
-	                    p.setCooldown(Material.TORCH, 3); p.swingMainHand();
+	                    p.setCooldown(CAREFUL, 3); p.swingMainHand();
 					}
 				}
 							
@@ -538,7 +537,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 				
 	
 
-                p.setCooldown(Material.TORCH, 3); p.swingMainHand();
+                p.setCooldown(CAREFUL, 3); p.swingMainHand();
 	
             	for(int i =0; i<8; i++) {
              	   Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -686,7 +685,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 						                {
 						                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_STRONG, 1.0f, 1.0f);
 						                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1.0f, 1.3f);
-						                    p.setCooldown(Material.TORCH, 3); p.swingOffHand();
+						                    p.setCooldown(CAREFUL, 3); p.swingOffHand();
 							        		p.teleport(w2);
 
 							        		Location l = gettargetblock(p, 3);
@@ -733,7 +732,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 				                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1.0f, 0.0f);
 				                    p.playSound(p.getLocation(), Sound.ENTITY_ITEM_BREAK, 1.0f, 2.0f);
 					        		p.teleport(pfl);
-				                    p.setCooldown(Material.TORCH, 3); p.swingMainHand();
+				                    p.setCooldown(CAREFUL, 3); p.swingMainHand();
 									parrying.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
 									parrying.putIfAbsent(p.getUniqueId(), 0);
 									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -746,7 +745,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 						                	}
 										}
 						            }, 9); 
-					        		Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 3).getLocation();
+				                	final Location l =gettargetblock(p,3).clone();
 					        		p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l, 5,1,1,1);
 					        		p.getWorld().spawnParticle(Particle.CRIT, l, 50,1,1,1);
 					        		for (Entity e : p.getWorld().getNearbyEntities(l, 3, 3, 3))
@@ -814,7 +813,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 			                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_STRONG, 1.0f, 1.0f);
 			                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1.0f, 1.3f);
 				        		p.teleport(w1);
-				        		Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 3).getLocation();
+			                	final Location l =gettargetblock(p,3).clone();
 				        		p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l, 5,1,1,1);
 								parrying.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
 								parrying.putIfAbsent(p.getUniqueId(), 0);
@@ -858,9 +857,9 @@ public class Boxskills extends Pak implements Listener, Serializable {
 			                {
 			                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_STRONG, 1.0f, 1.0f);
 			                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1.0f, 1.3f);
-			                    p.setCooldown(Material.TORCH, 3); p.swingOffHand();
+			                    p.setCooldown(CAREFUL, 3); p.swingOffHand();
 				        		p.teleport(w2);
-				        		Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 3).getLocation();
+			                	final Location l =gettargetblock(p,3).clone();
 				        		p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l, 5,1,1,1);
 				        		parrying.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
 								parrying.putIfAbsent(p.getUniqueId(), 0);
@@ -932,7 +931,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 	                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1.0f, 0.0f);
 	                    p.playSound(p.getLocation(), Sound.ENTITY_ITEM_BREAK, 1.0f, 2.0f);
 		        		p.teleport(pfl);
-	                    p.setCooldown(Material.TORCH, 3); p.swingMainHand();
+	                    p.setCooldown(CAREFUL, 3); p.swingMainHand();
 						parrying.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
 						parrying.putIfAbsent(p.getUniqueId(), 0);
 						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -945,7 +944,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 			                	}
 							}
 			            }, 9); 
-		        		Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 3).getLocation();
+	                	final Location l =gettargetblock(p,3).clone();
 		        		p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l, 5,1,1,1);
 		        		p.getWorld().spawnParticle(Particle.CRIT, l, 50,1,1,1);
 		        		for (Entity e : p.getWorld().getNearbyEntities(l, 3, 3, 3))
@@ -996,11 +995,11 @@ public class Boxskills extends Pak implements Listener, Serializable {
         		p.teleport(pfl);
         		Holding.holding(p, p, 25L);
 
-				p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 25,20,false,false));
-				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 25,20,false,false));
-				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 25,999999,false,false));
+				p.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 25,20,false,false));
+				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 25,20,false,false));
+				p.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 25,999999,false,false));
 				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 25,20,false,false));
-				p.setCooldown(Material.TORCH, 3); p.swingMainHand();
+				p.setCooldown(CAREFUL, 3); p.swingMainHand();
 
 				ArrayList<Location> line = new ArrayList<Location>();
                 AtomicInteger j = new AtomicInteger(0);
@@ -1072,7 +1071,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 	                    p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_HURT, 0.8f, 0f);
 	                    p.playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_ATTACK, 0.8f, 0f);
 	                    p.playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 0.4f, 2f);
-	                    p.setCooldown(Material.TORCH, 3); 
+	                    p.setCooldown(CAREFUL, 3); 
 	                    p.swingMainHand();
 	                    p.swingOffHand();
 						parrying.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
@@ -1089,9 +1088,9 @@ public class Boxskills extends Pak implements Listener, Serializable {
 			            }, 15); 
 		        		Location l = line.get(line.size()-1);
 		        		p.getWorld().spawnParticle(Particle.CRIT, l, 200,1,1,1);
-		        		p.getWorld().spawnParticle(Particle.CRIT_MAGIC, l, 400,1,1,1);
+		        		p.getWorld().spawnParticle(Particle.ENCHANTED_HIT, l, 400,1,1,1);
 		        		p.getWorld().spawnParticle(Particle.SONIC_BOOM, l, 50,2,2,2);
-						p.setCooldown(Material.TORCH, 3); p.swingMainHand();
+						p.setCooldown(CAREFUL, 3); p.swingMainHand();
 		        		
 		        		for (Entity e : l.getWorld().getNearbyEntities(l, 3, 3, 3))
 						{
@@ -1133,7 +1132,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 		    
 			
 			
-			if(!(p.isSneaking()) && (ac == Action.LEFT_CLICK_AIR || ac== Action.LEFT_CLICK_BLOCK) && !p.hasCooldown(Material.TORCH))
+			if(!(p.isSneaking()) && (ac == Action.LEFT_CLICK_AIR || ac== Action.LEFT_CLICK_BLOCK) && !p.hasCooldown(CAREFUL))
 			{
 					
 				SkillBuilder bd = new SkillBuilder()
@@ -1271,7 +1270,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 
 		
 		
-		if(ClassData.pc.get(p.getUniqueId()) == 7 && !p.hasCooldown(Material.TORCH)) {
+		if(ClassData.pc.get(p.getUniqueId()) == 7 && !p.hasCooldown(CAREFUL)) {
 			if(condition(p)&& (ac == Action.LEFT_CLICK_AIR || ac== Action.LEFT_CLICK_BLOCK)  && !p.isSneaking() &&sc.containsKey(p.getUniqueId()))
 			{
 				ev.setCancelled(true);
@@ -1343,7 +1342,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 		                public void run() 
 		                {
 			        		p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l,5,0.1,0.1,0.1,0);
-							p.getWorld().spawnParticle(Particle.BLOCK_CRACK, l, 2, 0.1,0.1,0.1,0 ,Material.LIGHT_BLUE_GLAZED_TERRACOTTA.createBlockData());
+							p.getWorld().spawnParticle(Particle.BLOCK, l, 2, 0.1,0.1,0.1,0 ,Material.LIGHT_BLUE_GLAZED_TERRACOTTA.createBlockData());
 	                    	for(Entity e: l.getWorld().getNearbyEntities(l,2.75,2.5,2.75)) {
 								if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
 								{
@@ -1392,7 +1391,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 
 		
 		
-		if(ClassData.pc.get(p.getUniqueId()) == 7 && !p.hasCooldown(Material.TORCH)) {
+		if(ClassData.pc.get(p.getUniqueId()) == 7 && !p.hasCooldown(CAREFUL)) {
 			if(condition(p)&& (ac == Action.LEFT_CLICK_AIR || ac== Action.LEFT_CLICK_BLOCK)  && !p.isSneaking() &&eq.containsKey(p.getUniqueId()))
 			{
 				ev.setCancelled(true);
@@ -1432,9 +1431,9 @@ public class Boxskills extends Pak implements Listener, Serializable {
 						break;
 					}
 				}
-				p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 500, 3,0.5,3,0 ,Material.GRASS_BLOCK.createBlockData());
-				p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 500, 3,0.5,3,0,Material.IRON_BLOCK.createBlockData());
-				p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 500, 3,0.5,3,0,Material.BASALT.createBlockData());
+				p.getWorld().spawnParticle(Particle.BLOCK, tl, 500, 3,0.5,3,0 ,Material.GRASS_BLOCK.createBlockData());
+				p.getWorld().spawnParticle(Particle.BLOCK, tl, 500, 3,0.5,3,0,Material.IRON_BLOCK.createBlockData());
+				p.getWorld().spawnParticle(Particle.BLOCK, tl, 500, 3,0.5,3,0,Material.BASALT.createBlockData());
 				p.getWorld().spawnParticle(Particle.CRIT, tl, 500, 0.5,3,0.5,0.05);
 				for(Entity e : p.getWorld().getNearbyEntities(tl,3.5, 3, 3.5)) {
             		if (e instanceof Player) 
@@ -1519,7 +1518,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 	                	
 	                    ArrayList<Location> line = new ArrayList<Location>();
 	                    HashSet<LivingEntity> les = new HashSet<>();
-	    				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1,1,false,false));
+	    				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 1,1,false,false));
 	                    
 	                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_NODAMAGE, 0.7f, 2f);
 	                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 0.7f, 2f);
@@ -1536,7 +1535,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 							}
 			            }, 9); 
 	                	
-	                	p.setCooldown(Material.TORCH, 3); p.swingOffHand();
+	                	p.setCooldown(CAREFUL, 3); p.swingOffHand();
 	                	
 	                    for(double d = 0.1; d <= 2; d += 0.2) {
 		                    Location pl = p.getEyeLocation().clone().add(0, -0.2, 0);
@@ -1545,7 +1544,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 	                    }
 	                	line.forEach(i -> {
 	     					p.getWorld().spawnParticle(Particle.SWEEP_ATTACK,i, 2,1,1,1);
-	     					p.getWorld().spawnParticle(Particle.CRIT_MAGIC,i, 20,0.1,0.1,0.1,0);
+	     					p.getWorld().spawnParticle(Particle.ENCHANTED_HIT,i, 20,0.1,0.1,0.1,0);
 	     					
 	                    	for (Entity e : p.getNearbyEntities(1.5, 1.5, 1.5))
 							{
@@ -1657,7 +1656,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
         	                	it.setPickupDelay(999999);
         	        			it.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
         	        			it.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), p.getName()));
-        	    				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1,1,false,false));
+        	    				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 1,1,false,false));
         	        			
         	        			
         	    				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -1674,7 +1673,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 			                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_NODAMAGE, 0.7f, 2f);
 			                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 0.7f, 2f);
 			                	
-			                	p.setCooldown(Material.TORCH, 3); p.swingOffHand();
+			                	p.setCooldown(CAREFUL, 3); p.swingOffHand();
 			                	
 			                    for(double d = 0.1; d <= 2; d += 0.2) {
 			                        Location pl = p.getEyeLocation().clone().add(0, -0.2, 0);
@@ -1683,7 +1682,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 			                    }
 			                	line.forEach(i -> {
 			     					p.getWorld().spawnParticle(Particle.SWEEP_ATTACK,i, 2,1,1,1);
-			     					p.getWorld().spawnParticle(Particle.CRIT_MAGIC,i, 3,0.3,0.3,0.3,0.01);
+			     					p.getWorld().spawnParticle(Particle.ENCHANTED_HIT,i, 3,0.3,0.3,0.3,0.01);
 			     					
 			                    	for (Entity e : p.getNearbyEntities(1.5, 1.5, 1.5))
 			    					{
@@ -1764,16 +1763,16 @@ public class Boxskills extends Pak implements Listener, Serializable {
 				p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_DIAMOND, 0.25f, 0f);
 				p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_IRON, 0.5f, 2f);
 				p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_CHAIN, 0.5f, 2f);
-				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 3,20,false,false));
-				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 3,100,false,false));
-				p.setCooldown(Material.TORCH, 3); p.swingOffHand();
+				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 3,20,false,false));
+				p.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 3,100,false,false));
+				p.setCooldown(CAREFUL, 3); p.swingOffHand();
 				
 				
 				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	                @Override
 	                public void run() 
 	                {
-	    				p.setCooldown(Material.TORCH, 3); p.swingOffHand();
+	    				p.setCooldown(CAREFUL, 3); p.swingOffHand();
 	    				p.playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 0.7f, 1.6f);
 	    				p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_STRONG, 0.5f, 0.1f);
 	    				
@@ -1789,7 +1788,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 	                	}	
 	                	cir.forEach(l -> {
 	            			w.spawnParticle(Particle.CLOUD, l,1,0.02,0.02,0.02,0.3);
-	            			w.spawnParticle(Particle.CRIT_MAGIC, l,5,0.02,0.02,0.02,0.1);
+	            			w.spawnParticle(Particle.ENCHANTED_HIT, l,5,0.02,0.02,0.02,0.1);
 	            	    });
 	    				
 	    				for(Entity e : p.getWorld().getNearbyEntities(tl,2.5, 2.5, 2.5)) {
@@ -1942,9 +1941,9 @@ public class Boxskills extends Pak implements Listener, Serializable {
 						.hm(sultcooldown)
 						.skillUse(() -> {
 						p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 35,0,false,false));
-						p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 40,20,false,false));
-						p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 35,20,false,false));
-						p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 35,20,false,false));
+						p.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 40,20,false,false));
+						p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 35,20,false,false));
+						p.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 35,20,false,false));
 						p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 35,20,false,false));
 						p.getWorld().spawnParticle(Particle.WHITE_ASH, p.getEyeLocation(), 40, 1, 1, 1);
 	                    p.playSound(p.getLocation(), Sound.ENTITY_WARDEN_HEARTBEAT, 0.8f, 0.2f);
@@ -1954,7 +1953,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 			                @Override
 			                public void run() 
 			                {
-			    				p.setCooldown(Material.TORCH, 3); p.swingMainHand();
+			    				p.setCooldown(CAREFUL, 3); p.swingMainHand();
 			    		    	final Location l = gettargetblock(p,6);
 			    				p.getWorld().spawnParticle(Particle.FLASH, l, 800, 10, 10, 10);
 								p.getWorld().spawnParticle(Particle.CRIT, l, 600, 10, 10, 10);
@@ -2039,7 +2038,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 		a1.forEach(l -> {
     		l.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l,5,0.1,0.1,0.1,0);
     		l.getWorld().spawnParticle(Particle.CLOUD, l,5,0.1,0.1,0.1,0);
-    		l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l,5,0.1,0.1,0.1,0);
+    		l.getWorld().spawnParticle(Particle.ENCHANTED_HIT, l,5,0.1,0.1,0.1,0);
 		});
 		a3.forEach(l -> {
     		l.getWorld().spawnParticle(Particle.CLOUD, l,40,0.65,1,0.65,0);
@@ -2088,9 +2087,9 @@ public class Boxskills extends Pak implements Listener, Serializable {
 			}
         }, 200); 
 		
-		p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100,20,false,false));
+		p.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 100,20,false,false));
 		p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100,4,false,false));
-		p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 100,4,false,false));
+		p.addPotionEffect(new PotionEffect(PotionEffectType.HASTE, 100,4,false,false));
 		p.getWorld().spawnParticle(Particle.WHITE_ASH, p.getEyeLocation(), 40, 1, 1, 1);
 		p.getWorld().playSound(p.getLocation(),Sound.ENTITY_HORSE_BREATHE, 1,0.8f);
 		p.getWorld().playSound(p.getLocation(),Sound.ENTITY_PLAYER_BREATH, 1,0.8f);
@@ -2111,7 +2110,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 					p.getWorld().playSound(p.getLocation(),Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 0.3f,0.8f);
 					p.getWorld().playSound(p.getLocation(),Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.3f,1.8f);
 					p.teleport(l);
-					p.setCooldown(Material.TORCH, 3); p.swingOffHand();
+					p.setCooldown(CAREFUL, 3); p.swingOffHand();
                 	
                 	for(Entity e : p.getWorld().getNearbyEntities(p.getLocation(), 3.5,8,3.5)) {
                 		if (e instanceof Player) 
@@ -2181,7 +2180,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
                     public void run() 
                     {
 						p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 5,5,false,false));
-        				p.setCooldown(Material.TORCH, 3); p.swingMainHand();
+        				p.setCooldown(CAREFUL, 3); p.swingMainHand();
         				uppersweep(p.getLocation().clone());
         				p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 0.7f, 0f);
         				p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_HURT, 1f, 1.5f);
@@ -2248,7 +2247,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 				tl.getWorld().spawnParticle(Particle.CRIT, tl, 600, 1, 1, 1);
 				tl.getWorld().spawnParticle(Particle.WHITE_ASH, tl, 800, 1, 1, 1);
 				tl.getWorld().spawnParticle(Particle.SWEEP_ATTACK, tl, 600, 5, 1, 5);
-				tl.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 600, 5, 1, 5, Material.IRON_BLOCK.createBlockData());
+				tl.getWorld().spawnParticle(Particle.BLOCK, tl, 600, 5, 1, 5, Material.IRON_BLOCK.createBlockData());
             	for(Entity e : tl.getWorld().getNearbyEntities(tl, 5,13,5)) {
 
             		if (e instanceof Player) 

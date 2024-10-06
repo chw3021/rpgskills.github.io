@@ -16,6 +16,7 @@ import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.AbstractArrow;
 import org.bukkit.entity.ArmorStand;
@@ -246,24 +247,27 @@ public class Pak extends CombatMode implements Serializable, Listener{
 
 	}
 	
+
+	final static HashMap<Material, BlockData> bdHm = new HashMap<>();
 	
-	final protected void cleans(Player p) {
+	final protected BlockData getBd(Material m) {
+		return bdHm.computeIfAbsent(m, Bukkit::createBlockData);
+	}
+	
+	
+	final protected void cleans(LivingEntity p) {
 
 
         	if(p.hasPotionEffect(PotionEffectType.HUNGER)) {
     			p.removePotionEffect(PotionEffectType.HUNGER);
         	}
-        	if(p.hasPotionEffect(PotionEffectType.BAD_OMEN))
-    		{
-    			p.removePotionEffect(PotionEffectType.BAD_OMEN);
-    		}
     		if(p.hasPotionEffect(PotionEffectType.BLINDNESS))
     		{
     			p.removePotionEffect(PotionEffectType.BLINDNESS);
     		}
-    		if(p.hasPotionEffect(PotionEffectType.CONFUSION))
+    		if(p.hasPotionEffect(PotionEffectType.NAUSEA))
     		{
-    			p.removePotionEffect(PotionEffectType.CONFUSION);
+    			p.removePotionEffect(PotionEffectType.NAUSEA);
     		}
     		if(p.hasPotionEffect(PotionEffectType.HUNGER))
     		{
@@ -273,13 +277,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
     		{
     			p.removePotionEffect(PotionEffectType.POISON);
     		}
-    		if(p.hasPotionEffect(PotionEffectType.SLOW))
+    		if(p.hasPotionEffect(PotionEffectType.SLOWNESS))
     		{
-    			p.removePotionEffect(PotionEffectType.SLOW);
+    			p.removePotionEffect(PotionEffectType.SLOWNESS);
     		}
-    		if(p.hasPotionEffect(PotionEffectType.SLOW_DIGGING))
+    		if(p.hasPotionEffect(PotionEffectType.MINING_FATIGUE))
     		{
-    			p.removePotionEffect(PotionEffectType.SLOW_DIGGING);
+    			p.removePotionEffect(PotionEffectType.MINING_FATIGUE);
     		}
     		if(p.hasPotionEffect(PotionEffectType.UNLUCK))
     		{
@@ -293,6 +297,22 @@ public class Pak extends CombatMode implements Serializable, Listener{
     		{
     			p.removePotionEffect(PotionEffectType.WITHER);
     		}
+    		if(p.hasPotionEffect(PotionEffectType.DARKNESS))
+    		{
+    			p.removePotionEffect(PotionEffectType.DARKNESS);
+    		}
+    		if(p.hasPotionEffect(PotionEffectType.WIND_CHARGED))
+    		{
+    			p.removePotionEffect(PotionEffectType.WIND_CHARGED);
+    		}
+    		if(p.hasPotionEffect(PotionEffectType.OOZING))
+    		{
+    			p.removePotionEffect(PotionEffectType.OOZING);
+    		}
+    		if(p.hasPotionEffect(PotionEffectType.INFESTED))
+    		{
+    			p.removePotionEffect(PotionEffectType.INFESTED);
+    		}
     		p.setFireTicks(0);
         	p.setFreezeTicks(0);
 	}
@@ -301,9 +321,9 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	
 	
 	final private void effectdamage(Player p) {
-		if (p.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE))
+		if (p.hasPotionEffect(PotionEffectType.STRENGTH))
 		{
-			player_damage.put(p.getName(),player_damage.get(p.getName())+p.getPotionEffect(PotionEffectType.INCREASE_DAMAGE).getAmplifier()*3);
+			player_damage.put(p.getName(),player_damage.get(p.getName())+p.getPotionEffect(PotionEffectType.STRENGTH).getAmplifier()*3);
 		}
 		if (p.hasPotionEffect(PotionEffectType.WEAKNESS))
 		{
@@ -325,7 +345,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	
 			if(mi.getType().name().contains("SWORD")&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
+				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
 				
 				return true;
@@ -339,7 +359,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	
 			if(mi.getType().name().contains("SWORD")&&!oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
+				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
 				
 				return true;
@@ -354,7 +374,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		else if(classnum == 2) {	//Hunter				
 	
 			if(mi.getType().name().contains("_AXE")&& !oi.getType().name().contains("SHIELD")&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD)) {
-				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
+				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
 				
 				return true;
@@ -368,7 +388,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		else if(classnum == 3) {	//Paladin					
 	
 			if(mi.getType().name().contains("_AXE")&& oi.getType().name().contains("SHIELD")&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)) {
-				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
+				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
 				return true;
 			}
@@ -384,7 +404,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	
 			if(mi.getType() == Material.CROSSBOW&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.ARROW_DAMAGE)*0.10) + p.getLevel()*0.125);
+				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.POWER)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
 				return true;
 			}
@@ -397,7 +417,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			if(mi.getType() == Material.BOW&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
 
-				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.ARROW_DAMAGE)*0.10) + p.getLevel()*0.125);
+				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.POWER)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
 				
 				return true;
@@ -411,7 +431,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	
 			if(mi.getType()==Material.BOW && !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.ARROW_DAMAGE)*0.10) + p.getLevel()*0.125);
+				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.POWER)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
 					
 					return true;
@@ -426,7 +446,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	
 			if(mi.getType() == Material.CROSSBOW&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.ARROW_DAMAGE)*0.10) + p.getLevel()*0.125);
+				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.POWER)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
 				
 				return true;
@@ -442,7 +462,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 					((mi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")&&!oi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")) ||
 							(!mi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")&&oi.getItemMeta().getLocalizedName().contains("CopiedKnuckle"))) )
 			{
-				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
+				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
 				return true;
 			}
@@ -459,7 +479,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 							((mi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")&&!oi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")) ||
 									(!mi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")&&oi.getItemMeta().getLocalizedName().contains("CopiedKnuckle"))) )
 			{
-					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
+					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					return true;
 			}
@@ -474,7 +494,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 							((mi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")&&!oi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")) ||
 									(!mi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")&&oi.getItemMeta().getLocalizedName().contains("CopiedKnuckle"))) )
 			{
-					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
+					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
 					return true;
@@ -491,7 +511,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 							((mi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")&&!oi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")) ||
 									(!mi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")&&oi.getItemMeta().getLocalizedName().contains("CopiedKnuckle"))) )
 			{
-					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
+					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
 					return true;
@@ -505,7 +525,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	
 			if(mi.getType()==Material.BLAZE_ROD && mi.hasItemMeta() && mi.getItemMeta().hasCustomModelData()&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
+					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
 					return true;
@@ -518,7 +538,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		else if(classnum == 12) {//Firemage
 			if(mi.getType()==Material.BLAZE_ROD && mi.hasItemMeta() && mi.getItemMeta().hasCustomModelData()&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
+					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
 					return true;
@@ -533,7 +553,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		else if(classnum == 13) { //Witherist
 			if(mi.getType().name().contains("HOE")&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
+				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
 				return true;
 			}
@@ -547,7 +567,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	
 			if(mi.getType().name().contains("HOE")&&!oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
+				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
 				return true;
 			}
@@ -559,7 +579,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		else if(classnum == 15) {//Chemist
 			if(mi.getType().name().contains("PICKAXE")&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
+					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
 					return true;
@@ -573,7 +593,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		else if(classnum == 16) {//Forger
 			if(mi.getType().name().contains("PICKAXE")&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
+					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					return true;
 			}
@@ -585,7 +605,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		else if(classnum == 17) {//Engineer
 			if(mi.getType().name().contains("PICKAXE")&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
+					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
 					return true;
@@ -598,7 +618,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		else if(classnum == 18) { // Cooker
 			if(mi.getType().name().contains("SHOVEL")&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
+				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
 				return true;
 			}
@@ -614,7 +634,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	
 			if(mi.getType()==Material.TRIDENT&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
+					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
 					return true;
@@ -631,14 +651,14 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	
 			if(mi.getType()==Material.TRIDENT&& oi.getType()==Material.SHIELD&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT))
 			{
-					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
+					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
 					return true;
 			}
 			else if(mi.getType()==Material.SHIELD&&oi.getType()==Material.TRIDENT&& !oi.getType().name().contains("BANNER_PATTERN")&& !(mi.getType()==Material.TRIDENT))
 			{
-					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + oi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
+					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + oi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
 					return true;
@@ -653,7 +673,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 				p.setFreezeTicks(0);
 				if(mi.getType() == Material.PRISMARINE_SHARD&& mi.hasItemMeta() && mi.getItemMeta().hasCustomModelData()&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 				{
-						player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
+						player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 						effectdamage(p);
 						return true;
 				}
@@ -665,7 +685,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		else if(classnum == 22) {//Angler
 			if(mi.getType()==Material.FISHING_ROD && !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
+					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
 					return true;
@@ -681,7 +701,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		else if(classnum == 25) { // Broiler
 			if(mi.getType().name().contains("SHOVEL")&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.10) + p.getLevel()*0.125);
+					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
 					return true;
@@ -1893,7 +1913,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		if(el == 14 || elm == 14) {//earth
 			mul = mul +(earthd.getOrDefault(p.getUniqueId(),0d))  - earthr.getOrDefault(le.getUniqueId(), 0d);
 			if(elm ==14) 
-			le.getWorld().spawnParticle(Particle.CLOUD, le.getEyeLocation(), 2, 0.5, 0.5, 0.5);
+			le.getWorld().spawnParticle(Particle.SMALL_GUST, le.getEyeLocation(), 2, 0.5, 0.5, 0.5);
 		}
 		if(el == 5 || elm == 5) {//wind
 			mul = mul +(windyd.getOrDefault(p.getUniqueId(),0d))  - windyr.getOrDefault(le.getUniqueId(), 0d);
@@ -1908,7 +1928,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		if(el == 7 || elm == 7) {//water
 			mul = mul +(waterd.getOrDefault(p.getUniqueId(),0d))  - waterr.getOrDefault(le.getUniqueId(), 0d);
 			if(elm == 7) 
-			le.getWorld().spawnParticle(Particle.WATER_SPLASH, le.getEyeLocation(), 2, 0.5, 0.5, 0.5);
+			le.getWorld().spawnParticle(Particle.SPLASH, le.getEyeLocation(), 2, 0.5, 0.5, 0.5);
 		}
 		if(el == 8 || elm == 8) {//dark
 			mul = mul +(darkd.getOrDefault(p.getUniqueId(),0d))  - darkr.getOrDefault(le.getUniqueId(), 0d);
@@ -1928,7 +1948,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		if(el == 11 || elm == 11) {//poison
 			mul = mul +(poisond.getOrDefault(p.getUniqueId(),0d))  - poisonr.getOrDefault(le.getUniqueId(), 0d);
 			if(elm == 11) 
-			le.getWorld().spawnParticle(Particle.SLIME, le.getEyeLocation(), 2, 0.5, 0.5, 0.5);
+			le.getWorld().spawnParticle(Particle.ITEM_SLIME, le.getEyeLocation(), 2, 0.5, 0.5, 0.5);
 		}
 		if(el == 16) {//forger
 			mul = mul +(earthd.getOrDefault(p.getUniqueId(),0d))  - earthr.getOrDefault(le.getUniqueId(), 0d);
@@ -2084,10 +2104,10 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	final public void atks(Double dou1, Double dou2,Player p, LivingEntity le) {
 		Double pd = player_damage.get(p.getName());
 		if(le.getCategory() == EntityCategory.UNDEAD) {
-			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_UNDEAD)*2.5;
+			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SMITE)*2.5;
 		}
 		if(le.getCategory() == EntityCategory.ARTHROPOD) {
-			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ARTHROPODS)*2.5;
+			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.BANE_OF_ARTHROPODS)*2.5;
 		}
 		if(le.getCategory() == EntityCategory.WATER) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.IMPALING)*2.5;
@@ -2110,10 +2130,10 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	final public void atks(Double dou1, Double dou2,Player p, LivingEntity le, Integer el) {
 		Double pd = player_damage.get(p.getName());
 		if(le.getCategory() == EntityCategory.UNDEAD) {
-			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_UNDEAD)*2.5;
+			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SMITE)*2.5;
 		}
 		if(le.getCategory() == EntityCategory.ARTHROPOD) {
-			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ARTHROPODS)*2.5;
+			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.BANE_OF_ARTHROPODS)*2.5;
 		}
 		if(le.getCategory() == EntityCategory.WATER) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.IMPALING)*2.5;
@@ -2137,10 +2157,10 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	final public void atk0(Double dou1, Double dou2,Player p, LivingEntity le) {
 		Double pd = player_damage.get(p.getName());
 		if(le.getCategory() == EntityCategory.UNDEAD) {
-			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_UNDEAD)*2.5;
+			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SMITE)*2.5;
 		}
 		if(le.getCategory() == EntityCategory.ARTHROPOD) {
-			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ARTHROPODS)*2.5;
+			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.BANE_OF_ARTHROPODS)*2.5;
 		}
 		if(le.getCategory() == EntityCategory.WATER) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.IMPALING)*2.5;
@@ -2163,10 +2183,10 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	final public void atk0(Double dou1, Double dou2,Player p, LivingEntity le, Integer el) {
 		Double pd = player_damage.get(p.getName());
 		if(le.getCategory() == EntityCategory.UNDEAD) {
-			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_UNDEAD)*2.5;
+			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SMITE)*2.5;
 		}
 		if(le.getCategory() == EntityCategory.ARTHROPOD) {
-			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ARTHROPODS)*2.5;
+			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.BANE_OF_ARTHROPODS)*2.5;
 		}
 		if(le.getCategory() == EntityCategory.WATER) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.IMPALING)*2.5;
@@ -2189,10 +2209,10 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	final public void atk1(Double dou, Player p, LivingEntity le) {
 		Double pd = player_damage.get(p.getName());
 		if(le.getCategory() == EntityCategory.UNDEAD) {
-			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_UNDEAD)*2.5;
+			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SMITE)*2.5;
 		}
 		if(le.getCategory() == EntityCategory.ARTHROPOD) {
-			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ARTHROPODS)*2.5;
+			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.BANE_OF_ARTHROPODS)*2.5;
 		}
 		if(le.getCategory() == EntityCategory.WATER) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.IMPALING)*2.5;
@@ -2213,10 +2233,10 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	final public void atk1(Double dou, Player p, LivingEntity le, Integer el) {
 		Double pd = player_damage.get(p.getName());
 		if(le.getCategory() == EntityCategory.UNDEAD) {
-			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_UNDEAD)*2.5;
+			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SMITE)*2.5;
 		}
 		if(le.getCategory() == EntityCategory.ARTHROPOD) {
-			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ARTHROPODS)*2.5;
+			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.BANE_OF_ARTHROPODS)*2.5;
 		}
 		if(le.getCategory() == EntityCategory.WATER) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.IMPALING)*2.5;
@@ -2239,10 +2259,10 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	final public void atk2(Double dou1,Double dou2, Player p, LivingEntity le) {
 		Double pd = player_damage.get(p.getName());
 		if(le.getCategory() == EntityCategory.UNDEAD) {
-			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_UNDEAD)*2.5;
+			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SMITE)*2.5;
 		}
 		if(le.getCategory() == EntityCategory.ARTHROPOD) {
-			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ARTHROPODS)*2.5;
+			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.BANE_OF_ARTHROPODS)*2.5;
 		}
 		if(le.getCategory() == EntityCategory.WATER) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.IMPALING)*2.5;
@@ -2263,10 +2283,10 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	final public void atk2(Double dou1,Double dou2, Player p, LivingEntity le, Integer el) {
 		Double pd = player_damage.get(p.getName());
 		if(le.getCategory() == EntityCategory.UNDEAD) {
-			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_UNDEAD)*2.5;
+			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SMITE)*2.5;
 		}
 		if(le.getCategory() == EntityCategory.ARTHROPOD) {
-			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ARTHROPODS)*2.5;
+			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.BANE_OF_ARTHROPODS)*2.5;
 		}
 		if(le.getCategory() == EntityCategory.WATER) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.IMPALING)*2.5;
@@ -2289,10 +2309,10 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		Double pd = player_damage.get(p.getName());
 		Double fd = pd*dou1 +  pd*dou2;
 		if(le.getCategory() == EntityCategory.UNDEAD) {
-			fd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_UNDEAD)*2.5;
+			fd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SMITE)*2.5;
 		}
 		if(le.getCategory() == EntityCategory.ARTHROPOD) {
-			fd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ARTHROPODS)*2.5;
+			fd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.BANE_OF_ARTHROPODS)*2.5;
 		}
 		if(le.getCategory() == EntityCategory.WATER) {
 			fd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.IMPALING)*2.5;
@@ -2312,10 +2332,10 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	final public void atk3(Double dou1,Double dou2, Player p, LivingEntity le, Integer el) {
 		Double pd = player_damage.get(p.getName());
 		if(le.getCategory() == EntityCategory.UNDEAD) {
-			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_UNDEAD)*2.5;
+			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SMITE)*2.5;
 		}
 		if(le.getCategory() == EntityCategory.ARTHROPOD) {
-			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ARTHROPODS)*2.5;
+			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.BANE_OF_ARTHROPODS)*2.5;
 		}
 		if(le.getCategory() == EntityCategory.WATER) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.IMPALING)*2.5;
@@ -2335,7 +2355,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	final private Location disloc(final Player p, final LivingEntity le, Location pl, Location elf) {
 
 		if(elf.getWorld() != pl.getWorld()) {
-			if(p.hasPotionEffect(PotionEffectType.SLOW)) {
+			if(p.hasPotionEffect(PotionEffectType.SLOWNESS)) {
 				return pl.clone().add(pl.clone().getDirection().rotateAroundY(Math.PI/22).normalize().multiply(2.8)).add(0, 0.1, 0);
 			}
 			else {
@@ -2347,7 +2367,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			return elf.clone().add(le.getLocation().clone().getDirection().rotateAroundY(Math.PI/2).normalize().multiply(0.76)).add(0, 0.68, 0);
 		}
 		else {
-			if(p.hasPotionEffect(PotionEffectType.SLOW)) {
+			if(p.hasPotionEffect(PotionEffectType.SLOWNESS)) {
 				return pl.clone().add(pl.clone().getDirection().rotateAroundY(Math.PI/22).normalize().multiply(2.8)).add(0, 0.1, 0);
 			}
 			else {
@@ -2414,10 +2434,10 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		}
 		Double pd = player_damage.get(p.getName());
 		if(le.getCategory() == EntityCategory.UNDEAD) {
-			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_UNDEAD)*2.5;
+			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SMITE)*2.5;
 		}
 		if(le.getCategory() == EntityCategory.ARTHROPOD) {
-			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ARTHROPODS)*2.5;
+			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.BANE_OF_ARTHROPODS)*2.5;
 		}
 		if(le.getCategory() == EntityCategory.WATER) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.IMPALING)*2.5;
@@ -2450,10 +2470,10 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		}
 		Double pd = player_damage.get(p.getName());
 		if(le.getCategory() == EntityCategory.UNDEAD) {
-			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_UNDEAD)*2.5;
+			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SMITE)*2.5;
 		}
 		if(le.getCategory() == EntityCategory.ARTHROPOD) {
-			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ARTHROPODS)*2.5;
+			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.BANE_OF_ARTHROPODS)*2.5;
 		}
 		if(le.getCategory() == EntityCategory.WATER) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.IMPALING)*2.5;
@@ -2501,10 +2521,10 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			if(pr.getShooter() instanceof Player) {
 				Player p = (Player) pr.getShooter();
 				if(le.getCategory() == EntityCategory.UNDEAD) {
-					d.setDamage(d.getDamage()+p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_UNDEAD)*2.5);
+					d.setDamage(d.getDamage()+p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SMITE)*2.5);
 				}
 				if(le.getCategory() == EntityCategory.ARTHROPOD) {
-					d.setDamage(d.getDamage()+p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ARTHROPODS)*2.5);
+					d.setDamage(d.getDamage()+p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.BANE_OF_ARTHROPODS)*2.5);
 				}
 				if(le.getCategory() == EntityCategory.WATER) {
 					d.setDamage(d.getDamage()+p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.IMPALING)*2.5);

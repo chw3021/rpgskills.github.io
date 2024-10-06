@@ -25,9 +25,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Cod;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FallingBlock;
-import org.bukkit.entity.Fish;
 import org.bukkit.entity.FishHook;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
@@ -215,14 +213,14 @@ public class Angskills extends Pak implements Serializable, Listener{
 								                @Override
 								                public void run() 
 								                {
-													p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1,0,false,false));
+													p.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1,0,false,false));
 													if(Proficiency.getpro(p)>=1) {
 														p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1,0,false,false));
 													}
 													p.getWorld().playSound(fh.getLocation(), Sound.ENTITY_FISHING_BOBBER_SPLASH, 0.5f, 2f);
 													p.getWorld().playSound(fh.getLocation(), Sound.ENTITY_SLIME_JUMP, 0.5f, 2f);
-													p.getWorld().spawnParticle(Particle.WATER_BUBBLE, fh.getLocation(), 222, 2,2,2, 0); 
-													p.getWorld().spawnParticle(Particle.WATER_SPLASH, fh.getLocation(), 100, 2,2,2, 0); 
+													p.getWorld().spawnParticle(Particle.BUBBLE, fh.getLocation(), 222, 2,2,2, 0); 
+													p.getWorld().spawnParticle(Particle.SPLASH, fh.getLocation(), 100, 2,2,2, 0); 
 													for (Entity e : p.getNearbyEntities(6, 3, 6))
 													{
 														if (e instanceof Player) 
@@ -231,8 +229,8 @@ public class Angskills extends Pak implements Serializable, Listener{
 															if(Party.hasParty(p) && Party.hasParty(p1))	{
 															if(Party.getParty(p).equals(Party.getParty(p1)))
 																{
-																p.getWorld().spawnParticle(Particle.WATER_SPLASH, p1.getLocation(), 60,2,2,2);
-																	p1.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1,0,false,false));
+																p.getWorld().spawnParticle(Particle.SPLASH, p1.getLocation(), 60,2,2,2);
+																	p1.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1,0,false,false));
 																	if(Proficiency.getpro(p)>=1) {
 																		p1.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1,0,false,false));
 																	}
@@ -362,12 +360,12 @@ public class Angskills extends Pak implements Serializable, Listener{
 			if((ac == Action.LEFT_CLICK_AIR || ac==Action.LEFT_CLICK_BLOCK) &&p.getInventory().getItemInMainHand().getType()==Material.FISHING_ROD && !p.isSneaking()) {
 	
 					p.setCooldown(CAREFUL, 10);
-					p.getWorld().spawnParticle(Particle.WATER_SPLASH, p.getLocation(), 100,2,2,2);
+					p.getWorld().spawnParticle(Particle.SPLASH, p.getLocation(), 100,2,2,2);
 					final Location tl = p.getEyeLocation().clone().add(p.getEyeLocation().clone().getDirection().normalize().multiply(2.7));
 					p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, tl, 10,2,1,2);
 					p.getWorld().playSound(p.getLocation(), Sound.BLOCK_SLIME_BLOCK_HIT, 0.5f, 2f);
 					if(Proficiency.getpro(p)>=1) {
-						p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1,0,false,false));
+						p.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1,0,false,false));
 					}
 					for(Entity e: p.getWorld().getNearbyEntities(tl, 2.5,2.5,2.5)) {
 						
@@ -378,7 +376,7 @@ public class Angskills extends Pak implements Serializable, Listener{
 						if(Party.getParty(p).equals(Party.getParty(p1)))
 							{
 							if(Proficiency.getpro(p)>=1) {
-								p1.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1,0,false,false));
+								p1.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1,0,false,false));
 							}
 							continue;
 							}
@@ -486,12 +484,12 @@ public class Angskills extends Pak implements Serializable, Listener{
 										p.getWorld().playSound(p.getLocation(), Sound.BLOCK_CORAL_BLOCK_PLACE, 0.5f, 1f);
 										p.getWorld().playSound(p.getLocation(), Sound.BLOCK_CORAL_BLOCK_PLACE, 0.5f, 0f);
 										p.getWorld().playSound(p.getLocation(), Sound.ENTITY_SLIME_JUMP, 0.5f, 2f);
-										p.getWorld().spawnParticle(Particle.WATER_SPLASH, lel, 100, 3,1,3, 0); 
-										p.getWorld().spawnParticle(Particle.BLOCK_CRACK, lel, 50*j.incrementAndGet(), 3,0.2,3, 0, Material.BUBBLE_CORAL_BLOCK.createBlockData()); 
-										p.getWorld().spawnParticle(Particle.BLOCK_CRACK, lel, 50*j.get(), 3,0.2,3, 0, Material.BRAIN_CORAL_BLOCK.createBlockData()); 
-										p.getWorld().spawnParticle(Particle.BLOCK_CRACK, lel, 50*j.get(), 3,0.2,3, 0, Material.FIRE_CORAL_BLOCK.createBlockData()); 
-										p.getWorld().spawnParticle(Particle.BLOCK_CRACK, lel, 50*j.get(), 3,0.2,3, 0, Material.HORN_CORAL_BLOCK.createBlockData()); 
-										p.getWorld().spawnParticle(Particle.BLOCK_CRACK, lel, 100*j.get(), 0.5,4,0.5, 0.5, Material.TUBE_CORAL_BLOCK.createBlockData()); 
+										p.getWorld().spawnParticle(Particle.SPLASH, lel, 100, 3,1,3, 0); 
+										p.getWorld().spawnParticle(Particle.BLOCK, lel, 50*j.incrementAndGet(), 3,0.2,3, 0, getBd(Material.BUBBLE_CORAL_BLOCK)); 
+										p.getWorld().spawnParticle(Particle.BLOCK, lel, 50*j.get(), 3,0.2,3, 0, getBd(Material.BRAIN_CORAL_BLOCK)); 
+										p.getWorld().spawnParticle(Particle.BLOCK, lel, 50*j.get(), 3,0.2,3, 0, getBd(Material.FIRE_CORAL_BLOCK)); 
+										p.getWorld().spawnParticle(Particle.BLOCK, lel, 50*j.get(), 3,0.2,3, 0, getBd(Material.HORN_CORAL_BLOCK)); 
+										p.getWorld().spawnParticle(Particle.BLOCK, lel, 100*j.get(), 0.5,4,0.5, 0.5, getBd(Material.TUBE_CORAL_BLOCK)); 
 										for (Entity a : p.getWorld().getNearbyEntities(lel,j.get(),j.get(),j.get()))
 										{
 				                    		if (a instanceof Player) 
@@ -570,8 +568,8 @@ public class Angskills extends Pak implements Serializable, Listener{
 				p.playSound(p.getLocation(), Sound.ENTITY_GENERIC_SPLASH, 0.8f, 2f);
 				p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_SPLASH_HIGH_SPEED, 0.8f, 2f);
 				p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 0.1f, 1.5f);
-				p.getWorld().spawnParticle(Particle.WATER_BUBBLE, pl, 600,2,2,2);
-				p.getWorld().spawnParticle(Particle.WATER_SPLASH, pl, 600,2,2,2);
+				p.getWorld().spawnParticle(Particle.BUBBLE, pl, 600,2,2,2);
+				p.getWorld().spawnParticle(Particle.SPLASH, pl, 600,2,2,2);
 				
 
             	HashSet<Location> sph = new HashSet<>();
@@ -683,9 +681,9 @@ public class Angskills extends Pak implements Serializable, Listener{
 		    				p.playSound(pf.getLocation(), Sound.ENTITY_PUFFER_FISH_BLOW_OUT, 0.8f, 0.5f);
 		    				p.playSound(pf.getLocation(), Sound.ENTITY_PUFFER_FISH_STING, 0.8f, 0.5f);
 		    				p.playSound(pf.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_HURT, 0.5f, 2f);
-		    				p.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, pf.getLocation(), 1);
-		    				p.getWorld().spawnParticle(Particle.WATER_BUBBLE, pf.getLocation(), 600,2,2,2);
-		    				p.getWorld().spawnParticle(Particle.WATER_SPLASH, pf.getLocation(), 600,2,2,2);
+		    				p.getWorld().spawnParticle(Particle.EXPLOSION, pf.getLocation(), 1);
+		    				p.getWorld().spawnParticle(Particle.BUBBLE, pf.getLocation(), 600,2,2,2);
+		    				p.getWorld().spawnParticle(Particle.SPLASH, pf.getLocation(), 600,2,2,2);
 		    				
 		    				for(Entity e : pl.getWorld().getNearbyEntities(pl, 4,4,4)) {
 		    					if (e instanceof Player) 
@@ -818,15 +816,15 @@ public class Angskills extends Pak implements Serializable, Listener{
 		                	Location l = p.getLocation();
 		                    p.playSound(p.getLocation(), Sound.ENTITY_GENERIC_DRINK, 1.0f, 0f);
 			        		p.getWorld().spawnParticle(Particle.BUBBLE_COLUMN_UP, l, 400, 4, 1, 4);
-			        		p.getWorld().spawnParticle(Particle.WATER_WAKE, l, 400, 4, 1, 4);
+			        		p.getWorld().spawnParticle(Particle.GUST_EMITTER_SMALL, l, 400, 4, 1, 4);
 							Holding.invur(p, fsd.CoralLiquor.get(p.getUniqueId())*4l);
-							p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60,0,false,false));
-							p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 160,0,false,false));
+							p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 60,0,false,false));
+							p.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 160,0,false,false));
 							p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200,2,false,false));
-							p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 200,2,false,false));
+							p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 200,2,false,false));
 							p.addPotionEffect(new PotionEffect(PotionEffectType.LUCK, 200,2,false,false));
 							if(Proficiency.getpro(p)>=1) {
-								p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 200,1,false,false));
+								p.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 200,1,false,false));
 								p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 200,2,false,false));
 							}
 							if(!p.hasPotionEffect(PotionEffectType.CONDUIT_POWER)) {
@@ -869,7 +867,7 @@ public class Angskills extends Pak implements Serializable, Listener{
 												p1.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 200, 3, false, false));
 												p1.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 200, 3, false, false));
 												if(Proficiency.getpro(p)>=1) {
-													p1.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 200,1,false,false));
+													p1.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 200,1,false,false));
 													p1.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 200,2,false,false));
 												}
 												if(drunkt.containsKey(p1.getName())) {
@@ -921,8 +919,8 @@ public class Angskills extends Pak implements Serializable, Listener{
 				p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_SPLASH_HIGH_SPEED, 0.8f, 2f);
 				p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_BREATH, 1, 0);
 				p.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, pl, 600,2,2,2);
-				p.getWorld().spawnParticle(Particle.WATER_BUBBLE, pl, 600,2,2,2);
-				p.getWorld().spawnParticle(Particle.WATER_SPLASH, pl, 600,2,2,2);
+				p.getWorld().spawnParticle(Particle.BUBBLE, pl, 600,2,2,2);
+				p.getWorld().spawnParticle(Particle.SPLASH, pl, 600,2,2,2);
 				for(Entity e : pl.getWorld().getNearbyEntities(pl, 4,4,4)) {
 					if (e instanceof Player) 
 					{
@@ -939,7 +937,7 @@ public class Angskills extends Pak implements Serializable, Listener{
 					{
 						LivingEntity le = (LivingEntity) e;
 						atks(2.1,fsd.CoralLiquor.get(p.getUniqueId())*2.5, p, le,5);
-						le.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 200, 10, false, false));
+						le.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 200, 10, false, false));
 						Holding.holding(p, le, 10l);
 					}
 				}
@@ -1000,7 +998,7 @@ public class Angskills extends Pak implements Serializable, Listener{
 											p.getWorld().playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.5f, 2f);
 											p.getWorld().playSound(p.getLocation(), Sound.ENTITY_SLIME_JUMP, 0.5f, 2f);
 											p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, pl, 10, 3,3,3, 0); 
-											p.getWorld().spawnParticle(Particle.WATER_BUBBLE, pl, 222, 3,3,3, 0); 
+											p.getWorld().spawnParticle(Particle.BUBBLE, pl, 222, 3,3,3, 0); 
 											for (Entity a : p.getWorld().getNearbyEntities(pl, 5, 5, 5))
 											{
 					                    		if (a instanceof Player) 
@@ -1093,7 +1091,7 @@ public class Angskills extends Pak implements Serializable, Listener{
 		                {	
 	             			p.teleport(i);
 							p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, p.getLocation(), 20, 3,3,3,0);
-							p.getWorld().spawnParticle(Particle.WATER_SPLASH, p.getLocation(), 20, 3,3,3,0);
+							p.getWorld().spawnParticle(Particle.SPLASH, p.getLocation(), 20, 3,3,3,0);
 	                    	for (Entity e : p.getNearbyEntities(3, 3, 3))
 							{
 	                    		if ((!(e == p))&& e instanceof LivingEntity) 
@@ -1155,8 +1153,8 @@ public class Angskills extends Pak implements Serializable, Listener{
 				p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 2f);
 				p.playSound(p.getLocation(), Sound.ENTITY_FISHING_BOBBER_SPLASH, 1.0f, 0f);
 				p.playSound(p.getLocation(), Sound.ENTITY_DOLPHIN_SPLASH, 1.0f, 0f);
-				p.getWorld().spawnParticle(Particle.WATER_SPLASH, p.getLocation(), 250, 3, 2, 3);
-				p.getWorld().spawnParticle(Particle.BLOCK_CRACK, p.getLocation(), 250, 3, 2, 3, Material.PRISMARINE.createBlockData());
+				p.getWorld().spawnParticle(Particle.SPLASH, p.getLocation(), 250, 3, 2, 3);
+				p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation(), 250, 3, 2, 3, Material.PRISMARINE.createBlockData());
 				for (Entity e : p.getWorld().getNearbyEntities(p.getLocation(), 5, 5, 5))
 				{
             		if (e instanceof Player) 
@@ -1395,8 +1393,8 @@ public class Angskills extends Pak implements Serializable, Listener{
 					                {
 	        							Holding.invur(p, 30l);
 	        							p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 100,100,false,false));
-	        							p.getWorld().spawnParticle(Particle.WATER_WAKE, tl, 1000,3,3,3);
-		             					p.getWorld().spawnParticle(Particle.REDSTONE, tl, 1000, 3,2,3,0, new DustOptions(Color.AQUA, 2));
+	        							p.getWorld().spawnParticle(Particle.GUST_EMITTER_SMALL, tl, 1000,3,3,3);
+		             					p.getWorld().spawnParticle(Particle.DUST, tl, 1000, 3,2,3,0, new DustOptions(Color.AQUA, 2));
 		             					p.playSound(tl, Sound.BLOCK_CONDUIT_ACTIVATE, 1, 2f);
 		             					p.playSound(tl, Sound.BLOCK_CONDUIT_ATTACK_TARGET, 1, 2f);
 		    		                    pw.getNearbyEntities(tl,9, 9, 9).forEach(e -> {
@@ -1438,9 +1436,9 @@ public class Angskills extends Pak implements Serializable, Listener{
 			ring.add(tl.clone().add(tl.getDirection().normalize().rotateAroundY(an+j*0.4).multiply(an*2)).add(0, an, 0));
 		}
 		ring.forEach(l -> {
-			w.spawnParticle(Particle.WATER_BUBBLE, l, 2, 0.5,0.5,0.5,0);
-			w.spawnParticle(Particle.WATER_WAKE, l, 1, 0.5,0.5,0.5,0);
-			w.spawnParticle(Particle.REDSTONE, l, 2, 0.5,0.5,0.5,0, new DustOptions(Color.AQUA, 1));
+			w.spawnParticle(Particle.BUBBLE, l, 2, 0.5,0.5,0.5,0);
+			w.spawnParticle(Particle.GUST_EMITTER_SMALL, l, 1, 0.5,0.5,0.5,0);
+			w.spawnParticle(Particle.DUST, l, 2, 0.5,0.5,0.5,0, new DustOptions(Color.AQUA, 1));
 
 		});
 	}
@@ -1528,11 +1526,10 @@ public class Angskills extends Pak implements Serializable, Listener{
 					                {
 
 					                	p.setGravity(true);
-	        							p.getWorld().spawnParticle(Particle.WATER_WAKE, p.getLocation(), 1000,13,13,13);
 	        							p.getWorld().spawnParticle(Particle.COMPOSTER, p.getLocation(), 1000,13,13,13);
-	        							p.getWorld().spawnParticle(Particle.WATER_BUBBLE, p.getLocation(), 1000,13,13,13);
-	        							p.getWorld().spawnParticle(Particle.WATER_SPLASH, p.getLocation(), 1000,13,13,13);
-		             					p.getWorld().spawnParticle(Particle.REDSTONE, p.getLocation(), 1000, 13,12,13,0, new DustOptions(Color.AQUA, 2));
+	        							p.getWorld().spawnParticle(Particle.BUBBLE, p.getLocation(), 1000,13,13,13);
+	        							p.getWorld().spawnParticle(Particle.SPLASH, p.getLocation(), 1000,13,13,13);
+		             					p.getWorld().spawnParticle(Particle.DUST, p.getLocation(), 1000, 13,12,13,0, new DustOptions(Color.AQUA, 2));
 		             					p.playSound(p.getLocation(), Sound.BLOCK_CONDUIT_ACTIVATE, 1, 2f);
 		             					p.playSound(p.getLocation(), Sound.BLOCK_CONDUIT_ATTACK_TARGET, 1, 2f);
 		             					p.playSound(p.getLocation(), Sound.ENTITY_DOLPHIN_SPLASH, 1, 2f);

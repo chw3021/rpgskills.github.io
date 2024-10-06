@@ -51,7 +51,7 @@ public class CheSkillsGui extends SkillsGui{
 				itemset("접착제", Material.LIME_GLAZED_TERRACOTTA, 0, 1, Arrays.asList("피격당한 적을 짧게 제압합니다"), 13, Cheskillsinv);
 				itemset("마그마볼", Material.MAGMA_CREAM, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[화염 계열]","재입력시 마그마볼을 투척합니다", "(피해량은 슬라임볼 레벨에 비례합니다)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.9*(1+csd.SlimeBall.getOrDefault(p.getUniqueId(),0)*0.07)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 14, Cheskillsinv);
 				itemset("맹독", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("전체 피해량이 증가합니다","",ChatColor.GREEN+ "활성화된 물약 효과 종류수에 비례해", ChatColor.GREEN+ "받는피해가 감소합니다", "0.2 + 종류수("+ p.getActivePotionEffects().size() + ") X 0.05"), 15, Cheskillsinv);
-				itemset("신경독", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[맹독 계열]","웅크리기 + 아이템던지기","산성구름이 추가피해를 입힙니다", "",ChatColor.BOLD+" X 0.5D"), 17, Cheskillsinv);
+				itemset("신경독", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[맹독 계열]","웅크리기 + num4","산성구름이 추가피해를 입힙니다", "",ChatColor.BOLD+" X 0.5D"), 17, Cheskillsinv);
 				
 				itemset("환각제(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/155015"), 18, Cheskillsinv);
 				itemset("찌르기(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/155015"), 19, Cheskillsinv);
@@ -70,7 +70,7 @@ public class CheSkillsGui extends SkillsGui{
 				itemset("접착제", Material.LIME_GLAZED_TERRACOTTA, 0, 1, Arrays.asList("피격당한 적을 짧게 제압합니다"), 13, Cheskillsinv);
 				itemset("마그마볼", Material.MAGMA_CREAM, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[화염 계열]","재입력시 마그마볼을 투척합니다", "(피해량은 슬라임볼 레벨에 비례합니다)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.9*(1+csd.SlimeBall.getOrDefault(p.getUniqueId(),0)*0.07)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 14, Cheskillsinv);
 				itemset("맹독", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("전체 피해량이 증가합니다","",ChatColor.GREEN+ "활성화된 물약 효과 종류수에 비례해", ChatColor.GREEN+ "받는피해가 감소합니다", "0.2 + 종류수("+ p.getActivePotionEffects().size() + ") X 0.05"), 15, Cheskillsinv);
-				itemset("신경독", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[맹독 계열]","웅크리기 + 아이템던지기","산성구름이 추가피해를 입힙니다", "",ChatColor.BOLD+" X 0.5D"), 17, Cheskillsinv);
+				itemset("신경독", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[맹독 계열]","웅크리기 + num4","산성구름이 추가피해를 입힙니다", "",ChatColor.BOLD+" X 0.5D"), 17, Cheskillsinv);
 				
 				itemset("환각제", Material.YELLOW_GLAZED_TERRACOTTA, 0, 1, Arrays.asList("재입력시 환각제를 투척합니다"), 18, Cheskillsinv);
 				itemset("찌르기", Material.BEEHIVE, 0, 1, Arrays.asList("추출당한 적을 짧게 제압합니다"), 19, Cheskillsinv);
@@ -79,7 +79,7 @@ public class CheSkillsGui extends SkillsGui{
 				itemset("화염병난사", Material.SUNFLOWER, 0, 1, Arrays.asList("8방향으로 화염병을 투척합니다"), 22, Cheskillsinv);
 				itemset("발광구", Material.GLOW_LICHEN, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[맹독 계열]","재입력시 발광구를 투척합니다", "(피해량은 슬라임볼 레벨에 비례합니다)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.8*(1+csd.SlimeBall.getOrDefault(p.getUniqueId(),0)*0.08)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 23, Cheskillsinv);
 				itemset("생체강화", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("공격력과 방어력이 증가합니다","신경독 쿨타임이 감소합니다"), 24, Cheskillsinv);
-				itemset("아마겟돈", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[맹독 계열]","달리기 + 아이템던지기", "",ChatColor.BOLD+" X 19.0D + 10 X 0.6D"), 26, Cheskillsinv);
+				itemset("아마겟돈", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[맹독 계열]","웅크리기 + num5", "",ChatColor.BOLD+" X 19.0D + 10 X 0.6D"), 26, Cheskillsinv);
 			}
 			itemset("현재 숙련도", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(""+Proficiency.getproexp(p)), 27, Cheskillsinv);
 			itemset("스킬포인트" , Material.NETHER_STAR, 0, 1, Arrays.asList(ChatColor.AQUA+"SP."+csd.SkillPoints.getOrDefault(p.getUniqueId(),0),"","클릭하면 스킬포인트가 초기화 됩니다"), 35, Cheskillsinv);
@@ -111,7 +111,7 @@ public class CheSkillsGui extends SkillsGui{
 				itemset("Glue", Material.LIME_GLAZED_TERRACOTTA, 0, 1, Arrays.asList("Hold Hit Enemies Shortly"), 13, Cheskillsinv);
 				itemset("MagmaBall", Material.MAGMA_CREAM, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Flame]","Throw Magma Ball When Use Once More", "(Damage Affected By SlimeBall)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.8*(1+csd.SlimeBall.getOrDefault(p.getUniqueId(),0)*0.08)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 14, Cheskillsinv);
 				itemset("Venom", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage", "Decreases received damage in", "Propotion to Number of PotionEffectTypes","0.2 + (Number of Types["+p.getActivePotionEffects().size() +"]X 0.05)"), 15, Cheskillsinv);
-				itemset("VX", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Poison]","Sneaking + ThrowItem","Acid clouds will cause additional damage", "",ChatColor.BOLD+" X 0.5D"), 17, Cheskillsinv);
+				itemset("VX", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Poison]","Sneaking + num4","Acid clouds will cause additional damage", "",ChatColor.BOLD+" X 0.5D"), 17, Cheskillsinv);
 				
 				itemset("Hallucinogen(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 18, Cheskillsinv);
 				itemset("Sting(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 19, Cheskillsinv);
@@ -130,7 +130,7 @@ public class CheSkillsGui extends SkillsGui{
 				itemset("Glue", Material.LIME_GLAZED_TERRACOTTA, 0, 1, Arrays.asList("Hold Hit Enemies Shortly"), 13, Cheskillsinv);
 				itemset("MagmaBall", Material.MAGMA_CREAM, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Flame]","Throw Magma Ball When Use Once More", "(Damage Affected By SlimeBall)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.8*(1+csd.SlimeBall.getOrDefault(p.getUniqueId(),0)*0.08)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 14, Cheskillsinv);
 				itemset("Venom", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage", "Decreases received damage in", "Propotion to Number of PotionEffectTypes","0.2 + (Number of Types["+p.getActivePotionEffects().size() +"]X 0.05)"), 15, Cheskillsinv);
-				itemset("VX", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Poison]","Sneaking + ThrowItem","Acid clouds will cause additional damage", "",ChatColor.BOLD+" X 0.5D"), 17, Cheskillsinv);
+				itemset("VX", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Poison]","Sneaking + num4","Acid clouds will cause additional damage", "",ChatColor.BOLD+" X 0.5D"), 17, Cheskillsinv);
 				
 				itemset("Hallucinogen", Material.YELLOW_GLAZED_TERRACOTTA, 0, 1, Arrays.asList("Throw Hallucinogen When Use Once More"), 18, Cheskillsinv);
 				itemset("Sting", Material.BEEHIVE, 0, 1, Arrays.asList("Hold Hit Enemies Shortly"), 19, Cheskillsinv);
@@ -139,7 +139,7 @@ public class CheSkillsGui extends SkillsGui{
 				itemset("CocktailFlower", Material.SUNFLOWER, 0, 1, Arrays.asList("Throw Cocktail 8 directions"), 22, Cheskillsinv);
 				itemset("GlowingBall", Material.GLOW_LICHEN, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Poison]","Throw Glowing Ball When Use Once More", "(Damage Affected By SlimeBall)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.8*(1+csd.SlimeBall.getOrDefault(p.getUniqueId(),0)*0.08)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 23, Cheskillsinv);
 				itemset("Bioreformation", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Damage & Armor","Decreases VX Cooldown"), 24, Cheskillsinv);
-				itemset("Armageddon", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Poison]","Sprinting + ThrowItem", "",ChatColor.BOLD+" X 19.0D + 10 X 0.6D"), 26, Cheskillsinv);
+				itemset("Armageddon", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Poison]","Sneaking + num5", "",ChatColor.BOLD+" X 19.0D + 10 X 0.6D"), 26, Cheskillsinv);
 			}
 			itemset("Current Proficiency", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(""+Proficiency.getproexp(p)), 27, Cheskillsinv);
 			itemset("SkillPoints" , Material.NETHER_STAR, 0, 1, Arrays.asList(ChatColor.AQUA+"SP."+csd.SkillPoints.getOrDefault(p.getUniqueId(),0),"","Click if you want to reset your skill's levels"), 35, Cheskillsinv);

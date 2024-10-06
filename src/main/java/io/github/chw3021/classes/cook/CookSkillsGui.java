@@ -28,7 +28,7 @@ public class CookSkillsGui{
 		items.setLore(Lore);
 		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+		items.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 		item.setItemMeta(items);
 		inv.setItem(loc, item);
 	}

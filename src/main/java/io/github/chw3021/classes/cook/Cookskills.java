@@ -163,10 +163,7 @@ public class Cookskills extends Pak implements Listener, Serializable {
 	                else // if timer is done
 	                {
 	                    sdcooldown.remove(p.getName()); // removing player from HashMap
-	                    Snowball firstarrow = p.launchProjectile(Snowball.class);
-	                    firstarrow.setItem(new ItemStack(Material.FURNACE));
-	                    firstarrow.remove();
-	                    Location tl = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 4).getLocation();
+	                    Location tl = gettargetblock(p,4).clone();
 	                    ArrayList<Location> meats = new ArrayList<>();
 	                    AtomicInteger j = new AtomicInteger();
 	                    for(int i=0; i<30; i++) {
@@ -214,7 +211,7 @@ public class Cookskills extends Pak implements Listener, Serializable {
 				                	p.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, l, 2, 4, 4, 4, 0.2);
 				                	p.getWorld().spawnParticle(Particle.FLAME, l, 1, 4, 4, 4, 0.2);
 				                	p.getWorld().spawnParticle(Particle.WHITE_ASH, l, 2, 4, 4, 4, 0.2);
-				                	p.getWorld().spawnParticle(Particle.SMOKE_NORMAL, l, 2, 4, 4, 4, 0.2);
+				                	p.getWorld().spawnParticle(Particle.SMOKE, l, 2, 4, 4, 4, 0.2);
 									p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1,0,false,false));
 									p.playSound(p.getLocation(), Sound.ENTITY_GENERIC_EAT, 0.5f, 2f);
 									p.playSound(meat.getLocation(), Sound.BLOCK_FURNACE_FIRE_CRACKLE, 0.8f, 2f);
@@ -283,7 +280,7 @@ public class Cookskills extends Pak implements Listener, Serializable {
 	            	Snowball firstarrow = p.launchProjectile(Snowball.class);
                     firstarrow.setItem(new ItemStack(Material.FURNACE));
                     firstarrow.remove();
-                    Location tl = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 4).getLocation();
+                    Location tl = gettargetblock(p,4).clone();
                     ArrayList<Location> meats = new ArrayList<>();
                     AtomicInteger j = new AtomicInteger();
                     for(int i=0; i<30; i++) {
@@ -331,7 +328,7 @@ public class Cookskills extends Pak implements Listener, Serializable {
 			                	p.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, l, 2, 4, 4, 4, 0.2);
 			                	p.getWorld().spawnParticle(Particle.FLAME, l, 1, 4, 4, 4, 0.2);
 			                	p.getWorld().spawnParticle(Particle.WHITE_ASH, l, 2, 4, 4, 4, 0.2);
-			                	p.getWorld().spawnParticle(Particle.SMOKE_NORMAL, l, 2, 4, 4, 4, 0.2);
+			                	p.getWorld().spawnParticle(Particle.SMOKE, l, 2, 4, 4, 4, 0.2);
 								p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1,0,false,false));
 								p.playSound(p.getLocation(), Sound.ENTITY_GENERIC_EAT, 0.5f, 2f);
 								p.playSound(meat.getLocation(), Sound.BLOCK_FURNACE_FIRE_CRACKLE, 0.8f, 2f);
@@ -428,7 +425,7 @@ public class Cookskills extends Pak implements Listener, Serializable {
 	                    firstarrow.setItem(new ItemStack(Material.MUSHROOM_STEW));
 	                    firstarrow.remove();
 	                    AreaEffectCloud cloud = (AreaEffectCloud) p.getWorld().spawnEntity(p.getLocation(), EntityType.AREA_EFFECT_CLOUD);
-	                    cloud.setParticle(Particle.BLOCK_CRACK, Material.RED_MUSHROOM_BLOCK.createBlockData());
+	                    cloud.setParticle(Particle.BLOCK, Material.RED_MUSHROOM_BLOCK.createBlockData());
 						cloud.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 						cloud.setMetadata("spa of "+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 	                    cloud.setRadius(3f);
@@ -437,7 +434,7 @@ public class Cookskills extends Pak implements Listener, Serializable {
 	                    cloud.setColor(Color.YELLOW);
 	                    cloud.setDuration(100);
 	                    AreaEffectCloud cloud2 = (AreaEffectCloud) p.getWorld().spawnEntity(p.getLocation(), EntityType.AREA_EFFECT_CLOUD);
-	                    cloud2.setParticle(Particle.BLOCK_CRACK, Material.BROWN_MUSHROOM_BLOCK.createBlockData());
+	                    cloud2.setParticle(Particle.BLOCK, Material.BROWN_MUSHROOM_BLOCK.createBlockData());
 						cloud2.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 						cloud2.setMetadata("spa of "+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 	                    cloud2.setRadius(3f);
@@ -452,7 +449,7 @@ public class Cookskills extends Pak implements Listener, Serializable {
 				                {	
 							p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1,0,false,false));
 							p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 10,4,false,false));
-							p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1,0,false,false));
+							p.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1,0,false,false));
 							p.playSound(p.getLocation(), Sound.BLOCK_LAVA_EXTINGUISH, 0.5f, 2f);
 							p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1,0,false,false));
 							p.playSound(p.getLocation(), Sound.ENTITY_GENERIC_EAT, 0.5f, 2f);
@@ -478,7 +475,7 @@ public class Cookskills extends Pak implements Listener, Serializable {
 												{
 													p1.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1,0,false,false));
 													p1.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 10,4,false,false));
-													p1.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1,0,false,false));
+													p1.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1,0,false,false));
 													p1.playSound(p.getLocation(), Sound.BLOCK_LAVA_EXTINGUISH, 0.5f, 2f);
 													p1.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1,0,false,false));
 													p1.playSound(p.getLocation(), Sound.ENTITY_GENERIC_EAT, 0.5f, 2f);
@@ -520,7 +517,7 @@ public class Cookskills extends Pak implements Listener, Serializable {
                     firstarrow.setItem(new ItemStack(Material.MUSHROOM_STEW));
                     firstarrow.remove();
                     AreaEffectCloud cloud = (AreaEffectCloud) p.getWorld().spawnEntity(p.getLocation(), EntityType.AREA_EFFECT_CLOUD);
-                    cloud.setParticle(Particle.BLOCK_CRACK, Material.RED_MUSHROOM_BLOCK.createBlockData());
+                    cloud.setParticle(Particle.BLOCK, Material.RED_MUSHROOM_BLOCK.createBlockData());
 					cloud.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 					cloud.setMetadata("spa of "+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
                     cloud.setRadius(3f);
@@ -529,7 +526,7 @@ public class Cookskills extends Pak implements Listener, Serializable {
                     cloud.setColor(Color.YELLOW);
                     cloud.setDuration(100);
                     AreaEffectCloud cloud2 = (AreaEffectCloud) p.getWorld().spawnEntity(p.getLocation(), EntityType.AREA_EFFECT_CLOUD);
-                    cloud2.setParticle(Particle.BLOCK_CRACK, Material.BROWN_MUSHROOM_BLOCK.createBlockData());
+                    cloud2.setParticle(Particle.BLOCK, Material.BROWN_MUSHROOM_BLOCK.createBlockData());
 					cloud2.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 					cloud2.setMetadata("spa of "+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
                     cloud2.setRadius(3f);
@@ -544,7 +541,7 @@ public class Cookskills extends Pak implements Listener, Serializable {
 			                {	
 						p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1,0,false,false));
 						p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 10,4,false,false));
-						p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1,0,false,false));
+						p.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1,0,false,false));
 						p.playSound(p.getLocation(), Sound.BLOCK_LAVA_EXTINGUISH, 0.5f, 2f);
 						p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1,0,false,false));
 						p.playSound(p.getLocation(), Sound.ENTITY_GENERIC_EAT, 0.5f, 2f);
@@ -570,7 +567,7 @@ public class Cookskills extends Pak implements Listener, Serializable {
 											{
 												p1.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1,0,false,false));
 												p1.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 10,4,false,false));
-												p1.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1,0,false,false));
+												p1.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1,0,false,false));
 												p1.playSound(p.getLocation(), Sound.BLOCK_LAVA_EXTINGUISH, 0.5f, 2f);
 												p1.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1,0,false,false));
 												p1.playSound(p.getLocation(), Sound.ENTITY_GENERIC_EAT, 0.5f, 2f);
@@ -635,7 +632,8 @@ public class Cookskills extends Pak implements Listener, Serializable {
 		                else // if timer is done
 		                {
 		                    cdcooldown.remove(p.getName()); // removing player from HashMap
-		                    Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 5).getLocation().setDirection(p.getLocation().getDirection());
+
+		                    Location l = gettargetblock(p,6).clone();
 			            	Location el = new Location(p.getWorld(), l.getX(), l.getY()+4.5, l.getZ());
 		                    ArrayList<Location> des = new ArrayList<>();
 		                    AtomicInteger j = new AtomicInteger();
@@ -717,7 +715,7 @@ public class Cookskills extends Pak implements Listener, Serializable {
 					                	p.getWorld().spawnParticle(Particle.FALLING_HONEY, el, 2, 4, 4, 4, 0.2);
 										p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1,0,false,false));
 										p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 2,2,false,false));
-										p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 2,2,false,false));
+										p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 2,2,false,false));
 										p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 2,2,false,false));
 										p.playSound(des.getLocation(), Sound.BLOCK_HONEY_BLOCK_SLIDE, 0.8f, 2f);
 										sat.computeIfPresent(p, (k,v) -> v+1);
@@ -748,7 +746,7 @@ public class Cookskills extends Pak implements Listener, Serializable {
 													{
 														p1.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1,0,false,false));
 														p1.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 2,2,false,false));
-														p1.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 2,2,false,false));
+														p1.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 2,2,false,false));
 														p1.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 2,2,false,false));
 														sat.computeIfPresent(p1, (k,v) -> v+1);
 														sat.putIfAbsent(p1, 0);
@@ -789,8 +787,9 @@ public class Cookskills extends Pak implements Listener, Serializable {
 		            }
 		            else // if cooldown doesn't have players name in it
 		            {
-		            	Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 5).getLocation().setDirection(p.getLocation().getDirection());
-		            	Location el = new Location(p.getWorld(), l.getX(), l.getY()+4.5, l.getZ());
+
+	                    Location l = gettargetblock(p,6).clone();
+	                    Location el = new Location(p.getWorld(), l.getX(), l.getY()+4.5, l.getZ());
 	                    ArrayList<Location> des = new ArrayList<>();
 	                    AtomicInteger j = new AtomicInteger();
 	                    for(int i=0; i<60; i++) {
@@ -871,7 +870,7 @@ public class Cookskills extends Pak implements Listener, Serializable {
 				                	p.getWorld().spawnParticle(Particle.FALLING_HONEY, el, 2, 4, 4, 4, 0.2);
 									p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1,0,false,false));
 									p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 2,2,false,false));
-									p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 2,2,false,false));
+									p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 2,2,false,false));
 									p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 2,2,false,false));
 									p.playSound(des.getLocation(), Sound.BLOCK_HONEY_BLOCK_SLIDE, 0.8f, 2f);
 									sat.computeIfPresent(p, (k,v) -> v+1);
@@ -902,7 +901,7 @@ public class Cookskills extends Pak implements Listener, Serializable {
 												{
 													p1.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1,0,false,false));
 													p1.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 2,2,false,false));
-													p1.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 2,2,false,false));
+													p1.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 2,2,false,false));
 													p1.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 2,2,false,false));
 													sat.computeIfPresent(p1, (k,v) -> v+1);
 													sat.putIfAbsent(p1, 0);
@@ -974,9 +973,9 @@ public class Cookskills extends Pak implements Listener, Serializable {
 	            		{
 	            			p.removePotionEffect(PotionEffectType.BLINDNESS);
 	            		}
-	            		if(p.hasPotionEffect(PotionEffectType.CONFUSION))
+	            		if(p.hasPotionEffect(PotionEffectType.NAUSEA))
 	            		{
-	            			p.removePotionEffect(PotionEffectType.CONFUSION);
+	            			p.removePotionEffect(PotionEffectType.NAUSEA);
 	            		}
 	            		if(p.hasPotionEffect(PotionEffectType.HUNGER))
 	            		{
@@ -1007,9 +1006,9 @@ public class Cookskills extends Pak implements Listener, Serializable {
             		{
             			p.removePotionEffect(PotionEffectType.BLINDNESS);
             		}
-            		if(p.hasPotionEffect(PotionEffectType.CONFUSION))
+            		if(p.hasPotionEffect(PotionEffectType.NAUSEA))
             		{
-            			p.removePotionEffect(PotionEffectType.CONFUSION);
+            			p.removePotionEffect(PotionEffectType.NAUSEA);
             		}
             		if(p.hasPotionEffect(PotionEffectType.HUNGER))
             		{
@@ -1059,9 +1058,9 @@ public class Cookskills extends Pak implements Listener, Serializable {
 		        		{
 		        			p1.removePotionEffect(PotionEffectType.BLINDNESS);
 		        		}
-		        		if(p1.hasPotionEffect(PotionEffectType.CONFUSION))
+		        		if(p1.hasPotionEffect(PotionEffectType.NAUSEA))
 		        		{
-		        			p1.removePotionEffect(PotionEffectType.CONFUSION);
+		        			p1.removePotionEffect(PotionEffectType.NAUSEA);
 		        		}
 		        		if(p1.hasPotionEffect(PotionEffectType.HUNGER))
 		        		{
@@ -1086,7 +1085,7 @@ public class Cookskills extends Pak implements Listener, Serializable {
 
 							atk0(0.35, esd.DessertRain.get(p.getUniqueId())*0.3, p, le);
 							p.playSound(le.getLocation(), Sound.BLOCK_SWEET_BERRY_BUSH_PLACE, 1, 2);
-							p.spawnParticle(Particle.BLOCK_CRACK, le.getLocation(), 30,1,1,1, 1, Material.SWEET_BERRY_BUSH.createBlockData());
+							p.spawnParticle(Particle.BLOCK, le.getLocation(), 30,1,1,1, 1, Material.SWEET_BERRY_BUSH.createBlockData());
 							
 						}
 				}
@@ -1417,9 +1416,9 @@ public class Cookskills extends Pak implements Listener, Serializable {
 	            	                	public void run() 
 	            		                {
 	        	                    		pp.playSound(pp.getLocation(), Sound.ITEM_ARMOR_EQUIP_GOLD, 1, 2);
-	        	                    		p.getWorld().spawnParticle(Particle.ITEM_CRACK, pp.getLocation(), 120,1,1,1,1, new ItemStack(Material.RABBIT_STEW));
-	        	                    		p.getWorld().spawnParticle(Particle.ITEM_CRACK, pp.getLocation(), 120,1,1,1,1, new ItemStack(Material.ENCHANTED_GOLDEN_APPLE));
-	        	                    		p.getWorld().spawnParticle(Particle.BLOCK_CRACK, pp.getLocation(), 100,3,3,3,1,Material.GOLD_BLOCK.createBlockData());
+	        	                    		p.getWorld().spawnParticle(Particle.ITEM, pp.getLocation(), 120,1,1,1,1, new ItemStack(Material.RABBIT_STEW));
+	        	                    		p.getWorld().spawnParticle(Particle.ITEM, pp.getLocation(), 120,1,1,1,1, new ItemStack(Material.ENCHANTED_GOLDEN_APPLE));
+	        	                    		p.getWorld().spawnParticle(Particle.BLOCK, pp.getLocation(), 100,3,3,3,1,Material.GOLD_BLOCK.createBlockData());
 	        	                    		p.getWorld().spawnParticle(Particle.COMPOSTER, pp.getLocation(), 50,3,3,3,1);
 	        	                    		p.getWorld().spawnParticle(Particle.HEART, pp.getLocation(), 10,1,1,1,1);
 	                                		 for(Entity e : pp.getNearbyEntities(3, 3, 3)) {
@@ -1477,9 +1476,9 @@ public class Cookskills extends Pak implements Listener, Serializable {
             	                	public void run() 
             		                {
         	                    		p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GOLD, 1, 2);
-        	                    		p.getWorld().spawnParticle(Particle.ITEM_CRACK, p.getLocation(), 120,1,1,1,1, new ItemStack(Material.RABBIT_STEW));
-        	                    		p.getWorld().spawnParticle(Particle.ITEM_CRACK, p.getLocation(), 120,1,1,1,1, new ItemStack(Material.ENCHANTED_GOLDEN_APPLE));
-        	                    		p.getWorld().spawnParticle(Particle.BLOCK_CRACK, p.getLocation(), 100,3,3,3,1,Material.GOLD_BLOCK.createBlockData());
+        	                    		p.getWorld().spawnParticle(Particle.ITEM, p.getLocation(), 120,1,1,1,1, new ItemStack(Material.RABBIT_STEW));
+        	                    		p.getWorld().spawnParticle(Particle.ITEM, p.getLocation(), 120,1,1,1,1, new ItemStack(Material.ENCHANTED_GOLDEN_APPLE));
+        	                    		p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation(), 100,3,3,3,1,Material.GOLD_BLOCK.createBlockData());
         	                    		p.getWorld().spawnParticle(Particle.COMPOSTER, p.getLocation(), 50,3,3,3,1);
         	                    		p.getWorld().spawnParticle(Particle.HEART, p.getLocation(), 10,1,1,1,1);
                                 		 for(Entity e : p.getNearbyEntities(3, 3, 3)) {
@@ -1542,9 +1541,9 @@ public class Cookskills extends Pak implements Listener, Serializable {
             	                	public void run() 
             		                {
         	                    		pp.playSound(pp.getLocation(), Sound.ITEM_ARMOR_EQUIP_GOLD, 1, 2);
-        	                    		p.getWorld().spawnParticle(Particle.ITEM_CRACK, pp.getLocation(), 120,1,1,1,1, new ItemStack(Material.RABBIT_STEW));
-        	                    		p.getWorld().spawnParticle(Particle.ITEM_CRACK, pp.getLocation(), 120,1,1,1,1, new ItemStack(Material.ENCHANTED_GOLDEN_APPLE));
-        	                    		p.getWorld().spawnParticle(Particle.BLOCK_CRACK, pp.getLocation(), 100,3,3,3,1,Material.GOLD_BLOCK.createBlockData());
+        	                    		p.getWorld().spawnParticle(Particle.ITEM, pp.getLocation(), 120,1,1,1,1, new ItemStack(Material.RABBIT_STEW));
+        	                    		p.getWorld().spawnParticle(Particle.ITEM, pp.getLocation(), 120,1,1,1,1, new ItemStack(Material.ENCHANTED_GOLDEN_APPLE));
+        	                    		p.getWorld().spawnParticle(Particle.BLOCK, pp.getLocation(), 100,3,3,3,1,Material.GOLD_BLOCK.createBlockData());
         	                    		p.getWorld().spawnParticle(Particle.COMPOSTER, pp.getLocation(), 50,3,3,3,1);
         	                    		p.getWorld().spawnParticle(Particle.HEART, pp.getLocation(), 10,1,1,1,1);
                                 		 for(Entity e : pp.getNearbyEntities(3, 3, 3)) {
@@ -1599,9 +1598,9 @@ public class Cookskills extends Pak implements Listener, Serializable {
         	                	public void run() 
         		                {
     	                    		p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GOLD, 1, 2);
-    	                    		p.getWorld().spawnParticle(Particle.ITEM_CRACK, p.getLocation(), 120,1,1,1,1, new ItemStack(Material.RABBIT_STEW));
-    	                    		p.getWorld().spawnParticle(Particle.ITEM_CRACK, p.getLocation(), 120,1,1,1,1, new ItemStack(Material.ENCHANTED_GOLDEN_APPLE));
-    	                    		p.getWorld().spawnParticle(Particle.BLOCK_CRACK, p.getLocation(), 100,3,3,3,1,Material.GOLD_BLOCK.createBlockData());
+    	                    		p.getWorld().spawnParticle(Particle.ITEM, p.getLocation(), 120,1,1,1,1, new ItemStack(Material.RABBIT_STEW));
+    	                    		p.getWorld().spawnParticle(Particle.ITEM, p.getLocation(), 120,1,1,1,1, new ItemStack(Material.ENCHANTED_GOLDEN_APPLE));
+    	                    		p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation(), 100,3,3,3,1,Material.GOLD_BLOCK.createBlockData());
     	                    		p.getWorld().spawnParticle(Particle.COMPOSTER, p.getLocation(), 50,3,3,3,1);
     	                    		p.getWorld().spawnParticle(Particle.HEART, p.getLocation(), 10,1,1,1,1);
                             		 for(Entity e : p.getNearbyEntities(3, 3, 3)) {

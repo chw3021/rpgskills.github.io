@@ -35,7 +35,7 @@ public class Classgui implements Serializable {
 		ItemMeta items = item.getItemMeta();
 		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+		items.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 		items.setDisplayName(display);
 		items.setLore(Lore);
 		items.setAttributeModifiers(null);
@@ -50,7 +50,7 @@ public class Classgui implements Serializable {
 		items.setDisplayName(display);
 		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+		items.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 		items.setLore(Lore);
 		item.setItemMeta(items);
 		inv.setItem(loc, item);
@@ -993,22 +993,22 @@ public class Classgui implements Serializable {
 			itemset(ChatColor.DARK_GREEN + "유형: 복수자", Material.COPPER_ORE, 0, 1, Arrays.asList("높은 생존성과 기능성"), 7, inv);
 
 			itemset(ChatColor.BLUE + "역할군: 방어", Material.CREEPER_BANNER_PATTERN, 0, 1,
-					Arrays.asList("피해 감소 기술을 소유하고 있습니다", "공격역할군보다 데미지가 낮습니다"), 9, inv);
+					Arrays.asList("피해 감소 기술을 소유하고 있습니다"), 9, inv);
 			itemset(ChatColor.RED + "역할군: 공격", Material.CREEPER_BANNER_PATTERN, 0, 1,
 					Arrays.asList("보스,리더형 몹에게 추가피해를 줍니다", "타역할군보다 방어력이 낮습니다"), 18, inv);
 			itemset(ChatColor.GREEN + "역할군: 제압", Material.CREEPER_BANNER_PATTERN, 0, 1,
-					Arrays.asList("타역할군보다 제압기술이 많습니다", "지원가를 제외한 타역할군보다 데미지가 낮습니다"), 27, inv);
+					Arrays.asList("타역할군보다 제압기술이 많습니다"), 27, inv);
 			itemset(ChatColor.DARK_AQUA + "역할군: 지원", Material.CREEPER_BANNER_PATTERN, 0, 1, Arrays
-					.asList("버프, 디버프 스킬을 소유하고 있습니다", "타역할군보다 데미지가 낮습니다", "파티가 없을시, 데미지가 증가합니다", "(증가치는 경험치 레벨에 비례합니다)"),
+					.asList("버프, 디버프 스킬을 소유하고 있습니다", "타역할군보다 데미지가 낮습니다", "파티가 없을시 데미지가 증가합니다", "(증가치는 경험치 레벨에 비례합니다)"),
 					36, inv);
 
 			itemset(ChatColor.BLUE + "검사", Material.IRON_SWORD, 0, 1, Arrays.asList("추천 장비:", "검", "", "공격: 3.5/5",
 					"방어: 4/5", "제어: 3/5", "지원: 0/5", "범위: 5/5", "사거리: 2.5/5", "기동: 3.5/5", "난이도: 보통"), 10, inv);
 			itemset(ChatColor.BLUE + "사냥꾼", Material.IRON_AXE, 0, 1, Arrays.asList("추천 장비:", "도끼", "", "공격: 5/5",
 					"방어: 2.5/5", "제어: 2.5/5", "지원: 1/5", "범위: 1/5", "사거리: 1/5", "기동: 5/5", "난이도: 어려움"), 19, inv);
-			itemset(ChatColor.BLUE + "투사", Material.CHAIN, 0, 1, Arrays.asList("추천 장비:", "검", "", "공격: 3/5",
+			itemset(ChatColor.BLUE + "투사", Material.CHAIN, 0, 1, Arrays.asList("추천 장비:", "철퇴", "", "공격: 3/5",
 					"방어: 2.5/5", "제어: 4/5", "지원: 1/5", "범위: 4/5", "사거리: 2/5", "기동: 2.5/5", "난이도: 보통"), 28, inv);
-			itemset(ChatColor.BLUE + "성기사", Material.SHIELD, 0, 1, Arrays.asList("추천 장비:", "주:도끼, 보조:방패", "",
+			itemset(ChatColor.BLUE + "성기사", Material.SHIELD, 0, 1, Arrays.asList("추천 장비:", "주:도끼 또는 철퇴, 보조:방패", "",
 					"공격: 1.5/5", "방어: 5/5", "제어: 3/5", "지원: 4.5/5", "범위: 2/5", "사거리: 2/5", "기동: 2/5", "난이도: 쉬움"), 37,
 					inv);
 
@@ -1094,12 +1094,11 @@ public class Classgui implements Serializable {
 					Arrays.asList("Higher Utility&Survivability Than Other Types"), 7, inv);
 
 			itemset(ChatColor.BLUE + "Role: Bruiser", Material.CREEPER_BANNER_PATTERN, 0, 1,
-					Arrays.asList("Has damage reduction skill", "Low AttackDamage Than Nuker"), 9, inv);
+					Arrays.asList("Has damage reduction skill"), 9, inv);
 			itemset(ChatColor.RED + "Role: Nuker", Material.CREEPER_BANNER_PATTERN, 0, 1,
 					Arrays.asList("Damage More to Boss & Leader Mob", "Low Armor Than Other Roles"), 18, inv);
 			itemset(ChatColor.GREEN + "Role: Holder", Material.CREEPER_BANNER_PATTERN, 0, 1,
-					Arrays.asList("Has More Holding Skills Than Other Roles", "Low AttackDamage Than Other Roles",
-							"Except Supporter"),
+					Arrays.asList("Has More Holding Skills Than Other Roles"),
 					27, inv);
 			itemset(ChatColor.DARK_AQUA + "Role: Supporter", Material.CREEPER_BANNER_PATTERN, 0, 1,
 					Arrays.asList("Has Healing Skills & Buff, Debuff Skills", "Low AttackDamage Than Other Roles",
@@ -1117,12 +1116,12 @@ public class Classgui implements Serializable {
 							"Difficulty: Hard"),
 					19, inv);
 			itemset(ChatColor.BLUE + "Broiler", Material.CHAIN, 0, 1,
-					Arrays.asList("Recommended equipment:", "Sword", "", "Attack: 3/5", "Defence: 2.5/5",
+					Arrays.asList("Recommended equipment:", "Mace", "", "Attack: 3/5", "Defence: 2.5/5",
 							"Control: 4/5", "Support: 1/5", "Area: 4/5", "Range: 2/5", "Mobility: 2/5",
 							"Difficulty: Normal"),
 					28, inv);
 			itemset(ChatColor.BLUE + "Paladin", Material.SHIELD, 0, 1,
-					Arrays.asList("Recommended equipment:", "Axe(main) & Shield(off)", "", "Attack: 1.5/5",
+					Arrays.asList("Recommended equipment:", "Axe or Mace(main) & Shield(off)", "", "Attack: 1.5/5",
 							"Defence: 5/5", "Control: 3/5", "Support: 4.5/5", "Area: 2/5", "Range: 2/5",
 							"Mobility: 2/5", "Difficulty: Easy"),
 					37, inv);

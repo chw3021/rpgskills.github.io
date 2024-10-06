@@ -360,7 +360,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 				case 1:
 					conv.put(p.getUniqueId(), 0);
 					p.playSound(p, Sound.ENTITY_SKELETON_CONVERTED_TO_STRAY, 0.5f, 1.3f);
-					p.spawnParticle(Particle.CRIT_MAGIC, p.getLocation(), 20, 1, 1, 1);
+					p.spawnParticle(Particle.ENCHANTED_HIT, p.getLocation(), 20, 1, 1, 1);
 					p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{갈망}").color(ChatColor.RED).create());
 					break;
 				case 0:
@@ -377,7 +377,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 				case 1:
 					conv.put(p.getUniqueId(), 0);
 					p.playSound(p, Sound.ENTITY_SKELETON_CONVERTED_TO_STRAY, 0.5f, 1.3f);
-					p.spawnParticle(Particle.CRIT_MAGIC, p.getLocation(), 20, 1, 1, 1);
+					p.spawnParticle(Particle.ENCHANTED_HIT, p.getLocation(), 20, 1, 1, 1);
 					p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{Eager}").color(ChatColor.RED).create());
 					break;
 				case 0:
@@ -484,7 +484,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 	                    		@Override
 				                	public void run() 
 					                {	
-									p.getWorld().spawnParticle(Particle.BLOCK_CRACK, i, 2, 0.5,0.5,0.5,0 ,Material.CRIMSON_NYLIUM.createBlockData());
+									p.getWorld().spawnParticle(Particle.BLOCK, i, 2, 0.5,0.5,0.5,0 ,Material.CRIMSON_NYLIUM.createBlockData());
 										if(ulton.containsKey(p.getUniqueId())) {
 											p.getWorld().spawnParticle(Particle.FALLING_LAVA, i, 2, 1, 1, 1);
 											}
@@ -560,7 +560,7 @@ public class Berskills extends Pak implements Listener, Serializable {
             	ravet.put(p.getUniqueId(), task);
             	
             	
-				final Location tl = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 4).getLocation();
+				final Location tl = gettargetblock(p,4).clone();
 				
 				ArrayList<Location> line = new ArrayList<Location>();
                 AtomicInteger j = new AtomicInteger(0);
@@ -575,9 +575,9 @@ public class Berskills extends Pak implements Listener, Serializable {
             		@Override
 	                	public void run() 
 		                {	
-						tl.getWorld().spawnParticle(Particle.BLOCK_CRACK, l, 500, 4,0.5,4,0 ,Material.CRIMSON_HYPHAE.createBlockData());
+						tl.getWorld().spawnParticle(Particle.BLOCK, l, 500, 4,0.5,4,0 ,Material.CRIMSON_HYPHAE.createBlockData());
 							if(ulton.containsKey(p.getUniqueId())) {
-								tl.getWorld().spawnParticle(Particle.DRIP_LAVA, l, 2, 1, 1, 1);
+								tl.getWorld().spawnParticle(Particle.DRIPPING_LAVA, l, 2, 1, 1, 1);
 								}
 			                }
                 	   }, j.getAndIncrement()/230); 
@@ -648,12 +648,12 @@ public class Berskills extends Pak implements Listener, Serializable {
 
             	final Location tl = p.getEyeLocation().clone().add(0, -1, 0);
             	p.getWorld().spawnParticle(Particle.SHRIEK, tl.clone(), 100, 1,1,1,1,10);
-				p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl.clone().add(tl.getDirection().normalize().multiply(1.2)), 100, 1,1,1,0.5 ,Material.DEEPSLATE_REDSTONE_ORE.createBlockData());
-				p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl.clone().add(tl.getDirection().normalize().multiply(2)), 200, 1.2,1.2,1.2,0.5 ,Material.DEEPSLATE_REDSTONE_ORE.createBlockData());
-				p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl.clone().add(tl.getDirection().normalize().multiply(3)), 300, 1.4,1.4,1.4,0.5 ,Material.DEEPSLATE_REDSTONE_ORE.createBlockData());
-				p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl.clone().add(tl.getDirection().normalize().multiply(4)), 400, 1.6,1.6,1.6,0.5 ,Material.DEEPSLATE_REDSTONE_ORE.createBlockData());
-				p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl.clone().add(tl.getDirection().normalize().multiply(5)), 600, 1.8,1.8,1.8,0.5 ,Material.DEEPSLATE_REDSTONE_ORE.createBlockData());
-				p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl.clone().add(tl.getDirection().normalize().multiply(6)), 800, 2,2,2,0.5 ,Material.DEEPSLATE_REDSTONE_ORE.createBlockData());
+				p.getWorld().spawnParticle(Particle.BLOCK, tl.clone().add(tl.getDirection().normalize().multiply(1.2)), 100, 1,1,1,0.5 ,Material.DEEPSLATE_REDSTONE_ORE.createBlockData());
+				p.getWorld().spawnParticle(Particle.BLOCK, tl.clone().add(tl.getDirection().normalize().multiply(2)), 200, 1.2,1.2,1.2,0.5 ,Material.DEEPSLATE_REDSTONE_ORE.createBlockData());
+				p.getWorld().spawnParticle(Particle.BLOCK, tl.clone().add(tl.getDirection().normalize().multiply(3)), 300, 1.4,1.4,1.4,0.5 ,Material.DEEPSLATE_REDSTONE_ORE.createBlockData());
+				p.getWorld().spawnParticle(Particle.BLOCK, tl.clone().add(tl.getDirection().normalize().multiply(4)), 400, 1.6,1.6,1.6,0.5 ,Material.DEEPSLATE_REDSTONE_ORE.createBlockData());
+				p.getWorld().spawnParticle(Particle.BLOCK, tl.clone().add(tl.getDirection().normalize().multiply(5)), 600, 1.8,1.8,1.8,0.5 ,Material.DEEPSLATE_REDSTONE_ORE.createBlockData());
+				p.getWorld().spawnParticle(Particle.BLOCK, tl.clone().add(tl.getDirection().normalize().multiply(6)), 800, 2,2,2,0.5 ,Material.DEEPSLATE_REDSTONE_ORE.createBlockData());
 				
 				
 				for(Entity e :tl.getWorld().getNearbyEntities(tl.clone().add(tl.getDirection().clone().normalize().multiply(3)),6, 6, 6)) {
@@ -691,7 +691,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 			line.add(snl.clone().add(v.clone().normalize().multiply(d)));
 		}
 		line.forEach(l -> {
-			snw.spawnParticle(Particle.BLOCK_CRACK, l, 3, 0.01,0.01,0.01,0, Material.RED_GLAZED_TERRACOTTA.createBlockData());
+			snw.spawnParticle(Particle.BLOCK, l, 3, 0.01,0.01,0.01,0, Material.RED_GLAZED_TERRACOTTA.createBlockData());
 		});
 	}
 
@@ -762,9 +762,9 @@ public class Berskills extends Pak implements Listener, Serializable {
 					                public void run() 
 					                {
 										p.playSound(pl.clone(), Sound.ENTITY_GENERIC_DRINK, 0.15f, 2f);
-										p.getWorld().spawnParticle(Particle.BLOCK_CRACK, pl.clone(), 200, 0.31,0.31,0.31,1,Material.REDSTONE_BLOCK.createBlockData());
-										p.getWorld().spawnParticle(Particle.BLOCK_CRACK, pl.clone(), 100, 0.1,0.1,0.1,1,Material.CRYING_OBSIDIAN.createBlockData());
-										p.getWorld().spawnParticle(Particle.BLOCK_CRACK, pl.clone(), 200, 0.51,0.51,0.51,1,Material.FIRE_CORAL_BLOCK.createBlockData());
+										p.getWorld().spawnParticle(Particle.BLOCK, pl.clone(), 200, 0.31,0.31,0.31,1,Material.REDSTONE_BLOCK.createBlockData());
+										p.getWorld().spawnParticle(Particle.BLOCK, pl.clone(), 100, 0.1,0.1,0.1,1,Material.CRYING_OBSIDIAN.createBlockData());
+										p.getWorld().spawnParticle(Particle.BLOCK, pl.clone(), 200, 0.51,0.51,0.51,1,Material.FIRE_CORAL_BLOCK.createBlockData());
 										
 										for (Entity a : p.getWorld().getNearbyEntities(pl.clone(), 5, 5, 5))
 										{
@@ -784,7 +784,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 												LivingEntity le = (LivingEntity)a;
 												Holding.holding(p, le, (long) 5); 
 												Ray(pl.clone(),le);
-												p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 0, false, false));
+												p.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1, 0, false, false));
 												p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1, 0, false, false));
 												atk0(0.2d, bsd.Inhale.get(p.getUniqueId())*0.2d, p, le);
 							                }					
@@ -827,9 +827,9 @@ public class Berskills extends Pak implements Listener, Serializable {
 	        	final Location pl = burst.remove(p.getUniqueId()).clone();
 	        	
 				
-				p.getWorld().spawnParticle(Particle.BLOCK_CRACK, pl, 700, 6,6,6,Material.CRIMSON_NYLIUM.createBlockData()); 
-				p.getWorld().spawnParticle(Particle.BLOCK_CRACK, pl, 700, 6,6,6,Material.NETHER_QUARTZ_ORE.createBlockData()); 
-				p.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, pl, 150, 6,6,6); 
+				p.getWorld().spawnParticle(Particle.BLOCK, pl, 700, 6,6,6,Material.CRIMSON_NYLIUM.createBlockData()); 
+				p.getWorld().spawnParticle(Particle.BLOCK, pl, 700, 6,6,6,Material.NETHER_QUARTZ_ORE.createBlockData()); 
+				p.getWorld().spawnParticle(Particle.EXPLOSION, pl, 150, 6,6,6); 
 				if(ulton.containsKey(p.getUniqueId())) {
 					p.getWorld().spawnParticle(Particle.LAVA, pl, 50, 6, 3, 6);
 					p.getWorld().spawnParticle(Particle.ASH, pl, 100, 6, 3, 6);
@@ -1048,7 +1048,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 				p.playSound(p.getLocation(), Sound.BLOCK_BASALT_BREAK, 1.0f, 2f);
 				p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_HURT, 1.0f, 2f);
 				p.getWorld().spawnParticle(Particle.CRIMSON_SPORE, p.getLocation(), 250, 3, 2, 3);
-				p.getWorld().spawnParticle(Particle.BLOCK_CRACK, p.getLocation(), 250, 3, 2, 3, Material.CRIMSON_HYPHAE.createBlockData());
+				p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation(), 250, 3, 2, 3, Material.CRIMSON_HYPHAE.createBlockData());
 				for (Entity e : p.getWorld().getNearbyEntities(p.getLocation(), 4, 4, 4))
 				{
             		if (e instanceof Player) 
@@ -1104,7 +1104,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 				p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 1.0f, 0.1f);
 				p.getWorld().spawnParticle(Particle.CRIMSON_SPORE, p.getLocation(), 250, 3, 2, 3);
 				p.getWorld().playSound(p.getLocation(), Sound.ENTITY_GOAT_SCREAMING_LONG_JUMP, 0.5f, 2f);
-				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 13, 20, false, false));
+				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 13, 20, false, false));
 
             	final Location tl = p.getLocation().clone().add(p.getLocation().clone().getDirection().normalize().multiply(1.7));
 
@@ -1203,7 +1203,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 
 		    			Location pl = p.getEyeLocation().clone();
 		    			
-						p.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, pl, 100, 2,2,2);
+						p.getWorld().spawnParticle(Particle.ANGRY_VILLAGER, pl, 100, 2,2,2);
 						for(int i = 0; i<10; i++) {
 		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 			             		@Override
@@ -1450,7 +1450,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 						                p1.playSound(p1.getLocation(), Sound.ITEM_BUCKET_FILL_LAVA, 1f, 0f);
 						                p1.setHealth(p1.getMaxHealth()*0.05);
 										p1.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 80, 255, false, false));
-										p1.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 80, 4, false, false));
+										p1.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 80, 4, false, false));
 										p1.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("[UNDYING]").color(ChatColor.BOLD).color(ChatColor.RED).create());
 									});
 							bd.execute();
@@ -1507,7 +1507,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 		                    p.playSound(p.getLocation(), Sound.ENTITY_BLAZE_SHOOT, 1.0f, 0.1f);
 							p.getWorld().spawnParticle(Particle.FLASH, l, 10, 8, 2, 8);
 							p.getWorld().spawnParticle(Particle.LAVA, l, 10, 8, 2, 8);
-							p.getWorld().spawnParticle(Particle.DRIP_LAVA, l, 10, 8, 2, 8);
+							p.getWorld().spawnParticle(Particle.DRIPPING_LAVA, l, 10, 8, 2, 8);
 							p.getWorld().spawnParticle(Particle.FALLING_LAVA, l, 10, 8, 2, 8);
 							ulton.put(p.getUniqueId(), true);
 							p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 300, 4, false, false));
@@ -1537,7 +1537,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 			if(ClassData.pc.get(p.getUniqueId()) == 1 &&  ev.getNewSlot()==4&&(is.getType().name().contains("SWORD")) && p.isSneaking()&& Proficiency.getpro(p) >=2)
 			{
 				final Location psl = p.getLocation();
-				final Location tl = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 6).getLocation();
+				final Location tl = gettargetblock(p,6).clone();
 				
             	p.setCooldown(CAREFUL, 3);
 				ev.setCancelled(true);
@@ -1571,10 +1571,10 @@ public class Berskills extends Pak implements Listener, Serializable {
 		    		                	p.teleport(psl);
 		    		                	p.setCooldown(CAREFUL, 3);
 					                    p.swingMainHand();
-			    						p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 1520, 8,0.3,8,0 ,Material.CRIMSON_NYLIUM.createBlockData());
+			    						p.getWorld().spawnParticle(Particle.BLOCK, tl, 1520, 8,0.3,8,0 ,Material.CRIMSON_NYLIUM.createBlockData());
 			    						p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, tl, 100, 8,0.3,8,0);
 		    							if(ulton.containsKey(p.getUniqueId())) {
-		    								p.getWorld().spawnParticle(Particle.DRIP_LAVA, tl, 2, 1, 1, 1);
+		    								p.getWorld().spawnParticle(Particle.DRIPPING_LAVA, tl, 2, 1, 1, 1);
 		    							}
 		    		                    p.playSound(p.getLocation(), Sound.ENTITY_FOX_SPIT, 1.0f, 2f);
 		    		                    p.playSound(p.getLocation(), Sound.BLOCK_LAVA_POP, 1.0f, 0f);
@@ -1621,10 +1621,10 @@ public class Berskills extends Pak implements Listener, Serializable {
 		                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		    		                @Override
 		    		                public void run() {
-			    						p.getWorld().spawnParticle(Particle.BLOCK_CRACK, l, 5, 0.3,0.3,0.3,0 ,Material.CRIMSON_NYLIUM.createBlockData());
+			    						p.getWorld().spawnParticle(Particle.BLOCK, l, 5, 0.3,0.3,0.3,0 ,Material.CRIMSON_NYLIUM.createBlockData());
 			    						p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l, 2, 0.3,0.3,0.3,0);
 		    							if(ulton.containsKey(p.getUniqueId())) {
-		    								p.getWorld().spawnParticle(Particle.DRIP_LAVA, l, 1, 1, 1, 1);
+		    								p.getWorld().spawnParticle(Particle.DRIPPING_LAVA, l, 1, 1, 1, 1);
 		    							}
 		    		                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.05f, 2f);
 					                    for(LivingEntity le: les) {
@@ -1654,7 +1654,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 				                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.35f, 2f);
 				    				p.playSound(p.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1.0f, 2f);
 				    				p.playSound(p.getLocation(), Sound.ENTITY_WITHER_HURT, 1.0f, 0f);
-		    						p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 5000, 8,8,8,0 ,Material.CRIMSON_NYLIUM.createBlockData());
+		    						p.getWorld().spawnParticle(Particle.BLOCK, tl, 5000, 8,8,8,0 ,Material.CRIMSON_NYLIUM.createBlockData());
 		    						p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, tl, 5000, 8,8,8,0);
 		    						p.getWorld().spawnParticle(Particle.CRIMSON_SPORE, tl, 5000, 8,8,8,0);
 				                    for(LivingEntity le: les) {
@@ -1681,7 +1681,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 			if(ClassData.pc.get(p.getUniqueId()) == 1 && (is.getType().name().contains("HOE")) && !p.isSneaking()&& p.isSprinting()&& Proficiency.getpro(p) >=2)
 			{
 				final Location psl = p.getLocation();
-				final Location tl = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 6).getLocation();
+				final Location tl = gettargetblock(p,6).clone();
 				p.setSneaking(true);
 				ev.setCancelled(true);
          	   	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -1725,9 +1725,9 @@ public class Berskills extends Pak implements Listener, Serializable {
 	    		                	p.teleport(psl);
 	    		                	p.setCooldown(CAREFUL, 3);
 				                    p.swingMainHand();
-		    						p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 1520, 2,2,2,0 ,Material.CRIMSON_NYLIUM.createBlockData());
+		    						p.getWorld().spawnParticle(Particle.BLOCK, tl, 1520, 2,2,2,0 ,Material.CRIMSON_NYLIUM.createBlockData());
 	    							if(ulton.containsKey(p.getUniqueId())) {
-	    								p.getWorld().spawnParticle(Particle.DRIP_LAVA, tl, 2, 1, 1, 1);
+	    								p.getWorld().spawnParticle(Particle.DRIPPING_LAVA, tl, 2, 1, 1, 1);
 	    							}
 	    		                    p.playSound(p.getLocation(), Sound.ENTITY_FOX_SPIT, 1.0f, 2f);
 	    		                    p.playSound(p.getLocation(), Sound.BLOCK_LAVA_POP, 1.0f, 0f);
@@ -1770,7 +1770,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 				         					sn.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
 				         					sn.setMetadata("vampire", new FixedMetadataValue(RMain.getInstance(),true));
 				         					sn.setVelocity(p.getLocation().clone().toVector().subtract(tl.toVector()).normalize().multiply(0.5));
-				         					p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1,1, false,false));
+				         					p.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1,1, false,false));
 						                }
 						            }, j.incrementAndGet());
 			                    });
@@ -1789,7 +1789,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 			                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.35f, 2f);
 			    				p.playSound(p.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1.0f, 2f);
 			    				p.playSound(p.getLocation(), Sound.ENTITY_WITHER_HURT, 1.0f, 0f);
-	    						p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 5000, 8,8,8,0 ,Material.CRIMSON_NYLIUM.createBlockData());
+	    						p.getWorld().spawnParticle(Particle.BLOCK, tl, 5000, 8,8,8,0 ,Material.CRIMSON_NYLIUM.createBlockData());
 	    						p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, tl, 5000, 8,8,8,0);
 	    						p.getWorld().spawnParticle(Particle.CRIMSON_SPORE, tl, 5000, 8,8,8,0);
 	    	                    les.forEach(le -> {
@@ -1825,9 +1825,9 @@ public class Berskills extends Pak implements Listener, Serializable {
     		                	p.teleport(psl);
     		                	p.setCooldown(CAREFUL, 3);
 			                    p.swingMainHand();
-	    						p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 1520, 2,2,2,0 ,Material.CRIMSON_NYLIUM.createBlockData());
+	    						p.getWorld().spawnParticle(Particle.BLOCK, tl, 1520, 2,2,2,0 ,Material.CRIMSON_NYLIUM.createBlockData());
     							if(ulton.containsKey(p.getUniqueId())) {
-    								p.getWorld().spawnParticle(Particle.DRIP_LAVA, tl, 2, 1, 1, 1);
+    								p.getWorld().spawnParticle(Particle.DRIPPING_LAVA, tl, 2, 1, 1, 1);
     							}
     		                    p.playSound(p.getLocation(), Sound.ENTITY_FOX_SPIT, 1.0f, 2f);
     		                    p.playSound(p.getLocation(), Sound.BLOCK_LAVA_POP, 1.0f, 0f);
@@ -1870,7 +1870,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 			         					sn.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
 			         					sn.setMetadata("vampire", new FixedMetadataValue(RMain.getInstance(),true));
 			         					sn.setVelocity(p.getLocation().clone().toVector().subtract(tl.toVector()).normalize().multiply(0.5));
-			         					p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1,1, false,false));
+			         					p.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1,1, false,false));
 					                }
 					            }, j.incrementAndGet());
 		                    });
@@ -1889,7 +1889,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 		                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.35f, 2f);
 		    				p.playSound(p.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1.0f, 2f);
 		    				p.playSound(p.getLocation(), Sound.ENTITY_WITHER_HURT, 1.0f, 0f);
-    						p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 5000, 8,8,8,0 ,Material.CRIMSON_NYLIUM.createBlockData());
+    						p.getWorld().spawnParticle(Particle.BLOCK, tl, 5000, 8,8,8,0 ,Material.CRIMSON_NYLIUM.createBlockData());
     						p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, tl, 5000, 8,8,8,0);
     						p.getWorld().spawnParticle(Particle.CRIMSON_SPORE, tl, 5000, 8,8,8,0);
     	                    les.forEach(le -> {
@@ -1913,7 +1913,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 			if(ev.getItem().hasMetadata("vampire") && ev.getItem().getOwner() == p.getUniqueId()) {
 				p.playSound(p.getLocation(), Sound.ENTITY_WANDERING_TRADER_DRINK_MILK, 1.0f, 2f);
 				for(int i = 0; i<ev.getItem().getItemStack().getAmount(); i++) {
-					p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1,1, false,false));
+					p.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1,1, false,false));
 					p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1,1, false,false));
 					if(p.getHealth() >= p.getMaxHealth()) {
 	                    p.setAbsorptionAmount(p.getAbsorptionAmount()+1.5);
@@ -2000,16 +2000,16 @@ public class Berskills extends Pak implements Listener, Serializable {
 			
 			dset2(d, p,(1+bsd.Lunacy.get(p.getUniqueId())*0.04435) * (1 + 0.2*(con)),le,14);
 			p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 30, 2, false, false));
-			p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 30, 1, false, false));
+			p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 30, 1, false, false));
 			if(con == 0) {
-				p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 0, false, false));
+				p.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1, 0, false, false));
 			}
 			if(Proficiency.getpro(p)>=1) {
-				p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 0, false, false));
+				p.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1, 0, false, false));
 			}
 			if(ulton.containsKey(p.getUniqueId())) {
 				dset1(d, p, 1.3, 0.005,le,10);
-				p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 1, false, false));
+				p.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1, 1, false, false));
 			}
 		}
 		}
@@ -2028,16 +2028,16 @@ public class Berskills extends Pak implements Listener, Serializable {
 
 					dset2(d, p,(1+bsd.Lunacy.get(p.getUniqueId())*0.04435) * (1 + 0.2*(con)),le,14);
 					p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 30, 2, false, false));
-					p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 30, 1, false, false));
+					p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 30, 1, false, false));
 					if(con == 0) {
-						p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 0, false, false));
+						p.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1, 0, false, false));
 					}
 					if(Proficiency.getpro(p)>=1) {
-						p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 0, false, false));
+						p.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1, 0, false, false));
 					}
 					if(ulton.containsKey(p.getUniqueId())) {
 						dset1(d, p, 1.3, 0.005,le,10);
-						p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 1, false, false));
+						p.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1, 1, false, false));
 					}
 				}
 			}

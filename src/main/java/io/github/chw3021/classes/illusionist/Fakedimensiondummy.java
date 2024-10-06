@@ -80,7 +80,7 @@ public class Fakedimensiondummy extends Pak{
 	                if(!(timer < 0)) // if timer is still more then 0 or 0
 	                {
 	                	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("Á¶ÀÛµÈ Â÷¿ø Àç»ç¿ë ´ë±â½Ã°£ÀÌ " + String.valueOf(Math.round(timer*10)/10.0) + "ÃÊ ³²¾Ò½À´Ï´Ù").create());
+	                		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("ï¿½ï¿½ï¿½Ûµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ã°ï¿½ï¿½ï¿½ " + String.valueOf(Math.round(timer*10)/10.0) + "ï¿½ï¿½ ï¿½ï¿½ï¿½Ò½ï¿½ï¿½Ï´ï¿½").create());
 	                	}
 	                	else {
 		                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to Warp Fake Dimension").create());
@@ -129,7 +129,7 @@ public class Fakedimensiondummy extends Pak{
 								Holding.invur(p,130l);
 			                    ArmorStand as = (ArmorStand)p.getWorld().spawnEntity(p.getLocation(), EntityType.ARMOR_STAND);
 			                    if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				                    as.setCustomName(ChatColor.BOLD + p.getName()+"ÀÇ Á¶ÀÛµÈÂ÷¿ø ÀÎÇü");
+				                    as.setCustomName(ChatColor.BOLD + p.getName()+"ï¿½ï¿½ ï¿½ï¿½ï¿½Ûµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 			                    }
 			                    else {
 				                    as.setCustomName(ChatColor.BOLD + p.getName()+"'s FakeDimension Doll");
@@ -150,7 +150,7 @@ public class Fakedimensiondummy extends Pak{
 					                public void run() 
 					                {
 					                    if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						                    p.sendTitle(ChatColor.GOLD+"³²Àº½Ã°£" , ChatColor.GOLD+""+time, 20, 20, 20) ;
+						                    p.sendTitle(ChatColor.GOLD+"ï¿½ï¿½ï¿½ï¿½ï¿½Ã°ï¿½" , ChatColor.GOLD+""+time, 20, 20, 20) ;
 					                    }
 					                    else {
 						                    p.sendTitle(ChatColor.GOLD+"TimeLeft" , ChatColor.GOLD+""+time, 20, 20, 20) ;
@@ -174,8 +174,6 @@ public class Fakedimensiondummy extends Pak{
 						        		p.teleport(dimfirstloc.get(p.getUniqueId()));
 										p.playSound(p.getLocation(), Sound.BLOCK_END_PORTAL_SPAWN, 0.5f, 2f);
 						        		p.getWorld().spawnParticle(Particle.PORTAL, p.getLocation(), 50,3,3,3,0);
-						        		p.getWorld().spawnParticle(Particle.SPELL, p.getLocation(), 50,3,3,3,0);
-						        		p.getWorld().spawnParticle(Particle.SPELL_INSTANT, p.getLocation(), 50,3,3,3,0);
 					                	Bukkit.getScheduler().cancelTask(dimcount.get(p.getUniqueId()));
 					                	dimcount.remove(p.getUniqueId());
 					                	dimfirstloc.remove(p.getUniqueId());
@@ -247,7 +245,7 @@ public class Fakedimensiondummy extends Pak{
 							Holding.invur(p,130l);
 		                    ArmorStand as = (ArmorStand)p.getWorld().spawnEntity(p.getLocation(), EntityType.ARMOR_STAND);
 		                    if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			                    as.setCustomName(ChatColor.BOLD + p.getName()+"ÀÇ Á¶ÀÛµÈÂ÷¿ø ÀÎÇü");
+			                    as.setCustomName(ChatColor.BOLD + p.getName()+"ï¿½ï¿½ ï¿½ï¿½ï¿½Ûµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		                    }
 		                    else {
 			                    as.setCustomName(ChatColor.BOLD + p.getName()+"'s FakeDimension Doll");
@@ -268,7 +266,7 @@ public class Fakedimensiondummy extends Pak{
 				                public void run() 
 				                {
 				                    if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					                    p.sendTitle(ChatColor.GOLD+"³²Àº½Ã°£" , ChatColor.GOLD+""+time, 20, 20, 20) ;
+					                    p.sendTitle(ChatColor.GOLD+"ï¿½ï¿½ï¿½ï¿½ï¿½Ã°ï¿½" , ChatColor.GOLD+""+time, 20, 20, 20) ;
 				                    }
 				                    else {
 					                    p.sendTitle(ChatColor.GOLD+"TimeLeft" , ChatColor.GOLD+""+time, 20, 20, 20) ;
@@ -292,8 +290,6 @@ public class Fakedimensiondummy extends Pak{
 					        		p.teleport(dimfirstloc.get(p.getUniqueId()));
 									p.playSound(p.getLocation(), Sound.BLOCK_END_PORTAL_SPAWN, 0.5f, 2f);
 					        		p.getWorld().spawnParticle(Particle.PORTAL, p.getLocation(), 50,3,3,3,0);
-					        		p.getWorld().spawnParticle(Particle.SPELL, p.getLocation(), 50,3,3,3,0);
-					        		p.getWorld().spawnParticle(Particle.SPELL_INSTANT, p.getLocation(), 50,3,3,3,0);
 				                	Bukkit.getScheduler().cancelTask(dimcount.get(p.getUniqueId()));
 				                	dimcount.remove(p.getUniqueId());
 				                	dimfirstloc.remove(p.getUniqueId());

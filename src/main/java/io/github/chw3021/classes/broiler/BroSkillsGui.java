@@ -27,7 +27,7 @@ public class BroSkillsGui{
 		items.setDisplayName(display);
 		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+		items.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 		items.setLore(Lore);
 		item.setItemMeta(items);
 		inv.setItem(loc, item);

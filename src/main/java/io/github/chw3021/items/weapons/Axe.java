@@ -63,8 +63,8 @@ public class Axe extends Weapons implements Listener {
 								Operation.ADD_NUMBER, EquipmentSlot.HAND));
 				if (cmdt == 14) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¹Ù¶÷ÀÇ µµ³¢");
-						rm.setLocalizedName(ChatColor.GOLD +"¹Ù¶÷ÀÇ µµ³¢");
+						rm.setDisplayName(ChatColor.GOLD +"ë°”ëŒì˜ ë„ë¼");
+						rm.setLocalizedName(ChatColor.GOLD +"ë°”ëŒì˜ ë„ë¼");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Windy Axe");
@@ -76,8 +76,8 @@ public class Axe extends Weapons implements Listener {
 				}
 				else if (cmdt == 5) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"´ëÁöÀÇ µµ³¢");
-						rm.setLocalizedName(ChatColor.GOLD +"´ëÁöÀÇ µµ³¢");
+						rm.setDisplayName(ChatColor.GOLD +"ëŒ€ì§€ì˜ ë„ë¼");
+						rm.setLocalizedName(ChatColor.GOLD +"ëŒ€ì§€ì˜ ë„ë¼");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Earth Axe");
@@ -87,8 +87,8 @@ public class Axe extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 6) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¼­¸®ÀÇ µµ³¢");
-						rm.setLocalizedName(ChatColor.GOLD +"¼­¸®ÀÇ µµ³¢");
+						rm.setDisplayName(ChatColor.GOLD +"ì„œë¦¬ì˜ ë„ë¼");
+						rm.setLocalizedName(ChatColor.GOLD +"ì„œë¦¬ì˜ ë„ë¼");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Frost Axe");
@@ -98,8 +98,8 @@ public class Axe extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 7) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¹Ù´ÙÀÇ µµ³¢");
-						rm.setLocalizedName(ChatColor.GOLD +"¹Ù´ÙÀÇ µµ³¢");
+						rm.setDisplayName(ChatColor.GOLD +"ë°”ë‹¤ì˜ ë„ë¼");
+						rm.setLocalizedName(ChatColor.GOLD +"ë°”ë‹¤ì˜ ë„ë¼");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Ocean Axe");
@@ -109,8 +109,8 @@ public class Axe extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 8) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¾îµÒÀÇ µµ³¢");
-						rm.setLocalizedName(ChatColor.GOLD +"¾îµÒÀÇ µµ³¢");
+						rm.setDisplayName(ChatColor.GOLD +"ì–´ë‘ ì˜ ë„ë¼");
+						rm.setLocalizedName(ChatColor.GOLD +"ì–´ë‘ ì˜ ë„ë¼");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Dark Axe");
@@ -120,8 +120,8 @@ public class Axe extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 9) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"°³Á¶µÈ µµ³¢");
-						rm.setLocalizedName(ChatColor.GOLD +"°³Á¶µÈ µµ³¢");
+						rm.setDisplayName(ChatColor.GOLD +"ê°œì¡°ëœ ë„ë¼");
+						rm.setLocalizedName(ChatColor.GOLD +"ê°œì¡°ëœ ë„ë¼");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Hyper Axe");
@@ -131,8 +131,8 @@ public class Axe extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 10) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"ÀÛ¿­ÇÏ´Â µµ³¢");
-						rm.setLocalizedName(ChatColor.GOLD +"ÀÛ¿­ÇÏ´Â µµ³¢");
+						rm.setDisplayName(ChatColor.GOLD +"ì‘ì—´í•˜ëŠ” ë„ë¼");
+						rm.setLocalizedName(ChatColor.GOLD +"ì‘ì—´í•˜ëŠ” ë„ë¼");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Burning Axe");
@@ -142,8 +142,8 @@ public class Axe extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 11) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¸Íµ¶ µµ³¢");
-						rm.setLocalizedName(ChatColor.GOLD +"¸Íµ¶ µµ³¢");
+						rm.setDisplayName(ChatColor.GOLD +"ë§¹ë… ë„ë¼");
+						rm.setLocalizedName(ChatColor.GOLD +"ë§¹ë… ë„ë¼");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Poison Axe");
@@ -171,8 +171,8 @@ public class Axe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 1.2,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"ÀÚ¿¬ÀÇ µµ³¢");
-						rm.setLocalizedName(ChatColor.GOLD +"ÀÚ¿¬ÀÇ µµ³¢");
+						rm.setDisplayName(ChatColor.GOLD +"ìì—°ì˜ ë„ë¼");
+						rm.setLocalizedName(ChatColor.GOLD +"ìì—°ì˜ ë„ë¼");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Natural Axe");
@@ -199,8 +199,8 @@ public class Axe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 1.2,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ µµ³¢ - 1´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ µµ³¢ - 1´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ë¼ - 1ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ë¼ - 1ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Axe - Lv.1");
@@ -227,8 +227,8 @@ public class Axe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 1.2,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ µµ³¢ - 2´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ µµ³¢ - 2´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ë¼ - 2ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ë¼ - 2ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Axe - Lv.2");
@@ -245,8 +245,8 @@ public class Axe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 1.2,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ µµ³¢ - 3´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ µµ³¢ - 3´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ë¼ - 3ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ë¼ - 3ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Axe - Lv.3");
@@ -263,8 +263,8 @@ public class Axe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 1.2,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ µµ³¢ - 4´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ µµ³¢ - 4´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ë¼ - 4ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ë¼ - 4ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Axe - Lv.4");
@@ -281,8 +281,8 @@ public class Axe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 1.2,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ µµ³¢ - 5´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ µµ³¢ - 5´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ë¼ - 5ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ë¼ - 5ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Axe - Lv.5");
@@ -299,8 +299,8 @@ public class Axe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 1.2,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ µµ³¢ - 6´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ µµ³¢ - 6´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ë¼ - 6ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ë¼ - 6ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Axe - Lv.6");
@@ -317,8 +317,8 @@ public class Axe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 1.2,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ µµ³¢ - 7´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ µµ³¢ - 7´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ë¼ - 7ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ë¼ - 7ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Axe - Lv.7");
@@ -335,8 +335,8 @@ public class Axe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 1.2,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ µµ³¢ - 8´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ µµ³¢ - 8´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ë¼ - 8ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ë¼ - 8ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Axe - Lv.8");
@@ -419,8 +419,8 @@ public class Axe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 1.2,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("´ëÁöÀÇ µµ³¢");
-						rm.setLocalizedName("´ëÁöÀÇ µµ³¢");
+						rm.setDisplayName("ëŒ€ì§€ì˜ ë„ë¼");
+						rm.setLocalizedName("ëŒ€ì§€ì˜ ë„ë¼");
 					}
 					else {
 						rm.setDisplayName("Earth Axe");
@@ -436,8 +436,8 @@ public class Axe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 1.2,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("¼­¸®ÀÇ µµ³¢");
-						rm.setLocalizedName("¼­¸®ÀÇ µµ³¢");
+						rm.setDisplayName("ì„œë¦¬ì˜ ë„ë¼");
+						rm.setLocalizedName("ì„œë¦¬ì˜ ë„ë¼");
 					}
 					else {
 						rm.setDisplayName("Frost Axe");
@@ -453,8 +453,8 @@ public class Axe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 1.2,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("¹Ù´ÙÀÇ µµ³¢");
-						rm.setLocalizedName("¹Ù´ÙÀÇ µµ³¢");
+						rm.setDisplayName("ë°”ë‹¤ì˜ ë„ë¼");
+						rm.setLocalizedName("ë°”ë‹¤ì˜ ë„ë¼");
 					}
 					else {
 						rm.setDisplayName("Ocean Axe");
@@ -470,8 +470,8 @@ public class Axe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 1.2,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("¾îµÒÀÇ µµ³¢");
-						rm.setLocalizedName("¾îµÒÀÇ µµ³¢");
+						rm.setDisplayName("ì–´ë‘ ì˜ ë„ë¼");
+						rm.setLocalizedName("ì–´ë‘ ì˜ ë„ë¼");
 					}
 					else {
 						rm.setDisplayName("Dark Axe");
@@ -492,8 +492,8 @@ public class Axe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 3,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("°³Á¶µÈ µµ³¢");
-						rm.setLocalizedName("°³Á¶µÈ µµ³¢");
+						rm.setDisplayName("ê°œì¡°ëœ ë„ë¼");
+						rm.setLocalizedName("ê°œì¡°ëœ ë„ë¼");
 					}
 					else {
 						rm.setDisplayName("Hyper Axe");
@@ -510,8 +510,8 @@ public class Axe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 1.2,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("ÀÛ¿­ÇÏ´Â µµ³¢");
-						rm.setLocalizedName("ÀÛ¿­ÇÏ´Â µµ³¢");
+						rm.setDisplayName("ì‘ì—´í•˜ëŠ” ë„ë¼");
+						rm.setLocalizedName("ì‘ì—´í•˜ëŠ” ë„ë¼");
 					}
 					else {
 						rm.setDisplayName("Burning Axe");

@@ -2,6 +2,7 @@ package io.github.chw3021.monsters.wild;
 
 import java.util.Random;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World.Environment;
 import org.bukkit.attribute.Attribute;
@@ -19,6 +20,8 @@ import org.bukkit.entity.Spider;
 import org.bukkit.entity.Vindicator;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import io.github.chw3021.monsters.Mobs;
@@ -139,26 +142,30 @@ public class WildMobsSpawn extends Mobs implements Listener {
 		}
 		if (le.getCategory() == EntityCategory.UNDEAD
 				&& le.getType() != EntityType.PHANTOM) {
-			Random random = new Random();
-			int ri = random.nextInt(5);
-			if (ri == 0) {
-				Mob1(le);
-			} 
-			else if (ri == 1) {
-				Mob2(le);
-			} 
-			else if (ri == 2) {
-				Mob3(le);
-			} 
-			else if (ri == 3) {
-				Mob4(le);
-			} 
-			else {
-				Default(le);
+			for(int i = 0; i<5; i++) {
+				Random random = new Random();
+				int ri = random.nextInt(5);
+				if (ri == 0) {
+					Mob1(le);
+				} 
+				else if (ri == 1) {
+					Mob2(le);
+				} 
+				else if (ri == 2) {
+					Mob3(le);
+				} 
+				else if (ri == 3) {
+					Mob4(le);
+				} 
+				else {
+					Default(le);
+				}
 			}
 		} 
 		else if (le.getType().name().contains("SPIDER")) {
-			SpiderV(le);
+			for(int i = 0; i<5; i++) {
+				SpiderV(le);
+			}
 		} 
 		else if (le.getType() == EntityType.CREEPER) {
 			CreeperV(le);

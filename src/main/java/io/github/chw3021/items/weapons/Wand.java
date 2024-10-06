@@ -66,8 +66,8 @@ public class Wand extends Weapons implements Listener {
 								Operation.ADD_NUMBER, EquipmentSlot.HAND));
 				if (cmdt == 14) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¹Ù¶÷ÀÇ ¿Ïµå");
-						rm.setLocalizedName(ChatColor.GOLD +"¹Ù¶÷ÀÇ ¿Ïµå");
+						rm.setDisplayName(ChatColor.GOLD +"ë°”ëŒì˜ ì™„ë“œ");
+						rm.setLocalizedName(ChatColor.GOLD +"ë°”ëŒì˜ ì™„ë“œ");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Windy Wand");
@@ -79,8 +79,8 @@ public class Wand extends Weapons implements Listener {
 				}
 				else if (cmdt == 5) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"´ëÁöÀÇ ¿Ïµå");
-						rm.setLocalizedName(ChatColor.GOLD +"´ëÁöÀÇ ¿Ïµå");
+						rm.setDisplayName(ChatColor.GOLD +"ëŒ€ì§€ì˜ ì™„ë“œ");
+						rm.setLocalizedName(ChatColor.GOLD +"ëŒ€ì§€ì˜ ì™„ë“œ");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Earth Wand");
@@ -90,8 +90,8 @@ public class Wand extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 6) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¼­¸®ÀÇ ¿Ïµå");
-						rm.setLocalizedName(ChatColor.GOLD +"¼­¸®ÀÇ ¿Ïµå");
+						rm.setDisplayName(ChatColor.GOLD +"ì„œë¦¬ì˜ ì™„ë“œ");
+						rm.setLocalizedName(ChatColor.GOLD +"ì„œë¦¬ì˜ ì™„ë“œ");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Frost Wand");
@@ -101,8 +101,8 @@ public class Wand extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 7) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¹Ù´ÙÀÇ ¿Ïµå");
-						rm.setLocalizedName(ChatColor.GOLD +"¹Ù´ÙÀÇ ¿Ïµå");
+						rm.setDisplayName(ChatColor.GOLD +"ë°”ë‹¤ì˜ ì™„ë“œ");
+						rm.setLocalizedName(ChatColor.GOLD +"ë°”ë‹¤ì˜ ì™„ë“œ");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Ocean Wand");
@@ -112,8 +112,8 @@ public class Wand extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 8) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¾îµÒÀÇ ¿Ïµå");
-						rm.setLocalizedName(ChatColor.GOLD +"¾îµÒÀÇ ¿Ïµå");
+						rm.setDisplayName(ChatColor.GOLD +"ì–´ë‘ ì˜ ì™„ë“œ");
+						rm.setLocalizedName(ChatColor.GOLD +"ì–´ë‘ ì˜ ì™„ë“œ");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Dark Wand");
@@ -123,8 +123,8 @@ public class Wand extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 9) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"°³Á¶µÈ ¿Ïµå");
-						rm.setLocalizedName(ChatColor.GOLD +"°³Á¶µÈ ¿Ïµå");
+						rm.setDisplayName(ChatColor.GOLD +"ê°œì¡°ëœ ì™„ë“œ");
+						rm.setLocalizedName(ChatColor.GOLD +"ê°œì¡°ëœ ì™„ë“œ");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Hyper Wand");
@@ -134,8 +134,8 @@ public class Wand extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 10) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"ÀÛ¿­ÇÏ´Â ¿Ïµå");
-						rm.setLocalizedName(ChatColor.GOLD +"ÀÛ¿­ÇÏ´Â ¿Ïµå");
+						rm.setDisplayName(ChatColor.GOLD +"ì‘ì—´í•˜ëŠ” ì™„ë“œ");
+						rm.setLocalizedName(ChatColor.GOLD +"ì‘ì—´í•˜ëŠ” ì™„ë“œ");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Burning Wand");
@@ -145,8 +145,8 @@ public class Wand extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 11) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¸Íµ¶ ¿Ïµå");
-						rm.setLocalizedName(ChatColor.GOLD +"¸Íµ¶ ¿Ïµå");
+						rm.setDisplayName(ChatColor.GOLD +"ë§¹ë… ì™„ë“œ");
+						rm.setLocalizedName(ChatColor.GOLD +"ë§¹ë… ì™„ë“œ");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Poison Wand");
@@ -171,8 +171,8 @@ public class Wand extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 29,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"ÀÚ¿¬ÀÇ ¿Ïµå");
-						rm.setLocalizedName(ChatColor.GOLD +"ÀÚ¿¬ÀÇ ¿Ïµå");
+						rm.setDisplayName(ChatColor.GOLD +"ìì—°ì˜ ì™„ë“œ");
+						rm.setLocalizedName(ChatColor.GOLD +"ìì—°ì˜ ì™„ë“œ");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Natural Wand");
@@ -196,8 +196,8 @@ public class Wand extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 12,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¿Ïµå - 1´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¿Ïµå - 1´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì™„ë“œ - 1ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì™„ë“œ - 1ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.1");
@@ -221,8 +221,8 @@ public class Wand extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 14,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¿Ïµå - 2´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¿Ïµå - 2´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì™„ë“œ - 2ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì™„ë“œ - 2ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.2");
@@ -236,8 +236,8 @@ public class Wand extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 16,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¿Ïµå - 3´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¿Ïµå - 3´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì™„ë“œ - 3ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì™„ë“œ - 3ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.3");
@@ -251,8 +251,8 @@ public class Wand extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 18,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¿Ïµå - 4´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¿Ïµå - 4´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì™„ë“œ - 4ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì™„ë“œ - 4ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.4");
@@ -266,8 +266,8 @@ public class Wand extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 20,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¿Ïµå - 5´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¿Ïµå - 5´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì™„ë“œ - 5ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì™„ë“œ - 5ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.5");
@@ -281,8 +281,8 @@ public class Wand extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 22,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¿Ïµå - 6´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¿Ïµå - 6´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì™„ë“œ - 6ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì™„ë“œ - 6ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.6");
@@ -296,8 +296,8 @@ public class Wand extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 24,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¿Ïµå - 7´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¿Ïµå - 7´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì™„ë“œ - 7ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì™„ë“œ - 7ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.7");
@@ -311,8 +311,8 @@ public class Wand extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 26,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¿Ïµå - 8´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ¿Ïµå - 8´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì™„ë“œ - 8ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ì™„ë“œ - 8ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.8");
@@ -798,8 +798,8 @@ public class Wand extends Weapons implements Listener {
 				"generic.attackDamage", 3, Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		meta.setCustomModelData(9000);
 		if(lang.contains("kr")){
-			meta.setDisplayName("³ª¹« ÁöÆÎÀÌ");
-			meta.setLocalizedName("³ª¹« ÁöÆÎÀÌ");
+			meta.setDisplayName("ë‚˜ë¬´ ì§€íŒ¡ì´");
+			meta.setLocalizedName("ë‚˜ë¬´ ì§€íŒ¡ì´");
 		}
 		else {
 			meta.setDisplayName("Wooden Wand");
@@ -824,8 +824,8 @@ public class Wand extends Weapons implements Listener {
 				"generic.attackDamage", 5, Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		meta.setCustomModelData(9000 + 1);
 		if(lang.contains("kr")){
-			meta.setDisplayName("µ¹ ÁöÆÎÀÌ");
-			meta.setLocalizedName("µ¹ ÁöÆÎÀÌ");
+			meta.setDisplayName("ëŒ ì§€íŒ¡ì´");
+			meta.setLocalizedName("ëŒ ì§€íŒ¡ì´");
 		}
 		else {
 			meta.setDisplayName("Stone Wand");
@@ -849,8 +849,8 @@ public class Wand extends Weapons implements Listener {
 				"generic.attackDamage", 4, Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		meta.setCustomModelData(9000 + 2);
 		if(lang.contains("kr")){
-			meta.setDisplayName("±İ ÁöÆÎÀÌ");
-			meta.setLocalizedName("±İ ÁöÆÎÀÌ");
+			meta.setDisplayName("ê¸ˆ ì§€íŒ¡ì´");
+			meta.setLocalizedName("ê¸ˆ ì§€íŒ¡ì´");
 		}
 		else {
 			meta.setDisplayName("Gold Wand");
@@ -874,8 +874,8 @@ public class Wand extends Weapons implements Listener {
 				"generic.attackDamage", 7, Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		meta.setCustomModelData(9000 + 3);
 		if(lang.contains("kr")){
-			meta.setDisplayName("Ã¶ ÁöÆÎÀÌ");
-			meta.setLocalizedName("Ã¶ ÁöÆÎÀÌ");
+			meta.setDisplayName("ì²  ì§€íŒ¡ì´");
+			meta.setLocalizedName("ì²  ì§€íŒ¡ì´");
 		}
 		else {
 			meta.setDisplayName("Iron Wand");
@@ -899,8 +899,8 @@ public class Wand extends Weapons implements Listener {
 				"generic.attackDamage", 8, Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		meta.setCustomModelData(9000 + 4);
 		if(lang.contains("kr")){
-			meta.setDisplayName("´ÙÀÌ¾Æ¸óµå ÁöÆÎÀÌ");
-			meta.setLocalizedName("´ÙÀÌ¾Æ¸óµå ÁöÆÎÀÌ");
+			meta.setDisplayName("ë‹¤ì´ì•„ëª¬ë“œ ì§€íŒ¡ì´");
+			meta.setLocalizedName("ë‹¤ì´ì•„ëª¬ë“œ ì§€íŒ¡ì´");
 		}
 		else {
 			meta.setDisplayName("Diamond Wand");
@@ -926,8 +926,8 @@ public class Wand extends Weapons implements Listener {
 		Player p = (Player) d.getView().getPlayer();
 		
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			rm.setDisplayName("³×´õ¶óÀÌÆ® ÁöÆÎÀÌ");
-			rm.setLocalizedName("³×´õ¶óÀÌÆ® ÁöÆÎÀÌ");
+			rm.setDisplayName("ë„¤ë”ë¼ì´íŠ¸ ì§€íŒ¡ì´");
+			rm.setLocalizedName("ë„¤ë”ë¼ì´íŠ¸ ì§€íŒ¡ì´");
 		}
 		else {
 			rm.setDisplayName("Netherite Wand");
@@ -982,8 +982,8 @@ public class Wand extends Weapons implements Listener {
 					rm.setCustomModelData(9000 + 60);
 					
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("³×´õ¶óÀÌÆ® ÁöÆÎÀÌ");
-						rm.setLocalizedName("³×´õ¶óÀÌÆ® ÁöÆÎÀÌ");
+						rm.setDisplayName("ë„¤ë”ë¼ì´íŠ¸ ì§€íŒ¡ì´");
+						rm.setLocalizedName("ë„¤ë”ë¼ì´íŠ¸ ì§€íŒ¡ì´");
 					}
 					else {
 						rm.setDisplayName("Netherite Wand");

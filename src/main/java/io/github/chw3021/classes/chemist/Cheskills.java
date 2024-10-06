@@ -23,22 +23,17 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicInteger;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.EntityEffect;
 import org.bukkit.FireworkEffect;
 import org.bukkit.FireworkEffect.Type;
-import org.bukkit.Vibration.Destination;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
-import org.bukkit.Vibration;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.entity.Arrow;
@@ -229,7 +224,6 @@ public class Cheskills extends Pak implements Listener, Serializable {
 						p.playSound(p.getLocation(), Sound.ENTITY_SLIME_JUMP, 1.0f, 0f);
 	                    Snowball thr = (Snowball) p.launchProjectile(Snowball.class);
 	                    thr.setShooter(p);
-	                    thr.setBounce(true);
 	                    thr.setItem(new ItemStack(Material.SLIME_BALL));
 	                    thr.setVelocity(p.getEyeLocation().getDirection().normalize().multiply(3));
 	                    thr.setMetadata("slimeball"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	 
@@ -289,7 +283,6 @@ public class Cheskills extends Pak implements Listener, Serializable {
 				p.playSound(p.getLocation(), Sound.ENTITY_MAGMA_CUBE_JUMP, 1.0f, 0f);
                 Snowball thr = (Snowball) p.launchProjectile(Snowball.class);
                 thr.setShooter(p);
-                thr.setBounce(true);
                 thr.setItem(new ItemStack(Material.MAGMA_CREAM));
                 thr.setVelocity(p.getEyeLocation().getDirection().normalize().multiply(3));
                 thr.setMetadata("magmaball"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	 
@@ -321,7 +314,6 @@ public class Cheskills extends Pak implements Listener, Serializable {
 				p.playSound(p.getLocation(), Sound.ENTITY_ENDER_PEARL_THROW, 0.8f, 0f);
                 Snowball thr = (Snowball) p.launchProjectile(Snowball.class);
                 thr.setShooter(p);
-                thr.setBounce(true);
                 thr.setItem(new ItemStack(Material.GLOWSTONE));
                 thr.setVelocity(p.getEyeLocation().getDirection().normalize().multiply(3));
                 thr.setMetadata("glowingball"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	 
@@ -338,7 +330,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
     		ring.add(tl.clone().add(tl.getDirection().normalize().rotateAroundY(an).multiply(an*0.56)).add(0, an*0.6, 0));
     	}
     	ring.forEach(l -> {
-			tl.getWorld().spawnParticle(Particle.SLIME, l, 5, 0.5,0.5,0.5,0);
+			tl.getWorld().spawnParticle(Particle.ITEM_SLIME, l, 5, 0.5,0.5,0.5,0);
 			tl.getWorld().spawnParticle(Particle.SPORE_BLOSSOM_AIR, l, 3, 0.5,0.5,0.5,0);
     		
     	});
@@ -382,7 +374,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 					if(acidstorming.containsKey(p.getUniqueId())) {
 						Holding.invur(p, 35l);
 						AcidStorm(fl.clone().add(0, -0.65, 0));
-						p.getWorld().spawnParticle(Particle.SPELL_MOB, fl, 200,3,3,3);
+						p.getWorld().spawnParticle(Particle.OMINOUS_SPAWNING, fl, 200,3,3,3);
 	                    p.playSound(fl, Sound.ENTITY_SPLASH_POTION_THROW, 0.08f, 1.6f);
 					}
                     if(vx.containsKey(p.getUniqueId())) {
@@ -449,10 +441,11 @@ public class Cheskills extends Pak implements Listener, Serializable {
 			if(ClassData.pc.get(p.getUniqueId()) == 15&& csd.AcidCloud.getOrDefault(p.getUniqueId(), 0)>=1) {
 				if(!(p.isSneaking()) && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK))
 				{
-					p.setCooldown(Material.TNT,3);
+					Double sec = 1d;
+					p.setCooldown(CAREFUL,3);
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
-						.cooldown(1d)
+						.cooldown(sec)
 						.kname("산성구름")
 						.ename("AcidCloud")
 						.slot(1)
@@ -586,7 +579,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 				                @Override
 				                public void run() 
 				                {
-					                Firework fr = (Firework) p.getWorld().spawnEntity(solid.getLocation(), EntityType.FIREWORK);
+					                Firework fr = (Firework) p.getWorld().spawnEntity(solid.getLocation(), EntityType.FIREWORK_ROCKET);
 				                    fr.setShotAtAngle(true);
 				                    fr.setShooter(p);
 				                    fr.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
@@ -606,7 +599,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 				                    
 				                	solid.getWorld().spawnParticle(Particle.FLAME, solid.getLocation(), 300,1,1,1,1);
 				                	solid.getWorld().spawnParticle(Particle.LAVA, solid.getLocation(), 30,1,1,1,1);
-				                	solid.getWorld().spawnParticle(Particle.BLOCK_CRACK, solid.getLocation(), 300,6,6,6,1,Material.MAGMA_BLOCK.createBlockData());
+				                	solid.getWorld().spawnParticle(Particle.BLOCK, solid.getLocation(), 300,6,6,6,1,Material.MAGMA_BLOCK.createBlockData());
 				                    p.playSound(solid.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1, 0);
 				                    p.playSound(solid.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 0);
 				                    for (Entity e : solid.getNearbyEntities(4.5, 4.5, 4.5))
@@ -707,7 +700,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 	                @Override
 	                public void run() 
 	                {
-		                Firework fr = (Firework) p.getWorld().spawnEntity(solid.getLocation(), EntityType.FIREWORK);
+		                Firework fr = (Firework) p.getWorld().spawnEntity(solid.getLocation(), EntityType.FIREWORK_ROCKET);
 	                    fr.setShotAtAngle(true);
 	                    fr.setShooter(p);
 	                    fr.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
@@ -728,7 +721,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 	                	solid.getWorld().spawnParticle(Particle.GLOW, solid.getLocation(), 300,1,1,1,1);
 	                	solid.getWorld().spawnParticle(Particle.LAVA, solid.getLocation(), 30,1,1,1,1);
 	                    solid.getWorld().spawnParticle(Particle.ASH, solid.getLocation(), 100,1,1,1,1);
-	                    solid.getWorld().spawnParticle(Particle.BLOCK_CRACK, solid.getLocation(), 300,6,6,6,1,Material.WHITE_GLAZED_TERRACOTTA.createBlockData());
+	                    solid.getWorld().spawnParticle(Particle.BLOCK, solid.getLocation(), 300,6,6,6,1,Material.WHITE_GLAZED_TERRACOTTA.createBlockData());
 	                    p.playSound(solid.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1, 0);
 	                    p.playSound(solid.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 0);
 	                    for (Entity e : solid.getNearbyEntities(4.5, 4.5, 4.5))
@@ -806,7 +799,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 	                @Override
 	                public void run() 
 	                {
-		                Firework fr = (Firework) p.getWorld().spawnEntity(solid.getLocation(), EntityType.FIREWORK);
+		                Firework fr = (Firework) p.getWorld().spawnEntity(solid.getLocation(), EntityType.FIREWORK_ROCKET);
 	                    fr.setShotAtAngle(true);
 	                    fr.setShooter(p);
 	                    fr.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
@@ -827,7 +820,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 	                    solid.setVelocity(solid.getVelocity().zero());
 	                    solid.setGravity(false);
 	                	solid.getWorld().spawnParticle(Particle.END_ROD, solid.getLocation(), 100,1,1,1,1);
-	                	solid.getWorld().spawnParticle(Particle.BLOCK_CRACK, solid.getLocation(), 300,6,6,6,1,Material.YELLOW_GLAZED_TERRACOTTA.createBlockData());
+	                	solid.getWorld().spawnParticle(Particle.BLOCK, solid.getLocation(), 300,6,6,6,1,Material.YELLOW_GLAZED_TERRACOTTA.createBlockData());
 
 						for(int n = 0; n<20; n++) {
 		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -858,7 +851,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 				    					}
 				    				}
 				                	solid.getWorld().spawnParticle(Particle.END_ROD, solid.getLocation(), 10,1,1,1,1);
-									solid.getWorld().spawnParticle(Particle.BLOCK_CRACK, solid.getLocation(), 10,3,3,3,1,Material.YELLOW_GLAZED_TERRACOTTA.createBlockData());
+									solid.getWorld().spawnParticle(Particle.BLOCK, solid.getLocation(), 10,3,3,3,1,Material.YELLOW_GLAZED_TERRACOTTA.createBlockData());
 				                }
 		                	 }, n*3); 														
 						}
@@ -921,9 +914,9 @@ public class Cheskills extends Pak implements Listener, Serializable {
             		Bukkit.getScheduler().cancelTask(chargingt.get(p.getUniqueId()));
             		chargingt.remove(p.getUniqueId());
                 	Location tl = p.getLocation().clone().add(p.getEyeLocation().getDirection().clone().normalize().multiply(0.78));
-					tl.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 200,3,3,3,1,Material.DIRT_PATH.createBlockData());
+					tl.getWorld().spawnParticle(Particle.BLOCK, tl, 200,3,3,3,1,Material.DIRT_PATH.createBlockData());
 					tl.getWorld().spawnParticle(Particle.CRIT, tl, 200,3,3,3);
-					tl.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, tl, 100,3,3,3);
+					tl.getWorld().spawnParticle(Particle.ANGRY_VILLAGER, 100,3,3,3);
                 	p.playSound(p.getLocation(), Sound.ENTITY_RAVAGER_STUNNED, 1f, 0.2f);
                 	p.playSound(p.getLocation(), Sound.ENTITY_RAVAGER_STUNNED, 1f, 1.9f);
                     for (Entity e : tl.getWorld().getNearbyEntities(tl, 4, 4, 4))
@@ -966,14 +959,14 @@ public class Cheskills extends Pak implements Listener, Serializable {
 			                	p.playSound(p.getLocation(), Sound.ENTITY_RAVAGER_STEP, 0.1f, 0.5f);
 			                	p.setVelocity(p.getEyeLocation().getDirection().clone().normalize().multiply(0.78));
 			                	
-								p.getWorld().spawnParticle(Particle.REDSTONE, p.getLocation(), 20,1,1,1, new Particle.DustOptions(Color.GREEN,2));
+								p.getWorld().spawnParticle(Particle.DUST, p.getLocation(), 20,1,1,1, new Particle.DustOptions(Color.GREEN,2));
 								
 			                	Location tl = p.getLocation().clone().add(p.getEyeLocation().getDirection().clone().normalize().multiply(0.78));
 			                	if(tl.getWorld().getNearbyEntities(tl, 1.2,1.2,1.2).stream().anyMatch(e -> (!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")))) {
 
-									tl.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 200,3,3,3,1,Material.DIRT_PATH.createBlockData());
+									tl.getWorld().spawnParticle(Particle.BLOCK, tl, 200,3,3,3,1,Material.DIRT_PATH.createBlockData());
 									tl.getWorld().spawnParticle(Particle.CRIT, tl, 200,3,3,3,0.1);
-									tl.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, tl, 100,3,3,3);
+									tl.getWorld().spawnParticle(Particle.ANGRY_VILLAGER, tl, 100,3,3,3);
 				                	p.playSound(p.getLocation(), Sound.ENTITY_RAVAGER_STUNNED, 1f, 0.2f);
 				                	p.playSound(p.getLocation(), Sound.ENTITY_RAVAGER_STUNNED, 1f, 1.9f);
 				                	if(chargingt.containsKey(p.getUniqueId())) {
@@ -1113,9 +1106,9 @@ public class Cheskills extends Pak implements Listener, Serializable {
                     p.playSound(p.getLocation(), Sound.WEATHER_RAIN_ABOVE, 1, 2);
                     p.playSound(p.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 1, 0);
 					p.getWorld().spawnParticle(Particle.WHITE_ASH, p.getLocation(), 200,2,2,2);
-					p.getWorld().spawnParticle(Particle.SPELL_MOB, p.getLocation(), 200,1,1,1);
-					p.getWorld().spawnParticle(Particle.SPELL_MOB_AMBIENT, p.getLocation(), 200,1,1,1);
-					p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 40,0,false,false));
+					p.getWorld().spawnParticle(Particle.ENTITY_EFFECT, p.getLocation(), 200,1,1,1);
+					p.getWorld().spawnParticle(Particle.EFFECT, p.getLocation(), 200,1,1,1);
+					p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 40,0,false,false));
 
 	            	if(acidstormingt.containsKey(p.getUniqueId())) {
 	            		Bukkit.getScheduler().cancelTask(acidstormingt.get(p.getUniqueId()));
@@ -1164,7 +1157,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 		                    p.playSound(p.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1, 1.5f);
 		                    p.playSound(p.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 2);
 		                    
-			                Firework fr = (Firework) p.getWorld().spawnEntity(p.getLocation(), EntityType.FIREWORK);
+			                Firework fr = (Firework) p.getWorld().spawnEntity(p.getLocation(), EntityType.FIREWORK_ROCKET);
 		                    fr.setShotAtAngle(true);
 		                    fr.setShooter(p);
 		                    fr.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
@@ -1182,9 +1175,9 @@ public class Cheskills extends Pak implements Listener, Serializable {
 		                    fr.setFireworkMeta(meta);
 		                    fr.detonate();
 		                    
-							p.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, p.getLocation(), 100,3,1,3);
-							p.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, p.getLocation().clone().add(0, 2.5, 0), 100,1,5,1);
-							p.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, p.getLocation().clone().add(0, 5, 0), 100,4,1,4);
+							p.getWorld().spawnParticle(Particle.EXPLOSION, p.getLocation(), 100,3,1,3);
+							p.getWorld().spawnParticle(Particle.EXPLOSION, p.getLocation().clone().add(0, 2.5, 0), 100,1,5,1);
+							p.getWorld().spawnParticle(Particle.EXPLOSION, p.getLocation().clone().add(0, 5, 0), 100,4,1,4);
 							p.getWorld().spawnParticle(Particle.SNEEZE, p.getLocation(), 1000,3,1,3,0);
 							p.getWorld().spawnParticle(Particle.SNEEZE, p.getLocation().clone().add(0, 2.5, 0), 1000,1,5,1,0);
 							p.getWorld().spawnParticle(Particle.SNEEZE, p.getLocation().clone().add(0, 5, 0), 1000,4,1,4,0);
@@ -1238,7 +1231,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 			
 			
 			if(ClassData.pc.get(p.getUniqueId()) == 15 && csd.Extraction.getOrDefault(p.getUniqueId(),0)>=1) {
-			if((p.isSneaking()) && (ac == Action.LEFT_CLICK_AIR || ac== Action.LEFT_CLICK_BLOCK) && !p.hasCooldown(Material.TNT))
+			if((p.isSneaking()) && (ac == Action.LEFT_CLICK_AIR || ac== Action.LEFT_CLICK_BLOCK) && !p.hasCooldown(CAREFUL))
 			{
 				
 				SkillBuilder bd = new SkillBuilder()
@@ -1267,7 +1260,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 								LivingEntity le = (LivingEntity)e;
 									{
 						                le.playEffect(EntityEffect.HURT_BERRY_BUSH);
-						                le.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 200,2,false,false));
+						                le.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 200,2,false,false));
 										p.playSound(le.getLocation(), Sound.ENTITY_COW_MILK, 0.2f, 2f);
 										if(le.getCategory() == EntityCategory.ARTHROPOD) {
 											extracted.put(p, 0);
@@ -1292,10 +1285,10 @@ public class Cheskills extends Pak implements Listener, Serializable {
 						}
 	                    p.playSound(p.getLocation(), Sound.BLOCK_CONDUIT_ATTACK_TARGET, 1.0f, 2f);
 						p.playSound(p.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 1.0f, 1f);
-	                	p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 200,1,false,true));
+	                	p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 200,1,false,true));
 	                	p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200,1,false,true));
 	                	if(Proficiency.getpro(p)<1) {
-		                	p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 50,0,false,true));
+		                	p.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 50,0,false,true));
 	                	}
 	                	if(Proficiency.getpro(p)>=1) {
 		                	p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 200,1,false,true));
@@ -1311,12 +1304,12 @@ public class Cheskills extends Pak implements Listener, Serializable {
 		                if (extracted.containsEntry(p, 0)) {
 		                	p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 200,0,false,true));
 		                	if(Proficiency.getpro(p)>=1) {
-			                	p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 200,1,false,true));
+			                	p.addPotionEffect(new PotionEffect(PotionEffectType.HASTE, 200,1,false,true));
 		                	}
 		                }
 		                if (extracted.containsEntry(p, 1)) {
-		                	p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 200,1,false,true));
-		                	p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 200,1,false,true));
+		                	p.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 200,1,false,true));
+		                	p.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 200,1,false,true));
 		                	if(Proficiency.getpro(p)>=1) {
 			                	p.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 200,3,false,true));
 		                	}
@@ -1362,7 +1355,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 		
 		
 		
-			if((!p.isSneaking())&& !p.isOnGround() && (ac == Action.LEFT_CLICK_AIR || ac== Action.LEFT_CLICK_BLOCK) && !p.hasCooldown(Material.TNT))
+			if((!p.isSneaking())&& !p.isOnGround() && (ac == Action.LEFT_CLICK_AIR || ac== Action.LEFT_CLICK_BLOCK) && !p.hasCooldown(CAREFUL))
 			{
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
@@ -1422,11 +1415,11 @@ public class Cheskills extends Pak implements Listener, Serializable {
 							}
  							atk1(0.45*(1+csd.SlimeBall.get(p.getUniqueId())*0.035), p, le);
  							Holding.holding(p, le, 20l);
- 							le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 40, 2, false, false));
- 							le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 40, 2, false, false));
+ 							le.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 40, 2, false, false));
+ 							le.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 40, 2, false, false));
  						}
  					}
- 					slime.getWorld().spawnParticle(Particle.SLIME, slime.getLocation(), 460, 3,3,3);
+ 					slime.getWorld().spawnParticle(Particle.ITEM_SLIME, slime.getLocation(), 460, 3,3,3);
  					slime.getWorld().playSound(slime.getLocation(), Sound.ENTITY_SLIME_SQUISH, 1, 0);
  					slime.getWorld().playSound(slime.getLocation(), Sound.ENTITY_SLIME_HURT, 1, 0);
  					slime.getWorld().playSound(slime.getLocation(), Sound.ENTITY_SLIME_DEATH, 1, 0);
@@ -1452,8 +1445,8 @@ public class Cheskills extends Pak implements Listener, Serializable {
 								}
 							}
  							atk1(0.9*(1+csd.SlimeBall.get(p.getUniqueId())*0.07), p, le);
- 							le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 40, 2, false, false));
- 							le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 40, 2, false, false));
+ 							le.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 40, 2, false, false));
+ 							le.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 40, 2, false, false));
  							le.setFireTicks(40);
  						}
  					}
@@ -1582,7 +1575,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 		ItemStack is = p.getInventory().getItemInMainHand();
 			if(ClassData.pc.get(p.getUniqueId()) == 15 && ev.getNewSlot()==3 && ((is.getType().name().contains("PICKAXE"))) && p.isSneaking()&& Proficiency.getpro(p) >=1)
 			{
-				p.setCooldown(Material.TNT,3);
+				p.setCooldown(CAREFUL,3);
 				ev.setCancelled(true);
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
@@ -1596,7 +1589,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 	                    	Bukkit.getScheduler().cancelTask(vxt.get(p.getUniqueId()));
 	                    }
 	                    Holding.invur(p, 100l);
-	                	p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 200,3,false,true));
+	                	p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 200,3,false,true));
 	                	p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200,3,false,true));
 
              			p.playSound(p.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 0f, 1f);
@@ -1639,9 +1632,9 @@ public class Cheskills extends Pak implements Listener, Serializable {
 		ItemStack is = p.getInventory().getItemInMainHand();
 			if(ClassData.pc.get(p.getUniqueId()) == 15 && ev.getNewSlot()==4 && ((is.getType().name().contains("PICKAXE"))) && p.isSneaking()&& Proficiency.getpro(p) >=2)
 			{
-				p.setCooldown(Material.TNT,3);
+				p.setCooldown(CAREFUL,3);
 				ev.setCancelled(true);
-				p.setCooldown(Material.TNT,3);
+				p.setCooldown(CAREFUL,3);
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
 						.cooldown(80*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d))
@@ -1650,8 +1643,8 @@ public class Cheskills extends Pak implements Listener, Serializable {
 						.slot(7)
 						.hm(sult2cooldown)
 						.skillUse(() -> {
-						
-	                    Location tl = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 3).getLocation();
+
+	                	final Location tl =gettargetblock(p,3).clone();
 	                    TNTPrimed tp = tl.getWorld().spawn(tl, TNTPrimed.class);
 	                    tp.setCustomName("NUKE");
 	                    tp.setYield(0);
@@ -1670,12 +1663,12 @@ public class Cheskills extends Pak implements Listener, Serializable {
 				                {
 				                    p.playSound(tp.getLocation(), Sound.BLOCK_CAVE_VINES_STEP, 0.15f, 0);
 				                    p.playSound(tp.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_CHARGE, 0.15f, 0);
-									p.getWorld().spawnParticle(Particle.BLOCK_DUST, tp.getLocation(), 100,2,2,2, Material.YELLOW_CONCRETE_POWDER.createBlockData());
-									p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tp.getLocation(), 100,3,3,3, Material.YELLOW_GLAZED_TERRACOTTA.createBlockData());
-									p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tp.getLocation(), 100,4,4,4, Material.RAW_GOLD_BLOCK.createBlockData());
-									p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tp.getLocation(), 100,3,3,3, Material.BLACK_GLAZED_TERRACOTTA.createBlockData());
-									p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tp.getLocation(), 100,2,2,2, Material.OBSIDIAN.createBlockData());
-									p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tp.getLocation(), 100,2,2,2, Material.RED_GLAZED_TERRACOTTA.createBlockData());
+									p.getWorld().spawnParticle(Particle.DUST, tp.getLocation(), 100,2,2,2, Material.YELLOW_CONCRETE_POWDER.createBlockData());
+									p.getWorld().spawnParticle(Particle.BLOCK, tp.getLocation(), 100,3,3,3, Material.YELLOW_GLAZED_TERRACOTTA.createBlockData());
+									p.getWorld().spawnParticle(Particle.BLOCK, tp.getLocation(), 100,4,4,4, Material.RAW_GOLD_BLOCK.createBlockData());
+									p.getWorld().spawnParticle(Particle.BLOCK, tp.getLocation(), 100,3,3,3, Material.BLACK_GLAZED_TERRACOTTA.createBlockData());
+									p.getWorld().spawnParticle(Particle.BLOCK, tp.getLocation(), 100,2,2,2, Material.OBSIDIAN.createBlockData());
+									p.getWorld().spawnParticle(Particle.BLOCK, tp.getLocation(), 100,2,2,2, Material.RED_GLAZED_TERRACOTTA.createBlockData());
 				                }
 		                	 }, n*4); 														
 						}
@@ -1689,13 +1682,13 @@ public class Cheskills extends Pak implements Listener, Serializable {
 			                    p.playSound(tp.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 0);
 			                    p.playSound(tp.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 0);
 			                    p.playSound(tp.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1, 0);
-			                    tp.getWorld().spawnParticle(Particle.SMOKE_LARGE, tp.getLocation(), 2000, 15,15,15,0);
+			                    tp.getWorld().spawnParticle(Particle.SMOKE, tp.getLocation(), 2000, 15,15,15,0);
 			                    tp.getWorld().spawnParticle(Particle.FLAME, tp.getLocation(), 2000, 15,15,15,0);
 			                    tp.getWorld().spawnParticle(Particle.GLOW, tp.getLocation(), 2000, 15,15,15,0);
 			                    tp.getWorld().spawnParticle(Particle.LAVA, tp.getLocation(), 100, 15,15,15,0);
-			                    tp.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, tp.getLocation(), 1000,12,1,12,0);
-			                    tp.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, tp.getLocation(), 1000, 3,10,3,0);
-			                    tp.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, tp.getLocation().clone().add(0, 10, 0), 1000, 15,1,15,0);
+			                    tp.getWorld().spawnParticle(Particle.EXPLOSION, tp.getLocation(), 1000,12,1,12,0);
+			                    tp.getWorld().spawnParticle(Particle.EXPLOSION, tp.getLocation(), 1000, 3,10,3,0);
+			                    tp.getWorld().spawnParticle(Particle.EXPLOSION, tp.getLocation().clone().add(0, 10, 0), 1000, 15,1,15,0);
 			                    tp.getWorld().spawnParticle(Particle.CLOUD, tp.getLocation(), 2000, 12,1,12,0);
 			                    tp.getWorld().spawnParticle(Particle.CLOUD, tp.getLocation(), 2000, 2,10,2,0);
 			                    tp.getWorld().spawnParticle(Particle.CLOUD, tp.getLocation().clone().add(0, 10, 0), 2000, 15,1,15,0);

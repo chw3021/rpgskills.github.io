@@ -5,10 +5,8 @@ package io.github.chw3021.classes.medic;
 
 import io.github.chw3021.commons.SkillBuilder;
 import io.github.chw3021.commons.SkillUseEvent;
-import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.potion.PotionType;
 import org.bukkit.util.EulerAngle;
 import io.github.chw3021.classes.ClassData;
 import io.github.chw3021.classes.Proficiency;
@@ -24,7 +22,6 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -194,7 +191,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 
 
 
-		if(ClassData.pc.get(p.getUniqueId()) == 61 && ssd.RemedyingRocket.getOrDefault(p.getUniqueId(), 1) >=1 && !p.hasCooldown(Material.ARROW)) {
+		if(ClassData.pc.get(p.getUniqueId()) == 61 && ssd.RemedyingRocket.getOrDefault(p.getUniqueId(), 1) >=1 && !p.hasCooldown(CAREFUL)) {
 			if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK) && !p.isSneaking())
 			{
 
@@ -202,6 +199,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 				if(p.getInventory().getItemInMainHand().getType() == Material.CROSSBOW)
 				{
 					ev.setCancelled(true);
+					p.setCooldown(CAREFUL, 10);
 					List<ItemStack> arrows = new ArrayList<ItemStack>();
 					ItemStack heal = new ItemStack(Material.FIREWORK_ROCKET);
 					FireworkMeta healm = (FireworkMeta) heal.getItemMeta();
@@ -256,7 +254,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 			if(ClassData.pc.get(p.getUniqueId()) == 61) {
 				if(p.getInventory().getItemInMainHand().getType() == Material.CROSSBOW)
 				{
-					if(ev.getProjectile().getType() == EntityType.FIREWORK)
+					if(ev.getProjectile().getType() == EntityType.FIREWORK_ROCKET)
 					{
 						Firework ar = (Firework) ev.getProjectile();
 						if(ar.getFireworkMeta().getDisplayName().equals("Remedying Rocket")) {
@@ -324,7 +322,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 							else {
 								p1.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 1, false, false));
 							}
-							p1.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 200, 2, false, false));
+							p1.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 200, 2, false, false));
 							if(Proficiency.getpro(p)>=2) {
 								Holding.invur(p1, 15l);
 							}
@@ -341,7 +339,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 					else {
 						p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 1, false, false));
 					}
-					p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 200, 0, false, false));
+					p.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 200, 0, false, false));
 					if(Proficiency.getpro(p)>=2) {
 						Holding.invur(p, 15l);
 					}
@@ -417,11 +415,11 @@ public class Medskills extends Pak implements Serializable, Listener {
 											else {
 												p1.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20, 0, false, false));
 											}
-											if(p1.hasPotionEffect(PotionEffectType.FAST_DIGGING)) {
-												p1.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 20+p1.getPotionEffect(PotionEffectType.FAST_DIGGING).getDuration(), p1.getPotionEffect(PotionEffectType.FAST_DIGGING).getAmplifier(), false, false));
+											if(p1.hasPotionEffect(PotionEffectType.HASTE)) {
+												p1.addPotionEffect(new PotionEffect(PotionEffectType.HASTE, 20+p1.getPotionEffect(PotionEffectType.HASTE).getDuration(), p1.getPotionEffect(PotionEffectType.HASTE).getAmplifier(), false, false));
 											}
 											else {
-												p1.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 20, 0, false, false));
+												p1.addPotionEffect(new PotionEffect(PotionEffectType.HASTE, 20, 0, false, false));
 											}
 										}
 										return;
@@ -536,7 +534,6 @@ public class Medskills extends Pak implements Serializable, Listener {
 								is.setItemMeta(pometa);
 								ThrownPotion thr = (ThrownPotion) p.launchProjectile(ThrownPotion.class);
 								thr.setShooter(p);
-								thr.setBounce(false);
 								thr.setItem(is);
 								thr.setMetadata("Decon of"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 							});
@@ -581,7 +578,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 									if(Party.isInSameParty(p,p1))	{
 										cleans(p1);
 										if(Proficiency.getpro(p)>=1) {
-											p1.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 0, false, false));
+											p1.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1, 0, false, false));
 										}
 										continue;
 
@@ -618,7 +615,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 				{
 					ev.setCancelled(true);
 
-					final Location ptl = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 2).getLocation().clone();
+		            Location ptl = gettargetblock(p,2).clone();
 					final World ptlw = ptl.getWorld();
 
 					if(brrt.containsKey(p.getUniqueId())) {
@@ -793,7 +790,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 					}
 					hlgp.remove(p.getUniqueId());
 
-					Location tl = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 2).getLocation();
+		            Location tl = gettargetblock(p,2).clone();
 
 					ArmorStand as = tl.getWorld().spawn(tl, ArmorStand.class);
 					as.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
@@ -814,7 +811,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 							@Override
 							public void run()
 							{
-								p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 0, false, false));
+								p.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1, 0, false, false));
 								p.playSound(p.getLocation(), Sound.BLOCK_BUBBLE_COLUMN_WHIRLPOOL_INSIDE, 0.5f, 2);
 								p.playSound(p.getLocation(), Sound.ENTITY_PUFFER_FISH_BLOW_UP, 1, 0);
 								tl.getWorld().spawnParticle(Particle.HEART, tl.clone(), 100,3, 3, 3);
@@ -830,7 +827,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 										if(Party.hasParty(p) && Party.hasParty(p1))	{
 											if(Party.getParty(p).equals(Party.getParty(p1)))
 											{
-												p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 0, false, false));
+												p.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1, 0, false, false));
 												continue;
 											}
 										}
@@ -864,111 +861,109 @@ public class Medskills extends Pak implements Serializable, Listener {
 		if(ClassData.pc.get(p.getUniqueId()) == 61 && ssd.SupplyCart.getOrDefault(p.getUniqueId(), 1) >=1 && p.getInventory().getItemInMainHand().getType() == Material.CROSSBOW) {
 			if(!p.isOnGround()&& !p.isSneaking())
 			{
-				Location ptl = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 3).getLocation();
-				if(dpcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-				{
 
-					ev.setCancelled(true);
-					SkillBuilder bd = new SkillBuilder()
-							.player(p)
-							.cooldown(sec)
-							.kname("보급카트")
-							.ename("SupplyCart")
-							.slot(2)
-							.hm(dpcooldown)
-							.skillUse(() -> {
-								if (spft.containsKey(p.getUniqueId())) {
-									Bukkit.getScheduler().cancelTask(spft.get(p.getUniqueId()));
-									spft.remove(p.getUniqueId());
+				ev.setCancelled(true);
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(sec)
+						.kname("보급카트")
+						.ename("SupplyCart")
+						.slot(2)
+						.hm(dpcooldown)
+						.skillUse(() -> {
+				            Location ptl = gettargetblock(p,2).clone();
+							if (spft.containsKey(p.getUniqueId())) {
+								Bukkit.getScheduler().cancelTask(spft.get(p.getUniqueId()));
+								spft.remove(p.getUniqueId());
+							}
+
+							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+								@Override
+								public void run() {
+									if (Proficiency.getpro(p) >= 1) {
+										spf.putIfAbsent(p.getUniqueId(), 0);
+									}
 								}
+							}, 3);
 
-								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-									@Override
-									public void run() {
-										if (Proficiency.getpro(p) >= 1) {
-											spf.putIfAbsent(p.getUniqueId(), 0);
+							int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+								@Override
+								public void run() {
+									spf.remove(p.getUniqueId());
+								}
+							}, 25);
+							spft.put(p.getUniqueId(), task);
+
+
+							p.playSound(ptl, Sound.ENTITY_MINECART_RIDING, 1, 2);
+							Location cl = p.getEyeLocation().add(0, 1, 0);
+							Minecart supply = (Minecart) p.getWorld().spawnEntity(cl, EntityType.CHEST_MINECART);
+							supply.setInvulnerable(true);
+							supply.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+							supply.setMetadata("rob" + p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+							supply.setFlyingVelocityMod(ptl.toVector().subtract(cl.toVector()).normalize().multiply(0.6));
+
+							p.playSound(p.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
+							for (Entity e : supply.getNearbyEntities(6, 6, 6)) {
+								if (e instanceof Player) {
+
+									Player p1 = (Player) e;
+									if (Party.isInSameParty(p,p1)) {
+										Player m = p;
+										Player parm = p1;
+
+										if(inhancert.containsKey(parm.getUniqueId())) {
+											Bukkit.getScheduler().cancelTask(inhancert.get(parm.getUniqueId()));
+											inhancert.remove(parm.getUniqueId());
+
 										}
-									}
-								}, 3);
-
-								int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-									@Override
-									public void run() {
-										spf.remove(p.getUniqueId());
-									}
-								}, 25);
-								spft.put(p.getUniqueId(), task);
-
-
-								p.playSound(ptl, Sound.ENTITY_MINECART_RIDING, 1, 2);
-								Location cl = p.getEyeLocation().add(0, 1, 0);
-								Minecart supply = (Minecart) p.getWorld().spawnEntity(cl, EntityType.MINECART_CHEST);
-								supply.setInvulnerable(true);
-								supply.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-								supply.setMetadata("rob" + p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-								supply.setFlyingVelocityMod(ptl.toVector().subtract(cl.toVector()).normalize().multiply(0.6));
-
-								p.playSound(p.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
-								for (Entity e : supply.getNearbyEntities(6, 6, 6)) {
-									if (e instanceof Player && e != p) {
-
-										Player p1 = (Player) e;
-										if (Party.isInSameParty(p,p1)) {
-											Player m = p;
-											Player parm = p1;
-
-											if(inhancert.containsKey(parm.getUniqueId())) {
-												Bukkit.getScheduler().cancelTask(inhancert.get(parm.getUniqueId()));
+										if(parm.hasPotionEffect(PotionEffectType.JUMP_BOOST) && !inhancer.containsKey(parm.getUniqueId())) {
+											parm.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 50+50*ssd.SupplyCart.get(m.getUniqueId())+parm.getPotionEffect(PotionEffectType.JUMP_BOOST).getDuration(), 1+parm.getPotionEffect(PotionEffectType.JUMP_BOOST).getAmplifier(), false, false));
+										}
+										else {
+											parm.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 50+50*ssd.SupplyCart.get(m.getUniqueId()), 1, false, false));
+										}
+										if(parm.hasPotionEffect(PotionEffectType.HASTE)&& !inhancer.containsKey(parm.getUniqueId())) {
+											parm.addPotionEffect(new PotionEffect(PotionEffectType.HASTE, 50+50*ssd.SupplyCart.get(m.getUniqueId())+parm.getPotionEffect(PotionEffectType.HASTE).getDuration(), 1+ssd.SupplyCart.get(m.getUniqueId())/2+parm.getPotionEffect(PotionEffectType.HASTE).getAmplifier(), false, false));
+										}
+										else {
+											parm.addPotionEffect(new PotionEffect(PotionEffectType.HASTE, 50+50*ssd.SupplyCart.get(m.getUniqueId()), 1+ssd.SupplyCart.get(m.getUniqueId())/2, false, false));
+										}
+										if(parm.hasPotionEffect(PotionEffectType.SPEED)&& !inhancer.containsKey(parm.getUniqueId())) {
+											parm.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 50+50*ssd.SupplyCart.get(m.getUniqueId())+parm.getPotionEffect(PotionEffectType.SPEED).getDuration(), 1+parm.getPotionEffect(PotionEffectType.SPEED).getAmplifier(), false, false));
+										}
+										else {
+											parm.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 50+50*ssd.SupplyCart.get(m.getUniqueId()), 1, false, false));
+										}
+										if(parm.hasPotionEffect(PotionEffectType.STRENGTH)&& !inhancer.containsKey(parm.getUniqueId())) {
+											parm.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 50+50*ssd.SupplyCart.get(m.getUniqueId())+parm.getPotionEffect(PotionEffectType.STRENGTH).getDuration(), 1+ssd.SupplyCart.get(m.getUniqueId())/2+parm.getPotionEffect(PotionEffectType.STRENGTH).getAmplifier(), false, false));
+										}
+										else {
+											parm.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 50+50*ssd.SupplyCart.get(m.getUniqueId()), 1+ssd.SupplyCart.get(m.getUniqueId())/2, false, false));
+										}
+										inhancer.put(parm.getUniqueId(), 1);
+										int in = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+											@Override
+											public void run()
+											{
+												inhancer.remove(parm.getUniqueId());
 												inhancert.remove(parm.getUniqueId());
-
 											}
-											if(parm.hasPotionEffect(PotionEffectType.JUMP) && !inhancer.containsKey(parm.getUniqueId())) {
-												parm.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 50+50*ssd.SupplyCart.get(m.getUniqueId())+parm.getPotionEffect(PotionEffectType.JUMP).getDuration(), 1+parm.getPotionEffect(PotionEffectType.JUMP).getAmplifier(), false, false));
-											}
-											else {
-												parm.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 50+50*ssd.SupplyCart.get(m.getUniqueId()), 1, false, false));
-											}
-											if(parm.hasPotionEffect(PotionEffectType.FAST_DIGGING)&& !inhancer.containsKey(parm.getUniqueId())) {
-												parm.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 50+50*ssd.SupplyCart.get(m.getUniqueId())+parm.getPotionEffect(PotionEffectType.FAST_DIGGING).getDuration(), 1+ssd.SupplyCart.get(m.getUniqueId())/2+parm.getPotionEffect(PotionEffectType.FAST_DIGGING).getAmplifier(), false, false));
-											}
-											else {
-												parm.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 50+50*ssd.SupplyCart.get(m.getUniqueId()), 1+ssd.SupplyCart.get(m.getUniqueId())/2, false, false));
-											}
-											if(parm.hasPotionEffect(PotionEffectType.SPEED)&& !inhancer.containsKey(parm.getUniqueId())) {
-												parm.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 50+50*ssd.SupplyCart.get(m.getUniqueId())+parm.getPotionEffect(PotionEffectType.SPEED).getDuration(), 1+parm.getPotionEffect(PotionEffectType.SPEED).getAmplifier(), false, false));
-											}
-											else {
-												parm.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 50+50*ssd.SupplyCart.get(m.getUniqueId()), 1, false, false));
-											}
-											if(parm.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE)&& !inhancer.containsKey(parm.getUniqueId())) {
-												parm.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 50+50*ssd.SupplyCart.get(m.getUniqueId())+parm.getPotionEffect(PotionEffectType.INCREASE_DAMAGE).getDuration(), 1+ssd.SupplyCart.get(m.getUniqueId())/2+parm.getPotionEffect(PotionEffectType.INCREASE_DAMAGE).getAmplifier(), false, false));
-											}
-											else {
-												parm.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 50+50*ssd.SupplyCart.get(m.getUniqueId()), 1+ssd.SupplyCart.get(m.getUniqueId())/2, false, false));
-											}
-											inhancer.put(parm.getUniqueId(), 1);
-											int in = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-												@Override
-												public void run()
-												{
-													inhancer.remove(parm.getUniqueId());
-													inhancert.remove(parm.getUniqueId());
-												}
-											}, 50+50*ssd.SupplyCart.get(m.getUniqueId()));
-											inhancert.put(parm.getUniqueId(), in);
-											p1.playSound(p1.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
-										}
+										}, 50+50*ssd.SupplyCart.get(m.getUniqueId()));
+										inhancert.put(parm.getUniqueId(), in);
+										p1.playSound(p1.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
 									}
 								}
-								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-									@Override
-									public void run() {
-										supply.remove();
-									}
-								}, 100);
-							});
-					bd.execute();
-				}
+							}
+							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+								@Override
+								public void run() {
+									supply.remove();
+								}
+							}, 100);
+						});
+				bd.execute();
+
 			}
 		}
 	}
@@ -1001,17 +996,17 @@ public class Medskills extends Pak implements Serializable, Listener {
 						inhancert.remove(p.getUniqueId());
 
 					}
-					if(p.hasPotionEffect(PotionEffectType.JUMP) && !inhancer.containsKey(p.getUniqueId())) {
-						p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 50+50*ssd.SupplyCart.get(m.getUniqueId())+p.getPotionEffect(PotionEffectType.JUMP).getDuration(), 1+p.getPotionEffect(PotionEffectType.JUMP).getAmplifier(), false, false));
+					if(p.hasPotionEffect(PotionEffectType.JUMP_BOOST) && !inhancer.containsKey(p.getUniqueId())) {
+						p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 50+50*ssd.SupplyCart.get(m.getUniqueId())+p.getPotionEffect(PotionEffectType.JUMP_BOOST).getDuration(), 1+p.getPotionEffect(PotionEffectType.JUMP_BOOST).getAmplifier(), false, false));
 					}
 					else {
-						p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 50+50*ssd.SupplyCart.get(m.getUniqueId()), 1, false, false));
+						p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 50+50*ssd.SupplyCart.get(m.getUniqueId()), 1, false, false));
 					}
-					if(p.hasPotionEffect(PotionEffectType.FAST_DIGGING)&& !inhancer.containsKey(p.getUniqueId())) {
-						p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 50+50*ssd.SupplyCart.get(m.getUniqueId())+p.getPotionEffect(PotionEffectType.FAST_DIGGING).getDuration(), 1+ssd.SupplyCart.get(m.getUniqueId())/2+p.getPotionEffect(PotionEffectType.FAST_DIGGING).getAmplifier(), false, false));
+					if(p.hasPotionEffect(PotionEffectType.HASTE)&& !inhancer.containsKey(p.getUniqueId())) {
+						p.addPotionEffect(new PotionEffect(PotionEffectType.HASTE, 50+50*ssd.SupplyCart.get(m.getUniqueId())+p.getPotionEffect(PotionEffectType.HASTE).getDuration(), 1+ssd.SupplyCart.get(m.getUniqueId())/2+p.getPotionEffect(PotionEffectType.HASTE).getAmplifier(), false, false));
 					}
 					else {
-						p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 50+50*ssd.SupplyCart.get(m.getUniqueId()), 1+ssd.SupplyCart.get(m.getUniqueId())/2, false, false));
+						p.addPotionEffect(new PotionEffect(PotionEffectType.HASTE, 50+50*ssd.SupplyCart.get(m.getUniqueId()), 1+ssd.SupplyCart.get(m.getUniqueId())/2, false, false));
 					}
 					if(p.hasPotionEffect(PotionEffectType.SPEED)&& !inhancer.containsKey(p.getUniqueId())) {
 						p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 50+50*ssd.SupplyCart.get(m.getUniqueId())+p.getPotionEffect(PotionEffectType.SPEED).getDuration(), 1+p.getPotionEffect(PotionEffectType.SPEED).getAmplifier(), false, false));
@@ -1019,11 +1014,11 @@ public class Medskills extends Pak implements Serializable, Listener {
 					else {
 						p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 50+50*ssd.SupplyCart.get(m.getUniqueId()), 1, false, false));
 					}
-					if(p.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE)&& !inhancer.containsKey(p.getUniqueId())) {
-						p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 50+50*ssd.SupplyCart.get(m.getUniqueId())+p.getPotionEffect(PotionEffectType.INCREASE_DAMAGE).getDuration(), 1+ssd.SupplyCart.get(m.getUniqueId())/2+p.getPotionEffect(PotionEffectType.INCREASE_DAMAGE).getAmplifier(), false, false));
+					if(p.hasPotionEffect(PotionEffectType.STRENGTH)&& !inhancer.containsKey(p.getUniqueId())) {
+						p.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 50+50*ssd.SupplyCart.get(m.getUniqueId())+p.getPotionEffect(PotionEffectType.STRENGTH).getDuration(), 1+ssd.SupplyCart.get(m.getUniqueId())/2+p.getPotionEffect(PotionEffectType.STRENGTH).getAmplifier(), false, false));
 					}
 					else {
-						p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 50+50*ssd.SupplyCart.get(m.getUniqueId()), 1+ssd.SupplyCart.get(m.getUniqueId())/2, false, false));
+						p.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 50+50*ssd.SupplyCart.get(m.getUniqueId()), 1+ssd.SupplyCart.get(m.getUniqueId())/2, false, false));
 					}
 					inhancer.put(p.getUniqueId(), 1);
 					int in = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -1043,17 +1038,17 @@ public class Medskills extends Pak implements Serializable, Listener {
 					Bukkit.getScheduler().cancelTask(inhancert.get(p.getUniqueId()));
 					inhancert.remove(p.getUniqueId());
 				}
-				if(p.hasPotionEffect(PotionEffectType.JUMP) && !inhancer.containsKey(p.getUniqueId())) {
-					p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 50+50*ssd.SupplyCart.get(m.getUniqueId())+p.getPotionEffect(PotionEffectType.JUMP).getDuration(), 1+p.getPotionEffect(PotionEffectType.JUMP).getAmplifier(), false, false));
+				if(p.hasPotionEffect(PotionEffectType.JUMP_BOOST) && !inhancer.containsKey(p.getUniqueId())) {
+					p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 50+50*ssd.SupplyCart.get(m.getUniqueId())+p.getPotionEffect(PotionEffectType.JUMP_BOOST).getDuration(), 1+p.getPotionEffect(PotionEffectType.JUMP_BOOST).getAmplifier(), false, false));
 				}
 				else {
-					p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 50+50*ssd.SupplyCart.get(m.getUniqueId()), 1, false, false));
+					p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 50+50*ssd.SupplyCart.get(m.getUniqueId()), 1, false, false));
 				}
-				if(p.hasPotionEffect(PotionEffectType.FAST_DIGGING)&& !inhancer.containsKey(p.getUniqueId())) {
-					p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 50+50*ssd.SupplyCart.get(m.getUniqueId())+p.getPotionEffect(PotionEffectType.FAST_DIGGING).getDuration(), 1+ssd.SupplyCart.get(m.getUniqueId())/2+p.getPotionEffect(PotionEffectType.FAST_DIGGING).getAmplifier(), false, false));
+				if(p.hasPotionEffect(PotionEffectType.HASTE)&& !inhancer.containsKey(p.getUniqueId())) {
+					p.addPotionEffect(new PotionEffect(PotionEffectType.HASTE, 50+50*ssd.SupplyCart.get(m.getUniqueId())+p.getPotionEffect(PotionEffectType.HASTE).getDuration(), 1+ssd.SupplyCart.get(m.getUniqueId())/2+p.getPotionEffect(PotionEffectType.HASTE).getAmplifier(), false, false));
 				}
 				else {
-					p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 50+50*ssd.SupplyCart.get(m.getUniqueId()), 1+ssd.SupplyCart.get(m.getUniqueId())/2, false, false));
+					p.addPotionEffect(new PotionEffect(PotionEffectType.HASTE, 50+50*ssd.SupplyCart.get(m.getUniqueId()), 1+ssd.SupplyCart.get(m.getUniqueId())/2, false, false));
 				}
 				if(p.hasPotionEffect(PotionEffectType.SPEED)&& !inhancer.containsKey(p.getUniqueId())) {
 					p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 50+50*ssd.SupplyCart.get(m.getUniqueId())+p.getPotionEffect(PotionEffectType.SPEED).getDuration(), 1+p.getPotionEffect(PotionEffectType.SPEED).getAmplifier(), false, false));
@@ -1061,11 +1056,11 @@ public class Medskills extends Pak implements Serializable, Listener {
 				else {
 					p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 50+50*ssd.SupplyCart.get(m.getUniqueId()), 1, false, false));
 				}
-				if(p.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE)&& !inhancer.containsKey(p.getUniqueId())) {
-					p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 50+50*ssd.SupplyCart.get(m.getUniqueId())+p.getPotionEffect(PotionEffectType.INCREASE_DAMAGE).getDuration(), 1+ssd.SupplyCart.get(m.getUniqueId())/2+p.getPotionEffect(PotionEffectType.INCREASE_DAMAGE).getAmplifier(), false, false));
+				if(p.hasPotionEffect(PotionEffectType.STRENGTH)&& !inhancer.containsKey(p.getUniqueId())) {
+					p.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 50+50*ssd.SupplyCart.get(m.getUniqueId())+p.getPotionEffect(PotionEffectType.STRENGTH).getDuration(), 1+ssd.SupplyCart.get(m.getUniqueId())/2+p.getPotionEffect(PotionEffectType.STRENGTH).getAmplifier(), false, false));
 				}
 				else {
-					p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 50+50*ssd.SupplyCart.get(m.getUniqueId()), 1+ssd.SupplyCart.get(m.getUniqueId())/2, false, false));
+					p.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 50+50*ssd.SupplyCart.get(m.getUniqueId()), 1+ssd.SupplyCart.get(m.getUniqueId())/2, false, false));
 				}
 				inhancer.put(p.getUniqueId(), 1);
 				int in = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -1123,14 +1118,14 @@ public class Medskills extends Pak implements Serializable, Listener {
 				}, 25);
 				msstmt.put(p.getUniqueId(), task);
 
-				Location ptl = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 3).getLocation();
+	            Location ptl = gettargetblock(p,3).clone();
 
 				for(int count = 0 ; count <8; count++) {
 					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 						@Override
 						public void run()
 						{
-							ptl.getWorld().spawnParticle(Particle.ITEM_CRACK, ptl, 100,5,5,5, new ItemStack(Material.IRON_BARS));
+							ptl.getWorld().spawnParticle(Particle.ITEM, ptl, 100,5,5,5, new ItemStack(Material.IRON_BARS));
 							p.playSound(ptl, Sound.BLOCK_CHAIN_HIT, 1, 2);
 							p.playSound(ptl, Sound.ENTITY_ARROW_HIT, 1, 2);
 
@@ -1183,7 +1178,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 				}
 				msstm.remove(p.getUniqueId());
 
-				final Location ptl = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 3).getLocation();
+	            Location ptl = gettargetblock(p,3).clone();
 
 
 
@@ -1194,9 +1189,9 @@ public class Medskills extends Pak implements Serializable, Listener {
 						{
 							p.playSound(ptl, Sound.BLOCK_CONDUIT_ACTIVATE, 0.5f, 2);
 							ptl.getWorld().spawnParticle(Particle.DUST_COLOR_TRANSITION, ptl.clone(), 1000, 7, 7, 7, new Particle.DustTransition(Color.RED, Color.GREEN, 3));
-							p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 2, 0, false, false));
+							p.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 2, 0, false, false));
 							ptl.getWorld().spawnParticle(Particle.COMPOSTER, ptl.clone(), 300, 7, 7, 7);
-							ptl.getWorld().spawnParticle(Particle.SPELL, ptl.clone(), 300, 7, 7, 7);
+							ptl.getWorld().spawnParticle(Particle.EFFECT, ptl.clone(), 300, 7, 7, 7);
 
 							for (Entity e : p.getWorld().getNearbyEntities(ptl, 7, 6, 7))
 							{
@@ -1207,7 +1202,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 									if(Party.hasParty(p) && Party.hasParty(p1))	{
 										if(Party.getParty(p).equals(Party.getParty(p1)))
 										{
-											p1.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 2, 0, false, false));
+											p1.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 2, 0, false, false));
 											continue;
 										}
 									}
@@ -1242,7 +1237,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 
 
 
-		if(ClassData.pc.get(p.getUniqueId()) == 61 && ssd.AED.getOrDefault(p.getUniqueId(), 1) >=1 && !p.hasCooldown(Material.ARROW)) {
+		if(ClassData.pc.get(p.getUniqueId()) == 61 && ssd.AED.getOrDefault(p.getUniqueId(), 1) >=1 && !p.hasCooldown(CAREFUL)) {
 			if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK) && p.isSneaking())
 			{
 				double sec =3*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
@@ -1282,7 +1277,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 									fnndlt.put(p.getUniqueId(), task);
 
 
-									Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 2).getLocation();
+						            Location l = gettargetblock(p,2).clone();
 
 									p.getWorld().spawnParticle(Particle.FLASH,l,5,1,1,1);
 									p.playSound(p.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 1, 2);
@@ -1299,16 +1294,16 @@ public class Medskills extends Pak implements Serializable, Listener {
 													if(Party.getParty(p).equals(Party.getParty(p1)))
 													{
 														if(Proficiency.getpro(p)>=1) {
-															p1.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 0, false, false));
+															p1.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1, 0, false, false));
 														}
 														Bukkit.getScheduler().cancelTask(aedt.get(p1.getUniqueId()));
 														aedt.remove(p1.getUniqueId());
 														aed.remove(p1.getUniqueId());
 														p1.setGlowing(false);
-														p1.removePotionEffect(PotionEffectType.CONFUSION);
+														p1.removePotionEffect(PotionEffectType.NAUSEA);
 														p1.removePotionEffect(PotionEffectType.BLINDNESS);
-														p1.removePotionEffect(PotionEffectType.SLOW);
-														p1.removePotionEffect(PotionEffectType.SLOW_DIGGING);
+														p1.removePotionEffect(PotionEffectType.SLOWNESS);
+														p1.removePotionEffect(PotionEffectType.MINING_FATIGUE);
 														p1.removePotionEffect(PotionEffectType.WEAKNESS);
 														p1.removePotionEffect(PotionEffectType.UNLUCK);
 														p1.removePotionEffect(PotionEffectType.HUNGER);
@@ -1353,7 +1348,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 
 
 
-		if(ClassData.pc.get(p.getUniqueId()) == 61&& fnndl.containsKey(p.getUniqueId())&& !p.hasCooldown(Material.ARROW)) {
+		if(ClassData.pc.get(p.getUniqueId()) == 61&& fnndl.containsKey(p.getUniqueId())&& !p.hasCooldown(CAREFUL)) {
 			if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK) && p.isSneaking())
 			{
 				if(p.isSneaking())
@@ -1392,7 +1387,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 						utrlnbzt.put(p.getUniqueId(), task);
 
 
-						Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 3).getLocation();
+			            Location l = gettargetblock(p,3).clone();
 
 						p.playSound(p.getLocation(), Sound.ENTITY_PUFFER_FISH_STING, 1, 1.6f);
 
@@ -1453,7 +1448,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 
 
 
-		if(ClassData.pc.get(p.getUniqueId()) == 61 && utrlnbz.containsKey(p.getUniqueId())&& !p.hasCooldown(Material.ARROW)) {
+		if(ClassData.pc.get(p.getUniqueId()) == 61 && utrlnbz.containsKey(p.getUniqueId())&& !p.hasCooldown(CAREFUL)) {
 			if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK) && p.isSneaking())
 			{
 				if(p.isSneaking())
@@ -1470,8 +1465,8 @@ public class Medskills extends Pak implements Serializable, Listener {
 
 
 						final Location tl = p.getEyeLocation().clone().add(0, -0.65, 0);
-						Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 3).getLocation();
-
+			            Location l = gettargetblock(p,3).clone();
+			            
 						p.getWorld().spawnParticle(Particle.WHITE_ASH, tl.clone().add(tl.getDirection().normalize().multiply(1.2)), 200, 1,1,1,0.5);
 						p.getWorld().spawnParticle(Particle.WHITE_ASH, tl.clone().add(tl.getDirection().normalize().multiply(2)), 400, 1.4,1.4,1.4,0.5);
 						p.getWorld().spawnParticle(Particle.WHITE_ASH, tl.clone().add(tl.getDirection().normalize().multiply(3)), 600, 1.8,1.8,1.8,0.5);
@@ -1484,9 +1479,9 @@ public class Medskills extends Pak implements Serializable, Listener {
 
 						p.playSound(p.getLocation(), Sound.ITEM_INK_SAC_USE, 1, 2);
 						p.playSound(p.getLocation(), Sound.BLOCK_CONDUIT_ACTIVATE, 1, 2);
-						p.getWorld().spawnParticle(Particle.BLOCK_DUST,l,200,3,3,3, Material.AMETHYST_BLOCK.createBlockData());
+						p.getWorld().spawnParticle(Particle.BLOCK,l,200,3,3,3, Material.AMETHYST_BLOCK.createBlockData());
 
-						p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 0, false, false));
+						p.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1, 0, false, false));
 
 						for(int count = 0 ; count <5; count++) {
 							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -1504,7 +1499,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 												if(Party.hasParty(p) && Party.hasParty(p1))	{
 													if(Party.getParty(p).equals(Party.getParty(p1)))
 													{
-														p1.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 0, false, false));
+														p1.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1, 0, false, false));
 														continue;
 													}
 												}
@@ -1654,179 +1649,98 @@ public class Medskills extends Pak implements Serializable, Listener {
 					if(Party.hasParty(p) &&!d.isCancelled())	{
 						if(Party.getMembers(Party.getParty(p)).anyMatch(par -> ClassData.pc.get(Bukkit.getPlayer(par).getUniqueId())==61)&&!d.isCancelled())
 						{
-							if(wrcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-							{
-								double timer = (wrcooldown.get(p.getName())/1000d + 30*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024)) - System.currentTimeMillis()/1000d; // geting time in seconds
-								if(!(timer < 0)) // if timer is still more then 0 or 0
-								{
-								}
-								else // if timer is done
-								{
-									wrcooldown.remove(p.getName()); // removing player from HashMap
-									d.setCancelled(true);
+							if(p.hasPotionEffect(PotionEffectType.RESISTANCE) && p.getPotionEffect(PotionEffectType.RESISTANCE).getAmplifier()>=4) {
+								return;
+							}
 
-									Party.getMembers(Party.getParty(p)).filter(par -> ClassData.pc.get(Bukkit.getPlayer(par).getUniqueId())==61).forEach(m -> {
-										final Player med = Bukkit.getPlayer(m);
-										if(med.getLocale().equalsIgnoreCase("ko_kr")) {
-											med.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(org.bukkit.ChatColor.RED + "환자 발생!").create());
+							SkillBuilder bd = new SkillBuilder()
+									.player(p)
+									.cooldown(30*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024))
+									.kname("빈사")
+									.ename("Groggy")
+									.slot(-1)
+									.hm(wrcooldown)
+									.skillUse(() -> {
+										d.setCancelled(true);
+
+										Party.getMembers(Party.getParty(p)).filter(par -> ClassData.pc.get(Bukkit.getPlayer(par).getUniqueId())==61).forEach(m -> {
+											final Player med = Bukkit.getPlayer(m);
+											if(med.getLocale().equalsIgnoreCase("ko_kr")) {
+												med.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(org.bukkit.ChatColor.RED + "환자 발생!").create());
+											}
+											else {
+												med.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(org.bukkit.ChatColor.RED + "Patient Occurrence!").create());
+											}
+											if(Proficiency.getpro(med)>=1) {
+												p.teleport(med);
+												p.playSound(p.getLocation(), Sound.ENTITY_MINECART_RIDING, 1, 2);
+												Minecart supply = (Minecart) p.getWorld().spawnEntity(p.getLocation(), EntityType.MINECART);
+												supply.setInvulnerable(true);
+												supply.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+												supply.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+												supply.addPassenger(p);
+
+												Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+													@Override
+													public void run()
+													{
+														supply.remove();
+													}
+												}, 100);
+											}
+											p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 3, false, false));
+											p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 100, 3, false, false));
+											p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 100, 3, false, false));
+											p.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 100, 3, false, false));
+											p.playNote(p.getLocation(), Instrument.CHIME, Note.natural(1, Tone.A));
+											p.playNote(p.getLocation(), Instrument.DIDGERIDOO, Note.natural(1, Tone.D));
+										});
+
+										int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
+											@Override
+											public void run()
+											{
+												p.setHealth(1);
+												Holding.holding(null, p, 10l);
+												p.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 30, 100, false, false));
+												p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 30, 100, false, false));
+												p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 30, 100, false, false));
+												p.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 30, 100, false, false));
+												p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 30, 100, false, false));
+												p.addPotionEffect(new PotionEffect(PotionEffectType.UNLUCK, 30, 100, false, false));
+												p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 30, 100, false, false));
+												p.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 30, 100, false, false));
+												p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 0.2f, 0);
+											}
+										}, 10,10);
+										aedt.put(p.getUniqueId(), task);
+										if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+											p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(org.bukkit.ChatColor.DARK_GRAY +"빈사 상태").create());
 										}
 										else {
-											med.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(org.bukkit.ChatColor.RED + "Patient Occurrence!").create());
+											p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(org.bukkit.ChatColor.DARK_GRAY +"Groggy").create());
 										}
-										if(Proficiency.getpro(med)>=1) {
-											p.teleport(med);
-											p.playSound(p.getLocation(), Sound.ENTITY_MINECART_RIDING, 1, 2);
-											Minecart supply = (Minecart) p.getWorld().spawnEntity(p.getLocation(), EntityType.MINECART);
-											supply.setInvulnerable(true);
-											supply.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-											supply.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-											supply.addPassenger(p);
-
-											Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-												@Override
-												public void run()
-												{
-													supply.remove();
-												}
-											}, 100);
-										}
-										p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 3, false, false));
-										p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 100, 3, false, false));
-										p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 100, 3, false, false));
-										p.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 100, 3, false, false));
-										p.playNote(p.getLocation(), Instrument.CHIME, Note.natural(1, Tone.A));
-										p.playNote(p.getLocation(), Instrument.DIDGERIDOO, Note.natural(1, Tone.D));
-									});
-
-									int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-										@Override
-										public void run()
-										{
-											p.setHealth(1);
-											p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 30, 100, false, false));
-											p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 30, 100, false, false));
-											p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 30, 100, false, false));
-											p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 30, 100, false, false));
-											p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 30, 100, false, false));
-											p.addPotionEffect(new PotionEffect(PotionEffectType.UNLUCK, 30, 100, false, false));
-											p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 30, 100, false, false));
-											p.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 30, 100, false, false));
-											p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 0.2f, 0);
-										}
-									}, 10,10);
-									aedt.put(p.getUniqueId(), task);
-									if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-										p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(org.bukkit.ChatColor.DARK_GRAY +"빈사 상태").create());
-									}
-									else {
-										p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(org.bukkit.ChatColor.DARK_GRAY +"Groggy").create());
-									}
-									aed.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
-									aed.putIfAbsent(p.getUniqueId(), 0);
-
-									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-										@Override
-										public void run()
-										{
-											aed.computeIfPresent(p.getUniqueId(), (k,v) -> v-1);
-											if(aed.containsKey(p.getUniqueId()) && aed.get(p.getUniqueId())<0) {
-												aed.remove(p.getUniqueId());;
-												p.setHealth(0);
-											}
-											if(aedt.containsKey(p.getUniqueId())) {
-												Bukkit.getScheduler().cancelTask(aedt.get(p.getUniqueId()));
-												aedt.remove(p.getUniqueId());
-											}
-										}
-									}, 80);
-
-									wrcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-								}
-							}
-							else // if cooldown doesn't have players name in it
-							{
-								d.setCancelled(true);
-
-								Party.getMembers(Party.getParty(p)).filter(par -> ClassData.pc.get(Bukkit.getPlayer(par).getUniqueId())==61).forEach(m -> {
-									final Player med = Bukkit.getPlayer(m);
-									if(med.getLocale().equalsIgnoreCase("ko_kr")) {
-										med.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(org.bukkit.ChatColor.RED + "환자 발생!").create());
-									}
-									else {
-										med.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(org.bukkit.ChatColor.RED + "Patient Occurrence!").create());
-									}
-									if(Proficiency.getpro(med)>=1) {
-										p.teleport(med);
-										p.playSound(p.getLocation(), Sound.ENTITY_MINECART_RIDING, 1, 2);
-										Minecart supply = (Minecart) p.getWorld().spawnEntity(p.getLocation(), EntityType.MINECART);
-										supply.setInvulnerable(true);
-										supply.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-										supply.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-										supply.addPassenger(p);
+										aed.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
+										aed.putIfAbsent(p.getUniqueId(), 0);
 
 										Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 											@Override
 											public void run()
 											{
-												supply.remove();
+												aed.computeIfPresent(p.getUniqueId(), (k,v) -> v-1);
+												if(aed.containsKey(p.getUniqueId()) && aed.get(p.getUniqueId())<0) {
+													aed.remove(p.getUniqueId());;
+													p.setHealth(0);
+												}
+												if(aedt.containsKey(p.getUniqueId())) {
+													Bukkit.getScheduler().cancelTask(aedt.get(p.getUniqueId()));
+													aedt.remove(p.getUniqueId());
+												}
 											}
-										}, 100);
-									}
-									p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 3, false, false));
-									p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 100, 3, false, false));
-									p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 100, 3, false, false));
-									p.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 100, 3, false, false));
-									p.playNote(p.getLocation(), Instrument.CHIME, Note.natural(1, Tone.A));
-									p.playNote(p.getLocation(), Instrument.DIDGERIDOO, Note.natural(1, Tone.D));
-								});
+										}, 80);
 
-								int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-									@Override
-									public void run()
-									{
-										p.setHealth(1);
-										p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 30, 100, false, false));
-										p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 30, 100, false, false));
-										p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 30, 100, false, false));
-										p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 30, 100, false, false));
-										p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 30, 100, false, false));
-										p.addPotionEffect(new PotionEffect(PotionEffectType.UNLUCK, 30, 100, false, false));
-										p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 30, 100, false, false));
-										p.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 30, 100, false, false));
-										p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 0.2f, 0);
-									}
-								}, 10,10);
-								aedt.put(p.getUniqueId(), task);
-								if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-									p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(org.bukkit.ChatColor.DARK_GRAY +"빈사 상태").create());
-								}
-								else {
-									p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(org.bukkit.ChatColor.DARK_GRAY +"Groggy").create());
-								}
-								if(aed.containsKey(p.getUniqueId())) {
-									aed.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
-								}
-								else {
-									aed.put(p.getUniqueId(), 0);
-								}
-
-								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-									@Override
-									public void run()
-									{
-										aed.computeIfPresent(p.getUniqueId(), (k,v) -> v-1);
-										if(aed.containsKey(p.getUniqueId()) && aed.get(p.getUniqueId())<0) {
-											aed.remove(p.getUniqueId());
-											p.setHealth(0);
-										}
-										if(aedt.containsKey(p.getUniqueId())) {
-											Bukkit.getScheduler().cancelTask(aedt.get(p.getUniqueId()));
-											aedt.remove(p.getUniqueId());
-										}
-									}
-								}, 80);
-								wrcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-							}
+									});
+							bd.execute();
 						}
 					}
 				}
@@ -2000,7 +1914,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 		if(ClassData.pc.get(p.getUniqueId()) == 61  && ev.getNewSlot()==3 && (is.getType().name().equals("CROSSBOW")) && p.isSneaking()&& Proficiency.getpro(p) >=1)
 		{
 			ev.setCancelled(true);
-			p.setCooldown(Material.ARROW, 1);
+			p.setCooldown(CAREFUL, 1);
 			SkillBuilder bd = new SkillBuilder()
 					.player(p)
 					.cooldown(90/Proficiency.getpro(p)*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d))
@@ -2009,7 +1923,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 					.slot(6)
 					.hm(bultcooldown)
 					.skillUse(() -> {
-						Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 3).getLocation();
+			            Location l = gettargetblock(p,3).clone();
 						HashSet<ArmorStand> remove = new HashSet<>();
 						p.getWorld().spawnParticle(Particle.END_ROD, l.clone().add(0, 6, 0), 400, 4, 4, 4);
 						for(int vi = -1; vi<4; vi+=1) {
@@ -2124,7 +2038,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 							public void run()
 							{
 								p.getWorld().spawnParticle(Particle.END_ROD, l.clone().add(0, 6, 0), 20, 4, 4, 4);
-								p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1,0,false,false));
+								p.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1,0,false,false));
 								p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 4,0,false,false));
 								for(Entity e: p.getWorld().getNearbyEntities(p.getLocation(),5,5,5)) {
 									if (e instanceof Player)
@@ -2134,7 +2048,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 										if(Party.hasParty(p) && Party.hasParty(p1))	{
 											if(Party.getParty(p).equals(Party.getParty(p1)))
 											{
-												p1.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1,0,false,false));
+												p1.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1,0,false,false));
 												p1.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1,0,false,false));
 											}
 										}
@@ -2171,10 +2085,10 @@ public class Medskills extends Pak implements Serializable, Listener {
 
 
 
-		if(ClassData.pc.get(p.getUniqueId()) == 61 && (is.getType().name().equals("CROSSBOW"))  && ev.getNewSlot()==4 && !p.isSneaking()&& p.isSprinting()&& Proficiency.getpro(p) >=2)
+		if(ClassData.pc.get(p.getUniqueId()) == 61 && (is.getType().name().equals("CROSSBOW"))  && ev.getNewSlot()==4 && p.isSneaking()&& Proficiency.getpro(p) >=2)
 		{
 			ev.setCancelled(true);
-			p.setCooldown(Material.ARROW, 1);
+			p.setCooldown(CAREFUL, 1);
 			SkillBuilder bd = new SkillBuilder()
 					.player(p)
 					.cooldown(60*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d))

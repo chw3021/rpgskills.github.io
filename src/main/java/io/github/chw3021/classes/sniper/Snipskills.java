@@ -10,6 +10,7 @@ import io.github.chw3021.classes.ClassData;
 import io.github.chw3021.classes.Proficiency;
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.commons.Pak;
+import io.github.chw3021.commons.SkillBuilder;
 import io.github.chw3021.obtains.Obtained;
 import io.github.chw3021.party.Party;
 import io.github.chw3021.rmain.RMain;
@@ -85,6 +86,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 	private HashMap<String, Long> cscooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> arcooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> dpcooldown = new HashMap<String, Long>();
+	private HashMap<String, Long> cwcooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> bultcooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> bult2cooldown = new HashMap<String, Long>();
 
@@ -171,7 +173,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 
 
 
-		if(ClassData.pc.get(p.getUniqueId()) == 4 && ssd.Rope.getOrDefault(p.getUniqueId(), 0)>=1 && !p.hasCooldown(Material.FIREWORK_STAR)) {
+		if(ClassData.pc.get(p.getUniqueId()) == 4 && ssd.Rope.getOrDefault(p.getUniqueId(), 0)>=1 && !p.hasCooldown(CAREFUL)) {
 			if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK) && !p.isOnGround() && !p.isSneaking())
 			{
 
@@ -179,143 +181,73 @@ public class Snipskills extends Pak implements Serializable, Listener {
 				if(p.getInventory().getItemInMainHand().getType() == Material.CROSSBOW && ssd.Rope.get(p.getUniqueId())>=1)
 				{
 					ev.setCancelled(true);
-					if(wrcooldown.containsKey(p.getName()))
-					{
-
-						double timer = (wrcooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d;
-						if(!(timer < 0))
-						{
-							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("밧줄타기 재사용 대기시간이 " + String.valueOf(Math.round(timer*10)/10.0) + "초 남았습니다").create());
-							}
-							else {
-								p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Rope").create());
-							}
-						}
-						else
-						{
-							wrcooldown.remove(p.getName());
-
-							ev.setCancelled(true);
+					SkillBuilder bd = new SkillBuilder()
+							.player(p)
+							.cooldown(sec)
+							.kname("밧줄타기")
+							.ename("Rope")
+							.slot(0)
+							.hm(wrcooldown)
+							.skillUse(() -> {
+								ev.setCancelled(true);
 
 
-							p.playSound(p.getLocation(), Sound.ITEM_CROSSBOW_LOADING_START, 1.0f, 0.5f);
-							p.playSound(p.getLocation(), Sound.ITEM_CROSSBOW_SHOOT, 1.0f, 0.5f);
-							ArrayList<Location> line = new ArrayList<Location>();
-							AtomicInteger j = new AtomicInteger(0);
-							Boolean lb = false;
-							for(double d = 0.1; d <= 18; d += 0.1) {
-								Location pl = p.getEyeLocation().clone();
-								pl.add(pl.getDirection().normalize().multiply(d));
-								if(!pl.getBlock().isPassable()) {
-									lb = true;
-									break;
-								}
-								line.add(pl);
-							}
-							line.forEach(i -> {
-								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-									@Override
-									public void run()
-									{
-										p.getWorld().spawnParticle(Particle.CRIT ,i, 3, 0.2,0.2,0.2,0);
+								p.playSound(p.getLocation(), Sound.ITEM_CROSSBOW_LOADING_START, 1.0f, 0.5f);
+								p.playSound(p.getLocation(), Sound.ITEM_CROSSBOW_SHOOT, 1.0f, 0.5f);
+								ArrayList<Location> line = new ArrayList<Location>();
+								AtomicInteger j = new AtomicInteger(0);
+								Boolean lb = false;
+								for(double d = 0.1; d <= 18; d += 0.1) {
+									Location pl = p.getEyeLocation().clone();
+									pl.add(pl.getDirection().normalize().multiply(d));
+									if(!pl.getBlock().isPassable()) {
+										lb = true;
+										break;
 									}
-								}, j.getAndIncrement()/15);
-							});
-							if(lb) {
-
-								if(Proficiency.getpro(p)>=1) {
-									List<ItemStack> arrows = new ArrayList<ItemStack>();
-									ItemStack far = new ItemStack(Material.ARROW);
-									ItemStack cb = p.getInventory().getItemInMainHand();
-									CrossbowMeta cbm = (CrossbowMeta) cb.getItemMeta();
-									p.playSound(p.getLocation(), Sound.ITEM_CROSSBOW_QUICK_CHARGE_3, 1, 2);
-									if(!cbm.hasChargedProjectiles() && p.getInventory().contains(Material.ARROW,1)) {
-										arrows.add(far);
-										if(cb.containsEnchantment(Enchantment.MULTISHOT)) {
-											arrows.add(far);
-											arrows.add(far);
-										}
-										cbm.setChargedProjectiles(arrows);
-										cb.setItemMeta(cbm);
-										p.getInventory().removeItem( new ItemStack(Material.ARROW,1));
-									}
+									line.add(pl);
 								}
 								line.forEach(i -> {
 									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 										@Override
 										public void run()
 										{
-											p.teleport(i);
-											p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 40, 123, false, false));
+											p.getWorld().spawnParticle(Particle.BLOCK ,i, 3, 0.2,0.2,0.2,0, Bukkit.createBlockData(Material.BIRCH_FENCE));
 										}
 									}, j.getAndIncrement()/15);
 								});
-							}
+								if(lb) {
 
-							wrcooldown.put(p.getName(), System.currentTimeMillis());
-						}
-					}
-					else
-					{
-						ev.setCancelled(true);
-
-						p.playSound(p.getLocation(), Sound.ITEM_CROSSBOW_LOADING_START, 1.0f, 0.5f);
-						p.playSound(p.getLocation(), Sound.ITEM_CROSSBOW_SHOOT, 1.0f, 0.5f);
-						ArrayList<Location> line = new ArrayList<Location>();
-						AtomicInteger j = new AtomicInteger(0);
-						Boolean lb = false;
-						for(double d = 0.1; d <= 18; d += 0.1) {
-							Location pl = p.getEyeLocation().clone();
-							pl.add(pl.getDirection().normalize().multiply(d));
-							if(!pl.getBlock().isPassable()) {
-								lb = true;
-								break;
-							}
-							line.add(pl);
-						}
-						line.forEach(i -> {
-							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-								@Override
-								public void run()
-								{
-									p.getWorld().spawnParticle(Particle.CRIT ,i, 3, 0.2,0.2,0.2,0);
-								}
-							}, j.getAndIncrement()/15);
-						});
-						if(lb) {
-
-							if(Proficiency.getpro(p)>=1) {
-								List<ItemStack> arrows = new ArrayList<ItemStack>();
-								ItemStack far = new ItemStack(Material.ARROW);
-								ItemStack cb = p.getInventory().getItemInMainHand();
-								CrossbowMeta cbm = (CrossbowMeta) cb.getItemMeta();
-								p.playSound(p.getLocation(), Sound.ITEM_CROSSBOW_QUICK_CHARGE_3, 1, 2);
-								if(!cbm.hasChargedProjectiles() && p.getInventory().contains(Material.ARROW,1)) {
-									arrows.add(far);
-									if(cb.containsEnchantment(Enchantment.MULTISHOT)) {
-										arrows.add(far);
-										arrows.add(far);
+									if(Proficiency.getpro(p)>=1) {
+										List<ItemStack> arrows = new ArrayList<ItemStack>();
+										ItemStack far = new ItemStack(Material.ARROW);
+										ItemStack cb = p.getInventory().getItemInMainHand();
+										CrossbowMeta cbm = (CrossbowMeta) cb.getItemMeta();
+										p.playSound(p.getLocation(), Sound.ITEM_CROSSBOW_QUICK_CHARGE_3, 1, 2);
+										if(!cbm.hasChargedProjectiles() && p.getInventory().contains(Material.ARROW,1)) {
+											arrows.add(far);
+											if(cb.containsEnchantment(Enchantment.MULTISHOT)) {
+												arrows.add(far);
+												arrows.add(far);
+											}
+											cbm.setChargedProjectiles(arrows);
+											cb.setItemMeta(cbm);
+											p.getInventory().removeItem( new ItemStack(Material.ARROW,1));
+										}
 									}
-									cbm.setChargedProjectiles(arrows);
-									cb.setItemMeta(cbm);
-									p.getInventory().removeItem( new ItemStack(Material.ARROW,1));
+									line.forEach(i -> {
+										Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+											@Override
+											public void run()
+											{
+												p.teleport(i);
+												p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 40, 123, false, false));
+											}
+										}, j.getAndIncrement()/15);
+									});
 								}
-							}
-							line.forEach(i -> {
-								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-									@Override
-									public void run()
-									{
-										p.teleport(i);
-										p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 40, 123, false, false));
-									}
-								}, j.getAndIncrement()/15);
+
 							});
-						}
-
-						wrcooldown.put(p.getName(), System.currentTimeMillis());
-					}
+					bd.execute();
 				}
 			}
 		}
@@ -350,97 +282,50 @@ public class Snipskills extends Pak implements Serializable, Listener {
 				if(p.getInventory().getItemInMainHand().getType() == Material.CROSSBOW)
 				{
 					ev.setCancelled(true);
+					SkillBuilder bd = new SkillBuilder()
+							.player(p)
+							.cooldown(sec)
+							.kname("철갑화살")
+							.ename("APA")
+							.slot(1)
+							.hm(arcooldown)
+							.skillUse(() -> {
+								if(shckarwt.containsKey(p.getUniqueId())) {
+									Bukkit.getScheduler().cancelTask(shckarwt.get(p.getUniqueId()));
+									shckarwt.remove(p.getUniqueId());
+								}
 
-					if(arcooldown.containsKey(p.getName()))
-					{
-
-						double timer = (arcooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d;
-						if(!(timer < 0))
-						{
-							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("철갑화살 재사용 대기시간이 " + String.valueOf(Math.round(timer*10)/10.0) + "초 남았습니다").create());
-							}
-							else {
-								p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use APA").create());
-							}
-						}
-						else
-						{
-							arcooldown.remove(p.getName());
-
-							if(shckarwt.containsKey(p.getUniqueId())) {
-								Bukkit.getScheduler().cancelTask(shckarwt.get(p.getUniqueId()));
-								shckarwt.remove(p.getUniqueId());
-							}
-
-							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-								@Override
-								public void run() {
-									if(Proficiency.getpro(p)>=1) {
-										shckarw.putIfAbsent(p.getUniqueId(), 0);
+								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+									@Override
+									public void run() {
+										if(Proficiency.getpro(p)>=1) {
+											shckarw.putIfAbsent(p.getUniqueId(), 0);
+										}
 									}
-								}
-							}, 3);
+								}, 3);
 
-							int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-								@Override
-								public void run() {
-									shckarw.remove(p.getUniqueId());
-								}
-							}, 25);
-							shckarwt.put(p.getUniqueId(), task);
+								int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+									@Override
+									public void run() {
+										shckarw.remove(p.getUniqueId());
+									}
+								}, 25);
+								shckarwt.put(p.getUniqueId(), task);
 
 
-							p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1.0f, 2f);
-							p.playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1.0f, 2f);
-							Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 20, 1);
-							ar.setShooter(p);
-							ar.setShotFromCrossbow(true);
-							ar.setCritical(true);
-							ar.setPierceLevel(127);
-							ar.setMetadata("APA", new FixedMetadataValue(RMain.getInstance(), true));
-							p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1f, 1.6f);
-							ar.setDamage(ar.getDamage()*(1+ssd.ArmourPiercingArrow.get(p.getUniqueId())*0.2));
-							arcooldown.put(p.getName(), System.currentTimeMillis());
-						}
-					}
-					else
-					{
+								p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1.0f, 2f);
+								p.playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1.0f, 2f);
+								Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 20, 1);
+								ar.setShooter(p);
+								ar.setWeapon(p.getInventory().getItemInMainHand());
+								ar.setCritical(true);
+								ar.setPierceLevel(127);
+								ar.setMetadata("APA", new FixedMetadataValue(RMain.getInstance(), true));
+								p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1f, 1.6f);
+								ar.setDamage(ar.getDamage()*(1+ssd.ArmourPiercingArrow.get(p.getUniqueId())*0.2));
+							});
+					bd.execute();
 
-						if(shckarwt.containsKey(p.getUniqueId())) {
-							Bukkit.getScheduler().cancelTask(shckarwt.get(p.getUniqueId()));
-							shckarwt.remove(p.getUniqueId());
-						}
-
-						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-							@Override
-							public void run() {
-								if(Proficiency.getpro(p)>=1) {
-									shckarw.putIfAbsent(p.getUniqueId(), 0);
-								}
-							}
-						}, 3);
-
-						int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-							@Override
-							public void run() {
-								shckarw.remove(p.getUniqueId());
-							}
-						}, 25);
-						shckarwt.put(p.getUniqueId(), task);
-
-						p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1.0f, 2f);
-						p.playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1.0f, 2f);
-						Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 20, 1);
-						ar.setShooter(p);
-						ar.setShotFromCrossbow(true);
-						ar.setCritical(true);
-						ar.setPierceLevel(127);
-						ar.setMetadata("APA", new FixedMetadataValue(RMain.getInstance(), true));
-						p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1f, 1.6f);
-						ar.setDamage(ar.getDamage()*(1+ssd.ArmourPiercingArrow.get(p.getUniqueId())*0.2));
-						arcooldown.put(p.getName(), System.currentTimeMillis());
-					}
 				}
 			}
 		}
@@ -526,7 +411,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 					p.playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1.0f, 1.5f);
 					Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 20, 1);
 					ar.setShooter(p);
-					ar.setShotFromCrossbow(true);
+					ar.setWeapon(p.getInventory().getItemInMainHand());
 					ar.setCritical(true);
 					ar.setPierceLevel(0);
 					ar.setKnockbackStrength(5);
@@ -592,7 +477,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 					dtyr.remove(p.getUniqueId());
 
 					p.playSound(p.getLocation(), Sound.ENTITY_WITHER_SHOOT, 1f, 2f);
-					Firework fr = (Firework) p.getWorld().spawnEntity(p.getEyeLocation(), EntityType.FIREWORK);
+					Firework fr = (Firework) p.getWorld().spawnEntity(p.getEyeLocation(), EntityType.FIREWORK_ROCKET);
 					FireworkEffect effect = FireworkEffect.builder()
 							.with(Type.BALL)
 							.withColor(Color.GRAY)
@@ -620,8 +505,8 @@ public class Snipskills extends Pak implements Serializable, Listener {
 			Firework fr = f.getEntity();
 			Player p = (Player)fr.getShooter();
 			Location frl = fr.getLocation();
-			frl.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, frl, 10,3,3,3);
-			frl.getWorld().spawnParticle(Particle.SMOKE_LARGE, frl, 100,3,3,3);
+			frl.getWorld().spawnParticle(Particle.EXPLOSION, frl, 10,3,3,3);
+			frl.getWorld().spawnParticle(Particle.SMOKE, frl, 100,3,3,3);
 			frl.getWorld().playSound(frl, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1f, 0.32f);
 
 			for(Entity e : fr.getWorld().getNearbyEntities(fr.getLocation(), 3,3, 3)) {
@@ -660,160 +545,80 @@ public class Snipskills extends Pak implements Serializable, Listener {
 				double sec =10*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 				if(p.getInventory().getItemInMainHand().getType() == Material.CROSSBOW)
 				{
-					if(dpcooldown.containsKey(p.getName()))
-					{
+					SkillBuilder bd = new SkillBuilder()
+							.player(p)
+							.cooldown(sec)
+							.kname("섬광탄")
+							.ename("FlashBomb")
+							.slot(2)
+							.hm(dpcooldown)
+							.skillUse(() -> {
+								if(smkshlt.containsKey(p.getUniqueId())) {
+									Bukkit.getScheduler().cancelTask(smkshlt.get(p.getUniqueId()));
+									smkshlt.remove(p.getUniqueId());
+								}
 
-						double timer = ((dpcooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d);
-						if(!(timer < 0))
-						{
-							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("섬광탄 재사용 대기시간이 " + String.valueOf(Math.round(timer*10)/10.0) + "초 남았습니다").create());
-							}
-							else {
-								p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + (int)timer + " seconds to use FlashBomb").create());
-							}
-						}
-						else
-						{
-							dpcooldown.remove(p.getName());
-
-							if(smkshlt.containsKey(p.getUniqueId())) {
-								Bukkit.getScheduler().cancelTask(smkshlt.get(p.getUniqueId()));
-								smkshlt.remove(p.getUniqueId());
-							}
-
-							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-								@Override
-								public void run() {
-									if(Proficiency.getpro(p)>=1) {
-										smkshl.putIfAbsent(p.getUniqueId(), 0);
+								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+									@Override
+									public void run() {
+										if(Proficiency.getpro(p)>=1) {
+											smkshl.putIfAbsent(p.getUniqueId(), 0);
+										}
 									}
-								}
-							}, 3);
+								}, 3);
 
-							int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-								@Override
-								public void run() {
-									smkshl.remove(p.getUniqueId());
-								}
-							}, 30);
-							smkshlt.put(p.getUniqueId(), task);
+								int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+									@Override
+									public void run() {
+										smkshl.remove(p.getUniqueId());
+									}
+								}, 30);
+								smkshlt.put(p.getUniqueId(), task);
 
-							Snowball sn = (Snowball) p.getWorld().spawnEntity(p.getEyeLocation(), EntityType.SNOWBALL);
-							sn.setItem(new ItemStack(Material.GLOW_BERRIES));
-							sn.setShooter(p);
-							sn.setVelocity(sn.getVelocity().add(p.getLocation().getDirection().normalize().multiply(0.75)));
-							sn.setPersistent(true);
-							Location tl = p.getLocation();
-							tl.setDirection(tl.getDirection().normalize().rotateAroundY(Math.PI));
-							tl.add(tl.getDirection().normalize().multiply(4));
-							tl.setDirection(p.getLocation().getDirection());
-							if(!tl.getBlock().isPassable())
-							{tl.add(0, 1, 0);}
-							if(tl.getBlock().isPassable())
-							{p.teleport(tl);}
-							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-								@Override
-								public void run()
-								{
-									p.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, sn.getLocation(), 2,1,1,1);
-									p.getWorld().spawnParticle(Particle.FLASH, sn.getLocation(), 20,5,5,5);
-									p.playSound(sn.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1, 2);
-									for(Entity e : sn.getNearbyEntities(5, 5, 5)) {
-										if(e instanceof LivingEntity && e!=p) {
-											if (e instanceof Player)
-											{
-												Player p1 = (Player) e;
-												if(Party.hasParty(p) && Party.hasParty(p1))	{
-													if(Party.getParty(p).equals(Party.getParty(p1)))
-													{
-														continue;
+								Snowball sn = (Snowball) p.getWorld().spawnEntity(p.getEyeLocation(), EntityType.SNOWBALL);
+								sn.setItem(new ItemStack(Material.GLOW_BERRIES));
+								sn.setShooter(p);
+								sn.setVelocity(sn.getVelocity().add(p.getLocation().getDirection().normalize().multiply(0.75)));
+								sn.setPersistent(true);
+								Location tl = p.getLocation();
+								tl.setDirection(tl.getDirection().normalize().rotateAroundY(Math.PI));
+								tl.add(tl.getDirection().normalize().multiply(4));
+								tl.setDirection(p.getLocation().getDirection());
+								if(!tl.getBlock().isPassable())
+								{tl.add(0, 1, 0);}
+								if(tl.getBlock().isPassable())
+								{p.teleport(tl);}
+								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+									@Override
+									public void run()
+									{
+										p.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, sn.getLocation(), 2,1,1,1);
+										p.getWorld().spawnParticle(Particle.FLASH, sn.getLocation(), 20,5,5,5);
+										p.playSound(sn.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1, 2);
+										for(Entity e : sn.getNearbyEntities(5, 5, 5)) {
+											if(e instanceof LivingEntity && e!=p) {
+												if (e instanceof Player)
+												{
+													Player p1 = (Player) e;
+													if(Party.hasParty(p) && Party.hasParty(p1))	{
+														if(Party.getParty(p).equals(Party.getParty(p1)))
+														{
+															continue;
+														}
 													}
 												}
-											}
-											LivingEntity le = (LivingEntity) e;
-											atk1(0.5*(1+ssd.FlashBomb.get(p.getUniqueId())*0.0687), p, le);
-											le.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 56, 4, false, false));
-											Holding.holding(p, le, 10l);
-										}
-									}
-									sn.setPersistent(false);
-									sn.remove();
-								}
-							}, 35);
-							dpcooldown.put(p.getName(), System.currentTimeMillis());
-						}
-					}
-					else
-					{
-
-						if(smkshlt.containsKey(p.getUniqueId())) {
-							Bukkit.getScheduler().cancelTask(smkshlt.get(p.getUniqueId()));
-							smkshlt.remove(p.getUniqueId());
-						}
-
-						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-							@Override
-							public void run() {
-								if(Proficiency.getpro(p)>=1) {
-									smkshl.putIfAbsent(p.getUniqueId(), 0);
-								}
-							}
-						}, 3);
-
-						int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-							@Override
-							public void run() {
-								smkshl.remove(p.getUniqueId());
-							}
-						}, 30);
-						smkshlt.put(p.getUniqueId(), task);
-
-						Snowball sn = (Snowball) p.getWorld().spawnEntity(p.getEyeLocation(), EntityType.SNOWBALL);
-						sn.setItem(new ItemStack(Material.GLOW_BERRIES));
-						sn.setShooter(p);
-						sn.setVelocity(sn.getVelocity().add(p.getLocation().getDirection().normalize().multiply(0.75)));
-						sn.setPersistent(true);
-						Location tl = p.getLocation();
-						tl.setDirection(tl.getDirection().normalize().rotateAroundY(Math.PI));
-						tl.add(tl.getDirection().normalize().multiply(4));
-						tl.setDirection(p.getLocation().getDirection());
-						if(!tl.getBlock().isPassable())
-						{tl.add(0, 1, 0);}
-						if(tl.getBlock().isPassable())
-						{p.teleport(tl);}
-						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-							@Override
-							public void run()
-							{
-								p.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, sn.getLocation(), 2,1,1,1);
-								p.getWorld().spawnParticle(Particle.FLASH, sn.getLocation(), 20,5,5,5);
-								p.playSound(sn.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1, 2);
-								for(Entity e : sn.getNearbyEntities(5, 5, 5)) {
-									if(e instanceof LivingEntity && e!=p) {
-										if (e instanceof Player)
-										{
-											Player p1 = (Player) e;
-											if(Party.hasParty(p) && Party.hasParty(p1))	{
-												if(Party.getParty(p).equals(Party.getParty(p1)))
-												{
-													continue;
-												}
+												LivingEntity le = (LivingEntity) e;
+												atk1(0.5*(1+ssd.FlashBomb.get(p.getUniqueId())*0.0687), p, le);
+												le.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 56, 4, false, false));
+												Holding.holding(p, le, 10l);
 											}
 										}
-										LivingEntity le = (LivingEntity) e;
-										atk1(0.5*(1+ssd.FlashBomb.get(p.getUniqueId())*0.0687), p, le);
-										le.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 56, 4, false, false));
-										Holding.holding(p, le, 10l);
+										sn.setPersistent(false);
+										sn.remove();
 									}
-								}
-								sn.setPersistent(false);
-								sn.remove();
-							}
-						}, 35);
-						dpcooldown.put(p.getName(), System.currentTimeMillis());
-					}
-					ev.setCancelled(true);
+								}, 35);
+							});
+					bd.execute();
 				}
 			}
 		}
@@ -871,9 +676,8 @@ public class Snipskills extends Pak implements Serializable, Listener {
 					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 						@Override
 						public void run() {
-							p.playSound(sn.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 2);
-							p.playSound(sn.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 0);
-							p.playSound(sn.getLocation(), Sound.BLOCK_SMOKER_SMOKE, 1, 2);
+							p.playSound(sn.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 0.4f, 0);
+							p.playSound(sn.getLocation(), Sound.BLOCK_SMOKER_SMOKE, 0.4f, 2);
 
 							for(int count = 0 ; count <40+ssd.FlashBomb.get(p.getUniqueId())*0.1; count++) {
 								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -881,7 +685,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 									public void run()
 									{
 										p.getWorld().spawnParticle(Particle.WHITE_ASH, sn.getLocation(), 300,5,5,5,0);
-										p.getWorld().spawnParticle(Particle.CAMPFIRE_SIGNAL_SMOKE, sn.getLocation(), 100,5,5,5,0.1);
+										p.getWorld().spawnParticle(Particle.CAMPFIRE_SIGNAL_SMOKE, sn.getLocation(), 100,5,0.1,5,0.1);
 
 
 										for (Entity e : sn.getWorld().getNearbyEntities(sn.getLocation().clone(), 6, 6, 6))
@@ -982,7 +786,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 				ev.setCancelled(true);
 				Player p = Bukkit.getPlayer(fallingb.getMetadata("dangerclose").get(0).asString());
 				Location tl = fallingb.getLocation();
-				tl.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, tl, 2,1,1,1);
+				tl.getWorld().spawnParticle(Particle.EXPLOSION, tl, 2,1,1,1);
 
 				for (Entity e : p.getWorld().getNearbyEntities(tl, 4, 4, 4))
 				{
@@ -999,6 +803,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 					if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
 						LivingEntity le = (LivingEntity)e;
 						atk1(0.34*(1 + ssd.FlashBomb.get(p.getUniqueId())*0.04), p, le);
+						Holding.holding(p, le, 10l);
 					}
 
 				}
@@ -1018,7 +823,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 				ev.setCancelled(true);
 				Player p = Bukkit.getPlayer(fallingb.getMetadata("dangerclose").get(0).asString());
 				Location tl = fallingb.getLocation();
-				tl.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, tl, 2,1,1,1);
+				tl.getWorld().spawnParticle(Particle.EXPLOSION, tl, 2,1,1,1);
 
 				for (Entity e : p.getWorld().getNearbyEntities(tl, 4, 4, 4))
 				{
@@ -1035,6 +840,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 					if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
 						LivingEntity le = (LivingEntity)e;
 						atk1(0.34*(1 + ssd.FlashBomb.get(p.getUniqueId())*0.04), p, le);
+						Holding.holding(p, le, 10l);
 					}
 
 				}
@@ -1053,7 +859,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 				ev.setCancelled(true);
 				Player p = Bukkit.getPlayer(fallingb.getMetadata("dangerclose").get(0).asString());
 				Location tl = fallingb.getLocation();
-				tl.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, tl, 2,1,1,1);
+				tl.getWorld().spawnParticle(Particle.EXPLOSION, tl, 2,1,1,1);
 
 				for (Entity e : p.getWorld().getNearbyEntities(tl, 4, 4, 4))
 				{
@@ -1070,6 +876,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 					if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
 						LivingEntity le = (LivingEntity)e;
 						atk1(0.34*(1 + ssd.FlashBomb.get(p.getUniqueId())*0.04), p, le);
+						Holding.holding(p, le, 10l);
 					}
 
 				}
@@ -1087,7 +894,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 
 
 
-		if(ClassData.pc.get(p.getUniqueId()) == 4 && ssd.Flare.getOrDefault(p.getUniqueId(),0)>=1 && !p.hasCooldown(Material.FIREWORK_STAR)) {
+		if(ClassData.pc.get(p.getUniqueId()) == 4 && ssd.Flare.getOrDefault(p.getUniqueId(),0)>=1 && !p.hasCooldown(CAREFUL)) {
 			if((a == Action.LEFT_CLICK_AIR || a == Action.LEFT_CLICK_BLOCK) && p.isSneaking())
 			{
 
@@ -1095,64 +902,34 @@ public class Snipskills extends Pak implements Serializable, Listener {
 				{
 					double sec = 35*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 					ev.setCancelled(true);
-					if(cscooldown.containsKey(p.getName()))
-					{
-						double timer = (cscooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d;
-						if(!(timer < 0))
-						{
-							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("조명지뢰 재사용 대기시간이 " + String.valueOf(Math.round(timer*10)/10.0) + "초 남았습니다").create());
-							}
-							else {
-								p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Flare").create());
-							}
-						}
-						else
-						{
-							cscooldown.remove(p.getName());
-							Firework fr = (Firework) p.getWorld().spawnEntity(p.getEyeLocation(), EntityType.FIREWORK);
-							fr.setShotAtAngle(true);
-							fr.setVelocity(p.getLocation().getDirection().multiply(2));
-							fr.setShooter(p);
-							fr.setMetadata("flare", new FixedMetadataValue(RMain.getInstance(), true));
-							fr.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-							ev.setCancelled(true);
+					SkillBuilder bd = new SkillBuilder()
+							.player(p)
+							.cooldown(sec)
+							.kname("조명지뢰")
+							.ename("Flare")
+							.slot(3)
+							.hm(cscooldown)
+							.skillUse(() -> {
+								Firework fr = (Firework) p.getWorld().spawnEntity(p.getEyeLocation(), EntityType.FIREWORK_ROCKET);
+								fr.setShotAtAngle(true);
+								fr.setVelocity(p.getLocation().getDirection().multiply(2));
+								fr.setShooter(p);
+								fr.setMetadata("flare", new FixedMetadataValue(RMain.getInstance(), true));
+								fr.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+								ev.setCancelled(true);
 
-							FireworkEffect effect = FireworkEffect.builder()
-									.with(Type.BALL_LARGE)
-									.withColor(Color.YELLOW)
-									.flicker(true)
-									.trail(true)
-									.build();
-							FireworkMeta meta = fr.getFireworkMeta();
-							meta.setPower(1);
-							meta.addEffect(effect);
-							fr.setFireworkMeta(meta);
-							cscooldown.put(p.getName(), System.currentTimeMillis());
-						}
-					}
-					else
-					{
-						Firework fr = (Firework) p.getWorld().spawnEntity(p.getEyeLocation(), EntityType.FIREWORK);
-						fr.setShotAtAngle(true);
-						fr.setVelocity(p.getLocation().getDirection().multiply(2));
-						fr.setShooter(p);
-						fr.setMetadata("flare", new FixedMetadataValue(RMain.getInstance(), true));
-						fr.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-						ev.setCancelled(true);
-
-						FireworkEffect effect = FireworkEffect.builder()
-								.with(Type.BALL_LARGE)
-								.withColor(Color.YELLOW)
-								.flicker(true)
-								.trail(true)
-								.build();
-						FireworkMeta meta = fr.getFireworkMeta();
-						meta.setPower(1);
-						meta.addEffect(effect);
-						fr.setFireworkMeta(meta);
-						cscooldown.put(p.getName(), System.currentTimeMillis());
-					}
+								FireworkEffect effect = FireworkEffect.builder()
+										.with(Type.BALL_LARGE)
+										.withColor(Color.YELLOW)
+										.flicker(true)
+										.trail(true)
+										.build();
+								FireworkMeta meta = fr.getFireworkMeta();
+								meta.setPower(1);
+								meta.addEffect(effect);
+								fr.setFireworkMeta(meta);
+							});
+					bd.execute();
 				}
 			}
 		}
@@ -1180,7 +957,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 					{
 						p.setSprinting(false);
 						p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 6, 0, false, false));
-						p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 6, 150, false, false));
+						p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 6, 150, false, false));
 						p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 6, 0, false, false));
 						if(Proficiency.getpro(p)>=2) {
 							p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 6, 128, false, false));
@@ -1209,60 +986,66 @@ public class Snipskills extends Pak implements Serializable, Listener {
 
 			if(Proficiency.getpro(p)>=1 ) {
 				ev.setCancelled(true);
-				if(!p.hasCooldown(Material.ARROW)) {
-
-					p.setCooldown(Material.ARROW, 20);
-					p.setGliding(true);
-					final Location pfel = p.getEyeLocation().clone();
-					final Location pfl = p.getLocation().clone().add(0, 0.25, 0);
-					if(ev.getPreviousSlot()==0) {
-						if(ev.getNewSlot()==8) {
-							for(int i = 0; i<20; i++) {
-								if(pfl.clone().add(pfel.clone().getDirection().multiply(0.1*i)).getBlock().isPassable()) {
-									p.teleport(pfl.clone().add(pfel.clone().getDirection().multiply(0.1*i)).setDirection(pfel.getDirection()));
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(1d)
+						.kname("포복")
+						.ename("Crawl")
+						.slot(4)
+						.hm(cwcooldown)
+						.skillUse(() -> {
+							p.setGliding(true);
+							final Location pfel = p.getEyeLocation().clone();
+							final Location pfl = p.getLocation().clone().add(0, 0.25, 0);
+							if(ev.getPreviousSlot()==0) {
+								if(ev.getNewSlot()==8) {
+									for(int i = 0; i<20; i++) {
+										if(pfl.clone().add(pfel.clone().getDirection().multiply(0.1*i)).getBlock().isPassable()) {
+											p.teleport(pfl.clone().add(pfel.clone().getDirection().multiply(0.1*i)).setDirection(pfel.getDirection()));
+										}
+									}
 								}
 							}
-						}
-					}
-					else if(ev.getPreviousSlot()==8) {
-						if(ev.getNewSlot()!=0) {
-							for(int i = 0; i<20; i++) {
-								if(pfl.clone().add(pfel.clone().getDirection().multiply(0.1*i)).getBlock().isPassable()) {
-									p.teleport(pfl.clone().add(pfel.clone().getDirection().multiply(0.1*i)).setDirection(pfel.getDirection()));
+							else if(ev.getPreviousSlot()==8) {
+								if(ev.getNewSlot()!=0) {
+									for(int i = 0; i<20; i++) {
+										if(pfl.clone().add(pfel.clone().getDirection().multiply(0.1*i)).getBlock().isPassable()) {
+											p.teleport(pfl.clone().add(pfel.clone().getDirection().multiply(0.1*i)).setDirection(pfel.getDirection()));
+										}
+									}
 								}
 							}
-						}
-					}
-					else {
-						if(ev.getNewSlot()<ev.getPreviousSlot()) {
-							for(int i = 0; i<20; i++) {
-								if(pfl.clone().add(pfel.clone().getDirection().multiply(0.1*i)).getBlock().isPassable()) {
-									p.teleport(pfl.clone().add(pfel.clone().getDirection().multiply(0.1*i)).setDirection(pfel.getDirection()));
+							else {
+								if(ev.getNewSlot()<ev.getPreviousSlot()) {
+									for(int i = 0; i<20; i++) {
+										if(pfl.clone().add(pfel.clone().getDirection().multiply(0.1*i)).getBlock().isPassable()) {
+											p.teleport(pfl.clone().add(pfel.clone().getDirection().multiply(0.1*i)).setDirection(pfel.getDirection()));
+										}
+									}
 								}
 							}
-						}
-					}
-					p.setGliding(true);
+							p.setGliding(true);
 
-					if(Proficiency.getpro(p)>=2) {
-						List<ItemStack> arrows = new ArrayList<ItemStack>();
-						ItemStack far = new ItemStack(Material.ARROW);
-						ItemStack cb = p.getInventory().getItemInMainHand();
-						CrossbowMeta cbm = (CrossbowMeta) cb.getItemMeta();
-						p.playSound(p.getLocation(), Sound.ITEM_CROSSBOW_QUICK_CHARGE_3, 1, 2);
-						if(!cbm.hasChargedProjectiles() && p.getInventory().contains(Material.ARROW,1)) {
-							if(cb.containsEnchantment(Enchantment.MULTISHOT)) {
-								arrows.add(far);
-								arrows.add(far);
+							if(Proficiency.getpro(p)>=2) {
+								List<ItemStack> arrows = new ArrayList<ItemStack>();
+								ItemStack far = new ItemStack(Material.ARROW);
+								ItemStack cb = p.getInventory().getItemInMainHand();
+								CrossbowMeta cbm = (CrossbowMeta) cb.getItemMeta();
+								p.playSound(p.getLocation(), Sound.ITEM_CROSSBOW_QUICK_CHARGE_3, 1, 2);
+								if(!cbm.hasChargedProjectiles() && p.getInventory().contains(Material.ARROW,1)) {
+									if(cb.containsEnchantment(Enchantment.MULTISHOT)) {
+										arrows.add(far);
+										arrows.add(far);
+									}
+									arrows.add(far);
+									cbm.setChargedProjectiles(arrows);
+									cb.setItemMeta(cbm);
+									p.getInventory().removeItem( new ItemStack(Material.ARROW,1));
+								}
 							}
-							arrows.add(far);
-							cbm.setChargedProjectiles(arrows);
-							cb.setItemMeta(cbm);
-							p.getInventory().removeItem( new ItemStack(Material.ARROW,1));
-						}
-					}
 
-				}
+						});
+				bd.execute();
 			}
 			else {
 				Bukkit.getServer().getScheduler().cancelTask(sz.get(p.getUniqueId()));
@@ -1310,7 +1093,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 							des.add(ell.setDirection(lel.toVector().subtract(ell.toVector())));
 						}
 						des.forEach(l -> {
-							Firework fr = (Firework) p.getWorld().spawnEntity(l, EntityType.FIREWORK);
+							Firework fr = (Firework) p.getWorld().spawnEntity(l, EntityType.FIREWORK_ROCKET);
 							fr.setVelocity(l.getDirection().multiply(0.6));
 							FireworkEffect effect = FireworkEffect.builder()
 									.with(Type.BALL)
@@ -1377,7 +1160,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 						des.add(ell.setDirection(lel.toVector().subtract(ell.toVector())));
 					}
 					des.forEach(l -> {
-						Firework fr = (Firework) p.getWorld().spawnEntity(l, EntityType.FIREWORK);
+						Firework fr = (Firework) p.getWorld().spawnEntity(l, EntityType.FIREWORK_ROCKET);
 						fr.setVelocity(l.getDirection().multiply(0.6));
 						FireworkEffect effect = FireworkEffect.builder()
 								.with(Type.BALL)
@@ -1421,8 +1204,8 @@ public class Snipskills extends Pak implements Serializable, Listener {
 			Firework fr = f.getEntity();
 			Player p = (Player)fr.getShooter();
 			Location frl = fr.getLocation();
-			frl.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, frl, 1);
-			frl.getWorld().spawnParticle(Particle.SMOKE_LARGE, frl, 30,1,1,1);
+			frl.getWorld().spawnParticle(Particle.EXPLOSION, frl, 1);
+			frl.getWorld().spawnParticle(Particle.SMOKE, frl, 30,1,1,1);
 			frl.getWorld().playSound(frl, Sound.ENTITY_FIREWORK_ROCKET_BLAST, 1f, 0.32f);
 			frl.getWorld().playSound(frl, Sound.ENTITY_FIREWORK_ROCKET_LARGE_BLAST, 1f, 0.2f);
 			f.setCancelled(true);
@@ -1516,279 +1299,259 @@ public class Snipskills extends Pak implements Serializable, Listener {
 	}
 
 
-	public void ULT(PlayerDropItemEvent ev)
-	{
+	public void ULT(PlayerItemHeldEvent ev)
+    {
 		Player p = (Player)ev.getPlayer();
-		Item it = ev.getItemDrop();
-		ItemStack is = it.getItemStack();
+		if(!isCombat(p)) {
+			return;
+		}
+		ItemStack is = p.getInventory().getItemInMainHand();
 
-		if(ClassData.pc.get(p.getUniqueId()) == 4 && (is.getType().name().equals("CROSSBOW")) && p.isSneaking()&& Proficiency.getpro(p) >=1)
+		if(ClassData.pc.get(p.getUniqueId()) == 4 && ev.getNewSlot()==3 && (is.getType().name().equals("CROSSBOW")) && p.isSneaking()&& Proficiency.getpro(p) >=1)
 		{
 			ev.setCancelled(true);
-			p.setCooldown(Material.FIREWORK_STAR, 2);
+			p.setCooldown(CAREFUL, 2);
+			SkillBuilder bd = new SkillBuilder()
+					.player(p)
+					.cooldown(45/Proficiency.getpro(p)*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d))
+					.kname("최후의 한발")
+					.ename("THE LAST ONE")
+					.slot(6)
+					.hm(bultcooldown)
+					.skillUse(() -> {
 
-			if(bultcooldown.containsKey(p.getName()))
-			{
-				double timer = (bultcooldown.get(p.getName())/1000d + 70/Proficiency.getpro(p)*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d)) - System.currentTimeMillis()/1000d;
-				if(!(timer < 0))
-				{
-					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("최후의 한발 재사용 대기시간이 " + String.valueOf(Math.round(timer*10)/10.0) + "초 남았습니다").create());
-					}
-					else {
-						p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use THE LAST ONE").create());
-					}
-				}
-				else
-				{
-					bultcooldown.remove(p.getName());
-					p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 13,0,false,false));
-					p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 30,20,false,false));
-					p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 30,255,false,false));
-					p.getWorld().spawnParticle(Particle.WHITE_ASH, p.getEyeLocation(), 40, 1, 1, 1);
-					p.getWorld().playSound(p.getLocation(),Sound.BLOCK_BEACON_ACTIVATE, 1,0.3f);
-					p.getWorld().playSound(p.getLocation(),Sound.BLOCK_CHEST_LOCKED, 1,0f);
-					p.getWorld().playSound(p.getLocation(),Sound.ENTITY_ARMOR_STAND_PLACE, 1,0.23f);
-					p.getWorld().playSound(p.getLocation(),Sound.ENTITY_PLAYER_BREATH, 1,0.23f);
-					AtomicInteger j = new AtomicInteger();
-					for(int i=0; i<25; i++) {
-						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-							@Override
-							public void run()
-							{
-								if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-									p.sendTitle(org.bukkit.ChatColor.RED+"충전중...", j.incrementAndGet()*4 +"%", 5, 5, 5);
-								}
-								else {
-									p.sendTitle(org.bukkit.ChatColor.RED+"Charging...", j.incrementAndGet()*4 +"%", 5, 5, 5);
-								}
-							}
-						}, i);
-					}
-					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-						@Override
-						public void run()
-						{
-							p.getWorld().spawnParticle(Particle.ASH, p.getLocation(), 600, 4, 4, 4);
-							p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 0.7f, 0f);
-							p.playSound(p.getLocation(), Sound.ENTITY_SQUID_DEATH, 1f, 1.3f);
-							p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1.0f, 1.6f);
-							p.playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1.0f, 1.5f);
-							p.playSound(p.getLocation(), Sound.BLOCK_BAMBOO_BREAK, 1.0f, 0.35f);
-							Arrow ar = p.launchProjectile(Arrow.class);
-							ar.setMetadata("APA", new FixedMetadataValue(RMain.getInstance(), true));
-							ar.setVelocity(ar.getVelocity().normalize().multiply(200));
-							ar.setShooter(p);
-							ar.setShotFromCrossbow(true);
-							ar.setCritical(true);
-							ar.setPierceLevel(127);
-							p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1f, 1.6f);
-							arsn(ar, p, 10d, 10d);
+						p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 13,0,false,false));
+						p.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 30,20,false,false));
+						p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 30,255,false,false));
+						p.getWorld().spawnParticle(Particle.WHITE_ASH, p.getEyeLocation(), 40, 1, 1, 1);
+						p.getWorld().playSound(p.getLocation(),Sound.BLOCK_BEACON_ACTIVATE, 1,0.3f);
+						p.getWorld().playSound(p.getLocation(),Sound.BLOCK_CHEST_LOCKED, 1,0f);
+						p.getWorld().playSound(p.getLocation(),Sound.ENTITY_ARMOR_STAND_PLACE, 1,0.23f);
+						p.getWorld().playSound(p.getLocation(),Sound.ENTITY_PLAYER_BREATH, 1,0.23f);
+						AtomicInteger j = new AtomicInteger();
+						for(int i=0; i<25; i++) {
 							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 								@Override
 								public void run()
 								{
-									ar.remove();
+									if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+										p.sendTitle(org.bukkit.ChatColor.RED+"충전중...", j.incrementAndGet()*4 +"%", 5, 5, 5);
+									}
+									else {
+										p.sendTitle(org.bukkit.ChatColor.RED+"Charging...", j.incrementAndGet()*4 +"%", 5, 5, 5);
+									}
 								}
-							}, 30);
+							}, i);
 						}
-					}, 30);
-					bultcooldown.put(p.getName(), System.currentTimeMillis());
-
-				}
-			}
-			else
-			{
-				p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 13,0,false,false));
-				p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 30,20,false,false));
-				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 30,255,false,false));
-				p.getWorld().spawnParticle(Particle.WHITE_ASH, p.getEyeLocation(), 40, 1, 1, 1);
-				p.getWorld().playSound(p.getLocation(),Sound.BLOCK_BEACON_ACTIVATE, 1,0.3f);
-				p.getWorld().playSound(p.getLocation(),Sound.BLOCK_CHEST_LOCKED, 1,0f);
-				p.getWorld().playSound(p.getLocation(),Sound.ENTITY_ARMOR_STAND_PLACE, 1,0.23f);
-				p.getWorld().playSound(p.getLocation(),Sound.ENTITY_PLAYER_BREATH, 1,0.23f);
-				AtomicInteger j = new AtomicInteger();
-				for(int i=0; i<25; i++) {
-					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-						@Override
-						public void run()
-						{
-							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								p.sendTitle(org.bukkit.ChatColor.RED+"충전중...", j.incrementAndGet()*4 +"%", 5, 5, 5);
-							}
-							else {
-								p.sendTitle(org.bukkit.ChatColor.RED+"Charging...", j.incrementAndGet()*4 +"%", 5, 5, 5);
-							}
-						}
-					}, i);
-				}
-				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					@Override
-					public void run()
-					{
-						p.getWorld().spawnParticle(Particle.ASH, p.getLocation(), 600, 4, 4, 4);
-						p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 0.7f, 0f);
-						p.playSound(p.getLocation(), Sound.ENTITY_SQUID_DEATH, 1f, 1.3f);
-						p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1.0f, 1.6f);
-						p.playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1.0f, 1.5f);
-						p.playSound(p.getLocation(), Sound.BLOCK_BAMBOO_BREAK, 1.0f, 0.35f);
-						Arrow ar = p.launchProjectile(Arrow.class);
-						ar.setMetadata("APA", new FixedMetadataValue(RMain.getInstance(), true));
-						ar.setVelocity(ar.getVelocity().normalize().multiply(200));
-						ar.setShooter(p);
-						ar.setShotFromCrossbow(true);
-						ar.setCritical(true);
-						ar.setPierceLevel(127);
-						p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1f, 1.6f);
-						arsn(ar, p, 10d, 10d);
 						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 							@Override
 							public void run()
 							{
-								ar.remove();
-							}
-						}, 30);
-					}
-				}, 30);
-				bultcooldown.put(p.getName(), System.currentTimeMillis());
-			}
-		}
-	}
-
-	public void ULT2(PlayerDropItemEvent ev)
-	{
-		Player p = (Player)ev.getPlayer();
-		Item it = ev.getItemDrop();
-		ItemStack is = it.getItemStack();
-
-		if(ClassData.pc.get(p.getUniqueId()) == 4 && (is.getType().name().equals("CROSSBOW")) && !p.isSneaking()&& p.isSprinting()&& Proficiency.getpro(p) >=2)
-		{
-			ev.setCancelled(true);
-			p.setCooldown(Material.FIREWORK_STAR, 2);
-
-			if(bult2cooldown.containsKey(p.getName()))
-			{
-				double timer = (bult2cooldown.get(p.getName())/1000d + 70*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d)) - System.currentTimeMillis()/1000d;
-				if(!(timer < 0))
-				{
-					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("독수리분대 재사용 대기시간이 " + String.valueOf(Math.round(timer*10)/10.0) + "초 남았습니다").create());
-					}
-					else {
-						p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Team Eagle").create());
-					}
-				}
-				else
-				{
-					bult2cooldown.remove(p.getName());
-					p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 13,0,false,false));
-					p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 50,20,false,false));
-					p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 30,255,false,false));
-					p.getWorld().spawnParticle(Particle.WHITE_ASH, p.getEyeLocation(), 40, 1, 1, 1);
-					p.getWorld().playSound(p.getLocation(),Sound.BLOCK_BEACON_ACTIVATE, 1,0.3f);
-					p.getWorld().playSound(p.getLocation(),Sound.BLOCK_CONDUIT_ACTIVATE, 1,0f);
-					p.getWorld().playSound(p.getLocation(),Sound.ENTITY_ENDERMAN_STARE, 1,0f);
-					HashSet<LivingEntity> tar = new HashSet<>();
-					HashSet<Location> ls = new HashSet<Location>();
-					for(int i=0; i<30; i++) {
-						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-							@Override
-							public void run()
-							{
-								tar.clear();
-								Collection<Entity> ce = new HashSet<>();
-								HashSet<Location> line = new HashSet<Location>();
-								for(int ss = 0; ss <= 60; ss++) {
-									Location pl = p.getEyeLocation().clone();
-									pl.add(p.getEyeLocation().getDirection().normalize().multiply(ss));
-									line.add(pl);
-								}
-								line.forEach(l -> {
-
-									ce.addAll(l.getWorld().getNearbyEntities(l,3, 3, 3));
-									if(ce.stream().anyMatch(e -> e.hasMetadata("boss"))) {
-										ce.removeIf(e -> !e.hasMetadata("boss"));
-									}
-									else if(ce.stream().anyMatch(e -> e.hasMetadata("leader"))) {
-										ce.removeIf(e -> !e.hasMetadata("leader"));
-									}
-								});
-								for(Entity e : ce) {
-
-									if (e instanceof Player)
-									{
-										Player p1 = (Player) e;
-										if(Party.hasParty(p) && Party.hasParty(p1))	{
-											if(Party.getParty(p).equals(Party.getParty(p1)))
-											{
-												continue;
-											}
-										}
-									}
-									if ((!(e == p))&& e instanceof LivingEntity&& !e.hasMetadata("fake") && !e.hasMetadata("portal"))
-									{
-										LivingEntity le = (LivingEntity)e;
-										tar.add(le);
-										break;
-
-									}
-								}
-								if(tar.stream().findFirst().isPresent()) {
-									if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-										p.sendTitle(org.bukkit.ChatColor.RED+"목표물 탐색중...",tar.stream().findFirst().get().getName(), 5, 5, 5);
-									}
-									else {
-										p.sendTitle(org.bukkit.ChatColor.RED+"Searching Target...",tar.stream().findFirst().get().getName(), 5, 5, 5);
-									}
-								}
-								else {
-									if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-										p.sendTitle(org.bukkit.ChatColor.RED+"목표물 탐색중...",null, 5, 5, 5);
-									}
-									else {
-										p.sendTitle(org.bukkit.ChatColor.RED+"Searching Target...",null, 5, 5, 5);
-									}
-								}
-							}
-						}, i);
-					}
-					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-						@Override
-						public void run()
-						{
-							if(tar.stream().findFirst().isPresent()) {
-								LivingEntity le = tar.stream().findFirst().get();
-								p.getWorld().playSound(p.getLocation(),Sound.BLOCK_CHEST_LOCKED, 1,0f);
-								if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-									p.sendTitle(org.bukkit.ChatColor.DARK_GREEN+"탐색완료!",le.getName(), 5, 5, 5);
-								}
-								else {
-									p.sendTitle(org.bukkit.ChatColor.DARK_GREEN+"Targeted!",le.getName(), 5, 5, 5);
-								}
-								for(int i =-20; i<20; i++) {
-									ls.add(le.getEyeLocation().clone().add(i, i/2, i));
-								}
-
+								p.getWorld().spawnParticle(Particle.ASH, p.getLocation(), 600, 4, 4, 4);
+								p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 0.7f, 0f);
+								p.playSound(p.getLocation(), Sound.ENTITY_SQUID_DEATH, 1f, 1.3f);
+								p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1.0f, 1.6f);
+								p.playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1.0f, 1.5f);
+								p.playSound(p.getLocation(), Sound.BLOCK_BAMBOO_BREAK, 1.0f, 0.35f);
+								Arrow ar = p.launchProjectile(Arrow.class);
+								ar.setMetadata("APA", new FixedMetadataValue(RMain.getInstance(), true));
+								ar.setVelocity(ar.getVelocity().normalize().multiply(200));
+								ar.setShooter(p);
+								ar.setWeapon(p.getInventory().getItemInMainHand());
+								ar.setCritical(true);
+								ar.setPierceLevel(127);
+								p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1f, 1.6f);
+								arsn(ar, p, 10d, 10d);
 								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 									@Override
 									public void run()
 									{
-										for(int i=0; i<40; i++) {
+										ar.remove();
+									}
+								}, 30);
+							}
+						}, 30);
+					});
+			bd.execute();
+
+		}
+	}
+
+	
+	public void ULT2(PlayerItemHeldEvent ev)
+	{
+		Player p = (Player)ev.getPlayer();
+		if(!isCombat(p)) {
+			return;
+		}
+
+		ItemStack is = p.getInventory().getItemInMainHand();
+
+		if(ClassData.pc.get(p.getUniqueId()) == 4 && ev.getNewSlot()==4 && (is.getType().name().equals("CROSSBOW")) && p.isSneaking() && Proficiency.getpro(p) >=2)
+		{
+			ev.setCancelled(true);
+			p.setCooldown(CAREFUL, 2);
+			SkillBuilder bd = new SkillBuilder()
+					.player(p)
+					.cooldown(80*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d))
+					.kname("독수리분대")
+					.ename("Team Eagle")
+					.slot(7)
+					.hm(bult2cooldown)
+					.skillUse(() -> {
+
+						p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 13,0,false,false));
+						p.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 50,20,false,false));
+						p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 30,255,false,false));
+						p.getWorld().spawnParticle(Particle.WHITE_ASH, p.getEyeLocation(), 40, 1, 1, 1);
+						p.getWorld().playSound(p.getLocation(),Sound.BLOCK_BEACON_ACTIVATE, 1,0.3f);
+						p.getWorld().playSound(p.getLocation(),Sound.BLOCK_CONDUIT_ACTIVATE, 1,0f);
+						p.getWorld().playSound(p.getLocation(),Sound.ENTITY_ENDERMAN_STARE, 1,0f);
+						HashSet<LivingEntity> tar = new HashSet<>();
+						HashSet<Location> ls = new HashSet<Location>();
+						for(int i=0; i<30; i++) {
+							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+								@Override
+								public void run()
+								{
+									tar.clear();
+									Collection<Entity> ce = new HashSet<>();
+									HashSet<Location> line = new HashSet<Location>();
+									for(int ss = 0; ss <= 60; ss++) {
+										Location pl = p.getEyeLocation().clone();
+										pl.add(p.getEyeLocation().getDirection().normalize().multiply(ss));
+										line.add(pl);
+									}
+									line.forEach(l -> {
+
+										ce.addAll(l.getWorld().getNearbyEntities(l,3, 3, 3));
+										if(ce.stream().anyMatch(e -> e.hasMetadata("boss"))) {
+											ce.removeIf(e -> !e.hasMetadata("boss"));
+										}
+										else if(ce.stream().anyMatch(e -> e.hasMetadata("leader"))) {
+											ce.removeIf(e -> !e.hasMetadata("leader"));
+										}
+									});
+									for(Entity e : ce) {
+
+										if (e instanceof Player)
+										{
+											Player p1 = (Player) e;
+											if(Party.hasParty(p) && Party.hasParty(p1))	{
+												if(Party.getParty(p).equals(Party.getParty(p1)))
+												{
+													continue;
+												}
+											}
+										}
+										if ((!(e == p))&& e instanceof LivingEntity&& !e.hasMetadata("fake") && !e.hasMetadata("portal"))
+										{
+											LivingEntity le = (LivingEntity)e;
+											tar.add(le);
+											break;
+
+										}
+									}
+									if(tar.stream().findFirst().isPresent()) {
+										if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+											p.sendTitle(org.bukkit.ChatColor.RED+"목표물 탐색중...",tar.stream().findFirst().get().getName(), 5, 5, 5);
+										}
+										else {
+											p.sendTitle(org.bukkit.ChatColor.RED+"Searching Target...",tar.stream().findFirst().get().getName(), 5, 5, 5);
+										}
+									}
+									else {
+										if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+											p.sendTitle(org.bukkit.ChatColor.RED+"목표물 탐색중...",null, 5, 5, 5);
+										}
+										else {
+											p.sendTitle(org.bukkit.ChatColor.RED+"Searching Target...",null, 5, 5, 5);
+										}
+									}
+								}
+							}, i);
+						}
+						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+							@Override
+							public void run()
+							{
+								if(tar.stream().findFirst().isPresent()) {
+									LivingEntity le = tar.stream().findFirst().get();
+									p.getWorld().playSound(p.getLocation(),Sound.BLOCK_CHEST_LOCKED, 1,0f);
+									if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+										p.sendTitle(org.bukkit.ChatColor.DARK_GREEN+"탐색완료!",le.getName(), 5, 5, 5);
+									}
+									else {
+										p.sendTitle(org.bukkit.ChatColor.DARK_GREEN+"Targeted!",le.getName(), 5, 5, 5);
+									}
+									for(int i =-20; i<20; i++) {
+										ls.add(le.getEyeLocation().clone().add(i, i/2, i));
+									}
+
+									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+										@Override
+										public void run()
+										{
+											for(int i=0; i<40; i++) {
+												Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+													@Override
+													public void run()
+													{
+														p.getWorld().spawnParticle(Particle.EXPLOSION, le.getLocation(), 3, 1, 1, 1);
+														p.getWorld().spawnParticle(Particle.CRIT, le.getLocation(), 40, 2, 2, 2,0.1);
+														p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, le.getLocation(), 10, 3,3, 3);
+														p.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, le.getLocation(), 3, 1, 1, 1);
+														p.getWorld().spawnParticle(Particle.FLASH, le.getLocation(), 10, 3, 3, 3);
+														p.getWorld().spawnParticle(Particle.INSTANT_EFFECT, le.getLocation(), 30, 1, 1, 1);
+														p.getWorld().spawnParticle(Particle.ENCHANTED_HIT, le.getLocation(), 30, 1, 1, 1);
+
+														p.getWorld().playSound(le.getLocation(),Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 0.3f,2f);
+														p.getWorld().playSound(le.getLocation(),Sound.ENTITY_ARROW_HIT, 0.3f,2f);
+														p.getWorld().playSound(le.getLocation(),Sound.ENTITY_GENERIC_EXPLODE, 0.3f,2f);
+														for(Entity e : le.getWorld().getNearbyEntities(le.getLocation(),4, 4, 4)) {
+															if (e instanceof Player)
+															{
+
+																Player p1 = (Player) e;
+																if(Party.hasParty(p) && Party.hasParty(p1))	{
+																	if(Party.getParty(p).equals(Party.getParty(p1)))
+																	{
+																		continue;
+																	}
+																}
+															}
+															if(e instanceof LivingEntity && e!=p&& !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
+																LivingEntity le = (LivingEntity)e;
+																atk1(0.5, p, le);
+																Holding.holding(p, le, 10l);
+
+															}
+
+														}
+													}
+												}, i*2);
+											}
 											Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 												@Override
 												public void run()
 												{
-													p.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, le.getLocation(), 3, 1, 1, 1);
-													p.getWorld().spawnParticle(Particle.CRIT, le.getLocation(), 40, 2, 2, 2,0.1);
-													p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, le.getLocation(), 10, 3,3, 3);
-													p.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, le.getLocation(), 3, 1, 1, 1);
-													p.getWorld().spawnParticle(Particle.FLASH, le.getLocation(), 10, 3, 3, 3);
-													p.getWorld().spawnParticle(Particle.SPELL_INSTANT, le.getLocation(), 30, 1, 1, 1);
-													p.getWorld().spawnParticle(Particle.CRIT_MAGIC, le.getLocation(), 30, 1, 1, 1);
+													p.getWorld().playSound(le.getLocation(),Sound.BLOCK_BEACON_ACTIVATE, 0.3f,1.5f);
+												}
+											}, 82);
+											Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+												@Override
+												public void run()
+												{
+													ls.forEach(l -> {
+														l.getWorld().spawnParticle(Particle.ASH, l, 10, 0.5,0.5,0.5,0);
+														l.getWorld().spawnParticle(Particle.WHITE_ASH, l, 10, 0.5,0.5,0.5,0);
+														l.getWorld().spawnParticle(Particle.FLASH, l, 3, 0.5, 0.5, 0.5);
+														l.getWorld().spawnParticle(Particle.CRIT, l, 3, 0.5, 0.5, 0.5,0);
 
-													p.getWorld().playSound(le.getLocation(),Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 0.3f,2f);
-													p.getWorld().playSound(le.getLocation(),Sound.ENTITY_ARROW_HIT, 0.3f,2f);
-													p.getWorld().playSound(le.getLocation(),Sound.ENTITY_GENERIC_EXPLODE, 0.3f,2f);
+													});
+
+													p.getWorld().playSound(le.getLocation(),Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1f,1.5f);
+													p.getWorld().playSound(le.getLocation(),Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1f,0.5f);
 													for(Entity e : le.getWorld().getNearbyEntities(le.getLocation(),4, 4, 4)) {
 														if (e instanceof Player)
 														{
@@ -1803,95 +1566,98 @@ public class Snipskills extends Pak implements Serializable, Listener {
 														}
 														if(e instanceof LivingEntity && e!=p&& !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
 															LivingEntity le = (LivingEntity)e;
-															atk1(0.5, p, le);
+															atk1(6.5, p, le);
 															Holding.holding(p, le, 10l);
 
 														}
 
 													}
 												}
-											}, i*2);
+											}, 90);
+
 										}
-										Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-											@Override
-											public void run()
-											{
-												p.getWorld().playSound(le.getLocation(),Sound.BLOCK_BEACON_ACTIVATE, 0.3f,1.5f);
-											}
-										}, 82);
-										Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-											@Override
-											public void run()
-											{
-												ls.forEach(l -> {
-													l.getWorld().spawnParticle(Particle.ASH, l, 10, 0.5,0.5,0.5,0);
-													l.getWorld().spawnParticle(Particle.WHITE_ASH, l, 10, 0.5,0.5,0.5,0);
-													l.getWorld().spawnParticle(Particle.FLASH, l, 3, 0.5, 0.5, 0.5);
-													l.getWorld().spawnParticle(Particle.CRIT, l, 3, 0.5, 0.5, 0.5,0);
-
-												});
-
-												p.getWorld().playSound(le.getLocation(),Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1f,1.5f);
-												p.getWorld().playSound(le.getLocation(),Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1f,0.5f);
-												for(Entity e : le.getWorld().getNearbyEntities(le.getLocation(),4, 4, 4)) {
-													if (e instanceof Player)
-													{
-
-														Player p1 = (Player) e;
-														if(Party.hasParty(p) && Party.hasParty(p1))	{
-															if(Party.getParty(p).equals(Party.getParty(p1)))
-															{
-																continue;
-															}
-														}
-													}
-													if(e instanceof LivingEntity && e!=p&& !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
-														LivingEntity le = (LivingEntity)e;
-														atk1(6.5, p, le);
-														Holding.holding(p, le, 10l);
-
-													}
-
-												}
-											}
-										}, 90);
-
-									}
-								}, 15);
-							}
-							else {
-								p.getWorld().playSound(p.getLocation(),Sound.BLOCK_CHEST_LOCKED, 1,0f);
-								if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-									p.sendTitle(org.bukkit.ChatColor.DARK_GREEN+"탐색 실패!","무차별 난사", 5, 5, 5);
+									}, 15);
 								}
 								else {
-									p.sendTitle(org.bukkit.ChatColor.DARK_GREEN+"Failed to Target.","Random Fire", 5, 5, 5);
-								}
+									p.getWorld().playSound(p.getLocation(),Sound.BLOCK_CHEST_LOCKED, 1,0f);
+									if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+										p.sendTitle(org.bukkit.ChatColor.DARK_GREEN+"탐색 실패!","무차별 난사", 5, 5, 5);
+									}
+									else {
+										p.sendTitle(org.bukkit.ChatColor.DARK_GREEN+"Failed to Target.","Random Fire", 5, 5, 5);
+									}
 
-								Location tl = p.getEyeLocation().clone().add(p.getEyeLocation().clone().getDirection().normalize().multiply(10));
-								for(int i =-20; i<20; i++) {
-									ls.add(tl.clone().add(i, i/2, i));
-								}
-								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-									@Override
-									public void run()
-									{
-										for(int i=0; i<40; i++) {
+									Location tl = p.getEyeLocation().clone().add(p.getEyeLocation().clone().getDirection().normalize().multiply(10));
+									for(int i =-20; i<20; i++) {
+										ls.add(tl.clone().add(i, i/2, i));
+									}
+									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+										@Override
+										public void run()
+										{
+											for(int i=0; i<40; i++) {
+												Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+													@Override
+													public void run()
+													{
+														p.getWorld().spawnParticle(Particle.EXPLOSION, tl, 3, 1, 1, 1);
+														p.getWorld().spawnParticle(Particle.CRIT, tl, 40, 2, 2, 2,0.1);
+														p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, tl, 10, 3,3, 3);
+														p.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, tl, 3, 1, 1, 1);
+														p.getWorld().spawnParticle(Particle.FLASH, tl, 10, 3, 3, 3);
+														p.getWorld().spawnParticle(Particle.INSTANT_EFFECT, tl, 30, 1, 1, 1);
+														p.getWorld().spawnParticle(Particle.ENCHANTED_HIT, tl, 30, 1, 1, 1);
+
+														p.getWorld().playSound(tl,Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 0.3f,2f);
+														p.getWorld().playSound(tl,Sound.ENTITY_ARROW_HIT, 0.3f,2f);
+														p.getWorld().playSound(tl,Sound.ENTITY_GENERIC_EXPLODE, 0.3f,2f);
+														for(Entity e : tl.getWorld().getNearbyEntities(tl,4, 4, 4)) {
+															if (e instanceof Player)
+															{
+
+																Player p1 = (Player) e;
+																if(Party.hasParty(p) && Party.hasParty(p1))	{
+																	if(Party.getParty(p).equals(Party.getParty(p1)))
+																	{
+																		continue;
+																	}
+																}
+															}
+															if(e instanceof LivingEntity && e!=p&& !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
+																LivingEntity le = (LivingEntity)e;
+																atk1(0.5, p, le);
+																Holding.holding(p, le, 10l);
+
+															}
+
+														}
+													}
+												}, i*2);
+											}
 											Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 												@Override
 												public void run()
 												{
-													p.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, tl, 3, 1, 1, 1);
-													p.getWorld().spawnParticle(Particle.CRIT, tl, 40, 2, 2, 2,0.1);
-													p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, tl, 10, 3,3, 3);
-													p.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, tl, 3, 1, 1, 1);
-													p.getWorld().spawnParticle(Particle.FLASH, tl, 10, 3, 3, 3);
-													p.getWorld().spawnParticle(Particle.SPELL_INSTANT, tl, 30, 1, 1, 1);
-													p.getWorld().spawnParticle(Particle.CRIT_MAGIC, tl, 30, 1, 1, 1);
+													p.getWorld().playSound(tl,Sound.BLOCK_BEACON_ACTIVATE, 0.3f,1.5f);
+													for(int i =-20; i<20; i++) {
+														ls.add(tl.clone().add(i, i/2, i));
+													}
+												}
+											}, 82);
+											Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+												@Override
+												public void run()
+												{
+													ls.forEach(l -> {
+														l.getWorld().spawnParticle(Particle.ASH, l, 10, 0.5,0.5,0.5,0);
+														l.getWorld().spawnParticle(Particle.WHITE_ASH, l, 10, 0.5,0.5,0.5,0);
+														l.getWorld().spawnParticle(Particle.FLASH, l, 3, 0.5, 0.5, 0.5);
+														l.getWorld().spawnParticle(Particle.CRIT, l, 3, 0.5, 0.5, 0.5,0);
 
-													p.getWorld().playSound(tl,Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 0.3f,2f);
-													p.getWorld().playSound(tl,Sound.ENTITY_ARROW_HIT, 0.3f,2f);
-													p.getWorld().playSound(tl,Sound.ENTITY_GENERIC_EXPLODE, 0.3f,2f);
+													});
+
+													p.getWorld().playSound(tl,Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1f,1.5f);
+													p.getWorld().playSound(tl,Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1f,0.5f);
 													for(Entity e : tl.getWorld().getNearbyEntities(tl,4, 4, 4)) {
 														if (e instanceof Player)
 														{
@@ -1906,361 +1672,24 @@ public class Snipskills extends Pak implements Serializable, Listener {
 														}
 														if(e instanceof LivingEntity && e!=p&& !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
 															LivingEntity le = (LivingEntity)e;
-															atk1(0.5, p, le);
+															atk1(6.5, p, le);
 															Holding.holding(p, le, 10l);
 
 														}
 
 													}
 												}
-											}, i*2);
+											}, 90);
+
 										}
-										Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-											@Override
-											public void run()
-											{
-												p.getWorld().playSound(tl,Sound.BLOCK_BEACON_ACTIVATE, 0.3f,1.5f);
-												for(int i =-20; i<20; i++) {
-													ls.add(tl.clone().add(i, i/2, i));
-												}
-											}
-										}, 82);
-										Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-											@Override
-											public void run()
-											{
-												ls.forEach(l -> {
-													l.getWorld().spawnParticle(Particle.ASH, l, 10, 0.5,0.5,0.5,0);
-													l.getWorld().spawnParticle(Particle.WHITE_ASH, l, 10, 0.5,0.5,0.5,0);
-													l.getWorld().spawnParticle(Particle.FLASH, l, 3, 0.5, 0.5, 0.5);
-													l.getWorld().spawnParticle(Particle.CRIT, l, 3, 0.5, 0.5, 0.5,0);
-
-												});
-
-												p.getWorld().playSound(tl,Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1f,1.5f);
-												p.getWorld().playSound(tl,Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1f,0.5f);
-												for(Entity e : tl.getWorld().getNearbyEntities(tl,4, 4, 4)) {
-													if (e instanceof Player)
-													{
-
-														Player p1 = (Player) e;
-														if(Party.hasParty(p) && Party.hasParty(p1))	{
-															if(Party.getParty(p).equals(Party.getParty(p1)))
-															{
-																continue;
-															}
-														}
-													}
-													if(e instanceof LivingEntity && e!=p&& !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
-														LivingEntity le = (LivingEntity)e;
-														atk1(6.5, p, le);
-														Holding.holding(p, le, 10l);
-
-													}
-
-												}
-											}
-										}, 90);
-
-									}
-								}, 15);
-							}
-						}
-					}, 30);
-					bult2cooldown.put(p.getName(), System.currentTimeMillis());
-
-				}
-			}
-			else
-			{
-				p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 13,0,false,false));
-				p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 50,20,false,false));
-				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 30,255,false,false));
-				p.getWorld().spawnParticle(Particle.WHITE_ASH, p.getEyeLocation(), 40, 1, 1, 1);
-				p.getWorld().playSound(p.getLocation(),Sound.BLOCK_BEACON_ACTIVATE, 1,0.3f);
-				p.getWorld().playSound(p.getLocation(),Sound.BLOCK_CONDUIT_ACTIVATE, 1,0f);
-				p.getWorld().playSound(p.getLocation(),Sound.ENTITY_ENDERMAN_STARE, 1,0f);
-				HashSet<LivingEntity> tar = new HashSet<>();
-				HashSet<Location> ls = new HashSet<Location>();
-				for(int i=0; i<30; i++) {
-					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-						@Override
-						public void run()
-						{
-							tar.clear();
-							Collection<Entity> ce = new HashSet<>();
-							HashSet<Location> line = new HashSet<Location>();
-							for(int ss = 0; ss <= 60; ss++) {
-								Location pl = p.getEyeLocation().clone();
-								pl.add(p.getEyeLocation().getDirection().normalize().multiply(ss));
-								line.add(pl);
-							}
-							line.forEach(l -> {
-
-								ce.addAll(l.getWorld().getNearbyEntities(l,3, 3, 3));
-								if(ce.stream().anyMatch(e -> e.hasMetadata("boss"))) {
-									ce.removeIf(e -> !e.hasMetadata("boss"));
-								}
-								else if(ce.stream().anyMatch(e -> e.hasMetadata("leader"))) {
-									ce.removeIf(e -> !e.hasMetadata("leader"));
-								}
-							});
-							for(Entity e : ce) {
-
-								if (e instanceof Player)
-								{
-									Player p1 = (Player) e;
-									if(Party.hasParty(p) && Party.hasParty(p1))	{
-										if(Party.getParty(p).equals(Party.getParty(p1)))
-										{
-											continue;
-										}
-									}
-								}
-								if ((!(e == p))&& e instanceof LivingEntity&& !e.hasMetadata("fake") && !e.hasMetadata("portal"))
-								{
-									LivingEntity le = (LivingEntity)e;
-									tar.add(le);
-									break;
-
+									}, 15);
 								}
 							}
-							if(tar.stream().findFirst().isPresent()) {
-								if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-									p.sendTitle(org.bukkit.ChatColor.RED+"목표물 탐색중...",tar.stream().findFirst().get().getName(), 5, 5, 5);
-								}
-								else {
-									p.sendTitle(org.bukkit.ChatColor.RED+"Searching Target...",tar.stream().findFirst().get().getName(), 5, 5, 5);
-								}
-							}
-							else {
-								if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-									p.sendTitle(org.bukkit.ChatColor.RED+"목표물 탐색중...",null, 5, 5, 5);
-								}
-								else {
-									p.sendTitle(org.bukkit.ChatColor.RED+"Searching Target...",null, 5, 5, 5);
-								}
-							}
-						}
-					}, i);
-				}
-				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					@Override
-					public void run()
-					{
-						if(tar.stream().findFirst().isPresent()) {
-							LivingEntity le = tar.stream().findFirst().get();
-							p.getWorld().playSound(p.getLocation(),Sound.BLOCK_CHEST_LOCKED, 1,0f);
-							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								p.sendTitle(org.bukkit.ChatColor.DARK_GREEN+"탐색완료!",le.getName(), 5, 5, 5);
-							}
-							else {
-								p.sendTitle(org.bukkit.ChatColor.DARK_GREEN+"Targeted!",le.getName(), 5, 5, 5);
-							}
-							for(int i =-20; i<20; i++) {
-								ls.add(le.getEyeLocation().clone().add(i, i/2, i));
-							}
+						}, 30);
+					});
+			bd.execute();
 
-							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-								@Override
-								public void run()
-								{
-									for(int i=0; i<40; i++) {
-										Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-											@Override
-											public void run()
-											{
-												p.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, le.getLocation(), 3, 1, 1, 1);
-												p.getWorld().spawnParticle(Particle.CRIT, le.getLocation(), 40, 2, 2, 2,0.1);
-												p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, le.getLocation(), 10, 3,3, 3);
-												p.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, le.getLocation(), 3, 1, 1, 1);
-												p.getWorld().spawnParticle(Particle.FLASH, le.getLocation(), 10, 3, 3, 3);
-												p.getWorld().spawnParticle(Particle.SPELL_INSTANT, le.getLocation(), 30, 1, 1, 1);
-												p.getWorld().spawnParticle(Particle.CRIT_MAGIC, le.getLocation(), 30, 1, 1, 1);
-
-												p.getWorld().playSound(le.getLocation(),Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 0.3f,2f);
-												p.getWorld().playSound(le.getLocation(),Sound.ENTITY_ARROW_HIT, 0.3f,2f);
-												p.getWorld().playSound(le.getLocation(),Sound.ENTITY_GENERIC_EXPLODE, 0.3f,2f);
-												for(Entity e : le.getWorld().getNearbyEntities(le.getLocation(),4, 4, 4)) {
-													if (e instanceof Player)
-													{
-
-														Player p1 = (Player) e;
-														if(Party.hasParty(p) && Party.hasParty(p1))	{
-															if(Party.getParty(p).equals(Party.getParty(p1)))
-															{
-																continue;
-															}
-														}
-													}
-													if(e instanceof LivingEntity && e!=p&& !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
-														LivingEntity le = (LivingEntity)e;
-														atk1(0.5, p, le);
-														Holding.holding(p, le, 10l);
-
-													}
-
-												}
-											}
-										}, i*2);
-									}
-									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-										@Override
-										public void run()
-										{
-											p.getWorld().playSound(le.getLocation(),Sound.BLOCK_BEACON_ACTIVATE, 0.3f,1.5f);
-										}
-									}, 82);
-									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-										@Override
-										public void run()
-										{
-											ls.forEach(l -> {
-												l.getWorld().spawnParticle(Particle.ASH, l, 10, 0.5,0.5,0.5,0);
-												l.getWorld().spawnParticle(Particle.WHITE_ASH, l, 10, 0.5,0.5,0.5,0);
-												l.getWorld().spawnParticle(Particle.FLASH, l, 3, 0.5, 0.5, 0.5);
-												l.getWorld().spawnParticle(Particle.CRIT, l, 3, 0.5, 0.5, 0.5,0);
-
-											});
-
-											p.getWorld().playSound(le.getLocation(),Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1f,1.5f);
-											p.getWorld().playSound(le.getLocation(),Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1f,0.5f);
-											for(Entity e : le.getWorld().getNearbyEntities(le.getLocation(),4, 4, 4)) {
-												if (e instanceof Player)
-												{
-
-													Player p1 = (Player) e;
-													if(Party.hasParty(p) && Party.hasParty(p1))	{
-														if(Party.getParty(p).equals(Party.getParty(p1)))
-														{
-															continue;
-														}
-													}
-												}
-												if(e instanceof LivingEntity && e!=p&& !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
-													LivingEntity le = (LivingEntity)e;
-													atk1(6.5, p, le);
-													Holding.holding(p, le, 10l);
-
-												}
-
-											}
-										}
-									}, 90);
-
-								}
-							}, 15);
-						}
-						else {
-							p.getWorld().playSound(p.getLocation(),Sound.BLOCK_CHEST_LOCKED, 1,0f);
-							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								p.sendTitle(org.bukkit.ChatColor.DARK_GREEN+"탐색 실패!","무차별 난사", 5, 5, 5);
-							}
-							else {
-								p.sendTitle(org.bukkit.ChatColor.DARK_GREEN+"Failed to Target.","Random Fire", 5, 5, 5);
-							}
-
-							Location tl = p.getEyeLocation().clone().add(p.getEyeLocation().clone().getDirection().normalize().multiply(10));
-							for(int i =-20; i<20; i++) {
-								ls.add(tl.clone().add(i, i/2, i));
-							}
-							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-								@Override
-								public void run()
-								{
-									for(int i=0; i<40; i++) {
-										Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-											@Override
-											public void run()
-											{
-												p.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, tl, 3, 1, 1, 1);
-												p.getWorld().spawnParticle(Particle.CRIT, tl, 40, 2, 2, 2,0.1);
-												p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, tl, 10, 3,3, 3);
-												p.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, tl, 3, 1, 1, 1);
-												p.getWorld().spawnParticle(Particle.FLASH, tl, 10, 3, 3, 3);
-												p.getWorld().spawnParticle(Particle.SPELL_INSTANT, tl, 30, 1, 1, 1);
-												p.getWorld().spawnParticle(Particle.CRIT_MAGIC, tl, 30, 1, 1, 1);
-
-												p.getWorld().playSound(tl,Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 0.3f,2f);
-												p.getWorld().playSound(tl,Sound.ENTITY_ARROW_HIT, 0.3f,2f);
-												p.getWorld().playSound(tl,Sound.ENTITY_GENERIC_EXPLODE, 0.3f,2f);
-												for(Entity e : tl.getWorld().getNearbyEntities(tl,4, 4, 4)) {
-													if (e instanceof Player)
-													{
-
-														Player p1 = (Player) e;
-														if(Party.hasParty(p) && Party.hasParty(p1))	{
-															if(Party.getParty(p).equals(Party.getParty(p1)))
-															{
-																continue;
-															}
-														}
-													}
-													if(e instanceof LivingEntity && e!=p&& !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
-														LivingEntity le = (LivingEntity)e;
-														atk1(0.5, p, le);
-														Holding.holding(p, le, 10l);
-
-													}
-
-												}
-											}
-										}, i*2);
-									}
-									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-										@Override
-										public void run()
-										{
-											p.getWorld().playSound(tl,Sound.BLOCK_BEACON_ACTIVATE, 0.3f,1.5f);
-											for(int i =-20; i<20; i++) {
-												ls.add(tl.clone().add(i, i/2, i));
-											}
-										}
-									}, 82);
-									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-										@Override
-										public void run()
-										{
-											ls.forEach(l -> {
-												l.getWorld().spawnParticle(Particle.ASH, l, 10, 0.5,0.5,0.5,0);
-												l.getWorld().spawnParticle(Particle.WHITE_ASH, l, 10, 0.5,0.5,0.5,0);
-												l.getWorld().spawnParticle(Particle.FLASH, l, 3, 0.5, 0.5, 0.5);
-												l.getWorld().spawnParticle(Particle.CRIT, l, 3, 0.5, 0.5, 0.5,0);
-
-											});
-
-											p.getWorld().playSound(tl,Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1f,1.5f);
-											p.getWorld().playSound(tl,Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1f,0.5f);
-											for(Entity e : tl.getWorld().getNearbyEntities(tl,4, 4, 4)) {
-												if (e instanceof Player)
-												{
-
-													Player p1 = (Player) e;
-													if(Party.hasParty(p) && Party.hasParty(p1))	{
-														if(Party.getParty(p).equals(Party.getParty(p1)))
-														{
-															continue;
-														}
-													}
-												}
-												if(e instanceof LivingEntity && e!=p&& !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
-													LivingEntity le = (LivingEntity)e;
-													atk1(6.5, p, le);
-													Holding.holding(p, le, 10l);
-
-												}
-
-											}
-										}
-									}, 90);
-
-								}
-							}, 15);
-						}
-					}
-				}, 30);
-				bult2cooldown.put(p.getName(), System.currentTimeMillis());
-			}
+			
 		}
 	}
 
@@ -2500,9 +1929,9 @@ public class Snipskills extends Pak implements Serializable, Listener {
 								e.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 40, 0, false, false));
 								dset2(d, p, 1.36*(1+ssd.HeadShot.get(p.getUniqueId())*0.036), e, 5);
 								if(e.hasMetadata("leader") || e.hasMetadata("boss")) {
-									d.setDamage(d.getDamage()*2.35);
+									d.setDamage(d.getDamage()*2.5);
 								}
-								p.getWorld().spawnParticle(Particle.DAMAGE_INDICATOR, e.getEyeLocation(), 50, 1,1,1);
+								p.getWorld().spawnParticle(Particle.CRIT, e.getEyeLocation(), 50, 1,1,1);
 								if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 									p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("[헤드샷]").bold(true).color(ChatColor.DARK_GREEN).create());
 								}

@@ -63,8 +63,8 @@ public class FishingRod extends Weapons implements Listener {
 								Operation.ADD_NUMBER, EquipmentSlot.HAND));
 				if (cmdt == 14) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¹Ù¶÷ÀÇ ³¬½Ã´ë");
-						rm.setLocalizedName(ChatColor.GOLD +"¹Ù¶÷ÀÇ ³¬½Ã´ë");
+						rm.setDisplayName(ChatColor.GOLD +"ë°”ëŒì˜ ë‚šì‹œëŒ€");
+						rm.setLocalizedName(ChatColor.GOLD +"ë°”ëŒì˜ ë‚šì‹œëŒ€");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Windy FishingRod");
@@ -76,8 +76,8 @@ public class FishingRod extends Weapons implements Listener {
 				}
 				else if (cmdt == 5) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"´ëÁöÀÇ ³¬½Ã´ë");
-						rm.setLocalizedName(ChatColor.GOLD +"´ëÁöÀÇ ³¬½Ã´ë");
+						rm.setDisplayName(ChatColor.GOLD +"ëŒ€ì§€ì˜ ë‚šì‹œëŒ€");
+						rm.setLocalizedName(ChatColor.GOLD +"ëŒ€ì§€ì˜ ë‚šì‹œëŒ€");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Earth FishingRod");
@@ -87,8 +87,8 @@ public class FishingRod extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 6) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¼­¸®ÀÇ ³¬½Ã´ë");
-						rm.setLocalizedName(ChatColor.GOLD +"¼­¸®ÀÇ ³¬½Ã´ë");
+						rm.setDisplayName(ChatColor.GOLD +"ì„œë¦¬ì˜ ë‚šì‹œëŒ€");
+						rm.setLocalizedName(ChatColor.GOLD +"ì„œë¦¬ì˜ ë‚šì‹œëŒ€");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Frost FishingRod");
@@ -98,8 +98,8 @@ public class FishingRod extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 7) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¹Ù´ÙÀÇ ³¬½Ã´ë");
-						rm.setLocalizedName(ChatColor.GOLD +"¹Ù´ÙÀÇ ³¬½Ã´ë");
+						rm.setDisplayName(ChatColor.GOLD +"ë°”ë‹¤ì˜ ë‚šì‹œëŒ€");
+						rm.setLocalizedName(ChatColor.GOLD +"ë°”ë‹¤ì˜ ë‚šì‹œëŒ€");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Ocean FishingRod");
@@ -109,8 +109,8 @@ public class FishingRod extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 8) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¾îµÒÀÇ ³¬½Ã´ë");
-						rm.setLocalizedName(ChatColor.GOLD +"¾îµÒÀÇ ³¬½Ã´ë");
+						rm.setDisplayName(ChatColor.GOLD +"ì–´ë‘ ì˜ ë‚šì‹œëŒ€");
+						rm.setLocalizedName(ChatColor.GOLD +"ì–´ë‘ ì˜ ë‚šì‹œëŒ€");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Dark FishingRod");
@@ -120,8 +120,8 @@ public class FishingRod extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 9) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"°³Á¶µÈ ³¬½Ã´ë");
-						rm.setLocalizedName(ChatColor.GOLD +"°³Á¶µÈ ³¬½Ã´ë");
+						rm.setDisplayName(ChatColor.GOLD +"ê°œì¡°ëœ ë‚šì‹œëŒ€");
+						rm.setLocalizedName(ChatColor.GOLD +"ê°œì¡°ëœ ë‚šì‹œëŒ€");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Hyper FishingRod");
@@ -131,8 +131,8 @@ public class FishingRod extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 10) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"ÀÛ¿­ÇÏ´Â ³¬½Ã´ë");
-						rm.setLocalizedName(ChatColor.GOLD +"ÀÛ¿­ÇÏ´Â ³¬½Ã´ë");
+						rm.setDisplayName(ChatColor.GOLD +"ì‘ì—´í•˜ëŠ” ë‚šì‹œëŒ€");
+						rm.setLocalizedName(ChatColor.GOLD +"ì‘ì—´í•˜ëŠ” ë‚šì‹œëŒ€");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Burning FishingRod");
@@ -142,8 +142,8 @@ public class FishingRod extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 11) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¸Íµ¶ ³¬½Ã´ë");
-						rm.setLocalizedName(ChatColor.GOLD +"¸Íµ¶ ³¬½Ã´ë");
+						rm.setDisplayName(ChatColor.GOLD +"ë§¹ë… ë‚šì‹œëŒ€");
+						rm.setLocalizedName(ChatColor.GOLD +"ë§¹ë… ë‚šì‹œëŒ€");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Poison FishingRod");
@@ -168,8 +168,8 @@ public class FishingRod extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 26,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"ÀÚ¿¬ÀÇ ³¬½Ã´ë");
-						rm.setLocalizedName(ChatColor.GOLD +"ÀÚ¿¬ÀÇ ³¬½Ã´ë");
+						rm.setDisplayName(ChatColor.GOLD +"ìì—°ì˜ ë‚šì‹œëŒ€");
+						rm.setLocalizedName(ChatColor.GOLD +"ìì—°ì˜ ë‚šì‹œëŒ€");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Natural FishingRod");
@@ -193,8 +193,8 @@ public class FishingRod extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 9,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³¬½Ã´ë - 1´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³¬½Ã´ë - 1´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë‚šì‹œëŒ€ - 1ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë‚šì‹œëŒ€ - 1ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.1");
@@ -218,8 +218,8 @@ public class FishingRod extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 11,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³¬½Ã´ë - 2´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³¬½Ã´ë - 2´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë‚šì‹œëŒ€ - 2ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë‚šì‹œëŒ€ - 2ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.2");
@@ -233,8 +233,8 @@ public class FishingRod extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 13,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³¬½Ã´ë - 3´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³¬½Ã´ë - 3´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë‚šì‹œëŒ€ - 3ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë‚šì‹œëŒ€ - 3ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.3");
@@ -248,8 +248,8 @@ public class FishingRod extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 15,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³¬½Ã´ë - 4´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³¬½Ã´ë - 4´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë‚šì‹œëŒ€ - 4ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë‚šì‹œëŒ€ - 4ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.4");
@@ -263,8 +263,8 @@ public class FishingRod extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 17,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³¬½Ã´ë - 5´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³¬½Ã´ë - 5´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë‚šì‹œëŒ€ - 5ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë‚šì‹œëŒ€ - 5ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.5");
@@ -278,8 +278,8 @@ public class FishingRod extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 19,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³¬½Ã´ë - 6´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³¬½Ã´ë - 6´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë‚šì‹œëŒ€ - 6ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë‚šì‹œëŒ€ - 6ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.6");
@@ -293,8 +293,8 @@ public class FishingRod extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 21,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³¬½Ã´ë - 7´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³¬½Ã´ë - 7´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë‚šì‹œëŒ€ - 7ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë‚šì‹œëŒ€ - 7ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.7");
@@ -308,8 +308,8 @@ public class FishingRod extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 23,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³¬½Ã´ë - 8´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³¬½Ã´ë - 8´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë‚šì‹œëŒ€ - 8ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë‚šì‹œëŒ€ - 8ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.8");
@@ -748,8 +748,8 @@ public class FishingRod extends Weapons implements Listener {
 				"generic.attackDamage", 2, Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		meta.setCustomModelData(12000+1);
 		if(lang.contains("kr")){
-			meta.setDisplayName("µ¹ ³¬½Ã´ë");
-			meta.setLocalizedName("µ¹ ³¬½Ã´ë");
+			meta.setDisplayName("ëŒ ë‚šì‹œëŒ€");
+			meta.setLocalizedName("ëŒ ë‚šì‹œëŒ€");
 		}
 		else {
 			meta.setDisplayName("Stone FishingRod");
@@ -773,8 +773,8 @@ public class FishingRod extends Weapons implements Listener {
 				"generic.attackDamage", 2, Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		meta.setCustomModelData(12000+2);
 		if(lang.contains("kr")){
-			meta.setDisplayName("±İ ³¬½Ã´ë");
-			meta.setLocalizedName("±İ ³¬½Ã´ë");
+			meta.setDisplayName("ê¸ˆ ë‚šì‹œëŒ€");
+			meta.setLocalizedName("ê¸ˆ ë‚šì‹œëŒ€");
 		}
 		else {
 			meta.setDisplayName("Gold FishingRod");
@@ -798,8 +798,8 @@ public class FishingRod extends Weapons implements Listener {
 				"generic.attackDamage", 3, Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		meta.setCustomModelData(12000+3);
 		if(lang.contains("kr")){
-			meta.setDisplayName("Ã¶ ³¬½Ã´ë");
-			meta.setLocalizedName("Ã¶ ³¬½Ã´ë");
+			meta.setDisplayName("ì²  ë‚šì‹œëŒ€");
+			meta.setLocalizedName("ì²  ë‚šì‹œëŒ€");
 		}
 		else {
 			meta.setDisplayName("Iron FishingRod");
@@ -823,8 +823,8 @@ public class FishingRod extends Weapons implements Listener {
 				"generic.attackDamage", 5, Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		meta.setCustomModelData(12000+4);
 		if(lang.contains("kr")){
-			meta.setDisplayName("´ÙÀÌ¾Æ¸óµå ³¬½Ã´ë");
-			meta.setLocalizedName("´ÙÀÌ¾Æ¸óµå ³¬½Ã´ë");
+			meta.setDisplayName("ë‹¤ì´ì•„ëª¬ë“œ ë‚šì‹œëŒ€");
+			meta.setLocalizedName("ë‹¤ì´ì•„ëª¬ë“œ ë‚šì‹œëŒ€");
 		}
 		else {
 			meta.setDisplayName("Diamond FishingRod");
@@ -851,8 +851,8 @@ public class FishingRod extends Weapons implements Listener {
 		Player p = (Player) d.getView().getPlayer();
 		
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			rm.setDisplayName("³×´õ¶óÀÌÆ® ³¬½Ã´ë");
-			rm.setLocalizedName("³×´õ¶óÀÌÆ® ³¬½Ã´ë");
+			rm.setDisplayName("ë„¤ë”ë¼ì´íŠ¸ ë‚šì‹œëŒ€");
+			rm.setLocalizedName("ë„¤ë”ë¼ì´íŠ¸ ë‚šì‹œëŒ€");
 		}
 		else {
 			rm.setDisplayName("Netherite FishingRod");
@@ -904,8 +904,8 @@ public class FishingRod extends Weapons implements Listener {
 							"generic.attackDamage", 7, Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					rm.setCustomModelData(12000+60);
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("³×´õ¶óÀÌÆ® ³¬½Ã´ë");
-						rm.setLocalizedName("³×´õ¶óÀÌÆ® ³¬½Ã´ë");
+						rm.setDisplayName("ë„¤ë”ë¼ì´íŠ¸ ë‚šì‹œëŒ€");
+						rm.setLocalizedName("ë„¤ë”ë¼ì´íŠ¸ ë‚šì‹œëŒ€");
 					}
 					else {
 						rm.setDisplayName("Netherite FishingRod");

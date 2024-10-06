@@ -77,7 +77,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 		if(Summoned.combo.containsRow(p.getName()))
 		{
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				p.sendMessage("ÀüÅõÁß¿¡´Â ÆÄÆ¼»ý¼ºÀÌ ºÒ°¡´É ÇÕ´Ï´Ù");
+				p.sendMessage("ï¿½ï¿½ï¿½ï¿½ï¿½ß¿ï¿½ï¿½ï¿½ ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò°ï¿½ï¿½ï¿½ ï¿½Õ´Ï´ï¿½");
 			}
 			else {
 				p.sendMessage("You Can't Create Party While Fightning");
@@ -92,7 +92,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 			Owner.put(p.getUniqueId(), true);
 
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				p.sendMessage(ChatColor.GOLD+ "ÆÄÆ¼ [" + name + "] °¡ »ý¼ºµÇ¾ú½À´Ï´Ù");
+				p.sendMessage(ChatColor.GOLD+ "ï¿½ï¿½Æ¼ [" + name + "] ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½");
 			}
 			else {
 				p.sendMessage(ChatColor.GOLD+ "Party [" + name + "] created");
@@ -104,8 +104,8 @@ public class Party implements CommandExecutor, Serializable, Listener{
 			heart.setDisplaySlot(DisplaySlot.BELOW_NAME);
 	        Objective po = nboard.registerNewObjective(name+"p" ,Criteria.DUMMY, ChatColor.GOLD + "Party: [" + name+"]");
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				heart.setDisplayName(ChatColor.GREEN + "[»ý¸í·Â]");
-				po.setDisplayName(ChatColor.GOLD + "ÆÄÆ¼: [" + name+"]");
+				heart.setDisplayName(ChatColor.GREEN + "[ï¿½ï¿½ï¿½ï¿½ï¿½]");
+				po.setDisplayName(ChatColor.GOLD + "ï¿½ï¿½Æ¼: [" + name+"]");
 			}
 	        po.setDisplaySlot(DisplaySlot.SIDEBAR);
 	        
@@ -133,7 +133,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 			if(Summoned.combo.containsRow(name))
 			{
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					p.sendMessage("ÀüÅõÁß¿¡´Â ÆÄÆ¼¿ø Ãß°¡°¡ ºÒ°¡´É ÇÕ´Ï´Ù");
+					p.sendMessage("ï¿½ï¿½ï¿½ï¿½ï¿½ß¿ï¿½ï¿½ï¿½ ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ ï¿½Ò°ï¿½ï¿½ï¿½ ï¿½Õ´Ï´ï¿½");
 				}
 				else {
 					p.sendMessage("You Can't Add member while fighting");
@@ -143,7 +143,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 			
 			if(Party.get(name).size()>8) {
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					p.sendMessage("ÆÄÆ¼¿øÀº ÃÖ´ë 8¸í±îÁö °¡´ÉÇÕ´Ï´Ù");
+					p.sendMessage("ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ 8ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½");
 				}
 				else {
 					p.sendMessage("Party members should be less than 8 people.");
@@ -170,7 +170,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 
 				getPlayerMembers(name).forEach(m -> {
 					if(m.getLocale().equalsIgnoreCase("ko_kr")) {
-						m.sendMessage(ChatColor.GOLD + p.getDisplayName() +  "°¡ [" + name +"] ÆÄÆ¼¿¡ Âü°¡Çß½À´Ï´Ù");
+						m.sendMessage(ChatColor.GOLD + p.getDisplayName() +  "ï¿½ï¿½ [" + name +"] ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½");
 					}
 					else {
 						m.sendMessage(ChatColor.GOLD + p.getDisplayName() +"joined party [" + name+"]");
@@ -201,7 +201,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 
 		getPlayerMembers(name).forEach(m -> {
 			if(m.getLocale().equalsIgnoreCase("ko_kr")) {
-				m.sendMessage(ChatColor.GOLD + p.getDisplayName() +  "°¡ [" + name +"] ÆÄÆ¼¿¡¼­ ¶°³µ½À´Ï´Ù");
+				m.sendMessage(ChatColor.GOLD + p.getDisplayName() +  "ï¿½ï¿½ [" + name +"] ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½");
 			}
 			else {
 				m.sendMessage(ChatColor.GOLD + p.getDisplayName() +"left party [" + name+"]");
@@ -218,7 +218,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 	{
 		getPlayerMembers(name).forEach(p -> {
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				p.sendMessage(ChatColor.RED + "ÆÄÆ¼ ["+ name + "] °¡ ÇØÃ¼µÇ¾ú½À´Ï´Ù");
+				p.sendMessage(ChatColor.RED + "ï¿½ï¿½Æ¼ ["+ name + "] ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½");
 			}
 			else {
 				p.sendMessage(ChatColor.RED + "Party ["+ name + "] has been disbanded");
@@ -285,7 +285,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 		if(p1 == null || p2 == null) {
 			return false;
 		}
-		if(p1 == p2) {
+		if(p1 == p2 || p1.equals(p2)) {
 			return true;
 		}
 		if(Party.containsValue(p1.getUniqueId()) && Party.containsValue(p2.getUniqueId())) {
@@ -313,7 +313,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 
 	final private void unlock(Player p, String party) {
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			p.sendMessage("ÇØ´ç ÆÄÆ¼ÀÇ ºñ¹Ð¹øÈ£¸¦ 10ÃÊ¾È¿¡ ÀÔ·ÂÇØÁÖ¼¼¿ä");
+			p.sendMessage("ï¿½Ø´ï¿½ ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ 10ï¿½Ê¾È¿ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½");
 		}
 		else {
 			p.sendMessage("Please Enter the password in 10 seconds To join.");
@@ -349,7 +349,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 				p.setScoreboard(oboard);
 				addNewPartyMember(p, sbs);
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					p.sendMessage(sbs +" ÆÄÆ¼¿¡ Âü°¡Çß½À´Ï´Ù");
+					p.sendMessage(sbs +" ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½");
 				}
 				else {
 					p.sendMessage("joined party " + sbs);
@@ -358,7 +358,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 			}
 			else {
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					p.sendMessage("ºñ¹Ð¹øÈ£°¡ Æ²·È½À´Ï´Ù");
+					p.sendMessage("ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ Æ²ï¿½È½ï¿½ï¿½Ï´ï¿½");
 				}
 				else {
 					p.sendMessage("Wrong Password");
@@ -375,7 +375,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 	final private void joinreq(Player p, String party) {
 		if(join.containsKey(party)) {
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				p.sendMessage(ChatColor.RED + "½ÅÃ»À» À§ÇØ¼­ ´ë±âÇÏ¼Å¾ßÇÕ´Ï´Ù");
+				p.sendMessage(ChatColor.RED + "ï¿½ï¿½Ã»ï¿½ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¼Å¾ï¿½ï¿½Õ´Ï´ï¿½");
 			}
 			else {
 				p.sendMessage(ChatColor.LIGHT_PURPLE + "You still have to wait to apply");
@@ -384,8 +384,8 @@ public class Party implements CommandExecutor, Serializable, Listener{
 		}
 		Player owner = getOwner(party);
 		if(owner.getLocale().equalsIgnoreCase("ko_kr")) {
-			owner.sendMessage(ChatColor.LIGHT_PURPLE + p.getDisplayName() + "°¡ ÆÄÆ¼ Âü°¡ ¿äÃ»À» º¸³Â½À´Ï´Ù.");
-			owner.sendMessage(ChatColor.LIGHT_PURPLE + "[¼ö¶ô: a] [°ÅÀý: d] 5ÃÊ¾È¿¡ ¹ÌÀÔ·Â½Ã ÀÚµ¿À¸·Î °ÅÀýµË´Ï´Ù");
+			owner.sendMessage(ChatColor.LIGHT_PURPLE + p.getDisplayName() + "ï¿½ï¿½ ï¿½ï¿½Æ¼ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã»ï¿½ï¿½ ï¿½ï¿½ï¿½Â½ï¿½ï¿½Ï´ï¿½.");
+			owner.sendMessage(ChatColor.LIGHT_PURPLE + "[ï¿½ï¿½ï¿½ï¿½: a] [ï¿½ï¿½ï¿½ï¿½: d] 5ï¿½Ê¾È¿ï¿½ ï¿½ï¿½ï¿½Ô·Â½ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ë´Ï´ï¿½");
 		}
 		else {
 			owner.sendMessage(ChatColor.LIGHT_PURPLE + p.getDisplayName() + "wants to join your party");
@@ -426,7 +426,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 					p.setScoreboard(oboard);
 					addNewPartyMember(p, par);
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						p.sendMessage(ChatColor.GOLD + "[" + par +"] ÆÄÆ¼¿¡ Âü°¡Çß½À´Ï´Ù");
+						p.sendMessage(ChatColor.GOLD + "[" + par +"] ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½");
 					}
 					else {
 						p.sendMessage(ChatColor.GOLD +"joined party [" + par+"]");
@@ -435,7 +435,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 				}
 				else {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						p.sendMessage(ChatColor.GRAY +"½ÅÃ»ÀÌ °ÅÀýµÇ¾ú½À´Ï´Ù");
+						p.sendMessage(ChatColor.GRAY +"ï¿½ï¿½Ã»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½");
 					}
 					else {
 						p.sendMessage(ChatColor.GRAY +"Your application has been declined");
@@ -454,7 +454,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 		String party = getParty(ow);
 		if(invite.containsKey(p.getUniqueId())) {
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				p.sendMessage(ChatColor.RED + "ÃÊ´ë¸¦ À§ÇØ¼­ ´ë±âÇÏ¼Å¾ßÇÕ´Ï´Ù");
+				p.sendMessage(ChatColor.RED + "ï¿½Ê´ë¸¦ ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¼Å¾ï¿½ï¿½Õ´Ï´ï¿½");
 			}
 			else {
 				p.sendMessage(ChatColor.LIGHT_PURPLE + "You still have to wait to invite");
@@ -462,8 +462,8 @@ public class Party implements CommandExecutor, Serializable, Listener{
 			return;
 		}
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			p.sendMessage(ChatColor.LIGHT_PURPLE + "[" + party + "] ÆÄÆ¼·Î ºÎÅÍ ÃÊ´ë¹Þ¾Ò½À´Ï´Ù.");
-			p.sendMessage(ChatColor.LIGHT_PURPLE + "[¼ö¶ô: a] [°ÅÀý: d] 5ÃÊ¾È¿¡ ¹ÌÀÔ·Â½Ã ÀÚµ¿À¸·Î °ÅÀýµË´Ï´Ù");
+			p.sendMessage(ChatColor.LIGHT_PURPLE + "[" + party + "] ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´ï¿½Þ¾Ò½ï¿½ï¿½Ï´ï¿½.");
+			p.sendMessage(ChatColor.LIGHT_PURPLE + "[ï¿½ï¿½ï¿½ï¿½: a] [ï¿½ï¿½ï¿½ï¿½: d] 5ï¿½Ê¾È¿ï¿½ ï¿½ï¿½ï¿½Ô·Â½ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ë´Ï´ï¿½");
 		}
 		else {
 			p.sendMessage(ChatColor.LIGHT_PURPLE + "You're just invited from Party [" + party + "]");
@@ -504,7 +504,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 				p.setScoreboard(oboard);
 				addNewPartyMember(p, par);
 				if(owner.getLocale().equalsIgnoreCase("ko_kr")) {
-					owner.sendMessage(ChatColor.GRAY +"ÃÊ´ë°¡ ¼ö¶ôµÇ¾ú½À´Ï´Ù");
+					owner.sendMessage(ChatColor.GRAY +"ï¿½Ê´ë°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½");
 				}
 				else {
 					owner.sendMessage(ChatColor.GRAY +"Your invitation has been accepted");
@@ -513,7 +513,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 			}
 			else {
 				if(owner.getLocale().equalsIgnoreCase("ko_kr")) {
-					owner.sendMessage(ChatColor.GRAY +"ÃÊ´ë°¡ °ÅÀýµÇ¾ú½À´Ï´Ù");
+					owner.sendMessage(ChatColor.GRAY +"ï¿½Ê´ë°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½");
 				}
 				else {
 					owner.sendMessage(ChatColor.GRAY +"Your invitation has been declined");
@@ -540,16 +540,16 @@ public class Party implements CommandExecutor, Serializable, Listener{
 
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 			p.sendMessage(ChatColor.GREEN +"[Made By chw3021]");
-			p.sendMessage(ChatColor.LIGHT_PURPLE +"---ÆÄÆ¼ ¸í·É¾î---");
-			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party create <ÆÄÆ¼¸í> (/party c): ÆÄÆ¼¸¦ »ý¼ºÇÏ°í ÆÄÆ¼ÀåÀÌ µË´Ï´Ù");
-			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party join <ÆÄÆ¼¸í> (/party j): ÇØ´ç ÆÄÆ¼¿¡ Âü°¡ÇÕ´Ï´Ù");
-			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party password <ºñ¹Ð¹øÈ£> (/party p): ÆÄÆ¼¸¦ ÇØ´ç ºñ¹Ð¹øÈ£·Î Àá±Å¼­, ºñ¹Ð¹øÈ£¸¦ ÀÔ·ÂÇØ¾ß ÆÄÆ¼¸¦ Âü°¡ÇÒ¼ö ÀÖ°ÔÇÕ´Ï´Ù");
-			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party invite <ÆÄÆ¼¸í> (/party i): (ÆÄÆ¼Àå¸¸ °¡´É) ÇØ´ç ÇÃ·¹ÀÌ¾î¸¦ ÃÊ´ëÇÕ´Ï´Ù");
-			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party kick <ÇÃ·¹ÀÌ¾î ÀÌ¸§> (/party k): (ÆÄÆ¼Àå¸¸ °¡´É) ÇØ´ç ÇÃ·¹ÀÌ¾î¸¦ °­ÅðÇÕ´Ï´Ù");
-			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party disband (/party d): (ÆÄÆ¼Àå¸¸ °¡´É) ÆÄÆ¼¸¦ ÇØÃ¼ÇÕ´Ï´Ù");
-			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party leave (/party lv): ÆÄÆ¼¸¦ ¶°³³´Ï´Ù");
-			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party assemble (/party a): (ÆÄÆ¼Àå¸¸ °¡´É) ÆÄÆ¼¿øµéÀ» ÀÚ½ÅÀÇ À§Ä¡·Î ÀÌµ¿½ÃÅµ´Ï´Ù");
-			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party list (/party li): ÇöÀç »ý¼ºµÇ¾îÀÖ´Â ÆÄÆ¼µéÀÇ ¸ñ·ÏÀ» Ç¥½ÃÇÕ´Ï´Ù");
+			p.sendMessage(ChatColor.LIGHT_PURPLE +"---ï¿½ï¿½Æ¼ ï¿½ï¿½É¾ï¿½---");
+			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party create <ï¿½ï¿½Æ¼ï¿½ï¿½> (/party c): ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½ï¿½ ï¿½Ë´Ï´ï¿½");
+			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party join <ï¿½ï¿½Æ¼ï¿½ï¿½> (/party j): ï¿½Ø´ï¿½ ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½");
+			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party password <ï¿½ï¿½Ð¹ï¿½È£> (/party p): ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ ï¿½ï¿½Å¼ï¿½, ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ø¾ï¿½ ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½Ö°ï¿½ï¿½Õ´Ï´ï¿½");
+			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party invite <ï¿½ï¿½Æ¼ï¿½ï¿½> (/party i): (ï¿½ï¿½Æ¼ï¿½å¸¸ ï¿½ï¿½ï¿½ï¿½) ï¿½Ø´ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½Ê´ï¿½ï¿½Õ´Ï´ï¿½");
+			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party kick <ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ì¸ï¿½> (/party k): (ï¿½ï¿½Æ¼ï¿½å¸¸ ï¿½ï¿½ï¿½ï¿½) ï¿½Ø´ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½");
+			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party disband (/party d): (ï¿½ï¿½Æ¼ï¿½å¸¸ ï¿½ï¿½ï¿½ï¿½) ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½Õ´Ï´ï¿½");
+			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party leave (/party lv): ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½");
+			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party assemble (/party a): (ï¿½ï¿½Æ¼ï¿½å¸¸ ï¿½ï¿½ï¿½ï¿½) ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½Åµï¿½Ï´ï¿½");
+			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party list (/party li): ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½Õ´Ï´ï¿½");
 		}
 		else {
 			p.sendMessage(ChatColor.GREEN +"[Made By chw3021]");
@@ -579,13 +579,13 @@ public class Party implements CommandExecutor, Serializable, Listener{
 					Player newowner = (Player) Bukkit.getPlayer(getMembers(par).filter(o->(o!=p.getUniqueId())).findAny().get());
 					setNewOwner(p,newowner,par);
 					if(newowner.getLocale().equalsIgnoreCase("ko_kr")) {
-						newowner.sendMessage("ÆÄÆ¼ÀåÀ» ÀÌÀÓ¹Þ¾Ò½À´Ï´Ù");
+						newowner.sendMessage("ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ó¹Þ¾Ò½ï¿½ï¿½Ï´ï¿½");
 					}
 					else {
 						newowner.sendMessage("You just took over owner of this party");
 					}
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						p.sendMessage("ÆÄÆ¼¸¦ ¶°³µ½À´Ï´Ù");
+						p.sendMessage("ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½");
 					}
 					else {
 						p.sendMessage("You left your party");
@@ -596,7 +596,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 				{
 					String par = getParty(p);
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						p.sendMessage("ÆÄÆ¼¸¦ ¶°³µ½À´Ï´Ù");
+						p.sendMessage("ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½");
 					}
 					else {
 						p.sendMessage("You left your party");
@@ -607,7 +607,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 			else {
 				String par = getParty(p);
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					p.sendMessage("ÆÄÆ¼¸¦ ¶°³µ½À´Ï´Ù");
+					p.sendMessage("ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½");
 				}
 				else {
 					p.sendMessage("You left your party");
@@ -617,7 +617,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 		}
 		else {
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				p.sendMessage("ÆÄÆ¼¿¡ ¼ÓÇØÀÖÁö ¾Ê½À´Ï´Ù");
+				p.sendMessage("ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½");
 			}
 			else {
 				p.sendMessage("You aren't in any party");
@@ -638,7 +638,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 				
 				if(hasParty(p)) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						p.sendMessage(ChatColor.LIGHT_PURPLE +"ÇöÀç ¼ÓÇØÀÖ´Â ÆÄÆ¼: " + getParty(p));
+						p.sendMessage(ChatColor.LIGHT_PURPLE +"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½Æ¼: " + getParty(p));
 					}
 					else {
 						p.sendMessage(ChatColor.LIGHT_PURPLE +"You belong to party: " + getParty(p));
@@ -655,7 +655,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 					if(!hasParty(p))
 						if(isPartyexist(sbs)) {
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								p.sendMessage(ChatColor.LIGHT_PURPLE +"ÀÌ¹Ì »ç¿ëÁßÀÎ ÆÄÆ¼¸íÀÔ´Ï´Ù");
+								p.sendMessage(ChatColor.LIGHT_PURPLE +"ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½Ô´Ï´ï¿½");
 							}
 							else {
 								p.sendMessage(ChatColor.LIGHT_PURPLE +"Already existing party");
@@ -664,7 +664,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 
 						else if(isnameable(sbs)) {
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								p.sendMessage(ChatColor.LIGHT_PURPLE +"ÇÃ·¹ÀÌ¾îÀÇ ÀÌ¸§Àº ÆÄÆ¼¸íÀ¸·Î »ç¿ëÇÒ¼ö ¾ø½À´Ï´Ù");
+								p.sendMessage(ChatColor.LIGHT_PURPLE +"ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½");
 							}
 							else {
 								p.sendMessage(ChatColor.LIGHT_PURPLE +"Party's Name Cannot be Player's Name");
@@ -676,7 +676,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 					else
 					{
 						if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-							p.sendMessage(ChatColor.LIGHT_PURPLE +"ÀÌ¹Ì ÆÄÆ¼¿¡ ¼ÓÇØÀÖ½À´Ï´Ù");
+							p.sendMessage(ChatColor.LIGHT_PURPLE +"ï¿½Ì¹ï¿½ ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½Ï´ï¿½");
 						}
 						else {
 							p.sendMessage(ChatColor.LIGHT_PURPLE +"You're already in a party");
@@ -692,7 +692,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 					{
 						password.put(getParty(p), sbs);
 						if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-							p.sendMessage(ChatColor.LIGHT_PURPLE +"ºñ¹Ð¹øÈ£ ¼³Á¤ ¿Ï·á: " +args[1]);
+							p.sendMessage(ChatColor.LIGHT_PURPLE +"ï¿½ï¿½Ð¹ï¿½È£ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½: " +args[1]);
 						}
 						else {
 							p.sendMessage(ChatColor.LIGHT_PURPLE +"Password Set: " +args[1]);
@@ -700,7 +700,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 					}
 					else {
 						if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-							p.sendMessage(ChatColor.LIGHT_PURPLE +"ÆÄÆ¼Àå¸¸ °¡´ÉÇÕ´Ï´Ù");
+							p.sendMessage(ChatColor.LIGHT_PURPLE +"ï¿½ï¿½Æ¼ï¿½å¸¸ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½");
 						}
 						else {
 							p.sendMessage(ChatColor.LIGHT_PURPLE +"You should be owner of a party");
@@ -717,7 +717,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 						if(hasParty(p))
 						{
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								p.sendMessage(ChatColor.LIGHT_PURPLE +"ÀÌ¹Ì ÆÄÆ¼¿¡ ¼ÓÇØÀÖ½À´Ï´Ù");
+								p.sendMessage(ChatColor.LIGHT_PURPLE +"ï¿½Ì¹ï¿½ ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½Ï´ï¿½");
 							}
 							else {
 								p.sendMessage(ChatColor.LIGHT_PURPLE +"You're already in a party");
@@ -734,7 +734,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 					}
 					else {
 						if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-							p.sendMessage(ChatColor.LIGHT_PURPLE +"Á¸ÀçÇÏÁö ¾Ê´Â ÆÄÆ¼ÀÔ´Ï´Ù");
+							p.sendMessage(ChatColor.LIGHT_PURPLE +"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´ï¿½ ï¿½ï¿½Æ¼ï¿½Ô´Ï´ï¿½");
 						}
 						else {
 							p.sendMessage(ChatColor.LIGHT_PURPLE +"invalid party");
@@ -751,7 +751,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 						if(hasParty(Bukkit.getPlayer(sbs)))
 						{
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								p.sendMessage(ChatColor.LIGHT_PURPLE +"ÀÌ¹Ì ÆÄÆ¼¿¡ ¼ÓÇØÀÖ´Â ÇÃ·¹ÀÌ¾î ÀÔ´Ï´Ù");
+								p.sendMessage(ChatColor.LIGHT_PURPLE +"ï¿½Ì¹ï¿½ ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ô´Ï´ï¿½");
 							}
 							else {
 								p.sendMessage(ChatColor.LIGHT_PURPLE +"The player is already in a party");
@@ -763,7 +763,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 					}
 					else {
 						if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-							p.sendMessage(ChatColor.LIGHT_PURPLE +"ÆÄÆ¼Àå¸¸ °¡´ÉÇÕ´Ï´Ù");
+							p.sendMessage(ChatColor.LIGHT_PURPLE +"ï¿½ï¿½Æ¼ï¿½å¸¸ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½");
 						}
 						else {
 							p.sendMessage(ChatColor.LIGHT_PURPLE +"You should be owner of a party");
@@ -779,13 +779,13 @@ public class Party implements CommandExecutor, Serializable, Listener{
 					if(isOwner(p) && hasParty(p)) {
 						if(Bukkit.getPlayer(sbs)!=null && hasParty(Bukkit.getPlayer(sbs))) {
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								p.sendMessage(ChatColor.LIGHT_PURPLE +sbs + " °¡ °­Åð ´çÇß½À´Ï´Ù");
+								p.sendMessage(ChatColor.LIGHT_PURPLE +sbs + " ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½");
 							}
 							else {
 								p.sendMessage(ChatColor.LIGHT_PURPLE +sbs + " kicked from your party");
 							}
 							if(Bukkit.getPlayer(sbs).getLocale().equalsIgnoreCase("ko_kr")) {
-								Bukkit.getPlayer(sbs).sendMessage(ChatColor.LIGHT_PURPLE +getParty(p)+" ÆÄÆ¼¿¡¼­ °­Åð ´çÇß½À´Ï´Ù"  );
+								Bukkit.getPlayer(sbs).sendMessage(ChatColor.LIGHT_PURPLE +getParty(p)+" ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½"  );
 							}
 							else {
 								Bukkit.getPlayer(sbs).sendMessage(ChatColor.LIGHT_PURPLE +"You just kicked from party " + getParty(p));
@@ -794,7 +794,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 						}
 						else {
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								p.sendMessage(ChatColor.LIGHT_PURPLE +"ÇØ´ç ÇÃ·¹ÀÌ¾î´Â ÀÌÆÄÆ¼¿¡ ¾ø½À´Ï´Ù");
+								p.sendMessage(ChatColor.LIGHT_PURPLE +"ï¿½Ø´ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½");
 							}
 							else {
 								p.sendMessage(ChatColor.LIGHT_PURPLE +"The player isn't in the party");
@@ -803,7 +803,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 					}
 					else {
 						if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-							p.sendMessage(ChatColor.LIGHT_PURPLE +"ÆÄÆ¼Àå¸¸ °¡´ÉÇÕ´Ï´Ù");
+							p.sendMessage(ChatColor.LIGHT_PURPLE +"ï¿½ï¿½Æ¼ï¿½å¸¸ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½");
 						}
 						else {
 							p.sendMessage(ChatColor.LIGHT_PURPLE +"You should be owner of a party");
@@ -829,7 +829,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 					getOwners().forEach(o -> {
 						String party =  getParty(Bukkit.getPlayer(o));
 						if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-							p.sendMessage(ChatColor.LIGHT_PURPLE +"ÆÄÆ¼¸í: "+ party +" | ÆÄÆ¼Àå: " + Bukkit.getPlayer(o).getDisplayName() + " | ÆÄÆ¼¿ø¼ö: " + (getMembers(party).toArray().length));
+							p.sendMessage(ChatColor.LIGHT_PURPLE +"ï¿½ï¿½Æ¼ï¿½ï¿½: "+ party +" | ï¿½ï¿½Æ¼ï¿½ï¿½: " + Bukkit.getPlayer(o).getDisplayName() + " | ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½ï¿½: " + (getMembers(party).toArray().length));
 						}
 						else {
 							p.sendMessage(ChatColor.LIGHT_PURPLE +"Party Name: "+ getParty(Bukkit.getPlayer(o)) +" | Owner: " + Bukkit.getPlayer(o).getDisplayName() + " | Number of Members: " + (getMembers(party).toArray().length));
@@ -849,7 +849,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 					}
 					else {
 						if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-							p.sendMessage(ChatColor.LIGHT_PURPLE +"ÆÄÆ¼Àå¸¸ °¡´ÉÇÕ´Ï´Ù");
+							p.sendMessage(ChatColor.LIGHT_PURPLE +"ï¿½ï¿½Æ¼ï¿½å¸¸ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½");
 						}
 						else {
 							p.sendMessage(ChatColor.LIGHT_PURPLE +"You should be owner of a party");

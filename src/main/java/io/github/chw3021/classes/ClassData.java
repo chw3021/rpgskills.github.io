@@ -656,13 +656,13 @@ public class ClassData implements Serializable, Listener{
 	        		{
 	        			p.removePotionEffect(PotionEffectType.CONDUIT_POWER);
 	        		}
-	        		if(p.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE))
+	        		if(p.hasPotionEffect(PotionEffectType.RESISTANCE))
 	        		{
-	        			p.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
+	        			p.removePotionEffect(PotionEffectType.RESISTANCE);
 	        		}
-	        		if(p.hasPotionEffect(PotionEffectType.FAST_DIGGING))
+	        		if(p.hasPotionEffect(PotionEffectType.HASTE))
 	        		{
-	        			p.removePotionEffect(PotionEffectType.FAST_DIGGING);
+	        			p.removePotionEffect(PotionEffectType.HASTE);
 	        		}
 	        		if(p.hasPotionEffect(PotionEffectType.FIRE_RESISTANCE))
 	        		{
@@ -680,17 +680,17 @@ public class ClassData implements Serializable, Listener{
 	        		{
 	        			p.removePotionEffect(PotionEffectType.HERO_OF_THE_VILLAGE);
 	        		}
-	        		if(p.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE))
+	        		if(p.hasPotionEffect(PotionEffectType.STRENGTH))
 	        		{
-	        			p.removePotionEffect(PotionEffectType.INCREASE_DAMAGE);
+	        			p.removePotionEffect(PotionEffectType.STRENGTH);
 	        		}
 	        		if(p.hasPotionEffect(PotionEffectType.INVISIBILITY))
 	        		{
 	        			p.removePotionEffect(PotionEffectType.INVISIBILITY);
 	        		}
-	        		if(p.hasPotionEffect(PotionEffectType.JUMP))
+	        		if(p.hasPotionEffect(PotionEffectType.JUMP_BOOST))
 	        		{
-	        			p.removePotionEffect(PotionEffectType.JUMP);
+	        			p.removePotionEffect(PotionEffectType.JUMP_BOOST);
 	        		}
 	        		if(p.hasPotionEffect(PotionEffectType.LUCK))
 	        		{

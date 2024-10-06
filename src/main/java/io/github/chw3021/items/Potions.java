@@ -10,7 +10,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
@@ -26,8 +25,8 @@ public class Potions {
 		
 		if(f==0) {
 			pom.setColor(Color.GRAY);
-			pom.setBasePotionData(new PotionData(PotionType.INSTANT_HEAL, false, true));
-			pom.addCustomEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 2400, 2, true,true), false);
+			pom.setBasePotionType(PotionType.STRONG_HEALING);
+			pom.addCustomEffect(new PotionEffect(PotionEffectType.HASTE, 2400, 2, true,true), false);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 2400, 2, true,true), false);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.SATURATION, 10, 10, true,true), false);
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -39,9 +38,9 @@ public class Potions {
 		}
 		else if(f==1) {
 			pom.setColor(Color.WHITE);
-			pom.setBasePotionData(new PotionData(PotionType.INSTANT_HEAL, false, true));
+			pom.setBasePotionType(PotionType.STRONG_HEALING);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 2400, 3, true,true), false);
-			pom.addCustomEffect(new PotionEffect(PotionEffectType.JUMP, 2400, 3, true,true), false);
+			pom.addCustomEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 2400, 3, true,true), false);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.SPEED, 2400, 3, true,true), false);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 2400, 3, true,true), false);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 3, true,true), false);
@@ -54,7 +53,7 @@ public class Potions {
 		}
 		else if(f==2) {
 			pom.setColor(Color.AQUA);
-			pom.setBasePotionData(new PotionData(PotionType.INSTANT_HEAL, false, true));
+			pom.setBasePotionType(PotionType.STRONG_HEALING);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.CONDUIT_POWER, 2400, 2, true,true), false);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 2400, 2, true,true), false);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 2400, 2, true,true), false);
@@ -71,9 +70,9 @@ public class Potions {
 		}
 		else if(f==3) {
 			pom.setColor(Color.NAVY);
-			pom.setBasePotionData(new PotionData(PotionType.INSTANT_HEAL, false, true));
+			pom.setBasePotionType(PotionType.STRONG_HEALING);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 2400, 2, true,true), false);
-			pom.addCustomEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 2400, 2, true,true), false);
+			pom.addCustomEffect(new PotionEffect(PotionEffectType.RESISTANCE, 2400, 2, true,true), false);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 2400, 6, true,true), false);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 6, true,true), false);
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -85,9 +84,9 @@ public class Potions {
 		}
 		else if(f==4) {
 			pom.setColor(Color.RED);
-			pom.setBasePotionData(new PotionData(PotionType.INSTANT_HEAL, false, true));
+			pom.setBasePotionType(PotionType.STRONG_HEALING);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 2400, 6, true,true), false);
-			pom.addCustomEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 2400, 2, true,true), false);
+			pom.addCustomEffect(new PotionEffect(PotionEffectType.STRENGTH, 2400, 2, true,true), false);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 2400, 5, true,true), false);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 5, true,true), false);
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -99,7 +98,7 @@ public class Potions {
 		}
 		else if(f==5) {
 			pom.setColor(Color.GREEN);
-			pom.setBasePotionData(new PotionData(PotionType.INSTANT_HEAL, false, true));
+			pom.setBasePotionType(PotionType.STRONG_HEALING);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.LUCK, 2400, 10, true,true), false);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 2400, 5, true,true), false);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 5, true,true), false);
@@ -112,7 +111,7 @@ public class Potions {
 		}
 		else if(f==6) {
 			pom.setColor(Color.YELLOW);
-			pom.setBasePotionData(new PotionData(PotionType.INSTANT_HEAL, false, true));
+			pom.setBasePotionType(PotionType.STRONG_HEALING);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.REGENERATION, 2400, 3, true,true), false);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.ABSORPTION, 2400, 10, true,true), false);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 2400, 5, true,true), false);

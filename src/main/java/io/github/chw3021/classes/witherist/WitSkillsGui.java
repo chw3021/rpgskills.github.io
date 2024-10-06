@@ -22,185 +22,185 @@ public class WitSkillsGui extends SkillsGui {
 		Obtained.itemset(p, Witskillsinv);
 
 		if (p.getLocale().equalsIgnoreCase("ko_kr")) {
-			itemset("À§´õÇØ°ñ", Material.WITHER_SKELETON_SKULL, 0, 1,
+			itemset("ìœ„ë”í•´ê³¨", Material.WITHER_SKELETON_SKULL, 0, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + wsd.WitherSkull.getOrDefault(p.getUniqueId(), 0), "",
-							ChatColor.UNDERLINE + "[¾îµÒ °è¿­]", "¼Õ¹Ù²Ù±â", "ºÎÀ¯Áß »ç¿ë½Ã °­È­µÈ ÇØ°ñÀ» ¹ß»çÇÕ´Ï´Ù", "",
+							ChatColor.UNDERLINE + "[ì–´ë‘  ê³„ì—´]", "ì†ë°”ê¾¸ê¸°", "ë¶€ìœ ì¤‘ ì‚¬ìš©ì‹œ ê°•í™”ëœ í•´ê³¨ì„ ë°œì‚¬í•©ë‹ˆë‹¤", "",
 							ChatColor.BOLD + " X "
 									+ BigDecimal.valueOf(0.34 * (1+wsd.WitherSkull.getOrDefault(p.getUniqueId(), 0) * 0.034))
 											.setScale(2, RoundingMode.HALF_EVEN)
-									+ "D (°­È­½Ã µÎ¹è)",
+									+ "D (ê°•í™”ì‹œ ë‘ë°°)",
 							"Master LV.50"),
 					0, Witskillsinv);
-			itemset("¾îµÒÀÇ°¥°í¸®", Material.WOODEN_HOE, 0, 1,
+			itemset("ì–´ë‘ ì˜ê°ˆê³ ë¦¬", Material.WOODEN_HOE, 0, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + wsd.ReapingHook.getOrDefault(p.getUniqueId(), 0), "",
-							ChatColor.UNDERLINE + "[¾îµÒ °è¿­]", "¿õÅ©¸®±â + ¿ìÅ¬¸¯", "Master LV.1"),
+							ChatColor.UNDERLINE + "[ì–´ë‘  ê³„ì—´]", "ì›…í¬ë¦¬ê¸° + ìš°í´ë¦­", "Master LV.1"),
 					1, Witskillsinv);
-			itemset("±¸¼ÓÀÇ³´", Material.STONE_HOE, 0, 1,
+			itemset("êµ¬ì†ì˜ë‚«", Material.STONE_HOE, 0, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + wsd.WitherScythe.getOrDefault(p.getUniqueId(), 0), "",
-							ChatColor.UNDERLINE + "[¾îµÒ °è¿­]", "±ÙÁ¢°ø°İ + ¿õÅ©¸®±â", "",
+							ChatColor.UNDERLINE + "[ì–´ë‘  ê³„ì—´]", "ê·¼ì ‘ê³µê²© + ì›…í¬ë¦¬ê¸°", "",
 							ChatColor.BOLD + "25 X "
 									+ BigDecimal.valueOf(1.81 * (1+wsd.WitherScythe.getOrDefault(p.getUniqueId(), 0) * 0.017))
 											.setScale(2, RoundingMode.HALF_EVEN)
 									+ "D",
 							"Master LV.50"),
 					2, Witskillsinv);
-			itemset("ÀúÁÖ", Material.IRON_HOE, 0, 1,
+			itemset("ì €ì£¼", Material.IRON_HOE, 0, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + wsd.Curse.getOrDefault(p.getUniqueId(), 0), "",
-							ChatColor.UNDERLINE + "[¾îµÒ °è¿­]", "¿ìÅ¬¸¯", "",
+							ChatColor.UNDERLINE + "[ì–´ë‘  ê³„ì—´]", "ìš°í´ë¦­", "",
 							ChatColor.BOLD + "1 X "
 									+ BigDecimal.valueOf(0.68 * (1+wsd.Curse.getOrDefault(p.getUniqueId(), 0) * 0.07)).setScale(2,
 											RoundingMode.HALF_EVEN)
 									+ "D",
 							"Master LV.50"),
 					3, Witskillsinv);
-			itemset("ºÎÀ¯", Material.ELYTRA, 0, 1,
-					Arrays.asList(ChatColor.AQUA + "LV." + wsd.Hover.getOrDefault(p.getUniqueId(), 0), "", "ÁÂÅ¬¸¯ + Á¡ÇÁ",
+			itemset("ë¶€ìœ ", Material.ELYTRA, 0, 1,
+					Arrays.asList(ChatColor.AQUA + "LV." + wsd.Hover.getOrDefault(p.getUniqueId(), 0), "", "ì¢Œí´ë¦­ + ì í”„",
 							"Master LV.1"),
 					4, Witskillsinv);
-			itemset("À§´õÀå¹Ì", Material.DIAMOND_HOE, 0, 1,
+			itemset("ìœ„ë”ì¥ë¯¸", Material.DIAMOND_HOE, 0, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + wsd.Roses.getOrDefault(p.getUniqueId(), 0), "",
-							ChatColor.UNDERLINE + "[¾îµÒ °è¿­]", "¼Õ¹Ù²Ù±â + ¿õÅ©¸®±â", "",
+							ChatColor.UNDERLINE + "[ì–´ë‘  ê³„ì—´]", "ì†ë°”ê¾¸ê¸° + ì›…í¬ë¦¬ê¸°", "",
 							ChatColor.BOLD + "10 X "
 									+ BigDecimal.valueOf(0.06 * (1+wsd.Roses.getOrDefault(p.getUniqueId(), 0) * 0.005)).setScale(2,
 											RoundingMode.HALF_EVEN)
 									+ "D",
 							"Master LV.50"),
 					5, Witskillsinv);
-			itemset("À§´õÈ­", Material.BOOK, 0, 1, Arrays.asList(
+			itemset("ìœ„ë”í™”", Material.BOOK, 0, 1, Arrays.asList(
 					ChatColor.AQUA + "LV." + wsd.Witherize.getOrDefault(p.getUniqueId(), 0), "",
-					"°ø°İ·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù(À§´õÇüÅÂ¿¡°Õ µÎ¹è)", "",
+					"ê³µê²©ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤(ìœ„ë”í˜•íƒœì—ê² ë‘ë°°)", "",
 					ChatColor.BOLD + " X "
 							+ BigDecimal.valueOf(1.25 * (1 + wsd.Witherize.getOrDefault(p.getUniqueId(), 0) * 0.0453))
 									.setScale(2, RoundingMode.HALF_EVEN),
-					"À§´õÇüÅÂÀÇ Àû¿¡°Ô ¹Ş´ÂÇÇÇØ°¡ °¨¼ÒÇÕ´Ï´Ù", "À§´õÈ¿°ú¿¡ ¸é¿ªÀÌµË´Ï´Ù", "¾îµÒ °è¿­ ÀúÇ×·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù", "Àû¿¡°Ô ½Ãµê È¿°ú¸¦ Áİ´Ï´Ù"), 7, Witskillsinv);
+					"ìœ„ë”í˜•íƒœì˜ ì ì—ê²Œ ë°›ëŠ”í”¼í•´ê°€ ê°ì†Œí•©ë‹ˆë‹¤", "ìœ„ë”íš¨ê³¼ì— ë©´ì—­ì´ë©ë‹ˆë‹¤", "ì–´ë‘  ê³„ì—´ ì €í•­ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤", "ì ì—ê²Œ ì‹œë“¦ íš¨ê³¼ë¥¼ ì¤ë‹ˆë‹¤"), 7, Witskillsinv);
 			if (Proficiency.getpro(p) < 1) {
-				itemset("À§´õ¿ë¿Ã°¡¹Ì(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/29315"), 9, Witskillsinv);
-				itemset("Èí¼öÀÇ°¥°í¸®(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/29315"), 10, Witskillsinv);
-				itemset("ÈÛ¾µ±â(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/29315"), 11, Witskillsinv);
-				itemset("¹ãÀÇ°í¸®(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/29315"), 12, Witskillsinv);
-				itemset("ºÎÀ¯¼ú(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/29315"), 13, Witskillsinv);
-				itemset("ÆÄ±«(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/29315"), 14, Witskillsinv);
-				itemset("º¹¼ö½É(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/29315"), 16, Witskillsinv);
-				itemset("±Øº¹(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/29315"), 17, Witskillsinv);
+				itemset("ìœ„ë”ìš©ì˜¬ê°€ë¯¸(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/29315"), 9, Witskillsinv);
+				itemset("í¡ìˆ˜ì˜ê°ˆê³ ë¦¬(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/29315"), 10, Witskillsinv);
+				itemset("íœ©ì“¸ê¸°(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/29315"), 11, Witskillsinv);
+				itemset("ë°¤ì˜ê³ ë¦¬(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/29315"), 12, Witskillsinv);
+				itemset("ë¶€ìœ ìˆ (ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/29315"), 13, Witskillsinv);
+				itemset("íŒŒê´´(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/29315"), 14, Witskillsinv);
+				itemset("ë³µìˆ˜ì‹¬(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/29315"), 16, Witskillsinv);
+				itemset("ê·¹ë³µ(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/29315"), 17, Witskillsinv);
 			} else if (Proficiency.getpro(p) < 2 && Proficiency.getpro(p) >= 1) {
-				itemset("À§´õ¿ë¿Ã°¡¹Ì", Material.DARK_OAK_TRAPDOOR, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¾îµÒ °è¿­]", "Àç»ç¿ë½Ã À§´õ¿ë¿Ã°¡¹Ì¸¦ ÅõÃ´ÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº À§´õÇØ°ñ ·¹º§¿¡ ºñ·¹ÇÕ´Ï´Ù)",
+				itemset("ìœ„ë”ìš©ì˜¬ê°€ë¯¸", Material.DARK_OAK_TRAPDOOR, 0, 1,
+						Arrays.asList(ChatColor.UNDERLINE + "[ì–´ë‘  ê³„ì—´]", "ì¬ì‚¬ìš©ì‹œ ìœ„ë”ìš©ì˜¬ê°€ë¯¸ë¥¼ íˆ¬ì²™í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ìœ„ë”í•´ê³¨ ë ˆë²¨ì— ë¹„ë ˆí•©ë‹ˆë‹¤)",
 								"",
 								ChatColor.BOLD + " X "
 										+ BigDecimal.valueOf(0.3 * (1+wsd.WitherSkull.getOrDefault(p.getUniqueId(), 0) * 0.03))
 												.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						9, Witskillsinv);
-				itemset("Èí¼öÀÇ°¥°í¸®", Material.IRON_HOE, 0, 1, Arrays.asList("ÁÖº¯Àûµéµµ ²ø¾î¿É´Ï´Ù"), 10, Witskillsinv);
-				itemset("ÈÛ¾µ±â", Material.NETHERITE_HOE, 0, 1, Arrays.asList("¹üÀ§°¡ Áõ°¡ÇÕ´Ï´Ù"), 11, Witskillsinv);
-				itemset("¹ãÀÇ°í¸®", Material.BLACKSTONE, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¾îµÒ °è¿­]", "Àç»ç¿ë½Ã ¹ãÀÇ°í¸®¸¦ »ç¿ëÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº ÀúÁÖ ·¹º§¿¡ ºñ·¹ÇÕ´Ï´Ù)", "",
+				itemset("í¡ìˆ˜ì˜ê°ˆê³ ë¦¬", Material.IRON_HOE, 0, 1, Arrays.asList("ì£¼ë³€ì ë“¤ë„ ëŒì–´ì˜µë‹ˆë‹¤"), 10, Witskillsinv);
+				itemset("íœ©ì“¸ê¸°", Material.NETHERITE_HOE, 0, 1, Arrays.asList("ë²”ìœ„ê°€ ì¦ê°€í•©ë‹ˆë‹¤"), 11, Witskillsinv);
+				itemset("ë°¤ì˜ê³ ë¦¬", Material.BLACKSTONE, 0, 1,
+						Arrays.asList(ChatColor.UNDERLINE + "[ì–´ë‘  ê³„ì—´]", "ì¬ì‚¬ìš©ì‹œ ë°¤ì˜ê³ ë¦¬ë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ì €ì£¼ ë ˆë²¨ì— ë¹„ë ˆí•©ë‹ˆë‹¤)", "",
 								ChatColor.BOLD + "10 X "
 										+ BigDecimal.valueOf(0.168 * (1+wsd.Curse.getOrDefault(p.getUniqueId(), 0) * 0.02))
 												.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						12, Witskillsinv);
-				itemset("ºÎÀ¯¼ú", Material.ELYTRA, 0, 1, Arrays.asList("Áö¼Ó½Ã°£ÀÌ µÎ¹è·Î Áõ°¡ÇÕ´Ï´Ù"), 13, Witskillsinv);
-				itemset("ÆÄ±«", Material.CRACKED_POLISHED_BLACKSTONE_BRICKS, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¾îµÒ °è¿­]", "Àç»ç¿ë½Ã ÆÄ±«¸¦ »ç¿ëÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº À§´õÀå¹Ì ·¹º§¿¡ ºñ·¹ÇÕ´Ï´Ù)", "",
+				itemset("ë¶€ìœ ìˆ ", Material.ELYTRA, 0, 1, Arrays.asList("ì§€ì†ì‹œê°„ì´ ë‘ë°°ë¡œ ì¦ê°€í•©ë‹ˆë‹¤"), 13, Witskillsinv);
+				itemset("íŒŒê´´", Material.CRACKED_POLISHED_BLACKSTONE_BRICKS, 0, 1,
+						Arrays.asList(ChatColor.UNDERLINE + "[ì–´ë‘  ê³„ì—´]", "ì¬ì‚¬ìš©ì‹œ íŒŒê´´ë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ìœ„ë”ì¥ë¯¸ ë ˆë²¨ì— ë¹„ë ˆí•©ë‹ˆë‹¤)", "",
 								ChatColor.BOLD + "5 X "
 										+ BigDecimal.valueOf(0.56 * (1 +wsd.Roses.getOrDefault(p.getUniqueId(), 0) * 0.048))
 												.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						14, Witskillsinv);
-				itemset("º¹¼ö½É", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("°ø°İ·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù"), 16, Witskillsinv);
-				itemset("±Øº¹", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE + "[¾îµÒ °è¿­]",
-						"¿õÅ©¸®±â + ¾ÆÀÌÅÛ´øÁö±â", "",
+				itemset("ë³µìˆ˜ì‹¬", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("ê³µê²©ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤"), 16, Witskillsinv);
+				itemset("ê·¹ë³µ", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE + "[ì–´ë‘  ê³„ì—´]",
+						"ì›…í¬ë¦¬ê¸° + num4", "",
 						ChatColor.BOLD  + "16D"), 17,
 						Witskillsinv);
 
-				itemset("Á¤È­±¤¼±(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/155015"), 23, Witskillsinv);
-				itemset("À§´õ¹æº®(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/155015"), 22, Witskillsinv);
-				itemset("¼öÁ¤°¨¿Á(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/155015"), 21, Witskillsinv);
-				itemset("¹é»ö¼®¿µ(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/155015"), 18, Witskillsinv);
-				itemset("Á¤Ç÷(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/155015"), 25, Witskillsinv);
-				itemset("Á¤º¹(Àá±è)", Material.STRUCTURE_VOID, 0, 1,
-						Arrays.asList("¿ä±¸ ¼÷·Ãµµ: " + Proficiency.getproexp(p) + "/155015"), 26, Witskillsinv);
+				itemset("ì •í™”ê´‘ì„ (ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/155015"), 23, Witskillsinv);
+				itemset("ìœ„ë”ë°©ë²½(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/155015"), 22, Witskillsinv);
+				itemset("ìˆ˜ì •ê°ì˜¥(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/155015"), 21, Witskillsinv);
+				itemset("ë°±ìƒ‰ì„ì˜(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/155015"), 18, Witskillsinv);
+				itemset("ì •í˜ˆ(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/155015"), 25, Witskillsinv);
+				itemset("ì •ë³µ(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1,
+						Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: " + Proficiency.getproexp(p) + "/155015"), 26, Witskillsinv);
 			} else {
-				itemset("À§´õ¿ë¿Ã°¡¹Ì", Material.DARK_OAK_TRAPDOOR, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¾îµÒ °è¿­]", "Àç»ç¿ë½Ã À§´õ¿ë¿Ã°¡¹Ì¸¦ ÅõÃ´ÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº À§´õÇØ°ñ ·¹º§¿¡ ºñ·¹ÇÕ´Ï´Ù)",
+				itemset("ìœ„ë”ìš©ì˜¬ê°€ë¯¸", Material.DARK_OAK_TRAPDOOR, 0, 1,
+						Arrays.asList(ChatColor.UNDERLINE + "[ì–´ë‘  ê³„ì—´]", "ì¬ì‚¬ìš©ì‹œ ìœ„ë”ìš©ì˜¬ê°€ë¯¸ë¥¼ íˆ¬ì²™í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ìœ„ë”í•´ê³¨ ë ˆë²¨ì— ë¹„ë ˆí•©ë‹ˆë‹¤)",
 								"",
 								ChatColor.BOLD + " X "
 										+ BigDecimal.valueOf(0.3 * (1+wsd.WitherSkull.getOrDefault(p.getUniqueId(), 0) * 0.03))
 												.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						9, Witskillsinv);
-				itemset("Èí¼öÀÇ°¥°í¸®", Material.IRON_HOE, 0, 1, Arrays.asList("ÁÖº¯Àûµéµµ ²ø¾î¿É´Ï´Ù"), 10, Witskillsinv);
-				itemset("ÈÛ¾µ±â", Material.NETHERITE_HOE, 0, 1, Arrays.asList("¹üÀ§°¡ Áõ°¡ÇÕ´Ï´Ù"), 11, Witskillsinv);
-				itemset("¹ãÀÇ°í¸®", Material.BLACKSTONE, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¾îµÒ °è¿­]", "Àç»ç¿ë½Ã ¹ãÀÇ°í¸®¸¦ »ç¿ëÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº ÀúÁÖ ·¹º§¿¡ ºñ·¹ÇÕ´Ï´Ù)", "",
+				itemset("í¡ìˆ˜ì˜ê°ˆê³ ë¦¬", Material.IRON_HOE, 0, 1, Arrays.asList("ì£¼ë³€ì ë“¤ë„ ëŒì–´ì˜µë‹ˆë‹¤"), 10, Witskillsinv);
+				itemset("íœ©ì“¸ê¸°", Material.NETHERITE_HOE, 0, 1, Arrays.asList("ë²”ìœ„ê°€ ì¦ê°€í•©ë‹ˆë‹¤"), 11, Witskillsinv);
+				itemset("ë°¤ì˜ê³ ë¦¬", Material.BLACKSTONE, 0, 1,
+						Arrays.asList(ChatColor.UNDERLINE + "[ì–´ë‘  ê³„ì—´]", "ì¬ì‚¬ìš©ì‹œ ë°¤ì˜ê³ ë¦¬ë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ì €ì£¼ ë ˆë²¨ì— ë¹„ë ˆí•©ë‹ˆë‹¤)", "",
 								ChatColor.BOLD + "10 X "
 										+ BigDecimal.valueOf(0.168 * (1+wsd.Curse.getOrDefault(p.getUniqueId(), 0) * 0.02))
 												.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						12, Witskillsinv);
-				itemset("ºÎÀ¯¼ú", Material.ELYTRA, 0, 1, Arrays.asList("Áö¼Ó½Ã°£ÀÌ µÎ¹è·Î Áõ°¡ÇÕ´Ï´Ù"), 13, Witskillsinv);
-				itemset("ÆÄ±«", Material.CRACKED_POLISHED_BLACKSTONE_BRICKS, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¾îµÒ °è¿­]", "Àç»ç¿ë½Ã ÆÄ±«¸¦ »ç¿ëÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº À§´õÀå¹Ì ·¹º§¿¡ ºñ·¹ÇÕ´Ï´Ù)", "",
+				itemset("ë¶€ìœ ìˆ ", Material.ELYTRA, 0, 1, Arrays.asList("ì§€ì†ì‹œê°„ì´ ë‘ë°°ë¡œ ì¦ê°€í•©ë‹ˆë‹¤"), 13, Witskillsinv);
+				itemset("íŒŒê´´", Material.CRACKED_POLISHED_BLACKSTONE_BRICKS, 0, 1,
+						Arrays.asList(ChatColor.UNDERLINE + "[ì–´ë‘  ê³„ì—´]", "ì¬ì‚¬ìš©ì‹œ íŒŒê´´ë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ìœ„ë”ì¥ë¯¸ ë ˆë²¨ì— ë¹„ë ˆí•©ë‹ˆë‹¤)", "",
 								ChatColor.BOLD + "5 X "
 										+ BigDecimal.valueOf(0.56 * (1 +wsd.Roses.getOrDefault(p.getUniqueId(), 0) * 0.048))
 												.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						14, Witskillsinv);
-				itemset("º¹¼ö½É", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("°ø°İ·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù"), 16, Witskillsinv);
-				itemset("±Øº¹", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE + "[¾îµÒ °è¿­]",
-						"¿õÅ©¸®±â + ¾ÆÀÌÅÛ´øÁö±â", "",
+				itemset("ë³µìˆ˜ì‹¬", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("ê³µê²©ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤"), 16, Witskillsinv);
+				itemset("ê·¹ë³µ", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE + "[ì–´ë‘  ê³„ì—´]",
+						"ì›…í¬ë¦¬ê¸° + num4", "",
 						ChatColor.BOLD  + "16D"), 17,
 						Witskillsinv);
 
-				itemset("À§´õ¹æº®", Material.SHIELD, 0, 1, Arrays.asList("»ç¿ë½Ã 2ÃÊµ¿¾È ¹«Àû»óÅÂ°¡ µË´Ï´Ù"), 22, Witskillsinv);
-				itemset("Á¤È­±¤¼±", Material.BEACON, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¾îµÒ °è¿­]", "Àç»ç¿ë½Ã Á¤È­±¤¼±À» »ç¿ëÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº À§´õÀå¹Ì ·¹º§¿¡ ºñ·¹ÇÕ´Ï´Ù)", "",
+				itemset("ìœ„ë”ë°©ë²½", Material.SHIELD, 0, 1, Arrays.asList("ì‚¬ìš©ì‹œ 2ì´ˆë™ì•ˆ ë¬´ì ìƒíƒœê°€ ë©ë‹ˆë‹¤"), 22, Witskillsinv);
+				itemset("ì •í™”ê´‘ì„ ", Material.BEACON, 0, 1,
+						Arrays.asList(ChatColor.UNDERLINE + "[ì–´ë‘  ê³„ì—´]", "ì¬ì‚¬ìš©ì‹œ ì •í™”ê´‘ì„ ì„ ì‚¬ìš©í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ìœ„ë”ì¥ë¯¸ ë ˆë²¨ì— ë¹„ë ˆí•©ë‹ˆë‹¤)", "",
 								ChatColor.BOLD + "3 X "
 										+ BigDecimal.valueOf(0.8 * (1+wsd.Roses.getOrDefault(p.getUniqueId(), 0) * 0.09))
 												.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						23, Witskillsinv);
-				itemset("¼öÁ¤°¨¿Á", Material.IRON_BARS, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¾îµÒ °è¿­]", "Àç»ç¿ë½Ã ¼öÁ¤°¨¿ÁÀ» »ç¿ëÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº ¼öÁ¤°¨¿Á ·¹º§¿¡ ºñ·¹ÇÕ´Ï´Ù)", "",
+				itemset("ìˆ˜ì •ê°ì˜¥", Material.IRON_BARS, 0, 1,
+						Arrays.asList(ChatColor.UNDERLINE + "[ì–´ë‘  ê³„ì—´]", "ì¬ì‚¬ìš©ì‹œ ìˆ˜ì •ê°ì˜¥ì„ ì‚¬ìš©í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ìˆ˜ì •ê°ì˜¥ ë ˆë²¨ì— ë¹„ë ˆí•©ë‹ˆë‹¤)", "",
 								ChatColor.BOLD + "8 X "
 										+ BigDecimal.valueOf(0.4* (1+wsd.Curse.getOrDefault(p.getUniqueId(), 0) * 0.038))
 												.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						21, Witskillsinv);
-				itemset("¹é»ö¼®¿µ", Material.QUARTZ, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[¾îµÒ °è¿­]", "Àç»ç¿ë½Ã ¹é»ö¼®¿µÀ» »ç¿ëÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº À§´õÇØ°ñ ·¹º§¿¡ ºñ·¹ÇÕ´Ï´Ù)", "",
+				itemset("ë°±ìƒ‰ì„ì˜", Material.QUARTZ, 0, 1,
+						Arrays.asList(ChatColor.UNDERLINE + "[ì–´ë‘  ê³„ì—´]", "ì¬ì‚¬ìš©ì‹œ ë°±ìƒ‰ì„ì˜ì„ ì‚¬ìš©í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ìœ„ë”í•´ê³¨ ë ˆë²¨ì— ë¹„ë ˆí•©ë‹ˆë‹¤)", "",
 								ChatColor.BOLD + "6 X "
 										+ BigDecimal.valueOf(0.36 * (1+wsd.WitherSkull.getOrDefault(p.getUniqueId(), 0) * 0.04))
 												.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						18, Witskillsinv);
-				itemset("Á¤Ç÷", Material.ENCHANTED_BOOK, 0, 1,
-						Arrays.asList("°ø°İ·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù", "±Øº¹ÀÇ ´ë±â½Ã°£ÀÌ °¨¼ÒÇÕ´Ï´Ù", "ÀÏºÎ ±â¼úµéÀÇ ½Ã°¢È¿°ú°¡ ¹Ù²ò´Ï´Ù", "À§´õÇüÅÂÀÇ Àû¿¡°Ô ¿ÏÀü¸é¿ªÀÌ µË´Ï´Ù"), 25,
+				itemset("ì •í˜ˆ", Material.ENCHANTED_BOOK, 0, 1,
+						Arrays.asList("ê³µê²©ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤", "ê·¹ë³µì˜ ëŒ€ê¸°ì‹œê°„ì´ ê°ì†Œí•©ë‹ˆë‹¤", "ì¼ë¶€ ê¸°ìˆ ë“¤ì˜ ì‹œê°íš¨ê³¼ê°€ ë°”ë€ë‹ˆë‹¤", "ìœ„ë”í˜•íƒœì˜ ì ì—ê²Œ ì™„ì „ë©´ì—­ì´ ë©ë‹ˆë‹¤"), 25,
 						Witskillsinv);
-				itemset("Á¤º¹", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE + "[¾îµÒ °è¿­]",
-						"´Ş¸®±â + ¾ÆÀÌÅÛ´øÁö±â", "",
+				itemset("ì •ë³µ", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE + "[ì–´ë‘  ê³„ì—´]",
+						"ì›…í¬ë¦¬ê¸° + num5", "",
 						ChatColor.BOLD + "26D"), 26,
 						Witskillsinv);
 			}
-			itemset("ÇöÀç ¼÷·Ãµµ", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("" + Proficiency.getproexp(p)), 27,
+			itemset("í˜„ì¬ ìˆ™ë ¨ë„", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("" + Proficiency.getproexp(p)), 27,
 					Witskillsinv);
-			itemset("½ºÅ³Æ÷ÀÎÆ®", Material.NETHER_STAR, 0, 1,
+			itemset("ìŠ¤í‚¬í¬ì¸íŠ¸", Material.NETHER_STAR, 0, 1,
 					Arrays.asList(ChatColor.AQUA + "SP." + wsd.SkillPoints.getOrDefault(p.getUniqueId(), 0), "",
-							"Å¬¸¯ÇÏ¸é ½ºÅ³Æ÷ÀÎÆ®°¡ ÃÊ±âÈ­ µË´Ï´Ù"),
+							"í´ë¦­í•˜ë©´ ìŠ¤í‚¬í¬ì¸íŠ¸ê°€ ì´ˆê¸°í™” ë©ë‹ˆë‹¤"),
 					35, Witskillsinv);
 
 		} else {
@@ -312,7 +312,7 @@ public class WitSkillsGui extends SkillsGui {
 				itemset("Vengeance", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage"), 16,
 						Witskillsinv);
 				itemset("Overcome", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE + "[Dark]",
-						"Sneaking + ThrowItem", "",
+						"Sneaking + num4", "",
 						ChatColor.BOLD + " X " + BigDecimal.valueOf(0).setScale(2, RoundingMode.HALF_EVEN) + "16D"), 17,
 						Witskillsinv);
 
@@ -366,7 +366,7 @@ public class WitSkillsGui extends SkillsGui {
 				itemset("Vengeance", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage"), 16,
 						Witskillsinv);
 				itemset("Overcome", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE + "[Dark]",
-						"Sneaking + ThrowItem", "",
+						"Sneaking + num4", "",
 						ChatColor.BOLD + " X " + BigDecimal.valueOf(0).setScale(2, RoundingMode.HALF_EVEN) + "16D"), 17,
 						Witskillsinv);
 
@@ -401,7 +401,7 @@ public class WitSkillsGui extends SkillsGui {
 								"Change some of the Skills' Effects", "Totally Immune To WitherType Mobs"),
 						25, Witskillsinv);
 				itemset("Overthrow", Material.WRITTEN_BOOK, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE + "[Dark]", "Sprinting + ThrowItem", "", 
+						Arrays.asList(ChatColor.UNDERLINE + "[Dark]", "Sneaking + num5", "", 
 								ChatColor.BOLD + "26D"), 26, Witskillsinv);
 			}
 			itemset("Current Proficiency", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("" + Proficiency.getproexp(p)),

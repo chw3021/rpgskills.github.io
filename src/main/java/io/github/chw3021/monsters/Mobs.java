@@ -41,10 +41,22 @@ public class Mobs extends Pak {
 			else if(t== EntityType.TADPOLE) {
 				return "올챙이";
 			}
-			else if(t== EntityType.WARDEN) {
-				return "와든";
+			else if(t== EntityType.ARMADILLO) {
+				return "아르마딜로";
 			}
-			
+			else if(t== EntityType.BOGGED) {
+				return "보그드";
+			}
+			else if(t== EntityType.CAMEL) {
+				return "낙타";
+			}
+			else if(t== EntityType.BREEZE) {
+				return "브리즈";
+			}
+			else if(t== EntityType.SNIFFER) {
+				return "스니퍼";
+			}
+
 			else if(t== EntityType.BAT) {
 				return "박쥐";
 			}
@@ -55,7 +67,7 @@ public class Mobs extends Pak {
 				return "블레이즈";
 			}
 			else if(t== EntityType.CAT) {
-				return "캣맘충들은 제발 자살해라";
+				return "고양이";
 			}
 			else if(t== EntityType.CAVE_SPIDER) {
 				return "동굴거미";
@@ -64,7 +76,7 @@ public class Mobs extends Pak {
 				return "닭";
 			}
 			else if(t== EntityType.COD) {
-				return "머구";
+				return "대구";
 			}
 			else if(t== EntityType.COW) {
 				return "소";
@@ -135,7 +147,7 @@ public class Mobs extends Pak {
 			else if(t== EntityType.MULE) {
 				return "노새";
 			}
-			else if(t== EntityType.MUSHROOM_COW) {
+			else if(t== EntityType.MOOSHROOM) {
 				return "무시룸";
 			}
 			else if(t== EntityType.OCELOT) {
@@ -151,13 +163,13 @@ public class Mobs extends Pak {
 				return "망령";
 			}
 			else if(t== EntityType.PIG) {
-				return "뚱띵훈";
+				return "돼지";
 			}
 			else if(t== EntityType.PIGLIN) {
 				return "피글린";
 			}
 			else if(t== EntityType.PIGLIN_BRUTE) {
-				return "피글린괴수";
+				return "난폭한피글린";
 			}
 			else if(t== EntityType.PILLAGER) {
 				return "약탈자";
@@ -195,7 +207,7 @@ public class Mobs extends Pak {
 			else if(t== EntityType.SLIME) {
 				return "슬라임";
 			}
-			else if(t== EntityType.SNOWMAN) {
+			else if(t== EntityType.SNOW_GOLEM) {
 				return "눈사람";
 			}
 			else if(t== EntityType.SPIDER) {
@@ -266,7 +278,6 @@ public class Mobs extends Pak {
 			return le.getName();
 		}
 	}
-	
 
 	public void RaidMobPo(EntityPotionEffectEvent d) {
 		if (d.getEntity() instanceof LivingEntity && d.getEntity().hasMetadata("raid")) {

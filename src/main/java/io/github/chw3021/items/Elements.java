@@ -244,7 +244,7 @@ public class Elements implements Listener {
 	
 
 	public static ItemStack getel(int i, Player p) {
-		ItemStack ii = new ItemStack(Material.GRASS);
+		ItemStack ii = new ItemStack(Material.GRASS_BLOCK);
 		ItemMeta imeta = ii.getItemMeta();
 		imeta.setCustomModelData(100*(i>0?1:-1) + i);
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -512,7 +512,7 @@ public class Elements implements Listener {
 
 
 	public static ItemStack getelcore(int i, Player p) {
-		ItemStack ii = new ItemStack(Material.GRASS);
+		ItemStack ii = new ItemStack(Material.GRASS_BLOCK);
 		ItemMeta imeta = ii.getItemMeta();
 		imeta.setCustomModelData(i);
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -787,7 +787,7 @@ public class Elements implements Listener {
 	
 
 	public static ItemStack getstel(int i, Player p) {
-		ItemStack ii = new ItemStack(Material.GRASS);
+		ItemStack ii = new ItemStack(Material.GRASS_BLOCK);
 		ItemMeta imeta = ii.getItemMeta();
 		imeta.setCustomModelData(200*(i>0?1:-1) + i);
 		imeta.setLore(Arrays.asList("고고학자에게 구매 가능합니다","고고학자는 정글피라미드에서 찾을수 있습니다"));
@@ -1001,7 +1001,7 @@ public class Elements implements Listener {
 			imeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 			ii.setItemMeta(imeta);
 		}
-		ii.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+		ii.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
 		
 		return ii;
 	}
@@ -1011,9 +1011,9 @@ public class Elements implements Listener {
 	public static ItemStack getscroll(Player p) {
 		ItemStack ii = new ItemStack(Material.MOJANG_BANNER_PATTERN);
 		ItemMeta imeta = ii.getItemMeta();
-		ii.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 1);
+		ii.addUnsafeEnchantment(Enchantment.FIRE_PROTECTION, 1);
 		imeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		imeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+		imeta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 			imeta.setLore(Arrays.asList(ChatColor.BOLD +"우클릭시 스킬포인트 1을 획득합니다"));
 			imeta.setDisplayName(ChatColor.GOLD +"신비로운 두루마리");

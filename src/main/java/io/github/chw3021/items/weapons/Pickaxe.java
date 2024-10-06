@@ -60,8 +60,8 @@ public class Pickaxe extends Weapons implements Listener {
 								Operation.ADD_NUMBER, EquipmentSlot.HAND));
 				if (cmdt == 14) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¹Ù¶÷ÀÇ °î±ªÀÌ");
-						rm.setLocalizedName(ChatColor.GOLD +"¹Ù¶÷ÀÇ °î±ªÀÌ");
+						rm.setDisplayName(ChatColor.GOLD +"ë°”ëŒì˜ ê³¡ê´­ì´");
+						rm.setLocalizedName(ChatColor.GOLD +"ë°”ëŒì˜ ê³¡ê´­ì´");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Windy Pickaxe");
@@ -73,8 +73,8 @@ public class Pickaxe extends Weapons implements Listener {
 				}
 				else if (cmdt == 5) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"´ëÁöÀÇ °î±ªÀÌ");
-						rm.setLocalizedName(ChatColor.GOLD +"´ëÁöÀÇ °î±ªÀÌ");
+						rm.setDisplayName(ChatColor.GOLD +"ëŒ€ì§€ì˜ ê³¡ê´­ì´");
+						rm.setLocalizedName(ChatColor.GOLD +"ëŒ€ì§€ì˜ ê³¡ê´­ì´");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Earth Pickaxe");
@@ -84,8 +84,8 @@ public class Pickaxe extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 6) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¼­¸®ÀÇ °î±ªÀÌ");
-						rm.setLocalizedName(ChatColor.GOLD +"¼­¸®ÀÇ °î±ªÀÌ");
+						rm.setDisplayName(ChatColor.GOLD +"ì„œë¦¬ì˜ ê³¡ê´­ì´");
+						rm.setLocalizedName(ChatColor.GOLD +"ì„œë¦¬ì˜ ê³¡ê´­ì´");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Frost Pickaxe");
@@ -95,8 +95,8 @@ public class Pickaxe extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 7) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¹Ù´ÙÀÇ °î±ªÀÌ");
-						rm.setLocalizedName(ChatColor.GOLD +"¹Ù´ÙÀÇ °î±ªÀÌ");
+						rm.setDisplayName(ChatColor.GOLD +"ë°”ë‹¤ì˜ ê³¡ê´­ì´");
+						rm.setLocalizedName(ChatColor.GOLD +"ë°”ë‹¤ì˜ ê³¡ê´­ì´");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Ocean Pickaxe");
@@ -106,8 +106,8 @@ public class Pickaxe extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 8) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¾îµÒÀÇ °î±ªÀÌ");
-						rm.setLocalizedName(ChatColor.GOLD +"¾îµÒÀÇ °î±ªÀÌ");
+						rm.setDisplayName(ChatColor.GOLD +"ì–´ë‘ ì˜ ê³¡ê´­ì´");
+						rm.setLocalizedName(ChatColor.GOLD +"ì–´ë‘ ì˜ ê³¡ê´­ì´");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Dark Pickaxe");
@@ -117,8 +117,8 @@ public class Pickaxe extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 9) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"°³Á¶µÈ °î±ªÀÌ");
-						rm.setLocalizedName(ChatColor.GOLD +"°³Á¶µÈ °î±ªÀÌ");
+						rm.setDisplayName(ChatColor.GOLD +"ê°œì¡°ëœ ê³¡ê´­ì´");
+						rm.setLocalizedName(ChatColor.GOLD +"ê°œì¡°ëœ ê³¡ê´­ì´");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Hyper Pickaxe");
@@ -128,8 +128,8 @@ public class Pickaxe extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 10) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"ÀÛ¿­ÇÏ´Â °î±ªÀÌ");
-						rm.setLocalizedName(ChatColor.GOLD +"ÀÛ¿­ÇÏ´Â °î±ªÀÌ");
+						rm.setDisplayName(ChatColor.GOLD +"ì‘ì—´í•˜ëŠ” ê³¡ê´­ì´");
+						rm.setLocalizedName(ChatColor.GOLD +"ì‘ì—´í•˜ëŠ” ê³¡ê´­ì´");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Burning Pickaxe");
@@ -139,8 +139,8 @@ public class Pickaxe extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 11) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¸Íµ¶ °î±ªÀÌ");
-						rm.setLocalizedName(ChatColor.GOLD +"¸Íµ¶ °î±ªÀÌ");
+						rm.setDisplayName(ChatColor.GOLD +"ë§¹ë… ê³¡ê´­ì´");
+						rm.setLocalizedName(ChatColor.GOLD +"ë§¹ë… ê³¡ê´­ì´");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Poison Pickaxe");
@@ -165,8 +165,8 @@ public class Pickaxe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 25,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"ÀÚ¿¬ÀÇ °î±ªÀÌ");
-						rm.setLocalizedName(ChatColor.GOLD +"ÀÚ¿¬ÀÇ °î±ªÀÌ");
+						rm.setDisplayName(ChatColor.GOLD +"ìì—°ì˜ ê³¡ê´­ì´");
+						rm.setLocalizedName(ChatColor.GOLD +"ìì—°ì˜ ê³¡ê´­ì´");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Natural Pickaxe");
@@ -190,8 +190,8 @@ public class Pickaxe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 8,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ °î±ªÀÌ - 1´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ °î±ªÀÌ - 1´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê³¡ê´­ì´ - 1ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê³¡ê´­ì´ - 1ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Pickaxe - Lv.1");
@@ -215,8 +215,8 @@ public class Pickaxe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 10,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ °î±ªÀÌ - 2´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ °î±ªÀÌ - 2´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê³¡ê´­ì´ - 2ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê³¡ê´­ì´ - 2ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Pickaxe - Lv.2");
@@ -230,8 +230,8 @@ public class Pickaxe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 12,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ °î±ªÀÌ - 3´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ °î±ªÀÌ - 3´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê³¡ê´­ì´ - 3ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê³¡ê´­ì´ - 3ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Pickaxe - Lv.3");
@@ -245,8 +245,8 @@ public class Pickaxe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 14,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ °î±ªÀÌ - 4´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ °î±ªÀÌ - 4´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê³¡ê´­ì´ - 4ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê³¡ê´­ì´ - 4ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Pickaxe - Lv.4");
@@ -260,8 +260,8 @@ public class Pickaxe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 16,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ °î±ªÀÌ - 5´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ °î±ªÀÌ - 5´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê³¡ê´­ì´ - 5ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê³¡ê´­ì´ - 5ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Pickaxe - Lv.5");
@@ -275,8 +275,8 @@ public class Pickaxe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 18,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ °î±ªÀÌ - 6´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ °î±ªÀÌ - 6´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê³¡ê´­ì´ - 6ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê³¡ê´­ì´ - 6ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Pickaxe - Lv.6");
@@ -290,8 +290,8 @@ public class Pickaxe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 20,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ °î±ªÀÌ - 7´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ °î±ªÀÌ - 7´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê³¡ê´­ì´ - 7ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê³¡ê´­ì´ - 7ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Pickaxe - Lv.7");
@@ -305,8 +305,8 @@ public class Pickaxe extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 22,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ °î±ªÀÌ - 8´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ °î±ªÀÌ - 8´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê³¡ê´­ì´ - 8ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ê³¡ê´­ì´ - 8ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Pickaxe - Lv.8");

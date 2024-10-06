@@ -27,7 +27,6 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;
@@ -38,7 +37,6 @@ import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.GameMode;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
@@ -56,7 +54,6 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
@@ -287,11 +284,11 @@ public class Hunskills extends Pak implements Serializable, Listener {
 				if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")))
 				{
 					LivingEntity le = (LivingEntity)e;
-					p.getWorld().spawnParticle(Particle.BLOCK_CRACK, le.getLocation(), 50, 1,1,1, 0.21, Material.COBWEB.createBlockData());
+					p.getWorld().spawnParticle(Particle.BLOCK, le.getLocation(), 50, 1,1,1, 0.21, Material.COBWEB.createBlockData());
 					p.playSound(le.getLocation(), Sound.BLOCK_WEEPING_VINES_BREAK, 0.7f, 0);
 					p.playSound(le.getLocation(), Sound.ENTITY_SPIDER_HURT, 0.5f, 0.2f);
-					le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 50, 3, false, false));
-					le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 50, 3, false, false));
+					le.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 50, 3, false, false));
+					le.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 50, 3, false, false));
 
 					Holding.holding(p, le, 30l);
 					if(Proficiency.getpro(p)>=2) {
@@ -519,20 +516,20 @@ public class Hunskills extends Pak implements Serializable, Listener {
 					@Override
 					public void run()
 					{
-						p.getWorld().spawnParticle(Particle.BLOCK_DUST, p.getLocation(), 10, 1, 1, 1, Material.DIRT.createBlockData());
-						if(p.hasPotionEffect(PotionEffectType.JUMP)) {
-							if(p.getPotionEffect(PotionEffectType.JUMP).getAmplifier()+1>10) {
-								p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 30, 10, false, false));
+						p.getWorld().spawnParticle(Particle.FALLING_DUST, p.getLocation(), 10, 1, 1, 1, Material.DIRT.createBlockData());
+						if(p.hasPotionEffect(PotionEffectType.JUMP_BOOST)) {
+							if(p.getPotionEffect(PotionEffectType.JUMP_BOOST).getAmplifier()+1>10) {
+								p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 30, 10, false, false));
 							}
 							else {
-								p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 30, p.getPotionEffect(PotionEffectType.JUMP).getAmplifier()+1, false, false));
+								p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 30, p.getPotionEffect(PotionEffectType.JUMP_BOOST).getAmplifier()+1, false, false));
 							}
 						}
 						else {
-							p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 30, 0, false, false));
+							p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 30, 0, false, false));
 						}
 						StringBuffer sb = new StringBuffer();
-						for(int i = 0; i < p.getPotionEffect(PotionEffectType.JUMP).getAmplifier(); i++) {
+						for(int i = 0; i < p.getPotionEffect(PotionEffectType.JUMP_BOOST).getAmplifier(); i++) {
 							sb.append(ChatColor.GREEN + "▲");
 						}
 
@@ -823,7 +820,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 
 							hucooldown.remove(p.getName());
 							p.playSound(p.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1.0f, 1.5f);
-							p.getWorld().spawnParticle(Particle.SMOKE_NORMAL, p.getLocation().getX(), p.getLocation().getY(), p.getLocation().getZ(), 3);
+							p.getWorld().spawnParticle(Particle.SMOKE, p.getLocation().getX(), p.getLocation().getY(), p.getLocation().getZ(), 3);
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 								p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{사냥 시작}").color(ChatColor.DARK_RED).create());
 							}
@@ -849,7 +846,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 					else
 					{
 						p.playSound(p.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1.0f, 1.5f);
-						p.getWorld().spawnParticle(Particle.SMOKE_NORMAL, p.getLocation().getX(), p.getLocation().getY(), p.getLocation().getZ(), 3);
+						p.getWorld().spawnParticle(Particle.SMOKE, p.getLocation().getX(), p.getLocation().getY(), p.getLocation().getZ(), 3);
 						if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 							p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{사냥 시작}").color(ChatColor.DARK_RED).create());
 						}
@@ -925,7 +922,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 								else {
 									HuntingEffectadd(p);
 									p.playSound(p.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1.0f, 1.5f);
-									p.getWorld().spawnParticle(Particle.SMOKE_NORMAL, p.getLocation(), 30,1,1,1);
+									p.getWorld().spawnParticle(Particle.SMOKE, p.getLocation(), 30,1,1,1);
 									if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 										p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{사냥 시작}").color(ChatColor.DARK_RED).create());
 									}
@@ -948,7 +945,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 							else {
 								HuntingEffectadd(p);
 								p.playSound(p.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1.0f, 1.5f);
-								p.getWorld().spawnParticle(Particle.SMOKE_NORMAL, p.getLocation(), 30,1,1,1);
+								p.getWorld().spawnParticle(Particle.SMOKE, p.getLocation(), 30,1,1,1);
 								if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 									p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{사냥 시작}").color(ChatColor.DARK_RED).create());
 								}
@@ -1014,7 +1011,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 															hucooldown.remove(p.getName());
 															HuntingEffectadd(p);
 															p.playSound(p.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1.0f, 1.5f);
-															p.getWorld().spawnParticle(Particle.SMOKE_NORMAL, p.getLocation(), 30,1,1,1);
+															p.getWorld().spawnParticle(Particle.SMOKE, p.getLocation(), 30,1,1,1);
 															if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 																p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{사냥 시작}").color(ChatColor.DARK_RED).create());
 															}
@@ -1063,7 +1060,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 											hucooldown.remove(p.getName());
 											HuntingEffectadd(p);
 											p.playSound(p.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1.0f, 1.5f);
-											p.getWorld().spawnParticle(Particle.SMOKE_NORMAL, p.getLocation(), 30,1,1,1);
+											p.getWorld().spawnParticle(Particle.SMOKE, p.getLocation(), 30,1,1,1);
 											if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 												p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{사냥 시작}").color(ChatColor.DARK_RED).create());
 											}
@@ -1132,7 +1129,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 															hucooldown.remove(p.getName());
 															HuntingEffectadd(p);
 															p.playSound(p.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1.0f, 1.5f);
-															p.getWorld().spawnParticle(Particle.SMOKE_NORMAL, p.getLocation(), 30,1,1,1);
+															p.getWorld().spawnParticle(Particle.SMOKE, p.getLocation(), 30,1,1,1);
 															if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 																p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{사냥 시작}").color(ChatColor.DARK_RED).create());
 															}
@@ -1160,7 +1157,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 											hucooldown.remove(p.getName());
 											HuntingEffectadd(p);
 											p.playSound(p.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1.0f, 1.5f);
-											p.getWorld().spawnParticle(Particle.SMOKE_NORMAL, p.getLocation(), 30,1,1,1);
+											p.getWorld().spawnParticle(Particle.SMOKE, p.getLocation(), 30,1,1,1);
 											if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 												p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("{사냥 시작}").color(ChatColor.DARK_RED).create());
 											}
@@ -1239,7 +1236,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 								le.setVelocity(p.getLocation().getDirection());
 								dset3(d, p, 1.0, 0.8*(1+hsd.Daze.get(p.getUniqueId())*0.035));
 								p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_BREAK, 1.0f, 2.0f);
-								p.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, le.getLocation(), 5, 1, 0, 1);
+								p.getWorld().spawnParticle(Particle.ANGRY_VILLAGER, le.getLocation(), 5, 1, 0, 1);
 								p.getWorld().spawnParticle(Particle.ASH, le.getLocation(), 200, 0.1, 1, 0.1);
 								Holding.holding(p, le, (long) 10);
 								if(Proficiency.getpro(p)>=1) {
@@ -1297,7 +1294,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 							le.setVelocity(p.getLocation().getDirection());
 							dset3(d, p, 1.0, 0.8*(1+hsd.Daze.get(p.getUniqueId())*0.035));
 							p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_BREAK, 1.0f, 2.0f);
-							p.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, le.getLocation(), 5, 1, 0, 1);
+							p.getWorld().spawnParticle(Particle.ANGRY_VILLAGER, le.getLocation(), 5, 1, 0, 1);
 							p.getWorld().spawnParticle(Particle.ASH, le.getLocation(), 200, 1, 1, 1);
 							Holding.holding(p, le, (long) 10);
 							if(Proficiency.getpro(p)>=1) {
@@ -1391,7 +1388,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 									}
 								}
 								dset3(d, p, 1.5, 1.1*(1+hsd.SkullCrusher.get(p.getUniqueId())*0.06));
-								p.getWorld().spawnParticle(Particle.BLOCK_CRACK, le.getEyeLocation(), 250, 1.52, 1.2, 1.52, Material.BONE_BLOCK.createBlockData());
+								p.getWorld().spawnParticle(Particle.BLOCK, le.getEyeLocation(), 250, 1.52, 1.2, 1.52, Material.BONE_BLOCK.createBlockData());
 								p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, le.getEyeLocation(), 5, 1.52, 1.2, 1.52);
 								p.playSound(p.getLocation(), Sound.BLOCK_BONE_BLOCK_BREAK, 1.0f, 2f);
 								p.playSound(p.getLocation(), Sound.BLOCK_NETHER_ORE_BREAK, 1.0f, 0f);
@@ -1456,7 +1453,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 								}
 							}
 							dset3(d, p, 1.5, 1.1*(1+hsd.SkullCrusher.get(p.getUniqueId())*0.06));
-							p.getWorld().spawnParticle(Particle.BLOCK_CRACK, le.getEyeLocation(), 250, 1.52, 1.2, 1.52, Material.BONE_BLOCK.createBlockData());
+							p.getWorld().spawnParticle(Particle.BLOCK, le.getEyeLocation(), 250, 1.52, 1.2, 1.52, Material.BONE_BLOCK.createBlockData());
 							p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, le.getEyeLocation(), 5, 1.52, 1.2, 1.52);
 							p.playSound(p.getLocation(), Sound.BLOCK_BONE_BLOCK_BREAK, 1.0f, 2f);
 							p.playSound(p.getLocation(), Sound.BLOCK_NETHER_ORE_BREAK, 1.0f, 0f);
@@ -1561,8 +1558,8 @@ public class Hunskills extends Pak implements Serializable, Listener {
 						lccooldown.remove(p.getName());
 						p.playSound(p.getLocation(), Sound.AMBIENT_CAVE, 1.0f, 1.8f);
 						p.getWorld().spawnParticle(Particle.DRAGON_BREATH, p.getLocation(), 100, 2, 2, 2);
-						p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 2, false, false));
-						p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 2, false, false));
+						p.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 100, 2, false, false));
+						p.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 100, 2, false, false));
 						for (Entity e : p.getWorld().getNearbyEntities(p.getLocation(), 8, 7, 8))
 						{
 							if (e instanceof Player)
@@ -1582,7 +1579,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 									Holding.holding(p, le, 100l);
 									le.getWorld().spawnParticle(Particle.REVERSE_PORTAL, le.getLocation(), 60,1,1,1);
 									le.getWorld().spawnParticle(Particle.ASH, le.getLocation(), 60,1,1,1);
-									le.getWorld().spawnParticle(Particle.SUSPENDED, le.getLocation(), 60,1,1,1);
+									le.getWorld().spawnParticle(Particle.CURRENT_DOWN, le.getLocation(), 60,1,1,1);
 									le.getWorld().spawnParticle(Particle.SOUL, le.getLocation(), 60,1,1,1);
 									le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 100, 2, false, false));
 									rage.put(p.getUniqueId(), le);
@@ -1671,7 +1668,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 		line.forEach(l -> {
 			p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l,5,0.1,0.1,0.1,0);
 			p.getWorld().spawnParticle(Particle.CRIT, l,5,0.1,0.1,0.1,0);
-			p.getWorld().spawnParticle(Particle.CRIT_MAGIC, l,5,0.1,0.1,0.1,0);
+			p.getWorld().spawnParticle(Particle.ENCHANTED_HIT, l,5,0.1,0.1,0.1,0);
 			for(int i = 0; i<8;i+=1) {
 				Location pl = p.getLocation();
 				Vector v = l.clone().toVector().subtract(pl.toVector()).normalize();
@@ -1854,7 +1851,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 						}
 						line.forEach(l -> {
 							p.getWorld().spawnParticle(Particle.CRIT, l,5,0.1,0.1,0.1,0);
-							p.getWorld().spawnParticle(Particle.BLOCK_CRACK, l,3,0.1,0.1,0.1,0, Material.NETHER_QUARTZ_ORE.createBlockData());
+							p.getWorld().spawnParticle(Particle.BLOCK, l,3,0.1,0.1,0.1,0, Material.NETHER_QUARTZ_ORE.createBlockData());
 
 						});
 					}
@@ -1892,7 +1889,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 					if (Math.abs(e.getLocation().getDirection().angle(p.getLocation().getDirection())) <= Math.PI/3+p.getLevel()/10 || Proficiency.getpro(p)>=2)
 					{
 						d.setDamage(d.getDamage()*1.5);
-						p.getWorld().spawnParticle(Particle.SPELL_WITCH, e.getLocation(), 100, 0.1, 1, 0.1);
+						p.getWorld().spawnParticle(Particle.WITCH, e.getLocation(), 100, 0.1, 1, 0.1);
 					}
 				}
 			}

@@ -6,17 +6,11 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Arrays;
-import java.util.List;
-
 import io.github.chw3021.classes.SkillsGui;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
 import io.github.chw3021.classes.Proficiency;
 import io.github.chw3021.obtains.Obtained;
 import net.md_5.bungee.api.ChatColor;
@@ -24,20 +18,6 @@ import net.md_5.bungee.api.ChatColor;
 public class FireSkillsGui extends SkillsGui {
 
 
-
-
-	public void itemset(String display, Material ID, int data, int stack, List<String> Lore, int loc, Inventory inv)
-	{
-		ItemStack item = new ItemStack(ID,stack);
-		ItemMeta items = item.getItemMeta();
-		items.setDisplayName(display);
-		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-		items.setLore(Lore);
-		item.setItemMeta(items);
-		inv.setItem(loc, item);
-	}
 
 	public void FIreSkillsinv(Player p)
 	{

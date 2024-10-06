@@ -6,54 +6,18 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Arrays;
-import java.util.List;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
 import io.github.chw3021.classes.Proficiency;
+import io.github.chw3021.classes.SkillsGui;
 import io.github.chw3021.obtains.Obtained;
 import net.md_5.bungee.api.ChatColor;
 
-public class NobSkillsGui{
+public class NobSkillsGui extends SkillsGui{
 	
 
-
-	public void itemset(String display, Material ID, int data, int stack, List<String> Lore, int loc, Inventory inv)
-	{
-		ItemStack item = new ItemStack(ID);
-		ItemMeta items = item.getItemMeta();
-		items.setDisplayName(display);
-		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-		Lore.forEach(l -> {
-			l=ChatColor.RESET+l;
-		});
-		items.setLore(Lore);
-		item.setItemMeta(items);
-		inv.setItem(loc, item);
-	}
-	
-	public void itemset(String display, ItemStack is, int data, int stack, List<String> Lore, int loc, Inventory inv)
-	{
-		ItemStack item = is;
-		ItemMeta items = item.getItemMeta();
-		items.setDisplayName(display);
-		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-		items.setLore(Lore);
-		item.setItemMeta(items);
-		inv.setItem(loc, item);
-	}
-	
-	
 	public void NobSkillsinv(Player p)
 	{
 		Inventory Nobskillsinv = Bukkit.createInventory(null, 54, "Nobskills");
@@ -90,7 +54,7 @@ public class NobSkillsGui{
 				itemset("아홀로틀분대", Material.AXOLOTL_BUCKET, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[물 계열]","삼지창의 위치에 아홀로틀분대를 부릅니다","보스,리더몹을 우선적으로 공격합니다","(피해량은 전이 레벨에 비례합니다)","",ChatColor.BOLD+"5 X 6 X "+BigDecimal.valueOf(0.05*(1+fsd.Transition.getOrDefault(p.getUniqueId(),1)*0.016)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 13, Nobskillsinv);
 				itemset("발광오징어", Material.GLOW_INK_SAC, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[물 계열]","종료시 발광오징어를 소환합니다","(피해량은 돌고래타기 레벨에 비례합니다)","",ChatColor.BOLD+"3 X "+BigDecimal.valueOf(0.36*(1+fsd.DolphinSurf.getOrDefault(p.getUniqueId(),1)*0.03)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 14, Nobskillsinv);
 				itemset("고결", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("공격력이 증가합니다", "[공격 역할군]의 방어력감소 효과를 제거합니다", "삼지창의 속도가 증가합니다"), 16, Nobskillsinv);
-				itemset("바다소용돌이", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[물 계열]","웅크리기 + 아이템투척","",ChatColor.BOLD+"10 X 0.46D + 14 X 0.8D"), 17, Nobskillsinv);
+				itemset("바다소용돌이", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[물 계열]","웅크리기 + num4","",ChatColor.BOLD+"10 X 0.46D + 14 X 0.8D"), 17, Nobskillsinv);
 
 				itemset("분사공격(잠김)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/155015"), 18, Nobskillsinv);
 				itemset("바다의눈(잠김)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/155015"), 19, Nobskillsinv);
@@ -108,7 +72,7 @@ public class NobSkillsGui{
 				itemset("아홀로틀분대", Material.AXOLOTL_BUCKET, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[물 계열]","삼지창의 위치에 아홀로틀분대를 부릅니다","보스,리더몹을 우선적으로 공격합니다","(피해량은 전이 레벨에 비례합니다)","",ChatColor.BOLD+"5 X 6 X "+BigDecimal.valueOf(0.05*(1+fsd.Transition.getOrDefault(p.getUniqueId(),1)*0.016)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 13, Nobskillsinv);
 				itemset("발광오징어", Material.GLOW_INK_SAC, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[물 계열]","종료시 발광오징어를 소환합니다","(피해량은 돌고래타기 레벨에 비례합니다)","",ChatColor.BOLD+"3 X "+BigDecimal.valueOf(0.36*(1+fsd.DolphinSurf.getOrDefault(p.getUniqueId(),1)*0.03)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 14, Nobskillsinv);
 				itemset("고결", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("공격력이 증가합니다", "[공격 역할군]의 방어력감소 효과를 제거합니다", "삼지창의 속도가 증가합니다"), 16, Nobskillsinv);
-				itemset("바다소용돌이", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[물 계열]","웅크리기 + 아이템투척","",ChatColor.BOLD+"10 X 0.46D + 20 X 0.5D"), 17, Nobskillsinv);
+				itemset("바다소용돌이", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[물 계열]","웅크리기 + num4","",ChatColor.BOLD+"10 X 0.46D + 20 X 0.5D"), 17, Nobskillsinv);
 
 				itemset("분사공격", Material.INK_SAC, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[물 계열]","재입력시 분사공격을 명령합니다","(피해량은 돌격 레벨에 비례합니다)","",ChatColor.BOLD+"6 X "+BigDecimal.valueOf(0.2*(1+fsd.Assault.getOrDefault(p.getUniqueId(),1)*0.015)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 18, Nobskillsinv);
 				itemset("바다의눈", Material.SEA_LANTERN, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[물 계열]","재입력시 바다의눈을 개안합니다", "(피해량은 물바퀴 레벨에 비례합니다)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.95*(1+fsd.WaterWheel.getOrDefault(p.getUniqueId(),1)*0.52)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 19, Nobskillsinv);
@@ -116,7 +80,7 @@ public class NobSkillsGui{
 				itemset("가디언저주", Material.PRISMARINE, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[물 계열]","[웅크리기 + 아이템변경[마우스휠]로","가디언의 저주를 사용할수 있습니다", "(피해량은 가디언지원대 레벨에 비례합니다)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.33*(1+fsd.GuardianSupport.getOrDefault(p.getUniqueId(),1)*0.056)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 21, Nobskillsinv);
 				itemset("호우", Material.POINTED_DRIPSTONE, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[물 계열]","삼지창위치에 호우를 부릅니다","(피해량은 전이 레벨에 비례합니다)","",ChatColor.BOLD+"6 X "+BigDecimal.valueOf(0.2*(1+fsd.Assault.getOrDefault(p.getUniqueId(),1)*0.026)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 22, Nobskillsinv);
 				itemset("통치자", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("공격력과 방어력이 증가합니다","바다소용돌이 재사용대기시간이 감소합니다"), 25, Nobskillsinv);
-				itemset("바다대행진", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[물 계열]","달리기 + 아이템투척","",ChatColor.BOLD+"200 X 0.2D"), 26, Nobskillsinv);
+				itemset("바다대행진", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[물 계열]","웅크리기 + num5","",ChatColor.BOLD+"200 X 0.2D"), 26, Nobskillsinv);
 			}
 			itemset("현재 숙련도", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(""+Proficiency.getproexp(p)), 27, Nobskillsinv);
 			itemset("스킬포인트", Material.NETHER_STAR, 0, 1, Arrays.asList(ChatColor.AQUA+"SP."+fsd.SkillPoints.getOrDefault(p.getUniqueId(),1),"","클릭하면 스킬포인트가 초기화 됩니다"), 35, Nobskillsinv);
@@ -151,7 +115,7 @@ public class NobSkillsGui{
 				itemset("AxolotlSquad", Material.AXOLOTL_BUCKET, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Water]","Summon AxolotlSquad to Hit Position","Target Boss & Leader First","(Damage Affected By Transition)","",ChatColor.BOLD+"5 X 6 X "+BigDecimal.valueOf(0.05*(1+fsd.Transition.getOrDefault(p.getUniqueId(),1)*0.016)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 13, Nobskillsinv);
 				itemset("GlowSquid", Material.GLOW_INK_SAC, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Water]","Summon GlowSquids When Surfing end","(Damage Affected By DolphinSurf)","",ChatColor.BOLD+"3 X "+BigDecimal.valueOf(0.36*(1+fsd.DolphinSurf.getOrDefault(p.getUniqueId(),1)*0.03)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 14, Nobskillsinv);
 				itemset("Noble", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage", "Remove Nuker's Armor Panalty", "Increases Trident Speed"), 16, Nobskillsinv);
-				itemset("Whirlpool", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Water]","Sneaking + ThrowItem","",ChatColor.BOLD+"10 X 0.46D + 20 X 0.5D"), 17, Nobskillsinv);
+				itemset("Whirlpool", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Water]","Sneaking + num4","",ChatColor.BOLD+"10 X 0.46D + 20 X 0.5D"), 17, Nobskillsinv);
 
 				itemset("SprayAttack(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 18, Nobskillsinv);
 				itemset("EyesOfSea(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 19, Nobskillsinv);
@@ -169,7 +133,7 @@ public class NobSkillsGui{
 				itemset("AxolotlSquad", Material.AXOLOTL_BUCKET, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Water]","Summon AxolotlSquad to Hit Position","Target Boss & Leader First","(Damage Affected By Transition)","",ChatColor.BOLD+"5 X 6 X "+BigDecimal.valueOf(0.05*(1+fsd.Transition.getOrDefault(p.getUniqueId(),1)*0.016)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 13, Nobskillsinv);
 				itemset("GlowSquid", Material.GLOW_INK_SAC, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Water]","Summon GlowSquids When Surfing end","(Damage Affected By DolphinSurf)","",ChatColor.BOLD+"3 X "+BigDecimal.valueOf(0.36*(1+fsd.DolphinSurf.getOrDefault(p.getUniqueId(),1)*0.03)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 14, Nobskillsinv);
 				itemset("Noble", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage", "Remove Nuker's Armor Panalty", "Increases Trident Speed"), 16, Nobskillsinv);
-				itemset("Whirlpool", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Water]","Sneaking + ThrowItem","",ChatColor.BOLD+"10 X 1.46D"), 17, Nobskillsinv);
+				itemset("Whirlpool", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Water]","Sneaking + num4","",ChatColor.BOLD+"10 X 1.46D"), 17, Nobskillsinv);
 
 				itemset("SprayAttack", Material.INK_SAC, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Water]","Order SprayAttack When You Use Once More","(Damage Affected By Assault)","",ChatColor.BOLD+"6 X "+BigDecimal.valueOf(0.2*(1+fsd.Assault.getOrDefault(p.getUniqueId(),1)*0.015)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 18, Nobskillsinv);
 				itemset("EyesOfSea", Material.SEA_LANTERN, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Water]","Rouse EyesOfSea When You Use Once More", "(Damage Affected By WaterWheel)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.95*(1+fsd.WaterWheel.getOrDefault(p.getUniqueId(),1)*0.52)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 19, Nobskillsinv);
@@ -177,7 +141,7 @@ public class NobSkillsGui{
 				itemset("GuardianCurse", Material.PRISMARINE, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Water]","Able To Use GuardianCurse","By [Sneaking + ChangeItem(MouseWheel)]", "(Damage Affected By GuardianSupport)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.33*(1+fsd.GuardianSupport.getOrDefault(p.getUniqueId(),1)*0.056)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 21, Nobskillsinv);
 				itemset("Downpour", Material.POINTED_DRIPSTONE, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Water]","Summon Downpour to Hit Position","(Damage Affected By Transition)","",ChatColor.BOLD+"6 X "+BigDecimal.valueOf(0.2*(1+fsd.Assault.getOrDefault(p.getUniqueId(),1)*0.026)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 22, Nobskillsinv);
 				itemset("Ruler", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Damage & Armor","Decrease Whirlpool Cooldown"), 25, Nobskillsinv);
-				itemset("OceanMarch", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Water]","Sprinting + ThrowItem","",ChatColor.BOLD+"10 X 0.46D + 20 X 0.5D"), 26, Nobskillsinv);
+				itemset("OceanMarch", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Water]","Sneaking + num5","",ChatColor.BOLD+"10 X 0.46D + 20 X 0.5D"), 26, Nobskillsinv);
 			}
 			itemset("Current Proficiency", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(""+Proficiency.getproexp(p)), 27, Nobskillsinv);
 			itemset("SkillPoints", Material.NETHER_STAR, 0, 1, Arrays.asList(ChatColor.AQUA+"SP."+fsd.SkillPoints.getOrDefault(p.getUniqueId(),1),"","Click if you want to reset your skill's levels"), 35, Nobskillsinv);

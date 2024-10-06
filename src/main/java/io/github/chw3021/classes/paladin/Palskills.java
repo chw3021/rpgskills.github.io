@@ -6,6 +6,7 @@ import io.github.chw3021.classes.ClassData;
 import io.github.chw3021.classes.Proficiency;
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.commons.Pak;
+import io.github.chw3021.commons.SkillBuilder;
 import io.github.chw3021.obtains.Obtained;
 import io.github.chw3021.party.Party;
 
@@ -23,7 +24,6 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;
@@ -61,6 +61,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.event.server.PluginEnableEvent;
@@ -188,6 +189,9 @@ public class Palskills extends Pak implements Serializable, Listener {
 		
 	}
 	
+	final private Boolean weaponCheck(Player p) {
+		return (p.getInventory().getItemInMainHand().getType().name().contains("_AXE") || p.getInventory().getItemInMainHand().getType() == Material.MACE) && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD");
+	}
 	
 	public void Restraint(PlayerSwapHandItemsEvent ev) 
 	{
@@ -197,152 +201,79 @@ public class Palskills extends Pak implements Serializable, Listener {
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3 && psd.Restraint.getOrDefault(p.getUniqueId(), 0)>=1) {
 			double sec =8*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
-			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD") && p.isBlocking() && p.isSneaking())
+			if(weaponCheck(p) && p.isBlocking() && p.isSneaking())
 			{
 				
 				ev.setCancelled(true);
-				if(rscooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-	            {
-	                double timer = (rscooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d; // geting time in seconds
-	                if(!(timer < 0)) // if timer is still more then 0 or 0
-	                {
-	                	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("∞·π⁄ ¿ÁªÁøÎ ¥Î±‚Ω√∞£¿Ã " + String.valueOf(Math.round(timer*10)/10.0) + "√  ≥≤æ“Ω¿¥œ¥Ÿ").create());
-	                	}
-	                	else {
-		                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Restraint").create());
-	                	}
-	                }
-	                else // if timer is done
-	                {
-	                    rscooldown.remove(p.getName()); // removing player from HashMap
-	                    
-	                	if(illmt.containsKey(p.getUniqueId())) {
-	                		Bukkit.getScheduler().cancelTask(illmt.get(p.getUniqueId()));
-	                		illmt.remove(p.getUniqueId());
-	                	}
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(sec)
+						.kname("Í≤∞Î∞ï")
+						.ename("Restraint")
+						.slot(0)
+						.hm(rscooldown)
+						.skillUse(() -> {
 
-	    				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	    	                @Override
-	    	                public void run() {
-	    						if(Proficiency.getpro(p)>=1) {
-	    							illm.putIfAbsent(p.getUniqueId(), 0);
-	    						}
-	    	                }
-	    	            }, 3); 
+		                	if(illmt.containsKey(p.getUniqueId())) {
+		                		Bukkit.getScheduler().cancelTask(illmt.get(p.getUniqueId()));
+		                		illmt.remove(p.getUniqueId());
+		                	}
 
-	            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	    	                @Override
-	    	                public void run() {
-	    						illm.remove(p.getUniqueId());
-	    	                }
-	    	            }, 45); 
-	                	illmt.put(p.getUniqueId(), task);
-	                	
-	                	
-	                    Location l = p.getLocation();
-						
-						p.getWorld().spawnParticle(Particle.FLASH, p.getLocation(), 12, 1, 1, 1);
-						p.playSound(p.getLocation(), Sound.ENTITY_EVOKER_CAST_SPELL, 1.0f, 1.6f);
-						p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_CHAIN, 1.0f, 0.8f);
-						for (Entity e : p.getWorld().getNearbyEntities(l, 4, 4, 4))
-						{
-                    		if (e instanceof Player) 
+		    				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		    	                @Override
+		    	                public void run() {
+		    						if(Proficiency.getpro(p)>=1) {
+		    							illm.putIfAbsent(p.getUniqueId(), 0);
+		    						}
+		    	                }
+		    	            }, 3); 
+
+		            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		    	                @Override
+		    	                public void run() {
+		    						illm.remove(p.getUniqueId());
+		    	                }
+		    	            }, 45); 
+		                	illmt.put(p.getUniqueId(), task);
+		                	
+		                	
+		                    Location l = p.getLocation();
+							
+							p.getWorld().spawnParticle(Particle.FLASH, p.getLocation(), 12, 1, 1, 1);
+							p.playSound(p.getLocation(), Sound.ENTITY_EVOKER_CAST_SPELL, 1.0f, 1.6f);
+							p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_CHAIN, 1.0f, 0.8f);
+							for (Entity e : p.getWorld().getNearbyEntities(l, 4, 4, 4))
 							{
-								Player p1 = (Player) e;
-								if(Party.hasParty(p) && Party.hasParty(p1))	{
-								if(Party.getParty(p).equals(Party.getParty(p1)))
-									{
-									continue;
+	                    		if (e instanceof Player) 
+								{
+									Player p1 = (Player) e;
+									if(Party.hasParty(p) && Party.hasParty(p1))	{
+									if(Party.getParty(p).equals(Party.getParty(p1)))
+										{
+										continue;
+										}
 									}
 								}
-							}
-							if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
-							{
-								final LivingEntity le = (LivingEntity)e;
-								le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20, 4, false, false));
-								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					                @Override
-					                public void run() {
-					                	
-
-										atks(0.7, psd.Restraint.get(p.getUniqueId())*0.69, p, le,14);
-										p.playSound(p.getLocation(), Sound.BLOCK_PISTON_CONTRACT, 1.0f, 2f);
-										p.getWorld().spawnParticle(Particle.ASH, le.getLocation(), 12, 1, 1, 1);
-										le.teleport(p.getLocation().add(0, 2, 0));
-					                	
-					                }
-					            }, 10); 
-							}
-						}
-		                rscooldown.put(p.getName(), System.currentTimeMillis());
-	                }
-	            }
-	            else // if cooldown doesn't have players name in it
-	            {
-                    
-                	if(illmt.containsKey(p.getUniqueId())) {
-                		Bukkit.getScheduler().cancelTask(illmt.get(p.getUniqueId()));
-                		illmt.remove(p.getUniqueId());
-                	}
-
-    				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-    	                @Override
-    	                public void run() {
-    						if(Proficiency.getpro(p)>=1) {
-    							illm.putIfAbsent(p.getUniqueId(), 0);
-    						}
-    	                }
-    	            }, 13); 
-
-            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-    	                @Override
-    	                public void run() {
-    						illm.remove(p.getUniqueId());
-    	                }
-    	            }, 35); 
-                	illmt.put(p.getUniqueId(), task);
-                	
-	            	Location l = p.getLocation();
-					p.getWorld().spawnParticle(Particle.FLASH, p.getLocation(), 12, 1, 1, 1);
-					p.playSound(p.getLocation(), Sound.ENTITY_EVOKER_CAST_SPELL, 1.0f, 1.6f);
-					p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_CHAIN, 1.0f, 0.8f);
-					for (Entity e : p.getWorld().getNearbyEntities(l, 4, 4, 4))
-					{
-                		if (e instanceof Player) 
-						{
-							Player p1 = (Player) e;
-							if(Party.hasParty(p) && Party.hasParty(p1))	{
-							if(Party.getParty(p).equals(Party.getParty(p1)))
+								if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
 								{
-								continue;
+									final LivingEntity le = (LivingEntity)e;
+									le.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 20, 4, false, false));
+									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+						                @Override
+						                public void run() {
+						                	
+
+											atks(0.7, psd.Restraint.get(p.getUniqueId())*0.69, p, le,14);
+											p.playSound(p.getLocation(), Sound.BLOCK_PISTON_CONTRACT, 1.0f, 2f);
+											p.getWorld().spawnParticle(Particle.ASH, le.getLocation(), 12, 1, 1, 1);
+											le.teleport(p.getLocation().add(0, 2, 0));
+						                	
+						                }
+						            }, 10); 
 								}
 							}
-						}
-						if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
-						{
-							final LivingEntity le = (LivingEntity)e;
-							le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20, 4, false, false));
-							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() {
-
-									atks(0.7, psd.Restraint.get(p.getUniqueId())*0.69, p, le,14);
-									p.getWorld().spawnParticle(Particle.ASH, le.getLocation(), 12, 1, 1, 1);
-									le.teleport(p.getLocation().add(0, 2, 0));
-				                	
-				                }
-				            }, 10); 
-						}
-					}
-					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() {
-							p.playSound(p.getLocation(), Sound.BLOCK_PISTON_CONTRACT, 1.0f, 2f);
-		                }
-		            }, 10); 
-	                rscooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-	            }
+						});
+				bd.execute();
 			}
 		}
 	}
@@ -353,7 +284,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 		Player p = ev.getPlayer();
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3 && illm.containsKey(p.getUniqueId())) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD") && p.isBlocking() && p.isSneaking())
+			if(weaponCheck(p) && p.isBlocking() && p.isSneaking())
 			{
 				ev.setCancelled(true);
 
@@ -401,7 +332,7 @@ public class Palskills extends Pak implements Serializable, Listener {
     				p.getWorld().spawnParticle(Particle.FLASH, cl, 5, 0.25,0.25,0.25,0);
     				p.getWorld().spawnParticle(Particle.COMPOSTER, cl, 100, 0.25,0.25,0.25,0);
     				p.getWorld().spawnParticle(Particle.WHITE_ASH, cl, 100, 0.25,0.25,0.25,0);
-    				p.getWorld().spawnParticle(Particle.BLOCK_CRACK, cl, 100, 0.25,0.25,0.25,0, Material.CHISELED_QUARTZ_BLOCK.createBlockData());
+    				p.getWorld().spawnParticle(Particle.BLOCK, cl, 100, 0.25,0.25,0.25,0, Material.CHISELED_QUARTZ_BLOCK.createBlockData());
             	});
             	
 				p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_STEP, 0.8f, 0f);
@@ -422,7 +353,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 					if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
 					{
 						final LivingEntity le = (LivingEntity)e;
-						le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20, 4, false, false));
+						le.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 20, 4, false, false));
 						atks(0.9, psd.Restraint.get(p.getUniqueId())*0.9, p, le,9);
 						Holding.holding(p, le, 30l);
 					}
@@ -439,7 +370,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 		Player p = ev.getPlayer();
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3 && doom.containsKey(p.getUniqueId())) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD") && p.isBlocking() && p.isSneaking())
+			if(weaponCheck(p) && p.isBlocking() && p.isSneaking())
 			{
 				ev.setCancelled(true);
 
@@ -491,7 +422,7 @@ public class Palskills extends Pak implements Serializable, Listener {
                 	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		                @Override
 		                public void run() {
-    						p.getWorld().spawnParticle(Particle.BLOCK_CRACK, l, 5, 0.3,0.3,0.3,0 ,Material.QUARTZ_PILLAR.createBlockData());
+    						p.getWorld().spawnParticle(Particle.BLOCK, l, 5, 0.3,0.3,0.3,0 ,Material.QUARTZ_PILLAR.createBlockData());
     						p.getWorld().spawnParticle(Particle.FLASH, l, 2, 0.3,0.3,0.3,0);
 		                    p.playSound(p.getLocation(), Sound.ENTITY_GLOW_SQUID_AMBIENT, 0.01f, 2f);
 		                    
@@ -530,9 +461,9 @@ public class Palskills extends Pak implements Serializable, Listener {
 
 	                    
 	                	cross.forEach(tl -> {
-	        				p.getWorld().spawnParticle(Particle.CRIT_MAGIC, tl, 300, 0.5, 0.5, 0.5);
+	        				p.getWorld().spawnParticle(Particle.ENCHANTED_HIT, tl, 300, 0.5, 0.5, 0.5);
 	        				p.getWorld().spawnParticle(Particle.WAX_ON, tl, 300, 0.5, 0.5, 0.5,0);
-	        				p.getWorld().spawnParticle(Particle.SPELL_INSTANT, tl, 300, 0.5, 0.5, 0.5,0);
+	        				p.getWorld().spawnParticle(Particle.INSTANT_EFFECT, tl, 300, 0.5, 0.5, 0.5,0);
 	        				p.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, tl, 300, 1, 1, 1,0.5);
 	                	});
 	    				p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE,0.3f, 0.3f);
@@ -561,31 +492,22 @@ public class Palskills extends Pak implements Serializable, Listener {
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3 && psd.Pray.getOrDefault(p.getUniqueId(), 0)>=1) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD") && p.isSneaking() && !p.isBlocking())
+			if(weaponCheck(p) && p.isSneaking() && !p.isBlocking())
 			{
 				
 				ev.setCancelled(true);
-				{
-					if(prcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-		            {
-		                double timer = (prcooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d; // geting time in seconds
-		                if(!(timer < 0)) // if timer is still more then 0 or 0
-		                {
-		                	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		                		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("±‚µµ ¿ÁªÁøÎ ¥Î±‚Ω√∞£¿Ã " + String.valueOf(Math.round(timer*10)/10.0) + "√  ≥≤æ“Ω¿¥œ¥Ÿ").create());
-		                	}
-		                	else {
-			                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Pray").create());
-		                	}
-		                    ev.setCancelled(true);
-		                }
-		                else // if timer is done
-		                {
-							
-		                    prcooldown.remove(p.getName()); // removing player from HashMap
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(sec)
+						.kname("Í∏∞ÎèÑ")
+						.ename("Pray")
+						.slot(1)
+						.hm(prcooldown)
+						.skillUse(() -> {
+
 			            	p.playSound(p.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_AMBIENT, 1.0f, 0.1f);
 		                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0f, 0.1f);
-			        		p.getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE, p.getLocation(), 100, 1, 1, 1);
+			        		p.getWorld().spawnParticle(Particle.ENCHANT, p.getLocation(), 100, 1, 1, 1);
 			        		if(p.getHealth()+1 + p.getLevel() *0.5* (1+ psd.Pray.get(p.getUniqueId())*0.1) <= p.getMaxHealth())
 			        		{
 				        		p.setHealth(p.getHealth()+1 + p.getLevel() *0.5* (1+ psd.Pray.get(p.getUniqueId())*0.1));
@@ -630,63 +552,8 @@ public class Palskills extends Pak implements Serializable, Listener {
 									}
 								} 
 							} 
-							prcooldown.put(p.getName(), System.currentTimeMillis());
-		               
-							}
-		            }
-		            else // if cooldown doesn't have players name in it
-		            {
-		            	p.playSound(p.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_AMBIENT, 1.0f, 0.1f);
-	                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0f, 0.1f);
-		        		p.getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE, p.getLocation(), 100, 1, 1, 1);
-		        		if(p.getHealth()+1 + p.getLevel() *0.5* (1+ psd.Pray.get(p.getUniqueId())*0.1) <= p.getMaxHealth())
-		        		{
-			        		p.setHealth(p.getHealth()+1 + p.getLevel() *0.5* (1+ psd.Pray.get(p.getUniqueId())*0.1));
-		        		}
-		        		else
-		        		{
-		        			p.setHealth(p.getMaxHealth());
-		        		}
-		        		if(Proficiency.getpro(p)>=1) {
-		        			Holding.invur(p, psd.Pray.get(p.getUniqueId())*4l);
-		        		}
-		        		if(Proficiency.getpro(p)>=2) {
-		        			p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 2, 2, false, false));
-		        		}
-						p.playEffect(org.bukkit.EntityEffect.VILLAGER_HEART);
-		        		cleans(p);
-						if(Party.hasParty(p)) {
-							for (Entity e : p.getWorld().getNearbyEntities(p.getLocation(),6, 5, 6))
-							{
-								if (e instanceof Player) 
-								{
-									Player le = (Player) e;
-									if(Party.isInSameParty(p, le))
-									{
-										if(le.getHealth()+1 + p.getLevel() *0.5* (1+ psd.Pray.get(p.getUniqueId())*0.1) <= le.getMaxHealth())
-						        		{
-							        		le.setHealth(le.getHealth()+1 + p.getLevel() *0.5* (1+ psd.Pray.get(p.getUniqueId())*0.1));
-						        		}
-						        		else
-						        		{
-						        			le.setHealth(le.getMaxHealth());
-						        		}
-						        		if(Proficiency.getpro(p)>=1) {
-						        			Holding.invur(le, psd.Pray.get(p.getUniqueId())*4l);
-						        		}
-						        		if(Proficiency.getpro(p)>=2) {
-						        			le.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 2, 2, false, false));
-						        		}
-										le.playEffect(org.bukkit.EntityEffect.VILLAGER_HEART);
-						        		cleans(le);
-									}
-								}
-							} 
-						} 
-		                prcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-		            
-					}
-				}
+						});
+				bd.execute();
 			}
 		}
 	}
@@ -699,28 +566,19 @@ public class Palskills extends Pak implements Serializable, Listener {
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3 && psd.Encourge.getOrDefault(p.getUniqueId(), 0)>=1) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD") && !p.isSneaking() && !p.isBlocking())
+			if(weaponCheck(p) && !p.isSneaking() && !p.isBlocking())
 			{
 				ev.setCancelled(true);
-				
-				{
-					if(eccooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-		            {
-		                double timer = (eccooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d; // geting time in seconds
-		                if(!(timer < 0)) // if timer is still more then 0 or 0
-		                {
-		                	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		                		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("∞›∑¡ ¿ÁªÁøÎ ¥Î±‚Ω√∞£¿Ã " + String.valueOf(Math.round(timer*10)/10.0) + "√  ≥≤æ“Ω¿¥œ¥Ÿ").create());
-		                	}
-		                	else {
-			                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Encourage").create());
-		                	}
-		                    ev.setCancelled(true);
-		                }
-		                else // if timer is done
-		                {
-		                    eccooldown.remove(p.getName()); // removing player from HashMap
-		                    
+
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(sec)
+						.kname("Í≤©Î†§")
+						.ename("Encourage")
+						.slot(2)
+						.hm(eccooldown)
+						.skillUse(() -> {
+
 		                	if(ariat.containsKey(p.getUniqueId())) {
 		                		Bukkit.getScheduler().cancelTask(ariat.get(p.getUniqueId()));
 		                		ariat.remove(p.getUniqueId());
@@ -743,7 +601,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 		    	            }, 45); 
 		                	ariat.put(p.getUniqueId(), task);
 		                	
-			                Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 3).getLocation();
+			                Location l = gettargetblock(p,3);
 		                    p.playSound(p.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_CHARGE, 1.0f, 0f);
 			        		p.getWorld().spawnParticle(Particle.END_ROD, l, 400, 2, 2, 2);
 			        		p.getWorld().spawnParticle(Particle.GLOW, l, 100, 4, 2, 4);
@@ -768,62 +626,8 @@ public class Palskills extends Pak implements Serializable, Listener {
 									atks(0.8, psd.Encourge.get(p.getUniqueId())*0.8, p, le,14);
 								}
 							}
-							eccooldown.put(p.getName(), System.currentTimeMillis());
-		                }
-		            }
-		            else // if cooldown doesn't have players name in it
-		            {
-	                    
-	                	if(ariat.containsKey(p.getUniqueId())) {
-	                		Bukkit.getScheduler().cancelTask(ariat.get(p.getUniqueId()));
-	                		ariat.remove(p.getUniqueId());
-	                	}
-
-	    				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	    	                @Override
-	    	                public void run() {
-	    						if(Proficiency.getpro(p)>=1) {
-	    							aria.putIfAbsent(p.getUniqueId(), 0);
-	    						}
-	    	                }
-	    	            }, 3); 
-
-	            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	    	                @Override
-	    	                public void run() {
-	    						aria.remove(p.getUniqueId());
-	    	                }
-	    	            }, 45); 
-	                	ariat.put(p.getUniqueId(), task);
-	                	
-		            	Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 3).getLocation();
-	                    p.playSound(p.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 1.0f, 0f);
-		        		p.getWorld().spawnParticle(Particle.END_ROD, l, 400, 2, 2, 2);
-		        		p.getWorld().spawnParticle(Particle.GLOW, l, 100, 4, 2, 4);
-						p.setAbsorptionAmount(p.getAbsorptionAmount()+2 + psd.Encourge.get(p.getUniqueId())*0.5);
-						for (Entity e : p.getWorld().getNearbyEntities(l ,4, 5, 4))
-						{
-							if (e instanceof Player) 
-							{
-								
-								Player p1 = (Player) e;
-								if(Party.hasParty(p) && Party.hasParty(p1))	{
-								if(Party.getParty(p).equals(Party.getParty(p1)))
-									{
-										p1.setAbsorptionAmount(p1.getAbsorptionAmount()+2 +psd.Encourge.get(p.getUniqueId())*0.5);
-									}
-								}
-								continue;
-							}
-							if (e instanceof LivingEntity && (e!=p)&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
-							{
-								LivingEntity le = (LivingEntity) e;
-								atks(0.8, psd.Encourge.get(p.getUniqueId())*0.8, p, le,14);
-							}
-						}
-		                eccooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-		            }
-				}
+						});
+				bd.execute();
 			}
 		}
 	}
@@ -834,7 +638,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3 && aria.containsKey(p.getUniqueId())) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD") && !p.isSneaking() && !p.isBlocking())
+			if(weaponCheck(p) && !p.isSneaking() && !p.isBlocking())
 			{
 				ev.setCancelled(true);
                 
@@ -869,20 +673,20 @@ public class Palskills extends Pak implements Serializable, Listener {
             	scryt.put(p.getUniqueId(), task);
 
             	
-            	final Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 3).getLocation();
+            	final Location l = gettargetblock(p,3);
                 p.playNote(l, Instrument.CHIME, Note.sharp(1, Tone.C));
                 p.playNote(l, Instrument.CHIME, Note.sharp(1, Tone.G));
                 p.playNote(l, Instrument.CHIME, Note.natural(1, Tone.E));;
-        		p.getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE, l, 400, 4, 4, 4);
+        		p.getWorld().spawnParticle(Particle.ENCHANT, l, 400, 4, 4, 4);
         		p.getWorld().spawnParticle(Particle.WAX_ON, l, 400, 4, 4, 4);
-        		p.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, l, 100, 2, 2, 2);
+        		p.getWorld().spawnParticle(Particle.HAPPY_VILLAGER, l, 100, 2, 2, 2);
 				for (Entity e : p.getWorld().getNearbyEntities(l ,5, 5, 5))
 				{
 					if (e instanceof Player) 
 					{
 						if(e==p) {
 							p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 30, 2, false, false));
-							p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 30, 2, false, false));
+							p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 30, 2, false, false));
     						continue;
 						}
 						
@@ -891,7 +695,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 						if(Party.getParty(p).equals(Party.getParty(p1)))
 							{
 								p1.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 30, 2, false, false));
-								p1.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 30, 2, false, false));
+								p1.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 30, 2, false, false));
 							}
 						}
 						continue;
@@ -910,7 +714,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 	                    p.playNote(l, Instrument.CHIME, Note.natural(1, Tone.A));
 	                    p.playNote(l, Instrument.CHIME, Note.natural(1, Tone.E));
 	                    p.playNote(l, Instrument.CHIME, Note.sharp(1, Tone.C));
-	            		p.getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE, l, 400, 4, 0, 4);
+	            		p.getWorld().spawnParticle(Particle.ENCHANT, l, 400, 4, 0, 4);
 	            		p.getWorld().spawnParticle(Particle.WAX_ON, l, 400, 4, 0, 4);
 	            		p.getWorld().spawnParticle(Particle.NOTE, l, 100, 2, 2, 2);
 	    				for (Entity e : p.getWorld().getNearbyEntities(l ,5, 5, 5))
@@ -920,7 +724,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 
 	    						if(e==p) {
 									p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 30, 2, false, false));
-									p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 30, 2, false, false));
+									p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 30, 2, false, false));
 		    						continue;
 	    						}
 	    						Player p1 = (Player) e;
@@ -928,7 +732,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 	    						if(Party.getParty(p).equals(Party.getParty(p1)))
 	    							{
 									p1.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 30, 2, false, false));
-									p1.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 30, 2, false, false));
+									p1.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 30, 2, false, false));
 	    							}
 	    						}
 	    						continue;
@@ -948,9 +752,9 @@ public class Palskills extends Pak implements Serializable, Listener {
 	                    p.playNote(l, Instrument.CHIME, Note.natural(1, Tone.E));
 	                    p.playNote(l, Instrument.CHIME, Note.natural(1, Tone.B));
 	                    p.playNote(l, Instrument.CHIME, Note.sharp(1, Tone.G));
-	            		p.getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE, l, 400, 4, 0, 4);
+	            		p.getWorld().spawnParticle(Particle.ENCHANT, l, 400, 4, 0, 4);
 	            		p.getWorld().spawnParticle(Particle.WAX_ON, l, 400, 4, 0, 4);
-	            		p.getWorld().spawnParticle(Particle.SPELL, l, 100, 2, 2, 2);
+	            		p.getWorld().spawnParticle(Particle.EFFECT, l, 100, 2, 2, 2);
 	    				for (Entity e : p.getWorld().getNearbyEntities(l ,5, 5, 5))
 	    				{
 	    					if (e instanceof Player) 
@@ -958,7 +762,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 
 	    						if(e==p) {
 									p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 30, 2, false, false));
-									p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 30, 2, false, false));
+									p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 30, 2, false, false));
 		    						continue;
 	    						}
 	    						Player p1 = (Player) e;
@@ -966,7 +770,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 	    						if(Party.getParty(p).equals(Party.getParty(p1)))
 	    							{
 									p1.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 30, 2, false, false));
-									p1.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 30, 2, false, false));
+									p1.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 30, 2, false, false));
 	    							}
 	    						}
 	    						continue;
@@ -990,7 +794,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3 && scry.containsKey(p.getUniqueId())) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD") && !p.isSneaking() && !p.isBlocking())
+			if(weaponCheck(p) && !p.isSneaking() && !p.isBlocking())
 			{
 				ev.setCancelled(true);
 
@@ -1046,21 +850,21 @@ public class Palskills extends Pak implements Serializable, Listener {
 		                    p.playNote(l, Instrument.CHIME, Note.sharp(1, Tone.D));
 		                    p.playNote(l, Instrument.CHIME, Note.natural(1, Tone.B));
 		                    p.playNote(l, Instrument.CHIME, Note.sharp(1, Tone.F));
-		            		p.getWorld().spawnParticle(Particle.TOWN_AURA, l, 400, 4, 0, 4);
+		            		p.getWorld().spawnParticle(Particle.DUST_PLUME, l, 400, 4, 0, 4);
 		            		p.getWorld().spawnParticle(Particle.BLOCK_MARKER, l, 100, 4, 0, 4,Material.CHISELED_QUARTZ_BLOCK.createBlockData());
 		    				for (Entity e : l.getWorld().getNearbyEntities(l ,4, 5, 4))
 		    				{
 		    					if (e instanceof Player) 
 		    					{
 		    						if(e==p) {
-		    							p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 0, false, false));
+		    							p.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1, 0, false, false));
 			    						continue;
 		    						}
 		    						Player p1 = (Player) e;
 		    						if(Party.hasParty(p) && Party.hasParty(p1))	{
 		    						if(Party.getParty(p).equals(Party.getParty(p1)))
 		    							{
-		    							p1.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 0, false, false));
+		    							p1.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1, 0, false, false));
 		    							}
 		    						}
 		    						continue;
@@ -1097,218 +901,113 @@ public class Palskills extends Pak implements Serializable, Listener {
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3 && psd.Judgement.getOrDefault(p.getUniqueId(), 0)>=1) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD")  && p.isSneaking() && !p.isBlocking()) 
+			if(weaponCheck(p)  && p.isSneaking() && !p.isBlocking()) 
 			{
-				if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK) && !p.hasCooldown(Material.ARMOR_STAND))
+				if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK) && !p.hasCooldown(CAREFUL))
 				{
 					ev.setCancelled(true);
-					
-					if(jmcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-		            {
-		                double timer = (jmcooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d; // geting time in seconds
-		                if(!(timer < 0)) // if timer is still more then 0 or 0
-		                {
-		                	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		                		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("Ω…∆« ¿ÁªÁøÎ ¥Î±‚Ω√∞£¿Ã " + String.valueOf(Math.round(timer*10)/10.0) + "√  ≥≤æ“Ω¿¥œ¥Ÿ").create());
-		                	}
-		                	else {
-			                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Judgement").create());
-		                	}
-		                }
-		                else // if timer is done
-		                {
-		                    jmcooldown.remove(p.getName()); // removing player from HashMap
+					SkillBuilder bd = new SkillBuilder()
+							.player(p)
+							.cooldown(sec)
+							.kname("Ïã¨Ìåê")
+							.ename("Judgement")
+							.slot(3)
+							.hm(jmcooldown)
+							.skillUse(() -> {
 
-		                	if(aspgt.containsKey(p.getUniqueId())) {
-		                		Bukkit.getScheduler().cancelTask(aspgt.get(p.getUniqueId()));
-		                		aspgt.remove(p.getUniqueId());
-		                	}
+			                	if(aspgt.containsKey(p.getUniqueId())) {
+			                		Bukkit.getScheduler().cancelTask(aspgt.get(p.getUniqueId()));
+			                		aspgt.remove(p.getUniqueId());
+			                	}
 
-		    				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		    	                @Override
-		    	                public void run() {
-		    						if(Proficiency.getpro(p)>=1) {
-		    							aspg.putIfAbsent(p.getUniqueId(), 0);
-		    						}
-		    	                }
-		    	            }, 3); 
+			    				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+			    	                @Override
+			    	                public void run() {
+			    						if(Proficiency.getpro(p)>=1) {
+			    							aspg.putIfAbsent(p.getUniqueId(), 0);
+			    						}
+			    	                }
+			    	            }, 3); 
 
-		            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		    	                @Override
-		    	                public void run() {
-		    						aspg.remove(p.getUniqueId());
-		    	                }
-		    	            }, 45); 
-		                	aspgt.put(p.getUniqueId(), task);
-		                	
-		                	
+			            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+			    	                @Override
+			    	                public void run() {
+			    						aspg.remove(p.getUniqueId());
+			    	                }
+			    	            }, 45); 
+			                	aspgt.put(p.getUniqueId(), task);
+			                	
+			                	
 
-		                    Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 2).getLocation();							
-		                    p.getWorld().spawnParticle(Particle.CRIT_MAGIC, l, 400, 4, 0, 4);
-		                    final ArmorStand as = p.getWorld().spawn(l, ArmorStand.class);
-		                    as.setArms(true);
-		                    as.setLeftArmPose(new EulerAngle(0 , 0, Math.toRadians( -90 )));
-		                    as.setRightArmPose(new EulerAngle(0 , 0, Math.toRadians( 90 )));
-		                    as.setMarker(true);
-		                    as.setGravity(false);
-		                    as.setCanPickupItems(false);
-		                    as.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-		                    as.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-			                p.playSound(p.getLocation(), Sound.BLOCK_BEACON_AMBIENT, 1.0f, 2.0f);
+			                    Location l = gettargetblock(p,2);				
+			                    p.getWorld().spawnParticle(Particle.ENCHANTED_HIT, l, 400, 4, 0, 4);
+			                    final ArmorStand as = p.getWorld().spawn(l, ArmorStand.class);
+			                    as.setArms(true);
+			                    as.setLeftArmPose(new EulerAngle(0 , 0, Math.toRadians( -90 )));
+			                    as.setRightArmPose(new EulerAngle(0 , 0, Math.toRadians( 90 )));
+			                    as.setMarker(true);
+			                    as.setGravity(false);
+			                    as.setCanPickupItems(false);
+			                    as.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+			                    as.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+				                p.playSound(p.getLocation(), Sound.BLOCK_BEACON_AMBIENT, 1.0f, 2.0f);
 
-							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() {
-				        			if(judge.containsKey(p.getUniqueId())) {
-				        				if(judge.get(p.getUniqueId())<=psd.Judgement.get(p.getUniqueId())) {
-						        			judge.put(p.getUniqueId(), psd.Judgement.get(p.getUniqueId()));
-				        				}
-				        			}
-				        			judge.putIfAbsent(p.getUniqueId(), psd.Judgement.get(p.getUniqueId()));
-				        			p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 200, 1 + (int)Math.floor(psd.Judgement.get(p.getUniqueId())*0.1), false, false, true));
-				        			p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 200, 1 + (int)Math.floor(psd.Judgement.get(p.getUniqueId())*0.1), false, false, true));
-				                	for (Entity a : l.getWorld().getNearbyEntities(l, 4, 4, 4))
-									{
-										if (a instanceof Player) 
+								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+					                @Override
+					                public void run() {
+					        			if(judge.containsKey(p.getUniqueId())) {
+					        				if(judge.get(p.getUniqueId())<=psd.Judgement.get(p.getUniqueId())) {
+							        			judge.put(p.getUniqueId(), psd.Judgement.get(p.getUniqueId()));
+					        				}
+					        			}
+					        			judge.putIfAbsent(p.getUniqueId(), psd.Judgement.get(p.getUniqueId()));
+					        			p.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 200, 1 + (int)Math.floor(psd.Judgement.get(p.getUniqueId())*0.1), false, false, true));
+					        			p.addPotionEffect(new PotionEffect(PotionEffectType.HASTE, 200, 1 + (int)Math.floor(psd.Judgement.get(p.getUniqueId())*0.1), false, false, true));
+					                	for (Entity a : l.getWorld().getNearbyEntities(l, 4, 4, 4))
 										{
-											
-											Player le = (Player)a;
-											if(Party.hasParty(p)&&Party.hasParty(le)) {
-											if(Party.getParty(p).equals(Party.getParty(le))) {
-								        			le.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 200, 1 + (int)Math.floor(psd.Judgement.get(p.getUniqueId())*0.1), false, false, true));
-								        			le.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 200, 1 + (int)Math.floor(psd.Judgement.get(p.getUniqueId())*0.1), false, false, true));
-								                    if(judget.containsKey(le.getUniqueId())) {
-								                    	Bukkit.getServer().getScheduler().cancelTask(judget.get(le.getUniqueId()));
-								                    }
-								        			if(judge.containsKey(le.getUniqueId())) {
-								        				if(judge.get(le.getUniqueId())<=psd.Judgement.get(p.getUniqueId())) {
-										        			judge.put(le.getUniqueId(), psd.Judgement.get(p.getUniqueId()));
-								        				}
-								        			}
-								        			judge.putIfAbsent(le.getUniqueId(), psd.Judgement.get(p.getUniqueId()));
-													int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-										                @Override
-										                public void run() {
-															judge.remove(le.getUniqueId());
-										                }
-										            }, 210); 
-													judget.put(le.getUniqueId(), task);
+											if (a instanceof Player) 
+											{
+												
+												Player le = (Player)a;
+												if(Party.hasParty(p)&&Party.hasParty(le)) {
+												if(Party.getParty(p).equals(Party.getParty(le))) {
+									        			le.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 200, 1 + (int)Math.floor(psd.Judgement.get(p.getUniqueId())*0.1), false, false, true));
+									        			le.addPotionEffect(new PotionEffect(PotionEffectType.HASTE, 200, 1 + (int)Math.floor(psd.Judgement.get(p.getUniqueId())*0.1), false, false, true));
+									                    if(judget.containsKey(le.getUniqueId())) {
+									                    	Bukkit.getServer().getScheduler().cancelTask(judget.get(le.getUniqueId()));
+									                    }
+									        			if(judge.containsKey(le.getUniqueId())) {
+									        				if(judge.get(le.getUniqueId())<=psd.Judgement.get(p.getUniqueId())) {
+											        			judge.put(le.getUniqueId(), psd.Judgement.get(p.getUniqueId()));
+									        				}
+									        			}
+									        			judge.putIfAbsent(le.getUniqueId(), psd.Judgement.get(p.getUniqueId()));
+														int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+											                @Override
+											                public void run() {
+																judge.remove(le.getUniqueId());
+											                }
+											            }, 210); 
+														judget.put(le.getUniqueId(), task);
+													}
 												}
+												continue;
 											}
-											continue;
-										}
-										if ((!(a == p))&& a instanceof LivingEntity && a!=as&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal"))) 
-										{
-											final LivingEntity le = (LivingEntity)a;
-											atks(0.8, psd.Judgement.get(p.getUniqueId())*0.8, p, le);
-													p.getWorld().strikeLightningEffect(l);
-													p.getWorld().strikeLightningEffect(le.getLocation());
-													 
-										}
-									}
-									as.remove();
-				                }
-				            }, 20);
-							jmcooldown.put(p.getName(), System.currentTimeMillis());  
-		                }
-		            }
-		            else // if cooldown doesn't have players name in it
-		            {
-
-	                	if(aspgt.containsKey(p.getUniqueId())) {
-	                		Bukkit.getScheduler().cancelTask(aspgt.get(p.getUniqueId()));
-	                		aspgt.remove(p.getUniqueId());
-	                	}
-
-	    				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	    	                @Override
-	    	                public void run() {
-	    						if(Proficiency.getpro(p)>=1) {
-	    							aspg.putIfAbsent(p.getUniqueId(), 0);
-	    						}
-	    	                }
-	    	            }, 3); 
-
-	            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	    	                @Override
-	    	                public void run() {
-	    						aspg.remove(p.getUniqueId());
-	    	                }
-	    	            }, 45); 
-	                	aspgt.put(p.getUniqueId(), task);
-	                	
-
-	                    if(judget.containsKey(p.getUniqueId())) {
-	                    	Bukkit.getServer().getScheduler().cancelTask(judget.get(p.getUniqueId()));
-	                    }
-	                    Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 2).getLocation();							
-	                    p.getWorld().spawnParticle(Particle.CRIT_MAGIC, l, 400, 4, 0, 4);
-	                    final ArmorStand as = p.getWorld().spawn(l, ArmorStand.class);
-	                    as.setArms(true);
-	                    as.setLeftArmPose(new EulerAngle(0 , 0, Math.toRadians( -90 )));
-	                    as.setRightArmPose(new EulerAngle(0 , 0, Math.toRadians( 90 )));
-	                    as.setMarker(true);
-	                    as.setGravity(false);
-	                    as.setCanPickupItems(false);
-	                    as.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-	                    as.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-		                p.playSound(p.getLocation(), Sound.BLOCK_BEACON_AMBIENT, 1.0f, 2.0f);
-
-						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() {
-			        			if(judge.containsKey(p.getUniqueId())) {
-			        				if(judge.get(p.getUniqueId())<=psd.Judgement.get(p.getUniqueId())) {
-					        			judge.put(p.getUniqueId(), psd.Judgement.get(p.getUniqueId()));
-			        				}
-			        			}
-			        			judge.putIfAbsent(p.getUniqueId(), psd.Judgement.get(p.getUniqueId()));
-			        			p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 200, 1 + (int)Math.floor(psd.Judgement.get(p.getUniqueId())*0.1), false, false, true));
-			        			p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 200, 1 + (int)Math.floor(psd.Judgement.get(p.getUniqueId())*0.1), false, false, true));
-			                	for (Entity a : l.getWorld().getNearbyEntities(l, 4, 4, 4))
-								{
-									if (a instanceof Player) 
-									{
-										
-										Player le = (Player)a;
-										if(Party.hasParty(p)&&Party.hasParty(le)) {
-										if(Party.getParty(p).equals(Party.getParty(le))) {
-							        			le.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 200, 1 + (int)Math.floor(psd.Judgement.get(p.getUniqueId())*0.1), false, false, true));
-							        			le.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 200, 1 + (int)Math.floor(psd.Judgement.get(p.getUniqueId())*0.1), false, false, true));
-							                    if(judget.containsKey(le.getUniqueId())) {
-							                    	Bukkit.getServer().getScheduler().cancelTask(judget.get(le.getUniqueId()));
-							                    }
-							        			if(judge.containsKey(le.getUniqueId())) {
-							        				if(judge.get(le.getUniqueId())<=psd.Judgement.get(p.getUniqueId())) {
-									        			judge.put(le.getUniqueId(), psd.Judgement.get(p.getUniqueId()));
-							        				}
-							        			}
-							        			judge.putIfAbsent(le.getUniqueId(), psd.Judgement.get(p.getUniqueId()));
-												int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-									                @Override
-									                public void run() {
-														judge.remove(le.getUniqueId());
-									                }
-									            }, 210); 
-												judget.put(le.getUniqueId(), task);
+											if ((!(a == p))&& a instanceof LivingEntity && a!=as&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal"))) 
+											{
+												final LivingEntity le = (LivingEntity)a;
+												atks(0.8, psd.Judgement.get(p.getUniqueId())*0.8, p, le);
+														p.getWorld().strikeLightningEffect(l);
+														p.getWorld().strikeLightningEffect(le.getLocation());
+														 
 											}
 										}
-										continue;
-									}
-									if ((!(a == p))&& a instanceof LivingEntity && a!=as&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal"))) 
-									{
-										final LivingEntity le = (LivingEntity)a;
-										atks(0.8, psd.Judgement.get(p.getUniqueId())*0.8, p, le);
-												p.getWorld().strikeLightningEffect(l);
-												p.getWorld().strikeLightningEffect(le.getLocation());
-												 
-									}
-								}
-								as.remove();
-			                }
-			            }, 20);
-						jmcooldown.put(p.getName(), System.currentTimeMillis());  
-					}
+										as.remove();
+					                }
+					            }, 20);
+							});
+					bd.execute();
+					
 				} 
 			}
 		}
@@ -1322,9 +1021,9 @@ public class Palskills extends Pak implements Serializable, Listener {
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3&& aspg.containsKey(p.getUniqueId())) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD")  && p.isSneaking() && !p.isBlocking()) 
+			if(weaponCheck(p)  && p.isSneaking() && !p.isBlocking()) 
 			{
-				if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK) && !p.hasCooldown(Material.ARMOR_STAND))
+				if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK) && !p.hasCooldown(CAREFUL))
 				{
 					ev.setCancelled(true);
 
@@ -1380,9 +1079,9 @@ public class Palskills extends Pak implements Serializable, Listener {
 		                    p.playSound(p.getLocation(), Sound.ENTITY_GENERIC_SPLASH, 1.0f, 2f);
 		                    p.playSound(p.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1.0f, 2f);
 			        		jo.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, l, 200,1,1,1);
-			        		jo.getWorld().spawnParticle(Particle.WATER_SPLASH, l, 200,1,1,1);
+			        		jo.getWorld().spawnParticle(Particle.SPLASH, l, 200,1,1,1);
 			        		jo.getWorld().spawnParticle(Particle.FLASH, l, 50,2,2,2);
-			        		jo.getWorld().spawnParticle(Particle.BLOCK_CRACK, l, 600,4,3,4,Material.CHISELED_QUARTZ_BLOCK.createBlockData());
+			        		jo.getWorld().spawnParticle(Particle.BLOCK, l, 600,4,3,4,Material.CHISELED_QUARTZ_BLOCK.createBlockData());
 		                	for (Entity e : jo.getWorld().getNearbyEntities(l, 4, 4, 4))
 							{
 	                    		if (e instanceof Player) 
@@ -1420,9 +1119,9 @@ public class Palskills extends Pak implements Serializable, Listener {
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3 && grff.containsKey(p.getUniqueId())) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD")  && p.isSneaking() && !p.isBlocking()) 
+			if(weaponCheck(p)  && p.isSneaking() && !p.isBlocking()) 
 			{
-				if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK) && !p.hasCooldown(Material.ARMOR_STAND))
+				if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK) && !p.hasCooldown(CAREFUL))
 				{
 					ev.setCancelled(true);
 					
@@ -1450,17 +1149,18 @@ public class Palskills extends Pak implements Serializable, Listener {
 						h.setMetadata("griffon", new FixedMetadataValue(RMain.getInstance(), p.getName()));	
 						h.setMetadata("portal", new FixedMetadataValue(RMain.getInstance(), p.getName()));	
 						h.setLeashHolder(p);
-						h.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 999999, 5, false, false));
-						h.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 999999, 5, false, false));
+						h.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 999999, 5, false, false));
+						h.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 999999, 5, false, false));
 						h.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 5, false, false));
 						h.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 2, false, false));
-						h.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999, 2, false, false));
+						h.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 999999, 2, false, false));
 						h.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 999999, 0, false, false));
 						h.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 999999, 2, false, false));
 						h.addPotionEffect(new PotionEffect(PotionEffectType.CONDUIT_POWER, 999999, 2, false, false));
 						h.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 999999, 2, false, false));
-						h.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 999999, 2, false, false));
+						h.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 999999, 2, false, false));
 						
+						h.setJumpStrength(2);
 						h.setInvulnerable(true);
 						h.setCollidable(false);
 						h.setColor(Color.WHITE);
@@ -1634,34 +1334,20 @@ public class Palskills extends Pak implements Serializable, Listener {
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3 && psd.Thrust.getOrDefault(p.getUniqueId(), 0)>=1) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD")&& !p.isSneaking() && p.isBlocking())
+			if(weaponCheck(p)&& !p.isSneaking() && p.isBlocking())
 			{
 				ev.setCancelled(true);
-				
-					if(thcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-		            {
-		                double timer = (thcooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d; // geting time in seconds
-		                if(!(timer < 0)) // if timer is still more then 0 or 0
-		                {
-		                	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		                		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("¡¯æ– ¿ÁªÁøÎ ¥Î±‚Ω√∞£¿Ã " + String.valueOf(Math.round(timer*10)/10.0) + "√  ≥≤æ“Ω¿¥œ¥Ÿ").create());
-		                	}
-		                	else {
-			                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Thrust").create());
-		                	}
-		                }
-		                else // if timer is done
-		                {
-		                    thcooldown.remove(p.getName()); // removing player from HashMap
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(sec)
+						.kname("ÏßÑÏïï")
+						.ename("Thrust")
+						.slot(4)
+						.hm(thcooldown)
+						.skillUse(() -> {
 		                    thrust(p);
-							thcooldown.put(p.getName(), System.currentTimeMillis());  
-		                }
-		            }
-		            else // if cooldown doesn't have players name in it
-		            {
-	                    thrust(p);
-						thcooldown.put(p.getName(), System.currentTimeMillis());  
-					}
+						});
+				bd.execute();
 			}
 		}
 	}
@@ -1671,7 +1357,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 		Player p = ev.getPlayer();
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3 && hlsm.containsKey(p.getUniqueId())) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD")&& !p.isSneaking() && p.isBlocking())
+			if(weaponCheck(p)&& !p.isSneaking() && p.isBlocking())
 			{
 				ev.setCancelled(true);
 				
@@ -1706,7 +1392,7 @@ public class Palskills extends Pak implements Serializable, Listener {
             	pltlt.put(p.getUniqueId(), task);
             	
             	
-                Location tl = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 1).getLocation();
+                Location tl = gettargetblock(p,3);
                 
                 ArrayList<Location> line = new ArrayList<Location>();
                 AtomicInteger j = new AtomicInteger();
@@ -1723,7 +1409,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 		                public void run() 
 		                {
 			        		p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l,10,1,1,1,0);
-			        		p.getWorld().spawnParticle(Particle.BLOCK_CRACK, l,10,1,1,1,0,Material.CHISELED_QUARTZ_BLOCK.createBlockData());	    
+			        		p.getWorld().spawnParticle(Particle.BLOCK, l,10,1,1,1,0,Material.CHISELED_QUARTZ_BLOCK.createBlockData());	    
 			        		p.getWorld().spawnParticle(Particle.WHITE_ASH, l,10,2,2,2,0.1);
 		                }
 					}, j.incrementAndGet()/900); 
@@ -1768,7 +1454,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 		Player p = ev.getPlayer();
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3&&pltl.containsKey(p.getUniqueId())) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD")&& !p.isSneaking() && p.isBlocking())
+			if(weaponCheck(p)&& !p.isSneaking() && p.isBlocking())
 			{
 				ev.setCancelled(true);
 
@@ -1808,8 +1494,8 @@ public class Palskills extends Pak implements Serializable, Listener {
 		                public void run() {
 		                    p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_PLACE, 0.3f, 0.78f);
 		                    p.playSound(p.getLocation(), Sound.BLOCK_COPPER_BREAK, 1.0f, 0.3f); 
-		            		p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl,100,1,1,1, Material.END_ROD.createBlockData());	   
-		            		p.getWorld().spawnParticle(Particle.ITEM_CRACK, tl,100,1,1,1, new ItemStack(Material.END_ROD));	  
+		            		p.getWorld().spawnParticle(Particle.BLOCK, tl,100,1,1,1, Material.END_ROD.createBlockData());	   
+		            		p.getWorld().spawnParticle(Particle.ITEM, tl,100,1,1,1, new ItemStack(Material.END_ROD));	  
 		    				for (Entity a : p.getWorld().getNearbyEntities(tl, 4, 4, 4))
 		    				{
 		                		if (a instanceof Player) 
@@ -1875,43 +1561,26 @@ public class Palskills extends Pak implements Serializable, Listener {
 			if(ClassData.pc.get(p.getUniqueId()) == 3 && psd.Punish.getOrDefault(p.getUniqueId(), 0)>=1 && (!griffon.containsKey(p.getUniqueId()) || (griffon.containsKey(p.getUniqueId()) && p.getVehicle() != griffon.get(p.getUniqueId())))) {				
 				double sec =5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 				if(p.getAttackCooldown()==1) 
-				{	
-				
-					if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD")&& !(p.hasCooldown(Material.YELLOW_TERRACOTTA)) && !(p.isSneaking()) && !(p.isOnGround()) && !(p.hasCooldown(Material.YELLOW_TERRACOTTA)))
+				{
+					
+					if(weaponCheck(p)&& !(p.hasCooldown(Material.YELLOW_TERRACOTTA)) && !(p.isSneaking()) && !(p.isOnGround()) && !(p.hasCooldown(Material.YELLOW_TERRACOTTA)))
 						{
-						if(pncooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-				        {
-				            double timer = (pncooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d; // geting time in seconds
-				            if(!(timer < 0)) // if timer is still more then 0 or 0
-				            {
-				            	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				            		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("¬°π˙ ¿ÁªÁøÎ ¥Î±‚Ω√∞£¿Ã " + String.valueOf(Math.round(timer*10)/10.0) + "√  ≥≤æ“Ω¿¥œ¥Ÿ").create());
-				            	}
-				            	else {
-					            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Punish").create());
-				            	}
-					        }
-				            else // if timer is done
-				            {
-				                pncooldown.remove(p.getName()); // removing player from HashMap
-								d.setDamage(d.getDamage()*1.5 + psd.Punish.get(p.getUniqueId())*1.5 + player_damage.get(p.getName())*0.5);
-								if(Proficiency.getpro(p) >=1) {
-									Holding.superholding(p, le, 20l);
-								}
-			                	p.getWorld().strikeLightningEffect(le.getLocation());
-					            pncooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-				            }
-				        }
-				        else // if cooldown doesn't have players name in it
-				        {
-
-							d.setDamage(d.getDamage()*1.5 + psd.Punish.get(p.getUniqueId())*1.5 + player_damage.get(p.getName())*0.5);
-							if(Proficiency.getpro(p) >=1) {
-								Holding.superholding(p, le, 20l);
-							}
-		                	p.getWorld().strikeLightningEffect(le.getLocation());
-				            pncooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-				        }
+						SkillBuilder bd = new SkillBuilder()
+								.player(p)
+								.cooldown(sec)
+								.kname("ÏßïÎ≤å")
+								.ename("Punish")
+								.slot(5)
+								.hm(pncooldown)
+								.skillUse(() -> {
+									d.setDamage(d.getDamage()*1.5 + psd.Punish.get(p.getUniqueId())*1.5 + player_damage.get(p.getName())*0.5);
+									if(Proficiency.getpro(p) >=1) {
+										Holding.superholding(p, le, 20l);
+									}
+				                	p.getWorld().strikeLightningEffect(le.getLocation());
+								});
+						bd.execute();
+						
 						}
 				}
 			}
@@ -1930,106 +1599,59 @@ public class Palskills extends Pak implements Serializable, Listener {
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3 && psd.Punish.getOrDefault(p.getUniqueId(), 0)>=1 && griffon.containsKey(p.getUniqueId()) && p.getVehicle() == griffon.get(p.getUniqueId())) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD")  && !p.isSneaking() && !p.isBlocking() && !p.isOnGround()) 
+			if(weaponCheck(p)  && !p.isSneaking() && !p.isBlocking() && !p.isOnGround()) 
 			{
-				if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK) && !p.hasCooldown(Material.ARMOR_STAND))
+				if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK) && !p.hasCooldown(CAREFUL))
 				{
 					ev.setCancelled(true);
-					
-					if(pncooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-		            {
-		                double timer = (pncooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d; // geting time in seconds
-		                if(!(timer < 0)) // if timer is still more then 0 or 0
-		                {
-		                	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		                		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("¬°π˙ ¿ÁªÁøÎ ¥Î±‚Ω√∞£¿Ã " + String.valueOf(Math.round(timer*10)/10.0) + "√  ≥≤æ“Ω¿¥œ¥Ÿ").create());
-		                	}
-		                	else {
-			                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Punish").create());
-		                	}
-		                }
-		                else // if timer is done
-		                {
-		                	pncooldown.remove(p.getName()); // removing player from HashMap
-			                Location l = p.getEyeLocation().add(p.getEyeLocation().clone().getDirection().normalize().multiply(1.5));
-			                AtomicInteger j = new AtomicInteger();
-			                
-		    				for(int co = 0 ; co<3; co++) {
-		    					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		    		                @Override
-		    		                public void run() {
-		    		                	l.add(l.clone().getDirection().multiply(j.incrementAndGet()));
-		    		                	
-		    		                	l.getWorld().strikeLightningEffect(l);
-		    		                	l.getWorld().strikeLightningEffect(l.clone().add(l.clone().getDirection().rotateAroundY(Math.PI/2).normalize().multiply(2)));
-		    		                	l.getWorld().strikeLightningEffect(l.clone().add(l.clone().getDirection().rotateAroundY(-Math.PI/2).normalize().multiply(2)));
-		    		    				for (Entity e : l.getWorld().getNearbyEntities(l ,4, 5, 4))
-		    		    				{
-		    		    					if (e instanceof Player) 
-		    		    					{
-		    		    						
-		    		    						Player p1 = (Player) e;
-		    		    						if(Party.hasParty(p) && Party.hasParty(p1))	{
-		    		    						if(Party.getParty(p).equals(Party.getParty(p1)))
-		    		    							{
-		    		    							p1.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 0, false, false));
-		    		    							}
-		    		    						}
-		    		    						continue;
-		    		    					}
-		    		    					if (e instanceof LivingEntity && (e!=p)&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
-		    		    					{
-		    		    						LivingEntity le = (LivingEntity) e;
-		    		    						atk1(0.8*(1+ psd.Punish.get(p.getUniqueId())*0.05),p, le,9);
-												Holding.superholding(p, le, 20l);
-		    		    					}
-		    		    				}
-		    						}
-		    		            }, co*10); 
-		    				}
-							pncooldown.put(p.getName(), System.currentTimeMillis());  
-		                }
-		            }
-		            else // if cooldown doesn't have players name in it
-		            {
-		                Location l = p.getEyeLocation().add(p.getEyeLocation().clone().getDirection().normalize().multiply(1.5));
 
-		                AtomicInteger j = new AtomicInteger();
-		                
-	    				for(int co = 0 ; co<3; co++) {
-	    					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	    		                @Override
-	    		                public void run() {
-	    		                	l.add(l.clone().getDirection().multiply(j.incrementAndGet()));
-	    		                	l.getWorld().strikeLightningEffect(l);
-	    		                	l.getWorld().strikeLightningEffect(l.clone().add(l.clone().getDirection().rotateAroundY(Math.PI/2).normalize().multiply(2)));
-	    		                	l.getWorld().strikeLightningEffect(l.clone().add(l.clone().getDirection().rotateAroundY(-Math.PI/2).normalize().multiply(2)));
-	    		    				for (Entity e : l.getWorld().getNearbyEntities(l ,4, 5, 4))
-	    		    				{
-	    		    					if (e instanceof Player) 
-	    		    					{
-	    		    						
-	    		    						Player p1 = (Player) e;
-	    		    						if(Party.hasParty(p) && Party.hasParty(p1))	{
-	    		    						if(Party.getParty(p).equals(Party.getParty(p1)))
-	    		    							{
-	    		    							p1.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 0, false, false));
-	    		    							}
-	    		    						}
-	    		    						continue;
-	    		    					}
-	    		    					if (e instanceof LivingEntity && (e!=p)&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
-	    		    					{
-	    		    						LivingEntity le = (LivingEntity) e;
-	    		    						atk1(0.8*(1+ psd.Punish.get(p.getUniqueId())*0.05),p, le,9);
-											Holding.superholding(p, le, 20l);
-	    		    					}
-	    		    				}
-	    						}
-	    		            }, co*10); 
-	    				}
-						pncooldown.put(p.getName(), System.currentTimeMillis());  
-					}
+					SkillBuilder bd = new SkillBuilder()
+							.player(p)
+							.cooldown(sec)
+							.kname("ÏßïÎ≤å")
+							.ename("Punish")
+							.slot(5)
+							.hm(pncooldown)
+							.skillUse(() -> {
+				                Location l = p.getEyeLocation().add(p.getEyeLocation().clone().getDirection().normalize().multiply(1.5));
+				                AtomicInteger j = new AtomicInteger();
+				                
+			    				for(int co = 0 ; co<3; co++) {
+			    					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+			    		                @Override
+			    		                public void run() {
+			    		                	l.add(l.clone().getDirection().multiply(j.incrementAndGet()));
+			    		                	
+			    		                	l.getWorld().strikeLightningEffect(l);
+			    		                	l.getWorld().strikeLightningEffect(l.clone().add(l.clone().getDirection().rotateAroundY(Math.PI/2).normalize().multiply(2)));
+			    		                	l.getWorld().strikeLightningEffect(l.clone().add(l.clone().getDirection().rotateAroundY(-Math.PI/2).normalize().multiply(2)));
+			    		    				for (Entity e : l.getWorld().getNearbyEntities(l ,4, 5, 4))
+			    		    				{
+			    		    					if (e instanceof Player) 
+			    		    					{
+			    		    						
+			    		    						Player p1 = (Player) e;
+			    		    						if(Party.hasParty(p) && Party.hasParty(p1))	{
+			    		    						if(Party.getParty(p).equals(Party.getParty(p1)))
+			    		    							{
+			    		    							p1.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1, 0, false, false));
+			    		    							}
+			    		    						}
+			    		    						continue;
+			    		    					}
+			    		    					if (e instanceof LivingEntity && (e!=p)&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
+			    		    					{
+			    		    						LivingEntity le = (LivingEntity) e;
+			    		    						atk1(0.8*(1+ psd.Punish.get(p.getUniqueId())*0.05),p, le,9);
+													Holding.superholding(p, le, 20l);
+			    		    					}
+			    		    				}
+			    						}
+			    		            }, co*10); 
+			    				}
+							});
+					bd.execute();
+					
 				} 
 			}
 		}
@@ -2037,113 +1659,65 @@ public class Palskills extends Pak implements Serializable, Listener {
 
 	
 	
-	
-	public void ULT(PlayerDropItemEvent ev)        
+
+	public void ULT(PlayerItemHeldEvent ev)
     {
 		Player p = (Player)ev.getPlayer();
-		final Location l = p.getLocation();
-		Item i = ev.getItemDrop();
-		ItemStack is = i.getItemStack();
-	    
+		if(!isCombat(p)) {
+			return;
+		}
 		
 		
-		if(ClassData.pc.get(p.getUniqueId()) == 3 && (is.getType().name().contains("_AXE")) && p.isSneaking() &&Proficiency.getpro(p)>=1)
+		if(ClassData.pc.get(p.getUniqueId()) == 3&& ev.getNewSlot()==3  && weaponCheck(p)  && p.isSneaking() &&Proficiency.getpro(p)>=1)
 			{
 				ev.setCancelled(true);
-				p.setCooldown(Material.ARMOR_STAND, 1);
-				if(aultcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-	            {
-	                double timer = (aultcooldown.get(p.getName())/1000d + 50/Proficiency.getpro(p)*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d)) - System.currentTimeMillis()/1000d; // geting time in seconds
-	                if(!(timer < 0)) // if timer is still more then 0 or 0
-	                {
-	                	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("√÷»ƒ¿« Ω…∆« ¿ÁªÁøÎ ¥Î±‚Ω√∞£¿Ã " + String.valueOf(Math.round(timer*10)/10.0) + "√  ≥≤æ“Ω¿¥œ¥Ÿ").create());
-	                	}
-	                	else {
-		                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use FinalJudgement").create());
-	                	}
-		            }
-	                else // if timer is done
-	                {
-	                    aultcooldown.remove(p.getName()); // removing player from HashMap
-	                    
-	                    p.playSound(p.getLocation(), Sound.AMBIENT_CRIMSON_FOREST_ADDITIONS, 1.0f, 0.5f);
-	                    p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_USE, 1.0f, 0f);
-						p.getWorld().spawnParticle(Particle.SNOW_SHOVEL, p.getLocation(), 500, 10,1,10);
-						p.getWorld().spawnParticle(Particle.TOTEM, p.getLocation(), 500, 4,1,4);
-						
-						for(int co = 0 ; co<10; co++) {
-							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() {
-									for (Entity e : p.getNearbyEntities(10, 10, 10))
-									{
-			                    		if (e instanceof Player) 
+				p.setCooldown(CAREFUL, 1);
+				ev.setCancelled(true);
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(56/Proficiency.getpro(p)*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d))
+						.kname("ÏµúÌõÑÏùò Ïã¨Ìåê")
+						.ename("FinalJudgement")
+						.slot(6)
+						.hm(aultcooldown)
+						.skillUse(() -> {
+
+		                    p.playSound(p.getLocation(), Sound.AMBIENT_CRIMSON_FOREST_ADDITIONS, 1.0f, 0.5f);
+		                    p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_USE, 1.0f, 0f);
+							p.getWorld().spawnParticle(Particle.ITEM_SNOWBALL, p.getLocation(), 500, 10,1,10);
+							p.getWorld().spawnParticle(Particle.TOTEM_OF_UNDYING, p.getLocation(), 500, 4,1,4);
+							
+							for(int co = 0 ; co<10; co++) {
+								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+					                @Override
+					                public void run() {
+										for (Entity e : p.getNearbyEntities(10, 10, 10))
 										{
-											Player p1 = (Player) e;
-											if(Party.hasParty(p) && Party.hasParty(p1))	{
-											if(Party.getParty(p).equals(Party.getParty(p1)))
-												{
-												continue;
+				                    		if (e instanceof Player) 
+											{
+												Player p1 = (Player) e;
+												if(Party.hasParty(p) && Party.hasParty(p1))	{
+												if(Party.getParty(p).equals(Party.getParty(p1)))
+													{
+													continue;
+													}
 												}
 											}
-										}
-										if ((e!=p)&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
-										{
-											final LivingEntity le = (LivingEntity)e; 	
-						                	Holding.superholding(p, le, 15l);
-											atk1(1.5, p, le,9);
-											le.getWorld().strikeLightningEffect(le.getLocation());
-											le.getWorld().strikeLightningEffect(l);
-										}
-									}
-								}
-				            }, co*10+10); 
-						}
-						
-		                aultcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-		            
-	                }
-	            }
-	            else // if cooldown doesn't have players name in it
-	            {
-
-                    
-                    p.playSound(p.getLocation(), Sound.AMBIENT_CRIMSON_FOREST_ADDITIONS, 1.0f, 0.5f);
-                    p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_USE, 1.0f, 0f);
-					p.getWorld().spawnParticle(Particle.SNOW_SHOVEL, p.getLocation(), 500, 10,1,10);
-					p.getWorld().spawnParticle(Particle.TOTEM, p.getLocation(), 500, 4,1,4);
-					
-					for(int co = 0 ; co<10; co++) {
-						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() {
-								for (Entity e : p.getNearbyEntities(10, 10, 10))
-								{
-		                    		if (e instanceof Player) 
-									{
-										Player p1 = (Player) e;
-										if(Party.hasParty(p) && Party.hasParty(p1))	{
-										if(Party.getParty(p).equals(Party.getParty(p1)))
+											if ((e!=p)&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
 											{
-											continue;
+												final LivingEntity le = (LivingEntity)e; 	
+							                	Holding.superholding(p, le, 15l);
+												atk1(1.5, p, le,9);
+												le.getWorld().strikeLightningEffect(le.getLocation());
 											}
 										}
 									}
-									if ((e!=p)&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
-									{
-										final LivingEntity le = (LivingEntity)e; 	
-					                	Holding.superholding(p, le, 15l);
-										atk1(1.5, p, le,9);
-										le.getWorld().strikeLightningEffect(le.getLocation());
-										le.getWorld().strikeLightningEffect(l);
-									}
-								}
+					            }, co*10+10); 
 							}
-			            }, co*10+10); 
-					}
-	                aultcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-	            }
+							
+						});
+				bd.execute();
+	            
 			}
     }
 	
@@ -2160,7 +1734,7 @@ public class Palskills extends Pak implements Serializable, Listener {
     	w.spawnParticle(Particle.FLASH, il, 30,2,2,2);
         line.forEach(l -> {
         	w.spawnParticle(Particle.FLASH, l, 30,1,1,1);
-        	w.spawnParticle(Particle.BLOCK_DUST, l, 200,0.1,0.1,0.1,0, Material.QUARTZ_BLOCK.createBlockData());
+        	w.spawnParticle(Particle.FALLING_DUST, l, 200,0.1,0.1,0.1,0, Material.QUARTZ_BLOCK.createBlockData());
         	w.spawnParticle(Particle.WHITE_ASH, l, 200,1,1,1,0.05);
         });
 	}
@@ -2227,14 +1801,14 @@ public class Palskills extends Pak implements Serializable, Listener {
                     p.playSound(p.getLocation(), Sound.PARTICLE_SOUL_ESCAPE, 0.4f, 1.8f);
                 	cross.forEach(cl -> {
 	    				cl.getWorld().spawnParticle(Particle.CLOUD, cl, 100, 0.5,0.5,0.5,0);
-	    				cl.getWorld().spawnParticle(Particle.TOWN_AURA, cl, 100, 0.5,0.5,0.5,0);
-	    				cl.getWorld().spawnParticle(Particle.BLOCK_CRACK, cl, 100, 0.5,0.5,0.5,0, Material.WHITE_GLAZED_TERRACOTTA.createBlockData());
-	    				cl.getWorld().spawnParticle(Particle.BLOCK_CRACK, cl, 100, 0.5,0.5,0.5,0, Material.CHISELED_QUARTZ_BLOCK.createBlockData());
+	    				cl.getWorld().spawnParticle(Particle.DUST_PLUME, cl, 100, 0.5,0.5,0.5,0);
+	    				cl.getWorld().spawnParticle(Particle.BLOCK, cl, 100, 0.5,0.5,0.5,0, Material.WHITE_GLAZED_TERRACOTTA.createBlockData());
+	    				cl.getWorld().spawnParticle(Particle.BLOCK, cl, 100, 0.5,0.5,0.5,0, Material.CHISELED_QUARTZ_BLOCK.createBlockData());
                 	});
 					for (Entity e : tl.getWorld().getNearbyEntities(tl,10, 10, 10))
 					{
 						if(e==p) {
-							p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 1, false, false));
+							p.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1, 1, false, false));
     						continue;
 						}
                 		if (e instanceof Player) 
@@ -2243,7 +1817,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 							if(Party.hasParty(p) && Party.hasParty(p1))	{
 							if(Party.getParty(p).equals(Party.getParty(p1)))
 								{
-									p1.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 1, false, false));
+									p1.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1, 1, false, false));
 									continue;
 								}
 							}
@@ -2301,47 +1875,30 @@ public class Palskills extends Pak implements Serializable, Listener {
 		}
 	}
 	
+
 	
-	public void ULT2(PlayerDropItemEvent ev)        
-    {
+	public void ULT2(PlayerItemHeldEvent ev)
+	{
 		Player p = (Player)ev.getPlayer();
-		Item it = ev.getItemDrop();
-		ItemStack is = it.getItemStack();
-	    
+		if(!isCombat(p)) {
+			return;
+		}
 		
-		
-		if(ClassData.pc.get(p.getUniqueId()) == 3 && (is.getType().name().contains("_AXE")) && !p.isSneaking()&& p.isSprinting() &&Proficiency.getpro(p)>=2)
+		if(ClassData.pc.get(p.getUniqueId()) == 3 && ev.getNewSlot()==4  &&weaponCheck(p) && p.isSneaking() &&Proficiency.getpro(p)>=2)
 			{
 				ev.setCancelled(true);
-				p.setCooldown(Material.ARMOR_STAND, 1);
-				if(ault2cooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-	            {
-	                double timer = (ault2cooldown.get(p.getName())/1000d + 65*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d)) - System.currentTimeMillis()/1000d; // geting time in seconds
-	                if(!(timer < 0)) // if timer is still more then 0 or 0
-	                {
-	                	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("¬¸»∏ ¿ÁªÁøÎ ¥Î±‚Ω√∞£¿Ã " + String.valueOf(Math.round(timer*10)/10.0) + "√  ≥≤æ“Ω¿¥œ¥Ÿ").create());
-	                	}
-	                	else {
-		                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Penance").create());
-	                	}
-		            }
-	                else // if timer is done
-	                {
-	                    ault2cooldown.remove(p.getName()); // removing player from HashMap
-
-	                    ult2(p);
-		                ault2cooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-		            
-	                }
-	            }
-	            else // if cooldown doesn't have players name in it
-	            {
-
-                    ult2(p);
-
-	                ault2cooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-	            }
+				p.setCooldown(CAREFUL, 1);
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(65*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d))
+						.kname("Ï∞∏Ìöå")
+						.ename("Penance")
+						.slot(7)
+						.hm(ault2cooldown)
+						.skillUse(() -> {
+		                    ult2(p);
+						});
+				bd.execute();
 			}
     }
 	
@@ -2585,7 +2142,7 @@ public class Palskills extends Pak implements Serializable, Listener {
         					p.playSound(pr.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_DEPLETE, 0.35f, 1.76f);
         					pw.spawnParticle(Particle.FLASH, pr.getLocation(), 1);
         					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-        			            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.BLUE +"[ºˆ»£¿« πÊ∫Æ]").create());
+        			            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.BLUE +"[ÏàòÌò∏Ïùò Î∞©Î≤Ω]").create());
         					}
         					else {
         			            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.BLUE +"[Barrier of Tutelary]").create());
@@ -2652,7 +2209,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 			pw.spawnParticle(Particle.FLASH, tar.getLocation(), 1);
 			par.playSound(par.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_DEPLETE, 0.35f, 1.76f);
 			if(par.getLocale().equalsIgnoreCase("ko_kr")) {
-	            par.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.BLUE +"[ºˆ»£¿« πÊ∫Æ]").create());
+	            par.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.BLUE +"[ÏàòÌò∏Ïùò Î∞©Î≤Ω]").create());
 			}
 			else {
 	            par.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.BLUE +"[Barrier of Tutelary]").create());
@@ -2668,7 +2225,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && p.getInventory().getItemInOffHand().getType().name().contains("SHIELD")) 
+			if(weaponCheck(p)) 
 			{
 				if((ac == Action.RIGHT_CLICK_AIR || ac == Action.RIGHT_CLICK_BLOCK))
 				{
@@ -2700,7 +2257,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 						par.playSound(par.getLocation(), Sound.ITEM_SHIELD_BLOCK, 0.6f, 1.46f);
 						d.setDamage(d.getDamage()*0.5);
 						if(par.getLocale().equalsIgnoreCase("ko_kr")) {
-		                    par.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.YELLOW +"[∫∏»£]").create());
+		                    par.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.YELLOW +"[Î≥¥Ìò∏]").create());
 						}
 						else {
 		                    par.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.YELLOW +"[Protection]").create());
@@ -2721,7 +2278,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 				d.setDamage(d.getDamage()*0.5);
 				par.playSound(par.getLocation(), Sound.ITEM_SHIELD_BLOCK, 0.6f, 1.46f);
 				if(par.getLocale().equalsIgnoreCase("ko_kr")) {
-                    par.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.YELLOW +"[∫∏»£]").create());
+                    par.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.YELLOW +"[Î≥¥Ìò∏]").create());
 				}
 				else {
                     par.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.YELLOW +"[Protection]").create());
@@ -2821,6 +2378,3 @@ public class Palskills extends Pak implements Serializable, Listener {
 	
 
 }
-
-
-

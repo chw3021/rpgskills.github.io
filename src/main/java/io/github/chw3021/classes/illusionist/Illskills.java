@@ -224,7 +224,7 @@ public class Illskills extends Pak implements Serializable {
 								public void run()
 								{
 									p.playSound(p.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f);
-									jo.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, l, 1,1,1,1);
+									jo.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, l, 1,1,1,1);
 									for (Entity e : jo.getWorld().getNearbyEntities(l, 4, 4, 4))
 									{
 										if (e instanceof Player)
@@ -598,7 +598,7 @@ public class Illskills extends Pak implements Serializable {
 									if(Bukkit.getEntity(gm.get(p.getUniqueId())) != null) {
 										ArmorStand as = (ArmorStand) Bukkit.getEntity(gm.get(p.getUniqueId()));
 
-										as.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, as.getLocation(), 2, 1, 1, 1);
+										as.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, as.getLocation(), 2, 1, 1, 1);
 										p.playSound(p.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f);
 
 										for (Entity e : as.getWorld().getNearbyEntities(as.getLocation(), 4, 5, 4))
@@ -820,9 +820,9 @@ public class Illskills extends Pak implements Serializable {
 		final World w = el.getWorld();
 
 		line.forEach(l -> {
-			w.spawnParticle(Particle.SPELL, l, 1);
-			w.spawnParticle(Particle.TOWN_AURA, l, 1);
-			w.spawnParticle(Particle.SPELL_INSTANT, l, 1);
+			w.spawnParticle(Particle.EFFECT, l, 1);
+			w.spawnParticle(Particle.TRIAL_OMEN, l, 1);
+			w.spawnParticle(Particle.INSTANT_EFFECT, l, 1);
 
 		});
 	}
@@ -886,8 +886,8 @@ public class Illskills extends Pak implements Serializable {
 								p.damage(p.getHealth()*0.4);
 								Holding.invur(p, 2l);
 								p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 30, 4, false, false));
-								p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20, 2, false, false));
-								p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 80, 80, false, false));
+								p.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 20, 2, false, false));
+								p.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 80, 80, false, false));
 								dit(p.getEyeLocation().clone(),p);
 
 								for (Entity a : p.getWorld().getNearbyEntities(p.getLocation(), 4, 4, 4))
@@ -906,7 +906,7 @@ public class Illskills extends Pak implements Serializable {
 									{
 										LivingEntity le = (LivingEntity)a;
 										atk1(1.626*(1+isd.Distortion.get(p.getUniqueId())*0.0835), p, le);
-										le.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 180, 100, false, false));
+										le.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 180, 100, false, false));
 
 
 									}
@@ -1021,7 +1021,7 @@ public class Illskills extends Pak implements Serializable {
 					les.forEach(e -> {
 						LivingEntity le = (LivingEntity)e;
 						atk1(1.1*(1+isd.Distortion.get(p.getUniqueId())*0.05), p, le);
-						le.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 180, 100, false, false));
+						le.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 180, 100, false, false));
 
 						if(j.get()+1>=lesl.size()) {
 							le.teleport(lesl.get(0));
@@ -1111,7 +1111,7 @@ public class Illskills extends Pak implements Serializable {
 					les.forEach(e -> {
 						LivingEntity le = (LivingEntity)e;
 						atk1(1.1*(1+isd.Distortion.get(p.getUniqueId())*0.05), p, le);
-						le.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 180, 100, false, false));
+						le.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 180, 100, false, false));
 						if(le instanceof Mob) {
 							Mob m = (Mob)le;
 							if(les.iterator().hasNext()) {
@@ -1220,7 +1220,7 @@ public class Illskills extends Pak implements Serializable {
 									p.setCooldown(CAREFUL, 2);
 									p.swingMainHand();
 									p.swingOffHand();
-									p.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, dam, 2, 1, 1, 1);
+									p.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, dam, 2, 1, 1, 1);
 									p.playSound(p.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f);
 									p.teleport(l);
 									p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 40, 1, false, false));
@@ -1315,7 +1315,7 @@ public class Illskills extends Pak implements Serializable {
 					}, 35);
 					pentrt.put(p.getUniqueId(), task);
 
-					Firework fr = (Firework) p.getWorld().spawnEntity(dam, EntityType.FIREWORK);
+					Firework fr = (Firework) p.getWorld().spawnEntity(dam, EntityType.FIREWORK_ROCKET);
 					fr.setShotAtAngle(true);
 					fr.setVelocity(fr.getVelocity().zero());
 					fr.setShooter(p);
@@ -1332,8 +1332,8 @@ public class Illskills extends Pak implements Serializable {
 					fr.setFireworkMeta(meta);
 					fr.detonate();
 
-					p.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, dam, 2, 1, 1, 1);
-					p.getWorld().spawnParticle(Particle.SPELL, dam, 200, 2, 2, 2);
+					p.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, dam, 2, 1, 1, 1);
+					p.getWorld().spawnParticle(Particle.EFFECT, dam, 200, 2, 2, 2);
 					p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 0.6f, 0.6f);
 					p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LARGE_BLAST, 0.6f, 1.1f);
 					p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 40, 1, false, false));
@@ -1411,8 +1411,8 @@ public class Illskills extends Pak implements Serializable {
 							public void run()
 							{
 								p.playSound(p.getLocation(), Sound.ENTITY_FOX_TELEPORT, 0.12f, 2f);
-								p.getWorld().spawnParticle(Particle.SPELL_MOB, l, 10,1,1,1);
-								p.getWorld().spawnParticle(Particle.SPELL_WITCH, l, 10,2,2,2);
+								p.getWorld().spawnParticle(Particle.ENTITY_EFFECT, l, 10,1,1,1,Color.FUCHSIA);
+								p.getWorld().spawnParticle(Particle.WITCH, l, 10,2,2,2);
 								p.getWorld().spawnParticle(Particle.PORTAL, l, 10,2,2,2);
 								p.teleport(l);
 								for(Entity e : l.getWorld().getNearbyEntities(l,4, 4.5, 4)) {
@@ -1571,7 +1571,7 @@ public class Illskills extends Pak implements Serializable {
 								public void run()
 								{
 
-									Firework fr = (Firework) p.getWorld().spawnEntity(l, EntityType.FIREWORK);
+									Firework fr = (Firework) p.getWorld().spawnEntity(l, EntityType.FIREWORK_ROCKET);
 									fr.setShotAtAngle(true);
 									fr.setVelocity(BlockFace.UP.getDirection().normalize());
 									fr.setShooter(p);
@@ -1639,7 +1639,7 @@ public class Illskills extends Pak implements Serializable {
 											l.getWorld().spawnParticle(Particle.DUST_COLOR_TRANSITION, l, 3,0.1,0.1,0.1, new Particle.DustTransition(rc1, rc2, 2));
 											if(finstack.getOrDefault(p.getUniqueId(), 0)>=8) {
 
-												Firework fr = (Firework) p.getWorld().spawnEntity(l, EntityType.FIREWORK);
+												Firework fr = (Firework) p.getWorld().spawnEntity(l, EntityType.FIREWORK_ROCKET);
 												fr.setShotAtAngle(true);
 												fr.setVelocity(BlockFace.UP.getDirection().normalize());
 												fr.setShooter(p);

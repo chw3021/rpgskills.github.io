@@ -25,7 +25,7 @@ public class SkillsGui {
 		items.setDisplayName(display);
 		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+		items.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 		List<String> input = new ArrayList<>();
 		input.add(ChatColor.AQUA + "LV." + lv);
 		input.add("");
@@ -54,7 +54,7 @@ public class SkillsGui {
 		items.setDisplayName(display);
 		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+		items.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 		List<String> input = new ArrayList<>();
 		input.addAll(Lore);
 		input.addAll(des(inv));
@@ -79,7 +79,7 @@ public class SkillsGui {
 		items.setDisplayName(display);
 		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+		items.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 		List<String> input = new ArrayList<>();
 
 		if(Lore.stream().anyMatch(s -> s.contains("Master"))) {
@@ -104,7 +104,7 @@ public class SkillsGui {
 		items.setDisplayName(display);
 		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+		items.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 		List<String> input = new ArrayList<>();
 
 		if(Lore.stream().anyMatch(s -> s.contains("Master"))) {
@@ -132,7 +132,7 @@ public class SkillsGui {
 		items.setDisplayName(display);
 		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+		items.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 		List<String> input = new ArrayList<>();
 		input.addAll(Lore);
 		input.addAll(des(inv));
@@ -151,7 +151,7 @@ public class SkillsGui {
 		items.setDisplayName(display);
 		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+		items.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 		List<String> input = new ArrayList<>();
 		input.add(ChatColor.AQUA + "LV." + lv);
 		input.add("");
@@ -180,7 +180,7 @@ public class SkillsGui {
 		items.setDisplayName(display);
 		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+		items.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 		List<String> input = new ArrayList<>();
 		input.add(ChatColor.AQUA + "LV." + lv);
 		input.add("");

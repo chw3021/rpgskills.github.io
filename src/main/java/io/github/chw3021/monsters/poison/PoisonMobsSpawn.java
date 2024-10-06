@@ -8,6 +8,7 @@ import org.bukkit.World.Environment;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Bogged;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Enderman;
 import org.bukkit.entity.EntityCategory;
@@ -69,7 +70,7 @@ public class PoisonMobsSpawn extends Mobs implements Listener {
 		newmob.setMetadata("DrugAddict", new FixedMetadataValue(RMain.getInstance(), true));
 		return newmob;
 	}
-	final private Skeleton Mob2(LivingEntity le) {
+	final private Bogged Mob2(LivingEntity le) {
 		ItemStack head = new ItemStack(Material.MANGROVE_LEAVES);
 		head.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 3);
 		ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
@@ -86,8 +87,7 @@ public class PoisonMobsSpawn extends Mobs implements Listener {
 		boots.setItemMeta(bom);
 		ItemStack main = new ItemStack(Material.BOW);
 		String reg = lang.contains("kr") ? "보초병":"Patrol";
-		Skeleton newmob = (Skeleton) Mobspawn(le, reg, 23000.0, head, chest, leg, boots, main, null, EntityType.SKELETON);
-		newmob.setConversionTime(-1);
+		Bogged newmob = (Bogged) Mobspawn(le, reg, 23000.0, head, chest, leg, boots, main, null, EntityType.BOGGED);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("poison", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("Rifleman", new FixedMetadataValue(RMain.getInstance(), true));

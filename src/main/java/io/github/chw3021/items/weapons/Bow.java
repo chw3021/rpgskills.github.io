@@ -63,8 +63,8 @@ public class Bow extends Weapons implements Listener {
 								Operation.ADD_NUMBER, EquipmentSlot.HAND));
 				if (cmdt == 14) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¹Ù¶÷ÀÇ È°");
-						rm.setLocalizedName(ChatColor.GOLD +"¹Ù¶÷ÀÇ È°");
+						rm.setDisplayName(ChatColor.GOLD +"ë°”ëŒì˜ í™œ");
+						rm.setLocalizedName(ChatColor.GOLD +"ë°”ëŒì˜ í™œ");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Windy Bow");
@@ -76,8 +76,8 @@ public class Bow extends Weapons implements Listener {
 				}
 				else if (cmdt == 5) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"´ëÁöÀÇ È°");
-						rm.setLocalizedName(ChatColor.GOLD +"´ëÁöÀÇ È°");
+						rm.setDisplayName(ChatColor.GOLD +"ëŒ€ì§€ì˜ í™œ");
+						rm.setLocalizedName(ChatColor.GOLD +"ëŒ€ì§€ì˜ í™œ");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Earth Bow");
@@ -87,8 +87,8 @@ public class Bow extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 6) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¼­¸®ÀÇ È°");
-						rm.setLocalizedName(ChatColor.GOLD +"¼­¸®ÀÇ È°");
+						rm.setDisplayName(ChatColor.GOLD +"ì„œë¦¬ì˜ í™œ");
+						rm.setLocalizedName(ChatColor.GOLD +"ì„œë¦¬ì˜ í™œ");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Frost Bow");
@@ -98,8 +98,8 @@ public class Bow extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 7) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¹Ù´ÙÀÇ È°");
-						rm.setLocalizedName(ChatColor.GOLD +"¹Ù´ÙÀÇ È°");
+						rm.setDisplayName(ChatColor.GOLD +"ë°”ë‹¤ì˜ í™œ");
+						rm.setLocalizedName(ChatColor.GOLD +"ë°”ë‹¤ì˜ í™œ");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Ocean Bow");
@@ -109,8 +109,8 @@ public class Bow extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 8) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¾îµÒÀÇ È°");
-						rm.setLocalizedName(ChatColor.GOLD +"¾îµÒÀÇ È°");
+						rm.setDisplayName(ChatColor.GOLD +"ì–´ë‘ ì˜ í™œ");
+						rm.setLocalizedName(ChatColor.GOLD +"ì–´ë‘ ì˜ í™œ");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Dark Bow");
@@ -120,8 +120,8 @@ public class Bow extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 9) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"°³Á¶µÈ È°");
-						rm.setLocalizedName(ChatColor.GOLD +"°³Á¶µÈ È°");
+						rm.setDisplayName(ChatColor.GOLD +"ê°œì¡°ëœ í™œ");
+						rm.setLocalizedName(ChatColor.GOLD +"ê°œì¡°ëœ í™œ");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Hyper Bow");
@@ -131,8 +131,8 @@ public class Bow extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 10) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"ÀÛ¿­ÇÏ´Â È°");
-						rm.setLocalizedName(ChatColor.GOLD +"ÀÛ¿­ÇÏ´Â È°");
+						rm.setDisplayName(ChatColor.GOLD +"ì‘ì—´í•˜ëŠ” í™œ");
+						rm.setLocalizedName(ChatColor.GOLD +"ì‘ì—´í•˜ëŠ” í™œ");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Burning Bow");
@@ -142,8 +142,8 @@ public class Bow extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 11) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¸Íµ¶ È°");
-						rm.setLocalizedName(ChatColor.GOLD +"¸Íµ¶ È°");
+						rm.setDisplayName(ChatColor.GOLD +"ë§¹ë… í™œ");
+						rm.setLocalizedName(ChatColor.GOLD +"ë§¹ë… í™œ");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Poison Bow");
@@ -168,8 +168,8 @@ public class Bow extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 27,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"ÀÚ¿¬ÀÇ È°");
-						rm.setLocalizedName(ChatColor.GOLD +"ÀÚ¿¬ÀÇ È°");
+						rm.setDisplayName(ChatColor.GOLD +"ìì—°ì˜ í™œ");
+						rm.setLocalizedName(ChatColor.GOLD +"ìì—°ì˜ í™œ");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Natural Bow");
@@ -193,8 +193,8 @@ public class Bow extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 10,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ È° - 1´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ È° - 1´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ í™œ - 1ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ í™œ - 1ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Bow - Lv.1");
@@ -218,8 +218,8 @@ public class Bow extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 12,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ È° - 2´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ È° - 2´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ í™œ - 2ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ í™œ - 2ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Bow - Lv.2");
@@ -233,8 +233,8 @@ public class Bow extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 14,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ È° - 3´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ È° - 3´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ í™œ - 3ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ í™œ - 3ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Bow - Lv.3");
@@ -248,8 +248,8 @@ public class Bow extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 16,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ È° - 4´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ È° - 4´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ í™œ - 4ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ í™œ - 4ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Bow - Lv.4");
@@ -263,8 +263,8 @@ public class Bow extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 18,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ È° - 5´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ È° - 5´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ í™œ - 5ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ í™œ - 5ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Bow - Lv.5");
@@ -278,8 +278,8 @@ public class Bow extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 20,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ È° - 6´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ È° - 6´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ í™œ - 6ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ í™œ - 6ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Bow - Lv.6");
@@ -293,8 +293,8 @@ public class Bow extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 22,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ È° - 7´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ È° - 7´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ í™œ - 7ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ í™œ - 7ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Bow - Lv.7");
@@ -308,8 +308,8 @@ public class Bow extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 24,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ È° - 8´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ È° - 8´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ í™œ - 8ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ í™œ - 8ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Bow - Lv.8");
@@ -749,8 +749,8 @@ public class Bow extends Weapons implements Listener {
 				"generic.attackDamage", 2, Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		meta.setCustomModelData(2000 +1);
 		if(lang.contains("kr")){
-			meta.setDisplayName("µ¹ È°");
-			meta.setLocalizedName("µ¹ È°");
+			meta.setDisplayName("ëŒ í™œ");
+			meta.setLocalizedName("ëŒ í™œ");
 		}
 		else {
 			meta.setDisplayName("Stone Bow");
@@ -774,8 +774,8 @@ public class Bow extends Weapons implements Listener {
 				"generic.attackDamage", 2, Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		meta.setCustomModelData(2000 + 2);
 		if(lang.contains("kr")){
-			meta.setDisplayName("±İ È°");
-			meta.setLocalizedName("±İ È°");
+			meta.setDisplayName("ê¸ˆ í™œ");
+			meta.setLocalizedName("ê¸ˆ í™œ");
 		}
 		else {
 			meta.setDisplayName("Gold Bow");
@@ -799,8 +799,8 @@ public class Bow extends Weapons implements Listener {
 				"generic.attackDamage", 4, Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		meta.setCustomModelData(2000 + 3);
 		if(lang.contains("kr")){
-			meta.setDisplayName("Ã¶ È°");
-			meta.setLocalizedName("Ã¶ È°");
+			meta.setDisplayName("ì²  í™œ");
+			meta.setLocalizedName("ì²  í™œ");
 		}
 		else {
 			meta.setDisplayName("Iron Bow");
@@ -824,8 +824,8 @@ public class Bow extends Weapons implements Listener {
 				"generic.attackDamage", 6, Operation.ADD_NUMBER, EquipmentSlot.HAND));
 		meta.setCustomModelData(2000 +4);
 		if(lang.contains("kr")){
-			meta.setDisplayName("´ÙÀÌ¾Æ¸óµå È°");
-			meta.setLocalizedName("´ÙÀÌ¾Æ¸óµå È°");
+			meta.setDisplayName("ë‹¤ì´ì•„ëª¬ë“œ í™œ");
+			meta.setLocalizedName("ë‹¤ì´ì•„ëª¬ë“œ í™œ");
 		}
 		else {
 			meta.setDisplayName("Diamond Bow");
@@ -851,8 +851,8 @@ public class Bow extends Weapons implements Listener {
 		Player p = (Player) d.getView().getPlayer();
 		
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			rm.setDisplayName("³×´õ¶óÀÌÆ® È°");
-			rm.setLocalizedName("³×´õ¶óÀÌÆ® È°");
+			rm.setDisplayName("ë„¤ë”ë¼ì´íŠ¸ í™œ");
+			rm.setLocalizedName("ë„¤ë”ë¼ì´íŠ¸ í™œ");
 		}
 		else {
 			rm.setDisplayName("Netherite Wand");
@@ -904,8 +904,8 @@ public class Bow extends Weapons implements Listener {
 							"generic.attackDamage", 8, Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					rm.setCustomModelData(2000 +60);
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName("³×´õ¶óÀÌÆ® È°");
-						rm.setLocalizedName("³×´õ¶óÀÌÆ® È°");
+						rm.setDisplayName("ë„¤ë”ë¼ì´íŠ¸ í™œ");
+						rm.setLocalizedName("ë„¤ë”ë¼ì´íŠ¸ í™œ");
 					}
 					else {
 						rm.setDisplayName("Netherite Wand");

@@ -176,7 +176,7 @@ public class Broskills extends Pak implements Listener, Serializable {
 	                    if(oneonly.containsKey(p.getUniqueId())) {
 
 	                    	LivingEntity le = oneonly.get(p.getUniqueId());
-	    					p.getWorld().spawnParticle(Particle.ITEM_CRACK, le.getLocation(), 50, 1,1,1, 0.21, new ItemStack(Material.CLOCK));
+	    					p.getWorld().spawnParticle(Particle.ITEM, le.getLocation(), 50, 1,1,1, 0.21, new ItemStack(Material.CLOCK));
 	    					p.playSound(le.getLocation(), Sound.BLOCK_CHAIN_BREAK, 1, 0);
 	    					p.playSound(le.getLocation(), Sound.ENTITY_TNT_PRIMED, 1, 2);
 	                    	for(int i = 0 ; i <12; i ++) {
@@ -193,7 +193,7 @@ public class Broskills extends Pak implements Listener, Serializable {
 	    		                @Override
 	    		                public void run()
 	    		                {
-	    							p.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, le.getLocation(), 50, 1,1,1, 0.21);
+	    							p.getWorld().spawnParticle(Particle.EXPLOSION, le.getLocation(), 50, 1,1,1, 0.21);
 	    							p.playSound(le.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1, 2);
 	             					
 	    							atk0(0.5, wsd.TimeBomb.get(p.getUniqueId())*0.5, p, le);
@@ -218,7 +218,7 @@ public class Broskills extends Pak implements Listener, Serializable {
 	            	if(oneonly.containsKey(p.getUniqueId())) {
 
                     	LivingEntity le = oneonly.get(p.getUniqueId());
-    					p.getWorld().spawnParticle(Particle.ITEM_CRACK, le.getLocation(), 50, 1,1,1, 0.21, new ItemStack(Material.CLOCK));
+    					p.getWorld().spawnParticle(Particle.ITEM, le.getLocation(), 50, 1,1,1, 0.21, new ItemStack(Material.CLOCK));
     					p.playSound(le.getLocation(), Sound.BLOCK_CHAIN_BREAK, 1, 0);
     					p.playSound(le.getLocation(), Sound.ENTITY_TNT_PRIMED, 1, 2);
                     	for(int i = 0 ; i <12; i ++) {
@@ -235,7 +235,7 @@ public class Broskills extends Pak implements Listener, Serializable {
     		                @Override
     		                public void run()
     		                {
-    							p.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, le.getLocation(), 50, 1,1,1, 0.21);
+    							p.getWorld().spawnParticle(Particle.EXPLOSION, le.getLocation(), 50, 1,1,1, 0.21);
     							p.playSound(le.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1, 2);
 
     							atk0(0.5, wsd.TimeBomb.get(p.getUniqueId())*0.5, p, le);
@@ -281,14 +281,14 @@ public class Broskills extends Pak implements Listener, Serializable {
         		if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake")) && !(e.hasMetadata("portal")))
 				{
 					LivingEntity le = (LivingEntity)e;
-					p.getWorld().spawnParticle(Particle.ITEM_CRACK, le.getLocation(), 50, 1,1,1, 0.21, new ItemStack(Material.CLOCK));
+					p.getWorld().spawnParticle(Particle.ITEM, le.getLocation(), 50, 1,1,1, 0.21, new ItemStack(Material.CLOCK));
 					p.playSound(le.getLocation(), Sound.BLOCK_CHAIN_BREAK, 1, 0);
 					p.playSound(le.getLocation(), Sound.ENTITY_TNT_PRIMED, 1, 2);
 					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		                @Override
 		                public void run()
 		                {
-							p.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, le.getLocation(), 50, 1,1,1, 0.21);
+							p.getWorld().spawnParticle(Particle.EXPLOSION, le.getLocation(), 50, 1,1,1, 0.21);
 							p.playSound(le.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1, 2);
 
 							atk0(0.5, wsd.TimeBomb.get(p.getUniqueId())*0.5, p, le);
@@ -342,8 +342,8 @@ public class Broskills extends Pak implements Listener, Serializable {
 					                public void run()
 					                {
 										p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_PLACE, 0.1f, 2f);
-					                	le.getWorld().spawnParticle(Particle.BLOCK_CRACK, le.getLocation(), 10,Material.CHAIN.createBlockData());
-					                	le.getWorld().spawnParticle(Particle.BLOCK_CRACK, le.getLocation(), 100,Material.CACTUS.createBlockData());
+					                	le.getWorld().spawnParticle(Particle.BLOCK, le.getLocation(), 10,Material.CHAIN.createBlockData());
+					                	le.getWorld().spawnParticle(Particle.BLOCK, le.getLocation(), 100,Material.CACTUS.createBlockData());
 		    							atk0(0.35, wsd.CactusTrap.get(p.getUniqueId())*0.3, p, le);
 						            	Holding.holding(p, le, 50l);
 										
@@ -364,7 +364,7 @@ public class Broskills extends Pak implements Listener, Serializable {
 				                public void run()
 				                {
 									p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_PLACE, 0.1f, 2f);
-				                	hook.getWorld().spawnParticle(Particle.BLOCK_CRACK, hook.getLocation(), 1,Material.CHAIN.createBlockData());
+				                	hook.getWorld().spawnParticle(Particle.BLOCK, hook.getLocation(), 1,Material.CHAIN.createBlockData());
 				                	for(Entity e: hook.getNearbyEntities(1.2, 1.2, 1.2)) {
 
 				                		if (e instanceof Player)
@@ -414,8 +414,8 @@ public class Broskills extends Pak implements Listener, Serializable {
 				                public void run()
 				                {
 									p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_PLACE, 0.1f, 2f);
-				                	le.getWorld().spawnParticle(Particle.BLOCK_CRACK, le.getLocation(), 10,Material.CHAIN.createBlockData());
-				                	le.getWorld().spawnParticle(Particle.BLOCK_CRACK, le.getLocation(), 100,Material.CACTUS.createBlockData());
+				                	le.getWorld().spawnParticle(Particle.BLOCK, le.getLocation(), 10,Material.CHAIN.createBlockData());
+				                	le.getWorld().spawnParticle(Particle.BLOCK, le.getLocation(), 100,Material.CACTUS.createBlockData());
 	    							atk0(0.35, wsd.CactusTrap.get(p.getUniqueId())*0.3, p, le);
 					            	Holding.holding(p, le, 50l);
 									
@@ -436,7 +436,7 @@ public class Broskills extends Pak implements Listener, Serializable {
 			                public void run()
 			                {
 								p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_PLACE, 0.1f, 2f);
-			                	hook.getWorld().spawnParticle(Particle.BLOCK_CRACK, hook.getLocation(), 1,Material.CHAIN.createBlockData());
+			                	hook.getWorld().spawnParticle(Particle.BLOCK, hook.getLocation(), 1,Material.CHAIN.createBlockData());
 			                	for(Entity e: hook.getNearbyEntities(1.2, 1.2, 1.2)) {
 
 			                		if (e instanceof Player)
@@ -526,7 +526,7 @@ public class Broskills extends Pak implements Listener, Serializable {
 		                    	Holding.superholding(p, le, 30l);
 		                    	
 		                    	le.teleport(p);
-		                    	le.getWorld().spawnParticle(Particle.BLOCK_CRACK, le.getLocation(), 100,1,1,1,Material.CHAIN.createBlockData());
+		                    	le.getWorld().spawnParticle(Particle.BLOCK, le.getLocation(), 100,1,1,1,Material.CHAIN.createBlockData());
 		                    	
 		                    	
 		                    }
@@ -545,7 +545,7 @@ public class Broskills extends Pak implements Listener, Serializable {
 					                public void run()
 					                {
 										p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_PLACE, 1.0f, 2f);
-					                	hook.getWorld().spawnParticle(Particle.BLOCK_CRACK, hook.getLocation(), 2,Material.CHAIN.createBlockData());
+					                	hook.getWorld().spawnParticle(Particle.BLOCK, hook.getLocation(), 2,Material.CHAIN.createBlockData());
 					                	for(Entity e: hook.getNearbyEntities(0.5, 0.5, 0.5)) {
 
 					                		if (e instanceof Player)
@@ -599,7 +599,7 @@ public class Broskills extends Pak implements Listener, Serializable {
 		                    	Holding.superholding(p, le, 30l);
 		                    	
 		                    	le.teleport(p);
-		                    	le.getWorld().spawnParticle(Particle.BLOCK_CRACK, le.getLocation(), 100,1,1,1,Material.CHAIN.createBlockData());
+		                    	le.getWorld().spawnParticle(Particle.BLOCK, le.getLocation(), 100,1,1,1,Material.CHAIN.createBlockData());
 		                    	
 		                    	
 		                    }
@@ -618,7 +618,7 @@ public class Broskills extends Pak implements Listener, Serializable {
 					                public void run()
 					                {
 										p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_PLACE, 1.0f, 2f);
-					                	hook.getWorld().spawnParticle(Particle.BLOCK_CRACK, hook.getLocation(), 2,Material.CHAIN.createBlockData());
+					                	hook.getWorld().spawnParticle(Particle.BLOCK, hook.getLocation(), 2,Material.CHAIN.createBlockData());
 					                	for(Entity e: hook.getNearbyEntities(0.5, 0.5, 0.5)) {
 
 					                		if (e instanceof Player)
@@ -749,8 +749,8 @@ public class Broskills extends Pak implements Listener, Serializable {
 
 							
 	             			p.getWorld().spawnParticle(Particle.ASH ,le.getLocation(), 300, 0.2,0.2,0.2,0);
-	             			p.getWorld().spawnParticle(Particle.SMOKE_NORMAL ,le.getLocation(), 300, 0.2,0.2,0.2,0);
-	             			p.getWorld().spawnParticle(Particle.REDSTONE ,le.getLocation(), 300, 0.2,0.2,0.2,0, new DustOptions(Color.GRAY, 2f));
+	             			p.getWorld().spawnParticle(Particle.SMOKE ,le.getLocation(), 300, 0.2,0.2,0.2,0);
+	             			p.getWorld().spawnParticle(Particle.DUST ,le.getLocation(), 300, 0.2,0.2,0.2,0, new DustOptions(Color.GRAY, 2f));
 	                    }
 	                    else {
 							p.playSound(p.getLocation(), Sound.BLOCK_SAND_BREAK, 1.0f, 0f);
@@ -765,8 +765,8 @@ public class Broskills extends Pak implements Listener, Serializable {
 		                    for(Location i : line) {
 
 		             			p.getWorld().spawnParticle(Particle.ASH ,i, 3, 0.2,0.2,0.2,0);
-		             			p.getWorld().spawnParticle(Particle.SMOKE_NORMAL ,i, 3, 0.2,0.2,0.2,0);
-		             			p.getWorld().spawnParticle(Particle.REDSTONE ,i, 3, 0.2,0.2,0.2,0, new DustOptions(Color.GRAY, 2f));
+		             			p.getWorld().spawnParticle(Particle.SMOKE ,i, 3, 0.2,0.2,0.2,0);
+		             			p.getWorld().spawnParticle(Particle.DUST ,i, 3, 0.2,0.2,0.2,0, new DustOptions(Color.GRAY, 2f));
 		             			if(i.getWorld().getNearbyEntities(i,1,1,1).stream().filter(en -> en instanceof LivingEntity && en!=p&& !(en.hasMetadata("fake")) && !(en.hasMetadata("portal"))).findFirst().isPresent()) {
 
 			             			LivingEntity le = (LivingEntity) i.getWorld().getNearbyEntities(i,1,1,1).stream().filter(en -> en instanceof LivingEntity && en!=p&& !(en.hasMetadata("fake")) && !(en.hasMetadata("portal"))).findFirst().get();
@@ -811,8 +811,8 @@ public class Broskills extends Pak implements Listener, Serializable {
 
 						
              			p.getWorld().spawnParticle(Particle.ASH ,le.getLocation(), 300, 0.2,0.2,0.2,0);
-             			p.getWorld().spawnParticle(Particle.SMOKE_NORMAL ,le.getLocation(), 300, 0.2,0.2,0.2,0);
-             			p.getWorld().spawnParticle(Particle.REDSTONE ,le.getLocation(), 300, 0.2,0.2,0.2,0, new DustOptions(Color.GRAY, 2f));
+             			p.getWorld().spawnParticle(Particle.SMOKE ,le.getLocation(), 300, 0.2,0.2,0.2,0);
+             			p.getWorld().spawnParticle(Particle.DUST ,le.getLocation(), 300, 0.2,0.2,0.2,0, new DustOptions(Color.GRAY, 2f));
                     }
                     else {
 						p.playSound(p.getLocation(), Sound.BLOCK_SAND_BREAK, 1.0f, 0f);
@@ -827,8 +827,8 @@ public class Broskills extends Pak implements Listener, Serializable {
 	                    for(Location i : line) {
 
 	             			p.getWorld().spawnParticle(Particle.ASH ,i, 3, 0.2,0.2,0.2,0);
-	             			p.getWorld().spawnParticle(Particle.SMOKE_NORMAL ,i, 3, 0.2,0.2,0.2,0);
-	             			p.getWorld().spawnParticle(Particle.REDSTONE ,i, 3, 0.2,0.2,0.2,0, new DustOptions(Color.GRAY, 2f));
+	             			p.getWorld().spawnParticle(Particle.SMOKE ,i, 3, 0.2,0.2,0.2,0);
+	             			p.getWorld().spawnParticle(Particle.DUST ,i, 3, 0.2,0.2,0.2,0, new DustOptions(Color.GRAY, 2f));
 	             			if(i.getWorld().getNearbyEntities(i,1,1,1).stream().filter(en -> en instanceof LivingEntity && en!=p&& !(en.hasMetadata("fake")) && !(en.hasMetadata("portal"))).findFirst().isPresent()) {
 
 		             			LivingEntity le = (LivingEntity) i.getWorld().getNearbyEntities(i,1,1,1).stream().filter(en -> en instanceof LivingEntity && en!=p&& !(en.hasMetadata("fake")) && !(en.hasMetadata("portal"))).findFirst().get();
@@ -893,7 +893,7 @@ public class Broskills extends Pak implements Listener, Serializable {
      					le.teleport(el);
 						p.playSound(p.getLocation(), Sound.BLOCK_GLASS_BREAK, 1.0f, 1f);
 						p.playSound(p.getLocation(), Sound.BLOCK_GLASS_BREAK, 1.0f, 0f);
-						p.getWorld().spawnParticle(Particle.BLOCK_CRACK, el, 320, 1,1,1,Material.GLASS.createBlockData());
+						p.getWorld().spawnParticle(Particle.BLOCK, el, 320, 1,1,1,Material.GLASS.createBlockData());
 						if(oneonly.getOrDefault(p.getUniqueId(), p) == le) {
 							for(int i = 0; i<10; i++) {
 			                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -905,7 +905,7 @@ public class Broskills extends Pak implements Listener, Serializable {
 						    		        	Holding.holding(p, le, 40l);
 						    		        	
 				        						p.playSound(p.getLocation(), Sound.ITEM_TRIDENT_HIT, 0.8f, 2f);
-				        						le.getWorld().spawnParticle(Particle.BLOCK_CRACK, le.getLocation(), 50, 0.51, 1, 0.51, Material.REDSTONE_BLOCK.createBlockData());
+				        						le.getWorld().spawnParticle(Particle.BLOCK, le.getLocation(), 50, 0.51, 1, 0.51, Material.REDSTONE_BLOCK.createBlockData());
 								            }
 					                	   }, i*5);
 
@@ -921,7 +921,7 @@ public class Broskills extends Pak implements Listener, Serializable {
 				             					atk0(0.18, wsd.GlassBreak.get(p.getUniqueId())*0.168, p, le);
 				             					
 				        						p.playSound(p.getLocation(), Sound.ITEM_TRIDENT_HIT, 0.8f, 2f);
-				        						le.getWorld().spawnParticle(Particle.BLOCK_CRACK, le.getLocation(), 50, 0.51, 1, 0.51, Material.REDSTONE_BLOCK.createBlockData());
+				        						le.getWorld().spawnParticle(Particle.BLOCK, le.getLocation(), 50, 0.51, 1, 0.51, Material.REDSTONE_BLOCK.createBlockData());
 								            }
 					                	   }, i*20);
 
@@ -936,7 +936,7 @@ public class Broskills extends Pak implements Listener, Serializable {
  					le.teleport(el);
 					p.playSound(p.getLocation(), Sound.BLOCK_GLASS_BREAK, 1.0f, 1f);
 					p.playSound(p.getLocation(), Sound.BLOCK_GLASS_BREAK, 1.0f, 0f);
-					p.getWorld().spawnParticle(Particle.BLOCK_CRACK, el, 320, 1,1,1,Material.GLASS.createBlockData());
+					p.getWorld().spawnParticle(Particle.BLOCK, el, 320, 1,1,1,Material.GLASS.createBlockData());
 					if(oneonly.getOrDefault(p.getUniqueId(), p) == le) {
 						for(int i = 0; i<10; i++) {
 		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -1007,7 +1007,7 @@ public class Broskills extends Pak implements Listener, Serializable {
 
 		                    if(oneonly.containsKey(p.getUniqueId())) {
 		                    	LivingEntity le = oneonly.get(p.getUniqueId());
-		    					p.getWorld().spawnParticle(Particle.ITEM_CRACK, le.getLocation(), 50, 1,1,1, 0.21, p.getInventory().getItemInMainHand());
+		    					p.getWorld().spawnParticle(Particle.ITEM, le.getLocation(), 50, 1,1,1, 0.21, p.getInventory().getItemInMainHand());
 		    					p.playSound(le.getLocation(), Sound.BLOCK_CHAIN_BREAK, 1, 0);
 		    					p.playSound(le.getLocation(), Sound.ENTITY_ITEM_BREAK, 1, 0);
 		    					p.playSound(le.getLocation(), Sound.BLOCK_NETHER_BRICKS_BREAK, 1, 0);
@@ -1034,7 +1034,7 @@ public class Broskills extends Pak implements Listener, Serializable {
 
 	                    if(oneonly.containsKey(p.getUniqueId())) {
 	                    	LivingEntity le = oneonly.get(p.getUniqueId());
-	    					p.getWorld().spawnParticle(Particle.ITEM_CRACK, le.getLocation(), 50, 1,1,1, 0.21, p.getInventory().getItemInMainHand());
+	    					p.getWorld().spawnParticle(Particle.ITEM, le.getLocation(), 50, 1,1,1, 0.21, p.getInventory().getItemInMainHand());
 	    					p.playSound(le.getLocation(), Sound.BLOCK_CHAIN_BREAK, 1, 0);
 	    					p.playSound(le.getLocation(), Sound.ENTITY_ITEM_BREAK, 1, 0);
 	    					p.playSound(le.getLocation(), Sound.BLOCK_NETHER_BRICKS_BREAK, 1, 0);
@@ -1084,7 +1084,7 @@ public class Broskills extends Pak implements Listener, Serializable {
         		if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake")) && !(e.hasMetadata("portal")))
 				{
 					LivingEntity le = (LivingEntity)e;
-					p.getWorld().spawnParticle(Particle.ITEM_CRACK, le.getLocation(), 50, 1,1,1, 0.21, p.getInventory().getItemInMainHand());
+					p.getWorld().spawnParticle(Particle.ITEM, le.getLocation(), 50, 1,1,1, 0.21, p.getInventory().getItemInMainHand());
 					p.playSound(le.getLocation(), Sound.BLOCK_CHAIN_BREAK, 1, 0);
 					p.playSound(le.getLocation(), Sound.ENTITY_ITEM_BREAK, 1, 0);
 					p.playSound(le.getLocation(), Sound.BLOCK_NETHER_BRICKS_BREAK, 1, 0);
@@ -1128,29 +1128,29 @@ public class Broskills extends Pak implements Listener, Serializable {
 		                    sultcooldown.remove(p.getName()); // removing player from HashMap
 		                    LivingEntity le = oneonly.get(p.getUniqueId());
 		                    p.playSound(p.getLocation(), Sound.BLOCK_REDSTONE_TORCH_BURNOUT, 1.0f, 0.1f);
-							p.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, p.getLocation(), 30, 1, 1, 1);
+							p.getWorld().spawnParticle(Particle.HAPPY_VILLAGER, p.getLocation(), 30, 1, 1, 1);
 							p.sendTitle(ChatColor.RED + "Match Start", null);
 							le.sendMessage(ChatColor.RED + "Match Start");
-							p.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, le.getLocation(), 30, 1, 1, 1);
+							p.getWorld().spawnParticle(Particle.ANGRY_VILLAGER, le.getLocation(), 30, 1, 1, 1);
 		                    p.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, p.getLevel()*2, 2, false,false));
-		                    p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, p.getLevel()*2, 2, false,false));
-		                    p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, p.getLevel()*2, 2, false,false));
+		                    p.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, p.getLevel()*2, 2, false,false));
+		                    p.addPotionEffect(new PotionEffect(PotionEffectType.HASTE, p.getLevel()*2, 2, false,false));
 		                    p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, p.getLevel()*2, 2, false,false));
-		                    p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, p.getLevel()*2, 2, false,false));
-		                    p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, p.getLevel()*2, 2, false,false));
+		                    p.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, p.getLevel()*2, 2, false,false));
+		                    p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, p.getLevel()*2, 2, false,false));
 		                    p.addPotionEffect(new PotionEffect(PotionEffectType.LUCK, p.getLevel()*2, 2, false,false));
 		                    p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, p.getLevel()*2, 2, false,false));
 		                    p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, p.getLevel()*2, 2, false,false));
 		                    p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, p.getLevel()*2, 2, false,false));
 		                    le.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, p.getLevel()*2, 2, false,false));
-		                    le.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, p.getLevel()*2, 2, false,false));
+		                    le.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, p.getLevel()*2, 2, false,false));
 		                    le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, p.getLevel()*2, 2, false,false));
 		                    le.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, p.getLevel()*2, 2, false,false));
 		                    le.addPotionEffect(new PotionEffect(PotionEffectType.POISON, p.getLevel()*2, 2, false,false));
 		                    le.addPotionEffect(new PotionEffect(PotionEffectType.UNLUCK, p.getLevel()*2, 2, false,false));
 		                    le.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, p.getLevel()*2, 2, false,false));
-		                    le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, p.getLevel()*2, 2, false,false));
-		                    le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, p.getLevel()*2, 2, false,false));
+		                    le.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, p.getLevel()*2, 2, false,false));
+		                    le.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, p.getLevel()*2, 2, false,false));
 			                sultcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
 
 		                }
@@ -1159,29 +1159,29 @@ public class Broskills extends Pak implements Listener, Serializable {
 		            {
 	                    LivingEntity le = oneonly.get(p.getUniqueId());
 	                    p.playSound(p.getLocation(), Sound.BLOCK_REDSTONE_TORCH_BURNOUT, 1.0f, 0.1f);
-						p.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, p.getLocation(), 30, 1, 1, 1);
+						p.getWorld().spawnParticle(Particle.HAPPY_VILLAGER, p.getLocation(), 30, 1, 1, 1);
 						p.sendTitle(ChatColor.RED + "Match Start", null);
 						le.sendMessage(ChatColor.RED + "Match Start");
-						p.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, le.getLocation(), 30, 1, 1, 1);
+						p.getWorld().spawnParticle(Particle.ANGRY_VILLAGER, le.getLocation(), 30, 1, 1, 1);
 	                    p.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, p.getLevel()*2, 2, false,false));
-	                    p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, p.getLevel()*2, 2, false,false));
-	                    p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, p.getLevel()*2, 2, false,false));
+	                    p.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, p.getLevel()*2, 2, false,false));
+	                    p.addPotionEffect(new PotionEffect(PotionEffectType.HASTE, p.getLevel()*2, 2, false,false));
 	                    p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, p.getLevel()*2, 2, false,false));
-	                    p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, p.getLevel()*2, 2, false,false));
-	                    p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, p.getLevel()*2, 2, false,false));
+	                    p.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, p.getLevel()*2, 2, false,false));
+	                    p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, p.getLevel()*2, 2, false,false));
 	                    p.addPotionEffect(new PotionEffect(PotionEffectType.LUCK, p.getLevel()*2, 2, false,false));
 	                    p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, p.getLevel()*2, 2, false,false));
 	                    p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, p.getLevel()*2, 2, false,false));
 	                    p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, p.getLevel()*2, 2, false,false));
 	                    le.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, p.getLevel()*2, 2, false,false));
-	                    le.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, p.getLevel()*2, 2, false,false));
+	                    le.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, p.getLevel()*2, 2, false,false));
 	                    le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, p.getLevel()*2, 2, false,false));
 	                    le.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, p.getLevel()*2, 2, false,false));
 	                    le.addPotionEffect(new PotionEffect(PotionEffectType.POISON, p.getLevel()*2, 2, false,false));
 	                    le.addPotionEffect(new PotionEffect(PotionEffectType.UNLUCK, p.getLevel()*2, 2, false,false));
 	                    le.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, p.getLevel()*2, 2, false,false));
-	                    le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, p.getLevel()*2, 2, false,false));
-	                    le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, p.getLevel()*2, 2, false,false));
+	                    le.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, p.getLevel()*2, 2, false,false));
+	                    le.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, p.getLevel()*2, 2, false,false));
 		                sultcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
 		            }
 				}

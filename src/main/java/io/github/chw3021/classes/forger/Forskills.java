@@ -259,6 +259,36 @@ public class Forskills extends Pak implements Serializable {
 		}
 	}
 
+	final private void overHeating(Player p) {
+		mgaovercount.computeIfPresent(p, (k,v) -> v+5);
+		mgaovercount.putIfAbsent(p, 0);
+		if(mgaovercount.get(p)>=100) {
+			if(mgaovert.containsKey(p.getUniqueId())) {
+				Bukkit.getScheduler().cancelTask(mgaovert.get(p.getUniqueId()));
+			}
+			mgaovercount.put(p, 100);
+			mgaover.putIfAbsent(p, 0);
+			int task2 = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+				@Override
+				public void run()
+				{
+					mgaover.remove(p);
+				}
+			}, 75);
+			mgaovert.put(p.getUniqueId(), task2);
+		}
+		if(mgaovercountt.containsKey(p.getUniqueId())) {
+			Bukkit.getScheduler().cancelTask(mgaovercountt.get(p.getUniqueId()));
+		}
+		int task1 = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+			@Override
+			public void run()
+			{
+				mgaovercount.remove(p);
+			}
+		}, 75);
+		mgaovercountt.put(p.getUniqueId(), task1);
+	}
 
 	public void MachineGun(PlayerSwapHandItemsEvent ev)
 	{
@@ -276,9 +306,6 @@ public class Forskills extends Pak implements Serializable {
 					if(Proficiency.getpro(p)>=1) {
 						mgaovercount.computeIfPresent(p, (k,v) -> v+1);
 						mgaovercount.putIfAbsent(p, 0);
-						if(mgaovercountt.containsKey(p.getUniqueId())) {
-							Bukkit.getScheduler().cancelTask(mgaovercountt.get(p.getUniqueId()));
-						}
 						if(mgaovercount.get(p)>=100) {
 							if(mgaovert.containsKey(p.getUniqueId())) {
 								Bukkit.getScheduler().cancelTask(mgaovert.get(p.getUniqueId()));
@@ -293,6 +320,9 @@ public class Forskills extends Pak implements Serializable {
 								}
 							}, 75);
 							mgaovert.put(p.getUniqueId(), task2);
+						}
+						if(mgaovercountt.containsKey(p.getUniqueId())) {
+							Bukkit.getScheduler().cancelTask(mgaovercountt.get(p.getUniqueId()));
 						}
 						int task1 = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 							@Override
@@ -331,7 +361,7 @@ public class Forskills extends Pak implements Serializable {
 					}
 					p.playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 0.76f, 1.6f);
 					p.playEffect(EntityEffect.HURT_BERRY_BUSH);
-					p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,20,3,false,false));
+					p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS,20,3,false,false));
 					if(!mgat.containsKey(p) || mgat.get(p) == 0) {
 						Arrow sn = (Arrow) p.launchProjectile(Arrow.class);
 						ar1(sn, p, 0.0013*(1+fsd.MachineGun.get(p.getUniqueId())*0.0125)*(1+(mgaovercount.getOrDefault(p, 1)/100d) * (mgaover.containsKey(p)?2:1)));
@@ -417,22 +447,6 @@ public class Forskills extends Pak implements Serializable {
 
 
 
-	public void Barrier(EntityDamageByEntityEvent d)
-	{
-
-		if(d.getEntity() instanceof Player)
-		{
-			Player p = (Player)d.getEntity();
-
-			if(ClassData.pc.get(p.getUniqueId()) == 16 && Proficiency.getpro(p) >=2 && mgaovercount.containsKey(p)) {
-				if(p.hasLineOfSight(d.getDamager())) {
-					d.setDamage(d.getDamage()*0.35);
-				}
-			}
-		}
-	}
-
-
 	public void LightningCannon(PlayerInteractEvent ev)
 	{
 		Player p = ev.getPlayer();
@@ -457,6 +471,10 @@ public class Forskills extends Pak implements Serializable {
 							.hm(gdcooldown)
 							.skillUse(() -> {
 
+								if(Proficiency.getpro(p)>=2) {
+									overHeating(p);
+								}
+								
 								if(spctrt.containsKey(p.getUniqueId())) {
 									Bukkit.getScheduler().cancelTask(spctrt.get(p.getUniqueId()));
 									spctrt.remove(p.getUniqueId());
@@ -504,8 +522,8 @@ public class Forskills extends Pak implements Serializable {
 										}
 										p.playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1, 2);
 										for(Location l : line) {
-											p.getWorld().spawnParticle(Particle.BLOCK_CRACK, l,5, 0.25,0.25,0.25,0, Material.WHITE_GLAZED_TERRACOTTA.createBlockData());
-											p.getWorld().spawnParticle(Particle.SNOWBALL, l,5, 0.25,0.25,0.25,0);
+											p.getWorld().spawnParticle(Particle.BLOCK, l,5, 0.25,0.25,0.25,0, Material.WHITE_GLAZED_TERRACOTTA.createBlockData());
+											p.getWorld().spawnParticle(Particle.ITEM_SNOWBALL, l,5, 0.25,0.25,0.25,0);
 											p.getWorld().spawnParticle(Particle.WAX_ON, l,5, 0.25,0.25,0.25,1);
 
 											for (Entity a : p.getWorld().getNearbyEntities(l, 1.5, 1.5, 1.5))
@@ -566,6 +584,9 @@ public class Forskills extends Pak implements Serializable {
 			if(ClassData.pc.get(p.getUniqueId()) == 16) {
 				if((p.isSneaking()) && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK)&& spctr.containsKey(p.getUniqueId()))
 				{
+					if(Proficiency.getpro(p)>=2) {
+						overHeating(p);
+					}
 
 					if(spctrt.containsKey(p.getUniqueId())) {
 						Bukkit.getScheduler().cancelTask(spctrt.get(p.getUniqueId()));
@@ -608,7 +629,7 @@ public class Forskills extends Pak implements Serializable {
 						line.add(pl);
 					}
 					for(Location l : line) {
-						p.getWorld().spawnParticle(Particle.BLOCK_CRACK, l,5, 0.25,0.25,0.25,0, Material.PINK_GLAZED_TERRACOTTA.createBlockData());
+						p.getWorld().spawnParticle(Particle.BLOCK, l,5, 0.25,0.25,0.25,0, Material.PINK_GLAZED_TERRACOTTA.createBlockData());
 
 						for (Entity a : p.getWorld().getNearbyEntities(l, 2, 2, 2))
 						{
@@ -657,7 +678,7 @@ public class Forskills extends Pak implements Serializable {
 		}
 		line.forEach(l -> {
 			l.getWorld().spawnParticle(Particle.GLOW, l,1,0.1,0.1,0.1,0);
-			l.getWorld().spawnParticle(Particle.BLOCK_CRACK, l,3,0.1,0.1,0.1,0, Material.PURPLE_GLAZED_TERRACOTTA.createBlockData());
+			l.getWorld().spawnParticle(Particle.BLOCK, l,3,0.1,0.1,0.1,0, Material.PURPLE_GLAZED_TERRACOTTA.createBlockData());
 
 		});
 		return line;
@@ -680,6 +701,9 @@ public class Forskills extends Pak implements Serializable {
 					}
 					bmwv.remove(p.getUniqueId());
 
+					if(Proficiency.getpro(p)>=2) {
+						overHeating(p);
+					}
 
 					final Location pl = p.getEyeLocation().clone();
 					p.playSound(p.getLocation(), Sound.BLOCK_CONDUIT_ACTIVATE, 1, 2);
@@ -752,6 +776,9 @@ public class Forskills extends Pak implements Serializable {
 								Bukkit.getScheduler().cancelTask(comprt.get(p.getUniqueId()));
 								comprt.remove(p.getUniqueId());
 							}
+							if(Proficiency.getpro(p)>=2) {
+								overHeating(p);
+							}
 
 							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 								@Override
@@ -793,7 +820,7 @@ public class Forskills extends Pak implements Serializable {
 								public void run()
 								{
 									p.getWorld().getEntities().stream().filter(e -> e.hasMetadata("tnt of"+p.getName())).forEach(t ->{
-										p.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, t.getLocation(), 1,0.1,0.1,0.1,0);
+										p.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, t.getLocation(), 1,0.1,0.1,0.1,0);
 										p.playSound(p.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 0f);
 										for(Entity e : t.getNearbyEntities(5, 5, 5)) {
 											if (e instanceof Player)
@@ -838,6 +865,9 @@ public class Forskills extends Pak implements Serializable {
 			if(ClassData.pc.get(p.getUniqueId()) == 16) {
 				ev.setCancelled(true);
 
+				if(Proficiency.getpro(p)>=2) {
+					overHeating(p);
+				}
 
 				if(comprt.containsKey(p.getUniqueId())) {
 					Bukkit.getScheduler().cancelTask(comprt.get(p.getUniqueId()));
@@ -870,14 +900,14 @@ public class Forskills extends Pak implements Serializable {
 				plzgrdt.put(p.getUniqueId(), task);
 
 
-				final Location tl = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 9).getLocation();
+                Location tl = gettargetblock(p,9).clone();
 				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 80, 100, false, false));
 				p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_HURT, 1, 2);
 				p.playSound(p.getLocation(), Sound.BLOCK_METAL_HIT, 1, 0);
 				p.playSound(p.getLocation(), Sound.BLOCK_DRIPSTONE_BLOCK_BREAK, 1, 0);
 				p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 0);
 
-				tl.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl,2000, 6,2,6,0, Material.LIGHT_GRAY_GLAZED_TERRACOTTA.createBlockData());
+				tl.getWorld().spawnParticle(Particle.BLOCK, tl,2000, 6,2,6,0, Material.LIGHT_GRAY_GLAZED_TERRACOTTA.createBlockData());
 				tl.getWorld().spawnParticle(Particle.WHITE_ASH, tl,2000, 6,1,6,0);
 				for(Entity e : tl.getWorld().getNearbyEntities(tl,6, 6, 6)) {
 					if (e instanceof Player)
@@ -924,6 +954,9 @@ public class Forskills extends Pak implements Serializable {
 			if(ClassData.pc.get(p.getUniqueId()) == 16) {
 				ev.setCancelled(true);
 
+				if(Proficiency.getpro(p)>=2) {
+					overHeating(p);
+				}
 
 				if(plzgrdt.containsKey(p.getUniqueId())) {
 					Bukkit.getScheduler().cancelTask(plzgrdt.get(p.getUniqueId()));
@@ -958,7 +991,7 @@ public class Forskills extends Pak implements Serializable {
 			Player p = (Player) d.getEntity().getShooter();
 			p.getWorld().spawnParticle(Particle.END_ROD, d.getEntity().getLocation(), 100, 5,5,14);
 			p.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, d.getEntity().getLocation(), 100, 5,5,14);
-			p.getWorld().spawnParticle(Particle.CRIT_MAGIC, d.getEntity().getLocation(), 200, 5,5,14);
+			p.getWorld().spawnParticle(Particle.ENCHANTED_HIT, d.getEntity().getLocation(), 200, 5,5,14);
 			p.playSound(p.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1, 2);
 			p.playSound(p.getLocation(), Sound.BLOCK_LODESTONE_HIT, 1, 0);
 			p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_BREAK, 1, 0);
@@ -1037,7 +1070,7 @@ public class Forskills extends Pak implements Serializable {
 						p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_HURT, 1f, 2f);
 						ArrayList<Location> line = RailSMG(p.getEyeLocation().clone());
 						line.forEach(l -> {
-							p.getWorld().spawnParticle(Particle.BLOCK_CRACK, l.add(0, -0.289, 0),4, 0.005,0.005,0.005,0, Material.LIGHT_BLUE_GLAZED_TERRACOTTA.createBlockData());
+							p.getWorld().spawnParticle(Particle.BLOCK, l.add(0, -0.289, 0),4, 0.005,0.005,0.005,0, Material.LIGHT_BLUE_GLAZED_TERRACOTTA.createBlockData());
 							p.getWorld().spawnParticle(Particle.GLOW, l.add(0, -0.289, 0),1, 0.005,0.005,0.005,0);
 
 							for (Entity a : p.getWorld().getNearbyEntities(l, 0.5, 0.5, 0.5))
@@ -1089,7 +1122,7 @@ public class Forskills extends Pak implements Serializable {
 						p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_CLUSTER_BREAK, 1f, 2f);
 						ArrayList<Location> line = RailSMG(p.getEyeLocation().clone());
 						line.forEach(l -> {
-							p.getWorld().spawnParticle(Particle.BLOCK_CRACK, l.add(0, -0.289, 0),5, 0.005,0.005,0.005,0, Material.LIGHT_BLUE_GLAZED_TERRACOTTA.createBlockData());
+							p.getWorld().spawnParticle(Particle.BLOCK, l.add(0, -0.289, 0),5, 0.005,0.005,0.005,0, Material.LIGHT_BLUE_GLAZED_TERRACOTTA.createBlockData());
 							p.getWorld().spawnParticle(Particle.GLOW, l.add(0, -0.289, 0),1, 0.005,0.005,0.005,0);
 
 							for (Entity a : p.getWorld().getNearbyEntities(l, 0.5, 0.5, 0.5))
@@ -1157,6 +1190,9 @@ public class Forskills extends Pak implements Serializable {
 							.slot(3)
 							.hm(frcooldown)
 							.skillUse(() -> {
+								if(Proficiency.getpro(p)>=2) {
+									overHeating(p);
+								}
 								RailSMG(p);
 							});
 					bd.execute();
@@ -1184,6 +1220,9 @@ public class Forskills extends Pak implements Serializable {
 						railsct.remove(p.getUniqueId());
 					}
 					railsc.remove(p.getUniqueId());
+					if(Proficiency.getpro(p)>=2) {
+						overHeating(p);
+					}
 
 
 					Arrow firstarrow = p.launchProjectile(Arrow.class);
@@ -1208,7 +1247,7 @@ public class Forskills extends Pak implements Serializable {
 									line.add(pl);
 								}
 								line.forEach(l ->{
-									p.getWorld().spawnParticle(Particle.BLOCK_CRACK, l.clone().add(0, -0.35, 0),45, j.addAndGet(-0.023),j.get(),j.get(),0, Material.CYAN_GLAZED_TERRACOTTA.createBlockData());
+									p.getWorld().spawnParticle(Particle.BLOCK, l.clone().add(0, -0.35, 0),45, j.addAndGet(-0.023),j.get(),j.get(),0, Material.CYAN_GLAZED_TERRACOTTA.createBlockData());
 									p.getWorld().spawnParticle(Particle.GLOW, l.clone().add(0, -0.35, 0),3);
 
 									for (Entity a : p.getWorld().getNearbyEntities(l, 1, 1, 1))
@@ -1288,6 +1327,9 @@ public class Forskills extends Pak implements Serializable {
 							.slot(4)
 							.hm(stcooldown)
 							.skillUse(() -> {
+								if(Proficiency.getpro(p)>=2) {
+									overHeating(p);
+								}
 								ArrayList<Location> line = new ArrayList<Location>();
 								ArrayList<Location> pie = new ArrayList<Location>();
 								HashSet<LivingEntity> les = new HashSet<LivingEntity>();
@@ -1382,6 +1424,22 @@ public class Forskills extends Pak implements Serializable {
 
 
 
+	public void Barrier(EntityDamageByEntityEvent d)
+	{
+	
+		if(d.getEntity() instanceof Player)
+		{
+			Player p = (Player)d.getEntity();
+	
+			if(ClassData.pc.get(p.getUniqueId()) == 16 && Proficiency.getpro(p) >=2 && fsd.DoubleBarrel.getOrDefault(p.getUniqueId(),0)>=1) {
+				if(p.hasLineOfSight(d.getDamager())) {
+					d.setDamage(d.getDamage()*0.5);
+				}
+			}
+		}
+	}
+
+
 	@SuppressWarnings("deprecation")
 	public void HoneyMissile(PlayerInteractEvent ev)
 	{
@@ -1407,6 +1465,9 @@ public class Forskills extends Pak implements Serializable {
 						.slot(5)
 						.hm(smcooldown)
 						.skillUse(() -> {
+							if(Proficiency.getpro(p)>=2) {
+								overHeating(p);
+							}
 							if(prmigt.containsKey(p.getUniqueId())) {
 								Bukkit.getScheduler().cancelTask(prmigt.get(p.getUniqueId()));
 								prmigt.remove(p.getUniqueId());
@@ -1429,32 +1490,26 @@ public class Forskills extends Pak implements Serializable {
 							}, 80);
 							prmigt.put(p.getUniqueId(), task);
 
-							ArrayList<Location> line = new ArrayList<Location>();
-							for(double dou = -Math.PI/12; dou<= Math.PI/12; dou += Math.PI/60) {
-								Location l = p.getEyeLocation().clone();
-								l.setDirection(l.getDirection().rotateAroundY(dou));
-								l.add(l.getDirection().normalize().multiply(25.1));
-								line.add(l);
-							}
-							line.forEach(l -> {
-								Firework hesh = (Firework) p.getWorld().spawnEntity(p.getEyeLocation(), EntityType.FIREWORK);
-								hesh.setShotAtAngle(true);
-								hesh.setMetadata("hesh of"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-								hesh.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-								hesh.setShooter(p);
-								hesh.setVelocity(l.toVector().subtract(p.getLocation().toVector()).normalize().multiply(1));
-								FireworkMeta fm = hesh.getFireworkMeta();
+							Location l = p.getEyeLocation().clone();
+							l.add(l.getDirection().normalize().multiply(25.1));
+							
+							Firework hesh = (Firework) p.getWorld().spawnEntity(p.getEyeLocation(), EntityType.FIREWORK_ROCKET);
+							hesh.setShotAtAngle(true);
+							hesh.setMetadata("hesh of"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+							hesh.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+							hesh.setShooter(p);
+							hesh.setVelocity(l.toVector().subtract(p.getLocation().toVector()).normalize().multiply(1));
+							FireworkMeta fm = hesh.getFireworkMeta();
 
-								FireworkEffect effect = FireworkEffect.builder()
-										.with(Type.BURST)
-										.withColor(Color.ORANGE)
-										.flicker(true)
-										.trail(true)
-										.build();
-								fm.setPower(3);
-								fm.addEffect(effect);
-								hesh.setFireworkMeta(fm);
-							});
+							FireworkEffect effect = FireworkEffect.builder()
+									.with(Type.BURST)
+									.withColor(Color.ORANGE)
+									.flicker(true)
+									.trail(true)
+									.build();
+							fm.setPower(3);
+							fm.addEffect(effect);
+							hesh.setFireworkMeta(fm);
 						});
 				bd.execute();
 
@@ -1485,14 +1540,14 @@ public class Forskills extends Pak implements Serializable {
 			LivingEntity le = (LivingEntity) d.getEntity();
 			if(heshpair.containsEntry(p.getUniqueId(), le.getUniqueId())) {
 				p.getWorld().playSound(le.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LARGE_BLAST, 1, 0);
-				le.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, le.getLocation(), 1,0.1,0.1,0.1);
+				le.getWorld().spawnParticle(Particle.EXPLOSION, le.getLocation(), 1,0.1,0.1,0.1);
 				le.getWorld().spawnParticle(Particle.LANDING_HONEY, le.getLocation(), 35, 2,2,2,3);
 				dset0(d, p, 0.085*(1+fsd.HoneyMissile.get(p.getUniqueId())*0.01),le,9);
 				heshc.computeIfPresent(le.getUniqueId(), (k,v) -> v-1);
 				if(heshc.containsKey(le.getUniqueId()) && heshc.get(le.getUniqueId())<=0) {
 					p.getWorld().playSound(le.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 1);
 					dset0(d, p, 0.53*(1+fsd.HoneyMissile.get(p.getUniqueId())*0.32)*(Proficiency.getpro(p)>=1 ? 2:1),le,9);
-					le.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, le.getLocation(), 1,0.1,0.1,0.1);
+					le.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, le.getLocation(), 1,0.1,0.1,0.1);
 					le.getWorld().spawnParticle(Particle.LANDING_HONEY, le.getLocation(), 100, 2,2,2,3);
 					heshc.remove(le.getUniqueId());
 					heshpair.remove(p.getUniqueId(), le.getUniqueId());
@@ -1502,7 +1557,7 @@ public class Forskills extends Pak implements Serializable {
 				if(heshc.containsKey(le.getUniqueId()) && d.getDamage()>=le.getHealth()) {
 					p.getWorld().playSound(le.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 1);
 					dset0(d, p, 0.53*(1+fsd.HoneyMissile.get(p.getUniqueId())*0.32)*(Proficiency.getpro(p)>=1 ? 2:1),le,9);
-					le.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, le.getLocation(), 1,0.1,0.1,0.1);
+					le.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, le.getLocation(), 1,0.1,0.1,0.1);
 					le.getWorld().spawnParticle(Particle.LANDING_HONEY, le.getLocation(), 100, 2,2,2,3);
 					heshc.remove(le.getUniqueId());
 					heshpair.remove(p.getUniqueId(), le.getUniqueId());
@@ -1520,14 +1575,14 @@ public class Forskills extends Pak implements Serializable {
 				Player p = (Player) arrow.getShooter();
 				if(heshpair.containsEntry(p.getUniqueId(), le.getUniqueId())) {
 					p.getWorld().playSound(le.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LARGE_BLAST, 1, 0);
-					le.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, le.getLocation(), 1,0.1,0.1,0.1);
+					le.getWorld().spawnParticle(Particle.EXPLOSION, le.getLocation(), 1,0.1,0.1,0.1);
 					le.getWorld().spawnParticle(Particle.LANDING_HONEY, le.getLocation(), 35, 2,2,2,3);
 					dset0(d, p, 0.085*(1+fsd.HoneyMissile.get(p.getUniqueId())*0.01),le,9);
 					heshc.computeIfPresent(le.getUniqueId(), (k,v) -> v-1);
 					if(heshc.containsKey(le.getUniqueId()) && heshc.get(le.getUniqueId())<=0) {
 						p.getWorld().playSound(le.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 1);
 						dset0(d, p, 0.53*(1+fsd.HoneyMissile.get(p.getUniqueId())*0.32)*(Proficiency.getpro(p)>=1 ? 2:1),le,9);
-						le.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, le.getLocation(), 1,0.1,0.1,0.1);
+						le.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, le.getLocation(), 1,0.1,0.1,0.1);
 						le.getWorld().spawnParticle(Particle.LANDING_HONEY, le.getLocation(), 100, 2,2,2,3);
 						heshc.remove(le.getUniqueId());
 						heshpair.remove(p.getUniqueId(), le.getUniqueId());
@@ -1537,7 +1592,7 @@ public class Forskills extends Pak implements Serializable {
 					if(heshc.containsKey(le.getUniqueId()) && d.getDamage()>=le.getHealth()) {
 						p.getWorld().playSound(le.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 1);
 						dset0(d, p, 0.53*(1+fsd.HoneyMissile.get(p.getUniqueId())*0.32)*(Proficiency.getpro(p)>=1 ? 2:1),le,9);
-						le.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, le.getLocation(), 1,0.1,0.1,0.1);
+						le.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, le.getLocation(), 1,0.1,0.1,0.1);
 						le.getWorld().spawnParticle(Particle.LANDING_HONEY, le.getLocation(), 100, 2,2,2,3);
 						heshc.remove(le.getUniqueId());
 						heshpair.remove(p.getUniqueId(), le.getUniqueId());
@@ -1563,7 +1618,7 @@ public class Forskills extends Pak implements Serializable {
 			if (fw.hasMetadata("hesh of"+p.getName())) {
 
 				fw.getWorld().spawnParticle(Particle.LANDING_HONEY, fw.getLocation(), 50, 2,2,2);
-				for(Entity e : fw.getNearbyEntities(4.5, 4.5, 4.5)) {
+				for(Entity e : fw.getNearbyEntities(6.5, 6.5, 6.5)) {
 					if (e instanceof Player)
 					{
 
@@ -1588,7 +1643,7 @@ public class Forskills extends Pak implements Serializable {
 
 									p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
 									atk1(0.53*(1+fsd.HoneyMissile.get(p.getUniqueId())*0.042)*(Proficiency.getpro(p)>=1 ? 2:1), p, le,9);
-									le.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, le.getLocation(), 1,0.1,0.1,0.1);
+									le.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, le.getLocation(), 1,0.1,0.1,0.1);
 									le.getWorld().spawnParticle(Particle.LANDING_HONEY, le.getLocation(), 100, 2,2,2,3);
 									heshc.remove(le.getUniqueId());
 								}
@@ -1597,7 +1652,7 @@ public class Forskills extends Pak implements Serializable {
 						}, 400);
 						heshtask.put(le.getUniqueId(), tass);
 						le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,100,1,false,false));
-						le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,100,1,false,false));
+						le.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS,100,1,false,false));
 					}
 
 				}
@@ -1640,12 +1695,16 @@ public class Forskills extends Pak implements Serializable {
 								p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
 								atk1(1.1*(1+fsd.HoneyMissile.get(p.getUniqueId())*0.0789)*(Proficiency.getpro(p)), p, le,9);
 								p.getWorld().playSound(le.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 1);
-								le.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, le.getLocation(), 1,0.1,0.1,0.1);
+								le.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, le.getLocation(), 1,0.1,0.1,0.1);
 								le.getWorld().spawnParticle(Particle.LANDING_HONEY, le.getLocation(), 50, 2,2,2,3);
 								leus.add(le.getUniqueId());
 								for(UUID leu : leus) {
-									Bukkit.getScheduler().cancelTask(heshtask.get(leu));
-									heshc.remove(leu);
+									if(heshtask.containsKey(leu)) {
+										Bukkit.getScheduler().cancelTask(heshtask.remove(leu));
+									}
+									if(heshc.containsKey(le.getUniqueId())) {
+										heshc.remove(leu);
+									}
 								}
 								heshpair.removeAll(p.getUniqueId());
 							}
@@ -1679,12 +1738,12 @@ public class Forskills extends Pak implements Serializable {
 					.slot(6)
 					.hm(sultcooldown)
 					.skillUse(() -> {
+						if(Proficiency.getpro(p)>=2) {
+							overHeating(p);
+						}
 						HashSet<LivingEntity> les = new HashSet<>();
 						p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_AMBIENT, 1, 2);
 						Holding.invur(p, 80l);
-						Arrow firstarrow = p.launchProjectile(Arrow.class);
-						firstarrow.setDamage(0);
-						firstarrow.remove();
 						for(int c=0;c<30;c++) {
 							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 								@Override
@@ -1778,10 +1837,10 @@ public class Forskills extends Pak implements Serializable {
 				public void run()
 				{
 					p.playSound(rayloc, Sound.BLOCK_BEACON_ACTIVATE, 0.1f, 2f);
-					p.playSound(rayloc, Sound.BLOCK_NOTE_BLOCK_BASS, 0.1f, 0f);
+					p.playSound(rayloc, Sound.BLOCK_NOTE_BLOCK_BASS, 0.3f, 0f);
 					p.getWorld().spawnParticle(Particle.FLASH, rayloc, 6000, 6, 200, 6);
 					ult2cir(p,1, rayloc);
-					for(Entity e: p.getWorld().getNearbyEntities(rayloc.clone(),6,300,6)) {
+					for(Entity e: rayloc.getWorld().getNearbyEntities(rayloc.clone(),6,300,6)) {
 						if (e instanceof Player)
 						{
 							Player p1 = (Player) e;
@@ -1831,18 +1890,27 @@ public class Forskills extends Pak implements Serializable {
 		Location pl = p.getLocation().clone().add(0, 1, 0);
 		Vector pv = pl.clone().add(1, 0, 0).toVector().subtract(pl.clone().toVector());
 
-		for(double an = 0; an<Math.PI*2; an+=Math.PI/90) {
-			if(parm==0) {
+		if(parm==0) {
+			for(double an = 0; an<Math.PI*2; an+=Math.PI/90) {
 				Location inloc = pl.clone().add(pv.rotateAroundY(an).normalize().multiply(6));
 				draw.add(floorFinder(inloc));
 			}
-			else {
-				Location inloc = rayloc.clone().add(pv.rotateAroundY(an).normalize().multiply(6));
-				draw.add(floorFinder(inloc));
+		}
+		else {
+			for(double an = 0; an<Math.PI*2; an+=Math.PI/90) {
+				for(int in = 0; in<6; in++) {
+					Location inloc = rayloc.clone().add(pv.rotateAroundY(an).normalize().multiply(in));
+					draw.add(floorFinder(inloc));
+				}
 			}
 		}
 		draw.forEach(l -> {
-			p.spawnParticle(Particle.REDSTONE, l.clone().add(0, 0.5, 0),1, new Particle.DustOptions(Color.LIME, 1) );
+			if(parm==0) {
+				p.spawnParticle(Particle.DUST, l.clone().add(0, 0.5, 0),1, new Particle.DustOptions(Color.LIME, 1) );
+			}
+			else {
+				p.spawnParticle(Particle.FLAME, l.clone().add(0, 0.5, 0),1);
+			}
 		});
 		return draw;
 	}
@@ -1867,6 +1935,9 @@ public class Forskills extends Pak implements Serializable {
 					.slot(7)
 					.hm(sult2cooldown)
 					.skillUse(() -> {
+						if(Proficiency.getpro(p)>=2) {
+							overHeating(p);
+						}
 						final GameMode pgm = p.getGameMode();
 						final Location fl = p.getLocation().clone();
 						raygm.put(p.getUniqueId(),pgm);

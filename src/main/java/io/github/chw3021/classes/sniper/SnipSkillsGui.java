@@ -6,51 +6,19 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Arrays;
-import java.util.List;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import io.github.chw3021.classes.Proficiency;
+import io.github.chw3021.classes.SkillsGui;
 import io.github.chw3021.obtains.Obtained;
 import net.md_5.bungee.api.ChatColor;
 
-public class SnipSkillsGui{
+public class SnipSkillsGui extends SkillsGui{
 	
 
 
-
-	public void itemset(String display, Material ID, int data, int stack, List<String> Lore, int loc, Inventory inv)
-	{
-		ItemStack item = new ItemStack(ID);
-		ItemMeta items = item.getItemMeta();
-		items.setDisplayName(display);
-		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-		Lore.forEach(l -> {
-			l=ChatColor.stripColor(l);
-		});
-		items.setLore(Lore);
-		item.setItemMeta(items);
-		inv.setItem(loc, item);
-	}
-	public void itemset(String display, ItemStack is, int data, int stack, List<String> Lore, int loc, Inventory inv)
-	{
-		ItemStack item = is;
-		ItemMeta items = item.getItemMeta();
-		items.setDisplayName(display);
-		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-		items.setLore(Lore);
-		item.setItemMeta(items);
-		inv.setItem(loc, item);
-	}
 	
 	
 	public void Snipskillsinv(Player p)
@@ -61,69 +29,69 @@ public class SnipSkillsGui{
 		Obtained.itemset(p, Snipskillsinv);
 
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			itemset("¹åÁÙÅ¸±â", Material.CROSSBOW, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.Rope.getOrDefault(p.getUniqueId(),0),"","Á¡ÇÁ + ÁÂÅ¬¸¯", "Master LV.1"), 0, Snipskillsinv);
-			itemset("Ã¶°©È­»ì", Material.TIPPED_ARROW, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.ArmourPiercingArrow.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","¿õÅ©¸®±â + ¼Õ¹Ù²Ù±â", 
-					"ÀûÀÇ ÇöÀçÃ¼·ÂÀÇ "+ BigDecimal.valueOf(1+0.1*ssd.ArmourPiercingArrow.getOrDefault(p.getUniqueId(),0)).setScale(2, RoundingMode.HALF_EVEN)  +"% ÀÇ ÇÇÇØ¸¦ Áİ´Ï´Ù", "Master LV.50"), 1, Snipskillsinv);
-			itemset("¼¶±¤Åº", Material.SNOWBALL, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.FlashBomb.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","Á¡ÇÁ + ¼Õ¹Ù²Ù±â","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.5*(1+ssd.FlashBomb.getOrDefault(p.getUniqueId(),0)*0.0687)).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master LV.50"), 2, Snipskillsinv);
-			itemset("Á¶¸íÁö·Ú", Material.GLOWSTONE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.Flare.getOrDefault(p.getUniqueId(),0),"","¿õÅ©¸®±â + ÁÂÅ¬¸¯", "Master LV.1"), 3, Snipskillsinv);
-			itemset("°ø½À", Material.FIREWORK_ROCKET, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.AirStrike.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","ÀûÁß½Ã ·ÎÄÏµéÀÌ ¶³¾îÁı´Ï´Ù","",ChatColor.BOLD+"3 X "+BigDecimal.valueOf(0.4*(1+ssd.AirStrike.getOrDefault(p.getUniqueId(),0)*0.0321)).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master LV.50"), 4, Snipskillsinv);
-			itemset("ÀºÆó", Material.SPYGLASS, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.Camouflage.getOrDefault(p.getUniqueId(),0),"","¿õÅ©¸®±â", "Master LV.1"), 5, Snipskillsinv);
-			itemset("°³Á¶", Material.CROSSBOW, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.Remodeling.getOrDefault(p.getUniqueId(),0),"",
-					"´õ °­·ÂÇÏ°í ºü¸¥ È­»ìÀÌ ³ª°©´Ï´Ù",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.123*(1+ssd.Remodeling.getOrDefault(p.getUniqueId(),0)*0.06)).setScale(2, RoundingMode.HALF_EVEN)+"D","", 
-					"È­»ìÀÇ °üÅë·¹º§ÀÌ Áõ°¡ÇÕ´Ï´Ù",ChatColor.BOLD+"+ "+ssd.Remodeling.getOrDefault(p.getUniqueId(),0)/2,"", 
-					"¿£´õ¸Ç°ú À§´õº¸È£¸·À» °ø°İÇÒ¼ö ÀÖ½À´Ï´Ù","","´ÙÁß¹ß»ç ¸¶¹ıºÎ¿©½Ã", "È­»ìµéÀÌ Áß¾ÓÀ¸·Î ¸ğÀÌ°í", "°¢°¢ È­»ìÀº ÇÇÇØ·®ÀÌ Àı¹İÀ¸·Î °¨¼ÒÇÕ´Ï´Ù", "Master LV.50"), 6, Snipskillsinv);
-			itemset("Çìµå¼¦", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.HeadShot.getOrDefault(p.getUniqueId(),0),"","ÀûÀÇ ¸Ó¸®ºÎºĞÀ» ÀûÁß½Ã ¹ßµ¿µË´Ï´Ù", "½ºÅ³·¹º§ÀÌ ³ôÀ»¼ö·Ï ÆÇÁ¤ÀÌ ÁÁ¾ÆÁı´Ï´Ù", "Ã¶°©È­»ì°ú ±Ã±Ø±â´Â Àû¿ëµÇÁö ¾Ê½À´Ï´Ù","",ChatColor.BOLD+" X "+BigDecimal.valueOf(1.36*(1+ssd.HeadShot.getOrDefault(p.getUniqueId(),0)*0.036)).setScale(2, RoundingMode.HALF_EVEN)), 7, Snipskillsinv);
+			itemset("ë°§ì¤„íƒ€ê¸°", Material.CROSSBOW, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.Rope.getOrDefault(p.getUniqueId(),0),"","ì í”„ + ì¢Œí´ë¦­", "Master LV.1"), 0, Snipskillsinv);
+			itemset("ì² ê°‘í™”ì‚´", Material.TIPPED_ARROW, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.ArmourPiercingArrow.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì›…í¬ë¦¬ê¸° + ì†ë°”ê¾¸ê¸°", 
+					"ì ì˜ í˜„ì¬ì²´ë ¥ì˜ "+ BigDecimal.valueOf(1+0.1*ssd.ArmourPiercingArrow.getOrDefault(p.getUniqueId(),0)).setScale(2, RoundingMode.HALF_EVEN)  +"% ì˜ í”¼í•´ë¥¼ ì¤ë‹ˆë‹¤", "Master LV.50"), 1, Snipskillsinv);
+			itemset("ì„¬ê´‘íƒ„", Material.SNOWBALL, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.FlashBomb.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì í”„ + ì†ë°”ê¾¸ê¸°","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.5*(1+ssd.FlashBomb.getOrDefault(p.getUniqueId(),0)*0.0687)).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master LV.50"), 2, Snipskillsinv);
+			itemset("ì¡°ëª…ì§€ë¢°", Material.GLOWSTONE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.Flare.getOrDefault(p.getUniqueId(),0),"","ì›…í¬ë¦¬ê¸° + ì¢Œí´ë¦­", "Master LV.1"), 3, Snipskillsinv);
+			itemset("ê³µìŠµ", Material.FIREWORK_ROCKET, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.AirStrike.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì ì¤‘ì‹œ ë¡œì¼“ë“¤ì´ ë–¨ì–´ì§‘ë‹ˆë‹¤","",ChatColor.BOLD+"3 X "+BigDecimal.valueOf(0.4*(1+ssd.AirStrike.getOrDefault(p.getUniqueId(),0)*0.0321)).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master LV.50"), 4, Snipskillsinv);
+			itemset("ì€í", Material.SPYGLASS, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.Camouflage.getOrDefault(p.getUniqueId(),0),"","ì›…í¬ë¦¬ê¸°", "Master LV.1"), 5, Snipskillsinv);
+			itemset("ê°œì¡°", Material.CROSSBOW, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.Remodeling.getOrDefault(p.getUniqueId(),0),"",
+					"ë” ê°•ë ¥í•˜ê³  ë¹ ë¥¸ í™”ì‚´ì´ ë‚˜ê°‘ë‹ˆë‹¤",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.123*(1+ssd.Remodeling.getOrDefault(p.getUniqueId(),0)*0.06)).setScale(2, RoundingMode.HALF_EVEN)+"D","", 
+					"í™”ì‚´ì˜ ê´€í†µë ˆë²¨ì´ ì¦ê°€í•©ë‹ˆë‹¤",ChatColor.BOLD+"+ "+ssd.Remodeling.getOrDefault(p.getUniqueId(),0)/2,"", 
+					"ì—”ë”ë§¨ê³¼ ìœ„ë”ë³´í˜¸ë§‰ì„ ê³µê²©í• ìˆ˜ ìˆìŠµë‹ˆë‹¤","","ë‹¤ì¤‘ë°œì‚¬ ë§ˆë²•ë¶€ì—¬ì‹œ", "í™”ì‚´ë“¤ì´ ì¤‘ì•™ìœ¼ë¡œ ëª¨ì´ê³ ", "ê°ê° í™”ì‚´ì€ í”¼í•´ëŸ‰ì´ ì ˆë°˜ìœ¼ë¡œ ê°ì†Œí•©ë‹ˆë‹¤", "Master LV.50"), 6, Snipskillsinv);
+			itemset("í—¤ë“œìƒ·", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.HeadShot.getOrDefault(p.getUniqueId(),0),"","ì ì˜ ë¨¸ë¦¬ë¶€ë¶„ì„ ì ì¤‘ì‹œ ë°œë™ë©ë‹ˆë‹¤", "ìŠ¤í‚¬ë ˆë²¨ì´ ë†’ì„ìˆ˜ë¡ íŒì •ì´ ì¢‹ì•„ì§‘ë‹ˆë‹¤", "ì² ê°‘í™”ì‚´ê³¼ ê¶ê·¹ê¸°ëŠ” ì ìš©ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤","",ChatColor.BOLD+" X "+BigDecimal.valueOf(1.36*(1+ssd.HeadShot.getOrDefault(p.getUniqueId(),0)*0.036)).setScale(2, RoundingMode.HALF_EVEN)), 7, Snipskillsinv);
 			if(Proficiency.getpro(p)<1) {
-				itemset("Áï½ÃÀåÀü(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 9, Snipskillsinv);
-				itemset("Ãæ°İÈ­»ì(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 10, Snipskillsinv);
-				itemset("¿¬¸·(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 11, Snipskillsinv);
-				itemset("±³¶õ(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 12, Snipskillsinv);
-				itemset("Áö¿ø»ç°İ(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 13, Snipskillsinv);
-				itemset("Æ÷º¹(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 14, Snipskillsinv);
-				itemset("È¸ÇÇ±âµ¿(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 15, Snipskillsinv);
-				itemset("Á¤¹Ğ(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 16, Snipskillsinv);
-				itemset("ÃÖÈÄÀÇ ÇÑ¹ß(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/29315"), 17, Snipskillsinv);
+				itemset("ì¦‰ì‹œì¥ì „(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 9, Snipskillsinv);
+				itemset("ì¶©ê²©í™”ì‚´(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 10, Snipskillsinv);
+				itemset("ì—°ë§‰(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 11, Snipskillsinv);
+				itemset("êµë€(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 12, Snipskillsinv);
+				itemset("ì§€ì›ì‚¬ê²©(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 13, Snipskillsinv);
+				itemset("í¬ë³µ(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 14, Snipskillsinv);
+				itemset("íšŒí”¼ê¸°ë™(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 15, Snipskillsinv);
+				itemset("ì •ë°€(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 16, Snipskillsinv);
+				itemset("ìµœí›„ì˜ í•œë°œ(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/29315"), 17, Snipskillsinv);
 			}
 			else if(Proficiency.getpro(p)<2 && Proficiency.getpro(p)>=1) {
-				itemset("Áï½ÃÀåÀü", Material.LEAD, 0, 1, Arrays.asList("¹åÁÙÅ¸±â¿¡ ¼º°øÇÏ¸é È­»ìÇÏ³ª¸¦", "Áï½Ã ÀåÀüÇÕ´Ï´Ù","ÀÏ¹İ È­»ì¸¸ ÀåÀü °¡´ÉÇÕ´Ï´Ù"), 9, Snipskillsinv);
-				itemset("Ãæ°İÈ­»ì", Material.TIPPED_ARROW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","ÀçÀÔ·Â½Ã Ãæ°İÈ­»ìÀ» ¹ß»çÇÕ´Ï´Ù","(ÇÇÇØ·®Àº Ã¶°©È­»ì ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.3*(1+ssd.ArmourPiercingArrow.getOrDefault(p.getUniqueId(),0)*0.06)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 10, Snipskillsinv);
-				itemset("¿¬¸·", Material.SMOKER, 0, 1, Arrays.asList("ÀçÀÔ·Â½Ã ¿¬¸·ÅºÀ» ÅõÃ´ÇÕ´Ï´Ù","¿¬¸·¾È¿¡¼­ ¿õÅ©¸®±â½Ã ¹«Àû»óÅÂ°¡ µË´Ï´Ù","(Áö¼Ó½Ã°£Àº ¼¶±¤Åº ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+""+BigDecimal.valueOf((40+ssd.FlashBomb.getOrDefault(p.getUniqueId(),0)*0.1)/10d).setScale(1, RoundingMode.HALF_EVEN)+"ÃÊ"), 11, Snipskillsinv);
-				itemset("±³¶õ", Material.GLOW_INK_SAC, 0, 1, Arrays.asList("ÀûÀ» Àá½Ã ±âÀı½ÃÅµ´Ï´Ù"), 12, Snipskillsinv);
-				itemset("Áö¿ø»ç°İ", Material.TARGET, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","ÀûÁß½Ã ÈÄ¼Ó»ç°İÀÌ ÀÌ·ç¾îÁı´Ï´Ù", "(ÇÇÇØ·®Àº °ø½À ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.7*ssd.AirStrike.getOrDefault(p.getUniqueId(),0)*0.05).setScale(2, RoundingMode.HALF_EVEN)+"D"), 13, Snipskillsinv);
-				itemset("Æ÷º¹", Material.COPPER_BLOCK, 0, 1, Arrays.asList("¿õÅ©¸®±â + ¾ÆÀÌÅÛ¹Ù²Ù±â(¸¶¿ì½ºÈÙ)·Î", "Æ÷º¹»ç¿ëÀÌ °¡´ÉÇØÁı´Ï´Ù", "Àç»ç¿ë ´ë±â½Ã°£ 1ÃÊ"), 14, Snipskillsinv);
-				itemset("È¸ÇÇ±âµ¿", Material.GLASS_PANE, 0, 1, Arrays.asList("»ç°İÈÄ ÀÌµ¿¼Óµµ°¡ Áõ°¡ÇÕ´Ï´Ù"), 15, Snipskillsinv);
-				itemset("Á¤¹Ğ", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("°ø°İ·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù"), 16, Snipskillsinv);
-				itemset("ÃÖÈÄÀÇ ÇÑ¹ß", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("¿õÅ©¸®±â + ¾ÆÀÌÅÛ´øÁö±â","",ChatColor.BOLD+"+ 10.0D"), 17, Snipskillsinv);
+				itemset("ì¦‰ì‹œì¥ì „", Material.LEAD, 0, 1, Arrays.asList("ë°§ì¤„íƒ€ê¸°ì— ì„±ê³µí•˜ë©´ í™”ì‚´í•˜ë‚˜ë¥¼", "ì¦‰ì‹œ ì¥ì „í•©ë‹ˆë‹¤","ì¼ë°˜ í™”ì‚´ë§Œ ì¥ì „ ê°€ëŠ¥í•©ë‹ˆë‹¤"), 9, Snipskillsinv);
+				itemset("ì¶©ê²©í™”ì‚´", Material.TIPPED_ARROW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì¬ì…ë ¥ì‹œ ì¶©ê²©í™”ì‚´ì„ ë°œì‚¬í•©ë‹ˆë‹¤","(í”¼í•´ëŸ‰ì€ ì² ê°‘í™”ì‚´ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.3*(1+ssd.ArmourPiercingArrow.getOrDefault(p.getUniqueId(),0)*0.06)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 10, Snipskillsinv);
+				itemset("ì—°ë§‰", Material.SMOKER, 0, 1, Arrays.asList("ì¬ì…ë ¥ì‹œ ì—°ë§‰íƒ„ì„ íˆ¬ì²™í•©ë‹ˆë‹¤","ì—°ë§‰ì•ˆì—ì„œ ì›…í¬ë¦¬ê¸°ì‹œ ë¬´ì ìƒíƒœê°€ ë©ë‹ˆë‹¤","(ì§€ì†ì‹œê°„ì€ ì„¬ê´‘íƒ„ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+""+BigDecimal.valueOf((40+ssd.FlashBomb.getOrDefault(p.getUniqueId(),0)*0.1)/10d).setScale(1, RoundingMode.HALF_EVEN)+"ì´ˆ"), 11, Snipskillsinv);
+				itemset("êµë€", Material.GLOW_INK_SAC, 0, 1, Arrays.asList("ì ì„ ì ì‹œ ê¸°ì ˆì‹œí‚µë‹ˆë‹¤"), 12, Snipskillsinv);
+				itemset("ì§€ì›ì‚¬ê²©", Material.TARGET, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì ì¤‘ì‹œ í›„ì†ì‚¬ê²©ì´ ì´ë£¨ì–´ì§‘ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ê³µìŠµ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.7*ssd.AirStrike.getOrDefault(p.getUniqueId(),0)*0.05).setScale(2, RoundingMode.HALF_EVEN)+"D"), 13, Snipskillsinv);
+				itemset("í¬ë³µ", Material.COPPER_BLOCK, 0, 1, Arrays.asList("ì›…í¬ë¦¬ê¸° + ì•„ì´í…œë°”ê¾¸ê¸°(ë§ˆìš°ìŠ¤íœ )ë¡œ", "í¬ë³µì‚¬ìš©ì´ ê°€ëŠ¥í•´ì§‘ë‹ˆë‹¤", "ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ 1ì´ˆ"), 14, Snipskillsinv);
+				itemset("íšŒí”¼ê¸°ë™", Material.GLASS_PANE, 0, 1, Arrays.asList("ì‚¬ê²©í›„ ì´ë™ì†ë„ê°€ ì¦ê°€í•©ë‹ˆë‹¤"), 15, Snipskillsinv);
+				itemset("ì •ë°€", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("ê³µê²©ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤"), 16, Snipskillsinv);
+				itemset("ìµœí›„ì˜ í•œë°œ", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("ì›…í¬ë¦¬ê¸° + num4","",ChatColor.BOLD+"+ 10.0D"), 17, Snipskillsinv);
 
-				itemset("Æ÷º¹ÀåÀü(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 18, Snipskillsinv);
-				itemset("´ëÀüÂ÷·ÎÄÏ(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 19, Snipskillsinv);
-				itemset("±ÙÁ¢Ç×°øÁö¿ø(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 20, Snipskillsinv);
-				itemset("³«ÇÏ»ê(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 23, Snipskillsinv);
-				itemset("Ä§Âø(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 25, Snipskillsinv);
-				itemset("µ¶¼ö¸®ºĞ´ë(Àá±è)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("¿ä±¸ ¼÷·Ãµµ: "+ Proficiency.getproexp(p) + "/155015"), 26, Snipskillsinv);
+				itemset("í¬ë³µì¥ì „(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 18, Snipskillsinv);
+				itemset("ëŒ€ì „ì°¨ë¡œì¼“(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 19, Snipskillsinv);
+				itemset("ê·¼ì ‘í•­ê³µì§€ì›(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 20, Snipskillsinv);
+				itemset("ë‚™í•˜ì‚°(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 23, Snipskillsinv);
+				itemset("ì¹¨ì°©(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 25, Snipskillsinv);
+				itemset("ë…ìˆ˜ë¦¬ë¶„ëŒ€(ì ê¹€)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("ìš”êµ¬ ìˆ™ë ¨ë„: "+ Proficiency.getproexp(p) + "/155015"), 26, Snipskillsinv);
 			}
 			else {
-				itemset("Áï½ÃÀåÀü", Material.LEAD, 0, 1, Arrays.asList("¹åÁÙÅ¸±â¿¡ ¼º°øÇÏ¸é È­»ìÇÏ³ª¸¦", "Áï½Ã ÀåÀüÇÕ´Ï´Ù","ÀÏ¹İ È­»ì¸¸ ÀåÀü °¡´ÉÇÕ´Ï´Ù"), 9, Snipskillsinv);
-				itemset("Ãæ°İÈ­»ì", Material.TIPPED_ARROW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","ÀçÀÔ·Â½Ã Ãæ°İÈ­»ìÀ» ¹ß»çÇÕ´Ï´Ù","(ÇÇÇØ·®Àº Ã¶°©È­»ì ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.3*(1+ssd.ArmourPiercingArrow.getOrDefault(p.getUniqueId(),0)*0.06)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 10, Snipskillsinv);
-				itemset("¿¬¸·", Material.SMOKER, 0, 1, Arrays.asList("ÀçÀÔ·Â½Ã ¿¬¸·ÅºÀ» ÅõÃ´ÇÕ´Ï´Ù","¿¬¸·¾È¿¡¼­ ¿õÅ©¸®±â½Ã ¹«Àû»óÅÂ°¡ µË´Ï´Ù","(Áö¼Ó½Ã°£Àº ¼¶±¤Åº ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+""+BigDecimal.valueOf((40+ssd.FlashBomb.getOrDefault(p.getUniqueId(),0)*0.1)/10d).setScale(1, RoundingMode.HALF_EVEN)+"ÃÊ"), 11, Snipskillsinv);
-				itemset("±³¶õ", Material.GLOW_INK_SAC, 0, 1, Arrays.asList("ÀûÀ» Àá½Ã ±âÀı½ÃÅµ´Ï´Ù"), 12, Snipskillsinv);
-				itemset("Áö¿ø»ç°İ", Material.TARGET, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","ÀûÁß½Ã ÈÄ¼Ó»ç°İÀÌ ÀÌ·ç¾îÁı´Ï´Ù", "(ÇÇÇØ·®Àº °ø½À ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.7*ssd.AirStrike.getOrDefault(p.getUniqueId(),0)*0.05).setScale(2, RoundingMode.HALF_EVEN)+"D"), 13, Snipskillsinv);
-				itemset("Æ÷º¹", Material.COPPER_BLOCK, 0, 1, Arrays.asList("¿õÅ©¸®±â + ¾ÆÀÌÅÛ¹Ù²Ù±â(¸¶¿ì½ºÈÙ)·Î", "Æ÷º¹»ç¿ëÀÌ °¡´ÉÇØÁı´Ï´Ù", "Àç»ç¿ë ´ë±â½Ã°£ 1ÃÊ"), 14, Snipskillsinv);
-				itemset("È¸ÇÇ±âµ¿", Material.GLASS_PANE, 0, 1, Arrays.asList("»ç°İÈÄ ÀÌµ¿¼Óµµ°¡ Áõ°¡ÇÕ´Ï´Ù"), 15, Snipskillsinv);
-				itemset("Á¤¹Ğ", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("°ø°İ·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù"), 16, Snipskillsinv);
-				itemset("ÃÖÈÄÀÇ ÇÑ¹ß", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("¿õÅ©¸®±â + ¾ÆÀÌÅÛ´øÁö±â","",ChatColor.BOLD+"+ 10.0D"), 17, Snipskillsinv);
+				itemset("ì¦‰ì‹œì¥ì „", Material.LEAD, 0, 1, Arrays.asList("ë°§ì¤„íƒ€ê¸°ì— ì„±ê³µí•˜ë©´ í™”ì‚´í•˜ë‚˜ë¥¼", "ì¦‰ì‹œ ì¥ì „í•©ë‹ˆë‹¤","ì¼ë°˜ í™”ì‚´ë§Œ ì¥ì „ ê°€ëŠ¥í•©ë‹ˆë‹¤"), 9, Snipskillsinv);
+				itemset("ì¶©ê²©í™”ì‚´", Material.TIPPED_ARROW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì¬ì…ë ¥ì‹œ ì¶©ê²©í™”ì‚´ì„ ë°œì‚¬í•©ë‹ˆë‹¤","(í”¼í•´ëŸ‰ì€ ì² ê°‘í™”ì‚´ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.3*(1+ssd.ArmourPiercingArrow.getOrDefault(p.getUniqueId(),0)*0.06)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 10, Snipskillsinv);
+				itemset("ì—°ë§‰", Material.SMOKER, 0, 1, Arrays.asList("ì¬ì…ë ¥ì‹œ ì—°ë§‰íƒ„ì„ íˆ¬ì²™í•©ë‹ˆë‹¤","ì—°ë§‰ì•ˆì—ì„œ ì›…í¬ë¦¬ê¸°ì‹œ ë¬´ì ìƒíƒœê°€ ë©ë‹ˆë‹¤","(ì§€ì†ì‹œê°„ì€ ì„¬ê´‘íƒ„ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+""+BigDecimal.valueOf((40+ssd.FlashBomb.getOrDefault(p.getUniqueId(),0)*0.1)/10d).setScale(1, RoundingMode.HALF_EVEN)+"ì´ˆ"), 11, Snipskillsinv);
+				itemset("êµë€", Material.GLOW_INK_SAC, 0, 1, Arrays.asList("ì ì„ ì ì‹œ ê¸°ì ˆì‹œí‚µë‹ˆë‹¤"), 12, Snipskillsinv);
+				itemset("ì§€ì›ì‚¬ê²©", Material.TARGET, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì ì¤‘ì‹œ í›„ì†ì‚¬ê²©ì´ ì´ë£¨ì–´ì§‘ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ê³µìŠµ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.7*ssd.AirStrike.getOrDefault(p.getUniqueId(),0)*0.05).setScale(2, RoundingMode.HALF_EVEN)+"D"), 13, Snipskillsinv);
+				itemset("í¬ë³µ", Material.COPPER_BLOCK, 0, 1, Arrays.asList("ì›…í¬ë¦¬ê¸° + ì•„ì´í…œë°”ê¾¸ê¸°(ë§ˆìš°ìŠ¤íœ )ë¡œ", "í¬ë³µì‚¬ìš©ì´ ê°€ëŠ¥í•´ì§‘ë‹ˆë‹¤", "ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ 1ì´ˆ"), 14, Snipskillsinv);
+				itemset("íšŒí”¼ê¸°ë™", Material.GLASS_PANE, 0, 1, Arrays.asList("ì‚¬ê²©í›„ ì´ë™ì†ë„ê°€ ì¦ê°€í•©ë‹ˆë‹¤"), 15, Snipskillsinv);
+				itemset("ì •ë°€", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("ê³µê²©ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤"), 16, Snipskillsinv);
+				itemset("ìµœí›„ì˜ í•œë°œ", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("ì›…í¬ë¦¬ê¸° + num4","",ChatColor.BOLD+"+ 10.0D"), 17, Snipskillsinv);
 
-				itemset("Æ÷º¹ÀåÀü", Material.CROSSBOW, 0, 1, Arrays.asList("Æ÷º¹»ç¿ë½Ã È­»ìÇÏ³ª¸¦ ÀåÀüÇÕ´Ï´Ù","ÈÙÀ» ¾Æ·¡·Î ³»¸®¸é Á¦ÀÚ¸®¿¡¼­ ÀåÀüÇÕ´Ï´Ù","ÀÏ¹İ È­»ì¸¸ ÀåÀü °¡´ÉÇÕ´Ï´Ù"), 18, Snipskillsinv);
-				itemset("´ëÀüÂ÷·ÎÄÏ", Material.BEDROCK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","ÀçÀÔ·Â½Ã ´ëÀüÂ÷·ÎÄÏÀ» ¹ß»çÇÕ´Ï´Ù","ÀûÀÇ ¹æ¾î·Â¿¡ ºñ·ÊÇØ ´õ³ôÀº ÇÇÇØ¸¦ Áİ´Ï´Ù","(ÇÇÇØ·®Àº Ã¶°©È­»ì ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)","",ChatColor.BOLD+
-						" X ("+BigDecimal.valueOf(1.3*(1+ssd.ArmourPiercingArrow.getOrDefault(p.getUniqueId(),0)*0.1)).setScale(2, RoundingMode.HALF_EVEN)+"X (1+Àû¹æ¾î·Â)) D"), 19, Snipskillsinv);
-				itemset("±ÙÁ¢Ç×°øÁö¿ø", Material.TNT, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[¹Ù¶÷ °è¿­]","ÀçÀÔ·Â½Ã ±ÙÁ¢Ç×°øÁö¿øÀ» ¿äÃ»ÇÕ´Ï´Ù", "(ÇÇÇØ·®Àº °ø½À ·¹º§¿¡ ºñ·ÊÇÕ´Ï´Ù)",
+				itemset("í¬ë³µì¥ì „", Material.CROSSBOW, 0, 1, Arrays.asList("í¬ë³µì‚¬ìš©ì‹œ í™”ì‚´í•˜ë‚˜ë¥¼ ì¥ì „í•©ë‹ˆë‹¤","íœ ì„ ì•„ë˜ë¡œ ë‚´ë¦¬ë©´ ì œìë¦¬ì—ì„œ ì¥ì „í•©ë‹ˆë‹¤","ì¼ë°˜ í™”ì‚´ë§Œ ì¥ì „ ê°€ëŠ¥í•©ë‹ˆë‹¤"), 18, Snipskillsinv);
+				itemset("ëŒ€ì „ì°¨ë¡œì¼“", Material.BEDROCK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì¬ì…ë ¥ì‹œ ëŒ€ì „ì°¨ë¡œì¼“ì„ ë°œì‚¬í•©ë‹ˆë‹¤","ì ì˜ ë°©ì–´ë ¥ì— ë¹„ë¡€í•´ ë”ë†’ì€ í”¼í•´ë¥¼ ì¤ë‹ˆë‹¤","(í”¼í•´ëŸ‰ì€ ì² ê°‘í™”ì‚´ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)","",ChatColor.BOLD+
+						" X ("+BigDecimal.valueOf(1.3*(1+ssd.ArmourPiercingArrow.getOrDefault(p.getUniqueId(),0)*0.1)).setScale(2, RoundingMode.HALF_EVEN)+"X (1+ì ë°©ì–´ë ¥)) D"), 19, Snipskillsinv);
+				itemset("ê·¼ì ‘í•­ê³µì§€ì›", Material.TNT, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[ë°”ëŒ ê³„ì—´]","ì¬ì…ë ¥ì‹œ ê·¼ì ‘í•­ê³µì§€ì›ì„ ìš”ì²­í•©ë‹ˆë‹¤", "(í”¼í•´ëŸ‰ì€ ê³µìŠµ ë ˆë²¨ì— ë¹„ë¡€í•©ë‹ˆë‹¤)",
 						"",ChatColor.BOLD+"12 X "+BigDecimal.valueOf(0.34*(1 + ssd.FlashBomb.getOrDefault(p.getUniqueId(),0)*0.04)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 20, Snipskillsinv);
-				itemset("³«ÇÏ»ê", Material.ELYTRA, 0, 1, Arrays.asList("¿õÅ©¸®±â µµÁß ´À¸°³«ÇÏÈ¿°ú¸¦ ¾ò½À´Ï´Ù"), 23, Snipskillsinv);
-				itemset("Ä§Âø", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("°ø°İ·Â°ú ¹æ¾î·ÂÀÌ Áõ°¡ÇÕ´Ï´Ù","ÃÖÈÄÀÇ ÇÑ¹ß Àç»ç¿ë´ë±â½Ã°£ÀÌ °¨¼ÒÇÕ´Ï´Ù", "Çìµå¼¦ÀÌ Ç×»ó ¹ßµ¿µË´Ï´Ù"), 25, Snipskillsinv);
-				itemset("µ¶¼ö¸®ºĞ´ë", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("´Ş¸®±â + ¾ÆÀÌÅÛ´øÁö±â","",ChatColor.BOLD+"40 X 0.5D, 6.5D"), 26, Snipskillsinv);
+				itemset("ë‚™í•˜ì‚°", Material.ELYTRA, 0, 1, Arrays.asList("ì›…í¬ë¦¬ê¸° ë„ì¤‘ ëŠë¦°ë‚™í•˜íš¨ê³¼ë¥¼ ì–»ìŠµë‹ˆë‹¤"), 23, Snipskillsinv);
+				itemset("ì¹¨ì°©", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("ê³µê²©ë ¥ê³¼ ë°©ì–´ë ¥ì´ ì¦ê°€í•©ë‹ˆë‹¤","ìµœí›„ì˜ í•œë°œ ì¬ì‚¬ìš©ëŒ€ê¸°ì‹œê°„ì´ ê°ì†Œí•©ë‹ˆë‹¤", "í—¤ë“œìƒ·ì´ í•­ìƒ ë°œë™ë©ë‹ˆë‹¤"), 25, Snipskillsinv);
+				itemset("ë…ìˆ˜ë¦¬ë¶„ëŒ€", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("ì›…í¬ë¦¬ê¸° + num5","",ChatColor.BOLD+"40 X 0.5D, 6.5D"), 26, Snipskillsinv);
 			}
-			itemset("ÇöÀç ¼÷·Ãµµ", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(""+Proficiency.getproexp(p)), 27, Snipskillsinv);
-			itemset("½ºÅ³Æ÷ÀÎÆ®", Material.NETHER_STAR, 0, 1, Arrays.asList(ChatColor.AQUA+"SP."+ssd.SkillPoints.getOrDefault(p.getUniqueId(),0),"","Å¬¸¯ÇÏ¸é ½ºÅ³Æ÷ÀÎÆ®°¡ ÃÊ±âÈ­ µË´Ï´Ù"), 35, Snipskillsinv);
+			itemset("í˜„ì¬ ìˆ™ë ¨ë„", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(""+Proficiency.getproexp(p)), 27, Snipskillsinv);
+			itemset("ìŠ¤í‚¬í¬ì¸íŠ¸", Material.NETHER_STAR, 0, 1, Arrays.asList(ChatColor.AQUA+"SP."+ssd.SkillPoints.getOrDefault(p.getUniqueId(),0),"","í´ë¦­í•˜ë©´ ìŠ¤í‚¬í¬ì¸íŠ¸ê°€ ì´ˆê¸°í™” ë©ë‹ˆë‹¤"), 35, Snipskillsinv);
 
 		}
 		else {
@@ -159,7 +127,7 @@ public class SnipSkillsGui{
 				itemset("Crawl", Material.COPPER_BLOCK, 0, 1, Arrays.asList("Able To Crawl By Using", "Sneaking + ChangingItem(MouseWheel)", "Cooldown 1s"), 14, Snipskillsinv);
 				itemset("Evasion", Material.GLASS_PANE, 0, 1, Arrays.asList("Get Speed Effect After Shooting"), 15, Snipskillsinv);
 				itemset("Precision", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage"), 16, Snipskillsinv);
-				itemset("The Last One", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("Sneaking + ThrowItem","",ChatColor.BOLD+"+ 10.0D"), 17, Snipskillsinv);
+				itemset("The Last One", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("Sneaking + num4","",ChatColor.BOLD+"+ 10.0D"), 17, Snipskillsinv);
 
 				itemset("CrawlingCharge(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 18, Snipskillsinv);
 				itemset("Destroyer(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 19, Snipskillsinv);
@@ -177,7 +145,7 @@ public class SnipSkillsGui{
 				itemset("Crawl", Material.COPPER_BLOCK, 0, 1, Arrays.asList("Able To Crawl By Using", "Sneaking + ChangingItem(MouseWheel)", "Cooldown 1s"), 14, Snipskillsinv);
 				itemset("Evasion", Material.GLASS_PANE, 0, 1, Arrays.asList("Get Speed Effect After Shooting"), 15, Snipskillsinv);
 				itemset("Precision", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage"), 16, Snipskillsinv);
-				itemset("The Last One", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("Sneaking + ThrowItem","",ChatColor.BOLD+"+ 10.0D"), 17, Snipskillsinv);
+				itemset("The Last One", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("Sneaking + num4","",ChatColor.BOLD+"+ 10.0D"), 17, Snipskillsinv);
 
 				itemset("CrawlingCharge", Material.CROSSBOW, 0, 1, Arrays.asList("Charge Arrow Instantly When Use Crawl","Charge in position if [Scroll Down]","You Can Only Charge Normal Arrow"), 18, Snipskillsinv);
 				itemset("Destroyer", Material.BEDROCK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Wind]","Shot Destroyer When Use Once More","Higher Damage to Armored Enemies","(Damage Affected By ArmourPiercingArrow)","",ChatColor.BOLD+
@@ -186,7 +154,7 @@ public class SnipSkillsGui{
 						"",ChatColor.BOLD+"12 X "+BigDecimal.valueOf(0.34*(1 + ssd.FlashBomb.getOrDefault(p.getUniqueId(),0)*0.04)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 20, Snipskillsinv);
 				itemset("Parachute", Material.ELYTRA, 0, 1, Arrays.asList("Get Slow Falling Effect While Sneaking"), 23, Snipskillsinv);
 				itemset("Composure", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Damage & Armor","Decrease The Last One Cooldown", "HeadShot Always Activate"), 25, Snipskillsinv);
-				itemset("Team Eagle", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("Sprinting + ThrowItem","",ChatColor.BOLD+"40 X 0.5D, 6.5D"), 26, Snipskillsinv);
+				itemset("Team Eagle", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("Sneaking + num5","",ChatColor.BOLD+"40 X 0.5D, 6.5D"), 26, Snipskillsinv);
 			}
 			itemset("Current Proficiency", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(""+Proficiency.getproexp(p)), 27, Snipskillsinv);
 			itemset("SkillPoints", Material.NETHER_STAR, 0, 1, Arrays.asList(ChatColor.AQUA+"SP."+ssd.SkillPoints.getOrDefault(p.getUniqueId(),0),"","Click if you want to reset your skill's levels"), 35, Snipskillsinv);

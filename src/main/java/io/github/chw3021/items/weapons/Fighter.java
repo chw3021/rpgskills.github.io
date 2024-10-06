@@ -72,8 +72,8 @@ public class Fighter extends Weapons implements Listener {
 								Operation.ADD_NUMBER, EquipmentSlot.HAND));
 				if (cmdt == 14) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¹Ù¶÷ÀÇ ³ÊÅ¬");
-						rm.setLocalizedName(ChatColor.GOLD +"¹Ù¶÷ÀÇ ³ÊÅ¬");
+						rm.setDisplayName(ChatColor.GOLD +"ë°”ëŒì˜ ë„ˆí´");
+						rm.setLocalizedName(ChatColor.GOLD +"ë°”ëŒì˜ ë„ˆí´");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Windy Knuckle");
@@ -85,8 +85,8 @@ public class Fighter extends Weapons implements Listener {
 				}
 				else if (cmdt == 5) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"´ëÁöÀÇ ³ÊÅ¬");
-						rm.setLocalizedName(ChatColor.GOLD +"´ëÁöÀÇ ³ÊÅ¬");
+						rm.setDisplayName(ChatColor.GOLD +"ëŒ€ì§€ì˜ ë„ˆí´");
+						rm.setLocalizedName(ChatColor.GOLD +"ëŒ€ì§€ì˜ ë„ˆí´");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Earth Knuckle");
@@ -96,8 +96,8 @@ public class Fighter extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 6) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¼­¸®ÀÇ ³ÊÅ¬");
-						rm.setLocalizedName(ChatColor.GOLD +"¼­¸®ÀÇ ³ÊÅ¬");
+						rm.setDisplayName(ChatColor.GOLD +"ì„œë¦¬ì˜ ë„ˆí´");
+						rm.setLocalizedName(ChatColor.GOLD +"ì„œë¦¬ì˜ ë„ˆí´");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Frost Knuckle");
@@ -107,8 +107,8 @@ public class Fighter extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 7) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¹Ù´ÙÀÇ ³ÊÅ¬");
-						rm.setLocalizedName(ChatColor.GOLD +"¹Ù´ÙÀÇ ³ÊÅ¬");
+						rm.setDisplayName(ChatColor.GOLD +"ë°”ë‹¤ì˜ ë„ˆí´");
+						rm.setLocalizedName(ChatColor.GOLD +"ë°”ë‹¤ì˜ ë„ˆí´");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Ocean Knuckle");
@@ -118,8 +118,8 @@ public class Fighter extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 8) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¾îµÒÀÇ ³ÊÅ¬");
-						rm.setLocalizedName(ChatColor.GOLD +"¾îµÒÀÇ ³ÊÅ¬");
+						rm.setDisplayName(ChatColor.GOLD +"ì–´ë‘ ì˜ ë„ˆí´");
+						rm.setLocalizedName(ChatColor.GOLD +"ì–´ë‘ ì˜ ë„ˆí´");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Dark Knuckle");
@@ -129,8 +129,8 @@ public class Fighter extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 9) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"°³Á¶µÈ ³ÊÅ¬");
-						rm.setLocalizedName(ChatColor.GOLD +"°³Á¶µÈ ³ÊÅ¬");
+						rm.setDisplayName(ChatColor.GOLD +"ê°œì¡°ëœ ë„ˆí´");
+						rm.setLocalizedName(ChatColor.GOLD +"ê°œì¡°ëœ ë„ˆí´");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Hyper Knuckle");
@@ -140,8 +140,8 @@ public class Fighter extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 10) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"ÀÛ¿­ÇÏ´Â ³ÊÅ¬");
-						rm.setLocalizedName(ChatColor.GOLD +"ÀÛ¿­ÇÏ´Â ³ÊÅ¬");
+						rm.setDisplayName(ChatColor.GOLD +"ì‘ì—´í•˜ëŠ” ë„ˆí´");
+						rm.setLocalizedName(ChatColor.GOLD +"ì‘ì—´í•˜ëŠ” ë„ˆí´");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Burning Knuckle");
@@ -151,8 +151,8 @@ public class Fighter extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 11) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¸Íµ¶ ³ÊÅ¬");
-						rm.setLocalizedName(ChatColor.GOLD +"¸Íµ¶ ³ÊÅ¬");
+						rm.setDisplayName(ChatColor.GOLD +"ë§¹ë… ë„ˆí´");
+						rm.setLocalizedName(ChatColor.GOLD +"ë§¹ë… ë„ˆí´");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Poison Knuckle");
@@ -180,8 +180,8 @@ public class Fighter extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 14,
 									Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"ÀÚ¿¬ÀÇ ³ÊÅ¬");
-						rm.setLocalizedName(ChatColor.GOLD +"ÀÚ¿¬ÀÇ ³ÊÅ¬");
+						rm.setDisplayName(ChatColor.GOLD +"ìì—°ì˜ ë„ˆí´");
+						rm.setLocalizedName(ChatColor.GOLD +"ìì—°ì˜ ë„ˆí´");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Natural Knuckle");
@@ -208,8 +208,8 @@ public class Fighter extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 6,
 									Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³ÊÅ¬ - 1´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³ÊÅ¬ - 1´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ˆí´ - 1ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ˆí´ - 1ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.1");
@@ -236,8 +236,8 @@ public class Fighter extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 7,
 									Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³ÊÅ¬ - 2´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³ÊÅ¬ - 2´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ˆí´ - 2ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ˆí´ - 2ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.2");
@@ -254,8 +254,8 @@ public class Fighter extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 8,
 									Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³ÊÅ¬ - 3´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³ÊÅ¬ - 3´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ˆí´ - 3ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ˆí´ - 3ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.3");
@@ -272,8 +272,8 @@ public class Fighter extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 9,
 									Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³ÊÅ¬ - 4´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³ÊÅ¬ - 4´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ˆí´ - 4ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ˆí´ - 4ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.4");
@@ -290,8 +290,8 @@ public class Fighter extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 10,
 									Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³ÊÅ¬ - 5´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³ÊÅ¬ - 5´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ˆí´ - 5ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ˆí´ - 5ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.5");
@@ -308,8 +308,8 @@ public class Fighter extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 11,
 									Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³ÊÅ¬ - 6´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³ÊÅ¬ - 6´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ˆí´ - 6ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ˆí´ - 6ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.6");
@@ -326,8 +326,8 @@ public class Fighter extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 12,
 									Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³ÊÅ¬ - 7´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³ÊÅ¬ - 7´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ˆí´ - 7ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ˆí´ - 7ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.7");
@@ -344,8 +344,8 @@ public class Fighter extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 13,
 									Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³ÊÅ¬ - 8´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ³ÊÅ¬ - 8´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ˆí´ - 8ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë„ˆí´ - 8ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.8");
@@ -796,7 +796,7 @@ public class Fighter extends Weapons implements Listener {
 			sm.getPersistentDataContainer().remove(herocore);
 			sm =pak.remelm(sm);
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				sm.setLore(Arrays.asList("º¸Á¶ ³ÊÅ¬"));
+				sm.setLore(Arrays.asList("ë³´ì¡° ë„ˆí´"));
 			}
 			else {
 				sm.setLore(Arrays.asList("Second Knuckle"));
@@ -881,9 +881,9 @@ public class Fighter extends Weapons implements Listener {
 		meta.setCustomModelData(1000);
 		meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
 		if(lang.contains("kr")){
-			meta.setLore(Arrays.asList("¼Õ±³Ã¼½Ã ÀåÂø"));
-			meta.setDisplayName("³ª¹« ³ÊÅ¬");
-			meta.setLocalizedName("³ª¹« ³ÊÅ¬");
+			meta.setLore(Arrays.asList("ì†êµì²´ì‹œ ì¥ì°©"));
+			meta.setDisplayName("ë‚˜ë¬´ ë„ˆí´");
+			meta.setLocalizedName("ë‚˜ë¬´ ë„ˆí´");
 		}
 		else {
 			meta.setDisplayName("Wooden Knuckle");
@@ -917,9 +917,9 @@ public class Fighter extends Weapons implements Listener {
 		meta.setCustomModelData(1000 +1);
 		meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
 		if(lang.contains("kr")){
-			meta.setLore(Arrays.asList("¼Õ±³Ã¼½Ã ÀåÂø"));
-			meta.setDisplayName("µ¹ ³ÊÅ¬");
-			meta.setLocalizedName("µ¹ ³ÊÅ¬");
+			meta.setLore(Arrays.asList("ì†êµì²´ì‹œ ì¥ì°©"));
+			meta.setDisplayName("ëŒ ë„ˆí´");
+			meta.setLocalizedName("ëŒ ë„ˆí´");
 		}
 		else {
 			meta.setDisplayName("Stone Knuckle");
@@ -952,9 +952,9 @@ public class Fighter extends Weapons implements Listener {
 		meta.setCustomModelData(1000 + 2);
 		meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
 		if(lang.contains("kr")){
-			meta.setLore(Arrays.asList("¼Õ±³Ã¼½Ã ÀåÂø"));
-			meta.setDisplayName("±İ ³ÊÅ¬");
-			meta.setLocalizedName("±İ ³ÊÅ¬");
+			meta.setLore(Arrays.asList("ì†êµì²´ì‹œ ì¥ì°©"));
+			meta.setDisplayName("ê¸ˆ ë„ˆí´");
+			meta.setLocalizedName("ê¸ˆ ë„ˆí´");
 		}
 		else {
 			meta.setDisplayName("Gold Knuckle");
@@ -987,9 +987,9 @@ public class Fighter extends Weapons implements Listener {
 		meta.setCustomModelData(1000 + 3);
 		meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
 		if(lang.contains("kr")){
-			meta.setLore(Arrays.asList("¼Õ±³Ã¼½Ã ÀåÂø"));
-			meta.setDisplayName("Ã¶ ³ÊÅ¬");
-			meta.setLocalizedName("Ã¶ ³ÊÅ¬");
+			meta.setLore(Arrays.asList("ì†êµì²´ì‹œ ì¥ì°©"));
+			meta.setDisplayName("ì²  ë„ˆí´");
+			meta.setLocalizedName("ì²  ë„ˆí´");
 		}
 		else {
 			meta.setDisplayName("Iron Knuckle");
@@ -1022,9 +1022,9 @@ public class Fighter extends Weapons implements Listener {
 		meta.setCustomModelData(1000 + 4);
 		meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
 		if(lang.contains("kr")){
-			meta.setLore(Arrays.asList("¼Õ±³Ã¼½Ã ÀåÂø"));
-			meta.setDisplayName("´ÙÀÌ¾Æ¸óµå ³ÊÅ¬");
-			meta.setLocalizedName("´ÙÀÌ¾Æ¸óµå ³ÊÅ¬");
+			meta.setLore(Arrays.asList("ì†êµì²´ì‹œ ì¥ì°©"));
+			meta.setDisplayName("ë‹¤ì´ì•„ëª¬ë“œ ë„ˆí´");
+			meta.setLocalizedName("ë‹¤ì´ì•„ëª¬ë“œ ë„ˆí´");
 		}
 		else {
 			meta.setDisplayName("Diamond Knuckle");
@@ -1059,9 +1059,9 @@ public class Fighter extends Weapons implements Listener {
 		Player p = (Player) d.getView().getPlayer();
 		
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			rm.setLore(Arrays.asList("¼Õ±³Ã¼½Ã ÀåÂø"));
-			rm.setDisplayName("³×´õ¶óÀÌÆ® ³ÊÅ¬");
-			rm.setLocalizedName("³×´õ¶óÀÌÆ® ³ÊÅ¬");
+			rm.setLore(Arrays.asList("ì†êµì²´ì‹œ ì¥ì°©"));
+			rm.setDisplayName("ë„¤ë”ë¼ì´íŠ¸ ë„ˆí´");
+			rm.setLocalizedName("ë„¤ë”ë¼ì´íŠ¸ ë„ˆí´");
 		}
 		else {
 			rm.setDisplayName("Netherite Knuckle");
@@ -1118,9 +1118,9 @@ public class Fighter extends Weapons implements Listener {
 					rm.setCustomModelData(1000 + 60);
 					rm.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setLore(Arrays.asList("¼Õ±³Ã¼½Ã ÀåÂø"));
-						rm.setDisplayName("³×´õ¶óÀÌÆ® ³ÊÅ¬");
-						rm.setLocalizedName("³×´õ¶óÀÌÆ® ³ÊÅ¬");
+						rm.setLore(Arrays.asList("ì†êµì²´ì‹œ ì¥ì°©"));
+						rm.setDisplayName("ë„¤ë”ë¼ì´íŠ¸ ë„ˆí´");
+						rm.setLocalizedName("ë„¤ë”ë¼ì´íŠ¸ ë„ˆí´");
 					}
 					else {
 						rm.setDisplayName("Netherite Knuckle");

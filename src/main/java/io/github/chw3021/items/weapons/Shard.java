@@ -66,8 +66,8 @@ public class Shard extends Weapons implements Listener {
 								Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
 				if (cmdt == 14) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¹Ù¶÷ÀÇ ºñ´Ã");
-						rm.setLocalizedName(ChatColor.GOLD +"¹Ù¶÷ÀÇ ºñ´Ã");
+						rm.setDisplayName(ChatColor.GOLD +"ë°”ëŒì˜ ë¹„ëŠ˜");
+						rm.setLocalizedName(ChatColor.GOLD +"ë°”ëŒì˜ ë¹„ëŠ˜");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Windy Shard");
@@ -79,8 +79,8 @@ public class Shard extends Weapons implements Listener {
 				}
 				else if (cmdt == 5) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"´ëÁöÀÇ ºñ´Ã");
-						rm.setLocalizedName(ChatColor.GOLD +"´ëÁöÀÇ ºñ´Ã");
+						rm.setDisplayName(ChatColor.GOLD +"ëŒ€ì§€ì˜ ë¹„ëŠ˜");
+						rm.setLocalizedName(ChatColor.GOLD +"ëŒ€ì§€ì˜ ë¹„ëŠ˜");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Earth Shard");
@@ -90,8 +90,8 @@ public class Shard extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 6) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¼­¸®ÀÇ ºñ´Ã");
-						rm.setLocalizedName(ChatColor.GOLD +"¼­¸®ÀÇ ºñ´Ã");
+						rm.setDisplayName(ChatColor.GOLD +"ì„œë¦¬ì˜ ë¹„ëŠ˜");
+						rm.setLocalizedName(ChatColor.GOLD +"ì„œë¦¬ì˜ ë¹„ëŠ˜");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Frost Shard");
@@ -101,8 +101,8 @@ public class Shard extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 7) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¹Ù´ÙÀÇ ºñ´Ã");
-						rm.setLocalizedName(ChatColor.GOLD +"¹Ù´ÙÀÇ ºñ´Ã");
+						rm.setDisplayName(ChatColor.GOLD +"ë°”ë‹¤ì˜ ë¹„ëŠ˜");
+						rm.setLocalizedName(ChatColor.GOLD +"ë°”ë‹¤ì˜ ë¹„ëŠ˜");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Ocean Shard");
@@ -112,8 +112,8 @@ public class Shard extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 8) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¾îµÒÀÇ ºñ´Ã");
-						rm.setLocalizedName(ChatColor.GOLD +"¾îµÒÀÇ ºñ´Ã");
+						rm.setDisplayName(ChatColor.GOLD +"ì–´ë‘ ì˜ ë¹„ëŠ˜");
+						rm.setLocalizedName(ChatColor.GOLD +"ì–´ë‘ ì˜ ë¹„ëŠ˜");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Dark Shard");
@@ -123,8 +123,8 @@ public class Shard extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 9) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"°³Á¶µÈ ºñ´Ã");
-						rm.setLocalizedName(ChatColor.GOLD +"°³Á¶µÈ ºñ´Ã");
+						rm.setDisplayName(ChatColor.GOLD +"ê°œì¡°ëœ ë¹„ëŠ˜");
+						rm.setLocalizedName(ChatColor.GOLD +"ê°œì¡°ëœ ë¹„ëŠ˜");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Hyper Shard");
@@ -134,8 +134,8 @@ public class Shard extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 10) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"ÀÛ¿­ÇÏ´Â ºñ´Ã");
-						rm.setLocalizedName(ChatColor.GOLD +"ÀÛ¿­ÇÏ´Â ºñ´Ã");
+						rm.setDisplayName(ChatColor.GOLD +"ì‘ì—´í•˜ëŠ” ë¹„ëŠ˜");
+						rm.setLocalizedName(ChatColor.GOLD +"ì‘ì—´í•˜ëŠ” ë¹„ëŠ˜");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Burning Shard");
@@ -145,8 +145,8 @@ public class Shard extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 11) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"¸Íµ¶ ºñ´Ã");
-						rm.setLocalizedName(ChatColor.GOLD +"¸Íµ¶ ºñ´Ã");
+						rm.setDisplayName(ChatColor.GOLD +"ë§¹ë… ë¹„ëŠ˜");
+						rm.setLocalizedName(ChatColor.GOLD +"ë§¹ë… ë¹„ëŠ˜");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Poison Shard");
@@ -174,8 +174,8 @@ public class Shard extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 27,
 									Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.GOLD +"ÀÚ¿¬ÀÇ ºñ´Ã");
-						rm.setLocalizedName(ChatColor.GOLD +"ÀÚ¿¬ÀÇ ºñ´Ã");
+						rm.setDisplayName(ChatColor.GOLD +"ìì—°ì˜ ë¹„ëŠ˜");
+						rm.setLocalizedName(ChatColor.GOLD +"ìì—°ì˜ ë¹„ëŠ˜");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Natural Shard");
@@ -202,8 +202,8 @@ public class Shard extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 10,
 									Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ºñ´Ã - 1´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ºñ´Ã - 1´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë¹„ëŠ˜ - 1ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë¹„ëŠ˜ - 1ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Shard - Lv.1");
@@ -230,8 +230,8 @@ public class Shard extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 12,
 									Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ºñ´Ã - 2´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ºñ´Ã - 2´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë¹„ëŠ˜ - 2ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë¹„ëŠ˜ - 2ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Shard - Lv.2");
@@ -248,8 +248,8 @@ public class Shard extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 14,
 									Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ºñ´Ã - 3´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ºñ´Ã - 3´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë¹„ëŠ˜ - 3ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë¹„ëŠ˜ - 3ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Shard - Lv.3");
@@ -266,8 +266,8 @@ public class Shard extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 16,
 									Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ºñ´Ã - 4´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ºñ´Ã - 4´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë¹„ëŠ˜ - 4ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë¹„ëŠ˜ - 4ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Shard - Lv.4");
@@ -284,8 +284,8 @@ public class Shard extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 18,
 									Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ºñ´Ã - 5´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ºñ´Ã - 5´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë¹„ëŠ˜ - 5ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë¹„ëŠ˜ - 5ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Shard - Lv.5");
@@ -302,8 +302,8 @@ public class Shard extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 20,
 									Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ºñ´Ã - 6´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ºñ´Ã - 6´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë¹„ëŠ˜ - 6ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë¹„ëŠ˜ - 6ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Shard - Lv.6");
@@ -320,8 +320,8 @@ public class Shard extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 22,
 									Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ºñ´Ã - 7´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ºñ´Ã - 7´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë¹„ëŠ˜ - 7ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë¹„ëŠ˜ - 7ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Shard - Lv.7");
@@ -338,8 +338,8 @@ public class Shard extends Weapons implements Listener {
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 24,
 									Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ºñ´Ã - 8´Ü°è");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"¿ø¼Ò±â¿îÀÇ ºñ´Ã - 8´Ü°è");
+						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë¹„ëŠ˜ - 8ë‹¨ê³„");
+						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"ì›ì†Œê¸°ìš´ì˜ ë¹„ëŠ˜ - 8ë‹¨ê³„");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Shard - Lv.8");
