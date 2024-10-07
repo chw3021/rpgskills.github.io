@@ -89,7 +89,7 @@ public class RMain extends JavaPlugin{
 
     	getConfig().addDefault("Language", "ko_kr");
         getConfig().options().copyDefaults(true);
-        getConfig().options().setHeader(Arrays.asList("English - en_us","�ѱ��� - ko_kr"));
+        getConfig().options().setHeader(Arrays.asList("English - en_us","한국어 - ko_kr"));
         saveConfig();
     	instance = this;
         System.out.println("Plugin is Activated");

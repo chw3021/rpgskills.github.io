@@ -48,11 +48,11 @@ public class Boots implements Listener {
 			rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(armor_toughness, 1, Operation.ADD_NUMBER, EquipmentSlotGroup.FEET));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 				rm.setDisplayName("안전화");
-				rm.setLocalizedName("안전화");
+				rm.setItemName("안전화");
 			}
 			else {
 				rm.setDisplayName("Safety Shoes");
-				rm.setLocalizedName("Safety Shoes");
+				rm.setItemName("Safety Shoes");
 			}
 			r.setItemMeta(rm);
 		}
@@ -65,11 +65,11 @@ public class Boots implements Listener {
 			rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(armor_toughness, 1, Operation.ADD_NUMBER, EquipmentSlotGroup.FEET));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 				rm.setDisplayName("설산 장화");
-				rm.setLocalizedName("설산 장화");
+				rm.setItemName("설산 장화");
 			}
 			else {
 				rm.setDisplayName("Snowy Boots");
-				rm.setLocalizedName("Snowy Boots");
+				rm.setItemName("Snowy Boots");
 			}
 			r.setItemMeta(rm);
 		}
@@ -81,11 +81,11 @@ public class Boots implements Listener {
 			rm.addAttributeModifier(Attribute.GENERIC_ARMOR, new AttributeModifier(armor, 2, Operation.ADD_NUMBER, EquipmentSlotGroup.FEET));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 				rm.setDisplayName("오리발");
-				rm.setLocalizedName("오리발");
+				rm.setItemName("오리발");
 			}
 			else {
 				rm.setDisplayName("Flippers");
-				rm.setLocalizedName("Flippers");
+				rm.setItemName("Flippers");
 			}
 			r.setItemMeta(rm);
 		}
@@ -97,11 +97,11 @@ public class Boots implements Listener {
 			rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(armor_toughness, 2, Operation.ADD_NUMBER, EquipmentSlotGroup.FEET));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 				rm.setDisplayName("프리즈머린 신발");
-				rm.setLocalizedName("프리즈머린 신발");
+				rm.setItemName("프리즈머린 신발");
 			}
 			else {
 				rm.setDisplayName("Prismarine Boots");
-				rm.setLocalizedName("Prismarine Boots");
+				rm.setItemName("Prismarine Boots");
 			}
 			r.setItemMeta(rm);
 		}
@@ -114,11 +114,11 @@ public class Boots implements Listener {
 			rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(armor_toughness, 3, Operation.ADD_NUMBER, EquipmentSlotGroup.FEET));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 				rm.setDisplayName("전술화");
-				rm.setLocalizedName("전술화");
+				rm.setItemName("전술화");
 			}
 			else {
 				rm.setDisplayName("Combat Boots");
-				rm.setLocalizedName("Combat Boots");
+				rm.setItemName("Combat Boots");
 			}
 			r.setItemMeta(rm);
 		}
@@ -131,11 +131,11 @@ public class Boots implements Listener {
 			im.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(armor_toughness, 4, Operation.ADD_NUMBER, EquipmentSlotGroup.FEET));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 				im.setDisplayName("합금화");
-				im.setLocalizedName("합금화");
+				im.setItemName("합금화");
 			}
 			else {
 				im.setDisplayName("Alloy Boots");
-				im.setLocalizedName("Alloy Boots");
+				im.setItemName("Alloy Boots");
 			}
 			im.addEnchant(Enchantment.PROTECTION, 1, true);
 			r.setItemMeta(im);
@@ -166,11 +166,11 @@ public class Boots implements Listener {
 							"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlotGroup.FEET));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName("대지의 부츠");
-						rm.setLocalizedName("대지의 부츠");
+						rm.setItemName("대지의 부츠");
 					}
 					else {
 						rm.setDisplayName("Earth Boots");
-						rm.setLocalizedName("Earth Boots");
+						rm.setItemName("Earth Boots");
 					}
 					if (rm.hasLore()) {
 						List<String> lore = rm.getLore();
@@ -196,11 +196,11 @@ public class Boots implements Listener {
 							"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlotGroup.FEET));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName("서리 부츠");
-						rm.setLocalizedName("서리 부츠");
+						rm.setItemName("서리 부츠");
 					}
 					else {
 						rm.setDisplayName("Frost Boots");
-						rm.setLocalizedName("Frost Boots");
+						rm.setItemName("Frost Boots");
 					}
 					if (rm.hasLore()) {
 						List<String> lore = rm.getLore();
@@ -224,11 +224,11 @@ public class Boots implements Listener {
 							"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlotGroup.FEET));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName("바다의 부츠");
-						rm.setLocalizedName("바다의 부츠");
+						rm.setItemName("바다의 부츠");
 					}
 					else {
 						rm.setDisplayName("Ocean Boots");
-						rm.setLocalizedName("Ocean Boots");
+						rm.setItemName("Ocean Boots");
 					}
 					if (rm.hasLore()) {
 						List<String> lore = rm.getLore();
@@ -254,11 +254,11 @@ public class Boots implements Listener {
 							"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlotGroup.FEET));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName("어둠의 전투화");
-						rm.setLocalizedName("어둠의 전투화");
+						rm.setItemName("어둠의 전투화");
 					}
 					else {
 						rm.setDisplayName("Dark Boots");
-						rm.setLocalizedName("Dark Boots");
+						rm.setItemName("Dark Boots");
 					}
 					if (rm.hasLore()) {
 						List<String> lore = rm.getLore();
@@ -284,11 +284,11 @@ public class Boots implements Listener {
 							"generic.luck", 6, Operation.ADD_NUMBER, EquipmentSlotGroup.FEET));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName("개조된 부츠");
-						rm.setLocalizedName("개조된 부츠");
+						rm.setItemName("개조된 부츠");
 					}
 					else {
 						rm.setDisplayName("Hyper Boots");
-						rm.setLocalizedName("Hyper Boots");
+						rm.setItemName("Hyper Boots");
 					}
 					if (rm.hasLore()) {
 						List<String> lore = rm.getLore();
@@ -314,11 +314,11 @@ public class Boots implements Listener {
 							"generic.attack_damage", 7, Operation.ADD_NUMBER, EquipmentSlotGroup.FEET));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName("작열하는 부츠");
-						rm.setLocalizedName("작열하는 부츠");
+						rm.setItemName("작열하는 부츠");
 					}
 					else {
 						rm.setDisplayName("Burning Boots");
-						rm.setLocalizedName("Burning Boots");
+						rm.setItemName("Burning Boots");
 					}
 					if (rm.hasLore()) {
 						List<String> lore = rm.getLore();
@@ -342,11 +342,11 @@ public class Boots implements Listener {
 							"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlotGroup.FEET));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName("자연의 부츠");
-						rm.setLocalizedName("자연의 부츠");
+						rm.setItemName("자연의 부츠");
 					}
 					else {
 						rm.setDisplayName("Natural Boots");
-						rm.setLocalizedName("Natural Boots");
+						rm.setItemName("Natural Boots");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -386,11 +386,11 @@ public class Boots implements Listener {
 									"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlotGroup.FEET));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 								rm.setDisplayName("대지의 부츠");
-								rm.setLocalizedName("대지의 부츠");
+								rm.setItemName("대지의 부츠");
 							}
 							else {
 								rm.setDisplayName("Earth Boots");
-								rm.setLocalizedName("Earth Boots");
+								rm.setItemName("Earth Boots");
 							}
 							if (rm.hasLore()) {
 								List<String> lore = rm.getLore();
@@ -416,11 +416,11 @@ public class Boots implements Listener {
 									"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlotGroup.FEET));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 								rm.setDisplayName("서리 부츠");
-								rm.setLocalizedName("서리 부츠");
+								rm.setItemName("서리 부츠");
 							}
 							else {
 								rm.setDisplayName("Frost Boots");
-								rm.setLocalizedName("Frost Boots");
+								rm.setItemName("Frost Boots");
 							}
 							if (rm.hasLore()) {
 								List<String> lore = rm.getLore();
@@ -444,11 +444,11 @@ public class Boots implements Listener {
 									"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlotGroup.FEET));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 								rm.setDisplayName("바다의 부츠");
-								rm.setLocalizedName("바다의 부츠");
+								rm.setItemName("바다의 부츠");
 							}
 							else {
 								rm.setDisplayName("Ocean Boots");
-								rm.setLocalizedName("Ocean Boots");
+								rm.setItemName("Ocean Boots");
 							}
 							if (rm.hasLore()) {
 								List<String> lore = rm.getLore();
@@ -474,11 +474,11 @@ public class Boots implements Listener {
 									"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlotGroup.FEET));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 								rm.setDisplayName("어둠의 전투화");
-								rm.setLocalizedName("어둠의 전투화");
+								rm.setItemName("어둠의 전투화");
 							}
 							else {
 								rm.setDisplayName("Dark Boots");
-								rm.setLocalizedName("Dark Boots");
+								rm.setItemName("Dark Boots");
 							}
 							if (rm.hasLore()) {
 								List<String> lore = rm.getLore();
@@ -504,11 +504,11 @@ public class Boots implements Listener {
 									"generic.luck", 6, Operation.ADD_NUMBER, EquipmentSlotGroup.FEET));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 								rm.setDisplayName("개조된 부츠");
-								rm.setLocalizedName("개조된 부츠");
+								rm.setItemName("개조된 부츠");
 							}
 							else {
 								rm.setDisplayName("Hyper Boots");
-								rm.setLocalizedName("Hyper Boots");
+								rm.setItemName("Hyper Boots");
 							}
 							if (rm.hasLore()) {
 								List<String> lore = rm.getLore();
@@ -534,11 +534,11 @@ public class Boots implements Listener {
 									"generic.attack_damage", 7, Operation.ADD_NUMBER, EquipmentSlotGroup.FEET));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 								rm.setDisplayName("작열하는 부츠");
-								rm.setLocalizedName("작열하는 부츠");
+								rm.setItemName("작열하는 부츠");
 							}
 							else {
 								rm.setDisplayName("Burning Boots");
-								rm.setLocalizedName("Burning Boots");
+								rm.setItemName("Burning Boots");
 							}
 							if (rm.hasLore()) {
 								List<String> lore = rm.getLore();
@@ -563,11 +563,11 @@ public class Boots implements Listener {
 									"generic.armor_toughness", 3, Operation.ADD_NUMBER, EquipmentSlotGroup.FEET));
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 								rm.setDisplayName("자연의 부츠");
-								rm.setLocalizedName("자연의 부츠");
+								rm.setItemName("자연의 부츠");
 							}
 							else {
 								rm.setDisplayName("Natural Boots");
-								rm.setLocalizedName("Natural Boots");
+								rm.setItemName("Natural Boots");
 							}
 							r.setItemMeta(rm);
 							return r;
