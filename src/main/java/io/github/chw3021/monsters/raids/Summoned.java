@@ -592,54 +592,13 @@ public class Summoned extends Mobs implements Serializable{
 	
 	final private void Effect(Player p) {
 
-
-    	if(p.hasPotionEffect(PotionEffectType.BAD_OMEN))
-		{
-			p.removePotionEffect(PotionEffectType.BAD_OMEN);
-		}
-		if(p.hasPotionEffect(PotionEffectType.BLINDNESS))
-		{
-			p.removePotionEffect(PotionEffectType.BLINDNESS);
-		}
-		if(p.hasPotionEffect(PotionEffectType.CONFUSION))
-		{
-			p.removePotionEffect(PotionEffectType.CONFUSION);
-		}
-		if(p.hasPotionEffect(PotionEffectType.HUNGER))
-		{
-			p.removePotionEffect(PotionEffectType.HUNGER);
-		}
-		if(p.hasPotionEffect(PotionEffectType.POISON))
-		{
-			p.removePotionEffect(PotionEffectType.POISON);
-		}
-		if(p.hasPotionEffect(PotionEffectType.SLOW))
-		{
-			p.removePotionEffect(PotionEffectType.SLOW);
-		}
-		if(p.hasPotionEffect(PotionEffectType.SLOW_DIGGING))
-		{
-			p.removePotionEffect(PotionEffectType.SLOW_DIGGING);
-		}
-		if(p.hasPotionEffect(PotionEffectType.UNLUCK))
-		{
-			p.removePotionEffect(PotionEffectType.UNLUCK);
-		}
-		if(p.hasPotionEffect(PotionEffectType.WEAKNESS))
-		{
-			p.removePotionEffect(PotionEffectType.WEAKNESS);
-		}
-		if(p.hasPotionEffect(PotionEffectType.WITHER))
-		{
-			p.removePotionEffect(PotionEffectType.WITHER);
-		}
-		p.setFireTicks(0);
+		cleans(p);
     	
 		p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 300, 5, false, false));
-		p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 300, 5, false, false));
+		p.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 300, 5, false, false));
 		p.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 300, 5, false, false));
 		p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 300, 5, false, false));
-		p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 300, 5, false, false));
+		p.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 300, 5, false, false));
 		p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 300, 5, false, false));
 		p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 300, 5, false, false));
     	p.setSaturation(1f);
@@ -842,7 +801,7 @@ public class Summoned extends Mobs implements Serializable{
 			                public void run() 
 			                {
 
-			        			le.getWorld().spawnParticle(Particle.TOTEM, lel, 300,1,1,1);
+			        			le.getWorld().spawnParticle(Particle.TOTEM_OF_UNDYING, lel, 300,1,1,1);
 			        			le.getWorld().spawnParticle(Particle.CRIMSON_SPORE, lel, 100,1,1,1);
 			        			le.getWorld().spawnParticle(Particle.REVERSE_PORTAL, lel, 300,1,1,1);
 			        			le.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, lel, 300,1,1,1);

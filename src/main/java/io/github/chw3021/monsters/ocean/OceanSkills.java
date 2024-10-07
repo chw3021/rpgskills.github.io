@@ -9,19 +9,18 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
-import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Breeze;
 import org.bukkit.entity.ElderGuardian;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Shulker;
 import org.bukkit.entity.ShulkerBullet;
-import org.bukkit.entity.Stray;
 import org.bukkit.entity.Trident;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
@@ -71,8 +70,8 @@ public class OceanSkills extends Summoned{
 
 	public void Mimic(EntityDamageByEntityEvent d) 
 	{
-		if(d.getEntity() instanceof Stray) {
-			Stray p = (Stray) d.getEntity();
+		if(d.getEntity() instanceof Breeze) {
+			Breeze p = (Breeze) d.getEntity();
 			if(p.hasMetadata("mimic") && !p.hasAI() && p.isInvisible()) {
 				p.removeMetadata("fake", RMain.getInstance());
 				d.setCancelled(false);
@@ -92,7 +91,7 @@ public class OceanSkills extends Summoned{
 				boots.setItemMeta(bom);
 				boots.addUnsafeEnchantment(Enchantment.DEPTH_STRIDER, 3);
 				ItemStack main = new ItemStack(Material.PRISMARINE_SHARD);
-				main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
+				main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
 				
 				EntityEquipment ee = p.getEquipment();
 				ee.setChestplate(chest);
@@ -225,7 +224,7 @@ public class OceanSkills extends Summoned{
                     @Override
                     public void run() {
             			p.getWorld().spawnParticle(Particle.SQUID_INK, tl, 200, 1,1,1);
-            			p.getWorld().spawnParticle(Particle.MOB_APPEARANCE, tl,1);
+            			p.getWorld().spawnParticle(Particle.ELDER_GUARDIAN, tl,1);
         				p.getWorld().playSound(tl, Sound.ENTITY_ELDER_GUARDIAN_CURSE, 0.4f, 1f);
         				p.getWorld().playSound(tl, Sound.BLOCK_BUBBLE_COLUMN_WHIRLPOOL_INSIDE, 0.85f, 2f);
     					for(Entity e : p.getWorld().getNearbyEntities(p.getLocation(),2, 2, 2)) {
@@ -454,7 +453,7 @@ public class OceanSkills extends Summoned{
 		}
 		
 		ls.forEach(l ->{
-			l.getWorld().spawnParticle(Particle.WATER_BUBBLE, l, 15,0.5,0.5,0.5,0.1);
+			l.getWorld().spawnParticle(Particle.BUBBLE, l, 15,0.5,0.5,0.5,0.1);
 			l.getWorld().playSound(l, Sound.BLOCK_BUBBLE_COLUMN_WHIRLPOOL_INSIDE, 0.05f, 2f);
 	        int i1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	            @Override
@@ -520,7 +519,7 @@ public class OceanSkills extends Summoned{
 		                	}
 		                }
 		    			p.getWorld().spawnParticle(Particle.NAUTILUS, p.getLocation().clone(), 200,2,2,2,0.1);
-		    			p.getWorld().spawnParticle(Particle.WATER_WAKE, p.getLocation().clone(), 200,2,2,2,0.1);
+		    			p.getWorld().spawnParticle(Particle.DOLPHIN, p.getLocation().clone(), 200,2,2,2,0.1);
 		                AtomicInteger j = new AtomicInteger();
 		                for(int i = 0; i<10; i++) {
 		                    int i1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -552,7 +551,7 @@ public class OceanSkills extends Summoned{
 	                	}
 	                }
 	    			p.getWorld().spawnParticle(Particle.NAUTILUS, p.getLocation().clone(), 200,2,2,2,0.1);
-	    			p.getWorld().spawnParticle(Particle.WATER_WAKE, p.getLocation().clone(), 200,2,2,2,0.1);
+	    			p.getWorld().spawnParticle(Particle.DOLPHIN, p.getLocation().clone(), 200,2,2,2,0.1);
 	                AtomicInteger j = new AtomicInteger();
 	                for(int i = 0; i<10; i++) {
 	                    int i1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -588,7 +587,7 @@ public class OceanSkills extends Summoned{
 
         AtomicInteger j = new AtomicInteger();
 		ls.forEach(l -> {
-			l.getWorld().spawnParticle(Particle.WATER_BUBBLE, l, 15,0.5,0.5,0.5,0.1);
+			l.getWorld().spawnParticle(Particle.BUBBLE, l, 15,0.5,0.5,0.5,0.1);
 			l.getWorld().playSound(l, Sound.BLOCK_BUBBLE_COLUMN_WHIRLPOOL_AMBIENT, 0.2f, 2);
             int i1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
                 @Override
@@ -600,7 +599,7 @@ public class OceanSkills extends Summoned{
 							if(ript.containsKey(rn)) {
 								ript.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
 							}
-		                	p.playEffect(EntityEffect.HURT);
+							p.playHurtAnimation(0);
 		                	Holding.ale(p).setMetadata("failed", new FixedMetadataValue(RMain.getInstance(),true));
 	                		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
 		                	Holding.untouchable.remove(p.getUniqueId());
@@ -698,7 +697,7 @@ public class OceanSkills extends Summoned{
 		                	}
 		                }
 		    			p.getWorld().spawnParticle(Particle.NAUTILUS, p.getLocation().clone(), 200,2,2,2,0.1);
-		    			p.getWorld().spawnParticle(Particle.WATER_WAKE, p.getLocation().clone(), 200,2,2,2,0.1);
+		    			p.getWorld().spawnParticle(Particle.DOLPHIN, p.getLocation().clone(), 200,2,2,2,0.1);
 	                    int i1 =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
 			                @Override
 			                public void run() {
@@ -732,7 +731,7 @@ public class OceanSkills extends Summoned{
 	                	}
 	                }
 	    			p.getWorld().spawnParticle(Particle.NAUTILUS, p.getLocation().clone(), 200,2,2,2,0.1);
-	    			p.getWorld().spawnParticle(Particle.WATER_WAKE, p.getLocation().clone(), 200,2,2,2,0.1);
+	    			p.getWorld().spawnParticle(Particle.DOLPHIN, p.getLocation().clone(), 200,2,2,2,0.1);
                     int i1 =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
 		                @Override
 		                public void run() {

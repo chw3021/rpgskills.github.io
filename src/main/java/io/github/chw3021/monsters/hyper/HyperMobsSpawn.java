@@ -41,7 +41,7 @@ public class HyperMobsSpawn extends Mobs implements Listener {
 	
 	final private Husk Stalker(LivingEntity le) {
 		ItemStack head = new ItemStack(Material.LODESTONE);
-		head.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 3);
+		head.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 3);
 		ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
 		LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
 		chm.setColor(Color.MAROON);
@@ -59,7 +59,7 @@ public class HyperMobsSpawn extends Mobs implements Listener {
 		mm.setCustomModelData(4009);
 		main.setItemMeta(mm);
 		ItemStack off = new ItemStack(Material.END_ROD);
-		off.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 2);
+		off.addUnsafeEnchantment(Enchantment.SHARPNESS, 2);
 		String reg = lang.contains("kr") ? "추적자":"Stalker";
 		Husk newmob = (Husk) Mobspawn(le, reg, 12000.0, head, chest, leg, boots, main, off, EntityType.HUSK);
 		newmob.setConversionTime(-1);
@@ -73,7 +73,7 @@ public class HyperMobsSpawn extends Mobs implements Listener {
 
 	final private Skeleton RayArcher(LivingEntity le) {
 		ItemStack head = new ItemStack(Material.PURPLE_STAINED_GLASS);
-		head.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 3);
+		head.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 3);
 		ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
 		LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
 		chm.setColor(Color.FUCHSIA);
@@ -91,7 +91,7 @@ public class HyperMobsSpawn extends Mobs implements Listener {
 		mm.setCustomModelData(2009);
 		main.setItemMeta(mm);
 		ItemStack off = new ItemStack(Material.BEACON);
-		off.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 2);
+		off.addUnsafeEnchantment(Enchantment.SHARPNESS, 2);
 		String reg = lang.contains("kr") ? "광선궁병":"RayArcher";
 		Skeleton newmob = (Skeleton) Mobspawn(le, reg, 9000.0, head, chest, leg, boots, main, off, EntityType.SKELETON);
 		newmob.setConversionTime(-1);
@@ -103,7 +103,7 @@ public class HyperMobsSpawn extends Mobs implements Listener {
 
 	final private Vindicator SecurityRobot(LivingEntity le) {
 		ItemStack head = new ItemStack(Material.TARGET);
-		head.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 3);
+		head.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 3);
 		ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
 		LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
 		chm.setColor(Color.TEAL);
@@ -118,7 +118,7 @@ public class HyperMobsSpawn extends Mobs implements Listener {
 		boots.setItemMeta(bom);
 		ItemStack main = new ItemStack(Material.SHIELD);
 		ItemStack off = new ItemStack(Material.SHIELD);
-		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
+		main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
 		String reg = lang.contains("kr") ? "경비로봇":"SecurityRobot";
 		Vindicator newmob = (Vindicator) Mobspawn(le, reg, 10000.0, head, null, null, null, main, off, EntityType.VINDICATOR);
 		newmob.setSilent(true);

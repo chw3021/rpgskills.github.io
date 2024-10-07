@@ -239,8 +239,8 @@ public class PoisonSkills extends Summoned{
 				LivingEntity p = (LivingEntity) po.getShooter();
 				if(po.hasMetadata("grenadier")) {
 					po.getWorld().playSound(po.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1f, 1f);
-					po.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, po.getLocation(), 5,2,2,2);
-					po.getWorld().spawnParticle(Particle.SLIME, po.getLocation(), 200,2,2,2);
+					po.getWorld().spawnParticle(Particle.EXPLOSION, po.getLocation(), 5,2,2,2);
+					po.getWorld().spawnParticle(Particle.ITEM_SLIME, po.getLocation(), 200,2,2,2);
             		for(Entity e : p.getWorld().getNearbyEntities(po.getLocation(), 2.5, 2.5, 2.5)) {
 						if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
 							LivingEntity le = (LivingEntity)e;
@@ -251,13 +251,13 @@ public class PoisonSkills extends Summoned{
 				else if(po.hasMetadata("PoisonGrenadier")) {
 					po.getWorld().playSound(po.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1f, 1f);
 					po.getWorld().playSound(p.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 2);
-					po.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, po.getLocation(), 5,2,2,2);
+					po.getWorld().spawnParticle(Particle.EXPLOSION, po.getLocation(), 5,2,2,2);
 					for(int n = 0; n<8; n++) {
 	                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 			                @Override
 			                public void run() 
 			                {
-								po.getWorld().spawnParticle(Particle.SLIME, po.getLocation(), 100,2,2,2);
+								po.getWorld().spawnParticle(Particle.ITEM_SLIME, po.getLocation(), 100,2,2,2);
 			            		for(Entity e : p.getWorld().getNearbyEntities(po.getLocation(), 2.5, 2.5, 2.5)) {
 									if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
 										LivingEntity le = (LivingEntity)e;
@@ -279,14 +279,14 @@ public class PoisonSkills extends Summoned{
 					po.getWorld().playSound(po.getLocation(), Sound.ENTITY_SPLASH_POTION_BREAK, 1f, 0.8f);
 					po.getWorld().playSound(p.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 2);
 					po.getWorld().spawnParticle(Particle.FLAME, po.getLocation(), 100,2,2,2);
-					po.getWorld().spawnParticle(Particle.SLIME, po.getLocation(), 100,2,2,2);
+					po.getWorld().spawnParticle(Particle.ITEM_SLIME, po.getLocation(), 100,2,2,2);
 					for(int n = 0; n<8; n++) {
 	                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 			                @Override
 			                public void run() 
 			                {
 								po.getWorld().spawnParticle(Particle.FLAME, po.getLocation(), 100,2,2,2);
-								po.getWorld().spawnParticle(Particle.SLIME, po.getLocation(), 100,2,2,2);
+								po.getWorld().spawnParticle(Particle.ITEM_SLIME, po.getLocation(), 100,2,2,2);
 			            		for(Entity e : p.getWorld().getNearbyEntities(po.getLocation(), 2.5, 2.5, 2.5)) {
 									if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
 										LivingEntity le = (LivingEntity)e;
@@ -433,7 +433,7 @@ public class PoisonSkills extends Summoned{
 					         			p.teleport(tl);
 			    					}
 			    				}
-								p.getWorld().spawnParticle(Particle.SLIME, p.getLocation(), 6, 0.1,0.1,0.1,0);
+								p.getWorld().spawnParticle(Particle.ITEM_SLIME, p.getLocation(), 6, 0.1,0.1,0.1,0);
 			                	p.setFallDistance(0);
 				            }
 			        	   }, j.incrementAndGet()/50); 
@@ -458,7 +458,7 @@ public class PoisonSkills extends Summoned{
             cloud.setSilent(false);
             cloud.setColor(Color.OLIVE);
             cloud.setRadiusPerTick(0.05f);
-            cloud.addCustomEffect(new PotionEffect(PotionEffectType.CONFUSION,60,2,false,false), false);
+            cloud.addCustomEffect(new PotionEffect(PotionEffectType.NAUSEA,60,2,false,false), false);
             cloud.addCustomEffect(new PotionEffect(PotionEffectType.GLOWING,60,2,false,false), false);
             cloud.setDuration(40);
 		}
@@ -545,7 +545,6 @@ public class PoisonSkills extends Summoned{
 		                    for(double an = -Math.PI/3; an<=Math.PI/3; an += Math.PI/9) {
 			                    ThrownPotion thr = (ThrownPotion) p.launchProjectile(ThrownPotion.class);
 			                    thr.setShooter(p);
-			                    thr.setBounce(false);
 			                    thr.setItem(is);
 			                    thr.setVelocity(p.getLocation().getDirection().rotateAroundY(an));
 			                    thr.setFireTicks(55);
@@ -577,7 +576,6 @@ public class PoisonSkills extends Summoned{
 	                    for(double an = -Math.PI/3; an<=Math.PI/3; an += Math.PI/9) {
 		                    ThrownPotion thr = (ThrownPotion) p.launchProjectile(ThrownPotion.class);
 		                    thr.setShooter(p);
-		                    thr.setBounce(false);
 		                    thr.setItem(is);
 		                    thr.setVelocity(p.getLocation().getDirection().rotateAroundY(an));
 		                    thr.setFireTicks(55);
@@ -668,7 +666,7 @@ public class PoisonSkills extends Summoned{
                         cloud.setSilent(false);
                         cloud.setColor(Color.OLIVE);
                         cloud.setRadiusPerTick(0.05f);
-                        cloud.addCustomEffect(new PotionEffect(PotionEffectType.CONFUSION,60,2,false,false), false);
+                        cloud.addCustomEffect(new PotionEffect(PotionEffectType.NAUSEA,60,2,false,false), false);
                         cloud.setDuration(40);
                         
                         final Location cl = cloud.getLocation().clone();
@@ -751,7 +749,7 @@ public class PoisonSkills extends Summoned{
                     cloud.setSilent(false);
                     cloud.setColor(Color.OLIVE);
                     cloud.setRadiusPerTick(0.05f);
-                    cloud.addCustomEffect(new PotionEffect(PotionEffectType.CONFUSION,60,2,false,false), false);
+                    cloud.addCustomEffect(new PotionEffect(PotionEffectType.NAUSEA,60,2,false,false), false);
                     cloud.setDuration(40);
 
                     final Location cl = cloud.getLocation().clone();
@@ -816,6 +814,7 @@ public class PoisonSkills extends Summoned{
 			}
 			final Player tar = (Player) p.getTarget();
 			final Location ptl = tar.getLocation().clone();
+			
 					if(rb4cooldown.containsKey(p.getUniqueId()))
 		            {
 		                long timer = (rb4cooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
@@ -840,7 +839,7 @@ public class PoisonSkills extends Summoned{
 				                @Override
 				                public void run() 
 				                {
-					                Firework fr = (Firework) p.getWorld().spawnEntity(solid.getLocation(), EntityType.FIREWORK);
+					                Firework fr = (Firework) p.getWorld().spawnEntity(solid.getLocation(), EntityType.FIREWORK_ROCKET);
 				                    fr.setShotAtAngle(true);
 				                    fr.setShooter(p);
 				                    fr.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
@@ -859,8 +858,8 @@ public class PoisonSkills extends Summoned{
 				                    
 				                	solid.getWorld().spawnParticle(Particle.FLAME, solid.getLocation(), 50,1,1,1,1);
 				                	solid.getWorld().spawnParticle(Particle.SNEEZE, solid.getLocation(), 50,1,1,1,1);
-				                	solid.getWorld().spawnParticle(Particle.SLIME, solid.getLocation(), 50,1,1,1,1);
-				                	solid.getWorld().spawnParticle(Particle.BLOCK_CRACK, solid.getLocation(), 600,4.5,4.5,4.5,1,Material.GREEN_GLAZED_TERRACOTTA.createBlockData());
+				                	solid.getWorld().spawnParticle(Particle.ITEM_SLIME, solid.getLocation(), 50,1,1,1,1);
+				                	solid.getWorld().spawnParticle(Particle.BLOCK, solid.getLocation(), 600,4.5,4.5,4.5,1,Material.GREEN_GLAZED_TERRACOTTA.createBlockData());
 				                    p.getWorld().playSound(solid.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1, 0);
 				                    p.getWorld().playSound(solid.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 0);
 				            		for(Entity e : p.getWorld().getNearbyEntities(solid.getLocation(), 4.5, 4.5, 4.5)) {
@@ -898,7 +897,7 @@ public class PoisonSkills extends Summoned{
 			                @Override
 			                public void run() 
 			                {
-				                Firework fr = (Firework) p.getWorld().spawnEntity(solid.getLocation(), EntityType.FIREWORK);
+				                Firework fr = (Firework) p.getWorld().spawnEntity(solid.getLocation(), EntityType.FIREWORK_ROCKET);
 			                    fr.setShotAtAngle(true);
 			                    fr.setShooter(p);
 			                    fr.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
@@ -917,8 +916,8 @@ public class PoisonSkills extends Summoned{
 			                    
 			                	solid.getWorld().spawnParticle(Particle.FLAME, solid.getLocation(), 50,1,1,1,1);
 			                	solid.getWorld().spawnParticle(Particle.SNEEZE, solid.getLocation(), 50,1,1,1,1);
-			                	solid.getWorld().spawnParticle(Particle.SLIME, solid.getLocation(), 50,1,1,1,1);
-			                	solid.getWorld().spawnParticle(Particle.BLOCK_CRACK, solid.getLocation(), 600,4.5,4.5,4.5,1,Material.GREEN_GLAZED_TERRACOTTA.createBlockData());
+			                	solid.getWorld().spawnParticle(Particle.ITEM_SLIME, solid.getLocation(), 50,1,1,1,1);
+			                	solid.getWorld().spawnParticle(Particle.BLOCK, solid.getLocation(), 600,4.5,4.5,4.5,1,Material.GREEN_GLAZED_TERRACOTTA.createBlockData());
 			                    p.getWorld().playSound(solid.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1, 0);
 			                    p.getWorld().playSound(solid.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 0);
 			            		for(Entity e : p.getWorld().getNearbyEntities(solid.getLocation(), 4.5, 4.5, 4.5)) {

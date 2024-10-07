@@ -255,7 +255,7 @@ public class OverworldRaids extends Summoned implements Listener {
         		p.sendTitle(ChatColor.BOLD +(ChatColor.DARK_GRAY + title), ChatColor.BOLD +sub, 5, 60, 5);
         		p.playSound(spl, Sound.ENTITY_WITCH_AMBIENT, 1, 0);
         		p.playSound(spl, Sound.ENTITY_RAVAGER_DEATH, 1, 0);
-            	p.spawnParticle(Particle.VILLAGER_ANGRY, spl, 1000,6,6,6);
+            	p.spawnParticle(Particle.ANGRY_VILLAGER, spl, 1000,6,6,6);
     		}
     		else {
     			if(RaidDifficulties.getMaxDifficulty(p, RaidCategory.OVERWORLD) <= difen.get(rn)) {
@@ -390,9 +390,9 @@ public class OverworldRaids extends Summoned implements Listener {
 		
 		if(in == 0) {
 			ItemStack main = new ItemStack(Material.STONE);
-			main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
+			main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
 			ItemStack off = new ItemStack(Material.STONE);
-			off.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
+			off.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
     		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "스톤골렘":"StoneGolem";
 			IronGolem newmob = (IronGolem) MobspawnLoc(esl, ChatColor.GRAY + reg, dif1, null,
 					null, null, null, main, off, EntityType.IRON_GOLEM);
@@ -424,27 +424,27 @@ public class OverworldRaids extends Summoned implements Listener {
 			LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
 			chm.setColor(Color.RED);
 			chest.setItemMeta(chm);
-			chest.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-			chest.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-			chest.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+			chest.addUnsafeEnchantment(Enchantment.FIRE_PROTECTION, 5);
+			chest.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+			chest.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 			ItemStack leg = new ItemStack(Material.LEATHER_LEGGINGS);
 			LeatherArmorMeta lem = (LeatherArmorMeta) leg.getItemMeta();
 			lem.setColor(Color.RED);
 			leg.setItemMeta(lem);
-			leg.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-			leg.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-			leg.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+			leg.addUnsafeEnchantment(Enchantment.FIRE_PROTECTION, 5);
+			leg.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+			leg.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 			ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
 			LeatherArmorMeta bom = (LeatherArmorMeta) boots.getItemMeta();
 			bom.setColor(Color.WHITE);
 			boots.setItemMeta(bom);
-			boots.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-			boots.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-			boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+			boots.addUnsafeEnchantment(Enchantment.FIRE_PROTECTION, 5);
+			boots.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+			boots.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
     		ItemStack main = new ItemStack(Material.STICK);
-    		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
+    		main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
     		ItemStack off = new ItemStack(Material.ICE);
-    		off.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
+    		off.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
     		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "설산마녀":"SnowWitch";
     		Witch newmob = (Witch) MobspawnLoc(esl, ChatColor.BLUE+reg, dif1, null, null, null, boots, main, off, EntityType.WITCH);
     		newmob.setGlowing(true);
@@ -507,7 +507,7 @@ public class OverworldRaids extends Summoned implements Listener {
 			ItemStack pe = new ItemStack(Material.BLACK_BANNER);
 			BannerMeta pem = (BannerMeta) pe.getItemMeta();
 			pem.addPattern(new Pattern(DyeColor.BLACK, PatternType.BASE));
-			pem.addPattern(new Pattern(DyeColor.GRAY, PatternType.STRIPE_SMALL));
+			pem.addPattern(new Pattern(DyeColor.GRAY, PatternType.SMALL_STRIPES));
 			pem.addPattern(new Pattern(DyeColor.BLACK, PatternType.CROSS));
 			pem.addPattern(new Pattern(DyeColor.LIGHT_GRAY, PatternType.TRIANGLES_TOP));
 			pem.addPattern(new Pattern(DyeColor.LIGHT_GRAY, PatternType.TRIANGLES_BOTTOM));
@@ -518,23 +518,23 @@ public class OverworldRaids extends Summoned implements Listener {
 			LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
 			chm.setColor(Color.BLACK);
 			chest.setItemMeta(chm);
-			chest.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-			chest.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-			chest.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+			chest.addUnsafeEnchantment(Enchantment.FIRE_PROTECTION, 5);
+			chest.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+			chest.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 			ItemStack leg = new ItemStack(Material.LEATHER_LEGGINGS);
 			LeatherArmorMeta lem = (LeatherArmorMeta) leg.getItemMeta();
 			lem.setColor(Color.BLACK);
 			leg.setItemMeta(lem);
-			leg.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-			leg.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-			leg.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+			leg.addUnsafeEnchantment(Enchantment.FIRE_PROTECTION, 5);
+			leg.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+			leg.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 			ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
 			LeatherArmorMeta bom = (LeatherArmorMeta) boots.getItemMeta();
 			bom.setColor(Color.BLACK);
 			boots.setItemMeta(bom);
-			boots.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-			boots.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-			boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+			boots.addUnsafeEnchantment(Enchantment.FIRE_PROTECTION, 5);
+			boots.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+			boots.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 			ItemStack main = new ItemStack(Material.NETHERITE_HOE);
 			ItemMeta mm = main.getItemMeta();
 			mm.setCustomModelData(8008);
@@ -611,30 +611,30 @@ public class OverworldRaids extends Summoned implements Listener {
 			LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
 			chm.setColor(Color.RED);
 			chest.setItemMeta(chm);
-			chest.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-			chest.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-			chest.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+			chest.addUnsafeEnchantment(Enchantment.FIRE_PROTECTION, 5);
+			chest.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+			chest.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 			ItemStack leg = new ItemStack(Material.LEATHER_LEGGINGS);
 			LeatherArmorMeta lem = (LeatherArmorMeta) leg.getItemMeta();
 			lem.setColor(Color.RED);
 			leg.setItemMeta(lem);
-			leg.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-			leg.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-			leg.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+			leg.addUnsafeEnchantment(Enchantment.FIRE_PROTECTION, 5);
+			leg.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+			leg.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 			ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
 			LeatherArmorMeta bom = (LeatherArmorMeta) boots.getItemMeta();
 			bom.setColor(Color.RED);
 			boots.setItemMeta(bom);
-			boots.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-			boots.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-			boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+			boots.addUnsafeEnchantment(Enchantment.FIRE_PROTECTION, 5);
+			boots.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+			boots.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 			boots.addUnsafeEnchantment(Enchantment.DEPTH_STRIDER,5);
     		ItemStack main = new ItemStack(Material.NETHERITE_AXE);
     		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
-    		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
+    		main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
     		ItemStack off = new ItemStack(Material.SHIELD);
     		off.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
-    		off.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
+    		off.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
     		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "붉은기사":"RedKnight";
     		Skeleton newmob = (Skeleton) MobspawnLoc(esl, ChatColor.RED+reg, dif1, head, chest, leg, boots, main, off, EntityType.SKELETON);
     		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
@@ -673,9 +673,9 @@ public class OverworldRaids extends Summoned implements Listener {
 			ItemMeta im1 = pe1.getItemMeta();
 			im1.setLore(Arrays.asList("Poison Boss"));
 			pe1.setItemMeta(im1);
-			pe1.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-			pe1.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-			pe1.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+			pe1.addUnsafeEnchantment(Enchantment.FIRE_PROTECTION, 5);
+			pe1.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+			pe1.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 			ItemStack leg = new ItemStack(Material.NETHERITE_LEGGINGS);
 			ItemStack pe11 = new ItemStack(Material.NETHERITE_BOOTS);
 			ItemMeta im11 = pe11.getItemMeta();
@@ -1087,7 +1087,7 @@ public class OverworldRaids extends Summoned implements Listener {
     	        	            			OverworldRaidFinish(rn,"Defeated..", "TimeOut",0);
 	    								}
 	        	                    	
-	        	                    	spl.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, spl, 1000,6,6,6);
+	        	                    	spl.getWorld().spawnParticle(Particle.ANGRY_VILLAGER, spl, 1000,6,6,6);
 	        	            		}
 	        	                }
 	        				}, 0, 20);
@@ -1240,7 +1240,7 @@ public class OverworldRaids extends Summoned implements Listener {
 		Player p = ev.getPlayer();
 		
 		if(!heroes.containsValue(p.getUniqueId()) && p.getWorld().getName().contains("Raid")) {
-			p.teleport(p.getBedSpawnLocation());
+			p.teleport(p.getBedLocation());
 		}
 	}
 
@@ -1252,7 +1252,7 @@ public class OverworldRaids extends Summoned implements Listener {
 		worlds.forEach(w -> w.getPlayers().forEach(b -> {
 				Player p = (Player) b;
 				if(!heroes.containsValue(p.getUniqueId()) && p.getWorld().getName().contains("Raid")) {
-					p.teleport(p.getBedSpawnLocation());
+					p.teleport(p.getBedLocation());
 				}
 		}));
 	}
@@ -1664,7 +1664,7 @@ public class OverworldRaids extends Summoned implements Listener {
 		if(d.getEntity().hasMetadata("inhibitor") && inhibitor.containsValue(d.getEntity().getUniqueId())) {
 			Entity le = d.getEntity();
 			String rn = le.getMetadata("inhibitor").get(0).asString();
-			Bukkit.getPluginManager().callEvent(new EntityDeathEvent((LivingEntity) Bukkit.getEntity(inhibitor.get(rn)) , null));
+			Bukkit.getPluginManager().callEvent(new EntityDeathEvent((LivingEntity) Bukkit.getEntity(inhibitor.get(rn)), d.getDamageSource(), new ArrayList<ItemStack>()));
 		}
 	}
 
@@ -1712,7 +1712,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	    		Bukkit.getPlayer(pu).playSound(spl, Sound.BLOCK_RESPAWN_ANCHOR_DEPLETE, 1, 0);
 	    		Bukkit.getPlayer(pu).playSound(spl, Sound.BLOCK_CONDUIT_DEACTIVATE, 1, 0);
 	    		for(ItemStack is : Bukkit.getPlayer(pu).getInventory().getStorageContents()) {
-	    			if(is != null && is.getItemMeta().hasLocalizedName() && is.getItemMeta().getLocalizedName().equals(rn + "Cursed shard"));
+	    			if(is != null && is.getItemMeta().hasItemName() && is.getItemMeta().getItemName().equals(rn + "Cursed shard"));
 	    		}
 	    		
 				if(Bukkit.getPlayer(pu).getLocale().equalsIgnoreCase("ko_kr")) {
@@ -1863,7 +1863,7 @@ public class OverworldRaids extends Summoned implements Listener {
 				Location spl = raidloc.get(rn).clone();
 	        	spl.getWorld().spawnParticle(Particle.SOUL, spl, 1000,1,1,1);
 	        	spl.getWorld().spawnParticle(Particle.DRIPPING_OBSIDIAN_TEAR, spl, 1000,1,1,1);
-	        	spl.getWorld().spawnParticle(Particle.SPELL_WITCH, spl, 1000,1,1,1);
+	        	spl.getWorld().spawnParticle(Particle.WITCH, spl, 1000,1,1,1);
 	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_PHANTOM_AMBIENT, 1, 0);
 	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_SKELETON_CONVERTED_TO_STRAY, 1, 0);
 	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_WITHER_DEATH, 0.1f, 0);
@@ -1875,7 +1875,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	        			ItemStack pe = new ItemStack(Material.BLACK_BANNER);
 	        			BannerMeta pem = (BannerMeta) pe.getItemMeta();
 	        			pem.addPattern(new Pattern(DyeColor.BLACK, PatternType.BASE));
-	        			pem.addPattern(new Pattern(DyeColor.GRAY, PatternType.STRIPE_SMALL));
+	        			pem.addPattern(new Pattern(DyeColor.GRAY, PatternType.SMALL_STRIPES));
 	        			pem.addPattern(new Pattern(DyeColor.BLACK, PatternType.CROSS));
 	        			pem.addPattern(new Pattern(DyeColor.LIGHT_GRAY, PatternType.TRIANGLES_TOP));
 	        			pem.addPattern(new Pattern(DyeColor.LIGHT_GRAY, PatternType.TRIANGLES_BOTTOM));
@@ -1946,7 +1946,7 @@ public class OverworldRaids extends Summoned implements Listener {
 				bossphase2(le);
 				Location spl = raidloc.get(rn).clone();
 	        	spl.getWorld().spawnParticle(Particle.BLOCK_MARKER, d.getEntity().getLocation(), 1000,1,1,1, Material.BARRIER.createBlockData());
-	        	spl.getWorld().spawnParticle(Particle.SPELL_INSTANT, d.getEntity().getLocation(), 1000,1,1,1);
+	        	spl.getWorld().spawnParticle(Particle.INSTANT_EFFECT, d.getEntity().getLocation(), 1000,1,1,1);
 	        	spl.getWorld().spawnParticle(Particle.CLOUD, d.getEntity().getLocation(), 1000,1,1,1);
 	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_GOAT_SCREAMING_AMBIENT, 1, 0);
 	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_HUSK_CONVERTED_TO_ZOMBIE, 1, 0);
@@ -2032,11 +2032,11 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		
 	    	    		ItemStack head = le.getEquipment().getHelmet();
 	    				ItemStack chest = new ItemStack(Material.NETHERITE_CHESTPLATE);
-	    				chest.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
+	    				chest.addUnsafeEnchantment(Enchantment.FIRE_PROTECTION, 5);
 	    				ItemStack leg = new ItemStack(Material.NETHERITE_LEGGINGS);
-	    				leg.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
+	    				leg.addUnsafeEnchantment(Enchantment.FIRE_PROTECTION, 5);
 	    				ItemStack boots = new ItemStack(Material.NETHERITE_BOOTS);
-	    				boots.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
+	    				boots.addUnsafeEnchantment(Enchantment.FIRE_PROTECTION, 5);
 	    				boots.addUnsafeEnchantment(Enchantment.DEPTH_STRIDER,5);
 	    	    		ItemStack main = new ItemStack(Material.NETHERITE_AXE);
 	    	    		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
@@ -2102,7 +2102,7 @@ public class OverworldRaids extends Summoned implements Listener {
 				bossphase2(le);
 				Location spl = raidloc.get(rn).clone();
 	        	spl.getWorld().spawnParticle(Particle.BLOCK_MARKER, d.getEntity().getLocation(), 1000,1,1,1, Material.BARRIER.createBlockData());
-	        	spl.getWorld().spawnParticle(Particle.SPELL_INSTANT, d.getEntity().getLocation(), 1000,1,1,1);
+	        	spl.getWorld().spawnParticle(Particle.INSTANT_EFFECT, d.getEntity().getLocation(), 1000,1,1,1);
 	        	spl.getWorld().spawnParticle(Particle.CLOUD, d.getEntity().getLocation(), 1000,1,1,1);
 	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_GOAT_SCREAMING_AMBIENT, 1, 0);
 	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_HUSK_CONVERTED_TO_ZOMBIE, 1, 0);
@@ -2119,9 +2119,9 @@ public class OverworldRaids extends Summoned implements Listener {
 	        			ItemMeta im1 = pe1.getItemMeta();
 	        			im1.setLore(Arrays.asList("Poison Boss2"));
 	        			pe1.setItemMeta(im1);
-	        			pe1.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-	        			pe1.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-	        			pe1.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+	        			pe1.addUnsafeEnchantment(Enchantment.FIRE_PROTECTION, 5);
+	        			pe1.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+	        			pe1.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 	        			ItemStack leg = new ItemStack(Material.NETHERITE_LEGGINGS);
 	        			ItemStack pe11 = new ItemStack(Material.NETHERITE_BOOTS);
 	        			ItemMeta im11 = pe11.getItemMeta();

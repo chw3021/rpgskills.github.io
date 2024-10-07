@@ -14,7 +14,6 @@ import org.bukkit.entity.Enderman;
 import org.bukkit.entity.EntityCategory;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Slime;
 import org.bukkit.entity.Spider;
 import org.bukkit.entity.Witch;
@@ -45,7 +44,7 @@ public class PoisonMobsSpawn extends Mobs implements Listener {
 	}
 	final private Zombie Mob1(LivingEntity le) {
 		ItemStack head = new ItemStack(Material.GREEN_GLAZED_TERRACOTTA);
-		head.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 3);
+		head.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 3);
 		ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
 		LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
 		chm.setColor(Color.GREEN);
@@ -60,7 +59,7 @@ public class PoisonMobsSpawn extends Mobs implements Listener {
 		boots.setItemMeta(bom);
 		ItemStack main = new ItemStack(Material.POTION);
 		ItemStack off = new ItemStack(Material.BREWING_STAND);
-		off.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 2);
+		off.addUnsafeEnchantment(Enchantment.SHARPNESS, 2);
 		String reg = lang.contains("kr") ? "약물중독자":"DrugAddict";
 		Zombie newmob = (Zombie) Mobspawn(le, reg, 25000.0, head, chest, leg, boots, main, off, EntityType.ZOMBIE);
 		newmob.setConversionTime(-1);
@@ -72,7 +71,7 @@ public class PoisonMobsSpawn extends Mobs implements Listener {
 	}
 	final private Bogged Mob2(LivingEntity le) {
 		ItemStack head = new ItemStack(Material.MANGROVE_LEAVES);
-		head.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 3);
+		head.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 3);
 		ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
 		LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
 		chm.setColor(Color.GREEN);
@@ -95,7 +94,7 @@ public class PoisonMobsSpawn extends Mobs implements Listener {
 	}
 	final private Slime Mob3(LivingEntity le) {
 		ItemStack head = new ItemStack(Material.MANGROVE_LEAVES);
-		head.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 3);
+		head.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 3);
 		
 		String reg = lang.contains("kr") ? "거대슬라임":"GiantSlime";
 		Slime newmob = (Slime) Mobspawn(le, reg, 20000.0, head, null, null, null, null, null, EntityType.SLIME);

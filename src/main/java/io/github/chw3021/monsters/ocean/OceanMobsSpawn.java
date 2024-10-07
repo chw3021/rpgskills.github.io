@@ -7,12 +7,12 @@ import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Breeze;
 import org.bukkit.entity.Drowned;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Phantom;
 import org.bukkit.entity.Shulker;
-import org.bukkit.entity.Stray;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
@@ -50,7 +50,7 @@ public class OceanMobsSpawn extends Mobs implements Listener {
 		bom.setColor(Color.WHITE);
 		boots.setItemMeta(bom);
 		ItemStack main = new ItemStack(Material.FISHING_ROD);
-		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 2);
+		main.addUnsafeEnchantment(Enchantment.SHARPNESS, 2);
 		String reg = lang.contains("kr") ? "랜턴맨":"LanternMan";
 		Drowned newmob = (Drowned) Mobspawn(le, reg, 2500.0, head, chest, leg, boots, main, main, EntityType.DROWNED);
 		newmob.setConversionTime(-1);
@@ -66,10 +66,10 @@ public class OceanMobsSpawn extends Mobs implements Listener {
 		return newmob;
 	}
 
-	final private Stray Mimic(LivingEntity le) {
+	final private Breeze Mimic(LivingEntity le) {
 		ItemStack head = new ItemStack(Material.TRAPPED_CHEST);
 		String reg = lang.contains("kr") ? "미믹":"Mimic";
-		Stray newmob = (Stray) Mobspawn(le, reg, 3000.0, head,  new ItemStack(Material.VOID_AIR),  new ItemStack(Material.VOID_AIR),  new ItemStack(Material.VOID_AIR), new ItemStack(Material.VOID_AIR),  new ItemStack(Material.VOID_AIR), EntityType.STRAY);
+		Breeze newmob = (Breeze) Mobspawn(le, reg, 3000.0, head,  new ItemStack(Material.VOID_AIR),  new ItemStack(Material.VOID_AIR),  new ItemStack(Material.VOID_AIR), new ItemStack(Material.VOID_AIR),  new ItemStack(Material.VOID_AIR), EntityType.BREEZE);
 		newmob.setSwimming(true);
 		newmob.setGravity(true);
 		newmob.setAI(false);
@@ -89,8 +89,8 @@ public class OceanMobsSpawn extends Mobs implements Listener {
 
 	final private Shulker SeaShulker(LivingEntity le) {
 		ItemStack head = new ItemStack(Material.SEAGRASS);
-		head.addUnsafeEnchantment(Enchantment.WATER_WORKER, 3);
-		head.addUnsafeEnchantment(Enchantment.OXYGEN, 3);
+		head.addUnsafeEnchantment(Enchantment.AQUA_AFFINITY, 3);
+		head.addUnsafeEnchantment(Enchantment.RESPIRATION, 3);
 		ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
 		LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
 		chm.setColor(Color.TEAL);
@@ -105,7 +105,7 @@ public class OceanMobsSpawn extends Mobs implements Listener {
 		boots.setItemMeta(bom);
 		boots.addUnsafeEnchantment(Enchantment.DEPTH_STRIDER, 3);
 		ItemStack main = new ItemStack(Material.SEAGRASS);
-		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
+		main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
 		String reg = lang.contains("kr") ? "바다셜커":"SeaShulker";
 		Shulker newmob = (Shulker) Mobspawn(le, reg, 2000.0, head, chest, leg, boots, main, main, EntityType.SHULKER);
 		newmob.setPeek(0.3f);
@@ -140,7 +140,7 @@ public class OceanMobsSpawn extends Mobs implements Listener {
 		boots.setItemMeta(bom);
 		ItemStack main = new ItemStack(Material.BONE);
 		ItemStack off = new ItemStack(Material.IRON_SWORD);
-		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 2);
+		main.addUnsafeEnchantment(Enchantment.SHARPNESS, 2);
 		String reg = lang.contains("kr") ? "떠도는해적":"DrownedPirate";
 		Drowned newmob = (Drowned) Mobspawn(le, reg, 1800.0, head, chest, leg, boots, off, main, EntityType.DROWNED);
 		newmob.setConversionTime(-1);
@@ -172,7 +172,7 @@ public class OceanMobsSpawn extends Mobs implements Listener {
 		boots.setItemMeta(bom);
 		ItemStack main = new ItemStack(Material.DIAMOND_SWORD);
 		ItemStack off = new ItemStack(Material.FLINT_AND_STEEL);
-		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 2);
+		main.addUnsafeEnchantment(Enchantment.SHARPNESS, 2);
 		String reg = lang.contains("kr") ? "해적선장의원혼":"DrownedCaptain";
 		Drowned newmob = (Drowned) Mobspawn(le, reg, 2600.0, head, chest, leg, boots, off, main, EntityType.DROWNED);
 		newmob.setConversionTime(-1);
@@ -196,7 +196,7 @@ public class OceanMobsSpawn extends Mobs implements Listener {
 		ItemStack boots = new ItemStack(Material.DIAMOND_BOOTS);
 		ItemStack main = new ItemStack(Material.TRIDENT);
 		ItemStack off = new ItemStack(Material.SHIELD);
-		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 2);
+		main.addUnsafeEnchantment(Enchantment.SHARPNESS, 2);
 		String reg = lang.contains("kr") ? "떠도는창기병":"DrownedLancer";
 		Drowned newmob = (Drowned) Mobspawn(le, reg, 2000.0, head, chest, leg, boots, main, off, EntityType.DROWNED);
 		newmob.setConversionTime(-1);

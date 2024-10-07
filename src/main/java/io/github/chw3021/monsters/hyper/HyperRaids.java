@@ -167,11 +167,11 @@ public class HyperRaids extends Summoned {
     	Location esl = spl.clone().add(number, 0, number2);
 
 		ItemStack head = new ItemStack(Material.LIME_STAINED_GLASS);
-		head.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
+		head.addUnsafeEnchantment(Enchantment.PROTECTION, 3);
 		ItemStack chest = new ItemStack(Material.NETHERITE_CHESTPLATE);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
+		chest.addUnsafeEnchantment(Enchantment.PROTECTION, 3);
 		ItemStack leg = new ItemStack(Material.NETHERITE_LEGGINGS);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
+		leg.addUnsafeEnchantment(Enchantment.PROTECTION, 3);
 		ItemStack boots = new ItemStack(Material.NETHERITE_BOOTS);
 		boots.addUnsafeEnchantment(Enchantment.DEPTH_STRIDER, 3);
 		ItemStack main = new ItemStack(Material.BOW);
@@ -200,11 +200,11 @@ public class HyperRaids extends Summoned {
     	Location esl = spl.clone().add(number, 0, number2);
 
 		ItemStack head = new ItemStack(Material.BLACK_STAINED_GLASS);
-		head.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
+		head.addUnsafeEnchantment(Enchantment.PROTECTION, 3);
 		ItemStack chest = new ItemStack(Material.NETHERITE_CHESTPLATE);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
+		chest.addUnsafeEnchantment(Enchantment.PROTECTION, 3);
 		ItemStack leg = new ItemStack(Material.NETHERITE_LEGGINGS);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3);
+		leg.addUnsafeEnchantment(Enchantment.PROTECTION, 3);
 		ItemStack boots = new ItemStack(Material.NETHERITE_BOOTS);
 		boots.addUnsafeEnchantment(Enchantment.DEPTH_STRIDER, 3);
 		ItemStack main = new ItemStack(Material.NETHERITE_SWORD);

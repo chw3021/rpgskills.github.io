@@ -108,23 +108,23 @@ public class PlainRaids extends Summoned {
 		LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
 		chm.setColor(Color.GRAY);
 		chest.setItemMeta(chm);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		chest.addUnsafeEnchantment(Enchantment.FIRE_PROTECTION, 5);
+		chest.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		chest.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack leg = new ItemStack(Material.LEATHER_LEGGINGS);
 		LeatherArmorMeta lem = (LeatherArmorMeta) leg.getItemMeta();
 		lem.setColor(Color.GRAY);
 		leg.setItemMeta(lem);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		leg.addUnsafeEnchantment(Enchantment.FIRE_PROTECTION, 5);
+		leg.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		leg.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
 		LeatherArmorMeta bom = (LeatherArmorMeta) boots.getItemMeta();
 		bom.setColor(Color.GRAY);
 		boots.setItemMeta(bom);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		boots.addUnsafeEnchantment(Enchantment.FIRE_PROTECTION, 5);
+		boots.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		boots.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack main = new ItemStack(Material.WOODEN_AXE);
 		ItemStack off = new ItemStack(Material.SHIELD);
 		String reg = lang.equalsIgnoreCase("ko_kr") ? "풀밭기사":"GrassKnight";
@@ -192,23 +192,23 @@ public class PlainRaids extends Summoned {
 		LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
 		chm.setColor(Color.GREEN);
 		chest.setItemMeta(chm);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		chest.addUnsafeEnchantment(Enchantment.FIRE_PROTECTION, 5);
+		chest.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		chest.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack leg = new ItemStack(Material.LEATHER_LEGGINGS);
 		LeatherArmorMeta lem = (LeatherArmorMeta) leg.getItemMeta();
 		lem.setColor(Color.fromRGB(101, 67, 33));
 		leg.setItemMeta(lem);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		leg.addUnsafeEnchantment(Enchantment.FIRE_PROTECTION, 5);
+		leg.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		leg.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
 		LeatherArmorMeta bom = (LeatherArmorMeta) boots.getItemMeta();
 		bom.setColor(Color.BLACK);
 		boots.setItemMeta(bom);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		boots.addUnsafeEnchantment(Enchantment.FIRE_PROTECTION, 5);
+		boots.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		boots.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack main = new ItemStack(Material.STICK);
 		ItemStack off = new ItemStack(Material.DARK_OAK_SAPLING);
 		String reg = lang.equalsIgnoreCase("ko_kr") ? "대지요정":"EarthFairy";
@@ -321,7 +321,7 @@ public class PlainRaids extends Summoned {
 		newmob.setCanJoinRaid(false);
 		newmob.setPatrolLeader(false);
 		newmob.setPatrolTarget(null);
-		newmob.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999, 1, false, false));
+		newmob.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 999999, 1, false, false));
 		newmob.addPotionEffect(
 				new PotionEffect(PotionEffectType.NIGHT_VISION, 999999, 1, false, false));
 		
@@ -379,9 +379,9 @@ public class PlainRaids extends Summoned {
 
 
 		ItemStack main = new ItemStack(Material.STONE);
-		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
+		main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
 		ItemStack off = new ItemStack(Material.STONE);
-		off.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
+		off.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
 		String reg = lang.equalsIgnoreCase("ko_kr") ? "장로크리퍼":"ElderCreeper";
 		Creeper newmob = (Creeper) Summon(esl, ChatColor.GREEN + reg, 200.0, null,
 				null, null, null, main, off, EntityType.CREEPER);

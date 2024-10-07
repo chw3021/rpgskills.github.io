@@ -99,7 +99,7 @@ public class HyperSkills extends Summoned{
                     public void run() 
                     {
                         p.getWorld().playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 0.36f, 0.3f);
-                    	p.getWorld().spawnParticle(Particle.BLOCK_CRACK, l,10, 0.5,0.5,0.5,0, Material.GREEN_GLAZED_TERRACOTTA.createBlockData());
+                    	p.getWorld().spawnParticle(Particle.BLOCK, l,10, 0.5,0.5,0.5,0, Material.GREEN_GLAZED_TERRACOTTA.createBlockData());
                     	p.getWorld().spawnParticle(Particle.GLOW, l,10, 0.5,0.5,0.5,0);
 
     					for(Entity e : p.getWorld().getNearbyEntities(l,1.25, 1.25, 1.25)) {
@@ -134,7 +134,7 @@ public class HyperSkills extends Summoned{
                     @Override
                     public void run() 
                     {
-                    	p.getWorld().spawnParticle(Particle.BLOCK_CRACK, l,10, 0.5,0.5,0.5,0, Material.YELLOW_GLAZED_TERRACOTTA.createBlockData());
+                    	p.getWorld().spawnParticle(Particle.BLOCK, l,10, 0.5,0.5,0.5,0, Material.YELLOW_GLAZED_TERRACOTTA.createBlockData());
                     	p.getWorld().spawnParticle(Particle.WAX_ON, l,10, 0.5,0.5,0.5,0);
 
     					for(Entity e : p.getWorld().getNearbyEntities(l,1.5, 1.5, 1.5)) {
@@ -270,12 +270,12 @@ public class HyperSkills extends Summoned{
 
         	p.getWorld().playSound(p.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 1f, 2f);
             line.forEach(l -> {
-            	p.getWorld().spawnParticle(Particle.BLOCK_CRACK, l.add(0, -0.289, 0),5, 0.005,0.005,0.005,0, Material.LIGHT.createBlockData());
+            	p.getWorld().spawnParticle(Particle.BLOCK, l.add(0, -0.289, 0),5, 0.005,0.005,0.005,0, Material.LIGHT.createBlockData());
 
                 Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
                     @Override
                     public void run() {
-                        	p.getWorld().spawnParticle(Particle.BLOCK_CRACK, l.add(0, -0.289, 0),5, 0.005,0.005,0.005,0, Material.MAGENTA_STAINED_GLASS.createBlockData());
+                        	p.getWorld().spawnParticle(Particle.BLOCK, l.add(0, -0.289, 0),5, 0.005,0.005,0.005,0, Material.MAGENTA_STAINED_GLASS.createBlockData());
 
                         	for (Entity e : p.getWorld().getNearbyEntities(l, 0.25, 0.25, 0.25))
             				{
@@ -311,7 +311,7 @@ public class HyperSkills extends Summoned{
                 }
 	        	p.getWorld().playSound(p.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 1f, 2f);
 	            line.forEach(l -> {
-	            	p.getWorld().spawnParticle(Particle.BLOCK_CRACK, l.add(0, -0.289, 0),5, 0.005,0.005,0.005,0, Material.LIGHT.createBlockData());
+	            	p.getWorld().spawnParticle(Particle.BLOCK, l.add(0, -0.289, 0),5, 0.005,0.005,0.005,0, Material.LIGHT.createBlockData());
 
 	            });
 
@@ -323,7 +323,7 @@ public class HyperSkills extends Summoned{
 		                	p.getWorld().playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1f, 2f);
 		                	p.getWorld().playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_SHOOT, 1f, 2f);
 		                    line.forEach(l -> {
-		                    	p.getWorld().spawnParticle(Particle.BLOCK_CRACK, l.add(0, -0.289, 0),5, 0.005,0.005,0.005,0, Material.MAGENTA_STAINED_GLASS.createBlockData());
+		                    	p.getWorld().spawnParticle(Particle.BLOCK, l.add(0, -0.289, 0),5, 0.005,0.005,0.005,0, Material.MAGENTA_STAINED_GLASS.createBlockData());
 
 		                    	for (Entity e : p.getWorld().getNearbyEntities(l, 0.25, 0.25, 0.25))
 		        				{
@@ -368,13 +368,12 @@ public class HyperSkills extends Summoned{
 	                	public void run() 
 		                {	
 	        	            Snowball sn = p.launchProjectile(Snowball.class);
-	        	            sn.setBounce(false);
 	        	            sn.setGravity(false);
 	        	            sn.setVelocity(p.getEyeLocation().clone().getDirection().normalize().multiply(0.16));
 	        	            sn.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 	        	            sn.setShooter(p);
 	        	            ItemStack eb = new ItemStack(Material.RAW_IRON_BLOCK);
-	        	            eb.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 10);
+	        	            eb.addUnsafeEnchantment(Enchantment.SHARPNESS, 10);
 	        	            sn.setItem(eb);
 	        	            sn.setGlowing(true);
 	        	            
@@ -420,13 +419,12 @@ public class HyperSkills extends Summoned{
                 	public void run() 
 	                {	
         	            Snowball sn = p.launchProjectile(Snowball.class);
-        	            sn.setBounce(false);
         	            sn.setGravity(false);
         	            sn.setVelocity(p.getEyeLocation().clone().getDirection().normalize().multiply(0.16));
         	            sn.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
         	            sn.setShooter(p);
         	            ItemStack eb = new ItemStack(Material.RAW_IRON_BLOCK);
-        	            eb.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 10);
+        	            eb.addUnsafeEnchantment(Enchantment.SHARPNESS, 10);
         	            sn.setItem(eb);
         	            sn.setGlowing(true);
         	            
@@ -504,7 +502,7 @@ public class HyperSkills extends Summoned{
 			Illusioner p = (Illusioner)d.getEntity();
 			if(d.getCause().equals(DamageCause.FALL)) 
 			{
-	        	p.getWorld().spawnParticle(Particle.BLOCK_CRACK, p.getLocation(), 65*(int)p.getFallDistance(), p.getFallDistance(), 1, p.getFallDistance(), p.getLocation().add(0, -1, 0).getBlock().getBlockData());
+	        	p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation(), 65*(int)p.getFallDistance(), p.getFallDistance(), 1, p.getFallDistance(), p.getLocation().add(0, -1, 0).getBlock().getBlockData());
 	        	for(Entity e: p.getNearbyEntities(p.getFallDistance()/2, 2, p.getFallDistance()/2)) {
 
 					if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
@@ -673,7 +671,7 @@ public class HyperSkills extends Summoned{
 	            {
 	            	rb3cooldown.remove(p.getUniqueId()); 
 					p.getWorld().playSound(p.getLocation(), Sound.ENTITY_HUSK_AMBIENT, 1.0f, 2f);
-					p.getWorld().spawnParticle(Particle.SMOKE_NORMAL, p.getLocation(), 100, 1,1,1);
+					p.getWorld().spawnParticle(Particle.SMOKE, p.getLocation(), 100, 1,1,1);
 	                Holding.holding(null, p, 20l);
 	                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	             		@Override
@@ -696,7 +694,7 @@ public class HyperSkills extends Summoned{
 	        else 
 	        {
 				p.getWorld().playSound(p.getLocation(), Sound.ENTITY_HUSK_AMBIENT, 1.0f, 2f);
-				p.getWorld().spawnParticle(Particle.SMOKE_NORMAL, p.getLocation(), 100, 1,1,1);
+				p.getWorld().spawnParticle(Particle.SMOKE, p.getLocation(), 100, 1,1,1);
                 Holding.holding(null, p, 20l);
                 Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
              		@Override
@@ -756,7 +754,7 @@ public class HyperSkills extends Summoned{
 	                scratchable.remove(p.getUniqueId());
 					p.getWorld().playSound(pl, Sound.ENTITY_HUSK_AMBIENT, 1.0f, 0f);
 					p.getWorld().playSound(pl, Sound.ENTITY_ZOGLIN_ANGRY, 1.0f, 0f);
-					p.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, pl, 100, 2,2,2);
+					p.getWorld().spawnParticle(Particle.ANGRY_VILLAGER, pl, 100, 2,2,2);
 	                Holding.holding(null, p,20l);
 					for(int i = 0; i<10; i++) {
 	                    int t = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -813,7 +811,7 @@ public class HyperSkills extends Summoned{
                 scratchable.remove(p.getUniqueId());
 				p.getWorld().playSound(pl, Sound.ENTITY_HUSK_AMBIENT, 1.0f, 0f);
 				p.getWorld().playSound(pl, Sound.ENTITY_ZOGLIN_ANGRY, 1.0f, 0f);
-				p.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, pl, 100, 2,2,2);
+				p.getWorld().spawnParticle(Particle.ANGRY_VILLAGER, pl, 100, 2,2,2);
                 Holding.holding(null, p,20l);
 				for(int i = 0; i<10; i++) {
                     int t = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -993,7 +991,7 @@ public class HyperSkills extends Summoned{
             	rl.getWorld().playSound(rl, Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1f, 2f);
             	rl.getWorld().playSound(rl, Sound.ENTITY_FIREWORK_ROCKET_SHOOT, 1f, 2f);
             	mls1.forEach(l -> {
-                	rl.getWorld().spawnParticle(Particle.BLOCK_CRACK, l,35, 0.5,0.5,0.5,0, Material.LIME_STAINED_GLASS.createBlockData());
+                	rl.getWorld().spawnParticle(Particle.BLOCK, l,35, 0.5,0.5,0.5,0, Material.LIME_STAINED_GLASS.createBlockData());
             		rl.getWorld().spawnParticle(Particle.GLOW, l,20, 0.5,0.5,0.5,0);
 
                 	for (Entity e : rl.getWorld().getNearbyEntities(l, 1, 2,1))
@@ -1196,8 +1194,8 @@ public class HyperSkills extends Summoned{
 				            			p.getWorld().playSound(pe.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_CHARGE, 1, 0);
 				                		Holding.invur(pe, 60l);
 					            		pe.teleport(p);
-					            		pe.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 255 ,false,false));
-					            		pe.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 60, 255 ,false,false));
+					            		pe.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 60, 255 ,false,false));
+					            		pe.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 60, 255 ,false,false));
 			                		}
 				                }
 				 				Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -1208,7 +1206,7 @@ public class HyperSkills extends Summoned{
 				                		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
 				    	                p.setInvulnerable(false);
 				    	                Holding.ale(p).setInvulnerable(false);
-										p.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, p.getLocation(), 100, 10,10,10);	
+										p.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, p.getLocation(), 100, 10,10,10);	
 										p.getWorld().spawnParticle(Particle.FLAME, p.getLocation(), 3000, 10,10,10);	
 					                    for(Player pe : OverworldRaids.getheroes(p)) {
 					                		p.removeMetadata("fake", RMain.getInstance());
@@ -1341,8 +1339,8 @@ public class HyperSkills extends Summoned{
 			            			p.getWorld().playSound(pe.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_CHARGE, 1, 0);
 			                		Holding.invur(pe, 60l);
 				            		pe.teleport(p);
-				            		pe.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 255 ,false,false));
-				            		pe.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 60, 255 ,false,false));
+				            		pe.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 60, 255 ,false,false));
+				            		pe.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 60, 255 ,false,false));
 		                		}
 			                }
 			 				Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -1353,7 +1351,7 @@ public class HyperSkills extends Summoned{
 			                		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
 			    	                p.setInvulnerable(false);
 			    	                Holding.ale(p).setInvulnerable(false);
-									p.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, p.getLocation(), 100, 10,10,10);	
+									p.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, p.getLocation(), 100, 10,10,10);	
 									p.getWorld().spawnParticle(Particle.FLAME, p.getLocation(), 3000, 10,10,10);	
 				                    for(Player pe : OverworldRaids.getheroes(p)) {
 				                		p.removeMetadata("fake", RMain.getInstance());

@@ -41,7 +41,7 @@ public class DarkMobsSpawn extends Mobs implements Listener {
 	}
 	final private Zombie Mob1(LivingEntity le) {
 		ItemStack head = new ItemStack(Material.STRIPPED_DARK_OAK_LOG);
-		head.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 3);
+		head.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 3);
 		ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
 		LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
 		chm.setColor(Color.BLACK);
@@ -59,7 +59,7 @@ public class DarkMobsSpawn extends Mobs implements Listener {
 		mm.setCustomModelData(3008);
 		main.setItemMeta(mm);
 		ItemStack off = new ItemStack(Material.SHIELD);
-		off.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 2);
+		off.addUnsafeEnchantment(Enchantment.SHARPNESS, 2);
 		String reg = lang.contains("kr") ? "잠식된기사":"ErodedKnight";
 		Zombie newmob = (Zombie) Mobspawn(le, reg, 6000.0, head, chest, leg, boots, main, off, EntityType.ZOMBIE);
 		newmob.setConversionTime(-1);
@@ -71,7 +71,7 @@ public class DarkMobsSpawn extends Mobs implements Listener {
 	}
 	final private Skeleton Mob2(LivingEntity le) {
 		ItemStack head = new ItemStack(Material.STRIPPED_DARK_OAK_LOG);
-		head.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 3);
+		head.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 3);
 		ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
 		LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
 		chm.setColor(Color.BLACK);
@@ -98,7 +98,7 @@ public class DarkMobsSpawn extends Mobs implements Listener {
 	}
 	final private Pillager Mob3(LivingEntity le) {
 		ItemStack head = new ItemStack(Material.STRIPPED_DARK_OAK_LOG);
-		head.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 3);
+		head.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 3);
 		
 		String reg = lang.contains("kr") ? "잠식된약탈자":"ErodedPillager";
 		Pillager newmob = (Pillager) Mobspawn(le, reg, 5000.0, head, null, null, null, null, null, EntityType.PILLAGER);

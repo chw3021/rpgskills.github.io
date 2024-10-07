@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -23,7 +21,6 @@ import org.bukkit.entity.IronGolem;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
-import org.bukkit.entity.IronGolem;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
@@ -98,7 +95,7 @@ public class MountainsSkills extends Summoned implements Listener{
                 @Override
                 public void run() {
                 	
-					p.getWorld().spawnParticle(Particle.BLOCK_CRACK, l, 5, 0.3,0.3,0.3,0 ,Material.STONE.createBlockData());
+					p.getWorld().spawnParticle(Particle.BLOCK, l, 5, 0.3,0.3,0.3,0 ,Material.STONE.createBlockData());
 					p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l, 10, 2,2,2,0);
                 }
             }, j.incrementAndGet()/3);
@@ -121,7 +118,7 @@ public class MountainsSkills extends Summoned implements Listener{
 		p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_DAMAGE, 0.6f, 0.2f);
 		p.getWorld().playSound(p.getLocation(), Sound.BLOCK_GILDED_BLACKSTONE_BREAK, 0.7f, 0.2f);
 		p.getWorld().playSound(p.getLocation(), Sound.BLOCK_SCULK_CATALYST_BREAK, 0.23f, 0.2f);
-		p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100, 2,2,2,0 ,Material.STONE.createBlockData());
+		p.getWorld().spawnParticle(Particle.BLOCK, tl, 100, 2,2,2,0 ,Material.STONE.createBlockData());
 		
 		for(int i = 0; i < co; i ++) {
 			for(double d = -Math.PI/6; d<Math.PI/6; d += Math.PI/3/co) {
@@ -209,8 +206,8 @@ public class MountainsSkills extends Summoned implements Listener{
 	                final Location pl = p.getLocation().clone();
 					p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_REPAIR, 0.5f, 0.1f);
 					p.getWorld().playSound(p.getLocation(), Sound.ITEM_CROSSBOW_LOADING_END, 1.0f, 0.2f);
-					p.getWorld().spawnParticle(Particle.BLOCK_CRACK, p.getLocation(), 100, 1,1,1,Material.COBBLESTONE.createBlockData());
-					p.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, p.getLocation(), 100, 1,1,1);
+					p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation(), 100, 1,1,1,Material.COBBLESTONE.createBlockData());
+					p.getWorld().spawnParticle(Particle.ANGRY_VILLAGER, p.getLocation(), 100, 1,1,1);
 	                Holding.holding(null, p, 32l);
 	                
 	                Smotion(p);
@@ -236,8 +233,8 @@ public class MountainsSkills extends Summoned implements Listener{
                 final Location pl = p.getLocation().clone();
 				p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_REPAIR, 0.5f, 0.1f);
 				p.getWorld().playSound(p.getLocation(), Sound.ITEM_CROSSBOW_LOADING_END, 1.0f, 0.2f);
-				p.getWorld().spawnParticle(Particle.BLOCK_CRACK, p.getLocation(), 100, 1,1,1,Material.COBBLESTONE.createBlockData());
-				p.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, p.getLocation(), 100, 1,1,1);
+				p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation(), 100, 1,1,1,Material.COBBLESTONE.createBlockData());
+				p.getWorld().spawnParticle(Particle.ANGRY_VILLAGER, p.getLocation(), 100, 1,1,1);
                 Holding.holding(null, p, 32l);
                 
                 Smotion(p);
@@ -270,7 +267,7 @@ public class MountainsSkills extends Summoned implements Listener{
 					po.getWorld().playSound(po.getLocation(), Sound.BLOCK_STONE_BREAK, 0.4f, 0.1f);
 					po.getWorld().playSound(po.getLocation(), Sound.BLOCK_STONE_HIT, 0.689f, 0.2f);
 					po.getWorld().playSound(po.getLocation(), Sound.BLOCK_STONE_FALL, 0.6f, 0.2f);
-					p.getWorld().spawnParticle(Particle.BLOCK_CRACK, po.getLocation(), 300, 1.5,1.5,1.5,Material.COBBLESTONE.createBlockData());
+					p.getWorld().spawnParticle(Particle.BLOCK, po.getLocation(), 300, 1.5,1.5,1.5,Material.COBBLESTONE.createBlockData());
             		for(Entity e : p.getWorld().getNearbyEntities(po.getLocation(), 1.5, 1.5, 1.5)) {
 						if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
 							LivingEntity le = (LivingEntity)e;
@@ -337,7 +334,7 @@ public class MountainsSkills extends Summoned implements Listener{
     			p.getWorld().playSound(pl, Sound.ENTITY_IRON_GOLEM_STEP, 1.0f, 0f);
     			p.getWorld().playSound(pl, Sound.ENTITY_IRON_GOLEM_REPAIR, 1.0f, 0f);
     			p.getWorld().playSound(pl, Sound.ITEM_ARMOR_EQUIP_NETHERITE, 1.0f, 0f);
-    			p.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, pl, 20, 2,2,2);
+    			p.getWorld().spawnParticle(Particle.ANGRY_VILLAGER, pl, 20, 2,2,2);
     			Holding.invur(p, 10l);
     			
                 Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -376,7 +373,7 @@ public class MountainsSkills extends Summoned implements Listener{
                             	public void run() 
                                 {	
                          			p.teleport(l);
-        	    					p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100,2.1,2,2.1,1, Material.STONE.createBlockData());
+        	    					p.getWorld().spawnParticle(Particle.BLOCK, tl, 100,2.1,2,2.1,1, Material.STONE.createBlockData());
         	    					p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, tl, 100,2.1,2,2.1,1);
         	    					p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_ATTACK, 1, 0);
 
@@ -414,7 +411,7 @@ public class MountainsSkills extends Summoned implements Listener{
 			p.getWorld().playSound(pl, Sound.ENTITY_IRON_GOLEM_STEP, 1.0f, 0f);
 			p.getWorld().playSound(pl, Sound.ENTITY_IRON_GOLEM_REPAIR, 1.0f, 0f);
 			p.getWorld().playSound(pl, Sound.ITEM_ARMOR_EQUIP_NETHERITE, 1.0f, 0f);
-			p.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, pl, 20, 2,2,2);
+			p.getWorld().spawnParticle(Particle.ANGRY_VILLAGER, pl, 20, 2,2,2);
 			Holding.invur(p, 10l);
 			
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -453,7 +450,7 @@ public class MountainsSkills extends Summoned implements Listener{
                         	public void run() 
                             {	
                      			p.teleport(l);
-    	    					p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100,3,2,3,1, Material.STONE.createBlockData());
+    	    					p.getWorld().spawnParticle(Particle.BLOCK, tl, 100,3,2,3,1, Material.STONE.createBlockData());
     	    					p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, tl, 100,3,2,3,1);
     	    					p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_ATTACK, 1, 0);
 
@@ -504,8 +501,8 @@ public class MountainsSkills extends Summoned implements Listener{
          		@Override
             	public void run() 
                 {	
-        			p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 300,2,2,2,1, Material.GRANITE.createBlockData());
-        			p.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, tl, 10,2,1,2,1);
+        			p.getWorld().spawnParticle(Particle.BLOCK, tl, 300,2,2,2,1, Material.GRANITE.createBlockData());
+        			p.getWorld().spawnParticle(Particle.EXPLOSION, tl, 10,2,1,2,1);
         			p.getWorld().playSound(tl, Sound.ENTITY_IRON_GOLEM_ATTACK, 1, 0);
         			p.getWorld().playSound(tl, Sound.BLOCK_STONE_BREAK, 1, 2);
         			for(Entity e : p.getWorld().getNearbyEntities(tl,2, 2, 2)) {
@@ -544,7 +541,7 @@ public class MountainsSkills extends Summoned implements Listener{
 	            {
 	                rb1cooldown.remove(p.getUniqueId()); // removing player from HashMap
 
-					p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100,3,2,3,1, Material.STONE.createBlockData());
+					p.getWorld().spawnParticle(Particle.BLOCK, tl, 100,3,2,3,1, Material.STONE.createBlockData());
 					p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_ATTACK, 1, 0);
 
 					for(Entity e : p.getWorld().getNearbyEntities(tl,3, 2, 3)) {
@@ -559,7 +556,7 @@ public class MountainsSkills extends Summoned implements Listener{
 	        else 
 	        {
 
-				p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100,3,2,3,1, Material.STONE.createBlockData());
+				p.getWorld().spawnParticle(Particle.BLOCK, tl, 100,3,2,3,1, Material.STONE.createBlockData());
 				p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_ATTACK, 1, 0);
 
 				for(Entity e : p.getWorld().getNearbyEntities(tl,3, 2, 3)) {
@@ -587,8 +584,8 @@ public class MountainsSkills extends Summoned implements Listener{
 				strong.remove(p.getUniqueId());
 
 
-				p.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, p.getLocation(), 50,1,1,1,1);
-				p.getWorld().spawnParticle(Particle.BLOCK_CRACK, p.getLocation(), 300,1,1,1,1, Material.STONE.createBlockData());
+				p.getWorld().spawnParticle(Particle.ANGRY_VILLAGER, p.getLocation(), 50,1,1,1,1);
+				p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation(), 300,1,1,1,1, Material.STONE.createBlockData());
 				p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_DAMAGE, 1, 0);
 				p.getWorld().playSound(p.getLocation(), Sound.BLOCK_STONE_BREAK, 1, 0);
 				
@@ -611,8 +608,8 @@ public class MountainsSkills extends Summoned implements Listener{
 					strong.remove(p.getUniqueId());
 
 
-					p.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, p.getLocation(), 50,1,1,1,1);
-					p.getWorld().spawnParticle(Particle.BLOCK_CRACK, p.getLocation(), 300,1,1,1,1, Material.STONE.createBlockData());
+					p.getWorld().spawnParticle(Particle.ANGRY_VILLAGER, p.getLocation(), 50,1,1,1,1);
+					p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation(), 300,1,1,1,1, Material.STONE.createBlockData());
 					p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_DAMAGE, 1, 0);
 					p.getWorld().playSound(p.getLocation(), Sound.BLOCK_STONE_BREAK, 1, 0);
 					ordealable.put(p.getUniqueId(),true);
@@ -663,10 +660,10 @@ public class MountainsSkills extends Summoned implements Listener{
 	                    int t1 =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
 			                @Override
 			                public void run() {
-								p.getWorld().spawnParticle(Particle.BLOCK_CRACK, p.getLocation(), 200, 2,1,2,Material.STONE.createBlockData());
+								p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation(), 200, 2,1,2,Material.STONE.createBlockData());
 								p.getWorld().spawnParticle(Particle.HEART, p.getLocation(), 50, 2,1,2);
 								p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_REPAIR, 1, 1);
-								p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 5,5,false,false));
+								p.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 5,5,false,false));
 			                }
 	                    },20,20);
 						ordt.put(rn, t1);    
@@ -691,10 +688,10 @@ public class MountainsSkills extends Summoned implements Listener{
                     int t1 =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
 		                @Override
 		                public void run() {
-							p.getWorld().spawnParticle(Particle.BLOCK_CRACK, p.getLocation(), 200, 2,1,2,Material.STONE.createBlockData());
+							p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation(), 200, 2,1,2,Material.STONE.createBlockData());
 							p.getWorld().spawnParticle(Particle.HEART, p.getLocation(), 50, 2,1,2);
 							p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_REPAIR, 1, 1);
-							p.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 6,5,false,false));
+							p.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 6,5,false,false));
 		                }
                     },20,20);
 					ordt.put(rn, t1);    
@@ -763,8 +760,8 @@ public class MountainsSkills extends Summoned implements Listener{
                             @Override
                             public void run() {
 
-                    			p.getWorld().spawnParticle(Particle.BLOCK_CRACK, l.clone(), 1000,1,15,1,0.1,Material.STONE.createBlockData());
-                    			p.getWorld().spawnParticle(Particle.BLOCK_CRACK, l.clone(), 1000,1,15,1,0.1,Material.ANDESITE.createBlockData());
+                    			p.getWorld().spawnParticle(Particle.BLOCK, l.clone(), 1000,1,15,1,0.1,Material.STONE.createBlockData());
+                    			p.getWorld().spawnParticle(Particle.BLOCK, l.clone(), 1000,1,15,1,0.1,Material.ANDESITE.createBlockData());
                             	p.swingMainHand();
                             	l.getWorld().playSound(l, Sound.ENTITY_WITHER_BREAK_BLOCK, 0.6f, 0.6f);
                             	p.getWorld().playSound(p.getLocation().clone(), Sound.ENTITY_IRON_GOLEM_ATTACK, 0.8f, 0.6f);
@@ -787,8 +784,8 @@ public class MountainsSkills extends Summoned implements Listener{
                         @Override
                         public void run() {
 
-                			p.getWorld().spawnParticle(Particle.BLOCK_CRACK, p.getLocation().clone(), 1000,1.5,10,1.5,0.1,Material.STONE.createBlockData());
-                			p.getWorld().spawnParticle(Particle.BLOCK_CRACK, p.getLocation().clone(), 1000,1.5,10,1.5,0.1,Material.ANDESITE.createBlockData());
+                			p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation().clone(), 1000,1.5,10,1.5,0.1,Material.STONE.createBlockData());
+                			p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation().clone(), 1000,1.5,10,1.5,0.1,Material.ANDESITE.createBlockData());
                         	p.swingMainHand();
                         	p.getWorld().playSound(p.getLocation().clone(), Sound.ENTITY_WITHER_BREAK_BLOCK, 0.6f, 0.6f);
                         	p.getWorld().playSound(p.getLocation().clone(), Sound.ENTITY_IRON_GOLEM_ATTACK, 0.8f, 0.6f);
@@ -854,7 +851,7 @@ public class MountainsSkills extends Summoned implements Listener{
 						count.putIfAbsent(p.getUniqueId(), 1);
 						
 		                Location rl = OverworldRaids.getraidloc(p).clone();
-				        p.playEffect(EntityEffect.HURT);
+				        p.playHurtAnimation(0);
 				        Bukkit.getScheduler().cancelTask(countt.get(p.getUniqueId()));
 	                	p.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 20,10,false,false));
 	                	counterable.remove(p.getUniqueId());
@@ -1010,8 +1007,8 @@ public class MountainsSkills extends Summoned implements Listener{
 			        	p.setGlowing(true);
 	            		pe.teleport(p);
 						pe.removePotionEffect(PotionEffectType.BLINDNESS);
-	            		pe.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 255 ,false,false));
-	            		pe.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 60, 255 ,false,false));
+	            		pe.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 60, 255 ,false,false));
+	            		pe.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 60, 255 ,false,false));
             		}
                 }
  				Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {

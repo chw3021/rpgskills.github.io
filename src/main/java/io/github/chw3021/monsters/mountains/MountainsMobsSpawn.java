@@ -76,7 +76,7 @@ public class MountainsMobsSpawn extends Mobs implements Listener {
 		bom.setColor(Color.GRAY);
 		boots.setItemMeta(bom);
 		ItemStack main = new ItemStack(Material.BOW);
-		main.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 3);
+		main.addUnsafeEnchantment(Enchantment.POWER, 3);
 		String reg = lang.contains("kr") ? "자갈궁수":"GravelArcher";
 		Skeleton newmob = (Skeleton) Mobspawn(le, reg, 100.0, head, chest, leg, boots, main,
 				null, EntityType.SKELETON);
@@ -109,7 +109,7 @@ public class MountainsMobsSpawn extends Mobs implements Listener {
 		newmob.setCanJoinRaid(false);
 		newmob.setPatrolLeader(false);
 		newmob.setPatrolTarget(null);
-		newmob.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999, 1, false, false));
+		newmob.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 999999, 1, false, false));
 		newmob.addPotionEffect(
 				new PotionEffect(PotionEffectType.NIGHT_VISION, 999999, 1, false, false));
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
@@ -123,23 +123,23 @@ public class MountainsMobsSpawn extends Mobs implements Listener {
 		LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
 		chm.setColor(Color.GREEN);
 		chest.setItemMeta(chm);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		chest.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		chest.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		chest.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack leg = new ItemStack(Material.LEATHER_LEGGINGS);
 		LeatherArmorMeta lem = (LeatherArmorMeta) leg.getItemMeta();
 		lem.setColor(Color.FUCHSIA);
 		leg.setItemMeta(lem);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		leg.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		leg.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		leg.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
 		LeatherArmorMeta bom = (LeatherArmorMeta) boots.getItemMeta();
 		bom.setColor(Color.MAROON);
 		boots.setItemMeta(bom);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		boots.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		boots.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		boots.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack main = new ItemStack(Material.DANDELION);
 		ItemStack off = new ItemStack(Material.SUNFLOWER);
 		String reg = lang.contains("kr") ? "꽃요정":"FlowerFairy";

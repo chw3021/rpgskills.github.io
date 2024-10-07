@@ -11,7 +11,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -114,7 +113,7 @@ public class DarkSkills extends Summoned{
             			if(p.isDead()) {
             				return;
             			}
-		        		p.getWorld().spawnParticle(Particle.SPELL_WITCH, l,4,0.1,0.3,0.1);
+		        		p.getWorld().spawnParticle(Particle.WITCH, l,4,0.1,0.3,0.1);
 		        		
 
                     	for (Entity e : p.getWorld().getNearbyEntities(l, 0.25, 0.25, 0.25))
@@ -167,7 +166,6 @@ public class DarkSkills extends Summoned{
                 WitherSkull ws = (WitherSkull) p.launchProjectile(WitherSkull.class);
                 ws.setYield(0.0f);
                 ws.setGravity(true);
-                ws.setBounce(true);
                 ws.setShooter(p);
                 ws.setVelocity(p.getLocation().getDirection().normalize().multiply(0.25));
                 ws.setIsIncendiary(false);
@@ -192,7 +190,7 @@ public class DarkSkills extends Summoned{
 		                @Override
 		                public void run() {
 
-		    				p.getWorld().spawnParticle(Particle.SPELL_WITCH, p.getLocation(), 100,3,2,3,0);
+		    				p.getWorld().spawnParticle(Particle.WITCH, p.getLocation(), 100,3,2,3,0);
 		    				for(Entity e : p.getNearbyEntities(3, 2, 3)) {
 								if(p!=e && e instanceof Player) {
 									LivingEntity le = (LivingEntity)e;
@@ -311,7 +309,7 @@ public class DarkSkills extends Summoned{
     				return;
     			}
 				po.getWorld().playSound(po.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 0.4f, 1.6f);
-				p.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, po.getLocation(), 4, 2,2,2);
+				p.getWorld().spawnParticle(Particle.EXPLOSION, po.getLocation(), 4, 2,2,2);
         		for(Entity e : p.getWorld().getNearbyEntities(po.getLocation(), 3.5, 3.5, 3.5)) {
 					if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
 						LivingEntity le = (LivingEntity)e;
@@ -439,8 +437,8 @@ public class DarkSkills extends Summoned{
             			}
 	        			pl.add(pv.clone().normalize().multiply(1.2));
 						hook.teleport(pl);
-	         			p.getWorld().spawnParticle(Particle.SPELL_WITCH ,pl, 10, 0.2,0.2,0.2,0);
-	         			p.getWorld().spawnParticle(Particle.SPELL_INSTANT ,pl, 10, 0.2,0.2,0.2,0);
+	         			p.getWorld().spawnParticle(Particle.WITCH ,pl, 10, 0.2,0.2,0.2,0);
+	         			p.getWorld().spawnParticle(Particle.INSTANT_EFFECT ,pl, 10, 0.2,0.2,0.2,0);
 	         			p.getWorld().spawnParticle(Particle.SCULK_SOUL ,pl, 10, 0.2,0.2,0.2,0);
 	                    for(Entity e : pl.getWorld().getNearbyEntities(pl, 1.2,1.2,1.2)) {
 							if(p!=e && e instanceof Player&& !(e.hasMetadata("fake"))) {
@@ -520,8 +518,8 @@ public class DarkSkills extends Summoned{
         			}
         			pl.add(pv.clone().normalize().multiply(1.2));
 					hook.teleport(pl);
-         			p.getWorld().spawnParticle(Particle.SPELL_WITCH ,pl, 10, 0.2,0.2,0.2,0);
-         			p.getWorld().spawnParticle(Particle.SPELL_INSTANT ,pl, 10, 0.2,0.2,0.2,0);
+         			p.getWorld().spawnParticle(Particle.WITCH ,pl, 10, 0.2,0.2,0.2,0);
+         			p.getWorld().spawnParticle(Particle.INSTANT_EFFECT ,pl, 10, 0.2,0.2,0.2,0);
          			p.getWorld().spawnParticle(Particle.SCULK_SOUL ,pl, 10, 0.2,0.2,0.2,0);
                     for(Entity e : pl.getWorld().getNearbyEntities(pl, 1.2,1.2,1.2)) {
 						if(p!=e && e instanceof Player&& !(e.hasMetadata("fake"))) {
@@ -628,7 +626,7 @@ public class DarkSkills extends Summoned{
 	        		                p.teleport(p);
 	        						p.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_SHOOT, 0.15f, 2f);
 	        						p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, el, 1, 0.5,0.5,0.5);
-	        						p.getWorld().spawnParticle(Particle.SPELL_WITCH, el, 50, 1,1,1);
+	        						p.getWorld().spawnParticle(Particle.WITCH, el, 50, 1,1,1);
 					            }
 	                	   }, i*2+j.getAndIncrement()+1); 
 
@@ -742,7 +740,7 @@ public class DarkSkills extends Summoned{
 					                	public void run() 
 						                {	
 										ptl.getWorld().spawnParticle(Particle.PORTAL, ptl, 200, 3,1.5,3); 
-										ptl.getWorld().spawnParticle(Particle.BLOCK_CRACK, ptl, 300, 1.5,1.5,1.5,Material.CRYING_OBSIDIAN.createBlockData()); 
+										ptl.getWorld().spawnParticle(Particle.BLOCK, ptl, 300, 1.5,1.5,1.5,Material.CRYING_OBSIDIAN.createBlockData()); 
 					     				ptl.getWorld().playSound(p.getLocation(), Sound.BLOCK_CHAIN_PLACE, 0.3f, 0);
 					     				ptl.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_HURT, 0.2f, 2f);
 											for (Entity e : ptl.getWorld().getNearbyEntities(ptl.clone(), 4, 4, 4))
@@ -851,7 +849,7 @@ public class DarkSkills extends Summoned{
 				                	public void run() 
 					                {	
 									ptl.getWorld().spawnParticle(Particle.PORTAL, ptl, 200, 3,1.5,3); 
-									ptl.getWorld().spawnParticle(Particle.BLOCK_CRACK, ptl, 300, 1.5,1.5,1.5,Material.CRYING_OBSIDIAN.createBlockData()); 
+									ptl.getWorld().spawnParticle(Particle.BLOCK, ptl, 300, 1.5,1.5,1.5,Material.CRYING_OBSIDIAN.createBlockData()); 
 				     				ptl.getWorld().playSound(p.getLocation(), Sound.BLOCK_CHAIN_PLACE, 0.3f, 0);
 				     				ptl.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_HURT, 0.2f, 2f);
 										for (Entity e : ptl.getWorld().getNearbyEntities(ptl.clone(), 4, 4, 4))
@@ -1181,7 +1179,7 @@ public class DarkSkills extends Summoned{
 					count.putIfAbsent(p.getUniqueId(), 1);
 					
 	                Location rl = OverworldRaids.getraidloc(p).clone();
-			        p.playEffect(EntityEffect.HURT);
+			        p.playHurtAnimation(0);
 			        Bukkit.getScheduler().cancelTask(countt.get(p.getUniqueId()));
                 	p.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 20,10,false,false));
                 	counterable.remove(p.getUniqueId());
@@ -1261,8 +1259,8 @@ public class DarkSkills extends Summoned{
 				        	p.setGlowing(true);
 		            		pe.teleport(p);
 							pe.removePotionEffect(PotionEffectType.BLINDNESS);
-		            		pe.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 255 ,false,false));
-		            		pe.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 60, 255 ,false,false));
+		            		pe.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 60, 255 ,false,false));
+		            		pe.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 60, 255 ,false,false));
                 		}
 	                }
 	 				Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -1363,8 +1361,8 @@ public class DarkSkills extends Summoned{
 			        	p.setGlowing(true);
 	            		pe.teleport(p);
 						pe.removePotionEffect(PotionEffectType.BLINDNESS);
-	            		pe.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 255 ,false,false));
-	            		pe.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 60, 255 ,false,false));
+	            		pe.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 60, 255 ,false,false));
+	            		pe.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 60, 255 ,false,false));
             		}
                 }
  				Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {

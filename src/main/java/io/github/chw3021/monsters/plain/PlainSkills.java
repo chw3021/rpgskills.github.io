@@ -73,7 +73,7 @@ public class PlainSkills extends Summoned implements Listener{
 	            	rb3cooldown.remove(p.getUniqueId()); 
 					p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_REPAIR, 0.5f, 0.1f);
 					p.getWorld().playSound(p.getLocation(), Sound.ITEM_CROSSBOW_LOADING_END, 1.0f, 0.2f);
-					p.getWorld().spawnParticle(Particle.BLOCK_CRACK, p.getLocation(), 100, 1,1,1,Material.LIME_WOOL.createBlockData());
+					p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation(), 100, 1,1,1,Material.LIME_WOOL.createBlockData());
 					p.getWorld().spawnParticle(Particle.SCULK_SOUL, p.getLocation(), 100, 1,1,1);
 	                Holding.holding(null, p, 20l);
 	                
@@ -86,7 +86,6 @@ public class PlainSkills extends Summoned implements Listener{
 								p.getWorld().playSound(p.getLocation(), Sound.ENTITY_EGG_THROW, 1.0f, 0.2f);
 		                        for(double an = -Math.PI/2; an<=Math.PI/2; an += Math.PI/5) {
 			        	            Snowball sn = p.launchProjectile(Snowball.class);
-			        	            sn.setBounce(true);
 			        	            sn.setVelocity(p.getEyeLocation().clone().getDirection().normalize().multiply(0.4));
 			        	            sn.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 			        	            sn.setMetadata("plainbossthrow", new FixedMetadataValue(RMain.getInstance(), true));
@@ -104,7 +103,7 @@ public class PlainSkills extends Summoned implements Listener{
 	        {
 				p.getWorld().playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_REPAIR, 0.5f, 0.1f);
 				p.getWorld().playSound(p.getLocation(), Sound.ITEM_CROSSBOW_LOADING_END, 1.0f, 0.2f);
-				p.getWorld().spawnParticle(Particle.BLOCK_CRACK, p.getLocation(), 100, 1,1,1,Material.LIME_WOOL.createBlockData());
+				p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation(), 100, 1,1,1,Material.LIME_WOOL.createBlockData());
 				p.getWorld().spawnParticle(Particle.SCULK_SOUL, p.getLocation(), 100, 1,1,1);
                 Holding.holding(null, p, 20l);
                 
@@ -117,7 +116,6 @@ public class PlainSkills extends Summoned implements Listener{
 							p.getWorld().playSound(p.getLocation(), Sound.ENTITY_EGG_THROW, 1.0f, 0.2f);
 	                        for(double an = -Math.PI/2; an<=Math.PI/2; an += Math.PI/5) {
 		        	            Snowball sn = p.launchProjectile(Snowball.class);
-		        	            sn.setBounce(true);
 		        	            sn.setVelocity(p.getEyeLocation().clone().getDirection().normalize().multiply(0.4));
 		        	            sn.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 		        	            sn.setMetadata("plainbossthrow", new FixedMetadataValue(RMain.getInstance(), true));
@@ -143,7 +141,7 @@ public class PlainSkills extends Summoned implements Listener{
 				LivingEntity p = (LivingEntity) po.getShooter();
 				if(po.hasMetadata("plainbossthrow")) {
 					po.getWorld().playSound(po.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 0.4f, 1.6f);
-					p.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, po.getLocation(), 4, 2,2,2);
+					p.getWorld().spawnParticle(Particle.EXPLOSION, po.getLocation(), 4, 2,2,2);
             		for(Entity e : p.getWorld().getNearbyEntities(po.getLocation(), 1.7, 1.5, 1.7)) {
 						if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
 							LivingEntity le = (LivingEntity)e;
@@ -213,8 +211,8 @@ public class PlainSkills extends Summoned implements Listener{
          			Holding.invur(p, 5l);
          			Holding.untouchable(p, 5l);
          			p.teleport(l);
-					p.getWorld().spawnParticle(Particle.BLOCK_CRACK, l, 100,3,2,3,1, Material.LIME_TERRACOTTA.createBlockData());
-					p.getWorld().spawnParticle(Particle.BLOCK_CRACK, l, 100,3,2,3,1, p.getLocation().getBlock().getBlockData());
+					p.getWorld().spawnParticle(Particle.BLOCK, l, 100,3,2,3,1, Material.LIME_TERRACOTTA.createBlockData());
+					p.getWorld().spawnParticle(Particle.BLOCK, l, 100,3,2,3,1, p.getLocation().getBlock().getBlockData());
 	            }
     	   	}, j.incrementAndGet());
         });
@@ -229,8 +227,8 @@ public class PlainSkills extends Summoned implements Listener{
          			Holding.untouchable(p, 5l);
          			p.teleport(l);
     				p.getWorld().playSound(l, Sound.ENTITY_CREEPER_HURT, 1, 0);
-					p.getWorld().spawnParticle(Particle.BLOCK_CRACK, l.clone().add(0, 5, 0), 100,1,2,1, Material.LIME_TERRACOTTA.createBlockData());
-					p.getWorld().spawnParticle(Particle.BLOCK_CRACK, l.clone().add(0, 5, 0), 100,1,2,1, p.getLocation().getBlock().getBlockData());
+					p.getWorld().spawnParticle(Particle.BLOCK, l.clone().add(0, 5, 0), 100,1,2,1, Material.LIME_TERRACOTTA.createBlockData());
+					p.getWorld().spawnParticle(Particle.BLOCK, l.clone().add(0, 5, 0), 100,1,2,1, p.getLocation().getBlock().getBlockData());
 	            }
     	   	}, 20+j2.incrementAndGet());
         });
@@ -262,7 +260,7 @@ public class PlainSkills extends Summoned implements Listener{
                     {	
              			p.teleport(tl);
         				p.getWorld().playSound(tl, Sound.ENTITY_CREEPER_HURT, 1, 0);
-    					p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100,3,2,3,1, Material.LIME_TERRACOTTA.createBlockData());
+    					p.getWorld().spawnParticle(Particle.BLOCK, tl, 100,3,2,3,1, Material.LIME_TERRACOTTA.createBlockData());
              			p.explode();
                     	burrowable.remove(p.getUniqueId());
     	            }
@@ -287,7 +285,7 @@ public class PlainSkills extends Summoned implements Listener{
                 {	
          			p.teleport(tl);
     				p.getWorld().playSound(tl, Sound.ENTITY_CREEPER_HURT, 1, 0);
-					p.getWorld().spawnParticle(Particle.BLOCK_CRACK, tl, 100,3,2,3,1, Material.LIME_TERRACOTTA.createBlockData());
+					p.getWorld().spawnParticle(Particle.BLOCK, tl, 100,3,2,3,1, Material.LIME_TERRACOTTA.createBlockData());
          			p.explode();
                 	burrowable.remove(p.getUniqueId());
 	            }
@@ -308,8 +306,8 @@ public class PlainSkills extends Summoned implements Listener{
 				p1.setFuseTicks(0);
 				d.setCancelled(true);
 				p1.setFuseTicks(0);
-				p1.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, p1.getLocation(), 120,4.5,4.5,4.5,1);
-				p1.getWorld().spawnParticle(Particle.REDSTONE, p1.getLocation(), 60,2.5,2.5,2.5,1, new Particle.DustOptions(Color.LIME, 3f));
+				p1.getWorld().spawnParticle(Particle.EXPLOSION, p1.getLocation(), 120,4.5,4.5,4.5,1);
+				p1.getWorld().spawnParticle(Particle.DUST, p1.getLocation(), 60,2.5,2.5,2.5,1, new Particle.DustOptions(Color.LIME, 3f));
 				p1.getWorld().playSound(p1.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1, 0);
 				for(Entity e : p1.getWorld().getNearbyEntities(p1.getLocation(),2.5, 2.5, 2.5)) {
 					if(p1!=e && e instanceof LivingEntity) {
