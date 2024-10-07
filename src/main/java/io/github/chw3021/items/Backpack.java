@@ -174,7 +174,7 @@ public class Backpack implements Serializable, Listener{
 		}
 		ItemStack pager = new ItemStack(Material.CHAIN_COMMAND_BLOCK);
 		ItemMeta pagerm = pager.getItemMeta();
-		pagerm.setLocalizedName("RpgBagpackPage");
+		pagerm.setItemName("RpgBagpackPage");
 		pager.setItemMeta(pagerm);
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 			itemset(ChatColor.GOLD + "이전 페이지", pager, 0, 1,

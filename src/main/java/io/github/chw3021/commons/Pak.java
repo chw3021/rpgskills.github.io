@@ -459,8 +459,8 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		else if(classnum == 7) { // Boxer
 			if(mi.getType().name().contains("BANNER_PATTERN") && mi.hasItemMeta() && mi.getItemMeta().hasCustomModelData() && oi.getType().name().contains("BANNER_PATTERN") && oi.hasItemMeta() && oi.getItemMeta().hasCustomModelData()
 					&& mi.getItemMeta().getCustomModelData() == oi.getItemMeta().getCustomModelData() && (oi.getType() == mi.getType()) &&
-					((mi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")&&!oi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")) ||
-							(!mi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")&&oi.getItemMeta().getLocalizedName().contains("CopiedKnuckle"))) )
+					((mi.getItemMeta().getItemName().contains("CopiedKnuckle")&&!oi.getItemMeta().getItemName().contains("CopiedKnuckle")) ||
+							(!mi.getItemMeta().getItemName().contains("CopiedKnuckle")&&oi.getItemMeta().getItemName().contains("CopiedKnuckle"))) )
 			{
 				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
@@ -476,8 +476,8 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		else if(classnum == 8) { //Wrestler
 			if(mi.getType().name().contains("BANNER_PATTERN") && mi.hasItemMeta() && mi.getItemMeta().hasCustomModelData() && oi.getType().name().contains("BANNER_PATTERN") && oi.hasItemMeta() && oi.getItemMeta().hasCustomModelData()
 					&& mi.getItemMeta().getCustomModelData() == oi.getItemMeta().getCustomModelData() && (oi.getType() == mi.getType()) &&
-							((mi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")&&!oi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")) ||
-									(!mi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")&&oi.getItemMeta().getLocalizedName().contains("CopiedKnuckle"))) )
+							((mi.getItemMeta().getItemName().contains("CopiedKnuckle")&&!oi.getItemMeta().getItemName().contains("CopiedKnuckle")) ||
+									(!mi.getItemMeta().getItemName().contains("CopiedKnuckle")&&oi.getItemMeta().getItemName().contains("CopiedKnuckle"))) )
 			{
 					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
@@ -491,8 +491,8 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		else if(classnum == 9) { //Tamer
 			if(mi.getType().name().contains("BANNER_PATTERN") && mi.hasItemMeta() && mi.getItemMeta().hasCustomModelData() && oi.getType().name().contains("BANNER_PATTERN") && oi.hasItemMeta() && oi.getItemMeta().hasCustomModelData()
 					&& mi.getItemMeta().getCustomModelData() == oi.getItemMeta().getCustomModelData() && (oi.getType() == mi.getType()) &&
-							((mi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")&&!oi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")) ||
-									(!mi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")&&oi.getItemMeta().getLocalizedName().contains("CopiedKnuckle"))) )
+							((mi.getItemMeta().getItemName().contains("CopiedKnuckle")&&!oi.getItemMeta().getItemName().contains("CopiedKnuckle")) ||
+									(!mi.getItemMeta().getItemName().contains("CopiedKnuckle")&&oi.getItemMeta().getItemName().contains("CopiedKnuckle"))) )
 			{
 					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
@@ -508,8 +508,8 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		else if(classnum == 10) { //Taoist
 			if(mi.getType().name().contains("BANNER_PATTERN") && mi.hasItemMeta() && mi.getItemMeta().hasCustomModelData() && oi.getType().name().contains("BANNER_PATTERN") && oi.hasItemMeta() && oi.getItemMeta().hasCustomModelData()
 					&& mi.getItemMeta().getCustomModelData() == oi.getItemMeta().getCustomModelData() && (oi.getType() == mi.getType()) &&
-							((mi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")&&!oi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")) ||
-									(!mi.getItemMeta().getLocalizedName().contains("CopiedKnuckle")&&oi.getItemMeta().getLocalizedName().contains("CopiedKnuckle"))) )
+							((mi.getItemMeta().getItemName().contains("CopiedKnuckle")&&!oi.getItemMeta().getItemName().contains("CopiedKnuckle")) ||
+									(!mi.getItemMeta().getItemName().contains("CopiedKnuckle")&&oi.getItemMeta().getItemName().contains("CopiedKnuckle"))) )
 			{
 					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);

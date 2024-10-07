@@ -307,13 +307,26 @@ public class SkillUsing implements Listener, Serializable {
 		Palskills.getInstance().ULT2(ev);
 
 		Snipskills.getInstance().Camouflage(ev);
+		Snipskills.getInstance().ULT(ev);
+		Snipskills.getInstance().ULT2(ev);
+
+		Swordskills.getInstance().ULT(ev);
+		Swordskills.getInstance().ULT2(ev);
 		
 		Taoskills.getInstance().Aura(ev);
+		Taoskills.getInstance().ULT(ev);
+		Taoskills.getInstance().ULT2(ev);
 		
 		Tamskills.getInstance().Recall(ev);
 		Tamskills.getInstance().ULT(ev);
 		Tamskills.getInstance().ULT2(ev);
 		Tamskills.getInstance().Smash(ev);
+		
+		Wdcskills.getInstance().ULT(ev);
+		Wdcskills.getInstance().ULT2(ev);
+
+		Witskills.getInstance().ULT(ev);
+		Witskills.getInstance().ULT2(ev);
 	}
 
 	@EventHandler
@@ -877,26 +890,16 @@ public class SkillUsing implements Listener, Serializable {
 
 		Palskills.getInstance().ThrowCancel(ev);
 
-		Snipskills.getInstance().ULT(ev);
-		Snipskills.getInstance().ULT2(ev);
 		Snipskills.getInstance().ThrowCancel(ev);
 
-		Swordskills.getInstance().ULT(ev);
-		Swordskills.getInstance().ULT2(ev);
 		Swordskills.getInstance().ThrowCancel(ev);
 
 		Tamskills.getInstance().ThrowCancel(ev);
 
-		Taoskills.getInstance().ULT(ev);
-		Taoskills.getInstance().ULT2(ev);
 		Taoskills.getInstance().ThrowCancel(ev);
 
-		Wdcskills.getInstance().ULT(ev);
-		Wdcskills.getInstance().ULT2(ev);
 		Wdcskills.getInstance().ThrowCancel(ev);
 
-		Witskills.getInstance().ULT(ev);
-		Witskills.getInstance().ULT2(ev);
 		Witskills.getInstance().ThrowCancel(ev);
 		
 		CombatMode.getInstance().modeChange(ev);

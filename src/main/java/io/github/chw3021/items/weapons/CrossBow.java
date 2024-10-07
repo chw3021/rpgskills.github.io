@@ -1,7 +1,5 @@
 package io.github.chw3021.items.weapons;
 
-import java.util.UUID;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -15,7 +13,7 @@ import org.bukkit.event.inventory.SmithItemEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.PrepareSmithingEvent;
 import org.bukkit.event.server.PluginEnableEvent;
-import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -55,19 +53,19 @@ public class CrossBow extends Weapons implements Listener {
 				rm.setCustomModelData(cmdt + 5000);
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 						new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 29,
-								Operation.ADD_NUMBER, EquipmentSlot.HAND));
+								Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 	
 				rm.addAttributeModifier(Attribute.GENERIC_LUCK,
 						new AttributeModifier(UUID.randomUUID(), "generic.luck", 30,
-								Operation.ADD_NUMBER, EquipmentSlot.HAND));
+								Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 				if (cmdt == 14) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"바람의 쇠뇌");
-						rm.setLocalizedName(ChatColor.GOLD +"바람의 쇠뇌");
+						rm.setItemName(ChatColor.GOLD +"바람의 쇠뇌");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Windy CrossBow");
-						rm.setLocalizedName(ChatColor.GOLD +"Windy CrossBow");
+						rm.setItemName(ChatColor.GOLD +"Windy CrossBow");
 					}
 					NamespacedKey.fromString("windy", RMain.getInstance());
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
@@ -76,77 +74,77 @@ public class CrossBow extends Weapons implements Listener {
 				else if (cmdt == 5) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"대지의 쇠뇌");
-						rm.setLocalizedName(ChatColor.GOLD +"대지의 쇠뇌");
+						rm.setItemName(ChatColor.GOLD +"대지의 쇠뇌");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Earth CrossBow");
-						rm.setLocalizedName(ChatColor.GOLD +"Earth CrossBow");
+						rm.setItemName(ChatColor.GOLD +"Earth CrossBow");
 					}
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
 					return r;
 				} else if (cmdt == 6) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"서리의 쇠뇌");
-						rm.setLocalizedName(ChatColor.GOLD +"서리의 쇠뇌");
+						rm.setItemName(ChatColor.GOLD +"서리의 쇠뇌");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Frost CrossBow");
-						rm.setLocalizedName(ChatColor.GOLD +"Frost CrossBow");
+						rm.setItemName(ChatColor.GOLD +"Frost CrossBow");
 					}
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
 					return r;
 				} else if (cmdt == 7) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"바다의 쇠뇌");
-						rm.setLocalizedName(ChatColor.GOLD +"바다의 쇠뇌");
+						rm.setItemName(ChatColor.GOLD +"바다의 쇠뇌");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Ocean CrossBow");
-						rm.setLocalizedName(ChatColor.GOLD +"Ocean CrossBow");
+						rm.setItemName(ChatColor.GOLD +"Ocean CrossBow");
 					}
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
 					return r;
 				} else if (cmdt == 8) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"어둠의 쇠뇌");
-						rm.setLocalizedName(ChatColor.GOLD +"어둠의 쇠뇌");
+						rm.setItemName(ChatColor.GOLD +"어둠의 쇠뇌");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Dark CrossBow");
-						rm.setLocalizedName(ChatColor.GOLD +"Dark CrossBow");
+						rm.setItemName(ChatColor.GOLD +"Dark CrossBow");
 					}
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
 					return r;
 				} else if (cmdt == 9) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"개조된 쇠뇌");
-						rm.setLocalizedName(ChatColor.GOLD +"개조된 쇠뇌");
+						rm.setItemName(ChatColor.GOLD +"개조된 쇠뇌");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Hyper CrossBow");
-						rm.setLocalizedName(ChatColor.GOLD +"Hyper CrossBow");
+						rm.setItemName(ChatColor.GOLD +"Hyper CrossBow");
 					}
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
 					return r;
 				} else if (cmdt == 10) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"작열하는 쇠뇌");
-						rm.setLocalizedName(ChatColor.GOLD +"작열하는 쇠뇌");
+						rm.setItemName(ChatColor.GOLD +"작열하는 쇠뇌");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Burning CrossBow");
-						rm.setLocalizedName(ChatColor.GOLD +"Burning CrossBow");
+						rm.setItemName(ChatColor.GOLD +"Burning CrossBow");
 					}
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
 					return r;
 				} else if (cmdt == 11) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"맹독 쇠뇌");
-						rm.setLocalizedName(ChatColor.GOLD +"맹독 쇠뇌");
+						rm.setItemName(ChatColor.GOLD +"맹독 쇠뇌");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Poison CrossBow");
-						rm.setLocalizedName(ChatColor.GOLD +"Poison CrossBow");
+						rm.setItemName(ChatColor.GOLD +"Poison CrossBow");
 					}
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
 					return r;
@@ -165,14 +163,14 @@ public class CrossBow extends Weapons implements Listener {
 					rm.setCustomModelData(cmdt + 5000);
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 29,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"자연의 쇠뇌");
-						rm.setLocalizedName(ChatColor.GOLD +"자연의 쇠뇌");
+						rm.setItemName(ChatColor.GOLD +"자연의 쇠뇌");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Natural CrossBow");
-						rm.setLocalizedName(ChatColor.GOLD +"Natural CrossBow");
+						rm.setItemName(ChatColor.GOLD +"Natural CrossBow");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -190,14 +188,14 @@ public class CrossBow extends Weapons implements Listener {
 					rm.setCustomModelData(1 + 5000+100);
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 12,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 1단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 1단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 1단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.1");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.1");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.1");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -215,14 +213,14 @@ public class CrossBow extends Weapons implements Listener {
 				if (cmdt == 5) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 14,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 2단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 2단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 2단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.2");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.2");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.2");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -230,14 +228,14 @@ public class CrossBow extends Weapons implements Listener {
 				else if (cmdt == 6) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 16,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 3단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 3단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 3단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.3");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.3");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.3");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -245,14 +243,14 @@ public class CrossBow extends Weapons implements Listener {
 				else if (cmdt == 7) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 18,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 4단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 4단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 4단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.4");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.4");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.4");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -260,14 +258,14 @@ public class CrossBow extends Weapons implements Listener {
 				else if (cmdt == 8) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 20,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 5단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 5단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 5단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.5");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.5");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.5");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -275,14 +273,14 @@ public class CrossBow extends Weapons implements Listener {
 				else if (cmdt == 9) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 22,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 6단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 6단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 6단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.6");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.6");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.6");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -290,14 +288,14 @@ public class CrossBow extends Weapons implements Listener {
 				else if (cmdt == 10) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 24,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 7단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 7단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 7단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.7");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.7");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.7");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -305,14 +303,14 @@ public class CrossBow extends Weapons implements Listener {
 				else if (cmdt == 11) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 26,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 8단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 8단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 8단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.8");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.8");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura CrossBow - Lv.8");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -744,16 +742,15 @@ public class CrossBow extends Weapons implements Listener {
 	public void StoneCrossBow(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.CROSSBOW);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-				"generic.attackDamage", 4, Operation.ADD_NUMBER, EquipmentSlot.HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 4, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(5000 + 1);
 		if(lang.contains("kr")){
 			meta.setDisplayName("돌 쇠뇌");
-			meta.setLocalizedName("돌 쇠뇌");
+			meta.setItemName("돌 쇠뇌");
 		}
 		else {
 			meta.setDisplayName("Stone CrossBow");
-			meta.setLocalizedName("Stone CrossBow");
+			meta.setItemName("Stone CrossBow");
 		}
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "stone_crossbow"), is);
@@ -770,16 +767,15 @@ public class CrossBow extends Weapons implements Listener {
 	public void GoldCrossBow(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.CROSSBOW);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-				"generic.attackDamage", 6, Operation.ADD_NUMBER, EquipmentSlot.HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 6, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(5000 +2);
 		if(lang.contains("kr")){
 			meta.setDisplayName("금 쇠뇌");
-			meta.setLocalizedName("금 쇠뇌");
+			meta.setItemName("금 쇠뇌");
 		}
 		else {
 			meta.setDisplayName("Gold CrossBow");
-			meta.setLocalizedName("Gold CrossBow");
+			meta.setItemName("Gold CrossBow");
 		}
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "gold_crossbow"), is);
@@ -796,16 +792,15 @@ public class CrossBow extends Weapons implements Listener {
 	public void IronCrossBow(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.CROSSBOW);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-				"generic.attackDamage", 8, Operation.ADD_NUMBER, EquipmentSlot.HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 8, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(5000 + 3 );
 		if(lang.contains("kr")){
 			meta.setDisplayName("철 쇠뇌");
-			meta.setLocalizedName("철 쇠뇌");
+			meta.setItemName("철 쇠뇌");
 		}
 		else {
 			meta.setDisplayName("Iron CrossBow");
-			meta.setLocalizedName("Iron CrossBow");
+			meta.setItemName("Iron CrossBow");
 		}
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "iron_crossbow"), is);
@@ -822,16 +817,15 @@ public class CrossBow extends Weapons implements Listener {
 	public void DiamondCrossBow(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.CROSSBOW);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-				"generic.attackDamage", 10, Operation.ADD_NUMBER, EquipmentSlot.HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 10, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(5000 + 4);
 		if(lang.contains("kr")){
 			meta.setDisplayName("다이아몬드 쇠뇌");
-			meta.setLocalizedName("다이아몬드 쇠뇌");
+			meta.setItemName("다이아몬드 쇠뇌");
 		}
 		else {
 			meta.setDisplayName("Diamond CrossBow");
-			meta.setLocalizedName("Diamond CrossBow");
+			meta.setItemName("Diamond CrossBow");
 		}
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "diamond_crossbow"), is);
@@ -848,18 +842,17 @@ public class CrossBow extends Weapons implements Listener {
 	public void NetheriteCrossBow(PrepareSmithingEvent d) {
 		ItemStack r = new ItemStack(Material.CROSSBOW);
 		ItemMeta rm = r.getItemMeta();
-		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-				"generic.attackDamage", 10, Operation.ADD_NUMBER, EquipmentSlot.HAND));
+		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 10, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		rm.setCustomModelData(5000 +60);
 		
 		Player p = (Player) d.getView().getPlayer();
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 			rm.setDisplayName("네더라이트 쇠뇌");
-			rm.setLocalizedName("네더라이트 쇠뇌");
+			rm.setItemName("네더라이트 쇠뇌");
 		}
 		else {
 			rm.setDisplayName("Netherite CrossBow");
-			rm.setLocalizedName("Netherite CrossBow");
+			rm.setItemName("Netherite CrossBow");
 		}
 
 		if (d.getInventory().getItem(0) != null && d.getInventory().getItem(0).getAmount() >= 1
@@ -873,7 +866,7 @@ public class CrossBow extends Weapons implements Listener {
 			if ((d.getInventory().getItem(0).getItemMeta().getCustomModelData() == 5000 + 4)
 					&& d.getInventory().getItem(1).getType() == Material.NETHERITE_INGOT) {
 				ItemMeta rm0 = d.getInventory().getItem(0).getItemMeta();
-				if(!rm0.getDisplayName().equals(rm0.getLocalizedName())) {
+				if(!rm0.getDisplayName().equals(rm0.getItemName())) {
 					rm.setDisplayName(rm0.getDisplayName());
 				}
 				r.setItemMeta(rm);
@@ -903,20 +896,19 @@ public class CrossBow extends Weapons implements Listener {
 					Player p = (Player) d.getWhoClicked();
 					ItemStack r = new ItemStack(Material.CROSSBOW);
 					ItemMeta rm = r.getItemMeta();
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-							"generic.attackDamage", 10, Operation.ADD_NUMBER, EquipmentSlot.HAND));
+					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 10, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					rm.setCustomModelData(5000 +60);
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName("네더라이트 쇠뇌");
-						rm.setLocalizedName("네더라이트 쇠뇌");
+						rm.setItemName("네더라이트 쇠뇌");
 					}
 					else {
 						rm.setDisplayName("Netherite CrossBow");
-						rm.setLocalizedName("Netherite CrossBow");
+						rm.setItemName("Netherite CrossBow");
 					}
 
 					ItemMeta rm0 = d.getInventory().getItem(0).getItemMeta();
-					if(!rm0.getDisplayName().equals(rm0.getLocalizedName())) {
+					if(!rm0.getDisplayName().equals(rm0.getItemName())) {
 						rm.setDisplayName(rm0.getDisplayName());
 					}
 					r.setItemMeta(rm);

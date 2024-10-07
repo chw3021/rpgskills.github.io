@@ -1,30 +1,9 @@
 package io.github.chw3021.items.weapons;
 
-import java.util.UUID;
-
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.attribute.AttributeModifier;
-import org.bukkit.attribute.AttributeModifier.Operation;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.SmithItemEvent;
-import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.event.inventory.PrepareSmithingEvent;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
-
-import io.github.chw3021.commons.Pak;
-import io.github.chw3021.rmain.RMain;
-import net.md_5.bungee.api.ChatColor;
 
 public class Axe extends Weapons implements Listener {
-
+/*
 	final private NamespacedKey nethercore = new NamespacedKey(RMain.getInstance(), "axe_nether_core");
 	final private NamespacedKey endercore = new NamespacedKey(RMain.getInstance(), "axe_ender_core");
 	final private NamespacedKey herocore = new NamespacedKey(RMain.getInstance(), "axe_hero_core");
@@ -528,7 +507,7 @@ public class Axe extends Weapons implements Listener {
 		} else {
 			return null;
 		}
-	}*/
+	}
 
 	private ItemStack nsc(Inventory inv, Integer cmdt, Player p) {
 
@@ -903,8 +882,9 @@ public class Axe extends Weapons implements Listener {
 			d.getClickedInventory().getItem(1).setAmount(d.getInventory().getItem(1).getAmount() - 1);
 			d.getClickedInventory().getItem(2).setAmount(0);
 		}
+		
 	}
-
+	*/
 
 
 }

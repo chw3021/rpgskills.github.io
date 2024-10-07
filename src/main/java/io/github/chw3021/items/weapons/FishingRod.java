@@ -1,7 +1,5 @@
 package io.github.chw3021.items.weapons;
 
-import java.util.UUID;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -15,7 +13,7 @@ import org.bukkit.event.inventory.SmithItemEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.PrepareSmithingEvent;
 import org.bukkit.event.server.PluginEnableEvent;
-import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -56,19 +54,19 @@ public class FishingRod extends Weapons implements Listener {
 				rm.setCustomModelData(cmdt + 12000);
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 						new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 26,
-								Operation.ADD_NUMBER, EquipmentSlot.HAND));
+								Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 	
 				rm.addAttributeModifier(Attribute.GENERIC_LUCK,
 						new AttributeModifier(UUID.randomUUID(), "generic.luck", 30,
-								Operation.ADD_NUMBER, EquipmentSlot.HAND));
+								Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 				if (cmdt == 14) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"바람의 낚시대");
-						rm.setLocalizedName(ChatColor.GOLD +"바람의 낚시대");
+						rm.setItemName(ChatColor.GOLD +"바람의 낚시대");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Windy FishingRod");
-						rm.setLocalizedName(ChatColor.GOLD +"Windy FishingRod");
+						rm.setItemName(ChatColor.GOLD +"Windy FishingRod");
 					}
 					NamespacedKey.fromString("windy", RMain.getInstance());
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
@@ -77,77 +75,77 @@ public class FishingRod extends Weapons implements Listener {
 				else if (cmdt == 5) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"대지의 낚시대");
-						rm.setLocalizedName(ChatColor.GOLD +"대지의 낚시대");
+						rm.setItemName(ChatColor.GOLD +"대지의 낚시대");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Earth FishingRod");
-						rm.setLocalizedName(ChatColor.GOLD +"Earth FishingRod");
+						rm.setItemName(ChatColor.GOLD +"Earth FishingRod");
 					}
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
 					return r;
 				} else if (cmdt == 6) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"서리의 낚시대");
-						rm.setLocalizedName(ChatColor.GOLD +"서리의 낚시대");
+						rm.setItemName(ChatColor.GOLD +"서리의 낚시대");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Frost FishingRod");
-						rm.setLocalizedName(ChatColor.GOLD +"Frost FishingRod");
+						rm.setItemName(ChatColor.GOLD +"Frost FishingRod");
 					}
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
 					return r;
 				} else if (cmdt == 7) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"바다의 낚시대");
-						rm.setLocalizedName(ChatColor.GOLD +"바다의 낚시대");
+						rm.setItemName(ChatColor.GOLD +"바다의 낚시대");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Ocean FishingRod");
-						rm.setLocalizedName(ChatColor.GOLD +"Ocean FishingRod");
+						rm.setItemName(ChatColor.GOLD +"Ocean FishingRod");
 					}
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
 					return r;
 				} else if (cmdt == 8) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"어둠의 낚시대");
-						rm.setLocalizedName(ChatColor.GOLD +"어둠의 낚시대");
+						rm.setItemName(ChatColor.GOLD +"어둠의 낚시대");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Dark FishingRod");
-						rm.setLocalizedName(ChatColor.GOLD +"Dark FishingRod");
+						rm.setItemName(ChatColor.GOLD +"Dark FishingRod");
 					}
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
 					return r;
 				} else if (cmdt == 9) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"개조된 낚시대");
-						rm.setLocalizedName(ChatColor.GOLD +"개조된 낚시대");
+						rm.setItemName(ChatColor.GOLD +"개조된 낚시대");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Hyper FishingRod");
-						rm.setLocalizedName(ChatColor.GOLD +"Hyper FishingRod");
+						rm.setItemName(ChatColor.GOLD +"Hyper FishingRod");
 					}
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
 					return r;
 				} else if (cmdt == 10) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"작열하는 낚시대");
-						rm.setLocalizedName(ChatColor.GOLD +"작열하는 낚시대");
+						rm.setItemName(ChatColor.GOLD +"작열하는 낚시대");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Burning FishingRod");
-						rm.setLocalizedName(ChatColor.GOLD +"Burning FishingRod");
+						rm.setItemName(ChatColor.GOLD +"Burning FishingRod");
 					}
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
 					return r;
 				} else if (cmdt == 11) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"맹독 낚시대");
-						rm.setLocalizedName(ChatColor.GOLD +"맹독 낚시대");
+						rm.setItemName(ChatColor.GOLD +"맹독 낚시대");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Poison FishingRod");
-						rm.setLocalizedName(ChatColor.GOLD +"Poison FishingRod");
+						rm.setItemName(ChatColor.GOLD +"Poison FishingRod");
 					}
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
 					return r;
@@ -166,14 +164,14 @@ public class FishingRod extends Weapons implements Listener {
 					rm.setCustomModelData(cmdt + 12000);
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 26,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"자연의 낚시대");
-						rm.setLocalizedName(ChatColor.GOLD +"자연의 낚시대");
+						rm.setItemName(ChatColor.GOLD +"자연의 낚시대");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Natural FishingRod");
-						rm.setLocalizedName(ChatColor.GOLD +"Natural FishingRod");
+						rm.setItemName(ChatColor.GOLD +"Natural FishingRod");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -191,14 +189,14 @@ public class FishingRod extends Weapons implements Listener {
 					rm.setCustomModelData(1 + 12000+100);
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 9,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 1단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 1단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 1단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.1");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.1");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.1");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -216,14 +214,14 @@ public class FishingRod extends Weapons implements Listener {
 				if (cmdt == 5) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 11,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 2단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 2단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 2단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.2");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.2");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.2");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -231,14 +229,14 @@ public class FishingRod extends Weapons implements Listener {
 				else if (cmdt == 6) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 13,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 3단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 3단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 3단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.3");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.3");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.3");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -246,14 +244,14 @@ public class FishingRod extends Weapons implements Listener {
 				else if (cmdt == 7) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 15,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 4단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 4단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 4단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.4");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.4");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.4");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -261,14 +259,14 @@ public class FishingRod extends Weapons implements Listener {
 				else if (cmdt == 8) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 17,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 5단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 5단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 5단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.5");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.5");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.5");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -276,14 +274,14 @@ public class FishingRod extends Weapons implements Listener {
 				else if (cmdt == 9) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 19,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 6단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 6단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 6단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.6");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.6");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.6");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -291,14 +289,14 @@ public class FishingRod extends Weapons implements Listener {
 				else if (cmdt == 10) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 21,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 7단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 7단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 7단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.7");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.7");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.7");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -306,14 +304,14 @@ public class FishingRod extends Weapons implements Listener {
 				else if (cmdt == 11) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 23,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 8단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 8단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 8단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.8");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.8");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura FishingRod - Lv.8");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -744,16 +742,15 @@ public class FishingRod extends Weapons implements Listener {
 	public void StoneFishingRod(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.FISHING_ROD);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-				"generic.attackDamage", 2, Operation.ADD_NUMBER, EquipmentSlot.HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 2, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(12000+1);
 		if(lang.contains("kr")){
 			meta.setDisplayName("돌 낚시대");
-			meta.setLocalizedName("돌 낚시대");
+			meta.setItemName("돌 낚시대");
 		}
 		else {
 			meta.setDisplayName("Stone FishingRod");
-			meta.setLocalizedName("Stone FishingRod");
+			meta.setItemName("Stone FishingRod");
 		}
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "stone_fishingrod"), is);
@@ -769,16 +766,15 @@ public class FishingRod extends Weapons implements Listener {
 	public void GoldFishingRod(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.FISHING_ROD);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-				"generic.attackDamage", 2, Operation.ADD_NUMBER, EquipmentSlot.HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 2, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(12000+2);
 		if(lang.contains("kr")){
 			meta.setDisplayName("금 낚시대");
-			meta.setLocalizedName("금 낚시대");
+			meta.setItemName("금 낚시대");
 		}
 		else {
 			meta.setDisplayName("Gold FishingRod");
-			meta.setLocalizedName("Gold FishingRod");
+			meta.setItemName("Gold FishingRod");
 		}
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "gold_fishingrod"), is);
@@ -794,16 +790,15 @@ public class FishingRod extends Weapons implements Listener {
 	public void IronFishingRod(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.FISHING_ROD);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-				"generic.attackDamage", 3, Operation.ADD_NUMBER, EquipmentSlot.HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 3, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(12000+3);
 		if(lang.contains("kr")){
 			meta.setDisplayName("철 낚시대");
-			meta.setLocalizedName("철 낚시대");
+			meta.setItemName("철 낚시대");
 		}
 		else {
 			meta.setDisplayName("Iron FishingRod");
-			meta.setLocalizedName("Iron FishingRod");
+			meta.setItemName("Iron FishingRod");
 		}
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "iron_fishingrod"), is);
@@ -819,16 +814,15 @@ public class FishingRod extends Weapons implements Listener {
 	public void DiamondFishingRod(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.FISHING_ROD);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-				"generic.attackDamage", 5, Operation.ADD_NUMBER, EquipmentSlot.HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 5, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(12000+4);
 		if(lang.contains("kr")){
 			meta.setDisplayName("다이아몬드 낚시대");
-			meta.setLocalizedName("다이아몬드 낚시대");
+			meta.setItemName("다이아몬드 낚시대");
 		}
 		else {
 			meta.setDisplayName("Diamond FishingRod");
-			meta.setLocalizedName("Diamond FishingRod");
+			meta.setItemName("Diamond FishingRod");
 		}
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "diamond_fishingrod"), is);
@@ -844,19 +838,18 @@ public class FishingRod extends Weapons implements Listener {
 	public void NetheriteFishingRod(PrepareSmithingEvent d) {
 		ItemStack r = new ItemStack(Material.FISHING_ROD);
 		ItemMeta rm = r.getItemMeta();
-		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-				"generic.attackDamage", 7, Operation.ADD_NUMBER, EquipmentSlot.HAND));
+		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 7, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		rm.setCustomModelData(12000+60);
 		
 		Player p = (Player) d.getView().getPlayer();
 		
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 			rm.setDisplayName("네더라이트 낚시대");
-			rm.setLocalizedName("네더라이트 낚시대");
+			rm.setItemName("네더라이트 낚시대");
 		}
 		else {
 			rm.setDisplayName("Netherite FishingRod");
-			rm.setLocalizedName("Netherite FishingRod");
+			rm.setItemName("Netherite FishingRod");
 		}
 
 		if (d.getInventory().getItem(0) != null && d.getInventory().getItem(0).getAmount() >= 1
@@ -870,7 +863,7 @@ public class FishingRod extends Weapons implements Listener {
 			if ((d.getInventory().getItem(0).getItemMeta().getCustomModelData() == 12000+4)
 					&& d.getInventory().getItem(1).getType() == Material.NETHERITE_INGOT) {
 				ItemMeta rm0 = d.getInventory().getItem(0).getItemMeta();
-				if(!rm0.getDisplayName().equals(rm0.getLocalizedName())) {
+				if(!rm0.getDisplayName().equals(rm0.getItemName())) {
 					rm.setDisplayName(rm0.getDisplayName());
 				}
 				r.setItemMeta(rm);
@@ -900,19 +893,18 @@ public class FishingRod extends Weapons implements Listener {
 					Player p = (Player) d.getWhoClicked();
 					ItemStack r = new ItemStack(Material.FISHING_ROD);
 					ItemMeta rm = r.getItemMeta();
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-							"generic.attackDamage", 7, Operation.ADD_NUMBER, EquipmentSlot.HAND));
+					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 7, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					rm.setCustomModelData(12000+60);
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName("네더라이트 낚시대");
-						rm.setLocalizedName("네더라이트 낚시대");
+						rm.setItemName("네더라이트 낚시대");
 					}
 					else {
 						rm.setDisplayName("Netherite FishingRod");
-						rm.setLocalizedName("Netherite FishingRod");
+						rm.setItemName("Netherite FishingRod");
 					}
 					ItemMeta rm0 = d.getInventory().getItem(0).getItemMeta();
-					if(!rm0.getDisplayName().equals(rm0.getLocalizedName())) {
+					if(!rm0.getDisplayName().equals(rm0.getItemName())) {
 						rm.setDisplayName(rm0.getDisplayName());
 					}
 					r.setItemMeta(rm);

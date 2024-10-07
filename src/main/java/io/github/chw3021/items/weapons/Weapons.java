@@ -769,6 +769,7 @@ public class Weapons {
 		return r;
 	}
 
+	//{@link io.github.chw3021.items.Elements.getstel(int, Player)}
 	final protected ItemStack elweapon(ItemStack i0, Integer cmdt, Player p) {
 	
 		ItemStack r = i0.clone();
@@ -948,6 +949,8 @@ public class Weapons {
 			return null;
 		}
 		
+		
+		//{@link io.github.chw3021.items.Elements.getstel(int, Player)}
 		rm.setCustomModelData(cmdt -200 + wn);
 		final int el = cmdt - 200;
 	
@@ -1066,22 +1069,22 @@ public class Weapons {
 	
 				return elweapon(i0, cmdt, p);
 			}
-			else if (i0.getItemMeta().hasCustomModelData() && i0.getItemMeta().getCustomModelData() == wn + 100+8
+			else if (i0.getItemMeta().hasCustomModelData() && i0.getItemMeta().getCustomModelData() == wn + 100+8 //wild
 					&&i1.getItemMeta().getCustomModelData() == cmdt) {
 
 				return arweapon(i0, cmdt, p);
 			} 
-			else if ((!i0.getItemMeta().hasCustomModelData())) {
+			else if ((!i0.getItemMeta().hasCustomModelData())) { //normal
 
 				return arweapon(i0, cmdt, p);
 			}
-			else if (i0.getItemMeta().hasCustomModelData() && i0.getItemMeta().getCustomModelData() == wn +60
+			else if (i0.getItemMeta().hasCustomModelData() && i0.getItemMeta().getCustomModelData() == wn +60 //netherite
 					&&i1.getItemMeta().getCustomModelData() == cmdt) {
 
 				return arweapon(i0, cmdt, p);
 			}
 			else if (i0.getItemMeta().hasCustomModelData() && i0.getItemMeta().getCustomModelData() <= wn + 100+7 &&i0.getItemMeta().getCustomModelData() >= wn + 100+1
-					&& i0.getItemMeta().getCustomModelData() == cmdt -3 + wn + 100 -1) {
+					&& i0.getItemMeta().getCustomModelData() == cmdt -3 + wn + 100 -1) { //aura
 
 				return arweapon(i0, cmdt, p);
 			}

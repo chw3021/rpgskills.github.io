@@ -2,8 +2,6 @@ package io.github.chw3021.items.weapons;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -22,7 +20,7 @@ import org.bukkit.event.inventory.PrepareSmithingEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.event.server.PluginEnableEvent;
-import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
@@ -62,22 +60,22 @@ public class Fighter extends Weapons implements Listener {
 				rm.setCustomModelData(cmdt + 1000);
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 						new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 15,
-								Operation.ADD_NUMBER, EquipmentSlot.HAND));
+								Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 						new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 14,
-								Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
+								Operation.ADD_NUMBER, EquipmentSlotGroup.OFF_HAND));
 	
 				rm.addAttributeModifier(Attribute.GENERIC_LUCK,
 						new AttributeModifier(UUID.randomUUID(), "generic.luck", 30,
-								Operation.ADD_NUMBER, EquipmentSlot.HAND));
+								Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 				if (cmdt == 14) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"바람의 너클");
-						rm.setLocalizedName(ChatColor.GOLD +"바람의 너클");
+						rm.setItemName(ChatColor.GOLD +"바람의 너클");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Windy Knuckle");
-						rm.setLocalizedName(ChatColor.GOLD +"Windy Knuckle");
+						rm.setItemName(ChatColor.GOLD +"Windy Knuckle");
 					}
 					NamespacedKey.fromString("windy", RMain.getInstance());
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
@@ -86,77 +84,77 @@ public class Fighter extends Weapons implements Listener {
 				else if (cmdt == 5) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"대지의 너클");
-						rm.setLocalizedName(ChatColor.GOLD +"대지의 너클");
+						rm.setItemName(ChatColor.GOLD +"대지의 너클");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Earth Knuckle");
-						rm.setLocalizedName(ChatColor.GOLD +"Earth Knuckle");
+						rm.setItemName(ChatColor.GOLD +"Earth Knuckle");
 					}
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
 					return r;
 				} else if (cmdt == 6) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"서리의 너클");
-						rm.setLocalizedName(ChatColor.GOLD +"서리의 너클");
+						rm.setItemName(ChatColor.GOLD +"서리의 너클");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Frost Knuckle");
-						rm.setLocalizedName(ChatColor.GOLD +"Frost Knuckle");
+						rm.setItemName(ChatColor.GOLD +"Frost Knuckle");
 					}
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
 					return r;
 				} else if (cmdt == 7) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"바다의 너클");
-						rm.setLocalizedName(ChatColor.GOLD +"바다의 너클");
+						rm.setItemName(ChatColor.GOLD +"바다의 너클");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Ocean Knuckle");
-						rm.setLocalizedName(ChatColor.GOLD +"Ocean Knuckle");
+						rm.setItemName(ChatColor.GOLD +"Ocean Knuckle");
 					}
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
 					return r;
 				} else if (cmdt == 8) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"어둠의 너클");
-						rm.setLocalizedName(ChatColor.GOLD +"어둠의 너클");
+						rm.setItemName(ChatColor.GOLD +"어둠의 너클");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Dark Knuckle");
-						rm.setLocalizedName(ChatColor.GOLD +"Dark Knuckle");
+						rm.setItemName(ChatColor.GOLD +"Dark Knuckle");
 					}
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
 					return r;
 				} else if (cmdt == 9) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"개조된 너클");
-						rm.setLocalizedName(ChatColor.GOLD +"개조된 너클");
+						rm.setItemName(ChatColor.GOLD +"개조된 너클");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Hyper Knuckle");
-						rm.setLocalizedName(ChatColor.GOLD +"Hyper Knuckle");
+						rm.setItemName(ChatColor.GOLD +"Hyper Knuckle");
 					}
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
 					return r;
 				} else if (cmdt == 10) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"작열하는 너클");
-						rm.setLocalizedName(ChatColor.GOLD +"작열하는 너클");
+						rm.setItemName(ChatColor.GOLD +"작열하는 너클");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Burning Knuckle");
-						rm.setLocalizedName(ChatColor.GOLD +"Burning Knuckle");
+						rm.setItemName(ChatColor.GOLD +"Burning Knuckle");
 					}
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
 					return r;
 				} else if (cmdt == 11) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"맹독 너클");
-						rm.setLocalizedName(ChatColor.GOLD +"맹독 너클");
+						rm.setItemName(ChatColor.GOLD +"맹독 너클");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Poison Knuckle");
-						rm.setLocalizedName(ChatColor.GOLD +"Poison Knuckle");
+						rm.setItemName(ChatColor.GOLD +"Poison Knuckle");
 					}
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
 					return r;
@@ -175,17 +173,17 @@ public class Fighter extends Weapons implements Listener {
 					rm.setCustomModelData(cmdt + 1000);
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 15,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 14,
-									Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"자연의 너클");
-						rm.setLocalizedName(ChatColor.GOLD +"자연의 너클");
+						rm.setItemName(ChatColor.GOLD +"자연의 너클");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Natural Knuckle");
-						rm.setLocalizedName(ChatColor.GOLD +"Natural Knuckle");
+						rm.setItemName(ChatColor.GOLD +"Natural Knuckle");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -203,17 +201,17 @@ public class Fighter extends Weapons implements Listener {
 					rm.setCustomModelData(1 + 1000+100);
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 6,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 6,
-									Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 1단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 1단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 1단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.1");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.1");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.1");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -231,17 +229,17 @@ public class Fighter extends Weapons implements Listener {
 				if (cmdt == 5) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 7,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 7,
-									Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 2단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 2단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 2단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.2");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.2");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.2");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -249,17 +247,17 @@ public class Fighter extends Weapons implements Listener {
 				else if (cmdt == 6) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 8,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 8,
-									Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 3단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 3단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 3단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.3");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.3");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.3");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -267,17 +265,17 @@ public class Fighter extends Weapons implements Listener {
 				else if (cmdt == 7) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 9,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 9,
-									Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 4단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 4단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 4단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.4");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.4");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.4");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -285,17 +283,17 @@ public class Fighter extends Weapons implements Listener {
 				else if (cmdt == 8) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 10,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 10,
-									Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 5단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 5단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 5단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.5");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.5");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.5");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -303,17 +301,17 @@ public class Fighter extends Weapons implements Listener {
 				else if (cmdt == 9) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 11,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 11,
-									Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 6단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 6단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 6단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.6");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.6");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.6");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -321,17 +319,17 @@ public class Fighter extends Weapons implements Listener {
 				else if (cmdt == 10) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 12,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 12,
-									Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 7단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 7단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 7단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.7");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.7");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.7");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -339,17 +337,17 @@ public class Fighter extends Weapons implements Listener {
 				else if (cmdt == 11) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 13,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 13,
-									Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
+									Operation.ADD_NUMBER, EquipmentSlotGroup.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 8단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 8단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 8단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.8");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.8");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura Knuckle - Lv.8");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -786,11 +784,11 @@ public class Fighter extends Weapons implements Listener {
 		ItemStack pis = p.getInventory().getItemInMainHand();
 		ItemStack pos = p.getInventory().getItemInOffHand();
 		if (pis.getAmount() >= 1 && pis.hasItemMeta() && pis.getItemMeta().hasCustomModelData()
-				&& pis.getType().name().contains("BANNER_PATTERN") && !pis.getItemMeta().getLocalizedName().contains("CopiedKnuckle") && pos.getType() == Material.AIR) {
+				&& pis.getType().name().contains("BANNER_PATTERN") && !pis.getItemMeta().getItemName().contains("CopiedKnuckle") && pos.getType() == Material.AIR) {
 			ev.setCancelled(true);
 			ItemStack swap = pis.clone();
 			ItemMeta sm = swap.getItemMeta();
-			sm.setLocalizedName("CopiedKnuckle");
+			sm.setItemName("CopiedKnuckle");
 			sm.getPersistentDataContainer().remove(nethercore);
 			sm.getPersistentDataContainer().remove(endercore);
 			sm.getPersistentDataContainer().remove(herocore);
@@ -814,7 +812,7 @@ public class Fighter extends Weapons implements Listener {
 		Player p =(Player) ev.getView().getPlayer();
 		if(ev.getCurrentItem() != null && ev.getCurrentItem().hasItemMeta()) {
 			ItemMeta im = ev.getCurrentItem().getItemMeta();
-			if(im.hasLocalizedName() && im.getLocalizedName().equals("CopiedKnuckle")) {
+			if(im.hasItemName() && im.getItemName().equals("CopiedKnuckle")) {
 				ev.setCancelled(true);
 				ev.getCurrentItem().setAmount(0);
 			}
@@ -822,7 +820,7 @@ public class Fighter extends Weapons implements Listener {
 		for(ItemStack is : p.getInventory().getContents()) {
 			if(is != null && is.hasItemMeta()) {
 				ItemMeta im = is.getItemMeta();
-				if(im.hasLocalizedName() && im.getLocalizedName().equals("CopiedKnuckle")) {
+				if(im.hasItemName() && im.getItemName().equals("CopiedKnuckle")) {
 					is.setAmount(0);
 				}
 			}
@@ -835,13 +833,13 @@ public class Fighter extends Weapons implements Listener {
 		if(ev.getItemDrop().getItemStack() != null && !ev.isCancelled()) {
 			Player p =(Player) ev.getPlayer();
 			ItemStack pis = ev.getItemDrop().getItemStack();
-			if(pis.getItemMeta().hasLocalizedName() && pis.getItemMeta().getLocalizedName().equals("CopiedKnuckle")) {
+			if(pis.getItemMeta().hasItemName() && pis.getItemMeta().getItemName().equals("CopiedKnuckle")) {
 				pis.setAmount(0);
 			}
 			for(ItemStack is : p.getInventory().getContents()) {
 				if(is != null && is.hasItemMeta()) {
 					ItemMeta im = is.getItemMeta();
-					if(im.hasLocalizedName() && im.getLocalizedName().equals("CopiedKnuckle")) {
+					if(im.hasItemName() && im.getItemName().equals("CopiedKnuckle")) {
 						is.setAmount(0);
 					}
 				}
@@ -857,7 +855,7 @@ public class Fighter extends Weapons implements Listener {
 	       	 List<ItemStack> di = ev.getDrops();
 	       	 di.forEach(is -> {
 	       		 ItemMeta im = is.getItemMeta();
-	       		 if(im.hasLocalizedName() && im.getLocalizedName().equals("CopiedKnuckle")) {
+	       		 if(im.hasItemName() && im.getItemName().equals("CopiedKnuckle")) {
 	       			 is.setAmount(0);
 	       		 }
 	       	 });
@@ -868,26 +866,24 @@ public class Fighter extends Weapons implements Listener {
 	public void WoodenKnuckle(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.GLOBE_BANNER_PATTERN, 1);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-				"generic.attackDamage", 1, Operation.ADD_NUMBER, EquipmentSlot.HAND));
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-				"generic.attackDamage", 1, Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 1, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 1, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
-				new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 8,
-						Operation.ADD_NUMBER, EquipmentSlot.HAND));
+				new AttributeModifier(attack_speed, 8,
+						Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
-				new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 8,
-						Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
+				new AttributeModifier(attack_speed, 8,
+						Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		meta.setCustomModelData(1000);
-		meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+		meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 		if(lang.contains("kr")){
 			meta.setLore(Arrays.asList("손교체시 장착"));
 			meta.setDisplayName("나무 너클");
-			meta.setLocalizedName("나무 너클");
+			meta.setItemName("나무 너클");
 		}
 		else {
 			meta.setDisplayName("Wooden Knuckle");
-			meta.setLocalizedName("Wooden Knuckle");
+			meta.setItemName("Wooden Knuckle");
 			meta.setLore(Arrays.asList("SwapHands To Equip"));
 		}
 		is.setItemMeta(meta);
@@ -904,26 +900,24 @@ public class Fighter extends Weapons implements Listener {
 	public void StoneKnuckle(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.GLOBE_BANNER_PATTERN, 1);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-				"generic.attackDamage", 2, Operation.ADD_NUMBER, EquipmentSlot.HAND));
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-				"generic.attackDamage", 1, Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 2, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 1, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
-				new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 8,
-						Operation.ADD_NUMBER, EquipmentSlot.HAND));
+				new AttributeModifier(attack_speed, 8,
+						Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
-				new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 8,
-						Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
+				new AttributeModifier(attack_speed, 8,
+						Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		meta.setCustomModelData(1000 +1);
-		meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+		meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 		if(lang.contains("kr")){
 			meta.setLore(Arrays.asList("손교체시 장착"));
 			meta.setDisplayName("돌 너클");
-			meta.setLocalizedName("돌 너클");
+			meta.setItemName("돌 너클");
 		}
 		else {
 			meta.setDisplayName("Stone Knuckle");
-			meta.setLocalizedName("Stone Knuckle");
+			meta.setItemName("Stone Knuckle");
 			meta.setLore(Arrays.asList("SwapHands To Equip"));
 		}
 		is.setItemMeta(meta);
@@ -939,26 +933,24 @@ public class Fighter extends Weapons implements Listener {
 	public void GoldKnuckle(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.GLOBE_BANNER_PATTERN, 1);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-				"generic.attackDamage", 2, Operation.ADD_NUMBER, EquipmentSlot.HAND));
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-				"generic.attackDamage", 1, Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 2, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 1, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
-				new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 8,
-						Operation.ADD_NUMBER, EquipmentSlot.HAND));
+				new AttributeModifier(attack_speed, 8,
+						Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
-				new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 8,
-						Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
+				new AttributeModifier(attack_speed, 8,
+						Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		meta.setCustomModelData(1000 + 2);
-		meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+		meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 		if(lang.contains("kr")){
 			meta.setLore(Arrays.asList("손교체시 장착"));
 			meta.setDisplayName("금 너클");
-			meta.setLocalizedName("금 너클");
+			meta.setItemName("금 너클");
 		}
 		else {
 			meta.setDisplayName("Gold Knuckle");
-			meta.setLocalizedName("Gold Knuckle");
+			meta.setItemName("Gold Knuckle");
 			meta.setLore(Arrays.asList("SwapHands To Equip"));
 		}
 		is.setItemMeta(meta);
@@ -974,26 +966,24 @@ public class Fighter extends Weapons implements Listener {
 	public void IronKnuckle(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.GLOBE_BANNER_PATTERN, 1);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-				"generic.attackDamage", 3, Operation.ADD_NUMBER, EquipmentSlot.HAND));
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-				"generic.attackDamage", 2, Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 3, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 2, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
-				new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 8,
-						Operation.ADD_NUMBER, EquipmentSlot.HAND));
+				new AttributeModifier(attack_speed, 8,
+						Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
-				new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 8,
-						Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
+				new AttributeModifier(attack_speed, 8,
+						Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		meta.setCustomModelData(1000 + 3);
-		meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+		meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 		if(lang.contains("kr")){
 			meta.setLore(Arrays.asList("손교체시 장착"));
 			meta.setDisplayName("철 너클");
-			meta.setLocalizedName("철 너클");
+			meta.setItemName("철 너클");
 		}
 		else {
 			meta.setDisplayName("Iron Knuckle");
-			meta.setLocalizedName("Iron Knuckle");
+			meta.setItemName("Iron Knuckle");
 			meta.setLore(Arrays.asList("SwapHands To Equip"));
 		}
 		is.setItemMeta(meta);
@@ -1009,26 +999,24 @@ public class Fighter extends Weapons implements Listener {
 	public void DiamondKnuckle(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.GLOBE_BANNER_PATTERN, 1);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-				"generic.attackDamage", 4, Operation.ADD_NUMBER, EquipmentSlot.HAND));
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-				"generic.attackDamage", 3, Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 4, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 3, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
-				new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 8,
-						Operation.ADD_NUMBER, EquipmentSlot.HAND));
+				new AttributeModifier(attack_speed, 8,
+						Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
-				new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 8,
-						Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
+				new AttributeModifier(attack_speed, 8,
+						Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		meta.setCustomModelData(1000 + 4);
-		meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+		meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 		if(lang.contains("kr")){
 			meta.setLore(Arrays.asList("손교체시 장착"));
 			meta.setDisplayName("다이아몬드 너클");
-			meta.setLocalizedName("다이아몬드 너클");
+			meta.setItemName("다이아몬드 너클");
 		}
 		else {
 			meta.setDisplayName("Diamond Knuckle");
-			meta.setLocalizedName("Diamond Knuckle");
+			meta.setItemName("Diamond Knuckle");
 			meta.setLore(Arrays.asList("SwapHands To Equip"));
 		}
 		is.setItemMeta(meta);
@@ -1044,28 +1032,26 @@ public class Fighter extends Weapons implements Listener {
 	public void NetheriteKnuckle(PrepareSmithingEvent d) {
 		ItemStack r = new ItemStack(Material.GLOBE_BANNER_PATTERN, 1);
 		ItemMeta rm = r.getItemMeta();
-		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-				"generic.attackDamage", 5, Operation.ADD_NUMBER, EquipmentSlot.HAND));
-		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-				"generic.attackDamage", 4, Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
+		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 5, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 4, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
-				new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 8,
-						Operation.ADD_NUMBER, EquipmentSlot.HAND));
+				new AttributeModifier(attack_speed, 8,
+						Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
-				new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 8,
-						Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
+				new AttributeModifier(attack_speed, 8,
+						Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		rm.setCustomModelData(1000 + 60);
-		rm.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+		rm.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 		Player p = (Player) d.getView().getPlayer();
 		
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 			rm.setLore(Arrays.asList("손교체시 장착"));
 			rm.setDisplayName("네더라이트 너클");
-			rm.setLocalizedName("네더라이트 너클");
+			rm.setItemName("네더라이트 너클");
 		}
 		else {
 			rm.setDisplayName("Netherite Knuckle");
-			rm.setLocalizedName("Netherite Knuckle");
+			rm.setItemName("Netherite Knuckle");
 			rm.setLore(Arrays.asList("SwapHands To Equip"));
 		}
 
@@ -1081,7 +1067,7 @@ public class Fighter extends Weapons implements Listener {
 			if ((d.getInventory().getItem(0).getItemMeta().getCustomModelData() == 1000 + 4)
 					&& d.getInventory().getItem(1).getType() == Material.NETHERITE_INGOT) {
 				ItemMeta rm0 = d.getInventory().getItem(0).getItemMeta();
-				if(!rm0.getDisplayName().equals(rm0.getLocalizedName())) {
+				if(!rm0.getDisplayName().equals(rm0.getItemName())) {
 					rm.setDisplayName(rm0.getDisplayName());
 				}
 				r.setItemMeta(rm);
@@ -1111,25 +1097,23 @@ public class Fighter extends Weapons implements Listener {
 					Player p = (Player) d.getWhoClicked();
 					ItemStack r = new ItemStack(Material.GLOBE_BANNER_PATTERN, 1);
 					ItemMeta rm = r.getItemMeta();
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-							"generic.attackDamage", 5, Operation.ADD_NUMBER, EquipmentSlot.HAND));
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-							"generic.attackDamage", 4, Operation.ADD_NUMBER, EquipmentSlot.OFF_HAND));
+					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 5, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 4, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 					rm.setCustomModelData(1000 + 60);
-					rm.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+					rm.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setLore(Arrays.asList("손교체시 장착"));
 						rm.setDisplayName("네더라이트 너클");
-						rm.setLocalizedName("네더라이트 너클");
+						rm.setItemName("네더라이트 너클");
 					}
 					else {
 						rm.setDisplayName("Netherite Knuckle");
-						rm.setLocalizedName("Netherite Knuckle");
+						rm.setItemName("Netherite Knuckle");
 						rm.setLore(Arrays.asList("SwapHands To Equip"));
 					}
 
 					ItemMeta rm0 = d.getInventory().getItem(0).getItemMeta();
-					if(!rm0.getDisplayName().equals(rm0.getLocalizedName())) {
+					if(!rm0.getDisplayName().equals(rm0.getItemName())) {
 						rm.setDisplayName(rm0.getDisplayName());
 					}
 					r.setItemMeta(rm);
@@ -1171,10 +1155,10 @@ public class Fighter extends Weapons implements Listener {
 					ItemStack r = new ItemStack(Material.BOW);
 					ItemMeta rm = r.getItemMeta();
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-							"generic.attackDamage", 11, Operation.ADD_NUMBER, EquipmentSlot.HAND));
+							"generic.attackDamage", 11, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					rm.setCustomModelData(1000 +11);
 					rm.setDisplayName("Netherite Knuckle");
-					rm.setLocalizedName("Netherite Knuckle");
+					rm.setItemName("Netherite Knuckle");
 					r.setItemMeta(rm);
 					if (p.getInventory().firstEmpty() != -1 && d.getClickedInventory().getItem(2).getItemMeta()
 							.getCustomModelData() == d.getCurrentItem().getItemMeta().getCustomModelData()) {

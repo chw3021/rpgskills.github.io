@@ -114,7 +114,7 @@ public class ScrollPoint implements Serializable, Listener{
 			if(p.getInventory().getItemInMainHand().getType()==Material.MOJANG_BANNER_PATTERN)
 			{
 				final ItemStack is = p.getInventory().getItemInMainHand();
-				if(is.hasItemMeta() && is.getItemMeta().hasLocalizedName() && is.getItemMeta().getLocalizedName().equals(ChatColor.GOLD +"Mysterious scroll")) {
+				if(is.hasItemMeta() && is.getItemMeta().hasItemName() && is.getItemMeta().getItemName().equals(ChatColor.GOLD +"Mysterious scroll")) {
 					p.getInventory().getItemInMainHand().setAmount(0);
 
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {

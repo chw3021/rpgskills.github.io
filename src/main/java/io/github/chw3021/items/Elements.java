@@ -84,77 +84,77 @@ public class Elements implements Listener {
 			if(i == 4) {
 				ii.setType(Material.GREEN_STAINED_GLASS);
 				imeta.setDisplayName(ChatColor.BLUE +"엘더크리퍼 침공작전 순간이동기");
-				imeta.setLocalizedName(ChatColor.BLUE +"ElderCreeper Raid Teleporter");
+				imeta.setItemName(ChatColor.BLUE +"ElderCreeper Raid Teleporter");
 			}
 			else if(i == 5) {
 				ii.setType(Material.LIGHT_GRAY_STAINED_GLASS);
 				imeta.setDisplayName(ChatColor.BLUE +"스톤골렘 침공작전 순간이동기");
-				imeta.setLocalizedName(ChatColor.BLUE +"StoneGolem Raid Teleporter");
+				imeta.setItemName(ChatColor.BLUE +"StoneGolem Raid Teleporter");
 			}
 			else if(i == 6) {
 				ii.setType(Material.WHITE_STAINED_GLASS);
 				imeta.setDisplayName(ChatColor.BLUE +"설산마녀 침공작전 순간이동기");
-				imeta.setLocalizedName(ChatColor.BLUE +"SnowWitch Raid Teleporter");
+				imeta.setItemName(ChatColor.BLUE +"SnowWitch Raid Teleporter");
 			}
 			else if(i == 7) {
 				ii.setType(Material.BLUE_STAINED_GLASS);
 				imeta.setDisplayName(ChatColor.BLUE +"엘더가디언 침공작전 순간이동기");
-				imeta.setLocalizedName(ChatColor.BLUE +"ElderGuardian Raid Teleporter");
+				imeta.setItemName(ChatColor.BLUE +"ElderGuardian Raid Teleporter");
 			}
 			else if(i == 8) {
 				ii.setType(Material.BROWN_STAINED_GLASS);
 				imeta.setDisplayName(ChatColor.BLUE +"흑마법사 침공작전 순간이동기");
-				imeta.setLocalizedName(ChatColor.BLUE +"DarkMage Raid Teleporter");
+				imeta.setItemName(ChatColor.BLUE +"DarkMage Raid Teleporter");
 			}
 			else if(i == 9) {
 				ii.setType(Material.MAGENTA_STAINED_GLASS);
 				imeta.setDisplayName(ChatColor.BLUE +"닥터B 침공작전 순간이동기");
-				imeta.setLocalizedName(ChatColor.BLUE +"DrB Raid Teleporter");
+				imeta.setItemName(ChatColor.BLUE +"DrB Raid Teleporter");
 			}
 			else if(i == 10) {
 				ii.setType(Material.RED_STAINED_GLASS);
 				imeta.setDisplayName(ChatColor.BLUE +"붉은기사 침공작전 순간이동기");
-				imeta.setLocalizedName(ChatColor.BLUE +"RedKnight Raid Teleporter");
+				imeta.setItemName(ChatColor.BLUE +"RedKnight Raid Teleporter");
 			}
 			else if(i == 12) {
 				ii.setType(Material.YELLOW_STAINED_GLASS);
 				imeta.setDisplayName(ChatColor.BLUE +"잊혀진 사제 침공작전 순간이동기");
-				imeta.setLocalizedName(ChatColor.BLUE +"LostTemplar Raid Teleporter");//wild
+				imeta.setItemName(ChatColor.BLUE +"LostTemplar Raid Teleporter");//wild
 			}
 			else if(i == -2) {
 				ii.setType(Material.ORANGE_STAINED_GLASS);
 				imeta.setDisplayName(ChatColor.BLUE +"수확자 침공작전 순간이동기");
-				imeta.setLocalizedName(ChatColor.BLUE +"Harvester Raid Teleporter");//soul
+				imeta.setItemName(ChatColor.BLUE +"Harvester Raid Teleporter");//soul
 			}
 			else if(i == -3) {
 				ii.setType(Material.MAGENTA_STAINED_GLASS);
 				imeta.setDisplayName(ChatColor.BLUE +"학살자 침공작전 순간이동기");
-				imeta.setLocalizedName(ChatColor.BLUE +"Slaughter Raid Teleporter");//crimson
+				imeta.setItemName(ChatColor.BLUE +"Slaughter Raid Teleporter");//crimson
 			}
 			else if(i == -4) {
 				ii.setType(Material.CYAN_STAINED_GLASS);
 				imeta.setDisplayName(ChatColor.BLUE +"거대팬텀 침공작전 순간이동기");
-				imeta.setLocalizedName(ChatColor.BLUE +"GiantPhantom Raid Teleporter");//warp
+				imeta.setItemName(ChatColor.BLUE +"GiantPhantom Raid Teleporter");//warp
 			}
 			else if(i == -5) {
 				ii.setType(Material.PINK_STAINED_GLASS);
 				imeta.setDisplayName(ChatColor.BLUE +"피글린요리사 침공작전 순간이동기");
-				imeta.setLocalizedName(ChatColor.BLUE +"PiglinCook Raid Teleporter");//volcanic
+				imeta.setItemName(ChatColor.BLUE +"PiglinCook Raid Teleporter");//volcanic
 			}
 			else if(i == -6) {
 				ii.setType(Material.GRAY_STAINED_GLASS);
 				imeta.setDisplayName(ChatColor.BLUE +"대량엔더맨 침공작전 순간이동기");
-				imeta.setLocalizedName(ChatColor.BLUE +"MassEndermans Raid Teleporter");//ender
+				imeta.setItemName(ChatColor.BLUE +"MassEndermans Raid Teleporter");//ender
 			}
 			else if(i == -7) {
 				ii.setType(Material.PURPLE_STAINED_GLASS);
 				imeta.setDisplayName(ChatColor.BLUE +"차원 훼방꾼 침공작전 순간이동기");
-				imeta.setLocalizedName(ChatColor.BLUE +"Disrupter Raid Teleporter");//void
+				imeta.setItemName(ChatColor.BLUE +"Disrupter Raid Teleporter");//void
 			}
 			else if(i == -8) {
 				ii.setType(Material.BLACK_STAINED_GLASS);
 				imeta.setDisplayName(ChatColor.BLUE +"위더 침공작전 순간이동기");
-				imeta.setLocalizedName(ChatColor.BLUE +"Wither Raid Teleporter");
+				imeta.setItemName(ChatColor.BLUE +"Wither Raid Teleporter");
 			}
 			ii.setItemMeta(imeta);
 			
@@ -164,77 +164,77 @@ public class Elements implements Listener {
 			if(i == 4) {
 				ii.setType(Material.GREEN_STAINED_GLASS);
 				imeta.setDisplayName(ChatColor.BLUE +"ElderCreeper Raid Teleporter");
-				imeta.setLocalizedName(ChatColor.BLUE +"ElderCreeper Raid Teleporter");
+				imeta.setItemName(ChatColor.BLUE +"ElderCreeper Raid Teleporter");
 			}
 			else if(i == 5) {
 				ii.setType(Material.LIGHT_GRAY_STAINED_GLASS);
 				imeta.setDisplayName(ChatColor.BLUE +"StoneGolem Raid Teleporter");
-				imeta.setLocalizedName(ChatColor.BLUE +"StoneGolem Raid Teleporter");
+				imeta.setItemName(ChatColor.BLUE +"StoneGolem Raid Teleporter");
 			}
 			else if(i == 6) {
 				ii.setType(Material.WHITE_STAINED_GLASS);
 				imeta.setDisplayName(ChatColor.BLUE +"SnowWitch Raid Teleporter");
-				imeta.setLocalizedName(ChatColor.BLUE +"SnowWitch Raid Teleporter");
+				imeta.setItemName(ChatColor.BLUE +"SnowWitch Raid Teleporter");
 			}
 			else if(i == 7) {
 				ii.setType(Material.BLUE_STAINED_GLASS);
 				imeta.setDisplayName(ChatColor.BLUE +"ElderGuardian Raid Teleporter");
-				imeta.setLocalizedName(ChatColor.BLUE +"ElderGuardian Raid Teleporter");
+				imeta.setItemName(ChatColor.BLUE +"ElderGuardian Raid Teleporter");
 			}
 			else if(i == 8) {
 				ii.setType(Material.BROWN_STAINED_GLASS);
 				imeta.setDisplayName(ChatColor.BLUE +"DarkMage Raid Teleporter");
-				imeta.setLocalizedName(ChatColor.BLUE +"DarkMage Raid Teleporter");
+				imeta.setItemName(ChatColor.BLUE +"DarkMage Raid Teleporter");
 			}
 			else if(i == 9) {
 				ii.setType(Material.MAGENTA_STAINED_GLASS);
 				imeta.setDisplayName(ChatColor.BLUE +"Dr.B Raid Teleporter");
-				imeta.setLocalizedName(ChatColor.BLUE +"DrB Raid Teleporter");
+				imeta.setItemName(ChatColor.BLUE +"DrB Raid Teleporter");
 			}
 			else if(i == 10) {
 				ii.setType(Material.RED_STAINED_GLASS);
 				imeta.setDisplayName(ChatColor.BLUE +"RedKnight Raid Teleporter");
-				imeta.setLocalizedName(ChatColor.BLUE +"RedKnight Raid Teleporter");
+				imeta.setItemName(ChatColor.BLUE +"RedKnight Raid Teleporter");
 			}
 			else if(i == 12) {
 				ii.setType(Material.YELLOW_STAINED_GLASS);
 				imeta.setDisplayName(ChatColor.BLUE +"LostTemplar Raid Teleporter");
-				imeta.setLocalizedName(ChatColor.BLUE +"LostTemplar Raid Teleporter");//wild
+				imeta.setItemName(ChatColor.BLUE +"LostTemplar Raid Teleporter");//wild
 			}
 			else if(i == -2) {
 				ii.setType(Material.ORANGE_STAINED_GLASS);
 				imeta.setDisplayName(ChatColor.BLUE +"Harvester Raid Teleporter");
-				imeta.setLocalizedName(ChatColor.BLUE +"Harvester Raid Teleporter");//soul
+				imeta.setItemName(ChatColor.BLUE +"Harvester Raid Teleporter");//soul
 			}
 			else if(i == -3) {
 				ii.setType(Material.MAGENTA_STAINED_GLASS);
 				imeta.setDisplayName(ChatColor.BLUE +"Slaughter Raid Teleporter");
-				imeta.setLocalizedName(ChatColor.BLUE +"Slaughter Raid Teleporter");//crimson
+				imeta.setItemName(ChatColor.BLUE +"Slaughter Raid Teleporter");//crimson
 			}
 			else if(i == -4) {
 				ii.setType(Material.CYAN_STAINED_GLASS);
 				imeta.setDisplayName(ChatColor.BLUE +"GiantPhantom Raid Teleporter");
-				imeta.setLocalizedName(ChatColor.BLUE +"GiantPhantom Raid Teleporter");//warp
+				imeta.setItemName(ChatColor.BLUE +"GiantPhantom Raid Teleporter");//warp
 			}
 			else if(i == -5) {
 				ii.setType(Material.PINK_STAINED_GLASS);
 				imeta.setDisplayName(ChatColor.BLUE +"PiglinCook Raid Teleporter");
-				imeta.setLocalizedName(ChatColor.BLUE +"PiglinCook Raid Teleporter");//volcanic
+				imeta.setItemName(ChatColor.BLUE +"PiglinCook Raid Teleporter");//volcanic
 			}
 			else if(i == -6) {
 				ii.setType(Material.GRAY_STAINED_GLASS);
 				imeta.setDisplayName(ChatColor.BLUE +"MassEndermans Raid Teleporter");
-				imeta.setLocalizedName(ChatColor.BLUE +"MassEndermans Raid Teleporter");//ender
+				imeta.setItemName(ChatColor.BLUE +"MassEndermans Raid Teleporter");//ender
 			}
 			else if(i == -7) {
 				ii.setType(Material.PURPLE_STAINED_GLASS);
 				imeta.setDisplayName(ChatColor.BLUE +"Disrupter Raid Teleporter");
-				imeta.setLocalizedName(ChatColor.BLUE +"Disrupter Raid Teleporter");//void
+				imeta.setItemName(ChatColor.BLUE +"Disrupter Raid Teleporter");//void
 			}
 			else if(i == -8) {
 				ii.setType(Material.BLACK_STAINED_GLASS);
 				imeta.setDisplayName(ChatColor.BLUE +"Wither Raid Teleporter");
-				imeta.setLocalizedName(ChatColor.BLUE +"Wither Raid Teleporter");
+				imeta.setItemName(ChatColor.BLUE +"Wither Raid Teleporter");
 			}
 			ii.setItemMeta(imeta);
 			
@@ -256,7 +256,7 @@ public class Elements implements Listener {
 				imeta.setLore(lore);
 				ii.setType(Material.DIORITE);
 				imeta.setDisplayName(ChatColor.BLUE +"바람의 파편");
-				imeta.setLocalizedName(ChatColor.BLUE +"바람의 파편");
+				imeta.setItemName(ChatColor.BLUE +"바람의 파편");
 			}
 			else if(i == 14) {
 				ii.setType(Material.WHITE_TULIP);
@@ -265,7 +265,7 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "바람의 핵으로 [네더라이트 무기]를 강화시", ChatColor.LIGHT_PURPLE + "[원소기운의 무기-1단계]를 획득합니다"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.BLUE +"대지의 파편");
-				imeta.setLocalizedName(ChatColor.BLUE +"대지의 파편");
+				imeta.setItemName(ChatColor.BLUE +"대지의 파편");
 			}
 			else if(i == 6) {
 				ii.setType(Material.BLUE_ICE);
@@ -274,7 +274,7 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "서리의 핵으로 [원소기운의 무기-2단계]를 강화시", ChatColor.LIGHT_PURPLE + "[원소기운의 무기-3단계]를 획득합니다"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.BLUE +"서리의 파편");
-				imeta.setLocalizedName(ChatColor.BLUE +"서리의 파편");
+				imeta.setItemName(ChatColor.BLUE +"서리의 파편");
 			}
 			else if(i == 7) {
 				ii.setType(Material.PRISMARINE_CRYSTALS);
@@ -283,7 +283,7 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "바다의 핵으로 [원소기운의 무기-3단계]를 강화시", ChatColor.LIGHT_PURPLE + "[원소기운의 무기-4단계]를 획득합니다"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.BLUE +"바다의 파편");
-				imeta.setLocalizedName(ChatColor.BLUE +"바다의 파편");
+				imeta.setItemName(ChatColor.BLUE +"바다의 파편");
 			}
 			else if(i == 8) {
 				ii.setType(Material.STRIPPED_DARK_OAK_WOOD);
@@ -292,7 +292,7 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "어둠의 핵으로 [원소기운의 무기-4단계]를 강화시", ChatColor.LIGHT_PURPLE + "[원소기운의 무기-5단계]를 획득합니다"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.BLUE +"어둠의 파편");
-				imeta.setLocalizedName(ChatColor.BLUE +"어둠의 파편");
+				imeta.setItemName(ChatColor.BLUE +"어둠의 파편");
 			}
 			else if(i == 9) {
 				ii.setType(Material.FIREWORK_STAR);
@@ -301,7 +301,7 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "하이퍼 엔진으로 [원소기운의 무기-5단계]를 강화시", ChatColor.LIGHT_PURPLE + "[원소기운의 무기-6단계]를 획득합니다"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.BLUE +"실험체 부품");
-				imeta.setLocalizedName(ChatColor.BLUE +"실험체 부품");
+				imeta.setItemName(ChatColor.BLUE +"실험체 부품");
 			}
 			else if(i == 10) {
 				ii.setType(Material.RED_SAND);
@@ -310,7 +310,7 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "타오르는 심장으로 [원소기운의 무기-6단계]를 강화시", ChatColor.LIGHT_PURPLE + "[원소기운의 무기-7단계]를 획득합니다"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.BLUE +"적색 파편");
-				imeta.setLocalizedName(ChatColor.BLUE +"적색 파편");
+				imeta.setItemName(ChatColor.BLUE +"적색 파편");
 			}
 			else if(i == 11) {
 				ii.setType(Material.GREEN_CONCRETE_POWDER);
@@ -319,7 +319,7 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "맹독의 핵으로 [원소기운의 무기-7단계]를 강화시", ChatColor.LIGHT_PURPLE + "[원소기운의 무기-8단계]를 획득합니다"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.BLUE +"맹독의 파편");
-				imeta.setLocalizedName(ChatColor.BLUE +"맹독의 파편");
+				imeta.setItemName(ChatColor.BLUE +"맹독의 파편");
 			}
 			else if(i == 12) {
 				ii.setType(Material.JUNGLE_SAPLING);
@@ -328,53 +328,53 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "야생의 핵으로 [원소기운의 무기-8단계]를 강화시", ChatColor.LIGHT_PURPLE + "[자연의 무기]를 획득합니다"));
 				lore.addAll(Arrays.asList("",ChatColor.GOLD + "자연의 무기를 [강력한 원소의 기운]으로 강화시", ChatColor.GOLD + "해당 속성의 무기를 제작할수 있습니다", ChatColor.GOLD + "[강력한 원소의 기운]은 보스 침공에서 획득가능"));
 				imeta.setDisplayName(ChatColor.BLUE +"야생의 파편");
-				imeta.setLocalizedName(ChatColor.BLUE +"야생의 파편");
+				imeta.setItemName(ChatColor.BLUE +"야생의 파편");
 			}
 			else if(i == -2) {
 				ii.setType(Material.GHAST_TEAR);
 				imeta.setLore(Arrays.asList("영혼의 핵을 제작하는데 사용됩니다", "영혼의 핵은 무기를 강화할때 사용됩니다"
 						,"",ChatColor.LIGHT_PURPLE +"네더지역의 4가지 핵을 조합하여 얻는", ChatColor.LIGHT_PURPLE +"융합된 네더의 핵을 통해",  ChatColor.LIGHT_PURPLE +"헬멧,갑옷 강화가 가능합니다"));
 				imeta.setDisplayName(ChatColor.BLUE +"영혼의 파편");
-				imeta.setLocalizedName(ChatColor.BLUE +"영혼의 파편");
+				imeta.setItemName(ChatColor.BLUE +"영혼의 파편");
 			}
 			else if(i == -3) {
 				ii.setType(Material.CRIMSON_FUNGUS);
 				imeta.setLore(Arrays.asList("진홍빛 핵을 제작하는데 사용됩니다", "진홍빛 핵은 무기를 강화할때 사용됩니다"
 						,"",ChatColor.LIGHT_PURPLE +"네더지역의 4가지 핵을 조합하여 얻는", ChatColor.LIGHT_PURPLE +"융합된 네더의 핵을 통해",  ChatColor.LIGHT_PURPLE +"헬멧,갑옷 강화가 가능합니다"));
 				imeta.setDisplayName(ChatColor.BLUE +"진홍빛 파편");
-				imeta.setLocalizedName(ChatColor.BLUE +"진홍빛 파편");
+				imeta.setItemName(ChatColor.BLUE +"진홍빛 파편");
 			}
 			else if(i == -4) {
 				ii.setType(Material.WARPED_FUNGUS);
 				imeta.setLore(Arrays.asList("뒤틀린 핵을 제작하는데 사용됩니다", "뒤틀린 핵은 무기를 강화할때 사용됩니다"
 						,"",ChatColor.LIGHT_PURPLE +"네더지역의 4가지 핵을 조합하여 얻는", ChatColor.LIGHT_PURPLE +"융합된 네더의 핵을 통해",  ChatColor.LIGHT_PURPLE +"헬멧,갑옷 강화가 가능합니다"));
 				imeta.setDisplayName(ChatColor.BLUE +"뒤틀린 파편");
-				imeta.setLocalizedName(ChatColor.BLUE +"뒤틀린 파편");
+				imeta.setItemName(ChatColor.BLUE +"뒤틀린 파편");
 			}
 			else if(i == -5) {
 				ii.setType(Material.BASALT);
 				imeta.setLore(Arrays.asList("화산의 핵을 제작하는데 사용됩니다", "화산의 핵은 무기를 강화할때 사용됩니다"
 						,"",ChatColor.LIGHT_PURPLE +"네더지역의 4가지 핵을 조합하여 얻는", ChatColor.LIGHT_PURPLE +"융합된 네더의 핵을 통해",  ChatColor.LIGHT_PURPLE +"헬멧,갑옷 강화가 가능합니다"));
 				imeta.setDisplayName(ChatColor.BLUE +"화산의 파편");
-				imeta.setLocalizedName(ChatColor.BLUE +"화산의 파편");
+				imeta.setItemName(ChatColor.BLUE +"화산의 파편");
 			}
 			else if(i == -6) {
 				ii.setType(Material.END_STONE);
 				imeta.setLore(Arrays.asList("엔더 핵을 제작하는데 사용됩니다", "엔더 핵은 무기를 강화할때 사용됩니다","",ChatColor.LIGHT_PURPLE +"엔더지역의 2가지 핵을 조합하여 얻는", ChatColor.LIGHT_PURPLE +"융합된 엔더의 핵을 통해",  ChatColor.LIGHT_PURPLE +"레깅스,부츠 강화가 가능합니다"));
 				imeta.setDisplayName(ChatColor.BLUE +"엔더 파편");
-				imeta.setLocalizedName(ChatColor.BLUE +"엔더 파편");
+				imeta.setItemName(ChatColor.BLUE +"엔더 파편");
 			}
 			else if(i == -7) {
 				ii.setType(Material.STRUCTURE_VOID);
 				imeta.setLore(Arrays.asList("공허의 핵을 제작하는데 사용됩니다", "공허의 핵은 무기를 강화할때 사용됩니다","",ChatColor.LIGHT_PURPLE +"엔더지역의 2가지 핵을 조합하여 얻는", ChatColor.LIGHT_PURPLE +"융합된 엔더의 핵을 통해",  ChatColor.LIGHT_PURPLE +"레깅스,부츠 강화가 가능합니다"));
 				imeta.setDisplayName(ChatColor.BLUE +"공허의 파편");
-				imeta.setLocalizedName(ChatColor.BLUE +"공허의 파편");
+				imeta.setItemName(ChatColor.BLUE +"공허의 파편");
 			}
 			else if(i == -8) {
 				ii.setType(Material.NETHER_STAR);
 				imeta.setLore(Arrays.asList("영웅의 상징을 제작하는데 사용됩니다", "영웅의 상징은 무기를 강화할때 사용됩니다"));
 				imeta.setDisplayName(ChatColor.BLUE +"서사의 파편");
-				imeta.setLocalizedName(ChatColor.BLUE +"서사의 파편");
+				imeta.setItemName(ChatColor.BLUE +"서사의 파편");
 			}
 			ii.setItemMeta(imeta);
 			
@@ -388,7 +388,7 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "If You Smith [Aura Weapon - Lv.1] with [Core Of Wind]", ChatColor.LIGHT_PURPLE + "You'll get [Aura Weapon - Lv.2]"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.BLUE +"Fragments of Wind");
-				imeta.setLocalizedName(ChatColor.BLUE +"Fragments of Wind");
+				imeta.setItemName(ChatColor.BLUE +"Fragments of Wind");
 			}
 			else if(i == 14) {
 				ii.setType(Material.WHITE_TULIP);
@@ -397,7 +397,7 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "If You Smith Netherite Weapon with [Core Of Earth]", ChatColor.LIGHT_PURPLE + "You'll get [Aura Weapon - Lv.1]"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.BLUE +"Fragments of Earth");
-				imeta.setLocalizedName(ChatColor.BLUE +"Fragments of Earth");
+				imeta.setItemName(ChatColor.BLUE +"Fragments of Earth");
 			}
 			else if(i == 6) {
 				ii.setType(Material.BLUE_ICE);
@@ -406,7 +406,7 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "If You Smith [Aura Weapon - Lv.2] with [Core Of Frost]", ChatColor.LIGHT_PURPLE + "You'll get [Aura Weapon - Lv.3]"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.BLUE +"Fragments of Frost");
-				imeta.setLocalizedName(ChatColor.BLUE +"Fragments of Frost");
+				imeta.setItemName(ChatColor.BLUE +"Fragments of Frost");
 			}
 			else if(i == 7) {
 				ii.setType(Material.PRISMARINE_CRYSTALS);
@@ -415,7 +415,7 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "If You Smith [Aura Weapon - Lv.3] with [Core Of Ocean]", ChatColor.LIGHT_PURPLE + "You'll get [Aura Weapon - Lv.4]"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.BLUE +"Fragments of Ocean");
-				imeta.setLocalizedName(ChatColor.BLUE +"Fragments of Ocean");
+				imeta.setItemName(ChatColor.BLUE +"Fragments of Ocean");
 			}
 			else if(i == 8) {
 				ii.setType(Material.STRIPPED_DARK_OAK_WOOD);
@@ -424,7 +424,7 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "If You Smith [Aura Weapon - Lv.4] with [Core Of Darkness]", ChatColor.LIGHT_PURPLE + "You'll get [Aura Weapon - Lv.5]"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.BLUE +"Fragments of Darkness");
-				imeta.setLocalizedName(ChatColor.BLUE +"Fragments of Darkness");
+				imeta.setItemName(ChatColor.BLUE +"Fragments of Darkness");
 			}
 			else if(i == 9) {
 				ii.setType(Material.FIREWORK_STAR);
@@ -433,7 +433,7 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "If You Smith [Aura Weapon - Lv.5] with [Hyper Engine]", ChatColor.LIGHT_PURPLE + "You'll get [Aura Weapon - Lv.6]"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.BLUE +"Part of Specimen");
-				imeta.setLocalizedName(ChatColor.BLUE +"Part of Specimen");
+				imeta.setItemName(ChatColor.BLUE +"Part of Specimen");
 			}
 			else if(i == 10) {
 				ii.setType(Material.GUNPOWDER);
@@ -442,7 +442,7 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "If You Smith [Aura Weapon - Lv.6] with [Burning Heart]", ChatColor.LIGHT_PURPLE + "You'll get [Aura Weapon - Lv.7]"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.BLUE +"Red Fragments");
-				imeta.setLocalizedName(ChatColor.BLUE +"Red Fragments");
+				imeta.setItemName(ChatColor.BLUE +"Red Fragments");
 			}
 			else if(i == 11) {
 				ii.setType(Material.GREEN_CONCRETE_POWDER);
@@ -451,7 +451,7 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "If You Smith [Aura Weapon - Lv.7] with [Core Of Poison]", ChatColor.LIGHT_PURPLE + "You'll get [Aura Weapon - Lv.8]"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.BLUE +"Fragments of Poison");
-				imeta.setLocalizedName(ChatColor.BLUE +"Fragments of Poison");
+				imeta.setItemName(ChatColor.BLUE +"Fragments of Poison");
 			}
 			else if(i == 12) {
 				ii.setType(Material.JUNGLE_SAPLING);
@@ -460,49 +460,49 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "If You Smith [Aura Weapon - Lv.8] with [Core Of Wild]", ChatColor.LIGHT_PURPLE + "You'll get [Natural Weapon]"));
 				lore.addAll(Arrays.asList("",ChatColor.GOLD + "If You Smith [Natural Weapon] with [Strong Core]", ChatColor.GOLD + "You'll get [Element Weapon]", ChatColor.GOLD + "You Can Get [Strong Core] From Boss Raid"));
 				imeta.setDisplayName(ChatColor.BLUE +"Fragments of Wild");
-				imeta.setLocalizedName(ChatColor.BLUE +"Fragments of Wild");
+				imeta.setItemName(ChatColor.BLUE +"Fragments of Wild");
 			}
 			else if(i == -2) {
 				ii.setType(Material.GHAST_TEAR);
 				imeta.setLore(Arrays.asList("Used For Crafting Condensate Soul", "Soul Core is Used For Smithing Weapon"));
 				imeta.setDisplayName(ChatColor.BLUE +"Fragments of Soul");
-				imeta.setLocalizedName(ChatColor.BLUE +"Fragments of Soul");
+				imeta.setItemName(ChatColor.BLUE +"Fragments of Soul");
 			}
 			else if(i == -3) {
 				ii.setType(Material.CRIMSON_FUNGUS);
 				imeta.setLore(Arrays.asList("Used For Crafting Crimson Core", "Crimson Core is Used For Smithing Weapon"));
 				imeta.setDisplayName(ChatColor.BLUE +"Crimson Fragments");
-				imeta.setLocalizedName(ChatColor.BLUE +"Crimson Fragments");
+				imeta.setItemName(ChatColor.BLUE +"Crimson Fragments");
 			}
 			else if(i == -4) {
 				ii.setType(Material.WARPED_FUNGUS);
 				imeta.setLore(Arrays.asList("Used For Crafting Warped Core", "Warped Core is Used For Smithing Weapon"));
 				imeta.setDisplayName(ChatColor.BLUE +"Warped Fragments");
-				imeta.setLocalizedName(ChatColor.BLUE +"Warped Fragments");
+				imeta.setItemName(ChatColor.BLUE +"Warped Fragments");
 			}
 			else if(i == -5) {
 				ii.setType(Material.BASALT);
 				imeta.setLore(Arrays.asList("Used For Crafting Volcanic Core", "Volcanic Core is Used For Smithing Weapon"));
 				imeta.setDisplayName(ChatColor.BLUE +"Volcanic Fragments");
-				imeta.setLocalizedName(ChatColor.BLUE +"Volcanic Fragments");
+				imeta.setItemName(ChatColor.BLUE +"Volcanic Fragments");
 			}
 			else if(i == -6) {
 				ii.setType(Material.END_STONE);
 				imeta.setLore(Arrays.asList("Used For Crafting Ender Core", "Ender Core is Used For Smithing Weapon"));
 				imeta.setDisplayName(ChatColor.BLUE +"Ender Fragments");
-				imeta.setLocalizedName(ChatColor.BLUE +"Ender Fragments");
+				imeta.setItemName(ChatColor.BLUE +"Ender Fragments");
 			}
 			else if(i == -7) {
 				ii.setType(Material.STRUCTURE_VOID);
 				imeta.setLore(Arrays.asList("Used For Crafting Void Core", "Void Core is Used For Smithing Weapon"));
 				imeta.setDisplayName(ChatColor.BLUE +"Void Fragments");
-				imeta.setLocalizedName(ChatColor.BLUE +"Void Fragments");
+				imeta.setItemName(ChatColor.BLUE +"Void Fragments");
 			}
 			else if(i == -8) {
 				ii.setType(Material.NETHER_STAR);
 				imeta.setLore(Arrays.asList("Used For Crafting Symbol Of Hero", "Symbol Of Hero is Used For Smithing Weapon"));
 				imeta.setDisplayName(ChatColor.BLUE +"Epic Fragments");
-				imeta.setLocalizedName(ChatColor.BLUE +"Epic Fragments");
+				imeta.setItemName(ChatColor.BLUE +"Epic Fragments");
 			}
 			ii.setItemMeta(imeta);
 			
@@ -523,7 +523,7 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "[원소기운의 무기-1단계]를 강화시", ChatColor.LIGHT_PURPLE + "[원소기운의 무기-2단계]를 획득합니다"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"바람의 핵");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"바람의 핵");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"바람의 핵");
 			}
 			else if(i == 14) {
 				List<String> lore = imeta.getLore();
@@ -531,7 +531,7 @@ public class Elements implements Listener {
 				imeta.setLore(lore);
 				ii.setType(Material.LIGHT_GRAY_GLAZED_TERRACOTTA);
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"대지의 핵");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"대지의 핵");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"대지의 핵");
 			}
 			else if(i == 6) {
 				List<String> lore = imeta.getLore();
@@ -539,7 +539,7 @@ public class Elements implements Listener {
 				imeta.setLore(lore);
 				ii.setType(Material.LIGHT_BLUE_GLAZED_TERRACOTTA);
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"서리의 핵");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"서리의 핵");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"서리의 핵");
 			}
 			else if(i == 7) {
 				List<String> lore = imeta.getLore();
@@ -547,7 +547,7 @@ public class Elements implements Listener {
 				imeta.setLore(lore);
 				ii.setType(Material.BLUE_GLAZED_TERRACOTTA);
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"바다의 핵");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"바다의 핵");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"바다의 핵");
 			}
 			else if(i == 8) {
 				List<String> lore = imeta.getLore();
@@ -555,7 +555,7 @@ public class Elements implements Listener {
 				imeta.setLore(lore);
 				ii.setType(Material.BROWN_GLAZED_TERRACOTTA);
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"어둠의 핵");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"어둠의 핵");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"어둠의 핵");
 			}
 			else if(i == 9) {
 				ii.setType(Material.WHITE_GLAZED_TERRACOTTA);
@@ -563,7 +563,7 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "[원소기운의 무기-5단계]를 강화시", ChatColor.LIGHT_PURPLE + "[원소기운의 무기-6단계]를 획득합니다"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"하이퍼 엔진");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"하이퍼 엔진");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"하이퍼 엔진");
 			}
 			else if(i == 10) {
 				ii.setType(Material.RED_GLAZED_TERRACOTTA);
@@ -571,7 +571,7 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "[원소기운의 무기-6단계]를 강화시", ChatColor.LIGHT_PURPLE + "[원소기운의 무기-7단계]를 획득합니다"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"작열하는 심장");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"작열하는 심장");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"작열하는 심장");
 			}
 			else if(i == 11) {
 				List<String> lore = imeta.getLore();
@@ -579,7 +579,7 @@ public class Elements implements Listener {
 				imeta.setLore(lore);
 				ii.setType(Material.LIME_GLAZED_TERRACOTTA);
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"맹독의 핵");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"맹독의 핵");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"맹독의 핵");
 			}
 			else if(i == 12) {
 				ii.setType(Material.ORANGE_GLAZED_TERRACOTTA);
@@ -588,7 +588,7 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.GOLD + "자연의 무기를 [강력한 원소의 기운]으로 강화시", ChatColor.GOLD + "해당 속성의 무기를 제작할수 있습니다", ChatColor.GOLD + "[강력한 원소의 기운]은 보스 침 에서 획득",ChatColor.GOLD +"또는 고고학자에게 구매 가능합니다",ChatColor.GOLD +"고고학자는 정글피라미드에서 찾을수 있습니다"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"야생의 핵");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"야생의 핵");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"야생의 핵");
 			}
 			else if(i == -2) {
 				ii.setType(Material.SOUL_SOIL);
@@ -596,7 +596,7 @@ public class Elements implements Listener {
 						ChatColor.GRAY +"무기강화시 네더지역 핵은",ChatColor.GRAY +"한가지만 부여 가능합니다", ChatColor.GRAY +"+50% 일반공격력, +15 행운", ChatColor.GRAY +"물,바람,어둠,서리 계열 공격력 +25%", "행운은 궁극기를 제외한 일반기술들의", "재사용 대기시간 감소에 영향을 줍니다"
 						,"", ChatColor.AQUA +"제작대에서 [진홍빛 핵]으로 교환가능"));
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"영혼 응축물");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"영혼 응축물");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"영혼 응축물");
 			}
 			else if(i == -3) {
 				ii.setType(Material.CRIMSON_HYPHAE);
@@ -604,7 +604,7 @@ public class Elements implements Listener {
 						ChatColor.GRAY +"무기강화시 네더지역 핵은",ChatColor.GRAY +"한가지만 부여 가능합니다", ChatColor.GRAY +"+50% 일반공격력, +15 행운", ChatColor.GRAY +"불,대지,번개,독 계열 공격력 +25%", "행운은 궁극기를 제외한 일반기술들의", "재사용 대기시간 감소에 영향을 줍니다"
 						,"", ChatColor.AQUA +"제작대에서 [뒤틀린 핵]으로 교환가능"));
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"진홍빛 핵");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"진홍빛 핵");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"진홍빛 핵");
 			}
 			else if(i == -4) {
 				ii.setType(Material.WARPED_HYPHAE);
@@ -612,7 +612,7 @@ public class Elements implements Listener {
 						ChatColor.GRAY +"무기강화시 네더지역 핵은",ChatColor.GRAY +"한가지만 부여 가능합니다", ChatColor.GRAY +"+25% 일반공격력, +50 행운", ChatColor.GRAY +"물,바람,어둠,서리 계열 공격력 +25%", "행운은 궁극기를 제외한 일반기술들의", "재사용 대기시간 감소에 영향을 줍니다"
 						,"", ChatColor.AQUA +"제작대에서 [화산의 핵]으로 교환가능"));
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"뒤틀린 핵");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"뒤틀린 핵");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"뒤틀린 핵");
 			}
 			else if(i == -5) {
 				ii.setType(Material.GILDED_BLACKSTONE);
@@ -620,7 +620,7 @@ public class Elements implements Listener {
 						ChatColor.GRAY +"무기강화시 네더지역 핵은",ChatColor.GRAY +"한가지만 부여 가능합니다", ChatColor.GRAY +"+25% 일반공격력, +50 행운", ChatColor.GRAY +"불,대지,번개,독 계열 공격력 +25%", "행운은 궁극기를 제외한 일반기술들의", "재사용 대기시간 감소에 영향을 줍니다"
 						,"", ChatColor.AQUA +"제작대에서 [영혼 응축물]으로 교환가능"));
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"화산의 핵");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"화산의 핵");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"화산의 핵");
 			}
 			else if(i == -6) {
 				ii.setType(Material.END_STONE_BRICKS);
@@ -628,7 +628,7 @@ public class Elements implements Listener {
 						ChatColor.GRAY +"무기강화시 엔더지역 핵은",ChatColor.GRAY +"한가지만 부여 가능합니다", ChatColor.GRAY +"+80% 일반공격력, +30% 행운", ChatColor.GRAY +"모든 원소 계열 공격력 +35%", "행운은 궁극기를 제외한 일반기술들의", "재사용 대기시간 감소에 영향을 줍니다"
 						,"", ChatColor.AQUA +"제작대에서 [공허의 핵]으로 교환가능"));
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"엔더 핵");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"엔더 핵");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"엔더 핵");
 			}
 			else if(i == -7) {
 				ii.setType(Material.PURPUR_PILLAR);
@@ -636,13 +636,13 @@ public class Elements implements Listener {
 						ChatColor.GRAY +"무기강화시 엔더지역 핵은",ChatColor.GRAY +"한가지만 부여 가능합니다", ChatColor.GRAY +"+40% 일반공격력, +60% 행운", ChatColor.GRAY +"모든 원소 계열 공격력 +35%", "행운은 궁극기를 제외한 일반기술들의", "재사용 대기시간 감소에 영향을 줍니다"
 						,"", ChatColor.AQUA +"제작대에서 [엔더 핵]으로 교환가능"));
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"공허의 핵");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"공허의 핵");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"공허의 핵");
 			}
 			else if(i == -8) {
 				ii.setType(Material.CRYING_OBSIDIAN);
 				imeta.setLore(Arrays.asList("무기 강화시 사용됩니다", "+110% 일반공격력, +80% 행운", "모든 원소 계열 공격력 +55%", "행운은 궁극기를 제외한 일반기술들의", "재사용 대기시간 감소에 영향을 줍니다"));
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"영웅의 상징");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"영웅의 상징");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"영웅의 상징");
 			}
 			imeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 			ii.setItemMeta(imeta);
@@ -656,7 +656,7 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "If You Smith [Aura Weapon - Lv.1]", ChatColor.LIGHT_PURPLE + "You'll get [Aura Weapon - Lv.2]"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"Core of Wind");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"Core of Wind");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"Core of Wind");
 			}
 			else if(i == 6) {
 				List<String> lore = imeta.getLore();
@@ -664,7 +664,7 @@ public class Elements implements Listener {
 				imeta.setLore(lore);
 				ii.setType(Material.LIGHT_BLUE_GLAZED_TERRACOTTA);
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"Core of Frost");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"Core of Frost");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"Core of Frost");
 			}
 			else if(i == 7) {
 				List<String> lore = imeta.getLore();
@@ -672,7 +672,7 @@ public class Elements implements Listener {
 				imeta.setLore(lore);
 				ii.setType(Material.BLUE_GLAZED_TERRACOTTA);
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"Core of Ocean");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"Core of Ocean");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"Core of Ocean");
 			}
 			else if(i == 8) {
 				List<String> lore = imeta.getLore();
@@ -680,7 +680,7 @@ public class Elements implements Listener {
 				imeta.setLore(lore);
 				ii.setType(Material.BROWN_GLAZED_TERRACOTTA);
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"Core of Darkness");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"Core of Darkness");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"Core of Darkness");
 			}
 			else if(i == 9) {
 				List<String> lore = imeta.getLore();
@@ -688,7 +688,7 @@ public class Elements implements Listener {
 				imeta.setLore(lore);
 				ii.setType(Material.WHITE_GLAZED_TERRACOTTA);
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"Hyper Engine");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"Hyper Engine");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"Hyper Engine");
 			}
 			else if(i == 10) {
 				ii.setType(Material.RED_GLAZED_TERRACOTTA);
@@ -696,7 +696,7 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "If You Smith [Aura Weapon - Lv.6]", ChatColor.LIGHT_PURPLE + "You'll get [Aura Weapon - Lv.7]"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"Burning Heart");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"Burning Heart");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"Burning Heart");
 			}
 			else if(i == 11) {
 				ii.setType(Material.LIME_GLAZED_TERRACOTTA);
@@ -704,7 +704,7 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "If You Smith [Aura Weapon - Lv.7]", ChatColor.LIGHT_PURPLE + "You'll get [Aura Weapon - Lv.8]"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"Core of Poison");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"Core of Poison");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"Core of Poison");
 			}
 			else if(i == 14) {
 				List<String> lore = imeta.getLore();
@@ -712,7 +712,7 @@ public class Elements implements Listener {
 				imeta.setLore(lore);
 				ii.setType(Material.LIGHT_GRAY_GLAZED_TERRACOTTA);
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"Core of Earth");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"Core of Earth");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"Core of Earth");
 			}
 			else if(i == 12) {
 				ii.setType(Material.ORANGE_GLAZED_TERRACOTTA);
@@ -722,7 +722,7 @@ public class Elements implements Listener {
 						,ChatColor.GOLD +"Or Buy From Archaeologist",ChatColor.GOLD +"Archaeologist locates on Jungle Pyramid"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"Wild Core");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"Wild Core");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"Wild Core");
 			}
 			else if(i == -2) {
 				ii.setType(Material.SOUL_SOIL);
@@ -730,7 +730,7 @@ public class Elements implements Listener {
 						,"", ChatColor.GRAY +"Only Single Nether Region Core", ChatColor.GRAY +"Can be Applied To [Weapon]",ChatColor.GRAY +"+50% Damage, +15 Luck",ChatColor.GRAY +"+25% Power Of Water,Wind,Dark,Frost", "Luck Affect To Decreasing Skill's Cooldown", "Except Ult"
 						,"", ChatColor.AQUA +"You Can Change To [Crimson Core]", ChatColor.AQUA +"On Crafting Table"));
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"Condensate Soul");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"Condensate Soul");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"Condensate Soul");
 			}
 			else if(i == -3) {
 				ii.setType(Material.CRIMSON_HYPHAE);
@@ -738,7 +738,7 @@ public class Elements implements Listener {
 						,"", ChatColor.GRAY +"Only Single Nether Region Core", ChatColor.GRAY +"Can be Applied To Weapon",ChatColor.GRAY +"+50% Damage, +15 Luck",ChatColor.GRAY +"+25% Power Of Fire,Earth,Lightning,Poison", "Luck Affect To Decreasing Skill's Cooldown", "Except Ult"
 						,"", ChatColor.AQUA +"You Can Change To [Warped Core]", ChatColor.AQUA +"On Crafting Table"));
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"Crimson Core");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"Crimson Core");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"Crimson Core");
 			}
 			else if(i == -4) {
 				ii.setType(Material.WARPED_HYPHAE);
@@ -746,7 +746,7 @@ public class Elements implements Listener {
 						,"", ChatColor.GRAY +"Only Single Nether Region Core", ChatColor.GRAY +"Can be Applied To Weapon",ChatColor.GRAY +"+25% Damage, +50 Luck",ChatColor.GRAY +"+25% Power Of Water,Wind,Dark,Frost", "Luck Affect To Decreasing Skill's Cooldown", "Except Ult"
 						,"", ChatColor.AQUA +"You Can Change To [Volcanic Core]", ChatColor.AQUA +"On Crafting Table"));
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"Warped Core");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"Warped Core");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"Warped Core");
 			}
 			else if(i == -5) {
 				ii.setType(Material.GILDED_BLACKSTONE);
@@ -754,7 +754,7 @@ public class Elements implements Listener {
 						,"", ChatColor.GRAY +"Only Single Nether Region Core", ChatColor.GRAY +"Can be Applied To Weapon",ChatColor.GRAY +"+25% Damage, +50 Luck",ChatColor.GRAY +"+25% Power Of Fire,Earth,Lightning,Poison", "Luck Affect To Decreasing Skill's Cooldown", "Except Ult"
 						,"", ChatColor.AQUA +"You Can Change To [Condensate Soul]", ChatColor.AQUA +"On Crafting Table"));
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"Volcanic Core");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"Volcanic Core");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"Volcanic Core");
 			}
 			else if(i == -6) {
 				ii.setType(Material.END_STONE_BRICKS);
@@ -762,7 +762,7 @@ public class Elements implements Listener {
 						,"", ChatColor.GRAY +"Only Single Ender Region Core", ChatColor.GRAY +"Can be Applied To Weapon",ChatColor.GRAY +"+80% Damage, +30% Luck",ChatColor.GRAY +"+35% Power Of All Elements", "Luck Affect To Decreasing Skill's Cooldown", "Except Ult"
 						,"", ChatColor.AQUA +"You Can Change To [Void Core]", ChatColor.AQUA +"On Crafting Table"));
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"Ender Core");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"Ender Core");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"Ender Core");
 			}
 			else if(i == -7) {
 				ii.setType(Material.PURPUR_PILLAR);
@@ -770,13 +770,13 @@ public class Elements implements Listener {
 						,"", ChatColor.GRAY +"Only Single Ender Region Core", ChatColor.GRAY +"Can be Applied To Weapon",ChatColor.GRAY +"+40% Damage, +60% Luck",ChatColor.GRAY +"+35% Power Of All Elements", "Luck Affect To Decreasing Skill's Cooldown", "Except Ult"
 						,"", ChatColor.AQUA +"You Can Change To [Ender Core]", ChatColor.AQUA +"On Crafting Table"));
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"Void Core");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"Void Core");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"Void Core");
 			}
 			else if(i == -8) {
 				ii.setType(Material.CRYING_OBSIDIAN);
 				imeta.setLore(Arrays.asList("Used for Smithing Weapon", "Increase Damage 110%, Luck 80%","+55% Power Of All Elements", "Luck Affect To Decreasing Skill's Cooldown", "Except Ult"));
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"Symbol Of Hero");
-				imeta.setLocalizedName(ChatColor.LIGHT_PURPLE +"Symbol Of Hero");
+				imeta.setItemName(ChatColor.LIGHT_PURPLE +"Symbol Of Hero");
 			}
 			imeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 			ii.setItemMeta(imeta);
@@ -800,7 +800,7 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.RED + "[고대의 방어구]는 네더 보스 몬스터드랍", ChatColor.RED + "또는 사신 npc에게 구매가능합니다"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.GOLD +"폭풍의 핵");
-				imeta.setLocalizedName(ChatColor.GOLD +"폭풍의 핵");
+				imeta.setItemName(ChatColor.GOLD +"폭풍의 핵");
 			}
 			else if(i == 14) {
 				List<String> lore = imeta.getLore();
@@ -810,7 +810,7 @@ public class Elements implements Listener {
 				imeta.setLore(lore);
 				ii.setType(Material.LIGHT_GRAY_GLAZED_TERRACOTTA);
 				imeta.setDisplayName(ChatColor.GOLD +"광야의 핵");
-				imeta.setLocalizedName(ChatColor.GOLD +"광야의 핵");
+				imeta.setItemName(ChatColor.GOLD +"광야의 핵");
 			}
 			else if(i == 6) {
 				List<String> lore = imeta.getLore();
@@ -820,7 +820,7 @@ public class Elements implements Listener {
 				imeta.setLore(lore);
 				ii.setType(Material.LIGHT_BLUE_GLAZED_TERRACOTTA);
 				imeta.setDisplayName(ChatColor.GOLD +"만년서리의 핵");
-				imeta.setLocalizedName(ChatColor.GOLD +"만년서리의 핵");
+				imeta.setItemName(ChatColor.GOLD +"만년서리의 핵");
 			}
 			else if(i == 7) {
 				List<String> lore = imeta.getLore();
@@ -830,7 +830,7 @@ public class Elements implements Listener {
 				imeta.setLore(lore);
 				ii.setType(Material.BLUE_GLAZED_TERRACOTTA);
 				imeta.setDisplayName(ChatColor.GOLD +"대양의 핵");
-				imeta.setLocalizedName(ChatColor.GOLD +"대양의 핵");
+				imeta.setItemName(ChatColor.GOLD +"대양의 핵");
 			}
 			else if(i == 8) {
 				List<String> lore = imeta.getLore();
@@ -840,7 +840,7 @@ public class Elements implements Listener {
 				imeta.setLore(lore);
 				ii.setType(Material.BROWN_GLAZED_TERRACOTTA);
 				imeta.setDisplayName(ChatColor.GOLD +"밤의 핵");
-				imeta.setLocalizedName(ChatColor.GOLD +"밤의 핵");
+				imeta.setItemName(ChatColor.GOLD +"밤의 핵");
 			}
 			else if(i == 9) {
 				ii.setType(Material.WHITE_GLAZED_TERRACOTTA);
@@ -850,7 +850,7 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.RED + "[고대의 방어구]는 네더 보스 몬스터드랍", ChatColor.RED + "또는 사신 npc에게 구매가능합니다"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.GOLD +"강화형 하이퍼 엔진");
-				imeta.setLocalizedName(ChatColor.GOLD +"강화형 하이퍼 엔진");
+				imeta.setItemName(ChatColor.GOLD +"강화형 하이퍼 엔진");
 			}
 			else if(i == 10) {
 				ii.setType(Material.RED_GLAZED_TERRACOTTA);
@@ -860,7 +860,7 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.RED + "[고대의 방어구]는 네더 보스 몬스터드랍", ChatColor.RED + "또는 사신 npc에게 구매가능합니다"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.GOLD +"태양의 심장");
-				imeta.setLocalizedName(ChatColor.GOLD +"태양의 심장");
+				imeta.setItemName(ChatColor.GOLD +"태양의 심장");
 			}
 			else if(i == 11) {
 				List<String> lore = imeta.getLore();
@@ -870,27 +870,27 @@ public class Elements implements Listener {
 				imeta.setLore(lore);
 				ii.setType(Material.LIME_GLAZED_TERRACOTTA);
 				imeta.setDisplayName(ChatColor.GOLD +"강력한 맹독의 핵");
-				imeta.setLocalizedName(ChatColor.GOLD +"강력한 맹독의 핵");
+				imeta.setItemName(ChatColor.GOLD +"강력한 맹독의 핵");
 			}
 			else if(i == 12) {
 				ii.setType(Material.BLACK_GLAZED_TERRACOTTA);
 				imeta.setLore(Arrays.asList("고고학자에게 강력한 원소핵을 구매할 수 있습니다","고고학자는 정글피라미드에서 찾을수 있습니다"));
 				imeta.setDisplayName(ChatColor.GOLD +"강력한 원소의 기운");
-				imeta.setLocalizedName(ChatColor.GOLD +"강력한 원소의 기운");
+				imeta.setItemName(ChatColor.GOLD +"강력한 원소의 기운");
 			}
 			else if(i == -2 || i== -3 || i == -4 || i == -5) {
 				ii.setType(Material.ANCIENT_DEBRIS);
 				imeta.setLore(Arrays.asList("투구, 갑옷 강화에 사용됩니다(방어구당 한번만 가능)","",
 						ChatColor.GRAY +"+15% 공격력, +10 행운", "", "행운은 궁극기를 제외한 일반기술들의", "재사용 대기시간 감소에 영향을 줍니다"));
 				imeta.setDisplayName(ChatColor.GOLD +"융합된 네더의 핵");
-				imeta.setLocalizedName(ChatColor.GOLD +"융합된 네더의 핵");
+				imeta.setItemName(ChatColor.GOLD +"융합된 네더의 핵");
 			}
 			else if(i == -6 || i ==7) {
 				ii.setType(Material.END_CRYSTAL);
 				imeta.setLore(Arrays.asList("레깅스, 부츠 강화에 사용됩니다(방어구당 한번만 가능)","",
 						ChatColor.GRAY +"+20% 공격력, +15 행운, +20% 속도", "", "행운은 궁극기를 제외한 일반기술들의", "재사용 대기시간 감소에 영향을 줍니다"));
 				imeta.setDisplayName(ChatColor.GOLD +"융합된 엔더 핵");
-				imeta.setLocalizedName(ChatColor.GOLD +"융합된 엔더 핵");
+				imeta.setItemName(ChatColor.GOLD +"융합된 엔더 핵");
 			}
 			imeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 			ii.setItemMeta(imeta);
@@ -906,7 +906,7 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.RED + "You Can Get [Ancient Armor] From Nether Boss", ChatColor.RED + "Or Reaper's Shop"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.GOLD +"Core of Storm");
-				imeta.setLocalizedName(ChatColor.GOLD +"Core of Storm");
+				imeta.setItemName(ChatColor.GOLD +"Core of Storm");
 			}
 			else if(i == 14) {
 				List<String> lore = imeta.getLore();
@@ -916,7 +916,7 @@ public class Elements implements Listener {
 				imeta.setLore(lore);
 				ii.setType(Material.LIGHT_GRAY_GLAZED_TERRACOTTA);
 				imeta.setDisplayName(ChatColor.GOLD +"Core of Wilderness");
-				imeta.setLocalizedName(ChatColor.GOLD +"Core of Wilderness");
+				imeta.setItemName(ChatColor.GOLD +"Core of Wilderness");
 			}
 			else if(i == 6) {
 				List<String> lore = imeta.getLore();
@@ -926,7 +926,7 @@ public class Elements implements Listener {
 				imeta.setLore(lore);
 				ii.setType(Material.LIGHT_BLUE_GLAZED_TERRACOTTA);
 				imeta.setDisplayName(ChatColor.GOLD +"Core of Everfrost");
-				imeta.setLocalizedName(ChatColor.GOLD +"Core of Everfrost");
+				imeta.setItemName(ChatColor.GOLD +"Core of Everfrost");
 			}
 			else if(i == 7) {
 				List<String> lore = imeta.getLore();
@@ -936,7 +936,7 @@ public class Elements implements Listener {
 				imeta.setLore(lore);
 				ii.setType(Material.BLUE_GLAZED_TERRACOTTA);
 				imeta.setDisplayName(ChatColor.GOLD +"Core of Pacific");
-				imeta.setLocalizedName(ChatColor.GOLD +"Core of Pacific");
+				imeta.setItemName(ChatColor.GOLD +"Core of Pacific");
 			}
 			else if(i == 8) {
 				List<String> lore = imeta.getLore();
@@ -946,7 +946,7 @@ public class Elements implements Listener {
 				imeta.setLore(lore);
 				ii.setType(Material.BROWN_GLAZED_TERRACOTTA);
 				imeta.setDisplayName(ChatColor.GOLD +"Core of Night");
-				imeta.setLocalizedName(ChatColor.GOLD +"Core of Night");
+				imeta.setItemName(ChatColor.GOLD +"Core of Night");
 			}
 			else if(i == 9) {
 				List<String> lore = imeta.getLore();
@@ -956,7 +956,7 @@ public class Elements implements Listener {
 				imeta.setLore(lore);
 				ii.setType(Material.WHITE_GLAZED_TERRACOTTA);
 				imeta.setDisplayName(ChatColor.GOLD +"Enhanced Hyper Engine");
-				imeta.setLocalizedName(ChatColor.GOLD +"Enhanced Hyper Engine");
+				imeta.setItemName(ChatColor.GOLD +"Enhanced Hyper Engine");
 			}
 			else if(i == 10) {
 				ii.setType(Material.RED_GLAZED_TERRACOTTA);
@@ -966,7 +966,7 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.RED + "You Can Get [Ancient Armor] From Nether Boss", ChatColor.RED + "Or Reaper's Shop"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.GOLD +"Solar Heart");
-				imeta.setLocalizedName(ChatColor.GOLD +"Solar Heart");
+				imeta.setItemName(ChatColor.GOLD +"Solar Heart");
 			}
 			else if(i == 11) {
 				ii.setType(Material.LIME_GLAZED_TERRACOTTA);
@@ -976,27 +976,27 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.RED + "You Can Get [Ancient Armor] From Nether Boss", ChatColor.RED + "Or Reaper's Shop"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.GOLD +"Core of Venom");
-				imeta.setLocalizedName(ChatColor.GOLD +"Core of Venom");
+				imeta.setItemName(ChatColor.GOLD +"Core of Venom");
 			}
 			else if(i == 12) {
 				ii.setType(Material.BLACK_GLAZED_TERRACOTTA);
 				imeta.setLore(Arrays.asList("You can buy Strong Core from [Archaeologist]","(Archaeologist Locates on the Jungle Pyramid)"));
 				imeta.setDisplayName(ChatColor.GOLD +"강력한 원소의 기운");
-				imeta.setLocalizedName(ChatColor.GOLD +"강력한 원소의 기운");
+				imeta.setItemName(ChatColor.GOLD +"강력한 원소의 기운");
 			}
 			else if(i == -2 || i == -3 || 3==-4||i==-5) {
 				ii.setType(Material.ANCIENT_DEBRIS);
 				imeta.setLore(Arrays.asList("Used For Smithing [ChestPlate, Helmet](Unstackable)","",
 						ChatColor.GRAY +"+15% Damage, +10 Luck", "", "Luck Affect To Decreasing Skill's Cooldown", "Except Ult"));
 				imeta.setDisplayName(ChatColor.GOLD +"Converged NetherCore");
-				imeta.setLocalizedName(ChatColor.GOLD +"Converged NetherCore");
+				imeta.setItemName(ChatColor.GOLD +"Converged NetherCore");
 			}
 			else if(i == -6 || i ==-7) {
 				ii.setType(Material.END_CRYSTAL);
 				imeta.setLore(Arrays.asList("Used For Smithing [Leggings, Boots](Unstackable)","",
 						ChatColor.GRAY +"+20% Damage, +15 Luck, +20% Speed", "", "Luck Affect To Decreasing Skill's Cooldown", "Except Ult"));
 				imeta.setDisplayName(ChatColor.GOLD +"Converged EnderCore");
-				imeta.setLocalizedName(ChatColor.GOLD +"Converged EnderCore");
+				imeta.setItemName(ChatColor.GOLD +"Converged EnderCore");
 			}
 			imeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 			ii.setItemMeta(imeta);
@@ -1017,23 +1017,23 @@ public class Elements implements Listener {
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 			imeta.setLore(Arrays.asList(ChatColor.BOLD +"우클릭시 스킬포인트 1을 획득합니다"));
 			imeta.setDisplayName(ChatColor.GOLD +"신비로운 두루마리");
-			imeta.setLocalizedName(ChatColor.GOLD +"Mysterious scroll");
+			imeta.setItemName(ChatColor.GOLD +"Mysterious scroll");
 		}
 		else {
 			imeta.setLore(Arrays.asList(ChatColor.BOLD +"Get 1 SkillPoint By RightClick"));
 			imeta.setDisplayName(ChatColor.GOLD +"Mysterious scroll");
-			imeta.setLocalizedName(ChatColor.GOLD +"Mysterious scroll");
+			imeta.setItemName(ChatColor.GOLD +"Mysterious scroll");
 		}
 		ii.setItemMeta(imeta);
 		return ii;
 	}
 
 	private void bedcheck(ItemStack bc, Block b, Player p) {
-		if((p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasLocalizedName())){
-			final String ln = p.getInventory().getItemInMainHand().getItemMeta().getLocalizedName();
+		if((p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasItemName())){
+			final String ln = p.getInventory().getItemInMainHand().getItemMeta().getItemName();
 			if(ln.contains("Teleporter") || ln.contains("순간이동기")){
 				ItemMeta bm =  p.getInventory().getItemInMainHand().getItemMeta();
-				String ll = bm.getLocalizedName().split(" ")[0];
+				String ll = bm.getItemName().split(" ")[0];
 				b.setMetadata(ChatColor.stripColor(ll) +"RaidPortal", new FixedMetadataValue(RMain.getInstance(), true));
 			}
 		}

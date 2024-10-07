@@ -14,6 +14,7 @@ import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.view.AnvilView;
 import org.bukkit.persistence.PersistentDataType;
 
 import io.github.chw3021.rmain.RMain;
@@ -27,7 +28,8 @@ public class NamingPrevent implements Listener {
 	public void AnvilPr(PrepareAnvilEvent d) 
 	{
 		AnvilInventory ai = (AnvilInventory) d.getInventory();
-		if(d.getInventory().getItem(0)!=null && d.getInventory().getItem(0).hasItemMeta() && !d.getInventory().getRenameText().equalsIgnoreCase(d.getInventory().getItem(0).getItemMeta().getDisplayName())) {
+		AnvilView av = (AnvilView) d.getView();
+		if(d.getInventory().getItem(0)!=null && d.getInventory().getItem(0).hasItemMeta() && !av.getRenameText().equalsIgnoreCase(d.getInventory().getItem(0).getItemMeta().getDisplayName())) {
 			Material type = d.getInventory().getItem(0).getType();
 			
 			if(type == Material.NETHERITE_HELMET || type == Material.NETHERITE_LEGGINGS || type == Material.NETHERITE_CHESTPLATE|| type == Material.NETHERITE_BOOTS) {
@@ -79,7 +81,7 @@ public class NamingPrevent implements Listener {
 						Damageable dim0 = (Damageable) im0;
 						dim0.setDamage(0);
 					}
-					im0.getPersistentDataContainer().set(repaired, PersistentDataType.INTEGER, ai.getRepairCost());
+					im0.getPersistentDataContainer().set(repaired, PersistentDataType.INTEGER, av.getRepairCost());
 					is0.setItemMeta(im0);
 					HashMap<Enchantment, Integer> enh = new HashMap<Enchantment, Integer>();
 					enh.putAll(is1.getEnchantments());
@@ -108,7 +110,7 @@ public class NamingPrevent implements Listener {
 						Damageable dim0 = (Damageable) im0;
 						dim0.setDamage(0);
 					}
-					im0.getPersistentDataContainer().set(repaired, PersistentDataType.INTEGER, ai.getRepairCost());
+					im0.getPersistentDataContainer().set(repaired, PersistentDataType.INTEGER, av.getRepairCost());
 					is0.setItemMeta(im0);
 					HashMap<Enchantment, Integer> enh = new HashMap<Enchantment, Integer>();
 					enh.putAll(is1.getEnchantments());
@@ -138,48 +140,49 @@ public class NamingPrevent implements Listener {
 		}
 		else if(d.getClickedInventory().getType() == InventoryType.ANVIL) {
 			AnvilInventory ai = (AnvilInventory) d.getClickedInventory();
+			AnvilView av = (AnvilView) d.getView();
 			if(ai.getItem(2) != null && d.getCurrentItem() != null) {
 				Material type = d.getInventory().getItem(2).getType();
 				if(type == Material.NETHERITE_HELMET || type == Material.NETHERITE_LEGGINGS || type == Material.NETHERITE_CHESTPLATE|| type == Material.NETHERITE_BOOTS) {
 					if(d.getCurrentItem().getItemMeta().getDisplayName().contains("RedKnight")) {
 						d.setCancelled(true);
-						ai.setRepairCost(0);
 						d.getViewers().forEach(p -> p.sendMessage("You Can't Change Name"));
+						av.setRepairCost(0);
 						return;
 					}
 					else if(d.getCurrentItem().getItemMeta().getDisplayName().contains("Ocean")) {
 						d.setCancelled(true);
-						ai.setRepairCost(0);
+						av.setRepairCost(0);
 						d.getViewers().forEach(p -> p.sendMessage("You Can't Change Name"));
 						return;
 					}
 					else if(d.getCurrentItem().getItemMeta().getDisplayName().contains("Dark")) {
 						d.setCancelled(true);
-						ai.setRepairCost(0);
+						av.setRepairCost(0);
 						d.getViewers().forEach(p -> p.sendMessage("You Can't Change Name"));
 						return;
 					}
 					else if(d.getCurrentItem().getItemMeta().getDisplayName().contains("Frost")) {
 						d.setCancelled(true);
-						ai.setRepairCost(0);
+						av.setRepairCost(0);
 						d.getViewers().forEach(p -> p.sendMessage("You Can't Change Name"));
 						return;
 					}
 					else if(d.getCurrentItem().getItemMeta().getDisplayName().contains("Burning")) {
 						d.setCancelled(true);
-						ai.setRepairCost(0);
+						av.setRepairCost(0);
 						d.getViewers().forEach(p -> p.sendMessage("You Can't Change Name"));
 						return;
 					}
 					else if(d.getCurrentItem().getItemMeta().getDisplayName().contains("Hyper")) {
 						d.setCancelled(true);
-						ai.setRepairCost(0);
+						av.setRepairCost(0);
 						d.getViewers().forEach(p -> p.sendMessage("You Can't Change Name"));
 						return;
 					}
 					else if(d.getCurrentItem().getItemMeta().getDisplayName().contains("Earth")) {
 						d.setCancelled(true);
-						ai.setRepairCost(0);
+						av.setRepairCost(0);
 						d.getViewers().forEach(p -> p.sendMessage("You Can't Change Name"));
 						return;
 					}

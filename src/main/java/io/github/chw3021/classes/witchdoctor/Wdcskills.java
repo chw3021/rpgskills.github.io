@@ -2061,15 +2061,18 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 
 	}
 	
-	public void ULT2(PlayerDropItemEvent ev)        
+	public void ULT2(PlayerItemHeldEvent ev)        
     {
 		Player p = (Player)ev.getPlayer();
-		Item it = ev.getItemDrop();
-		ItemStack is = it.getItemStack();
+		if(!isCombat(p)) {
+			return;
+		}
+
+		ItemStack is = p.getInventory().getItemInMainHand();
         final Location l = p.getLocation().clone();
 		
 		
-		if(ClassData.pc.get(p.getUniqueId()) == 14 && (is.getType().name().contains("HOE")) && p.isSprinting()&& !p.isSneaking()&&Proficiency.getpro(p) >=2)
+		if(ClassData.pc.get(p.getUniqueId()) == 14 && ev.getNewSlot()==4 && (is.getType().name().contains("HOE")) && p.isSprinting()&& !p.isSneaking()&&Proficiency.getpro(p) >=2)
 			{
 				ev.setCancelled(true);
 				p.setCooldown(CAREFUL, 2);
