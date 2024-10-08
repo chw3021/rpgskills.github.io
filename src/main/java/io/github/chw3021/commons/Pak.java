@@ -20,6 +20,7 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.AbstractArrow;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.EntityCategory;
@@ -215,7 +216,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		}
 	}
 	
-	protected final Location gettargetblock(Player p, Integer in) {
+	protected final Location gettargetblock(LivingEntity p, Integer in) {
 		if(p.rayTraceBlocks(in) == null) {
 
 			try {
@@ -331,6 +332,11 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		}
 	}
 	
+	final protected Double bbArrow(final Arrow ar) {
+		Double damage = ar.getVelocity().length()*ar.getDamage();
+		
+		return damage;
+	}
 	
 
 	final public boolean DamageGetter(Player p) {

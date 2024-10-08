@@ -1464,8 +1464,7 @@ public class Oceskills extends Pak implements Serializable {
 				         					if(i.getBlock().isPassable()) {
 					                    	p.teleport(i);
 				         					}
-				        					p.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 5, 255, false, false));
-				        					p.setGliding(true);
+				        					p.setRiptiding(true);
 							            }
 			                    	}, j.incrementAndGet()/17); 
 								}); 

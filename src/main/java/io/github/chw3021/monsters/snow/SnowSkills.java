@@ -102,7 +102,7 @@ public class SnowSkills extends Summoned implements Listener{
 			                @Override
 			                public void run() 
 			                {
-			                	p.getWorld().spawnParticle(Particle.BLOCK_CRACK,po.getLocation(), 500, 2, 1, 2, Material.SNOW_BLOCK.createBlockData());
+			                	p.getWorld().spawnParticle(Particle.BLOCK,po.getLocation(), 500, 2, 1, 2, getBd(Material.SNOW_BLOCK));
 			            		for(Entity e : p.getWorld().getNearbyEntities(po.getLocation(), 2, 2, 2)) {
 									if(p!=e && e instanceof LivingEntity) {
 										LivingEntity le = (LivingEntity)e;
@@ -124,7 +124,7 @@ public class SnowSkills extends Summoned implements Listener{
 			if(po.getShooter() instanceof Snowman) {
 				Snowman p = (Snowman) po.getShooter();
 				if(p.hasMetadata("wsnowman")) {
-                	p.getWorld().spawnParticle(Particle.BLOCK_CRACK,po.getLocation(), 60, 1, 1, 1, Material.SNOW_BLOCK.createBlockData());
+                	p.getWorld().spawnParticle(Particle.BLOCK,po.getLocation(), 60, 1, 1, 1, Material.SNOW_BLOCK.createBlockData());
             		for(Entity e : p.getWorld().getNearbyEntities(po.getLocation(), 1, 1, 1)) {
 						if(p!=e && e instanceof LivingEntity) {
 							LivingEntity le = (LivingEntity)e;
@@ -144,20 +144,20 @@ public class SnowSkills extends Summoned implements Listener{
 		w.playSound(el.clone().add(0,4,0), Sound.BLOCK_GLASS_BREAK, 0.35f, j.get()*0.08f);
 		w.playSound(el.clone().add(0,4,0), Sound.BLOCK_LANTERN_BREAK, 0.35f, j.get()*0.08f);
 		w.playSound(el.clone().add(0,4,0), Sound.ITEM_TRIDENT_THROW, 0.35f, j.get()*0.08f);
-		w.spawnParticle(Particle.BLOCK_CRACK, el.clone().add(0, j.incrementAndGet()/5, 0), 25, 1, 2, 1, Material.SNOW_BLOCK.createBlockData());
-		w.spawnParticle(Particle.BLOCK_CRACK, el.clone().add(0, j.incrementAndGet()/5, 0), 25, 0.5, 2, 0.5, Material.WHITE_WOOL.createBlockData());
+		w.spawnParticle(Particle.BLOCK, el.clone().add(0, j.incrementAndGet()/5, 0), 25, 1, 2, 1, Material.SNOW_BLOCK.createBlockData());
+		w.spawnParticle(Particle.BLOCK, el.clone().add(0, j.incrementAndGet()/5, 0), 25, 0.5, 2, 0.5, Material.WHITE_WOOL.createBlockData());
 		w.spawnParticle(Particle.REVERSE_PORTAL, el.clone().add(0, j.incrementAndGet()/5+0.1, 0), 25, 0.1, 2, 0.1);
-		w.spawnParticle(Particle.BLOCK_CRACK, el.clone().add(0, j.get()/5+1, 0), 25, 0.3, 2, 0.3, Material.SNOW_BLOCK.createBlockData());
-		w.spawnParticle(Particle.BLOCK_CRACK, el.clone().add(0, j.get()/5+1, 0), 25, 0.2, 2, 0.2, Material.WHITE_WOOL.createBlockData());
+		w.spawnParticle(Particle.BLOCK, el.clone().add(0, j.get()/5+1, 0), 25, 0.3, 2, 0.3, Material.SNOW_BLOCK.createBlockData());
+		w.spawnParticle(Particle.BLOCK, el.clone().add(0, j.get()/5+1, 0), 25, 0.2, 2, 0.2, Material.WHITE_WOOL.createBlockData());
 		w.spawnParticle(Particle.REVERSE_PORTAL, el.clone().add(0, j.get()/5+1.1, 0), 25, 0.1, 2, 0.1);
-		w.spawnParticle(Particle.BLOCK_CRACK, el.clone().add(0, j.get()/5+2, 0), 25, 0.3, 2, 0.3, Material.SNOW_BLOCK.createBlockData());
-		w.spawnParticle(Particle.BLOCK_CRACK, el.clone().add(0, j.get()/5+2, 0), 25, 0.2, 2, 0.2, Material.WHITE_WOOL.createBlockData());
+		w.spawnParticle(Particle.BLOCK, el.clone().add(0, j.get()/5+2, 0), 25, 0.3, 2, 0.3, Material.SNOW_BLOCK.createBlockData());
+		w.spawnParticle(Particle.BLOCK, el.clone().add(0, j.get()/5+2, 0), 25, 0.2, 2, 0.2, Material.WHITE_WOOL.createBlockData());
 		w.spawnParticle(Particle.REVERSE_PORTAL, el.clone().add(0, j.get()/5+2.1, 0), 25, 0.1, 2, 0.1);
-		w.spawnParticle(Particle.BLOCK_CRACK, el.clone().add(0, j.get()/5+3, 0), 25, 0.3, 2, 0.3, Material.SNOW_BLOCK.createBlockData());
-		w.spawnParticle(Particle.BLOCK_CRACK, el.clone().add(0, j.get()/5+3, 0), 25, 0.2, 2, 0.2, Material.WHITE_WOOL.createBlockData());
+		w.spawnParticle(Particle.BLOCK, el.clone().add(0, j.get()/5+3, 0), 25, 0.3, 2, 0.3, Material.SNOW_BLOCK.createBlockData());
+		w.spawnParticle(Particle.BLOCK, el.clone().add(0, j.get()/5+3, 0), 25, 0.2, 2, 0.2, Material.WHITE_WOOL.createBlockData());
 		w.spawnParticle(Particle.REVERSE_PORTAL, el.clone().add(0, j.get()/5+3.1, 0), 25, 0.1, 2, 0.1);
-		w.spawnParticle(Particle.BLOCK_CRACK, el.clone().add(0, j.get()/5+4, 0), 25, 0.2, 2, 0.2, Material.SNOW_BLOCK.createBlockData());
-		w.spawnParticle(Particle.BLOCK_CRACK, el.clone().add(0, j.get()/5+4, 0), 25, 0.1, 2, 0.1, Material.WHITE_WOOL.createBlockData());
+		w.spawnParticle(Particle.BLOCK, el.clone().add(0, j.get()/5+4, 0), 25, 0.2, 2, 0.2, Material.SNOW_BLOCK.createBlockData());
+		w.spawnParticle(Particle.BLOCK, el.clone().add(0, j.get()/5+4, 0), 25, 0.1, 2, 0.1, Material.WHITE_WOOL.createBlockData());
 		w.spawnParticle(Particle.REVERSE_PORTAL, el.clone().add(0, j.get()/5+4.1, 0), 25, 0.05, 2, 0.05);
 		return el;
     	
@@ -180,10 +180,10 @@ public class SnowSkills extends Summoned implements Listener{
 				p.getWorld().playSound(p.getEyeLocation(), Sound.ENTITY_WITCH_AMBIENT, 1,2);
 	               PotionMeta pm = (PotionMeta) po.getItem().getItemMeta();
 	               pm.removeCustomEffect(PotionEffectType.POISON);
-	               pm.setBasePotionData(new PotionData(PotionType.WEAKNESS));
+	               pm.setBasePotionType(PotionType.WEAKNESS);
 	               pm.setColor(Color.AQUA);
-	               pm.addCustomEffect(new PotionEffect(PotionEffectType.SLOW, 200,1,true,true), true);
-	               pm.addCustomEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 200,1,true,true), true);
+	               pm.addCustomEffect(new PotionEffect(PotionEffectType.SLOWNESS, 200,1,true,true), true);
+	               pm.addCustomEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 200,1,true,true), true);
 	               ItemStack pi = po.getItem();
 	               pi.setItemMeta(pm);
 	               po.setItem(pi);
@@ -199,16 +199,16 @@ public class SnowSkills extends Summoned implements Listener{
 			            	rb2cooldown.remove(p.getUniqueId()); 
 			            	
 
-			            	Location el = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 4).getLocation().add(0, -4, 0).setDirection(p.getEyeLocation().clone().getDirection());
+			            	Location el = gettargetblock(p,4).add(0, -4, 0).setDirection(p.getEyeLocation().clone().getDirection());
 			            	
 			            	final World w = el.getWorld();
 			            	
 			            	AtomicInteger j = new AtomicInteger();
 							p.getWorld().playSound(el.clone(), Sound.BLOCK_SNOW_FALL, 0.8f, 2f);
 							p.getWorld().playSound(el.clone(), Sound.AMBIENT_UNDERWATER_ENTER, 0.8f, 0f);
-		            		p.getWorld().spawnParticle(Particle.WATER_WAKE, el.clone().add(0, 4, 0), 100, 2, 2, 2);
+		            		p.getWorld().spawnParticle(Particle.DOLPHIN, el.clone().add(0, 4, 0), 100, 2, 2, 2);
 		            		p.getWorld().spawnParticle(Particle.WHITE_ASH, el.clone().add(0, 4, 0), 100, 2, 2, 2);
-		            		p.getWorld().spawnParticle(Particle.SNOWBALL, el.clone().add(0, 4, 0), 100, 2, 2, 2);
+		            		p.getWorld().spawnParticle(Particle.ITEM_SNOWBALL, el.clone().add(0, 4, 0), 100, 2, 2, 2);
 							for(int d1=0; d1<25; d1++) {
 								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					                @Override
@@ -230,16 +230,15 @@ public class SnowSkills extends Summoned implements Listener{
 			        {
 		            	
 
-		            	Location el = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR, Material.VOID_AIR, Material.GRASS)), 4).getLocation().add(0, -4, 0).setDirection(p.getEyeLocation().clone().getDirection());
-		            	
+		            	Location el = gettargetblock(p,4).add(0, -4, 0).setDirection(p.getEyeLocation().clone().getDirection());
 		            	final World w = el.getWorld();
 		            	
 		            	AtomicInteger j = new AtomicInteger();
 						p.getWorld().playSound(el.clone(), Sound.BLOCK_SNOW_FALL, 0.8f, 2f);
 						p.getWorld().playSound(el.clone(), Sound.AMBIENT_UNDERWATER_ENTER, 0.8f, 0f);
-	            		p.getWorld().spawnParticle(Particle.WATER_WAKE, el.clone().add(0, 4, 0), 100, 2, 2, 2);
+	            		p.getWorld().spawnParticle(Particle.DOLPHIN, el.clone().add(0, 4, 0), 100, 2, 2, 2);
 	            		p.getWorld().spawnParticle(Particle.WHITE_ASH, el.clone().add(0, 4, 0), 100, 2, 2, 2);
-	            		p.getWorld().spawnParticle(Particle.SNOWBALL, el.clone().add(0, 4, 0), 100, 2, 2, 2);
+	            		p.getWorld().spawnParticle(Particle.ITEM_SNOWBALL, el.clone().add(0, 4, 0), 100, 2, 2, 2);
 						for(int d1=0; d1<25; d1++) {
 							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 				                @Override
@@ -282,8 +281,8 @@ public class SnowSkills extends Summoned implements Listener{
 	                @Override
 	                public void run() 
 	                {
-	                	solid.getWorld().spawnParticle(Particle.BLOCK_CRACK, solid.getLocation(), 400,3,3,3,0.1,Material.SNOW.createBlockData());
-	                	solid.getWorld().spawnParticle(Particle.BLOCK_CRACK, solid.getLocation(), 300,3,3,3,0.1,Material.ICE.createBlockData());
+	                	solid.getWorld().spawnParticle(Particle.BLOCK, solid.getLocation(), 400,3,3,3,0.1,Material.SNOW.createBlockData());
+	                	solid.getWorld().spawnParticle(Particle.BLOCK, solid.getLocation(), 300,3,3,3,0.1,Material.ICE.createBlockData());
 	                	solid.getWorld().spawnParticle(Particle.SNOWFLAKE, solid.getLocation(), 300,3,3,3,0.1);
 	                        p.getWorld().playSound(solid.getLocation(), Sound.BLOCK_POWDER_SNOW_BREAK, 1, 0);
 		                    p.getWorld().playSound(solid.getLocation(), Sound.BLOCK_SNOW_BREAK, 1, 0);
@@ -315,8 +314,8 @@ public class SnowSkills extends Summoned implements Listener{
             @Override
             public void run() 
             {
-            	solid.getWorld().spawnParticle(Particle.BLOCK_CRACK, solid.getLocation(), 400,3,3,3,0.1,Material.SNOW.createBlockData());
-            	solid.getWorld().spawnParticle(Particle.BLOCK_CRACK, solid.getLocation(), 300,3,3,3,0.1,Material.ICE.createBlockData());
+            	solid.getWorld().spawnParticle(Particle.BLOCK, solid.getLocation(), 400,3,3,3,0.1,Material.SNOW.createBlockData());
+            	solid.getWorld().spawnParticle(Particle.BLOCK, solid.getLocation(), 300,3,3,3,0.1,Material.ICE.createBlockData());
             	solid.getWorld().spawnParticle(Particle.SNOWFLAKE, solid.getLocation(), 300,3,3,3,0.1);
                     p.getWorld().playSound(solid.getLocation(), Sound.BLOCK_POWDER_SNOW_BREAK, 1, 0);
                     p.getWorld().playSound(solid.getLocation(), Sound.BLOCK_SNOW_BREAK, 1, 0);
@@ -392,7 +391,7 @@ public class SnowSkills extends Summoned implements Listener{
 	                @Override
 	                public void run() 
 	                {
-                    	p.getWorld().spawnParticle(Particle.BLOCK_CRACK, bl,30, 3,0.1,3,0,Material.POWDER_SNOW.createBlockData());
+                    	p.getWorld().spawnParticle(Particle.BLOCK, bl,30, 3,0.1,3,0,Material.POWDER_SNOW.createBlockData());
 	                }
 				}, j.incrementAndGet()/30);
         	});
@@ -451,7 +450,7 @@ public class SnowSkills extends Summoned implements Listener{
 						                @Override
 						                public void run() 
 						                {
-					                    	p.getWorld().spawnParticle(Particle.BLOCK_CRACK, bl,30, 3,0.1,3,0,Material.POWDER_SNOW.createBlockData());
+					                    	p.getWorld().spawnParticle(Particle.BLOCK, bl,30, 3,0.1,3,0,Material.POWDER_SNOW.createBlockData());
 						                }
 									}, j.incrementAndGet()/30);
 			                	});
@@ -495,7 +494,7 @@ public class SnowSkills extends Summoned implements Listener{
 					                @Override
 					                public void run() 
 					                {
-				                    	p.getWorld().spawnParticle(Particle.BLOCK_CRACK, bl,30, 3,0.1,3,0,Material.POWDER_SNOW.createBlockData());
+				                    	p.getWorld().spawnParticle(Particle.BLOCK, bl,30, 3,0.1,3,0,Material.POWDER_SNOW.createBlockData());
 					                }
 								}, j.incrementAndGet()/30);
 		                	});
@@ -547,9 +546,9 @@ public class SnowSkills extends Summoned implements Listener{
 		                	hunt.remove(p.getUniqueId()); 
 		                	p.getWorld().playSound(p.getLocation(), Sound.ENTITY_SKELETON_CONVERTED_TO_STRAY, 1f, 0f);
 		                	p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 60,2,true,true));
-		                	p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 60,2,true,true));
+		                	p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 60,2,true,true));
 		                	p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 60,2,true,true));
-		                	p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60,1,true,true));
+		                	p.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 60,1,true,true));
 							ev.setCancelled(true);
 		                	hunt.put(p.getUniqueId(), System.currentTimeMillis());  
 		                }
@@ -559,9 +558,9 @@ public class SnowSkills extends Summoned implements Listener{
 
 	                	p.getWorld().playSound(p.getLocation(), Sound.ENTITY_SKELETON_CONVERTED_TO_STRAY, 1f, 0f);
 	                	p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 60,2,true,true));
-	                	p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 60,2,true,true));
+	                	p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 60,2,true,true));
 	                	p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 60,2,true,true));
-	                	p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60,1,true,true));
+	                	p.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 60,1,true,true));
 						ev.setCancelled(true);
 						hunt.put(p.getUniqueId(), System.currentTimeMillis());  
 					}
@@ -648,8 +647,8 @@ public class SnowSkills extends Summoned implements Listener{
 	final private void blockexplode(FallingBlock fallingb) {
 		LivingEntity p = (LivingEntity) Holding.ale(snowblock.get(fallingb.getUniqueId()));
 		Location tl = fallingb.getLocation();
-		tl.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, tl, 1);
-		tl.getWorld().spawnParticle(Particle.SNOW_SHOVEL, tl, 400,3,3,3);
+		tl.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, tl, 1);
+		tl.getWorld().spawnParticle(Particle.ITEM_SNOWBALL, tl, 400,3,3,3);
 
 		for (Entity e : p.getWorld().getNearbyEntities(tl, 3, 3, 3))
 		{
@@ -713,7 +712,7 @@ public class SnowSkills extends Summoned implements Listener{
                 Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	                @Override
 	                public void run() {
-	                    p.getWorld().spawnParticle(Particle.SNOW_SHOVEL, ar.getLocation(), 20,2,2,2);
+	                    p.getWorld().spawnParticle(Particle.ITEM_SNOWBALL, ar.getLocation(), 20,2,2,2);
 	                    p.getWorld().spawnParticle(Particle.SNOWFLAKE, ar.getLocation(), 20,2,2,2);
 						for(Entity e : p.getWorld().getNearbyEntities(ar.getLocation(),2, 2, 2)) {
 							if(p!=e && e instanceof Player&& !(e.hasMetadata("fake"))) {
@@ -814,12 +813,12 @@ public class SnowSkills extends Summoned implements Listener{
 								                	}
 								                	ring.forEach(l -> {
 								                		pw.spawnParticle(Particle.WHITE_ASH, l, 5, 0.5,0.5,0.5,0);
-								                		pw.spawnParticle(Particle.SNOW_SHOVEL, l, 2, 0.5,0.5,0.5,0);
+								                		pw.spawnParticle(Particle.ITEM_SNOWBALL, l, 2, 0.5,0.5,0.5,0);
 								                		pw.spawnParticle(Particle.SNOWFLAKE, l, 2, 0.5,0.5,0.5,0);
 								                		
 								                	});
 													p.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_AMBIENT, 0.1f, 2f);
-								                    p.getWorld().spawnParticle(Particle.SNOW_SHOVEL, p.getLocation(), 100,5,2,5);
+								                    p.getWorld().spawnParticle(Particle.ITEM_SNOWBALL, p.getLocation(), 100,5,2,5);
 								                    p.getWorld().spawnParticle(Particle.WHITE_ASH, p.getLocation(), 100,5,2,5);
 													for(Entity e : p.getWorld().getNearbyEntities(p.getLocation(),5, 5, 5)) {
 														if(p!=e && e instanceof Player&& !(e.hasMetadata("fake"))) {
@@ -876,12 +875,12 @@ public class SnowSkills extends Summoned implements Listener{
 							                	}
 							                	ring.forEach(l -> {
 							                		pw.spawnParticle(Particle.WHITE_ASH, l, 5, 0.5,0.5,0.5,0);
-							                		pw.spawnParticle(Particle.SNOW_SHOVEL, l, 2, 0.5,0.5,0.5,0);
+							                		pw.spawnParticle(Particle.ITEM_SNOWBALL, l, 2, 0.5,0.5,0.5,0);
 							                		pw.spawnParticle(Particle.SNOWFLAKE, l, 2, 0.5,0.5,0.5,0);
 							                		
 							                	});
 												p.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_AMBIENT, 0.1f, 2f);
-							                    p.getWorld().spawnParticle(Particle.SNOW_SHOVEL, p.getLocation(), 100,5,2,5);
+							                    p.getWorld().spawnParticle(Particle.ITEM_SNOWBALL, p.getLocation(), 100,5,2,5);
 							                    p.getWorld().spawnParticle(Particle.WHITE_ASH, p.getLocation(), 100,5,2,5);
 												for(Entity e : p.getWorld().getNearbyEntities(p.getLocation(),5, 5, 5)) {
 													if(p!=e && e instanceof Player&& !(e.hasMetadata("fake"))) {
@@ -939,7 +938,7 @@ public class SnowSkills extends Summoned implements Listener{
                 	}
                 	ring.forEach(l -> {
 						tl.getWorld().spawnParticle(Particle.WHITE_ASH, l, 5, 0.5,0.5,0.5,0);
-						tl.getWorld().spawnParticle(Particle.SNOW_SHOVEL, l, 2, 0.5,0.5,0.5,0);
+						tl.getWorld().spawnParticle(Particle.ITEM_SNOWBALL, l, 2, 0.5,0.5,0.5,0);
 						tl.getWorld().spawnParticle(Particle.SNOWFLAKE, l, 2, 0.5,0.5,0.5,0);
                 		
                 	});

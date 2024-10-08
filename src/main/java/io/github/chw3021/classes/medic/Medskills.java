@@ -42,6 +42,8 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Breeze;
+import org.bukkit.entity.Enderman;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
@@ -52,6 +54,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Snowball;
 import org.bukkit.entity.ThrownPotion;
+import org.bukkit.entity.Wither;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -272,7 +275,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 										p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to shoot RemedyingRocket").create());
 									}
 									ev.setCancelled(true);
-									ev.setConsumeItem(false);
+									p.updateInventory();
 								}
 								else // if timer is done
 								{
@@ -982,11 +985,11 @@ public class Medskills extends Pak implements Serializable, Listener {
 					d.getPlayer().getInventory().removeItem(b);
 				}
 			}, 1/5);
-			if(Bukkit.getPlayerExact(d.getItem().getItemMeta().getLocalizedName())==null) {
+			if(Bukkit.getPlayerExact(d.getItem().getItemMeta().getItemName())==null) {
 				return;
 			}
 
-			Player m = Bukkit.getPlayer(d.getItem().getItemMeta().getLocalizedName());
+			Player m = Bukkit.getPlayer(d.getItem().getItemMeta().getItemName());
 			Player p = d.getPlayer();
 			if(Party.hasParty(p) && Party.hasParty(m))	{
 				if(Party.getParty(p).equals(Party.getParty(m)))
@@ -1931,9 +1934,9 @@ public class Medskills extends Pak implements Serializable, Listener {
 							v1.setCollidable(false);
 							v1.setGravity(false);
 							v1.setCanPickupItems(false);
-							v1.setChestplate(new ItemStack(Material.IRON_CHESTPLATE));
-							v1.setLeggings(new ItemStack(Material.IRON_LEGGINGS));
-							v1.setBoots(new ItemStack(Material.IRON_BOOTS));
+							v1.getEquipment().setChestplate(new ItemStack(Material.IRON_CHESTPLATE));
+							v1.getEquipment().setLeggings(new ItemStack(Material.IRON_LEGGINGS));
+							v1.getEquipment().setBoots(new ItemStack(Material.IRON_BOOTS));
 							v1.setMetadata("Caduceus of" + p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 							v1.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 							v1.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
@@ -1946,10 +1949,10 @@ public class Medskills extends Pak implements Serializable, Listener {
 						ball.setInvisible(true);
 						ball.setGravity(false);
 						ball.setCanPickupItems(false);
-						ball.setHelmet(new ItemStack(Material.BEACON));
-						ball.setChestplate(new ItemStack(Material.IRON_CHESTPLATE));
-						ball.setLeggings(new ItemStack(Material.IRON_LEGGINGS));
-						ball.setBoots(new ItemStack(Material.IRON_BOOTS));
+						ball.getEquipment().setHelmet(new ItemStack(Material.BEACON));
+						ball.getEquipment().setChestplate(new ItemStack(Material.IRON_CHESTPLATE));
+						ball.getEquipment().setLeggings(new ItemStack(Material.IRON_LEGGINGS));
+						ball.getEquipment().setBoots(new ItemStack(Material.IRON_BOOTS));
 						ball.setMetadata("Caduceus of" + p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 						ball.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 						ball.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
@@ -1960,8 +1963,8 @@ public class Medskills extends Pak implements Serializable, Listener {
 						wing1.setInvisible(true);
 						wing1.setGravity(false);
 						wing1.setCanPickupItems(false);
-						wing1.setHelmet(new ItemStack(Material.SMOOTH_QUARTZ));
-						wing1.setChestplate(new ItemStack(Material.ELYTRA));
+						wing1.getEquipment().setHelmet(new ItemStack(Material.SMOOTH_QUARTZ));
+						wing1.getEquipment().setChestplate(new ItemStack(Material.ELYTRA));
 						wing1.setMetadata("Caduceus of" + p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 						wing1.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 						wing1.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
@@ -1971,8 +1974,8 @@ public class Medskills extends Pak implements Serializable, Listener {
 						wing2.setInvisible(true);
 						wing2.setGravity(false);
 						wing2.setCanPickupItems(false);
-						wing2.setHelmet(new ItemStack(Material.SMOOTH_QUARTZ));
-						wing2.setChestplate(new ItemStack(Material.ELYTRA));
+						wing2.getEquipment().setHelmet(new ItemStack(Material.SMOOTH_QUARTZ));
+						wing2.getEquipment().setChestplate(new ItemStack(Material.ELYTRA));
 						wing2.setMetadata("Caduceus of" + p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 						wing2.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 						wing2.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
@@ -1982,8 +1985,8 @@ public class Medskills extends Pak implements Serializable, Listener {
 						wing3.setInvisible(true);
 						wing3.setGravity(false);
 						wing3.setCanPickupItems(false);
-						wing3.setHelmet(new ItemStack(Material.SMOOTH_QUARTZ));
-						wing3.setChestplate(new ItemStack(Material.ELYTRA));
+						wing3.getEquipment().setHelmet(new ItemStack(Material.SMOOTH_QUARTZ));
+						wing3.getEquipment().setChestplate(new ItemStack(Material.ELYTRA));
 						wing3.setMetadata("Caduceus of" + p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 						wing3.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 						wing3.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
@@ -1993,8 +1996,8 @@ public class Medskills extends Pak implements Serializable, Listener {
 						wing4.setInvisible(true);
 						wing4.setGravity(false);
 						wing4.setCanPickupItems(false);
-						wing4.setHelmet(new ItemStack(Material.SMOOTH_QUARTZ));
-						wing4.setChestplate(new ItemStack(Material.ELYTRA));
+						wing4.getEquipment().setHelmet(new ItemStack(Material.SMOOTH_QUARTZ));
+						wing4.getEquipment().setChestplate(new ItemStack(Material.ELYTRA));
 						wing4.setMetadata("Caduceus of" + p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 						wing4.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 						wing4.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
@@ -2004,8 +2007,8 @@ public class Medskills extends Pak implements Serializable, Listener {
 						wing5.setInvisible(true);
 						wing5.setGravity(false);
 						wing5.setCanPickupItems(false);
-						wing5.setHelmet(new ItemStack(Material.SMOOTH_QUARTZ));
-						wing5.setChestplate(new ItemStack(Material.ELYTRA));
+						wing5.getEquipment().setHelmet(new ItemStack(Material.SMOOTH_QUARTZ));
+						wing5.getEquipment().setChestplate(new ItemStack(Material.ELYTRA));
 						wing5.setMetadata("Caduceus of" + p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 						wing5.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 						wing5.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
@@ -2015,8 +2018,8 @@ public class Medskills extends Pak implements Serializable, Listener {
 						wing6.setInvisible(true);
 						wing6.setGravity(false);
 						wing6.setCanPickupItems(false);
-						wing6.setHelmet(new ItemStack(Material.SMOOTH_QUARTZ));
-						wing6.setChestplate(new ItemStack(Material.ELYTRA));
+						wing6.getEquipment().setHelmet(new ItemStack(Material.SMOOTH_QUARTZ));
+						wing6.getEquipment().setChestplate(new ItemStack(Material.ELYTRA));
 						wing6.setMetadata("Caduceus of" + p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 						wing6.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 						wing6.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
@@ -2137,6 +2140,39 @@ public class Medskills extends Pak implements Serializable, Listener {
 		}
 
 
+	}
+
+	@SuppressWarnings("deprecation")
+	public void EnderWitherHunter(ProjectileHitEvent ev)
+	{
+
+		if(ev.getEntity().getShooter() instanceof Player && ev.getEntity() instanceof Arrow)
+		{
+			Player p = (Player)ev.getEntity().getShooter();
+
+
+
+
+			if(ClassData.pc.get(p.getUniqueId()) == 61)  {
+				if(ev.getHitEntity() instanceof Wither) {
+					Wither e =(Wither) ev.getHitEntity();
+					Arrow ar = (Arrow) ev.getEntity();
+					if(e.getHealth() <= e.getMaxHealth()/2)
+					{
+						p.setCooldown(Material.YELLOW_TERRACOTTA, 1);
+						e.damage(bbArrow(ar), ar);
+					}
+				}
+				if(ev.getHitEntity() instanceof Enderman || ev.getHitEntity() instanceof Breeze) {
+					LivingEntity e =(LivingEntity) ev.getHitEntity();
+					Arrow ar = (Arrow) ev.getEntity();
+					{
+						p.setCooldown(Material.YELLOW_TERRACOTTA, 1);
+						e.damage(bbArrow(ar), ar);
+					}
+				}
+			}
+		}
 	}
 
 

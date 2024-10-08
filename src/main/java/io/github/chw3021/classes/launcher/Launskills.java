@@ -47,6 +47,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.entity.AbstractArrow.PickupStatus;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Breeze;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Enderman;
 import org.bukkit.entity.Entity;
@@ -765,7 +766,6 @@ public class Launskills extends Pak implements Serializable, Listener {
 					double ri1 = ran.nextDouble()*2 * (ran.nextBoolean() ? 1:-1);
 					double ri2 = ran.nextDouble()*2 * (ran.nextBoolean() ? 1:-1);
 					Snowball sn = p.getWorld().spawn(fl.clone().add(ri1, 3, ri2), Snowball.class);
-					sn.setBounce(false);
 					sn.setGravity(true);
 					sn.setGlowing(true);
 					sn.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
@@ -1912,9 +1912,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 							cscooldown.remove(p.getName()); // removing player from HashMap
 							Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 5, 0, Arrow.class);
 							ar.setShooter(p);
-							ar.setKnockbackStrength(0);
 							ar.setCritical(true);
-							ar.setBounce(false);
 							ar.setInvulnerable(true);
 							ar1(ar, p, 1d);
 							p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 0.1f, 1.6f);
@@ -1946,9 +1944,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 					{
 						Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 5, 0, Arrow.class);
 						ar.setShooter(p);
-						ar.setKnockbackStrength(0);
 						ar.setCritical(true);
-						ar.setBounce(false);
 						ar.setInvulnerable(true);
 						ar1(ar, p, 1d);
 						p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 0.1f, 1.6f);
@@ -2071,15 +2067,15 @@ public class Launskills extends Pak implements Serializable, Listener {
 					if(e.getHealth() <= e.getMaxHealth()/2)
 					{
 						p.setCooldown(Material.YELLOW_TERRACOTTA, 1);
-						e.damage(ar.getDamage()/4, ar);
+						e.damage(bbArrow(ar), ar);
 					}
 				}
-				if(ev.getHitEntity() instanceof Enderman) {
-					Enderman e =(Enderman) ev.getHitEntity();
+				if(ev.getHitEntity() instanceof Enderman || ev.getHitEntity() instanceof Breeze) {
+					LivingEntity e =(LivingEntity) ev.getHitEntity();
 					Arrow ar = (Arrow) ev.getEntity();
 					{
 						p.setCooldown(Material.YELLOW_TERRACOTTA, 1);
-						e.damage(ar.getDamage()/4, ar);
+						e.damage(bbArrow(ar), ar);
 					}
 				}
 			}

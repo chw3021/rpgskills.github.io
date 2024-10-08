@@ -18,6 +18,7 @@ import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Breeze;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Evoker;
 import org.bukkit.entity.Phantom;
@@ -26,6 +27,7 @@ import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Vindicator;
 import org.bukkit.entity.Witch;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -34,7 +36,6 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import io.github.chw3021.commons.Holding;
 import io.github.chw3021.monsters.raids.Summoned;
 import io.github.chw3021.rmain.RMain;
 
@@ -323,14 +324,14 @@ public class DarkRaids extends Summoned {
 		main.setItemMeta(mm);
 		
 		String reg = lang.equalsIgnoreCase("ko_kr") ? "밤의군단사냥꾼":"NightCorpsHunter";
-		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 5500.0, head, chest, leg, boots, main, null, EntityType.SKELETON);
-		newmob.setConversionTime(-1);
-		
+		Breeze newmob = (Breeze) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 5500.0, head, chest, leg, boots, main, null, EntityType.BREEZE);
+				
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
 		
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.35);
+		newmob.getAttribute(Attribute.GENERIC_FLYING_SPEED).setBaseValue(0.35);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		newmob.setLootTable(null);
@@ -394,7 +395,7 @@ public class DarkRaids extends Summoned {
 		addraider(rn,META,newmob);
 		
 	}
-	@SuppressWarnings("unchecked")
+
 	final private void Boss(Location spl, String rn) {
 
     	Random random=new Random();
@@ -424,9 +425,9 @@ public class DarkRaids extends Summoned {
 		boots.addUnsafeEnchantment(Enchantment.FIRE_PROTECTION, 5);
 		boots.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
 		boots.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
-		ItemStack main = new ItemStack(Material.NETHERITE_HOE);
+		ItemStack main = new ItemStack(Material.BOW);
 		ItemMeta mm = main.getItemMeta();
-		mm.setCustomModelData(8008);
+		mm.setCustomModelData(4008);
 		main.setItemMeta(mm);
 
 		
@@ -447,6 +448,7 @@ public class DarkRaids extends Summoned {
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
 		newmob.setMetadata("summonedboss", new FixedMetadataValue(RMain.getInstance(), rn));
+		newmob.setMetadata("NightArcher", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setRemoveWhenFarAway(false);
 		
 		BossBar	newbar = Bukkit.getServer().createBossBar(new NamespacedKey(RMain.getInstance(), rn +"Nightmare"),newmob.getName(), BarColor.PURPLE, BarStyle.SEGMENTED_20, BarFlag.CREATE_FOG);
@@ -455,43 +457,28 @@ public class DarkRaids extends Summoned {
 		
 		addraider(rn,META,newmob);
 		
-	
+
+		bossBar(rn, META, newmob);
+
+		
 		final Object ht = getherotype(rn);
-	
+
+		ItemStack mainf = new ItemStack(Material.NETHERITE_HOE);
+		ItemMeta mmf = mainf.getItemMeta();
+		mmf.setCustomModelData(8008);
+		mainf.setItemMeta(mmf);
+		
 		if(ht instanceof Player) {
 			Player p = (Player) ht;
-			int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-	            @Override
-	            public void run() 
-	            {
-	
-					if(Holding.ale(newmob)!=null) {
-	                	raidbar.get(rn, META).setProgress(Holding.ale(newmob).getHealth()/25000d);
-	                	raidbar.get(rn, META).setTitle(Holding.ale(newmob).getName());
-	    				raidbar.get(rn, META).addPlayer(p);
-					}
-	            }
-			}, 0, 1);
-			raidbart.put(rn, META, task);
+			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
 		}
 		else if(getherotype(rn) instanceof HashSet){
+			@SuppressWarnings("unchecked")
 			HashSet<Player> par = (HashSet<Player>) ht;
-			int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-	            @Override
-	            public void run() 
-	            {
-					if(Holding.ale(newmob)!=null) {
-	                	raidbar.get(rn, META).setProgress(Holding.ale(newmob).getHealth()/25000d);
-	                	raidbar.get(rn, META).setTitle(Holding.ale(newmob).getName());
-	            		par.forEach(p -> {
-	        				raidbar.get(rn, META).addPlayer(p);
-	            		});
-					}
-	            }
-			}, 0, 1);
-			raidbart.put(rn, META, task);
+    		par.forEach(p -> {
+    			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+    		});
 		}
-		
 	}
 	
 	

@@ -33,7 +33,7 @@ import com.google.common.collect.Multimap;
 
 import io.github.chw3021.items.Elements;
 import io.github.chw3021.items.Potions;
-import io.github.chw3021.obtains.NPCsSpawn;
+import io.github.chw3021.obtains.NPCLoc;
 import io.github.chw3021.obtains.Obtained;
 import io.github.chw3021.obtains.TrophyLoc;
 import io.github.chw3021.party.Party;
@@ -147,7 +147,7 @@ public class PillagerOutpostQuest implements Listener {
 		    		QuestEnd(p,3);
 					return;
 				}
-				if(TrophyLoc.getLocsdata().Locs.containsEntry(p.getUniqueId(), NPCsSpawn.npcloc.get(le.getUniqueId()))) {
+				if(TrophyLoc.getLocsdata().Locs.containsEntry(p.getUniqueId(), NPCLoc.npcloc.get(le.getUniqueId()))) {
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": 고마워요!").create());
 	        		}
@@ -257,7 +257,7 @@ public class PillagerOutpostQuest implements Listener {
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": I think it's stored in a Chest inside the Outpost..Could you get it for me?").create());
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": (Quest Will be Canceled If You Die, Quit or go far away)").create());
 	        		}
-	        		Location nl = NPCsSpawn.npcloc.get(le.getUniqueId());
+	        		Location nl = NPCLoc.npcloc.get(le.getUniqueId());
 	        		quested.put(p.getUniqueId(), nl);
 	        		startloc.put(p.getUniqueId(), le.getLocation().clone());
 	        		
@@ -312,10 +312,10 @@ public class PillagerOutpostQuest implements Listener {
 		if(d.getInventory().getLocation() != null && d.getPlayer() !=null) {
 			Player p = (Player) d.getPlayer();
 			Location l = d.getInventory().getLocation();
-			if(!NPCsSpawn.pil.containsValue(l) || !quested.containsKey(p.getUniqueId()) || clearable.containsKey(p.getUniqueId())) {
+			if(!NPCLoc.pil.containsValue(l) || !quested.containsKey(p.getUniqueId()) || clearable.containsKey(p.getUniqueId())) {
 				return;
 			}
-			if(NPCsSpawn.pil.get(quested.get(p.getUniqueId())).equals(l)) {
+			if(NPCLoc.pil.get(quested.get(p.getUniqueId())).equals(l)) {
 	    		p.playSound(p.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 	        		p.sendTitle(ChatColor.BOLD + "상인의 가방", ChatColor.BOLD + "(1/1)", 10, 20, 10);
@@ -333,7 +333,7 @@ public class PillagerOutpostQuest implements Listener {
 		if(d.getBlock().getState() instanceof Chest) {
 			Chest c = (Chest) d.getBlock().getState();
 			Player p = (Player) d.getPlayer();
-			NPCsSpawn.pil.keySet().forEach(k -> {
+			NPCLoc.pil.keySet().forEach(k -> {
 				if(c.getLocation().distance(k)<60) {
 					d.setCancelled(true);
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -351,7 +351,7 @@ public class PillagerOutpostQuest implements Listener {
 	{
 		if(d.getBlock().getState() instanceof Chest) {
 			Chest c = (Chest) d.getBlock().getState();
-			if(NPCsSpawn.pil.containsValue(c.getLocation())) {
+			if(NPCLoc.pil.containsValue(c.getLocation())) {
 				d.setCancelled(true);
 			}
 		}

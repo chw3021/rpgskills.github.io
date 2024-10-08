@@ -39,6 +39,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Breeze;
 import org.bukkit.entity.Enderman;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityCategory;
@@ -1836,10 +1837,11 @@ public class Snipskills extends Pak implements Serializable, Listener {
 				if(ev.getHitEntity() instanceof Wither) {
 					Wither e =(Wither) ev.getHitEntity();
 					Arrow ar = (Arrow) ev.getEntity();
+					if(e.getHealth() <= e.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()/2)
 					{
 
 						if(Math.abs(ar.getLocation().getY() - (e.getEyeLocation().getY())) <= (0.5+ssd.HeadShot.get(p.getUniqueId())*0.01)|| Proficiency.getpro(p)>=2) {
-							e.damage(ar.getDamage()*7*1.36*(1+ssd.HeadShot.get(p.getUniqueId())*0.036), p);
+							e.damage(bbArrow(ar)*1.36*(1+ssd.HeadShot.get(p.getUniqueId())*0.036), p);
 							e.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 40, 0, false, false));
 							p.getWorld().spawnParticle(Particle.DAMAGE_INDICATOR, e.getEyeLocation(), 50, 1,1,1);
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -1850,16 +1852,16 @@ public class Snipskills extends Pak implements Serializable, Listener {
 							}
 						}
 						else {
-							e.damage(ar.getDamage()*7, p);
+							e.damage(bbArrow(ar), p);
 						}
 					}
 				}
-				if(ev.getHitEntity() instanceof Enderman) {
-					Enderman e =(Enderman) ev.getHitEntity();
+				if(ev.getHitEntity() instanceof Enderman || ev.getHitEntity() instanceof Breeze) {
+					LivingEntity e =(LivingEntity) ev.getHitEntity();
 					Arrow ar = (Arrow) ev.getEntity();
 
 					if(Math.abs(ar.getLocation().getY() - (e.getEyeLocation().getY())) <= (0.5+ssd.HeadShot.get(p.getUniqueId())*0.01)|| Proficiency.getpro(p)>=2) {
-						e.damage(ar.getDamage()*7*1.36*(1+ssd.HeadShot.get(p.getUniqueId())*0.036), p);
+						e.damage(bbArrow(ar)*1.36*(1+ssd.HeadShot.get(p.getUniqueId())*0.036), p);
 						e.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 40, 0, false, false));
 						p.getWorld().spawnParticle(Particle.DAMAGE_INDICATOR, e.getEyeLocation(), 50, 1,1,1);
 						if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -1870,7 +1872,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 						}
 					}
 					else {
-						e.damage(ar.getDamage()*7, p);
+						e.damage(bbArrow(ar), p);
 					}
 				}
 			}

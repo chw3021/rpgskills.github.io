@@ -13,6 +13,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.block.EndGateway;
 import org.bukkit.boss.BarColor;
@@ -43,6 +44,7 @@ import com.google.common.collect.Multimap;
 import com.google.common.collect.Table;
 
 import io.github.chw3021.commons.CommonEvents;
+import io.github.chw3021.commons.Holding;
 import io.github.chw3021.items.Elements;
 import io.github.chw3021.monsters.Mobs;
 import io.github.chw3021.party.Party;
@@ -438,6 +440,48 @@ public class Summoned extends Mobs implements Serializable{
 		}
         
 	}
+	
+	@SuppressWarnings("unchecked")
+	protected void bossBar(String rn, String META, LivingEntity newmob) {
+
+		final Object ht = getherotype(rn);
+		
+		if(ht instanceof Player) {
+			Player p = (Player) ht;
+			int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
+	            @Override
+	            public void run() 
+	            {
+	
+					if(Holding.ale(newmob)!=null) {
+	                	raidbar.get(rn, META).setProgress((double)Holding.ale(newmob).getHealth()/Holding.ale(newmob).getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+	                	raidbar.get(rn, META).setTitle(Holding.ale(newmob).getName());
+	    				raidbar.get(rn, META).addPlayer(p);
+					}
+	            }
+			}, 0, 1);
+			raidbart.put(rn, META, task);
+		}
+		else if(getherotype(rn) instanceof HashSet){
+			HashSet<Player> par = (HashSet<Player>) ht;
+			int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
+	            @Override
+	            public void run() 
+	            {
+					if(Holding.ale(newmob)!=null) {
+	                	raidbar.get(rn, META).setProgress((double)Holding.ale(newmob).getHealth()/Holding.ale(newmob).getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+	                	raidbar.get(rn, META).setTitle(Holding.ale(newmob).getName());
+	            		par.forEach(p -> {
+	        				raidbar.get(rn, META).addPlayer(p);
+	            		});
+					}
+	            }
+			}, 0, 1);
+			raidbart.put(rn, META, task);
+		}
+		
+	}
+	
 	final protected Integer getelnum(String meta) {
 		if(meta.equals("plain")) {
 			return 14;

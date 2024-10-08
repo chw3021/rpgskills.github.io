@@ -1668,9 +1668,6 @@ public class Nobskills extends Pak implements Serializable, Listener {
 			{
 					ev.setCancelled(true);
 		            Location fl = gettargetblock(p,20).clone();
-	    			if(p.rayTraceBlocks(40) != null) {
-	    				fl = p.rayTraceBlocks(40).getHitPosition().toLocation(p.getWorld());
-	                }
 	                final Location tl = fl.clone();
 	                
 	            	if(bckwsht.containsKey(p.getUniqueId())) {
@@ -1786,9 +1783,6 @@ public class Nobskills extends Pak implements Serializable, Listener {
 					ev.setCancelled(true);
 
 		            Location fl = gettargetblock(p,20).clone();
-	    			if(p.rayTraceBlocks(40) != null) {
-	    				fl = p.rayTraceBlocks(40).getHitPosition().toLocation(p.getWorld());
-	                }
 	                final Location tl = fl.clone().add(0, 1.6, 0);
 	                
 	            	if(clvet.containsKey(p.getUniqueId())) {

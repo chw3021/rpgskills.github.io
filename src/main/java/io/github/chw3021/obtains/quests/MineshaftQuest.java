@@ -27,7 +27,7 @@ import io.github.chw3021.items.armors.Boots;
 import io.github.chw3021.items.armors.Chestplate;
 import io.github.chw3021.items.armors.Helmet;
 import io.github.chw3021.items.armors.Leggings;
-import io.github.chw3021.obtains.NPCsSpawn;
+import io.github.chw3021.obtains.NPCLoc;
 import io.github.chw3021.obtains.Obtained;
 import io.github.chw3021.obtains.TrophyLoc;
 import io.github.chw3021.party.Party;
@@ -116,7 +116,7 @@ public class MineshaftQuest {
 				if(quested.containsKey(p.getUniqueId())|| p.hasCooldown(Material.RAIL)) {
 					return;
 				}
-				if(TrophyLoc.getLocsdata().Locs.containsEntry(p.getUniqueId(), NPCsSpawn.npcloc.get(le.getUniqueId()))) {
+				if(TrophyLoc.getLocsdata().Locs.containsEntry(p.getUniqueId(), NPCLoc.npcloc.get(le.getUniqueId()))) {
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": 고마워요!").create());
 	        		}
@@ -193,7 +193,7 @@ public class MineshaftQuest {
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": I'd appreciate it if you could find it.").create());
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": (Quest Will be Canceled If You Die, Quit or go far away)").create());
 	        		}
-	        		quested.put(p.getUniqueId(), NPCsSpawn.npcloc.get(le.getUniqueId()));
+	        		quested.put(p.getUniqueId(), NPCLoc.npcloc.get(le.getUniqueId()));
 	        		startloc.put(p.getUniqueId(), le.getLocation().clone());
 	        		
     	    		int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {

@@ -102,31 +102,60 @@ public class DarkSkills extends Summoned{
         	final ArrayList<Location> line = RayBow(p.getEyeLocation().clone());
 
             AtomicInteger j = new AtomicInteger();
-            
         	p.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_SHOOT, 1f, 2f);
-            line.forEach(l -> {
+            
+            if(p.hasMetadata("boss")) {
+                
+                line.forEach(l -> {
 
-				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	                @Override
-	                public void run() 
-	                {
-            			if(p.isDead()) {
-            				return;
-            			}
-		        		p.getWorld().spawnParticle(Particle.WITCH, l,4,0.1,0.3,0.1);
-		        		
+    				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+    	                @Override
+    	                public void run() 
+    	                {
+                			if(p.isDead()) {
+                				return;
+                			}
+    		        		p.getWorld().spawnParticle(Particle.WITCH, l,18,0.5,0.8,0.5);
+    		        		
 
-                    	for (Entity e : p.getWorld().getNearbyEntities(l, 0.25, 0.25, 0.25))
-        				{
-        					if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
-        						LivingEntity le = (LivingEntity)e;
-        						le.damage(0.5,p);
-        					}
-        				}
-	                }
-				}, j.incrementAndGet()/2); 
-				
-            });
+                        	for (Entity e : p.getWorld().getNearbyEntities(l, 0.7, 0.7, 0.7))
+            				{
+            					if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
+            						LivingEntity le = (LivingEntity)e;
+            						le.damage(1.2,p);
+            					}
+            				}
+    	                }
+    				}, j.incrementAndGet()/3); 
+    				
+                });
+            }
+            else {
+                line.forEach(l -> {
+
+    				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+    	                @Override
+    	                public void run() 
+    	                {
+                			if(p.isDead()) {
+                				return;
+                			}
+    		        		p.getWorld().spawnParticle(Particle.WITCH, l,4,0.1,0.3,0.1);
+    		        		
+
+                        	for (Entity e : p.getWorld().getNearbyEntities(l, 0.25, 0.25, 0.25))
+            				{
+            					if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
+            						LivingEntity le = (LivingEntity)e;
+            						le.damage(0.5,p);
+            					}
+            				}
+    	                }
+    				}, j.incrementAndGet()/2); 
+    				
+                });
+            }
+            
 
 		 }
 	}

@@ -318,10 +318,8 @@ public class MobsSkillsEvents extends Mobs implements Listener, Serializable  {
 		PlainSkills.getInstance().StoneThrow(d);
 
 		RedSkills.getInstance().Ordeal(d);
-		//RedSkills.getInstance().Meteor(d);
 		RedSkills.getInstance().Daze(d);
 		RedSkills.getInstance().Ring(d);
-		RedSkills.getInstance().MagmaBlock(d);
 		RedSkills.getInstance().Fire(d);
 		RedSkills.getInstance().Eruption(d);
 		RedSkills.getInstance().BackStab(d);
@@ -503,6 +501,8 @@ public class MobsSkillsEvents extends Mobs implements Listener, Serializable  {
 		DarkSkills.getInstance().darkBow(e);
 
 		PoisonSkills.getInstance().bowshoot(e);
+		
+		RedSkills.getInstance().Sweep(e);
 	}
 		
 
@@ -533,8 +533,6 @@ public class MobsSkillsEvents extends Mobs implements Listener, Serializable  {
 	public void DropItem(EntityDropItemEvent ev) 
 	{
 		
-		RedSkills.getInstance().MagmaBlock(ev);
-
 		SnowSkills.getInstance().SnowBlock(ev);
 		
 		MountainsSkills.getInstance().EarthBlock(ev);
@@ -551,8 +549,6 @@ public class MobsSkillsEvents extends Mobs implements Listener, Serializable  {
 	@EventHandler
 	public void BlockChanger(EntityChangeBlockEvent ev) 
 	{
-		RedSkills.getInstance().MagmaBlock(ev);
-
 		SnowSkills.getInstance().SnowBlock(ev);
 
 		MountainsSkills.getInstance().EarthBlock(ev);

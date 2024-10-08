@@ -37,6 +37,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AbstractArrow;
 import org.bukkit.entity.AbstractArrow.PickupStatus;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Breeze;
 import org.bukkit.entity.Enderman;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
@@ -1301,13 +1302,13 @@ public class Archskills extends Pak implements Serializable, Listener{
 					if(e.getHealth() <= e.getMaxHealth()/2)
 					{
 						p.setCooldown(Material.YELLOW_TERRACOTTA, 1);
-						atk0(0d, ar.getDamage()*3, p, e,5);
-						e.damage(ar.getDamage()*3, p);
+						atk0(0d, bbArrow(ar), p, e,5);
+						//e.damage(ar.getDamage()*3, p);
 					}
 					ev.getEntity().remove();
 				}
-				if(ev.getHitEntity() instanceof Enderman) {
-					Enderman e =(Enderman) ev.getHitEntity();
+				if(ev.getHitEntity() instanceof Enderman || ev.getHitEntity() instanceof Breeze) {
+					LivingEntity e =(LivingEntity) ev.getHitEntity();
 					{
 						if(ar.hasMetadata("holdshot")) {
 							Holding.holding(p, e, 40l);
@@ -1325,7 +1326,7 @@ public class Archskills extends Pak implements Serializable, Listener{
 							}
 						}
 						p.setCooldown(Material.YELLOW_TERRACOTTA, 1);
-						atk0(0d, ar.getDamage()*3, p, e,5);
+						atk0(0d, bbArrow(ar), p, e,5);
 						e.teleport(ev.getEntity().getLocation().clone().add(0, -0.5, 0));
 						Holding.holding(p, e, 2l);
 						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {

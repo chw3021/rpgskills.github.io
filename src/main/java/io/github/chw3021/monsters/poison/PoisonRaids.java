@@ -15,10 +15,10 @@ import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Bogged;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Evoker;
 import org.bukkit.entity.Illusioner;
-import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Vindicator;
 import org.bukkit.entity.Witch;
@@ -26,7 +26,6 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
-import io.github.chw3021.commons.Holding;
 import io.github.chw3021.monsters.raids.Summoned;
 import io.github.chw3021.rmain.RMain;
 
@@ -156,7 +155,7 @@ public class PoisonRaids extends Summoned {
 		main.setItemMeta(mm);
 		ItemStack off = new ItemStack(Material.OBSIDIAN);
 		String reg = lang.equalsIgnoreCase("ko_kr") ? "강화형소총수":"VenomRifleman";
-		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.DARK_GREEN+reg + "<"+rn+">", 26000.0, head, chest, leg, boots, main, off, EntityType.SKELETON);
+		Bogged newmob = (Bogged) Summon(esl, ChatColor.DARK_GREEN+reg + "<"+rn+">", 26000.0, head, chest, leg, boots, main, off, EntityType.BOGGED);
 		
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
 		
@@ -188,7 +187,7 @@ public class PoisonRaids extends Summoned {
 		ItemStack off = new ItemStack(Material.SHIELD);
 
 		String reg = lang.equalsIgnoreCase("ko_kr") ? "강화형전사":"VenomSoldier";
-		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.DARK_GREEN+reg + "<"+rn+">", 26500.0, head, chest, leg, boots, main, off, EntityType.SKELETON);
+		Bogged newmob = (Bogged) Summon(esl, ChatColor.DARK_GREEN+reg + "<"+rn+">", 26500.0, head, chest, leg, boots, main, off, EntityType.BOGGED);
 		
 		
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
@@ -277,8 +276,7 @@ public class PoisonRaids extends Summoned {
 		ItemStack off = new ItemStack(Material.DEEPSLATE_IRON_ORE);
 		
 		String reg = lang.equalsIgnoreCase("ko_kr") ? "기관총난사범":"MachineGunman";
-		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.DARK_GREEN+reg + "<"+rn+">", 25500.0, head, chest, leg, boots, main, off, EntityType.SKELETON);
-		newmob.setConversionTime(-1);
+		Bogged newmob = (Bogged) Summon(esl, ChatColor.DARK_GREEN+reg + "<"+rn+">", 25500.0, head, chest, leg, boots, main, off, EntityType.BOGGED);
 		
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
 		newmob.setMetadata("MachineGunman", new FixedMetadataValue(RMain.getInstance(), rn));
@@ -345,7 +343,7 @@ public class PoisonRaids extends Summoned {
 		addraider(rn,META,newmob);
 		
 	}
-	@SuppressWarnings("unchecked")
+
 	final private void Boss(Location spl, String rn) {
 
     	Random random=new Random();
@@ -393,43 +391,8 @@ public class PoisonRaids extends Summoned {
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		addraider(rn,META,newmob);
-		
-	
-		final Object ht = getherotype(rn);
-	
-		if(ht instanceof Player) {
-			Player p = (Player) ht;
-			int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-	            @Override
-	            public void run() 
-	            {
-	
-					if(Holding.ale(newmob)!=null) {
-	                	raidbar.get(rn, META).setProgress(Holding.ale(newmob).getHealth()/100000d);
-	                	raidbar.get(rn, META).setTitle(Holding.ale(newmob).getName());
-	    				raidbar.get(rn, META).addPlayer(p);
-					}
-	            }
-			}, 0, 1);
-			raidbart.put(rn, META, task);
-		}
-		else if(getherotype(rn) instanceof HashSet){
-			HashSet<Player> par = (HashSet<Player>) ht;
-			int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-	            @Override
-	            public void run() 
-	            {
-					if(Holding.ale(newmob)!=null) {
-	                	raidbar.get(rn, META).setProgress(Holding.ale(newmob).getHealth()/25000d);
-	                	raidbar.get(rn, META).setTitle(Holding.ale(newmob).getName());
-	            		par.forEach(p -> {
-	        				raidbar.get(rn, META).addPlayer(p);
-	            		});
-					}
-	            }
-			}, 0, 1);
-			raidbart.put(rn, META, task);
-		}
+
+		bossBar(rn, META, newmob);
 		
 	}
 	

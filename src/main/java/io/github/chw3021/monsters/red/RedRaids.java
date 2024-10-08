@@ -24,6 +24,7 @@ import org.bukkit.entity.Ravager;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Vindicator;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
@@ -31,7 +32,6 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import io.github.chw3021.commons.Holding;
 import io.github.chw3021.monsters.raids.Summoned;
 import io.github.chw3021.rmain.RMain;
 
@@ -108,30 +108,30 @@ public class RedRaids extends Summoned {
 		LeatherArmorMeta hem = (LeatherArmorMeta) head.getItemMeta();
 		hem.setColor(Color.RED);
 		head.setItemMeta(hem);
-		head.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		head.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		head.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		head.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		head.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		head.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
 		LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
 		chm.setColor(Color.RED);
 		chest.setItemMeta(chm);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		chest.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		chest.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		chest.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack leg = new ItemStack(Material.LEATHER_LEGGINGS);
 		LeatherArmorMeta lem = (LeatherArmorMeta) leg.getItemMeta();
 		lem.setColor(Color.RED);
 		leg.setItemMeta(lem);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		leg.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		leg.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		leg.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
 		LeatherArmorMeta bom = (LeatherArmorMeta) boots.getItemMeta();
 		bom.setColor(Color.RED);
 		boots.setItemMeta(bom);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		boots.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		boots.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		boots.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack main = new ItemStack(Material.IRON_SWORD);
 		String reg = lang.equalsIgnoreCase("ko_kr") ? "붉은용사":"RedWarrior";
 		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.RED+reg + "<"+rn+">", 15000.0, head, chest, leg, boots, main, null, EntityType.SKELETON);
@@ -161,36 +161,36 @@ public class RedRaids extends Summoned {
 		LeatherArmorMeta hem = (LeatherArmorMeta) head.getItemMeta();
 		hem.setColor(Color.RED);
 		head.setItemMeta(hem);
-		head.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		head.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		head.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		head.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		head.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		head.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
 		LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
 		chm.setColor(Color.RED);
 		chest.setItemMeta(chm);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		chest.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		chest.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		chest.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack leg = new ItemStack(Material.LEATHER_LEGGINGS);
 		LeatherArmorMeta lem = (LeatherArmorMeta) leg.getItemMeta();
 		lem.setColor(Color.RED);
 		leg.setItemMeta(lem);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		leg.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		leg.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		leg.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
 		LeatherArmorMeta bom = (LeatherArmorMeta) boots.getItemMeta();
 		bom.setColor(Color.RED);
 		boots.setItemMeta(bom);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		boots.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		boots.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		boots.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack main = new ItemStack(Material.NETHERITE_SWORD);
 		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
-		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
+		main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
 		ItemStack off = new ItemStack(Material.SHIELD);
 		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
-		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
+		main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
 		String reg = lang.equalsIgnoreCase("ko_kr") ? "붉은단장":"RedWarlord";
 		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.RED+reg + "<"+rn+">", 20000.0, head, chest, leg, boots, main, off, EntityType.SKELETON);
 		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
@@ -220,33 +220,33 @@ public class RedRaids extends Summoned {
     	double number2 = (random.nextDouble()+1.5) * 2.5 * (random.nextBoolean() ? -1 : 1);
     	Location esl = spl.clone().add(number, 2.5, number2);
     	ItemStack head = new ItemStack(Material.RED_SANDSTONE);
-		head.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		head.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		head.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		head.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		head.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		head.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
 		LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
 		chm.setColor(Color.RED);
 		chest.setItemMeta(chm);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		chest.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		chest.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		chest.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack leg = new ItemStack(Material.LEATHER_LEGGINGS);
 		LeatherArmorMeta lem = (LeatherArmorMeta) leg.getItemMeta();
 		lem.setColor(Color.RED);
 		leg.setItemMeta(lem);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		leg.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		leg.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		leg.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
 		LeatherArmorMeta bom = (LeatherArmorMeta) boots.getItemMeta();
 		bom.setColor(Color.RED);
 		boots.setItemMeta(bom);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		boots.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		boots.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		boots.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack main = new ItemStack(Material.FIRE_CHARGE);
 		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
-		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 5);
+		main.addUnsafeEnchantment(Enchantment.SHARPNESS, 5);
 		ItemStack off = new ItemStack(Material.NETHERITE_AXE);
 		ItemMeta offm = off.getItemMeta();
 		offm.setCustomModelData(4010);
@@ -280,36 +280,36 @@ public class RedRaids extends Summoned {
     	double number2 = (random.nextDouble()+1.5) * 2 * (random.nextBoolean() ? -1 : 1);
     	Location esl = spl.clone().add(number, 2.5, number2);
     	ItemStack head = new ItemStack(Material.CHISELED_RED_SANDSTONE);
-		head.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		head.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		head.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		head.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		head.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		head.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
 		LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
 		chm.setColor(Color.RED);
 		chest.setItemMeta(chm);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		chest.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		chest.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		chest.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack leg = new ItemStack(Material.LEATHER_LEGGINGS);
 		LeatherArmorMeta lem = (LeatherArmorMeta) leg.getItemMeta();
 		lem.setColor(Color.RED);
 		leg.setItemMeta(lem);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		leg.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		leg.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		leg.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
 		LeatherArmorMeta bom = (LeatherArmorMeta) boots.getItemMeta();
 		bom.setColor(Color.RED);
 		boots.setItemMeta(bom);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		boots.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		boots.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		boots.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack main = new ItemStack(Material.FIRE_CHARGE);
 		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
-		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 5);
+		main.addUnsafeEnchantment(Enchantment.SHARPNESS, 5);
 		ItemStack off = new ItemStack(Material.ENCHANTED_BOOK);
 		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
-		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 5);
+		main.addUnsafeEnchantment(Enchantment.SHARPNESS, 5);
 		String reg = lang.equalsIgnoreCase("ko_kr") ? "붉은 주술사":"RedWarlock";
 		Evoker newmob = (Evoker) Summon(esl, ChatColor.RED+reg + "<"+rn+">", 19000.0, head, chest, leg, boots, main, off, EntityType.EVOKER);
 		newmob.setCanJoinRaid(false);
@@ -346,26 +346,26 @@ public class RedRaids extends Summoned {
 		LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
 		chm.setColor(Color.RED);
 		chest.setItemMeta(chm);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		chest.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		chest.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		chest.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack leg = new ItemStack(Material.LEATHER_LEGGINGS);
 		LeatherArmorMeta lem = (LeatherArmorMeta) leg.getItemMeta();
 		lem.setColor(Color.RED);
 		leg.setItemMeta(lem);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		leg.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		leg.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		leg.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
 		LeatherArmorMeta bom = (LeatherArmorMeta) boots.getItemMeta();
 		bom.setColor(Color.RED);
 		boots.setItemMeta(bom);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		boots.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		boots.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		boots.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack main = new ItemStack(Material.FIRE_CHARGE);
 		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
-		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 5);
+		main.addUnsafeEnchantment(Enchantment.SHARPNESS, 5);
 		String reg = lang.equalsIgnoreCase("ko_kr") ? "테라코타좀비":"WalkingTerracotta";
 		Husk newmob = (Husk) Summon(esl, ChatColor.RED+reg + "<"+rn+">", 20000.0, head, chest, leg, boots, main, main, EntityType.HUSK);
 		newmob.setAdult();
@@ -400,26 +400,26 @@ public class RedRaids extends Summoned {
 		LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
 		chm.setColor(Color.RED);
 		chest.setItemMeta(chm);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		chest.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		chest.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		chest.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack leg = new ItemStack(Material.LEATHER_LEGGINGS);
 		LeatherArmorMeta lem = (LeatherArmorMeta) leg.getItemMeta();
 		lem.setColor(Color.RED);
 		leg.setItemMeta(lem);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		leg.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		leg.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		leg.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
 		LeatherArmorMeta bom = (LeatherArmorMeta) boots.getItemMeta();
 		bom.setColor(Color.RED);
 		boots.setItemMeta(bom);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		boots.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		boots.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		boots.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack main = new ItemStack(Material.FIRE_CHARGE);
 		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
-		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 5);
+		main.addUnsafeEnchantment(Enchantment.SHARPNESS, 5);
 		String reg = lang.equalsIgnoreCase("ko_kr") ? "용암괴수":"Lavager";
 		Ravager newmob = (Ravager) Summon(esl, ChatColor.RED+reg + "<"+rn+">", 21000.0, head, chest, leg, boots, main, main, EntityType.RAVAGER);
 		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
@@ -454,38 +454,38 @@ public class RedRaids extends Summoned {
 		LeatherArmorMeta hem = (LeatherArmorMeta) head.getItemMeta();
 		hem.setColor(Color.RED);
 		head.setItemMeta(hem);
-		head.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		head.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		head.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		head.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		head.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		head.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
 		LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
 		chm.setColor(Color.RED);
 		chest.setItemMeta(chm);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		chest.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		chest.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		chest.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack leg = new ItemStack(Material.LEATHER_LEGGINGS);
 		LeatherArmorMeta lem = (LeatherArmorMeta) leg.getItemMeta();
 		lem.setColor(Color.RED);
 		leg.setItemMeta(lem);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		leg.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		leg.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		leg.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
 		LeatherArmorMeta bom = (LeatherArmorMeta) boots.getItemMeta();
 		bom.setColor(Color.RED);
 		boots.setItemMeta(bom);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		boots.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		boots.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		boots.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack main = new ItemStack(Material.BOW);
-		main.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 2);
-		main.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 2);
-		main.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 5);
+		main.addUnsafeEnchantment(Enchantment.POWER, 2);
+		main.addUnsafeEnchantment(Enchantment.PUNCH, 2);
+		main.addUnsafeEnchantment(Enchantment.FLAME, 5);
 		ItemStack off = new ItemStack(Material.BOW);
-		main.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 2);
-		main.addUnsafeEnchantment(Enchantment.ARROW_KNOCKBACK, 2);
-		main.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 5);
+		main.addUnsafeEnchantment(Enchantment.POWER, 2);
+		main.addUnsafeEnchantment(Enchantment.PUNCH, 2);
+		main.addUnsafeEnchantment(Enchantment.FLAME, 5);
 		String reg = lang.equalsIgnoreCase("ko_kr") ? "그을린궁수":"BurnedArcher";
 		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.RED+reg + "<"+rn+">", 16000.0, head, chest, leg, boots, main, off, EntityType.SKELETON);
 		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
@@ -509,7 +509,7 @@ public class RedRaids extends Summoned {
 		addraider(rn,META,newmob);
 		
 	}
-	@SuppressWarnings("unchecked")
+	
 	final private void Boss(Location spl, String rn) {
 
     	Random random=new Random();
@@ -527,29 +527,30 @@ public class RedRaids extends Summoned {
 		LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
 		chm.setColor(Color.RED);
 		chest.setItemMeta(chm);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		chest.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		chest.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		chest.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		chest.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack leg = new ItemStack(Material.LEATHER_LEGGINGS);
 		LeatherArmorMeta lem = (LeatherArmorMeta) leg.getItemMeta();
 		lem.setColor(Color.RED);
 		leg.setItemMeta(lem);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		leg.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		leg.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		leg.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		leg.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
 		LeatherArmorMeta bom = (LeatherArmorMeta) boots.getItemMeta();
 		bom.setColor(Color.RED);
 		boots.setItemMeta(bom);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, 5);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
-		boots.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 1);
+		boots.addUnsafeEnchantment(Enchantment.FLAME, 5);
+		boots.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
+		boots.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 		boots.addUnsafeEnchantment(Enchantment.DEPTH_STRIDER,5);
-		ItemStack main = new ItemStack(Material.NETHERITE_AXE);
-		ItemMeta offm = main.getItemMeta();
-		offm.setCustomModelData(4010);
-		main.setItemMeta(offm);
-		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
+		
+		ItemStack main = new ItemStack(Material.BOW);//Bow
+		ItemMeta mm = main.getItemMeta();
+		mm.setCustomModelData(2010);
+		main.setItemMeta(mm);
+		
 		ItemStack off = new ItemStack(Material.SHIELD);
 		off.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
 		String reg = lang.equalsIgnoreCase("ko_kr") ? "붉은기사":"RedKnight";
@@ -577,18 +578,46 @@ public class RedRaids extends Summoned {
 		
 		addraider(rn,META,newmob);
 		
-	
+		bossBar(rn, META, newmob);
+
 		final Object ht = getherotype(rn);
-	
+
+		ItemStack mainf = new ItemStack(Material.NETHERITE_AXE);
+		ItemMeta offm = mainf.getItemMeta();
+		offm.setCustomModelData(4010);
+		mainf.setItemMeta(offm);
+		mainf.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
+		
 		if(ht instanceof Player) {
 			Player p = (Player) ht;
+			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+		}
+		else if(getherotype(rn) instanceof HashSet){
+			@SuppressWarnings("unchecked")
+			HashSet<Player> par = (HashSet<Player>) ht;
+    		par.forEach(p -> {
+    			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+    		});
+		}
+	/*
+		final Object ht = getherotype(rn);
+
+		ItemStack mainf = new ItemStack(Material.NETHERITE_AXE);
+		ItemMeta offm = mainf.getItemMeta();
+		offm.setCustomModelData(4010);
+		mainf.setItemMeta(offm);
+		mainf.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
+		
+		if(ht instanceof Player) {
+			Player p = (Player) ht;
+			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
 			int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
 	            @Override
 	            public void run() 
 	            {
 	
 					if(Holding.ale(newmob)!=null) {
-	                	raidbar.get(rn, META).setProgress(Holding.ale(newmob).getHealth()/60000d);
+	                	raidbar.get(rn, META).setProgress((double)Holding.ale(newmob).getHealth()/Holding.ale(newmob).getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
 	                	raidbar.get(rn, META).setTitle(Holding.ale(newmob).getName());
 	    				raidbar.get(rn, META).addPlayer(p);
 					}
@@ -598,12 +627,15 @@ public class RedRaids extends Summoned {
 		}
 		else if(getherotype(rn) instanceof HashSet){
 			HashSet<Player> par = (HashSet<Player>) ht;
+    		par.forEach(p -> {
+    			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+    		});
 			int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
 	            @Override
 	            public void run() 
 	            {
 					if(Holding.ale(newmob)!=null) {
-	                	raidbar.get(rn, META).setProgress(Holding.ale(newmob).getHealth()/60000d);
+	                	raidbar.get(rn, META).setProgress((double)Holding.ale(newmob).getHealth()/Holding.ale(newmob).getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
 	                	raidbar.get(rn, META).setTitle(Holding.ale(newmob).getName());
 	            		par.forEach(p -> {
 	        				raidbar.get(rn, META).addPlayer(p);
@@ -612,7 +644,7 @@ public class RedRaids extends Summoned {
 	            }
 			}, 0, 1);
 			raidbart.put(rn, META, task);
-		}
+		}*/
 		
 	}
 	

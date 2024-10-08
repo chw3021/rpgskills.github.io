@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
@@ -145,6 +146,7 @@ public class NPCLoc implements Serializable, Listener{
 		if(w.getEnvironment() == Environment.THE_END && st != Structure.END_CITY) {
 			return null;
 		}
+		
 		try {
 			return w.locateNearestStructure(lel, st, 1, b).getLocation();
 		}
@@ -213,6 +215,12 @@ public class NPCLoc implements Serializable, Listener{
 			sths.add(Structure.OCEAN_RUIN_WARM);
 			sths.add(Structure.PILLAGER_OUTPOST);
 			sths.add(Structure.RUINED_PORTAL);
+			sths.add(Structure.RUINED_PORTAL_DESERT);
+			sths.add(Structure.RUINED_PORTAL_JUNGLE);
+			sths.add(Structure.RUINED_PORTAL_MOUNTAIN);
+			sths.add(Structure.RUINED_PORTAL_NETHER);
+			sths.add(Structure.RUINED_PORTAL_OCEAN);
+			sths.add(Structure.RUINED_PORTAL_SWAMP);
 			sths.add(Structure.SHIPWRECK);
 			sths.add(Structure.STRONGHOLD);
 			sths.add(Structure.SWAMP_HUT);
@@ -237,42 +245,73 @@ public class NPCLoc implements Serializable, Listener{
 			if(w.hasMetadata("fake")||w.hasMetadata("rpgraidworld")) {
 				return;
 			}
+			
+            AtomicInteger j = new AtomicInteger();
+            
 			if(!Locs.containsKey(w.getUID())) {
 				HashSet<HashMap<Location, String>> hs = new HashSet<>();
 				strset().forEach(str -> {
+					
 					HashMap<Location, String> hm = new HashMap<>();
-					Location stl = strct(w, new Location(w,0,0,0), str.getKey().getKey(), true);
-					if(stl == null) {
-						stl = strct(w, new Location(w,0,0,0), str.getKey().getKey(), false);
-						if(stl == null) {
-							return;
-						}
-					}
-					hm.put(stl, str.getKey().getKey());
+					
+					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		                @Override
+		                public void run() 
+		                {
+		                	Location stl = strct(w, new Location(w,0,0,0), str.getKey().getKey(), true);
+							if(stl == null) {
+								stl = strct(w, new Location(w,0,0,0), str.getKey().getKey(), false);
+								if(stl == null) {
+									return;
+								}
+							}
+							hm.put(stl, str.getKey().getKey());
 
-					Location stl1 = strct(w, w.getSpawnLocation(), str.getKey().getKey(), true);
-					if(stl1 == null) {
-						stl1 = strct(w, w.getSpawnLocation(), str.getKey().getKey(), false);
-						if(stl1 == null) {
-							return;
-						}
-					}
-					hm.put(stl1, str.getKey().getKey());
-					hs.add(hm);
+							Location stl1 = strct(w, w.getSpawnLocation(), str.getKey().getKey(), true);
+							if(stl1 == null) {
+								stl1 = strct(w, w.getSpawnLocation(), str.getKey().getKey(), false);
+								if(stl1 == null) {
+									return;
+								}
+							}
+							hm.put(stl1, str.getKey().getKey());
+							hs.add(hm);
+		                }
+					}, j.incrementAndGet()*20+100); 
+					
 				});
-				saver(w,hs);
-				System.out.println("File Created");
-				System.out.println("Please reload one more time after reload completed");
+
+				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	                @Override
+	                public void run() 
+	                {
+	    				saver(w,hs);
+	    				System.out.println("File Created");
+	    				System.out.println("Please reload one more time after reload completed");
+	                }
+				}, j.incrementAndGet()*20+100); 
 				return;
 			}
 			else if(Locs.containsKey(w.getUID())) {
 				System.out.println("Spawning NPCs of World: "+w.getName() +"...");
 				Locs.get(w.getUID()).forEach(hm -> {
 					hm.entrySet().forEach(en->{
-						Spawn(en.getKey(), en.getValue());
+						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+			                @Override
+			                public void run() 
+			                {
+								Spawn(en.getKey(), en.getValue());
+			                }
+						}, j.incrementAndGet()*20+100); 
 					});
 				});
-				System.out.println(w.getName() +"'s NPCs Spawned");
+				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	                @Override
+	                public void run() 
+	                {
+	    				System.out.println(w.getName() +"'s NPCs Spawned");
+	                }
+				}, j.incrementAndGet()*20+100); 
 			}
 		});
 	}
@@ -321,42 +360,56 @@ public class NPCLoc implements Serializable, Listener{
 	@EventHandler	
 	public void despawning(PluginDisableEvent ev) 
 	{
-		
+		AtomicInteger j = new AtomicInteger();
 		Bukkit.getWorlds().forEach(w -> {
 			if(w.hasMetadata("fake")||w.hasMetadata("rpgraidworld") || !w.canGenerateStructures()) {
 				return;
 			}
-			
-			if(PlayerLocs.containsKey(w.getUID())) {
-				HashSet<HashMap<Location, String>> hs = new HashSet<>();
-				PlayerLocs.get(w.getUID()).forEach(l -> {
-					strset().forEach(str -> {
-						HashMap<Location, String> hm = new HashMap<>();
 
-						Location stl1 = strct(w, l, str.getKey().getKey(), true);
-						if(stl1 == null) {
-							stl1 = strct(w, l, str.getKey().getKey(), false);
-							if(stl1 == null) {
-								return;
-							}
-						}
-						hm.put(stl1, str.getKey().getKey());
-						
-						hs.add(hm);
-					});
-				});
-				saver(w,hs);
-			}
-			
-			if(NPCLocs.containsKey(w.getUID())) {
-				NPCLocs.get(w.getUID()).forEach(l -> {
-					for(Entity e : l.getChunk().getEntities()) {
-						e.remove();
-					};
-				});
-			}
+			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                @Override
+                public void run() 
+                {
+        			if(PlayerLocs.containsKey(w.getUID())) {
+        				HashSet<HashMap<Location, String>> hs = new HashSet<>();
+        				PlayerLocs.get(w.getUID()).forEach(l -> {
+        					strset().forEach(str -> {
+        						HashMap<Location, String> hm = new HashMap<>();
+
+        						Location stl1 = strct(w, l, str.getKey().getKey(), true);
+        						if(stl1 == null) {
+        							stl1 = strct(w, l, str.getKey().getKey(), false);
+        							if(stl1 == null) {
+        								return;
+        							}
+        						}
+        						hm.put(stl1, str.getKey().getKey());
+        						
+        						hs.add(hm);
+        					});
+        				});
+        				saver(w,hs);
+        			}
+        			
+        			/*if(NPCLocs.containsKey(w.getUID())) {
+        				NPCLocs.get(w.getUID()).forEach(l -> {
+        					for(Entity e : l.getChunk().getEntities()) {
+        						e.remove();
+        					};
+        				});
+        			}*/
+        			npcloc.keySet().forEach(uid ->{
+        				Entity entity = Bukkit.getEntity(uid);
+        				if (entity != null) {
+        				    entity.remove();
+        				}
+        			});
+                }
+			}, j.incrementAndGet()*40); 
 		});
 	}
+	
+	
 	public static HashMap<UUID,Location> npcloc = new HashMap<UUID,Location>();
 	private static HashMap<Location,String> npcsloc = new HashMap<Location,String> ();
 	public static HashMap<Location,Location> pil = new HashMap<Location,Location> ();
@@ -739,7 +792,7 @@ public class NPCLoc implements Serializable, Listener{
     			boots.setItemMeta(bom);
 
     			String reg = lang.contains("kr") ? "이글루 눈사람":"Igloo Snowman";
-    			Snowman v = (Snowman) mnpc(w,lel, EntityType.SNOWMAN, "igloo", reg,head,chest,leg,boots,null,null);
+    			Snowman v = (Snowman) mnpc(w,lel, EntityType.SNOW_GOLEM, "igloo", reg,head,chest,leg,boots,null,null);
         		if(v != null) {
             		v.setDerp(true);
         		}

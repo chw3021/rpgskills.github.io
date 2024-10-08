@@ -13,7 +13,6 @@ import org.bukkit.entity.Drowned;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Evoker;
 import org.bukkit.entity.Husk;
-import org.bukkit.entity.Illusioner;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Vindicator;
 import org.bukkit.entity.Witch;

@@ -33,7 +33,7 @@ import io.github.chw3021.items.armors.Boots;
 import io.github.chw3021.items.armors.Chestplate;
 import io.github.chw3021.items.armors.Helmet;
 import io.github.chw3021.items.armors.Leggings;
-import io.github.chw3021.obtains.NPCsSpawn;
+import io.github.chw3021.obtains.NPCLoc;
 import io.github.chw3021.obtains.Obtained;
 import io.github.chw3021.obtains.TrophyLoc;
 import io.github.chw3021.party.Party;
@@ -139,7 +139,7 @@ public class OceanMonumentQuest implements Listener {
 		    		QuestEnd(p,3);
 					return;
 				}
-				if(TrophyLoc.getLocsdata().Locs.containsEntry(p.getUniqueId(), NPCsSpawn.npcloc.get(le.getUniqueId()))) {
+				if(TrophyLoc.getLocsdata().Locs.containsEntry(p.getUniqueId(), NPCLoc.npcloc.get(le.getUniqueId()))) {
 					
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": 감사합니다.").create());
@@ -256,7 +256,7 @@ public class OceanMonumentQuest implements Listener {
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Could you bring me five of [Guardian's Nerve Cells] from near by Guardians?").create());
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": (Quest Will be Canceled If You Die, Quit, RightClick or go far away)").create());
 	        		}
-	        		quested.put(p.getUniqueId(), NPCsSpawn.npcloc.get(le.getUniqueId()));
+	        		quested.put(p.getUniqueId(), NPCLoc.npcloc.get(le.getUniqueId()));
 	        		startloc.put(p.getUniqueId(), le.getLocation().clone());
 
 	        		

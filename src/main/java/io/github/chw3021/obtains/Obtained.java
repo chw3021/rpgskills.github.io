@@ -694,7 +694,7 @@ public class Obtained implements Serializable, Listener {
 		items.setDisplayName(display);
 		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+		items.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 		items.setLore(Lore);
 		item.setItemMeta(items);
 		inv.setItem(loc, item);
@@ -708,7 +708,7 @@ public class Obtained implements Serializable, Listener {
 		items.setDisplayName(display);
 		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		items.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+		items.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 		items.setLore(Lore);
 		item.setItemMeta(items);
 		inv.setItem(loc, item);
@@ -720,54 +720,54 @@ public class Obtained implements Serializable, Listener {
 		Obtained od = new Obtained(Obtained.loadData(path + "/plugins/RPGskills/Obtained.data"));
 	
 		ItemStack mp = new ItemStack(Material.CHEST);
-		mp.addUnsafeEnchantment(Enchantment.DAMAGE_UNDEAD, 1);
+		mp.addUnsafeEnchantment(Enchantment.SMITE, 1);
 	
 		ItemStack ms = new ItemStack(Material.POWERED_RAIL);
-		ms.addUnsafeEnchantment(Enchantment.DAMAGE_UNDEAD, 1);
+		ms.addUnsafeEnchantment(Enchantment.SMITE, 1);
 		ItemStack zh = new ItemStack(Material.ZOMBIE_HEAD);
-		zh.addUnsafeEnchantment(Enchantment.DAMAGE_UNDEAD, 1);
+		zh.addUnsafeEnchantment(Enchantment.SMITE, 1);
 		ItemStack sb = new ItemStack(Material.POWDER_SNOW_BUCKET);
-		sb.addUnsafeEnchantment(Enchantment.DAMAGE_UNDEAD, 1);
+		sb.addUnsafeEnchantment(Enchantment.SMITE, 1);
 		ItemStack pc = new ItemStack(Material.PRISMARINE_CRYSTALS);
-		pc.addUnsafeEnchantment(Enchantment.DAMAGE_UNDEAD, 1);
+		pc.addUnsafeEnchantment(Enchantment.SMITE, 1);
 		ItemStack ds = new ItemStack(Material.DARK_OAK_SIGN);
-		ds.addUnsafeEnchantment(Enchantment.DAMAGE_UNDEAD, 1);
+		ds.addUnsafeEnchantment(Enchantment.SMITE, 1);
 		ItemStack bb = new ItemStack(Material.BIRCH_BOAT);
-		ds.addUnsafeEnchantment(Enchantment.DAMAGE_UNDEAD, 1);
+		ds.addUnsafeEnchantment(Enchantment.SMITE, 1);
 		ItemStack hs = new ItemStack(Material.HEART_OF_THE_SEA);
-		hs.addUnsafeEnchantment(Enchantment.DAMAGE_UNDEAD, 1);
+		hs.addUnsafeEnchantment(Enchantment.SMITE, 1);
 		ItemStack jp = new ItemStack(Material.MOSSY_STONE_BRICKS);
-		jp.addUnsafeEnchantment(Enchantment.DAMAGE_UNDEAD, 1);
+		jp.addUnsafeEnchantment(Enchantment.SMITE, 1);
 		ItemStack pe = new ItemStack(Material.WHITE_BANNER);
 		BannerMeta pem = (BannerMeta) pe.getItemMeta();
 		pem.addPattern(new Pattern(DyeColor.WHITE, PatternType.BASE));
-		pem.addPattern(new Pattern(DyeColor.CYAN, PatternType.RHOMBUS_MIDDLE));
+		pem.addPattern(new Pattern(DyeColor.CYAN, PatternType.RHOMBUS));
 		pem.addPattern(new Pattern(DyeColor.LIGHT_GRAY, PatternType.STRIPE_BOTTOM));
 		pem.addPattern(new Pattern(DyeColor.GRAY, PatternType.STRIPE_CENTER));
 		pem.addPattern(new Pattern(DyeColor.LIGHT_GRAY, PatternType.CURLY_BORDER));
 		pem.addPattern(new Pattern(DyeColor.BLACK, PatternType.STRIPE_MIDDLE));
 		pem.addPattern(new Pattern(DyeColor.LIGHT_GRAY, PatternType.HALF_HORIZONTAL));
-		pem.addPattern(new Pattern(DyeColor.LIGHT_GRAY, PatternType.CIRCLE_MIDDLE));
+		pem.addPattern(new Pattern(DyeColor.LIGHT_GRAY, PatternType.CIRCLE));
 		pem.addPattern(new Pattern(DyeColor.BLACK, PatternType.BORDER));
 		pe.setItemMeta(pem);
 		ItemStack cs = new ItemStack(Material.CHISELED_SANDSTONE);
-		cs.addUnsafeEnchantment(Enchantment.DAMAGE_UNDEAD, 1);
+		cs.addUnsafeEnchantment(Enchantment.SMITE, 1);
 		ItemStack ef = new ItemStack(Material.END_PORTAL_FRAME);
-		ef.addUnsafeEnchantment(Enchantment.DAMAGE_UNDEAD, 1);
+		ef.addUnsafeEnchantment(Enchantment.SMITE, 1);
 		ItemStack my = new ItemStack(Material.MYCELIUM);
-		my.addUnsafeEnchantment(Enchantment.DAMAGE_UNDEAD, 1);
+		my.addUnsafeEnchantment(Enchantment.SMITE, 1);
 		ItemStack be = new ItemStack(Material.BELL);
-		be.addUnsafeEnchantment(Enchantment.DAMAGE_UNDEAD, 1);
+		be.addUnsafeEnchantment(Enchantment.SMITE, 1);
 		ItemStack co = new ItemStack(Material.CRYING_OBSIDIAN);
-		co.addUnsafeEnchantment(Enchantment.DAMAGE_UNDEAD, 1);
+		co.addUnsafeEnchantment(Enchantment.SMITE, 1);
 		ItemStack nq = new ItemStack(Material.NETHER_QUARTZ_ORE);
-		nq.addUnsafeEnchantment(Enchantment.DAMAGE_UNDEAD, 1);
+		nq.addUnsafeEnchantment(Enchantment.SMITE, 1);
 		ItemStack ba = new ItemStack(Material.BASALT);
-		ba.addUnsafeEnchantment(Enchantment.DAMAGE_UNDEAD, 1);
+		ba.addUnsafeEnchantment(Enchantment.SMITE, 1);
 		ItemStack ed = new ItemStack(Material.END_STONE_BRICKS);
-		ed.addUnsafeEnchantment(Enchantment.DAMAGE_UNDEAD, 1);
+		ed.addUnsafeEnchantment(Enchantment.SMITE, 1);
 		ItemStack ph = new ItemStack(Material.DRAGON_HEAD);
-		ph.addUnsafeEnchantment(Enchantment.DAMAGE_UNDEAD, 1);
+		ph.addUnsafeEnchantment(Enchantment.SMITE, 1);
 	
 		if (p.getLocale().equalsIgnoreCase("ko_kr")) {
 			itemset(ChatColor.GOLD + "쓰레기통", new ItemStack(Material.COMPOSTER), 0, 1, Arrays.asList("클릭시 쓰레기통을 엽니다"),
@@ -865,7 +865,7 @@ public class Obtained implements Serializable, Listener {
 			}
 	
 			if (od.PillagerOutpost.getOrDefault(p.getUniqueId(), 0) >= 2) {
-				pe.addUnsafeEnchantment(Enchantment.DAMAGE_UNDEAD, 1);
+				pe.addUnsafeEnchantment(Enchantment.SMITE, 1);
 				itemset(ChatColor.GOLD + "약탈자 전초기지 전리품", pe, 0, 1, Arrays.asList("방어력이 6% 증가합니다"), 44, inv);
 			} else {
 				itemset(ChatColor.GOLD + "약탈자 전초기지 전리품(아직 모두 획득하지 못함)", pe, 0, 1,
@@ -1052,7 +1052,7 @@ public class Obtained implements Serializable, Listener {
 			}
 	
 			if (od.PillagerOutpost.getOrDefault(p.getUniqueId(), 0) >= 2) {
-				pe.addUnsafeEnchantment(Enchantment.DAMAGE_UNDEAD, 1);
+				pe.addUnsafeEnchantment(Enchantment.SMITE, 1);
 				itemset(ChatColor.GOLD + "Trophy Of PillagerOutpost", pe, 0, 1, Arrays.asList("Increase Armor 6%"), 44,
 						inv);
 			} else {

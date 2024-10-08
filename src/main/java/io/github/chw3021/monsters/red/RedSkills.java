@@ -17,7 +17,6 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Evoker;
-import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Husk;
 import org.bukkit.entity.Illusioner;
@@ -28,14 +27,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Snowball;
 import org.bukkit.entity.Stray;
-import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityDropItemEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
+import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.EntitySpellCastEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
@@ -45,9 +43,6 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
-
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
 
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.monsters.raids.OverworldRaids;
@@ -69,7 +64,6 @@ public class RedSkills extends Summoned{
 	private HashMap<UUID, Long> rb3cooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Long> rb5cooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Long> rb6cooldown = new HashMap<UUID, Long>();
-	private HashMap<UUID, Long> rb7cooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Long> rb8cooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Long> chcooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Integer> redcharge = new HashMap<UUID, Integer>();
@@ -81,9 +75,6 @@ public class RedSkills extends Summoned{
 	private HashMap<UUID, Boolean> chargable = new HashMap<UUID, Boolean>();
 	
 	private static HashMap<UUID, Integer> fbt = new HashMap<UUID, Integer>();
-	
-	private HashMap<UUID, LivingEntity> magma = new HashMap<UUID, LivingEntity>();
-
 	
 	private static final RedSkills instance = new RedSkills ();
 	public static RedSkills getInstance()
@@ -117,7 +108,7 @@ public class RedSkills extends Summoned{
 		    				for(Entity e : p.getNearbyEntities(3, 2, 3)) {
 								if(p!=e && e instanceof Player) {
 									LivingEntity le = (LivingEntity)e;
-									le.damage(2,p);
+									le.damage(2.5,p);
 								}
 		    				}
 		                }
@@ -151,7 +142,6 @@ public class RedSkills extends Summoned{
     	    			p.getWorld().playSound(p.getLocation(), Sound.ENTITY_HUSK_CONVERTED_TO_ZOMBIE, 1, 2);
     	                Snowball fb = (Snowball) p.launchProjectile(Snowball.class);
     	                fb.setItem(p.getEquipment().getHelmet());
-    	                fb.setBounce(false);
     	                fb.setShooter(p);
     	                try {
         	                fb.setVelocity(pe.getEyeLocation().toVector().subtract(p.getEyeLocation().toVector()).normalize().multiply(0.8));
@@ -176,7 +166,7 @@ public class RedSkills extends Summoned{
 			if(fb.getShooter() instanceof Husk) {
 				Husk p = (Husk) fb.getShooter();
 				if(fb.hasMetadata("headthrow")) {
-					fb.getWorld().spawnParticle(Particle.BLOCK_DUST, fb.getLocation(), 100,1,1,1, fb.getItem().getType().createBlockData());
+					fb.getWorld().spawnParticle(Particle.FALLING_DUST, fb.getLocation(), 100,1,1,1, fb.getItem().getType().createBlockData());
 					p.getWorld().playSound(fb.getLocation(), Sound.BLOCK_SAND_BREAK, 1, 1);
 					p.getWorld().playSound(fb.getLocation(), Sound.BLOCK_SAND_BREAK, 1, 2);
 					for(Entity e : fb.getNearbyEntities(1.3, 1.3, 1.3)) {
@@ -711,6 +701,7 @@ public class RedSkills extends Summoned{
 				                    p.getWorld().playSound(p.getLocation(), Sound.ENTITY_SKELETON_HORSE_JUMP_WATER, 1.0f, 0f);
 				                    p.getWorld().playSound(p.getLocation(), Sound.ENTITY_SKELETON_STEP, 1.0f, 0f);
 				        			p.teleport(tar.getLocation().clone().add(0, 6, 0));
+				        			p.setFallDistance(15);
 				        			stab.put(p.getUniqueId(), true);
 				                	backable.remove(p.getUniqueId());
 					            }
@@ -786,6 +777,7 @@ public class RedSkills extends Summoned{
 			                    p.getWorld().playSound(p.getLocation(), Sound.ENTITY_SKELETON_HORSE_JUMP_WATER, 1.0f, 0f);
 			                    p.getWorld().playSound(p.getLocation(), Sound.ENTITY_SKELETON_STEP, 1.0f, 0f);
 			        			p.teleport(tar.getLocation().clone().add(0, 6, 0));
+			        			p.setFallDistance(15);
 			        			stab.put(p.getUniqueId(), true);
 			                	backable.remove(p.getUniqueId());
 				            }
@@ -872,7 +864,7 @@ public class RedSkills extends Summoned{
 			if(fb.getShooter() instanceof LivingEntity) {
 				LivingEntity p = (LivingEntity) fb.getShooter();
 				if(fb.hasMetadata("redfb")) {
-					fb.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, fb.getLocation(), 2,1,1,1);
+					fb.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, fb.getLocation(), 2,1,1,1);
 					p.getWorld().playSound(fb.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 1);
 					for(Entity n : fb.getNearbyEntities(2.3, 2.3, 2.3)) {
 						if(n!=p && n instanceof LivingEntity&& !(n.hasMetadata("raid"))) {
@@ -882,7 +874,7 @@ public class RedSkills extends Summoned{
 					}
 				}
 				if(fb.hasMetadata("redbfb")) {
-					fb.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, fb.getLocation(), 2,1,1,1);
+					fb.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, fb.getLocation(), 2,1,1,1);
 					p.getWorld().playSound(fb.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 1);
 					for(Entity n : fb.getNearbyEntities(3, 3, 3)) {
 						if(n!=p && n instanceof LivingEntity&& !(n.hasMetadata("raid"))) {
@@ -929,8 +921,7 @@ public class RedSkills extends Summoned{
 		                    rb5cooldown.remove(p.getUniqueId()); // removing player from HashMap
 
 
-							p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 40, 3, false, false));
-							p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 40, 2, false, false));
+							p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 40, 2, false, false));
 							for(int i = 0; i <6; i++) {
 			                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					                @Override
@@ -985,8 +976,7 @@ public class RedSkills extends Summoned{
 		            {
 
 
-						p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 40, 3, false, false));
-						p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 40, 3, false, false));
+						p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 40, 3, false, false));
 						for(int i = 0; i <6; i++) {
 		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 				                @Override
@@ -1140,453 +1130,46 @@ public class RedSkills extends Summoned{
 			}
 	}
 
-	@SuppressWarnings("deprecation")
-	
-	public void Meteor(EntityDamageByEntityEvent d) 
+	public void Sweep(EntityShootBowEvent ev) 
 	{
-	    
-		int sec = 35;
-		if(d.getEntity() instanceof Stray && d.getEntity().hasMetadata("redboss") && d.getEntity().hasMetadata("ruined")) 
-		{
-			Stray p = (Stray)d.getEntity();
-			if(p.hasMetadata("failed")) {
-				return;
-			}
-			if((p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getMaxHealth()*0.2);
-                ordealable.put(p.getUniqueId(), true);
-                d.setCancelled(true);
-				return;
-			}
-				if(rb7cooldown.containsKey(p.getUniqueId()))
-		        {
-		            long timer = (rb7cooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
-		            if(!(timer < 0))
-		            {
-		            }
-		            else 
-		            {
-		                rb7cooldown.remove(p.getUniqueId()); // removing player from HashMap
-		                dazable.remove(p.getUniqueId());
-	                    if(fbt.containsKey(p.getUniqueId())) {
-	                    	Bukkit.getScheduler().cancelTask(fbt.get(p.getUniqueId()));
-	                    }
-		                Location rl = OverworldRaids.getraidloc(p).clone();
-		    			String rn = p.getMetadata("raid").get(0).asString();
-	                    p.teleport(rl.add(0, 1, 0));
-	                    final Location tl = p.getLocation();
-		                
-		                for(Entity e : OverworldRaids.getheroes(p)) {
-		                	if(e instanceof Player && !e.hasMetadata("fake")) {
-		                		Player pe = (Player) e;
-		                		Holding.invur(pe, 40l);
-		    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-			                		pe.sendMessage(ChatColor.BOLD+"붉은기사: 운명에 저항하지마라.");
-		    					}
-		    					else {
-			                		pe.sendMessage(ChatColor.BOLD+"RedKnight: You can't change your destiny.");
-		    					}
-								pe.getWorld().playSound(pe.getLocation(), Sound.ENTITY_WITHER_AMBIENT, 0.3f, 2);
-								if(pe.getWorld() == p.getWorld()) {
-									pe.teleport(tl);
-								}
-		                	}
-		                }
-	                    AtomicInteger j = new AtomicInteger();	
-						for(int i = 0; i <5; i++) {
-		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() {
-					            	ArrayList<Location> ring = new ArrayList<Location>();
-									p.getWorld().playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 1, 0);
+		if(ev.getEntity().hasMetadata("redboss")){
 
-				                	for(double an = 0; an<Math.PI*2; an +=Math.PI/180) {
-				                		ring.add(tl.clone().add(tl.getDirection().normalize().rotateAroundY(an).multiply(an)).add(0, an+j.get(), 0));
-				                	}
-				                	ring.forEach(l -> {
-										tl.getWorld().spawnParticle(Particle.ASH, l, 5, 0.5,0.5,0.5,0);
-										tl.getWorld().spawnParticle(Particle.SMOKE_NORMAL, l, 2, 0.5,0.5,0.5,0);
-										tl.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, l, 2, 0.5,0.5,0.5,0);
-				                		
-				                	});
-				                	j.incrementAndGet();
-				                }
-				            }, i*5); 	                    	
-	                    }
-						ArrayList<Location> mls1 = new ArrayList<>();
-						ArrayList<Location> mls2 = new ArrayList<>();
-						ArrayList<Location> mls3 = new ArrayList<>();
-						ArrayList<Location> mls4 = new ArrayList<>();
-						for(int i = 0; i<15; i++) {
-							mls1.add(rl.clone().add(i, 7, 0));
-							mls2.add(rl.clone().add(-i, 7, 0));
-							mls3.add(rl.clone().add(0, 7, i));
-							mls4.add(rl.clone().add(0, 7, -i));
-						}
-
-						for(int i = 0; i<15; i++) {
-							mls1.add(rl.clone().add(i, 7, i));
-							mls2.add(rl.clone().add(-i, 7, i));
-							mls3.add(rl.clone().add(-i, 7, -i));
-							mls4.add(rl.clone().add(i, 7, -i));
-						}
-
-
-						for(int i = 0; i<15; i++) {
-		                	Random r1 = new Random();
-		                	Random r2 = new Random();
-		                	Random r3 = new Random();
-		                	Random r4 = new Random();
-		                	double rd1 = r1.nextDouble()*20 *(r3.nextBoolean()?1:-1);
-		                	double rd2 = r2.nextDouble()*20*(r4.nextBoolean()?1:-1);
-							mls1.add(rl.clone().add(rd1, 7, rd2));
-							mls2.add(rl.clone().add(rd1, 7, rd2));
-							mls3.add(rl.clone().add(rd1, 7, rd2));
-							mls4.add(rl.clone().add(rd1, 7, rd2));
-						}
-		                Holding.holding(null, p, 60l);
-		                Holding.invur(p, 60l);
-						
-						int t1 = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() {
-				                AtomicInteger j1 = new AtomicInteger();
-				                AtomicInteger j2 = new AtomicInteger();
-				                AtomicInteger j3 = new AtomicInteger();
-				                AtomicInteger j4 = new AtomicInteger();
-			                	mls1.forEach(l -> {
-			                		int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-						                @Override
-						                public void run() {
-											FallingBlock fallingb = p.getWorld().spawnFallingBlock(l, Material.RED_GLAZED_TERRACOTTA.createBlockData());
-											fallingb.setInvulnerable(true);
-											fallingb.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
-											fallingb.setMetadata("redknightmagma", new FixedMetadataValue(RMain.getInstance(),true));
-											fallingb.setMetadata("redknightmagma"+rn, new FixedMetadataValue(RMain.getInstance(),true));
-											fallingb.setVisualFire(true);
-											fallingb.setDropItem(true);
-											fallingb.setHurtEntities(true);
-											magma.put(fallingb.getUniqueId(), p);
-						                }
-			                		}, j1.getAndIncrement()*4);
-									ordt.put(rn, t1);
-			                	});
-			                	mls2.forEach(l -> {
-			                		int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-						                @Override
-						                public void run() {
-											FallingBlock fallingb = p.getWorld().spawnFallingBlock(l, Material.RED_GLAZED_TERRACOTTA.createBlockData());
-											fallingb.setInvulnerable(true);
-											fallingb.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
-											fallingb.setMetadata("redknightmagma", new FixedMetadataValue(RMain.getInstance(),true));
-											fallingb.setMetadata("redknightmagma"+rn, new FixedMetadataValue(RMain.getInstance(),true));
-											fallingb.setVisualFire(true);
-											fallingb.setDropItem(true);
-											fallingb.setHurtEntities(true);
-											magma.put(fallingb.getUniqueId(), p);
-						                }
-			                		},j2.getAndIncrement()*4);
-									ordt.put(rn, t1);
-			                	});
-			                	mls3.forEach(l -> {
-			                		int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-						                @Override
-						                public void run() {
-											FallingBlock fallingb = p.getWorld().spawnFallingBlock(l, Material.RED_GLAZED_TERRACOTTA.createBlockData());
-											fallingb.setInvulnerable(true);
-											fallingb.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
-											fallingb.setMetadata("redknightmagma", new FixedMetadataValue(RMain.getInstance(),true));
-											fallingb.setMetadata("redknightmagma"+rn, new FixedMetadataValue(RMain.getInstance(),true));
-											fallingb.setVisualFire(true);
-											fallingb.setDropItem(true);
-											fallingb.setHurtEntities(true);
-											magma.put(fallingb.getUniqueId(), p);
-						                }
-			                		},j3.getAndIncrement()*4);
-									ordt.put(rn, t1);
-			                	});
-			                	mls4.forEach(l -> {
-			                		int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-						                @Override
-						                public void run() {
-											FallingBlock fallingb = p.getWorld().spawnFallingBlock(l, Material.RED_GLAZED_TERRACOTTA.createBlockData());
-											fallingb.setInvulnerable(true);
-											fallingb.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
-											fallingb.setMetadata("redknightmagma", new FixedMetadataValue(RMain.getInstance(),true));
-											fallingb.setMetadata("redknightmagma"+rn, new FixedMetadataValue(RMain.getInstance(),true));
-											fallingb.setVisualFire(true);
-											fallingb.setDropItem(true);
-											fallingb.setHurtEntities(true);
-											magma.put(fallingb.getUniqueId(), p);
-						                }
-			                		},j4.getAndIncrement()*4);
-									ordt.put(rn, t1);
-			                	});
-			                }
-			            }, 40);
-						ordt.put(rn, t1);  
-						int t2 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() {
-			                	dazable.put(p.getUniqueId(), true);
-			                }
-			            }, 200);
-						ordt.put(rn, t2);  
-	                    rb7cooldown.put(p.getUniqueId(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-		            }
-		        }
-		        else 
-		        {
-	                dazable.remove(p.getUniqueId());
-                    if(fbt.containsKey(p.getUniqueId())) {
-                    	Bukkit.getScheduler().cancelTask(fbt.get(p.getUniqueId()));
-                    }
-	                Location rl = OverworldRaids.getraidloc(p).clone();
-	    			String rn = p.getMetadata("raid").get(0).asString();
-                    p.teleport(rl.add(0, 1, 0));
-                    final Location tl = p.getLocation();
-
-	                for(Entity e : OverworldRaids.getheroes(p)) {
-	                	if(e instanceof Player && !e.hasMetadata("fake")) {
-	                		Player pe = (Player) e;
-	                		Holding.invur(pe, 40l);
-	    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-		                		pe.sendMessage(ChatColor.BOLD+"붉은기사: 운명에 저항하지마라.");
-	    					}
-	    					else {
-		                		pe.sendMessage(ChatColor.BOLD+"RedKnight: You can't change your destiny.");
-	    					}
-							pe.getWorld().playSound(pe.getLocation(), Sound.ENTITY_WITHER_AMBIENT, 0.3f, 2);
-							if(pe.getWorld() == p.getWorld()) {
-								
-							pe.teleport(tl);
+			ev.setCancelled(true);
+			
+		    LivingEntity p = ev.getEntity();
+		    
+		    final Vector v = ev.getProjectile().getVelocity().normalize().clone();
+            
+            p.getWorld().playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 0.5f);
+            p.getWorld().playSound(p.getLocation(), Sound.ENTITY_SKELETON_STEP, 1.0f, 0f);
+            p.getWorld().playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 1.0f, 0.5f);
+			for(int i = 0; i<4; i++) {
+                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+             		@Override
+                	public void run() 
+	                {	
+    	    			Location pl = p.getLocation().clone();
+    					p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, pl, 10, 1.5,1.5,1.5);
+             			p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 1,0,false,false));
+	                	p.setVelocity(v.clone().multiply(1.2));
+         				p.getWorld().spawnParticle(Particle.FLAME, pl, 30, 1,1,1);
+						for(Entity e : p.getWorld().getNearbyEntities(p.getLocation(),1.5, 1.5, 1.5)) {
+							if(e instanceof LivingEntity&&  !(e.hasMetadata("portal")) && e!=p) {
+								LivingEntity le = (LivingEntity)e;
+								le.damage(1,p);
+								Holding.holding(null, le, 10l);
 							}
-	                	}
-	                }
-                    AtomicInteger j = new AtomicInteger();	
-					for(int i = 0; i <5; i++) {
-	                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() {
-				            	ArrayList<Location> ring = new ArrayList<Location>();
-								p.getWorld().playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 1, 0);
-
-			                	for(double an = 0; an<Math.PI*2; an +=Math.PI/180) {
-			                		ring.add(tl.clone().add(tl.getDirection().normalize().rotateAroundY(an).multiply(an)).add(0, an+j.get(), 0));
-			                	}
-			                	ring.forEach(l -> {
-									tl.getWorld().spawnParticle(Particle.ASH, l, 5, 0.5,0.5,0.5,0);
-									tl.getWorld().spawnParticle(Particle.SMOKE_NORMAL, l, 2, 0.5,0.5,0.5,0);
-									tl.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, l, 2, 0.5,0.5,0.5,0);
-			                		
-			                	});
-			                	j.incrementAndGet();
-			                }
-			            }, i*5); 	                    	
-                    }
-					ArrayList<Location> mls1 = new ArrayList<>();
-					ArrayList<Location> mls2 = new ArrayList<>();
-					ArrayList<Location> mls3 = new ArrayList<>();
-					ArrayList<Location> mls4 = new ArrayList<>();
-					for(int i = 0; i<15; i++) {
-						mls1.add(rl.clone().add(i, 7, 0));
-						mls2.add(rl.clone().add(-i, 7, 0));
-						mls3.add(rl.clone().add(0, 7, i));
-						mls4.add(rl.clone().add(0, 7, -i));
-					}
-
-					for(int i = 0; i<15; i++) {
-						mls1.add(rl.clone().add(i, 7, i));
-						mls2.add(rl.clone().add(-i, 7, i));
-						mls3.add(rl.clone().add(-i, 7, -i));
-						mls4.add(rl.clone().add(i, 7, -i));
-					}
-
-
-					for(int i = 0; i<15; i++) {
-	                	Random r1 = new Random();
-	                	Random r2 = new Random();
-	                	Random r3 = new Random();
-	                	Random r4 = new Random();
-	                	double rd1 = r1.nextDouble()*20 *(r3.nextBoolean()?1:-1);
-	                	double rd2 = r2.nextDouble()*20*(r4.nextBoolean()?1:-1);
-						mls1.add(rl.clone().add(rd1, 7, rd2));
-						mls2.add(rl.clone().add(rd1, 7, rd2));
-						mls3.add(rl.clone().add(rd1, 7, rd2));
-						mls4.add(rl.clone().add(rd1, 7, rd2));
-					}
-	                Holding.holding(null, p, 60l);
-	                Holding.invur(p, 60l);
-					
-					int t1 = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() {
-			                AtomicInteger j1 = new AtomicInteger();
-			                AtomicInteger j2 = new AtomicInteger();
-			                AtomicInteger j3 = new AtomicInteger();
-			                AtomicInteger j4 = new AtomicInteger();
-		                	mls1.forEach(l -> {
-		                		int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					                @Override
-					                public void run() {
-										FallingBlock fallingb = p.getWorld().spawnFallingBlock(l, Material.RED_GLAZED_TERRACOTTA.createBlockData());
-										fallingb.setInvulnerable(true);
-										fallingb.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
-										fallingb.setMetadata("redknightmagma", new FixedMetadataValue(RMain.getInstance(),true));
-										fallingb.setMetadata("redknightmagma"+rn, new FixedMetadataValue(RMain.getInstance(),true));
-										fallingb.setVisualFire(true);
-										fallingb.setDropItem(true);
-										fallingb.setHurtEntities(true);
-										magma.put(fallingb.getUniqueId(), p);
-					                }
-		                		}, j1.getAndIncrement()*4);
-								ordt.put(rn, t1);
-		                	});
-		                	mls2.forEach(l -> {
-		                		int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					                @Override
-					                public void run() {
-										FallingBlock fallingb = p.getWorld().spawnFallingBlock(l, Material.RED_GLAZED_TERRACOTTA.createBlockData());
-										fallingb.setInvulnerable(true);
-										fallingb.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
-										fallingb.setMetadata("redknightmagma", new FixedMetadataValue(RMain.getInstance(),true));
-										fallingb.setMetadata("redknightmagma"+rn, new FixedMetadataValue(RMain.getInstance(),true));
-										fallingb.setVisualFire(true);
-										fallingb.setDropItem(true);
-										fallingb.setHurtEntities(true);
-										magma.put(fallingb.getUniqueId(), p);
-					                }
-		                		},j2.getAndIncrement()*4);
-								ordt.put(rn, t1);
-		                	});
-		                	mls3.forEach(l -> {
-		                		int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					                @Override
-					                public void run() {
-										FallingBlock fallingb = p.getWorld().spawnFallingBlock(l, Material.RED_GLAZED_TERRACOTTA.createBlockData());
-										fallingb.setInvulnerable(true);
-										fallingb.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
-										fallingb.setMetadata("redknightmagma", new FixedMetadataValue(RMain.getInstance(),true));
-										fallingb.setMetadata("redknightmagma"+rn, new FixedMetadataValue(RMain.getInstance(),true));
-										fallingb.setVisualFire(true);
-										fallingb.setDropItem(true);
-										fallingb.setHurtEntities(true);
-										magma.put(fallingb.getUniqueId(), p);
-					                }
-		                		},j3.getAndIncrement()*4);
-								ordt.put(rn, t1);
-		                	});
-		                	mls4.forEach(l -> {
-		                		int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					                @Override
-					                public void run() {
-										FallingBlock fallingb = p.getWorld().spawnFallingBlock(l, Material.RED_GLAZED_TERRACOTTA.createBlockData());
-										fallingb.setInvulnerable(true);
-										fallingb.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
-										fallingb.setMetadata("redknightmagma", new FixedMetadataValue(RMain.getInstance(),true));
-										fallingb.setMetadata("redknightmagma"+rn, new FixedMetadataValue(RMain.getInstance(),true));
-										fallingb.setVisualFire(true);
-										fallingb.setDropItem(true);
-										fallingb.setHurtEntities(true);
-										magma.put(fallingb.getUniqueId(), p);
-					                }
-		                		},j4.getAndIncrement()*4);
-								ordt.put(rn, t1);
-		                	});
-		                }
-		            }, 40);
-					ordt.put(rn, t1);  
-					int t2 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() {
-		                	dazable.put(p.getUniqueId(), true);
-		                }
-		            }, 200);
-					ordt.put(rn, t2);  
-		            rb7cooldown.put(p.getUniqueId(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-		        }
+						}
+	                	
+		            }
+        	   	}, i);
 			}
-	}
 
-	
-	public void MagmaBlock(EntityDropItemEvent ev) 
-	{
-		if(ev.getEntity() instanceof FallingBlock){
-		    FallingBlock fallingb = (FallingBlock) ev.getEntity();
-	        if(magma.containsKey(fallingb.getUniqueId())){
-	        	ev.setCancelled(true);
-				LivingEntity p = (LivingEntity) Holding.ale(magma.get(fallingb.getUniqueId()));
-				Location tl = fallingb.getLocation();
-				tl.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, tl, 1);
-
-				for (Entity e : p.getWorld().getNearbyEntities(tl, 3, 3, 3))
-				{
-					if(p!=e && e instanceof Player) {
-						Player le = (Player)e;
-                		le.damage(6, p);
-					}
-					
-				}
-				p.getWorld().playSound(tl, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 0);
-				fallingb.remove();
-	        }
 		 }
 	}
 
 
 
-	
-	public void MagmaBlock(EntityDamageByEntityEvent ev) 
-	{
-		if(ev.getDamager() instanceof FallingBlock){
-		    FallingBlock fallingb = (FallingBlock) ev.getDamager();
-	        if(magma.containsKey(fallingb.getUniqueId())){
-	        	ev.setCancelled(true);
-				LivingEntity p = (LivingEntity) Holding.ale(magma.get(fallingb.getUniqueId()));
-				Location tl = fallingb.getLocation();
-				tl.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, tl, 1);
-
-				for (Entity e : p.getWorld().getNearbyEntities(tl, 3, 3, 3))
-				{
-					if(p!=e && e instanceof Player) {
-						Player le = (Player)e;
-                		le.damage(6, p);
-					}
-					
-				}
-				p.getWorld().playSound(tl, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 0);
-				fallingb.remove();
-	        }
-		 }
-	}
-
-
-	
-	public void MagmaBlock(EntityChangeBlockEvent ev) 
-	{
-		if(ev.getEntity() instanceof FallingBlock){
-		    FallingBlock fallingb = (FallingBlock) ev.getEntity();
-	        if(magma.containsKey(fallingb.getUniqueId())){
-	        	ev.setCancelled(true);
-				LivingEntity p = (LivingEntity) Holding.ale(magma.get(fallingb.getUniqueId()));
-				Location tl = fallingb.getLocation();
-				tl.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, tl, 1);
-
-				for (Entity e : p.getWorld().getNearbyEntities(tl, 3, 3, 3))
-				{
-					if(p!=e && e instanceof Player) {
-						Player le = (Player)e;
-                		le.damage(6, p);
-					}
-					
-				}
-				p.getWorld().playSound(tl, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 0);
-				fallingb.remove();
-	        }
-		 }
-	}
-	
-	
 	final private void ordeal(LivingEntity p, EntityDamageByEntityEvent d) {
 		if(fbt.containsKey(p.getUniqueId())) {
         	Bukkit.getScheduler().cancelTask(fbt.get(p.getUniqueId()));
@@ -1825,8 +1408,8 @@ public class RedSkills extends Summoned{
 	    					}
 	                		Holding.invur(pe, 60l);
 		            		pe.teleport(p);
-		            		pe.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 255 ,false,false));
-		            		pe.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 60, 255 ,false,false));
+		            		pe.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 60, 255 ,false,false));
+		            		pe.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 60, 255 ,false,false));
 		                }
 		 				Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 			                @Override
@@ -1850,7 +1433,7 @@ public class RedSkills extends Summoned{
 					
 					d.setCancelled(true);
 					d.getEntity().getWorld().playSound(d.getEntity().getLocation(), Sound.BLOCK_LAVA_EXTINGUISH, 1, 0);
-					d.getEntity().addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 1 ,false,false));
+					d.getEntity().addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1, 1 ,false,false));
 					d.getItem().remove();
 				}
 			}

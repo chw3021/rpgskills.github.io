@@ -84,8 +84,8 @@ public class RedMobsSpawn extends Mobs implements Listener {
 		bom.setColor(Color.RED);
 		boots.setItemMeta(bom);
 		ItemStack main = new ItemStack(Material.BOW);
-		main.addUnsafeEnchantment(Enchantment.ARROW_FIRE, 2);
-		main.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 3);
+		main.addUnsafeEnchantment(Enchantment.FLAME, 2);
+		main.addUnsafeEnchantment(Enchantment.POWER, 3);
 		String reg = lang.contains("kr") ? "그을린해골":"BurnedSkull";
 		Skeleton newmob = (Skeleton) Mobspawn(le, reg, 12000.0, null, chest, leg, boots, main, null, EntityType.SKELETON);
 		newmob.setConversionTime(-1);
@@ -113,7 +113,7 @@ public class RedMobsSpawn extends Mobs implements Listener {
 		boots.setItemMeta(bom);
 		ItemStack main = new ItemStack(Material.FIRE_CHARGE);
 		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 2);
-		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 5);
+		main.addUnsafeEnchantment(Enchantment.SHARPNESS, 5);
 		String reg = lang.contains("kr") ? "그을린마법사":"BurnedMage";
 		Illusioner newmob = (Illusioner) Mobspawn(le, reg, 10500.0, head, chest, leg, boots, main,main, EntityType.ILLUSIONER);
 		newmob.setCanJoinRaid(false);
@@ -147,7 +147,7 @@ public class RedMobsSpawn extends Mobs implements Listener {
 		boots.setItemMeta(bom);
 		ItemStack main = new ItemStack(Material.IRON_SWORD);
 		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 2);
-		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
+		main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
 		String reg = lang.contains("kr") ? "붉은전사":"RedBruise";
 		Skeleton newmob = (Skeleton) Mobspawn(le, reg, 12000.0, head, chest, leg, boots, main, main, EntityType.SKELETON);
 		newmob.setConversionTime(-1);

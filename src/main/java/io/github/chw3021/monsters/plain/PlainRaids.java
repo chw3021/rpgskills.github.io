@@ -19,7 +19,6 @@ import org.bukkit.entity.Creeper;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Husk;
 import org.bukkit.entity.Pillager;
-import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Vex;
 import org.bukkit.entity.Zombie;
@@ -30,7 +29,6 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import io.github.chw3021.commons.Holding;
 import io.github.chw3021.monsters.raids.Summoned;
 import io.github.chw3021.rmain.RMain;
 
@@ -369,7 +367,7 @@ public class PlainRaids extends Summoned {
 		addraider(rn,META,newmob);
 		
 	}
-	@SuppressWarnings("unchecked")
+
 	final private void Boss(Location spl, String rn) {
 
     	Random random=new Random();
@@ -412,43 +410,8 @@ public class PlainRaids extends Summoned {
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		addraider(rn,META,newmob);
-		
-	
-		final Object ht = getherotype(rn);
-	
-		if(ht instanceof Player) {
-			Player p = (Player) ht;
-			int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-	            @Override
-	            public void run() 
-	            {
-	
-					if(Holding.ale(newmob)!=null) {
-	                	raidbar.get(rn, META).setProgress(Holding.ale(newmob).getHealth()/200d);
-	                	raidbar.get(rn, META).setTitle(Holding.ale(newmob).getName());
-	    				raidbar.get(rn, META).addPlayer(p);
-					}
-	            }
-			}, 0, 1);
-			raidbart.put(rn, META, task);
-		}
-		else if(getherotype(rn) instanceof HashSet){
-			HashSet<Player> par = (HashSet<Player>) ht;
-			int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-	            @Override
-	            public void run() 
-	            {
-					if(Holding.ale(newmob)!=null) {
-	                	raidbar.get(rn, META).setProgress(Holding.ale(newmob).getHealth()/200d);
-	                	raidbar.get(rn, META).setTitle(Holding.ale(newmob).getName());
-	            		par.forEach(p -> {
-	        				raidbar.get(rn, META).addPlayer(p);
-	            		});
-					}
-	            }
-			}, 0, 1);
-			raidbart.put(rn, META, task);
-		}
+
+		bossBar(rn, META, newmob);
 		
 	}
 	

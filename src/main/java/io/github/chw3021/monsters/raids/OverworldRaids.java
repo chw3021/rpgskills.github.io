@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -62,6 +63,7 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -366,7 +368,7 @@ public class OverworldRaids extends Summoned implements Listener {
 		raidbart.put(rn, task);
 	}
 	
-	final private LivingEntity bossgen(Location spl, Player p, String rn, Integer in, Double dif) {
+	final private LivingEntity bossgen(Location spl, Player pm, String rn, Integer in, Double dif) {
 		
     	Random random=new Random();
     	double number = (random.nextDouble()+1.5) * 2 * (random.nextBoolean() ? -1 : 1);
@@ -391,9 +393,10 @@ public class OverworldRaids extends Summoned implements Listener {
 		if(in == 0) {
 			ItemStack main = new ItemStack(Material.STONE);
 			main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
+			main.addUnsafeEnchantment(Enchantment.WIND_BURST, 3);
 			ItemStack off = new ItemStack(Material.STONE);
 			off.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
-    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "스톤골렘":"StoneGolem";
+    		String reg = pm.getLocale().equalsIgnoreCase("ko_kr") ? "스톤골렘":"StoneGolem";
 			IronGolem newmob = (IronGolem) MobspawnLoc(esl, ChatColor.GRAY + reg, dif1, null,
 					null, null, null, main, off, EntityType.IRON_GOLEM);
 			newmob.setGlowing(true);
@@ -445,7 +448,7 @@ public class OverworldRaids extends Summoned implements Listener {
     		main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
     		ItemStack off = new ItemStack(Material.ICE);
     		off.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
-    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "설산마녀":"SnowWitch";
+    		String reg = pm.getLocale().equalsIgnoreCase("ko_kr") ? "설산마녀":"SnowWitch";
     		Witch newmob = (Witch) MobspawnLoc(esl, ChatColor.BLUE+reg, dif1, null, null, null, boots, main, off, EntityType.WITCH);
     		newmob.setGlowing(true);
     		newmob.getEquipment().setBootsDropChance(0);
@@ -488,7 +491,7 @@ public class OverworldRaids extends Summoned implements Listener {
     		inhb.setGlowing(true);
     		inhb.getEquipment().setHelmet(new ItemStack(Material.BEACON));
     		inhb.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(dif1);;
-			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+			if(pm.getLocale().equalsIgnoreCase("ko_kr")) {
         		inhb.setCustomName(rn + " 엘더가디언 억제기");
 			}
 			else {
@@ -535,12 +538,12 @@ public class OverworldRaids extends Summoned implements Listener {
 			boots.addUnsafeEnchantment(Enchantment.FIRE_PROTECTION, 5);
 			boots.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
 			boots.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
-			ItemStack main = new ItemStack(Material.NETHERITE_HOE);
+			ItemStack main = new ItemStack(Material.BOW);
 			ItemMeta mm = main.getItemMeta();
-			mm.setCustomModelData(8008);
+			mm.setCustomModelData(4008);
 			main.setItemMeta(mm);
 			
-    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "밤의군단장":"NightCorpsCommander";
+    		String reg = pm.getLocale().equalsIgnoreCase("ko_kr") ? "밤의군단장":"NightCorpsCommander";
     		Skeleton newmob = (Skeleton) MobspawnLoc(esl, ChatColor.GRAY+reg, dif1, pe, chest, leg, boots, main, null, EntityType.SKELETON);
 
     		newmob.setConversionTime(-1);
@@ -563,6 +566,26 @@ public class OverworldRaids extends Summoned implements Listener {
     		
 
     		bossbargen("darkboss", rn, newmob);
+    		
+
+    		final Object ht = getherotype(rn);
+
+    		ItemStack mainf = new ItemStack(Material.NETHERITE_HOE);
+    		ItemMeta mmf = mainf.getItemMeta();
+    		mmf.setCustomModelData(8008);
+    		mainf.setItemMeta(mmf);
+    		
+    		if(ht instanceof Player) {
+    			Player p = (Player) ht;
+    			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+    		}
+    		else if(getherotype(rn) instanceof HashSet){
+    			@SuppressWarnings("unchecked")
+    			HashSet<Player> par = (HashSet<Player>) ht;
+        		par.forEach(p -> {
+        			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+        		});
+    		}
 
     		return newmob;
 		}
@@ -572,7 +595,7 @@ public class OverworldRaids extends Summoned implements Listener {
 			mm.setCustomModelData(2009);
 			main.setItemMeta(mm);
 
-    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "닥터B":"Dr.B";
+    		String reg = pm.getLocale().equalsIgnoreCase("ko_kr") ? "닥터B":"Dr.B";
     		Illusioner newmob = (Illusioner) MobspawnLoc(esl, ChatColor.DARK_PURPLE+reg, dif1, new ItemStack(Material.BLACK_STAINED_GLASS), null, null, null, main, null, EntityType.ILLUSIONER);
 			newmob.setCanJoinRaid(false);
 			newmob.setPatrolTarget(null);
@@ -629,13 +652,16 @@ public class OverworldRaids extends Summoned implements Listener {
 			boots.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
 			boots.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 			boots.addUnsafeEnchantment(Enchantment.DEPTH_STRIDER,5);
-    		ItemStack main = new ItemStack(Material.NETHERITE_AXE);
-    		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
-    		main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
+			
+			ItemStack main = new ItemStack(Material.BOW);//Bow
+			ItemMeta mm = main.getItemMeta();
+			mm.setCustomModelData(2010);
+			main.setItemMeta(mm);
+			
     		ItemStack off = new ItemStack(Material.SHIELD);
     		off.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
     		off.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
-    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "붉은기사":"RedKnight";
+    		String reg = pm.getLocale().equalsIgnoreCase("ko_kr") ? "붉은기사":"RedKnight";
     		Skeleton newmob = (Skeleton) MobspawnLoc(esl, ChatColor.RED+reg, dif1, head, chest, leg, boots, main, off, EntityType.SKELETON);
     		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
     		newmob.setGlowing(true);
@@ -660,6 +686,26 @@ public class OverworldRaids extends Summoned implements Listener {
     		
 
     		bossbargen("redboss", rn, newmob);
+    		
+    		final Object ht = getherotype(rn);
+
+    		ItemStack mainf = new ItemStack(Material.NETHERITE_AXE);
+    		ItemMeta offm = mainf.getItemMeta();
+    		offm.setCustomModelData(4010);
+    		mainf.setItemMeta(offm);
+    		mainf.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
+    		
+    		if(ht instanceof Player) {
+    			Player p = (Player) ht;
+    			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+    		}
+    		else if(getherotype(rn) instanceof HashSet){
+    			@SuppressWarnings("unchecked")
+    			HashSet<Player> par = (HashSet<Player>) ht;
+        		par.forEach(p -> {
+        			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+        		});
+    		}
 
     		return newmob;
 		}
@@ -686,7 +732,7 @@ public class OverworldRaids extends Summoned implements Listener {
 			mm.setCustomModelData(2011);
 			main.setItemMeta(mm);
 			
-    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "테러리스트":"Terrorist";
+    		String reg = pm.getLocale().equalsIgnoreCase("ko_kr") ? "테러리스트":"Terrorist";
     		Skeleton newmob = (Skeleton) MobspawnLoc(esl, ChatColor.DARK_GREEN+reg, dif1, pe, pe1, leg, pe11, main, null, EntityType.SKELETON);
 
     		newmob.setConversionTime(-1);
@@ -1882,10 +1928,11 @@ public class OverworldRaids extends Summoned implements Listener {
 	        			pem.addPattern(new Pattern(DyeColor.BLACK, PatternType.BORDER));
 	        			pem.addPattern(new Pattern(DyeColor.YELLOW, PatternType.MOJANG));
 	        			pe.setItemMeta(pem);
-	        			ItemStack main = new ItemStack(Material.NETHERITE_HOE);
+	        			ItemStack main = new ItemStack(Material.BOW);
 	        			ItemMeta mm = main.getItemMeta();
-	        			mm.setCustomModelData(8008);
+	        			mm.setCustomModelData(4008);
 	        			main.setItemMeta(mm);
+
 		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "악몽의형상":"NightMare";
 	        			
 	            		Skeleton newmob = (Skeleton) MobspawnLoc(le.getLocation(), ChatColor.GRAY+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, pe, null, null, null, main, null, EntityType.SKELETON);
@@ -1913,7 +1960,25 @@ public class OverworldRaids extends Summoned implements Listener {
 	
 	
 	    	    		bossbargen("NightMare", rn, newmob);
+
+	    	    		final Object ht = getherotype(rn);
+
+	    	    		ItemStack mainf = new ItemStack(Material.NETHERITE_HOE);
+	    	    		ItemMeta mmf = mainf.getItemMeta();
+	    	    		mmf.setCustomModelData(8008);
+	    	    		mainf.setItemMeta(mmf);
 	    	    		
+	    	    		if(ht instanceof Player) {
+	    	    			Player p = (Player) ht;
+	    	    			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+	    	    		}
+	    	    		else if(getherotype(rn) instanceof HashSet){
+	    	    			@SuppressWarnings("unchecked")
+	    	    			HashSet<Player> par = (HashSet<Player>) ht;
+	    	        		par.forEach(p -> {
+	    	        			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+	    	        		});
+	    	    		}
 	    	    		targeting(rn);
 	            		
 	                	heroes.get(rn).forEach(pu -> {
@@ -2038,8 +2103,10 @@ public class OverworldRaids extends Summoned implements Listener {
 	    				ItemStack boots = new ItemStack(Material.NETHERITE_BOOTS);
 	    				boots.addUnsafeEnchantment(Enchantment.FIRE_PROTECTION, 5);
 	    				boots.addUnsafeEnchantment(Enchantment.DEPTH_STRIDER,5);
-	    	    		ItemStack main = new ItemStack(Material.NETHERITE_AXE);
-	    	    		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
+	    				ItemStack main = new ItemStack(Material.BOW);//Bow
+	    				ItemMeta mm = main.getItemMeta();
+	    				mm.setCustomModelData(2010);
+	    				main.setItemMeta(mm);
 	    	    		ItemStack off = new ItemStack(Material.SHIELD);
 	    	    		off.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
 		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "몰락한 붉은기사":"Ruined RedKnight";
@@ -2069,7 +2136,27 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		
 	
 	    	    		bossbargen("RuinedRedKnight", rn, newmob);
-	
+
+	    	    		final Object ht = getherotype(rn);
+
+	    	    		ItemStack mainf = new ItemStack(Material.NETHERITE_AXE);
+	    	    		ItemMeta offm = mainf.getItemMeta();
+	    	    		offm.setCustomModelData(4010);
+	    	    		mainf.setItemMeta(offm);
+	    	    		mainf.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
+	    	    		
+	    	    		if(ht instanceof Player) {
+	    	    			Player p = (Player) ht;
+	    	    			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+	    	    		}
+	    	    		else if(getherotype(rn) instanceof HashSet){
+	    	    			@SuppressWarnings("unchecked")
+	    	    			HashSet<Player> par = (HashSet<Player>) ht;
+	    	        		par.forEach(p -> {
+	    	        			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+	    	        		});
+	    	    		}
+	    	    		
 	    	    		targeting(rn);
 	                	heroes.get(rn).forEach(pu -> {
 							if(Bukkit.getPlayer(pu).getLocale().equalsIgnoreCase("ko_kr")) {

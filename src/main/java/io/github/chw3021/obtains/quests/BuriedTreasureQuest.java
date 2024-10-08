@@ -55,7 +55,7 @@ import com.google.common.collect.Table;
 import io.github.chw3021.items.Elements;
 import io.github.chw3021.items.Potions;
 import io.github.chw3021.monsters.Mobs;
-import io.github.chw3021.obtains.NPCsSpawn;
+import io.github.chw3021.obtains.NPCLoc;
 import io.github.chw3021.obtains.Obtained;
 import io.github.chw3021.obtains.TrophyLoc;
 import io.github.chw3021.party.Party;
@@ -168,9 +168,9 @@ public class BuriedTreasureQuest extends Mobs implements Serializable  {
 			Player p = (Player) d.getPlayer();
 			if(c.getWorld().getNearbyEntities(c.getLocation(),2,5,2).stream().anyMatch(e -> e.hasMetadata("treasure"))) {
 				LivingEntity le = (LivingEntity) c.getWorld().getNearbyEntities(c.getLocation(),2,5,2).stream().filter(e -> e.hasMetadata("treasure")).findFirst().get();
-				if(TrophyLoc.getLocsdata().Locs.containsEntry(p.getUniqueId(), NPCsSpawn.npcloc.get(le.getUniqueId()))) {
+				if(TrophyLoc.getLocsdata().Locs.containsEntry(p.getUniqueId(), NPCLoc.npcloc.get(le.getUniqueId()))) {
 
-					Location l = NPCsSpawn.npcloc.get(le.getUniqueId());
+					Location l = NPCLoc.npcloc.get(le.getUniqueId());
 					Inventory ci = Bukkit.createInventory(p, c.getInventory().getSize(), p.getName() + "'s Buried Treasure");
 					if(check(p)) {
 						ci.setContents(getinv(p,l));
@@ -215,7 +215,7 @@ public class BuriedTreasureQuest extends Mobs implements Serializable  {
 			if(p.getLocation().getWorld().getNearbyEntities(p.getLocation(),3,5,3).stream().anyMatch(e -> e.hasMetadata("treasure"))) {
 				LivingEntity le = (LivingEntity) p.getLocation().getWorld().getNearbyEntities(p.getLocation(),3,5,3).stream().filter(e -> e.hasMetadata("treasure")).findFirst().get();
 				if(check(p)) {
-					Location l = NPCsSpawn.npcloc.get(le.getUniqueId());
+					Location l = NPCLoc.npcloc.get(le.getUniqueId());
 					save(p,l,ci);
 				}
 			}
@@ -422,7 +422,7 @@ public class BuriedTreasureQuest extends Mobs implements Serializable  {
 	        		}
 					return;
 				}
-				if(TrophyLoc.getLocsdata().Locs.containsEntry(p.getUniqueId(), NPCsSpawn.npcloc.get(le.getUniqueId()))) {
+				if(TrophyLoc.getLocsdata().Locs.containsEntry(p.getUniqueId(), NPCLoc.npcloc.get(le.getUniqueId()))) {
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": 자격을 갖추었군.").create());
 	        		}
@@ -466,7 +466,7 @@ public class BuriedTreasureQuest extends Mobs implements Serializable  {
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Overcome the ordeal.").create());
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": (Quest Will be Canceled If You Die, Quit or go far away)").create());
 	        		}
-	        		quested.put(p.getUniqueId(), NPCsSpawn.npcloc.get(le.getUniqueId()));
+	        		quested.put(p.getUniqueId(), NPCLoc.npcloc.get(le.getUniqueId()));
 	        		startloc.put(p.getUniqueId(), le.getLocation().clone());
 
     	    		BossBar	newbar = Bukkit.getServer().createBossBar(new NamespacedKey(RMain.getInstance(), p.getName()+"treasurequest"),"Killed Monsters: " + qmobskill.get(p.getName())  + "/" + 20, BarColor.BLUE, BarStyle.SEGMENTED_20, BarFlag.CREATE_FOG);

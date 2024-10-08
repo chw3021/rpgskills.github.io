@@ -43,7 +43,7 @@ import io.github.chw3021.items.Potions;
 import io.github.chw3021.items.armors.Boots;
 import io.github.chw3021.items.armors.Helmet;
 import io.github.chw3021.monsters.Mobs;
-import io.github.chw3021.obtains.NPCsSpawn;
+import io.github.chw3021.obtains.NPCLoc;
 import io.github.chw3021.obtains.Obtained;
 import io.github.chw3021.obtains.TrophyLoc;
 import io.github.chw3021.party.Party;
@@ -210,7 +210,7 @@ public class ShipwreckQuest extends Mobs implements Listener  {
 		    		QuestEnd(p,3);
 					return;
 				}
-				if(TrophyLoc.getLocsdata().Locs.containsEntry(p.getUniqueId(), NPCsSpawn.npcloc.get(le.getUniqueId()))) {
+				if(TrophyLoc.getLocsdata().Locs.containsEntry(p.getUniqueId(), NPCLoc.npcloc.get(le.getUniqueId()))) {
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": 고마워요!").create());
 	        		}
@@ -312,7 +312,7 @@ public class ShipwreckQuest extends Mobs implements Listener  {
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Thanks So Much. Even after I die, phantoms continue to bully me..").create());
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": (Quest Will be Canceled If You Die, Quit or go far away)").create());
 	        		}
-	        		quested.put(p.getUniqueId(), NPCsSpawn.npcloc.get(le.getUniqueId()));
+	        		quested.put(p.getUniqueId(), NPCLoc.npcloc.get(le.getUniqueId()));
 	        		startloc.put(p.getUniqueId(), le.getLocation().clone());
 
     	    		BossBar	newbar = Bukkit.getServer().createBossBar(new NamespacedKey(RMain.getInstance(), p.getName()+"shipwreckquest"),"Killed Monsters: " + qmobskill.get(p.getName())  + "/" + 20, BarColor.BLUE, BarStyle.SEGMENTED_20, BarFlag.CREATE_FOG);

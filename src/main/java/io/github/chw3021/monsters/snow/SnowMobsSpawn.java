@@ -75,7 +75,7 @@ public class SnowMobsSpawn extends Mobs implements Listener {
 		bom.setColor(Color.WHITE);
 		boots.setItemMeta(bom);
 		ItemStack main = new ItemStack(Material.BOW);
-		main.addUnsafeEnchantment(Enchantment.ARROW_DAMAGE, 3);
+		main.addUnsafeEnchantment(Enchantment.POWER, 3);
 		String reg = lang.contains("kr") ? "서리해골":"FrostSkull";
 		Stray newmob = (Stray) Mobspawn(le, reg, 800.0, head, chest, leg, boots, main, null, EntityType.STRAY);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
@@ -101,7 +101,7 @@ public class SnowMobsSpawn extends Mobs implements Listener {
 		bom.setColor(Color.NAVY);
 		boots.setItemMeta(bom);
 		ItemStack main = new ItemStack(Material.DIAMOND_AXE);
-		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 2);
+		main.addUnsafeEnchantment(Enchantment.SHARPNESS, 2);
 		String reg = lang.contains("kr") ? "서리사냥꾼":"FrostHunter";
 		Stray newmob = (Stray) Mobspawn(le, reg, 650.0, head, null, null, boots, main,null, EntityType.STRAY);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
@@ -127,7 +127,7 @@ public class SnowMobsSpawn extends Mobs implements Listener {
 		bom.setColor(Color.WHITE);
 		boots.setItemMeta(bom);
 		ItemStack main = new ItemStack(Material.BLUE_ICE);
-		main.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 3);
+		main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
 		String reg = lang.contains("kr") ? "서리마법사":"FrozenMage";
 		Stray newmob = (Stray) Mobspawn(le, reg, 600.0, null, chest, leg, boots, main, main, EntityType.STRAY);
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.2);

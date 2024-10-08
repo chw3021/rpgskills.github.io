@@ -46,7 +46,7 @@ public class WildMobsSpawn extends Mobs implements Listener {
 	}
 	final private Zombie Mob1(LivingEntity le) {
 		ItemStack head = new ItemStack(Material.MOSSY_COBBLESTONE);
-		head.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 3);
+		head.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 3);
 		ItemStack main = new ItemStack(Material.NETHERITE_SWORD);
 		String reg = lang.contains("kr") ? "고대좀비":"AncientZombie";
 		Zombie newmob = (Zombie) Mobspawn(le, reg, 35000.0, head, null, null, null, main, null, EntityType.ZOMBIE);
@@ -58,7 +58,7 @@ public class WildMobsSpawn extends Mobs implements Listener {
 	}
 	final private Skeleton Mob2(LivingEntity le) {
 		ItemStack head = new ItemStack(Material.JUNGLE_LEAVES);
-		head.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 3);
+		head.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 3);
 		String reg = lang.contains("kr") ? "고대스켈레톤":"AncientSkeleton";
 		Skeleton newmob = (Skeleton) Mobspawn(le, reg, 33000.0, head, null, null, null, null, null, EntityType.SKELETON);
 		newmob.setConversionTime(-1);
@@ -69,7 +69,7 @@ public class WildMobsSpawn extends Mobs implements Listener {
 	}
 	final private Slime Mob3(LivingEntity le) {
 		ItemStack head = new ItemStack(Material.MANGROVE_LEAVES);
-		head.addUnsafeEnchantment(Enchantment.PROTECTION_PROJECTILE, 3);
+		head.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 3);
 		
 		String reg = lang.contains("kr") ? "고대슬라임":"AncientSlime";
 		Slime newmob = (Slime) Mobspawn(le, reg, 20000.0, head, null, null, null, null, null, EntityType.SLIME);
