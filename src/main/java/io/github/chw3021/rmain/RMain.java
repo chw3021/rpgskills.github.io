@@ -1,16 +1,15 @@
 package io.github.chw3021.rmain;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.SpawnCategory;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.google.common.collect.HashBasedTable;
@@ -44,6 +43,7 @@ import io.github.chw3021.classes.witchdoctor.WdcSkillsData;
 import io.github.chw3021.classes.witherist.WitSkillsData;
 import io.github.chw3021.classes.wreltler.WreSkillsData;
 import io.github.chw3021.commons.CommonEvents;
+import io.github.chw3021.commons.ConfigManager;
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.commons.Pak;
 import io.github.chw3021.commons.Rpgs;
@@ -73,24 +73,42 @@ import io.github.chw3021.monsters.MobDam;
 import io.github.chw3021.monsters.MobsSkillsEvents;
 import io.github.chw3021.monsters.raids.OverworldRaids;
 import io.github.chw3021.monsters.raids.RaidDifficulties;
-import io.github.chw3021.monsters.raids.Summoned;
 import io.github.chw3021.obtains.NPCLoc;
 import io.github.chw3021.obtains.NPCcontact;
 import io.github.chw3021.obtains.Obtained;
 import io.github.chw3021.obtains.TrophyLoc;
 import io.github.chw3021.party.Party;
+import net.md_5.bungee.api.ChatColor;
 
 public class RMain extends JavaPlugin{
 
 	private static RMain instance;
-	
+
+    private ConfigManager configManager;
+
+    public ConfigManager getConfigManager() {
+        return configManager;
+    }
+    
 	@Override
     public void onEnable() {
 
-    	getConfig().addDefault("Language", "ko_kr");
-        getConfig().options().copyDefaults(true);
-        getConfig().options().setHeader(Arrays.asList("English - en_us","한국어 - ko_kr"));
-        saveConfig();
+        configManager = new ConfigManager(this);
+        // 설정 파일 생성
+        configManager.createCustomConfig();
+        
+        // 주석과 함께 설정 저장 (필요한 경우)
+        configManager.saveConfigWithComments();
+        
+        // config.yml에서 값을 가져오거나 다른 설정 로직 추가 가능
+        FileConfiguration config = configManager.getCustomConfig();
+        String language = config.getString("Language");
+        List<String> disabledWorlds = config.getStringList("Worlds");
+        
+        // 예시: 서버 콘솔에 언어 설정 출력
+        getLogger().info("Language set to: " + language);
+        getLogger().info("Disabled worlds: " + String.join(", ", disabledWorlds));
+        
     	instance = this;
         System.out.println("Plugin is Activated");
 
@@ -193,7 +211,7 @@ public class RMain extends JavaPlugin{
         Bukkit.getPluginManager().registerEvents(new CommonEvents(), this);
         Bukkit.getPluginManager().registerEvents(new Holding(), this);
         
-        //Bukkit.getPluginManager().registerEvents(new NPCLoc(HashMultimap.create()), this);
+        Bukkit.getPluginManager().registerEvents(new NPCLoc(HashMultimap.create()), this);
     }
     
     public static RMain getInstance()
@@ -215,6 +233,9 @@ public class RMain extends JavaPlugin{
 						le.setRemoveWhenFarAway(true);
 					}
 					b.remove();
+					if(b.hasMetadata("obnpc")) {
+	    				System.out.println(ChatColor.BLUE+ w.getName() +"'s "+b.getCustomName()+" despawned");
+					}
 				}
 			});
 			}

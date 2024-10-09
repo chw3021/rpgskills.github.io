@@ -9,6 +9,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.attribute.Attribute;
@@ -490,7 +491,7 @@ public class CommonEvents extends Mobs implements Listener {
 		if (le instanceof Endermite) {
 			return true;
 		}
-		if(le.getCategory() == EntityCategory.WATER) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_IMPALING.isTagged(le.getType())) {
 			return true;
 		}
 		return false;

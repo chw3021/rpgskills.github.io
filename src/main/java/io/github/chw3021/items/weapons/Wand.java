@@ -1,7 +1,5 @@
 package io.github.chw3021.items.weapons;
 
-import java.util.UUID;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -16,7 +14,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.inventory.PrepareSmithingEvent;
 import org.bukkit.event.server.PluginEnableEvent;
-import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
@@ -24,6 +22,7 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import io.github.chw3021.commons.ConfigManager;
 import io.github.chw3021.commons.Pak;
 import io.github.chw3021.rmain.RMain;
 
@@ -33,7 +32,7 @@ public class Wand extends Weapons implements Listener {
 	final private NamespacedKey endercore = new NamespacedKey(RMain.getInstance(), "wand_ender_core");
 	final private NamespacedKey herocore = new NamespacedKey(RMain.getInstance(), "wand_hero_core");*/
 
-	final private String lang = RMain.getInstance().getConfig().getString("Language");
+	final private String lang = ConfigManager.getInstance(RMain.getInstance()).getCustomConfig().getString("Language");
 	Pak pak = new Pak();
 	/*
 	private ItemStack csc(Inventory inv, Integer cmdt, Player p) {
@@ -58,20 +57,20 @@ public class Wand extends Weapons implements Listener {
 				rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
 				rm.setCustomModelData(cmdt + 9000);
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-						new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 29,
-								Operation.ADD_NUMBER, EquipmentSlot.HAND));
+						new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 29,
+								Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 	
 				rm.addAttributeModifier(Attribute.GENERIC_LUCK,
 						new AttributeModifier(UUID.randomUUID(), "generic.luck", 30,
-								Operation.ADD_NUMBER, EquipmentSlot.HAND));
+								Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 				if (cmdt == 14) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"바람의 완드");
-						rm.setLocalizedName(ChatColor.GOLD +"바람의 완드");
+						rm.setItemName(ChatColor.GOLD +"바람의 완드");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Windy Wand");
-						rm.setLocalizedName(ChatColor.GOLD +"Windy Wand");
+						rm.setItemName(ChatColor.GOLD +"Windy Wand");
 					}
 					NamespacedKey.fromString("windy", RMain.getInstance());
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
@@ -80,77 +79,77 @@ public class Wand extends Weapons implements Listener {
 				else if (cmdt == 5) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"대지의 완드");
-						rm.setLocalizedName(ChatColor.GOLD +"대지의 완드");
+						rm.setItemName(ChatColor.GOLD +"대지의 완드");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Earth Wand");
-						rm.setLocalizedName(ChatColor.GOLD +"Earth Wand");
+						rm.setItemName(ChatColor.GOLD +"Earth Wand");
 					}
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
 					return r;
 				} else if (cmdt == 6) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"서리의 완드");
-						rm.setLocalizedName(ChatColor.GOLD +"서리의 완드");
+						rm.setItemName(ChatColor.GOLD +"서리의 완드");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Frost Wand");
-						rm.setLocalizedName(ChatColor.GOLD +"Frost Wand");
+						rm.setItemName(ChatColor.GOLD +"Frost Wand");
 					}
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
 					return r;
 				} else if (cmdt == 7) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"바다의 완드");
-						rm.setLocalizedName(ChatColor.GOLD +"바다의 완드");
+						rm.setItemName(ChatColor.GOLD +"바다의 완드");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Ocean Wand");
-						rm.setLocalizedName(ChatColor.GOLD +"Ocean Wand");
+						rm.setItemName(ChatColor.GOLD +"Ocean Wand");
 					}
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
 					return r;
 				} else if (cmdt == 8) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"어둠의 완드");
-						rm.setLocalizedName(ChatColor.GOLD +"어둠의 완드");
+						rm.setItemName(ChatColor.GOLD +"어둠의 완드");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Dark Wand");
-						rm.setLocalizedName(ChatColor.GOLD +"Dark Wand");
+						rm.setItemName(ChatColor.GOLD +"Dark Wand");
 					}
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
 					return r;
 				} else if (cmdt == 9) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"개조된 완드");
-						rm.setLocalizedName(ChatColor.GOLD +"개조된 완드");
+						rm.setItemName(ChatColor.GOLD +"개조된 완드");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Hyper Wand");
-						rm.setLocalizedName(ChatColor.GOLD +"Hyper Wand");
+						rm.setItemName(ChatColor.GOLD +"Hyper Wand");
 					}
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
 					return r;
 				} else if (cmdt == 10) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"작열하는 완드");
-						rm.setLocalizedName(ChatColor.GOLD +"작열하는 완드");
+						rm.setItemName(ChatColor.GOLD +"작열하는 완드");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Burning Wand");
-						rm.setLocalizedName(ChatColor.GOLD +"Burning Wand");
+						rm.setItemName(ChatColor.GOLD +"Burning Wand");
 					}
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
 					return r;
 				} else if (cmdt == 11) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"맹독 완드");
-						rm.setLocalizedName(ChatColor.GOLD +"맹독 완드");
+						rm.setItemName(ChatColor.GOLD +"맹독 완드");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Poison Wand");
-						rm.setLocalizedName(ChatColor.GOLD +"Poison Wand");
+						rm.setItemName(ChatColor.GOLD +"Poison Wand");
 					}
 					r.setItemMeta(pak.putelm(rm, cmdt, 0.25, p));
 					return r;
@@ -168,15 +167,15 @@ public class Wand extends Weapons implements Listener {
 				if (cmdt == 12) {
 					rm.setCustomModelData(cmdt + 9000);
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 29,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 29,
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"자연의 완드");
-						rm.setLocalizedName(ChatColor.GOLD +"자연의 완드");
+						rm.setItemName(ChatColor.GOLD +"자연의 완드");
 					}
 					else {
 						rm.setDisplayName(ChatColor.GOLD +"Natural Wand");
-						rm.setLocalizedName(ChatColor.GOLD +"Natural Wand");
+						rm.setItemName(ChatColor.GOLD +"Natural Wand");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -193,15 +192,15 @@ public class Wand extends Weapons implements Listener {
 				if (cmdt == 14) {
 					rm.setCustomModelData(1 + 9000+100);
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 12,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 12,
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 완드 - 1단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 완드 - 1단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 완드 - 1단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.1");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.1");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.1");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -218,105 +217,105 @@ public class Wand extends Weapons implements Listener {
 				rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
 				if (cmdt == 5) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 14,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 14,
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 완드 - 2단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 완드 - 2단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 완드 - 2단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.2");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.2");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.2");
 					}
 					r.setItemMeta(rm);
 					return r;
 				}
 				else if (cmdt == 6) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 16,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 16,
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 완드 - 3단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 완드 - 3단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 완드 - 3단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.3");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.3");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.3");
 					}
 					r.setItemMeta(rm);
 					return r;
 				}
 				else if (cmdt == 7) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 18,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 18,
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 완드 - 4단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 완드 - 4단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 완드 - 4단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.4");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.4");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.4");
 					}
 					r.setItemMeta(rm);
 					return r;
 				}
 				else if (cmdt == 8) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 20,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 20,
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 완드 - 5단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 완드 - 5단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 완드 - 5단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.5");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.5");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.5");
 					}
 					r.setItemMeta(rm);
 					return r;
 				}
 				else if (cmdt == 9) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 22,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 22,
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 완드 - 6단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 완드 - 6단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 완드 - 6단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.6");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.6");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.6");
 					}
 					r.setItemMeta(rm);
 					return r;
 				}
 				else if (cmdt == 10) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 24,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 24,
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 완드 - 7단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 완드 - 7단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 완드 - 7단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.7");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.7");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.7");
 					}
 					r.setItemMeta(rm);
 					return r;
 				}
 				else if (cmdt == 11) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 26,
-									Operation.ADD_NUMBER, EquipmentSlot.HAND));
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 26,
+									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 완드 - 8단계");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"원소기운의 완드 - 8단계");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"원소기운의 완드 - 8단계");
 					}
 					else {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.8");
-						rm.setLocalizedName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.8");
+						rm.setItemName(ChatColor.LIGHT_PURPLE +"Aura Wand - Lv.8");
 					}
 					r.setItemMeta(rm);
 					return r;
@@ -794,24 +793,23 @@ public class Wand extends Weapons implements Listener {
 	public void WoodenWand(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.BLAZE_ROD);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-				"generic.attackDamage", 3, Operation.ADD_NUMBER, EquipmentSlot.HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 3, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(9000);
+		meta.setMaxStackSize(1);
 		if(lang.contains("kr")){
 			meta.setDisplayName("나무 지팡이");
-			meta.setLocalizedName("나무 지팡이");
+			meta.setItemName("나무 지팡이");
 		}
 		else {
 			meta.setDisplayName("Wooden Wand");
-			meta.setLocalizedName("Wooden Wand");
+			meta.setItemName("Wooden Wand");
 		}
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "wooden_wand"), is);
-		rc.shape("axx", "xsx", "xxs");
-		rc.shape("xxa", "xsx", "sxx");
+		rc.shape("a  ", " s ", "  s");
+		rc.shape("  a", " s ", "s  ");
 		RecipeChoice rcc =  new RecipeChoice.MaterialChoice(Material.ACACIA_PLANKS,Material.BIRCH_PLANKS,Material.CRIMSON_PLANKS,Material.DARK_OAK_PLANKS,Material.JUNGLE_PLANKS,Material.OAK_PLANKS,Material.SPRUCE_PLANKS,Material.WARPED_PLANKS);
 		rc.setIngredient('a', rcc);
-		rc.setIngredient('x', Material.AIR);
 		rc.setIngredient('s', Material.STICK);
 		Bukkit.getServer().addRecipe(rc);
 	}
@@ -820,23 +818,22 @@ public class Wand extends Weapons implements Listener {
 	public void StoneWand(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.BLAZE_ROD);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-				"generic.attackDamage", 5, Operation.ADD_NUMBER, EquipmentSlot.HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 5, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(9000 + 1);
+		meta.setMaxStackSize(1);
 		if(lang.contains("kr")){
 			meta.setDisplayName("돌 지팡이");
-			meta.setLocalizedName("돌 지팡이");
+			meta.setItemName("돌 지팡이");
 		}
 		else {
 			meta.setDisplayName("Stone Wand");
-			meta.setLocalizedName("Stone Wand");
+			meta.setItemName("Stone Wand");
 		}
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "stone_wand"), is);
-		rc.shape("axx", "xsx", "xxs");
-		rc.shape("xxa", "xsx", "sxx");
+		rc.shape("a  ", " s ", "  s");
+		rc.shape("  a", " s ", "s  ");
 		rc.setIngredient('s', Material.STICK);
-		rc.setIngredient('x', Material.AIR);
 		rc.setIngredient('a', Material.COBBLESTONE);
 		Bukkit.getServer().addRecipe(rc);
 	}
@@ -845,23 +842,22 @@ public class Wand extends Weapons implements Listener {
 	public void GoldWand(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.BLAZE_ROD);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-				"generic.attackDamage", 4, Operation.ADD_NUMBER, EquipmentSlot.HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(9000 + 2);
+		meta.setMaxStackSize(1);
 		if(lang.contains("kr")){
 			meta.setDisplayName("금 지팡이");
-			meta.setLocalizedName("금 지팡이");
+			meta.setItemName("금 지팡이");
 		}
 		else {
 			meta.setDisplayName("Gold Wand");
-			meta.setLocalizedName("Gold Wand");
+			meta.setItemName("Gold Wand");
 		}
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "gold_wand"), is);
-		rc.shape("axx", "xsx", "xxs");
-		rc.shape("xxa", "xsx", "sxx");
+		rc.shape("a  ", " s ", "  s");
+		rc.shape("  a", " s ", "s  ");
 		rc.setIngredient('s', Material.STICK);
-		rc.setIngredient('x', Material.AIR);
 		rc.setIngredient('a', Material.GOLD_INGOT);
 		Bukkit.getServer().addRecipe(rc);
 	}
@@ -870,23 +866,22 @@ public class Wand extends Weapons implements Listener {
 	public void IronWand(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.BLAZE_ROD);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-				"generic.attackDamage", 7, Operation.ADD_NUMBER, EquipmentSlot.HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 7, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(9000 + 3);
+		meta.setMaxStackSize(1);
 		if(lang.contains("kr")){
 			meta.setDisplayName("철 지팡이");
-			meta.setLocalizedName("철 지팡이");
+			meta.setItemName("철 지팡이");
 		}
 		else {
 			meta.setDisplayName("Iron Wand");
-			meta.setLocalizedName("Iron Wand");
+			meta.setItemName("Iron Wand");
 		}
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "iron_wand"), is);
-		rc.shape("axx", "xsx", "xxs");
-		rc.shape("xxa", "xsx", "sxx");
+		rc.shape("a  ", " s ", "  s");
+		rc.shape("  a", " s ", "s  ");
 		rc.setIngredient('s', Material.STICK);
-		rc.setIngredient('x', Material.AIR);
 		rc.setIngredient('a', Material.IRON_INGOT);
 		Bukkit.getServer().addRecipe(rc);
 	}
@@ -895,23 +890,22 @@ public class Wand extends Weapons implements Listener {
 	public void DiamondWand(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.BLAZE_ROD);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-				"generic.attackDamage", 8, Operation.ADD_NUMBER, EquipmentSlot.HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 8, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(9000 + 4);
+		meta.setMaxStackSize(1);
 		if(lang.contains("kr")){
 			meta.setDisplayName("다이아몬드 지팡이");
-			meta.setLocalizedName("다이아몬드 지팡이");
+			meta.setItemName("다이아몬드 지팡이");
 		}
 		else {
 			meta.setDisplayName("Diamond Wand");
-			meta.setLocalizedName("Diamond Wand");
+			meta.setItemName("Diamond Wand");
 		}
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "diamond_wand"), is);
-		rc.shape("axx", "xsx", "xxs");
-		rc.shape("xxa", "xsx", "sxx");
+		rc.shape("a  ", " s ", "  s");
+		rc.shape("  a", " s ", "s  ");
 		rc.setIngredient('s', Material.STICK);
-		rc.setIngredient('x', Material.AIR);
 		rc.setIngredient('a', Material.DIAMOND);
 		Bukkit.getServer().addRecipe(rc);
 	}
@@ -920,18 +914,18 @@ public class Wand extends Weapons implements Listener {
 	public void NetheriteWand(PrepareSmithingEvent d) {
 		ItemStack r = new ItemStack(Material.BLAZE_ROD);
 		ItemMeta rm = r.getItemMeta();
-		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-				"generic.attackDamage", 10, Operation.ADD_NUMBER, EquipmentSlot.HAND));
+		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 10, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		rm.setCustomModelData(9000 + 60);
+		rm.setMaxStackSize(1);
 		Player p = (Player) d.getView().getPlayer();
 		
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 			rm.setDisplayName("네더라이트 지팡이");
-			rm.setLocalizedName("네더라이트 지팡이");
+			rm.setItemName("네더라이트 지팡이");
 		}
 		else {
 			rm.setDisplayName("Netherite Wand");
-			rm.setLocalizedName("Netherite Wand");
+			rm.setItemName("Netherite Wand");
 		}
 
 
@@ -947,7 +941,7 @@ public class Wand extends Weapons implements Listener {
 			if ((d.getInventory().getItem(0).getItemMeta().getCustomModelData() == 9000+4)
 					&& d.getInventory().getItem(1).getType() == Material.NETHERITE_INGOT) {
 				ItemMeta rm0 = d.getInventory().getItem(0).getItemMeta();
-				if(!rm0.getDisplayName().equals(rm0.getLocalizedName())) {
+				if(!rm0.getDisplayName().equals(rm0.getItemName())) {
 					rm.setDisplayName(rm0.getDisplayName());
 				}
 				r.setItemMeta(rm);
@@ -977,21 +971,21 @@ public class Wand extends Weapons implements Listener {
 					Player p = (Player) d.getWhoClicked();
 					ItemStack r = new ItemStack(Material.BLAZE_ROD);
 					ItemMeta rm = r.getItemMeta();
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-							"generic.attackDamage", 10, Operation.ADD_NUMBER, EquipmentSlot.HAND));
+					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 10, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					rm.setCustomModelData(9000 + 60);
+					rm.setMaxStackSize(1);
 					
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName("네더라이트 지팡이");
-						rm.setLocalizedName("네더라이트 지팡이");
+						rm.setItemName("네더라이트 지팡이");
 					}
 					else {
 						rm.setDisplayName("Netherite Wand");
-						rm.setLocalizedName("Netherite Wand");
+						rm.setItemName("Netherite Wand");
 					}
 
 					ItemMeta rm0 = d.getInventory().getItem(0).getItemMeta();
-					if(!rm0.getDisplayName().equals(rm0.getLocalizedName())) {
+					if(!rm0.getDisplayName().equals(rm0.getItemName())) {
 						rm.setDisplayName(rm0.getDisplayName());
 					}
 					r.setItemMeta(rm);

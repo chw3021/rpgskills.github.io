@@ -28,13 +28,14 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import io.github.chw3021.commons.ConfigManager;
 import io.github.chw3021.commons.Pak;
 import io.github.chw3021.rmain.RMain;
 
 public class Fighter extends Weapons implements Listener {
 
 	
-	final private String lang = RMain.getInstance().getConfig().getString("Language");
+	final private String lang = ConfigManager.getInstance(RMain.getInstance()).getCustomConfig().getString("Language");
 	Pak pak = new Pak();
 /*
 	private ItemStack csc(Inventory inv, Integer cmdt, Player p) {
@@ -59,15 +60,15 @@ public class Fighter extends Weapons implements Listener {
 				rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
 				rm.setCustomModelData(cmdt + 1000);
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-						new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 15,
-								Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+						new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 15,
+								Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-						new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 14,
+						new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 14,
 								Operation.ADD_NUMBER, EquipmentSlotGroup.OFF_HAND));
 	
 				rm.addAttributeModifier(Attribute.GENERIC_LUCK,
 						new AttributeModifier(UUID.randomUUID(), "generic.luck", 30,
-								Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+								Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 				if (cmdt == 14) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"바람의 너클");
@@ -172,10 +173,10 @@ public class Fighter extends Weapons implements Listener {
 				if (cmdt == 12) {
 					rm.setCustomModelData(cmdt + 1000);
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 15,
-									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 15,
+									Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 14,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 14,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"자연의 너클");
@@ -200,10 +201,10 @@ public class Fighter extends Weapons implements Listener {
 				if (cmdt == 14) {
 					rm.setCustomModelData(1 + 1000+100);
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 6,
-									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 6,
+									Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 6,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 6,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 1단계");
@@ -228,10 +229,10 @@ public class Fighter extends Weapons implements Listener {
 				rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
 				if (cmdt == 5) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 7,
-									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 7,
+									Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 7,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 7,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 2단계");
@@ -246,10 +247,10 @@ public class Fighter extends Weapons implements Listener {
 				}
 				else if (cmdt == 6) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 8,
-									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 8,
+									Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 8,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 8,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 3단계");
@@ -264,10 +265,10 @@ public class Fighter extends Weapons implements Listener {
 				}
 				else if (cmdt == 7) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 9,
-									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 9,
+									Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 9,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 9,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 4단계");
@@ -282,10 +283,10 @@ public class Fighter extends Weapons implements Listener {
 				}
 				else if (cmdt == 8) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 10,
-									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 10,
+									Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 10,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 10,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 5단계");
@@ -300,10 +301,10 @@ public class Fighter extends Weapons implements Listener {
 				}
 				else if (cmdt == 9) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 11,
-									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 11,
+									Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 11,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 11,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 6단계");
@@ -318,10 +319,10 @@ public class Fighter extends Weapons implements Listener {
 				}
 				else if (cmdt == 10) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 12,
-									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 12,
+									Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 12,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 12,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 7단계");
@@ -336,10 +337,10 @@ public class Fighter extends Weapons implements Listener {
 				}
 				else if (cmdt == 11) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 13,
-									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 13,
+									Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 13,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 13,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.OFF_HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 너클 - 8단계");
@@ -784,7 +785,7 @@ public class Fighter extends Weapons implements Listener {
 		ItemStack pis = p.getInventory().getItemInMainHand();
 		ItemStack pos = p.getInventory().getItemInOffHand();
 		if (pis.getAmount() >= 1 && pis.hasItemMeta() && pis.getItemMeta().hasCustomModelData()
-				&& pis.getType().name().contains("BANNER_PATTERN") && !pis.getItemMeta().getItemName().contains("CopiedKnuckle") && pos.getType() == Material.AIR) {
+				&& pis.getType().name().contains("BANNER_PATTERN") && !pis.getItemMeta().getItemName().contains("CopiedKnuckle") && pos.getType() == Material.VOID_AIR) {
 			ev.setCancelled(true);
 			ItemStack swap = pis.clone();
 			ItemMeta sm = swap.getItemMeta();
@@ -866,13 +867,15 @@ public class Fighter extends Weapons implements Listener {
 	public void WoodenKnuckle(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.GLOBE_BANNER_PATTERN, 1);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 1, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 1, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
+		meta.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+		meta.removeAttributeModifier(Attribute.GENERIC_ATTACK_SPEED);
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 1, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 1, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
-				new AttributeModifier(attack_speed, 8,
-						Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+				new AttributeModifier(getKey(), 8,
+						Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
-				new AttributeModifier(attack_speed, 8,
+				new AttributeModifier(getKey(), 8,
 						Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		meta.setCustomModelData(1000);
 		meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
@@ -888,10 +891,9 @@ public class Fighter extends Weapons implements Listener {
 		}
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "wooden_knuckle"), is);
-		rc.shape("xax", "bxb");
+		rc.shape("xax", " x ");
 		RecipeChoice rcc =  new RecipeChoice.MaterialChoice(Material.ACACIA_PLANKS,Material.BIRCH_PLANKS,Material.CRIMSON_PLANKS,Material.DARK_OAK_PLANKS,Material.JUNGLE_PLANKS,Material.OAK_PLANKS,Material.SPRUCE_PLANKS,Material.WARPED_PLANKS);
 		rc.setIngredient('x', rcc);
-		rc.setIngredient('b', Material.AIR);
 		rc.setIngredient('a', Material.STICK);
 		Bukkit.getServer().addRecipe(rc);
 	}
@@ -900,13 +902,15 @@ public class Fighter extends Weapons implements Listener {
 	public void StoneKnuckle(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.GLOBE_BANNER_PATTERN, 1);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 2, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 1, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
+		meta.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+		meta.removeAttributeModifier(Attribute.GENERIC_ATTACK_SPEED);
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 1, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
-				new AttributeModifier(attack_speed, 8,
-						Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+				new AttributeModifier(getKey(), 8,
+						Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
-				new AttributeModifier(attack_speed, 8,
+				new AttributeModifier(getKey(), 8,
 						Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		meta.setCustomModelData(1000 +1);
 		meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
@@ -922,9 +926,8 @@ public class Fighter extends Weapons implements Listener {
 		}
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "stone_knuckle"), is);
-		rc.shape("xax", "bxb");
+		rc.shape("xax", " x ");
 		rc.setIngredient('x', Material.COBBLESTONE);
-		rc.setIngredient('b', Material.AIR);
 		rc.setIngredient('a', Material.STICK);
 		Bukkit.getServer().addRecipe(rc);
 	}
@@ -933,13 +936,15 @@ public class Fighter extends Weapons implements Listener {
 	public void GoldKnuckle(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.GLOBE_BANNER_PATTERN, 1);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 2, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 1, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
+		meta.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+		meta.removeAttributeModifier(Attribute.GENERIC_ATTACK_SPEED);
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 1, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
-				new AttributeModifier(attack_speed, 8,
-						Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+				new AttributeModifier(getKey(), 8,
+						Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
-				new AttributeModifier(attack_speed, 8,
+				new AttributeModifier(getKey(), 8,
 						Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		meta.setCustomModelData(1000 + 2);
 		meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
@@ -955,9 +960,8 @@ public class Fighter extends Weapons implements Listener {
 		}
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "gold_knuckle"), is);
-		rc.shape("xax", "bxb");
+		rc.shape("xax", " x ");
 		rc.setIngredient('x', Material.GOLD_INGOT);
-		rc.setIngredient('b', Material.AIR);
 		rc.setIngredient('a', Material.STICK);
 		Bukkit.getServer().addRecipe(rc);
 	}
@@ -966,13 +970,15 @@ public class Fighter extends Weapons implements Listener {
 	public void IronKnuckle(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.GLOBE_BANNER_PATTERN, 1);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 3, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 2, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
+		meta.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+		meta.removeAttributeModifier(Attribute.GENERIC_ATTACK_SPEED);
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 3, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
-				new AttributeModifier(attack_speed, 8,
-						Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+				new AttributeModifier(getKey(), 8,
+						Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
-				new AttributeModifier(attack_speed, 8,
+				new AttributeModifier(getKey(), 8,
 						Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		meta.setCustomModelData(1000 + 3);
 		meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
@@ -988,9 +994,8 @@ public class Fighter extends Weapons implements Listener {
 		}
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "iron_knuckle"), is);
-		rc.shape("xax", "bxb");
-		rc.setIngredient('x', Material.IRON_INGOT);
-		rc.setIngredient('b', Material.AIR);
+		rc.shape("xax", " x ");
+		rc.setIngredient('x', Material.IRON_BLOCK);
 		rc.setIngredient('a', Material.STICK);
 		Bukkit.getServer().addRecipe(rc);
 	}
@@ -999,13 +1004,15 @@ public class Fighter extends Weapons implements Listener {
 	public void DiamondKnuckle(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.GLOBE_BANNER_PATTERN, 1);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 4, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 3, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
+		meta.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+		meta.removeAttributeModifier(Attribute.GENERIC_ATTACK_SPEED);
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 3, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
-				new AttributeModifier(attack_speed, 8,
-						Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+				new AttributeModifier(getKey(), 8,
+						Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
-				new AttributeModifier(attack_speed, 8,
+				new AttributeModifier(getKey(), 8,
 						Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		meta.setCustomModelData(1000 + 4);
 		meta.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
@@ -1021,9 +1028,8 @@ public class Fighter extends Weapons implements Listener {
 		}
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "diamond_knuckle"), is);
-		rc.shape("xax", "bxb");
+		rc.shape("xax", " x ");
 		rc.setIngredient('x', Material.DIAMOND);
-		rc.setIngredient('b', Material.AIR);
 		rc.setIngredient('a', Material.STICK);
 		Bukkit.getServer().addRecipe(rc);
 	}
@@ -1032,13 +1038,13 @@ public class Fighter extends Weapons implements Listener {
 	public void NetheriteKnuckle(PrepareSmithingEvent d) {
 		ItemStack r = new ItemStack(Material.GLOBE_BANNER_PATTERN, 1);
 		ItemMeta rm = r.getItemMeta();
-		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 5, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
-		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 4, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
+		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 5, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
+		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
-				new AttributeModifier(attack_speed, 8,
-						Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+				new AttributeModifier(getKey(), 8,
+						Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
-				new AttributeModifier(attack_speed, 8,
+				new AttributeModifier(getKey(), 8,
 						Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		rm.setCustomModelData(1000 + 60);
 		rm.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
@@ -1097,8 +1103,8 @@ public class Fighter extends Weapons implements Listener {
 					Player p = (Player) d.getWhoClicked();
 					ItemStack r = new ItemStack(Material.GLOBE_BANNER_PATTERN, 1);
 					ItemMeta rm = r.getItemMeta();
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 5, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 4, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
+					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 5, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
+					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 					rm.setCustomModelData(1000 + 60);
 					rm.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -1133,44 +1139,5 @@ public class Fighter extends Weapons implements Listener {
 
 	
 
-	
-
-	/*@EventHandler
-	public void NetheriteKnuckle(SmithItemEvent d) {
-		if (d.getClickedInventory() == null) {
-			return;
-		}
-		if (d.getClickedInventory().getType() == InventoryType.SMITHING) {
-			if (d.getClickedInventory().getItem(2) != null && d.getCurrentItem().getItemMeta().hasCustomModelData()
-					&& d.getInventory().getItem(0).getItemMeta().hasCustomModelData()
-					&& d.getInventory().getItem(1) != null
-					&& !d.getInventory().getItem(2).getItemMeta().getPersistentDataContainer()
-							.getOrDefault(nethercore, PersistentDataType.STRING, "none").equals("netherCore")
-					&& !d.getInventory().getItem(2).getItemMeta().getPersistentDataContainer()
-							.getOrDefault(endercore, PersistentDataType.STRING, "none").equals("enderCore")
-					&& !d.getInventory().getItem(2).getItemMeta().getPersistentDataContainer()
-							.getOrDefault(herocore, PersistentDataType.STRING, "none").equals("heroCore")) {
-				if (d.getCurrentItem().getItemMeta().getCustomModelData() == 2011) {
-					Player p = (Player) d.getWhoClicked();
-					ItemStack r = new ItemStack(Material.BOW);
-					ItemMeta rm = r.getItemMeta();
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
-							"generic.attackDamage", 11, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
-					rm.setCustomModelData(1000 +11);
-					rm.setDisplayName("Netherite Knuckle");
-					rm.setItemName("Netherite Knuckle");
-					r.setItemMeta(rm);
-					if (p.getInventory().firstEmpty() != -1 && d.getClickedInventory().getItem(2).getItemMeta()
-							.getCustomModelData() == d.getCurrentItem().getItemMeta().getCustomModelData()) {
-						p.getInventory().addItem(r);
-						d.getClickedInventory().getItem(0).setAmount(d.getInventory().getItem(0).getAmount() - 1);
-						d.getClickedInventory().getItem(1).setAmount(d.getInventory().getItem(1).getAmount() - 1);
-						d.getClickedInventory().getItem(2).setAmount(0);
-					}
-				}
-			}
-		}
-	
-	}*/
 
 }

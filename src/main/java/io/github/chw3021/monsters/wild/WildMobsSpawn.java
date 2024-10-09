@@ -2,8 +2,8 @@ package io.github.chw3021.monsters.wild;
 
 import java.util.Random;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.World.Environment;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
@@ -11,7 +11,6 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Bee;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Enderman;
-import org.bukkit.entity.EntityCategory;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Skeleton;
@@ -20,8 +19,6 @@ import org.bukkit.entity.Spider;
 import org.bukkit.entity.Vindicator;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import io.github.chw3021.monsters.Mobs;
@@ -140,7 +137,7 @@ public class WildMobsSpawn extends Mobs implements Listener {
 		if (le.getLocation().getWorld().getEnvironment() != Environment.NORMAL || !b.name().contains("JUNGLE")) {
 			return;
 		}
-		if (le.getCategory() == EntityCategory.UNDEAD
+		if (Tag.ENTITY_TYPES_SENSITIVE_TO_SMITE.isTagged(le.getType())
 				&& le.getType() != EntityType.PHANTOM) {
 			for(int i = 0; i<5; i++) {
 				Random random = new Random();

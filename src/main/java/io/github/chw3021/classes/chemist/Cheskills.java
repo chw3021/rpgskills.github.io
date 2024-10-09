@@ -34,12 +34,12 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.Tag;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityCategory;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Item;
@@ -1262,13 +1262,13 @@ public class Cheskills extends Pak implements Listener, Serializable {
 						                le.playEffect(EntityEffect.HURT_BERRY_BUSH);
 						                le.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 200,2,false,false));
 										p.playSound(le.getLocation(), Sound.ENTITY_COW_MILK, 0.2f, 2f);
-										if(le.getCategory() == EntityCategory.ARTHROPOD) {
+										if(Tag.ENTITY_TYPES_SENSITIVE_TO_BANE_OF_ARTHROPODS.isTagged(le.getType())) {
 											extracted.put(p, 0);
 										}
-										else if(le.getCategory() == EntityCategory.UNDEAD) {
+										else if(Tag.ENTITY_TYPES_SENSITIVE_TO_SMITE.isTagged(le.getType())) {
 											extracted.put(p, 1);
 										}
-										else if(le.getCategory() == EntityCategory.WATER) {
+										else if(Tag.ENTITY_TYPES_SENSITIVE_TO_IMPALING.isTagged(le.getType())) {
 											extracted.put(p, 2);
 										}
 										else if(le.getType() == EntityType.ENDERMAN) {

@@ -3,13 +3,13 @@ package io.github.chw3021.monsters.snow;
 import java.util.Random;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Drowned;
 import org.bukkit.entity.Enderman;
-import org.bukkit.entity.EntityCategory;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Guardian;
 import org.bukkit.entity.LivingEntity;
@@ -207,7 +207,7 @@ public class SnowMobsSpawn extends Mobs implements Listener {
 				|| b.name().contains("FROZEN")|| b.name().contains("GROVE")|| b.name().contains("JAG"))) {
 			return;
 		} 
-		if(le.getCategory() == EntityCategory.UNDEAD && le.getType() != EntityType.PHANTOM ) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_SMITE.isTagged(le.getType()) && le.getType() != EntityType.PHANTOM ) {
     		Random random=new Random();
         	int ri = random.nextInt(5);
         	if(ri == 0) {

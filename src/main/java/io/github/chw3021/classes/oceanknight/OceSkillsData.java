@@ -379,7 +379,7 @@ public class OceSkillsData implements Serializable, Listener{
 						}
 						break;		}
 					case "OceanCharge":
-					case "삼연격":{
+					case "삼지창돌격":{
 						if(e.getClick().equals(ClickType.LEFT)) {
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && OceanCharge.get(p.getUniqueId())<50){
 								OceanCharge.put(p.getUniqueId(), OceanCharge.get(p.getUniqueId()) +1);

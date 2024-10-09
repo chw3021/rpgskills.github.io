@@ -14,6 +14,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.Nullable;
 
+import io.github.chw3021.commons.ConfigManager;
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.commons.Pak;
 import io.github.chw3021.rmain.RMain;
@@ -24,7 +25,7 @@ public class Mobs extends Pak {
 	 * 
 	 */
 	private static final long serialVersionUID = -3620485680544888652L;
-	protected final String lang = RMain.getInstance().getConfig().getString("Language");
+	protected final String lang = ConfigManager.getInstance(RMain.getInstance()).getCustomConfig().getString("Language");
 
 	final protected String trans(LivingEntity le) {
 		if(lang.contains("kr")) {

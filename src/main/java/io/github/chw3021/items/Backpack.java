@@ -144,7 +144,7 @@ public class Backpack implements Serializable, Listener{
 		}
 		Inventory ci = Bukkit.createInventory(p, 54, name);
 		if(check(p)) {
-			ci = page(p,0);
+			ci = page(p,1);
 		}
 		p.openInventory(ci);
 		save(p,ci);
@@ -170,14 +170,18 @@ public class Backpack implements Serializable, Listener{
 		pagerm.setItemName("RpgBagpackPage");
 		pager.setItemMeta(pagerm);
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			itemset(ChatColor.GOLD + "이전 페이지", pager, 0, 1,
-					Arrays.asList(ChatColor.GOLD + "" + (page)), 52, ci);
+			if(page>1) {
+				itemset(ChatColor.GOLD + "이전 페이지", pager, 0, 1,
+						Arrays.asList(ChatColor.GOLD + "" + (page)), 52, ci);
+			}
 			itemset(ChatColor.GOLD + "다음 페이지", pager, 0, 1,
 					Arrays.asList(ChatColor.GOLD + "" + (page)), 53, ci);
 		}
 		else {
-			itemset(ChatColor.GOLD + "Prev", pager, 0, 1,
-					Arrays.asList(ChatColor.GOLD + "" + (page)), 52, ci);
+			if(page>1) {
+				itemset(ChatColor.GOLD + "Prev", pager, 0, 1,
+						Arrays.asList(ChatColor.GOLD + "" + (page)), 52, ci);
+			}
 			itemset(ChatColor.GOLD + "Next", pager, 0, 1,
 					Arrays.asList(ChatColor.GOLD + "" + (page)), 53, ci);
 		}
@@ -208,7 +212,7 @@ public class Backpack implements Serializable, Listener{
             List<String> lore = inv.getItem(53).getItemMeta().getLore();
             if (lore != null && !lore.isEmpty()) {
                 try {
-                    return Integer.parseInt(lore.get(0)); // 로어의 첫 번째 항목을 정수로 변환
+                    return Integer.parseInt(lore.get(0))+1; // 로어의 첫 번째 항목을 정수로 변환
                 } catch (NumberFormatException e) {
                     // 예외 처리: 페이지가 숫자가 아닐 경우 기본값 0 반환
                     return 0;
@@ -248,7 +252,7 @@ public class Backpack implements Serializable, Listener{
 			}
 		}
 		
-		else if (e.getView().getTitle().equals(p.getName() + "'s Backpack") || e.getView().getTitle().equals(p.getName() + "의 배낭")) {
+		if (e.getView().getTitle().contains(p.getName() + "'s Backpack") || e.getView().getTitle().contains(p.getName() + "의 배낭")) {
 			 if (e.getCurrentItem() == null || e.getCurrentItem().getType() == Material.AIR || !e.getCurrentItem().hasItemMeta()) {
 		            return;
 		        }
@@ -256,24 +260,27 @@ public class Backpack implements Serializable, Listener{
 		        String displayName = ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName());
 
 		        // RpgBagpackPage 체크
-		        if (!e.getCurrentItem().getItemMeta().getDisplayName().equals("RpgBagpackPage")) {
+		        if (!e.getCurrentItem().getItemMeta().getItemName().equals("RpgBagpackPage")) {
 		            return;
 		        }
+	            System.out.println("good");
 
 		        int currentPage = getCurrentPage(e.getInventory());
+	            System.out.println(currentPage);
 
-		        if (displayName.equals("Prev") || displayName.equals(ChatColor.GOLD + "이전 페이지")) {
+		        if (displayName.equals("Prev") || displayName.equals("이전 페이지")) {
 		            e.setCancelled(true);
 		            // 이전 페이지로 이동
 		            if (currentPage > 0) {
 		                Inventory newInventory = page(p, currentPage - 1);
 		                p.openInventory(newInventory);
 		            }
-		        } else if (displayName.equals("Next") || displayName.equals(ChatColor.GOLD + "다음 페이지")) {
+		        } else if (displayName.equals("Next") || displayName.equals("다음 페이지")) {
 		            e.setCancelled(true);
 		            // 다음 페이지로 이동
 		            Inventory newInventory = page(p, currentPage + 1);
 		            p.openInventory(newInventory);
+		            System.out.println(currentPage);
 		        }
 	    }
 	}

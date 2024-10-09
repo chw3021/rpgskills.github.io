@@ -1459,14 +1459,14 @@ public class Oceskills extends Pak implements Serializable {
 			             		@Override
 					                	public void run() 
 						                {	
-				         					p.getWorld().spawnParticle(Particle.DRIPPING_WATER,i, 2,1,1,1);
-				         					p.getWorld().spawnParticle(Particle.BUBBLE,i, 2,1,1,1);
+				         					p.getWorld().spawnParticle(Particle.DRIPPING_WATER,i, 1,1,1,1);
+				         					p.getWorld().spawnParticle(Particle.BUBBLE,i, 1,1,1,1);
 				         					if(i.getBlock().isPassable()) {
 					                    	p.teleport(i);
 				         					}
-				        					p.setRiptiding(true);
+				        					p.setGliding(true);
 							            }
-			                    	}, j.incrementAndGet()/17); 
+			                    	}, j.incrementAndGet()/4); 
 								}); 
 			                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					                @Override
@@ -1492,16 +1492,21 @@ public class Oceskills extends Pak implements Serializable {
 												LivingEntity le = (LivingEntity)e;
 												atk1(0.6*(1+fsd.OceanCharge.get(p.getUniqueId())*0.055), p, le);
 												le.teleport(pel.clone());
+												p.setCooldown(CAREFUL, 3);
+												p.swingMainHand();
+												p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS,20, 255, false, false));
+												p.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 20, 255, false, false));
 												Holding.superholding(p, le, 20l);
 												Holding.holding(null, p, 20l);
+							                    p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_IRON, 0.15f, 2.0f);
 											}
 										}
-			         					p.getWorld().spawnParticle(Particle.BUBBLE_POP,50, 2,1,1,1);
-			         					p.getWorld().spawnParticle(Particle.SPLASH,50, 2,1,1,1);
+			         					p.getWorld().spawnParticle(Particle.BUBBLE_POP,pel, 50,1,1,1);
+			         					p.getWorld().spawnParticle(Particle.SPLASH,pel, 50,1,1,1);
 					                    p.playSound(p.getLocation(), Sound.ENTITY_DROWNED_SHOOT, 0.35f, 2.0f);
 					                    p.playSound(p.getLocation(), Sound.ITEM_TRIDENT_HIT, 0.5f, 0.0f);
 					                }
-			                    }, j.incrementAndGet()/17); 
+			                    }, j.incrementAndGet()/4); 
 							});
 					bd.execute();
 					

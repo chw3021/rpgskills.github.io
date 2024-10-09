@@ -1093,6 +1093,7 @@ public class SkillUsing implements Listener, Serializable {
 	public void Death(PlayerDeathEvent ev)
 	{
 		CommonEvents.getInstance().delete(ev);
+		CombatMode.getInstance().death(ev);
 		
 		
 		Broskills.getInstance().OneOnly(ev);

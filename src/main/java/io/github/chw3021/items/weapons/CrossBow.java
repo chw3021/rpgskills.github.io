@@ -19,6 +19,7 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import io.github.chw3021.commons.ConfigManager;
 import io.github.chw3021.commons.Pak;
 import io.github.chw3021.rmain.RMain;
 
@@ -27,7 +28,7 @@ public class CrossBow extends Weapons implements Listener {
 	final static private NamespacedKey nethercore = new NamespacedKey(RMain.getInstance(), "crossbow_nether_core");
 	final static private NamespacedKey endercore = new NamespacedKey(RMain.getInstance(), "crossbow_ender_core");
 	final static private NamespacedKey herocore = new NamespacedKey(RMain.getInstance(), "crossbow_hero_core");*/
-	final private String lang = RMain.getInstance().getConfig().getString("Language");
+	final private String lang = ConfigManager.getInstance(RMain.getInstance()).getCustomConfig().getString("Language");
 	Pak pak = new Pak();
 /*
 	private ItemStack csc(Inventory inv, Integer cmdt, Player p) {
@@ -52,7 +53,7 @@ public class CrossBow extends Weapons implements Listener {
 				rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
 				rm.setCustomModelData(cmdt + 5000);
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-						new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 29,
+						new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 29,
 								Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 	
 				rm.addAttributeModifier(Attribute.GENERIC_LUCK,
@@ -162,7 +163,7 @@ public class CrossBow extends Weapons implements Listener {
 				if (cmdt == 12) {
 					rm.setCustomModelData(cmdt + 5000);
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 29,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 29,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"자연의 쇠뇌");
@@ -187,7 +188,7 @@ public class CrossBow extends Weapons implements Listener {
 				if (cmdt == 14) {
 					rm.setCustomModelData(1 + 5000+100);
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 12,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 12,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 1단계");
@@ -212,7 +213,7 @@ public class CrossBow extends Weapons implements Listener {
 				rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
 				if (cmdt == 5) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 14,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 14,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 2단계");
@@ -227,7 +228,7 @@ public class CrossBow extends Weapons implements Listener {
 				}
 				else if (cmdt == 6) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 16,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 16,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 3단계");
@@ -242,7 +243,7 @@ public class CrossBow extends Weapons implements Listener {
 				}
 				else if (cmdt == 7) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 18,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 18,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 4단계");
@@ -257,7 +258,7 @@ public class CrossBow extends Weapons implements Listener {
 				}
 				else if (cmdt == 8) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 20,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 20,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 5단계");
@@ -272,7 +273,7 @@ public class CrossBow extends Weapons implements Listener {
 				}
 				else if (cmdt == 9) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 22,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 22,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 6단계");
@@ -287,7 +288,7 @@ public class CrossBow extends Weapons implements Listener {
 				}
 				else if (cmdt == 10) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 24,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 24,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 7단계");
@@ -302,7 +303,7 @@ public class CrossBow extends Weapons implements Listener {
 				}
 				else if (cmdt == 11) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 26,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 26,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 쇠뇌 - 8단계");
@@ -742,7 +743,7 @@ public class CrossBow extends Weapons implements Listener {
 	public void StoneCrossBow(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.CROSSBOW);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 4, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(5000 + 1);
 		if(lang.contains("kr")){
 			meta.setDisplayName("돌 쇠뇌");
@@ -754,12 +755,11 @@ public class CrossBow extends Weapons implements Listener {
 		}
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "stone_crossbow"), is);
-		rc.shape("wiw", "sts", "xwx");
+		rc.shape("wiw", "sts", " w ");
 		rc.setIngredient('w', Material.COBBLESTONE);
 		rc.setIngredient('i', Material.IRON_INGOT);
 		rc.setIngredient('s', Material.STRING);
 		rc.setIngredient('t', Material.TRIPWIRE_HOOK);
-		rc.setIngredient('x', Material.AIR);
 		Bukkit.getServer().addRecipe(rc);
 	}
 
@@ -767,7 +767,7 @@ public class CrossBow extends Weapons implements Listener {
 	public void GoldCrossBow(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.CROSSBOW);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 6, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 6, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(5000 +2);
 		if(lang.contains("kr")){
 			meta.setDisplayName("금 쇠뇌");
@@ -779,12 +779,11 @@ public class CrossBow extends Weapons implements Listener {
 		}
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "gold_crossbow"), is);
-		rc.shape("wiw", "sts", "xwx");
+		rc.shape("wiw", "sts", " w ");
 		rc.setIngredient('w', Material.GOLD_INGOT);
 		rc.setIngredient('i', Material.IRON_INGOT);
 		rc.setIngredient('s', Material.STRING);
 		rc.setIngredient('t', Material.TRIPWIRE_HOOK);
-		rc.setIngredient('x', Material.AIR);
 		Bukkit.getServer().addRecipe(rc);
 	}
 
@@ -792,7 +791,7 @@ public class CrossBow extends Weapons implements Listener {
 	public void IronCrossBow(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.CROSSBOW);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 8, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 8, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(5000 + 3 );
 		if(lang.contains("kr")){
 			meta.setDisplayName("철 쇠뇌");
@@ -804,12 +803,11 @@ public class CrossBow extends Weapons implements Listener {
 		}
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "iron_crossbow"), is);
-		rc.shape("wiw", "sts", "xwx");
+		rc.shape("wiw", "sts", " w ");
 		rc.setIngredient('w', Material.IRON_INGOT);
 		rc.setIngredient('i', Material.IRON_INGOT);
 		rc.setIngredient('s', Material.STRING);
 		rc.setIngredient('t', Material.TRIPWIRE_HOOK);
-		rc.setIngredient('x', Material.AIR);
 		Bukkit.getServer().addRecipe(rc);
 	}
 
@@ -817,7 +815,7 @@ public class CrossBow extends Weapons implements Listener {
 	public void DiamondCrossBow(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.CROSSBOW);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 10, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 10, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(5000 + 4);
 		if(lang.contains("kr")){
 			meta.setDisplayName("다이아몬드 쇠뇌");
@@ -829,12 +827,11 @@ public class CrossBow extends Weapons implements Listener {
 		}
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "diamond_crossbow"), is);
-		rc.shape("wiw", "sts", "xwx");
+		rc.shape("wiw", "sts", " w ");
 		rc.setIngredient('w', Material.DIAMOND);
 		rc.setIngredient('i', Material.IRON_INGOT);
 		rc.setIngredient('s', Material.STRING);
 		rc.setIngredient('t', Material.TRIPWIRE_HOOK);
-		rc.setIngredient('x', Material.AIR);
 		Bukkit.getServer().addRecipe(rc);
 	}
 
@@ -842,7 +839,7 @@ public class CrossBow extends Weapons implements Listener {
 	public void NetheriteCrossBow(PrepareSmithingEvent d) {
 		ItemStack r = new ItemStack(Material.CROSSBOW);
 		ItemMeta rm = r.getItemMeta();
-		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 10, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 10, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		rm.setCustomModelData(5000 +60);
 		
 		Player p = (Player) d.getView().getPlayer();
@@ -896,7 +893,7 @@ public class CrossBow extends Weapons implements Listener {
 					Player p = (Player) d.getWhoClicked();
 					ItemStack r = new ItemStack(Material.CROSSBOW);
 					ItemMeta rm = r.getItemMeta();
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 10, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 10, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					rm.setCustomModelData(5000 +60);
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName("네더라이트 쇠뇌");

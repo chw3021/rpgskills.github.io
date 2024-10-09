@@ -3,6 +3,7 @@ package io.github.chw3021.monsters.hyper;
 import java.util.Random;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.World.Environment;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
@@ -189,7 +190,7 @@ public class HyperMobsSpawn extends Mobs implements Listener {
 				&& le.getLocation().getWorld().getEnvironment() == Environment.NORMAL)) {
 			return;
 		} 
-		if (le.getCategory() == EntityCategory.UNDEAD
+		if (Tag.ENTITY_TYPES_SENSITIVE_TO_SMITE.isTagged(le.getType())
 				&& le.getType() != EntityType.PHANTOM) {
 			Random random = new Random();
 			int ri = random.nextInt(5);

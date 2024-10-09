@@ -21,7 +21,6 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;

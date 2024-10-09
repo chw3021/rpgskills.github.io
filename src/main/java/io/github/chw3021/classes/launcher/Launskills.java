@@ -42,16 +42,15 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Particle.DustOptions;
 import org.bukkit.Sound;
+import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.entity.AbstractArrow.PickupStatus;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Breeze;
-import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Enderman;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityCategory;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Firework;
@@ -59,6 +58,7 @@ import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
+import org.bukkit.entity.Raider;
 import org.bukkit.entity.Snowball;
 import org.bukkit.entity.Wither;
 import org.bukkit.event.Listener;
@@ -382,20 +382,20 @@ public class Launskills extends Pak implements Serializable, Listener {
 		if(d.getDamager() instanceof Arrow && d.getEntity() instanceof LivingEntity &&!d.isCancelled())
 		{
 			Projectile a = (Projectile) d.getDamager();
-			LivingEntity e = (LivingEntity)d.getEntity();
+			LivingEntity le = (LivingEntity)d.getEntity();
 			if(a.getShooter() instanceof Player && !a.hasMetadata("fake"))
 			{
 				Player p = (Player) a.getShooter();
-				Location el =e.getLocation();
+				Location el =le.getLocation();
 
 
 
 				if(ClassData.pc.get(p.getUniqueId()) == 5)
 				{
-					if (e instanceof Player)
+					if (le instanceof Player)
 					{
 
-						Player p1 = (Player) e;
+						Player p1 = (Player) le;
 						if(Party.hasParty(p) && Party.hasParty(p1))	{
 							if(Party.getParty(p).equals(Party.getParty(p1)))
 							{
@@ -412,42 +412,42 @@ public class Launskills extends Pak implements Serializable, Listener {
 
 							if(arrowtype.get(p.getName()) == 0 || arrowtype.get(p.getName()) == 5)
 							{
-								dset2(d, p, 1d, e, 9);
-								if(e.getCategory() == EntityCategory.UNDEAD)
+								dset2(d, p, 1d, le, 9);
+								if(Tag.ENTITY_TYPES_SENSITIVE_TO_SMITE.isTagged(le.getType()))
 								{
 									d.setDamage(d.getDamage()*(1.1));
 								}
 								p.getWorld().spawnParticle(Particle.FLASH, el, 3, 1, 1, 1);
 								p.getWorld().spawnParticle(Particle.WAX_ON, el, 3, 1, 1, 1);
 								p.getWorld().strikeLightningEffect(el);
-								e.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 40, 0, false, false));
+								le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 40, 0, false, false));
 							}
 							if(arrowtype.get(p.getName()) == 1 || arrowtype.get(p.getName()) == 4)
 							{
-								dset2(d, p, 1d, e, 7);
-								if(e.getType() == EntityType.BLAZE || e.getType().name().contains("ENDER") || e.getType() == EntityType.GHAST || e.getType() == EntityType.MAGMA_CUBE || e.getType() == EntityType.WITCH || e.getType() == EntityType.EVOKER || e.getType() == EntityType.PILLAGER || e.getType() == EntityType.PIGLIN_BRUTE || e.getType() == EntityType.RAVAGER || e.getType() == EntityType.PLAYER)
+								dset2(d, p, 1d, le, 7);
+								if(le.getType().name().contains("ENDER") || Tag.ENTITY_TYPES_FREEZE_HURTS_EXTRA_TYPES.isTagged(le.getType()) || le instanceof Raider|| le.getType() == EntityType.GHAST || le.getType() == EntityType.PIGLIN_BRUTE || le.getType() == EntityType.PLAYER)
 								{
 									d.setDamage(d.getDamage()*(1.1));
 								}
 								p.getWorld().spawnParticle(Particle.FALLING_WATER, el, 10, 1, 1, 1);
-								e.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 40, 0, false, false));
-								e.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 40, 0, false, false));
+								le.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 40, 0, false, false));
+								le.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 40, 0, false, false));
 							}
 							if(arrowtype.get(p.getName()) == 2 || arrowtype.get(p.getName()) == 5)
 							{
-								dset2(d, p, 1d, e, 10);
-								if(e.getCategory() == EntityCategory.ARTHROPOD)
+								dset2(d, p, 1d, le, 10);
+								if(Tag.ENTITY_TYPES_SENSITIVE_TO_BANE_OF_ARTHROPODS.isTagged(le.getType()))
 								{
 									d.setDamage(d.getDamage()*(1.1));
 								}
 								p.getWorld().spawnParticle(Particle.FLAME, el, 10, 1, 1, 1, 0);
-								e.setFireTicks(40);
+								le.setFireTicks(40);
 							}
 							if(arrowtype.get(p.getName()) == 3 || arrowtype.get(p.getName()) == 4)
 							{
-								dset2(d, p, 1d, e, 5);
+								dset2(d, p, 1d, le, 5);
 								p.getWorld().spawnParticle(Particle.END_ROD, el, 10, 1, 1, 1);
-								e.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 10, 0, false, false));
+								le.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 10, 0, false, false));
 							}
 						}
 						else {
@@ -466,14 +466,14 @@ public class Launskills extends Pak implements Serializable, Listener {
 		if(d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity &&!d.isCancelled())
 		{
 			Player p = (Player) d.getDamager();
-			LivingEntity e = (LivingEntity)d.getEntity();
+			LivingEntity le = (LivingEntity)d.getEntity();
 
 			if(ClassData.pc.get(p.getUniqueId()) == 5)
 			{
-				if (e instanceof Player)
+				if (le instanceof Player)
 				{
 
-					Player p1 = (Player) e;
+					Player p1 = (Player) le;
 					if(Party.hasParty(p) && Party.hasParty(p1))	{
 						if(Party.getParty(p).equals(Party.getParty(p1)))
 						{
@@ -483,6 +483,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 					}
 				}
 
+				Location el =le.getLocation();
 
 				if(p.getInventory().getItemInMainHand().getType() == Material.BOW)
 				{
@@ -490,36 +491,42 @@ public class Launskills extends Pak implements Serializable, Listener {
 
 						if(arrowtype.get(p.getName()) == 0 || arrowtype.get(p.getName()) == 5)
 						{
-							dset2(d, p, 1d, e, 9);
-							if(e.getCategory() == EntityCategory.UNDEAD)
+							dset2(d, p, 1d, le, 9);
+							if(Tag.ENTITY_TYPES_SENSITIVE_TO_SMITE.isTagged(le.getType()))
 							{
 								d.setDamage(d.getDamage()*(1.1));
 							}
-							e.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 40, 0, false, false));
+							p.getWorld().spawnParticle(Particle.FLASH, el, 3, 1, 1, 1);
+							p.getWorld().spawnParticle(Particle.WAX_ON, el, 3, 1, 1, 1);
+							p.getWorld().strikeLightningEffect(el);
+							le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 40, 0, false, false));
 						}
 						if(arrowtype.get(p.getName()) == 1 || arrowtype.get(p.getName()) == 4)
 						{
-							dset2(d, p, 1d, e, 7);
-							if(e.getType() == EntityType.BLAZE || e.getType().name().contains("ENDER") || e.getType() == EntityType.GHAST || e.getType() == EntityType.MAGMA_CUBE || e.getType() == EntityType.WITCH || e.getType() == EntityType.EVOKER || e.getType() == EntityType.PILLAGER || e.getType() == EntityType.PIGLIN_BRUTE || e.getType() == EntityType.RAVAGER || e.getType() == EntityType.PLAYER)
+							dset2(d, p, 1d, le, 7);
+							if(le.getType().name().contains("ENDER") || Tag.ENTITY_TYPES_FREEZE_HURTS_EXTRA_TYPES.isTagged(le.getType()) || le instanceof Raider|| le.getType() == EntityType.GHAST || le.getType() == EntityType.PIGLIN_BRUTE || le.getType() == EntityType.PLAYER)
 							{
 								d.setDamage(d.getDamage()*(1.1));
 							}
-							e.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 40, 0, false, false));
-							e.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 40, 0, false, false));
+							p.getWorld().spawnParticle(Particle.FALLING_WATER, el, 10, 1, 1, 1);
+							le.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 40, 0, false, false));
+							le.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 40, 0, false, false));
 						}
 						if(arrowtype.get(p.getName()) == 2 || arrowtype.get(p.getName()) == 5)
 						{
-							dset2(d, p, 1d, e, 10);
-							if(e.getCategory() == EntityCategory.ARTHROPOD)
+							dset2(d, p, 1d, le, 10);
+							if(Tag.ENTITY_TYPES_SENSITIVE_TO_BANE_OF_ARTHROPODS.isTagged(le.getType()))
 							{
 								d.setDamage(d.getDamage()*(1.1));
 							}
-							e.setFireTicks(40);
+							p.getWorld().spawnParticle(Particle.FLAME, el, 10, 1, 1, 1, 0);
+							le.setFireTicks(40);
 						}
 						if(arrowtype.get(p.getName()) == 3 || arrowtype.get(p.getName()) == 4)
 						{
-							dset2(d, p, 1d, e, 14);
-							e.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 10, 0, false, false));
+							dset2(d, p, 1d, le, 5);
+							p.getWorld().spawnParticle(Particle.END_ROD, el, 10, 1, 1, 1);
+							le.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 10, 0, false, false));
 						}
 					}
 					else {

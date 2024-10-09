@@ -19,6 +19,7 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import io.github.chw3021.commons.ConfigManager;
 import io.github.chw3021.commons.Pak;
 import io.github.chw3021.rmain.RMain;
 
@@ -28,7 +29,7 @@ public class FishingRod extends Weapons implements Listener {
 	final static private NamespacedKey endercore = new NamespacedKey(RMain.getInstance(), "fishingrod_ender_core");
 	final static private NamespacedKey herocore = new NamespacedKey(RMain.getInstance(), "fishingrod_hero_core");*/
 	
-	final String lang = RMain.getInstance().getConfig().getString("Language");
+	final String lang = ConfigManager.getInstance(RMain.getInstance()).getCustomConfig().getString("Language");
 	Pak pak = new Pak();
 /*
 	private ItemStack csc(Inventory inv, Integer cmdt, Player p) {
@@ -53,7 +54,7 @@ public class FishingRod extends Weapons implements Listener {
 				rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
 				rm.setCustomModelData(cmdt + 12000);
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-						new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 26,
+						new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 26,
 								Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 	
 				rm.addAttributeModifier(Attribute.GENERIC_LUCK,
@@ -163,7 +164,7 @@ public class FishingRod extends Weapons implements Listener {
 				if (cmdt == 12) {
 					rm.setCustomModelData(cmdt + 12000);
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 26,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 26,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"자연의 낚시대");
@@ -188,7 +189,7 @@ public class FishingRod extends Weapons implements Listener {
 				if (cmdt == 14) {
 					rm.setCustomModelData(1 + 12000+100);
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 9,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 9,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 1단계");
@@ -213,7 +214,7 @@ public class FishingRod extends Weapons implements Listener {
 				rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
 				if (cmdt == 5) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 11,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 11,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 2단계");
@@ -228,7 +229,7 @@ public class FishingRod extends Weapons implements Listener {
 				}
 				else if (cmdt == 6) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 13,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 13,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 3단계");
@@ -243,7 +244,7 @@ public class FishingRod extends Weapons implements Listener {
 				}
 				else if (cmdt == 7) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 15,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 15,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 4단계");
@@ -258,7 +259,7 @@ public class FishingRod extends Weapons implements Listener {
 				}
 				else if (cmdt == 8) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 17,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 17,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 5단계");
@@ -273,7 +274,7 @@ public class FishingRod extends Weapons implements Listener {
 				}
 				else if (cmdt == 9) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 19,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 19,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 6단계");
@@ -288,7 +289,7 @@ public class FishingRod extends Weapons implements Listener {
 				}
 				else if (cmdt == 10) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 21,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 21,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 7단계");
@@ -303,7 +304,7 @@ public class FishingRod extends Weapons implements Listener {
 				}
 				else if (cmdt == 11) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 23,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 23,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 낚시대 - 8단계");
@@ -742,7 +743,7 @@ public class FishingRod extends Weapons implements Listener {
 	public void StoneFishingRod(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.FISHING_ROD);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 2, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(12000+1);
 		if(lang.contains("kr")){
 			meta.setDisplayName("돌 낚시대");
@@ -754,10 +755,9 @@ public class FishingRod extends Weapons implements Listener {
 		}
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "stone_fishingrod"), is);
-		rc.shape("bba", "bax", "abx");
-		rc.shape("abb", "xab", "xba");
+		rc.shape("  a", " ax", "a x");
+		rc.shape("a  ", "xa ", "x a");
 		rc.setIngredient('x', Material.STRING);
-		rc.setIngredient('b', Material.AIR);
 		rc.setIngredient('a', Material.COBBLESTONE);
 		Bukkit.getServer().addRecipe(rc);
 	}
@@ -766,7 +766,7 @@ public class FishingRod extends Weapons implements Listener {
 	public void GoldFishingRod(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.FISHING_ROD);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 2, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(12000+2);
 		if(lang.contains("kr")){
 			meta.setDisplayName("금 낚시대");
@@ -778,10 +778,9 @@ public class FishingRod extends Weapons implements Listener {
 		}
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "gold_fishingrod"), is);
-		rc.shape("bba", "bax", "abx");
-		rc.shape("abb", "xab", "xba");
+		rc.shape("  a", " ax", "a x");
+		rc.shape("a  ", "xa ", "x a");
 		rc.setIngredient('x', Material.STRING);
-		rc.setIngredient('b', Material.AIR);
 		rc.setIngredient('a', Material.GOLD_INGOT);
 		Bukkit.getServer().addRecipe(rc);
 	}
@@ -790,7 +789,7 @@ public class FishingRod extends Weapons implements Listener {
 	public void IronFishingRod(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.FISHING_ROD);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 3, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 3, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(12000+3);
 		if(lang.contains("kr")){
 			meta.setDisplayName("철 낚시대");
@@ -802,10 +801,9 @@ public class FishingRod extends Weapons implements Listener {
 		}
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "iron_fishingrod"), is);
-		rc.shape("bba", "bax", "abx");
-		rc.shape("abb", "xab", "xba");
+		rc.shape("  a", " ax", "a x");
+		rc.shape("a  ", "xa ", "x a");
 		rc.setIngredient('x', Material.STRING);
-		rc.setIngredient('b', Material.AIR);
 		rc.setIngredient('a', Material.IRON_INGOT);
 		Bukkit.getServer().addRecipe(rc);
 	}
@@ -814,7 +812,7 @@ public class FishingRod extends Weapons implements Listener {
 	public void DiamondFishingRod(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.FISHING_ROD);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 5, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 5, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(12000+4);
 		if(lang.contains("kr")){
 			meta.setDisplayName("다이아몬드 낚시대");
@@ -826,10 +824,9 @@ public class FishingRod extends Weapons implements Listener {
 		}
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "diamond_fishingrod"), is);
-		rc.shape("bba", "bax", "abx");
-		rc.shape("abb", "xab", "xba");
+		rc.shape("  a", " ax", "a x");
+		rc.shape("a  ", "xa ", "x a");
 		rc.setIngredient('x', Material.STRING);
-		rc.setIngredient('b', Material.AIR);
 		rc.setIngredient('a', Material.DIAMOND);
 		Bukkit.getServer().addRecipe(rc);
 	}
@@ -838,7 +835,7 @@ public class FishingRod extends Weapons implements Listener {
 	public void NetheriteFishingRod(PrepareSmithingEvent d) {
 		ItemStack r = new ItemStack(Material.FISHING_ROD);
 		ItemMeta rm = r.getItemMeta();
-		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 7, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 7, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		rm.setCustomModelData(12000+60);
 		
 		Player p = (Player) d.getView().getPlayer();
@@ -893,7 +890,7 @@ public class FishingRod extends Weapons implements Listener {
 					Player p = (Player) d.getWhoClicked();
 					ItemStack r = new ItemStack(Material.FISHING_ROD);
 					ItemMeta rm = r.getItemMeta();
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 7, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 7, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					rm.setCustomModelData(12000+60);
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName("네더라이트 낚시대");

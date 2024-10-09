@@ -15,6 +15,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
+import org.bukkit.Tag;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.enchantments.Enchantment;
@@ -2097,9 +2098,8 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		else {
 			le.setHealth(0);
 		}
-		le.playEffect(EntityEffect.HURT);
+		le.playHurtAnimation(0);
 		le.getWorld().playSound(le.getLocation(), Sound.ENTITY_ENDER_DRAGON_HURT, SoundCategory.HOSTILE, 1, 1);
-		Bukkit.getPluginManager().callEvent(new EntityDamageEvent(le,DamageCause.ENTITY_ATTACK,dam));
 		ch.remove();
 	}
 
@@ -2109,13 +2109,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	 */
 	final public void atks(Double dou1, Double dou2,Player p, LivingEntity le) {
 		Double pd = player_damage.get(p.getName());
-		if(le.getCategory() == EntityCategory.UNDEAD) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_SMITE.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SMITE)*2.5;
 		}
-		if(le.getCategory() == EntityCategory.ARTHROPOD) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_BANE_OF_ARTHROPODS.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.BANE_OF_ARTHROPODS)*2.5;
 		}
-		if(le.getCategory() == EntityCategory.WATER) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_IMPALING.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.IMPALING)*2.5;
 		}
 		Double fd = pd*dou1 + dou2;
@@ -2135,13 +2135,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	 */
 	final public void atks(Double dou1, Double dou2,Player p, LivingEntity le, Integer el) {
 		Double pd = player_damage.get(p.getName());
-		if(le.getCategory() == EntityCategory.UNDEAD) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_SMITE.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SMITE)*2.5;
 		}
-		if(le.getCategory() == EntityCategory.ARTHROPOD) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_BANE_OF_ARTHROPODS.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.BANE_OF_ARTHROPODS)*2.5;
 		}
-		if(le.getCategory() == EntityCategory.WATER) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_IMPALING.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.IMPALING)*2.5;
 		}
 		Double fd = eldam(pd*dou1 + dou2,p,le,el);
@@ -2162,13 +2162,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	 */
 	final public void atk0(Double dou1, Double dou2,Player p, LivingEntity le) {
 		Double pd = player_damage.get(p.getName());
-		if(le.getCategory() == EntityCategory.UNDEAD) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_SMITE.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SMITE)*2.5;
 		}
-		if(le.getCategory() == EntityCategory.ARTHROPOD) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_BANE_OF_ARTHROPODS.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.BANE_OF_ARTHROPODS)*2.5;
 		}
-		if(le.getCategory() == EntityCategory.WATER) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_IMPALING.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.IMPALING)*2.5;
 		}
 		Double fd = pd*dou1  * (1 + 0.1 *dou2);
@@ -2188,13 +2188,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	 */
 	final public void atk0(Double dou1, Double dou2,Player p, LivingEntity le, Integer el) {
 		Double pd = player_damage.get(p.getName());
-		if(le.getCategory() == EntityCategory.UNDEAD) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_SMITE.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SMITE)*2.5;
 		}
-		if(le.getCategory() == EntityCategory.ARTHROPOD) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_BANE_OF_ARTHROPODS.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.BANE_OF_ARTHROPODS)*2.5;
 		}
-		if(le.getCategory() == EntityCategory.WATER) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_IMPALING.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.IMPALING)*2.5;
 		}
 		Double fd = eldam(pd*dou1 * (1 + 0.1 *dou2),p,le,el);
@@ -2214,13 +2214,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	 */
 	final public void atk1(Double dou, Player p, LivingEntity le) {
 		Double pd = player_damage.get(p.getName());
-		if(le.getCategory() == EntityCategory.UNDEAD) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_SMITE.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SMITE)*2.5;
 		}
-		if(le.getCategory() == EntityCategory.ARTHROPOD) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_BANE_OF_ARTHROPODS.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.BANE_OF_ARTHROPODS)*2.5;
 		}
-		if(le.getCategory() == EntityCategory.WATER) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_IMPALING.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.IMPALING)*2.5;
 		}
 		Double fd = pd*dou;
@@ -2238,13 +2238,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	 */
 	final public void atk1(Double dou, Player p, LivingEntity le, Integer el) {
 		Double pd = player_damage.get(p.getName());
-		if(le.getCategory() == EntityCategory.UNDEAD) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_SMITE.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SMITE)*2.5;
 		}
-		if(le.getCategory() == EntityCategory.ARTHROPOD) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_BANE_OF_ARTHROPODS.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.BANE_OF_ARTHROPODS)*2.5;
 		}
-		if(le.getCategory() == EntityCategory.WATER) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_IMPALING.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.IMPALING)*2.5;
 		}
 		Double fd = eldam(pd*dou,p,le,el);
@@ -2264,13 +2264,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	 */
 	final public void atk2(Double dou1,Double dou2, Player p, LivingEntity le) {
 		Double pd = player_damage.get(p.getName());
-		if(le.getCategory() == EntityCategory.UNDEAD) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_SMITE.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SMITE)*2.5;
 		}
-		if(le.getCategory() == EntityCategory.ARTHROPOD) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_BANE_OF_ARTHROPODS.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.BANE_OF_ARTHROPODS)*2.5;
 		}
-		if(le.getCategory() == EntityCategory.WATER) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_IMPALING.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.IMPALING)*2.5;
 		}
 		Double fd = dou1 * (1+ pd*dou2);
@@ -2288,13 +2288,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	 */
 	final public void atk2(Double dou1,Double dou2, Player p, LivingEntity le, Integer el) {
 		Double pd = player_damage.get(p.getName());
-		if(le.getCategory() == EntityCategory.UNDEAD) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_SMITE.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SMITE)*2.5;
 		}
-		if(le.getCategory() == EntityCategory.ARTHROPOD) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_BANE_OF_ARTHROPODS.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.BANE_OF_ARTHROPODS)*2.5;
 		}
-		if(le.getCategory() == EntityCategory.WATER) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_IMPALING.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.IMPALING)*2.5;
 		}
 		Double fd = eldam(dou1 * (1+ pd*dou2),p,le,el);
@@ -2314,13 +2314,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	final public void atk3(Double dou1,Double dou2, Player p, LivingEntity le) {
 		Double pd = player_damage.get(p.getName());
 		Double fd = pd*dou1 +  pd*dou2;
-		if(le.getCategory() == EntityCategory.UNDEAD) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_SMITE.isTagged(le.getType())) {
 			fd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SMITE)*2.5;
 		}
-		if(le.getCategory() == EntityCategory.ARTHROPOD) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_BANE_OF_ARTHROPODS.isTagged(le.getType())) {
 			fd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.BANE_OF_ARTHROPODS)*2.5;
 		}
-		if(le.getCategory() == EntityCategory.WATER) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_IMPALING.isTagged(le.getType())) {
 			fd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.IMPALING)*2.5;
 		}
 		if(le instanceof EnderDragon) {
@@ -2337,13 +2337,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	 */
 	final public void atk3(Double dou1,Double dou2, Player p, LivingEntity le, Integer el) {
 		Double pd = player_damage.get(p.getName());
-		if(le.getCategory() == EntityCategory.UNDEAD) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_SMITE.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SMITE)*2.5;
 		}
-		if(le.getCategory() == EntityCategory.ARTHROPOD) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_BANE_OF_ARTHROPODS.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.BANE_OF_ARTHROPODS)*2.5;
 		}
-		if(le.getCategory() == EntityCategory.WATER) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_IMPALING.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.IMPALING)*2.5;
 		}
 		Double fd = eldam(pd*dou1 +  pd*dou2,p,le,el);
@@ -2439,13 +2439,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			return;
 		}
 		Double pd = player_damage.get(p.getName());
-		if(le.getCategory() == EntityCategory.UNDEAD) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_SMITE.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SMITE)*2.5;
 		}
-		if(le.getCategory() == EntityCategory.ARTHROPOD) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_BANE_OF_ARTHROPODS.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.BANE_OF_ARTHROPODS)*2.5;
 		}
-		if(le.getCategory() == EntityCategory.WATER) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_IMPALING.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.IMPALING)*2.5;
 		}
 		if(!Holding.superholding.containsKey(le.getUniqueId())) {
@@ -2475,13 +2475,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			return;
 		}
 		Double pd = player_damage.get(p.getName());
-		if(le.getCategory() == EntityCategory.UNDEAD) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_SMITE.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SMITE)*2.5;
 		}
-		if(le.getCategory() == EntityCategory.ARTHROPOD) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_BANE_OF_ARTHROPODS.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.BANE_OF_ARTHROPODS)*2.5;
 		}
-		if(le.getCategory() == EntityCategory.WATER) {
+		if(Tag.ENTITY_TYPES_SENSITIVE_TO_IMPALING.isTagged(le.getType())) {
 			pd += p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.IMPALING)*2.5;
 		}
 		if(!Holding.superholding.containsKey(le.getUniqueId())) {
@@ -2511,13 +2511,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		/*if(d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity && d.getDamage()>0) {
 			Player p = (Player) d.getDamager();
 			LivingEntity le = (LivingEntity) d.getEntity();
-			if(le.getCategory() == EntityCategory.UNDEAD) {
+			if(Tag.ENTITY_TYPES_SENSITIVE_TO_SMITE.isTagged(le.getType())) {
 				d.setDamage(d.getDamage()+p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_UNDEAD)*2.5);
 			}
-			if(le.getCategory() == EntityCategory.ARTHROPOD) {
+			if(Tag.ENTITY_TYPES_SENSITIVE_TO_BANE_OF_ARTHROPODS.isTagged(le.getType())) {
 				d.setDamage(d.getDamage()+p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ARTHROPODS)*2.5);
 			}
-			if(le.getCategory() == EntityCategory.WATER) {
+			if(Tag.ENTITY_TYPES_SENSITIVE_TO_IMPALING.isTagged(le.getType())) {
 				d.setDamage(d.getDamage()+p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.IMPALING)*2.5);
 			}
 		}*/
@@ -2526,13 +2526,13 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			LivingEntity le = (LivingEntity) d.getEntity();
 			if(pr.getShooter() instanceof Player) {
 				Player p = (Player) pr.getShooter();
-				if(le.getCategory() == EntityCategory.UNDEAD) {
+				if(Tag.ENTITY_TYPES_SENSITIVE_TO_SMITE.isTagged(le.getType())) {
 					d.setDamage(d.getDamage()+p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SMITE)*2.5);
 				}
-				if(le.getCategory() == EntityCategory.ARTHROPOD) {
+				if(Tag.ENTITY_TYPES_SENSITIVE_TO_BANE_OF_ARTHROPODS.isTagged(le.getType())) {
 					d.setDamage(d.getDamage()+p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.BANE_OF_ARTHROPODS)*2.5);
 				}
-				if(le.getCategory() == EntityCategory.WATER) {
+				if(Tag.ENTITY_TYPES_SENSITIVE_TO_IMPALING.isTagged(le.getType())) {
 					d.setDamage(d.getDamage()+p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.IMPALING)*2.5);
 				}
 			}

@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.World.Environment;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
@@ -11,7 +12,6 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Bogged;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Enderman;
-import org.bukkit.entity.EntityCategory;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Slime;
@@ -155,7 +155,7 @@ public class PoisonMobsSpawn extends Mobs implements Listener {
 				) {
 			return;
 		} 
-		if (le.getCategory() == EntityCategory.UNDEAD
+		if (Tag.ENTITY_TYPES_SENSITIVE_TO_SMITE.isTagged(le.getType())
 				&& le.getType() != EntityType.PHANTOM) {
 			Random random = new Random();
 			int ri = random.nextInt(5);

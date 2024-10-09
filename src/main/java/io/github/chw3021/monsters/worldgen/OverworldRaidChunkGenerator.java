@@ -13,36 +13,35 @@ import org.bukkit.util.noise.SimplexOctaveGenerator;
 import org.jetbrains.annotations.NotNull;
 
 public class OverworldRaidChunkGenerator extends ChunkGenerator {
+	@Override
+	public void generateSurface(@NotNull WorldInfo worldInfo, @NotNull Random random, int chunkX, int chunkZ, @NotNull ChunkGenerator.ChunkData chunkData) {
+	    SimplexOctaveGenerator generator = new SimplexOctaveGenerator(new Random(worldInfo.getSeed()), 6);
+	    generator.setScale(0.008);
 
-    @Override
-    public void generateSurface(@NotNull WorldInfo worldInfo, @NotNull Random random, int chunkX, int chunkZ, @NotNull ChunkGenerator.ChunkData chunkData) {
-        SimplexOctaveGenerator generator = new SimplexOctaveGenerator(new Random(worldInfo.getSeed()), 6);
-        generator.setScale(0.008);
+	    Material material;
+	    if (worldInfo.getEnvironment() == World.Environment.NORMAL) {
+	        material = Material.CRACKED_STONE_BRICKS;
+	    } else {
+	        material = Material.NETHERRACK;
+	    }
 
-        Material material= Material.STONE;;
-        if (worldInfo.getEnvironment() == World.Environment.NORMAL) {
-            material = Material.CRACKED_STONE_BRICKS;
-        } else {
-            material = Material.NETHERRACK;
-        }
+	    int worldX = chunkX * 16;
+	    int worldZ = chunkZ * 16;
 
-        int worldX = chunkX * 16;
-        int worldZ = chunkZ * 16;
+	    for (int x = 0; x < 16; x++) {
+	        for (int z = 0; z < 16; z++) {
+	            double noise = generator.noise(worldX + x, worldZ + z, 0.5, 0.5, true);
+	            int height = 40 + (int)(noise * 20); // 노이즈 기반의 동적 높이
 
-        for (int x = 0; x < 16; x++) {
-            for (int z = 0; z < 16; z++) {
-                double noise = generator.noise(worldX + x, worldZ + z, 1, 1, true);
-                int height = 100;
-                for (int y = 40; y < height; y++) {
-                    chunkData.setBlock(x, y, z, material);
-                    chunkData.setBlock(x+(int) noise, y, z, Material.MOSSY_STONE_BRICKS);
-                }
-                for (int y = chunkData.getMinHeight()+2; y < 39; y++) {
-                    chunkData.setBlock(x, y, z, Material.WATER);
-                }
-            }
-        }
-    }
+	            for (int y = 40; y < height; y++) {
+	                chunkData.setBlock(x, y, z, material);
+	            }
+	            for (int y = chunkData.getMinHeight() + 2; y < 40; y++) {
+	                chunkData.setBlock(x, y, z, Material.WATER);
+	            }
+	        }
+	    }
+	}
 
     @Override
     public void generateBedrock(@NotNull WorldInfo worldInfo, @NotNull Random random, int chunkX, int chunkZ, @NotNull ChunkGenerator.ChunkData chunkData) {

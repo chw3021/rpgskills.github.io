@@ -13,6 +13,7 @@ import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityPickupItemEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -184,6 +185,12 @@ public class CombatMode implements Serializable{
 		Player p = ev.getPlayer();
 		quitCombat(p,1);
 	}
+	public void death(PlayerDeathEvent ev) {
+		if(isCombat(ev.getEntity())) {
+			ev.setKeepInventory(true);
+		}
+	}
+
 
 	public void deleter(PluginDisableEvent ev) {
 		Bukkit.getServer().getOnlinePlayers().forEach(p -> {

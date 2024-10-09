@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
@@ -58,6 +59,7 @@ import org.jetbrains.annotations.Nullable;
 
 import com.google.common.collect.HashMultimap;
 
+import io.github.chw3021.commons.ConfigManager;
 import io.github.chw3021.rmain.RMain;
 
 public class NPCLoc implements Serializable, Listener{
@@ -148,7 +150,12 @@ public class NPCLoc implements Serializable, Listener{
 		}
 		
 		try {
-			return w.locateNearestStructure(lel, st, 1, b).getLocation();
+			for(int i = 1; i < 1001; i+=100) {
+				if(w.locateNearestStructure(lel, st, i, b) != null) {
+					return w.locateNearestStructure(lel, st, i, b).getLocation();
+				}
+			}
+			return w.locateNearestStructure(lel, st, 1000, b).getLocation();
 		}
 		catch(NullPointerException e){
 			return null;
@@ -241,78 +248,91 @@ public class NPCLoc implements Serializable, Listener{
 	public void spawning(PluginEnableEvent ev) 
 	{
 		HashMultimap<UUID, HashMap<Location, String>> Locs = getLocsdata().Locs;
+        AtomicInteger j = new AtomicInteger();
+
 		Bukkit.getWorlds().forEach(w -> {
-			if(w.hasMetadata("fake")||w.hasMetadata("rpgraidworld")) {
+			if(w.hasMetadata("fake")||w.hasMetadata("rpgraidworld") || disabledWorlds.contains(w.getName())) {
 				return;
 			}
 			
-            AtomicInteger j = new AtomicInteger();
-            
-			if(!Locs.containsKey(w.getUID())) {
-				HashSet<HashMap<Location, String>> hs = new HashSet<>();
-				strset().forEach(str -> {
-					
-					HashMap<Location, String> hm = new HashMap<>();
-					
-					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() 
-		                {
-		                	Location stl = strct(w, new Location(w,0,0,0), str.getKey().getKey(), true);
-							if(stl == null) {
-								stl = strct(w, new Location(w,0,0,0), str.getKey().getKey(), false);
-								if(stl == null) {
-									return;
-								}
-							}
-							hm.put(stl, str.getKey().getKey());
+			
+			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                @Override
+                public void run() 
+                {
+        			if(!Locs.containsKey(w.getUID())) {
+        				System.out.println("Generating NPC Save File....");
+        				HashSet<HashMap<Location, String>> hs = new HashSet<>();
+        				strset().forEach(str -> {
+        					
+        					HashMap<Location, String> hm = new HashMap<>();
+        					
+        					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+        		                @Override
+        		                public void run() 
+        		                {
+        		                	Location stl = strct(w, new Location(w,0,64,0), str.getKey().getKey(), true);
+        							if(stl == null) {
+        								stl = strct(w, new Location(w,0,64,0), str.getKey().getKey(), false);
+        								if(stl == null) {
+        									return;
+        								}
+        							}
+        							hm.put(stl, str.getKey().getKey());
 
-							Location stl1 = strct(w, w.getSpawnLocation(), str.getKey().getKey(), true);
-							if(stl1 == null) {
-								stl1 = strct(w, w.getSpawnLocation(), str.getKey().getKey(), false);
-								if(stl1 == null) {
-									return;
-								}
-							}
-							hm.put(stl1, str.getKey().getKey());
-							hs.add(hm);
-		                }
-					}, j.incrementAndGet()*20+100); 
-					
-				});
+        							Location stl1 = strct(w, w.getSpawnLocation(), str.getKey().getKey(), true);
+        							if(stl1 == null) {
+        								stl1 = strct(w, w.getSpawnLocation(), str.getKey().getKey(), false);
+        								if(stl1 == null) {
+        									return;
+        								}
+        							}
+        							hm.put(stl1, str.getKey().getKey());
+        							hs.add(hm);
+        		                }
+        					}, j.incrementAndGet()*20); 
+        					
+        				});
 
-				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	                @Override
-	                public void run() 
-	                {
-	    				saver(w,hs);
-	    				System.out.println("File Created");
-	    				System.out.println("Please reload one more time after reload completed");
-	                }
-				}, j.incrementAndGet()*20+100); 
-				return;
-			}
-			else if(Locs.containsKey(w.getUID())) {
-				System.out.println("Spawning NPCs of World: "+w.getName() +"...");
-				Locs.get(w.getUID()).forEach(hm -> {
-					hm.entrySet().forEach(en->{
-						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() 
-			                {
-								Spawn(en.getKey(), en.getValue());
-			                }
-						}, j.incrementAndGet()*20+100); 
-					});
-				});
-				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	                @Override
-	                public void run() 
-	                {
-	    				System.out.println(w.getName() +"'s NPCs Spawned");
-	                }
-				}, j.incrementAndGet()*20+100); 
-			}
+        				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+        	                @Override
+        	                public void run() 
+        	                {
+        	                	if(hs.isEmpty()) {
+            	    				System.out.println("There's no Structure in " + w.getName());
+                    				return;
+        	                	}
+        	    				saver(w,hs);
+        	    				System.out.println(w.getName()+" NPC File Created");
+        	    				System.out.println("Please reload one more time after reload completed");
+        	                }
+        				}, j.incrementAndGet()*20); 
+        				return;
+        			}
+        			else if(Locs.containsKey(w.getUID())) {
+        				System.out.println("Spawning NPCs of World: "+w.getName() +"...");
+        				Locs.get(w.getUID()).forEach(hm -> {
+        					hm.entrySet().forEach(en->{
+        						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+        			                @Override
+        			                public void run() 
+        			                {
+        								Spawn(en.getKey(), en.getValue());
+        			                }
+        						}, j.incrementAndGet()*20); 
+        					});
+        				});
+        				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+        	                @Override
+        	                public void run() 
+        	                {
+        	    				System.out.println(w.getName() +"'s NPCs Spawned");
+        	                }
+        				}, j.incrementAndGet()*20); 
+        			}
+                }
+			}, 100); 
+			
 		});
 	}
 
@@ -360,52 +380,49 @@ public class NPCLoc implements Serializable, Listener{
 	@EventHandler	
 	public void despawning(PluginDisableEvent ev) 
 	{
-		AtomicInteger j = new AtomicInteger();
+		Bukkit.getOnlinePlayers().forEach(p -> {
+			PlayerLocs.put(p.getWorld().getUID(),p.getLocation());
+		});
 		Bukkit.getWorlds().forEach(w -> {
 			if(w.hasMetadata("fake")||w.hasMetadata("rpgraidworld") || !w.canGenerateStructures()) {
 				return;
 			}
+			System.out.println(w.getName() +"'s NPC File Saving...");
+			if(PlayerLocs.containsKey(w.getUID())) {
+				HashSet<HashMap<Location, String>> hs = new HashSet<>();
+				PlayerLocs.get(w.getUID()).forEach(l -> {
+					strset().forEach(str -> {
+						HashMap<Location, String> hm = new HashMap<>();
 
-			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-                @Override
-                public void run() 
-                {
-        			if(PlayerLocs.containsKey(w.getUID())) {
-        				HashSet<HashMap<Location, String>> hs = new HashSet<>();
-        				PlayerLocs.get(w.getUID()).forEach(l -> {
-        					strset().forEach(str -> {
-        						HashMap<Location, String> hm = new HashMap<>();
-
-        						Location stl1 = strct(w, l, str.getKey().getKey(), true);
-        						if(stl1 == null) {
-        							stl1 = strct(w, l, str.getKey().getKey(), false);
-        							if(stl1 == null) {
-        								return;
-        							}
-        						}
-        						hm.put(stl1, str.getKey().getKey());
-        						
-        						hs.add(hm);
-        					});
-        				});
-        				saver(w,hs);
-        			}
-        			
-        			/*if(NPCLocs.containsKey(w.getUID())) {
-        				NPCLocs.get(w.getUID()).forEach(l -> {
-        					for(Entity e : l.getChunk().getEntities()) {
-        						e.remove();
-        					};
-        				});
-        			}*/
-        			npcloc.keySet().forEach(uid ->{
-        				Entity entity = Bukkit.getEntity(uid);
-        				if (entity != null) {
-        				    entity.remove();
-        				}
-        			});
-                }
-			}, j.incrementAndGet()*40); 
+						Location stl1 = strct(w, l, str.getKey().getKey(), true);
+						if(stl1 == null) {
+							stl1 = strct(w, l, str.getKey().getKey(), false);
+							if(stl1 == null) {
+								return;
+							}
+						}
+						hm.put(stl1, str.getKey().getKey());
+						
+						hs.add(hm);
+					});
+				});
+				saver(w,hs);
+			}
+			
+			/*if(NPCLocs.containsKey(w.getUID())) {
+				NPCLocs.get(w.getUID()).forEach(l -> {
+					for(Entity e : l.getChunk().getEntities()) {
+						e.remove();
+					};
+				});
+			}*/
+			npcloc.keySet().forEach(uid ->{
+				Entity entity = Bukkit.getEntity(uid);
+				if (entity != null) {
+				    entity.remove();
+    				System.out.println(w.getName() +"'s "+entity+" despawned");
+				}
+			});
 		});
 	}
 	
@@ -669,7 +686,10 @@ public class NPCLoc implements Serializable, Listener{
 	}
 
 
-	protected final String lang = RMain.getInstance().getConfig().getString("Language");
+	protected final String lang = ConfigManager.getInstance(RMain.getInstance()).getCustomConfig().getString("Language");
+	List<String> disabledWorlds = ConfigManager.getInstance(RMain.getInstance()).getCustomConfig().getStringList("Worlds");
+	
+	
 	final public void Spawn(final Location lel, String ns) {
 
 		final World w = lel.getWorld();

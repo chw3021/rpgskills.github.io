@@ -3,8 +3,10 @@ package io.github.chw3021.monsters;
 
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Random;
 
+import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
@@ -47,6 +49,7 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 
+import io.github.chw3021.commons.ConfigManager;
 import io.github.chw3021.monsters.dark.DarkMobsSpawn;
 import io.github.chw3021.monsters.dark.DarkRaids;
 import io.github.chw3021.monsters.dark.DarkSkills;
@@ -85,7 +88,8 @@ public class MobsSkillsEvents extends Mobs implements Listener, Serializable  {
 	 * 
 	 */
 	private static final long serialVersionUID = -3182008353111479606L;
-	private final String lang = RMain.getInstance().getConfig().getString("Language");
+	private final String lang = ConfigManager.getInstance(RMain.getInstance()).getCustomConfig().getString("Language");
+	private final List<String> disabledWorlds = ConfigManager.getInstance(RMain.getInstance()).getCustomConfig().getStringList("Worlds");
 	Mobs mobs = new Mobs();                 
 
 
@@ -96,15 +100,16 @@ public class MobsSkillsEvents extends Mobs implements Listener, Serializable  {
 		if (ev.getEntityType() == EntityType.ARMOR_STAND) {
 			return;
 		}
-		if ((ev.getEntity().getWorld().getName().contains("Raid")
-				|| ev.getEntity().getWorld().getName().contains("Fake")) && ev.getSpawnReason() != SpawnReason.CUSTOM && ev.getSpawnReason() != SpawnReason.MOUNT
+		
+		final World world = ev.getEntity().getWorld();
+		final String worldName = world.getName();
+		if ((world.hasMetadata("rpgraidworld") || disabledWorlds.contains(worldName)) && ev.getSpawnReason() != SpawnReason.CUSTOM && ev.getSpawnReason() != SpawnReason.MOUNT
 				&& !(ev.getEntity() instanceof Player) && !ev.getEntity().hasMetadata("rpgspawned")) {
 			ev.setCancelled(true);
 			return;
 		}
 		if (!ev.getEntity().hasMetadata("rpgspawned") && !ev.getEntity().hasMetadata("untargetable")
-				&& !ev.getEntity().hasMetadata("fake") && !ev.getEntity().getWorld().getName().contains("Fake")
-				&& !ev.getEntity().getWorld().getName().contains("Raid") && ev.getEntity() instanceof LivingEntity && ev.getSpawnReason() != SpawnReason.CUSTOM
+				&& !ev.getEntity().hasMetadata("fake") && ev.getEntity() instanceof LivingEntity && ev.getSpawnReason() != SpawnReason.CUSTOM
 				&& ev.getSpawnReason() != SpawnReason.RAID&& ev.getSpawnReason() != SpawnReason.SHOULDER_ENTITY
 				&& ev.getSpawnReason() != SpawnReason.ENDER_PEARL) {
 

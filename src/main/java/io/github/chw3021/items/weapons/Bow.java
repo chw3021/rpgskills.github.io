@@ -19,6 +19,7 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import io.github.chw3021.commons.ConfigManager;
 import io.github.chw3021.commons.Pak;
 import io.github.chw3021.rmain.RMain;
 
@@ -28,7 +29,7 @@ public class Bow extends Weapons implements Listener {
 	final static private NamespacedKey endercore = new NamespacedKey(RMain.getInstance(), "bow_ender_core");
 	final static private NamespacedKey herocore = new NamespacedKey(RMain.getInstance(), "bow_hero_core");*/
 
-	final String lang = RMain.getInstance().getConfig().getString("Language");
+	final String lang = ConfigManager.getInstance(RMain.getInstance()).getCustomConfig().getString("Language");
 	Pak pak = new Pak();
 	/*
 	private ItemStack csc(Inventory inv, Integer cmdt, Player p) {
@@ -53,7 +54,7 @@ public class Bow extends Weapons implements Listener {
 				rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
 				rm.setCustomModelData(cmdt + 2000);
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-						new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 27,
+						new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 27,
 								Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 	
 				rm.addAttributeModifier(Attribute.GENERIC_LUCK,
@@ -163,7 +164,7 @@ public class Bow extends Weapons implements Listener {
 				if (cmdt == 12) {
 					rm.setCustomModelData(cmdt + 2000);
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 27,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 27,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.GOLD +"자연의 활");
@@ -188,7 +189,7 @@ public class Bow extends Weapons implements Listener {
 				if (cmdt == 14) {
 					rm.setCustomModelData(1 + 2000+100);
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 10,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 10,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 활 - 1단계");
@@ -213,7 +214,7 @@ public class Bow extends Weapons implements Listener {
 				rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
 				if (cmdt == 5) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 12,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 12,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 활 - 2단계");
@@ -228,7 +229,7 @@ public class Bow extends Weapons implements Listener {
 				}
 				else if (cmdt == 6) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 14,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 14,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 활 - 3단계");
@@ -243,7 +244,7 @@ public class Bow extends Weapons implements Listener {
 				}
 				else if (cmdt == 7) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 16,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 16,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 활 - 4단계");
@@ -258,7 +259,7 @@ public class Bow extends Weapons implements Listener {
 				}
 				else if (cmdt == 8) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 18,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 18,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 활 - 5단계");
@@ -273,7 +274,7 @@ public class Bow extends Weapons implements Listener {
 				}
 				else if (cmdt == 9) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 20,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 20,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 활 - 6단계");
@@ -288,7 +289,7 @@ public class Bow extends Weapons implements Listener {
 				}
 				else if (cmdt == 10) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 22,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 22,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 활 - 7단계");
@@ -303,7 +304,7 @@ public class Bow extends Weapons implements Listener {
 				}
 				else if (cmdt == 11) {
 					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
-							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 24,
+							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 24,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName(ChatColor.LIGHT_PURPLE +"원소기운의 활 - 8단계");
@@ -743,7 +744,7 @@ public class Bow extends Weapons implements Listener {
 	public void StoneBow(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.BOW);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 2, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(2000 +1);
 		if(lang.contains("kr")){
 			meta.setDisplayName("돌 활");
@@ -755,10 +756,9 @@ public class Bow extends Weapons implements Listener {
 		}
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "stone_bow"), is);
-		rc.shape("bax", "abx", "bax");
-		rc.shape("xab", "xba", "xab");
+		rc.shape(" ax", "a x", " ax");
+		rc.shape("xa ", "x a", "xa ");
 		rc.setIngredient('x', Material.STRING);
-		rc.setIngredient('b', Material.AIR);
 		rc.setIngredient('a', Material.COBBLESTONE);
 		Bukkit.getServer().addRecipe(rc);
 	}
@@ -767,7 +767,7 @@ public class Bow extends Weapons implements Listener {
 	public void GoldBow(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.BOW);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 2, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(2000 + 2);
 		if(lang.contains("kr")){
 			meta.setDisplayName("금 활");
@@ -779,10 +779,9 @@ public class Bow extends Weapons implements Listener {
 		}
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "gold_bow"), is);
-		rc.shape("bax", "abx", "bax");
-		rc.shape("xab", "xba", "xab");
+		rc.shape(" ax", "a x", " ax");
+		rc.shape("xa ", "x a", "xa ");
 		rc.setIngredient('x', Material.STRING);
-		rc.setIngredient('b', Material.AIR);
 		rc.setIngredient('a', Material.GOLD_INGOT);
 		Bukkit.getServer().addRecipe(rc);
 	}
@@ -791,7 +790,7 @@ public class Bow extends Weapons implements Listener {
 	public void IronBow(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.BOW);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 4, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(2000 + 3);
 		if(lang.contains("kr")){
 			meta.setDisplayName("철 활");
@@ -803,10 +802,9 @@ public class Bow extends Weapons implements Listener {
 		}
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "iron_bow"), is);
-		rc.shape("bax", "abx", "bax");
-		rc.shape("xab", "xba", "xab");
+		rc.shape(" ax", "a x", " ax");
+		rc.shape("xa ", "x a", "xa ");
 		rc.setIngredient('x', Material.STRING);
-		rc.setIngredient('b', Material.AIR);
 		rc.setIngredient('a', Material.IRON_INGOT);
 		Bukkit.getServer().addRecipe(rc);
 	}
@@ -815,7 +813,7 @@ public class Bow extends Weapons implements Listener {
 	public void DiamondBow(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.BOW);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 6, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 6, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(2000 +4);
 		if(lang.contains("kr")){
 			meta.setDisplayName("다이아몬드 활");
@@ -827,10 +825,9 @@ public class Bow extends Weapons implements Listener {
 		}
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "diamond_bow"), is);
-		rc.shape("bax", "abx", "bax");
-		rc.shape("xab", "xba", "xab");
+		rc.shape(" ax", "a x", " ax");
+		rc.shape("xa ", "x a", "xa ");
 		rc.setIngredient('x', Material.STRING);
-		rc.setIngredient('b', Material.AIR);
 		rc.setIngredient('a', Material.DIAMOND);
 		Bukkit.getServer().addRecipe(rc);
 	}
@@ -839,7 +836,7 @@ public class Bow extends Weapons implements Listener {
 	public void NetheriteBow(PrepareSmithingEvent d) {
 		ItemStack r = new ItemStack(Material.BOW);
 		ItemMeta rm = r.getItemMeta();
-		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 8, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 8, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		rm.setCustomModelData(2000 +60);
 		Player p = (Player) d.getView().getPlayer();
 		
@@ -893,7 +890,7 @@ public class Bow extends Weapons implements Listener {
 					Player p = (Player) d.getWhoClicked();
 					ItemStack r = new ItemStack(Material.BOW);
 					ItemMeta rm = r.getItemMeta();
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(attackDamage, 8, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 8, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					rm.setCustomModelData(2000 +60);
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName("네더라이트 활");
