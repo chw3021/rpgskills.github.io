@@ -508,7 +508,8 @@ public class Hunskills extends Pak implements Serializable, Listener {
 		Player p = (Player)e.getPlayer();
 
 
-		if(ClassData.pc.get(p.getUniqueId()) == 2 )			{
+		if(ClassData.pc.get(p.getUniqueId()) == 2 )			
+		{
 
 			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE") && Proficiency.getpro(p)>=1 && e.isSneaking()&& climb.containsKey(p.getName()))
 			{

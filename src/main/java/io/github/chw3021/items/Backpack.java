@@ -104,7 +104,7 @@ public class Backpack implements Serializable, Listener{
         return;
     }
     
-    final private Boolean check(Player p) {
+    final private static Boolean check(Player p) {
 		Table<UUID, Integer, ItemStack[]> chest = getdata();
 		return chest.containsRow(p.getUniqueId());
     }
@@ -119,7 +119,7 @@ public class Backpack implements Serializable, Listener{
 
 
 
-	public void itemset(String display, ItemStack is, int data, int stack, List<String> Lore, int loc,
+	public static void itemset(String display, ItemStack is, int data, int stack, List<String> Lore, int loc,
 			Inventory inv) {
 		ItemStack item = is;
 		ItemMeta items = item.getItemMeta();
@@ -150,7 +150,7 @@ public class Backpack implements Serializable, Listener{
 		save(p,ci);
     }
     
-    final private Inventory page(Player p, int page){
+    final private static Inventory page(Player p, int page){
 
 		
 		String name = null;
@@ -190,22 +190,6 @@ public class Backpack implements Serializable, Listener{
 
     
     
-    final private void dumpster(Player p) {
-
-		
-		String name = null;
-		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			name = "쓰레기통";
-		}
-		else {
-			name = "Dumpster";
-		}
-		Inventory ci = Bukkit.createInventory(p, 54, name);
-		
-		
-		
-		p.openInventory(ci);
-    }
 
     private int getCurrentPage(Inventory inv) {
         if (inv.getItem(53) != null && inv.getItem(53).hasItemMeta()) {
@@ -301,33 +285,6 @@ public class Backpack implements Serializable, Listener{
 		}
 	}
 
-    private static ItemStack[] Add(ItemStack[] inv, ItemStack val, Integer count, HashSet<Integer> indexes) {
-    	ItemStack[] ret = inv;
-		Integer cv = count;
-		
-		
-		for(Integer id : indexes) {
-			if(count==1) {
-				ItemStack vc = val.clone();
-				vc.setAmount(val.getAmount() + ret[id].getAmount());
-				ret[id] = vc;
-				break;
-			}
-			cv--;
-			if(cv>1) {
-				ItemStack vc = val.clone();
-				vc.setAmount(val.getMaxStackSize());
-				ret[id] = vc;
-			}
-			else if(cv==1){
-				ItemStack vc = val.clone();
-				vc.setAmount(val.getAmount() + ret[id].getAmount() - val.getMaxStackSize());
-				ret[id] = vc;
-			}
-		}
-		return ret;
-    }
-
 	/*List<ItemStack> iss = new ArrayList<>(Arrays.asList(inv));
     	if(val==null) {
     		return inv;
@@ -367,54 +324,112 @@ public class Backpack implements Serializable, Listener{
     		iss.add(val);
     	}
     	return iss.toArray(new ItemStack[iss.size()]);*/
-    
-    public static void add(Player p, ItemStack is) {
+	private static ItemStack[] Add(ItemStack[] inv, ItemStack val, int count, HashSet<Integer> indexes) {
+	    for (Integer id : indexes) {
+	        ItemStack currentSlotItem = inv[id];
+	        int currentAmount = (currentSlotItem != null) ? currentSlotItem.getAmount() : 0;
+	        int maxStackSize = val.getMaxStackSize();
 
-		try {
-	        Table<UUID, Integer, ItemStack[]> chest;
-			chest = getdata();
-			int count = 1;
-		    	if(is.getAmount() > is.getMaxStackSize()){
-				count = (int) Math.ceil((is.getAmount()*1.0)/is.getMaxStackSize()*1.0);
-			}
-			HashSet<Integer> indexes = new HashSet<>();
-			ItemStack[] input = null;
-			int i = 0; 
+	        // 현재 슬롯에 추가할 수 있는 양 계산
+	        int spaceInSlot = maxStackSize - currentAmount;
 
-			for(; i < chest.row(p.getUniqueId()).keySet().size(); i++ ){
-				for(ItemStack elis : chest.get(p.getUniqueId(),i)){
-					if(elis == null){
-						count--;
-						indexes.add(i);
-						if(count==0){
-							input = chest.get(p.getUniqueId(),i);
-							break;
-						}
-					}
-				}
-				count = (int) Math.ceil((is.getAmount()*1.0)/is.getMaxStackSize()*1.0); 
-				indexes.clear();
-			}
-			if(input == null){
-				input = chest.get(p.getUniqueId(),i+1);
-			}
-		        ItemStack[] nis = Add(input, is, count, indexes);
-		        chest.put(p.getUniqueId(), chest.row(p.getUniqueId()).keySet().size()-1, nis);
-		        String path = new File("").getAbsolutePath();
-				new Backpack(chest).saveData(path +"/plugins/RPGskills/BackPack.data");
-		} catch (NullPointerException e) {
-			// TODO Auto-generated catch block
-	        Table<UUID, Integer, ItemStack[]> chest = HashBasedTable.create();
-			p.closeInventory();
-	        chest.put(p.getUniqueId(), 0, new ItemStack[54]);
+	        if (count <= spaceInSlot) {
+	            // 현재 슬롯에 모두 추가 가능
+	            if (currentSlotItem == null) {
+	                inv[id] = val.clone();
+	                inv[id].setAmount(count);
+	            } else {
+	                currentSlotItem.setAmount(currentAmount + count);
+	            }
+	            break; // 아이템 추가 완료
+	        } else {
+	            // 현재 슬롯을 가득 채운 후, 남은 아이템은 다음 슬롯에 추가
+	            if (currentSlotItem == null) {
+	                inv[id] = val.clone();
+	                inv[id].setAmount(maxStackSize);
+	            } else {
+	                currentSlotItem.setAmount(maxStackSize);
+	            }
+	            count -= spaceInSlot; // 슬롯에 추가한 양만큼 count 감소
+	        }
+	    }
+	    return inv; // 갱신된 인벤토리 반환
+	}
+	public static void add(Player player, ItemStack item) {
+	    try {
+	        Table<UUID, Integer, ItemStack[]> chest = getdata();  // 가방 데이터 가져오기
+	        int totalItems = item.getAmount();  // 아이템 총 개수
+	        int stackSize = item.getMaxStackSize();  // 최대 스택 크기
+	        int requiredSlots = (int) Math.ceil((double) totalItems / stackSize);  // 필요한 슬롯 수 계산
+	        HashSet<Integer> emptyIndexes = new HashSet<>();  // 빈 슬롯 추적
+
+	        ItemStack[] inventory = null;
+
+	        // 현재 페이지별로 빈 슬롯 탐색 (52, 53번 슬롯 제외)
+	        for (int currentPage = 0; currentPage < chest.row(player.getUniqueId()).keySet().size(); currentPage++) {
+	            ItemStack[] currentPageItems = chest.get(player.getUniqueId(), currentPage);
+
+	            for (int slot = 0; slot < 52; slot++) {  // 52번과 53번 슬롯은 페이지 전환용이므로 제외
+	                ItemStack currentItem = currentPageItems[slot];
+	                if (currentItem == null || (currentItem.isSimilar(item) && currentItem.getAmount() < stackSize)) {
+	                    emptyIndexes.add(slot);
+	                    if (--requiredSlots <= 0) {
+	                        inventory = currentPageItems;
+	                        break;
+	                    }
+	                }
+	            }
+
+	            if (requiredSlots <= 0) break;
+	        }
+
+	        // 빈 슬롯을 찾지 못한 경우 새로운 페이지 생성
+	        if (emptyIndexes.isEmpty()) {
+	            int nextPage = chest.row(player.getUniqueId()).keySet().size();
+	            inventory = new ItemStack[54];  // 새로운 페이지 생성
+	            chest.put(player.getUniqueId(), nextPage, inventory);
+	            
+	            // 새로운 페이지에 "이전"과 "다음" 페이지 버튼 추가
+	            Inventory newInventory = page(player, nextPage);  // 페이지 전환 아이템을 포함한 새 페이지 생성
+	            chest.put(player.getUniqueId(), nextPage, newInventory.getContents());  // 새 페이지의 인벤토리 저장
+	        }
+
+	        // 아이템 추가
+	        ItemStack[] updatedInventory = Add(inventory, item, totalItems, emptyIndexes);
+	        chest.put(player.getUniqueId(), chest.row(player.getUniqueId()).keySet().size() - 1, updatedInventory);
+
+	        // 데이터 저장
 	        String path = new File("").getAbsolutePath();
-			new Backpack(chest).saveData(path +"/plugins/RPGskills/BackPack.data");
-		}
-    }
-    
+	        new Backpack(chest).saveData(path + "/plugins/RPGskills/BackPack.data");
+
+	    } catch (NullPointerException e) {
+	        // 가방 데이터가 없을 경우 새 페이지 생성
+	        Table<UUID, Integer, ItemStack[]> chest = HashBasedTable.create();
+	        chest.put(player.getUniqueId(), 0, new ItemStack[54]);  // 첫 페이지 생성
+	        String path = new File("").getAbsolutePath();
+	        new Backpack(chest).saveData(path + "/plugins/RPGskills/BackPack.data");
+	    }
+	}
+
 	public static Table<UUID, Integer, ItemStack[]> getdata() {
         String path = new File("").getAbsolutePath();
         Backpack data = new Backpack(Backpack.loadData(path +"/plugins/RPGskills/Backpack.data"));
 		return data.chest;
 	}
+    final private void dumpster(Player p) {
+
+		
+		String name = null;
+		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+			name = "쓰레기통";
+		}
+		else {
+			name = "Dumpster";
+		}
+		Inventory ci = Bukkit.createInventory(p, 54, name);
+		
+		
+		
+		p.openInventory(ci);
+    }
 }

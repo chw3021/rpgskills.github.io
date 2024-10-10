@@ -35,22 +35,29 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.Tag;
+import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.AbstractVillager;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Breeze;
+import org.bukkit.entity.Display.Brightness;
 import org.bukkit.entity.Enderman;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityCategory;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Firework;
+import org.bukkit.entity.Illager;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.PiglinAbstract;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Snowball;
+import org.bukkit.entity.Witch;
 import org.bukkit.entity.Wither;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -60,7 +67,6 @@ import org.bukkit.event.entity.EntityDropItemEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.FireworkExplodeEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -412,10 +418,11 @@ public class Snipskills extends Pak implements Serializable, Listener {
 					p.playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1.0f, 1.5f);
 					Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 20, 1);
 					ar.setShooter(p);
-					ar.setWeapon(p.getInventory().getItemInMainHand());
+					ItemStack bow = p.getInventory().getItemInMainHand().clone();
+					bow.addUnsafeEnchantment(Enchantment.PUNCH, 5);
+					ar.setWeapon(bow);
 					ar.setCritical(true);
 					ar.setPierceLevel(0);
-					ar.setKnockbackStrength(5);
 					ar.setMetadata("APA", new FixedMetadataValue(RMain.getInstance(), true));
 					ar.setMetadata("ShockArrow", new FixedMetadataValue(RMain.getInstance(), true));
 					p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1f, 1.6f);
@@ -506,9 +513,10 @@ public class Snipskills extends Pak implements Serializable, Listener {
 			Firework fr = f.getEntity();
 			Player p = (Player)fr.getShooter();
 			Location frl = fr.getLocation();
-			frl.getWorld().spawnParticle(Particle.EXPLOSION, frl, 10,3,3,3);
-			frl.getWorld().spawnParticle(Particle.SMOKE, frl, 100,3,3,3);
-			frl.getWorld().playSound(frl, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1f, 0.32f);
+			World w = frl.getWorld();
+			w.spawnParticle(Particle.EXPLOSION, frl, 10,3,3,3);
+			w.spawnParticle(Particle.SMOKE, frl, 100,3,3,3);
+			w.playSound(frl, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1f, 0.32f);
 
 			for(Entity e : fr.getWorld().getNearbyEntities(fr.getLocation(), 3,3, 3)) {
 				if (e instanceof Player)
@@ -1205,14 +1213,15 @@ public class Snipskills extends Pak implements Serializable, Listener {
 			Firework fr = f.getEntity();
 			Player p = (Player)fr.getShooter();
 			Location frl = fr.getLocation();
-			frl.getWorld().spawnParticle(Particle.EXPLOSION, frl, 1);
-			frl.getWorld().spawnParticle(Particle.SMOKE, frl, 30,1,1,1);
-			frl.getWorld().playSound(frl, Sound.ENTITY_FIREWORK_ROCKET_BLAST, 1f, 0.32f);
-			frl.getWorld().playSound(frl, Sound.ENTITY_FIREWORK_ROCKET_LARGE_BLAST, 1f, 0.2f);
+			World w = frl.getWorld();
+			w.spawnParticle(Particle.EXPLOSION, frl, 1);
+			w.spawnParticle(Particle.SMOKE, frl, 30,1,1,1);
+			w.playSound(frl, Sound.ENTITY_FIREWORK_ROCKET_BLAST, 1f, 0.32f);
+			w.playSound(frl, Sound.ENTITY_FIREWORK_ROCKET_LARGE_BLAST, 1f, 0.2f);
 			f.setCancelled(true);
 			fr.remove();
 
-			for(Entity e : frl.getWorld().getNearbyEntities(frl, 1.82,1.82, 1.82)) {
+			for(Entity e : w.getNearbyEntities(frl, 1.82,1.82, 1.82)) {
 				if (e instanceof Player)
 				{
 
@@ -1234,6 +1243,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 		if(f.getEntity().getShooter() instanceof Player && f.getEntity().hasMetadata("flare")) {
 			Firework fr = f.getEntity();
 			Player p = (Player)fr.getShooter();
+			World w = fr.getWorld();
 			for(Entity e : f.getEntity().getNearbyEntities(30, 30, 30)) {
 				if (e instanceof Player)
 				{
@@ -1262,7 +1272,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 				for(int j = -20; j<20; j++) {
 					for(int k = -20; k<20; k++) {
 						Location hl = fr.getLocation().clone().add(i, j, k);
-						if((hl.getBlock().getType() == Material.VOID_AIR || hl.getBlock().getType() == Material.AIR || hl.getBlock().getType() == Material.YELLOW_TERRACOTTA) && hl.getBlock().getType()!=Material.LIGHT) {
+						if((hl.getBlock().getType() == Material.VOID_AIR || hl.getBlock().getType() == Material.AIR) && hl.getBlock().getType()!=Material.LIGHT) {
 							hls.put(hl, hl.getBlock().getBlockData());
 							hs.add(hl);
 						}
@@ -1270,14 +1280,17 @@ public class Snipskills extends Pak implements Serializable, Listener {
 				}
 			}
 			hs.forEach(l -> {
-				l.getBlock().setType(Material.LIGHT);
-				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					@Override
-					public void run()
-					{
-						l.getBlock().setBlockData(hls.get(l));
-					}
-				},	 400);
+				w.spawn(l, BlockDisplay.class, b ->{
+					b.setBlock(getBd(Material.LIGHT));
+					b.setBrightness(new Brightness(15,15));
+					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+						@Override
+						public void run()
+						{
+							b.remove();
+						}
+					},	 400);
+				});
 			});
 			return;
 		}
@@ -1879,72 +1892,51 @@ public class Snipskills extends Pak implements Serializable, Listener {
 		}
 	}
 
+	public void HeadShot(EntityDamageByEntityEvent d) {
+	    if (!(d.getDamager() instanceof Arrow) || !(d.getEntity() instanceof LivingEntity) || d.isCancelled()) {
+	        return;
+	    }
 
-	public void HeadShot(EntityDamageByEntityEvent d)
-	{
-		if(d.getDamager() instanceof Arrow && d.getEntity() instanceof LivingEntity && !d.isCancelled())
-		{
-			Projectile a = (Projectile) d.getDamager();
-			final BoundingBox al =  a.getBoundingBox();
-			LivingEntity e = (LivingEntity)d.getEntity();
-			if(a.getShooter() instanceof Player && !a.hasMetadata("APA"))
-			{
+	    Projectile a = (Projectile) d.getDamager();
+	    LivingEntity e = (LivingEntity) d.getEntity();
 
-				Player p = (Player) a.getShooter();
-				final Location pl =  p.getLocation();
+	    if (a.getShooter() instanceof Player && !a.hasMetadata("APA")) {
+	        Player p = (Player) a.getShooter();
+	        if (ClassData.pc.get(p.getUniqueId()) == 4 && p.getInventory().getItemInMainHand().getType() == Material.CROSSBOW) {
+	            boolean isHeadshot = isHeadshot(e, a, p);
+	            if (isHeadshot) {
+	                handleHeadshot(p, e, d);
+	            }
+	        }
+	    }
+	}
 
+	private boolean isHeadshot(LivingEntity e, Projectile a, Player p) {
+	    BoundingBox al = a.getBoundingBox();
+	    if (e instanceof Illager || e instanceof PiglinAbstract || e instanceof Witch || e instanceof AbstractVillager||
+	        (Tag.ENTITY_TYPES_SENSITIVE_TO_SMITE.isTagged(e.getType())&&e.getType()!=EntityType.PHANTOM) || 
+	        e.getType() == EntityType.CREEPER || 
+	        e.getType() == EntityType.BREEZE || 
+	        e.getType() == EntityType.PLAYER || 
+	        e.getType() == EntityType.BLAZE || 
+	        e.getType() == EntityType.ENDERMAN) {
+	        
+	        return Math.abs((e.getBoundingBox().getMaxY()) - al.getCenterY()) <= (0.25 + ssd.HeadShot.get(p.getUniqueId()) * 0.1) || Proficiency.getpro(p) >= 2;
+	    } else {
+	        Location pl = p.getLocation();
+	        return Math.abs(e.getLocation().getDirection().angle(pl.getDirection())) <= (Math.PI + ssd.HeadShot.get(p.getUniqueId()) * 0.1) &&
+	               Math.abs(e.getLocation().getDirection().angle(pl.getDirection())) > (Math.PI / 2 - ssd.HeadShot.get(p.getUniqueId()) * 0.1) || Proficiency.getpro(p) >= 2;
+	    }
+	}
 
-				if(ClassData.pc.get(p.getUniqueId()) == 4) {
-					if(p.getInventory().getItemInMainHand().getType() == Material.CROSSBOW)
-					{
-
-
-						if(e.getCategory() == EntityCategory.ILLAGER || e.getCategory() == EntityCategory.UNDEAD ||e.getType()==EntityType.CREEPER||e.getType()==EntityType.PLAYER||e.getType()==EntityType.BLAZE||e.getType()==EntityType.ENDERMAN) {
-							if(Math.abs((e.getBoundingBox().getMaxY())-al.getCenterY()) <= (0.25+ssd.HeadShot.get(p.getUniqueId())*0.1) || Proficiency.getpro(p)>=2) {
-
-								if (e instanceof Player)
-								{
-									Player p1 = (Player) e;
-									if(Party.hasParty(p) && Party.hasParty(p1))	{
-										if(Party.getParty(p).equals(Party.getParty(p1)))
-										{
-											return;
-										}
-									}
-								}
-								e.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 40, 0, false, false));
-								dset2(d, p, 1.36*(1+ssd.HeadShot.get(p.getUniqueId())*0.036), e, 5);
-								if(e.hasMetadata("leader") || e.hasMetadata("boss")) {
-									d.setDamage(d.getDamage()*2.5);
-								}
-								p.getWorld().spawnParticle(Particle.CRIT, e.getEyeLocation(), 50, 1,1,1);
-								if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-									p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("[헤드샷]").bold(true).color(ChatColor.DARK_GREEN).create());
-								}
-								else {
-									p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("[HEADSHOT]").bold(true).color(ChatColor.DARK_GREEN).create());
-								}
-							}
-						}
-						else {
-							if((Math.abs(e.getLocation().getDirection().angle(pl.getDirection())) <= (Math.PI+ssd.HeadShot.get(p.getUniqueId())*0.1) && Math.abs(e.getLocation().getDirection().angle(pl.getDirection())) > (Math.PI/2-ssd.HeadShot.get(p.getUniqueId())*0.1)) || Proficiency.getpro(p)>=2) {
-								e.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 40, 0, false, false));
-								dset2(d, p, 1.36*(1+ssd.HeadShot.get(p.getUniqueId())*0.036), e, 5);
-								if(e.hasMetadata("leader") || e.hasMetadata("boss")) {
-									d.setDamage(d.getDamage()*2.5);
-								}
-								p.getWorld().spawnParticle(Particle.CRIT, e.getEyeLocation(), 50, 1,1,1);
-								if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-									p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("[헤드샷]").bold(true).color(ChatColor.DARK_GREEN).create());
-								}
-								else {
-									p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("[HEADSHOT]").bold(true).color(ChatColor.DARK_GREEN).create());
-								}
-							}
-						}
-					}
-				}
-			}
-		}
+	private void handleHeadshot(Player p, LivingEntity e, EntityDamageByEntityEvent d) {
+	    e.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 40, 0, false, false));
+	    dset2(d, p, 1.36 * (1 + ssd.HeadShot.get(p.getUniqueId()) * 0.036), e, 5);
+	    if (e.hasMetadata("leader") || e.hasMetadata("boss")) {
+	        d.setDamage(d.getDamage() * 2.5);
+	    }
+	    p.getWorld().spawnParticle(Particle.CRIT, e.getEyeLocation(), 50, 1, 1, 1);
+	    String message = p.getLocale().equalsIgnoreCase("ko_kr") ? "[헤드샷]" : "[HEADSHOT]";
+	    p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(message).bold(true).color(ChatColor.DARK_GREEN).create());
 	}
 }

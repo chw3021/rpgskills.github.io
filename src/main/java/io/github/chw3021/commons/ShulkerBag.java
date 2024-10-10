@@ -31,7 +31,7 @@ public class ShulkerBag implements Listener {
 			ItemStack key = new ItemStack(Material.SHULKER_BOX);
 			ItemMeta im =  key.getItemMeta();
 			im.setDisplayName(p.getUniqueId().toString());
-			im.setLocalizedName(p.getUniqueId().toString());
+			im.setItemName(p.getUniqueId().toString());
 			key.setItemMeta(im);
 			p.getEquipment().setItemInMainHand(key);
 			skb.setLock(p.getUniqueId().toString());
@@ -47,7 +47,7 @@ public class ShulkerBag implements Listener {
 		Player p = (Player) d.getWhoClicked();
 		if(d.getCurrentItem() != null) {
 			ItemStack ci = d.getCurrentItem();
-			if(ci.hasItemMeta() && ci.getItemMeta().hasLocalizedName() && ci.getItemMeta().getLocalizedName().equals(p.getUniqueId().toString())) {
+			if(ci.hasItemMeta() && ci.getItemMeta().hasItemName() && ci.getItemMeta().getItemName().equals(p.getUniqueId().toString())) {
 				d.setCancelled(true);
 			}
 		}
@@ -71,7 +71,7 @@ public class ShulkerBag implements Listener {
 			ShulkerBox skb = (ShulkerBox)sisave.get(ci);
 			p.getEquipment().setItemInMainHand(skb.getBlock().getDrops().stream().findFirst().get());
 			for(ItemStack is : p.getInventory().getContents()) {
-				if(is != null && is.hasItemMeta() && is.getItemMeta().hasLocalizedName() && is.getItemMeta().getLocalizedName().equals(p.getUniqueId().toString())) {
+				if(is != null && is.hasItemMeta() && is.getItemMeta().hasItemName() && is.getItemMeta().getItemName().equals(p.getUniqueId().toString())) {
 					is.setAmount(0);
 				}
 			}

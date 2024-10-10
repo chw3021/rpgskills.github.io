@@ -1412,7 +1412,7 @@ public class Oceskills extends Pak implements Serializable {
 					SkillBuilder bd = new SkillBuilder()
 							.player(p)
 							.cooldown(sec)
-							.kname("꿰뚫기")
+							.kname("삼지창돌격")
 							.ename("OceanCharge")
 							.slot(5)
 							.hm(pncooldown)
@@ -1466,7 +1466,7 @@ public class Oceskills extends Pak implements Serializable {
 				         					}
 				        					p.setGliding(true);
 							            }
-			                    	}, j.incrementAndGet()/4); 
+			                    	}, j.incrementAndGet()/8); 
 								}); 
 			                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					                @Override
@@ -1498,7 +1498,7 @@ public class Oceskills extends Pak implements Serializable {
 												p.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 20, 255, false, false));
 												Holding.superholding(p, le, 20l);
 												Holding.holding(null, p, 20l);
-							                    p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_IRON, 0.15f, 2.0f);
+							                    p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_LAND, 0.15f, 2.0f);
 											}
 										}
 			         					p.getWorld().spawnParticle(Particle.BUBBLE_POP,pel, 50,1,1,1);
@@ -1506,7 +1506,7 @@ public class Oceskills extends Pak implements Serializable {
 					                    p.playSound(p.getLocation(), Sound.ENTITY_DROWNED_SHOOT, 0.35f, 2.0f);
 					                    p.playSound(p.getLocation(), Sound.ITEM_TRIDENT_HIT, 0.5f, 0.0f);
 					                }
-			                    }, j.incrementAndGet()/4); 
+			                    }, j.incrementAndGet()/8); 
 							});
 					bd.execute();
 					

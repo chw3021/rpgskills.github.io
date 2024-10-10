@@ -11,7 +11,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
-import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import io.github.chw3021.rmain.RMain;
@@ -34,7 +33,6 @@ public class RaidWorldLoad implements Listener {
 					rw.setDifficulty(Difficulty.HARD);
 					rw.setTime(12000);
 					rw.setAutoSave(false);
-					rw.setKeepSpawnInMemory(false);
 					rw.setPVP(false);
 					rw.setSpawnFlags(false, false);
 					rw.setGameRule(GameRule.KEEP_INVENTORY, true);
@@ -50,6 +48,7 @@ public class RaidWorldLoad implements Listener {
 					rw.setGameRule(GameRule.DO_ENTITY_DROPS, false);
 					rw.setGameRule(GameRule.DO_MOB_LOOT, false);
 					rw.setGameRule(GameRule.SPAWN_RADIUS, 0);
+					rw.setGameRule(GameRule.SPAWN_CHUNK_RADIUS, 0);
 				}
 			}, 2);
 		}

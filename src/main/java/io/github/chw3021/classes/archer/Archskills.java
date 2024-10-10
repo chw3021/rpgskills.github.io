@@ -98,6 +98,7 @@ public class Archskills extends Pak implements Serializable, Listener{
 	private String path = new File("").getAbsolutePath();
 	private ArchSkillsData asd;
 
+	private ItemStack knockbackBow = new ItemStack(Material.BOW);
 
 
 	public void classinv(InventoryClickEvent e)
@@ -750,7 +751,7 @@ public class Archskills extends Pak implements Serializable, Listener{
 											if(Proficiency.getpro(p) >=1) {
 												ar.setPierceLevel(10);
 											}
-											ar.setKnockbackStrength(0);
+											ar.setWeapon(knockbackBow);
 											ar1(ar, p, 0.034*(1+asd.RapidFire.get(p.getUniqueId())*0.01));
 											p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1f, 1.6f);
 											arar.add(ar);
@@ -762,7 +763,7 @@ public class Archskills extends Pak implements Serializable, Listener{
 											if(Proficiency.getpro(p) >=1) {
 												ar.setPierceLevel(10);
 											}
-											ar.setKnockbackStrength(0);
+											ar.setWeapon(knockbackBow);
 											ar1(ar, p, 0.034*(1+asd.RapidFire.get(p.getUniqueId())*0.01));
 											p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1f, 1.6f);
 											arar.add(ar);
@@ -898,7 +899,7 @@ public class Archskills extends Pak implements Serializable, Listener{
 													for(int i = 0; i<25; i++) {
 														AbstractArrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 4, 20, fa.getClass());
 														ar.setShooter(p);
-														ar.setKnockbackStrength(0);
+														ar.setWeapon(knockbackBow);
 														ar.setCritical(true);
 														
 														ar1(ar, p, 0.01*(1+asd.MultiShot.get(p.getUniqueId())*0.0065));
@@ -915,7 +916,7 @@ public class Archskills extends Pak implements Serializable, Listener{
 										for(int i = 0; i<25; i++) {
 											AbstractArrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 4, 20, fa.getClass());
 											ar.setShooter(p);
-											ar.setKnockbackStrength(0);
+											ar.setWeapon(knockbackBow);
 											ar.setCritical(true);
 											
 											ar1(ar, p, 0.01*(1+asd.MultiShot.get(p.getUniqueId())*0.0065));
@@ -1108,7 +1109,7 @@ public class Archskills extends Pak implements Serializable, Listener{
 										if(fArrow.containsKey(p)) {
 											AbstractArrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 9, 48, ((AbstractArrow)fArrow.get(p)).getClass());
 											ar.setShooter(p);
-											ar.setKnockbackStrength(0);
+											ar.setWeapon(knockbackBow);
 											ar.setPickupStatus(PickupStatus.DISALLOWED);
 											ar.setCritical(true);
 											
@@ -1119,7 +1120,7 @@ public class Archskills extends Pak implements Serializable, Listener{
 										else {
 											Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 9, 48);
 											ar.setShooter(p);
-											ar.setKnockbackStrength(0);
+											ar.setWeapon(knockbackBow);
 											ar.setPickupStatus(PickupStatus.DISALLOWED);
 											ar.setCritical(true);
 											

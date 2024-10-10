@@ -9,11 +9,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Evoker;
@@ -418,8 +418,8 @@ public class RedSkills extends Summoned{
 			final Skeleton p = (Skeleton)d.getEntity();
 
 			if(p.hasMetadata("raid")) {
-				if((p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-					p.setHealth(p.getMaxHealth()*0.2);
+				if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
+					p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
 	                d.setCancelled(true);
 	                ordealable.put(p.getUniqueId(), true);
 					return;
@@ -1029,7 +1029,6 @@ public class RedSkills extends Summoned{
 		}
 	}
 	
-	@SuppressWarnings("deprecation")
 	public void Daze(EntityDamageByEntityEvent d) 
 	{
 	    
@@ -1037,8 +1036,8 @@ public class RedSkills extends Summoned{
 		if(d.getEntity() instanceof Stray && d.getEntity().hasMetadata("redboss") && d.getEntity().hasMetadata("ruined")) 
 		{
 			Stray p = (Stray)d.getEntity();
-			if((p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getMaxHealth()*0.2);
+			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
+				p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
                 d.setCancelled(true);
                 ordealable.put(p.getUniqueId(), true);
 				return;
@@ -1180,7 +1179,7 @@ public class RedSkills extends Summoned{
         	ordt.removeAll(rn);
         }
         Location rl = OverworldRaids.getraidloc(p).clone();
-		p.setHealth(p.getMaxHealth()*0.2);
+		p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
         d.setCancelled(true);
     	p.teleport(rl.clone().add(0, 0, 1));
         Holding.holding(null, p, 651l);
@@ -1305,7 +1304,7 @@ public class RedSkills extends Summoned{
 	}
 
 	final private void redknightfailed(LivingEntity p, String rn) {
-    	p.playEffect(EntityEffect.HURT);
+    	p.playHurtAnimation(0);
     	Holding.reset(Holding.ale(p));
     	Holding.ale(p).setMetadata("failed", new FixedMetadataValue(RMain.getInstance(),true));
 		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
@@ -1333,8 +1332,6 @@ public class RedSkills extends Summoned{
 		ordt.put(rn, t3);
 	}
 	
-	@SuppressWarnings("deprecation")
-	
 	public void Ordeal(EntityDamageByEntityEvent d) 
 	{
 	    
@@ -1342,7 +1339,7 @@ public class RedSkills extends Summoned{
 		if(d.getEntity() instanceof Stray && d.getEntity().hasMetadata("redboss") && d.getEntity().hasMetadata("ruined")&& !d.getEntity().hasMetadata("failed")) 
 		{
 			Stray p = (Stray)d.getEntity();
-			if(!(p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2)|| !ordealable.containsKey(p.getUniqueId())) {
+			if(!(p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2)|| !ordealable.containsKey(p.getUniqueId())) {
 				return;
 			}
 				if(rb6cooldown.containsKey(p.getUniqueId()))

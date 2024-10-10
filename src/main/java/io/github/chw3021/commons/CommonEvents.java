@@ -21,7 +21,6 @@ import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.EnderDragon.Phase;
 import org.bukkit.entity.Endermite;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityCategory;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;

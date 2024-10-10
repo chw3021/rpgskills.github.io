@@ -10,12 +10,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
-import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Evoker;
@@ -42,13 +42,9 @@ import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
-
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
 
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.monsters.raids.OverworldRaids;
@@ -1070,8 +1066,8 @@ public class SnowSkills extends Summoned implements Listener{
 			if(p.hasMetadata("failed") || ordeal.containsKey(p.getUniqueId())) {
 				return;
 			}
-			if((p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getMaxHealth()*0.2);
+			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
+				p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
                 ordealable.put(p.getUniqueId(), true);
                 d.setCancelled(true);
 				return;
@@ -1150,7 +1146,7 @@ public class SnowSkills extends Summoned implements Listener{
         			p.getWorld().playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_CHIME, 1, 0);
         			p.getWorld().spawnParticle(Particle.SNOWFLAKE, p.getLocation(), 400,1,1,1);
 
-	            	p.playEffect(EntityEffect.HURT);
+	            	p.playHurtAnimation(0);
 					Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("mirror"+rn)).forEach(e -> e.remove());
 	        		ordeal.remove(p.getUniqueId());
 
@@ -1214,7 +1210,7 @@ public class SnowSkills extends Summoned implements Listener{
     		newmob.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY,10,1,false,false));
     		newmob.getEquipment().setItemInMainHand(main);
     		newmob.getEquipment().setItemInOffHand(off);
-    		newmob.setMaxHealth(p.getMaxHealth());
+    		newmob.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue((p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()));;
     		newmob.setHealth(p.getHealth());
     		newmob.setCanJoinRaid(false);
     		newmob.setPatrolTarget(null);
@@ -1272,7 +1268,7 @@ public class SnowSkills extends Summoned implements Listener{
 		count.put(p.getUniqueId(), 4);
 		
         Location rl = OverworldRaids.getraidloc(p).clone();
-		p.setHealth(p.getMaxHealth()*0.2);
+		p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
         d.setCancelled(true);
     	p.teleport(rl.clone().add(0, 0, 1));
 		Holding.invur(p, 60l);

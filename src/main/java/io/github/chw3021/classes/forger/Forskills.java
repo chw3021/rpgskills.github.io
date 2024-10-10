@@ -27,7 +27,6 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;
@@ -40,6 +39,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Item;
+import org.bukkit.entity.LightningStrike;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -244,17 +244,33 @@ public class Forskills extends Pak implements Serializable {
 	public void MachineGun(ProjectileHitEvent ev)
 	{
 
-		if(ev.getEntity().hasMetadata("mgbul") && ev.getHitEntity() instanceof LivingEntity)
+		if(ev.getEntity().hasMetadata("mgbul"))
 		{
 			Projectile sn = ev.getEntity();
 			Player p = (Player) sn.getShooter();
-			LivingEntity le = (LivingEntity) ev.getHitEntity();
+			Location l = sn.getLocation().clone();
 
-			p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
-			atk1(0.0658*(1+fsd.MachineGun.get(p.getUniqueId())*0.064)*(1+(mgaovercount.getOrDefault(p, 1)/100d))* (mgaover.containsKey(p)?2:1), p, le,14);
-			/*
-        	le.damage(player_damage.get(p.getName())*0.0586*(1+fsd.MachineGun.get(p.getUniqueId())*0.05)*(1+(mgaovercount.getOrDefault(p, 1)/100))* (mgaover.containsKey(p)?2:1), p);
-			*/
+
+			for (Entity a : l.getWorld().getNearbyEntities(l, 0.8, 0.8, 0.8))
+			{
+				if ((!(a == p))&& a instanceof LivingEntity&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal")))
+				{
+					if (a instanceof Player)
+					{
+
+						Player p1 = (Player) a;
+						if(Party.hasParty(p) && Party.hasParty(p1))	{
+							if(Party.getParty(p).equals(Party.getParty(p1)))
+							{
+								continue;
+							}
+						}
+					}
+					LivingEntity le = (LivingEntity)a;
+					p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
+					atk1(0.0658*(1+fsd.MachineGun.get(p.getUniqueId())*0.064)*(1+(mgaovercount.getOrDefault(p, 1)/100d))* (mgaover.containsKey(p)?2:1), p, le,14);
+				}
+			}
 
 		}
 	}
@@ -366,13 +382,13 @@ public class Forskills extends Pak implements Serializable {
 						Arrow sn = (Arrow) p.launchProjectile(Arrow.class);
 						ar1(sn, p, 0.0013*(1+fsd.MachineGun.get(p.getUniqueId())*0.0125)*(1+(mgaovercount.getOrDefault(p, 1)/100d) * (mgaover.containsKey(p)?2:1)));
 						sn.setShooter(p);
-						sn.setKnockbackStrength(0);
+						sn.setWeapon(p.getInventory().getItemInMainHand());
 						sn.setPickupStatus(PickupStatus.DISALLOWED);
 						sn.setVelocity(p.getEyeLocation().getDirection().normalize().multiply(100));
 						sn.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 						sn.setMetadata("mg of"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 						sn.setInvulnerable(true);
-						sn.setPierceLevel(3);
+						sn.setPierceLevel(127);
 						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 							@Override
 							public void run()
@@ -498,6 +514,7 @@ public class Forskills extends Pak implements Serializable {
 								spctrt.put(p.getUniqueId(), task);
 
 								p.playSound(p.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 1, 2);
+								final World w = p.getWorld();
 
 								ArrayList<Location> line1 = new ArrayList<Location>();
 								HashSet<LivingEntity> les = new HashSet<LivingEntity>();
@@ -507,7 +524,7 @@ public class Forskills extends Pak implements Serializable {
 									line1.add(pl);
 								}
 								for(Location l : line1) {
-									p.getWorld().spawnParticle(Particle.FLASH, l, 1,0.1,0.1,0.1,0);
+									w.spawnParticle(Particle.FLASH, l, 1,0.1,0.1,0.1,0);
 								}
 								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 									@Override
@@ -522,9 +539,9 @@ public class Forskills extends Pak implements Serializable {
 										}
 										p.playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1, 2);
 										for(Location l : line) {
-											p.getWorld().spawnParticle(Particle.BLOCK, l,5, 0.25,0.25,0.25,0, Material.WHITE_GLAZED_TERRACOTTA.createBlockData());
-											p.getWorld().spawnParticle(Particle.ITEM_SNOWBALL, l,5, 0.25,0.25,0.25,0);
-											p.getWorld().spawnParticle(Particle.WAX_ON, l,5, 0.25,0.25,0.25,1);
+											w.spawnParticle(Particle.BLOCK, l,5, 0.25,0.25,0.25,0, getBd(Material.WHITE_GLAZED_TERRACOTTA));
+											w.spawnParticle(Particle.ITEM_SNOWBALL, l,5, 0.25,0.25,0.25,0);
+											w.spawnParticle(Particle.WAX_ON, l,5, 0.25,0.25,0.25,1);
 
 											for (Entity a : p.getWorld().getNearbyEntities(l, 1.5, 1.5, 1.5))
 											{
@@ -555,7 +572,13 @@ public class Forskills extends Pak implements Serializable {
 									{
 										for(LivingEntity le: les) {
 											p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
-											p.getWorld().spigot().strikeLightningEffect(le.getLocation(), true);
+											LightningStrike lightning = w.strikeLightningEffect(le.getLocation());
+											lightning.setSilent(true);
+											lightning.setCausingPlayer(p);
+											lightning.setFlashes(0);
+											Bukkit.getScheduler().runTaskLater(RMain.getInstance(), () -> {
+											    lightning.remove();
+											}, 1L);
 											atk1(0.9*(1+fsd.LightningCannon.get(p.getUniqueId())*0.06), p, le,9);
 											le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,60,1,false,false));
 
@@ -971,7 +994,6 @@ public class Forskills extends Pak implements Serializable {
 
 
 				Snowball sn = p.launchProjectile(Snowball.class);
-				sn.setBounce(false);
 				sn.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 				sn.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 				sn.setMetadata("plzg", new FixedMetadataValue(RMain.getInstance(), true));

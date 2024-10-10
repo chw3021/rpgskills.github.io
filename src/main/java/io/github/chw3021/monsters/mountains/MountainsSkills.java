@@ -3,7 +3,6 @@ package io.github.chw3021.monsters.mountains;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -14,6 +13,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
@@ -630,8 +630,8 @@ public class MountainsSkills extends Summoned implements Listener{
 			if(ordeal.containsKey(p.getUniqueId()) || p.hasMetadata("failed")) {
 				return;
 			}
-			if((p.hasMetadata("ruined") && p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getMaxHealth()*0.2);
+			if((p.hasMetadata("ruined") && p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
+				p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
                 d.setCancelled(true);
                 ordealable.put(p.getUniqueId(), true);
 				return;
@@ -805,29 +805,29 @@ public class MountainsSkills extends Summoned implements Listener{
     		countt.put(p.getUniqueId(), i2);
 	}
 
-	final private void dropping(LivingEntity p, Location pl, Location tl) 
-	{
-
-        List<Location> line = new ArrayList<>();
-        
-        for(double an =0; an<10; an+=0.5) {
-        	line.add(pl.clone().add(0,-an,0));
-        }
-
-    	AtomicInteger u = new AtomicInteger();
-        line.forEach(l -> {
-    		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-                @Override
-                public void run() 
-                {
-                	p.setGliding(true);
-    				p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l, 3, 1, 1, 1);
-    				p.teleport(l);
-                }
-    		},u.getAndIncrement()*2);
-    	});
-	}
-	
+//	final private void dropping(LivingEntity p, Location pl, Location tl) 
+//	{
+//
+//        List<Location> line = new ArrayList<>();
+//        
+//        for(double an =0; an<10; an+=0.5) {
+//        	line.add(pl.clone().add(0,-an,0));
+//        }
+//
+//    	AtomicInteger u = new AtomicInteger();
+//        line.forEach(l -> {
+//    		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+//                @Override
+//                public void run() 
+//                {
+//                	p.setGliding(true);
+//    				p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l, 3, 1, 1, 1);
+//    				p.teleport(l);
+//                }
+//    		},u.getAndIncrement()*2);
+//    	});
+//	}
+//	
 
 	public void mCounter(EntityDamageByEntityEvent d) 
 	{
@@ -946,7 +946,7 @@ public class MountainsSkills extends Summoned implements Listener{
         	ordt.removeAll(rn);
         }
         d.setCancelled(true);
-		p.setHealth(p.getMaxHealth()*0.2);
+		p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
         p.teleport(rl.clone());
         Holding.holding(null, p, 1500l);
         Holding.invur(p, 100l);

@@ -1,18 +1,10 @@
 package io.github.chw3021.items.weapons;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.entity.Trident;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
-import org.bukkit.event.player.PlayerItemHeldEvent;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import io.github.chw3021.rmain.RMain;
 
 public class Tridentnaming extends Weapons implements Listener {
 
@@ -67,7 +59,7 @@ public class Tridentnaming extends Weapons implements Listener {
 			ItemStack is = t.getItem();
 		
 			if(is.hasItemMeta() && is.getItemMeta().hasCustomModelData()) {
-				t.setCustomName(is.getItemMeta().getLocalizedName());
+				t.setCustomName(is.getItemMeta().getItemName());
 				t.setCustomNameVisible(false);
 			}
 		}

@@ -8,7 +8,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -38,9 +37,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
-
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.monsters.raids.OverworldRaids;
 import io.github.chw3021.monsters.raids.Summoned;
@@ -1002,7 +998,7 @@ public class HyperSkills extends Summoned{
     					}
                 		if(e == Holding.ale(p)) {
 			                guud.computeIfPresent(p.getUniqueId(), (k,v) -> v-1);
-		                	p.playEffect(EntityEffect.HURT);
+		                	p.playHurtAnimation(0);
 			                for(Player pe : OverworldRaids.getheroes(p)) {
 		    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
 			                		pe.sendMessage(ChatColor.BOLD+"타격횟수: "+(10-guud.getOrDefault(p.getUniqueId(),0) + "/10"));
@@ -1017,7 +1013,7 @@ public class HyperSkills extends Summoned{
 			                    	ordt.removeAll(rn);
 			                    }
 			                    guud.remove(p.getUniqueId());
-			                	p.playEffect(EntityEffect.HURT);
+			                	p.playHurtAnimation(0);
 		                		Holding.reset(p);
 		                		Holding.ale(p).setInvisible(false);
 			                	Holding.ale(p).setMetadata("failed", new FixedMetadataValue(RMain.getInstance(),true));

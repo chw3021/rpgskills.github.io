@@ -40,6 +40,7 @@ import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -1706,6 +1707,21 @@ public class Frostskills extends Pak implements Listener, Serializable {
 		}
 	}
 
+
+	public void CoolBody(PlayerMoveEvent ev)
+	{
+		Player p = ev.getPlayer();
+	    Location loc = ev.getTo();
+	    Block block = loc.getBlock();
+
+		if((ArmorSet.setnum(p) == 6|| ClassData.pc.get(p.getUniqueId()) == 21))
+		{
+		    if (block.getType() == Material.POWDER_SNOW) {
+		        p.setVelocity(new Vector(0, 0.1, 0));
+		        p.setFreezeTicks(0);
+		    }
+		}
+	}
 
 
 	public void CoolBody(EntityDamageEvent d)

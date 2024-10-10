@@ -55,8 +55,8 @@ public class Enchanting implements Listener {
 				lore.add(ChatColor.YELLOW + "5초 동안 진행되고 일정확률로 성공합니다");
 				lore.add(ChatColor.YELLOW + "확률은 주변 책장의 개수에 비례합니다");
 				lore.add("");
-				lore.add(ChatColor.DARK_PURPLE + "무기의 경우 [찌르기, 살충, 강타]는 최대 10레벨");
-				lore.add(ChatColor.DARK_PURPLE + "[무한 화살, 다중발사]는 1레벨, [빠른 장전]은 최대 3레벨");
+				lore.add(ChatColor.DARK_PURPLE + "무기의 경우 [찌르기, 살충, 강타, 육중]는 최대 10레벨");
+				lore.add(ChatColor.DARK_PURPLE + "[무한 화살, 다중발사]는 1레벨, [빠른 장전, 돌풍]은 최대 3레벨");
 				lore.add(ChatColor.DARK_PURPLE + "그 외 마법부여는 255레벨까지 가능합니다");
 				lore.add("");
 				lore.add(ChatColor.DARK_PURPLE + "활과 쇠뇌은 [힘], 그 외 무기들은 [날카로움]의 레벨에");
@@ -77,9 +77,9 @@ public class Enchanting implements Listener {
 				lore.add(ChatColor.YELLOW + "To the number of BookShelves");
 				lore.add("");
 				lore.add(ChatColor.DARK_PURPLE + "For weapons, [Impaling, Bane of Arthropods]");
-				lore.add(ChatColor.DARK_PURPLE + "[Smite] is up to 10 levels");
+				lore.add(ChatColor.DARK_PURPLE + "[Smite, Density] is up to 10 levels");
 				lore.add(ChatColor.DARK_PURPLE + "[Infinity, Multishot] is up to 1 level");
-				lore.add(ChatColor.DARK_PURPLE + "[Quick Charge] is up to 3 level");
+				lore.add(ChatColor.DARK_PURPLE + "[Quick Charge, Wind Burst] is up to 3 level");
 				lore.add(ChatColor.DARK_PURPLE + "Other Enchantments are available up to 255 levels");
 				lore.add("");
 				lore.add(ChatColor.DARK_PURPLE + "Damage of Bow and Crossbow increase with multiplication");
@@ -325,23 +325,23 @@ public class Enchanting implements Listener {
 	    		}
 	    		else {
 		    		if(d.getItem().getType().name().contains("SWORD")){
-			        	if(ri < 35) {
+			        	if(ri < 40) {
 			        		eo[i].setEnchantment(Enchantment.SHARPNESS);
 			        		eo[i].setEnchantmentLevel(i+1);
 			        	}
-			        	else if(d.getItem().getEnchantmentLevel(Enchantment.BANE_OF_ARTHROPODS)+i+1<=10 &&ri < 50) {
+			        	else if(d.getItem().getEnchantmentLevel(Enchantment.BANE_OF_ARTHROPODS)+i+1<=10 &&ri < 55) {
 			        		eo[i].setEnchantment(Enchantment.BANE_OF_ARTHROPODS);
 			        		eo[i].setEnchantmentLevel(i+1);
 			        	}
-			        	else if (d.getItem().getEnchantmentLevel(Enchantment.SMITE)+i+1<=10 &&ri <65){
+			        	else if (d.getItem().getEnchantmentLevel(Enchantment.SMITE)+i+1<=10 &&ri <70){
 			        		eo[i].setEnchantment(Enchantment.SMITE);
 			        		eo[i].setEnchantmentLevel(i+1);
 			        	}
-			        	else if (ri <70){
+			        	else if (ri <75){
 			        		eo[i].setEnchantment(Enchantment.FIRE_ASPECT);
 			        		eo[i].setEnchantmentLevel(i+1);
 			        	}
-			        	else if (ri <75){
+			        	else if (ri <80){
 			        		eo[i].setEnchantment(Enchantment.KNOCKBACK);
 			        		eo[i].setEnchantmentLevel(i+1);
 			        	}
@@ -377,6 +377,14 @@ public class Enchanting implements Listener {
 			        	}
 			        	else if (ri <73){
 			        		eo[i].setEnchantment(Enchantment.FORTUNE);
+			        		eo[i].setEnchantmentLevel(i+1);
+			        	}
+			        	else if (ri <76){
+			        		eo[i].setEnchantment(Enchantment.FIRE_ASPECT);
+			        		eo[i].setEnchantmentLevel(i+1);
+			        	}
+			        	else if (ri <79){
+			        		eo[i].setEnchantment(Enchantment.KNOCKBACK);
 			        		eo[i].setEnchantmentLevel(i+1);
 			        	}
 			        	else if (ri <82){
@@ -415,6 +423,40 @@ public class Enchanting implements Listener {
 			        	}
 			        	else if (ri <82){
 			        		eo[i].setEnchantment(Enchantment.EFFICIENCY);
+			        		eo[i].setEnchantmentLevel(i+1);
+			        	}
+			        	else if (ri <88){
+			        		eo[i].setEnchantment(Enchantment.LOOTING);
+			        		eo[i].setEnchantmentLevel(i+1);
+			        	}
+			        	else {
+			        		eo[i].setEnchantment(Enchantment.UNBREAKING);
+			        		eo[i].setEnchantmentLevel(i+1);
+			        	}
+		    		}
+		    		else if(d.getItem().getType() == Material.MACE){
+			        	if(ri < 30) {
+			        		eo[i].setEnchantment(Enchantment.SHARPNESS);
+			        		eo[i].setEnchantmentLevel(i+1);
+			        	}
+			        	else if(d.getItem().getEnchantmentLevel(Enchantment.BANE_OF_ARTHROPODS)+i+1<=10 &&ri < 45) {
+			        		eo[i].setEnchantment(Enchantment.BANE_OF_ARTHROPODS);
+			        		eo[i].setEnchantmentLevel(i+1);
+			        	}
+			        	else if (d.getItem().getEnchantmentLevel(Enchantment.SMITE)+i+1<=10 &&ri <60){
+			        		eo[i].setEnchantment(Enchantment.SMITE);
+			        		eo[i].setEnchantmentLevel(i+1);
+			        	}
+			        	else if (d.getItem().getEnchantmentLevel(Enchantment.DENSITY)+i+1<=10 &&ri <70){
+			        		eo[i].setEnchantment(Enchantment.DENSITY);
+			        		eo[i].setEnchantmentLevel(i+1);
+			        	}
+			        	else if (d.getItem().getEnchantmentLevel(Enchantment.BREACH)+i+1<=3 &&ri <75){
+			        		eo[i].setEnchantment(Enchantment.BREACH);
+			        		eo[i].setEnchantmentLevel(i+1);
+			        	}
+			        	else if (d.getItem().getEnchantmentLevel(Enchantment.WIND_BURST)+i+1<=3 &&ri <80){
+			        		eo[i].setEnchantment(Enchantment.WIND_BURST);
 			        		eo[i].setEnchantmentLevel(i+1);
 			        	}
 			        	else if (ri <88){
@@ -565,7 +607,7 @@ public class Enchanting implements Listener {
 	        		eo[i].setEnchantmentLevel(i+1);
 	        	}
 			}
-			else if(d.getItem().getType().name().contains("CHESTPLATE") || d.getItem().getType().name().contains("LEGGINGS")) {
+			else if(d.getItem().getType().name().contains("CHESTPLATE")) {
 	        	if(d.getItem().getEnchantmentLevel(Enchantment.PROTECTION)+i+1<=4 && ri<20){
 	        		eo[i].setEnchantment(Enchantment.PROTECTION);
 	        		eo[i].setEnchantmentLevel(i+1);
@@ -583,6 +625,36 @@ public class Enchanting implements Listener {
 	        		eo[i].setEnchantmentLevel(i+1);
 	        	}
 	        	else if(d.getItem().getEnchantmentLevel(Enchantment.THORNS)+i+1<=4 && ri<90){
+	        		eo[i].setEnchantment(Enchantment.THORNS);
+	        		eo[i].setEnchantmentLevel(i+1);
+	        	}
+	        	else {
+	        		eo[i].setEnchantment(Enchantment.UNBREAKING);
+	        		eo[i].setEnchantmentLevel(i+1);
+	        	}
+			}
+			else if(d.getItem().getType().name().contains("LEGGINGS")) {
+	        	if(d.getItem().getEnchantmentLevel(Enchantment.PROTECTION)+i+1<=4 && ri<20){
+	        		eo[i].setEnchantment(Enchantment.PROTECTION);
+	        		eo[i].setEnchantmentLevel(i+1);
+	        	}
+	        	else if(d.getItem().getEnchantmentLevel(Enchantment.BLAST_PROTECTION)+i+1<=4 && ri<35){
+	        		eo[i].setEnchantment(Enchantment.BLAST_PROTECTION);
+	        		eo[i].setEnchantmentLevel(i+1);
+	        	}
+	        	else if(d.getItem().getEnchantmentLevel(Enchantment.FIRE_PROTECTION)+i+1<=4 && ri<55){
+	        		eo[i].setEnchantment(Enchantment.FIRE_PROTECTION);
+	        		eo[i].setEnchantmentLevel(i+1);
+	        	}
+	        	else if(d.getItem().getEnchantmentLevel(Enchantment.PROJECTILE_PROTECTION)+i+1<=4 && ri<75){
+	        		eo[i].setEnchantment(Enchantment.PROJECTILE_PROTECTION);
+	        		eo[i].setEnchantmentLevel(i+1);
+	        	}
+	        	else if(d.getItem().getEnchantmentLevel(Enchantment.THORNS)+i+1<=4 && ri<85){
+	        		eo[i].setEnchantment(Enchantment.THORNS);
+	        		eo[i].setEnchantmentLevel(i+1);
+	        	}
+	        	else if(d.getItem().getEnchantmentLevel(Enchantment.SWIFT_SNEAK)+i+1<=4 && ri<92){
 	        		eo[i].setEnchantment(Enchantment.THORNS);
 	        		eo[i].setEnchantmentLevel(i+1);
 	        	}

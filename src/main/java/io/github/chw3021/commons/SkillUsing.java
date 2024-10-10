@@ -1231,6 +1231,9 @@ public class SkillUsing implements Listener, Serializable {
 	public void Move(PlayerMoveEvent ev) {
 		
 		Hunskills.getInstance().Climb(ev);
+		
+		Frostskills.getInstance().CoolBody(ev);
+		
 		Holding.getInstance().holded(ev);
 		//CommonEvents.getInstance().ChangeBiome(ev);
 	}
