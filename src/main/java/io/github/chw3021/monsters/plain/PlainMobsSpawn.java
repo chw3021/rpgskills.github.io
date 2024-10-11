@@ -36,7 +36,7 @@ public class PlainMobsSpawn extends Mobs implements Listener {
 	
 	final public void Spawn(LivingEntity le,Biome b) {
 		if (!((b.name().contains("PLAINS")
-				|| b.name().contains("RIVER")
+				|| b.name().contains("RIVER")|| b.name().contains("MEADOW")
 				|| b.name().contains("BEACH"))&& !b.name().contains("SNOWY")&& !b.name().contains("FROZEN")
 				&& le.getLocation().getWorld().getEnvironment() == Environment.NORMAL)) {
 			return;

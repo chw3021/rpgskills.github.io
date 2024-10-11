@@ -124,25 +124,26 @@ public class HyperSkills extends Summoned{
 				pl.add(p.getEyeLocation().getDirection().normalize().multiply(d));
 				line1.add(pl);
             }
-            for(final Location l : line1) {
-            	p.getWorld().spawnParticle(Particle.FLASH, l, 1,0.1,0.1,0.1,0);
-    			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-                    @Override
-                    public void run() 
-                    {
-                    	p.getWorld().spawnParticle(Particle.BLOCK, l,10, 0.5,0.5,0.5,0, Material.YELLOW_GLAZED_TERRACOTTA.createBlockData());
+
+			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                @Override
+                public void run() 
+                {
+                    for(final Location l : line1) {
+                    	p.getWorld().spawnParticle(Particle.FLASH, l, 1,0.1,0.1,0.1,0);
+                    	p.getWorld().spawnParticle(Particle.BLOCK, l,20, 1.8,1.8,1.8,0, getBd(Material.YELLOW_GLAZED_TERRACOTTA));
                     	p.getWorld().spawnParticle(Particle.WAX_ON, l,10, 0.5,0.5,0.5,0);
 
-    					for(Entity e : p.getWorld().getNearbyEntities(l,1.5, 1.5, 1.5)) {
+    					for(Entity e : p.getWorld().getNearbyEntities(l,2, 2, 2)) {
     						if(p!=e && e instanceof Player&& !(e.hasMetadata("fake"))) {
     							LivingEntity le = (LivingEntity)e;
     							le.damage(3,p);
     						}
     					}
-    								
                     }
-    			}, 20);
-            }
+								
+                }
+			}, 25);
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
                 @Override
                 public void run() 
@@ -150,7 +151,7 @@ public class HyperSkills extends Summoned{
                     p.getWorld().playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1, 2);
 								
                 }
-			}, 20);
+			}, 25);
 		}
 	}
 	

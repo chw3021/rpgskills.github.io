@@ -855,11 +855,11 @@ public class OverworldRaids extends Summoned implements Listener {
 			}
     		String rn = d.getClickedBlock().getMetadata("OverworldRaidPortal").get(0).asString();
     		World rw = Bukkit.getServer().getWorld("OverworldRaid");
-    		int fix = p.getEntityId()*50-29999900;
-    		int fiz = p.getEntityId()*50-29999900;
-    		if(fix >= 29999900) {
-    			fix = fix - 29999900*2;
-    			fiz = 29999900*2 - fiz;
+    		int fix = p.getEntityId()*100-29999984;
+    		int fiz = p.getEntityId()*100-29999984;
+    		if(fix >= 29999984) {
+    			fix = fix - 29999984*2;
+    			fiz = 29999984*2 - fiz;
     		}
     		for(int in = 0; in<20; in++) {
 	    		if(rw.getHighestBlockAt(fix, fiz).getType().name().contains("LEAVES")) {

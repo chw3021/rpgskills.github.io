@@ -3,6 +3,7 @@ package io.github.chw3021.monsters.ocean;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -17,6 +18,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Breeze;
 import org.bukkit.entity.ElderGuardian;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Guardian;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Shulker;
@@ -351,6 +353,7 @@ public class OceanSkills extends Summoned{
 		    			p.getWorld().playSound(tl, Sound.ITEM_TRIDENT_THUNDER, 0.2f, 2f);
 		    			Holding.holding(null, p, 30l);
 		    			Holding.invur(p, 30l);
+		    			String rn = gethero(p);
 
                     	Tridents(tl.clone(),p).forEach(v ->{
                     		for(int i = 0; i<25; i++) {
@@ -361,6 +364,7 @@ public class OceanSkills extends Summoned{
     		                    public void run() {
     	                    		Trident t = p.launchProjectile(Trident.class, v);
     	                    		t.setDamage(5);
+    	                    		t.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(),true));
     	    		                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
     	    		                    @Override
     	    		                    public void run() {
@@ -377,9 +381,8 @@ public class OceanSkills extends Summoned{
 		        else 
 		        {
 
-	    			p.getWorld().spawnParticle(Particle.BUBBLE_COLUMN_UP, tl, 200, 1,1,1);
+
 	    			p.getWorld().spawnParticle(Particle.NAUTILUS, tl, 200, 1,1,1);
-	    			p.getWorld().spawnParticle(Particle.GLOW_SQUID_INK, tl, 200, 1,1,1);
 	    			p.getWorld().spawnParticle(Particle.FLASH, tl, 10, 1,1,1);
 	    			p.getWorld().playSound(tl, Sound.BLOCK_CONDUIT_ACTIVATE, 0.6f, 2f);
 	    			p.getWorld().playSound(tl, Sound.BLOCK_BUBBLE_COLUMN_BUBBLE_POP, 1f, 0.1f);
@@ -387,6 +390,7 @@ public class OceanSkills extends Summoned{
 	    			p.getWorld().playSound(tl, Sound.ITEM_TRIDENT_THUNDER, 0.2f, 2f);
 	    			Holding.holding(null, p, 30l);
 	    			Holding.invur(p, 30l);
+	    			String rn = gethero(p);
 
                 	Tridents(tl.clone(),p).forEach(v ->{
                 		for(int i = 0; i<25; i++) {
@@ -397,6 +401,7 @@ public class OceanSkills extends Summoned{
 		                    public void run() {
 	                    		Trident t = p.launchProjectile(Trident.class, v);
 	                    		t.setDamage(5);
+	                    		t.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(),true));
 	    		                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	    		                    @Override
 	    		                    public void run() {
@@ -566,8 +571,187 @@ public class OceanSkills extends Summoned{
 		        }
 			}
 	}
+
+	public static HashMap<UUID, UUID> ordeal = new HashMap<UUID, UUID>();//가디언 uuid 저장
+
+	public static HashMap<UUID, Integer> count = new HashMap<UUID, Integer>();//가디언 uuid 저장
+	public HashMap<UUID, Integer> guardiant = new HashMap<UUID, Integer>();//가디언 텔포 태스크 저장
+
+
+	final private List<Location> markCreate(ElderGuardian p) {
+		List<Location> ls = new ArrayList<>();
+	    List<UUID> summonedGuardians = new ArrayList<>();
+		String rn = p.getMetadata("raid").get(0).asString();
+
+		count.put(p.getUniqueId(), 6);
+		
+		Location pfl = p.getLocation();
+		
+		ls.add(pfl.clone().add(0, 1.5, 0));
+		ls.add(pfl.clone().add(1.5, 0, 0));
+		ls.add(pfl.clone().add(0, 0, 1.5));
+		ls.add(pfl.clone().add(0, -1.5, 0));
+		ls.add(pfl.clone().add(-1.5, 0, 0));
+		ls.add(pfl.clone().add(0, 0, -1.5));
+		
+		ls.forEach(l ->{
+			l.getWorld().spawnParticle(Particle.BUBBLE, l, 15,0.5,0.5,0.5,0.1);
+			l.getWorld().playSound(l, Sound.BLOCK_BUBBLE_COLUMN_WHIRLPOOL_INSIDE, 0.05f, 2f);
+
+    		l.getWorld().spawn(l, Guardian.class, newmob ->{
+        		newmob.setCustomNameVisible(false);
+        		newmob.setGlowing(true);
+        		newmob.setInvulnerable(true);
+        		newmob.setRemoveWhenFarAway(false);
+        		newmob.setGravity(false);
+        		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), rn));
+        		newmob.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
+        		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
+        		newmob.setMetadata("mark", new FixedMetadataValue(RMain.getInstance(), rn));
+        		newmob.setMetadata("mark"+rn, new FixedMetadataValue(RMain.getInstance(), rn));
+        		newmob.setAI(false);
+                summonedGuardians.add(newmob.getUniqueId());
+            	ordeal.put(newmob.getUniqueId(), p.getUniqueId());
+    		});
+    		
+		});
+
+    	Location el = p.getLocation();
+    	
+    	AtomicInteger j = new AtomicInteger();
+    	for (int i = 0; i < summonedGuardians.size(); i++) {
+            Entity guardian = Bukkit.getEntity(summonedGuardians.get(j.get()));
+            int i1 =Bukkit.getServer().getScheduler().runTaskTimer(RMain.getInstance(), new Runnable() {
+                @Override
+                public void run() {
+                    if(guardian == null) {
+                    	return;
+                    }
+            		Location pfl = p.getLocation().clone();
+                    Location offset = ls.get(j.getAndIncrement()).clone().subtract(pfl);
+                    Location newLoc = el.clone().add(offset);  
+                    guardian.teleport(newLoc);  
+                }
+            }, 0,1).getTaskId();
+    		ordt.put(rn, i1); 
+    		guardiant.put(guardian.getUniqueId(), i1); 
+        }
+    	
+
+		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+				if(ript.containsKey(rn)) {
+					ript.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
+				}
+				Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("mark"+rn)).forEach(e -> {
+					ordeal.remove(e.getUniqueId());
+		    		Bukkit.getScheduler().cancelTask(guardiant.get(e.getUniqueId()));
+					e.remove();
+				});
+
+        		if(ordt.containsKey(rn)) {
+        			ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
+        		}
+                for(Entity e1 : OverworldRaids.getheroes(p)) {
+                	if(e1 instanceof Player) {
+                		Player pe = (Player) e1;
+                		pe.setHealth(0);
+    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
+	                		pe.sendMessage(ChatColor.BOLD+"엘더가디언: 모든것은 그분 뜻대로...");
+    					}
+    					else {
+	                		pe.sendMessage(ChatColor.BOLD+"ElderGuardian: Everything is up to him..");
+    					}
+                	}
+                }
+                return;
+            }
+        }, 300);
+		ordt.put(rn, task);
+    	
+		return ls;
+	}
 	
-	
+	public void markHit(EntityDamageByEntityEvent d) {
+
+		if(!ordeal.containsKey(d.getEntity().getUniqueId())) {
+			return;
+		}
+		if(d.getDamager() instanceof ElderGuardian) {
+			return;
+		}
+		if(d.getDamager() instanceof Player) {
+			Player dp = (Player) d.getDamager();
+			if(dp.hasCooldown(Material.YELLOW_TERRACOTTA)) {
+				return;
+			}
+		}
+		Guardian g = (Guardian) d.getEntity();
+		ElderGuardian p = (ElderGuardian) Bukkit.getEntity(ordeal.get(g.getUniqueId()));
+		String rn = gethero(p);
+
+		if(g.hasMetadata("mark") && g.isValid()) {
+    		ordeal.remove(ordeal.get(g.getUniqueId()));
+    		Bukkit.getScheduler().cancelTask(guardiant.get(g.getUniqueId()));
+    		guardiant.remove(g.getUniqueId());
+    		g.remove();
+			p.getWorld().playSound(g.getLocation(), Sound.ENTITY_GUARDIAN_HURT, 1, 0);
+			p.getWorld().spawnParticle(Particle.BUBBLE, g.getLocation(), 60,1,1,1);
+			count.computeIfPresent(p.getUniqueId(), (k,v) -> v-1);
+
+			if(count.getOrDefault(p.getUniqueId(), 0)>1) {
+                for(Player pe : OverworldRaids.getheroes(p)) {
+            		pe.sendMessage(ChatColor.BLUE+ "["+(6-count.getOrDefault(p.getUniqueId(), 0))+ "/6]");
+                }
+			}
+			else {
+    			p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 1, 0);
+    			p.getWorld().spawnParticle(Particle.BUBBLE, p.getLocation(), 400,1,1,1);
+    			p.getWorld().spawnParticle(Particle.DRAGON_BREATH, p.getLocation(), 400,1,1,1);
+
+            	p.playHurtAnimation(0);
+				Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("mark"+rn)).forEach(e -> e.remove());
+        		ordeal.remove(p.getUniqueId());
+
+        		if(ordt.containsKey(rn)) {
+        			ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
+        		}
+
+				if(ript.containsKey(rn)) {
+					ript.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
+				}
+				p.playHurtAnimation(0);
+            	Holding.ale(p).setMetadata("failed", new FixedMetadataValue(RMain.getInstance(),true));
+        		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
+            	Holding.untouchable.remove(p.getUniqueId());
+            	Holding.holding(null, Holding.ale(p), 300l);
+                for(Entity e1 : OverworldRaids.getheroes(p)) {
+                	if(e1 instanceof Player) {
+                		Player pe = (Player) e1;
+	                	Holding.superholding(pe, Holding.ale(p), 300l);
+    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
+	                		pe.sendMessage(ChatColor.BOLD+"엘더가디언: 이런 건방진!..");
+    					}
+    					else {
+	                		pe.sendMessage(ChatColor.BOLD+"ElderGuardian: How dare are You!...");
+    					}
+                	}
+                }
+                rb3cooldown.put(p.getUniqueId(), System.currentTimeMillis());
+	            int t3 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	                @Override
+	                public void run() {
+	                	p.removeMetadata("failed", RMain.getInstance());
+                		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
+	                }
+	            }, 300);
+				ordt.put(rn, t3);
+				return;
+			}
+		}
+	}
+
 	
 	final private void Riptide(ElderGuardian p, Player pe) {
 		String rn = p.getMetadata("raid").get(0).asString();
@@ -595,60 +779,13 @@ public class OceanSkills extends Summoned{
                 	p.teleport(l);
 	    			l.getWorld().getNearbyEntities(l, 1, 1, 1).forEach(e -> {
 		    			l.getWorld().playSound(l, Sound.ITEM_TRIDENT_RIPTIDE_1, 0.1f, 0f);
-						if(p!=e && e != pe && e instanceof LivingEntity){
-							if(ript.containsKey(rn)) {
-								ript.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
-							}
-							p.playHurtAnimation(0);
-		                	Holding.ale(p).setMetadata("failed", new FixedMetadataValue(RMain.getInstance(),true));
-	                		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
-		                	Holding.untouchable.remove(p.getUniqueId());
-		                	Holding.holding(null, Holding.ale(p), 300l);
-			                for(Entity e1 : OverworldRaids.getheroes(p)) {
-			                	if(e1 instanceof Player) {
-			                		Player pe = (Player) e1;
-				                	Holding.superholding(pe, Holding.ale(p), 300l);
-			    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-				                		pe.sendMessage(ChatColor.BOLD+"엘더가디언: 이런 건방진!..");
-			    					}
-			    					else {
-				                		pe.sendMessage(ChatColor.BOLD+"ElderGuardian: How dare are You!...");
-			    					}
-			                	}
-			                }
-			                rb3cooldown.put(p.getUniqueId(), System.currentTimeMillis());
-				            int t3 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() {
-				                	p.removeMetadata("failed", RMain.getInstance());
-			                		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
-				                }
-				            }, 300);
-							ordt.put(rn, t3);
-							return;
-						}
 						if(p!=e && e == pe) {
 							LivingEntity le = (LivingEntity)e;
-							le.setHealth(0);
-							if(ript.containsKey(rn)) {
-								ript.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
-							}
-			                for(Entity e1 : OverworldRaids.getheroes(p)) {
-			                	if(e1 instanceof Player) {
-			                		Player pe = (Player) e1;
-			    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-				                		pe.sendMessage(ChatColor.BOLD+"엘더가디언: 모든것은 그분 뜻대로...");
-			    					}
-			    					else {
-				                		pe.sendMessage(ChatColor.BOLD+"ElderGuardian: Everything is up to him..");
-			    					}
-			                	}
-			                }
-			                return;
+							le.damage(3,p);
 						}
 	    			});
                 }
-            }, j.incrementAndGet()/20+12);
+            }, j.incrementAndGet()/15+15);
             ript.put(rn, i1); 
 		});
 	}
@@ -696,6 +833,7 @@ public class OceanSkills extends Summoned{
 		    					}
 		                	}
 		                }
+		                markCreate(p);
 		    			p.getWorld().spawnParticle(Particle.NAUTILUS, p.getLocation().clone(), 200,2,2,2,0.1);
 		    			p.getWorld().spawnParticle(Particle.DOLPHIN, p.getLocation().clone(), 200,2,2,2,0.1);
 	                    int i1 =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
@@ -705,7 +843,7 @@ public class OceanSkills extends Summoned{
 				                Holding.untouchable(p, 40l);
 			                	Riptide(p, tar);
 			                }
-			            }, 40, 20);
+			            }, 40, 25);
 						ordt.put(rn, i1);  
 						ript.put(rn, i1);  
 		            }
@@ -730,6 +868,7 @@ public class OceanSkills extends Summoned{
 	    					}
 	                	}
 	                }
+	                markCreate(p);
 	    			p.getWorld().spawnParticle(Particle.NAUTILUS, p.getLocation().clone(), 200,2,2,2,0.1);
 	    			p.getWorld().spawnParticle(Particle.DOLPHIN, p.getLocation().clone(), 200,2,2,2,0.1);
                     int i1 =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
@@ -739,7 +878,7 @@ public class OceanSkills extends Summoned{
 			                Holding.untouchable(p, 40l);
 		                	Riptide(p, tar);
 		                }
-		            }, 40, 20);
+		            }, 40, 25);
 					ordt.put(rn, i1);  
 					ript.put(rn, i1);  
 		        }

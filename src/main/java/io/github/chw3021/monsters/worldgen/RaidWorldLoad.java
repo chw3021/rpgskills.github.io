@@ -1,6 +1,8 @@
 package io.github.chw3021.monsters.worldgen;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 import org.bukkit.GameRule;
@@ -11,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
+import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import io.github.chw3021.rmain.RMain;
@@ -20,6 +23,7 @@ public class RaidWorldLoad implements Listener {
 	@EventHandler
 	public void raidworldload(PluginEnableEvent ev)   
     {
+		AtomicInteger j = new AtomicInteger();
 		if (Bukkit.getServer().getWorld("OverworldRaid") == null) {
 			WorldCreator rwc = new WorldCreator("OverworldRaid");
 			rwc.environment(Environment.NORMAL);
@@ -45,15 +49,61 @@ public class RaidWorldLoad implements Listener {
 					rw.setGameRule(GameRule.DO_PATROL_SPAWNING, false);
 					rw.setGameRule(GameRule.DO_TILE_DROPS, false);
 					rw.setGameRule(GameRule.DO_TRADER_SPAWNING, false);
+					rw.setGameRule(GameRule.DO_WARDEN_SPAWNING, false);
 					rw.setGameRule(GameRule.DO_ENTITY_DROPS, false);
 					rw.setGameRule(GameRule.DO_MOB_LOOT, false);
+					rw.setGameRule(GameRule.DO_MOB_SPAWNING, false);
+					rw.setGameRule(GameRule.DROWNING_DAMAGE, false);
+					rw.setGameRule(GameRule.MOB_GRIEFING, false);
 					rw.setGameRule(GameRule.SPAWN_RADIUS, 0);
 					rw.setGameRule(GameRule.SPAWN_CHUNK_RADIUS, 0);
 				}
-			}, 2);
+			}, j.incrementAndGet()*50);
 		}
 		return;
     }
+	
+	@EventHandler
+	public void raidworldload(WorldLoadEvent ev) {
+		if(ev.getWorld().getName().equals("OverworldRaid")) {
+			if (Bukkit.getServer().getWorld("NetherRaid") == null) {
+				WorldCreator rwc = new WorldCreator("NetherRaid");
+				rwc.environment(Environment.NETHER);
+				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+					@Override
+					public void run() {
+						rwc.generator(new NetherRaidChunkGenerator());
+						World rw = rwc.createWorld();
+						rw.setMetadata("rpgraidworld", new FixedMetadataValue(RMain.getInstance(),true));
+						rwc.environment(Environment.NETHER);
+						rw.setDifficulty(Difficulty.HARD);
+						rw.setTime(12000);
+						rw.setAutoSave(false);
+						rw.setPVP(false);
+						rw.setSpawnFlags(false, false);
+						rw.setGameRule(GameRule.KEEP_INVENTORY, true);
+						rw.setGameRule(GameRule.DO_INSOMNIA, false);
+						rw.setGameRule(GameRule.DO_IMMEDIATE_RESPAWN, true);
+						rw.setGameRule(GameRule.DISABLE_RAIDS, true);
+						rw.setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
+						rw.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
+						rw.setGameRule(GameRule.DO_WEATHER_CYCLE, false);
+						rw.setGameRule(GameRule.DO_PATROL_SPAWNING, false);
+						rw.setGameRule(GameRule.DO_TILE_DROPS, false);
+						rw.setGameRule(GameRule.DO_TRADER_SPAWNING, false);
+						rw.setGameRule(GameRule.DO_WARDEN_SPAWNING, false);
+						rw.setGameRule(GameRule.DO_ENTITY_DROPS, false);
+						rw.setGameRule(GameRule.DO_MOB_LOOT, false);
+						rw.setGameRule(GameRule.DO_MOB_SPAWNING, false);
+						rw.setGameRule(GameRule.DROWNING_DAMAGE, false);
+						rw.setGameRule(GameRule.MOB_GRIEFING, false);
+						rw.setGameRule(GameRule.SPAWN_RADIUS, 0);
+						rw.setGameRule(GameRule.SPAWN_CHUNK_RADIUS, 0);
+					}
+				}, 50);
+			}
+		}
+	}
 	
 	
 	@EventHandler

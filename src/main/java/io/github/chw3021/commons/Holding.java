@@ -49,6 +49,15 @@ public class Holding implements Listener{
 		return ale;
 	}
 
+	static public LivingEntity ale(UUID uid) {
+		LivingEntity ale = (LivingEntity) Bukkit.getEntity(uid);
+		if(ale == null) {
+			return null;
+		}
+		return ale;
+	}
+	
+	
 	static public LivingEntity ale(LivingEntity le) {
 		LivingEntity ale = (LivingEntity) Bukkit.getEntity(le.getUniqueId());
 		if(ale == null) {

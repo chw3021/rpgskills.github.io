@@ -157,7 +157,7 @@ public class DarkMobsSpawn extends Mobs implements Listener {
 	}
 	final public void Spawn(LivingEntity le,Biome b) {
 		if (le.getLocation().getWorld().getEnvironment() != Environment.NORMAL || !(b.name().contains("CAVE")
-				|| b.name().contains("FOREST"))
+				|| b.name().contains("FOREST")|| b==Biome.DEEP_DARK)
 				) {
 			return;
 		} 

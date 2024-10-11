@@ -198,7 +198,7 @@ public class MountainsMobsSpawn extends Mobs implements Listener {
 	}
 	
 	final public void Spawn(LivingEntity le,Biome b) {
-		if (!((b.name().contains("PEAKS") ||b.name().contains("MEADOW")||b.name().contains("HILLS") || b.name().contains("STONY") || b.name().contains("TAIGA")))
+		if (!((b.name().contains("PEAKS") ||b.name().contains("HILLS") || b.name().contains("STONY") || b.name().contains("TAIGA")))
 				|| b.name().contains("SNOWY")|| b.name().contains("FROZEN")|| b.name().contains("JAG")) {
 			return;
 		}

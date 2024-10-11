@@ -207,7 +207,9 @@ public class CombatMode implements Serializable{
 			Player p = (Player) ev.getEntity();
 			if(isCombat(p)) {
 				ev.setCancelled(true);
+				ev.getItem().teleport(p);
 				ev.getItem().remove();
+				p.playSound(p, Sound.ENTITY_ITEM_PICKUP, 1, 1);
 				Backpack.add(p, ev.getItem().getItemStack());
 			}
 		}

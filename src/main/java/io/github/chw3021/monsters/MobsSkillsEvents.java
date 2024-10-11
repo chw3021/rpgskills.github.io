@@ -352,6 +352,7 @@ public class MobsSkillsEvents extends Mobs implements Listener, Serializable  {
 
 		OceanSkills.getInstance().Mimic(d);
 		OceanSkills.getInstance().Spikes(d);
+		OceanSkills.getInstance().markHit(d);
 		OceanSkills.getInstance().Riptide(d);
 		OceanSkills.getInstance().Shoot(d);
 		OceanSkills.getInstance().Tridents(d);
@@ -371,6 +372,9 @@ public class MobsSkillsEvents extends Mobs implements Listener, Serializable  {
 		PoisonSkills.getInstance().motovthrow(d);
 		PoisonSkills.getInstance().charge(d);
 		PoisonSkills.getInstance().napalm(d);
+		PoisonSkills.getInstance().Ordeal(d);
+		PoisonSkills.getInstance().multiShot(d);
+		PoisonSkills.getInstance().aiming(d);
 
 	}
 

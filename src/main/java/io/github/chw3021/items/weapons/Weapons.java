@@ -58,8 +58,8 @@ public class Weapons {
 			if (cmdt == -2) {
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 						new AttributeModifier(getKey(), 0.5,
-								Operation.ADD_SCALAR, EquipmentSlotGroup.HAND));
-				rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(getKey(), 15, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+								Operation.ADD_SCALAR, EquipmentSlotGroup.MAINHAND));
+				rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(getKey(), 15, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 					if (rm.hasLore()) {
 						List<String> lore = rm.getLore();
@@ -84,8 +84,8 @@ public class Weapons {
 			} else if (cmdt == -3) {
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 						new AttributeModifier(getKey(), 0.5,
-								Operation.ADD_SCALAR, EquipmentSlotGroup.HAND));
-				rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(getKey(), 15, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+								Operation.ADD_SCALAR, EquipmentSlotGroup.MAINHAND));
+				rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(getKey(), 15, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 					if (rm.hasLore()) {
 						List<String> lore = rm.getLore();
@@ -110,8 +110,8 @@ public class Weapons {
 			} else if (cmdt == -4) {
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 						new AttributeModifier(getKey(), 0.25,
-								Operation.ADD_SCALAR, EquipmentSlotGroup.HAND));
-				rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(getKey(), 50, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+								Operation.ADD_SCALAR, EquipmentSlotGroup.MAINHAND));
+				rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(getKey(), 50, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 					if (rm.hasLore()) {
 						List<String> lore = rm.getLore();
@@ -136,8 +136,8 @@ public class Weapons {
 			} else if (cmdt == -5) {
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 						new AttributeModifier(getKey(), 0.25,
-								Operation.ADD_SCALAR, EquipmentSlotGroup.HAND));
-				rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(getKey(), 50, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+								Operation.ADD_SCALAR, EquipmentSlotGroup.MAINHAND));
+				rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(getKey(), 50, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 					if (rm.hasLore()) {
 						List<String> lore = rm.getLore();
@@ -167,8 +167,8 @@ public class Weapons {
 			if (cmdt == -2) {
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 						new AttributeModifier(getKey(), 0.5,
-								Operation.ADD_SCALAR, EquipmentSlotGroup.HAND));
-				rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(getKey(), 15, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+								Operation.ADD_SCALAR, EquipmentSlotGroup.MAINHAND));
+				rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(getKey(), 15, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 						new AttributeModifier(getKey(), 0.5,
 								Operation.ADD_SCALAR, EquipmentSlotGroup.OFFHAND));
@@ -197,8 +197,8 @@ public class Weapons {
 			} else if (cmdt == -3) {
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 						new AttributeModifier(getKey(), 0.5,
-								Operation.ADD_SCALAR, EquipmentSlotGroup.HAND));
-				rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(getKey(), 15, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+								Operation.ADD_SCALAR, EquipmentSlotGroup.MAINHAND));
+				rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(getKey(), 15, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 						new AttributeModifier(getKey(), 0.5,
 								Operation.ADD_SCALAR, EquipmentSlotGroup.OFFHAND));
@@ -227,8 +227,8 @@ public class Weapons {
 			} else if (cmdt == -4) {
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 						new AttributeModifier(getKey(), 0.25,
-								Operation.ADD_SCALAR, EquipmentSlotGroup.HAND));
-				rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(getKey(), 50, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+								Operation.ADD_SCALAR, EquipmentSlotGroup.MAINHAND));
+				rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(getKey(), 50, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 						new AttributeModifier(getKey(), 0.25,
 								Operation.ADD_SCALAR, EquipmentSlotGroup.OFFHAND));
@@ -257,8 +257,8 @@ public class Weapons {
 			} else if (cmdt == -5) {
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 						new AttributeModifier(getKey(), 0.25,
-								Operation.ADD_SCALAR, EquipmentSlotGroup.HAND));
-				rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(getKey(), 50, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+								Operation.ADD_SCALAR, EquipmentSlotGroup.MAINHAND));
+				rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(getKey(), 50, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 						new AttributeModifier(getKey(), 0.25,
 								Operation.ADD_SCALAR, EquipmentSlotGroup.OFFHAND));
@@ -296,8 +296,8 @@ public class Weapons {
 			if (cmdt == -6) {
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 						new AttributeModifier(getKey(), 0.8,
-								Operation.ADD_SCALAR, EquipmentSlotGroup.HAND));
-				rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(getKey(), 0.3, Operation.ADD_SCALAR, EquipmentSlotGroup.HAND));
+								Operation.ADD_SCALAR, EquipmentSlotGroup.MAINHAND));
+				rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(getKey(), 0.3, Operation.ADD_SCALAR, EquipmentSlotGroup.MAINHAND));
 				rm.getPersistentDataContainer().set(endercore, PersistentDataType.STRING, "enderCore");
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 					if (rm.hasLore()) {
@@ -323,8 +323,8 @@ public class Weapons {
 
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 						new AttributeModifier(getKey(), 0.4,
-								Operation.ADD_SCALAR, EquipmentSlotGroup.HAND));
-				rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(getKey(), 0.6, Operation.ADD_SCALAR, EquipmentSlotGroup.HAND));
+								Operation.ADD_SCALAR, EquipmentSlotGroup.MAINHAND));
+				rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(getKey(), 0.6, Operation.ADD_SCALAR, EquipmentSlotGroup.MAINHAND));
 				rm.getPersistentDataContainer().set(endercore, PersistentDataType.STRING, "enderCore");
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 					if (rm.hasLore()) {
@@ -354,8 +354,8 @@ public class Weapons {
 			if (cmdt == -6) {
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 						new AttributeModifier(getKey(), 0.8,
-								Operation.ADD_SCALAR, EquipmentSlotGroup.HAND));
-				rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(getKey(), 0.3, Operation.ADD_SCALAR, EquipmentSlotGroup.HAND));
+								Operation.ADD_SCALAR, EquipmentSlotGroup.MAINHAND));
+				rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(getKey(), 0.3, Operation.ADD_SCALAR, EquipmentSlotGroup.MAINHAND));
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 						new AttributeModifier(getKey(), 0.8,
 								Operation.ADD_SCALAR, EquipmentSlotGroup.OFFHAND));
@@ -385,8 +385,8 @@ public class Weapons {
 
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 						new AttributeModifier(getKey(), 0.4,
-								Operation.ADD_SCALAR, EquipmentSlotGroup.HAND));
-				rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(getKey(), 0.6, Operation.ADD_SCALAR, EquipmentSlotGroup.HAND));
+								Operation.ADD_SCALAR, EquipmentSlotGroup.MAINHAND));
+				rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(getKey(), 0.6, Operation.ADD_SCALAR, EquipmentSlotGroup.MAINHAND));
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 						new AttributeModifier(getKey(), 0.4,
 								Operation.ADD_SCALAR, EquipmentSlotGroup.OFFHAND));
@@ -424,8 +424,8 @@ public class Weapons {
 			if (cmdt == -8) {
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 						new AttributeModifier(getKey(), 1.1,
-								Operation.MULTIPLY_SCALAR_1, EquipmentSlotGroup.HAND));
-				rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(getKey(),0.8, Operation.MULTIPLY_SCALAR_1, EquipmentSlotGroup.HAND));
+								Operation.MULTIPLY_SCALAR_1, EquipmentSlotGroup.MAINHAND));
+				rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(getKey(),0.8, Operation.MULTIPLY_SCALAR_1, EquipmentSlotGroup.MAINHAND));
 				rm.getPersistentDataContainer().set(herocore, PersistentDataType.STRING, "heroCore");
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 					if (rm.hasLore()) {
@@ -455,8 +455,8 @@ public class Weapons {
 			if (cmdt == -8) {
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 						new AttributeModifier(getKey(), 1.1,
-								Operation.MULTIPLY_SCALAR_1, EquipmentSlotGroup.HAND));
-				rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(getKey(),0.8, Operation.MULTIPLY_SCALAR_1, EquipmentSlotGroup.HAND));
+								Operation.MULTIPLY_SCALAR_1, EquipmentSlotGroup.MAINHAND));
+				rm.addAttributeModifier(Attribute.GENERIC_LUCK, new AttributeModifier(getKey(),0.8, Operation.MULTIPLY_SCALAR_1, EquipmentSlotGroup.MAINHAND));
 				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 						new AttributeModifier(getKey(), 1.1,
 								Operation.MULTIPLY_SCALAR_1, EquipmentSlotGroup.OFFHAND));
@@ -539,6 +539,9 @@ public class Weapons {
 		else if(m.contains("FISHING_ROD")) {
 			return 12000;
 		}
+		else if(m.contains("MACE")) {
+			return 13000;
+		}
 		return 0;
 	}
 	
@@ -586,13 +589,13 @@ public class Weapons {
 			rm.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 					new AttributeModifier(getKey(), dm/2+1,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 					new AttributeModifier(getKey(), dm/2+1,
 							Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
 					new AttributeModifier(getKey(), 8,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
 					new AttributeModifier(getKey(), 8,
 							Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
@@ -602,95 +605,95 @@ public class Weapons {
 			ename = "Bow";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(getKey(), dm,
-					Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+					Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
 					new AttributeModifier(getKey(), 1.2,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 		}
 		else if(m== Material.NETHERITE_SWORD) {
 			kname = "검";
 			ename = "Sword";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(getKey(), dm,
-					Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+					Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
 					new AttributeModifier(getKey(), 1.6,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 		}
 		else if(m == Material.NETHERITE_AXE) {
 			kname = "도끼";
 			ename = "Axe";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(getKey(), dm+3,
-					Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+					Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
 					new AttributeModifier(getKey(), 1,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 		}
 		else if(m == Material.CROSSBOW) {
 			kname = "쇠뇌";
 			ename = "Crossbow";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(getKey(), dm+2,
-					Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+					Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
 					new AttributeModifier(getKey(), 1.5,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 		}
 		else if(m== Material.NETHERITE_SHOVEL) {
 			kname = "삽";
 			ename = "Shovel";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(getKey(), dm-2,
-					Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+					Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
 					new AttributeModifier(getKey(), 1.1,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 		}
 		else if(m == Material.NETHERITE_PICKAXE) {
 			kname = "곡괭이";
 			ename = "Pickaxe";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(getKey(), dm-2,
-					Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+					Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
 					new AttributeModifier(getKey(), 1.2,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 		}
 		else if(m == Material.NETHERITE_HOE) {
 			kname = "괭이";
 			ename = "Hoe";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 					new AttributeModifier(getKey(), dm-3,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
 					new AttributeModifier(getKey(), 5,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 		}
 		else if(m == Material.BLAZE_ROD) {
 			kname = "완드";
 			ename = "Wand";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(getKey(), dm+2,
-					Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+					Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
 					new AttributeModifier(getKey(), 1.5,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 		}
 		else if(m == Material.TRIDENT) {
 			kname = "삼지창";
 			ename = "Trident";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 					new AttributeModifier(getKey(), dm,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 					new AttributeModifier(getKey(), dm,
 							Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
 					new AttributeModifier(getKey(), 1.1,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
 					new AttributeModifier(getKey(), 1.1,
 							Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
@@ -700,20 +703,30 @@ public class Weapons {
 			ename = "Shard";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(getKey(), dm,
-					Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+					Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
 					new AttributeModifier(getKey(), 1.2,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 		}
 		else if(m == Material.FISHING_ROD) {
 			kname = "낚시대";
 			ename = "FishingRod";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(getKey(), dm-1,
-					Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+					Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
 					new AttributeModifier(getKey(), 1.2,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
+		}
+		else if(m == Material.MACE) {
+			kname = "철퇴";
+			ename = "Mace";
+			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+			new AttributeModifier(getKey(), dm,
+					Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
+			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+					new AttributeModifier(getKey(), 0.6,
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 		}
 		else {
 			return null;
@@ -783,7 +796,7 @@ public class Weapons {
 	
 		rm.addAttributeModifier(Attribute.GENERIC_LUCK,
 				new AttributeModifier(getKey(), 30,
-						Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+						Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 		
 				
 		final String m = r.getType().name();
@@ -812,13 +825,13 @@ public class Weapons {
 			}
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 					new AttributeModifier(getKey(), 15,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 					new AttributeModifier(getKey(), 14,
 							Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
 					new AttributeModifier(getKey(), 10,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
 					new AttributeModifier(getKey(), 10,
 							Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
@@ -828,102 +841,102 @@ public class Weapons {
 			ename = "Bow";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(getKey(), 27,
-					Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+					Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
 					new AttributeModifier(getKey(), 1.6,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 		}
 		else if(m.contains("SWORD")) {
 			kname = "검";
 			ename = "Sword";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(getKey(), 27,
-					Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+					Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
 					new AttributeModifier(getKey(), 1.6,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 		}
 		else if(m.contains("_AXE")) {
 			kname = "도끼";
 			ename = "Axe";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(getKey(), 30,
-					Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+					Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
 					new AttributeModifier(getKey(), 1.2,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 		}
 		else if(m.equals("CROSSBOW")) {
 			kname = "쇠뇌";
 			ename = "Crossbow";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(getKey(), 29,
-					Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+					Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
 					new AttributeModifier(getKey(), 1.2,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 		}
 		else if(m.contains("SHOVEL")) {
 			kname = "삽";
 			ename = "Shovel";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(getKey(), 25,
-					Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+					Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
 					new AttributeModifier(getKey(), 1.2,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 		}
 		else if(m.contains("PICKAXE")) {
 			kname = "곡괭이";
 			ename = "Pickaxe";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(getKey(), 25,
-					Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+					Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
 					new AttributeModifier(getKey(), 1.4,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 		}
 		else if(m.contains("HOE")) {
 			kname = "괭이";
 			ename = "Hoe";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 					new AttributeModifier(getKey(), 24,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 	
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
 					new AttributeModifier(getKey(), 5,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 		}
 		else if(m.contains("BLAZE_ROD")) {
 			kname = "완드";
 			ename = "Wand";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(getKey(), 29,
-					Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+					Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
 					new AttributeModifier(getKey(), 1.6,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 		}
 		else if(m.contains("TRIDENT")) {
 			kname = "삼지창";
 			ename = "Trident";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 					new AttributeModifier(getKey(), 27,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 					new AttributeModifier(getKey(), 27,
 							Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 	
 			rm.addAttributeModifier(Attribute.GENERIC_LUCK,
 					new AttributeModifier(getKey(), 30,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 			rm.addAttributeModifier(Attribute.GENERIC_LUCK,
 					new AttributeModifier(getKey(), 30,
 							Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 			
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
 					new AttributeModifier(getKey(), 1.2,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
 					new AttributeModifier(getKey(), 1.2,
 							Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
@@ -933,20 +946,30 @@ public class Weapons {
 			ename = "Shard";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(getKey(), 27,
-					Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+					Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
 					new AttributeModifier(getKey(), 1.2,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 		}
 		else if(m.contains("FISHING_ROD")) {
 			kname = "낚시대";
 			ename = "FishingRod";
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(getKey(), 26,
-					Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+					Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
 					new AttributeModifier(getKey(), 1.2,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
+		}
+		else if(m.contains("MACE")) {
+			kname = "철퇴";
+			ename = "Mace";
+			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+			new AttributeModifier(getKey(), 27,
+					Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
+			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+					new AttributeModifier(getKey(), 0.75,
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 		}
 		else {
 			return null;
@@ -1353,7 +1376,7 @@ public class Weapons {
 		}
 		ItemMeta im = is.getItemMeta();
 		if (!im.hasCustomModelData() && im.getAttributeModifiers(EquipmentSlot.HAND).isEmpty()) {
-			im.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 8, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+			im.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 8, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 		}
 		if (!im.hasCustomModelData() && im.getAttributeModifiers(EquipmentSlot.OFF_HAND).isEmpty()) {
 			im.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 8, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
@@ -1572,6 +1595,10 @@ public class Weapons {
 			else if(m == Material.TRIDENT) {
 				return 10d;
 			}
+			else if(m == Material.MACE) {
+				return 6d;
+			}
+			
 			
 			else {
 				return 0d;
@@ -1654,6 +1681,9 @@ public class Weapons {
 				}
 				else if(mt == Material.NETHERITE_HOE) {
 					return 4d;
+				}
+				else if(mt == Material.MACE) {
+					return 0.6d;
 				}
 				
 				
@@ -1800,16 +1830,20 @@ public class Weapons {
 		return is;
 	}
 
+	final private boolean availableWeapons(Material m, ItemMeta im) {
+		return m == Material.PRISMARINE_SHARD || (m == Material.BLAZE_ROD && im.hasCustomModelData())|| (m == Material.SHEARS && im.hasCustomModelData()) 
+				|| m == Material.FISHING_ROD || m == Material.BOW || m == Material.CROSSBOW
+			|| m == Material.TRIDENT || (m == Material.GLOBE_BANNER_PATTERN && im.hasCustomModelData()) || m.name().contains("SWORD") || m.name().contains("AXE")
+			|| m.name().contains("HOE")	|| m.name().contains("SHOVEL") || m == Material.MACE;
+	}
+	
 	public void AttributeChange(PrepareAnvilEvent ev) 
 	{
 		if(ev.getResult() != null) {
 			ItemStack is = ev.getResult();
 			ItemMeta im = is.getItemMeta();
 			Material m = is.getType();
-			if(m == Material.PRISMARINE_SHARD || (m == Material.BLAZE_ROD && im.hasCustomModelData())|| (m == Material.SHEARS && im.hasCustomModelData()) 
-					|| m == Material.FISHING_ROD || m == Material.BOW || m == Material.CROSSBOW
-				|| m == Material.TRIDENT || (m == Material.GLOBE_BANNER_PATTERN && im.hasCustomModelData()) || m.name().contains("SWORD") || m.name().contains("AXE")
-				|| m.name().contains("HOE")	|| m.name().contains("SHOVEL")) {
+			if(availableWeapons(m,im)) {
 				Player p = (Player) ev.getView().getPlayer();
 				wealore(is, p);
 			}
@@ -1821,10 +1855,7 @@ public class Weapons {
 			ItemStack is = ev.getResult();
 			ItemMeta im = is.getItemMeta();
 			Material m = is.getType();
-			if(m == Material.PRISMARINE_SHARD || (m == Material.BLAZE_ROD && im.hasCustomModelData())|| (m == Material.SHEARS && im.hasCustomModelData()) 
-					|| m == Material.FISHING_ROD || m == Material.BOW || m == Material.CROSSBOW
-				|| m == Material.TRIDENT || (m == Material.GLOBE_BANNER_PATTERN && im.hasCustomModelData()) || m.name().contains("SWORD") || m.name().contains("AXE")
-				|| m.name().contains("HOE")	|| m.name().contains("SHOVEL")) {
+			if(availableWeapons(m,im)) {
 				Player p = (Player) ev.getView().getPlayer();
 				wealore(is, p);
 			}
@@ -1857,10 +1888,7 @@ public class Weapons {
 			ItemStack is = ev.getItem().getItemStack();
 			ItemMeta im = is.getItemMeta();
 			Material m = is.getType();
-			if(m == Material.PRISMARINE_SHARD || (m == Material.BLAZE_ROD && im.hasCustomModelData())|| (m == Material.SHEARS && im.hasCustomModelData()) 
-					|| m == Material.FISHING_ROD || m == Material.BOW || m == Material.CROSSBOW
-				|| m == Material.TRIDENT || (m == Material.GLOBE_BANNER_PATTERN && im.hasCustomModelData()) || m.name().contains("SWORD") || m.name().contains("AXE")
-				|| m.name().contains("HOE")	|| m.name().contains("SHOVEL")) {
+			if(availableWeapons(m,im)) {
 				Player p = (Player) ev.getEntity();
 				wealore(is, p);
 			}

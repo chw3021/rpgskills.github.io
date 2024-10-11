@@ -32,7 +32,7 @@ public class MountainsTrees extends BlockPopulator {
 		        int Z = random.nextInt(15);
 		        int Y = 100;
 		        for(int yi = 1; yi<3;yi++) {
-			        chunk.getBlock(X, Y+yi, Z).setType(Material.CHISELED_STONE_BRICKS);
+			        chunk.getBlock(X, Y+yi, Z).setType(Material.CRYING_OBSIDIAN);
 		        }
 		        
 		    }

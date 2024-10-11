@@ -250,9 +250,9 @@ public class Classgui implements Serializable {
 				p.setDisplayName(ChatColor.LIGHT_PURPLE + "[[[Mysterious]]]" + p.getDisplayName());
 				p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[[[Mysterious]]]" + p.getPlayerListName());
 			} else {
-				p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "Launcher");
-				p.setDisplayName(ChatColor.LIGHT_PURPLE + "[Launcher]" + p.getDisplayName());
-				p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[Launcher]" + p.getPlayerListName());
+				p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "Elementalist");
+				p.setDisplayName(ChatColor.LIGHT_PURPLE + "[Elementalist]" + p.getDisplayName());
+				p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[Elementalist]" + p.getPlayerListName());
 			}
 			break;
 		}
@@ -1115,7 +1115,7 @@ public class Classgui implements Serializable {
 							"Control: 2.5/5", "Support: 1/5", "Area: 1/5", "Range: 1/5", "Mobility: 5/5",
 							"Difficulty: Hard"),
 					19, inv);
-			itemset(ChatColor.BLUE + "Broiler", Material.CHAIN, 0, 1,
+			itemset(ChatColor.BLUE + "Broiler", Material.MACE, 0, 1,
 					Arrays.asList("Recommended equipment:", "Mace", "", "Attack: 3/5", "Defence: 2.5/5",
 							"Control: 4/5", "Support: 1/5", "Area: 4/5", "Range: 2/5", "Mobility: 2/5",
 							"Difficulty: Normal"),
@@ -1136,7 +1136,7 @@ public class Classgui implements Serializable {
 							"Control: 1.5/5", "Support: 1/5", "Area: 2/5", "Range: 5/5", "Mobility: 2.5/5",
 							"Difficulty: Hard"),
 					20, inv);
-			itemset(ChatColor.BLUE + "Launcher", Material.FIREWORK_ROCKET, 0, 1,
+			itemset(ChatColor.BLUE + "Elementalist", Material.SPECTRAL_ARROW, 0, 1,
 					Arrays.asList("Recommended equipment:", "Bow", "", "Attack: 3/5", "Defence: 2/5", "Control: 4/5",
 							"Support: 1/5", "Area: 3.5/5", "Range: 4/5", "Mobility: 2/5", "Difficulty: Normal"),
 					29, inv);
@@ -1198,7 +1198,7 @@ public class Classgui implements Serializable {
 							"Control: 2.5/5", "Support: 1/5", "Area: 3/5", "Range: 5/5", "Mobility: 1.5/5",
 							"Difficulty: Normal"),
 					23, inv);
-			itemset(ChatColor.BLUE + "Engineer", Material.IRON_PICKAXE, 0, 1,
+			itemset(ChatColor.BLUE + "Engineer", Material.DISPENSER, 0, 1,
 					Arrays.asList("Recommended equipment:", "Pickaxe", "", "Attack: 3/5", "Defence: 4/5",
 							"Control: 5/5", "Support: 1/5", "Area: 2.5/5", "Range: 2/5", "Mobility: 2.5/5",
 							"Difficulty: Normal"),

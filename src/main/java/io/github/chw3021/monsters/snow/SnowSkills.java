@@ -68,7 +68,7 @@ public class SnowSkills extends Summoned implements Listener{
 	public HashMap<UUID, Long> rb7cooldown = new HashMap<UUID, Long>();
 	
 	public static HashMap<UUID, Boolean> ordealable = new HashMap<UUID, Boolean>();
-	public static HashMap<UUID, UUID> ordeal = new HashMap<UUID, UUID>();
+	public static HashMap<UUID, UUID> ordeal = new HashMap<UUID, UUID>();//분신 uuid 저장
 	public static HashMap<UUID, Integer> count = new HashMap<UUID, Integer>();
 
 	private HashMap<UUID, LivingEntity> snowblock = new HashMap<UUID, LivingEntity>();
@@ -1274,6 +1274,7 @@ public class SnowSkills extends Summoned implements Listener{
 		Holding.invur(p, 60l);
 		p.setCustomNameVisible(false);
 		
+		
         for(Player pe : OverworldRaids.getheroes(p)) {
 			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
         		pe.sendMessage(ChatColor.BLUE+"한번 찾아보시지!");
@@ -1281,6 +1282,8 @@ public class SnowSkills extends Summoned implements Listener{
 			else {
         		pe.sendMessage(ChatColor.BLUE+"Look it up!");
 			}
+    		pe.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,10,1,false,false));
+    		pe.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS,10,255,false,false));
     		pe.teleport(rl);
     		Holding.invur(pe, 60l);
     		Holding.untouchable(pe, 60l);

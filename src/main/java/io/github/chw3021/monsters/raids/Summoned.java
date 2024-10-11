@@ -864,6 +864,16 @@ public class Summoned extends Mobs implements Serializable{
 	@SuppressWarnings("unchecked")
 	private final void AncientPortal(String rn, Integer combo, LivingEntity le) {
 
+		if(raidporstand.containsKey(rn)) {
+			if(Bukkit.getEntity(raidporstand.get(rn)) != null) {
+				Bukkit.getEntity(raidporstand.get(rn)).remove();
+			}
+			raidporstand.remove(rn);
+		}
+		if(raidpor.containsKey(rn)) {
+			raidpor.get(rn).setType(Material.VOID_AIR);
+			raidpor.remove(rn);
+		}
 		Location sl = le.getLocation().clone().add(0, 0.5, 0);
 		if(!sl.getBlock().isEmpty()) {
 			sl = CommonEvents.getInstance().BlankFinder(sl);
@@ -872,6 +882,7 @@ public class Summoned extends Mobs implements Serializable{
 		EndGateway eg = (EndGateway) le.getWorld().getBlockState(sl);
 		eg.setExactTeleport(true);
 		eg.setExitLocation(null);
+		eg.setAge(0);
 		eg.update();
 		eg.setMetadata("OverworldRaidPortal", new FixedMetadataValue(RMain.getInstance(), rn));
 		eg.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
@@ -914,6 +925,76 @@ public class Summoned extends Mobs implements Serializable{
 					as.setCustomName(ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
 					p.sendTitle(ChatColor.RED +"Ancient Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)", 10,35, 10);
 					p.sendMessage(ChatColor.RED +"Ancient Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
+				}
+			});
+		}
+	
+	}
+
+	@SuppressWarnings("unchecked")
+	private final void NethercorePortal(String rn, Integer combo, LivingEntity le) {
+
+		if(raidporstand.containsKey(rn)) {
+			if(Bukkit.getEntity(raidporstand.get(rn)) != null) {
+				Bukkit.getEntity(raidporstand.get(rn)).remove();
+			}
+			raidporstand.remove(rn);
+		}
+		if(raidpor.containsKey(rn)) {
+			raidpor.get(rn).setType(Material.VOID_AIR);
+			raidpor.remove(rn);
+		}
+		Location sl = le.getLocation().clone().add(0, 0.5, 0);
+		if(!sl.getBlock().isEmpty()) {
+			sl = CommonEvents.getInstance().BlankFinder(sl);
+		}
+		sl.getBlock().setType(Material.END_GATEWAY);
+		EndGateway eg = (EndGateway) le.getWorld().getBlockState(sl);
+		eg.setExactTeleport(true);
+		eg.setExitLocation(null);
+		eg.setAge(10000);
+		eg.update();
+		eg.setMetadata("NethercoreRaidPortal", new FixedMetadataValue(RMain.getInstance(), rn));
+		eg.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
+		raidpor.put(rn, eg.getBlock());
+
+		
+		ArmorStand as = le.getWorld().spawn(sl, ArmorStand.class, a ->{
+			a.setInvulnerable(true);
+			a.setInvisible(true);
+			a.setGravity(false);
+			a.setCollidable(false);
+			a.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
+			a.setMetadata("rob", new FixedMetadataValue(RMain.getInstance(), rn));
+			raidporstand.put(rn, a.getUniqueId());
+			a.setCustomNameVisible(true);
+		});
+		
+		if(getherotype(rn) instanceof Player) {
+			Player p = (Player) getherotype(rn);
+			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+				as.setCustomName(ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다");
+				p.sendTitle(ChatColor.RED +"네더 코어 포탈 소환", ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다", 10,35, 10);
+				p.sendMessage(ChatColor.RED +"네더 코어 포탈 소환", ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다");
+			}
+			else {
+				as.setCustomName(ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
+				p.sendTitle(ChatColor.RED +"Nether Core Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)", 10,35, 10);
+				p.sendMessage(ChatColor.RED +"Nether Core Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
+			}
+		}
+		else if(getherotype(rn) instanceof HashSet){
+			HashSet<Player> par = (HashSet<Player>) getherotype(rn);
+			par.forEach(p ->{
+				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+					as.setCustomName(ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다");
+					p.sendTitle(ChatColor.RED +"네더 코어 포탈 소환", ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다", 10,35, 10);
+					p.sendMessage(ChatColor.RED +"네더 코어 포탈 소환", ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다");
+				}
+				else {
+					as.setCustomName(ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
+					p.sendTitle(ChatColor.RED +"Nether Core Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)", 10,35, 10);
+					p.sendMessage(ChatColor.RED +"Nether Core Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
 				}
 			});
 		}
@@ -969,7 +1050,7 @@ public class Summoned extends Mobs implements Serializable{
 			}
 		}
 	}
-
+	
 	public final Object Combo(EntityDeathEvent d, String meta) 
 	{		
 		final LivingEntity le = d.getEntity();
@@ -982,6 +1063,17 @@ public class Summoned extends Mobs implements Serializable{
 
 					if(combo==MINCOMBO) {
 						AncientPortal(rn,combo,le);
+						return rn;
+					}
+					else if(combo % COMBOPER == 0 && combo>=COMBOPER) {
+						ComboMessage(rn,combo,false);
+						return rn;
+					}
+				}
+				else if(meta.equals("nether")) {
+
+					if(combo==MINCOMBO) {
+						NethercorePortal(rn,combo,le);
 						return rn;
 					}
 					else if(combo % COMBOPER == 0 && combo>=COMBOPER) {
@@ -1016,6 +1108,18 @@ public class Summoned extends Mobs implements Serializable{
 
 							if(combo==MINCOMBO) {
 								AncientPortal(rn,combo,le);
+								hs.add(rn);
+							}
+							else if(combo % COMBOPER == 0 && combo>=COMBOPER) {
+								ComboMessage(rn,combo,false);
+								hs.add(rn);
+							}
+							return;
+						}
+						else if(meta.equals("nether")) {
+
+							if(combo==MINCOMBO) {
+								NethercorePortal(rn,combo,le);
 								hs.add(rn);
 							}
 							else if(combo % COMBOPER == 0 && combo>=COMBOPER) {

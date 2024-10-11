@@ -975,7 +975,10 @@ public class Nobskills extends Pak implements Serializable, Listener {
 												}
 											}
 										}
-										gs.get(p.getUniqueId()).forEach(g -> g.playEffect(EntityEffect.GUARDIAN_TARGET));
+										gs.get(p.getUniqueId()).forEach(g -> {
+											g.playEffect(EntityEffect.GUARDIAN_TARGET);
+											((Guardian)g).setLaser(true);
+										});
 					                	atk1(0.33*(1+fsd.GuardianSupport.get(p.getUniqueId())*0.056), p, le);
 										le.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 30, 2, false,false));
 										le.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 30, 2, false,false));
