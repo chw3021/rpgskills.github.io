@@ -60,8 +60,14 @@ public class CombatMode implements Serializable{
 				return true;
 			}
 			break;
-		case 2: case 3:
+		case 2:
 			if (mi.getType().name().contains("_AXE")
+					&& !p.getInventory().getItemInMainHand().getType().name().contains("PICK")) {
+				return true;
+			}
+			break;
+		case 3:
+			if ((mi.getType().name().contains("_AXE") || mi.getType() == Material.MACE)
 					&& !p.getInventory().getItemInMainHand().getType().name().contains("PICK")) {
 				return true;
 			}

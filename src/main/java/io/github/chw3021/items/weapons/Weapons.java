@@ -545,6 +545,24 @@ public class Weapons {
 		return 0;
 	}
 	
+	public ItemStack giveElWeapon(Integer el, Player p) {
+		
+		Integer cmdt = el +200;
+		ItemStack is = p.getInventory().getItemInMainHand().clone();
+		ItemMeta im = is.getItemMeta();
+		im.setCustomModelData(getwn(is.getType())+8+100);
+		is.setItemMeta(im);
+		
+		
+		ItemStack elW = elweapon(arweapon(is.clone(),12,p), cmdt , p);
+		
+		p.getInventory().addItem(elW);
+		
+		return elW;
+	}
+	
+	
+	//weaponNum + el +100   or   weaponNum + 12
 	final protected ItemStack arweapon(ItemStack i0, Integer cmdt, Player p) {
 
 		ItemStack r = i0.clone();
@@ -557,34 +575,30 @@ public class Weapons {
 		String kname = "";
 		String ename = "";
 		ItemMeta rm = r.getItemMeta();
-		rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
 
 		final Material m = r.getType();
 		final Integer dm = 8 + lev*2;
 		final Integer wn = getwn(m);
-				
 
+
+		if(lev == 1) {
+			if(!(rm.hasCustomModelData() && rm.getCustomModelData() - wn == 60)) {
+				return null;
+			}
+			if (!(!rm.hasCustomModelData() && (m.name().contains("NETHERITE") || m == Material.MACE || m == Material.TRIDENT ) )) {
+				return null;
+			}
+			
+		}
+		else if(lev != 1 && lev <= rm.getCustomModelData()-wn-100) {
+			return null;
+		}
+		
+		rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+		
 		if(m == Material.GLOBE_BANNER_PATTERN) {
 			kname = "너클";
 			ename = "Knuckle";
-			if(p.getLocale().contains("kr")){
-				if (rm.hasLore()) {
-					List<String> lore = rm.getLore();
-					lore.add( "손교체시 장착");
-					rm.setLore(lore);
-				} else {
-					rm.setLore(Arrays.asList("손교체시 장착"));
-				}
-			}
-			else {
-				if (rm.hasLore()) {
-					List<String> lore = rm.getLore();
-					lore.add( "SwapHands To Equip");
-					rm.setLore(lore);
-				} else {
-					rm.setLore(Arrays.asList("SwapHands To Equip"));
-				}
-			}
 			rm.addItemFlags(ItemFlag.HIDE_DYE);
 			rm.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
@@ -805,24 +819,6 @@ public class Weapons {
 		if(m.contains("_BANNER")) {
 			kname = "너클";
 			ename = "Knuckle";
-			if(p.getLocale().contains("kr")){
-				if (rm.hasLore()) {
-					List<String> lore = rm.getLore();
-					lore.add( "손교체시 장착");
-					rm.setLore(lore);
-				} else {
-					rm.setLore(Arrays.asList("손교체시 장착"));
-				}
-			}
-			else {
-				if (rm.hasLore()) {
-					List<String> lore = rm.getLore();
-					lore.add( "SwapHands To Equip");
-					rm.setLore(lore);
-				} else {
-					rm.setLore(Arrays.asList("SwapHands To Equip"));
-				}
-			}
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 					new AttributeModifier(getKey(), 15,
 							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
@@ -967,9 +963,6 @@ public class Weapons {
 			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
 			new AttributeModifier(getKey(), 27,
 					Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
-			rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
-					new AttributeModifier(getKey(), 0.75,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 		}
 		else {
 			return null;

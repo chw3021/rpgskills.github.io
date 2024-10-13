@@ -18,12 +18,7 @@ public class OverworldRaidChunkGenerator extends ChunkGenerator {
 	    SimplexOctaveGenerator generator = new SimplexOctaveGenerator(new Random(worldInfo.getSeed()), 6);
 	    generator.setScale(0.008);
 
-	    Material material;
-	    if (worldInfo.getEnvironment() == World.Environment.NORMAL) {
-	        material = Material.CRACKED_STONE_BRICKS;
-	    } else {
-	        material = Material.NETHERRACK;
-	    }
+	    Material material = Material.CRACKED_STONE_BRICKS;
 
 	    int worldX = chunkX * 16;
 	    int worldZ = chunkZ * 16;
@@ -31,12 +26,12 @@ public class OverworldRaidChunkGenerator extends ChunkGenerator {
 	    for (int x = 0; x < 16; x++) {
 	        for (int z = 0; z < 16; z++) {
 	            double noise = generator.noise(worldX + x, worldZ + z, 0.5, 0.5, true);
-	            int height = 40 + (int)(noise * 20); // 노이즈 기반의 동적 높이
+	            int height =98 + (int)(noise * 4); // 노이즈 기반의 동적 높이
 
-	            for (int y = 40; y < height; y++) {
+	            for (int y = 42; y < height; y++) {
 	                chunkData.setBlock(x, y, z, material);
 	            }
-	            for (int y = chunkData.getMinHeight() + 2; y < 40; y++) {
+	            for (int y = chunkData.getMinHeight() + 2; y < 42; y++) {
 	                chunkData.setBlock(x, y, z, Material.WATER);
 	            }
 	        }

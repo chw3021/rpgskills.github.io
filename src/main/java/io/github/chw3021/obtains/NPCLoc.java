@@ -154,12 +154,10 @@ public class NPCLoc implements Serializable, Listener{
 		}
 		
 		try {
-			for(int i = 1; i < 1001; i+=100) {
-				if(w.locateNearestStructure(lel, st, i, b) != null) {
-					return w.locateNearestStructure(lel, st, i, b).getLocation();
-				}
+			if(w.locateNearestStructure(lel, st, 1, b) != null) {
+				return w.locateNearestStructure(lel, st, 1, b).getLocation();
 			}
-			return w.locateNearestStructure(lel, st, 1000, b).getLocation();
+			return null;
 		}
 		catch(NullPointerException e){
 			return null;
@@ -445,39 +443,30 @@ public class NPCLoc implements Serializable, Listener{
 		
 	}
 	
-	@EventHandler	
-	public void spawning(AsyncStructureGenerateEvent ev) 
-	{
-		final World w = ev.getWorld();
-		if(w.hasMetadata("fake")||w.hasMetadata("rpgraidworld") || !w.canGenerateStructures() || disabledWorlds.contains(w.getName())) {
-			return;
-		}
+	@EventHandler
+	public void spawning(AsyncStructureGenerateEvent ev) {
+	    final World w = ev.getWorld();
 
-		Runnable r = new Runnable() {
-            @Override
-            public void run() 
-            {
-        		final Location stl = new Location(w, ev.getChunkX(),0,ev.getChunkZ());
-        		final Structure str = ev.getStructure();
-        		
-        		HashSet<HashMap<Location, String>> hs = new HashSet<>();
-        		HashMap<Location, String> hm = new HashMap<>();
-        		hm.put(stl, ev.getStructure().getKey().getKey());
-        		
-        		hs.add(hm);
-        		saver(w,hs);
-        		
-        		Spawn(stl, str.getKey().getKey());
-            }
-		};
-		
-		if(ev.isAsynchronous()) {
-			
-			Bukkit.getServer().getScheduler().runTaskLater(RMain.getInstance(), r, 20); 
-		}
-		else {
-			Bukkit.getServer().getScheduler().runTask(RMain.getInstance(), r);
-		}
+	    // 월드가 특정 메타데이터를 가지고 있거나, 구조물을 생성할 수 없거나, 비활성화된 월드라면 중지
+	    if (w.hasMetadata("fake") || w.hasMetadata("rpgraidworld") || !w.canGenerateStructures() || disabledWorlds.contains(w.getName())) {
+	        return;
+	    }
+
+	    // 비동기 이벤트 안에서는 월드 변경 작업을 직접 하지 않고, 필요한 정보만 수집
+	    final Location stl = new Location(w, ev.getChunkX(), 0, ev.getChunkZ());
+	    final Structure str = ev.getStructure();
+
+	    // 동기 작업으로 넘겨서 실행
+	    Bukkit.getScheduler().runTask(RMain.getInstance(), () -> {
+	        HashSet<HashMap<Location, String>> hs = new HashSet<>();
+	        HashMap<Location, String> hm = new HashMap<>();
+	        hm.put(stl, str.getKey().getKey());
+
+	        hs.add(hm);
+	        saver(w, hs); // saver는 월드 데이터를 처리하는 메서드로 가정
+
+	        Spawn(stl, str.getKey().getKey()); // Spawn은 구조물 생성을 처리하는 메서드로 가정
+	    });
 	}
 
 	
@@ -520,7 +509,6 @@ public class NPCLoc implements Serializable, Listener{
 			Entity entity = Bukkit.getEntity(uid);
 			if (entity != null) {
 			    entity.remove();
-				System.out.println(w.getName() +"'s "+entity+" despawned");
 			}
 		});
 	}

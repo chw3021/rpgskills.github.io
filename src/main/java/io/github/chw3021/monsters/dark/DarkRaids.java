@@ -331,7 +331,6 @@ public class DarkRaids extends Summoned {
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
 		
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.35);
-		newmob.getAttribute(Attribute.GENERIC_FLYING_SPEED).setBaseValue(0.35);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		newmob.setLootTable(null);
@@ -467,18 +466,23 @@ public class DarkRaids extends Summoned {
 		ItemMeta mmf = mainf.getItemMeta();
 		mmf.setCustomModelData(8008);
 		mainf.setItemMeta(mmf);
-		
-		if(ht instanceof Player) {
-			Player p = (Player) ht;
-			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
-		}
-		else if(getherotype(rn) instanceof HashSet){
-			@SuppressWarnings("unchecked")
-			HashSet<Player> par = (HashSet<Player>) ht;
-    		par.forEach(p -> {
-    			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
-    		});
-		}
+
+		Bukkit.getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
+		    @Override
+		    public void run() {
+				if(ht instanceof Player) {
+					Player p = (Player) ht;
+					p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+				}
+				else if(getherotype(rn) instanceof HashSet){
+					@SuppressWarnings("unchecked")
+					HashSet<Player> par = (HashSet<Player>) ht;
+		    		par.forEach(p -> {
+		    			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+		    		});
+				}
+		    }
+		}, 2L); 
 	}
 	
 	

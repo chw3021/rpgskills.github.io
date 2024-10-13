@@ -42,7 +42,6 @@ import org.bukkit.World.Environment;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.AbstractArrow.PickupStatus;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Axolotl;
 import org.bukkit.entity.Axolotl.Variant;
 import org.bukkit.entity.Cod;
@@ -118,6 +117,9 @@ public class Nobskills extends Pak implements Serializable, Listener {
 	private HashMap<UUID, Integer> bckwsht = new HashMap<UUID, Integer>();
 	private HashMap<UUID, Integer> clve = new HashMap<UUID, Integer>();
 	private HashMap<UUID, Integer> clvet = new HashMap<UUID, Integer>();
+	
+
+	private HashMap<UUID, Double> damage = new HashMap<UUID, Double>();
 	
 
 	private Multimap<UUID, Mob> axs = HashMultimap.create();
@@ -216,7 +218,6 @@ public class Nobskills extends Pak implements Serializable, Listener {
 		}
 	}
 
-	
 	public void Transition(ProjectileLaunchEvent e) 
 	{
 		
@@ -228,7 +229,6 @@ public class Nobskills extends Pak implements Serializable, Listener {
 
 			
 			if(ClassData.pc.get(p.getUniqueId()) == 19 && fsd.Transition.getOrDefault(p.getUniqueId(), 0)>=1) {
-				DamageGetter(p);
 				if(Proficiency.getpro(p)>=1) {
 					t.setVelocity(t.getVelocity().clone().multiply(2.5));
 				}
@@ -243,6 +243,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 							.skillUse(() -> {
 				                t.setMetadata("tras of "+p.getName(), new FixedMetadataValue(RMain.getInstance(),true));
 				                ar1(t, p, 0.7*(1+fsd.Transition.get(p.getUniqueId())*0.03));
+				                
 							});
 					bd.execute();
 				}
@@ -251,6 +252,19 @@ public class Nobskills extends Pak implements Serializable, Listener {
 		}
 	}
 
+	final private boolean isTridentLaunched(Player p) {
+		
+		if(!damage.containsKey(p.getUniqueId())) {
+			return false;
+		}
+		
+		if(p.getInventory().getItemInMainHand()==null || p.getInventory().getItemInMainHand().getType() != Material.TRIDENT) {
+			
+			player_damage.put(p.getName(), damage.get(p.getUniqueId()));
+			return true;
+		}
+		return false;
+	}
 
 	
 	public void Transition(ProjectileHitEvent d) 
@@ -312,6 +326,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 						cs.setAdult();
 						cs.setBreed(false);
 						cs.setVariant(Variant.WILD);
+						cs.setCollidable(false);
 						axs.put(p.getUniqueId(), cs);
 						Axolotl cs1 = (Axolotl) t.getWorld().spawnEntity(l.clone().add(1, 1, 1), EntityType.AXOLOTL);
 						cs1.setInvulnerable(true);
@@ -321,6 +336,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 						cs1.setAdult();
 						cs1.setBreed(false);
 						cs1.setVariant(Variant.BLUE);
+						cs1.setCollidable(false);
 						axs.put(p.getUniqueId(), cs1);
 						Axolotl cs2 = (Axolotl) t.getWorld().spawnEntity(l.clone().add(-1, 1, 1), EntityType.AXOLOTL);
 						cs2.setInvulnerable(true);
@@ -330,6 +346,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 						cs2.setAdult();
 						cs2.setBreed(false);
 						cs2.setVariant(Variant.CYAN);
+						cs2.setCollidable(false);
 						axs.put(p.getUniqueId(), cs2);
 						Axolotl cs3 = (Axolotl) t.getWorld().spawnEntity(l.clone().add(1, 1, -1), EntityType.AXOLOTL);
 						cs3.setInvulnerable(true);
@@ -339,6 +356,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 						cs3.setAdult();
 						cs3.setBreed(false);
 						cs3.setVariant(Variant.GOLD);
+						cs3.setCollidable(false);
 						axs.put(p.getUniqueId(), cs3);
 						Axolotl cs4 = (Axolotl) t.getWorld().spawnEntity(l.clone().add(-1, 1, -1), EntityType.AXOLOTL);
 						cs4.setInvulnerable(true);
@@ -348,6 +366,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 						cs4.setAdult();
 						cs4.setBreed(false);
 						cs4.setVariant(Variant.LUCY);
+						cs4.setCollidable(false);
 						axs.put(p.getUniqueId(), cs4);
                 		Collection<Entity> ce = t.getWorld().getNearbyEntities(l,6, 6, 6);
                 		if(ce.stream().anyMatch(e -> e.hasMetadata("boss"))) {
@@ -502,6 +521,9 @@ public class Nobskills extends Pak implements Serializable, Listener {
 		if(ev.getEntity() instanceof Player) {
 			Player p = (Player) ev.getEntity();
 
+			if(damage.containsKey(p.getUniqueId())) {
+				damage.remove(p.getUniqueId());
+			}
 			if(ot.containsKey(p.getUniqueId()) && ev.getItem().getItemStack().getType() != Material.TRIDENT) {
 				ev.setCancelled(true);
 			}
@@ -524,6 +546,9 @@ public class Nobskills extends Pak implements Serializable, Listener {
 			
 			if(ClassData.pc.get(p.getUniqueId()) == 19 && !t.hasMetadata("fake")) {
 				
+
+				DamageGetter(p);
+				damage.put(p.getUniqueId(), Pak.player_damage.getOrDefault(p.getName(), 0d));
 				
 			    t.setInvulnerable(true);
 			    t.setPersistent(true);
@@ -1065,7 +1090,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 		p.getWorld().spawnParticle(Particle.SPLASH, dol.get(p.getUniqueId()).getLocation(), 60,3,3,3);
 		p.leaveVehicle();
 		for(Entity e: dol.get(p.getUniqueId()).getWorld().getNearbyEntities(dol.get(p.getUniqueId()).getLocation(), 5,5,5)) {
-			
+			isTridentLaunched(p);
     		if (e instanceof Player) 
 			{
 				Player p1 = (Player) e;
@@ -1099,6 +1124,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
              		@Override
                 	public void run() 
 	                {	
+            			isTridentLaunched(p);
         				doll.getWorld().spawnParticle(Particle.GLOW, doll, 60,3,3,3);
 	                    p.playSound(doll, Sound.ENTITY_GLOW_SQUID_SQUIRT, 1.0f, 2f);
     					for(Entity e: doll.getWorld().getNearbyEntities(doll, 5,5,5)) {
@@ -1181,9 +1207,8 @@ public class Nobskills extends Pak implements Serializable, Listener {
 							.hm(jmcooldown)
 							.skillUse(() -> {
 								p.setCooldown(Material.DOLPHIN_SPAWN_EGG,5);
-								Snowball ds = (Snowball) p.getWorld().spawnEntity(p.getEyeLocation(), EntityType.SNOWBALL);
+								Snowball ds = (Snowball) p.getWorld().spawnEntity(p.getLocation(), EntityType.SNOWBALL);
 								ds.setSilent(true);
-								ds.setBounce(false);
 								ds.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 								ds.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 								ds.setInvulnerable(true);
@@ -1198,6 +1223,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 								cs.setInvulnerable(true);
 								cs.setAI(false);
 								cs.setGravity(false);
+								cs.setCollidable(false);
 								cs.setCustomName(p.getName());
 								cs.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 								cs.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
@@ -1211,7 +1237,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 				             			if(cs.isValid()) {
 					             			if(ds.getLocation().add(ds.getVelocity().normalize().multiply(1)).getBlock().isPassable()){
 												ds.setVelocity(p.getEyeLocation().clone().getDirection().normalize().multiply(1));
-												Location dsl = ds.getLocation().clone().add(0, 1, 0);
+												Location dsl = ds.getLocation().clone();
 												dsl.setDirection(p.getEyeLocation().clone().getDirection());
 												dsl.add(dsl.getDirection().clone().normalize().multiply(3));
 												cs.teleport(dsl);
@@ -1270,6 +1296,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 		                	PufferFish cs = (PufferFish) p.getWorld().spawnEntity(p.getEyeLocation().add(p.getLocation().getDirection().normalize().rotateAroundY(-Math.PI/6).multiply(1.5)), EntityType.PUFFERFISH);
 							cs.setInvulnerable(true);
 							cs.setAI(false);
+							cs.setCollidable(false);
 							cs.setCustomName(p.getName());
 							cs.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 							cs.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
@@ -1277,6 +1304,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 		                	TropicalFish cs1 = (TropicalFish) p.getWorld().spawnEntity(p.getEyeLocation().add(p.getLocation().getDirection().normalize().rotateAroundY(Math.PI/6).multiply(1.5)), EntityType.TROPICAL_FISH);
 							cs1.setInvulnerable(true);
 							cs1.setAI(false);
+							cs.setCollidable(false);
 							cs1.setCustomName(p.getName());
 							cs1.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 							cs1.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
@@ -1284,6 +1312,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 							Cod cs2 = (Cod) p.getWorld().spawnEntity(p.getEyeLocation().add(p.getLocation().getDirection().normalize().rotateAroundY(Math.PI/2).multiply(1.5)), EntityType.COD);
 							cs2.setInvulnerable(true);
 							cs2.setAI(false);
+							cs.setCollidable(false);
 							cs2.setCustomName(p.getName());
 							cs2.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 							cs2.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
@@ -1291,6 +1320,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 							Salmon cs3 = (Salmon) p.getWorld().spawnEntity(p.getEyeLocation().add(p.getLocation().getDirection().normalize().rotateAroundY(-Math.PI/2).multiply(1.5)), EntityType.SALMON);
 							cs3.setInvulnerable(true);
 							cs3.setAI(false);
+							cs.setCollidable(false);
 							cs3.setCustomName(p.getName());
 							cs3.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 							cs3.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
@@ -1298,6 +1328,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 		                	Turtle cs4 = (Turtle) p.getWorld().spawnEntity(p.getLocation().add(p.getLocation().getDirection().multiply(1.5)), EntityType.TURTLE);
 							cs4.setInvulnerable(true);
 							cs4.setAI(false);
+							cs.setCollidable(false);
 							cs4.setCustomName(p.getName());
 							cs4.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 							cs4.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
@@ -1306,6 +1337,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 							cs5.setInvulnerable(true);
 							cs5.setGravity(false);
 							cs5.setAI(false);
+							cs.setCollidable(false);
 							cs5.setCustomName(p.getName());
 							cs5.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 							cs5.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
@@ -1315,6 +1347,9 @@ public class Nobskills extends Pak implements Serializable, Listener {
 	                		int task1 = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
 				                @Override
 				                public void run() {
+				                	
+				        			isTridentLaunched(p);
+				        			
 									cs.getWorld().spawnParticle(Particle.FALLING_WATER, cs.getLocation(), 20, 1,1,1,0);
 									cs.getWorld().spawnParticle(Particle.BUBBLE, cs.getLocation(), 10, 1,1,1,0.1);
 									cs.getWorld().spawnParticle(Particle.SPLASH, cs.getLocation(), 10, 1,1,1,0.1);
@@ -1459,6 +1494,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		                @Override
 		                public void run() {
+		        			isTridentLaunched(p);
 		    				p.getWorld().spawnParticle(Particle.CRIT, m.getLocation(), 60, 2,2,2,0.1);
 		    				p.getWorld().spawnParticle(Particle.DOLPHIN, m.getLocation(), 300, 5,1,5,0.1);
 		    				p.playSound(m.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 1, 2);
@@ -1515,6 +1551,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		                @Override
 		                public void run() {
+		        			isTridentLaunched(p);
 		    				m.getWorld().spawnParticle(Particle.GLOW_SQUID_INK, m.getLocation(), 20, 2,2,2,0.1);
 		    				m.getWorld().spawnParticle(Particle.SQUID_INK, m.getLocation(), 40, 2,2,2,0.1);
 		    				m.getWorld().spawnParticle(Particle.SPLASH, m.getLocation(), 40, 2,2,2,0.1);
@@ -1622,6 +1659,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 	    				                @Override
 	    				                public void run() 
 	    				                {
+	    				        			isTridentLaunched(p);
 	    				                	HashSet<LivingEntity> les = new HashSet<LivingEntity>();
 	    				                	WaterWheel(pl,j.incrementAndGet()).forEach(bl -> line.add(bl));
 	    				                    for(Location l : line) {
@@ -1731,7 +1769,8 @@ public class Nobskills extends Pak implements Serializable, Listener {
 						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 			                @Override
 			                public void run() {
-			                	
+
+			        			isTridentLaunched(p);
 			                	t.setGravity(true);
 			                    p.playSound(tl, Sound.ITEM_TRIDENT_THROW, 0.1f, 0);
 			                    p.playSound(tl, Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.1f, 2);
@@ -1844,6 +1883,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		                @Override
 		                public void run() {
+		        			isTridentLaunched(p);
 		                    p.playSound(tl, Sound.BLOCK_CONDUIT_ACTIVATE, 1, 0);
 		                    p.playSound(tl, Sound.BLOCK_CONDUIT_ATTACK_TARGET, 1, 0);
 
@@ -1916,10 +1956,11 @@ public class Nobskills extends Pak implements Serializable, Listener {
 			                	});
 			                	if(Proficiency.getpro(p) >=1) {
 
-			                		Turtle cs = (Turtle) p.getWorld().spawnEntity(p.getEyeLocation(), EntityType.TURTLE);
+			                		Turtle cs = (Turtle) p.getWorld().spawnEntity(p.getEyeLocation().add(0,1.5,0), EntityType.TURTLE);
 			    					cs.setInvulnerable(true);
 			    					cs.setAI(false);
 			    					cs.setGravity(false);
+			    					cs.setCollidable(false);
 			    					cs.setVelocity(p.getEyeLocation().clone().getDirection().normalize().multiply(0.5));
 			    					cs.setCustomName(p.getName());
 			    					cs.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
@@ -1934,6 +1975,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 			        	             		@Override
 			        	                	public void run() 
 			        		                {	
+			        	            			isTridentLaunched(p);
 			        	        				p.getWorld().spawnParticle(Particle.GLOW, cs.getLocation(), 60,3,3,3);
 			        		                    p.playSound(p.getLocation(), Sound.ENTITY_TURTLE_SHAMBLE_BABY, 0.6f, 1f);
 			    								cs.teleport(le);
@@ -1951,6 +1993,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 			        	             		@Override
 			        	                	public void run() 
 			        		                {	
+			        	            			isTridentLaunched(p);
 			        	        				p.getWorld().spawnParticle(Particle.GLOW, cs.getLocation(), 60,3,3,3);
 			        		                    p.playSound(p.getLocation(), Sound.ENTITY_TURTLE_SHAMBLE_BABY, 0.6f, 1f);
 			    								cs.teleport(le);
@@ -2049,6 +2092,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 			        						}
 			        	            		if ((!(e == p))&& e instanceof LivingEntity&& !e.hasMetadata("fake") && !e.hasMetadata("portal")) 
 			        						{
+			        	            			isTridentLaunched(p);
 			        								LivingEntity le = (LivingEntity)e;
 			        			                	atk1(0.46, p, le);
 			        								le.teleport(le.getLocation().add(0, 0.02, 0));
@@ -2131,7 +2175,8 @@ public class Nobskills extends Pak implements Serializable, Listener {
 				Location tl = fallingb.getLocation();
 				tl.getWorld().spawnParticle(Particle.SPLASH, tl, 150,5,5,5);
 				tl.getWorld().spawnParticle(Particle.CLOUD, tl, 20,2,2,2);
-				
+
+				isTridentLaunched(p);
 	
 				for (Entity e : p.getWorld().getNearbyEntities(tl, 6, 6, 6))
 				{
@@ -2172,7 +2217,8 @@ public class Nobskills extends Pak implements Serializable, Listener {
 				Location tl = fallingb.getLocation();
 				tl.getWorld().spawnParticle(Particle.SPLASH, tl, 150,5,5,5);
 				tl.getWorld().spawnParticle(Particle.CLOUD, tl, 20,2,2,2);
-				
+
+				isTridentLaunched(p);
 	
 				for (Entity e : p.getWorld().getNearbyEntities(tl, 6, 6, 6))
 				{
@@ -2213,7 +2259,8 @@ public class Nobskills extends Pak implements Serializable, Listener {
 				Location tl = fallingb.getLocation();
 				tl.getWorld().spawnParticle(Particle.SPLASH, tl, 150,5,5,5);
 				tl.getWorld().spawnParticle(Particle.CLOUD, tl, 20,2,2,2);
-				
+
+				isTridentLaunched(p);
 	
 				for (Entity e : p.getWorld().getNearbyEntities(tl, 6, 6, 6))
 				{
@@ -2450,6 +2497,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 			    					march.add(cs16);
 			    					
 			    					march.forEach(m -> {
+			    						m.setCollidable(false);
 			    						Location arrange = m.getLocation().clone();
 			    						arrange.setDirection(p.getEyeLocation().getDirection());
 			    						m.teleport(arrange);
@@ -2459,6 +2507,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 			    		                @Override
 			    		                public void run() 
 			    		                {
+			    		        			isTridentLaunched(p);
 			    		                	march.forEach(m->{
 			    		    					m.setGravity(false);
 			    								Location arrange = m.getLocation().clone();
@@ -2562,15 +2611,15 @@ public class Nobskills extends Pak implements Serializable, Listener {
 		LivingEntity le = (LivingEntity)d.getEntity();
 		if(ClassData.pc.get(p.getUniqueId()) == 19) {
 
-			if(p.getInventory().getItemInMainHand().getType()==Material.TRIDENT&& !p.getInventory().getItemInOffHand().getType().name().contains("NUGGET")&& !(p.getInventory().getItemInOffHand().getType()==Material.TRIDENT)&& !(p.getInventory().getItemInOffHand().getType()==Material.SHIELD))
+			if((p.getInventory().getItemInMainHand().getType()==Material.TRIDENT ||isTridentLaunched(p))&& !p.getInventory().getItemInOffHand().getType().name().contains("NUGGET")&& !(p.getInventory().getItemInOffHand().getType()==Material.TRIDENT)&& !(p.getInventory().getItemInOffHand().getType()==Material.SHIELD))
 			{
 				dset2(d, p, 1.15*(1+fsd.MarkOfSea.get(p.getUniqueId())*0.0636), le, 7);
 			}
 		}
 		}
-		if(d.getDamager() instanceof Arrow && d.getEntity() instanceof LivingEntity) 
+		if(d.getDamager() instanceof Projectile && d.getEntity() instanceof LivingEntity) 
 		{
-			Arrow ar = (Arrow)d.getDamager();
+			Projectile ar = (Projectile)d.getDamager();
 	
 			if(ar.getShooter() instanceof Player) {
 				Player p = (Player) ar.getShooter();
@@ -2581,7 +2630,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 				
 				if(ClassData.pc.get(p.getUniqueId()) == 19) {
 
-					if(p.getInventory().getItemInMainHand().getType()==Material.TRIDENT&& !p.getInventory().getItemInOffHand().getType().name().contains("NUGGET")&& !(p.getInventory().getItemInOffHand().getType()==Material.TRIDENT)&& !(p.getInventory().getItemInOffHand().getType()==Material.SHIELD))
+					if((p.getInventory().getItemInMainHand().getType()==Material.TRIDENT ||isTridentLaunched(p))&& !p.getInventory().getItemInOffHand().getType().name().contains("NUGGET")&& !(p.getInventory().getItemInOffHand().getType()==Material.TRIDENT)&& !(p.getInventory().getItemInOffHand().getType()==Material.SHIELD))
 					{
 						dset2(d, p, 1.15*(1+fsd.MarkOfSea.get(p.getUniqueId())*0.0636), le, 7);
 					}

@@ -124,7 +124,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	Integer LIVES = 5;
 	Double BOSSHP = 100000d;
 	
-	Integer BOSSNUM = 0;
+	Integer BOSSNUM = 2;
 	
 	
 	private static final OverworldRaids instance = new OverworldRaids ();
@@ -574,18 +574,23 @@ public class OverworldRaids extends Summoned implements Listener {
     		ItemMeta mmf = mainf.getItemMeta();
     		mmf.setCustomModelData(8008);
     		mainf.setItemMeta(mmf);
-    		
-    		if(ht instanceof Player) {
-    			Player p = (Player) ht;
-    			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
-    		}
-    		else if(getherotype(rn) instanceof HashSet){
-    			@SuppressWarnings("unchecked")
-    			HashSet<Player> par = (HashSet<Player>) ht;
-        		par.forEach(p -> {
-        			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
-        		});
-    		}
+
+    		Bukkit.getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
+    		    @Override
+    		    public void run() {
+    				if(ht instanceof Player) {
+    					Player p = (Player) ht;
+    					p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+    				}
+    				else if(getherotype(rn) instanceof HashSet){
+    					@SuppressWarnings("unchecked")
+    					HashSet<Player> par = (HashSet<Player>) ht;
+    		    		par.forEach(p -> {
+    		    			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+    		    		});
+    				}
+    		    }
+    		}, 2L); 
 
     		return newmob;
 		}
@@ -695,17 +700,23 @@ public class OverworldRaids extends Summoned implements Listener {
     		mainf.setItemMeta(offm);
     		mainf.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
     		
-    		if(ht instanceof Player) {
-    			Player p = (Player) ht;
-    			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
-    		}
-    		else if(getherotype(rn) instanceof HashSet){
-    			@SuppressWarnings("unchecked")
-    			HashSet<Player> par = (HashSet<Player>) ht;
-        		par.forEach(p -> {
-        			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
-        		});
-    		}
+
+    		Bukkit.getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
+    		    @Override
+    		    public void run() {
+    				if(ht instanceof Player) {
+    					Player p = (Player) ht;
+    					p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+    				}
+    				else if(getherotype(rn) instanceof HashSet){
+    					@SuppressWarnings("unchecked")
+    					HashSet<Player> par = (HashSet<Player>) ht;
+    		    		par.forEach(p -> {
+    		    			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+    		    		});
+    				}
+    		    }
+    		}, 2L); 
 
     		return newmob;
 		}
@@ -1286,7 +1297,7 @@ public class OverworldRaids extends Summoned implements Listener {
 		Player p = ev.getPlayer();
 		
 		if(!heroes.containsValue(p.getUniqueId()) && p.getWorld().getName().contains("Raid")) {
-			p.teleport(p.getBedLocation());
+			p.teleport(p.getRespawnLocation());
 		}
 	}
 
@@ -1298,7 +1309,7 @@ public class OverworldRaids extends Summoned implements Listener {
 		worlds.forEach(w -> w.getPlayers().forEach(b -> {
 				Player p = (Player) b;
 				if(!heroes.containsValue(p.getUniqueId()) && p.getWorld().getName().contains("Raid")) {
-					p.teleport(p.getBedLocation());
+					p.teleport(p.getRespawnLocation());
 				}
 		}));
 	}
@@ -1720,8 +1731,8 @@ public class OverworldRaids extends Summoned implements Listener {
 		if(d.getEntity().hasMetadata("inhibitor") && inhibitor.containsValue(d.getEntity().getUniqueId())) {
 			LivingEntity le = d.getEntity();
 			String rn = le.getMetadata("inhibitor").get(0).asString();
-			Location spl = le.getLocation().clone().add(0, -60, 0);
-			spl.setY(30);
+			Location spl = le.getLocation().clone().add(0, -70, 0);
+			spl.setY(15);
 			raidloc.put(rn, spl);
 			le.remove();
 			if(Bukkit.getEntity(inhibitor.get(rn)) !=null) {
@@ -1778,7 +1789,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	            	Random random=new Random();
 	            	double number = (random.nextDouble()+1.5) * 5 * (random.nextBoolean() ? -1 : 1);
 	            	double number2 = (random.nextDouble()+1.5) * 5 * (random.nextBoolean() ? -1 : 1);
-	            	Location esl = spl.clone().add(number, -10, number2);
+	            	Location esl = spl.clone().add(number, -5, number2);
 	
 	        		String reg = lang.equalsIgnoreCase("ko_kr") ? "엘더가디언":"ElderGuardian";
 	        		ElderGuardian newmob = (ElderGuardian) MobspawnLoc(esl, ChatColor.BLUE+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, null, null, null, null, null, null, EntityType.ELDER_GUARDIAN);
@@ -1810,11 +1821,13 @@ public class OverworldRaids extends Summoned implements Listener {
 	                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.GRAY + "보스 단계"), null, 5, 69, 5);
 			        		Bukkit.getPlayer(pu).playSound(spl, Sound.EVENT_RAID_HORN, 1, 1);
 				    		Bukkit.getPlayer(pu).sendMessage("남은 목숨 "+ ChatColor.BOLD + String.valueOf(lives.getOrDefault(rn, 0)));
+				    		Bukkit.getPlayer(pu).teleport(spl.clone().add(0,2.5,0));
 						}
 						else {
 	                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.GRAY + "BOSS WAVE"), null, 5, 69, 5);
 			        		Bukkit.getPlayer(pu).playSound(spl, Sound.EVENT_RAID_HORN, 1, 1);
 	                		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + String.valueOf(lives.getOrDefault(rn, 0)) + "lives Left");
+	        	    		Bukkit.getPlayer(pu).teleport(spl.clone().add(0,2.5,0));
 						}
 	            	});
 	            }
@@ -1967,18 +1980,23 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		ItemMeta mmf = mainf.getItemMeta();
 	    	    		mmf.setCustomModelData(8008);
 	    	    		mainf.setItemMeta(mmf);
-	    	    		
-	    	    		if(ht instanceof Player) {
-	    	    			Player p = (Player) ht;
-	    	    			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
-	    	    		}
-	    	    		else if(getherotype(rn) instanceof HashSet){
-	    	    			@SuppressWarnings("unchecked")
-	    	    			HashSet<Player> par = (HashSet<Player>) ht;
-	    	        		par.forEach(p -> {
-	    	        			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
-	    	        		});
-	    	    		}
+
+	    	    		Bukkit.getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
+	    	    		    @Override
+	    	    		    public void run() {
+	    	    				if(ht instanceof Player) {
+	    	    					Player p = (Player) ht;
+	    	    					p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+	    	    				}
+	    	    				else if(getherotype(rn) instanceof HashSet){
+	    	    					@SuppressWarnings("unchecked")
+	    	    					HashSet<Player> par = (HashSet<Player>) ht;
+	    	    		    		par.forEach(p -> {
+	    	    		    			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+	    	    		    		});
+	    	    				}
+	    	    		    }
+	    	    		}, 2L); 
 	    	    		targeting(rn);
 	            		
 	                	heroes.get(rn).forEach(pu -> {
@@ -2144,19 +2162,23 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		offm.setCustomModelData(4010);
 	    	    		mainf.setItemMeta(offm);
 	    	    		mainf.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
-	    	    		
-	    	    		if(ht instanceof Player) {
-	    	    			Player p = (Player) ht;
-	    	    			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
-	    	    		}
-	    	    		else if(getherotype(rn) instanceof HashSet){
-	    	    			@SuppressWarnings("unchecked")
-	    	    			HashSet<Player> par = (HashSet<Player>) ht;
-	    	        		par.forEach(p -> {
-	    	        			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
-	    	        		});
-	    	    		}
-	    	    		
+
+	    	    		Bukkit.getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
+	    	    		    @Override
+	    	    		    public void run() {
+	    	    				if(ht instanceof Player) {
+	    	    					Player p = (Player) ht;
+	    	    					p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+	    	    				}
+	    	    				else if(getherotype(rn) instanceof HashSet){
+	    	    					@SuppressWarnings("unchecked")
+	    	    					HashSet<Player> par = (HashSet<Player>) ht;
+	    	    		    		par.forEach(p -> {
+	    	    		    			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+	    	    		    		});
+	    	    				}
+	    	    		    }
+	    	    		}, 2L); 
 	    	    		targeting(rn);
 	                	heroes.get(rn).forEach(pu -> {
 							if(Bukkit.getPlayer(pu).getLocale().equalsIgnoreCase("ko_kr")) {

@@ -57,6 +57,7 @@ import io.github.chw3021.classes.witchdoctor.WdcSkillsGui;
 import io.github.chw3021.classes.witherist.WitSkillsGui;
 import io.github.chw3021.classes.wreltler.WreSkillsGui;
 import io.github.chw3021.items.Elements;
+import io.github.chw3021.items.armors.Armors;
 import io.github.chw3021.items.armors.Boots;
 import io.github.chw3021.items.armors.Chestplate;
 import io.github.chw3021.items.armors.Helmet;
@@ -327,6 +328,16 @@ public class Rpgs extends Summoned implements CommandExecutor, Serializable, Lis
 				{
 					Weapons w = new Weapons();
 					w.winv(p);
+				}
+				else if((args[0].equalsIgnoreCase("elweapon")||args[0].equalsIgnoreCase("elw")) && p.isOp()&& !args[1].isEmpty())
+				{
+					Weapons w = new Weapons();
+					w.giveElWeapon(Integer.parseInt(args[1]), p );
+				}
+				else if((args[0].equalsIgnoreCase("elarmors")||args[0].equalsIgnoreCase("elar")) && p.isOp()&& !args[1].isEmpty())
+				{
+					Armors ar = new Armors();
+					ar.giveElArmors(Integer.parseInt(args[1]), p);
 				}
 				else if(args[0].equalsIgnoreCase("god") && p.isOp()&& !args[1].isEmpty())
 				{

@@ -972,6 +972,7 @@ public class SkillUsing implements Listener, Serializable {
 		Launskills.getInstance().ChargingShot(e);
 
 		Medskills.getInstance().ArrowClinic(e);
+		Medskills.getInstance().EnderWitherHunter(e);
 		Medskills.getInstance().Throw(e);
 
 		Oceskills.getInstance().Crisp(e);

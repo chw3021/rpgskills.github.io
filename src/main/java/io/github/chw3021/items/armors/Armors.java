@@ -57,6 +57,17 @@ public class Armors {
 		
 		return im;
 	}
+	
+	public ItemStack[] giveElArmors(Integer el, Player p) {
+		ItemStack[] elArmors = new ItemStack[4];
+		Integer cmdt = el +200;
+		for(int i = 0; i <4; i++) {
+			elArmors[i] = elArmor(acArmor(i,p), cmdt , p);
+		}
+		p.getInventory().addItem(elArmors);
+		
+		return elArmors;
+	}
 
 
 	final private Integer getan(Material ma) {
@@ -76,7 +87,7 @@ public class Armors {
 		return 0;
 	}
 
-	final protected ItemStack acArmor(Integer slot, Integer cmdt, Player p) {
+	final protected ItemStack acArmor(Integer slot, Player p) { //ruined portal quest 에서 습득
 
 		ItemStack r = new ItemStack(Material.NETHERITE_BOOTS);
 		String kname = "";
@@ -285,22 +296,7 @@ public class Armors {
 	
 				return elArmor(i0, cmdt, p);
 			}
-			else if (i0.getItemMeta().hasCustomModelData() && i0.getItemMeta().getCustomModelData() == an + 100+8 //wild
-					&&i1.getItemMeta().getCustomModelData() == cmdt) {
-	
-				return elArmor(i0, cmdt, p);
-			} 
 			else if ((!i0.getItemMeta().hasCustomModelData())) { //normal
-	
-				return elArmor(i0, cmdt, p);
-			}
-			else if (i0.getItemMeta().hasCustomModelData() && i0.getItemMeta().getCustomModelData() == an +60 //netherite
-					&&i1.getItemMeta().getCustomModelData() == cmdt) {
-	
-				return elArmor(i0, cmdt, p);
-			}
-			else if (i0.getItemMeta().hasCustomModelData() && i0.getItemMeta().getCustomModelData() <= an + 100+7 &&i0.getItemMeta().getCustomModelData() >= an + 100+1
-					&& i0.getItemMeta().getCustomModelData() == cmdt -3 + an + 100 -1) { //aura
 	
 				return elArmor(i0, cmdt, p);
 			}

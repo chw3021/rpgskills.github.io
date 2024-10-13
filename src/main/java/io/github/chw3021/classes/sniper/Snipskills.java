@@ -239,6 +239,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 											cbm.setChargedProjectiles(arrows);
 											cb.setItemMeta(cbm);
 											p.getInventory().removeItem( new ItemStack(Material.ARROW,1));
+											p.updateInventory();
 										}
 									}
 									line.forEach(i -> {
@@ -1050,6 +1051,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 									cbm.setChargedProjectiles(arrows);
 									cb.setItemMeta(cbm);
 									p.getInventory().removeItem( new ItemStack(Material.ARROW,1));
+									p.updateInventory();
 								}
 							}
 
@@ -1240,59 +1242,50 @@ public class Snipskills extends Pak implements Serializable, Listener {
 			}
 		}
 
-		if(f.getEntity().getShooter() instanceof Player && f.getEntity().hasMetadata("flare")) {
-			Firework fr = f.getEntity();
-			Player p = (Player)fr.getShooter();
-			World w = fr.getWorld();
-			for(Entity e : f.getEntity().getNearbyEntities(30, 30, 30)) {
-				if (e instanceof Player)
-				{
+		if (f.getEntity().getShooter() instanceof Player && f.getEntity().hasMetadata("flare")) {
+		    Firework fr = f.getEntity();
+		    Player p = (Player) fr.getShooter();
+		    World w = fr.getWorld();
+		    for (Entity e : f.getEntity().getNearbyEntities(30, 30, 30)) {
+		        if (e instanceof Player) {
+		            Player p1 = (Player) e;
+		            if (Party.hasParty(p) && Party.hasParty(p1)) {
+		                if (Party.getParty(p).equals(Party.getParty(p1))) {
+		                    continue;
+		                }
+		            }
+		        }
+		        if (e instanceof LivingEntity && e != p && !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
+		            LivingEntity le = (LivingEntity) e;
+		            le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 400, 0, false, false));
+		            if (Proficiency.getpro(p) >= 1) {
+		                Holding.holding(p, le, 40L);
+		            }
+		        }
+		    }
 
-					Player p1 = (Player) e;
-					if(Party.hasParty(p) && Party.hasParty(p1))	{
-						if(Party.getParty(p).equals(Party.getParty(p1)))
-						{
-							continue;
-						}
-					}
-				}
-				if(e instanceof LivingEntity && e!=p&& !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
-					LivingEntity le = (LivingEntity)e;
-					le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 400, 0, false, false));
-					if(Proficiency.getpro(p)>=1) {
-						Holding.holding(p, le, 40l);
-					}
+		    HashSet<Location> hs = new HashSet<>();
+		    HashMap<Location, BlockData> hls = new HashMap<>();
 
-				}
-			}
-			HashSet<Location> hs = new HashSet<>();
-			HashMap<Location, BlockData> hls = new HashMap<>();
+		    for (int i = -20; i < 20; i++) {
+		        for (int j = -20; j < 20; j++) {
+		            for (int k = -20; k < 20; k++) {
+		                Location hl = fr.getLocation().clone().add(i, j, k);
+		                if ((hl.getBlock().getType() == Material.VOID_AIR || hl.getBlock().getType() == Material.AIR) && hl.getBlock().getType() != Material.LIGHT) {
+		                    hls.put(hl, hl.getBlock().getBlockData());
+		                    hs.add(hl);
+		                    hl.getBlock().setType(Material.LIGHT);  // 라이트 블록으로 변경
+		                }
+		            }
+		        }
+		    }
 
-			for(int i = -20; i<20; i++) {
-				for(int j = -20; j<20; j++) {
-					for(int k = -20; k<20; k++) {
-						Location hl = fr.getLocation().clone().add(i, j, k);
-						if((hl.getBlock().getType() == Material.VOID_AIR || hl.getBlock().getType() == Material.AIR) && hl.getBlock().getType()!=Material.LIGHT) {
-							hls.put(hl, hl.getBlock().getBlockData());
-							hs.add(hl);
-						}
-					}
-				}
-			}
-			hs.forEach(l -> {
-				w.spawn(l, BlockDisplay.class, b ->{
-					b.setBlock(getBd(Material.LIGHT));
-					b.setBrightness(new Brightness(15,15));
-					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-						@Override
-						public void run()
-						{
-							b.remove();
-						}
-					},	 400);
-				});
-			});
-			return;
+		    // 20초 후에 블록을 원래 상태로 복구
+		    Bukkit.getScheduler().runTaskLater(RMain.getInstance(), () -> {
+		        for (Location loc : hs) {
+		            loc.getBlock().setBlockData(hls.get(loc));  // 원래 블록으로 복구
+		        }
+		    }, 20 * 20); // 20초 후
 		}
 	}
 
@@ -1764,7 +1757,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 							}
 
 							if(bolt.getPierceLevel()+ssd.Remodeling.getOrDefault(p.getUniqueId(),0)/2<=127) {
-								bolt.setPierceLevel(ar.getPierceLevel()+ssd.Remodeling.get(p.getUniqueId())/2);
+								bolt.setPierceLevel(ar.getPierceLevel()+ssd.Remodeling.getOrDefault(p.getUniqueId(),0)/2);
 							}
 							else {
 								bolt.setPierceLevel(127);
@@ -1825,7 +1818,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 
 
 			if(ClassData.pc.get(p.getUniqueId()) == 4) {
-				dset2(d, p, (1+ssd.HeadShot.getOrDefault(p.getUniqueId(),0)*0.036), le, 14);
+				dset2(d, p, 1d, le, 5);
 				if(le.hasMetadata("leader") || le.hasMetadata("boss")) {
 					d.setDamage(d.getDamage()*2.35);
 				}
@@ -1856,7 +1849,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 						if(Math.abs(ar.getLocation().getY() - (e.getEyeLocation().getY())) <= (0.5+ssd.HeadShot.get(p.getUniqueId())*0.01)|| Proficiency.getpro(p)>=2) {
 							e.damage(bbArrow(ar)*1.36*(1+ssd.HeadShot.get(p.getUniqueId())*0.036), p);
 							e.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 40, 0, false, false));
-							p.getWorld().spawnParticle(Particle.DAMAGE_INDICATOR, e.getEyeLocation(), 50, 1,1,1);
+							p.getWorld().spawnParticle(Particle.CRIT, e.getEyeLocation(), 50, 1,1,1);
 							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 								p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("[헤드샷]").bold(true).color(ChatColor.DARK_GREEN).create());
 							}
@@ -1876,7 +1869,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 					if(Math.abs(ar.getLocation().getY() - (e.getEyeLocation().getY())) <= (0.5+ssd.HeadShot.get(p.getUniqueId())*0.01)|| Proficiency.getpro(p)>=2) {
 						e.damage(bbArrow(ar)*1.36*(1+ssd.HeadShot.get(p.getUniqueId())*0.036), p);
 						e.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 40, 0, false, false));
-						p.getWorld().spawnParticle(Particle.DAMAGE_INDICATOR, e.getEyeLocation(), 50, 1,1,1);
+						p.getWorld().spawnParticle(Particle.CRIT, e.getEyeLocation(), 50, 1,1,1);
 						if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 							p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("[헤드샷]").bold(true).color(ChatColor.DARK_GREEN).create());
 						}

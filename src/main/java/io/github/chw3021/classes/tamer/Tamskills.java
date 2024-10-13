@@ -15,6 +15,7 @@ import io.github.chw3021.party.Party;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.ProjectileSource;
+import org.bukkit.util.Vector;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
@@ -812,24 +813,25 @@ public class Tamskills extends Pak implements Listener, Serializable {
 		                    w.setBreed(false);
 		                    w.setAgeLock(true);
 							w.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
-							w.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(w.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()*(1+tsd.Pets.get(p.getUniqueId())*0.05)*(1+tsd.Taming.get(p.getUniqueId())*0.1));
-							w.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(w.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue()*(1+tsd.Taming.get(p.getUniqueId())*0.015));
-							w.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(5*(1+tsd.Pets.get(p.getUniqueId())*0.02)*(1+tsd.Taming.get(p.getUniqueId())*0.015));
+							w.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(w.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()*(1+tsd.Pets.getOrDefault(p.getUniqueId(),0)*0.05)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.1));
+							w.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(w.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue()*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.015));
+							w.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(5*(1+tsd.Pets.getOrDefault(p.getUniqueId(),0)*0.02)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.015));
 							w.setHealth(w.getMaxHealth());
 							w.setMetadata("pet of "+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	
 							w.setMetadata("untargetable", new FixedMetadataValue(RMain.getInstance(), p.getName()));
 		                    w.setCustomName(p.getName());
 		                    w.setSilent(true);
 		                    w.setRemoveWhenFarAway(false);
+		                    w.getEquipment().setChestplate(new ItemStack(Material.WOLF_ARMOR));
 		                    Cat cat = (Cat) p.getWorld().spawnEntity(p.getLocation(), EntityType.CAT);
 		                    cat.setTamed(true);
 		                    cat.setOwner(p);
 		                    cat.setAdult();
 		                    cat.setBreed(false);
 		                    cat.setAgeLock(true);
-							cat.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(cat.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()*(1+tsd.Pets.get(p.getUniqueId())*0.05)*(1+tsd.Taming.get(p.getUniqueId())*0.1));
-							cat.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(cat.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue()*(1+tsd.Taming.get(p.getUniqueId())*0.01));
-							cat.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(3*(1+tsd.Pets.get(p.getUniqueId())*0.02)*(1+tsd.Taming.get(p.getUniqueId())*0.01));
+							cat.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(cat.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()*(1+tsd.Pets.getOrDefault(p.getUniqueId(),0)*0.05)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.1));
+							cat.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(cat.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue()*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.01));
+							cat.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(3*(1+tsd.Pets.getOrDefault(p.getUniqueId(),0)*0.02)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.01));
 							cat.setHealth(cat.getMaxHealth());
 							cat.setMetadata("pet of "+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	
 							cat.setMetadata("untargetable", new FixedMetadataValue(RMain.getInstance(), p.getName()));
@@ -842,13 +844,14 @@ public class Tamskills extends Pak implements Listener, Serializable {
 		                    par.setAdult();
 		                    par.setBreed(false);
 		                    par.setAgeLock(true);
-							par.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(par.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()*(1+tsd.Pets.get(p.getUniqueId())*0.05)*(1+tsd.Taming.get(p.getUniqueId())*0.1));
-							par.getAttribute(Attribute.GENERIC_FLYING_SPEED).setBaseValue(3*(1+tsd.Taming.get(p.getUniqueId())*0.01));
+							par.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(par.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()*(1+tsd.Pets.getOrDefault(p.getUniqueId(),0)*0.05)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.1));
+							par.getAttribute(Attribute.GENERIC_FLYING_SPEED).setBaseValue(3*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.01));
 							par.setHealth(par.getMaxHealth());
 							par.setMetadata("pet of "+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	
 							par.setMetadata("untargetable", new FixedMetadataValue(RMain.getInstance(), p.getName()));
 							par.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), p.getName()));
 							par.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), p.getName()));
+							par.setMetadata("rob", new FixedMetadataValue(RMain.getInstance(), p.getName()));
 		                    par.setCustomName(p.getName());
 		                    par.setSilent(true);
 		                    par.setRemoveWhenFarAway(false);
@@ -859,15 +862,17 @@ public class Tamskills extends Pak implements Listener, Serializable {
 		                    tamed.put(p.getUniqueId(), cat);
 		                    tamed.put(p.getUniqueId(), par);
 	                    	if(Proficiency.getpro(p)>=1) {
+	                    		
+	                    		
 			                    Fox fox = (Fox) p.getWorld().spawnEntity(p.getLocation(), EntityType.FOX);
 			                    fox.setFirstTrustedPlayer(p);
 			                    fox.setSecondTrustedPlayer(p);
 			                    fox.setAdult();
 			                    fox.setBreed(false);
 			                    fox.setAgeLock(true);
-			                    fox.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(fox.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()*(1+tsd.Pets.get(p.getUniqueId())*0.05)*(1+tsd.Taming.get(p.getUniqueId())*0.1));
-			                    fox.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(fox.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue()*(1+tsd.Taming.get(p.getUniqueId())*0.01));
-			                    fox.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(4*(1+tsd.Pets.get(p.getUniqueId())*0.03)*(1+tsd.Taming.get(p.getUniqueId())*0.02));
+			                    fox.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(fox.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()*(1+tsd.Pets.getOrDefault(p.getUniqueId(),0)*0.05)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.1));
+			                    fox.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(fox.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue()*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.01));
+			                    fox.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(4*(1+tsd.Pets.getOrDefault(p.getUniqueId(),0)*0.03)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.02));
 			                    fox.setHealth(fox.getMaxHealth());
 								fox.setMetadata("pet of "+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	
 								fox.setMetadata("untargetable", new FixedMetadataValue(RMain.getInstance(), p.getName()));
@@ -879,9 +884,9 @@ public class Tamskills extends Pak implements Listener, Serializable {
 			                    oce.setAdult();
 			                    oce.setBreed(false);
 			                    oce.setAgeLock(true);
-			                    oce.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(oce.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()*(1+tsd.Pets.get(p.getUniqueId())*0.05)*(1+tsd.Taming.get(p.getUniqueId())*0.1));
-			                    oce.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(oce.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue()*(1+tsd.Taming.get(p.getUniqueId())*0.01));
-			                    oce.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(4*(1+tsd.Pets.get(p.getUniqueId())*0.03)*(1+tsd.Taming.get(p.getUniqueId())*0.02));
+			                    oce.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(oce.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()*(1+tsd.Pets.getOrDefault(p.getUniqueId(),0)*0.05)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.1));
+			                    oce.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(oce.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue()*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.01));
+			                    oce.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(4*(1+tsd.Pets.getOrDefault(p.getUniqueId(),0)*0.03)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.02));
 			                    oce.setHealth(oce.getMaxHealth());
 								oce.setMetadata("pet of "+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	
 								oce.setMetadata("untargetable", new FixedMetadataValue(RMain.getInstance(), p.getName()));
@@ -935,7 +940,7 @@ public class Tamskills extends Pak implements Listener, Serializable {
 							}
 							if(e != p &&e instanceof LivingEntity&& !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
 								LivingEntity le = (LivingEntity)e;
-								atk1(0.5*(1+tsd.Pets.get(p.getUniqueId())*0.035)*(1+tsd.Taming.get(p.getUniqueId())*0.058), p, le,14);
+								atk1(0.5*(1+tsd.Pets.getOrDefault(p.getUniqueId(),0)*0.035)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.058), p, le,14);
 							}
 						}
 						p.getWorld().playSound(b.getLocation(), Sound.ENTITY_WOLF_SHAKE, 1f, 1.5f);
@@ -957,7 +962,7 @@ public class Tamskills extends Pak implements Listener, Serializable {
 							}
 							if(e != p &&e instanceof LivingEntity&& !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
 								LivingEntity le = (LivingEntity)e;
-								atk1(0.5*(1+tsd.Pets.get(p.getUniqueId())*0.035)*(1+tsd.Taming.get(p.getUniqueId())*0.058), p, le,14);
+								atk1(0.5*(1+tsd.Pets.getOrDefault(p.getUniqueId(),0)*0.035)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.058), p, le,14);
 							}
 						}
 						p.getWorld().playSound(b.getLocation(), Sound.ENTITY_WOLF_SHAKE, 1f, 1.5f);
@@ -1004,8 +1009,8 @@ public class Tamskills extends Pak implements Listener, Serializable {
 		                    for(int b =0; b<6; b++) {
 								Bee bees = (Bee) p.getWorld().spawnEntity(i, EntityType.BEE);
 								bees.setAdult();
-								bees.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(3*(1+tsd.BeeHive.get(p.getUniqueId())*0.03)*(1+tsd.Taming.get(p.getUniqueId())*0.023));
-								bees.getAttribute(Attribute.GENERIC_FLYING_SPEED).setBaseValue(bees.getAttribute(Attribute.GENERIC_FLYING_SPEED).getBaseValue()*(1+tsd.Taming.get(p.getUniqueId())*0.01));
+								bees.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(3*(1+tsd.BeeHive.getOrDefault(p.getUniqueId(),0)*0.03)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.023));
+								bees.getAttribute(Attribute.GENERIC_FLYING_SPEED).setBaseValue(bees.getAttribute(Attribute.GENERIC_FLYING_SPEED).getBaseValue()*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.01));
 								bees.setInvulnerable(true);
 								bees.setHealth(bees.getMaxHealth());
 								bees.setMetadata("bees of "+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	
@@ -1098,7 +1103,7 @@ public class Tamskills extends Pak implements Listener, Serializable {
     		    							}
     		    							if(e != p &&e instanceof LivingEntity&& !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
     		    								LivingEntity le = (LivingEntity)e;
-    		    								atk1(0.2*(1+tsd.BeeHive.get(p.getUniqueId())*0.01)*(1+tsd.Taming.get(p.getUniqueId())*0.058), p, le,11);
+    		    								atk1(0.2*(1+tsd.BeeHive.getOrDefault(p.getUniqueId(),0)*0.01)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.058), p, le,11);
     		    							}
     		    						}
     				                }
@@ -1132,7 +1137,7 @@ public class Tamskills extends Pak implements Listener, Serializable {
     		    							}
     		    							if(e != p &&e instanceof LivingEntity&& !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
     		    								LivingEntity le = (LivingEntity)e;
-    		    								atk1(0.2*(1+tsd.BeeHive.get(p.getUniqueId())*0.01)*(1+tsd.Taming.get(p.getUniqueId())*0.058), p, le,11);
+    		    								atk1(0.2*(1+tsd.BeeHive.getOrDefault(p.getUniqueId(),0)*0.01)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.058), p, le,11);
     		    							}
     		    						}
     				                }
@@ -1265,7 +1270,7 @@ public class Tamskills extends Pak implements Listener, Serializable {
 					}
 					if(e !=p &&e instanceof LivingEntity&& !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
 						LivingEntity le = (LivingEntity)e;
-						atk1(0.85*(1+tsd.CreepBomb.get(creeper.get(c).getUniqueId())*0.08)*(1+tsd.Taming.get(p.getUniqueId())*0.058), p, le);
+						atk1(0.85*(1+tsd.CreepBomb.getOrDefault(creeper.get(c).getUniqueId(),0)*0.08)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.058), p, le);
 					}
 				}
                 if(Proficiency.getpro(p)>=2) {
@@ -1291,7 +1296,7 @@ public class Tamskills extends Pak implements Listener, Serializable {
 			    					if(e !=p &&e instanceof LivingEntity&& !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
 			                    		if(!tamed.containsValue(e)) {
 				    						LivingEntity le = (LivingEntity)e;
-				    						atk1(0.08*(1+tsd.CreepBomb.get(creeper.get(c).getUniqueId())*0.07)*(1+tsd.Taming.get(p.getUniqueId())*0.058), p, le);
+				    						atk1(0.08*(1+tsd.CreepBomb.getOrDefault(creeper.get(c).getUniqueId(),0)*0.07)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.058), p, le);
 				    						le.teleport(c);
 				    						Holding.holding(p, le, 10l);
 			                    		}
@@ -1425,7 +1430,7 @@ public class Tamskills extends Pak implements Listener, Serializable {
 				if(e != p &&e instanceof LivingEntity&& !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
             		if(!tamed.containsValue(e)) {
     					LivingEntity le = (LivingEntity)e;
-    					atk1(0.6*(1+tsd.PandaSweep.get(p.getUniqueId())*0.03)*(1+tsd.Taming.get(p.getUniqueId())*0.058), p, le,14);
+    					atk1(0.6*(1+tsd.PandaSweep.getOrDefault(p.getUniqueId(),0)*0.03)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.058), p, le,14);
     					le.teleport(b);
             		}
 				}
@@ -1499,9 +1504,9 @@ public class Tamskills extends Pak implements Listener, Serializable {
 			                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 2.0f);
 			                    Panda pd = (Panda) p.getWorld().spawnEntity(p.getLocation(), EntityType.PANDA);
 								pd.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
-								pd.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(pd.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()*(10+tsd.PandaSweep.get(p.getUniqueId())*10)*(1+tsd.Taming.get(p.getUniqueId())));
-								pd.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(pd.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue()*(1+tsd.Taming.get(p.getUniqueId())*0.01));
-								pd.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(8*(1+tsd.PandaSweep.get(p.getUniqueId())*0.04)*(1+tsd.Taming.get(p.getUniqueId())*0.02));
+								pd.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(pd.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()*(10+tsd.PandaSweep.getOrDefault(p.getUniqueId(),0)*10)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)));
+								pd.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(pd.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue()*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.01));
+								pd.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(8*(1+tsd.PandaSweep.getOrDefault(p.getUniqueId(),0)*0.04)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.02));
 			                    pd.setAdult();
 			                    pd.setBreed(false);
 			                    pd.setCustomName(p.getName());
@@ -1515,7 +1520,7 @@ public class Tamskills extends Pak implements Listener, Serializable {
 			                    pd.setMainGene(Gene.PLAYFUL);
 			                    pd.setHiddenGene(Gene.BROWN);
 			                    pd.setRolling(true);
-			                    pd.setOnBack(true);
+			                    pd.setOnBack(false);
 		
 			                    int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
 			             			@Override
@@ -1540,7 +1545,7 @@ public class Tamskills extends Pak implements Listener, Serializable {
 					                    	}
 					                    }
 						            }
-		                		}, 40,40); 
+		                		}, 0,200); 
 			                    pandat.put(p.getUniqueId(), task);
 							});
 					bd.execute();
@@ -1598,7 +1603,7 @@ public class Tamskills extends Pak implements Listener, Serializable {
 	        				if(e != p &&e instanceof LivingEntity&& !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
 	                    		if(!tamed.containsValue(e)) {
 		        					LivingEntity le = (LivingEntity)e;
-		        					atk1(0.6*(1+tsd.PandaSweep.get(p.getUniqueId())*0.03)*(1+tsd.Taming.get(p.getUniqueId())*0.058), p, le,14);
+		        					atk1(0.6*(1+tsd.PandaSweep.getOrDefault(p.getUniqueId(),0)*0.03)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.058), p, le,14);
 		    	        			le.getWorld().spawnParticle(Particle.ANGRY_VILLAGER, le.getLocation(), 2,1,1,1,0.5);
 		        					Holding.holding(p, le, 40l);
 	                    		}
@@ -1782,7 +1787,7 @@ public class Tamskills extends Pak implements Listener, Serializable {
 			            				if(e != p &&e instanceof LivingEntity&& !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
 			                        		if(!tamed.containsValue(e)) {
 			                					LivingEntity le = (LivingEntity)e;
-			                					atk1(10*(1+tsd.Taming.get(p.getUniqueId())*0.058), p, le,14);
+			                					atk1(10*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.058), p, le,14);
 			                					le.teleport(b);
 			                        		}
 			            				}
@@ -1833,14 +1838,15 @@ public class Tamskills extends Pak implements Listener, Serializable {
 		i.setDirection(i.clone().getDirection().normalize().multiply(-1));
         p.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, 0.6f, 2.0f);
 		EnderDragon ig = (EnderDragon) p.getWorld().spawnEntity(i, EntityType.ENDER_DRAGON);
-		for(Entity e : ig.getNearbyEntities(20, 20, 20)) {
-			e.setVelocity(e.getVelocity().clone().zero());
+		for (Entity e : ig.getNearbyEntities(20, 20, 20)) {
+		    e.setVelocity(new Vector(0, 0, 0));
 		}
 		ig.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
-		ig.getAttribute(Attribute.GENERIC_ATTACK_KNOCKBACK).setBaseValue(-100);
-		ig.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(ig.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()*(1+p.getLevel()*0.25)*(1+tsd.Taming.get(p.getUniqueId())));
+		ig.getAttribute(Attribute.GENERIC_ATTACK_KNOCKBACK).setBaseValue(0);
+		ig.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(ig.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()*(1+p.getLevel()*0.25)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)));
 		ig.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0);
 
+		ig.setCollidable(false);
         ig.setHealth(ig.getMaxHealth());
         ig.setSilent(true);
 		ig.setMetadata("rob of "+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	
@@ -1857,13 +1863,12 @@ public class Tamskills extends Pak implements Listener, Serializable {
             par.setSilent(true);
         });
 		
-        p.swingMainHand();
-        Holding.invur(p, 150l);
-        Holding.fly(p, 150l);
+        Holding.invur(p, 160l);
+        Holding.fly(p, 160l);
         
         tamed.put(p.getUniqueId(), ig);
         for(Mob m : tamed.get(p.getUniqueId())) {
-            Holding.invur(m, 150l);
+            Holding.invur(m, 160l);
         }
         if(attention.containsKey(p.getUniqueId())) {
         	ig.setTarget(attention.get(p.getUniqueId()));
@@ -1871,7 +1876,7 @@ public class Tamskills extends Pak implements Listener, Serializable {
         int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
  			@Override
         	public void run() 
-            {	
+            {
  				p.setLeashHolder(ig);
 				final Location tl = p.getEyeLocation().clone().add(p.getEyeLocation().clone().getDirection().normalize().multiply(3));
     			tl.getWorld().spawnParticle(Particle.DRAGON_BREATH, tl, 100,3,3,3,0.5);
@@ -1890,15 +1895,17 @@ public class Tamskills extends Pak implements Listener, Serializable {
     					if(Party.hasParty(p) && Party.hasParty(p1))	{
     					if(Party.getParty(p).equals(Party.getParty(p1)))
     						{
+    				        	Holding.invur(p1, 160l);
     							continue;
     						}
     					}
     				}
     				if(e != p &&e instanceof LivingEntity&& !e.hasMetadata("fake")&& !e.hasMetadata("portal")) {
     					LivingEntity le = (LivingEntity)e;
-    					atk1(0.1*(1+tsd.Taming.get(p.getUniqueId())*0.058), p, le,14);
+    					atk1(0.1*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.058), p, le,14);
     					le.teleport(tl);
     					Holding.holding(p, le, 10l);
+    					le.setVelocity(new Vector(0, 0, 0));
     				}
     			}
             }
@@ -2620,6 +2627,10 @@ public class Tamskills extends Pak implements Listener, Serializable {
 		if(ClassData.pc.get(p.getUniqueId()) == 9 && !p.hasCooldown(Material.PANDA_SPAWN_EGG) && p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() &&  p.isSneaking() && tamed.containsKey(p.getUniqueId())){
 			ev.setCancelled(true);
 			p.setCooldown(Material.PANDA_SPAWN_EGG, 3);
+			
+			if(ev.getNewSlot() == 3 || ev.getNewSlot() == 4) {
+				return;
+			}
 			
 			if(ev.getPreviousSlot()==0) {
 				if(ev.getNewSlot() < 8) {

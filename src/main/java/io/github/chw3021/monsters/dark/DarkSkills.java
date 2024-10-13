@@ -106,6 +106,8 @@ public class DarkSkills extends Summoned{
             
             if(p.hasMetadata("boss")) {
                 
+            	p.swingMainHand();
+            	
                 line.forEach(l -> {
 
     				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {

@@ -1152,6 +1152,7 @@ public class RedSkills extends Summoned{
              			p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 1,0,false,false));
 	                	p.setVelocity(v.clone().multiply(1.2));
          				p.getWorld().spawnParticle(Particle.FLAME, pl, 30, 1,1,1);
+         				p.swingMainHand();
 						for(Entity e : p.getWorld().getNearbyEntities(p.getLocation(),1.5, 1.5, 1.5)) {
 							if(e instanceof LivingEntity&&  !(e.hasMetadata("portal")) && e!=p) {
 								LivingEntity le = (LivingEntity)e;

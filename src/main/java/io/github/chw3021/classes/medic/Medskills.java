@@ -229,6 +229,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 						else {
 							p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.AQUA + "Remedying Rocket Loaded").create());
 						}
+						p.updateInventory();
 					}
 					else if(cbm.hasChargedProjectiles()) {
 						cbm.setChargedProjectiles(null);
@@ -2159,16 +2160,14 @@ public class Medskills extends Pak implements Serializable, Listener {
 					Arrow ar = (Arrow) ev.getEntity();
 					if(e.getHealth() <= e.getMaxHealth()/2)
 					{
-						p.setCooldown(Material.YELLOW_TERRACOTTA, 1);
-						e.damage(bbArrow(ar), ar);
+						e.damage(bbArrow(ar), p);
 					}
 				}
 				if(ev.getHitEntity() instanceof Enderman || ev.getHitEntity() instanceof Breeze) {
 					LivingEntity e =(LivingEntity) ev.getHitEntity();
 					Arrow ar = (Arrow) ev.getEntity();
 					{
-						p.setCooldown(Material.YELLOW_TERRACOTTA, 1);
-						e.damage(bbArrow(ar), ar);
+						e.damage(bbArrow(ar), p);
 					}
 				}
 			}
@@ -2208,7 +2207,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 					{
 						if(d.getDamage()>0) {
 							dset2(d, p, 1d, le, 14);
-							d.setDamage(d.getDamage()+ssd.Medicine.get(p.getUniqueId())*0.65);
+							d.setDamage(d.getDamage()+ssd.Medicine.getOrDefault(p.getUniqueId(),0)*0.65);
 							if(wing.containsKey(p.getUniqueId())) {
 								dset1(d, p, 1.0, 0.007);
 							}
@@ -2229,7 +2228,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 					{
 						if(d.getDamage()>0) {
 							dset2(d, p, 1d, le, 14);
-							d.setDamage(d.getDamage()+ssd.Medicine.get(p.getUniqueId())*0.65);
+							d.setDamage(d.getDamage()+ssd.Medicine.getOrDefault(p.getUniqueId(),0)*0.65);
 							if(wing.containsKey(p.getUniqueId())) {
 								dset1(d, p, 1.0, 0.007);
 							}

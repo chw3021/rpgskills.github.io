@@ -248,10 +248,9 @@ public class Forskills extends Pak implements Serializable {
 		{
 			Projectile sn = ev.getEntity();
 			Player p = (Player) sn.getShooter();
-			Location l = sn.getLocation().clone();
+			Location l = ev.getHitBlock() != null ? ev.getHitBlock().getLocation() : ev.getHitEntity().getLocation();
 
-
-			for (Entity a : l.getWorld().getNearbyEntities(l, 0.8, 0.8, 0.8))
+			for (Entity a : l.getWorld().getNearbyEntities(l, 0.5, 0.5, 0.5))
 			{
 				if ((!(a == p))&& a instanceof LivingEntity&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal")))
 				{
@@ -572,13 +571,14 @@ public class Forskills extends Pak implements Serializable {
 									{
 										for(LivingEntity le: les) {
 											p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
-											LightningStrike lightning = w.strikeLightningEffect(le.getLocation());
-											lightning.setSilent(true);
-											lightning.setCausingPlayer(p);
-											lightning.setFlashes(0);
-											Bukkit.getScheduler().runTaskLater(RMain.getInstance(), () -> {
-											    lightning.remove();
-											}, 1L);
+											w.spawn(le.getLocation(), LightningStrike.class, lightning ->{
+												lightning.setSilent(true);
+												lightning.setCausingPlayer(p);
+												lightning.setFlashes(0);
+												Bukkit.getScheduler().runTaskLater(RMain.getInstance(), () -> {
+												    lightning.remove();
+												}, 1L);
+											});
 											atk1(0.9*(1+fsd.LightningCannon.get(p.getUniqueId())*0.06), p, le,9);
 											le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,60,1,false,false));
 

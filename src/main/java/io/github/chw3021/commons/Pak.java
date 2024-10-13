@@ -1915,12 +1915,12 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		if(el == 14 || elm == 14) {//earth
 			mul = mul +(earthd.getOrDefault(p.getUniqueId(),0d))  - earthr.getOrDefault(le.getUniqueId(), 0d);
 			if(elm ==14) 
-			le.getWorld().spawnParticle(Particle.SMALL_GUST, le.getEyeLocation(), 2, 0.5, 0.5, 0.5);
+			le.getWorld().spawnParticle(Particle.COMPOSTER, le.getEyeLocation(), 2, 0.5, 0.5, 0.5);
 		}
 		if(el == 5 || elm == 5) {//wind
 			mul = mul +(windyd.getOrDefault(p.getUniqueId(),0d))  - windyr.getOrDefault(le.getUniqueId(), 0d);
 			if(elm ==5) 
-			le.getWorld().spawnParticle(Particle.COMPOSTER, le.getEyeLocation(), 2, 0.5, 0.5, 0.5);
+			le.getWorld().spawnParticle(Particle.SMALL_GUST, le.getEyeLocation(), 2, 0.5, 0.5, 0.5);
 		}
 		if(el == 6 || elm == 6) {//frost
 			mul = mul +(frostd.getOrDefault(p.getUniqueId(),0d))  - frostr.getOrDefault(le.getUniqueId(), 0d);
@@ -2074,7 +2074,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		d.setDamage(fd);
     }
 	
-	final private void Enderdragonhit(EnderDragon le, Player p, Double d) {
+	protected final void Enderdragonhit(EnderDragon le, Player p, Double d) {
 		final Chicken ch = le.getWorld().spawn(le.getLocation().add(0, 1.25, 0), Chicken.class);
 		ch.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(9999999);
 		ch.setHealth(9999999);

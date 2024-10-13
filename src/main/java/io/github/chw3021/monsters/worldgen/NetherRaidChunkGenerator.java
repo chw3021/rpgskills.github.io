@@ -27,13 +27,13 @@ public class NetherRaidChunkGenerator extends ChunkGenerator {
 	    for (int x = 0; x < 16; x++) {
 	        for (int z = 0; z < 16; z++) {
 	            double noise = generator.noise(worldX + x, worldZ + z, 0.5, 0.5, true);
-	            int height = 40 + (int)(noise * 20); // 노이즈 기반의 동적 높이
+	            int height =95 + (int)(noise * 5); // 노이즈 기반의 동적 높이
 
 	            for (int y = 40; y < height; y++) {
 	                chunkData.setBlock(x, y, z, material);
 	            }
 	            for (int y = chunkData.getMinHeight() + 2; y < 40; y++) {
-	                chunkData.setBlock(x, y, z, Material.NETHERRACK);
+	                chunkData.setBlock(x, y, z, Material.WATER);
 	            }
 	        }
 	    }

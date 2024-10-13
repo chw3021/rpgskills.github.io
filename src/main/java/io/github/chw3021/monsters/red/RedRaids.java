@@ -588,17 +588,22 @@ public class RedRaids extends Summoned {
 		mainf.setItemMeta(offm);
 		mainf.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
 		
-		if(ht instanceof Player) {
-			Player p = (Player) ht;
-			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
-		}
-		else if(getherotype(rn) instanceof HashSet){
-			@SuppressWarnings("unchecked")
-			HashSet<Player> par = (HashSet<Player>) ht;
-    		par.forEach(p -> {
-    			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
-    		});
-		}
+		Bukkit.getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
+		    @Override
+		    public void run() {
+				if(ht instanceof Player) {
+					Player p = (Player) ht;
+					p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+				}
+				else if(getherotype(rn) instanceof HashSet){
+					@SuppressWarnings("unchecked")
+					HashSet<Player> par = (HashSet<Player>) ht;
+		    		par.forEach(p -> {
+		    			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+		    		});
+				}
+		    }
+		}, 2L); 
 	/*
 		final Object ht = getherotype(rn);
 

@@ -30,22 +30,24 @@ import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Table;
 
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.monsters.raids.OverworldRaids;
-import io.github.chw3021.monsters.raids.Summoned;
 import io.github.chw3021.rmain.RMain;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
 
 
-public class OceanSkills extends Summoned{
+public class OceanSkills extends OverworldRaids{
 
 	/**
 	 * 
@@ -145,6 +147,7 @@ public class OceanSkills extends Summoned{
                 	public void run() 
 	                {	
         				ShulkerBullet fr = p.launchProjectile( ShulkerBullet.class);
+        				fr.setVelocity(fr.getVelocity().multiply(2));
         				fr.setShooter(p);
         				fr.setTarget(tl);
 		            }
@@ -164,6 +167,7 @@ public class OceanSkills extends Summoned{
             	public void run() 
                 {	
     				ShulkerBullet fr = p.launchProjectile( ShulkerBullet.class);
+    				fr.setVelocity(fr.getVelocity().multiply(2));
     				fr.setShooter(p);
     				fr.setTarget(tl);
 	            }
@@ -181,7 +185,7 @@ public class OceanSkills extends Summoned{
 		{
 			final ElderGuardian p = (ElderGuardian)d.getEntity();
 			if(p.hasMetadata("raid")) {
-				if(!OverworldRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| p.hasMetadata("failed")) {
+				if(!OverworldRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| p.hasMetadata("failed") || count.containsKey(p.getUniqueId())) {
 					return;
 				}
 
@@ -220,7 +224,6 @@ public class OceanSkills extends Summoned{
     			p.getWorld().playSound(tl, Sound.BLOCK_CONDUIT_ACTIVATE, 0.6f, 0.3f);
     			p.getWorld().playSound(tl, Sound.BLOCK_CONDUIT_AMBIENT_SHORT, 0.2f, 2f);
     			Holding.holding(null, p, 40l);
-    			Holding.invur(p, 5l);
     			
                 Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
                     @Override
@@ -249,7 +252,6 @@ public class OceanSkills extends Summoned{
 			p.getWorld().playSound(tl, Sound.BLOCK_CONDUIT_ACTIVATE, 0.6f, 2f);
 			p.getWorld().playSound(tl, Sound.BLOCK_CONDUIT_AMBIENT_SHORT, 0.2f, 2f);
 			Holding.holding(null, p, 40l);
-			Holding.invur(p, 5l);
 			
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
                 @Override
@@ -279,7 +281,7 @@ public class OceanSkills extends Summoned{
 		{
 			final ElderGuardian p = (ElderGuardian)d.getEntity();
 			if(p.hasMetadata("raid")) {
-				if(!OverworldRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| p.hasMetadata("failed")) {
+				if(!OverworldRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| p.hasMetadata("failed") || count.containsKey(p.getUniqueId())) {
 					return;
 				}
 
@@ -332,7 +334,7 @@ public class OceanSkills extends Summoned{
 		{
 			ElderGuardian p = (ElderGuardian)d.getEntity();
 			final Location tl = p.getLocation().clone();
-			if(p.hasMetadata("failed")) {
+			if(p.hasMetadata("failed") || count.containsKey(p.getUniqueId())) {
 				return;
 			}
 				if(rb4cooldown.containsKey(p.getUniqueId()))
@@ -352,7 +354,6 @@ public class OceanSkills extends Summoned{
 		    			p.getWorld().playSound(tl, Sound.ITEM_CROSSBOW_LOADING_END, 0.9f, 0.5f);
 		    			p.getWorld().playSound(tl, Sound.ITEM_TRIDENT_THUNDER, 0.2f, 2f);
 		    			Holding.holding(null, p, 30l);
-		    			Holding.invur(p, 30l);
 		    			String rn = gethero(p);
 
                     	Tridents(tl.clone(),p).forEach(v ->{
@@ -389,7 +390,6 @@ public class OceanSkills extends Summoned{
 	    			p.getWorld().playSound(tl, Sound.ITEM_CROSSBOW_LOADING_END, 0.9f, 0.5f);
 	    			p.getWorld().playSound(tl, Sound.ITEM_TRIDENT_THUNDER, 0.2f, 2f);
 	    			Holding.holding(null, p, 30l);
-	    			Holding.invur(p, 30l);
 	    			String rn = gethero(p);
 
                 	Tridents(tl.clone(),p).forEach(v ->{
@@ -458,15 +458,16 @@ public class OceanSkills extends Summoned{
 		}
 		
 		ls.forEach(l ->{
-			l.getWorld().spawnParticle(Particle.BUBBLE, l, 15,0.5,0.5,0.5,0.1);
+			l.getWorld().spawnParticle(Particle.GLOW_SQUID_INK, l, 25,2,2,2,0.1);
 			l.getWorld().playSound(l, Sound.BLOCK_BUBBLE_COLUMN_WHIRLPOOL_INSIDE, 0.05f, 2f);
 	        int i1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	            @Override
 	            public void run() {
-	    			l.getWorld().spawnParticle(Particle.NAUTILUS, l, 15,0.5,0.5,0.5,0.1);
+	    			l.getWorld().spawnParticle(Particle.SMALL_GUST, l, 15,0.5,0.5,0.5,0.1);
 	    			l.getWorld().spawnParticle(Particle.DRIPPING_OBSIDIAN_TEAR, l, 15,0.5,0.5,0.5,0.1);
+	    			l.getWorld().spawnParticle(Particle.BUBBLE, l, 15,0.5,0.5,0.5,0.1);
 	    			l.getWorld().playSound(l, Sound.ITEM_TRIDENT_THROW, 0.05f, 0f);
-	    			l.getWorld().getNearbyEntities(l, 1, 1, 1).forEach(e -> {
+	    			l.getWorld().getNearbyEntities(l, 1.5, 1.5, 1.5).forEach(e -> {
 						if(p!=e && e instanceof Player) {
 							LivingEntity le = (LivingEntity)e;
 							le.damage(10,p);	
@@ -489,7 +490,7 @@ public class OceanSkills extends Summoned{
 		if(d.getEntity() instanceof ElderGuardian&& !d.isCancelled() && d.getEntity().hasMetadata("oceanboss") && d.getEntity().hasMetadata("ruined")) 
 		{
 			ElderGuardian p = (ElderGuardian)d.getEntity();
-			if(p.hasMetadata("failed")) {
+			if(p.hasMetadata("failed") || count.containsKey(p.getUniqueId())) {
 				return;
 			}
 			if((p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
@@ -509,9 +510,6 @@ public class OceanSkills extends Summoned{
 		            {
 		                rb2cooldown.remove(p.getUniqueId()); // removing player from HashMap
 		        		String rn = p.getMetadata("raid").get(0).asString();
-		                d.setCancelled(true);
-		                Holding.invur(p, 20l);
-		                Holding.untouchable(p, 20l);
 		                for(Entity e : OverworldRaids.getheroes(p)) {
 		                	if(e instanceof Player) {
 		                		Player pe = (Player) e;
@@ -541,9 +539,6 @@ public class OceanSkills extends Summoned{
 		        else 
 		        {
 	        		String rn = p.getMetadata("raid").get(0).asString();
-	                d.setCancelled(true);
-	                Holding.invur(p, 20l);
-	                Holding.untouchable(p, 20l);
 	                for(Entity e : OverworldRaids.getheroes(p)) {
 	                	if(e instanceof Player) {
 	                		Player pe = (Player) e;
@@ -575,67 +570,69 @@ public class OceanSkills extends Summoned{
 	public static HashMap<UUID, UUID> ordeal = new HashMap<UUID, UUID>();//가디언 uuid 저장
 
 	public static HashMap<UUID, Integer> count = new HashMap<UUID, Integer>();//가디언 uuid 저장
-	public HashMap<UUID, Integer> guardiant = new HashMap<UUID, Integer>();//가디언 텔포 태스크 저장
+	public ListMultimap<UUID, UUID> guardians = ArrayListMultimap.create();//가디언 텔포 태스크 저장
 
 
 	final private List<Location> markCreate(ElderGuardian p) {
-		List<Location> ls = new ArrayList<>();
 	    List<UUID> summonedGuardians = new ArrayList<>();
 		String rn = p.getMetadata("raid").get(0).asString();
 
+        if(ordt.containsKey(rn)) {
+        	ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
+        	ordt.removeAll(rn);
+        }
+		
 		count.put(p.getUniqueId(), 6);
 		
 		Location pfl = p.getLocation();
 		
-		ls.add(pfl.clone().add(0, 1.5, 0));
-		ls.add(pfl.clone().add(1.5, 0, 0));
-		ls.add(pfl.clone().add(0, 0, 1.5));
-		ls.add(pfl.clone().add(0, -1.5, 0));
-		ls.add(pfl.clone().add(-1.5, 0, 0));
-		ls.add(pfl.clone().add(0, 0, -1.5));
+		List<Location> ls = new ArrayList<>();
+		
+		ls.add(pfl.clone().add(0, 2.5, 0));
+		ls.add(pfl.clone().add(2.5, 0, 0));
+		ls.add(pfl.clone().add(0, 0, 2.5));
+		ls.add(pfl.clone().add(0, -2.5, 0));
+		ls.add(pfl.clone().add(-2.5, 0, 0));
+		ls.add(pfl.clone().add(0, 0, -2.5));
+		
+
+		if(getheroes(p).size() >1) {
+			count.put(p.getUniqueId(), 12);
+
+			ls.add(pfl.clone().add(2.5, 0, 2.5));
+			ls.add(pfl.clone().add(-2.5, 0, 2.5));
+			ls.add(pfl.clone().add(-2.5, 0, -2.5));
+			ls.add(pfl.clone().add(2.5, 0, -2.5));
+			ls.add(pfl.clone().add(2.5, 2.5, 2.5));
+			ls.add(pfl.clone().add(-2.5, -2.5, -2.5));
+			
+		}
+		
 		
 		ls.forEach(l ->{
 			l.getWorld().spawnParticle(Particle.BUBBLE, l, 15,0.5,0.5,0.5,0.1);
 			l.getWorld().playSound(l, Sound.BLOCK_BUBBLE_COLUMN_WHIRLPOOL_INSIDE, 0.05f, 2f);
 
     		l.getWorld().spawn(l, Guardian.class, newmob ->{
+    			newmob.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 999999,999999,false,false));
+        		newmob.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
         		newmob.setCustomNameVisible(false);
         		newmob.setGlowing(true);
-        		newmob.setInvulnerable(true);
         		newmob.setRemoveWhenFarAway(false);
         		newmob.setGravity(false);
+        		newmob.setCollidable(false);
         		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), rn));
-        		newmob.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
         		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
         		newmob.setMetadata("mark", new FixedMetadataValue(RMain.getInstance(), rn));
         		newmob.setMetadata("mark"+rn, new FixedMetadataValue(RMain.getInstance(), rn));
         		newmob.setAI(false);
                 summonedGuardians.add(newmob.getUniqueId());
             	ordeal.put(newmob.getUniqueId(), p.getUniqueId());
+            	guardians.put(p.getUniqueId(), newmob.getUniqueId());
     		});
     		
 		});
 
-    	Location el = p.getLocation();
-    	
-    	AtomicInteger j = new AtomicInteger();
-    	for (int i = 0; i < summonedGuardians.size(); i++) {
-            Entity guardian = Bukkit.getEntity(summonedGuardians.get(j.get()));
-            int i1 =Bukkit.getServer().getScheduler().runTaskTimer(RMain.getInstance(), new Runnable() {
-                @Override
-                public void run() {
-                    if(guardian == null) {
-                    	return;
-                    }
-            		Location pfl = p.getLocation().clone();
-                    Location offset = ls.get(j.getAndIncrement()).clone().subtract(pfl);
-                    Location newLoc = el.clone().add(offset);  
-                    guardian.teleport(newLoc);  
-                }
-            }, 0,1).getTaskId();
-    		ordt.put(rn, i1); 
-    		guardiant.put(guardian.getUniqueId(), i1); 
-        }
     	
 
 		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -644,16 +641,25 @@ public class OceanSkills extends Summoned{
 				if(ript.containsKey(rn)) {
 					ript.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
 				}
+        		count.remove(p.getUniqueId());
+        		guardians.get(p.getUniqueId()).forEach(ge -> {
+        			if(Holding.ale(ge) != null) {
+        				Holding.ale(ge).remove();
+        			}
+        		});
+        		guardians.removeAll(p.getUniqueId());
 				Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("mark"+rn)).forEach(e -> {
 					ordeal.remove(e.getUniqueId());
-		    		Bukkit.getScheduler().cancelTask(guardiant.get(e.getUniqueId()));
 					e.remove();
 				});
 
         		if(ordt.containsKey(rn)) {
         			ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
         		}
-                for(Entity e1 : OverworldRaids.getheroes(p)) {
+        		
+        		Holding.ale(p).teleport(getraidloc(Holding.ale(p)));
+        		
+                for(Entity e1 : getheroes(p)) {
                 	if(e1 instanceof Player) {
                 		Player pe = (Player) e1;
                 		pe.setHealth(0);
@@ -667,7 +673,7 @@ public class OceanSkills extends Summoned{
                 }
                 return;
             }
-        }, 300);
+        }, 560);
 		ordt.put(rn, task);
     	
 		return ls;
@@ -681,6 +687,7 @@ public class OceanSkills extends Summoned{
 		if(d.getDamager() instanceof ElderGuardian) {
 			return;
 		}
+		d.setCancelled(true);
 		if(d.getDamager() instanceof Player) {
 			Player dp = (Player) d.getDamager();
 			if(dp.hasCooldown(Material.YELLOW_TERRACOTTA)) {
@@ -692,27 +699,28 @@ public class OceanSkills extends Summoned{
 		String rn = gethero(p);
 
 		if(g.hasMetadata("mark") && g.isValid()) {
-    		ordeal.remove(ordeal.get(g.getUniqueId()));
-    		Bukkit.getScheduler().cancelTask(guardiant.get(g.getUniqueId()));
-    		guardiant.remove(g.getUniqueId());
+    		ordeal.remove(g.getUniqueId());
+    		
     		g.remove();
 			p.getWorld().playSound(g.getLocation(), Sound.ENTITY_GUARDIAN_HURT, 1, 0);
 			p.getWorld().spawnParticle(Particle.BUBBLE, g.getLocation(), 60,1,1,1);
 			count.computeIfPresent(p.getUniqueId(), (k,v) -> v-1);
 
-			if(count.getOrDefault(p.getUniqueId(), 0)>1) {
+			if(count.getOrDefault(p.getUniqueId(), 0)>0) {
                 for(Player pe : OverworldRaids.getheroes(p)) {
             		pe.sendMessage(ChatColor.BLUE+ "["+(6-count.getOrDefault(p.getUniqueId(), 0))+ "/6]");
                 }
 			}
 			else {
-    			p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 1, 0);
+    			p.getWorld().playSound(p.getLocation(), Sound.BLOCK_CONDUIT_ACTIVATE, 1, 0);
     			p.getWorld().spawnParticle(Particle.BUBBLE, p.getLocation(), 400,1,1,1);
     			p.getWorld().spawnParticle(Particle.DRAGON_BREATH, p.getLocation(), 400,1,1,1);
 
+        		guardians.removeAll(p.getUniqueId());
             	p.playHurtAnimation(0);
 				Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("mark"+rn)).forEach(e -> e.remove());
         		ordeal.remove(p.getUniqueId());
+        		count.remove(p.getUniqueId());
 
         		if(ordt.containsKey(rn)) {
         			ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
@@ -726,7 +734,7 @@ public class OceanSkills extends Summoned{
         		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
             	Holding.untouchable.remove(p.getUniqueId());
             	Holding.holding(null, Holding.ale(p), 300l);
-                for(Entity e1 : OverworldRaids.getheroes(p)) {
+                for(Entity e1 : getheroes(p)) {
                 	if(e1 instanceof Player) {
                 		Player pe = (Player) e1;
 	                	Holding.superholding(pe, Holding.ale(p), 300l);
@@ -768,7 +776,10 @@ public class OceanSkills extends Summoned{
 		for(int i = 1; i<eldl.distance(pl)+3;i++ ) {
 			ls.add(eldl.clone().add(v.clone().multiply(i)));
 		}
-
+		
+		
+		p.setTarget(null);
+		p.setLaser(false);
         AtomicInteger j = new AtomicInteger();
 		ls.forEach(l -> {
 			l.getWorld().spawnParticle(Particle.BUBBLE, l, 15,0.5,0.5,0.5,0.1);
@@ -776,6 +787,33 @@ public class OceanSkills extends Summoned{
             int i1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
                 @Override
                 public void run() {
+            		List<Location> gls = new ArrayList<>();
+            		
+            		gls.add(l.clone().add(0, 2.5, 0));
+            		gls.add(l.clone().add(2.5, 0, 0));
+            		gls.add(l.clone().add(0, 0, 2.5));
+            		gls.add(l.clone().add(0, -2.5, 0));
+            		gls.add(l.clone().add(-2.5, 0, 0));
+            		gls.add(l.clone().add(0, 0, -2.5));
+            		if(OverworldRaids.getheroes(p).size() >1) {
+            			gls.add(l.clone().add(2.5, 0, 2.5));
+            			gls.add(l.clone().add(-2.5, 0, 2.5));
+            			gls.add(l.clone().add(-2.5, 0, -2.5));
+            			gls.add(l.clone().add(2.5, 0, -2.5));
+            			gls.add(l.clone().add(2.5, 2.5, 2.5));
+            			gls.add(l.clone().add(-2.5, -2.5, -2.5));
+            			
+            		}
+            		
+            		
+            		for(int i = 0; i <gls.size(); i++) {
+            			Guardian g = (Guardian) Bukkit.getEntity(guardians.get(p.getUniqueId()).get(i));
+            			if(g == null) {
+            				continue;
+            			}
+            			g.teleport(gls.get(i));
+            		}
+            		
                 	p.teleport(l);
 	    			l.getWorld().getNearbyEntities(l, 1, 1, 1).forEach(e -> {
 		    			l.getWorld().playSound(l, Sound.ITEM_TRIDENT_RIPTIDE_1, 0.1f, 0f);
@@ -785,7 +823,7 @@ public class OceanSkills extends Summoned{
 						}
 	    			});
                 }
-            }, j.incrementAndGet()/15+15);
+            }, j.incrementAndGet()/2+25);
             ript.put(rn, i1); 
 		});
 	}
@@ -802,7 +840,7 @@ public class OceanSkills extends Summoned{
 			if(p.hasMetadata("failed")) {
 				return;
 			}
-			if(!(p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2)|| !ordealable.containsKey(p.getUniqueId())) {
+			if(!(p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2)|| !ordealable.containsKey(p.getUniqueId())|| count.containsKey(p.getUniqueId())) {
 				return;
 			}
 				if(rb3cooldown.containsKey(p.getUniqueId()))
@@ -820,11 +858,11 @@ public class OceanSkills extends Summoned{
 		                d.setCancelled(true);
 		                Holding.invur(p, 40l);
 		                Holding.holding(null, p, 40l);
-		                Holding.untouchable(p, 40l);
+		                Holding.untouchable(p, 39l);
 		                for(Entity e : OverworldRaids.getheroes(p)) {
-		                	Holding.invur(p, 20l);
 		                	if(e instanceof Player) {
 		                		Player pe = (Player) e;
+			                	Holding.invur(pe, 40l);
 		    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
 			                		pe.sendMessage(ChatColor.BOLD+"엘더가디언: "+tar.getName()+"! 네놈부터 처리해주겠다!");
 		    					}
@@ -840,10 +878,11 @@ public class OceanSkills extends Summoned{
 			                @Override
 			                public void run() {
 				                Holding.invur(p, 40l);
+				                Holding.holding(null, p, 60l);
 				                Holding.untouchable(p, 40l);
 			                	Riptide(p, tar);
 			                }
-			            }, 40, 25);
+			            }, 40, 40);
 						ordt.put(rn, i1);  
 						ript.put(rn, i1);  
 		            }
@@ -855,11 +894,11 @@ public class OceanSkills extends Summoned{
 	                d.setCancelled(true);
 	                Holding.invur(p, 40l);
 	                Holding.holding(null, p, 40l);
-	                Holding.untouchable(p, 40l);
+	                Holding.untouchable(p, 39l);
 	                for(Entity e : OverworldRaids.getheroes(p)) {
-	                	Holding.invur(p, 20l);
 	                	if(e instanceof Player) {
 	                		Player pe = (Player) e;
+		                	Holding.invur(pe, 40l);
 	    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
 		                		pe.sendMessage(ChatColor.BOLD+"엘더가디언: "+tar.getName()+"! 네놈부터 처리해주겠다!");
 	    					}
@@ -875,10 +914,11 @@ public class OceanSkills extends Summoned{
 		                @Override
 		                public void run() {
 			                Holding.invur(p, 40l);
+			                Holding.holding(null, p, 40l);
 			                Holding.untouchable(p, 40l);
 		                	Riptide(p, tar);
 		                }
-		            }, 40, 25);
+		            }, 40, 40);
 					ordt.put(rn, i1);  
 					ript.put(rn, i1);  
 		        }

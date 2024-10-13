@@ -243,15 +243,17 @@ public class Elements implements Listener {
 	}
 	
 
-	public static ItemStack getel(int i, Player p) {
+	public static ItemStack getel(int i, Player p) {//elNum+100
 		ItemStack ii = new ItemStack(Material.GRASS_BLOCK);
 		ItemMeta imeta = ii.getItemMeta();
 		imeta.setCustomModelData(100*(i>0?1:-1) + i);
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 			imeta.setLore(Arrays.asList("64개를 조합시 무기를 강화할수 있는 핵을 획득합니다"));
+			List<String> lore = imeta.getLore();
+			if(i >=5) {
+				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[지상 원소핵 강화 순서, 획득 가능한 군계]",ChatColor.AQUA + "네더라이트-대지(평원)-바람(산)-서리(얼음)-바다",ChatColor.AQUA + "어둠(숲)-개조(사막)-작열(악지)-맹독(늪)-야생(정글)",ChatColor.AQUA + "삼지창, 철퇴는 네더라이트 순서와 동일합니다"));
+			}
 			if(i == 5) {
-				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[지상 원소핵 강화 순서, 획득 가능한 군계]",ChatColor.AQUA + "네더라이트-대지(평원)-바람(산)-서리(얼음)-바다",ChatColor.AQUA + "어둠(숲)-개조(사막)-작열(악지)-맹독(늪)-야생(정글)" ));
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "바람의 핵으로 [원소기운의 무기-1단계]를 강화시", ChatColor.LIGHT_PURPLE + "[원소기운의 무기-2단계]를 획득합니다"));
 				imeta.setLore(lore);
 				ii.setType(Material.DIORITE);
@@ -260,17 +262,13 @@ public class Elements implements Listener {
 			}
 			else if(i == 14) {
 				ii.setType(Material.WHITE_TULIP);
-				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[지상 원소핵 강화 순서, 획득 가능한 군계]",ChatColor.AQUA + "네더라이트-대지(평원)-바람(산)-서리(얼음)-바다",ChatColor.AQUA + "어둠(숲)-개조(사막)-작열(악지)-맹독(늪)-야생(정글)" ));
-				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "바람의 핵으로 [네더라이트 무기]를 강화시", ChatColor.LIGHT_PURPLE + "[원소기운의 무기-1단계]를 획득합니다"));
+				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "대지의 핵으로 [네더라이트 무기, 삼지창, 철퇴]를 강화시", ChatColor.LIGHT_PURPLE + "[원소기운의 무기-1단계]를 획득합니다"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.BLUE +"대지의 파편");
 				imeta.setItemName(ChatColor.BLUE +"대지의 파편");
 			}
 			else if(i == 6) {
 				ii.setType(Material.BLUE_ICE);
-				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[지상 원소핵 강화 순서, 획득 가능한 군계]",ChatColor.AQUA + "네더라이트-대지(평원)-바람(산)-서리(얼음)-바다",ChatColor.AQUA + "어둠(숲)-개조(사막)-작열(악지)-맹독(늪)-야생(정글)" ));
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "서리의 핵으로 [원소기운의 무기-2단계]를 강화시", ChatColor.LIGHT_PURPLE + "[원소기운의 무기-3단계]를 획득합니다"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.BLUE +"서리의 파편");
@@ -278,8 +276,6 @@ public class Elements implements Listener {
 			}
 			else if(i == 7) {
 				ii.setType(Material.PRISMARINE_CRYSTALS);
-				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[지상 원소핵 강화 순서, 획득 가능한 군계]",ChatColor.AQUA + "네더라이트-대지(평원)-바람(산)-서리(얼음)-바다",ChatColor.AQUA + "어둠(숲)-개조(사막)-작열(악지)-맹독(늪)-야생(정글)" ));
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "바다의 핵으로 [원소기운의 무기-3단계]를 강화시", ChatColor.LIGHT_PURPLE + "[원소기운의 무기-4단계]를 획득합니다"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.BLUE +"바다의 파편");
@@ -287,8 +283,6 @@ public class Elements implements Listener {
 			}
 			else if(i == 8) {
 				ii.setType(Material.STRIPPED_DARK_OAK_WOOD);
-				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[지상 원소핵 강화 순서, 획득 가능한 군계]",ChatColor.AQUA + "네더라이트-대지(평원)-바람(산)-서리(얼음)-바다",ChatColor.AQUA + "어둠(숲)-개조(사막)-작열(악지)-맹독(늪)-야생(정글)" ));
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "어둠의 핵으로 [원소기운의 무기-4단계]를 강화시", ChatColor.LIGHT_PURPLE + "[원소기운의 무기-5단계]를 획득합니다"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.BLUE +"어둠의 파편");
@@ -296,8 +290,6 @@ public class Elements implements Listener {
 			}
 			else if(i == 9) {
 				ii.setType(Material.FIREWORK_STAR);
-				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[지상 원소핵 강화 순서, 획득 가능한 군계]",ChatColor.AQUA + "네더라이트-대지(평원)-바람(산)-서리(얼음)-바다",ChatColor.AQUA + "어둠(숲)-개조(사막)-작열(악지)-맹독(늪)-야생(정글)" ));
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "하이퍼 엔진으로 [원소기운의 무기-5단계]를 강화시", ChatColor.LIGHT_PURPLE + "[원소기운의 무기-6단계]를 획득합니다"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.BLUE +"실험체 부품");
@@ -305,8 +297,6 @@ public class Elements implements Listener {
 			}
 			else if(i == 10) {
 				ii.setType(Material.RED_SAND);
-				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[지상 원소핵 강화 순서, 획득 가능한 군계]",ChatColor.AQUA + "네더라이트-대지(평원)-바람(산)-서리(얼음)-바다",ChatColor.AQUA + "어둠(숲)-개조(사막)-작열(악지)-맹독(늪)-야생(정글)" ));
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "타오르는 심장으로 [원소기운의 무기-6단계]를 강화시", ChatColor.LIGHT_PURPLE + "[원소기운의 무기-7단계]를 획득합니다"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.BLUE +"적색 파편");
@@ -314,8 +304,6 @@ public class Elements implements Listener {
 			}
 			else if(i == 11) {
 				ii.setType(Material.GREEN_CONCRETE_POWDER);
-				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[지상 원소핵 강화 순서, 획득 가능한 군계]",ChatColor.AQUA + "네더라이트-대지(평원)-바람(산)-서리(얼음)-바다",ChatColor.AQUA + "어둠(숲)-개조(사막)-작열(악지)-맹독(늪)-야생(정글)" ));
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "맹독의 핵으로 [원소기운의 무기-7단계]를 강화시", ChatColor.LIGHT_PURPLE + "[원소기운의 무기-8단계]를 획득합니다"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.BLUE +"맹독의 파편");
@@ -323,8 +311,6 @@ public class Elements implements Listener {
 			}
 			else if(i == 12) {
 				ii.setType(Material.JUNGLE_SAPLING);
-				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[지상 원소핵 강화 순서, 획득 가능한 군계]",ChatColor.AQUA + "네더라이트-대지(평원)-바람(산)-서리(얼음)-바다",ChatColor.AQUA + "어둠(숲)-개조(사막)-작열(악지)-맹독(늪)-야생(정글)" ));
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "야생의 핵으로 [원소기운의 무기-8단계]를 강화시", ChatColor.LIGHT_PURPLE + "[자연의 무기]를 획득합니다"));
 				lore.addAll(Arrays.asList("",ChatColor.GOLD + "자연의 무기를 [강력한 원소의 기운]으로 강화시", ChatColor.GOLD + "해당 속성의 무기를 제작할수 있습니다", ChatColor.GOLD + "[강력한 원소의 기운]은 보스 침공에서 획득가능"));
 				imeta.setDisplayName(ChatColor.BLUE +"야생의 파편");
@@ -381,10 +367,13 @@ public class Elements implements Listener {
 		}
 		else {
 			imeta.setLore(Arrays.asList("Used For Crafting Core(64Fragments = 1Core)", "Core is Used For Smithing Weapon"));
+			List<String> lore = imeta.getLore();
+
+			if(i >= 5) {
+				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[Order of Smithing & Obtainable Biome]",ChatColor.AQUA + "Netherite-Earth(Plain)-Wind(Mountain,Hill)",ChatColor.AQUA + "Frost(Frozen)-Ocean-Dark(Forest)-Hyper(Desert)",ChatColor.AQUA + "Burning(Badlands)-Poison(Swamp)-Wild(Jungle)",ChatColor.AQUA + "Trident, Mace are included in the Netherite's order"));
+			}
 			if(i == 5) {
 				ii.setType(Material.DIORITE);
-				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[Order of Smithing & Obtainable Biome]",ChatColor.AQUA + "Netherite-Earth(Plain)-Wind(Mountain,Hill)",ChatColor.AQUA + "Frost(Frozen)-Ocean-Dark(Forest)-Hyper(Desert)",ChatColor.AQUA + "Burning(Badlands)-Poison(Swamp)-Wild(Jungle)"));
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "If You Smith [Aura Weapon - Lv.1] with [Core Of Wind]", ChatColor.LIGHT_PURPLE + "You'll get [Aura Weapon - Lv.2]"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.BLUE +"Fragments of Wind");
@@ -392,17 +381,13 @@ public class Elements implements Listener {
 			}
 			else if(i == 14) {
 				ii.setType(Material.WHITE_TULIP);
-				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[Order of Smithing & Obtainable Biome]",ChatColor.AQUA + "Netherite-Earth(Plain)-Wind(Mountain,Hill)",ChatColor.AQUA + "Frost(Frozen)-Ocean-Dark(Forest)-Hyper(Desert)",ChatColor.AQUA + "Burning(Badlands)-Poison(Swamp)-Wild(Jungle)"));
-				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "If You Smith Netherite Weapon with [Core Of Earth]", ChatColor.LIGHT_PURPLE + "You'll get [Aura Weapon - Lv.1]"));
+				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "If You Smith Netherite Weapon, Mace, Trident",ChatColor.LIGHT_PURPLE + "With [Core Of Earth]", ChatColor.LIGHT_PURPLE + "You'll get [Aura Weapon - Lv.1]"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.BLUE +"Fragments of Earth");
 				imeta.setItemName(ChatColor.BLUE +"Fragments of Earth");
 			}
 			else if(i == 6) {
 				ii.setType(Material.BLUE_ICE);
-				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[Order of Smithing & Obtainable Biome]",ChatColor.AQUA + "Netherite-Earth(Plain)-Wind(Mountain,Hill)",ChatColor.AQUA + "Frost(Frozen)-Ocean-Dark(Forest)-Hyper(Desert)",ChatColor.AQUA + "Burning(Badlands)-Poison(Swamp)-Wild(Jungle)"));
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "If You Smith [Aura Weapon - Lv.2] with [Core Of Frost]", ChatColor.LIGHT_PURPLE + "You'll get [Aura Weapon - Lv.3]"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.BLUE +"Fragments of Frost");
@@ -410,8 +395,6 @@ public class Elements implements Listener {
 			}
 			else if(i == 7) {
 				ii.setType(Material.PRISMARINE_CRYSTALS);
-				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[Order of Smithing & Obtainable Biome]",ChatColor.AQUA + "Netherite-Earth(Plain)-Wind(Mountain,Hill)",ChatColor.AQUA + "Frost(Frozen)-Ocean-Dark(Forest)-Hyper(Desert)",ChatColor.AQUA + "Burning(Badlands)-Poison(Swamp)-Wild(Jungle)"));
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "If You Smith [Aura Weapon - Lv.3] with [Core Of Ocean]", ChatColor.LIGHT_PURPLE + "You'll get [Aura Weapon - Lv.4]"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.BLUE +"Fragments of Ocean");
@@ -419,8 +402,6 @@ public class Elements implements Listener {
 			}
 			else if(i == 8) {
 				ii.setType(Material.STRIPPED_DARK_OAK_WOOD);
-				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[Order of Smithing & Obtainable Biome]",ChatColor.AQUA + "Netherite-Earth(Plain)-Wind(Mountain,Hill)",ChatColor.AQUA + "Frost(Frozen)-Ocean-Dark(Forest)-Hyper(Desert)",ChatColor.AQUA + "Burning(Badlands)-Poison(Swamp)-Wild(Jungle)"));
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "If You Smith [Aura Weapon - Lv.4] with [Core Of Darkness]", ChatColor.LIGHT_PURPLE + "You'll get [Aura Weapon - Lv.5]"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.BLUE +"Fragments of Darkness");
@@ -428,8 +409,6 @@ public class Elements implements Listener {
 			}
 			else if(i == 9) {
 				ii.setType(Material.FIREWORK_STAR);
-				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[Order of Smithing & Obtainable Biome]",ChatColor.AQUA + "Netherite-Earth(Plain)-Wind(Mountain,Hill)",ChatColor.AQUA + "Frost(Frozen)-Ocean-Dark(Forest)-Hyper(Desert)",ChatColor.AQUA + "Burning(Badlands)-Poison(Swamp)-Wild(Jungle)"));
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "If You Smith [Aura Weapon - Lv.5] with [Hyper Engine]", ChatColor.LIGHT_PURPLE + "You'll get [Aura Weapon - Lv.6]"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.BLUE +"Part of Specimen");
@@ -437,8 +416,6 @@ public class Elements implements Listener {
 			}
 			else if(i == 10) {
 				ii.setType(Material.GUNPOWDER);
-				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[Order of Smithing & Obtainable Biome]",ChatColor.AQUA + "Netherite-Earth(Plain)-Wind(Mountain,Hill)",ChatColor.AQUA + "Frost(Frozen)-Ocean-Dark(Forest)-Hyper(Desert)",ChatColor.AQUA + "Burning(Badlands)-Poison(Swamp)-Wild(Jungle)"));
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "If You Smith [Aura Weapon - Lv.6] with [Burning Heart]", ChatColor.LIGHT_PURPLE + "You'll get [Aura Weapon - Lv.7]"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.BLUE +"Red Fragments");
@@ -446,8 +423,6 @@ public class Elements implements Listener {
 			}
 			else if(i == 11) {
 				ii.setType(Material.GREEN_CONCRETE_POWDER);
-				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[Order of Smithing & Obtainable Biome]",ChatColor.AQUA + "Netherite-Earth(Plain)-Wind(Mountain,Hill)",ChatColor.AQUA + "Frost(Frozen)-Ocean-Dark(Forest)-Hyper(Desert)",ChatColor.AQUA + "Burning(Badlands)-Poison(Swamp)-Wild(Jungle)"));
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "If You Smith [Aura Weapon - Lv.7] with [Core Of Poison]", ChatColor.LIGHT_PURPLE + "You'll get [Aura Weapon - Lv.8]"));
 				imeta.setLore(lore);
 				imeta.setDisplayName(ChatColor.BLUE +"Fragments of Poison");
@@ -455,8 +430,6 @@ public class Elements implements Listener {
 			}
 			else if(i == 12) {
 				ii.setType(Material.JUNGLE_SAPLING);
-				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.AQUA + "[Order of Smithing & Obtainable Biome]",ChatColor.AQUA + "Netherite-Earth(Plain)-Wind(Mountain,Hill)",ChatColor.AQUA + "Frost(Frozen)-Ocean-Dark(Forest)-Hyper(Desert)",ChatColor.AQUA + "Burning(Badlands)-Poison(Swamp)-Wild(Jungle)"));
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "If You Smith [Aura Weapon - Lv.8] with [Core Of Wild]", ChatColor.LIGHT_PURPLE + "You'll get [Natural Weapon]"));
 				lore.addAll(Arrays.asList("",ChatColor.GOLD + "If You Smith [Natural Weapon] with [Strong Core]", ChatColor.GOLD + "You'll get [Element Weapon]", ChatColor.GOLD + "You Can Get [Strong Core] From Boss Raid"));
 				imeta.setDisplayName(ChatColor.BLUE +"Fragments of Wild");
@@ -511,23 +484,25 @@ public class Elements implements Listener {
 	}
 
 
-	public static ItemStack getelcore(int i, Player p) {
+	public static ItemStack getelcore(int i, Player p) { //elNum
 		ItemStack ii = new ItemStack(Material.GRASS_BLOCK);
 		ItemMeta imeta = ii.getItemMeta();
 		imeta.setCustomModelData(i);
+	
+		
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 			imeta.setLore(Arrays.asList("무기를 강화할때 사용합니다"));
 			if(i == 5) {
-				ii.setType(Material.GREEN_GLAZED_TERRACOTTA);
 				List<String> lore = imeta.getLore();
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "[원소기운의 무기-1단계]를 강화시", ChatColor.LIGHT_PURPLE + "[원소기운의 무기-2단계]를 획득합니다"));
 				imeta.setLore(lore);
+				ii.setType(Material.GREEN_GLAZED_TERRACOTTA);
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"바람의 핵");
 				imeta.setItemName(ChatColor.LIGHT_PURPLE +"바람의 핵");
 			}
 			else if(i == 14) {
 				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "[네더라이트 무기]를 강화시", ChatColor.LIGHT_PURPLE + "[원소기운의 무기-1단계]를 획득합니다"));
+				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "[네더라이트 무기, 철퇴, 삼지창] 강화시", ChatColor.LIGHT_PURPLE + "[원소기운의 무기-1단계]를 획득합니다"));
 				imeta.setLore(lore);
 				ii.setType(Material.LIGHT_GRAY_GLAZED_TERRACOTTA);
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"대지의 핵");
@@ -708,7 +683,7 @@ public class Elements implements Listener {
 			}
 			else if(i == 14) {
 				List<String> lore = imeta.getLore();
-				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "If You Smith Netherite Weapon", ChatColor.LIGHT_PURPLE + "You'll get [Aura Weapon - Lv.1]"));
+				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "If You Smith Netherite Weapon, Trident, Mace", ChatColor.LIGHT_PURPLE + "You'll get [Aura Weapon - Lv.1]"));
 				imeta.setLore(lore);
 				ii.setType(Material.LIGHT_GRAY_GLAZED_TERRACOTTA);
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"Core of Earth");
@@ -786,7 +761,7 @@ public class Elements implements Listener {
 	}
 	
 
-	public static ItemStack getstel(int i, Player p) {
+	public static ItemStack getstel(int i, Player p) {// elNum+200
 		ItemStack ii = new ItemStack(Material.GRASS_BLOCK);
 		ItemMeta imeta = ii.getItemMeta();
 		imeta.setCustomModelData(200*(i>0?1:-1) + i);
@@ -884,6 +859,7 @@ public class Elements implements Listener {
 						ChatColor.GRAY +"+15% 공격력, +10 행운", "", "행운은 궁극기를 제외한 일반기술들의", "재사용 대기시간 감소에 영향을 줍니다"));
 				imeta.setDisplayName(ChatColor.GOLD +"융합된 네더의 핵");
 				imeta.setItemName(ChatColor.GOLD +"융합된 네더의 핵");
+				imeta.setCustomModelData(200*(i>0?1:-1) + -2);
 			}
 			else if(i == -6 || i ==7) {
 				ii.setType(Material.END_CRYSTAL);
@@ -891,6 +867,7 @@ public class Elements implements Listener {
 						ChatColor.GRAY +"+20% 공격력, +15 행운, +20% 속도", "", "행운은 궁극기를 제외한 일반기술들의", "재사용 대기시간 감소에 영향을 줍니다"));
 				imeta.setDisplayName(ChatColor.GOLD +"융합된 엔더 핵");
 				imeta.setItemName(ChatColor.GOLD +"융합된 엔더 핵");
+				imeta.setCustomModelData(200*(i>0?1:-1) + -6);
 			}
 			imeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 			ii.setItemMeta(imeta);

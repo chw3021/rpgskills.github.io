@@ -36,7 +36,7 @@ public class TamSkillsGui extends SkillsGui{
 					"Master LV.50"), 2, Tamskillsinv);
 			itemset("벌집", Material.BEEHIVE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+tsd.BeeHive.getOrDefault(p.getUniqueId(), 0),"",ChatColor.UNDERLINE+"[맹독 계열]","점프 + 우클릭","",ChatColor.BOLD+" X "+BigDecimal.valueOf(3*(1+tsd.BeeHive.getOrDefault(p.getUniqueId(), 0)*0.03)*(1+tsd.Taming.getOrDefault(p.getUniqueId(), 0)*0.023)).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master LV.50"), 3, Tamskillsinv);
 			itemset("크리퍼폭탄", Material.CREEPER_HEAD, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+tsd.CreepBomb.getOrDefault(p.getUniqueId(), 0),"",ChatColor.UNDERLINE+"[맹독 계열]","웅크리기 + 좌클릭","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.08*(1+tsd.CreepBomb.getOrDefault(p.getUniqueId(), 0)*0.07)*(1+tsd.Taming.getOrDefault(p.getUniqueId(), 0)*0.058)).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master LV.50"), 4, Tamskillsinv);
-			itemset("판다", Material.PANDA_SPAWN_EGG, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+tsd.PandaSweep.getOrDefault(p.getUniqueId(), 0),"",ChatColor.UNDERLINE+"[대지 계열]","점프 + 좌클릭","주변적을 지속적으로 도발합니다",""+ChatColor.BOLD+" X "+BigDecimal.valueOf(8*(1+tsd.PandaSweep.getOrDefault(p.getUniqueId(), 0)*0.04)*(1+tsd.Taming.getOrDefault(p.getUniqueId(), 0)*0.02)).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master LV.50"), 5, Tamskillsinv);
+			itemset("판다", Material.PANDA_SPAWN_EGG, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+tsd.PandaSweep.getOrDefault(p.getUniqueId(), 0),"",ChatColor.UNDERLINE+"[대지 계열]","점프 + 좌클릭","주변적을 지속적으로 도발합니다(10초)",""+ChatColor.BOLD+" X "+BigDecimal.valueOf(8*(1+tsd.PandaSweep.getOrDefault(p.getUniqueId(), 0)*0.04)*(1+tsd.Taming.getOrDefault(p.getUniqueId(), 0)*0.02)).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master LV.50"), 5, Tamskillsinv);
 			itemset("조련", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+tsd.Taming.getOrDefault(p.getUniqueId(), 0),"","동물들의 체력, 공격력, 속도가 증가합니다","",
 					ChatColor.GOLD+"웅크리기 + 아이템바꾸기 위(마우스휠 위방향)", ChatColor.GOLD+"동물들을 모으고 집중공격을 해제합니다","", ChatColor.AQUA+"웅크리기 + 아이템바꾸기 아래(마우스휠 아래방향)", ChatColor.AQUA+"동물들을 되돌려보냅니다"), 6, Tamskillsinv);
 			if(Proficiency.getpro(p)<1) {
@@ -105,7 +105,7 @@ public class TamSkillsGui extends SkillsGui{
 						,"",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.6*(1+tsd.PandaSweep.getOrDefault(p.getUniqueId(), 0)*0.03)*(1+tsd.Taming.getOrDefault(p.getUniqueId(), 0)*0.058)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 23, Tamskillsinv);
 				itemset("교감", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("공격력과 방어력이 증가합니다","철골렘 재사용 대기시간이 감소합니다"), 24, Tamskillsinv);
 				itemset("길들여진 드래곤", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(
-						ChatColor.UNDERLINE+"[대지 계열]","웅크리기 + num5",ChatColor.BOLD+"150 X "+BigDecimal.valueOf(0.1*(1+tsd.Taming.get(p.getUniqueId())*0.058)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 26, Tamskillsinv);
+						ChatColor.UNDERLINE+"[대지 계열]","웅크리기 + num5",ChatColor.BOLD+"150 X "+BigDecimal.valueOf(0.1*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.058)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 26, Tamskillsinv);
 			}
 			itemset("현재 숙련도", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(""+Proficiency.getproexp(p)), 27, Tamskillsinv);
 			itemset("스킬포인트", Material.NETHER_STAR, 0, 1, Arrays.asList(ChatColor.AQUA+"SP."+tsd.SkillPoints.getOrDefault(p.getUniqueId(), 0),"","클릭하면 스킬포인트가 초기화 됩니다"), 35, Tamskillsinv);
@@ -121,7 +121,7 @@ public class TamSkillsGui extends SkillsGui{
 					"Master LV.50"), 2, Tamskillsinv);
 			itemset("BeeHive", Material.BEEHIVE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+tsd.BeeHive.getOrDefault(p.getUniqueId(), 0),"",ChatColor.UNDERLINE+"[Poison]","Jump + RightClick","",ChatColor.BOLD+" X "+BigDecimal.valueOf(3*(1+tsd.BeeHive.getOrDefault(p.getUniqueId(), 0)*0.03)*(1+tsd.Taming.getOrDefault(p.getUniqueId(), 0)*0.023)).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master LV.50"), 3, Tamskillsinv);
 			itemset("CreepBomb", Material.CREEPER_HEAD, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+tsd.CreepBomb.getOrDefault(p.getUniqueId(), 0),"",ChatColor.UNDERLINE+"[Poison]","Sneaking + LeftClick","",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.08*(1+tsd.CreepBomb.getOrDefault(p.getUniqueId(), 0)*0.07)*(1+tsd.Taming.getOrDefault(p.getUniqueId(), 0)*0.058)).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master LV.50"), 4, Tamskillsinv);
-			itemset("Panda", Material.PANDA_SPAWN_EGG, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+tsd.PandaSweep.getOrDefault(p.getUniqueId(), 0),"",ChatColor.UNDERLINE+"[Earth]","Jump + LeftClick","Taunt Near By Enemies Continuously",""+ChatColor.BOLD+" X "+BigDecimal.valueOf(8*(1+tsd.PandaSweep.getOrDefault(p.getUniqueId(), 0)*0.04)*(1+tsd.Taming.getOrDefault(p.getUniqueId(), 0)*0.02)).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master LV.50"), 5, Tamskillsinv);
+			itemset("Panda", Material.PANDA_SPAWN_EGG, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+tsd.PandaSweep.getOrDefault(p.getUniqueId(), 0),"",ChatColor.UNDERLINE+"[Earth]","Jump + LeftClick","Taunt Near By Enemies Continuously(10s)",""+ChatColor.BOLD+" X "+BigDecimal.valueOf(8*(1+tsd.PandaSweep.getOrDefault(p.getUniqueId(), 0)*0.04)*(1+tsd.Taming.getOrDefault(p.getUniqueId(), 0)*0.02)).setScale(2, RoundingMode.HALF_EVEN)+"D", "Master LV.50"), 5, Tamskillsinv);
 			itemset("Taming", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+tsd.Taming.getOrDefault(p.getUniqueId(), 0),"","Increases Creatures' HP, Damage, Speed","",
 					ChatColor.GOLD+"Sneaking + ItemChangeUp(MouseWheelUp)", ChatColor.GOLD+"To Assemble Animals And Remove Target","", ChatColor.AQUA+"Sneaking + ItemChangeDown(MouseWheelDown)", ChatColor.AQUA+"To Return Animals"), 6, Tamskillsinv);
 			if(Proficiency.getpro(p)<1) {
@@ -188,7 +188,7 @@ public class TamSkillsGui extends SkillsGui{
 						,"",ChatColor.BOLD+" X "+BigDecimal.valueOf(0.6*(1+tsd.PandaSweep.getOrDefault(p.getUniqueId(), 0)*0.03)*(1+tsd.Taming.getOrDefault(p.getUniqueId(), 0)*0.058)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 23, Tamskillsinv);
 				itemset("Communication", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Damage & Armor","Decrease IronGolem Cooldown"), 24, Tamskillsinv);
 				itemset("Tamed Dragon", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(
-						ChatColor.UNDERLINE+"[Earth]","Sneaking + num5",ChatColor.BOLD+"150 X "+BigDecimal.valueOf(0.1*(1+tsd.Taming.get(p.getUniqueId())*0.058)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 26, Tamskillsinv);
+						ChatColor.UNDERLINE+"[Earth]","Sneaking + num5",ChatColor.BOLD+"150 X "+BigDecimal.valueOf(0.1*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.058)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 26, Tamskillsinv);
 			}
 			itemset("Current Proficiency", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(""+Proficiency.getproexp(p)), 27, Tamskillsinv);
 			itemset("SkillPoints", Material.NETHER_STAR, 0, 1, Arrays.asList(ChatColor.AQUA+"SP."+tsd.SkillPoints.getOrDefault(p.getUniqueId(), 0),"","Click if you want to reset your skill's levels"), 35, Tamskillsinv);
