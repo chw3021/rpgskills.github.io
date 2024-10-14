@@ -1254,7 +1254,7 @@ public class PoisonSkills extends Summoned{
         Location rl = OverworldRaids.getraidloc(p).clone();
 		p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
         d.setCancelled(true);
-    	p.teleport(rl.clone().add(0, 0, 1));
+    	p.teleport(rl.clone().add(0, 1, 1));
         Holding.holding(null, p, 671l);
         Holding.untouchable(p, 671l);
         for(Player pe : OverworldRaids.getheroes(p)) {
@@ -1264,7 +1264,7 @@ public class PoisonSkills extends Summoned{
 			else {
         		pe.sendMessage(ChatColor.BOLD+"TheApocalyptic: Let's Play The Game.");
 			}
-    		pe.teleport(rl.clone().add(30, 0, 0));
+    		pe.teleport(rl.clone().add(35, 2, 35));
     		Holding.invur(pe, 40l);
         }
         int t1 = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {

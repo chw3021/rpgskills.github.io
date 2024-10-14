@@ -65,6 +65,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Wither;
 import org.bukkit.entity.Wolf;
+import org.bukkit.entity.memory.MemoryKey;
 import org.bukkit.entity.AbstractArrow.PickupStatus;
 import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.event.Listener;
@@ -1019,7 +1020,8 @@ public class Tamskills extends Pak implements Listener, Serializable {
 								bees.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	
 								bees.setAnger(300);
 								bees.setSilent(true);
-								bees.setCustomName(p.getName());         
+								bees.setCustomName(p.getName());       
+								bees.setMemory(MemoryKey.LIKED_PLAYER, p.getUniqueId());  
 								bh.add(bees);
 			                    tamed.put(p.getUniqueId(), bees);
 			                    if(attention.containsKey(p.getUniqueId())) {
@@ -1335,6 +1337,7 @@ public class Tamskills extends Pak implements Listener, Serializable {
 			                    Creeper cp = (Creeper) p.getWorld().spawnEntity(p.getEyeLocation().clone().add(p.getEyeLocation().getDirection().clone().normalize().multiply(3)), EntityType.CREEPER);
 			                    cp.setPowered(true);
 			                    cp.setMaxFuseTicks(3);
+			                    cp.setMemory(MemoryKey.LIKED_PLAYER, p.getUniqueId());
 			                    cp.setCollidable(false);
 			                    creeper.put(cp, p);
 			                    cp.setCustomName(p.getName());
@@ -1521,6 +1524,7 @@ public class Tamskills extends Pak implements Listener, Serializable {
 			                    pd.setHiddenGene(Gene.BROWN);
 			                    pd.setRolling(true);
 			                    pd.setOnBack(false);
+			                    pd.setMemory(MemoryKey.LIKED_PLAYER, p.getUniqueId());
 		
 			                    int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
 			             			@Override
@@ -1679,6 +1683,7 @@ public class Tamskills extends Pak implements Listener, Serializable {
 		                    ig.setPlayerCreated(true);
 		                    ig.setHealth(ig.getMaxHealth());
 		                    ig.setSilent(true);
+		                    ig.setMemory(MemoryKey.LIKED_PLAYER, p.getUniqueId());
 							ig.setMetadata("ig of "+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	
 							ig.setMetadata("untargetable", new FixedMetadataValue(RMain.getInstance(), p.getName()));	
 							ig.setCustomName(p.getName());

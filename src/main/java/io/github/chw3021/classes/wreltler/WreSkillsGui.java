@@ -35,7 +35,7 @@ public class WreSkillsGui extends SkillsGui{
 			itemset("Suplex", Material.LEATHER_HELMET, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.Suplex.get(p.getUniqueId()),"",ChatColor.UNDERLINE+"[Earth]","SwapHand + Sneaking" ,"Master LV.50"), 2, Wreskillsinv);
 			itemset("ArmThrow", Material.IRON_CHESTPLATE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.ArmThrow.get(p.getUniqueId()),"",ChatColor.UNDERLINE+"[Earth]","SwapHand" ,"Master LV.50"), 3, Wreskillsinv);
 			itemset("GiantSwing", Material.BRICK_WALL, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.GiantSwing.get(p.getUniqueId()),"",ChatColor.UNDERLINE+"[Earth]","Sneaking + Hit","LeftClick Or Using Another Skill To Quit Earlier","Master LV.50"), 4, Wreskillsinv);
-			itemset("Squall", Material.CHAINMAIL_HELMET, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.Squall.get(p.getUniqueId()),"",ChatColor.UNDERLINE+"[Earth]","Get Jump,Speed,Resistance effect", "when you're Sprinting", "Hit Near By Enemies", "Master LV.1"), 5, Wreskillsinv);
+			itemset("Squall", Material.CHAINMAIL_HELMET, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.ChokeSlam.get(p.getUniqueId()),"",ChatColor.UNDERLINE+"[Earth]","Get Jump,Speed,Resistance effect", "when you're Sprinting", "Hit Near By Enemies", "Master LV.1"), 5, Wreskillsinv);
 			itemset("ForeArmSmash", Material.WRITABLE_BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.ForeArmSmash.get(p.getUniqueId()),"",ChatColor.UNDERLINE+"[Earth]","Jump+Hit",  "Higher Height will give more damage", "Master LV.50"), 6, Wreskillsinv);
 			itemset("Tough", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.Chopping.get(p.getUniqueId()),"","Increases Damage, KnockBack Resistance"), 7, Wreskillsinv);
 			if(Proficiency.getpro(p)<1) {
@@ -91,7 +91,7 @@ public class WreSkillsGui extends SkillsGui{
 			itemset("Suplex", Material.LEATHER_HELMET, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.Suplex.get(p.getUniqueId()),"",ChatColor.UNDERLINE+"[Earth]","SwapHand + Sneaking" ,"Master LV.50"), 2, Wreskillsinv);
 			itemset("ArmThrow", Material.IRON_CHESTPLATE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.ArmThrow.get(p.getUniqueId()),"",ChatColor.UNDERLINE+"[Earth]","SwapHand" ,"Master LV.50"), 3, Wreskillsinv);
 			itemset("GiantSwing", Material.TRIPWIRE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.GiantSwing.get(p.getUniqueId()),"",ChatColor.UNDERLINE+"[Earth]","Sneaking + Hit","LeftClick Or Using Another Skill To Quit Earlier","Master LV.50"), 4, Wreskillsinv);
-			itemset("Squall", Material.CHAINMAIL_HELMET, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.Squall.get(p.getUniqueId()),"",ChatColor.UNDERLINE+"[Earth]","Get Jump,Speed,Resistance effect", "when you're Sprinting", "Hit Near By Enemies", "Master LV.1"), 5, Wreskillsinv);
+			itemset("Squall", Material.CHAINMAIL_HELMET, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.ChokeSlam.get(p.getUniqueId()),"",ChatColor.UNDERLINE+"[Earth]","Get Jump,Speed,Resistance effect", "when you're Sprinting", "Hit Near By Enemies", "Master LV.1"), 5, Wreskillsinv);
 			itemset("ForeArmSmash", Material.WRITABLE_BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.ForeArmSmash.get(p.getUniqueId()),"",ChatColor.UNDERLINE+"[Earth]","Jump+Hit",  "Higher Height will give more damage", "Master LV.50"), 6, Wreskillsinv);
 			itemset("Tough", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.Chopping.get(p.getUniqueId()),"","Increases Damage, KnockBack Resistance"), 7, Wreskillsinv);
 			if(Proficiency.getpro(p)<1) {

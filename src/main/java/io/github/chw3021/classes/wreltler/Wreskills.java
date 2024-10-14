@@ -6,10 +6,9 @@ import io.github.chw3021.classes.ClassData;
 import io.github.chw3021.classes.Proficiency;
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.commons.Pak;
+import io.github.chw3021.commons.SkillBuilder;
 import io.github.chw3021.party.Party;
 
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import com.google.common.collect.ArrayListMultimap;
@@ -29,6 +28,7 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bukkit.Bukkit;
+import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -41,17 +41,13 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.event.vehicle.VehicleExitEvent;
@@ -59,7 +55,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
 
-public class Wreskills extends Pak implements Listener, Serializable {
+public class Wreskills extends Pak implements Serializable {
 	
 
 	
@@ -93,14 +89,14 @@ public class Wreskills extends Pak implements Listener, Serializable {
 	Pak pak = new Pak();
 	
 
-	@EventHandler	
+		
 	public void er(PluginEnableEvent ev) 
 	{
 		WreSkillsData w = new WreSkillsData(WreSkillsData.loadData(path +"/plugins/RPGskills/WreSkillsData.data"));
 		wsd = w;
 	}
 	
-	@EventHandler
+	
 	public void classinv(InventoryClickEvent e)
 	{
 		if(ChatColor.stripColor(e.getView().getTitle()).equalsIgnoreCase("Classes"))
@@ -131,7 +127,7 @@ public class Wreskills extends Pak implements Listener, Serializable {
 		}
 	}
 
-	@EventHandler	
+		
 	public void nepreventer(PlayerJoinEvent ev) 
 	{
 		WreSkillsData w = new WreSkillsData(WreSkillsData.loadData(path +"/plugins/RPGskills/WreSkillsData.data"));
@@ -139,116 +135,118 @@ public class Wreskills extends Pak implements Listener, Serializable {
 		
 	}
 	
-	@EventHandler
+	final private boolean quitTackle(Player p) {
+
+    	if(tacklet.containsKey(p.getUniqueId()) && !p.hasCooldown(CAREFUL)) {
+
+        	if(poundingt.containsKey(p.getUniqueId())) {
+        		Bukkit.getScheduler().cancelTask(poundingt.get(p.getUniqueId()));
+        		poundingt.remove(p.getUniqueId());
+        	}
+
+			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                @Override
+                public void run() {
+					if(Proficiency.getpro(p)>=1) {
+						pounding.putIfAbsent(p.getUniqueId(), 0);
+					}
+                }
+            }, 6); 
+
+    		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                @Override
+                public void run() {
+					pounding.remove(p.getUniqueId());
+                }
+            }, 30); 
+        	poundingt.put(p.getUniqueId(), task);
+
+        	if(tacklet.containsKey(p.getUniqueId())) {
+        		Bukkit.getScheduler().cancelTask(tacklet.get(p.getUniqueId()));
+        		tacklet.remove(p.getUniqueId());
+        	}
+
+        	p.setVelocity(p.getEyeLocation().getDirection().clone().normalize().multiply(0.1));
+        	Location tl = p.getLocation().clone().add(p.getEyeLocation().getDirection().clone().normalize().multiply(1.3));
+
+			tl.getWorld().spawnParticle(Particle.BLOCK, tl, 200,3,3,3,1,getBd(Material.DIRT_PATH));
+			tl.getWorld().spawnParticle(Particle.FALLING_DUST, tl, 200,3,3,3,0.1,getBd(Material.DIRT_PATH));
+			tl.getWorld().spawnParticle(Particle.ASH, tl, 100,3,3,3);
+        	p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_STRONG, 1f, 0.2f);
+        	p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_STRONG, 1f, 1.9f);
+            for (Entity e : tl.getWorld().getNearbyEntities(tl, 2, 2, 2))
+			{
+        		if (e instanceof Player) 
+				{
+					
+					Player p1 = (Player) e;
+					if(Party.hasParty(p) && Party.hasParty(p1))	{
+					if(Party.getParty(p).equals(Party.getParty(p1)))
+						{
+						continue;
+						}
+					}
+				}
+        		if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
+				{
+        			LivingEntity le = (LivingEntity)e;
+        			le.teleport(tl.clone().add(0, -1, 0));
+                	atk1(1.0, p, le);
+                	Holding.holding(p, le, 20l);
+                	le.playEffect(EntityEffect.ENTITY_DEATH);
+        			
+				}
+			}
+            return true;
+    	}
+    	p.setCooldown(CAREFUL, 3);
+		return false;
+	}
+	
+	
 	public void Tackle(PlayerInteractEvent ev) 
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
 		double sec =5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024);
 
-        
-		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 8) {
 		if((p.isSneaking())&& (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK))
 		{
 			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
 			{
+				if(quitTackle(p)) {
+					return;
+				}
+            	
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(sec)
+						.kname("태클")
+						.ename("Tackle")
+						.slot(0)
+						.hm(sdcooldown)
+						.skillUse(() -> {
 
+		 					GiantSwingThrow(p);
+		 					
+		 					
+		                    int q =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
+				                @Override
+				                public void run() 
+				                {
+				                	Holding.invur(p, 10l);
+				                	p.playSound(p.getLocation(), Sound.BLOCK_HANGING_ROOTS_STEP, 0.1f, 1.5f);
+				                	p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_STRONG, 0.25f, 1.9f);
+				                	p.setGliding(true);
+				                	p.setVelocity(p.getEyeLocation().getDirection().clone().normalize().multiply(1.3));
+				                	
+									
+				                	Location tl = p.getLocation().clone().add(p.getEyeLocation().getDirection().clone().normalize().multiply(1.3));
 
-            	if(tacklet.containsKey(p.getUniqueId()) && !p.hasCooldown(Material.APPLE)) {
-                    
-                	if(poundingt.containsKey(p.getUniqueId())) {
-                		Bukkit.getScheduler().cancelTask(poundingt.get(p.getUniqueId()));
-                		poundingt.remove(p.getUniqueId());
-                	}
+									tl.getWorld().spawnParticle(Particle.BLOCK, tl, 35,1,1,1,1,getBd(Material.DIRT_PATH));
 
-					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() {
-							if(Proficiency.getpro(p)>=1) {
-								pounding.putIfAbsent(p.getUniqueId(), 0);
-							}
-		                }
-		            }, 6); 
-
-            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() {
-							pounding.remove(p.getUniqueId());
-		                }
-		            }, 50); 
-                	poundingt.put(p.getUniqueId(), task);
-                	
-            		Bukkit.getScheduler().cancelTask(tacklet.get(p.getUniqueId()));
-            		tacklet.remove(p.getUniqueId());
-            		
-                	Location tl = p.getLocation().clone().add(p.getEyeLocation().getDirection().clone().normalize().multiply(1.3));
-					tl.getWorld().spawnParticle(Particle.BLOCK, tl, 200,3,3,3,1,Material.DIRT_PATH.createBlockData());
-					tl.getWorld().spawnParticle(Particle.CRIT, tl, 200,3,3,3);
-					tl.getWorld().spawnParticle(Particle.ANGRY_VILLAGER, tl, 100,3,3,3);
-                	p.playSound(p.getLocation(), Sound.ENTITY_RAVAGER_STUNNED, 1f, 0.2f);
-                	p.playSound(p.getLocation(), Sound.ENTITY_RAVAGER_STUNNED, 1f, 1.9f);
-                    for (Entity e : tl.getWorld().getNearbyEntities(tl, 4, 4, 4))
-    				{
-                		if (e instanceof Player) 
-    					{
-    						
-    						Player p1 = (Player) e;
-    						if(Party.hasParty(p) && Party.hasParty(p1))	{
-    						if(Party.getParty(p).equals(Party.getParty(p1)))
-    							{
-    							continue;
-    							}
-    						}
-    					}
-                		if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
-    					{
-                			LivingEntity le = (LivingEntity)e;
-		                	atk1(1.0, p, le);
-		                	Holding.holding(p, le, 20l);
-                			
-    					}
-    				}
-            	}
-            	p.setCooldown(Material.APPLE, 3);
-				
-				if(sdcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-	            {
-	                double timer = (sdcooldown.get(p.getName())/1000 + sec) - System.currentTimeMillis()/1000; // geting time in seconds
-	                if(!(timer < 0)) // if timer is still more then 0 or 0
-	                {
-	                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Tackle").create());
-	                }
-	                else // if timer is done
-	                {
-	                    sdcooldown.remove(p.getName()); // removing player from HashMap
-                    	if(poundingt.containsKey(p.getUniqueId())) {
-                    		Bukkit.getScheduler().cancelTask(poundingt.get(p.getUniqueId()));
-                    		poundingt.remove(p.getUniqueId());
-                    	}
-	 					GiantSwingThrow(p);
-	 					
-
-	                    int q =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() 
-			                {
-			                	Holding.invur(p, 10l);
-			                	p.playSound(p.getLocation(), Sound.BLOCK_HANGING_ROOTS_STEP, 0.1f, 1.5f);
-			                	p.setGliding(true);
-			                	p.setVelocity(p.getEyeLocation().getDirection().clone().normalize().multiply(1.3));
-			                	
-								p.getWorld().spawnParticle(Particle.FALLING_DUST, p.getLocation(), 20,1,1,1, Material.DIRT.createBlockData());
-								
-			                	Location tl = p.getLocation().clone().add(p.getEyeLocation().getDirection().clone().normalize().multiply(1.3));
-			                	if(tl.getWorld().getNearbyEntities(tl, 1.2,1.2,1.2).stream().anyMatch(e -> (!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")))) {
-
-									tl.getWorld().spawnParticle(Particle.BLOCK, tl, 200,3,3,3,1,Material.DIRT_PATH.createBlockData());
-									tl.getWorld().spawnParticle(Particle.CRIT, tl, 200,3,3,3,0.1);
-									tl.getWorld().spawnParticle(Particle.ASH, tl, 100,3,3,3);
-				                	p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_STRONG, 1f, 0.2f);
-				                	p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_STRONG, 1f, 1.9f);
 				                	if(tacklet.containsKey(p.getUniqueId())) {
 				                		Bukkit.getScheduler().cancelTask(tacklet.get(p.getUniqueId()));
 				                		tacklet.remove(p.getUniqueId());
@@ -270,143 +268,32 @@ public class Wreskills extends Pak implements Listener, Serializable {
 				                		if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
 				    					{
 				                			LivingEntity le = (LivingEntity)e;
-						                	atk1(1.0, p, le);
-						                	le.teleport(le.getLocation().clone().add(0, -1, 0));
+						                	le.teleport(tl.clone().add(0, -0.5, 0));
 						                	Holding.holding(p, le, 25l);
-						                	le.setSwimming(true);
-
-
-					    					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					    		                @Override
-					    		                public void run() {
-					    							if(Proficiency.getpro(p)>=1) {
-					    								pounding.putIfAbsent(p.getUniqueId(), 0);
-					    							}
-					    		                }
-					    		            }, 6); 
-
-					                		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					    		                @Override
-					    		                public void run() {
-					    							pounding.remove(p.getUniqueId());
-					    		                }
-					    		            }, 50); 
-					                    	poundingt.put(p.getUniqueId(), task);
 				    					}
 				    				}
-			                	}
-			                }
-	                	 }, 0,2);
-	                    tacklet.put(p.getUniqueId(), q);
-	                    
-	                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() {
-			                	p.setVelocity(p.getEyeLocation().getDirection().clone().normalize().multiply(0.1));
-			                	if(tacklet.containsKey(p.getUniqueId())) {
-			                		Bukkit.getScheduler().cancelTask(tacklet.get(p.getUniqueId()));
-			                		tacklet.remove(p.getUniqueId());
-			                	}
-			                }
-			            }, 8); 
-		                sdcooldown.put(p.getName(), System.currentTimeMillis());
-	                }
-	            }
-	            else // if cooldown doesn't have players name in it
-	            {
- 					GiantSwingThrow(p);
-                	if(poundingt.containsKey(p.getUniqueId())) {
-                		Bukkit.getScheduler().cancelTask(poundingt.get(p.getUniqueId()));
-                		poundingt.remove(p.getUniqueId());
-                	}
- 					
-
-                    int q =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() 
-		                {
-		                	Holding.invur(p, 10l);
-		                	p.playSound(p.getLocation(), Sound.BLOCK_HANGING_ROOTS_STEP, 0.1f, 1.5f);
-		                	p.setGliding(true);
-		                	p.setVelocity(p.getEyeLocation().getDirection().clone().normalize().multiply(1.3));
-		                	
-							p.getWorld().spawnParticle(Particle.FALLING_DUST, p.getLocation(), 20,1,1,1, Material.DIRT.createBlockData());
-							
-		                	Location tl = p.getLocation().clone().add(p.getEyeLocation().getDirection().clone().normalize().multiply(1.3));
-		                	if(tl.getWorld().getNearbyEntities(tl, 1.2,1.2,1.2).stream().anyMatch(e -> (!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")))) {
-
-								tl.getWorld().spawnParticle(Particle.BLOCK, tl, 200,3,3,3,1,Material.DIRT_PATH.createBlockData());
-								tl.getWorld().spawnParticle(Particle.CRIT, tl, 200,3,3,3,0.1);
-								tl.getWorld().spawnParticle(Particle.ASH, tl, 100,3,3,3);
-			                	p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_STRONG, 1f, 0.2f);
-			                	p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_STRONG, 1f, 1.9f);
-			                	if(tacklet.containsKey(p.getUniqueId())) {
-			                		Bukkit.getScheduler().cancelTask(tacklet.get(p.getUniqueId()));
-			                		tacklet.remove(p.getUniqueId());
-			                	}
-		                        
-			                    for (Entity e : tl.getWorld().getNearbyEntities(tl, 1.5, 1.5, 1.5))
-			    				{
-			                		if (e instanceof Player) 
-			    					{
-			    						
-			    						Player p1 = (Player) e;
-			    						if(Party.hasParty(p) && Party.hasParty(p1))	{
-			    						if(Party.getParty(p).equals(Party.getParty(p1)))
-			    							{
-			    							continue;
-			    							}
-			    						}
-			    					}
-			                		if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
-			    					{
-			                			LivingEntity le = (LivingEntity)e;
-					                	atk1(1.0, p, le);
-					                	le.teleport(le.getLocation().clone().add(0, -1, 0));
-					                	Holding.holding(p, le, 25l);
-					                	le.setSwimming(true);
-
-				    					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				    		                @Override
-				    		                public void run() {
-				    							if(Proficiency.getpro(p)>=1) {
-				    								pounding.putIfAbsent(p.getUniqueId(), 0);
-				    							}
-				    		                }
-				    		            }, 6); 
-
-				                		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				    		                @Override
-				    		                public void run() {
-				    							pounding.remove(p.getUniqueId());
-				    		                }
-				    		            }, 50); 
-				                    	poundingt.put(p.getUniqueId(), task);
-				                    	
-			                			
-			    					}
-			    				}
-		                	}
-		                }
-                	 }, 0,2);
-                    tacklet.put(p.getUniqueId(), q);
-                    
-                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() {
-		                	p.setVelocity(p.getEyeLocation().getDirection().clone().normalize().multiply(0.1));
-		                	if(tacklet.containsKey(p.getUniqueId())) {
-		                		Bukkit.getScheduler().cancelTask(tacklet.get(p.getUniqueId()));
-		                		tacklet.remove(p.getUniqueId());
-		                	}
-		                }
-		            }, 8); 
-	                sdcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-	            }
+				                }
+		                	 }, 0,2);
+		                    tacklet.put(p.getUniqueId(), q);
+		                    
+		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+				                @Override
+				                public void run() {
+				                	p.setVelocity(p.getEyeLocation().getDirection().clone().normalize().multiply(0.1));
+				                	if(tacklet.containsKey(p.getUniqueId())) {
+				                		Bukkit.getScheduler().cancelTask(tacklet.get(p.getUniqueId()));
+				                		tacklet.remove(p.getUniqueId());
+				                	}
+				                	quitTackle(p);
+				                }
+				            }, 8); 
+						});
+				bd.execute();
+			}
 	            
 			} // adding players name + current system time in miliseconds
             
-		}}
+		}
 	}
 	
 	
@@ -428,31 +315,33 @@ public class Wreskills extends Pak implements Listener, Serializable {
         	sitdown.remove(p.getUniqueId());
         }
         
-		ArmorStand pa = p.getWorld().spawn(p.getLocation().clone(), ArmorStand.class);
-		pa.setRemoveWhenFarAway(true);
-		pa.setInvisible(true);
-		pa.setInvulnerable(true);
-		pa.setSmall(true);
-		pa.setCollidable(false);
-		pa.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
-		pa.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(),p.getName()));
-		pa.setMetadata("rob", new FixedMetadataValue(RMain.getInstance(),p.getName()));
-		pa.addPassenger(p);
-		
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-            @Override
-            public void run() {
-                if(sitdown.containsKey(p.getUniqueId())) {
-                	Holding.ale(sitdown.get(p.getUniqueId())).remove();
-                	sitdown.remove(p.getUniqueId());
-                }
-            	pa.remove();
-            }
-        }, tick); 
+		p.getWorld().spawn(p.getLocation().clone(), ArmorStand.class, pa ->{
+			pa.setRemoveWhenFarAway(true);
+			pa.setInvisible(true);
+			pa.setInvulnerable(true);
+			pa.setSmall(true);
+			pa.setCollidable(false);
+			pa.setGravity(false);
+			pa.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
+			pa.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(),p.getName()));
+			pa.setMetadata("rob", new FixedMetadataValue(RMain.getInstance(),p.getName()));
+			pa.addPassenger(p);
+			
+	        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	            @Override
+	            public void run() {
+	                if(sitdown.containsKey(p.getUniqueId())) {
+	                	Holding.ale(sitdown.get(p.getUniqueId())).remove();
+	                	sitdown.remove(p.getUniqueId());
+	                }
+	            	pa.remove();
+	            }
+	        }, tick); 
+		});
 		
 	}
 	
-	@EventHandler
+	
 	public void Pounding(PlayerInteractEvent ev) 
 	{
 		Player p = ev.getPlayer();
@@ -499,7 +388,6 @@ public class Wreskills extends Pak implements Listener, Serializable {
 		                	le.teleport(tl);
 		                	les.add(le);
 		                	Holding.holding(p, le, 25l);
-							sit(p,25);
     					}
     				}
                     
@@ -508,13 +396,16 @@ public class Wreskills extends Pak implements Listener, Serializable {
 			                @Override
 			                public void run() 
 			                {
+								sit(p,6);
 
+								p.setCooldown(CAREFUL, 3);
+								p.swingMainHand();
 								p.getWorld().spawnParticle(Particle.CRIT, tl, 50, 2,2,2,0);
 								p.getWorld().spawnParticle(Particle.ENCHANTED_HIT, tl, 50, 2,2,2,0);
 								p.playSound(tl, Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.35f, 1.5f);
 								p.playSound(tl, Sound.ENTITY_PLAYER_ATTACK_STRONG, 0.7f, 0);
 								p.playSound(tl, Sound.ENTITY_PLAYER_ATTACK_STRONG, 0.7f, 0.1f);
-								p.playSound(tl, Sound.ENTITY_PLAYER_ATTACK_WEAK, 0.7f, 0.6f);
+								p.playSound(tl, Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 0.5f, 0.8f);
 			                	les.forEach(le -> {
 				                	atk1(1.0, p, le);
 			                	});
@@ -526,7 +417,7 @@ public class Wreskills extends Pak implements Listener, Serializable {
 		}
 	}
 
-	@EventHandler
+	
 	public void ArmThrow(PlayerSwapHandItemsEvent ev) 
 	{
 		Player p = ev.getPlayer();
@@ -537,342 +428,41 @@ public class Wreskills extends Pak implements Listener, Serializable {
 		{
 			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
 			{
-				
 
-				if(swcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-	            {
-	                double timer = (swcooldown.get(p.getName())/1000 + sec) - System.currentTimeMillis()/1000; // geting time in seconds
-	                if(!(timer < 0)) // if timer is still more then 0 or 0
-	                {
-	                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use ArmThrow").create());
-	                }
-	                else // if timer is done
-	                {
-	                    swcooldown.remove(p.getName()); // removing player from HashMap
-	 					GiantSwingThrow(p);
-
-		        		ArrayList<Location> drop = new ArrayList<>();
-	                    Location l = gettargetblock(p,2);
-	                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1, 0);
-	                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 2.0f);
-		        		p.getWorld().spawnParticle(Particle.SWEEP_ATTACK,l, 40, 2, 0.1, 2);
-		        		
-	                    AtomicInteger j = new AtomicInteger();
-	                    
-
-	                    for(Entity e : p.getWorld().getNearbyEntities(l, 3.5, 3.5, 3.5)) {
-		                    
-	                		if (e instanceof Player) 
-							{
-								
-								Player p1 = (Player) e;
-								if(Party.hasParty(p) && Party.hasParty(p1))	{
-								if(Party.getParty(p).equals(Party.getParty(p1)))
-									{
-										return;
-									}
-								}
-							}
-		                    if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
-							{
-								LivingEntity le = (LivingEntity)e;
-									le.teleport(p.getEyeLocation().clone().add(p.getEyeLocation().clone().getDirection().multiply(1.1)));
-									Holding.superholding(p, le, (long) 45);
-									p.swingOffHand();
-									p.playSound(p.getLocation(), Sound.BLOCK_SAND_BREAK, 1, 0);
-									p.setGliding(true);
-									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-						                @Override
-						                public void run() 
-						                {
-											le.teleport(le.getLocation().add(0, -1.25, 0));
-											p.playSound(le.getLocation(), Sound.ENTITY_HOSTILE_BIG_FALL, 0.1f, 0);
-											p.playSound(le.getLocation(), Sound.BLOCK_WEEPING_VINES_PLACE, 0.1f, 0);
-											atk0(0.9, wsd.ArmThrow.get(p.getUniqueId())*0.9, p, le);
-											Holding.superholding(p, le, (long) 45);
-											p.getWorld().spawnParticle(Particle.BLOCK, le.getLocation(), 10, 2,2,2,0 ,Material.DIRT.createBlockData());
-											p.getWorld().spawnParticle(Particle.ENCHANTED_HIT, le.getLocation(), 10, 2,2,2,0);
-											p.playSound(p.getLocation(), Sound.ENTITY_GOAT_LONG_JUMP, 0.1f, 0);
-						                	p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION,5,30,false,false));
-						                }
-			                	   }, 10); 
-								} 
-	                    }
-						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() 
-			                {
-			                	p.setGliding(true);
-				        		for(int i=0; i<50; i++) {
-				        			Location plc = p.getLocation().clone().add(0, -i, 0);
-				        			if(!plc.getBlock().isPassable()) {
-				        				break;
-				        			}
-				        			drop.add(plc);
-				        		}
-								drop.forEach(dl -> {
-									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
-									{
-					             	@Override
-							                public void run() 
-					             				{	
-					             					p.teleport(dl);
-								                    p.playSound(p.getLocation(), Sound.BLOCK_SNOW_FALL, 0.3f, 2f);
-								                    p.playSound(p.getLocation(), Sound.ENTITY_HORSE_BREATHE, 0.3f, 1.1f);
-								                    p.playSound(p.getLocation(), Sound.ENTITY_HORSE_BREATHE, 0.3f, 2);
-								                    p.spawnParticle(Particle.CRIT, p.getLocation(), 3);
-									            }
-						            }, j.incrementAndGet()/2+1);
-			                    });
-								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
-								{
-				             	@Override
-						                public void run() 
-				             				{	
-											p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation(), 100, 2,2,2,0 ,Material.DIRT.createBlockData());
-											p.playSound(p.getLocation(), Sound.BLOCK_CAVE_VINES_PICK_BERRIES, 1, 0);
-											p.playSound(p.getLocation(), Sound.BLOCK_GRASS_BREAK, 1, 0);
-						                    p.getWorld().spawnParticle(Particle.CRIT, l, 500,4,2,4);
-						                    p.getWorld().spawnParticle(Particle.ENCHANTED_HIT, l, 500,4,2,4);
-						                    p.getWorld().spawnParticle(Particle.LARGE_SMOKE, l, 500,4,2,4);
-						                    p.getWorld().spawnParticle(Particle.BLOCK, l, 500,4,2,4, p.getLocation().clone().add(0, -1, 0).getBlock().getBlockData());
-											for (Entity e : p.getWorld().getNearbyEntities(p.getLocation(),4, 4, 4))
-											{
-					                    		if (e instanceof Player) 
-					    						{
-					    							
-					    							Player p1 = (Player) e;
-					    							if(Party.hasParty(p) && Party.hasParty(p1))	{
-					    							if(Party.getParty(p).equals(Party.getParty(p1)))
-					    								{
-					    									continue;
-					    								}
-					    							}
-					    						}
-					                    		if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
-												{
-													LivingEntity le = (LivingEntity)e;
-													atk0(0.9, wsd.ArmThrow.get(p.getUniqueId())*0.9, p, le);
-													Holding.superholding(p, le, (long) 45);
-												}
-											}
-								            }
-					            }, j.incrementAndGet()/2+1);
-			                }
-						}, 20); 
-						
-		                swcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-		                
-	                }
-	            }
-	            else // if cooldown doesn't have players name in it
-	            {
-	                swcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-	                
-	            }
-			}
-		}
-		}
-	}
-	
-	@EventHandler
-	public void ChokeSlam(PlayerSwapHandItemsEvent ev) 
-	{
-		Player p = ev.getPlayer();
-		double sec =4*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024);
-		
-		if(ClassData.pc.get(p.getUniqueId()) == 8) {
-		if(!p.isSneaking())
-		{
-			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
-			{
-				
-				ev.setCancelled(true);
-				if(p.hasCooldown(Material.REPEATER)) {
-					return;
-				}
-				if(swcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-	            {
-	                double timer = (swcooldown.get(p.getName())/1000 + sec) - System.currentTimeMillis()/1000; // geting time in seconds
-	                if(!(timer < 0)) // if timer is still more then 0 or 0
-	                {
-	                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use ChokeSlam").create());
-	                }
-	                else // if timer is done
-	                {
-	                    swcooldown.remove(p.getName()); // removing player from HashMap
-	 					GiantSwingThrow(p);
-	                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1, 0);
-	                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 2.0f);
-		        		p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, p.getLocation().getX(), p.getLocation().getY(), p.getLocation().getZ(), 4, 2, 0, 2);
-
-		        		ArrayList<Location> drop = new ArrayList<>();
-	                    Location l = gettargetblock(p,2);
-	                    AtomicInteger j = new AtomicInteger();
-	                    
-
-	                    for(Entity e : p.getWorld().getNearbyEntities(l, 3.5, 3.5, 3.5)) {
-		                    
-	                		if (e instanceof Player) 
-							{
-								
-								Player p1 = (Player) e;
-								if(Party.hasParty(p) && Party.hasParty(p1))	{
-								if(Party.getParty(p).equals(Party.getParty(p1)))
-									{
-										return;
-									}
-								}
-							}
-		                    if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
-							{
-								LivingEntity le = (LivingEntity)e;
-									le.teleport(p.getEyeLocation().clone().add(p.getEyeLocation().clone().getDirection().multiply(1.1)));
-									Holding.superholding(p, le, (long) 45);
-									p.swingOffHand();
-									p.playSound(p.getLocation(), Sound.BLOCK_SAND_BREAK, 1, 0);
-									p.setGliding(true);
-									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					                @Override
-					                public void run() 
-					                {
-										le.teleport(le.getLocation().add(0, -1.25, 0));
-										p.playSound(le.getLocation(), Sound.ENTITY_HOSTILE_BIG_FALL, 0.1f, 0);
-										p.playSound(le.getLocation(), Sound.BLOCK_WEEPING_VINES_PLACE, 0.1f, 0);
-										atk0(0.9, wsd.ArmThrow.get(p.getUniqueId())*0.9, p, le);
-										Holding.superholding(p, le, (long) 45);
-										p.getWorld().spawnParticle(Particle.BLOCK, le.getLocation(), 10, 2,2,2,0 ,Material.DIRT.createBlockData());
-										p.getWorld().spawnParticle(Particle.ENCHANTED_HIT, le.getLocation(), 10, 2,2,2,0);
-										p.playSound(p.getLocation(), Sound.ENTITY_GOAT_LONG_JUMP, 0.1f, 0);
-					                	p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION,5,30,false,false));
-					                }
-								}, 10); 
-								p.setCooldown(Material.REPEATER, 10);
-							} 
-	                    }
-						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() 
-			                {
-			                	p.setGliding(true);
-				        		for(int i=0; i<50; i++) {
-				        			Location plc = p.getLocation().clone().add(0, -i, 0);
-				        			if(!plc.getBlock().isPassable()) {
-				        				break;
-				        			}
-				        			drop.add(plc);
-				        		}
-								drop.forEach(dl -> {
-									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
-									{
-					             	@Override
-							                public void run() 
-					             				{	
-					             					p.teleport(dl);
-								                    p.playSound(p.getLocation(), Sound.BLOCK_SNOW_FALL, 0.3f, 2f);
-								                    p.playSound(p.getLocation(), Sound.ENTITY_HORSE_BREATHE, 0.3f, 1.1f);
-								                    p.playSound(p.getLocation(), Sound.ENTITY_HORSE_BREATHE, 0.3f, 2);
-								                    p.spawnParticle(Particle.CRIT, p.getLocation(), 3);
-									            }
-						            }, j.incrementAndGet()/2+1);
-			                    });
-								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
-								{
-				             	@Override
-						                public void run() 
-				             				{	
-											p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation(), 100, 2,2,2,0 ,Material.DIRT.createBlockData());
-											p.playSound(p.getLocation(), Sound.BLOCK_CAVE_VINES_PICK_BERRIES, 1, 0);
-											p.playSound(p.getLocation(), Sound.BLOCK_GRASS_BREAK, 1, 0);
-						                    p.getWorld().spawnParticle(Particle.CRIT, l, 500,4,2,4);
-						                    p.getWorld().spawnParticle(Particle.ENCHANTED_HIT, l, 500,4,2,4);
-						                    p.getWorld().spawnParticle(Particle.LARGE_SMOKE, l, 500,4,2,4);
-						                    p.getWorld().spawnParticle(Particle.BLOCK, l, 500,4,2,4, p.getLocation().clone().add(0, -1, 0).getBlock().getBlockData());
-											for (Entity e : p.getWorld().getNearbyEntities(p.getLocation(),4, 4, 4))
-											{
-					                    		if (e instanceof Player) 
-					    						{
-					    							
-					    							Player p1 = (Player) e;
-					    							if(Party.hasParty(p) && Party.hasParty(p1))	{
-					    							if(Party.getParty(p).equals(Party.getParty(p1)))
-					    								{
-					    									continue;
-					    								}
-					    							}
-					    						}
-					                    		if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
-												{
-													LivingEntity le = (LivingEntity)e;
-													atk0(0.9, wsd.ArmThrow.get(p.getUniqueId())*0.9, p, le);
-													Holding.superholding(p, le, (long) 45);
-												}
-											}
-								            }
-					            }, j.incrementAndGet()/2+1);
-			                }
-						}, 20); 
-						
-		                swcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-		                
-	                }
-	            }
-	            else // if cooldown doesn't have players name in it
-	            {
-	                swcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-	                
-	            }
-			}
-		}
-		}
-	}
-
-	@EventHandler
-	public void Suplex(PlayerSwapHandItemsEvent ev) 
-	{
-		Player p = ev.getPlayer();
-		double sec =6*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024);
-
-        
-		
-		
-		if(ClassData.pc.get(p.getUniqueId()) == 8) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData() && p.isSneaking())
-			{
-				ev.setCancelled(true);
-				
-				
-					if(cdcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-		            {
-		                double timer = (cdcooldown.get(p.getName())/1000 + sec) - System.currentTimeMillis()/1000; // geting time in seconds
-		                if(!(timer < 0)) // if timer is still more then 0 or 0
-		                {
-		                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use Suplex").create());
-		                    ev.setCancelled(true);
-		                }
-		                else // if timer is done
-		                {
-		                    cdcooldown.remove(p.getName()); // removing player from HashMap
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(sec)
+						.kname("업어치기")
+						.ename("ArmThrow")
+						.slot(1)
+						.hm(swcooldown)
+						.skillUse(() -> {
 		 					GiantSwingThrow(p);
-		                    p.swingOffHand();
-		                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1, 0);
-		                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 2.0f);
-			        		p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, p.getLocation().getX(), p.getLocation().getY(), p.getLocation().getZ(), 4, 2, 0, 2);
-		                    p.setGliding(true);
+		 					
+		 					p.setCooldown(CAREFUL, 2);
+		 					p.swingMainHand();
+
+		                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 2);
+							p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, p.getLocation(), 10, 2,2,2,0);
 		                    ArrayList<Location> air = new ArrayList<Location>();
 		                    ArrayList<Location> sight = new ArrayList<Location>();
-		                    Location l = gettargetblock(p,2);
-		                    for(double i=Math.PI/180; i > -Math.PI; i -= Math.PI/180) {
-		                    	Location eye = p.getEyeLocation().clone();
-		                    	Vector eyev = eye.getDirection().clone().rotateAroundY(Math.PI/2);
-		                    	Location a = eye.clone().setDirection(eye.getDirection().rotateAroundAxis(eyev, i).normalize());
-		                    	Location b = eye.clone().add(eye.getDirection().rotateAroundAxis(eyev, i).normalize().multiply(2));
-		                    	sight.add(a);
-		                    	air.add(b);
-		                    }
-		                    for(Entity e : p.getWorld().getNearbyEntities(l, 3, 3, 3)) {
-			                    AtomicInteger j = new AtomicInteger(0);
-			                    AtomicInteger k = new AtomicInteger(0);
+	                    	final Location eye = p.getEyeLocation().clone();
+		                    final Location l = eye.clone().add(eye.clone().getDirection().normalize().multiply(-1.5));
+	                    	Vector eyev = eye.getDirection().clone().rotateAroundY(-Math.PI/2);
+	                    	for(double i = Math.PI; i > 0; i -= Math.PI/90) {
+	                    	    Location a = eye.clone().setDirection(eye.getDirection().rotateAroundAxis(eyev, i).normalize());
+	                    	    
+	                    	    // 포물선 효과를 적용하기 위한 Y축 변동만 추가
+	                    	    double heightOffset = Math.sin(i) * 2;  // 높이 변화를 주어 포물선 효과 적용
+	                    	    a.setY(eye.getY() + heightOffset);  // 원래 높이에 대한 Y 변화
+	                    	    sight.add(a);
+	                    	    
+	                    	    air.add(a.clone().add(a.clone().getDirection().normalize().multiply(1.8)));  // 적을 던지는 거리 계산
+	                    	}
+		                    HashSet<LivingEntity> lehs = new HashSet<>();
+			        		
+		                    
+		                    for(Entity e : p.getWorld().getNearbyEntities(l, 2, 2, 2)) {
 		                    	if(e instanceof LivingEntity && e!=p&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
 		                    		if (e instanceof Player) 
 		    						{
@@ -886,58 +476,259 @@ public class Wreskills extends Pak implements Listener, Serializable {
 		    							}
 		    						}
 		                    		LivingEntity le = (LivingEntity)e;
-										Holding.superholding(p, le, (long) 45);
-					                    le.teleport(p.getLocation());
-		                    			air.forEach(lel ->  {
-											Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
-											{
-							             	@Override
-									                public void run() 
-							             				{	
-									                    	le.teleport(lel);
-									                    	
-											            }
-								            }, j.incrementAndGet()/30+10); 
-											});
-		                    			sight.forEach(lel ->  {
-											Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
-											{
-							             	@Override
-									                public void run() 
-							             				{	
-									                    	p.teleport(lel);
-									                    	
-											            }
-								            }, k.incrementAndGet()/30+10); 
-											});
+		                    		lehs.add(le);
+									Holding.superholding(p, le, (long) 45);
+				                    le.teleport(p.getLocation());
+		                    	}
+		                    }
+							
+		                    if(!lehs.isEmpty()) {
+			                    AtomicInteger k = new AtomicInteger(0);
+                    			sight.forEach(lel ->  {
+									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
+									{
+					             	@Override
+							                public void run() 
+					             				{	
+							                    	p.teleport(lel);
+							                    	
+									            }
+						            }, k.incrementAndGet()/30+5); 
+								});
+								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
+								{
+				             	@Override
+						                public void run() 
+				             				{	
+												p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation().clone(), 120, 2,0.5,2,0 ,getBd(Material.DIRT));
+							                    p.playSound(p.getLocation(), Sound.ENTITY_GENERIC_BIG_FALL, 1f, 0);
+												
+								            }
+					            }, k.incrementAndGet()/30+5);
+								
+		                    	lehs.forEach(le -> {
+				                    AtomicInteger j = new AtomicInteger(0);
+
+	                    			air.forEach(lel ->  {
 										Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
 										{
 						             	@Override
 								                public void run() 
 						             				{	
-						             					atk0(0.97, wsd.Suplex.get(p.getUniqueId())*1.15, p, le);
-														p.getWorld().spawnParticle(Particle.BLOCK, le.getLocation(), 10, 2,2,2,0 ,Material.DIRT.createBlockData());
-								                    	le.teleport(p.getLocation().add(0, -1, 0));
-									                    p.playSound(p.getLocation(), Sound.ITEM_CROSSBOW_LOADING_MIDDLE, 1, 0);
-														
+								                    	le.teleport(lel);
+								                    	
 										            }
-							            }, j.incrementAndGet()/30+10);
-		                    		}
+							            }, j.incrementAndGet()/30+5); 
+									});
+									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
+									{
+					             	@Override
+							                public void run() 
+					             				{	
+		             								atk0(0.97, wsd.ArmThrow.getOrDefault(p.getUniqueId(),0)*1.15, p, le);
+									            }
+						            }, j.incrementAndGet()/30+5); 
+		                    	});
 		                    }
-							cdcooldown.put(p.getName(), System.currentTimeMillis()); 
-		                }
-		            }
-		            else // if cooldown doesn't have players name in it
-		            {
+						});
+				bd.execute();
+
+			}
+		}
+		}
+	}
+	
+	
+	public void ChokeSlam(PlayerSwapHandItemsEvent ev) 
+	{
+		Player p = ev.getPlayer();
+		double sec =4*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024);
+		
+		if(ClassData.pc.get(p.getUniqueId()) == 8) {
+		if(!p.isSneaking())
+		{
+			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
+			{
+				
+				ev.setCancelled(true);
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(sec)
+						.kname("메치기")
+						.ename("ChokeSlam")
+						.slot(2)
+						.hm(frcooldown)
+						.skillUse(() -> {
+							GiantSwingThrow(p);
+		                    final Location l = gettargetblock(p,2).clone().add(0, -0.5, 0);
+		                    final Location fl =p.getEyeLocation().clone().add(p.getEyeLocation().clone().getDirection().multiply(1.1));
+		                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.6f, 0);
+		                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.2f, 2.0f);
+			        		p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l, 10, 1.5, 0.5, 1.5);
+
+		                    HashSet<LivingEntity> les = new HashSet<>();
+
+		                    for(Entity e : p.getWorld().getNearbyEntities(l, 1.5, 1.5, 1.5)) {
+			                    
+		                		if (e instanceof Player) 
+								{
+									
+									Player p1 = (Player) e;
+									if(Party.hasParty(p) && Party.hasParty(p1))	{
+									if(Party.getParty(p).equals(Party.getParty(p1)))
+										{
+											return;
+										}
+									}
+								}
+			                    if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
+								{
+									LivingEntity le = (LivingEntity)e;
+									le.teleport(fl);
+									Holding.superholding(p, le, (long) 45);
+									les.add(le);
+								} 
+		                    }
+		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+				                @Override
+				                public void run() 
+				                {
+				                	if(!les.isEmpty()) {
+				                		les.forEach(le ->{
+											le.teleport(l);
+											atk0(0.9, wsd.ChokeSlam.get(p.getUniqueId())*0.9, p, le);
+				                		});
+										p.playSound(l, Sound.ENTITY_HOSTILE_BIG_FALL, 1f, 0);
+										p.playSound(l, Sound.ENTITY_WIND_CHARGE_THROW, 1f, 0);
+										p.getWorld().spawnParticle(Particle.BLOCK, l, 100, 2,2,2,0 ,Material.DIRT.createBlockData());
+				                	}
+				                }
+							}, 10);
+						});
+				bd.execute();
+			}
+		}
+		}
+	}
+
+	
+	public void Suplex(PlayerSwapHandItemsEvent ev) 
+	{
+		Player p = ev.getPlayer();
+		double sec =6*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024);
+
+        
+		
+		
+		if(ClassData.pc.get(p.getUniqueId()) == 8) {
+			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData() && p.isSneaking())
+			{
+				ev.setCancelled(true);
+
+				SkillBuilder bd = new SkillBuilder()
+					.player(p)
+					.cooldown(sec)
+					.kname("안아넘기기")
+					.ename("Suplex")
+					.slot(3)
+					.hm(cdcooldown)
+					.skillUse(() -> {
+						GiantSwingThrow(p);
+	                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1, 0);
+	                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 2.0f);
+		        		p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, p.getLocation().getX(), p.getLocation().getY(), p.getLocation().getZ(), 4, 2, 0, 2);
+	                    ArrayList<Location> air = new ArrayList<Location>();
+	                    ArrayList<Location> sight = new ArrayList<Location>();
+	                    final Location l = gettargetblock(p,2);
+                    	final Location eye = p.getEyeLocation().clone();
+                    	Vector eyev = eye.getDirection().clone().rotateAroundY(Math.PI/2);
+	                    for(double i=Math.PI/180; i > -Math.PI; i -= Math.PI/180) {
+	                    	Location a = eye.clone().setDirection(eye.getDirection().rotateAroundAxis(eyev, i).normalize());
+	                    	sight.add(a);
+	                    	air.add(a.clone().add(a.clone().getDirection().normalize().multiply(2)));
+	                    }
+	 					
+	 					p.setCooldown(CAREFUL, 2);
+	 					p.swingMainHand();
+	                    HashSet<LivingEntity> lehs = new HashSet<>();
+		        		
 	                    
-		                cdcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-		            }
-				}
+	                    for(Entity e : p.getWorld().getNearbyEntities(l, 2, 2, 2)) {
+	                    	if(e instanceof LivingEntity && e!=p&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
+	                    		if (e instanceof Player) 
+	    						{
+	    							
+	    							Player p1 = (Player) e;
+	    							if(Party.hasParty(p) && Party.hasParty(p1))	{
+	    							if(Party.getParty(p).equals(Party.getParty(p1)))
+	    								{
+	    									continue;
+	    								}
+	    							}
+	    						}
+	                    		LivingEntity le = (LivingEntity)e;
+	                    		lehs.add(le);
+								Holding.superholding(p, le, (long) 45);
+			                    le.teleport(p.getLocation());
+	                    	}
+	                    }
+						
+	                    if(!lehs.isEmpty()) {
+		                    AtomicInteger k = new AtomicInteger(0);
+                			sight.forEach(lel ->  {
+								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
+								{
+				             	@Override
+						                public void run() 
+				             				{	
+						                    	p.teleport(lel);
+						                    	
+								            }
+					            }, k.incrementAndGet()/30+5); 
+							});
+							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
+							{
+			             	@Override
+					                public void run() 
+			             				{	
+											p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation().clone(), 120, 2,0.5,2,0 ,getBd(Material.DIRT));
+						                    p.playSound(p.getLocation(), Sound.ENTITY_GENERIC_BIG_FALL, 1f, 0);
+											
+							            }
+				            }, k.incrementAndGet()/30+5);
+							
+	                    	lehs.forEach(le -> {
+			                    AtomicInteger j = new AtomicInteger(0);
+
+                    			air.forEach(lel ->  {
+									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
+									{
+					             	@Override
+							                public void run() 
+					             				{	
+							                    	le.teleport(lel);
+							                    	
+									            }
+						            }, j.incrementAndGet()/30+5); 
+								});
+								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
+								{
+				             	@Override
+						                public void run() 
+				             				{	
+	             								atk0(0.97, wsd.Suplex.getOrDefault(p.getUniqueId(),0)*1.15, p, le);
+								            }
+					            }, j.incrementAndGet()/30+5); 
+	                    	});
+	                    }
+					});
+				bd.execute();
+			}
 		}
 	
 	}
 	
-	@EventHandler
+	
 	public void BodyPress(PlayerInteractEvent ev) 
 	{
 		Player p = ev.getPlayer();
@@ -1037,7 +828,7 @@ public class Wreskills extends Pak implements Listener, Serializable {
 		}}
 	}
 	
-	@EventHandler
+	
 	public void Chopping(EntityDamageByEntityEvent d) 
 	{
 		if(d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity && !d.isCancelled()) 
@@ -1124,7 +915,7 @@ public class Wreskills extends Pak implements Listener, Serializable {
                 
 	}
 	
-	@EventHandler
+	
 	public void GiantSwing(EntityDamageByEntityEvent d) 
 	{
 		if(d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity && !d.isCancelled())
@@ -1268,81 +1059,8 @@ public class Wreskills extends Pak implements Listener, Serializable {
 		}
 	}
 
-	@EventHandler
-	public void ForeArmSmash(EntityDamageByEntityEvent d) 
-	{
-		if(d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity && !d.isCancelled()) 
-		{
-	        
-		Player p = (Player)d.getDamager();
-		LivingEntity le = (LivingEntity)d.getEntity();
-		
 
 		
-		
-		if(ClassData.pc.get(p.getUniqueId()) == 8) {
-		double sec =5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024);
-		if(p.getAttackCooldown()==1 && wsd.ForeArmSmash.getOrDefault(p.getUniqueId(),0)>=1) 
-			{	
-				if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData() && !(p.isSneaking()) && !(p.isOnGround()) &&  !(p.hasCooldown(Material.YELLOW_TERRACOTTA)) )
-					{
-					if(smcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-			        {
-			            double timer = (smcooldown.get(p.getName())/1000 + sec) - System.currentTimeMillis()/1000; // geting time in seconds
-			            if(!(timer < 0)) // if timer is still more then 0 or 0
-			            {
-			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use ForeArmSmash").create());
-				        }
-			            else // if timer is done
-			            {
-			                smcooldown.remove(p.getName()); // removing player from HashMap
-							d.setDamage(d.getDamage()*1.5*(1+p.getFallDistance()*0.2));
-							le.teleport(le.getLocation().add(0, -1, 0));
-							Holding.holding(p, le, 30l);
-							p.playSound(p.getLocation(), Sound.BLOCK_BONE_BLOCK_BREAK, 1.0f, 0f);
-							p.playSound(p.getLocation(), Sound.BLOCK_GLASS_BREAK, 1.0f, 0f);
-				            smcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-			            }
-			        }
-			        else // if cooldown doesn't have players name in it
-			        {
-						d.setDamage(d.getDamage()*1.5*(1+p.getFallDistance()*0.2));
-						le.teleport(le.getLocation().add(0, -1, 0));
-						Holding.holding(p, le, 30l);
-						p.playSound(p.getLocation(), Sound.BLOCK_BONE_BLOCK_BREAK, 1.0f, 0f);
-						p.playSound(p.getLocation(), Sound.BLOCK_GLASS_BREAK, 1.0f, 0f);
-			            smcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-			        }
-					}
-			}
-		}}
-	}
-
-	@EventHandler	
-	public void TackleRush(PlayerDeathEvent ev) 
-	{
-		Player p = ev.getEntity();
-
-
-		if(tr.containsKey(p)) {
-			Bukkit.getServer().getScheduler().cancelTask(tr.get(p));
-			tr.remove(p);
-		}
-	}
-
-	@EventHandler	
-	public void TackleRush(PlayerQuitEvent ev) 
-	{
-		Player p = ev.getPlayer();
-
-
-		if(tr.containsKey(p)) {
-			Bukkit.getServer().getScheduler().cancelTask(tr.get(p));
-			tr.remove(p);
-		}
-	}
-	
-	@EventHandler
 	public void ULT(PlayerDropItemEvent ev)        
     {
 		Player p = (Player)ev.getPlayer();
@@ -1582,7 +1300,7 @@ public class Wreskills extends Pak implements Listener, Serializable {
 			}
     }
 	
-	@EventHandler
+	
 	public void Equipment(PlayerItemDamageEvent e) 
 	{
 		Player p = e.getPlayer();

@@ -407,6 +407,9 @@ public class NPCLoc implements Serializable, Listener{
 	public void spawning(WorldLoadEvent ev) 
 	{
 		final World w = ev.getWorld();
+
+		HashMultimap<UUID, HashMap<Location, String>> Locs = getLocsdata().Locs;
+		
 		if(!Locs.containsKey(w.getUID())) {
 			return;
 		}

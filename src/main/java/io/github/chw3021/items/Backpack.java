@@ -221,6 +221,7 @@ public class Backpack implements Serializable, Listener{
 			{
 				String s = ChatColor.stripColor((e.getCurrentItem().getItemMeta().getDisplayName()));
 				if(s.equals("Backpack") || s.equals("배낭")) {
+					e.setCancelled(false);
 					try {
 						checkoff(p);
 					}
@@ -230,6 +231,7 @@ public class Backpack implements Serializable, Listener{
 					p.setItemOnCursor(null);
 				}
 				else if(s.equals("Dumpster") || s.equals("쓰레기통")) {
+					e.setCancelled(false);
 					dumpster(p);
 					p.setItemOnCursor(null);
 				}
@@ -247,10 +249,8 @@ public class Backpack implements Serializable, Listener{
 		        if (!e.getCurrentItem().getItemMeta().getItemName().equals("RpgBagpackPage")) {
 		            return;
 		        }
-	            System.out.println("good");
 
-		        int currentPage = getCurrentPage(e.getInventory());
-	            System.out.println(currentPage);
+		        int currentPage = getCurrentPage(e.getClickedInventory());
 
 		        if (displayName.equals("Prev") || displayName.equals("이전 페이지")) {
 		            e.setCancelled(true);
@@ -355,6 +355,7 @@ public class Backpack implements Serializable, Listener{
 	    }
 	    return inv; // 갱신된 인벤토리 반환
 	}
+	
 	public static void add(Player player, ItemStack item) {
 	    try {
 	        Table<UUID, Integer, ItemStack[]> chest = getdata();  // 가방 데이터 가져오기

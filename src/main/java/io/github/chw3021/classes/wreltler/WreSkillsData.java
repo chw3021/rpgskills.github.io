@@ -32,7 +32,7 @@ public class WreSkillsData implements Serializable, Listener{
 	 * 
 	 */
 	private static transient final long serialVersionUID = -3510364976678355846L;
-	public final HashMap<UUID, Integer> Squall;
+	public final HashMap<UUID, Integer> ChokeSlam;
 	public final HashMap<UUID, Integer> Chopping;
 	public final HashMap<UUID, Integer> Suplex;
 	public final HashMap<UUID, Integer> BodyPress;
@@ -43,8 +43,8 @@ public class WreSkillsData implements Serializable, Listener{
 	public final HashMap<UUID, Integer> SkillPoints;
     // Can be used for saving
 	
-    public WreSkillsData(HashMap<UUID, Integer> Squall, HashMap<UUID, Integer> Chopping, HashMap<UUID, Integer> Suplex, HashMap<UUID, Integer> BodyPress, HashMap<UUID, Integer> Tackle, HashMap<UUID, Integer> GiantSwing, HashMap<UUID, Integer> ArmThrow, HashMap<UUID, Integer> ForeArmSmash, HashMap<UUID, Integer> SkillPoints) {
-    	this.Squall = Squall;
+    public WreSkillsData(HashMap<UUID, Integer> ChokeSlam, HashMap<UUID, Integer> Chopping, HashMap<UUID, Integer> Suplex, HashMap<UUID, Integer> BodyPress, HashMap<UUID, Integer> Tackle, HashMap<UUID, Integer> GiantSwing, HashMap<UUID, Integer> ArmThrow, HashMap<UUID, Integer> ForeArmSmash, HashMap<UUID, Integer> SkillPoints) {
+    	this.ChokeSlam = ChokeSlam;
     	this.Chopping = Chopping;
     	this.Suplex = Suplex;
     	this.BodyPress = BodyPress;
@@ -56,7 +56,7 @@ public class WreSkillsData implements Serializable, Listener{
     	}
     // Can be used for loading
     public WreSkillsData(WreSkillsData loadedData) {
-    	this.Squall = loadedData.Squall;
+    	this.ChokeSlam = loadedData.ChokeSlam;
     	this.Chopping = loadedData.Chopping;
     	this.Suplex = loadedData.Suplex;
     	this.BodyPress = loadedData.BodyPress;
@@ -110,7 +110,7 @@ public class WreSkillsData implements Serializable, Listener{
 			{
 				if(!getWrestlerdata().SkillPoints.containsKey(p.getUniqueId()))
 				{
-					HashMap<UUID, Integer> Squall = getWrestlerdata().Squall;
+					HashMap<UUID, Integer> ChokeSlam = getWrestlerdata().ChokeSlam;
 					HashMap<UUID, Integer> Chopping = getWrestlerdata().Chopping;
 					HashMap<UUID, Integer> Suplex = getWrestlerdata().Suplex;
 					HashMap<UUID, Integer> BodyPress = getWrestlerdata().BodyPress;
@@ -120,7 +120,7 @@ public class WreSkillsData implements Serializable, Listener{
 					HashMap<UUID, Integer> ForeArmSmash = getWrestlerdata().ForeArmSmash;
 					HashMap<UUID, Integer> SkillPoints = getWrestlerdata().SkillPoints;
 					SkillPoints.put(p.getUniqueId(), p.getLevel() + ScrollPoint.sp.get(p.getUniqueId()));
-					Squall.put(p.getUniqueId(), 0);
+					ChokeSlam.put(p.getUniqueId(), 0);
 					Chopping.put(p.getUniqueId(), 0);
 					Suplex.put(p.getUniqueId(), 0);
 					BodyPress.put(p.getUniqueId(), 0);
@@ -128,7 +128,7 @@ public class WreSkillsData implements Serializable, Listener{
 					GiantSwing.put(p.getUniqueId(), 0);
 					ArmThrow.put(p.getUniqueId(), 0);
 					ForeArmSmash.put(p.getUniqueId(), 0);
-					new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+					new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 
 					WreSkillsGui wrg = new WreSkillsGui();
 					wrg.WreSkillsinv(p);
@@ -136,7 +136,7 @@ public class WreSkillsData implements Serializable, Listener{
 			}
 			catch(NullPointerException ne)
 			{
-				HashMap<UUID, Integer> Squall = new HashMap<UUID, Integer>();
+				HashMap<UUID, Integer> ChokeSlam = new HashMap<UUID, Integer>();
 				HashMap<UUID, Integer> Chopping = new HashMap<UUID, Integer>();
 				HashMap<UUID, Integer> Suplex = new HashMap<UUID, Integer>();
 				HashMap<UUID, Integer> BodyPress = new HashMap<UUID, Integer>();
@@ -146,7 +146,7 @@ public class WreSkillsData implements Serializable, Listener{
 				HashMap<UUID, Integer> ForeArmSmash = new HashMap<UUID, Integer>();
 				HashMap<UUID, Integer> SkillPoints = new HashMap<UUID, Integer>();
 				SkillPoints.put(p.getUniqueId(), p.getLevel() + ScrollPoint.sp.get(p.getUniqueId()));
-				Squall.put(p.getUniqueId(), 0);
+				ChokeSlam.put(p.getUniqueId(), 0);
 				Chopping.put(p.getUniqueId(), 0);
 				Suplex.put(p.getUniqueId(), 0);
 				BodyPress.put(p.getUniqueId(), 0);
@@ -154,7 +154,7 @@ public class WreSkillsData implements Serializable, Listener{
 				GiantSwing.put(p.getUniqueId(), 0);
 				ArmThrow.put(p.getUniqueId(), 0);
 				ForeArmSmash.put(p.getUniqueId(), 0);
-				new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+				new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 
 				WreSkillsGui wrg = new WreSkillsGui();
 				wrg.WreSkillsinv(p);
@@ -165,7 +165,7 @@ public class WreSkillsData implements Serializable, Listener{
 
 	public static void scroll(Player p) {
         String path = new File("").getAbsolutePath();
-		HashMap<UUID, Integer> Squall = getWrestlerdata().Squall;
+		HashMap<UUID, Integer> ChokeSlam = getWrestlerdata().ChokeSlam;
 		HashMap<UUID, Integer> Chopping = getWrestlerdata().Chopping;
 		HashMap<UUID, Integer> Suplex = getWrestlerdata().Suplex;
 		HashMap<UUID, Integer> BodyPress = getWrestlerdata().BodyPress;
@@ -176,7 +176,7 @@ public class WreSkillsData implements Serializable, Listener{
 		HashMap<UUID, Integer> SkillPoints = getWrestlerdata().SkillPoints;
 		
 		SkillPoints.put(p.getUniqueId(), SkillPoints.getOrDefault(p.getUniqueId(),1) + 1);
-		new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+		new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 
 
 	}
@@ -189,7 +189,7 @@ public class WreSkillsData implements Serializable, Listener{
 		Player p = (Player) e.getPlayer();
         String path = new File("").getAbsolutePath();
 
-		HashMap<UUID, Integer> Squall = getWrestlerdata().Squall;
+		HashMap<UUID, Integer> ChokeSlam = getWrestlerdata().ChokeSlam;
 		HashMap<UUID, Integer> Chopping = getWrestlerdata().Chopping;
 		HashMap<UUID, Integer> Suplex = getWrestlerdata().Suplex;
 		HashMap<UUID, Integer> BodyPress = getWrestlerdata().BodyPress;
@@ -202,13 +202,13 @@ public class WreSkillsData implements Serializable, Listener{
 			if(e.getNewLevel() > e.getOldLevel())
 			{
 				SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) + e.getNewLevel() - e.getOldLevel());
-				new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+				new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 		        
 			}
 			else
 			{	
 
-				Squall.put(p.getUniqueId(), 0);
+				ChokeSlam.put(p.getUniqueId(), 0);
 				Chopping.put(p.getUniqueId(), 0);
 				Suplex.put(p.getUniqueId(), 0);
 				BodyPress.put(p.getUniqueId(), 0);
@@ -217,7 +217,7 @@ public class WreSkillsData implements Serializable, Listener{
 				GiantSwing.put(p.getUniqueId(), 0);
 				ForeArmSmash.put(p.getUniqueId(), 0);
 				SkillPoints.put(p.getUniqueId(), e.getNewLevel() + ScrollPoint.sp.get(p.getUniqueId()));
-				new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+				new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 		        
 			}
 		}
@@ -241,7 +241,7 @@ public class WreSkillsData implements Serializable, Listener{
 				WreSkillsGui wrg = new WreSkillsGui();
 				
 
-				HashMap<UUID, Integer> Squall = getWrestlerdata().Squall;
+				HashMap<UUID, Integer> ChokeSlam = getWrestlerdata().ChokeSlam;
 				HashMap<UUID, Integer> Chopping = getWrestlerdata().Chopping;
 				HashMap<UUID, Integer> Suplex = getWrestlerdata().Suplex;
 				HashMap<UUID, Integer> BodyPress = getWrestlerdata().BodyPress;
@@ -253,44 +253,45 @@ public class WreSkillsData implements Serializable, Listener{
 				switch (ChatColor.stripColor((e.getCurrentItem().getItemMeta().getDisplayName())))
 				{
 					
-					case "Squall":{
+					case "ChokeSlam":{
 						if(e.getClick().equals(ClickType.LEFT)) {
-							if(SkillPoints.get(p.getUniqueId()) >= 1 && Squall.get(p.getUniqueId()) < 1){
-								Squall.put(p.getUniqueId(), Squall.get(p.getUniqueId()) +1);
+							if(SkillPoints.get(p.getUniqueId()) >= 1 && ChokeSlam.get(p.getUniqueId())<50){
+								ChokeSlam.put(p.getUniqueId(), ChokeSlam.get(p.getUniqueId()) +1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -1);
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}	
 						}
 						else if(e.getClick().equals(ClickType.RIGHT)) {
-							if(Squall.get(p.getUniqueId()) >= 1){
-								Squall.put(p.getUniqueId(), Squall.get(p.getUniqueId()) -1);
+							if(ChokeSlam.get(p.getUniqueId()) >= 1){
+								ChokeSlam.put(p.getUniqueId(), ChokeSlam.get(p.getUniqueId()) -1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) +1);
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
-							}
+							}	
 						}
 						else if(e.getClick().equals(ClickType.SHIFT_LEFT)) {
 							if(SkillPoints.get(p.getUniqueId())>0) {
-								if(Squall.get(p.getUniqueId())+SkillPoints.get(p.getUniqueId())>1) {
-									if(Squall.get(p.getUniqueId()) < 1) {
-										Squall.put(p.getUniqueId(), 1);
-										SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) - 1);										
-									}							
+								if(ChokeSlam.get(p.getUniqueId())+SkillPoints.get(p.getUniqueId())>50) {
+									if(ChokeSlam.get(p.getUniqueId())<50){
+										final int a = 50 - ChokeSlam.get(p.getUniqueId());
+										ChokeSlam.put(p.getUniqueId(), 50);
+										SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -  a);				
+									}
 								}
-								else {
-									Squall.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+Squall.get(p.getUniqueId()));
-									SkillPoints.put(p.getUniqueId(), 0);									
+								else{
+									ChokeSlam.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+ChokeSlam.get(p.getUniqueId()));
+									SkillPoints.put(p.getUniqueId(), 0);						
 								}
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}
 						}
 						else if(e.getClick().equals(ClickType.SHIFT_RIGHT)) {
-							if(Squall.get(p.getUniqueId())>0) {
-								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+Squall.get(p.getUniqueId()));
-								Squall.put(p.getUniqueId(), 0);
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+							if(ChokeSlam.get(p.getUniqueId())>0) {
+								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+ChokeSlam.get(p.getUniqueId()));
+								ChokeSlam.put(p.getUniqueId(), 0);
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}
 						}
@@ -301,7 +302,7 @@ public class WreSkillsData implements Serializable, Listener{
 							if(SkillPoints.get(p.getUniqueId()) >= 1){
 								Chopping.put(p.getUniqueId(), Chopping.get(p.getUniqueId()) +1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -1);
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}	
 						}
@@ -309,7 +310,7 @@ public class WreSkillsData implements Serializable, Listener{
 							if(Chopping.get(p.getUniqueId()) >= 1){
 								Chopping.put(p.getUniqueId(), Chopping.get(p.getUniqueId()) -1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) +1);
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}	
 						}
@@ -317,7 +318,7 @@ public class WreSkillsData implements Serializable, Listener{
 							if(SkillPoints.get(p.getUniqueId())>0) {
 								Chopping.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+Chopping.get(p.getUniqueId()));
 								SkillPoints.put(p.getUniqueId(), 0);
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}
 						}
@@ -325,7 +326,7 @@ public class WreSkillsData implements Serializable, Listener{
 							if(Chopping.get(p.getUniqueId())>0) {
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+Chopping.get(p.getUniqueId()));
 								Chopping.put(p.getUniqueId(), 0);
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}
 						}
@@ -335,7 +336,7 @@ public class WreSkillsData implements Serializable, Listener{
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Suplex.get(p.getUniqueId())<50){
 								Suplex.put(p.getUniqueId(), Suplex.get(p.getUniqueId()) +1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -1);
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}	
 						}
@@ -343,7 +344,7 @@ public class WreSkillsData implements Serializable, Listener{
 							if(Suplex.get(p.getUniqueId()) >= 1){
 								Suplex.put(p.getUniqueId(), Suplex.get(p.getUniqueId()) -1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) +1);
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}	
 						}
@@ -360,7 +361,7 @@ public class WreSkillsData implements Serializable, Listener{
 									Suplex.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+Suplex.get(p.getUniqueId()));
 									SkillPoints.put(p.getUniqueId(), 0);						
 								}
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}
 						}
@@ -368,7 +369,7 @@ public class WreSkillsData implements Serializable, Listener{
 							if(Suplex.get(p.getUniqueId())>0) {
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+Suplex.get(p.getUniqueId()));
 								Suplex.put(p.getUniqueId(), 0);
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}
 						}
@@ -378,7 +379,7 @@ public class WreSkillsData implements Serializable, Listener{
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && Tackle.get(p.getUniqueId())<1){
 								Tackle.put(p.getUniqueId(), Tackle.get(p.getUniqueId()) +1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -1);
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}	
 						}
@@ -386,7 +387,7 @@ public class WreSkillsData implements Serializable, Listener{
 							if(Tackle.get(p.getUniqueId()) >= 1){
 								Tackle.put(p.getUniqueId(), Tackle.get(p.getUniqueId()) -1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) +1);
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}	
 						}
@@ -403,7 +404,7 @@ public class WreSkillsData implements Serializable, Listener{
 									Tackle.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+Tackle.get(p.getUniqueId()));
 									SkillPoints.put(p.getUniqueId(), 0);						
 								}
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}
 						}
@@ -411,7 +412,7 @@ public class WreSkillsData implements Serializable, Listener{
 							if(Tackle.get(p.getUniqueId())>0) {
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+Tackle.get(p.getUniqueId()));
 								Tackle.put(p.getUniqueId(), 0);
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}
 						}
@@ -421,7 +422,7 @@ public class WreSkillsData implements Serializable, Listener{
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && GiantSwing.get(p.getUniqueId())<50){
 								GiantSwing.put(p.getUniqueId(), GiantSwing.get(p.getUniqueId()) +1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -1);
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}	
 						}
@@ -429,7 +430,7 @@ public class WreSkillsData implements Serializable, Listener{
 							if(GiantSwing.get(p.getUniqueId()) >= 1){
 								GiantSwing.put(p.getUniqueId(), GiantSwing.get(p.getUniqueId()) -1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) +1);
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}	
 						}
@@ -446,7 +447,7 @@ public class WreSkillsData implements Serializable, Listener{
 									GiantSwing.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+GiantSwing.get(p.getUniqueId()));
 									SkillPoints.put(p.getUniqueId(), 0);						
 								}
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}
 						}
@@ -454,7 +455,7 @@ public class WreSkillsData implements Serializable, Listener{
 							if(GiantSwing.get(p.getUniqueId())>0) {
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+GiantSwing.get(p.getUniqueId()));
 								GiantSwing.put(p.getUniqueId(), 0);
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}
 						}
@@ -464,7 +465,7 @@ public class WreSkillsData implements Serializable, Listener{
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && ArmThrow.get(p.getUniqueId())<50){
 								ArmThrow.put(p.getUniqueId(), ArmThrow.get(p.getUniqueId()) +1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -1);
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}	
 						}
@@ -472,7 +473,7 @@ public class WreSkillsData implements Serializable, Listener{
 							if(ArmThrow.get(p.getUniqueId()) >= 1){
 								ArmThrow.put(p.getUniqueId(), ArmThrow.get(p.getUniqueId()) -1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) +1);
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}	
 						}
@@ -489,7 +490,7 @@ public class WreSkillsData implements Serializable, Listener{
 									ArmThrow.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+ArmThrow.get(p.getUniqueId()));
 									SkillPoints.put(p.getUniqueId(), 0);						
 								}
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}
 						}
@@ -497,7 +498,7 @@ public class WreSkillsData implements Serializable, Listener{
 							if(ArmThrow.get(p.getUniqueId())>0) {
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+ArmThrow.get(p.getUniqueId()));
 								ArmThrow.put(p.getUniqueId(), 0);
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}
 						}
@@ -507,7 +508,7 @@ public class WreSkillsData implements Serializable, Listener{
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && ForeArmSmash.get(p.getUniqueId())<50){
 								ForeArmSmash.put(p.getUniqueId(), ForeArmSmash.get(p.getUniqueId()) +1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -1);
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}	
 						}
@@ -515,7 +516,7 @@ public class WreSkillsData implements Serializable, Listener{
 							if(ForeArmSmash.get(p.getUniqueId()) >= 1){
 								ForeArmSmash.put(p.getUniqueId(), ForeArmSmash.get(p.getUniqueId()) -1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) +1);
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}	
 						}
@@ -532,7 +533,7 @@ public class WreSkillsData implements Serializable, Listener{
 									ForeArmSmash.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+ForeArmSmash.get(p.getUniqueId()));
 									SkillPoints.put(p.getUniqueId(), 0);						
 								}
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}
 						}
@@ -540,7 +541,7 @@ public class WreSkillsData implements Serializable, Listener{
 							if(ForeArmSmash.get(p.getUniqueId())>0) {
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+ForeArmSmash.get(p.getUniqueId()));
 								ForeArmSmash.put(p.getUniqueId(), 0);
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}
 						}
@@ -550,7 +551,7 @@ public class WreSkillsData implements Serializable, Listener{
 							if(SkillPoints.get(p.getUniqueId()) >= 1 && BodyPress.get(p.getUniqueId())<50){
 								BodyPress.put(p.getUniqueId(), BodyPress.get(p.getUniqueId()) +1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -1);
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}	
 						}
@@ -558,7 +559,7 @@ public class WreSkillsData implements Serializable, Listener{
 							if(BodyPress.get(p.getUniqueId()) >= 1){
 								BodyPress.put(p.getUniqueId(), BodyPress.get(p.getUniqueId()) -1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) +1);
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}	
 						}
@@ -575,7 +576,7 @@ public class WreSkillsData implements Serializable, Listener{
 									BodyPress.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+BodyPress.get(p.getUniqueId()));
 									SkillPoints.put(p.getUniqueId(), 0);						
 								}
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}
 						}
@@ -583,23 +584,22 @@ public class WreSkillsData implements Serializable, Listener{
 							if(BodyPress.get(p.getUniqueId())>0) {
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+BodyPress.get(p.getUniqueId()));
 								BodyPress.put(p.getUniqueId(), 0);
-								new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+								new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 						        wrg.WreSkillsinv(p);
 							}
 						}
 						break;		}
 					case "SkillPoints":		{			
-						Squall.put(p.getUniqueId(), 0);
+						ChokeSlam.put(p.getUniqueId(), 0);
 						Chopping.put(p.getUniqueId(), 0);
 						Suplex.put(p.getUniqueId(), 0);
 						BodyPress.put(p.getUniqueId(), 0);
 						ArmThrow.put(p.getUniqueId(), 0);
 						Tackle.put(p.getUniqueId(), 0);
-						Squall.put(p.getUniqueId(), 0);
 						GiantSwing.put(p.getUniqueId(), 0);
 						ForeArmSmash.put(p.getUniqueId(), 0);
 						SkillPoints.put(p.getUniqueId(), p.getLevel() + ScrollPoint.sp.get(p.getUniqueId()));
-						new WreSkillsData(Squall, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
+						new WreSkillsData(ChokeSlam, Chopping, Suplex, BodyPress, Tackle, GiantSwing, ArmThrow, ForeArmSmash, SkillPoints).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
 				        wrg.WreSkillsinv(p);
 				        break;	
 				}}

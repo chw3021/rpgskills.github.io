@@ -30,9 +30,9 @@ public class MountainsTrees extends BlockPopulator {
 		    for (int i = 1; i < amount; i++) {
 		        int X = random.nextInt(15);
 		        int Z = random.nextInt(15);
-		        int Y = 100;
-		        for(int yi = 1; yi<3;yi++) {
-			        chunk.getBlock(X, Y+yi, Z).setType(Material.CRYING_OBSIDIAN);
+		        int Y = 98;
+		        for(int yi = 1; yi<5;yi++) {
+			        chunk.getBlock(X, Y+yi, Z).setType(Material.OBSIDIAN);
 		        }
 		        
 		    }
