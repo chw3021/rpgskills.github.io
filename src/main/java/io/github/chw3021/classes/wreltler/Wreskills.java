@@ -744,88 +744,82 @@ public class Wreskills extends Pak implements Serializable {
 			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
 			{
 
-				
-				if(sdcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-	            {
-	                double timer = (sdcooldown.get(p.getName())/1000 + sec) - System.currentTimeMillis()/1000; // geting time in seconds
-	                if(!(timer < 0)) // if timer is still more then 0 or 0
-	                {
-	                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use BodyPress").create());
-	                }
-	                else // if timer is done
-	                {
-	                    sdcooldown.remove(p.getName()); // removing player from HashMap
-	 					GiantSwingThrow(p);
-						p.setGliding(true);
-						p.swingMainHand();
-						p.swingOffHand();
-						p.playSound(p.getLocation(), Sound.ENTITY_HORSE_JUMP, 1.0f, 0f);
-	                    ArrayList<Location> line = new ArrayList<Location>();
-	                    Location l = gettargetblock(p,4);
-	                    AtomicInteger j = new AtomicInteger(0);
-	                    AtomicInteger b = new AtomicInteger(0);
-	                    for(double d = 0.1; d <= 4; d += 0.1) {
-		                    Location pl = p.getLocation().add(0, 1, 0);
-							Vector ltr = l.toVector().subtract(pl.toVector());
-							pl.add(ltr.normalize().multiply(d));
-							line.add(pl);
-	                    }
-	                    if(line.stream().filter(o -> !o.getBlock().isPassable()).findFirst().isPresent()) {
-		                    Location block =line.stream().filter(o -> !o.getBlock().isPassable()).findFirst().get();
-		                    for(int k=0; k<line.indexOf(block); k++) {
-			                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			             		@Override
-					                	public void run() 
-						                {
-									p.setGliding(true);	
-					                    	p.teleport(line.get(b.getAndIncrement()));
-					                    	p.setGliding(true);
-							            }
-				                	   }, j.incrementAndGet()/10); 
-								 }}
-	                    else {
-		                    	line.forEach(i -> {
-			                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			             		@Override
-					                	public void run() 
-						                {	
-									p.setGliding(true);
-			             					p.teleport(line.get(b.getAndIncrement()));
-					                    	p.setGliding(true);
-							            }
-				                	   }, j.incrementAndGet()/10); 
-								}); 
-	                    	}
-	                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() 
-			                {
-			                    p.playSound(p.getLocation(), Sound.ENTITY_GENERIC_BIG_FALL, 1.0f, 0f);
-			                    p.playSound(p.getLocation(), Sound.ENTITY_HOSTILE_BIG_FALL, 1.0f, 0f);
-				        		p.getWorld().spawnParticle(Particle.LARGE_SMOKE, p.getEyeLocation(), 100,4,4,4);
-								p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation(), 50, 2,2,2,0 ,Material.DIRT.createBlockData());
-			                	for (Entity e : p.getWorld().getNearbyEntities(l, 4, 4, 4))
-								{
-		                    		if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(sec)
+						.kname("공중삼각조르기")
+						.ename("FlyingTriangleChoke")
+						.slot(4)
+						.hm(gdcooldown)
+						.skillUse(() -> {
+							GiantSwingThrow(p);
+							p.setGliding(true);
+							p.swingMainHand();
+							p.swingOffHand();
+							p.playSound(p.getLocation(), Sound.ENTITY_HORSE_JUMP, 1.0f, 0f);
+		                    ArrayList<Location> line = new ArrayList<Location>();
+		                    Location l = gettargetblock(p,4);
+		                    AtomicInteger j = new AtomicInteger(0);
+		                    AtomicInteger b = new AtomicInteger(0);
+		                    for(double d = 0.1; d <= 4; d += 0.1) {
+			                    Location pl = p.getLocation().add(0, 1, 0);
+								Vector ltr = l.toVector().subtract(pl.toVector());
+								pl.add(ltr.normalize().multiply(d));
+								line.add(pl);
+		                    }
+		                    if(line.stream().filter(o -> !o.getBlock().isPassable()).findFirst().isPresent()) {
+			                    Location block =line.stream().filter(o -> !o.getBlock().isPassable()).findFirst().get();
+			                    for(int k=0; k<line.indexOf(block); k++) {
+				                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+				             		@Override
+						                	public void run() 
+							                {
+										p.setGliding(true);	
+						                    	p.teleport(line.get(b.getAndIncrement()));
+						                    	p.setGliding(true);
+								            }
+					                	   }, j.incrementAndGet()/10); 
+									 }}
+		                    else {
+			                    	line.forEach(i -> {
+				                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+				             		@Override
+						                	public void run() 
+							                {	
+										p.setGliding(true);
+				             					p.teleport(line.get(b.getAndIncrement()));
+						                    	p.setGliding(true);
+								            }
+					                	   }, j.incrementAndGet()/10); 
+									}); 
+		                    	}
+		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+				                @Override
+				                public void run() 
+				                {
+				                    p.playSound(p.getLocation(), Sound.ENTITY_GENERIC_BIG_FALL, 1.0f, 0f);
+				                    p.playSound(p.getLocation(), Sound.ENTITY_HOSTILE_BIG_FALL, 1.0f, 0f);
+					        		p.getWorld().spawnParticle(Particle.LARGE_SMOKE, p.getEyeLocation(), 100,4,4,4);
+									p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation(), 50, 2,2,2,0 ,Material.DIRT.createBlockData());
+				                	for (Entity e : p.getWorld().getNearbyEntities(l, 4, 4, 4))
 									{
-										LivingEntity le = (LivingEntity)e;
-										atk0(1.78, 1.64, p, le);
-					                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_STRONG, 1.0f, 0f);
+			                    		if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
+										{
+											LivingEntity le = (LivingEntity)e;
+											atk0(1.78, 1.64, p, le);
+						                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_STRONG, 1.0f, 0f);
+										}
 									}
-								}
-			                }
-	            	   }, j.incrementAndGet()/10); 
-		                sdcooldown.put(p.getName(), System.currentTimeMillis());
-	                }
-	            }
-	            else // if cooldown doesn't have players name in it
-	            {
-	                sdcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-	            }
+				                }
+		            	   }, j.incrementAndGet()/10); 
+						});
+				bd.execute();
+				
 	            
-			} // adding players name + current system time in miliseconds
+				} 
             
-		}}
+			}
+		}
 	}
 	
 	
