@@ -7,8 +7,10 @@ import io.github.chw3021.classes.Proficiency;
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.commons.Pak;
 import io.github.chw3021.commons.SkillBuilder;
+import io.github.chw3021.obtains.Obtained;
 import io.github.chw3021.party.Party;
 
+import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
 
 import com.google.common.collect.ArrayListMultimap;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bukkit.Bukkit;
@@ -34,19 +37,23 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Minecart;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.event.server.PluginEnableEvent;
@@ -80,8 +87,6 @@ public class Wreskills extends Pak implements Serializable {
 	private Multimap<String, Integer> gst = ArrayListMultimap.create();
 	private HashMap<UUID, UUID> gs = new HashMap<UUID, UUID>();
 	
-	private HashMap<Player, Integer> tr = new HashMap<Player, Integer>();
-	Holding hold = Holding.getInstance();
 	private String path = new File("").getAbsolutePath();
 	private WreSkillsData wsd;
 
@@ -137,7 +142,7 @@ public class Wreskills extends Pak implements Serializable {
 	
 	final private boolean quitTackle(Player p) {
 
-    	if(tacklet.containsKey(p.getUniqueId()) && !p.hasCooldown(CAREFUL)) {
+    	if(!p.hasCooldown(CAREFUL)) {
 
         	if(poundingt.containsKey(p.getUniqueId())) {
         		Bukkit.getScheduler().cancelTask(poundingt.get(p.getUniqueId()));
@@ -169,12 +174,11 @@ public class Wreskills extends Pak implements Serializable {
         	p.setVelocity(p.getEyeLocation().getDirection().clone().normalize().multiply(0.1));
         	Location tl = p.getLocation().clone().add(p.getEyeLocation().getDirection().clone().normalize().multiply(1.3));
 
-			tl.getWorld().spawnParticle(Particle.BLOCK, tl, 200,3,3,3,1,getBd(Material.DIRT_PATH));
-			tl.getWorld().spawnParticle(Particle.FALLING_DUST, tl, 200,3,3,3,0.1,getBd(Material.DIRT_PATH));
-			tl.getWorld().spawnParticle(Particle.ASH, tl, 100,3,3,3);
+			tl.getWorld().spawnParticle(Particle.BLOCK, tl, 100,1.5,1.5,1.5,1,getBd(Material.DIRT_PATH));
+			tl.getWorld().spawnParticle(Particle.ASH, tl, 100,1,1,1);
         	p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_STRONG, 1f, 0.2f);
         	p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_STRONG, 1f, 1.9f);
-            for (Entity e : tl.getWorld().getNearbyEntities(tl, 2, 2, 2))
+            for (Entity e : tl.getWorld().getNearbyEntities(tl, 1.5, 1.5, 1.5))
 			{
         		if (e instanceof Player) 
 				{
@@ -193,13 +197,13 @@ public class Wreskills extends Pak implements Serializable {
         			le.teleport(tl.clone().add(0, -1, 0));
                 	atk1(1.0, p, le);
                 	Holding.holding(p, le, 20l);
+                	le.setRotation(180, 0);
                 	le.playEffect(EntityEffect.ENTITY_DEATH);
-        			
+        			//le가 누워있는 부분 구현
 				}
 			}
             return true;
     	}
-    	p.setCooldown(CAREFUL, 3);
 		return false;
 	}
 	
@@ -208,10 +212,10 @@ public class Wreskills extends Pak implements Serializable {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec =5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024);
+		double sec =5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 		
-		if(ClassData.pc.get(p.getUniqueId()) == 8) {
+		if(ClassData.pc.get(p.getUniqueId()) == 8 && wsd.Tackle.getOrDefault(p.getUniqueId(), 0)>=1) {
 		if((p.isSneaking())&& (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK))
 		{
 			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
@@ -230,6 +234,7 @@ public class Wreskills extends Pak implements Serializable {
 						.skillUse(() -> {
 
 		 					GiantSwingThrow(p);
+		 			    	p.setCooldown(CAREFUL, 5);
 		 					
 		 					
 		                    int q =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
@@ -295,6 +300,7 @@ public class Wreskills extends Pak implements Serializable {
             
 		}
 	}
+
 	
 	
 	private HashMap<UUID, ArmorStand> sitdown = new HashMap<UUID, ArmorStand>();
@@ -309,7 +315,7 @@ public class Wreskills extends Pak implements Serializable {
 		}
 	}
 	
-	final private void sit(Player p, Integer tick) {
+	final private void sit(LivingEntity p, Integer tick) {
         if(sitdown.containsKey(p.getUniqueId())) {
         	Holding.ale(sitdown.get(p.getUniqueId())).remove();
         	sitdown.remove(p.getUniqueId());
@@ -320,11 +326,14 @@ public class Wreskills extends Pak implements Serializable {
 			pa.setInvisible(true);
 			pa.setInvulnerable(true);
 			pa.setSmall(true);
+			pa.setMarker(true);
+			pa.setBasePlate(false);
 			pa.setCollidable(false);
 			pa.setGravity(false);
 			pa.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
 			pa.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(),p.getName()));
 			pa.setMetadata("rob", new FixedMetadataValue(RMain.getInstance(),p.getName()));
+			pa.setBodyPose(new EulerAngle(Math.toRadians(90), 0, 0));
 			pa.addPassenger(p);
 			
 	        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -421,9 +430,9 @@ public class Wreskills extends Pak implements Serializable {
 	public void ArmThrow(PlayerSwapHandItemsEvent ev) 
 	{
 		Player p = ev.getPlayer();
-		double sec =4*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024);
+		double sec =4*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 		
-		if(ClassData.pc.get(p.getUniqueId()) == 8) {
+		if(ClassData.pc.get(p.getUniqueId()) == 8 && wsd.ArmThrow.getOrDefault(p.getUniqueId(), 0)>=1) {
 		if(!p.isSneaking())
 		{
 			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
@@ -525,7 +534,7 @@ public class Wreskills extends Pak implements Serializable {
 					             	@Override
 							                public void run() 
 					             				{	
-		             								atk0(0.97, wsd.ArmThrow.getOrDefault(p.getUniqueId(),0)*1.15, p, le);
+		             								atk0(0.97, wsd.ArmThrow.getOrDefault(p.getUniqueId(),0)*0.915, p, le);
 									            }
 						            }, j.incrementAndGet()/30+5); 
 		                    	});
@@ -542,9 +551,9 @@ public class Wreskills extends Pak implements Serializable {
 	public void ChokeSlam(PlayerSwapHandItemsEvent ev) 
 	{
 		Player p = ev.getPlayer();
-		double sec =4*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024);
+		double sec =4*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 		
-		if(ClassData.pc.get(p.getUniqueId()) == 8) {
+		if(ClassData.pc.get(p.getUniqueId()) == 8 && wsd.ChokeSlam.getOrDefault(p.getUniqueId(), 0)>=1) {
 		if(!p.isSneaking())
 		{
 			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
@@ -560,15 +569,14 @@ public class Wreskills extends Pak implements Serializable {
 						.hm(frcooldown)
 						.skillUse(() -> {
 							GiantSwingThrow(p);
-		                    final Location l = gettargetblock(p,2).clone().add(0, -0.5, 0);
 		                    final Location fl =p.getEyeLocation().clone().add(p.getEyeLocation().clone().getDirection().multiply(1.1));
 		                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.6f, 0);
 		                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.2f, 2.0f);
-			        		p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l, 10, 1.5, 0.5, 1.5);
+			        		p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, fl, 10, 1.5, 0.5, 1.5);
 
 		                    HashSet<LivingEntity> les = new HashSet<>();
 
-		                    for(Entity e : p.getWorld().getNearbyEntities(l, 1.5, 1.5, 1.5)) {
+		                    for(Entity e : p.getWorld().getNearbyEntities(fl, 1.5, 1.5, 1.5)) {
 			                    
 		                		if (e instanceof Player) 
 								{
@@ -593,14 +601,15 @@ public class Wreskills extends Pak implements Serializable {
 				                @Override
 				                public void run() 
 				                {
+				                    Location l = gettargetblock(p,2).clone().add(0, -0.5, 0);
 				                	if(!les.isEmpty()) {
 				                		les.forEach(le ->{
 											le.teleport(l);
-											atk0(0.9, wsd.ChokeSlam.get(p.getUniqueId())*0.9, p, le);
+											atk0(1.02, wsd.ChokeSlam.get(p.getUniqueId())*1.1, p, le);
 				                		});
 										p.playSound(l, Sound.ENTITY_HOSTILE_BIG_FALL, 1f, 0);
 										p.playSound(l, Sound.ENTITY_WIND_CHARGE_THROW, 1f, 0);
-										p.getWorld().spawnParticle(Particle.BLOCK, l, 100, 2,2,2,0 ,Material.DIRT.createBlockData());
+										p.getWorld().spawnParticle(Particle.BLOCK, l, 100, 2,2,2,0 ,getBd(Material.DIRT));
 				                	}
 				                }
 							}, 10);
@@ -615,12 +624,12 @@ public class Wreskills extends Pak implements Serializable {
 	public void Suplex(PlayerSwapHandItemsEvent ev) 
 	{
 		Player p = ev.getPlayer();
-		double sec =6*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024);
+		double sec =6*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
         
 		
 		
-		if(ClassData.pc.get(p.getUniqueId()) == 8) {
+		if(ClassData.pc.get(p.getUniqueId()) == 8 && wsd.Suplex.getOrDefault(p.getUniqueId(), 0)>=1) {
 			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData() && p.isSneaking())
 			{
 				ev.setCancelled(true);
@@ -636,7 +645,7 @@ public class Wreskills extends Pak implements Serializable {
 						GiantSwingThrow(p);
 	                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1, 0);
 	                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 2.0f);
-		        		p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, p.getLocation().getX(), p.getLocation().getY(), p.getLocation().getZ(), 4, 2, 0, 2);
+		        		p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, p.getLocation(), 15, 2, 0.2, 2);
 	                    ArrayList<Location> air = new ArrayList<Location>();
 	                    ArrayList<Location> sight = new ArrayList<Location>();
 	                    final Location l = gettargetblock(p,2);
@@ -716,7 +725,7 @@ public class Wreskills extends Pak implements Serializable {
 				             	@Override
 						                public void run() 
 				             				{	
-	             								atk0(0.97, wsd.Suplex.getOrDefault(p.getUniqueId(),0)*1.15, p, le);
+	             								atk0(1.27, wsd.Suplex.getOrDefault(p.getUniqueId(),0)*1.25, p, le);
 								            }
 					            }, j.incrementAndGet()/30+5); 
 	                    	});
@@ -729,16 +738,17 @@ public class Wreskills extends Pak implements Serializable {
 	}
 	
 	
-	public void BodyPress(PlayerInteractEvent ev) 
+	@SuppressWarnings("deprecation")
+	public void GuillotineChoke(PlayerInteractEvent ev) 
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec =5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024);
+		double sec =5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
         
 		
 		
-		if(ClassData.pc.get(p.getUniqueId()) == 8) {
+		if(ClassData.pc.get(p.getUniqueId()) == 8 && wsd.GuillotineChoke.getOrDefault(p.getUniqueId(), 0)>=1) {
 		if(!(p.isSneaking())&& !p.isOnGround() && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK))
 		{
 			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
@@ -747,8 +757,8 @@ public class Wreskills extends Pak implements Serializable {
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
 						.cooldown(sec)
-						.kname("공중삼각조르기")
-						.ename("FlyingTriangleChoke")
+						.kname("앞목조르기")
+						.ename("GuillotineChoke")
 						.slot(4)
 						.hm(gdcooldown)
 						.skillUse(() -> {
@@ -758,60 +768,65 @@ public class Wreskills extends Pak implements Serializable {
 							p.swingOffHand();
 							p.playSound(p.getLocation(), Sound.ENTITY_HORSE_JUMP, 1.0f, 0f);
 		                    ArrayList<Location> line = new ArrayList<Location>();
-		                    Location l = gettargetblock(p,4);
+		                    final Location tl = gettargetblock(p,2);
 		                    AtomicInteger j = new AtomicInteger(0);
-		                    AtomicInteger b = new AtomicInteger(0);
-		                    for(double d = 0.1; d <= 4; d += 0.1) {
-			                    Location pl = p.getLocation().add(0, 1, 0);
-								Vector ltr = l.toVector().subtract(pl.toVector());
-								pl.add(ltr.normalize().multiply(d));
-								line.add(pl);
+		                    final Location pl = p.getLocation().add(0, 1, 0);
+		                    for(double d = 0.1; d <= tl.distance(pl); d += 0.1) {
+								Vector ltr = tl.clone().toVector().subtract(pl.clone().toVector());
+								if(pl.clone().add(ltr.normalize().multiply(d)).getBlock().isPassable()) {
+									line.add(pl.clone().add(ltr.normalize().multiply(d)));
+								}
 		                    }
-		                    if(line.stream().filter(o -> !o.getBlock().isPassable()).findFirst().isPresent()) {
-			                    Location block =line.stream().filter(o -> !o.getBlock().isPassable()).findFirst().get();
-			                    for(int k=0; k<line.indexOf(block); k++) {
-				                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				             		@Override
-						                	public void run() 
-							                {
+		                    AtomicBoolean ab = new AtomicBoolean(false);
+		                    for(Location l : line) {
+		                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		                    		
+		                    		@Override
+				                	public void run() 
+					                {
 										p.setGliding(true);	
-						                    	p.teleport(line.get(b.getAndIncrement()));
-						                    	p.setGliding(true);
-								            }
-					                	   }, j.incrementAndGet()/10); 
-									 }}
-		                    else {
-			                    	line.forEach(i -> {
-				                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				             		@Override
-						                	public void run() 
-							                {	
+				                    	p.teleport(l);
 										p.setGliding(true);
-				             					p.teleport(line.get(b.getAndIncrement()));
-						                    	p.setGliding(true);
-								            }
-					                	   }, j.incrementAndGet()/10); 
-									}); 
-		                    	}
-		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() 
-				                {
-				                    p.playSound(p.getLocation(), Sound.ENTITY_GENERIC_BIG_FALL, 1.0f, 0f);
-				                    p.playSound(p.getLocation(), Sound.ENTITY_HOSTILE_BIG_FALL, 1.0f, 0f);
-					        		p.getWorld().spawnParticle(Particle.LARGE_SMOKE, p.getEyeLocation(), 100,4,4,4);
-									p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation(), 50, 2,2,2,0 ,Material.DIRT.createBlockData());
-				                	for (Entity e : p.getWorld().getNearbyEntities(l, 4, 4, 4))
-									{
-			                    		if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
-										{
-											LivingEntity le = (LivingEntity)e;
-											atk0(1.78, 1.64, p, le);
-						                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_STRONG, 1.0f, 0f);
+										
+										if(!p.getWorld().getNearbyEntities(l, 0.5, 0.5, 0.5).isEmpty()) {
+											ab.set(true);
+						                    p.playSound(p.getLocation(), Sound.ITEM_CROSSBOW_LOADING_START, 1.0f, 0f);
+							        		p.getWorld().spawnParticle(Particle.SNEEZE, l, 4);
+						                    Location gl = l.clone();
+
+											for (Entity e : l.getWorld().getNearbyEntities(l, 0.5, 0.5, 0.5))
+											{
+					                    		if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
+												{
+													LivingEntity le = (LivingEntity)e;
+													le.teleport(l);
+													Holding.superholding(p, le, 55l);
+													gl = le.getEyeLocation().clone().add(0, -0.2, 0).setDirection(l.getDirection());
+													Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
+													{
+									             	@Override
+											                public void run() 
+									             			{	
+					             								atk0(1.6, wsd.GuillotineChoke.getOrDefault(p.getUniqueId(),0)*1.65, p, le);
+					             								le.playHurtAnimation(0);
+													        }
+										            }, 35);
+												}
+											}
+											p.teleport(gl);
+											Holding.holding(null, p, 35l);
+											sit(p,35);
+											
+											return;
 										}
-									}
-				                }
-		            	   }, j.incrementAndGet()/10); 
+					                }
+		                    	}, j.incrementAndGet()/10); 
+	                    		if(ab.get()) {
+	                    			break;
+	                    		}
+		                    }
+		                    
+		                    
 						});
 				bd.execute();
 				
@@ -823,55 +838,6 @@ public class Wreskills extends Pak implements Serializable {
 	}
 	
 	
-	public void Chopping(EntityDamageByEntityEvent d) 
-	{
-		if(d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity && !d.isCancelled()) 
-		{
-		Player p = (Player)d.getDamager();
-		LivingEntity le = (LivingEntity)d.getEntity();
-		Location el =le.getLocation();
-		el.setY(el.getY()+1);
-
-        
-		
-		
-		
-		if(ClassData.pc.get(p.getUniqueId()) == 8) {
-			
-				if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
-				{
-					d.setDamage(d.getDamage()*(1+wsd.Chopping.get(p.getUniqueId())*0.035));
-					p.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
-					p.playSound(p.getLocation(), Sound.ENTITY_SLIME_JUMP, 1.0f, 0f);
-				}
-		}
-		}
-
-		if(d.getDamager() instanceof Arrow && d.getEntity() instanceof EnderDragon) 
-		{
-			Arrow ar = (Arrow)d.getDamager();
-			EnderDragon le = (EnderDragon)d.getEntity();
-			if(ar.getShooter() instanceof Player) {
-				Player p = (Player)ar.getShooter();
-				Location el =le.getLocation();
-				el.setY(el.getY()+1);
-
-		        
-				
-				
-				
-				if(ClassData.pc.get(p.getUniqueId()) == 8) {
-					
-						if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
-						{
-							d.setDamage(d.getDamage()*(1+wsd.Chopping.get(p.getUniqueId())*0.035));
-							p.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
-							p.playSound(p.getLocation(), Sound.ENTITY_SLIME_JUMP, 1.0f, 0f);
-						}
-				}
-			}
-		}
-	}
 	final private void GiantSwingThrow(Player p) {
 		if(!gs.containsKey(p.getUniqueId())) {
 			return;
@@ -886,10 +852,11 @@ public class Wreskills extends Pak implements Serializable {
 		gst.removeAll(p.getName());
 		gs.remove(p.getUniqueId());
 		
-		p.playSound(p.getLocation(), Sound.ENTITY_EGG_THROW, 1, 0);
-        p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_SHOOT, 1, 0);
-        atk0(2.1, wsd.GiantSwing.get(p.getUniqueId())*1.6, p, le);
-        le.setVelocity(p.getEyeLocation().clone().getDirection().normalize().multiply(0.6));
+		p.playSound(p.getLocation(), Sound.ENTITY_EGG_THROW, 0.8f, 0);
+        p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 0.6f, 0);
+        le.setGliding(true);
+        le.setVelocity(BlockFace.DOWN.getDirection().multiply(1));
+		p.getWorld().spawnParticle(Particle.ASH, le.getLocation(), 50);
      	for(Entity e: le.getWorld().getNearbyEntities(le.getLocation(),4, 4, 4)) {
      		if(e!=p && e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
  			LivingEntity lle = (LivingEntity) e;
@@ -902,7 +869,7 @@ public class Wreskills extends Pak implements Serializable {
 						}
 					}
 			}
-            atk0(2.1, wsd.GiantSwing.get(p.getUniqueId())*1.6, p, lle);
+	        atk0(2.2, wsd.GiantSwing.get(p.getUniqueId())*1.99, p, lle);
      		}
      	}
          	
@@ -919,378 +886,221 @@ public class Wreskills extends Pak implements Serializable {
 		LivingEntity le = (LivingEntity)d.getEntity();
 		
 		
-		if(ClassData.pc.get(p.getUniqueId()) == 8) {
-		double sec = 15*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024);;
-			if(p.getAttackCooldown()==1) 
-			{	
-				if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData() && (p.isSneaking()) && !(p.hasCooldown(Material.YELLOW_TERRACOTTA)) && !d.isCancelled())
-					{
-					if(gdcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-			        {
-			            double timer = (gdcooldown.get(p.getName())/1000 + sec) - System.currentTimeMillis()/1000; // geting time in seconds
-			            if(!(timer < 0)) // if timer is still more then 0 or 0
-			            {
-			            	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use GiantSwing").create());
-				        }
-			            else // if timer is done
-			            {
-							gdcooldown.remove(p.getName()); // removing player from HashMap
-							
-		 					GiantSwingThrow(p);
-							
-							if(le instanceof Player) {
-								Player p1 = (Player) le;
-								if(Party.hasParty(p) && Party.hasParty(p1))	{
-									if(Party.getParty(p).equals(Party.getParty(p1)))
-										{
-											return;
-										}
-									}
-							}
-							gs.put(p.getUniqueId(), le.getUniqueId());
-							d.setDamage(d.getDamage()*1.6);
-							p.playSound(p.getLocation(), Sound.ITEM_TRIDENT_RIPTIDE_2, 1.0f,0f);
-							ArrayList<Location> swing = new ArrayList<Location>();
-							ArrayList<Location> eye = new ArrayList<Location>();
-							AtomicInteger j = new AtomicInteger(0);
-							AtomicInteger k = new AtomicInteger(0);
-							for(double i = 0; i<Math.PI*7; i += Math.PI/90) {
-								Location l1 = p.getLocation().add(0, -1, 0);
-								Location l2 = p.getLocation();
-								Location e = l2.setDirection(l2.getDirection().rotateAroundY(i).normalize());
-								Location s = l1.setDirection(l1.getDirection().rotateAroundY(i).normalize());
-								s.add(s.getDirection().multiply(2));
-								swing.add(s);
-								eye.add(e);
-							}
-							Holding.superholding(p, le, (long) 100);
-							p.getWorld().spawnParticle(Particle.ANGRY_VILLAGER, le.getLocation(), 5, 1, 0, 1);
-							swing.forEach(l -> {
-								int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
+		if(ClassData.pc.get(p.getUniqueId()) == 8 && wsd.GiantSwing.getOrDefault(p.getUniqueId(), 0)>=1) {
+			double sec = 26*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+
+			SkillBuilder bd = new SkillBuilder()
+				.player(p)
+				.cooldown(sec)
+				.kname("풍차돌리기")
+				.ename("GiantSwing")
+				.slot(5)
+				.hm(smcooldown)
+				.skillUse(() -> {
+ 					GiantSwingThrow(p);
+					
+					if(le instanceof Player) {
+						Player p1 = (Player) le;
+						if(Party.hasParty(p) && Party.hasParty(p1))	{
+							if(Party.getParty(p).equals(Party.getParty(p1)))
 								{
-						     	@Override
-				                public void run() 
-				     				{	
-				                     	le.teleport(l);
-				                    	p.teleport(eye.get(k.getAndIncrement()));
-					                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.2f, 0);
-						            }
-						        }, j.incrementAndGet()/10); 
-								gst.put(p.getName(), task);
-							});
-							int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
-							{
-						 	@Override
-						            public void run() 
-						 				{	
-						 					GiantSwingThrow(p);
-						 				}
-							}, j.incrementAndGet()/10+1);
-							gst.put(p.getName(), task);
-							
-							gdcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-			            }
-			        }
-			        else // if cooldown doesn't have players name in it
-			        {
-	 					GiantSwingThrow(p);
-						
-						if(le instanceof Player) {
-							Player p1 = (Player) le;
-							if(Party.hasParty(p) && Party.hasParty(p1))	{
-								if(Party.getParty(p).equals(Party.getParty(p1)))
-									{
-										return;
-									}
+									return;
 								}
-						}
-						gs.put(p.getUniqueId(), le.getUniqueId());
-						d.setDamage(d.getDamage()*1.6);
-						p.playSound(p.getLocation(), Sound.ITEM_TRIDENT_RIPTIDE_2, 1.0f,0f);
-						ArrayList<Location> swing = new ArrayList<Location>();
-						ArrayList<Location> eye = new ArrayList<Location>();
-						AtomicInteger j = new AtomicInteger(0);
-						AtomicInteger k = new AtomicInteger(0);
-						for(double i = 0; i<Math.PI*7; i += Math.PI/90) {
-							Location l1 = p.getLocation().add(0, -1, 0);
-							Location l2 = p.getLocation();
-							Location e = l2.setDirection(l2.getDirection().rotateAroundY(i).normalize());
-							Location s = l1.setDirection(l1.getDirection().rotateAroundY(i).normalize());
-							s.add(s.getDirection().multiply(2));
-							swing.add(s);
-							eye.add(e);
-						}
-						Holding.superholding(p, le, (long) 100);
-						p.getWorld().spawnParticle(Particle.ANGRY_VILLAGER, le.getLocation(), 5, 1, 0, 1);
-						swing.forEach(l -> {
-							int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
-							{
-					     	@Override
-			                public void run() 
-			     				{	
-			                     	le.teleport(l);
-			                    	p.teleport(eye.get(k.getAndIncrement()));
-				                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.2f, 0);
-					            }
-					        }, j.incrementAndGet()/10); 
-							gst.put(p.getName(), task);
-						});
-						int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
-						{
-					 	@Override
-					            public void run() 
-					 				{	
-					 					GiantSwingThrow(p);
-					 				}
-						}, j.incrementAndGet()/10+1);
-						gst.put(p.getName(), task);
-						
-			            gdcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-			        }
+							}
 					}
-				}
+					gs.put(p.getUniqueId(), le.getUniqueId());
+					p.playSound(p.getLocation(), Sound.ITEM_TRIDENT_RIPTIDE_2, 1.0f,0f);
+					ArrayList<Location> swing = new ArrayList<Location>();
+					ArrayList<Location> eye = new ArrayList<Location>();
+					AtomicInteger j = new AtomicInteger(0);
+					AtomicInteger k = new AtomicInteger(0);
+					final Location l1 = p.getLocation().clone().add(0, -1, 0);
+					final Location l2 = p.getLocation().clone();
+					for(double i = Math.PI/90; i<Math.PI*8; i += Math.PI/90) {
+						Location s = l1.clone().setDirection(l1.getDirection().clone().rotateAroundY(i).normalize().multiply(2));
+						Location e = l2.clone().setDirection(l2.getDirection().clone().rotateAroundY(i).normalize());
+						swing.add(s);
+						eye.add(e);
+					}
+					p.getWorld().spawnParticle(Particle.ANGRY_VILLAGER, le.getLocation(), 5, 1, 0, 1);
+					swing.forEach(l -> {
+						int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
+						{
+				     	@Override
+		                public void run() 
+		     				{	
+		                     	le.teleport(l);
+		    					Holding.superholding(p, le, 40l);
+		                    	p.teleport(eye.get(k.getAndIncrement()));
+			                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.2f, 0);
+				            }
+				        }, j.incrementAndGet()/10); 
+						gst.put(p.getName(), task);
+					});
+					int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
+					{
+				 	@Override
+				            public void run() 
+				 				{	
+				 					GiantSwingThrow(p);
+				 				}
+					}, j.incrementAndGet()/10+1);
+					gst.put(p.getName(), task);
+					
+				});
+				bd.execute();
+					
+				
 			}
 		}
 	}
 
-
+	final private Integer roll(Player p) {
 		
-	public void ULT(PlayerDropItemEvent ev)        
+		final Location pfl = p.getLocation().clone();
+		final Vector pv = p.getEyeLocation().getDirection().clone().normalize();
+		final Vector axis = pv.rotateAroundY(Math.PI/2);
+		double rotationStep = (2 * Math.PI) / 40d;
+		ArrayList<Location> line = new ArrayList<>();
+		
+		double angle = 0;
+		double blocked = 0;
+		for(double doub = 0; doub <4; doub+=0.1) {
+			if(!pfl.clone().add(pv.clone().multiply(blocked)).getBlock().isPassable()){
+				line.add(pfl.clone().add(pv.clone().multiply(blocked)).setDirection(pv.rotateAroundY(angle).rotateAroundAxis(axis, angle)));
+			}
+			else {
+				blocked = doub;
+				line.add(pfl.clone().add(pv.clone().multiply(doub)).setDirection(pv.rotateAroundY(angle).rotateAroundAxis(axis, angle)));
+			}
+			angle =+ rotationStep;
+		}
+		
+		AtomicInteger j = new AtomicInteger();
+
+		p.getWorld().spawn(p.getLocation().clone(), ArmorStand.class, pa ->{
+			pa.setRemoveWhenFarAway(true);
+			pa.setInvisible(true);
+			pa.setInvulnerable(true);
+			pa.setSmall(true);
+			pa.setMarker(true);
+			pa.setBasePlate(false);
+			pa.setCollidable(false);
+			pa.setGravity(false);
+			pa.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
+			pa.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(),p.getName()));
+			pa.setMetadata("rob", new FixedMetadataValue(RMain.getInstance(),p.getName()));
+			pa.addPassenger(p);
+
+			
+			line.forEach(l ->{
+		        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		            @Override
+		            public void run() {
+	                    p.playSound(p.getLocation(), Sound.BLOCK_HEAVY_CORE_STEP, 0.1f, 0);
+	                    p.playSound(p.getLocation(), Sound.BLOCK_BASALT_STEP, 0.1f, 0);
+						p.getWorld().spawnParticle(Particle.WARPED_SPORE, l, 5);
+						p.getWorld().spawnParticle(Particle.SPORE_BLOSSOM_AIR, l, 5);
+						p.getWorld().spawnParticle(Particle.CRIMSON_SPORE, l, 5);
+						p.getWorld().spawnParticle(Particle.CHERRY_LEAVES, l, 5);
+						p.getWorld().spawnParticle(Particle.MYCELIUM, l, 5);
+		            	pa.teleport(l);
+		    			pa.setHeadPose(new EulerAngle(Math.toRadians(j.get()), 0, 0));
+		    			pa.setBodyPose(new EulerAngle(Math.toRadians(j.get()), 0, 0));
+		    			pa.addPassenger(p);
+		            	
+		            }
+		        }, j.getAndIncrement()); 
+			});
+	        
+	        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	            @Override
+	            public void run() {
+	            	pa.remove();
+	            }
+	        }, j.get()); 
+		});
+		
+		return j.get();
+		
+	}
+
+
+	public void ULT(PlayerItemHeldEvent ev)
     {
 		Player p = (Player)ev.getPlayer();
-		Item ii = ev.getItemDrop();
-		ItemStack is = ii.getItemStack();
-        
+		if(!isCombat(p)) {
+			return;
+		}
+		ItemStack is = p.getInventory().getItemInMainHand();
 		
-		
-		
-		
-			if(ClassData.pc.get(p.getUniqueId()) == 8 && (is.getType().name().contains("BANNER_PATTERN"))&& (is.hasItemMeta()) && is.getItemMeta().hasCustomModelData()  && p.isSneaking()&& Proficiency.getpro(p) >=1)
+			if(ClassData.pc.get(p.getUniqueId()) == 8 && ev.getNewSlot()==3 && (is.getType().name().contains("BANNER_PATTERN"))&& (is.hasItemMeta()) && is.getItemMeta().hasCustomModelData()  && p.isSneaking()&& Proficiency.getpro(p) >=1)
 			{
 				ev.setCancelled(true);
-				if(sultcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-	            {
-	                double timer = (sultcooldown.get(p.getName())/1000 + 60) - System.currentTimeMillis()/1000; // geting time in seconds
-	                if(!(timer < 0)) // if timer is still more then 0 or 0
-	                {
-	                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use FinishMove").create());
-	                }
-	                else // if timer is done
-	                {
-	                    sultcooldown.remove(p.getName()); // removing player from HashMap
-	                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1, 0);
-	                    p.playSound(p.getLocation(), Sound.AMBIENT_WARPED_FOREST_ADDITIONS, 1.0f, 2.0f);
-		        		p.getWorld().spawnParticle(Particle.LARGE_SMOKE, p.getLocation().getX(), p.getLocation().getY(), p.getLocation().getZ(), 40, 2, 0, 2);
-		        		AtomicInteger j = new AtomicInteger();
-		        		ArrayList<Location> drop = new ArrayList<>();
-		        		for(int i=50; i>0; i -= 1) {
-		        			Location plc = p.getLocation().clone();
-		        			drop.add(plc.add(0, i, 0));
-		        		}
-	                    Location l = gettargetblock(p,2);
+				SkillBuilder bd = new SkillBuilder()
+						.player(p)
+						.cooldown(60/Proficiency.getpro(p)*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d))
+						.kname("다리얽어비틀기")
+						.ename("HeelHook")
+						.slot(6)
+						.hm(sultcooldown)
+						.skillUse(() -> {
+							
+							int delay = roll(p);
 
-		        		p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l, 500, 6, 2, 6);
-	                    for(Entity e : p.getWorld().getNearbyEntities(l, 6, 5, 6)) {
-	                    	if(e instanceof LivingEntity && e!=p&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
-	                			LivingEntity le = (LivingEntity)e;
-	                    		if(le instanceof Player) {
-									Player p1 = (Player) e;
-									if(Party.hasParty(p) && Party.hasParty(p1))	{
-										if(Party.getParty(p).equals(Party.getParty(p1)))
-											{
-												continue;
-											}
-										}
-		                    		else {
-		                    				Holding.superholding(p, le, (long) 100);
-						                    le.teleport(l);
-		                			}
-	                    		}
-	                    		else {
-	                				Holding.superholding(p, le, (long) 100);
-				                    le.teleport(l);
-	                    		}
-	                		}
-	                	}
-
-						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
-						{
-		             	@Override
-				                public void run() 
-		             				{	
-					                    p.playSound(p.getLocation(), Sound.ENTITY_DOLPHIN_JUMP, 1, 2);
-					                    p.playSound(p.getLocation(), Sound.ENTITY_HORSE_JUMP, 1, 2);
-						            }
-			            }, 10);
-	                    drop.forEach(dl -> {
+		                    p.playSound(p.getLocation(), Sound.ENTITY_ARMADILLO_ROLL, 0.8f, 0);
+		                    HashSet<LivingEntity> les = new HashSet<>();
+		                    
 							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
 							{
-			             	@Override
-					                public void run() 
-			             				{	
-			             					p.teleport(dl);
-						                    p.playSound(p.getLocation(), Sound.BLOCK_SNOW_FALL, 0.3f, 2f);
-						                    p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 0.3f, 2f);
-						                    p.playSound(p.getLocation(), Sound.ENTITY_HORSE_BREATHE, 1, 2);
-						                    p.spawnParticle(Particle.CRIT, p.getLocation(), 1);
-							            }
-				            }, j.incrementAndGet()/2+10);
-	                    });
-						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
-						{
-		             	@Override
+								@Override
 				                public void run() 
-		             				{	
-				                    p.playSound(p.getLocation(), Sound.BLOCK_BELL_RESONATE, 1, 2);
-				                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 1, 0);
-				                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_STRONG, 1, 0);
-				                    p.playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1, 0);
-				                    p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_HURT, 1, 0);
-				                    p.spawnParticle(Particle.CRIT, l, 500,6,2,6);
-				                    p.spawnParticle(Particle.LARGE_SMOKE, l, 500,6,2,6);
-				                    p.spawnParticle(Particle.BLOCK, l, 500,6,2,6, p.getLocation().getBlock().getBlockData());
-		             					for(Entity e : p.getWorld().getNearbyEntities(l, 6, 5, 6)) {
-		                            	if(e instanceof LivingEntity && e!=p&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
-		                        			LivingEntity le = (LivingEntity)e;
-		                            		if(le instanceof Player) {
+		             				{
+										for(Entity e : p.getWorld().getNearbyEntities(p.getLocation(), 1.5, 1.5, 1.5)) {
+		                            		if(e instanceof Player) {
 		        								Player p1 = (Player) e;
 		        								if(Party.hasParty(p) && Party.hasParty(p1))	{
 		        									if(Party.getParty(p).equals(Party.getParty(p1)))
-		        										{
-		        											continue;
-		        										}
-		        									}
-		        	                    		else {
-		        	             					
-		        	             					p.swingMainHand();
-
-		        	        						atk1(19.8, p, le);
-		        									
-		        	                    			p.leaveVehicle();
-		        	                			}
-		                            		}
-		                            		else {
-		    	             					
-		    	             					p.swingMainHand();
-
-	        	        						atk1(19.8, p, le);
-		    	                    			p.leaveVehicle();
-		                            		}
-		                        		}
-		                        	}
-						            }
-			            }, j.incrementAndGet()/2+10);
-		                sultcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-		            
-	                
-	                }
-	            }
-	            else // if cooldown doesn't have players name in it
-	            {
-                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1, 0);
-                    p.playSound(p.getLocation(), Sound.AMBIENT_WARPED_FOREST_ADDITIONS, 1.0f, 2.0f);
-	        		p.getWorld().spawnParticle(Particle.LARGE_SMOKE, p.getLocation().getX(), p.getLocation().getY(), p.getLocation().getZ(), 40, 2, 0, 2);
-	        		AtomicInteger j = new AtomicInteger();
-	        		ArrayList<Location> drop = new ArrayList<>();
-	        		for(int i=50; i>0; i -= 1) {
-	        			Location plc = p.getLocation().clone();
-	        			drop.add(plc.add(0, i, 0));
-	        		}
-                    Location l = gettargetblock(p,2);
-
-	        		p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l, 500, 6, 2, 6);
-                    for(Entity e : p.getWorld().getNearbyEntities(l, 6, 5, 6)) {
-                    	if(e instanceof LivingEntity && e!=p&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
-                			LivingEntity le = (LivingEntity)e;
-                    		if(le instanceof Player) {
-								Player p1 = (Player) e;
-								if(Party.hasParty(p) && Party.hasParty(p1))	{
-									if(Party.getParty(p).equals(Party.getParty(p1)))
-										{
-											continue;
-										}
-									}
-	                    		else {
-	                    				Holding.superholding(p, le, (long) 100);
-					                    le.teleport(l);
-	                			}
-                    		}
-                    		else {
-                				Holding.superholding(p, le, (long) 100);
-			                    le.teleport(l);
-                    		}
-                		}
-                	}
-
-					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
-					{
-	             	@Override
-			                public void run() 
-	             				{	
-				                    p.playSound(p.getLocation(), Sound.ENTITY_DOLPHIN_JUMP, 1, 2);
-				                    p.playSound(p.getLocation(), Sound.ENTITY_HORSE_JUMP, 1, 2);
-					            }
-		            }, 10);
-                    drop.forEach(dl -> {
-						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
-						{
-		             	@Override
-				                public void run() 
-		             				{	
-		             					p.teleport(dl);
-					                    p.playSound(p.getLocation(), Sound.BLOCK_SNOW_FALL, 0.3f, 2f);
-					                    p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 0.3f, 2f);
-					                    p.playSound(p.getLocation(), Sound.ENTITY_HORSE_BREATHE, 1, 2);
-					                    p.spawnParticle(Particle.CRIT, p.getLocation(), 1);
-						            }
-			            }, j.incrementAndGet()/2+10);
-                    });
-					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
-					{
-	             	@Override
-			                public void run() 
-	             				{	
-			                    p.playSound(p.getLocation(), Sound.BLOCK_BELL_RESONATE, 1, 2);
-			                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 1, 0);
-			                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_STRONG, 1, 0);
-			                    p.playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1, 0);
-			                    p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_HURT, 1, 0);
-			                    p.spawnParticle(Particle.CRIT, l, 500,6,2,6);
-			                    p.spawnParticle(Particle.LARGE_SMOKE, l, 500,6,2,6);
-			                    p.spawnParticle(Particle.BLOCK, l, 500,6,2,6, p.getLocation().getBlock().getBlockData());
-	             					for(Entity e : p.getWorld().getNearbyEntities(l, 6, 5, 6)) {
-	                            	if(e instanceof LivingEntity && e!=p&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
-	                        			LivingEntity le = (LivingEntity)e;
-	                            		if(le instanceof Player) {
-	        								Player p1 = (Player) e;
-	        								if(Party.hasParty(p) && Party.hasParty(p1))	{
-	        									if(Party.getParty(p).equals(Party.getParty(p1)))
 	        										{
 	        											continue;
 	        										}
 	        									}
-	        	                    		else {
-	        	             					
-	        	             					p.swingMainHand();
+		                            		}
+			                            	if(e instanceof LivingEntity && e!=p&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
+			                        			LivingEntity le = (LivingEntity)e;
+			                        			les.add(le);
+			                        			Holding.superholding(p, le, 100l);
+			                        		}
+			                        	}
+	                	            	if(!les.isEmpty()) {
+	            		                    p.playSound(p.getLocation(), Sound.BLOCK_VAULT_ACTIVATE, 0.8f, 2);
+	            		                    p.playSound(p.getLocation(), Sound.BLOCK_VAULT_CLOSE_SHUTTER, 0.8f, 0);
+	            							p.getWorld().spawnParticle(Particle.VAULT_CONNECTION, p.getLocation(), 100,1,1,1);
+	                	            	}
+						            }
+				            }, delay);
 
-	        	        						atk1(19.8, p, le);
-	        									
-	        	                    			p.leaveVehicle();
-	        	                			}
-	                            		}
-	                            		else {
-	    	             					
-	    	             					p.swingMainHand();
-
-        	        						atk1(19.8, p, le);
-	    	                    			p.leaveVehicle();
-	                            		}
-	                        		}
-	                        	}
-					            }
-		            }, j.incrementAndGet()/2+10);
-	                sultcooldown.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-	            }
+                	        
+                	        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                	            @Override
+                	            public void run() {
+                	            	if(les.isEmpty()) {
+                	            		return;
+                	            	}
+        		                    p.playSound(p.getLocation(), Sound.BLOCK_BONE_BLOCK_BREAK, 0.8f, 2);
+        		                    p.playSound(p.getLocation(), Sound.ENTITY_SKELETON_STEP, 0.34f, 0);
+        		                    p.playSound(p.getLocation(), Sound.ENTITY_SKELETON_HURT, 0.34f, 0.6f);
+        		                    p.playSound(p.getLocation(), Sound.ENTITY_WITHER_SKELETON_HURT, 0.34f, 0.6f);
+        							p.getWorld().spawnParticle(Particle.CRIT, p.getLocation(), 100,1,1,1);
+        							p.getWorld().spawnParticle(Particle.ENCHANTED_HIT, p.getLocation(), 100,1,1,1);
+        							p.getWorld().spawnParticle(Particle.WHITE_ASH, p.getLocation(), 100,1,1,1);
+                	            	les.forEach(le ->{
+    	        						atk1(25.5, p, le);
+                	            	});
+                	            }
+                	        }, delay+20); 
+						});
+				bd.execute();
 			}
     }
 	
@@ -1310,6 +1120,49 @@ public class Wreskills extends Pak implements Serializable {
 			}
 		}
 		
+	}
+
+
+	public void TakeDown(EntityDamageByEntityEvent d) 
+	{
+		if(d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity && !d.isCancelled()) 
+		{
+		Player p = (Player)d.getDamager();
+		LivingEntity le = (LivingEntity)d.getEntity();
+		Location el =le.getLocation();
+		el.setY(el.getY()+1);
+	
+	    
+		
+		
+		
+		if(ClassData.pc.get(p.getUniqueId()) == 8) {
+			
+				if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
+				{
+					dset2(d,p, 1.43 * (1+wsd.TakeDown.get(p.getUniqueId())*0.041),le,14);
+					p.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+				}
+		}
+		}
+	
+		if(d.getDamager() instanceof Projectile && d.getEntity() instanceof LivingEntity && !d.isCancelled()) 
+		{
+			Projectile ar = (Projectile)d.getDamager();
+			LivingEntity le = (LivingEntity)d.getEntity();
+			if(ar.getShooter() instanceof Player) {
+				Player p = (Player)ar.getShooter();
+				
+				if(ClassData.pc.get(p.getUniqueId()) == 8) {
+					
+						if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
+						{
+							dset2(d,p, 1.43 * (1+wsd.TakeDown.get(p.getUniqueId())*0.041),le,14);
+							p.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+						}
+				}
+			}
+		}
 	}
 }
 

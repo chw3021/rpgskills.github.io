@@ -1213,6 +1213,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 								ds.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 								ds.setInvulnerable(true);
 								ds.setGravity(false);
+								ds.setVisibleByDefault(false);
 								ds.setItem(new ItemStack(Material.HEART_OF_THE_SEA));
 								ds.setVelocity(p.getEyeLocation().clone().getDirection().normalize().multiply(0.5));
 								ds.addPassenger(p);

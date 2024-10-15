@@ -671,7 +671,7 @@ public class Angskills extends Pak implements Serializable, Listener{
 					pf.setGravity(false);
 					pf.setCollidable(false);
 					pf.setInvulnerable(true);
-					pf.setPuffState(200);
+					pf.setPuffState(500);
 					pf.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 					pf.setMetadata("rob", new FixedMetadataValue(RMain.getInstance(), p.getName()));
 					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {

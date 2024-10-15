@@ -1712,7 +1712,7 @@ public class Illskills extends Pak implements Serializable {
 	}
 
 
-	public void FakeDimensionDoll(EntityDamageByEntityEvent d) {
+	public void FinaleDamage(EntityDamageByEntityEvent d) {
 
 		if(d.getDamager() instanceof Player && finstack.getOrDefault(d.getDamager().getUniqueId(),0)>=8 && d.getEntity() instanceof LivingEntity) {
 			Player p = (Player) d.getDamager();

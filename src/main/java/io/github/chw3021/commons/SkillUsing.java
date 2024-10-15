@@ -748,7 +748,7 @@ public class SkillUsing implements Listener, Serializable {
 
 		Illskills.getInstance().ArmorDecrease(d);
 		Illskills.getInstance().Damagegetter(d);
-		Illskills.getInstance().FakeDimensionDoll(d);
+		Illskills.getInstance().FinaleDamage(d);
 		Illskills.getInstance().Switch(d);
 		Illskills.getInstance().Magnify(d);
 		Illskills.getInstance().Hypnosis(d);
