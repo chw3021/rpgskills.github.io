@@ -62,6 +62,7 @@ import io.github.chw3021.monsters.hyper.HyperSkills;
 import io.github.chw3021.monsters.mountains.MountainsMobsSpawn;
 import io.github.chw3021.monsters.mountains.MountainsRaids;
 import io.github.chw3021.monsters.mountains.MountainsSkills;
+import io.github.chw3021.monsters.nether.NetherMobsSpawn;
 import io.github.chw3021.monsters.nether.NetherRaids;
 import io.github.chw3021.monsters.ocean.OceanMobsSpawn;
 import io.github.chw3021.monsters.ocean.OceanRaids;
@@ -181,64 +182,56 @@ public class MobsSkillsEvents extends Mobs implements Listener, Serializable  {
 				PoisonMobsSpawn.getInstance().Spawn(le,b);
 				WildMobsSpawn.getInstance().Spawn(le,b);
 				
+				NetherMobsSpawn.getInstance().Spawn(le, b);
 				
-				if ((b.name().contains("NETHER"))
-						&& le.getLocation().getWorld().getEnvironment() == Environment.NETHER) {
-					LivingEntity newmob = mobs.Mobspawn(le, trans(le), 35000.0, le.getEquipment().getHelmet(),
-							le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
-							le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(),
-							le.getEquipment().getItemInOffHand(), le.getType());
-					newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
-					newmob.setMetadata("nether", new FixedMetadataValue(RMain.getInstance(), true));
-				} 
-				
-				else if ((b.name().contains("WARPED"))
-						&& le.getLocation().getWorld().getEnvironment() == Environment.NETHER) {
-					String reg = lang.contains("kr") ? "뒤틀린":"Warped";
-					LivingEntity newmob = mobs.Mobspawn(le, reg + trans(le), 40000.0, le.getEquipment().getHelmet(),
-							le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
-							le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(),
-							le.getEquipment().getItemInOffHand(), le.getType());
-					newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
-					newmob.setMetadata("nether", new FixedMetadataValue(RMain.getInstance(), true));
-					newmob.setMetadata("warped", new FixedMetadataValue(RMain.getInstance(), true));
-				} 
-				
-				else if ((b.name().contains("CRIMSON"))
-						&& le.getLocation().getWorld().getEnvironment() == Environment.NETHER) {
-					String reg = lang.contains("kr") ? "진홍빛":"Crimson";
-					LivingEntity newmob = mobs.Mobspawn(le, reg + trans(le), 40000.0, le.getEquipment().getHelmet(),
-							le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
-							le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(),
-							le.getEquipment().getItemInOffHand(), le.getType());
-					newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
-					newmob.setMetadata("nether", new FixedMetadataValue(RMain.getInstance(), true));
-					newmob.setMetadata("crimson", new FixedMetadataValue(RMain.getInstance(), true));
-				} 
-				
-				else if ((b.name().contains("SOUL"))
-						&& le.getLocation().getWorld().getEnvironment() == Environment.NETHER) {
-					String reg = lang.contains("kr") ? "영혼의":"Soul";
-					LivingEntity newmob = mobs.Mobspawn(le, reg + trans(le), 40000.0, le.getEquipment().getHelmet(),
-							le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
-							le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(),
-							le.getEquipment().getItemInOffHand(), le.getType());
-					newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
-					newmob.setMetadata("nether", new FixedMetadataValue(RMain.getInstance(), true));
-					newmob.setMetadata("soul", new FixedMetadataValue(RMain.getInstance(), true));
-				} 
-				
-				else if ((b.name().contains("BASALT"))
-						&& le.getLocation().getWorld().getEnvironment() == Environment.NETHER) {
-					String reg = lang.contains("kr") ? "화산지대":"Volcanic";
-					LivingEntity newmob = mobs.Mobspawn(le, reg+ trans(le), 40000.0,
-							le.getEquipment().getHelmet(), le.getEquipment().getChestplate(),
-							le.getEquipment().getLeggings(), le.getEquipment().getBoots(),
-							le.getEquipment().getItemInMainHand(), le.getEquipment().getItemInOffHand(), le.getType());
-					newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
-					newmob.setMetadata("nether", new FixedMetadataValue(RMain.getInstance(), true));
-					newmob.setMetadata("volcanic", new FixedMetadataValue(RMain.getInstance(), true));
-				} else if (b == Biome.THE_END
+//				else if ((b.name().contains("WARPED"))
+//						&& le.getLocation().getWorld().getEnvironment() == Environment.NETHER) {
+//					String reg = lang.contains("kr") ? "뒤틀린":"Warped";
+//					LivingEntity newmob = mobs.Mobspawn(le, reg + trans(le), 40000.0, le.getEquipment().getHelmet(),
+//							le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
+//							le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(),
+//							le.getEquipment().getItemInOffHand(), le.getType());
+//					newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
+//					newmob.setMetadata("nether", new FixedMetadataValue(RMain.getInstance(), true));
+//					newmob.setMetadata("warped", new FixedMetadataValue(RMain.getInstance(), true));
+//				} 
+//				
+//				else if ((b.name().contains("CRIMSON"))
+//						&& le.getLocation().getWorld().getEnvironment() == Environment.NETHER) {
+//					String reg = lang.contains("kr") ? "진홍빛":"Crimson";
+//					LivingEntity newmob = mobs.Mobspawn(le, reg + trans(le), 40000.0, le.getEquipment().getHelmet(),
+//							le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
+//							le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(),
+//							le.getEquipment().getItemInOffHand(), le.getType());
+//					newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
+//					newmob.setMetadata("nether", new FixedMetadataValue(RMain.getInstance(), true));
+//					newmob.setMetadata("crimson", new FixedMetadataValue(RMain.getInstance(), true));
+//				} 
+//				
+//				else if ((b.name().contains("SOUL"))
+//						&& le.getLocation().getWorld().getEnvironment() == Environment.NETHER) {
+//					String reg = lang.contains("kr") ? "영혼의":"Soul";
+//					LivingEntity newmob = mobs.Mobspawn(le, reg + trans(le), 40000.0, le.getEquipment().getHelmet(),
+//							le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
+//							le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(),
+//							le.getEquipment().getItemInOffHand(), le.getType());
+//					newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
+//					newmob.setMetadata("nether", new FixedMetadataValue(RMain.getInstance(), true));
+//					newmob.setMetadata("soul", new FixedMetadataValue(RMain.getInstance(), true));
+//				} 
+//				
+//				else if ((b.name().contains("BASALT"))
+//						&& le.getLocation().getWorld().getEnvironment() == Environment.NETHER) {
+//					String reg = lang.contains("kr") ? "화산지대":"Volcanic";
+//					LivingEntity newmob = mobs.Mobspawn(le, reg+ trans(le), 40000.0,
+//							le.getEquipment().getHelmet(), le.getEquipment().getChestplate(),
+//							le.getEquipment().getLeggings(), le.getEquipment().getBoots(),
+//							le.getEquipment().getItemInMainHand(), le.getEquipment().getItemInOffHand(), le.getType());
+//					newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
+//					newmob.setMetadata("nether", new FixedMetadataValue(RMain.getInstance(), true));
+//					newmob.setMetadata("volcanic", new FixedMetadataValue(RMain.getInstance(), true));
+//				}
+				if (b == Biome.THE_END
 						&& le.getLocation().getWorld().getEnvironment() == Environment.THE_END) {
 					LivingEntity newmob = mobs.Mobspawn(le, trans(le), 80000.0, le.getEquipment().getHelmet(),
 							le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
