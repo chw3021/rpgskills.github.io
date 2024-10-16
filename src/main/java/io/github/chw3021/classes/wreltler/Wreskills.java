@@ -18,9 +18,6 @@ import com.google.common.collect.Multimap;
 
 import io.github.chw3021.rmain.RMain;
 import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -39,18 +36,14 @@ import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Minecart;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
+import org.bukkit.entity.Snowball;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
@@ -78,7 +71,6 @@ public class Wreskills extends Pak implements Serializable {
 	private HashMap<String, Long> gdcooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> sultcooldown = new HashMap<String, Long>();
 
-	private HashMap<UUID, Integer> tacklet = new HashMap<UUID, Integer>();
 	
 	private HashMap<UUID, Integer> pounding = new HashMap<UUID, Integer>();
 	private HashMap<UUID, Integer> poundingt = new HashMap<UUID, Integer>();
@@ -92,7 +84,13 @@ public class Wreskills extends Pak implements Serializable {
 
 
 	Pak pak = new Pak();
-	
+
+
+	private static final Wreskills instance = new Wreskills ();
+	public static Wreskills getInstance(){
+		return instance;
+	}
+
 
 		
 	public void er(PluginEnableEvent ev) 
@@ -142,7 +140,7 @@ public class Wreskills extends Pak implements Serializable {
 	
 	final private boolean quitTackle(Player p) {
 
-    	if(!p.hasCooldown(CAREFUL)) {
+    	if(!p.hasCooldown(CAREFUL) && tackledt.containsKey(p.getUniqueId())) {
 
         	if(poundingt.containsKey(p.getUniqueId())) {
         		Bukkit.getScheduler().cancelTask(poundingt.get(p.getUniqueId()));
@@ -170,6 +168,10 @@ public class Wreskills extends Pak implements Serializable {
         		Bukkit.getScheduler().cancelTask(tacklet.get(p.getUniqueId()));
         		tacklet.remove(p.getUniqueId());
         	}
+        	if(tackledt.containsKey(p.getUniqueId())) {
+        		Bukkit.getScheduler().cancelTask(tackledt.get(p.getUniqueId()));
+        		tackledt.remove(p.getUniqueId());
+        	}
 
         	p.setVelocity(p.getEyeLocation().getDirection().clone().normalize().multiply(0.1));
         	Location tl = p.getLocation().clone().add(p.getEyeLocation().getDirection().clone().normalize().multiply(1.3));
@@ -194,7 +196,7 @@ public class Wreskills extends Pak implements Serializable {
         		if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
 				{
         			LivingEntity le = (LivingEntity)e;
-        			le.teleport(tl.clone().add(0, -1, 0));
+        			le.teleport(tl.clone().add(0, -0.5, 0));
                 	atk1(1.0, p, le);
                 	Holding.holding(p, le, 20l);
                 	le.setRotation(180, 0);
@@ -206,7 +208,9 @@ public class Wreskills extends Pak implements Serializable {
     	}
 		return false;
 	}
-	
+
+	private HashMap<UUID, Integer> tacklet = new HashMap<UUID, Integer>();
+	private HashMap<UUID, Integer> tackledt = new HashMap<UUID, Integer>();
 	
 	public void Tackle(PlayerInteractEvent ev) 
 	{
@@ -245,17 +249,13 @@ public class Wreskills extends Pak implements Serializable {
 				                	p.playSound(p.getLocation(), Sound.BLOCK_HANGING_ROOTS_STEP, 0.1f, 1.5f);
 				                	p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_STRONG, 0.25f, 1.9f);
 				                	p.setGliding(true);
-				                	p.setVelocity(p.getEyeLocation().getDirection().clone().normalize().multiply(1.3));
+				                	p.setVelocity(p.getEyeLocation().getDirection().clone().normalize().multiply(0.6));
 				                	
 									
-				                	Location tl = p.getLocation().clone().add(p.getEyeLocation().getDirection().clone().normalize().multiply(1.3));
+				                	Location tl = p.getLocation().clone().add(p.getEyeLocation().getDirection().clone().normalize().multiply(0.6));
 
 									tl.getWorld().spawnParticle(Particle.BLOCK, tl, 35,1,1,1,1,getBd(Material.DIRT_PATH));
 
-				                	if(tacklet.containsKey(p.getUniqueId())) {
-				                		Bukkit.getScheduler().cancelTask(tacklet.get(p.getUniqueId()));
-				                		tacklet.remove(p.getUniqueId());
-				                	}
 			                    	
 				                    for (Entity e : tl.getWorld().getNearbyEntities(tl, 1.5, 1.5, 1.5))
 				    				{
@@ -274,24 +274,21 @@ public class Wreskills extends Pak implements Serializable {
 				    					{
 				                			LivingEntity le = (LivingEntity)e;
 						                	le.teleport(tl.clone().add(0, -0.5, 0));
-						                	Holding.holding(p, le, 25l);
+						                	Holding.superholding(p, le, 20l);
 				    					}
 				    				}
 				                }
 		                	 }, 0,2);
 		                    tacklet.put(p.getUniqueId(), q);
 		                    
-		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		                    int t2 = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 				                @Override
 				                public void run() {
 				                	p.setVelocity(p.getEyeLocation().getDirection().clone().normalize().multiply(0.1));
-				                	if(tacklet.containsKey(p.getUniqueId())) {
-				                		Bukkit.getScheduler().cancelTask(tacklet.get(p.getUniqueId()));
-				                		tacklet.remove(p.getUniqueId());
-				                	}
 				                	quitTackle(p);
 				                }
-				            }, 8); 
+				            }, 35); 
+		                    tackledt.put(p.getUniqueId(), t2);
 						});
 				bd.execute();
 			}
@@ -433,7 +430,7 @@ public class Wreskills extends Pak implements Serializable {
 		double sec =4*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 8 && wsd.ArmThrow.getOrDefault(p.getUniqueId(), 0)>=1) {
-		if(!p.isSneaking())
+		if(p.isSneaking())
 		{
 			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
 			{
@@ -456,7 +453,6 @@ public class Wreskills extends Pak implements Serializable {
 		                    ArrayList<Location> air = new ArrayList<Location>();
 		                    ArrayList<Location> sight = new ArrayList<Location>();
 	                    	final Location eye = p.getEyeLocation().clone();
-		                    final Location l = eye.clone().add(eye.clone().getDirection().normalize().multiply(-1.5));
 	                    	Vector eyev = eye.getDirection().clone().rotateAroundY(-Math.PI/2);
 	                    	for(double i = Math.PI; i > 0; i -= Math.PI/90) {
 	                    	    Location a = eye.clone().setDirection(eye.getDirection().rotateAroundAxis(eyev, i).normalize());
@@ -471,7 +467,7 @@ public class Wreskills extends Pak implements Serializable {
 		                    HashSet<LivingEntity> lehs = new HashSet<>();
 			        		
 		                    
-		                    for(Entity e : p.getWorld().getNearbyEntities(l, 2, 2, 2)) {
+		                    for(Entity e : p.getWorld().getNearbyEntities(p.getLocation(), 2, 2, 2)) {
 		                    	if(e instanceof LivingEntity && e!=p&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
 		                    		if (e instanceof Player) 
 		    						{
@@ -621,16 +617,17 @@ public class Wreskills extends Pak implements Serializable {
 	}
 
 	
-	public void Suplex(PlayerSwapHandItemsEvent ev) 
+	public void Suplex(PlayerInteractEvent ev) 
 	{
 		Player p = ev.getPlayer();
+		Action ac = ev.getAction();
 		double sec =6*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
         
 		
 		
-		if(ClassData.pc.get(p.getUniqueId()) == 8 && wsd.Suplex.getOrDefault(p.getUniqueId(), 0)>=1) {
-			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData() && p.isSneaking())
+		if(ClassData.pc.get(p.getUniqueId()) == 8 && wsd.Suplex.getOrDefault(p.getUniqueId(), 0)>=1 && !p.isSneaking()&& (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK)) {
+			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
 			{
 				ev.setCancelled(true);
 
@@ -748,8 +745,8 @@ public class Wreskills extends Pak implements Serializable {
         
 		
 		
-		if(ClassData.pc.get(p.getUniqueId()) == 8 && wsd.GuillotineChoke.getOrDefault(p.getUniqueId(), 0)>=1) {
-		if(!(p.isSneaking())&& !p.isOnGround() && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK))
+		if(ClassData.pc.get(p.getUniqueId()) == 8 && wsd.GuillotineChoke.getOrDefault(p.getUniqueId(), 0)>=1 && !p.hasCooldown(CAREFUL)) {
+		if(!(p.isSneaking())&& !p.isOnGround() && (ac == Action.LEFT_CLICK_AIR || ac== Action.LEFT_CLICK_BLOCK))
 		{
 			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
 			{
@@ -787,36 +784,35 @@ public class Wreskills extends Pak implements Serializable {
 										p.setGliding(true);	
 				                    	p.teleport(l);
 										p.setGliding(true);
-										
-										if(!p.getWorld().getNearbyEntities(l, 0.5, 0.5, 0.5).isEmpty()) {
-											ab.set(true);
-						                    p.playSound(p.getLocation(), Sound.ITEM_CROSSBOW_LOADING_START, 1.0f, 0f);
-							        		p.getWorld().spawnParticle(Particle.SNEEZE, l, 4);
-						                    Location gl = l.clone();
 
-											for (Entity e : l.getWorld().getNearbyEntities(l, 0.5, 0.5, 0.5))
+					                    p.playSound(p.getLocation(), Sound.ITEM_CROSSBOW_LOADING_START, 1.0f, 0f);
+						        		p.getWorld().spawnParticle(Particle.SNEEZE, l, 4);
+					                    Location gl = l.clone();
+
+										for (Entity e : l.getWorld().getNearbyEntities(l, 0.5, 0.5, 0.5))
+										{
+				                    		if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
 											{
-					                    		if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
+												LivingEntity le = (LivingEntity)e;
+												le.teleport(l);
+												Holding.superholding(p, le, 55l);
+												gl = le.getEyeLocation().clone().add(0, -0.2, 0).setDirection(l.getDirection());
+												Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
 												{
-													LivingEntity le = (LivingEntity)e;
-													le.teleport(l);
-													Holding.superholding(p, le, 55l);
-													gl = le.getEyeLocation().clone().add(0, -0.2, 0).setDirection(l.getDirection());
-													Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
-													{
-									             	@Override
-											                public void run() 
-									             			{	
-					             								atk0(1.6, wsd.GuillotineChoke.getOrDefault(p.getUniqueId(),0)*1.65, p, le);
-					             								le.playHurtAnimation(0);
-													        }
-										            }, 35);
-												}
+								             	@Override
+										                public void run() 
+								             			{	
+				             								atk0(1.6, wsd.GuillotineChoke.getOrDefault(p.getUniqueId(),0)*1.65, p, le);
+				             								le.playHurtAnimation(0);
+												        }
+									            }, 35);
+												ab.set(true);
 											}
+										}
+										if(ab.get()) {
 											p.teleport(gl);
 											Holding.holding(null, p, 35l);
 											sit(p,35);
-											
 											return;
 										}
 					                }
@@ -852,6 +848,10 @@ public class Wreskills extends Pak implements Serializable {
 		gst.removeAll(p.getName());
 		gs.remove(p.getUniqueId());
 		
+		if(!le.isValid() || le.isDead()) {
+			return;
+		}
+		
 		p.playSound(p.getLocation(), Sound.ENTITY_EGG_THROW, 0.8f, 0);
         p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 0.6f, 0);
         le.setGliding(true);
@@ -886,7 +886,7 @@ public class Wreskills extends Pak implements Serializable {
 		LivingEntity le = (LivingEntity)d.getEntity();
 		
 		
-		if(ClassData.pc.get(p.getUniqueId()) == 8 && wsd.GiantSwing.getOrDefault(p.getUniqueId(), 0)>=1) {
+		if(ClassData.pc.get(p.getUniqueId()) == 8 && p.isSneaking() && wsd.GiantSwing.getOrDefault(p.getUniqueId(), 0)>=1 && !p.hasCooldown(Material.YELLOW_TERRACOTTA)) {
 			double sec = 26*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 			SkillBuilder bd = new SkillBuilder()
@@ -929,6 +929,9 @@ public class Wreskills extends Pak implements Serializable {
 				     	@Override
 		                public void run() 
 		     				{	
+					    		if(!le.isValid() || le.isDead()) {
+					    			GiantSwingThrow(p);
+					    		}
 		                     	le.teleport(l);
 		    					Holding.superholding(p, le, 40l);
 		                    	p.teleport(eye.get(k.getAndIncrement()));
@@ -957,7 +960,7 @@ public class Wreskills extends Pak implements Serializable {
 
 	final private Integer roll(Player p) {
 		
-		final Location pfl = p.getLocation().clone();
+		final Location pfl = p.getLocation().clone().add(0, 0.3, 0);
 		final Vector pv = p.getEyeLocation().getDirection().clone().normalize();
 		final Vector axis = pv.rotateAroundY(Math.PI/2);
 		double rotationStep = (2 * Math.PI) / 40d;
@@ -967,30 +970,26 @@ public class Wreskills extends Pak implements Serializable {
 		double blocked = 0;
 		for(double doub = 0; doub <4; doub+=0.1) {
 			if(!pfl.clone().add(pv.clone().multiply(blocked)).getBlock().isPassable()){
-				line.add(pfl.clone().add(pv.clone().multiply(blocked)).setDirection(pv.rotateAroundY(angle).rotateAroundAxis(axis, angle)));
+				final Location inl = pfl.clone().add(pv.clone().multiply(blocked));
+				line.add(inl.clone().setDirection(pv.rotateAroundY(angle).rotateAroundAxis(axis, angle)));
 			}
 			else {
 				blocked = doub;
-				line.add(pfl.clone().add(pv.clone().multiply(doub)).setDirection(pv.rotateAroundY(angle).rotateAroundAxis(axis, angle)));
+				final Location inl = pfl.clone().add(pv.clone().multiply(blocked));
+				line.add(inl.clone().setDirection(pv.rotateAroundY(angle).rotateAroundAxis(axis, angle)));
 			}
 			angle =+ rotationStep;
 		}
 		
 		AtomicInteger j = new AtomicInteger();
 
-		p.getWorld().spawn(p.getLocation().clone(), ArmorStand.class, pa ->{
-			pa.setRemoveWhenFarAway(true);
-			pa.setInvisible(true);
+		p.getWorld().spawn(p.getLocation().clone(), Snowball.class, pa ->{
+			//pa.setInvisible(true);
 			pa.setInvulnerable(true);
-			pa.setSmall(true);
-			pa.setMarker(true);
-			pa.setBasePlate(false);
-			pa.setCollidable(false);
 			pa.setGravity(false);
 			pa.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
 			pa.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(),p.getName()));
 			pa.setMetadata("rob", new FixedMetadataValue(RMain.getInstance(),p.getName()));
-			pa.addPassenger(p);
 
 			
 			line.forEach(l ->{
@@ -1005,12 +1004,10 @@ public class Wreskills extends Pak implements Serializable {
 						p.getWorld().spawnParticle(Particle.CHERRY_LEAVES, l, 5);
 						p.getWorld().spawnParticle(Particle.MYCELIUM, l, 5);
 		            	pa.teleport(l);
-		    			pa.setHeadPose(new EulerAngle(Math.toRadians(j.get()), 0, 0));
-		    			pa.setBodyPose(new EulerAngle(Math.toRadians(j.get()), 0, 0));
-		    			pa.addPassenger(p);
+		    			pa.setRotation(l.getYaw(), l.getPitch());
 		            	
 		            }
-		        }, j.getAndIncrement()); 
+		        }, j.getAndIncrement()/2); 
 			});
 	        
 	        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -1018,10 +1015,10 @@ public class Wreskills extends Pak implements Serializable {
 	            public void run() {
 	            	pa.remove();
 	            }
-	        }, j.get()); 
+	        }, j.get()/2); 
 		});
 		
-		return j.get();
+		return j.get()/2;
 		
 	}
 
@@ -1039,7 +1036,7 @@ public class Wreskills extends Pak implements Serializable {
 				ev.setCancelled(true);
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
-						.cooldown(60/Proficiency.getpro(p)*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d))
+						.cooldown(10/Proficiency.getpro(p)*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d))
 						.kname("다리얽어비틀기")
 						.ename("HeelHook")
 						.slot(6)
@@ -1048,7 +1045,7 @@ public class Wreskills extends Pak implements Serializable {
 							
 							int delay = roll(p);
 
-		                    p.playSound(p.getLocation(), Sound.ENTITY_ARMADILLO_ROLL, 0.8f, 0);
+		                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_WEAK, 1f, 0);
 		                    HashSet<LivingEntity> les = new HashSet<>();
 		                    
 							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 

@@ -75,6 +75,7 @@ import io.github.chw3021.classes.tamer.Tamskills;
 import io.github.chw3021.classes.taoist.Taoskills;
 import io.github.chw3021.classes.witchdoctor.Wdcskills;
 import io.github.chw3021.classes.witherist.Witskills;
+import io.github.chw3021.classes.wreltler.Wreskills;
 import io.github.chw3021.items.weapons.Weapons;
 import io.github.chw3021.monsters.raids.Summoned;
 
@@ -134,6 +135,8 @@ public class SkillUsing implements Listener, Serializable {
 		Taoskills.getInstance().classinv(e);
 		Wdcskills.getInstance().classinv(e);
 		Witskills.getInstance().classinv(e);
+		Wreskills.getInstance().classinv(e);
+		
 	}
 
 	@EventHandler	
@@ -167,6 +170,7 @@ public class SkillUsing implements Listener, Serializable {
 		Taoskills.getInstance().nepreventer(ev);
 		Wdcskills.getInstance().nepreventer(ev);
 		Witskills.getInstance().nepreventer(ev);
+		Wreskills.getInstance().nepreventer(ev);
 		
 	}
 
@@ -202,6 +206,7 @@ public class SkillUsing implements Listener, Serializable {
 		Taoskills.getInstance().er(ev);
 		Wdcskills.getInstance().er(ev);
 		Witskills.getInstance().er(ev);
+		Wreskills.getInstance().er(ev);
 	}
 	
 	
@@ -232,6 +237,8 @@ public class SkillUsing implements Listener, Serializable {
 		Wdcskills.getInstance().delete(ev);
 		
 		Witskills.getInstance().Hover(ev);
+		
+		
 	}
 
 	@EventHandler
@@ -327,6 +334,8 @@ public class SkillUsing implements Listener, Serializable {
 
 		Witskills.getInstance().ULT(ev);
 		Witskills.getInstance().ULT2(ev);
+		
+		Wreskills.getInstance().ULT(ev);
 	}
 
 	@EventHandler
@@ -483,6 +492,9 @@ public class SkillUsing implements Listener, Serializable {
 		Witskills.getInstance().WhiteQuarts(ev);
 		Witskills.getInstance().WitherBola(ev);
 		Witskills.getInstance().WitherSkull(ev);
+		
+		Wreskills.getInstance().ArmThrow(ev);
+		Wreskills.getInstance().ChokeSlam(ev);
 	}
 
 	@EventHandler
@@ -676,6 +688,11 @@ public class SkillUsing implements Listener, Serializable {
 		Witskills.getInstance().Curse(ev);
 		Witskills.getInstance().Hover(ev);
 		Witskills.getInstance().ReapingHook(ev);
+		
+		Wreskills.getInstance().Tackle(ev);
+		Wreskills.getInstance().Pounding(ev);
+		Wreskills.getInstance().GuillotineChoke(ev);
+		Wreskills.getInstance().Suplex(ev);
 	}
 	
 	
@@ -802,6 +819,8 @@ public class SkillUsing implements Listener, Serializable {
 		Wdcskills.getInstance().ult2(d);
 		Wdcskills.getInstance().Legba(d);
 
+		Wreskills.getInstance().TakeDown(d);
+		Wreskills.getInstance().GiantSwing(d);
 	}
 
 	@EventHandler
@@ -901,6 +920,7 @@ public class SkillUsing implements Listener, Serializable {
 		Wdcskills.getInstance().ThrowCancel(ev);
 
 		Witskills.getInstance().ThrowCancel(ev);
+
 		
 		CombatMode.getInstance().modeChange(ev);
 		Summoned.getInstance().ThrowCancel(ev);
@@ -1178,6 +1198,7 @@ public class SkillUsing implements Listener, Serializable {
 		Taoskills.getInstance().Equipment(e);
 		Wdcskills.getInstance().Equipment(e);
 		Witskills.getInstance().Equipment(e);
+		Wreskills.getInstance().Equipment(e);
 	}
 
 

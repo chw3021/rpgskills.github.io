@@ -109,7 +109,7 @@ public class WildRaids extends Summoned {
 		return pe;
 	}
 	final private ItemStack mobleg() {
-		ItemStack pe = mobleg();
+		ItemStack pe = new ItemStack(Material.NETHERITE_LEGGINGS);
 		ArmorMeta arm = (ArmorMeta) pe.getItemMeta();
 		ArmorTrim t1 = new ArmorTrim(TrimMaterial.EMERALD, TrimPattern.SILENCE);
 		arm.setTrim(t1);

@@ -26,14 +26,14 @@ public class WreSkillsGui extends SkillsGui{
 		Obtained.itemset(p, Wreskillsinv);
 
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			itemset("GuillotineChoke", Material.LEATHER_CHESTPLATE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.GuillotineChoke.get(p.getUniqueId()),"",ChatColor.UNDERLINE+"[Earth]","Jump + RightClick" ,"Master LV.50"), 0, Wreskillsinv);
-			itemset("Tackle", Material.IRON_LEGGINGS, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.Tackle.get(p.getUniqueId()),"",ChatColor.UNDERLINE+"[Earth]","Sneaking + Rightclick" ,"Master LV.1"), 1, Wreskillsinv);
-			itemset("Suplex", Material.LEATHER_HELMET, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.Suplex.get(p.getUniqueId()),"",ChatColor.UNDERLINE+"[Earth]","SwapHand + Sneaking" ,"Master LV.50"), 2, Wreskillsinv);
-			itemset("ArmThrow", Material.IRON_CHESTPLATE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.ArmThrow.get(p.getUniqueId()),"",ChatColor.UNDERLINE+"[Earth]","SwapHand" ,"Master LV.50"), 3, Wreskillsinv);
-			itemset("GiantSwing", Material.BRICK_WALL, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.GiantSwing.get(p.getUniqueId()),"",ChatColor.UNDERLINE+"[Earth]","Sneaking + Hit","LeftClick Or Using Another Skill To Quit Earlier","Master LV.50"), 4, Wreskillsinv);
-			itemset("ChokeSlam", Material.CHAINMAIL_HELMET, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.ChokeSlam.get(p.getUniqueId()),"",ChatColor.UNDERLINE+"[Earth]","Get Jump,Speed,Resistance effect", "when you're Sprinting", "Hit Near By Enemies", "Master LV.1"), 5, Wreskillsinv);
-			itemset("ForeArmSmash", Material.WRITABLE_BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.ForeArmSmash.get(p.getUniqueId()),"",ChatColor.UNDERLINE+"[Earth]","Jump+Hit",  "Higher Height will give more damage", "Master LV.50"), 6, Wreskillsinv);
-			itemset("TakeDown", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.TakeDown.get(p.getUniqueId()),"","Increases Damage, KnockBack Resistance"), 7, Wreskillsinv);
+			itemset("GuillotineChoke", Material.LEATHER_CHESTPLATE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.GuillotineChoke.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[Earth]","Jump + RightClick" ,"Master LV.50"), 0, Wreskillsinv);
+			itemset("Tackle", Material.IRON_LEGGINGS, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.Tackle.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[Earth]","Sneaking + Rightclick" ,"Master LV.1"), 1, Wreskillsinv);
+			itemset("Suplex", Material.LEATHER_HELMET, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.Suplex.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[Earth]","SwapHand + Sneaking" ,"Master LV.50"), 2, Wreskillsinv);
+			itemset("ArmThrow", Material.IRON_CHESTPLATE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.ArmThrow.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[Earth]","SwapHand" ,"Master LV.50"), 3, Wreskillsinv);
+			itemset("GiantSwing", Material.BRICK_WALL, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.GiantSwing.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[Earth]","Sneaking + Hit","LeftClick Or Using Another Skill To Quit Earlier","Master LV.50"), 4, Wreskillsinv);
+			itemset("ChokeSlam", Material.CHAINMAIL_HELMET, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.ChokeSlam.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[Earth]","Get Jump,Speed,Resistance effect", "when you're Sprinting", "Hit Near By Enemies", "Master LV.1"), 5, Wreskillsinv);
+			itemset("ForeArmSmash", Material.WRITABLE_BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.ForeArmSmash.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[Earth]","Jump+Hit",  "Higher Height will give more damage", "Master LV.50"), 6, Wreskillsinv);
+			itemset("TakeDown", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.TakeDown.getOrDefault(p.getUniqueId(),0),"","Increases Damage, KnockBack Resistance"), 7, Wreskillsinv);
 			if(Proficiency.getpro(p)<1) {
 				itemset("Somersault(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 9, Wreskillsinv);
 				itemset("Pounding(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 10, Wreskillsinv);
@@ -82,14 +82,14 @@ public class WreSkillsGui extends SkillsGui{
 			
 		}
 		else {
-			itemset("GuillotineChoke", Material.LEATHER_CHESTPLATE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.GuillotineChoke.get(p.getUniqueId()),"",ChatColor.UNDERLINE+"[Earth]","Jump + RightClick" ,"Master LV.50"), 0, Wreskillsinv);
-			itemset("Tackle", Material.IRON_LEGGINGS, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.Tackle.get(p.getUniqueId()),"",ChatColor.UNDERLINE+"[Earth]","Sneaking + Rightclick" ,"Master LV.1"), 1, Wreskillsinv);
-			itemset("Suplex", Material.LEATHER_HELMET, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.Suplex.get(p.getUniqueId()),"",ChatColor.UNDERLINE+"[Earth]","SwapHand + Sneaking" ,"Master LV.50"), 2, Wreskillsinv);
-			itemset("ArmThrow", Material.IRON_CHESTPLATE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.ArmThrow.get(p.getUniqueId()),"",ChatColor.UNDERLINE+"[Earth]","SwapHand" ,"Master LV.50"), 3, Wreskillsinv);
-			itemset("GiantSwing", Material.TRIPWIRE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.GiantSwing.get(p.getUniqueId()),"",ChatColor.UNDERLINE+"[Earth]","Sneaking + Hit","LeftClick Or Using Another Skill To Quit Earlier","Master LV.50"), 4, Wreskillsinv);
-			itemset("ChokeSlam", Material.CHAINMAIL_HELMET, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.ChokeSlam.get(p.getUniqueId()),"",ChatColor.UNDERLINE+"[Earth]","Get Jump,Speed,Resistance effect", "when you're Sprinting", "Hit Near By Enemies", "Master LV.1"), 5, Wreskillsinv);
-			itemset("ForeArmSmash", Material.WRITABLE_BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.ForeArmSmash.get(p.getUniqueId()),"",ChatColor.UNDERLINE+"[Earth]","Jump+Hit",  "Higher Height will give more damage", "Master LV.50"), 6, Wreskillsinv);
-			itemset("TakeDown", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.TakeDown.get(p.getUniqueId()),"","Increases Damage, KnockBack Resistance"), 7, Wreskillsinv);
+			itemset("GuillotineChoke", Material.LEATHER_CHESTPLATE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.GuillotineChoke.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[Earth]","Jump + RightClick" ,"Master LV.50"), 0, Wreskillsinv);
+			itemset("Tackle", Material.IRON_LEGGINGS, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.Tackle.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[Earth]","Sneaking + Rightclick" ,"Master LV.1"), 1, Wreskillsinv);
+			itemset("Suplex", Material.LEATHER_HELMET, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.Suplex.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[Earth]","SwapHand + Sneaking" ,"Master LV.50"), 2, Wreskillsinv);
+			itemset("ArmThrow", Material.IRON_CHESTPLATE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.ArmThrow.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[Earth]","SwapHand" ,"Master LV.50"), 3, Wreskillsinv);
+			itemset("GiantSwing", Material.TRIPWIRE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.GiantSwing.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[Earth]","Sneaking + Hit","LeftClick Or Using Another Skill To Quit Earlier","Master LV.50"), 4, Wreskillsinv);
+			itemset("ChokeSlam", Material.CHAINMAIL_HELMET, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.ChokeSlam.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[Earth]","Get Jump,Speed,Resistance effect", "when you're Sprinting", "Hit Near By Enemies", "Master LV.1"), 5, Wreskillsinv);
+			itemset("ForeArmSmash", Material.WRITABLE_BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.ForeArmSmash.getOrDefault(p.getUniqueId(),0),"",ChatColor.UNDERLINE+"[Earth]","Jump+Hit",  "Higher Height will give more damage", "Master LV.50"), 6, Wreskillsinv);
+			itemset("TakeDown", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+wsd.TakeDown.getOrDefault(p.getUniqueId(),0),"","Increases Damage, KnockBack Resistance"), 7, Wreskillsinv);
 			if(Proficiency.getpro(p)<1) {
 				itemset("Somersault(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 9, Wreskillsinv);
 				itemset("Pounding(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 10, Wreskillsinv);

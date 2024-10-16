@@ -124,7 +124,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	Integer LIVES = 5;
 	Double BOSSHP = 100000d;
 	
-	Integer BOSSNUM = 2;
+	Integer BOSSNUM = 6;
 	
 	
 	private static final OverworldRaids instance = new OverworldRaids ();
