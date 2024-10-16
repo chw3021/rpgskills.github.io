@@ -9,16 +9,20 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Drowned;
+import org.bukkit.entity.Blaze;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Evoker;
-import org.bukkit.entity.Husk;
-import org.bukkit.entity.Skeleton;
-import org.bukkit.entity.Vindicator;
-import org.bukkit.entity.Witch;
+import org.bukkit.entity.Ghast;
+import org.bukkit.entity.Hoglin;
+import org.bukkit.entity.PigZombie;
+import org.bukkit.entity.PiglinBrute;
+import org.bukkit.entity.WitherSkeleton;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ArmorMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.trim.ArmorTrim;
+import org.bukkit.inventory.meta.trim.TrimMaterial;
+import org.bukkit.inventory.meta.trim.TrimPattern;
 import org.bukkit.metadata.FixedMetadataValue;
 import io.github.chw3021.monsters.raids.Summoned;
 import io.github.chw3021.rmain.RMain;
@@ -43,7 +47,7 @@ public class NetherRaids extends Summoned {
 	String META = "nether";
 	
 	
-	public void WildCombo(EntityDeathEvent d) 
+	public void NetherCombo(EntityDeathEvent d) 
 	{	
 		final Object com = Combo(d,META);
 	
@@ -96,15 +100,27 @@ public class NetherRaids extends Summoned {
 		return pe;
 	}
 	final private ItemStack mobchest() {
-		ItemStack pe = new ItemStack(Material.GOLDEN_CHESTPLATE);
+		ItemStack pe = new ItemStack(Material.NETHERITE_CHESTPLATE);
+		ArmorMeta arm = (ArmorMeta) pe.getItemMeta();
+		ArmorTrim t1 = new ArmorTrim(TrimMaterial.QUARTZ, TrimPattern.RIB);
+		arm.setTrim(t1);
+		pe.setItemMeta(arm);
 		return pe;
 	}
 	final private ItemStack mobleg() {
-		ItemStack pe = new ItemStack(Material.GOLDEN_LEGGINGS);
+		ItemStack pe = mobleg();
+		ArmorMeta arm = (ArmorMeta) pe.getItemMeta();
+		ArmorTrim t1 = new ArmorTrim(TrimMaterial.QUARTZ, TrimPattern.RIB);
+		arm.setTrim(t1);
+		pe.setItemMeta(arm);
 		return pe;
 	}
 	final private ItemStack mobboots() {
-		ItemStack pe = new ItemStack(Material.GOLDEN_BOOTS);
+		ItemStack pe = new ItemStack(Material.NETHERITE_BOOTS);
+		ArmorMeta arm = (ArmorMeta) pe.getItemMeta();
+		ArmorTrim t1 = new ArmorTrim(TrimMaterial.QUARTZ, TrimPattern.RIB);
+		arm.setTrim(t1);
+		pe.setItemMeta(arm);
 		return pe;
 	}
 	
@@ -115,10 +131,12 @@ public class NetherRaids extends Summoned {
     	Location esl = spl.clone().add(number, 2.5, number2);
     	ItemStack head = mobhead();
 		ItemStack chest = mobchest();
-		ItemStack leg = new ItemStack(Material.NETHERITE_LEGGINGS);
+		ItemStack leg = mobleg();
 		ItemStack boots = mobboots();
+		ItemStack main = new ItemStack(Material.BOW);
+		
 		String reg = lang.equalsIgnoreCase("ko_kr") ? "네더사수":"NetherShooter";
-		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 35000.0, head, chest, leg, boots, null, null, EntityType.SKELETON);
+		WitherSkeleton newmob = (WitherSkeleton) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 45000.0, head, chest, leg, boots, main, null, EntityType.WITHER_SKELETON);
 		
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
 		
@@ -138,14 +156,12 @@ public class NetherRaids extends Summoned {
     	Location esl = spl.clone().add(number, 2.5, number2);
     	ItemStack head = mobhead();
 		ItemStack chest = mobchest();
-		ItemStack leg = new ItemStack(Material.NETHERITE_LEGGINGS);
+		ItemStack leg = mobleg();
 		ItemStack boots = mobboots();
 		ItemStack main = new ItemStack(Material.NETHERITE_SWORD);
 
-		ItemStack off = new ItemStack(Material.SHIELD);
-
 		String reg = lang.equalsIgnoreCase("ko_kr") ? "네더전사":"NetherWarrior";
-		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 40000.0, head, chest, leg, boots, main, off, EntityType.SKELETON);
+		WitherSkeleton newmob = (WitherSkeleton) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 48000.0, head, chest, leg, boots, main, null, EntityType.WITHER_SKELETON);
 		
 		
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
@@ -153,7 +169,7 @@ public class NetherRaids extends Summoned {
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
-		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(0.9);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		
@@ -170,16 +186,13 @@ public class NetherRaids extends Summoned {
     	Location esl = spl.clone().add(number, 2.5, number2);
     	ItemStack head = mobhead();
 		ItemStack chest = mobchest();
-		ItemStack leg = new ItemStack(Material.NETHERITE_LEGGINGS);
+		ItemStack leg = mobleg();
 		ItemStack boots = mobboots();
-		ItemStack main = new ItemStack(Material.BOOK);
+		ItemStack main = new ItemStack(Material.ENCHANTED_BOOK);
 		
 		String reg = lang.equalsIgnoreCase("ko_kr") ? "네더마법사":"NetherMage";
-		Evoker newmob = (Evoker) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 35000.0, head, chest, leg, boots, main, null, EntityType.EVOKER);
+		Blaze newmob = (Blaze) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 35000.0, head, chest, leg, boots, main, null, EntityType.BLAZE);
 
-		newmob.setCanJoinRaid(false);
-		newmob.setPatrolLeader(false);
-		newmob.setPatrolTarget(null);
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
@@ -196,12 +209,18 @@ public class NetherRaids extends Summoned {
     	double number = (random.nextDouble()+1.5) * 2.5 * (random.nextBoolean() ? -1 : 1);
     	double number2 = (random.nextDouble()+1.5) * 2.5 * (random.nextBoolean() ? -1 : 1);
     	Location esl = spl.clone().add(number, 2.5, number2);
+    	ItemStack head = mobhead();
+		ItemStack chest = mobchest();
+		ItemStack leg = mobleg();
+		ItemStack boots = mobboots();
+		ItemStack main = new ItemStack(Material.ENCHANTED_BOOK);
 		
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "네더과학자":"NetherScientist";
-		Witch newmob = (Witch) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 38000.0, null, null, null, null, null, null, EntityType.WITCH);
-		newmob.setCanJoinRaid(false);
-		newmob.setPatrolLeader(false);
-		newmob.setPatrolTarget(null);
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "강화호글린":"EnhancedHoglin";
+		Hoglin newmob = (Hoglin) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 50000.0, head, chest, leg, boots, main, null, EntityType.HOGLIN);
+		newmob.setAdult();
+		newmob.setIsAbleToBeHunted(false);
+		newmob.setImmuneToZombification(true);
+		newmob.setConversionTime(-1);
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(),rn));
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
@@ -220,19 +239,23 @@ public class NetherRaids extends Summoned {
     	
     	ItemStack head = mobhead();
 		ItemStack chest = mobchest();
-		ItemStack leg = new ItemStack(Material.NETHERITE_LEGGINGS);
+		ItemStack leg = mobleg();
 		ItemStack boots = mobboots();
-		
+
+		ItemStack main = new ItemStack(Material.MACE);
 		ItemStack off = new ItemStack(Material.SHIELD);
 		
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "네더바다전사":"NetherMarine";
-		Drowned newmob = (Drowned) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 42000.0, head, chest, leg, boots, null, off, EntityType.DROWNED);
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "네더기사":"NetherKnight";
+		PiglinBrute newmob = (PiglinBrute) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 50000.0, head, chest, leg, boots, main, off, EntityType.PIGLIN_BRUTE);
 		newmob.setConversionTime(-1);
+		newmob.setAdult();
+		newmob.setImmuneToZombification(true);
 		
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
-		
+
+		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.35);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
@@ -248,22 +271,20 @@ public class NetherRaids extends Summoned {
 
     	ItemStack head = mobhead();
 		ItemStack chest = mobchest();
-		ItemStack leg = new ItemStack(Material.NETHERITE_LEGGINGS);
+		ItemStack leg = mobleg();
 		ItemStack boots = mobboots();
 		
 		ItemStack main = new ItemStack(Material.NETHERITE_HOE);
 		
-		String reg = lang.contains("kr") ? "네더복수자":"NetherAvenger";
-		Husk newmob = (Husk) Summon(esl, reg, 35000.0, head, chest, leg, boots, main,
-				null, EntityType.HUSK);
-		newmob.setConversionTime(-1);
+		String reg = lang.contains("kr") ? "강화가스트":"EnhancedGhast";
+		Ghast newmob = (Ghast) Summon(esl, reg, 47500.0, head, chest, leg, boots, main,
+				null, EntityType.GHAST);
 		
+		newmob.setCharging(true);
 		
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
-		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		
@@ -277,19 +298,24 @@ public class NetherRaids extends Summoned {
     	double number = (random.nextDouble()+1.5) * 2.5 * (random.nextBoolean() ? -1 : 1);
     	double number2 = (random.nextDouble()+1.5) * 2.5 * (random.nextBoolean() ? -1 : 1);
     	Location esl = spl.clone().add(number, 2.5, number2);
-    	ItemStack head = null;
-    	
+    	ItemStack head = mobhead();
+		ItemStack chest = mobchest();
+		ItemStack leg = mobleg();
+		ItemStack boots = mobboots();
+		
 		ItemStack main = new ItemStack(Material.GLOBE_BANNER_PATTERN);
 		ItemMeta offm = main.getItemMeta();
 		offm.setCustomModelData(1060);
 		main.setItemMeta(offm);
+		main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
 		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
 		
 		String reg = lang.equalsIgnoreCase("ko_kr") ? "네더격투가":"NetherFighter";
-		Vindicator newmob = (Vindicator) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 27000.0, head, null, null, null, main, main, EntityType.VINDICATOR);
-		newmob.setCanJoinRaid(false);
-		newmob.setPatrolLeader(false);
-		newmob.setPatrolTarget(null);
+		PigZombie newmob = (PigZombie) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 47500.0, head, chest, leg, boots, main, main, EntityType.ZOMBIFIED_PIGLIN);
+		newmob.setConversionTime(-1);
+		newmob.setAdult();
+		newmob.setAnger(999999);
+		newmob.setAngry(true);
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(),rn));
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));

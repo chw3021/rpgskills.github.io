@@ -18,8 +18,12 @@ public class BloodNight {
 
 	public void SummonedTarget(EntityTargetEvent d) 
 	{	
+		
 		if(d.getEntity() instanceof LivingEntity) {
-			Bukkit.getPluginManager().callEvent(new CreatureSpawnEvent((LivingEntity) d.getEntity(), SpawnReason.NATURAL));
+			LivingEntity le = (LivingEntity) d.getEntity();
+			if(le.getWorld().getTime()>=12000 && le.getWorld().getTime()<=24000) {
+				Bukkit.getPluginManager().callEvent(new CreatureSpawnEvent((LivingEntity) d.getEntity(), SpawnReason.NATURAL));
+			}
 		}
 		
 	}

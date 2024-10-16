@@ -113,15 +113,16 @@ public class PoisonSkills extends Summoned{
                 @Override
                 public void run() 
                 {
-                	p.getWorld().spawnParticle(Particle.FLAME, p.getLocation(), 300, 2.5,2.5,2.5);
-                    p.getWorld().playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 1, 2);
-                    p.getWorld().playSound(p.getLocation(), Sound.ENTITY_BLAZE_BURN, 1, 2);
+                	p.getWorld().spawnParticle(Particle.FLAME, p.getLocation(), 200);
+                	p.getWorld().spawnParticle(Particle.SMALL_FLAME, p.getLocation(), 200);
+                    p.getWorld().playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 0.6f, 0.5f);
+                    p.getWorld().playSound(p.getLocation(), Sound.ENTITY_BLAZE_BURN, 0.7f,0.4f);
 
 					for(Entity e : p.getWorld().getNearbyEntities(p.getLocation(),2.5, 2.5, 2.5)) {
 						if(p!=e && e instanceof Player&& !(e.hasMetadata("fake"))) {
 							LivingEntity le = (LivingEntity)e;
-							le.damage(3,p);
-							le.setFireTicks(30);
+							le.damage(4,p);
+							le.setFireTicks(50);
 						}
 					}
 								
@@ -181,9 +182,6 @@ public class PoisonSkills extends Summoned{
 	{
 		if(d.getEntity().getShooter() instanceof Witch && d.getEntity() instanceof ThrownPotion) {
 			Witch p = (Witch) d.getEntity().getShooter();
-			if(!p.hasMetadata("poison")) {
-				return;
-			}
 			if(p.hasMetadata("Grenadier")) {
 				Snowball fr = p.getWorld().spawn(p.getEyeLocation(), Snowball.class);
 				fr.setShooter(p);

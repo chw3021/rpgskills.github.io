@@ -191,7 +191,7 @@ public class MountainsMobsSpawn extends Mobs implements Listener {
 				le.getEquipment().getLeggings(), le.getEquipment().getBoots(),
 				le.getEquipment().getItemInMainHand(), le.getEquipment().getItemInOffHand(),
 				le.getType());
-		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
+		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), "mountains"));
 		newmob.setMetadata("unmodified", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("mountains", new FixedMetadataValue(RMain.getInstance(), true));
 		return newmob;

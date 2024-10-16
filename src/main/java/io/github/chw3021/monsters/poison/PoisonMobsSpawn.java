@@ -145,7 +145,7 @@ public class PoisonMobsSpawn extends Mobs implements Listener {
 				le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
 				le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(),
 				le.getEquipment().getItemInOffHand(), le.getType());
-		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
+		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), "poison"));
 		newmob.setMetadata("unmodified", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("poison", new FixedMetadataValue(RMain.getInstance(), true));
 		return newmob;

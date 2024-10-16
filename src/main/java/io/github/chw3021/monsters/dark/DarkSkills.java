@@ -166,7 +166,7 @@ public class DarkSkills extends Summoned{
 	public void Spell(EntitySpellCastEvent ev) 
 	{
 
-		if(ev.getEntity() instanceof Evoker  && ev.getEntity().hasMetadata("dark")) 
+		if(ev.getEntity() instanceof Evoker  && ev.getEntity().hasMetadata("vexLocked")) 
 		{
 			Evoker p = (Evoker)ev.getEntity();
 			

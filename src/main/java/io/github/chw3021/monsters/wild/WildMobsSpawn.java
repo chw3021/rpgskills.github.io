@@ -128,7 +128,7 @@ public class WildMobsSpawn extends Mobs implements Listener {
 				le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
 				le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(),
 				le.getEquipment().getItemInOffHand(), le.getType());
-		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
+		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), "wild"));
 		newmob.setMetadata("unmodified", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("wild", new FixedMetadataValue(RMain.getInstance(), true));
 		return newmob;

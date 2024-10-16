@@ -259,7 +259,8 @@ public class DarkRaids extends Summoned {
 		newmob.setPatrolLeader(false);
 		newmob.setPatrolTarget(null);
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
-		
+
+		newmob.setMetadata("vexLocked", new FixedMetadataValue(RMain.getInstance(), rn));
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));

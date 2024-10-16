@@ -299,7 +299,7 @@ public class RedSkills extends Summoned{
 	
 	public void Jump(EntityTargetEvent ev) 
 	{
-		if((ev.getEntity() instanceof Skeleton) && ev.getEntity().hasMetadata("jumper") && ev.getEntity().hasMetadata("red")  && ev.getTarget() instanceof LivingEntity) 
+		if((ev.getEntity() instanceof Skeleton) && ev.getEntity().hasMetadata("jumper") && ev.getTarget() instanceof LivingEntity) 
 		{
 
 			final Skeleton p = (Skeleton)ev.getEntity();

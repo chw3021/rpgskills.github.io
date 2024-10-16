@@ -200,7 +200,7 @@ public class RedMobsSpawn extends Mobs implements Listener {
 	final private LivingEntity Default(LivingEntity le) {
 		String reg = lang.contains("kr") ? "악지":"BadLands";
 		LivingEntity newmob = Mobspawn(le, reg +trans(le), 12000.0, le.getEquipment().getHelmet(), le.getEquipment().getChestplate(), le.getEquipment().getLeggings(), le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(), le.getEquipment().getItemInOffHand(), le.getType());
-		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
+		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), "red"));
 		newmob.setMetadata("red", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("unmodified", new FixedMetadataValue(RMain.getInstance(), true));
 		Pak.flamer.put(newmob.getUniqueId(), 0.3);

@@ -18,7 +18,11 @@ import org.bukkit.entity.Vindicator;
 import org.bukkit.entity.Witch;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ArmorMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.trim.ArmorTrim;
+import org.bukkit.inventory.meta.trim.TrimMaterial;
+import org.bukkit.inventory.meta.trim.TrimPattern;
 import org.bukkit.metadata.FixedMetadataValue;
 import io.github.chw3021.monsters.raids.Summoned;
 import io.github.chw3021.rmain.RMain;
@@ -93,14 +97,31 @@ public class WildRaids extends Summoned {
 	
 	final private ItemStack mobhead() {
 		ItemStack pe = new ItemStack(Material.MOSS_BLOCK);
+		pe.addUnsafeEnchantment(Enchantment.BANE_OF_ARTHROPODS, 1);
 		return pe;
 	}
 	final private ItemStack mobchest() {
 		ItemStack pe = new ItemStack(Material.NETHERITE_CHESTPLATE);
+		ArmorMeta arm = (ArmorMeta) pe.getItemMeta();
+		ArmorTrim t1 = new ArmorTrim(TrimMaterial.EMERALD, TrimPattern.SILENCE);
+		arm.setTrim(t1);
+		pe.setItemMeta(arm);
+		return pe;
+	}
+	final private ItemStack mobleg() {
+		ItemStack pe = mobleg();
+		ArmorMeta arm = (ArmorMeta) pe.getItemMeta();
+		ArmorTrim t1 = new ArmorTrim(TrimMaterial.EMERALD, TrimPattern.SILENCE);
+		arm.setTrim(t1);
+		pe.setItemMeta(arm);
 		return pe;
 	}
 	final private ItemStack mobboots() {
 		ItemStack pe = new ItemStack(Material.NETHERITE_BOOTS);
+		ArmorMeta arm = (ArmorMeta) pe.getItemMeta();
+		ArmorTrim t1 = new ArmorTrim(TrimMaterial.EMERALD, TrimPattern.SILENCE);
+		arm.setTrim(t1);
+		pe.setItemMeta(arm);
 		return pe;
 	}
 	
@@ -111,7 +132,7 @@ public class WildRaids extends Summoned {
     	Location esl = spl.clone().add(number, 2.5, number2);
     	ItemStack head = mobhead();
 		ItemStack chest = mobchest();
-		ItemStack leg = new ItemStack(Material.NETHERITE_LEGGINGS);
+		ItemStack leg = mobleg();
 		ItemStack boots = mobboots();
 		String reg = lang.equalsIgnoreCase("ko_kr") ? "고대의사수":"AncientShooter";
 		Skeleton newmob = (Skeleton) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 35000.0, head, chest, leg, boots, null, null, EntityType.SKELETON);
@@ -134,7 +155,7 @@ public class WildRaids extends Summoned {
     	Location esl = spl.clone().add(number, 2.5, number2);
     	ItemStack head = mobhead();
 		ItemStack chest = mobchest();
-		ItemStack leg = new ItemStack(Material.NETHERITE_LEGGINGS);
+		ItemStack leg = mobleg();
 		ItemStack boots = mobboots();
 		ItemStack main = new ItemStack(Material.NETHERITE_SWORD);
 
@@ -145,6 +166,7 @@ public class WildRaids extends Summoned {
 		
 		
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
+		newmob.setMetadata("jumper", new FixedMetadataValue(RMain.getInstance(), rn));
 		
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
@@ -166,7 +188,7 @@ public class WildRaids extends Summoned {
     	Location esl = spl.clone().add(number, 2.5, number2);
     	ItemStack head = mobhead();
 		ItemStack chest = mobchest();
-		ItemStack leg = new ItemStack(Material.NETHERITE_LEGGINGS);
+		ItemStack leg = mobleg();
 		ItemStack boots = mobboots();
 		ItemStack main = new ItemStack(Material.BOOK);
 		
@@ -177,6 +199,7 @@ public class WildRaids extends Summoned {
 		newmob.setPatrolLeader(false);
 		newmob.setPatrolTarget(null);
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
+		newmob.setMetadata("vexLocked", new FixedMetadataValue(RMain.getInstance(), rn));
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
@@ -194,7 +217,7 @@ public class WildRaids extends Summoned {
     	Location esl = spl.clone().add(number, 2.5, number2);
 		
 		String reg = lang.equalsIgnoreCase("ko_kr") ? "고대의과학자":"AncientScientist";
-		Witch newmob = (Witch) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 38000.0, null, null, null, null, null, null, EntityType.WITCH);
+		Witch newmob = (Witch) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 38000.0, mobhead(), null, null, null, null, null, EntityType.WITCH);
 		newmob.setCanJoinRaid(false);
 		newmob.setPatrolLeader(false);
 		newmob.setPatrolTarget(null);
@@ -216,13 +239,15 @@ public class WildRaids extends Summoned {
     	
     	ItemStack head = mobhead();
 		ItemStack chest = mobchest();
-		ItemStack leg = new ItemStack(Material.NETHERITE_LEGGINGS);
+		ItemStack leg = mobleg();
 		ItemStack boots = mobboots();
-		
+
+		ItemStack main = new ItemStack(Material.TRIDENT);
+		main.addUnsafeEnchantment(Enchantment.RIPTIDE, 10);
 		ItemStack off = new ItemStack(Material.SHIELD);
 		
 		String reg = lang.equalsIgnoreCase("ko_kr") ? "고대의바다전사":"AncientMarine";
-		Drowned newmob = (Drowned) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 42000.0, head, chest, leg, boots, null, off, EntityType.DROWNED);
+		Drowned newmob = (Drowned) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 42000.0, head, chest, leg, boots, main, off, EntityType.DROWNED);
 		newmob.setConversionTime(-1);
 		
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
@@ -244,13 +269,13 @@ public class WildRaids extends Summoned {
 
     	ItemStack head = mobhead();
 		ItemStack chest = mobchest();
-		ItemStack leg = new ItemStack(Material.NETHERITE_LEGGINGS);
+		ItemStack leg = mobleg();
 		ItemStack boots = mobboots();
 		
 		ItemStack main = new ItemStack(Material.NETHERITE_HOE);
 		
 		String reg = lang.contains("kr") ? "고대의복수자":"AncientAvenger";
-		Husk newmob = (Husk) Summon(esl, reg, 35000.0, head, chest, leg, boots, main,
+		Husk newmob = (Husk) Summon(esl, reg, 40000.0, head, chest, leg, boots, main,
 				null, EntityType.HUSK);
 		newmob.setConversionTime(-1);
 		
@@ -273,7 +298,7 @@ public class WildRaids extends Summoned {
     	double number = (random.nextDouble()+1.5) * 2.5 * (random.nextBoolean() ? -1 : 1);
     	double number2 = (random.nextDouble()+1.5) * 2.5 * (random.nextBoolean() ? -1 : 1);
     	Location esl = spl.clone().add(number, 2.5, number2);
-    	ItemStack head = null;
+    	ItemStack head = mobhead();
     	
 		ItemStack main = new ItemStack(Material.GLOBE_BANNER_PATTERN);
 		ItemMeta offm = main.getItemMeta();
@@ -282,7 +307,7 @@ public class WildRaids extends Summoned {
 		main.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
 		
 		String reg = lang.equalsIgnoreCase("ko_kr") ? "고대의격투가":"AncientFighter";
-		Vindicator newmob = (Vindicator) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 27000.0, head, null, null, null, main, main, EntityType.VINDICATOR);
+		Vindicator newmob = (Vindicator) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 45000.0, head, null, null, null, main, main, EntityType.VINDICATOR);
 		newmob.setCanJoinRaid(false);
 		newmob.setPatrolLeader(false);
 		newmob.setPatrolTarget(null);

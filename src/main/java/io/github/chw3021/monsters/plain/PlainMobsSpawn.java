@@ -28,7 +28,7 @@ public class PlainMobsSpawn extends Mobs implements Listener {
 				le.getEquipment().getLeggings(), le.getEquipment().getBoots(),
 				le.getEquipment().getItemInMainHand(), le.getEquipment().getItemInOffHand(),
 				le.getType());
-		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
+		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), "plain"));
 		newmob.setMetadata("unmodified", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("plain", new FixedMetadataValue(RMain.getInstance(), true));
 		return newmob;

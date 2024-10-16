@@ -10,6 +10,7 @@ import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.MagmaCube;
@@ -32,6 +33,8 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.EntitySpellCastEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
+import org.bukkit.event.entity.EntityTransformEvent;
+import org.bukkit.event.entity.EntityTransformEvent.TransformReason;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.event.entity.FireworkExplodeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -59,6 +62,7 @@ import io.github.chw3021.monsters.hyper.HyperSkills;
 import io.github.chw3021.monsters.mountains.MountainsMobsSpawn;
 import io.github.chw3021.monsters.mountains.MountainsRaids;
 import io.github.chw3021.monsters.mountains.MountainsSkills;
+import io.github.chw3021.monsters.nether.NetherRaids;
 import io.github.chw3021.monsters.ocean.OceanMobsSpawn;
 import io.github.chw3021.monsters.ocean.OceanRaids;
 import io.github.chw3021.monsters.ocean.OceanSkills;
@@ -120,6 +124,9 @@ public class MobsSkillsEvents extends Mobs implements Listener, Serializable  {
 					return;
 				}
 			}
+			if(ev.getSpawnReason() == SpawnReason.PIGLIN_ZOMBIFIED) {
+				return;
+			}
 			le.setCustomName(null);
 			if (ev.getEntityType() == EntityType.WITHER) {
 				ev.getEntity().setMaxHealth(900000);
@@ -151,7 +158,6 @@ public class MobsSkillsEvents extends Mobs implements Listener, Serializable  {
 				ev.getEntity().setMetadata("sandbag", new FixedMetadataValue(RMain.getInstance(), true));
 			} else {
 				
-
 				
             	final Biome b = le.getLocation().getBlock().getBiome();
 
@@ -265,7 +271,40 @@ public class MobsSkillsEvents extends Mobs implements Listener, Serializable  {
 
 
 	@EventHandler
-	public void VilClickCan(SlimeSplitEvent ev) {
+	public void Transform(EntityTransformEvent ev) {
+		Entity tfe = ev.getTransformedEntity();
+		if(tfe.hasMetadata("rpgspawned") && ev.getTransformReason() == TransformReason.PIGLIN_ZOMBIFIED) {
+			LivingEntity le = (LivingEntity) ev.getTransformedEntity();
+			LivingEntity nle = (LivingEntity) ev.getEntity();
+
+			String reg = le.getCustomName();
+			if(reg.contains("피글린")) {
+				reg = reg.substring(0, reg.indexOf("피글린"));
+			}
+			else if(reg.contains("호글린")) {
+				reg = reg.substring(0, reg.indexOf("호글린"));
+			}
+			else if(reg.contains("Piglin")) {
+				reg = reg.substring(0, reg.indexOf("Piglin"));
+			}
+			else if(reg.contains("Hoglin")) {
+				reg = reg.substring(0, reg.indexOf("Hoglin"));
+			}
+			
+			LivingEntity newmob = Mobspawn(nle, reg + trans(nle), le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue(),
+					le.getEquipment().getHelmet(), le.getEquipment().getChestplate(),
+					le.getEquipment().getLeggings(), le.getEquipment().getBoots(),
+					le.getEquipment().getItemInMainHand(), le.getEquipment().getItemInOffHand(),
+					nle.getType());
+			if(!tfe.getMetadata("rpgspawned").get(0).asString().equals("true")) {
+				newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), tfe.getMetadata("rpgspawned").get(0).asString()));
+				newmob.setMetadata("unmodified", new FixedMetadataValue(RMain.getInstance(), true));
+			}
+		}
+	}
+
+	@EventHandler
+	public void SlimeSplit(SlimeSplitEvent ev) {
 		PoisonSkills.getInstance().slimesplit(ev);
 	}
 
@@ -415,6 +454,7 @@ public class MobsSkillsEvents extends Mobs implements Listener, Serializable  {
 		PoisonRaids.getInstance().PoisonCombo(d);
 		WildRaids.getInstance().WildCombo(d);
 		
+		NetherRaids.getInstance().NetherCombo(d);
 		
 	
 		RedSkills.getInstance().Fireball(d);
