@@ -7,7 +7,6 @@ import io.github.chw3021.classes.Proficiency;
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.commons.Pak;
 import io.github.chw3021.commons.SkillBuilder;
-import io.github.chw3021.commons.SkillUseEvent;
 import io.github.chw3021.obtains.Obtained;
 import io.github.chw3021.party.Party;
 
@@ -1399,7 +1398,7 @@ public class Swordskills extends Pak implements Listener, Serializable {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec =4*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =3.5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 
 
@@ -1410,196 +1409,104 @@ public class Swordskills extends Pak implements Listener, Serializable {
 				if(p.getInventory().getItemInMainHand().getType().name().contains("SWORD"))
 				{
 
-
-					if(frcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-					{
-						double timer = (frcooldown.get(p.getName())/1000d + sec) - System.currentTimeMillis()/1000d; // geting time in seconds
-						if(!(timer < 0)) // if timer is still more then 0 or 0
-						{
-							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("섬격 재사용 대기시간이 " + String.valueOf(Math.round(timer*10)/10.0) + "초 남았습니다").create());
-							}
-							else {
-								p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use FlashyRush").create());
-							}
-						}
-						else // if timer is done
-						{
-							frcooldown.remove(p.getName()); // removing player from HashMap
-							p.setCooldown(CAREFUL, 3);
-							p.swingOffHand();
-							ArrayList<Location> line = new ArrayList<Location>();
-							HashSet<LivingEntity> les = new HashSet<LivingEntity>();
-							p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 2f);
-							p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1.0f, 0f);
-							AtomicInteger j = new AtomicInteger(0);
-							for(double d = 0; d <= 5; d += 0.1) {
-								Location pl = p.getEyeLocation();
-								pl.add(pl.clone().getDirection().normalize().multiply(d));
-								if(!pl.getBlock().isPassable()) {
-									break;
-								}
-								line.add(pl);
-							}
-							line.forEach(i -> {
-								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-									@Override
-									public void run()
-									{
-										p.setCooldown(CAREFUL, 3);
-										p.teleport(i);
-										p.getWorld().spawnParticle(Particle.FLASH, p.getLocation(), 6, 0.1,0.1,0.1,0);
-										for (Entity e : p.getWorld().getNearbyEntities(i,1.5, 1.5, 1.5))
-										{
-											if (e instanceof Player)
-											{
-
-												Player p1 = (Player) e;
-												if(Party.hasParty(p) && Party.hasParty(p1))	{
-													if(Party.getParty(p).equals(Party.getParty(p1)))
-													{
-														continue;
-													}
-												}
-											}
-											if ((!(e == p))&& e instanceof LivingEntity && !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && !e.isDead())
-											{
-												LivingEntity le = (LivingEntity)e;
-												les.add(le);
-											}
-										}
-										p.setFallDistance(0);
-									}
-								}, j.incrementAndGet()/50);
-							});
-							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-								@Override
-								public void run()
-								{
-
-									p.setCooldown(CAREFUL, 3);
-									p.swingMainHand();
-									for(LivingEntity le: les) {
-										atk1(0.73 *(1+ ssd.FlashyRush.get(p.getUniqueId())*0.042), p, le);
-										if(Proficiency.getpro(p)>=1) {
-											Holding.holding(p, le, 10l);
-											Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-												@Override
-												public void run()
-												{
-													atk1(0.73 *(1+ ssd.FlashyRush.get(p.getUniqueId())*0.042), p, le);
-													Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-														@Override
-														public void run()
-														{
-															if(le.isDead() && frcooldown.containsKey(p.getName())) {
-																frcooldown.remove(p.getName());
-															}
-														}
-													}, 1/5);
-												}
-											}, 9);
-										}
-										Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-											@Override
-											public void run()
-											{
-												if(le.isDead() && frcooldown.containsKey(p.getName())) {
-													frcooldown.remove(p.getName());
-												}
-											}
-										}, 1/5);
-
-									}
-
-								}
-							}, j.incrementAndGet()/50);
-
-							frcooldown.put(p.getName(), System.currentTimeMillis());
-						}
-					}
-					else // if cooldown doesn't have players name in it
-					{
-						p.setCooldown(CAREFUL, 3);
-						p.swingOffHand();
-						ArrayList<Location> line = new ArrayList<Location>();
-						HashSet<LivingEntity> les = new HashSet<LivingEntity>();
-						p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 2f);
-						p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1.0f, 0f);
-						AtomicInteger j = new AtomicInteger(0);
-						for(double d = 0; d <= 5; d += 0.1) {
-							Location pl = p.getEyeLocation();
-							pl.add(pl.clone().getDirection().normalize().multiply(d));
-							if(pl.getBlock().isPassable()) {
-								line.add(pl);
-							}
-						}
-						line.forEach(i -> {
-							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-								@Override
-								public void run()
-								{
-									p.setCooldown(CAREFUL, 3);
-									p.teleport(i);
-									p.getWorld().spawnParticle(Particle.FLASH, p.getLocation(), 6, 0.1,0.1,0.1,0);
-									for (Entity e : p.getWorld().getNearbyEntities(i,1.5, 1.5, 1.5))
-									{
-										if ((!(e == p))&& e instanceof LivingEntity && !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))&& !e.isDead())
-										{
-											LivingEntity le = (LivingEntity)e;
-											les.add(le);
-										}
-									}
-									p.setFallDistance(0);
-								}
-							}, j.incrementAndGet()/50);
-						});
-						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-							@Override
-							public void run()
-							{
-
+					SkillBuilder bd = new SkillBuilder()
+							.player(p)
+							.cooldown(sec)
+							.kname("섬격")
+							.ename("FlashyRush")
+							.slot(5)
+							.hm(frcooldown)
+							.skillUse(() -> {
 								p.setCooldown(CAREFUL, 3);
-								p.swingMainHand();
-								for(LivingEntity le: les) {
-									atk1(0.73 *(1+ ssd.FlashyRush.get(p.getUniqueId())*0.042), p, le);
-									if(Proficiency.getpro(p)>=1) {
-										Holding.holding(p, le, 10l);
-										Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-											@Override
-											public void run()
-											{
-												atk1(0.73 *(1+ ssd.FlashyRush.get(p.getUniqueId())*0.042), p, le);
-												Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-													@Override
-													public void run()
-													{
-														if(le.isDead() && frcooldown.containsKey(p.getName())) {
-															frcooldown.remove(p.getName());
-														}
-													}
-												}, 1/5);
-											}
-										}, 9);
+								p.swingOffHand();
+								ArrayList<Location> line = new ArrayList<Location>();
+								HashSet<LivingEntity> les = new HashSet<LivingEntity>();
+								p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 2f);
+								p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1.0f, 0f);
+								AtomicInteger j = new AtomicInteger(0);
+								for(double d = 0; d <= 5; d += 0.1) {
+									Location pl = p.getEyeLocation();
+									pl.add(pl.clone().getDirection().normalize().multiply(d));
+									if(!pl.getBlock().isPassable()) {
+										break;
 									}
+									line.add(pl);
+								}
+								line.forEach(i -> {
 									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 										@Override
 										public void run()
 										{
-
-											if(le.isDead() && frcooldown.containsKey(p.getName())) {
-												frcooldown.remove(p.getName());
+											p.setCooldown(CAREFUL, 3);
+											p.teleport(i);
+											p.getWorld().spawnParticle(Particle.FLASH, p.getLocation(), 6, 0.1,0.1,0.1,0);
+											for (Entity e : p.getWorld().getNearbyEntities(i,1.5, 1.5, 1.5))
+											{
+												if (e instanceof Player)
+												{
+	
+													Player p1 = (Player) e;
+													if(Party.hasParty(p) && Party.hasParty(p1))	{
+														if(Party.getParty(p).equals(Party.getParty(p1)))
+														{
+															continue;
+														}
+													}
+												}
+												if ((!(e == p))&& e instanceof LivingEntity && !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && !e.isDead())
+												{
+													LivingEntity le = (LivingEntity)e;
+													les.add(le);
+												}
 											}
-
+											p.setFallDistance(0);
 										}
-									}, 1/5);
-
-								}
-
-							}
-						}, j.incrementAndGet()/50);
-						frcooldown.put(p.getName(), System.currentTimeMillis());
-					}
+									}, j.incrementAndGet()/50);
+								});
+								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+									@Override
+									public void run()
+									{
+	
+										p.setCooldown(CAREFUL, 3);
+										p.swingMainHand();
+										for(LivingEntity le: les) {
+											atk1(0.73 *(1+ ssd.FlashyRush.get(p.getUniqueId())*0.042), p, le);
+											if(Proficiency.getpro(p)>=1) {
+												Holding.holding(p, le, 10l);
+												Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+													@Override
+													public void run()
+													{
+														atk1(0.73 *(1+ ssd.FlashyRush.get(p.getUniqueId())*0.042), p, le);
+														Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+															@Override
+															public void run()
+															{
+																if(le.isDead() && frcooldown.containsKey(p.getName())) {
+																	frcooldown.remove(p.getName());
+																}
+															}
+														}, 1/5);
+													}
+												}, 9);
+											}
+											Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+												@Override
+												public void run()
+												{
+													if(le.isDead() && frcooldown.containsKey(p.getName())) {
+														frcooldown.remove(p.getName());
+													}
+												}
+											}, 1/5);
+	
+										}
+	
+									}
+								}, j.incrementAndGet()/50);
+							});
+					bd.execute();
 
 				} // adding players name + current system time in miliseconds
 
@@ -2365,7 +2272,6 @@ public class Swordskills extends Pak implements Listener, Serializable {
 						if(guardcool.containsKey(p.getUniqueId())) {
 							Bukkit.getScheduler().cancelTask(guardcool.get(p.getUniqueId()));
 						}
-						Bukkit.getPluginManager().callEvent(new SkillUseEvent(p, sec,5, "막기", "Guard"));
 						int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
 							@Override
 							public void run()

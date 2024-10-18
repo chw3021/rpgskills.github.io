@@ -108,7 +108,22 @@ public class OceanSkills extends OverworldRaids{
 		}
 	}
 	    
-		
+
+	public void riptider(ProjectileLaunchEvent d) 
+	{
+	    
+		if(d.getEntity() instanceof Trident) 
+		{
+			Trident po = (Trident)d.getEntity();
+			if(po.getShooter() instanceof LivingEntity) {
+				LivingEntity p = (LivingEntity) po.getShooter();
+				if(p.hasMetadata("riptider")) {
+					d.setCancelled(true);
+					p.setRiptiding(true);
+				}
+			}
+		}					
+	}
 	
 
 	public void shulker(ProjectileLaunchEvent d) 

@@ -167,7 +167,7 @@ public class EngSkillsGui extends SkillsGui {
 						Arrays.asList("공격력이 증가합니다", "스킬 사용시 궁극기를 제외한 모든 스킬들의", "재사용 대기시간이 0.5초 감소합니다"), 15,
 						Engskillsinv);
 				itemset("전투 순양함", Material.WRITTEN_BOOK, 0, 1,
-						Arrays.asList("웅크리기 + num4", "", ChatColor.BOLD + "5 X 2.2D"), 17, Engskillsinv);
+						Arrays.asList("웅크리기 + num4", "", "스킬들의 공격력과 성능이 증가합니다",ChatColor.BOLD + "+ 0.1D"), 17, Engskillsinv);
 
 
 				itemset("원자궤도", Material.BUCKET, 0, 1,
@@ -319,7 +319,7 @@ public class EngSkillsGui extends SkillsGui {
 				itemset("Overclock", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage",
 						"Decreases All Skills Cooldown 0.5s", "When Use any Skill (Except Ults)"), 15, Engskillsinv);
 				itemset("Battle Cruiser", Material.WRITTEN_BOOK, 0, 1,
-						Arrays.asList("Sneaking + num4", "", ChatColor.BOLD + " X 9.2D"), 17, Engskillsinv);
+						Arrays.asList("Sneaking + num4", "","Increase Damage and Range", ChatColor.BOLD + " + 0.1D"), 17, Engskillsinv);
 
 				itemset("Orbital(Locked)", Material.STRUCTURE_VOID, 0, 1,
 						Arrays.asList("Required Proficiency: " + Proficiency.getproexp(p) + "/155015"), 18,
@@ -375,7 +375,7 @@ public class EngSkillsGui extends SkillsGui {
 				itemset("Overclock", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Whole Skills Damage",
 						"Decreases All Skills Cooldown 0.5s", "When Use any Skill (Except Ults)"), 15, Engskillsinv);
 				itemset("Battle Cruiser", Material.WRITTEN_BOOK, 0, 1,
-						Arrays.asList("Sneaking + num4", "", ChatColor.BOLD + " X 9.2D"), 17, Engskillsinv);
+						Arrays.asList("Sneaking + num4", "","Increase Damage and Range", ChatColor.BOLD + " + 0.1D"), 17, Engskillsinv);
 
 				itemset("Orbital", Material.BUCKET, 0, 1,
 						Arrays.asList(ChatColor.UNDERLINE + "[Lightning]", "Make Orbital When Use Once More",

@@ -375,6 +375,7 @@ public class NPCLoc implements Serializable, Listener{
 					Spawn(stl, str.getKey().getKey());
 				});
 			});
+
 		}
 	}
 	
@@ -397,6 +398,7 @@ public class NPCLoc implements Serializable, Listener{
 				return;
 			}
 			stlc.forEach(stls -> {
+				System.out.println(stls);
 				Location stl = stls.getBoundingBox().getCenter().toLocation(w);
 				Spawn(stl, str.getKey().getKey());
 			});

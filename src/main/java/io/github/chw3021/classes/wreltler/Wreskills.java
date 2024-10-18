@@ -29,6 +29,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.EntityEffect;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -40,7 +41,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
-import org.bukkit.entity.Snowball;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -287,7 +287,7 @@ public class Wreskills extends Pak implements Serializable {
 				                	p.setVelocity(p.getEyeLocation().getDirection().clone().normalize().multiply(0.1));
 				                	quitTackle(p);
 				                }
-				            }, 35); 
+				            }, 15); 
 		                    tackledt.put(p.getUniqueId(), t2);
 						});
 				bd.execute();
@@ -435,6 +435,7 @@ public class Wreskills extends Pak implements Serializable {
 			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
 			{
 
+				ev.setCancelled(true);
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
 						.cooldown(sec)
@@ -495,6 +496,7 @@ public class Wreskills extends Pak implements Serializable {
 					             	@Override
 							                public void run() 
 					             				{	
+					             					lel.getWorld().spawnParticle(Particle.SWEEP_ATTACK, lel, 3);
 							                    	p.teleport(lel);
 							                    	
 									            }
@@ -505,8 +507,9 @@ public class Wreskills extends Pak implements Serializable {
 				             	@Override
 						                public void run() 
 				             				{	
-												p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation().clone(), 120, 2,0.5,2,0 ,getBd(Material.DIRT));
+												p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation().clone(), 350, 2,0.5,2,0 ,getBd(Material.DIRT));
 							                    p.playSound(p.getLocation(), Sound.ENTITY_GENERIC_BIG_FALL, 1f, 0);
+							                    p.playSound(p.getLocation(), Sound.ITEM_MACE_SMASH_GROUND_HEAVY, 1f, 0);
 												
 								            }
 					            }, k.incrementAndGet()/30+5);
@@ -604,8 +607,10 @@ public class Wreskills extends Pak implements Serializable {
 											atk0(1.02, wsd.ChokeSlam.get(p.getUniqueId())*1.1, p, le);
 				                		});
 										p.playSound(l, Sound.ENTITY_HOSTILE_BIG_FALL, 1f, 0);
-										p.playSound(l, Sound.ENTITY_WIND_CHARGE_THROW, 1f, 0);
-										p.getWorld().spawnParticle(Particle.BLOCK, l, 100, 2,2,2,0 ,getBd(Material.DIRT));
+					                    p.playSound(p.getLocation(), Sound.ENTITY_FISHING_BOBBER_THROW, 0.2f, 2.0f);
+										p.playSound(p.getLocation(), Sound.ITEM_MACE_SMASH_GROUND_HEAVY, 1f, 0);
+										p.getWorld().spawnParticle(Particle.BLOCK, l, 550, 2,2,2,0 ,getBd(Material.STONE));
+										p.getWorld().spawnParticle(Particle.BLOCK, l, 550, 2,2,2,0 ,getBd(Material.DIRT));
 				                	}
 				                }
 							}, 10);
@@ -687,6 +692,7 @@ public class Wreskills extends Pak implements Serializable {
 				             	@Override
 						                public void run() 
 				             				{	
+				             					p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, p.getLocation().clone(), 3);
 						                    	p.teleport(lel);
 						                    	
 								            }
@@ -697,8 +703,8 @@ public class Wreskills extends Pak implements Serializable {
 			             	@Override
 					                public void run() 
 			             				{	
-											p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation().clone(), 120, 2,0.5,2,0 ,getBd(Material.DIRT));
-						                    p.playSound(p.getLocation(), Sound.ENTITY_GENERIC_BIG_FALL, 1f, 0);
+											p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation().clone(), 330, 2,0.5,2,0 ,getBd(Material.DIRT));
+						                    p.playSound(p.getLocation(), Sound.ITEM_MACE_SMASH_GROUND_HEAVY, 1f, 0);
 											
 							            }
 				            }, k.incrementAndGet()/30+5);
@@ -775,6 +781,8 @@ public class Wreskills extends Pak implements Serializable {
 								}
 		                    }
 		                    AtomicBoolean ab = new AtomicBoolean(false);
+		                    HashSet<LivingEntity> hle = new HashSet<>();
+		                    
 		                    for(Location l : line) {
 		                    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		                    		
@@ -785,8 +793,6 @@ public class Wreskills extends Pak implements Serializable {
 				                    	p.teleport(l);
 										p.setGliding(true);
 
-					                    p.playSound(p.getLocation(), Sound.ITEM_CROSSBOW_LOADING_START, 1.0f, 0f);
-						        		p.getWorld().spawnParticle(Particle.SNEEZE, l, 4);
 					                    Location gl = l.clone();
 
 										for (Entity e : l.getWorld().getNearbyEntities(l, 0.5, 0.5, 0.5))
@@ -794,25 +800,19 @@ public class Wreskills extends Pak implements Serializable {
 				                    		if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
 											{
 												LivingEntity le = (LivingEntity)e;
-												le.teleport(l);
+												le.teleport(l.clone().setDirection(p.getEyeLocation().getDirection().normalize().multiply(-1)));
 												Holding.superholding(p, le, 55l);
-												gl = le.getEyeLocation().clone().add(0, -0.2, 0).setDirection(l.getDirection());
-												Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
-												{
-								             	@Override
-										                public void run() 
-								             			{	
-				             								atk0(1.6, wsd.GuillotineChoke.getOrDefault(p.getUniqueId(),0)*1.65, p, le);
-				             								le.playHurtAnimation(0);
-												        }
-									            }, 35);
+												gl = le.getEyeLocation().clone().add(0, -0.4, 0).setDirection(l.getDirection());
 												ab.set(true);
+												hle.add(le);
 											}
 										}
 										if(ab.get()) {
+						                    p.playSound(p.getLocation(), Sound.ITEM_CROSSBOW_LOADING_START, 1.0f, 0f);
+							        		p.getWorld().spawnParticle(Particle.CRIT, l, 30);
 											p.teleport(gl);
-											Holding.holding(null, p, 35l);
-											sit(p,35);
+											Holding.holding(null, p, 25l);
+											sit(p,25);
 											return;
 										}
 					                }
@@ -821,6 +821,22 @@ public class Wreskills extends Pak implements Serializable {
 	                    			break;
 	                    		}
 		                    }
+		                    
+							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
+							{
+			             	@Override
+					                public void run() 
+			             			{	
+					                    p.playSound(p.getLocation(), Sound.ENTITY_ITEM_BREAK, 1.0f, 0f);
+						        		p.getWorld().spawnParticle(Particle.ITEM, p.getLocation(), 200,1,1,1, new ItemStack(Material.BONE));
+			             				if(!hle.isEmpty()) {
+			             					hle.forEach(le ->{
+		         								atk0(1.6, wsd.GuillotineChoke.getOrDefault(p.getUniqueId(),0)*1.65, p, le);
+		         								le.playHurtAnimation(0);
+			             					});
+			             				}
+							        }
+				            }, 25);
 		                    
 		                    
 						});
@@ -960,6 +976,8 @@ public class Wreskills extends Pak implements Serializable {
 
 	final private Integer roll(Player p) {
 		
+		p.setGameMode(GameMode.SPECTATOR);
+		
 		final Location pfl = p.getLocation().clone().add(0, 0.3, 0);
 		final Vector pv = p.getEyeLocation().getDirection().clone().normalize();
 		final Vector axis = pv.rotateAroundY(Math.PI/2);
@@ -971,21 +989,25 @@ public class Wreskills extends Pak implements Serializable {
 		for(double doub = 0; doub <4; doub+=0.1) {
 			if(!pfl.clone().add(pv.clone().multiply(blocked)).getBlock().isPassable()){
 				final Location inl = pfl.clone().add(pv.clone().multiply(blocked));
-				line.add(inl.clone().setDirection(pv.rotateAroundY(angle).rotateAroundAxis(axis, angle)));
+				line.add(inl.clone().setDirection(pv.rotateAroundY(angle).normalize().rotateAroundAxis(axis, angle).normalize()));
 			}
 			else {
 				blocked = doub;
 				final Location inl = pfl.clone().add(pv.clone().multiply(blocked));
-				line.add(inl.clone().setDirection(pv.rotateAroundY(angle).rotateAroundAxis(axis, angle)));
+				line.add(inl.clone().setDirection(pv.rotateAroundY(angle).normalize().rotateAroundAxis(axis, angle).normalize()));
 			}
 			angle =+ rotationStep;
 		}
 		
+		
+		
 		AtomicInteger j = new AtomicInteger();
 
-		p.getWorld().spawn(p.getLocation().clone(), Snowball.class, pa ->{
+		p.getWorld().spawn(p.getLocation().clone(), ArmorStand.class, pa ->{
 			//pa.setInvisible(true);
 			pa.setInvulnerable(true);
+			pa.setBasePlate(false);
+			pa.setCollidable(false);
 			pa.setGravity(false);
 			pa.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
 			pa.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(),p.getName()));
@@ -998,14 +1020,33 @@ public class Wreskills extends Pak implements Serializable {
 		            public void run() {
 	                    p.playSound(p.getLocation(), Sound.BLOCK_HEAVY_CORE_STEP, 0.1f, 0);
 	                    p.playSound(p.getLocation(), Sound.BLOCK_BASALT_STEP, 0.1f, 0);
-						p.getWorld().spawnParticle(Particle.WARPED_SPORE, l, 5);
-						p.getWorld().spawnParticle(Particle.SPORE_BLOSSOM_AIR, l, 5);
-						p.getWorld().spawnParticle(Particle.CRIMSON_SPORE, l, 5);
-						p.getWorld().spawnParticle(Particle.CHERRY_LEAVES, l, 5);
-						p.getWorld().spawnParticle(Particle.MYCELIUM, l, 5);
+						l.getWorld().spawnParticle(Particle.WARPED_SPORE, l, 5);
+						l.getWorld().spawnParticle(Particle.SPORE_BLOSSOM_AIR, l, 5);
+						l.getWorld().spawnParticle(Particle.CRIMSON_SPORE, l, 5);
+						l.getWorld().spawnParticle(Particle.CHERRY_LEAVES, l, 5);
+						l.getWorld().spawnParticle(Particle.MYCELIUM, l, 5);
 		            	pa.teleport(l);
-		    			pa.setRotation(l.getYaw(), l.getPitch());
-		            	
+		    			pa.setBodyPose(new EulerAngle(l.getX(),l.getY(),l.getZ()));
+		    			pa.setHeadPose(new EulerAngle(l.getX(),l.getY(),l.getZ()));
+		    			p.setSpectatorTarget(pa);
+
+						for(Entity e : p.getWorld().getNearbyEntities(p.getLocation(), 1.5, 1.5, 1.5)) {
+                    		if(e instanceof Player) {
+								Player p1 = (Player) e;
+								if(Party.hasParty(p) && Party.hasParty(p1))	{
+									if(Party.getParty(p).equals(Party.getParty(p1)))
+									{
+										continue;
+									}
+								}
+                    		}
+                        	if(e instanceof LivingEntity && e!=p&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
+                    			LivingEntity le = (LivingEntity)e;
+                    			le.teleport(l.clone().setDirection(le.getVelocity().normalize()));
+                    			Holding.superholding(p, le, 100l);
+                    			
+                    		}
+                    	}
 		            }
 		        }, j.getAndIncrement()/2); 
 			});
@@ -1043,6 +1084,8 @@ public class Wreskills extends Pak implements Serializable {
 						.hm(sultcooldown)
 						.skillUse(() -> {
 							
+							final GameMode pgm = p.getGameMode();
+							
 							int delay = roll(p);
 
 		                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_WEAK, 1f, 0);
@@ -1053,6 +1096,7 @@ public class Wreskills extends Pak implements Serializable {
 								@Override
 				                public void run() 
 		             				{
+					            		p.setGameMode(pgm);
 										for(Entity e : p.getWorld().getNearbyEntities(p.getLocation(), 1.5, 1.5, 1.5)) {
 		                            		if(e instanceof Player) {
 		        								Player p1 = (Player) e;
@@ -1066,10 +1110,12 @@ public class Wreskills extends Pak implements Serializable {
 			                            	if(e instanceof LivingEntity && e!=p&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
 			                        			LivingEntity le = (LivingEntity)e;
 			                        			les.add(le);
+		                	            		sit(le,20);
 			                        			Holding.superholding(p, le, 100l);
 			                        		}
 			                        	}
 	                	            	if(!les.isEmpty()) {
+	                	            		sit(p,20);
 	            		                    p.playSound(p.getLocation(), Sound.BLOCK_VAULT_ACTIVATE, 0.8f, 2);
 	            		                    p.playSound(p.getLocation(), Sound.BLOCK_VAULT_CLOSE_SHUTTER, 0.8f, 0);
 	            							p.getWorld().spawnParticle(Particle.VAULT_CONNECTION, p.getLocation(), 100,1,1,1);

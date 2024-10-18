@@ -401,7 +401,7 @@ public class OverworldRaids extends Summoned implements Listener {
 					null, null, null, main, off, EntityType.IRON_GOLEM);
 			newmob.setGlowing(true);
 			newmob.setPlayerCreated(false);
-    		newmob.setLootTable(null);
+    		
 
     		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
     		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
@@ -471,7 +471,7 @@ public class OverworldRaids extends Summoned implements Listener {
     		
     		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
     		newmob.setMetadata("bosswave1", new FixedMetadataValue(RMain.getInstance(), true));
-    		newmob.setLootTable(null);
+    		
     		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
     		newmob.setRemoveWhenFarAway(false);
     		raider.put(rn, newmob.getUniqueId());
@@ -547,7 +547,7 @@ public class OverworldRaids extends Summoned implements Listener {
     		Skeleton newmob = (Skeleton) MobspawnLoc(esl, ChatColor.GRAY+reg, dif1, pe, chest, leg, boots, main, null, EntityType.SKELETON);
 
     		newmob.setConversionTime(-1);
-    		newmob.setLootTable(null);
+    		
     		newmob.setGlowing(true);
     		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
     		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
@@ -560,7 +560,7 @@ public class OverworldRaids extends Summoned implements Listener {
     		
     		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
     		newmob.setMetadata("bosswave1", new FixedMetadataValue(RMain.getInstance(), true));
-    		newmob.setLootTable(null);
+    		
     		newmob.setRemoveWhenFarAway(false);
     		raider.put(rn, newmob.getUniqueId());
     		
@@ -617,7 +617,7 @@ public class OverworldRaids extends Summoned implements Listener {
     		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), armor));
     		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
     		newmob.setMetadata("bosswave1", new FixedMetadataValue(RMain.getInstance(), true));
-    		newmob.setLootTable(null);
+    		
     		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
     		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
     		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
@@ -681,7 +681,7 @@ public class OverworldRaids extends Summoned implements Listener {
     		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), armor));
     		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
     		newmob.setMetadata("bosswave1", new FixedMetadataValue(RMain.getInstance(), true));
-    		newmob.setLootTable(null);
+    		
     		
     		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
     		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
@@ -747,7 +747,7 @@ public class OverworldRaids extends Summoned implements Listener {
     		Skeleton newmob = (Skeleton) MobspawnLoc(esl, ChatColor.DARK_GREEN+reg, dif1, pe, pe1, leg, pe11, main, null, EntityType.SKELETON);
 
     		newmob.setConversionTime(-1);
-    		newmob.setLootTable(null);
+    		
     		newmob.setGlowing(true);
     		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
     		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
@@ -760,7 +760,7 @@ public class OverworldRaids extends Summoned implements Listener {
     		
     		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
     		newmob.setMetadata("bosswave1", new FixedMetadataValue(RMain.getInstance(), true));
-    		newmob.setLootTable(null);
+    		
     		newmob.setRemoveWhenFarAway(false);
     		raider.put(rn, newmob.getUniqueId());
     		
@@ -1602,7 +1602,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), le.getMetadata("boss").get(0).asDouble()));
 	    	    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
 	    	    		newmob.setMetadata("finalboss", new FixedMetadataValue(RMain.getInstance(), true));
-	    	    		newmob.setLootTable(null);
+	    	    		
 	    	    		
 	    	    		
 	    	    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.4);
@@ -1679,7 +1679,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), le.getMetadata("boss").get(0).asDouble()));
 	    	    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
 	    	    		newmob.setMetadata("finalboss", new FixedMetadataValue(RMain.getInstance(), true));
-	    	    		newmob.setLootTable(null);
+	    	    		
 	    	    		
 	    	    		
 	    	    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.4);
@@ -1805,7 +1805,7 @@ public class OverworldRaids extends Summoned implements Listener {
 		    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), le.getMetadata("boss").get(0).asDouble()));
 		    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
 		    		newmob.setMetadata("bosswave1", new FixedMetadataValue(RMain.getInstance(), true));
-		    		newmob.setLootTable(null);
+		    		
 		    		
 		    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
 		    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
@@ -1879,7 +1879,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), le.getMetadata("boss").get(0).asDouble()));
 	    	    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
 	    	    		newmob.setMetadata("finalboss", new FixedMetadataValue(RMain.getInstance(), true));
-	    	    		newmob.setLootTable(null);
+	    	    		
 	    	    		
 	    	    		
 	    	    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.4);
@@ -1960,7 +1960,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), le.getMetadata("boss").get(0).asDouble()));
 	    	    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
 	    	    		newmob.setMetadata("finalboss", new FixedMetadataValue(RMain.getInstance(), true));
-	    	    		newmob.setLootTable(null);
+	    	    		
 	    	    		newmob.setConversionTime(-1);
 	    	    		
 	    	    		
@@ -2053,7 +2053,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), le.getMetadata("boss").get(0).asDouble()));
 	    	    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
 	    	    		newmob.setMetadata("finalboss", new FixedMetadataValue(RMain.getInstance(), true));
-	    	    		newmob.setLootTable(null);
+	    	    		
 	    	    		newmob.setAdult();
 	    	    		newmob.setConversionTime(-1);
 	    	    		
@@ -2143,7 +2143,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), le.getMetadata("boss").get(0).asDouble()));
 	    	    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
 	    	    		newmob.setMetadata("finalboss", new FixedMetadataValue(RMain.getInstance(), true));
-	    	    		newmob.setLootTable(null);
+	    	    		
 	    	    		
 	    	    		
 	    	    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.4);
@@ -2236,9 +2236,9 @@ public class OverworldRaids extends Summoned implements Listener {
 	        			ItemMeta im11 = pe11.getItemMeta();
 	        			im11.setLore(Arrays.asList("Poison Boss2"));
 	        			pe11.setItemMeta(im11);
-	        			ItemStack main = new ItemStack(Material.NETHERITE_HOE);
+	        			ItemStack main = new ItemStack(Material.BOW);
 	        			ItemMeta mm = main.getItemMeta();
-	        			mm.setCustomModelData(8008);
+	        			mm.setCustomModelData(2011);
 	        			main.setItemMeta(mm);
 	        			
 	            		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "종말론자":"TheApocalyptic";
@@ -2251,7 +2251,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), le.getMetadata("boss").get(0).asDouble()));
 	    	    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
 	    	    		newmob.setMetadata("finalboss", new FixedMetadataValue(RMain.getInstance(), true));
-	    	    		newmob.setLootTable(null);
+	    	    		
 	    	    		newmob.setConversionTime(-1);
 	    	    		
 	    	    		

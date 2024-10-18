@@ -1532,14 +1532,16 @@ public class Witskills extends Pak implements Listener, Serializable {
 									hovert.remove(p.getName());
 								}
 
-								Holding.fly(p, 100l);
+								Long delay = 100l;
+								
 								p.playSound(p.getLocation(), Sound.ENTITY_WITHER_AMBIENT, 0.6f, 1.6f);
 								if(Proficiency.getpro(p)>=1) {
-									Holding.fly(p, 200l);
+									delay = 200l;
 								}
 								if(Proficiency.getpro(p)>=2) {
 									Holding.invur(p, 40l);
 								}
+								Holding.fly(p, delay);
 								int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
 									@Override
 									public void run()
@@ -1558,7 +1560,7 @@ public class Witskills extends Pak implements Listener, Serializable {
 											hovert.remove(p.getName());
 										}
 									}
-								}, 200);
+								}, delay);
 							});
 					bd.execute();
 				}

@@ -15,6 +15,7 @@ import org.bukkit.World.Environment;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.boss.DragonBattle.RespawnPhase;
 import org.bukkit.entity.Ageable;
+import org.bukkit.entity.Armadillo;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.EnderDragon;
@@ -483,6 +484,9 @@ public class CommonEvents extends Mobs implements Listener {
 			if(!al.isAdult()) {
 				return true;
 			}
+		}
+		if (le instanceof Armadillo) {
+			return true;
 		}
 		if (le instanceof Silverfish) {
 			return true;

@@ -1,8 +1,11 @@
-package io.github.chw3021.monsters.poison;
+package io.github.chw3021.monsters.nether;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -57,11 +60,12 @@ import com.google.common.util.concurrent.AtomicDouble;
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.monsters.raids.OverworldRaids;
 import io.github.chw3021.monsters.raids.Summoned;
+import io.github.chw3021.party.Party;
 import io.github.chw3021.rmain.RMain;
 
 
 
-public class PoisonSkills extends Summoned{
+public class PiglinSkills extends Summoned{
 
 	/**
 	 * 
@@ -81,93 +85,13 @@ public class PoisonSkills extends Summoned{
 	
 
 	
-	private static final PoisonSkills instance = new PoisonSkills ();
-	public static PoisonSkills getInstance()
+	private static final PiglinSkills instance = new PiglinSkills ();
+	public static PiglinSkills getInstance()
 	{
 		return instance;
 	}
 	
-	public void slimesplit(SlimeSplitEvent d) 
-	{
-		if(d.getEntity().hasMetadata("GiantSlime")) {
-			d.setCancelled(true);
-		}
-	}
 	
-	
-
-	public void spell(EntitySpellCastEvent ev) 
-	{
-
-		if(ev.getEntity() instanceof Evoker  && ev.getEntity().hasMetadata("Arsonist")) 
-		{
-			Evoker p = (Evoker)ev.getEntity();
-			
-			ev.setCancelled(true);
-
-        	p.getWorld().spawnParticle(Particle.ASH, p.getLocation(), 40, 1,1,1);
-            p.getWorld().playSound(p.getLocation(), Sound.ENTITY_TNT_PRIMED, 1, 2);
-            p.getWorld().playSound(p.getLocation(), Sound.ITEM_FLINTANDSTEEL_USE, 1, 0);
-
-			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-                @Override
-                public void run() 
-                {
-                	p.getWorld().spawnParticle(Particle.FLAME, p.getLocation(), 200);
-                	p.getWorld().spawnParticle(Particle.SMALL_FLAME, p.getLocation(), 200);
-                    p.getWorld().playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 0.6f, 0.5f);
-                    p.getWorld().playSound(p.getLocation(), Sound.ENTITY_BLAZE_BURN, 0.7f,0.4f);
-
-					for(Entity e : p.getWorld().getNearbyEntities(p.getLocation(),2.5, 2.5, 2.5)) {
-						if(p!=e && e instanceof Player&& !(e.hasMetadata("fake"))) {
-							LivingEntity le = (LivingEntity)e;
-							le.damage(4,p);
-							le.setFireTicks(50);
-						}
-					}
-								
-                }
-			}, 25);
-		}
-		
-		if(ev.getEntity() instanceof Illusioner  && ev.getEntity().hasMetadata("GasSprayer")) 
-		{
-			Illusioner p = (Illusioner)ev.getEntity();
-			
-			ev.setCancelled(true);
-
-        	p.getWorld().spawnParticle(Particle.SPIT, p.getLocation(), 40, 1,1,1);
-            p.getWorld().playSound(p.getLocation(), Sound.BLOCK_END_PORTAL_FRAME_FILL, 1, 2);
-            p.getWorld().playSound(p.getLocation(), Sound.BLOCK_BREWING_STAND_BREW, 1, 0);
-
-			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-                @Override
-                public void run() 
-                {
-					for(int n = 0; n<3; n++) {
-	                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() 
-			                {
-			                	p.getWorld().spawnParticle(Particle.SNEEZE, p.getLocation(), 300, 2.7,2.7,2.7);
-			                    p.getWorld().playSound(p.getLocation(), Sound.BLOCK_BUBBLE_COLUMN_WHIRLPOOL_INSIDE, 1, 2);
-			                    p.getWorld().playSound(p.getLocation(), Sound.BLOCK_CANDLE_EXTINGUISH, 1, 0);
-
-								for(Entity e : p.getWorld().getNearbyEntities(p.getLocation(),2.7, 2.7, 2.7)) {
-									if(p!=e && e instanceof Player&& !(e.hasMetadata("fake"))) {
-										LivingEntity le = (LivingEntity)e;
-										le.damage(2,p);
-									}
-								}
-			                }
-	                	 }, n*3); 														
-					}
-								
-                }
-			}, 40);
-		}
-	}
-
 	final private ArrayList<Location> RayBow(Location il){
     	ArrayList<Location> line = new ArrayList<Location>();
         for(double d = 0.1; d <= 3.1; d += 0.3) {
@@ -178,62 +102,6 @@ public class PoisonSkills extends Summoned{
         return line;
 	}
 	
-	public void launch(ProjectileLaunchEvent d) 
-	{
-		if(d.getEntity().getShooter() instanceof Witch && d.getEntity() instanceof ThrownPotion) {
-			Witch p = (Witch) d.getEntity().getShooter();
-			if(p.hasMetadata("Grenadier")) {
-				Snowball fr = p.getWorld().spawn(p.getEyeLocation(), Snowball.class);
-				fr.setShooter(p);
-                fr.setVelocity(p.getEyeLocation().getDirection().normalize().multiply(0.68));
-				fr.setMetadata("grenadier", new FixedMetadataValue(RMain.getInstance(), true));
-                fr.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-                fr.setItem(new ItemStack(Material.GREEN_TERRACOTTA));
-				d.setCancelled(true);
-				
-			}
-			else if(p.hasMetadata("PoisonGrenadier")) {
-				Snowball fr = p.getWorld().spawn(p.getEyeLocation(), Snowball.class);
-				fr.setShooter(p);
-                fr.setVelocity(p.getEyeLocation().getDirection().normalize().multiply(0.68));
-				fr.setMetadata("PoisonGrenadier", new FixedMetadataValue(RMain.getInstance(), true));
-                fr.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-                fr.setItem(new ItemStack(Material.GREEN_GLAZED_TERRACOTTA));
-				d.setCancelled(true);
-			}
-		}
-		else if(d.getEntity().hasMetadata("GasSprayer")) {
-			Illusioner p = (Illusioner) d.getEntity().getShooter();
-        	d.setCancelled(true);
-        	final ArrayList<Location> line = RayBow(p.getEyeLocation().clone());
-            for(double an = -Math.PI/3; an<=Math.PI/3; an += Math.PI/6) {
-	        	line.addAll(RayBow(p.getEyeLocation().clone().add(p.getEyeLocation().getDirection().clone().normalize().rotateAroundY(an))));
-            }
-        	p.getWorld().playSound(p.getLocation(), Sound.BLOCK_LAVA_EXTINGUISH, 1f, 2f);
-
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-                @Override
-                public void run() {
-                	p.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_SHOOT, 0.1f, 2f);
-                	p.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_SHOOT, 0.1f, 0f);
-                	
-                    line.forEach(l -> {
-                    	p.getWorld().spawnParticle(Particle.SNEEZE, l.add(0, -0.289, 0),5, 0.1,0.1,0.1,0.1);
-
-                    	for (Entity e : p.getWorld().getNearbyEntities(l, 0.25, 0.25, 0.25))
-        				{
-        					if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
-        						LivingEntity le = (LivingEntity)e;
-        						le.damage(0.3,p);
-        						le.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 40,1,false,false));
-        					}
-        				}
-                    });
-                }
-            }, 10); 
-			
-		}
-	}
 	public void hit(ProjectileHitEvent d) 
 	{
 		if(d.getEntity() instanceof Snowball) 
@@ -272,12 +140,20 @@ public class PoisonSkills extends Summoned{
 	                	 }, n*3); 														
 					}
 				}
-				else if(po.hasMetadata("Rifleman") && d.getHitEntity()!=null) {
-            		Entity e = d.getHitEntity();
-					if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
-						LivingEntity le = (LivingEntity)e;
-						le.damage(3.1,p);
-					}
+				else if(po.hasMetadata("cookedFoods")) {
+            		final Location l = d.getHitEntity() != null ? d.getHitEntity().getLocation() : d.getHitBlock().getLocation();
+
+					l.getWorld().spawnParticle(Particle.SMALL_FLAME, l, 50);
+					l.getWorld().spawnParticle(Particle.BLOCK, l, 200,2.5,2.5,2.5,getBd(Material.FIRE_CORAL_BLOCK));
+					l.getWorld().playSound(l, Sound.BLOCK_CORAL_BLOCK_BREAK, 1f, 1.5f);
+					
+            		for(Entity e : l.getWorld().getNearbyEntities(l, 2.5, 2.5, 2.5)) {
+						if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
+							LivingEntity le = (LivingEntity)e;
+							le.damage(2.5,p);
+							Holding.holding(null, le, 5l);
+						}
+                	}
 				}
 				else if(po.hasMetadata("bossmotov")) {
 					po.getWorld().playSound(po.getLocation(), Sound.ENTITY_SPLASH_POTION_BREAK, 1f, 0.8f);
@@ -308,221 +184,59 @@ public class PoisonSkills extends Summoned{
 	}
 	
 
+	Material[] cookeds = new Material[] {Material.ROTTEN_FLESH, 
+			Material.SPIDER_EYE,
+			Material.RABBIT_FOOT,
+			Material.NETHER_WART, 
+			Material.MAGMA_CREAM,
+			Material.PHANTOM_MEMBRANE,
+			Material.GLISTERING_MELON_SLICE
+	};
+	
 	public void bowshoot(EntityShootBowEvent ev) 
 	{
-		if(!ev.getEntity().hasMetadata("poison")) {
-			return;
-		}
-		if(ev.getEntity().hasMetadata("Rifleman")){
+		if(ev.getEntity().hasMetadata("volcanicboss")){
 
 			ev.setCancelled(true);
 			
 		    LivingEntity p = ev.getEntity();
 		    
-        	p.getWorld().playSound(p.getLocation(), Sound.ITEM_CROSSBOW_LOADING_END, 1f, 2f);
-			p.getWorld().spawnParticle(Particle.ASH, p.getLocation(), 10);
+        	p.getWorld().playSound(p.getLocation(), Sound.BLOCK_SMOKER_SMOKE, 1f, 0f);
 
-			for(int i = 0 ; i < 3; i++) {
+			p.getWorld().spawnParticle(Particle.FLAME, p.getLocation(), 10);
+			p.getWorld().spawnParticle(Particle.SMOKE, p.getLocation(), 100, 0.1,0.1,0.1,2);
+			AtomicInteger j = new AtomicInteger();
+
+
+			for(Material c : cookeds) {
         		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	                @Override
 	                public void run() {
-
-	                	p.getWorld().playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_SNARE, 1f, 2f);
-	                	p.getWorld().playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 1f, 2f);
-	                	
+	                	p.swingMainHand();
+	                	p.getWorld().playSound(p.getLocation(), Sound.BLOCK_FURNACE_FIRE_CRACKLE, 1f, 2f);
 	                    Snowball ws = (Snowball) p.launchProjectile(Snowball.class);
-	                    ws.setItem(new ItemStack(Material.GREEN_DYE));
+	                    ws.setItem(new ItemStack(c));
 	                    ws.setShooter(p);
-	                    ws.setVelocity(p.getLocation().getDirection().normalize().multiply(1.85));
-	    				ws.setMetadata("Rifleman", new FixedMetadataValue(RMain.getInstance(), true));
-	                	
+	                    ws.setVelocity(p.getLocation().getDirection().normalize().multiply(1.4));
+	        			ws.setMetadata("cookedFoods", new FixedMetadataValue(RMain.getInstance(), true));
 	                }
-	            }, i*2+10); 
+	            }, j.getAndIncrement()*3+10); 
 			}
 
-		 }
-		else if(ev.getEntity().hasMetadata("MachineGunman")){
-			ev.setCancelled(true);
-			
-		    LivingEntity p = ev.getEntity();
-		    Holding.holding(null, p, 80l);
-        	p.getWorld().playSound(p.getLocation(), Sound.ITEM_CROSSBOW_LOADING_END, 1f, 2f);
-        	p.getWorld().playSound(p.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_CHARGE, 1f, 2f);
-			p.getWorld().spawnParticle(Particle.ASH, p.getLocation(), 30);
-			p.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, p.getLocation(), 30);
-
-			for(int i = 0 ; i < 20; i++) {
-        		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	                @Override
-	                public void run() {
-
-	                	p.getWorld().playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_SNARE, 1f, 0f);
-	                	p.getWorld().playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 1f, 0f);
-	                	
-	                    Snowball ws = (Snowball) p.launchProjectile(Snowball.class);
-	                    ws.setItem(new ItemStack(Material.GREEN_DYE));
-	                    ws.setShooter(p);
-	                    ws.setVelocity(p.getLocation().getDirection().normalize().multiply(1.85));
-	    				ws.setMetadata("Rifleman", new FixedMetadataValue(RMain.getInstance(), true));
-	                	
-	                }
-	            }, i+30); 
-			}
-		}
-		else if(ev.getEntity().hasMetadata("poisonboss")){
-
-			ev.setCancelled(true);
-			
-		    LivingEntity p = ev.getEntity();
-		    
-        	p.getWorld().playSound(p.getLocation(), Sound.ITEM_CROSSBOW_LOADING_END, 1f, 2f);
-			p.getWorld().spawnParticle(Particle.ASH, p.getLocation(), 10);
-			ArrayList<Location> line = new ArrayList<Location>();
-			final Location fl = p.getEyeLocation().clone();
-
-
-
-			for(int i = 0 ; i < 6; i++) {
-        		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	                @Override
-	                public void run() {
-	                	p.getWorld().playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_SNARE, 1f, 2f);
-	                	p.getWorld().playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 1f, 2f);
-	                    Snowball ws = (Snowball) p.launchProjectile(Snowball.class);
-	                    ws.setItem(new ItemStack(Material.GREEN_DYE));
-	                    ws.setShooter(p);
-	                    ws.setVelocity(p.getLocation().getDirection().normalize().multiply(1.85));
-	        			ws.setMetadata("Rifleman", new FixedMetadataValue(RMain.getInstance(), true));
-	                }
-	            }, i+2); 
-			}
-
-
-	    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			@Override
-	        	public void run() 
-	            {	
-					Location sl = p.getEyeLocation().clone();
-					Vector pv = sl.clone().toVector().subtract(fl.toVector()).normalize();
-					try {
-						pv.checkFinite();
-					}
-					catch(IllegalArgumentException e) {
-						pv = fl.getDirection();
-					}
-
-			        for(double d = 0.1; d <= 3; d += 0.1) {
-			            Location pl = fl.clone();
-						pl.add(pv.clone().normalize().multiply(d));
-						if(!pl.getBlock().isPassable()) {
-							break;
-						}
-						line.add(pl);
-			        }
-			        p.getWorld().playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 2f);
-			        
-					
-			        AtomicInteger j = new AtomicInteger(0);
-			    	line.forEach(i -> {
-			        	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			 		@Override
-			            	public void run() 
-			                {	
-			         			try {
-				         			p.teleport(i);
-			    				}
-			    				catch(IllegalArgumentException e) {
-			    					Location tl = p.getLocation().clone().add(fl.clone().getDirection().multiply(0.1));
-			    					if(tl.getBlock().isPassable()) {
-					         			p.teleport(tl);
-			    					}
-			    				}
-								p.getWorld().spawnParticle(Particle.ITEM_SLIME, p.getLocation(), 6, 0.1,0.1,0.1,0);
-			                	p.setFallDistance(0);
-				            }
-			        	   }, j.incrementAndGet()/50); 
-					 });
-
-	            }
-	    	   }, 9); 
 
 		 }
 	}
 
 
-	public void drug(EntityDamageByEntityEvent d) 
-	{
-		if(d.getEntity() instanceof Zombie &&d.getDamager().hasMetadata("poison")&& !d.isCancelled()) 
-		{
-			Zombie p = (Zombie) d.getEntity();
-            AreaEffectCloud cloud = (AreaEffectCloud) p.getWorld().spawnEntity(p.getLocation(), EntityType.AREA_EFFECT_CLOUD);
-			cloud.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-            cloud.setRadius(2.5f);
-            cloud.setSource(p);
-            cloud.setSilent(false);
-            cloud.setColor(Color.OLIVE);
-            cloud.setRadiusPerTick(0.05f);
-            cloud.addCustomEffect(new PotionEffect(PotionEffectType.NAUSEA,60,2,false,false), false);
-            cloud.addCustomEffect(new PotionEffect(PotionEffectType.SLOWNESS,60,2,false,false), false);
-            cloud.setDuration(40);
-		}
-	}
-	
-	
 
-	public void poisoness(EntityDamageByEntityEvent d) 
-	{
-		if((d.getDamager() instanceof LivingEntity) && d.getEntity() instanceof LivingEntity &&d.getDamager().hasMetadata("poison")&& !d.isCancelled()) 
-		{
-			LivingEntity le = (LivingEntity) d.getEntity();
-			le.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 40,1,false,false));
-		}
-	}
-	
-
-	public void poisoncreep(EntityTargetEvent d) 
-	{
-		Entity cc = d.getEntity();
-		
-		if(cc instanceof Creeper) {
-			Creeper p = (Creeper)cc;
-			if(p.hasMetadata("poison")) {
-				for(int i = 0 ; i < 10; i++) {
-	        		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() {
-
-		    				p.teleport(p.getLocation().clone().add(p.getLocation().clone().getDirection().normalize().multiply(0.2)));
-		                }
-		            }, i); 
-				}
-			}
-		}
-		if(cc instanceof Evoker) {
-			Evoker p = (Evoker)cc;
-			if(p.hasMetadata("poison")) {
-				for(int i = 0 ; i < 10; i++) {
-	        		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() {
-
-		    				p.teleport(p.getLocation().clone().add(p.getLocation().clone().getDirection().normalize().multiply(0.2)));
-		                }
-		            }, i); 
-				}
-			}
-		}
-	}
-
-
-	private HashMap<UUID, Integer> throwable = new HashMap<UUID, Integer>();
-	public void motovthrow(EntityDamageByEntityEvent d) 
+	private HashMap<UUID, Integer> grillable = new HashMap<UUID, Integer>();
+	public void grilled(EntityDamageByEntityEvent d) 
 	{
 	    
 		int sec = 4;
-		if(d.getEntity() instanceof Skeleton && d.getEntity().hasMetadata("poisonboss") && throwable.containsKey(d.getEntity().getUniqueId())) 
+		if(d.getEntity().hasMetadata("volcanicboss") && grillable.containsKey(d.getEntity().getUniqueId())) 
 		{
-			Skeleton p = (Skeleton)d.getEntity();
+			LivingEntity p = (LivingEntity)d.getEntity();
 			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
 				p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
                 d.setCancelled(true);
@@ -539,110 +253,131 @@ public class PoisonSkills extends Summoned{
 	            {
 	            	rb3cooldown.remove(p.getUniqueId()); 
 
-	            	throwable.remove(p.getUniqueId());
+	            	grillable.remove(p.getUniqueId());
 	                Holding.holding(null, p, 20l);
 
-                    p.getWorld().playSound(p.getLocation(), Sound.ENTITY_GENERIC_DRINK, 1.0f, 2f);
+	                String rn = gethero(p);
+					
+	                Location tl = gettargetblock(p,4).clone();
+	                
+					p.getWorld().playSound(tl, Sound.BLOCK_FURNACE_FIRE_CRACKLE, 1f, 0f);
+                	p.getWorld().spawnParticle(Particle.FLAME, tl, 500, 4, 1, 4, 0);
+                	p.getWorld().spawnParticle(Particle.SMOKE, tl, 500, 4, 1, 4, 0);
+                	
+                	
+                    ArrayList<Location> meats = new ArrayList<>();
+                    AtomicInteger j = new AtomicInteger();
+                    for(int i=0; i<30; i++) {
+			            Random random=new Random();
+                    	double number = random.nextDouble() * 2 * (random.nextBoolean() ? -1 : 1);
+                    	double number2 = random.nextDouble() * 2 * (random.nextBoolean() ? -1 : 1);
+                    	meats.add(tl.clone().add(number, 1, number2));
+                    }
                     
-                    int t =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() 
-		                {
-		                    ItemStack is = new ItemStack(Material.SPLASH_POTION);
-		                    ItemMeta imeta = is.getItemMeta();
-		                    PotionMeta pometa = (PotionMeta)imeta;
-		                    pometa.setColor(Color.GREEN);
-		                    is.setItemMeta(pometa);
-		                    
-		                    if(p.hasMetadata("ruined")) {
-		                    	AtomicDouble ad = new AtomicDouble();
-								for(int i = 0; i<54; i++) {
-				                    int t = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					             		@Override
-					                	public void run() 
-						                {
-					                        p.getWorld().playSound(p.getLocation(), Sound.ENTITY_SPLASH_POTION_THROW, 0.7f, 0f);
-						                    ThrownPotion thr = (ThrownPotion) p.launchProjectile(ThrownPotion.class);
-						                    thr.setMetadata("stuff"+gethero(p), new FixedMetadataValue(RMain.getInstance(), true));
-						                    thr.setShooter(p);
-						                    thr.setItem(is);
-						                    thr.setVelocity(p.getLocation().getDirection().rotateAroundY(ad.getAndAdd(Math.PI/9)));
-						                    thr.setFireTicks(55);
-						                    thr.setMetadata("PoisonGrenadier", new FixedMetadataValue(RMain.getInstance(), true));	 
-							            }
-			                	   	}, i);
-				                    ordt.put(gethero(p), t);
-								}
-		                    }
-		                    
-		                    for(double an = -Math.PI/3; an<=Math.PI/3; an += Math.PI/9) {
-			                    ThrownPotion thr = (ThrownPotion) p.launchProjectile(ThrownPotion.class);
-			                    thr.setMetadata("stuff"+gethero(p), new FixedMetadataValue(RMain.getInstance(), true));
-			                    thr.setShooter(p);
-			                    thr.setItem(is);
-			                    thr.setVelocity(p.getLocation().getDirection().rotateAroundY(an));
-			                    thr.setFireTicks(55);
-			                    thr.setMetadata("PoisonGrenadier", new FixedMetadataValue(RMain.getInstance(), true));	                    	
-		                    }
-		                    npable.put(p.getUniqueId(), true);
-		                }
-                    }, 20); 
-                    ordt.put(gethero(p), t);
+                    meats.forEach(l ->{
+						int t= Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+			                @Override
+			                public void run() 
+			                {
+			                	Random random=new Random();
+			                	int ri = random.nextInt(7);
+			                	Item meat = p.getWorld().dropItemNaturally(l, new ItemStack(Material.RABBIT_FOOT));
+			                	meat.setPickupDelay(9999);
+			                	meat.setItemStack(new ItemStack(cookeds[ri]));
+			                	meat.setOwner(p.getUniqueId());
+			                	meat.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
+			                	meat.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
+			                	meat.setMetadata("stuff", new FixedMetadataValue(RMain.getInstance(), rn));
+			                	p.getWorld().spawnParticle(Particle.FLAME, l, 50, 4, 4, 4, 0.2);
+			                	p.getWorld().spawnParticle(Particle.LANDING_OBSIDIAN_TEAR, l, 50, 4, 4, 4, 0.2);
+								p.getWorld().playSound(p.getLocation(), Sound.ENTITY_GENERIC_EAT, 0.5f, 2f);
+								p.getWorld().playSound(meat.getLocation(), Sound.BLOCK_FURNACE_FIRE_CRACKLE, 0.8f, 2f);
+								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+					                @Override
+					                public void run() 
+					                {
+					                	meat.remove();
+					                }
+								}, 10);
+			                	for(Entity e : p.getWorld().getNearbyEntities(l, 4,4,4)) {
+			                		if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && e!=p) {
+			                			LivingEntity le = (LivingEntity)e;
+
+										le.damage(4, p);
+										le.setFireTicks(100);
+			    						
+			                		}
+			                	}
+			                }
+						}, j.incrementAndGet()*2+40);
+	                	ordt.put(rn, t);
+                    });
 					rb3cooldown.put(p.getUniqueId(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
 	            }
 	        }
 	        else 
 	        {
 
-            	throwable.remove(p.getUniqueId());
+
+            	grillable.remove(p.getUniqueId());
                 Holding.holding(null, p, 20l);
 
-                p.getWorld().playSound(p.getLocation(), Sound.ENTITY_GENERIC_DRINK, 1.0f, 2f);
+                String rn = gethero(p);
+				
+                Location tl = gettargetblock(p,4).clone();
                 
-                int t =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	                @Override
-	                public void run() 
-	                {
-	                    ItemStack is = new ItemStack(Material.SPLASH_POTION);
-	                    ItemMeta imeta = is.getItemMeta();
-	                    PotionMeta pometa = (PotionMeta)imeta;
-	                    pometa.setColor(Color.GREEN);
-	                    is.setItemMeta(pometa);
-	                    
-	                    if(p.hasMetadata("ruined")) {
-	                    	AtomicDouble ad = new AtomicDouble();
-							for(int i = 0; i<54; i++) {
-			                    int t = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				             		@Override
-				                	public void run() 
-					                {
-				                        p.getWorld().playSound(p.getLocation(), Sound.ENTITY_SPLASH_POTION_THROW, 0.7f, 0f);
-					                    ThrownPotion thr = (ThrownPotion) p.launchProjectile(ThrownPotion.class);
-					                    thr.setMetadata("stuff"+gethero(p), new FixedMetadataValue(RMain.getInstance(), true));
-					                    thr.setShooter(p);
-					                    thr.setItem(is);
-					                    thr.setVelocity(p.getLocation().getDirection().rotateAroundY(ad.getAndAdd(Math.PI/9)));
-					                    thr.setFireTicks(55);
-					                    thr.setMetadata("PoisonGrenadier", new FixedMetadataValue(RMain.getInstance(), true));	 
-						            }
-		                	   	}, i);
-			                    ordt.put(gethero(p), t);
-							}
-	                    }
-	                    
-	                    for(double an = -Math.PI/3; an<=Math.PI/3; an += Math.PI/9) {
-		                    ThrownPotion thr = (ThrownPotion) p.launchProjectile(ThrownPotion.class);
-		                    thr.setMetadata("stuff"+gethero(p), new FixedMetadataValue(RMain.getInstance(), true));
-		                    thr.setShooter(p);
-		                    thr.setItem(is);
-		                    thr.setVelocity(p.getLocation().getDirection().rotateAroundY(an));
-		                    thr.setFireTicks(55);
-		                    thr.setMetadata("PoisonGrenadier", new FixedMetadataValue(RMain.getInstance(), true));	                    	
-	                    }
-	                    npable.put(p.getUniqueId(), true);
-	                }
-                }, 20); 
-                ordt.put(gethero(p), t);
+				p.getWorld().playSound(tl, Sound.BLOCK_FURNACE_FIRE_CRACKLE, 1f, 0f);
+            	p.getWorld().spawnParticle(Particle.FLAME, tl, 500, 4, 1, 4, 0);
+            	p.getWorld().spawnParticle(Particle.SMOKE, tl, 500, 4, 1, 4, 0);
+            	
+            	
+                ArrayList<Location> meats = new ArrayList<>();
+                AtomicInteger j = new AtomicInteger();
+                for(int i=0; i<30; i++) {
+		            Random random=new Random();
+                	double number = random.nextDouble() * 2 * (random.nextBoolean() ? -1 : 1);
+                	double number2 = random.nextDouble() * 2 * (random.nextBoolean() ? -1 : 1);
+                	meats.add(tl.clone().add(number, 1, number2));
+                }
+                
+                meats.forEach(l ->{
+					int t = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		                @Override
+		                public void run() 
+		                {
+		                	Random random=new Random();
+		                	int ri = random.nextInt(7);
+		                	Item meat = p.getWorld().dropItemNaturally(l, new ItemStack(Material.RABBIT_FOOT));
+		                	meat.setPickupDelay(9999);
+		                	meat.setItemStack(new ItemStack(cookeds[ri]));
+		                	meat.setOwner(p.getUniqueId());
+		                	meat.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
+		                	meat.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
+		                	meat.setMetadata("stuff", new FixedMetadataValue(RMain.getInstance(), rn));
+		                	p.getWorld().spawnParticle(Particle.FLAME, l, 50, 4, 4, 4, 0.2);
+		                	p.getWorld().spawnParticle(Particle.LANDING_OBSIDIAN_TEAR, l, 50, 4, 4, 4, 0.2);
+							p.getWorld().playSound(p.getLocation(), Sound.ENTITY_GENERIC_EAT, 0.5f, 2f);
+							p.getWorld().playSound(meat.getLocation(), Sound.BLOCK_FURNACE_FIRE_CRACKLE, 0.8f, 2f);
+							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+				                @Override
+				                public void run() 
+				                {
+				                	meat.remove();
+				                }
+							}, 10);
+		                	for(Entity e : p.getWorld().getNearbyEntities(l, 4,4,4)) {
+		                		if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && e!=p) {
+		                			LivingEntity le = (LivingEntity)e;
+
+									le.damage(4, p);
+									le.setFireTicks(100);
+		    						
+		                		}
+		                	}
+		                }
+					}, j.incrementAndGet()*2+40);
+                	ordt.put(rn, t);
+                });
 				rb3cooldown.put(p.getUniqueId(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
 	        }
 		}					
@@ -823,7 +558,7 @@ public class PoisonSkills extends Summoned{
      		@Override
         	public void run() 
             {	
-     			throwable.putIfAbsent(p.getUniqueId(), 1);
+     			grillable.putIfAbsent(p.getUniqueId(), 1);
             }
 	   	}, 80);
 	}

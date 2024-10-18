@@ -176,7 +176,8 @@ public class OceanRaids extends Summoned {
 		newmob.addPotionEffect(new PotionEffect(PotionEffectType.CONDUIT_POWER, 999999, 255, false, false));
 		newmob.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 999999, 255, false, false));
 		newmob.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 999999, 255, false, false));
-		
+
+		newmob.setMetadata("riptider", new FixedMetadataValue(RMain.getInstance(), rn));
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
@@ -303,7 +304,7 @@ public class OceanRaids extends Summoned {
     	double number = (random.nextDouble()+1.5) * 2.5 * (random.nextBoolean() ? -1 : 1);
     	double number2 = (random.nextDouble()+1.5) * 2.5 * (random.nextBoolean() ? -1 : 1);
     	Location esl = spl.clone().add(number, 0, number2);
-    	ItemStack head = new ItemStack(Material.BLACK_SHULKER_BOX);
+    	ItemStack head = new ItemStack(Material.VAULT);
 		ItemStack chest = new ItemStack(Material.NETHERITE_CHESTPLATE);
 		ItemMeta chm = (ItemMeta) chest.getItemMeta();
 		chest.setItemMeta(chm);

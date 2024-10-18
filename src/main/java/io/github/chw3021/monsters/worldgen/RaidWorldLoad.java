@@ -66,8 +66,8 @@ public class RaidWorldLoad implements Listener {
 	@EventHandler
 	public void raidworldload(WorldLoadEvent ev) {
 		if(ev.getWorld().getName().equals("OverworldRaid")) {
-			if (Bukkit.getServer().getWorld("NetherRaid") == null) {
-				WorldCreator rwc = new WorldCreator("NetherRaid");
+			if (Bukkit.getServer().getWorld("NethercoreRaid") == null) {
+				WorldCreator rwc = new WorldCreator("NethercoreRaid");
 				rwc.environment(Environment.NETHER);
 				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					@Override

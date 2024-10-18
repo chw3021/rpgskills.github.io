@@ -251,6 +251,7 @@ public class WildRaids extends Summoned {
 		newmob.setConversionTime(-1);
 		
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
+		newmob.setMetadata("riptider", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
 		

@@ -1848,6 +1848,7 @@ public class Tamskills extends Pak implements Listener, Serializable {
 		}
 		ig.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
 		ig.getAttribute(Attribute.GENERIC_ATTACK_KNOCKBACK).setBaseValue(0);
+		ig.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(0);
 		ig.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(ig.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()*(1+p.getLevel()*0.25)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)));
 		ig.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0);
 

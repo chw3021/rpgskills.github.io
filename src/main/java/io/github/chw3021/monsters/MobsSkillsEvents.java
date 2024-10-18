@@ -184,53 +184,7 @@ public class MobsSkillsEvents extends Mobs implements Listener, Serializable  {
 				
 				NetherMobsSpawn.getInstance().Spawn(le, b);
 				
-//				else if ((b.name().contains("WARPED"))
-//						&& le.getLocation().getWorld().getEnvironment() == Environment.NETHER) {
-//					String reg = lang.contains("kr") ? "뒤틀린":"Warped";
-//					LivingEntity newmob = mobs.Mobspawn(le, reg + trans(le), 40000.0, le.getEquipment().getHelmet(),
-//							le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
-//							le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(),
-//							le.getEquipment().getItemInOffHand(), le.getType());
-//					newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
-//					newmob.setMetadata("nether", new FixedMetadataValue(RMain.getInstance(), true));
-//					newmob.setMetadata("warped", new FixedMetadataValue(RMain.getInstance(), true));
-//				} 
-//				
-//				else if ((b.name().contains("CRIMSON"))
-//						&& le.getLocation().getWorld().getEnvironment() == Environment.NETHER) {
-//					String reg = lang.contains("kr") ? "진홍빛":"Crimson";
-//					LivingEntity newmob = mobs.Mobspawn(le, reg + trans(le), 40000.0, le.getEquipment().getHelmet(),
-//							le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
-//							le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(),
-//							le.getEquipment().getItemInOffHand(), le.getType());
-//					newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
-//					newmob.setMetadata("nether", new FixedMetadataValue(RMain.getInstance(), true));
-//					newmob.setMetadata("crimson", new FixedMetadataValue(RMain.getInstance(), true));
-//				} 
-//				
-//				else if ((b.name().contains("SOUL"))
-//						&& le.getLocation().getWorld().getEnvironment() == Environment.NETHER) {
-//					String reg = lang.contains("kr") ? "영혼의":"Soul";
-//					LivingEntity newmob = mobs.Mobspawn(le, reg + trans(le), 40000.0, le.getEquipment().getHelmet(),
-//							le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
-//							le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(),
-//							le.getEquipment().getItemInOffHand(), le.getType());
-//					newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
-//					newmob.setMetadata("nether", new FixedMetadataValue(RMain.getInstance(), true));
-//					newmob.setMetadata("soul", new FixedMetadataValue(RMain.getInstance(), true));
-//				} 
-//				
-//				else if ((b.name().contains("BASALT"))
-//						&& le.getLocation().getWorld().getEnvironment() == Environment.NETHER) {
-//					String reg = lang.contains("kr") ? "화산지대":"Volcanic";
-//					LivingEntity newmob = mobs.Mobspawn(le, reg+ trans(le), 40000.0,
-//							le.getEquipment().getHelmet(), le.getEquipment().getChestplate(),
-//							le.getEquipment().getLeggings(), le.getEquipment().getBoots(),
-//							le.getEquipment().getItemInMainHand(), le.getEquipment().getItemInOffHand(), le.getType());
-//					newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
-//					newmob.setMetadata("nether", new FixedMetadataValue(RMain.getInstance(), true));
-//					newmob.setMetadata("volcanic", new FixedMetadataValue(RMain.getInstance(), true));
-//				}
+				
 				if (b == Biome.THE_END
 						&& le.getLocation().getWorld().getEnvironment() == Environment.THE_END) {
 					LivingEntity newmob = mobs.Mobspawn(le, trans(le), 80000.0, le.getEquipment().getHelmet(),
@@ -506,7 +460,8 @@ public class MobsSkillsEvents extends Mobs implements Listener, Serializable  {
 		SnowSkills.getInstance().Potion(e);
 		
 		OceanSkills.getInstance().shulker(e);
-
+		OceanSkills.getInstance().riptider(e);
+		
 		HyperSkills.getInstance().Granadier(e);
 		HyperSkills.getInstance().RayBow(e);
 		

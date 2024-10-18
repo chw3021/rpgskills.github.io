@@ -13,6 +13,7 @@ import org.bukkit.entity.Blaze;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Ghast;
 import org.bukkit.entity.Hoglin;
+import org.bukkit.entity.MagmaCube;
 import org.bukkit.entity.PigZombie;
 import org.bukkit.entity.PiglinBrute;
 import org.bukkit.entity.WitherSkeleton;
@@ -96,7 +97,8 @@ public class NetherRaids extends Summoned {
 	}
 	
 	final private ItemStack mobhead() {
-		ItemStack pe = new ItemStack(Material.NETHERRACK);
+		ItemStack pe = new ItemStack(Material.NETHER_QUARTZ_ORE);
+		pe.addUnsafeEnchantment(Enchantment.BINDING_CURSE, 1);
 		return pe;
 	}
 	final private ItemStack mobchest() {
@@ -160,17 +162,21 @@ public class NetherRaids extends Summoned {
 		ItemStack boots = mobboots();
 		ItemStack main = new ItemStack(Material.NETHERITE_SWORD);
 
-		String reg = lang.equalsIgnoreCase("ko_kr") ? "네더전사":"NetherWarrior";
-		WitherSkeleton newmob = (WitherSkeleton) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 48000.0, head, chest, leg, boots, main, null, EntityType.WITHER_SKELETON);
+		String reg = lang.equalsIgnoreCase("ko_kr") ? "거대마그마큐브":"GiantMagmaCube";
+		MagmaCube newmob = (MagmaCube) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 48000.0, head, chest, leg, boots, main, null, EntityType.MAGMA_CUBE);
 		
 		
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
+		newmob.setSize(6);
 		
+		newmob.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(48000.0);
+		newmob.setHealth(48000);
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
+		newmob.getAttribute(Attribute.GENERIC_JUMP_STRENGTH).setBaseValue(10);
 		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(0.9);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
+		newmob.setMetadata("GiantSlime", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		
 		

@@ -20,11 +20,12 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
+import org.bukkit.entity.TextDisplay;
+import org.bukkit.entity.TextDisplay.TextAlignment;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
@@ -889,11 +890,11 @@ public class Summoned extends Mobs implements Serializable{
 		raidpor.put(rn, eg.getBlock());
 
 		
-		ArmorStand as = le.getWorld().spawn(sl, ArmorStand.class, a ->{
+		TextDisplay as = le.getWorld().spawn(sl, TextDisplay.class, a ->{
 			a.setInvulnerable(true);
-			a.setInvisible(true);
 			a.setGravity(false);
-			a.setCollidable(false);
+			a.setAlignment(TextAlignment.CENTER);
+			a.setGlowing(true);
 			a.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
 			a.setMetadata("rob", new FixedMetadataValue(RMain.getInstance(), rn));
 			raidporstand.put(rn, a.getUniqueId());
@@ -902,13 +903,15 @@ public class Summoned extends Mobs implements Serializable{
 		
 		if(getherotype(rn) instanceof Player) {
 			Player p = (Player) getherotype(rn);
+			Holding.invur(p, 100l);
+			p.teleport(CommonEvents.getInstance().BlankFinder(sl.clone().add(2, 0, 2)));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				as.setCustomName(ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다");
+				as.setText(ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다");
 				p.sendTitle(ChatColor.RED +"고대의 포탈 소환", ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다", 10,35, 10);
 				p.sendMessage(ChatColor.RED +"고대의 포탈 소환", ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다");
 			}
 			else {
-				as.setCustomName(ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
+				as.setText(ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
 				p.sendTitle(ChatColor.RED +"Ancient Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)", 10,35, 10);
 				p.sendMessage(ChatColor.RED +"Ancient Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
 			}
@@ -916,13 +919,19 @@ public class Summoned extends Mobs implements Serializable{
 		else if(getherotype(rn) instanceof HashSet){
 			HashSet<Player> par = (HashSet<Player>) getherotype(rn);
 			par.forEach(p ->{
+				Holding.invur(p, 100l);
+				Location lel = le.getLocation().clone().add(2, 1, 2);
+				if(!lel.getBlock().isEmpty()) {
+					lel = CommonEvents.getInstance().BlankFinder(lel);
+				}
+				p.teleport(lel);
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					as.setCustomName(ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다");
+					as.setText(ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다");
 					p.sendTitle(ChatColor.RED +"고대의 포탈 소환", ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다", 10,35, 10);
 					p.sendMessage(ChatColor.RED +"고대의 포탈 소환", ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다");
 				}
 				else {
-					as.setCustomName(ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
+					as.setText(ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
 					p.sendTitle(ChatColor.RED +"Ancient Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)", 10,35, 10);
 					p.sendMessage(ChatColor.RED +"Ancient Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
 				}
@@ -959,11 +968,11 @@ public class Summoned extends Mobs implements Serializable{
 		raidpor.put(rn, eg.getBlock());
 
 		
-		ArmorStand as = le.getWorld().spawn(sl, ArmorStand.class, a ->{
+		TextDisplay as = le.getWorld().spawn(sl, TextDisplay.class, a ->{
 			a.setInvulnerable(true);
-			a.setInvisible(true);
 			a.setGravity(false);
-			a.setCollidable(false);
+			a.setAlignment(TextAlignment.CENTER);
+			a.setGlowing(true);
 			a.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
 			a.setMetadata("rob", new FixedMetadataValue(RMain.getInstance(), rn));
 			raidporstand.put(rn, a.getUniqueId());
@@ -973,12 +982,12 @@ public class Summoned extends Mobs implements Serializable{
 		if(getherotype(rn) instanceof Player) {
 			Player p = (Player) getherotype(rn);
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				as.setCustomName(ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다");
+				as.setText(ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다");
 				p.sendTitle(ChatColor.RED +"네더 코어 포탈 소환", ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다", 10,35, 10);
 				p.sendMessage(ChatColor.RED +"네더 코어 포탈 소환", ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다");
 			}
 			else {
-				as.setCustomName(ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
+				as.setText(ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
 				p.sendTitle(ChatColor.RED +"Nether Core Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)", 10,35, 10);
 				p.sendMessage(ChatColor.RED +"Nether Core Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
 			}
@@ -987,12 +996,12 @@ public class Summoned extends Mobs implements Serializable{
 			HashSet<Player> par = (HashSet<Player>) getherotype(rn);
 			par.forEach(p ->{
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					as.setCustomName(ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다");
+					as.setText(ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다");
 					p.sendTitle(ChatColor.RED +"네더 코어 포탈 소환", ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다", 10,35, 10);
 					p.sendMessage(ChatColor.RED +"네더 코어 포탈 소환", ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다");
 				}
 				else {
-					as.setCustomName(ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
+					as.setText(ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
 					p.sendTitle(ChatColor.RED +"Nether Core Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)", 10,35, 10);
 					p.sendMessage(ChatColor.RED +"Nether Core Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
 				}

@@ -50,7 +50,6 @@ public class WildMobsSpawn extends Mobs implements Listener {
 		newmob.setConversionTime(-1);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("wild", new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.setMetadata("DrugAddict", new FixedMetadataValue(RMain.getInstance(), true));
 		return newmob;
 	}
 	final private Skeleton Mob2(LivingEntity le) {
@@ -61,7 +60,6 @@ public class WildMobsSpawn extends Mobs implements Listener {
 		newmob.setConversionTime(-1);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("wild", new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.setMetadata("Rifleman", new FixedMetadataValue(RMain.getInstance(), true));
 		return newmob;
 	}
 	final private Slime Mob3(LivingEntity le) {
@@ -71,7 +69,7 @@ public class WildMobsSpawn extends Mobs implements Listener {
 		String reg = lang.contains("kr") ? "고대슬라임":"AncientSlime";
 		Slime newmob = (Slime) Mobspawn(le, reg, 20000.0, head, null, null, null, null, null, EntityType.SLIME);
 		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.33);
-		newmob.setSize(6);
+		newmob.setSize(2);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("wild", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("GiantSlime", new FixedMetadataValue(RMain.getInstance(), true));
@@ -101,7 +99,6 @@ public class WildMobsSpawn extends Mobs implements Listener {
 		Creeper newmob = (Creeper) Mobspawn(le, reg, 28000.0, null, null, null, null, null, null, EntityType.CREEPER);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("wild", new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.setMetadata("AutoNuker", new FixedMetadataValue(RMain.getInstance(), true));
 		return newmob;
 	}
 	final private Enderman EndermanV(LivingEntity le) {

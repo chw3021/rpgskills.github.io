@@ -145,10 +145,9 @@ public class Drops implements Listener {
 	    			
 	        	}
 			}
-
-			if(d.getEntity().hasMetadata("wild")) {
+			if(d.getEntity().hasMetadata("poison")) {
 				LivingEntity le = d.getEntity();
-				ItemStack ii = Elements.getel(12, p);
+				ItemStack ii = Elements.getel(11, p);
 				ii.setAmount(1);
 
 	    		Random random=new Random();
@@ -158,10 +157,11 @@ public class Drops implements Listener {
 	    			
 	        	}
 			}
-			
-			if(d.getEntity().hasMetadata("nether")) {
+
+			if(d.getEntity().hasMetadata("wild")) {
 				LivingEntity le = d.getEntity();
-				ItemStack ii = new ItemStack(Material.NETHERITE_SCRAP);
+				ItemStack ii = Elements.getel(12, p);
+				ii.setAmount(1);
 
 	    		Random random=new Random();
 	        	int ri = random.nextInt(100);
