@@ -20,6 +20,7 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.FireworkEffect.Type;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Arrow;
@@ -39,6 +40,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.ThrownPotion;
 import org.bukkit.entity.Witch;
 import org.bukkit.entity.Zombie;
+import org.bukkit.entity.AbstractArrow.PickupStatus;
+import org.bukkit.event.entity.AreaEffectCloudApplyEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDropItemEvent;
@@ -594,17 +597,12 @@ public class PiglinSkills extends Summoned{
     	final World w = p.getWorld();
         Holding.holding(null, p, 40l);
 		Location pfl = p.getEyeLocation().clone();
-		w.playSound(pfl, Sound.BLOCK_SCULK_SHRIEKER_SHRIEK, 0.5f, 0f);
-		w.playSound(pfl, Sound.BLOCK_PISTON_CONTRACT, 1.0f, 0f);
-		w.playSound(pfl, Sound.ENTITY_ENDERMAN_TELEPORT, 0.5f, 0f);
-		w.spawnParticle(Particle.WHITE_ASH, pfl, 150, 2,2,2);
-		w.spawnParticle(Particle.WHITE_SMOKE, pfl, 150, 2,2,2);
-		w.spawnParticle(Particle.PORTAL, pfl, 150, 2,2,2);
+		w.playSound(pfl, Sound.ENTITY_PIGLIN_BRUTE_DEATH, 1.0f, 0f);
+		w.playSound(pfl, Sound.ENTITY_PIGLIN_BRUTE_DEATH, 1.0f, 0f);
+		w.spawnParticle(Particle.SMOKE, pfl, 150, 2,2,2);
+		w.spawnParticle(Particle.BLOCK_MARKER, pfl, 20,1,1,1, getBd(Material.FURNACE));
 		
 
-        for(Player pe : OverworldRaids.getheroes(p)) {
-    		pe.hideEntity(RMain.getInstance(), Holding.ale(p));
-        }
 		
         p.teleport(p.getLocation().clone().add(20, 0.3, 20));
         
@@ -612,45 +610,22 @@ public class PiglinSkills extends Summoned{
             @Override
             public void run() 
             {
-                final ArrayList<Location> line1 = new ArrayList<Location>();
-                final Location pl = p.getEyeLocation().clone();
-                final Location pel = OverworldRaids.getheroes(p).stream().findAny().get().getEyeLocation().clone();
-                
-                final Vector v = pel.toVector().subtract(pl.toVector()).clone().normalize();
-                
-                for(double d = 0.1; d <= pl.distance(pel)*1.2; d += 0.5) {
-        			line1.add(pl.clone().add(v.multiply(d)));
-                }
 
-                for(final Location l : line1) {
-                	p.getWorld().spawnParticle(Particle.FLASH, l, 1,0.1,0.1,0.1,0);
-                	p.getWorld().playSound(p.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_DEPLETE, 1, 2);
-                }
-                
-        		int t = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-                    @Override
-                    public void run() 
-                    {
-                        for(Player pe : OverworldRaids.getheroes(p)) {
-                    		pe.showEntity(RMain.getInstance(), Holding.ale(p));
-                        }
-                		
-                    	p.getWorld().playSound(p.getLocation(), Sound.ITEM_CROSSBOW_SHOOT, 1, 0);
-                        p.getWorld().playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1, 2);
-
-                        for(final Location l : line1) {
-                        	p.getWorld().spawnParticle(Particle.BLOCK, l,10, 0.5,0.5,0.5,0, getBd(Material.DEEPSLATE_IRON_ORE));
-
-        					for(Entity e : p.getWorld().getNearbyEntities(l,0.8, 0.8, 0.8)) {
-        						if(p!=e && e instanceof Player&& !(e.hasMetadata("fake"))) {
-        							LivingEntity le = (LivingEntity)e;
-        							le.damage(10,p);
-        						}
-        					}
-                        }
-                    }
-        		}, 10);
-                ordt.put(gethero(p), t);
+        		w.playSound(pfl, Sound.ENTITY_ZOMBIFIED_PIGLIN_HURT, 1.0f, 0f);
+        		w.playSound(pfl, Sound.ENTITY_PIG_DEATH, 1.0f, 0f);
+		        for(Player pe : OverworldRaids.getheroes(p)) {
+					for(int i = 0; i <25; i++) {
+						Arrow ar =p.getWorld().spawnArrow(pe.getLocation(), BlockFace.UP.getDirection() , 0.5f, 60);
+						ar.setShooter(p);
+	                    Snowball ws = (Snowball) p.launchProjectile(Snowball.class);
+	                    ws.setItem(new ItemStack(Material.COOKED_PORKCHOP));
+	                    ws.setShooter(p);
+	                    ws.setVelocity(ar.getVelocity());
+	        			ws.setMetadata("cookedFoods", new FixedMetadataValue(RMain.getInstance(), true));
+						ar.remove();
+					}
+		        }
+		        
             }
 		}, 40);
         ordt.put(gethero(p), t);
@@ -860,66 +835,56 @@ public class PiglinSkills extends Summoned{
 		}
 	}
 
-	private HashMap<UUID, Boolean> npable = new HashMap<UUID, Boolean>();
+	private HashMap<UUID, Boolean> smkable = new HashMap<UUID, Boolean>();
 	
-	final private void napalm(Location ptl, LivingEntity p) {
-		p.getWorld().playSound(ptl, Sound.ENTITY_TNT_PRIMED, 1.0f, 2f);
+	final private void smoker(Location ptl, LivingEntity p) {
+		
+		String rn = gethero(p);
+		World w = ptl.getWorld();
+		p.getWorld().playSound(ptl, Sound.BLOCK_SMOKER_SMOKE, 1.0f, 0f);
     	p.getWorld().playSound(ptl, Sound.BLOCK_FIRE_AMBIENT, 1.0f, 2f);
-		ItemStack is = new ItemStack(Material.GREEN_GLAZED_TERRACOTTA);
-		Item solid = ptl.getWorld().dropItem(ptl, is);
-		solid.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-		solid.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-		solid.setMetadata("stuff"+gethero(p), new FixedMetadataValue(RMain.getInstance(), true));
-		solid.setGlowing(true);
-		solid.setPickupDelay(9999);
         int t = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
             @Override
             public void run() 
             {
-                Firework fr = (Firework) p.getWorld().spawnEntity(solid.getLocation(), EntityType.FIREWORK_ROCKET);
-                fr.setShotAtAngle(true);
-                fr.setShooter(p);
-                fr.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-        	
-    			FireworkEffect effect = FireworkEffect.builder()
-                            .with(Type.BALL_LARGE)
-                            .withColor(Color.GREEN, Color.RED, Color.LIME)
-                            .flicker(true)
-                            .trail(true)
-                            .build();
-                FireworkMeta meta = fr.getFireworkMeta();
-                meta.setPower(0);
-                meta.addEffect(effect);
-                fr.setFireworkMeta(meta);
-                fr.detonate();
-                
-            	solid.getWorld().spawnParticle(Particle.FLAME, solid.getLocation(), 50,1,1,1,1);
-            	solid.getWorld().spawnParticle(Particle.SNEEZE, solid.getLocation(), 50,1,1,1,1);
-            	solid.getWorld().spawnParticle(Particle.ITEM_SLIME, solid.getLocation(), 50,1,1,1,1);
-            	solid.getWorld().spawnParticle(Particle.BLOCK, solid.getLocation(), 600,4.5,4.5,4.5,1,getBd(Material.GREEN_GLAZED_TERRACOTTA));
-                p.getWorld().playSound(solid.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1, 0);
-                p.getWorld().playSound(solid.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 0);
-        		for(Entity e : p.getWorld().getNearbyEntities(solid.getLocation(), 4.5, 4.5, 4.5)) {
-					if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
-						LivingEntity le = (LivingEntity)e;
-						le.damage(7,p);
-						le.setFireTicks(50);
-					}
-            	}
-                solid.remove();
+                AreaEffectCloud cloud = (AreaEffectCloud) w.spawnEntity(p.getLocation(), EntityType.AREA_EFFECT_CLOUD);
+                cloud.setParticle(Particle.SMOKE);
+        		cloud.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+        		cloud.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), rn));
+        		cloud.setMetadata("piglincloud", new FixedMetadataValue(RMain.getInstance(), rn));
+                cloud.setRadius(4f);
+                cloud.setSource(p);
+                cloud.setSilent(false);
+                cloud.setColor(Color.RED);
+                cloud.setDuration(300);
 
-            	npable.remove(p.getUniqueId());
+            	smkable.remove(p.getUniqueId());
             }
         }, 35); 
         ordt.put(gethero(p), t);
 	}
 	
-	public void napalm(EntityDamageByEntityEvent d) 
+	public void cloudApplied(AreaEffectCloudApplyEvent ev) {
+		if(ev.getEntity().hasMetadata("piglincloud")) {
+			 AreaEffectCloud cloud = ev.getEntity();
+			 LivingEntity p = (LivingEntity) cloud.getSource();
+
+             for(Entity e : cloud.getWorld().getNearbyEntities(cloud.getLocation().clone(),4,4,4)) {
+						if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
+							LivingEntity le = (LivingEntity)e;
+							le.damage(3.5,p);
+						}
+                 }
+			 
+		}
+	}
+	
+	public void smoker(EntityDamageByEntityEvent d) 
 	{
 		if((d.getEntity() instanceof Skeleton) && d.getEntity().hasMetadata("poisonboss")) 
 		{
 			Skeleton p = (Skeleton)d.getEntity();
-			int sec = 8;
+			int sec = 4;
 	        
 
 			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
@@ -946,7 +911,7 @@ public class PiglinSkills extends Summoned{
 		                	
 			                Holding.holding(null, p, 10l);
 
-			                napalm(ptl, p);
+			                smoker(ptl, p);
 		                    
 		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		                 		@Override
@@ -966,7 +931,7 @@ public class PiglinSkills extends Summoned{
 	                	
 		                Holding.holding(null, p, 10l);
 
-		                napalm(ptl, p);
+		                smoker(ptl, p);
 	                    
 	                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	                 		@Override
@@ -1069,7 +1034,7 @@ public class PiglinSkills extends Summoned{
 		String rn = p.getMetadata("raid").get(0).asString();
 		Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(e -> e.remove());
         for(Player pe : OverworldRaids.getheroes(p)) {
-            napalm(pe.getLocation(), p);
+            smoker(pe.getLocation(), p);
             
 			for(int i = 0; i <3; i++) {
 				AtomicInteger j = new AtomicInteger(3);

@@ -39,7 +39,9 @@ import org.bukkit.Particle.DustTransition;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Item;
@@ -1901,6 +1903,15 @@ public class Fireskills extends Pak implements Serializable, Listener {
     	if(hotbodyt.containsKey(p.getUniqueId())) {
     		Bukkit.getScheduler().cancelTask(hotbodyt.remove(p.getUniqueId()));
     	}
+        AreaEffectCloud cloud = (AreaEffectCloud) p.getWorld().spawnEntity(p.getLocation(), EntityType.AREA_EFFECT_CLOUD);
+        cloud.setParticle(Particle.LANDING_LAVA);
+		cloud.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+		cloud.setMetadata("rob", new FixedMetadataValue(RMain.getInstance(), p.getName()));
+        cloud.setRadius(3f);
+        cloud.setSource(p);
+        cloud.setSilent(false);
+        cloud.setColor(Color.RED);
+        cloud.setDuration(60);
 		int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
             @Override
             public void run() 
@@ -1924,7 +1935,6 @@ public class Fireskills extends Pak implements Serializable, Listener {
                 		atk1(0.03*casted.getOrDefault(p.getUniqueId(),0), p, le);
 					}
 				}
-				pl.getWorld().spawnParticle(Particle.LANDING_LAVA, pl, 505, 3.5,0.3,3.5);
             }
 		}, 0,5); 
 		hotbody.put(p.getUniqueId(), task);
@@ -1935,6 +1945,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
             	if(hotbody.containsKey(p.getUniqueId())) {
             		Bukkit.getScheduler().cancelTask(hotbody.remove(p.getUniqueId()));
             	}
+            	cloud.remove();
             }
 		}, 60);
 		hotbodyt.put(p.getUniqueId(), ht);
