@@ -703,6 +703,8 @@ public class SnowSkills extends Summoned implements Listener{
 		if(ev.getEntity() instanceof Stray && ev.getEntity().hasMetadata("arch") && ev.getEntity().hasMetadata("snowy")){
 		    Projectile ar = (Projectile) ev.getProjectile();
 		    Stray p = (Stray) ev.getEntity();
+		    ar.setGravity(false);
+		    ar.setVelocity(ar.getVelocity().normalize().multiply(1.2));
 		    
 			for(int i = 0; i <15; i++) {
                 Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
