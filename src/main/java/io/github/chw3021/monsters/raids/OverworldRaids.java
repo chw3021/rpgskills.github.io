@@ -2247,6 +2247,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		newmob.setGlowing(true);
 	    	    		newmob.setMetadata("poisonboss", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		newmob.setMetadata("ruined", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		newmob.setMetadata("poison", new FixedMetadataValue(RMain.getInstance(), true));
 	
 	    	    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), le.getMetadata("boss").get(0).asDouble()));
 	    	    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));

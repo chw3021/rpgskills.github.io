@@ -361,6 +361,7 @@ public class MobsSkillsEvents extends Mobs implements Listener, Serializable  {
 		PoisonSkills.getInstance().Ordeal(d);
 		PoisonSkills.getInstance().multiShot(d);
 		PoisonSkills.getInstance().aiming(d);
+		PoisonSkills.getInstance().playerSuccess(d);
 
 	}
 

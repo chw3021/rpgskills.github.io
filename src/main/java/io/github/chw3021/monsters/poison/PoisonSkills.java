@@ -523,6 +523,9 @@ public class PoisonSkills extends Summoned{
 		if(d.getEntity() instanceof Skeleton && d.getEntity().hasMetadata("poisonboss") && throwable.containsKey(d.getEntity().getUniqueId())) 
 		{
 			Skeleton p = (Skeleton)d.getEntity();
+			if(ordeal.containsKey(p.getUniqueId())) {
+				return;
+			}
 			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
 				p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
                 d.setCancelled(true);
@@ -661,7 +664,7 @@ public class PoisonSkills extends Summoned{
 		w.spawnParticle(Particle.LARGE_SMOKE, pl, 150, 2,2,2);
 		w.spawnParticle(Particle.GUST, pl, 150, 2,2,2);
 		int i = 0;
-		int count = p.hasMetadata("ruined") ? 100 : 50;
+		int count = p.hasMetadata("ruined") ? 40 : 20;
 		for(; i<count; i++) {
             int t = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
          		@Override
@@ -669,7 +672,7 @@ public class PoisonSkills extends Summoned{
                 {
                 	w.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_SNARE, 0.8f, 0f);
                 	w.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 0.8f, 2f);
-					int count = p.hasMetadata("ruined") ? 80 : 30;
+					int count = p.hasMetadata("ruined") ? 30 : 15;
 
                 	for(int a = 0; a <count; a ++) {
 	                	
@@ -702,7 +705,7 @@ public class PoisonSkills extends Summoned{
             {	
      			chargable.putIfAbsent(p.getUniqueId(), true);
             }
-	   	}, 80+i);
+	   	}, 200+i);
 	}
 	
 
@@ -711,10 +714,10 @@ public class PoisonSkills extends Summoned{
 		if(d.getEntity().hasMetadata("poisonboss") && (d.getEntity() instanceof Mob)) 
 		{
 			Mob p = (Mob)d.getEntity();
-			int sec = 8;
+			int sec = 12;
 	
 	
-			if(p.hasMetadata("failed") || !shotable.containsKey(p.getUniqueId())) {
+			if(p.hasMetadata("failed") || ordeal.containsKey(p.getUniqueId()) || !shotable.containsKey(p.getUniqueId())) {
 				return;
 			}
 			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
@@ -833,8 +836,11 @@ public class PoisonSkills extends Summoned{
 		if(d.getEntity().hasMetadata("poisonboss") && (d.getEntity() instanceof Mob)) 
 		{
 			Mob p = (Mob)d.getEntity();
-			int sec = 8;
+			int sec = 30;
 
+			if(ordeal.containsKey(p.getUniqueId())) {
+				return;
+			}
 
 			if(p.hasMetadata("failed") || !aimable.containsKey(p.getUniqueId())) {
 				return;
@@ -989,17 +995,20 @@ public class PoisonSkills extends Summoned{
             {	
      			aimable.put(p.getUniqueId(), true);
             }
-        }, 46); 
+        }, 150); 
 	}
 	
 	final private void charge(Skeleton p, Location tl) {
 
+		if(ordeal.containsKey(p.getUniqueId())) {
+			return;
+		}
 		if(p.hasMetadata("failed") || !chargable.containsKey(p.getUniqueId())) {
 			return;
 		}
 		if(rb8cooldown.containsKey(p.getUniqueId()))
         {
-            long timer = (rb8cooldown.get(p.getUniqueId())/1000 + 9) - System.currentTimeMillis()/1000; 
+            long timer = (rb8cooldown.get(p.getUniqueId())/1000 + 15) - System.currentTimeMillis()/1000; 
             if(!(timer < 0))
             {
             }
@@ -1077,9 +1086,12 @@ public class PoisonSkills extends Summoned{
 		if((d.getEntity() instanceof Skeleton) && d.getEntity().hasMetadata("poisonboss")) 
 		{
 			Skeleton p = (Skeleton)d.getEntity();
-			int sec = 8;
+			int sec = 5;
 	        
 
+			if(ordeal.containsKey(p.getUniqueId())) {
+				return;
+			}
 			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
 				p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
                 d.setCancelled(true);
@@ -1228,9 +1240,9 @@ public class PoisonSkills extends Summoned{
 		Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(e -> e.remove());
         for(Player pe : OverworldRaids.getheroes(p)) {
             napalm(pe.getLocation(), p);
-            
+
+			AtomicInteger j = new AtomicInteger(3);
 			for(int i = 0; i <3; i++) {
-				AtomicInteger j = new AtomicInteger(3);
                 int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	                @Override
 	                public void run() {
@@ -1363,8 +1375,11 @@ public class PoisonSkills extends Summoned{
 
 			Skeleton p = (Skeleton)d.getEntity();
 			Player player = (Player)d.getDamager();
-			if(!player.hasCooldown(Material.YELLOW_TERRACOTTA) && ordeal.containsKey(p.getUniqueId())) {
-				bossfailed(p, gethero(p));
+			if(ordeal.containsKey(p.getUniqueId())) {
+				d.setCancelled(true);
+				if(!player.hasCooldown(Material.YELLOW_TERRACOTTA)) {
+					bossfailed(p, gethero(p));
+				}
 			}
 		}
 	}
