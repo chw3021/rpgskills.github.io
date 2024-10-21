@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -25,6 +26,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.TextDisplay;
+import org.bukkit.entity.Display.Billboard;
 import org.bukkit.entity.TextDisplay.TextAlignment;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -875,7 +877,7 @@ public class Summoned extends Mobs implements Serializable{
 			raidpor.get(rn).setType(Material.VOID_AIR);
 			raidpor.remove(rn);
 		}
-		Location sl = le.getLocation().clone().add(0, 0.5, 0);
+		Location sl = le.getLocation().clone().add(0, 1.5, 0);
 		if(!sl.getBlock().isEmpty()) {
 			sl = CommonEvents.getInstance().BlankFinder(sl);
 		}
@@ -895,10 +897,14 @@ public class Summoned extends Mobs implements Serializable{
 			a.setGravity(false);
 			a.setAlignment(TextAlignment.CENTER);
 			a.setGlowing(true);
+			a.setBackgroundColor(Color.WHITE);
+			a.setBillboard(Billboard.CENTER);
+			a.setSeeThrough(true);
+			a.setViewRange(15f);
 			a.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
 			a.setMetadata("rob", new FixedMetadataValue(RMain.getInstance(), rn));
 			raidporstand.put(rn, a.getUniqueId());
-			a.setCustomNameVisible(true);
+			a.setCustomNameVisible(false);
 		});
 		
 		if(getherotype(rn) instanceof Player) {
@@ -967,16 +973,20 @@ public class Summoned extends Mobs implements Serializable{
 		eg.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
 		raidpor.put(rn, eg.getBlock());
 
-		
+
 		TextDisplay as = le.getWorld().spawn(sl, TextDisplay.class, a ->{
 			a.setInvulnerable(true);
 			a.setGravity(false);
 			a.setAlignment(TextAlignment.CENTER);
 			a.setGlowing(true);
+			a.setBackgroundColor(Color.WHITE);
+			a.setBillboard(Billboard.CENTER);
+			a.setSeeThrough(true);
+			a.setViewRange(15f);
 			a.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
 			a.setMetadata("rob", new FixedMetadataValue(RMain.getInstance(), rn));
 			raidporstand.put(rn, a.getUniqueId());
-			a.setCustomNameVisible(true);
+			a.setCustomNameVisible(false);
 		});
 		
 		if(getherotype(rn) instanceof Player) {

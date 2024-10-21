@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
+import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -119,7 +120,8 @@ public class OceanSkills extends OverworldRaids{
 				LivingEntity p = (LivingEntity) po.getShooter();
 				if(p.hasMetadata("riptider")) {
 					d.setCancelled(true);
-					p.setRiptiding(true);
+					p.setVelocity(po.getVelocity());
+					p.playEffect(EntityEffect.ZOGLIN_ATTACK);
 				}
 			}
 		}					

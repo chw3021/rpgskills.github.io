@@ -705,7 +705,7 @@ public class PoisonSkills extends Summoned{
             {	
      			chargable.putIfAbsent(p.getUniqueId(), true);
             }
-	   	}, 200+i);
+	   	}, 250+i);
 	}
 	
 
@@ -718,6 +718,9 @@ public class PoisonSkills extends Summoned{
 	
 	
 			if(p.hasMetadata("failed") || ordeal.containsKey(p.getUniqueId()) || !shotable.containsKey(p.getUniqueId())) {
+				return;
+			}
+			if(p.getTarget() == null|| !(p.getTarget() instanceof Player)) {
 				return;
 			}
 			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
@@ -828,7 +831,7 @@ public class PoisonSkills extends Summoned{
             {	
      			throwable.putIfAbsent(p.getUniqueId(), 1);
             }
-	   	}, 80);
+	   	}, 160);
 	}
 	
 	public void aiming(EntityDamageByEntityEvent d) 
@@ -962,16 +965,16 @@ public class PoisonSkills extends Summoned{
                 	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
             		@Override
 	                	public void run() 
-			                {	
-	                    for(Entity e : cloud.getWorld().getNearbyEntities(cl,2,2,2)) {
+		                {	
+                    		for(Entity e : cloud.getWorld().getNearbyEntities(cl,2,2,2)) {
     							if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
     								LivingEntity le = (LivingEntity)e;
     								le.damage(3.5,p);
     								Holding.holding(null, le, 20l);
     							}
-    	                    }
-			            }
-                	   }, i*10); 
+                    		}
+		                }
+                	}, i*10); 
                 }
     			
             }
@@ -995,7 +998,7 @@ public class PoisonSkills extends Summoned{
             {	
      			aimable.put(p.getUniqueId(), true);
             }
-        }, 150); 
+        }, 160); 
 	}
 	
 	final private void charge(Skeleton p, Location tl) {
@@ -1124,7 +1127,7 @@ public class PoisonSkills extends Summoned{
 		                        {	
 		                 			shotable.put(p.getUniqueId(), true);
 		        	            }
-		                    }, 46); 
+		                    }, 120); 
 		                    
 	             			
 							rb4cooldown.put(p.getUniqueId(), System.currentTimeMillis());  
@@ -1144,7 +1147,7 @@ public class PoisonSkills extends Summoned{
 	                        {	
 	                 			shotable.put(p.getUniqueId(), true);
 	        	            }
-	                    }, 46); 
+	                    }, 120); 
 	                    
 						rb4cooldown.put(p.getUniqueId(), System.currentTimeMillis());  
 					}
@@ -1249,7 +1252,7 @@ public class PoisonSkills extends Summoned{
 	                	pe.playSound(p, Sound.ENTITY_ELDER_GUARDIAN_HURT, 1, 0.3f);
 	            		pe.sendTitle(ChatColor.DARK_GREEN+""+j.getAndDecrement(),ChatColor.BOLD+"",10,20, 10);
 	                }
-	            }, i*20); 	 
+	            }, i*15); 	 
 				ordt.put(rn, t1);                   	
             }
 			int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -1259,7 +1262,7 @@ public class PoisonSkills extends Summoned{
             		pe.sendTitle(ChatColor.DARK_RED+"■",ChatColor.BOLD+"",10,20, 10);
             		asSpawn(pe, rn, p);
                 }
-            }, 65); 
+            }, 50); 
 			ordt.put(rn, t1);  
         }
 	}
@@ -1274,9 +1277,9 @@ public class PoisonSkills extends Summoned{
         Location rl = OverworldRaids.getraidloc(p).clone();
 		p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
         d.setCancelled(true);
-    	p.teleport(rl.clone().add(30, 1, 25));
-        Holding.holding(null, p, 671l);
-        Holding.untouchable(p, 671l);
+    	p.teleport(rl.clone().add(30, 1, 30));
+        Holding.holding(null, p,370l);
+        Holding.untouchable(p, 370l);
         for(Player pe : OverworldRaids.getheroes(p)) {
 			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
         		pe.sendMessage(ChatColor.BOLD+"종말론자: 게임을 시작한다.");
@@ -1291,13 +1294,13 @@ public class PoisonSkills extends Summoned{
             @Override
             public void run() {
 
-				for(int i = 0; i <5; i++) {
+				for(int i = 0; i <3; i++) {
                     int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		                @Override
 		                public void run() {
 		                	countDown(p);
 		                }
-		            }, i*120); 	 
+		            }, i*100); 	 
 					ordt.put(rn, t1);                   	
                 }
             }
@@ -1331,7 +1334,7 @@ public class PoisonSkills extends Summoned{
             	}
                 rb6cooldown.remove(p.getUniqueId());
             }
-        }, 671);
+        }, 370);
 		ordt.put(rn, t3);
 	}
 	
@@ -1342,6 +1345,8 @@ public class PoisonSkills extends Summoned{
         	ordt.removeAll(rn);
 		}
 		ordeal.remove(p.getUniqueId());
+		p.getWorld().playSound(p.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_DEPLETE, 1, 0);
+    	p.getWorld().spawnParticle(Particle.WHITE_ASH, p.getLocation(), 100,0.1,0.1,0.1,0);
     	p.playHurtAnimation(0);
     	Holding.reset(Holding.ale(p));
     	Holding.ale(p).setMetadata("failed", new FixedMetadataValue(RMain.getInstance(),true));

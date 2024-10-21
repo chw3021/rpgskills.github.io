@@ -238,6 +238,8 @@ public class Palskills extends Pak implements Serializable, Listener {
 		                	
 		                	
 		                    Location l = p.getLocation();
+		                    
+		                    final Location tl = gettargetblock(p,2).clone().add(0,2,0);
 							
 							p.getWorld().spawnParticle(Particle.FLASH, p.getLocation(), 12, 1, 1, 1);
 							p.playSound(p.getLocation(), Sound.ENTITY_EVOKER_CAST_SPELL, 1.0f, 1.6f);
@@ -266,7 +268,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 											atks(0.7, psd.Restraint.get(p.getUniqueId())*0.69, p, le,14);
 											p.playSound(p.getLocation(), Sound.BLOCK_PISTON_CONTRACT, 1.0f, 2f);
 											p.getWorld().spawnParticle(Particle.ASH, le.getLocation(), 12, 1, 1, 1);
-											le.teleport(p.getLocation().add(0, 2, 0));
+											le.teleport(tl);
 						                	
 						                }
 						            }, 10); 

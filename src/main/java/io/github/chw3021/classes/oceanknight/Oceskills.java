@@ -673,9 +673,7 @@ public class Oceskills extends Pak implements Serializable {
 
 	            Location tl = gettargetblock(p,3).clone();
 					
-				p.playSound(p.getLocation(), Sound.ENTITY_DOLPHIN_SPLASH, 1, 0);
                 p.playSound(p.getLocation(), Sound.ENTITY_HOSTILE_SPLASH, 1.0f, 0f);
-				p.playSound(p.getLocation(), Sound.ENTITY_SHULKER_TELEPORT, 1, 2);
                 p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.6f, 2f);
                 p.playSound(p.getLocation(), Sound.ENTITY_DROWNED_SHOOT, 0.6f, 1.5f);
                 s1.forEach(l ->{
@@ -757,37 +755,31 @@ public class Oceskills extends Pak implements Serializable {
 	            Location tl = gettargetblock(p,4).clone();
 
 				p.playSound(p.getLocation(), Sound.ENTITY_DOLPHIN_SPLASH, 0.5f, 0);
-                p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.5f, 0f);
                 p.playSound(p.getLocation(), Sound.ENTITY_DROWNED_SHOOT, 0.6f, 0.1f);
-                p.playSound(p.getLocation(), Sound.ENTITY_GENERIC_BIG_FALL, 0.5f, 0f);
-                p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_STRONG, 0.5f, 0f);
                 p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_HURT, 0.5f, 0f);
 				ArrayList<Location> lls = new ArrayList<Location>();
 				p.setGliding(true);
                 for(int i = 0; i<10; i++) {
                 	lls.add(p.getEyeLocation().clone().add(p.getEyeLocation().clone().getDirection().normalize().multiply(i)));
                 }
-                
+
+            	final Location eye = p.getLocation().clone().setDirection(p.getLocation().clone().getDirection().multiply(-1));
+            	final Vector eyev = p.getLocation().getDirection().clone().rotateAroundY(Math.PI/2);
 
 				ArrayList<Location> sight = new ArrayList<Location>();
                 for(double i=Math.PI/180; i > -Math.PI; i -= Math.PI/180) {
-                	Location eye = p.getLocation().clone();
-                	eye.setDirection(eye.clone().getDirection().multiply(-1));
-                	Vector eyev = p.getLocation().getDirection().clone().rotateAroundY(Math.PI/2);
-                	Location a = eye.clone().setDirection(eye.getDirection().rotateAroundAxis(eyev, i).normalize());
+                	Location a = eye.clone().setDirection(eye.getDirection().rotateAroundAxis(eyev, i).normalize()).multiply(2.5);
                 	sight.add(a);
                 }
                 sight.forEach(l -> {
-						p.teleport(l);
+                	l.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l, 50,0.3,0.3,0.3);
                 });
 
                 lls.forEach(l -> {
-                	l.getWorld().spawnParticle(Particle.ENCHANTED_HIT, l, 100,0.2,0.2,0.2,0.1);
-                	l.getWorld().spawnParticle(Particle.CRIT, l, 100,0.1,0.1,0.1,0.1);
-                	l.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l, 100,0.3,0.3,0.3);
-                	l.getWorld().spawnParticle(Particle.FIREWORK, l, 20,0.2,0.2,0.2,0.1);
-                	l.getWorld().spawnParticle(Particle.WHITE_ASH, l, 20,1,0,1);
-                	l.getWorld().spawnParticle(Particle.FALLING_WATER, l, 2000,6,1,6);
+                	l.getWorld().spawnParticle(Particle.GUST_EMITTER_SMALL, l, 10,0.2,0.2,0.2,0.1);
+                	l.getWorld().spawnParticle(Particle.SPLASH, l, 20,0.2,0.2,0.2,0.1);
+                	l.getWorld().spawnParticle(Particle.BUBBLE, l, 20,1,0,1);
+                	l.getWorld().spawnParticle(Particle.FALLING_WATER, l, 200,6,1,6);
                 });
 
             	p.setCooldown(CAREFUL, 3);
@@ -1492,10 +1484,11 @@ public class Oceskills extends Pak implements Serializable {
 												LivingEntity le = (LivingEntity)e;
 												atk1(0.6*(1+fsd.OceanCharge.get(p.getUniqueId())*0.055), p, le);
 												le.teleport(pel.clone());
+												p.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 20, 100, false, false));
 												p.setCooldown(CAREFUL, 3);
 												p.swingMainHand();
+												p.startRiptideAttack(20, 0f, p.getInventory().getItemInMainHand().clone());
 												p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS,20, 255, false, false));
-												p.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 20, 255, false, false));
 												Holding.superholding(p, le, 20l);
 												Holding.holding(null, p, 20l);
 							                    p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_LAND, 0.15f, 2.0f);
@@ -1615,8 +1608,6 @@ public class Oceskills extends Pak implements Serializable {
 	                	HashSet<LivingEntity> les = new HashSet<LivingEntity>();
 
 						p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_IRON, 0.8f, 0f);
-						p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 5, 255, false, false));
-						p.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 5, 255, false, false));
 		            	Holding.invur(p, 10l);
 						
 						

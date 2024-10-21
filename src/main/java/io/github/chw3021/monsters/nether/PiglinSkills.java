@@ -1,7 +1,6 @@
 package io.github.chw3021.monsters.nether;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -12,61 +11,39 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
-import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.World;
-import org.bukkit.FireworkEffect.Type;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Evoker;
 import org.bukkit.entity.FallingBlock;
-import org.bukkit.entity.Firework;
-import org.bukkit.entity.Illusioner;
 import org.bukkit.entity.Item;
-import org.bukkit.entity.Skeleton;
-import org.bukkit.entity.Snowball;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Snowball;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.ThrownPotion;
-import org.bukkit.entity.Witch;
-import org.bukkit.entity.Zombie;
-import org.bukkit.entity.AbstractArrow.PickupStatus;
 import org.bukkit.event.entity.AreaEffectCloudApplyEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDropItemEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
-import org.bukkit.event.entity.EntitySpellCastEvent;
-import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.event.entity.ProjectileLaunchEvent;
-import org.bukkit.event.entity.SlimeSplitEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.FireworkMeta;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.util.concurrent.AtomicDouble;
-
 import io.github.chw3021.commons.Holding;
-import io.github.chw3021.monsters.raids.OverworldRaids;
+import io.github.chw3021.monsters.raids.NethercoreRaids;
 import io.github.chw3021.monsters.raids.Summoned;
-import io.github.chw3021.party.Party;
 import io.github.chw3021.rmain.RMain;
 
 
@@ -115,38 +92,7 @@ public class PiglinSkills extends Summoned{
 			Snowball po = (Snowball)d.getEntity();
 			if(po.getShooter() instanceof LivingEntity) {
 				LivingEntity p = (LivingEntity) po.getShooter();
-				if(po.hasMetadata("grenadier")) {
-					po.getWorld().playSound(po.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1f, 1f);
-					po.getWorld().spawnParticle(Particle.EXPLOSION, po.getLocation(), 5,2,2,2);
-					po.getWorld().spawnParticle(Particle.ITEM_SLIME, po.getLocation(), 200,2,2,2);
-            		for(Entity e : p.getWorld().getNearbyEntities(po.getLocation(), 2.5, 2.5, 2.5)) {
-						if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
-							LivingEntity le = (LivingEntity)e;
-							le.damage(4,p);
-						}
-                	}
-				}
-				else if(po.hasMetadata("PoisonGrenadier")) {
-					po.getWorld().playSound(po.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1f, 1f);
-					po.getWorld().playSound(p.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 2);
-					po.getWorld().spawnParticle(Particle.EXPLOSION, po.getLocation(), 5,2,2,2);
-					for(int n = 0; n<8; n++) {
-	                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() 
-			                {
-								po.getWorld().spawnParticle(Particle.ITEM_SLIME, po.getLocation(), 100,2,2,2);
-			            		for(Entity e : p.getWorld().getNearbyEntities(po.getLocation(), 2.5, 2.5, 2.5)) {
-									if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
-										LivingEntity le = (LivingEntity)e;
-										le.damage(4,p);
-									}
-			                	}
-			                }
-	                	 }, n*3); 														
-					}
-				}
-				else if(po.hasMetadata("cookedFoods")) {
+				if(po.hasMetadata("cookedFoods")) {
             		final Location l = d.getHitEntity() != null ? d.getHitEntity().getLocation() : d.getHitBlock().getLocation();
 
 					l.getWorld().spawnParticle(Particle.SMALL_FLAME, l, 50);
@@ -160,29 +106,6 @@ public class PiglinSkills extends Summoned{
 							Holding.holding(null, le, 5l);
 						}
                 	}
-				}
-				else if(po.hasMetadata("bossmotov")) {
-					po.getWorld().playSound(po.getLocation(), Sound.ENTITY_SPLASH_POTION_BREAK, 1f, 0.8f);
-					po.getWorld().playSound(p.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 2);
-					po.getWorld().spawnParticle(Particle.FLAME, po.getLocation(), 100,2,2,2);
-					po.getWorld().spawnParticle(Particle.ITEM_SLIME, po.getLocation(), 100,2,2,2);
-					for(int n = 0; n<8; n++) {
-	                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() 
-			                {
-								po.getWorld().spawnParticle(Particle.FLAME, po.getLocation(), 100,2,2,2);
-								po.getWorld().spawnParticle(Particle.ITEM_SLIME, po.getLocation(), 100,2,2,2);
-			            		for(Entity e : p.getWorld().getNearbyEntities(po.getLocation(), 2.5, 2.5, 2.5)) {
-									if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
-										LivingEntity le = (LivingEntity)e;
-										le.damage(2.5,p);
-										Holding.holding(null, le, 5l);
-									}
-			                	}
-			                }
-	                	 }, n*3); 														
-					}
 				}
 			}
 			
@@ -553,7 +476,7 @@ public class PiglinSkills extends Summoned{
 
 	public void furnace(EntityDamageByEntityEvent d) 
 	{
-		if(d.getEntity().hasMetadata("poisonboss") && (d.getEntity() instanceof Mob)) 
+		if(d.getEntity().hasMetadata("volcanicboss") && (d.getEntity() instanceof Mob)) 
 		{
 			Mob p = (Mob)d.getEntity();
 			int sec = 8;
@@ -590,9 +513,9 @@ public class PiglinSkills extends Summoned{
 	}
 
 
-	private HashMap<UUID, Boolean> aimable = new HashMap<UUID, Boolean>();
+	private HashMap<UUID, Boolean> porkable = new HashMap<UUID, Boolean>();
 	
-	final private void aiming(LivingEntity p) {
+	final private void porkchop(LivingEntity p) {
 
     	final World w = p.getWorld();
         Holding.holding(null, p, 40l);
@@ -613,7 +536,7 @@ public class PiglinSkills extends Summoned{
 
         		w.playSound(pfl, Sound.ENTITY_ZOMBIFIED_PIGLIN_HURT, 1.0f, 0f);
         		w.playSound(pfl, Sound.ENTITY_PIG_DEATH, 1.0f, 0f);
-		        for(Player pe : OverworldRaids.getheroes(p)) {
+		        for(Player pe : NethercoreRaids.getheroes(p)) {
 					for(int i = 0; i <25; i++) {
 						Arrow ar =p.getWorld().spawnArrow(pe.getLocation(), BlockFace.UP.getDirection() , 0.5f, 60);
 						ar.setShooter(p);
@@ -633,7 +556,7 @@ public class PiglinSkills extends Summoned{
      		@Override
         	public void run() 
             {	
-            	aimable.remove(p.getUniqueId());
+            	porkable.remove(p.getUniqueId());
             }
 	   	}, 60);
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -645,15 +568,15 @@ public class PiglinSkills extends Summoned{
 	   	}, 80);
 	}
 	
-	public void aiming(EntityDamageByEntityEvent d) 
+	public void porkchop(EntityDamageByEntityEvent d) 
 	{
-		if(d.getEntity().hasMetadata("poisonboss") && (d.getEntity() instanceof Mob)) 
+		if(d.getEntity().hasMetadata("volcanicboss") && (d.getEntity() instanceof Mob)) 
 		{
 			Mob p = (Mob)d.getEntity();
 			int sec = 8;
 
 
-			if(p.hasMetadata("failed") || !aimable.containsKey(p.getUniqueId())) {
+			if(p.hasMetadata("failed") || !porkable.containsKey(p.getUniqueId())) {
 				return;
 			}
 			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
@@ -671,14 +594,14 @@ public class PiglinSkills extends Summoned{
 		                else 
 		                {
 		                	aicooldown.remove(p.getUniqueId()); // removing player from HashMap
-		                	aiming(p);
+		                	porkchop(p);
 		                	aicooldown.put(p.getUniqueId(), System.currentTimeMillis());  
 		                }
 		            }
 		            else 
 		            {
 
-		            	aiming(p);
+		            	porkchop(p);
 	                	aicooldown.put(p.getUniqueId(), System.currentTimeMillis());  
 					}
 		}
@@ -690,9 +613,9 @@ public class PiglinSkills extends Summoned{
 	@SuppressWarnings("unchecked")
 	public void charge(EntityDamageByEntityEvent d) 
 	{
-		if(d.getEntity().hasMetadata("poisonboss")) 
+		if(d.getEntity().hasMetadata("volcanicboss")) 
 		{
-			final Skeleton p = (Skeleton)d.getEntity();
+			final LivingEntity p = (LivingEntity)d.getEntity();
 
 			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
 				p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
@@ -702,11 +625,11 @@ public class PiglinSkills extends Summoned{
 			}
 
 			if(p.hasMetadata("raid")) {
-				if(!OverworldRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| p.hasMetadata("failed")) {
+				if(!NethercoreRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| p.hasMetadata("failed")) {
 					return;
 				}
 
-				final Location tl = OverworldRaids.getheroes(p).stream().filter(pe -> pe.getWorld().equals(p.getWorld())).findAny().get().getLocation().clone().add(0,0.2,0);
+				final Location tl = NethercoreRaids.getheroes(p).stream().filter(pe -> pe.getWorld().equals(p.getWorld())).findAny().get().getLocation().clone().add(0,0.2,0);
 				charge(p,tl);
 			}
 			else if(p.hasMetadata("summoned")) {
@@ -727,7 +650,7 @@ public class PiglinSkills extends Summoned{
 
 	private HashMap<UUID, Integer> hookt1 = new HashMap<UUID, Integer>();
 	
-	final private void chargeStart(Skeleton p, Location tl) {
+	final private void chargeStart(LivingEntity p, Location tl) {
 
         final Location pfl = p.getLocation().clone();
         
@@ -736,8 +659,9 @@ public class PiglinSkills extends Summoned{
 
 		p.swingMainHand();
 		p.getWorld().playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_NETHERITE, 1.0f, 0f);
-		p.getWorld().playSound(p.getLocation(), Sound.BLOCK_SCULK_CHARGE, 1.0f, 0f);
-			p.getWorld().spawnParticle(Particle.SCULK_CHARGE ,p.getLocation(), 200, 0.2,0.2,0.2,1,0.5f);
+		p.getWorld().playSound(p.getLocation(), Sound.BLOCK_BLASTFURNACE_FIRE_CRACKLE, 1.0f, 0f);
+			p.getWorld().spawnParticle(Particle.ASH ,p.getLocation(), 200, 0.2,1,0.2,1,0.5f);
+			p.getWorld().spawnParticle(Particle.LAVA ,p.getEyeLocation(), 10);
 			Holding.holding(null, p, 10l);
 
 		Location pl = pfl.clone();
@@ -749,44 +673,27 @@ public class PiglinSkills extends Summoned{
     			if(p.isDead()) {
     				return;
     			}
-    			p.getWorld().playSound(p.getLocation(), Sound.BLOCK_GLASS_BREAK, 1.0f, 0f);
-                AreaEffectCloud cloud = (AreaEffectCloud) p.getWorld().spawnEntity(p.getLocation(), EntityType.AREA_EFFECT_CLOUD);
-    			cloud.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-    			cloud.setMetadata("stuff"+gethero(p), new FixedMetadataValue(RMain.getInstance(), true));
-                cloud.setRadius(2.5f);
-                cloud.setSource(p);
-                cloud.setSilent(false);
-                cloud.setColor(Color.OLIVE);
-                cloud.setRadiusPerTick(0.05f);
-                cloud.addCustomEffect(new PotionEffect(PotionEffectType.NAUSEA,60,2,false,false), false);
-                cloud.setDuration(40);
+    			p.getWorld().playSound(p.getLocation(), Sound.ENTITY_PIGLIN_ANGRY, 0.1f, 0f);
+    			p.getWorld().spawnParticle(Particle.TRIAL_SPAWNER_DETECTION_OMINOUS ,p.getLocation(), 50, 2,2,2,1);
                 
-                final Location cl = cloud.getLocation().clone();
+                final Location cl = p.getLocation().clone();
                 
-    			pl.add(pv.clone().normalize().multiply(0.65));
+    			pl.add(pv.clone().normalize().multiply(1.25));
     			
     			if(pl.getBlock().isPassable()) {
 					p.teleport(pl);
     			}
 
-                for(int i = 0; i<4; i++) {
-                	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-            		@Override
-	                	public void run() 
-			                {	
-	                    for(Entity e : cloud.getWorld().getNearbyEntities(cl,2,2,2)) {
-    							if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
-    								LivingEntity le = (LivingEntity)e;
-    								le.damage(3.5,p);
-    								Holding.holding(null, le, 20l);
-    							}
-    	                    }
-			            }
-                	   }, i*10); 
+                for(Entity e : cl.getWorld().getNearbyEntities(cl,2,2,2)) {
+					if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
+						LivingEntity le = (LivingEntity)e;
+						le.damage(3.5,p);
+						le.teleport(p);
+					}
                 }
     			
             }
-    	},10,2);
+    	},10,1);
         hookt1.put(p.getUniqueId(), task);
         ordt.put(gethero(p), task);
         
@@ -799,17 +706,17 @@ public class PiglinSkills extends Summoned{
     				hookt1.remove(p.getUniqueId());
     			}
             }
-    	},45);
+    	},20);
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
      		@Override
         	public void run() 
             {	
-     			aimable.put(p.getUniqueId(), true);
+     			porkable.put(p.getUniqueId(), true);
             }
-        }, 46); 
+        }, 150); 
 	}
 	
-	final private void charge(Skeleton p, Location tl) {
+	final private void charge(LivingEntity p, Location tl) {
 
 		if(p.hasMetadata("failed") || !chargable.containsKey(p.getUniqueId())) {
 			return;
@@ -837,18 +744,22 @@ public class PiglinSkills extends Summoned{
 
 	private HashMap<UUID, Boolean> smkable = new HashMap<UUID, Boolean>();
 	
-	final private void smoker(Location ptl, LivingEntity p) {
+	final private void smoker(Location ptl, LivingEntity p, Integer dur) {
 		
 		String rn = gethero(p);
 		World w = ptl.getWorld();
 		p.getWorld().playSound(ptl, Sound.BLOCK_SMOKER_SMOKE, 1.0f, 0f);
     	p.getWorld().playSound(ptl, Sound.BLOCK_FIRE_AMBIENT, 1.0f, 2f);
+    	
+    	w.spawnParticle(Particle.BLOCK_MARKER, ptl, 1, getBd(Material.SMOKER));
+    	
         int t = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
             @Override
             public void run() 
             {
-                AreaEffectCloud cloud = (AreaEffectCloud) w.spawnEntity(p.getLocation(), EntityType.AREA_EFFECT_CLOUD);
+                AreaEffectCloud cloud = (AreaEffectCloud) w.spawnEntity(ptl, EntityType.AREA_EFFECT_CLOUD);
                 cloud.setParticle(Particle.SMOKE);
+                cloud.addCustomEffect(new PotionEffect(PotionEffectType.HUNGER, 100, 1, false, false, false), false);
         		cloud.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
         		cloud.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), rn));
         		cloud.setMetadata("piglincloud", new FixedMetadataValue(RMain.getInstance(), rn));
@@ -856,7 +767,7 @@ public class PiglinSkills extends Summoned{
                 cloud.setSource(p);
                 cloud.setSilent(false);
                 cloud.setColor(Color.RED);
-                cloud.setDuration(300);
+                cloud.setDuration(dur);
 
             	smkable.remove(p.getUniqueId());
             }
@@ -881,9 +792,9 @@ public class PiglinSkills extends Summoned{
 	
 	public void smoker(EntityDamageByEntityEvent d) 
 	{
-		if((d.getEntity() instanceof Skeleton) && d.getEntity().hasMetadata("poisonboss")) 
+		if((d.getEntity() instanceof Mob) && d.getEntity().hasMetadata("volcanicboss")) 
 		{
-			Skeleton p = (Skeleton)d.getEntity();
+			Mob p = (Mob)d.getEntity();
 			int sec = 4;
 	        
 
@@ -911,7 +822,7 @@ public class PiglinSkills extends Summoned{
 		                	
 			                Holding.holding(null, p, 10l);
 
-			                smoker(ptl, p);
+			                smoker(ptl, p,300);
 		                    
 		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		                 		@Override
@@ -931,7 +842,7 @@ public class PiglinSkills extends Summoned{
 	                	
 		                Holding.holding(null, p, 10l);
 
-		                smoker(ptl, p);
+		                smoker(ptl, p,300);
 	                    
 	                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	                 		@Override
@@ -948,115 +859,144 @@ public class PiglinSkills extends Summoned{
 
 	public static HashMap<UUID, Integer> count = new HashMap<UUID, Integer>();
 	private HashMap<UUID, Boolean> ordealable = new HashMap<UUID, Boolean>();
-	public static HashMap<UUID, Boolean> ordeal = new HashMap<UUID, Boolean>();//poisonBoss 패턴 시작 여부 저장
+	public static HashMap<UUID, Boolean> ordeal = new HashMap<UUID, Boolean>();//volcanicboss 패턴 시작 여부 저장
 
-	private HashMultimap<UUID, UUID> pair = HashMultimap.create();//ArmorStands uuid 저장
 	public HashMap<UUID, Integer> ast = new HashMap<UUID, Integer>();//ArmorStands damage 태스크 저장
 	public HashMap<UUID, Integer> asdt = new HashMap<UUID, Integer>();//ArmorStands remove 태스크 저장
 	
-	final private void asSpawn(Player pe, String rn, LivingEntity p) {
-		HashSet<Location> ls = new HashSet<>();
-		final Location fl = pe.getLocation().clone();
-		ls.add(fl.clone().add(0, 2.5, 0));
-		ls.add(fl.clone().add(0, -1, 0));
-		ls.add(fl.clone().add(1, 0, 0));
-		ls.add(fl.clone().add(-1, 0, 0));
-		ls.add(fl.clone().add(0, 0, 1));
-		ls.add(fl.clone().add(0, 0, -1));
-		
+	final private void asSpawn(Player pe, String rn, LivingEntity p, final Location fl, int a) {
+
 		final World w = fl.getWorld();
 		
-		ls.forEach(l ->{
-			w.spawn(l, ArmorStand.class, newmob -> {
 
-				newmob.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
-				newmob.setGravity(false);
-        		newmob.setCustomNameVisible(false);
-        		newmob.setInvulnerable(true);
-        		newmob.setRemoveWhenFarAway(false);
-        		newmob.setGravity(false);
-        		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), rn));
-        		newmob.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
-        		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
-        		newmob.setAI(false);
-            	pair.put(pe.getUniqueId(), newmob.getUniqueId());
-				
-    			int t2 =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-                    @Override
-                    public void run() {
-	            		
-	            		if(Holding.ale(pe).isDead()) {
-	            			pair.get(pe.getUniqueId()).forEach(as ->{
-	            				if(ast.containsKey(as)) {
-		                        	Bukkit.getScheduler().cancelTask(ast.get(as));
-		                        	ast.remove(as);
-	            				}
-	            				if(asdt.containsKey(as)) {
-		                        	Bukkit.getScheduler().cancelTask(asdt.get(as));
-		                        	asdt.remove(as);
-	            				}
-	                        	if(Bukkit.getEntity(as) != null) {
-		                        	Bukkit.getEntity(as).remove();
-	                        	}
-	            			});
-	            		}
-	            		
-	            		for(Entity e : p.getWorld().getNearbyEntities(newmob.getLocation().clone(), 0.5, 0.1, 0.5)) {
-							if(p!=e && e instanceof Player&& !(e.hasMetadata("fake"))) {
-								Player le = (Player)e;
-								le.setHealth(0);
+		w.spawn(fl, ArmorStand.class, newmob -> {
+
+			newmob.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
+			newmob.setGravity(false);
+    		newmob.setCustomNameVisible(false);
+    		newmob.setInvulnerable(true);
+    		newmob.setRemoveWhenFarAway(false);
+    		newmob.setGravity(false);
+    		newmob.setMarker(true);
+    		newmob.setSmall(true);
+    		newmob.setInvisible(true);
+    		newmob.setCollidable(false);
+			newmob.setMetadata("cake"+rn, new FixedMetadataValue(RMain.getInstance(), true));
+    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), rn));
+    		newmob.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
+    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
+    		newmob.setAI(false);
+    		newmob.getEquipment().setHelmet(new ItemStack(Material.CANDLE_CAKE));
+    		if(a%4==0) {
+        		newmob.getEquipment().setHelmet(new ItemStack(Material.YELLOW_CANDLE_CAKE));
+        		newmob.setMetadata("yellowcake"+rn, new FixedMetadataValue(RMain.getInstance(), rn));
+    		}
+    		newmob.getEquipment().setItemInMainHand(new ItemStack(Material.COOKIE));
+    		newmob.getEquipment().setItemInOffHand(new ItemStack(Material.SUGAR));
+			
+			int t2 =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
+                @Override
+                public void run() {
+                	
+                	Location pel = Holding.ale(pe).getLocation();
+                	Location arl = Holding.ale(newmob).getLocation();
+                	
+                	if(pel.getWorld().equals(arl.getWorld())) {
+                		Vector v = pel.clone().toVector().subtract(arl.clone().toVector()).clone().normalize().multiply(0.4);
+                		if(pel.distance(arl)>6) {
+                			v.multiply(10);
+                		}
+                		Holding.ale(newmob).setVelocity(v);
+                	}
+                	
+            		for(Entity e : newmob.getWorld().getNearbyEntities(newmob.getLocation().clone(), 1, 5, 1)) {
+						if(p!=e && e instanceof Player&& !(e.hasMetadata("fake"))) {
+							Player le = (Player)e;
+							if(Holding.ale(newmob).hasMetadata("yellowcake"+rn)) {
+								Bukkit.getScheduler().cancelTask(ast.get(newmob.getUniqueId()));
+			                	ast.remove(newmob.getUniqueId());
+			                	Holding.ale(newmob).remove();
+			                	return;
 							}
-	                	}
-                    }
-                }, 0,1);
-    			ordt.put(rn, t2);
-    			ast.put(newmob.getUniqueId(), t2);
-    			
-    			int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-                    @Override
-                    public void run() {
-
-        				if(ast.containsKey(newmob.getUniqueId())) {
-                        	Bukkit.getScheduler().cancelTask(ast.get(newmob.getUniqueId()));
-                        	ast.remove(newmob.getUniqueId());
-        				}
-                    	Holding.ale(newmob).remove();
-                    }
-                }, 50); 
-    			asdt.put(newmob.getUniqueId(), t1);
-    			ordt.put(rn, t1);
-			});
+							
+							le.damage(5,p);
+						}
+                	}
+                }
+            }, 0,3);
+			ordt.put(rn, t2);
+			ast.put(newmob.getUniqueId(), t2);
 		});
 		
 	}
 
-	final private void countDown(LivingEntity p) {
+	final private void cake(LivingEntity p, int a) {
 		String rn = p.getMetadata("raid").get(0).asString();
-		Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(e -> e.remove());
-        for(Player pe : OverworldRaids.getheroes(p)) {
-            smoker(pe.getLocation(), p);
+		Bukkit.getWorld("NethercoreRaid").getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(e -> e.remove());
+        for(Player pe : NethercoreRaids.getheroes(p)) {
+        	
+        	if(!pe.getWorld().equals(p.getWorld()) || pe.isDead()) {
+        		continue;
+        	}
+        	
+            smoker(pe.getLocation(), p, 500);
             
-			for(int i = 0; i <3; i++) {
-				AtomicInteger j = new AtomicInteger(3);
-                int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	                @Override
-	                public void run() {
-	                	pe.playSound(p, Sound.ENTITY_ELDER_GUARDIAN_HURT, 1, 0.3f);
-	            		pe.sendTitle(ChatColor.DARK_GREEN+""+j.getAndDecrement(),ChatColor.BOLD+"",10,20, 10);
-	                }
-	            }, i*20); 	 
-				ordt.put(rn, t1);                   	
-            }
+            final Location fl = pe.getLocation().clone();
+
+			p.getWorld().playSound(pe.getLocation(), Sound.BLOCK_SMOKER_SMOKE, 1, 0);
+			p.getWorld().playSound(pe.getLocation(), Sound.BLOCK_HONEY_BLOCK_BREAK, 1, 0);
+			p.getWorld().spawnParticle(Particle.FALLING_HONEY, fl, 50,1,1,1);
+            
 			int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
                 @Override
                 public void run() {
-                	pe.playSound(p, Sound.ENTITY_ELDER_GUARDIAN_HURT, 1, 0);
-            		pe.sendTitle(ChatColor.DARK_RED+"■",ChatColor.BOLD+"",10,20, 10);
-            		asSpawn(pe, rn, p);
+                	pe.playSound(p, Sound.BLOCK_CAKE_ADD_CANDLE, 1, 0);
+            		asSpawn(pe, rn, p, fl, a);
                 }
-            }, 65); 
+            }, 20); 
 			ordt.put(rn, t1);  
         }
+	}
+	
+	final private boolean judge(LivingEntity p, String rn) {
+		Boolean bool = Bukkit.getWorld("NethercoreRaid").getEntities().stream().anyMatch(e -> e.hasMetadata("yellowcake"+rn));
+		if(bool) {
+            for(Player pe : NethercoreRaids.getheroes(p)) {
+    			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
+            		pe.sendMessage(ChatColor.BOLD+"피글린요리사: 그렇게는 배불리 먹지 못해!!!");
+    			}
+    			else {
+            		pe.sendMessage(ChatColor.BOLD+"PiglinCook: That won't fill you up!!!");
+    			}
+        		Holding.invur(pe, 60l);
+    			p.getWorld().playSound(pe.getLocation(), Sound.ENTITY_TNT_PRIMED, 1, 0);
+        	}
+	        int t3 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	            @Override
+	            public void run() {
+					Bukkit.getWorld("NethercoreRaid").getEntities().stream().filter(e -> e.hasMetadata("cake"+rn)).forEach(newmob -> {
+	                	Bukkit.getScheduler().cancelTask(ast.get(newmob.getUniqueId()));
+	                	ast.remove(newmob.getUniqueId());
+	                	Holding.ale(newmob).remove();
+					});
+
+	        		if(ordt.containsKey(rn)) {
+	        			ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
+	        		}
+	        		
+	        		ordeal.remove(p.getUniqueId());
+	                for(Player pe : NethercoreRaids.getheroes(p)) {
+	            		pe.setHealth(0);
+	            	}
+	                rb6cooldown.remove(p.getUniqueId());
+	            }
+	        }, 20);
+			ordt.put(rn, t3);
+		}
+		else {
+			bossfailed(p,rn);
+		}
+		return bool;
 	}
 
 	final private void ordeal(LivingEntity p, EntityDamageByEntityEvent d) {
@@ -1066,67 +1006,38 @@ public class PiglinSkills extends Summoned{
         	ordt.removeAll(rn);
         }
         ordeal.put(p.getUniqueId(), true);
-        Location rl = OverworldRaids.getraidloc(p).clone();
+        Location rl = NethercoreRaids.getraidloc(p).clone();
 		p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
         d.setCancelled(true);
     	p.teleport(rl.clone().add(30, 1, 25));
-        Holding.holding(null, p, 671l);
-        Holding.untouchable(p, 671l);
-        for(Player pe : OverworldRaids.getheroes(p)) {
+        Holding.holding(null, p, 450l);
+        Holding.untouchable(p, 450l);
+        for(Player pe : NethercoreRaids.getheroes(p)) {
 			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-        		pe.sendMessage(ChatColor.BOLD+"종말론자: 게임을 시작한다.");
+        		pe.sendMessage(ChatColor.BOLD+"피글린요리사: 후식 시간이다!");
 			}
 			else {
-        		pe.sendMessage(ChatColor.BOLD+"TheApocalyptic: Let's Play The Game.");
+        		pe.sendMessage(ChatColor.BOLD+"PiglinCook: Dessert Time!");
 			}
     		pe.teleport(rl.clone().add(0, 1.5, 0));
     		Holding.invur(pe, 40l);
         }
-        int t1 = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+        
+        AtomicInteger j = new AtomicInteger(1);
+        int t1 = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
             @Override
             public void run() {
-
-				for(int i = 0; i <5; i++) {
-                    int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() {
-		                	countDown(p);
-		                }
-		            }, i*120); 	 
-					ordt.put(rn, t1);                   	
-                }
+            	cake(p, j.getAndIncrement());
             }
-        }, 20);
+        }, 20, 20);
 		ordt.put(rn, t1);
 		
         int t3 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
             @Override
             public void run() {
-				Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(newmob -> {
-                	Bukkit.getScheduler().cancelTask(ast.get(newmob.getUniqueId()));
-                	ast.remove(newmob.getUniqueId());
-                	Holding.ale(newmob).remove();
-				});
-
-        		if(ordt.containsKey(rn)) {
-        			ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
-        		}
-        		
-        		ordeal.remove(p.getUniqueId());
-                for(Player pe : OverworldRaids.getheroes(p)) {
-        			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-                		pe.sendMessage(ChatColor.BOLD+"종말론자: 게임 오버!!!");
-        			}
-        			else {
-                		pe.sendMessage(ChatColor.BOLD+"TheApocalyptic: GAME OVER!!!");
-        			}
-            		Holding.invur(pe, 60l);
-        			p.getWorld().playSound(pe.getLocation(), Sound.ENTITY_TNT_PRIMED, 1, 0);
-            		pe.setHealth(0);
-            	}
-                rb6cooldown.remove(p.getUniqueId());
+            	judge(p,rn);
             }
-        }, 671);
+        }, 450);
 		ordt.put(rn, t3);
 	}
 	
@@ -1141,13 +1052,13 @@ public class PiglinSkills extends Summoned{
     	Holding.reset(Holding.ale(p));
     	Holding.ale(p).setMetadata("failed", new FixedMetadataValue(RMain.getInstance(),true));
 		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
-		Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(e -> e.remove());
-        for(Player pe : OverworldRaids.getheroes(p)) {
+		Bukkit.getWorld("NethercoreRaid").getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(e -> e.remove());
+        for(Player pe : NethercoreRaids.getheroes(p)) {
 			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-        		pe.sendMessage(ChatColor.BOLD+"종말론자: 게임 오버...");
+        		pe.sendMessage(ChatColor.BOLD+"피글린요리사: 계산은... 필요 없다...");
 			}
 			else {
-        		pe.sendMessage(ChatColor.BOLD+"TheApocalyptic: Game Over...");
+        		pe.sendMessage(ChatColor.BOLD+"PiglinCook: No need for payment... it's on the house...");
 			}
     		Holding.holding(pe, p, 300l);
     		p.removeMetadata("fake", RMain.getInstance());
@@ -1163,27 +1074,15 @@ public class PiglinSkills extends Summoned{
         }, 300);
 		ordt.put(rn, t3);
 	}
-	
-	public void playerSuccess(EntityDamageByEntityEvent d) 
-	{
-		if(d.getEntity().hasMetadata("poisonboss") && d.getEntity().hasMetadata("ruined") && d.getDamager() instanceof Player) {
-
-			Skeleton p = (Skeleton)d.getEntity();
-			Player player = (Player)d.getDamager();
-			if(!player.hasCooldown(Material.YELLOW_TERRACOTTA) && ordeal.containsKey(p.getUniqueId())) {
-				bossfailed(p, gethero(p));
-			}
-		}
-	}
 	    
 	
 	public void Ordeal(EntityDamageByEntityEvent d) 
 	{
 	    
 		int sec =70;
-		if(d.getEntity().hasMetadata("poisonboss") && d.getEntity().hasMetadata("ruined")&& !d.getEntity().hasMetadata("failed")) 
+		if(d.getEntity().hasMetadata("volcanicboss") && d.getEntity().hasMetadata("ruined")&& !d.getEntity().hasMetadata("failed")) 
 		{
-			Skeleton p = (Skeleton)d.getEntity();
+			LivingEntity p = (LivingEntity)d.getEntity();
 			if(!(p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2)|| !ordealable.containsKey(p.getUniqueId())) {
 				return;
 			}

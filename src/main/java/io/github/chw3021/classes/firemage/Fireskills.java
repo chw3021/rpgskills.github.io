@@ -433,7 +433,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
 					                		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 								                @Override
 								                public void run() {
-													p.getWorld().spawnParticle(Particle.FLAME, l, 6, 0.5,0.2,0.5,0);								                    
+													p.getWorld().spawnParticle(Particle.FLAME, l, 5, 0.5,0.2,0.5,0);								                    
 								                }
 								            }, j.incrementAndGet()/60); 
 					                		
@@ -539,18 +539,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
 		            }, 40); 
 	            	vclst.put(p.getUniqueId(), task);
 
-                    		AtomicInteger j = new AtomicInteger();	
                     		AtomicInteger k = new AtomicInteger(3);	
-							for(int i = 0; i <6; i++) {
-			                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					                @Override
-					                public void run() {
-					                    p.playSound(tl, Sound.BLOCK_LAVA_AMBIENT, 0.6f, 2f);
-										tl.getWorld().spawnParticle(Particle.SMALL_FLAME, tl, 50*j.incrementAndGet(), 1,j.get()/2,1,0);
-										tl.getWorld().spawnParticle(Particle.WAX_ON, tl, 50*j.incrementAndGet(), 1,j.get()/2,1,0.1);
-					                }
-					            }, i*3); 	                    	
-		                    }
 							for(int i = 0; i <3; i++) {
 			                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					                @Override
@@ -728,13 +717,12 @@ public class Fireskills extends Pak implements Serializable, Listener {
 		                	
 							p.playSound(tl, Sound.BLOCK_FIRE_AMBIENT, 1, 0.5f);
 							p.playSound(tl, Sound.BLOCK_BLASTFURNACE_FIRE_CRACKLE, 1, 0);
+							tl.getWorld().spawnParticle(Particle.BLOCK_MARKER, tl, 15, 0.1,0.1,0.1,getBd(Material.FIRE));
 							for(int i = 0; i <20; i++) {
 			                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					                @Override
 					                public void run() {
 										p.playSound(tl, Sound.ITEM_FIRECHARGE_USE, 0.3f, 0.346f);
-										tl.getWorld().spawnParticle(Particle.FLAME, tl, 60, 0.1,0.1,0.1,0.1);
-										tl.getWorld().spawnParticle(Particle.WHITE_ASH, tl, 20, 1.1,1.1,1.1,0.1);
 										for(Entity e : tl.getWorld().getNearbyEntities(tl,4, 4, 4)) {
 											if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
 					                    		if (e instanceof Player) 
@@ -906,7 +894,6 @@ public class Fireskills extends Pak implements Serializable, Listener {
 			                public void run() 
 			                {
 
-		                    	p.getWorld().spawnParticle(Particle.WAX_ON,tl,300, 3,0.13,3,0.1);
 		                    	p.getWorld().spawnParticle(Particle.FLAME,tl,100, 3,0.1,3,0);
 			                	p.playSound(p.getLocation(), Sound.BLOCK_CONDUIT_ACTIVATE, 0.5f, 2f);
 			                	p.playSound(p.getLocation(), Sound.ITEM_GLOW_INK_SAC_USE,0.5f, 2f);
@@ -923,21 +910,15 @@ public class Fireskills extends Pak implements Serializable, Listener {
 	                	p.playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 0.8f, 2f);
 	                	p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.8f, 2f);
 	                	p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.6f, 0f);
-	                	p.playSound(p.getLocation(), Sound.ITEM_GLOW_INK_SAC_USE, 0.6f, 2f);
-	                	p.playSound(p.getLocation(), Sound.ITEM_GLOW_INK_SAC_USE, 0.8f, 0f);
 	                	p.playSound(p.getLocation(), Sound.ITEM_TRIDENT_THROW, 0.7f, 0f);
 	                	AtomicInteger j = new AtomicInteger();
-                    	p.getWorld().spawnParticle(Particle.WAX_ON,tl,60, 3,0.13,3,0.6);
-                    	p.getWorld().spawnParticle(Particle.FLAME,tl,100, 3,0.1,3,0);
-                    	p.getWorld().spawnParticle(Particle.GLOW,tl,100, 3,0.1,3,0);
 	                    for(Location l : line) {
 	                  	   Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 				                @Override
 				                public void run() 
 				                {
-			                    	tl.getWorld().spawnParticle(Particle.WAX_ON, l.clone().add(0, -0.289, 0),5, 0.1,0.1,0.1,0);
+			                    	tl.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l.clone().add(0, -0.289, 0),5, 0.1,0.1,0.1,0);
 			                    	tl.getWorld().spawnParticle(Particle.GLOW, l.clone().add(0, -0.289, 0),5, 0.1,0.1,0.1,0);
-			                    	tl.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l.clone().add(0, -0.289, 0),1, 0.1,0.1,0.1,0);
 				                }
 	                  	   	}, j.incrementAndGet()/6); 
 
@@ -979,7 +960,6 @@ public class Fireskills extends Pak implements Serializable, Listener {
 					                public void run() 
 					                {
 
-				                    	p.getWorld().spawnParticle(Particle.WAX_ON,line.get(line.size()-1),10, 5,0.1,5,0);
 				                    	p.getWorld().spawnParticle(Particle.FLAME,line.get(line.size()-1),10, 5,0.1,5,0);
 				                    	p.getWorld().spawnParticle(Particle.GLOW,line.get(line.size()-1),10, 5,0.1,5,0);
 					                	for(LivingEntity le : les) {
@@ -1013,7 +993,6 @@ public class Fireskills extends Pak implements Serializable, Listener {
         }
     	cir.forEach(l -> {
 			w.spawnParticle(Particle.FLAME, l,2,0.1,0.1,0.1,0.1);
-			w.spawnParticle(Particle.ASH, l,1,0.1,0.1,0.1,0.1);
 	    });
 	    return ;
 	}
@@ -1155,9 +1134,9 @@ public class Fireskills extends Pak implements Serializable, Listener {
 							p.playSound(p.getLocation(), Sound.BLOCK_LAVA_POP, 0.8f, 2f);
 							p.playSound(p.getLocation(), Sound.BLOCK_POINTED_DRIPSTONE_DRIP_LAVA, 0.8f, 1.5f);
 							p.playSound(p.getLocation(), Sound.BLOCK_LAVA_EXTINGUISH, 0.7f, 02);
-							tl.getWorld().spawnParticle(Particle.FALLING_LAVA, tl.clone().add(0, 5, 0), 600, 6,0.1,6,0.5);
-							tl.getWorld().spawnParticle(Particle.LANDING_LAVA, tl.clone().add(0, 5, 0), 600, 6,0.1,6,0.5);
-							tl.getWorld().spawnParticle(Particle.LARGE_SMOKE, tl.clone().add(0, 5, 0), 600, 6,0.1,6,0.5);
+							tl.getWorld().spawnParticle(Particle.FALLING_LAVA, tl.clone().add(0, 5, 0), 100, 6,0.1,6,0.5);
+							tl.getWorld().spawnParticle(Particle.LANDING_LAVA, tl.clone().add(0, 5, 0), 100, 6,0.1,6,0.5);
+							tl.getWorld().spawnParticle(Particle.LARGE_SMOKE, tl.clone().add(0, 5, 0), 100, 6,0.1,6,0.5);
 	
 							for (Entity e :tl.getWorld().getNearbyEntities(tl, 6, 10, 6))
 							{
@@ -1262,10 +1241,9 @@ public class Fireskills extends Pak implements Serializable, Listener {
 						p.playSound(p.getLocation(), Sound.BLOCK_LAVA_EXTINGUISH, 0.7f, 0.2f);
 						p.playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 0.2f, 0.6f);
 						p.playSound(p.getLocation(), Sound.BLOCK_LAVA_EXTINGUISH, 0.2f, 0);
-						tl.getWorld().spawnParticle(Particle.FLASH, tl, 7, 0.7,0.7,0.7);
-						tl.getWorld().spawnParticle(Particle.ASH, tl, 100, 0.7,0.7,0.7,0);
-						tl.getWorld().spawnParticle(Particle.FLAME, tl, 100, 0.7,0.7,0.7,0);
-						tl.getWorld().spawnParticle(Particle.LAVA, tl, 10, 0.7,0.7,0.7,0);
+						tl.getWorld().spawnParticle(Particle.ASH, tl, 25, 0.7,0.7,0.7,0);
+						tl.getWorld().spawnParticle(Particle.FLAME, tl, 70, 0.7,0.7,0.7,0);
+						tl.getWorld().spawnParticle(Particle.LAVA, tl, 2, 0.7,0.7,0.7,0);
 						
 	                }
 	            }, 22); 	
@@ -1293,8 +1271,8 @@ public class Fireskills extends Pak implements Serializable, Listener {
 							final int ki = k.incrementAndGet();
 							
 		                	cir.forEach(l -> {
-								l.getWorld().spawnParticle(Particle.FLAME, l, 4*ki, 0.51*ki,0.51*ki,0.51*ki,0.4);
-								l.getWorld().spawnParticle(Particle.ASH, l, 3*ki, 0.51*ki,0.51*ki,0.51*ki,0.2);
+								l.getWorld().spawnParticle(Particle.FLAME, l, 2*ki, 0.51*ki,0.51*ki,0.51*ki,0.4);
+								l.getWorld().spawnParticle(Particle.ASH, l, ki, 0.51*ki,0.51*ki,0.51*ki,0.2);
 								
 		                	});
 		                	
@@ -1495,10 +1473,9 @@ public class Fireskills extends Pak implements Serializable, Listener {
 
 	final private void MagmaBlock(Player p, FallingBlock fallingb) {
 		Location tl = fallingb.getLocation();
-		tl.getWorld().spawnParticle(Particle.LAVA, tl, 20,5,5,5);
-		tl.getWorld().spawnParticle(Particle.BLOCK, tl, 100,5,5,5, Material.MAGMA_BLOCK.createBlockData());
+		tl.getWorld().spawnParticle(Particle.LAVA, tl, 5,5,5,5);
 		tl.getWorld().spawnParticle(Particle.FLAME, tl, 100,5,5,5);
-		tl.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, tl, 2,1,1,1);
+		tl.getWorld().spawnParticle(Particle.EXPLOSION, tl, 2,1,1,1);
 
 		for (Entity e : p.getWorld().getNearbyEntities(tl, 5, 5, 5))
 		{
@@ -1917,6 +1894,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
             public void run() 
             {
         		Location pl = p.getLocation().clone();
+        		cloud.teleport(pl);
                 p.playSound(pl, Sound.BLOCK_POINTED_DRIPSTONE_DRIP_LAVA, 1.0f, 0f);
 				for(Entity e : pl.getWorld().getNearbyEntities(pl,3.5, 2, 3.5)) {
 	        		if (e instanceof Player) 

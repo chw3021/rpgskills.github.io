@@ -20,6 +20,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.AreaEffectCloudApplyEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -64,6 +65,7 @@ import io.github.chw3021.monsters.mountains.MountainsRaids;
 import io.github.chw3021.monsters.mountains.MountainsSkills;
 import io.github.chw3021.monsters.nether.NetherMobsSpawn;
 import io.github.chw3021.monsters.nether.NetherRaids;
+import io.github.chw3021.monsters.nether.PiglinSkills;
 import io.github.chw3021.monsters.ocean.OceanMobsSpawn;
 import io.github.chw3021.monsters.ocean.OceanRaids;
 import io.github.chw3021.monsters.ocean.OceanSkills;
@@ -363,6 +365,14 @@ public class MobsSkillsEvents extends Mobs implements Listener, Serializable  {
 		PoisonSkills.getInstance().aiming(d);
 		PoisonSkills.getInstance().playerSuccess(d);
 
+		PiglinSkills.getInstance().grilled(d);
+		PiglinSkills.getInstance().furnace(d);
+		PiglinSkills.getInstance().Block(d);
+		PiglinSkills.getInstance().porkchop(d);
+		PiglinSkills.getInstance().charge(d);
+		PiglinSkills.getInstance().smoker(d);
+		PiglinSkills.getInstance().Ordeal(d);
+		
 	}
 
 
@@ -487,6 +497,8 @@ public class MobsSkillsEvents extends Mobs implements Listener, Serializable  {
 		MountainsSkills.getInstance().EarthQuake(e);
 
 		PoisonSkills.getInstance().hit(e);
+		
+		PiglinSkills.getInstance().hit(e);
 	}
 
 	@EventHandler
@@ -501,6 +513,8 @@ public class MobsSkillsEvents extends Mobs implements Listener, Serializable  {
 		PoisonSkills.getInstance().bowshoot(e);
 		
 		RedSkills.getInstance().Sweep(e);
+
+		PiglinSkills.getInstance().bowshoot(e);
 	}
 		
 
@@ -534,7 +548,8 @@ public class MobsSkillsEvents extends Mobs implements Listener, Serializable  {
 		SnowSkills.getInstance().SnowBlock(ev);
 		
 		MountainsSkills.getInstance().EarthBlock(ev);
-		
+
+		PiglinSkills.getInstance().Block(ev);
 	}
 
 	@EventHandler
@@ -550,6 +565,8 @@ public class MobsSkillsEvents extends Mobs implements Listener, Serializable  {
 		SnowSkills.getInstance().SnowBlock(ev);
 
 		MountainsSkills.getInstance().EarthBlock(ev);
+
+		PiglinSkills.getInstance().Block(ev);
 	}
 
 
@@ -560,6 +577,13 @@ public class MobsSkillsEvents extends Mobs implements Listener, Serializable  {
 		SnowSkills.getInstance().Breeze(d);
 	}
 
+
+	@EventHandler
+	public void AreaEffect(AreaEffectCloudApplyEvent ev) 
+	{
+		PiglinSkills.getInstance().cloudApplied(ev);
+	}
+	
 	@EventHandler
 	public void Target(EntityTargetEvent d) 
 	{

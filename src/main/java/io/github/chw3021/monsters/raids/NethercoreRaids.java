@@ -694,9 +694,26 @@ public class NethercoreRaids extends Summoned implements Listener {
 			
 		}
 	}
-	@SuppressWarnings("deprecation")
-
 	
+
+	final private void playerTP(Player p, Location spl, String rn) {
+		final Location pl = p.getLocation();
+		beforepl.put(p.getUniqueId(), pl);
+		Holding.invur(p, 100l);
+		int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() 
+            {
+				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 20,1,false,false));
+				p.teleport(spl.clone().add(0,0.5,0));
+				Holding.invur(p, 100l);
+            }
+		}, 50); 
+		ordt.put(rn, task);
+	}
+	
+	
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void NethercoreRaidStart(PlayerInteractEvent d)
 	{
@@ -761,11 +778,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 						}
 		        		heroes.put(rn, pu);
 		        		
-						final Location pl = Bukkit.getPlayer(pu).getLocation();
-						beforepl.put(pu, pl);
-        				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 20,1,false,false));
-						Bukkit.getPlayer(pu).teleport(spl.clone().add(0,0.5,0));
-						Holding.invur(Bukkit.getPlayer(pu), 40l);
+						playerTP(Bukkit.getPlayer(pu),spl,rn);
 					});
 				}
 				else {
@@ -789,10 +802,8 @@ public class NethercoreRaids extends Summoned implements Listener {
 					return;
 				}
         		heroes.put(rn, p.getUniqueId());
-				final Location pl = p.getLocation();
-				beforepl.put(p.getUniqueId(), pl);
-				p.teleport(spl.clone().add(0,0.5,0));
-				Holding.invur(p, 40l);
+        		
+        		playerTP(p,spl,rn);
 			}
     		RaidFinish(rn,"","",0);
 			d.getClickedBlock().setType(Material.VOID_AIR);

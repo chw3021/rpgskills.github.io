@@ -197,7 +197,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 							}, 25);
 							obvt.put(p.getUniqueId(), task);
 
-		                    Location asl = gettargetblock(p,5).clone();
+		                    Location asl = gettargetblock(p,5).clone().add(0, 2, 0);
 							ArmorStand as = (ArmorStand)p.getWorld().spawnEntity(asl, EntityType.ARMOR_STAND);
 							ItemStack head = new ItemStack(Material.DISPENSER);
 							ItemStack ch = new ItemStack(Material.ELYTRA);
@@ -351,7 +351,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 
 
 
-                Location asl = gettargetblock(p,5).clone();
+                Location asl = gettargetblock(p,5).clone().add(0, 2, 1);
                 ArmorStand as = (ArmorStand)p.getWorld().spawnEntity(asl, EntityType.ARMOR_STAND);
 				ItemStack head = new ItemStack(Material.OBSERVER);
 				ItemStack ch = new ItemStack(Material.ELYTRA);
@@ -530,7 +530,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 				Holding.invur(p, 20l);
 
 
-                Location tl = gettargetblock(p,2).clone();
+                Location tl = gettargetblock(p,5).clone().add(1, 2, 0);
                 ArmorStand as = tl.getWorld().spawn(tl, ArmorStand.class);
 
 				as.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
@@ -936,11 +936,15 @@ public class Engskills extends Pak implements Listener, Serializable {
 					p.playSound(tl, Sound.ENTITY_SLIME_JUMP, 0.85f, 1.6f);
 					Holding.superholding(p, p, 8l);
 
+					final Location tel = tl.clone();
 					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+						
 						@Override
 						public void run() {
+							p.teleport(pfel);
+							p.getWorld().spawnParticle(Particle.REVERSE_PORTAL, tel, 50, 1,1,1);
 							p.playSound(p.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_AMBIENT, 0.85f, 2f);
-							p.playSound(p.getLocation(), Sound.BLOCK_BUBBLE_COLUMN_WHIRLPOOL_INSIDE, 0.85f, 2f);
+							p.playSound(p.getLocation(), Sound.BLOCK_BUBBLE_COLUMN_WHIRLPOOL_INSIDE, 0.55f, 0f);
 							for(Entity e : p.getWorld().getNearbyEntities(p.getLocation(),5, 5, 5)) {
 								if (e instanceof Player)
 								{
@@ -956,7 +960,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 								if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
 									LivingEntity le = (LivingEntity)e;
 									atk0(0.76, esd.X_ray.get(p.getUniqueId())*0.45, p, le);
-									le.teleport(p);
+									le.teleport(tel);
 									Holding.superholding(p, le, 40l);
 								}
 							}
@@ -1026,7 +1030,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 							}, 25);
 							engbt.put(p.getUniqueId(), task);
 
-			                Location l = gettargetblock(p,4).clone();
+			                Location l = gettargetblock(p,5).clone();
 							EnderCrystal gravit = (EnderCrystal) p.getWorld().spawnEntity(l, EntityType.END_CRYSTAL);
 							gravit.setInvulnerable(true);
 							gravit.setShowingBottom(false);
@@ -1624,8 +1628,8 @@ public class Engskills extends Pak implements Listener, Serializable {
 							@Override
 							public void run()
 							{
-								as.getWorld().spawnParticle(Particle.FLASH, l, 10, 2,2,2);
-								as.getWorld().playSound(l, Sound.BLOCK_BEACON_ACTIVATE, 0.8f, 2);
+								as.getWorld().spawnParticle(Particle.FLASH, l, 5, 2,2,2);
+								as.getWorld().playSound(l, Sound.BLOCK_BEACON_ACTIVATE, 0.4f, 2);
 							}
 						}, i*3);
 					}
@@ -1678,6 +1682,26 @@ public class Engskills extends Pak implements Listener, Serializable {
 			}
 		}
 	}
+	
+	final private void Arrow(Location tl) {
+		HashSet<Location> ls = new HashSet<>();
+		Location fl = tl.clone().add(0,3,0);
+		for(int i  = -3; i<3; i++) {
+			ls.add(fl.clone().add(0, i, 0));
+		}
+		ls.add(fl.clone().add(1, -3, 1));
+		ls.add(fl.clone().add(-1, -3, -1));
+		ls.add(fl.clone().add(2, -3, 2));
+		ls.add(fl.clone().add(-2, -3, -2));
+		ls.add(fl.clone().add(1, 3, 1));
+		ls.add(fl.clone().add(-1, 3, -1));
+		ls.add(fl.clone().add(2, 3, 2));
+		ls.add(fl.clone().add(-2, 3, -2));
+		
+		ls.forEach(l ->{
+			tl.getWorld().spawnParticle(Particle.BLOCK_MARKER, l, 3, 0.5,0.5,0.5, getBd(Material.COMMAND_BLOCK));
+		});
+	}
 
 
 	public void Anti_gravity(PlayerInteractEvent ev)
@@ -1711,13 +1735,8 @@ public class Engskills extends Pak implements Listener, Serializable {
 					p.getWorld().playSound(l, Sound.BLOCK_BEACON_DEACTIVATE, 0.4f, 0.5f);
 					p.getWorld().playSound(l, Sound.BLOCK_BEACON_DEACTIVATE, 0.4f, 0.7f);
 					p.getWorld().playSound(l, Sound.BLOCK_BEACON_DEACTIVATE, 0.4f, 0.9f);
-					p.getWorld().playSound(l, Sound.BLOCK_BEACON_DEACTIVATE, 0.4f, 1.1f);
-					p.getWorld().playSound(l, Sound.BLOCK_BEACON_DEACTIVATE, 0.4f, 1.4f);
-					p.getWorld().playSound(l, Sound.BLOCK_BEACON_DEACTIVATE, 0.4f, 1.8f);
-					p.getWorld().playSound(l, Sound.BLOCK_BEACON_DEACTIVATE, 0.4f, 2f);
 
-					p.getWorld().spawnParticle(Particle.DRIPPING_OBSIDIAN_TEAR, l, 200, 5,1,5);
-					p.getWorld().spawnParticle(Particle.WARPED_SPORE, l, 400, 5,1,5);
+					Arrow(l);
 
 					for (Entity a : p.getWorld().getNearbyEntities(l, 5, 3, 5))
 					{
@@ -1751,15 +1770,8 @@ public class Engskills extends Pak implements Listener, Serializable {
 						@Override
 						public void run()
 						{
-							l.getWorld().spawnParticle(Particle.DRIPPING_OBSIDIAN_TEAR, l.clone().add(0,3,0), 200, 5,1,5);
-							l.getWorld().spawnParticle(Particle.WARPED_SPORE, l.clone().add(0,3,0), 400, 5,1,5);
 							l.getWorld().spawnParticle(Particle.END_ROD, l.clone().add(0,3,0), 400, 5,1,5);
 
-							l.getWorld().playSound(l, Sound.BLOCK_CONDUIT_ACTIVATE, 0.4f, 0);
-							l.getWorld().playSound(l, Sound.BLOCK_CONDUIT_ACTIVATE, 0.4f, 0.5f);
-							l.getWorld().playSound(l, Sound.BLOCK_CONDUIT_ACTIVATE, 0.4f, 0.7f);
-							l.getWorld().playSound(l, Sound.BLOCK_CONDUIT_ACTIVATE, 0.4f, 0.9f);
-							l.getWorld().playSound(l, Sound.BLOCK_CONDUIT_ACTIVATE, 0.4f, 1.1f);
 							l.getWorld().playSound(l, Sound.BLOCK_CONDUIT_ACTIVATE, 0.4f, 1.4f);
 							l.getWorld().playSound(l, Sound.BLOCK_CONDUIT_ACTIVATE, 0.4f, 1.8f);
 							l.getWorld().playSound(l, Sound.BLOCK_CONDUIT_ACTIVATE, 0.4f, 2f);
