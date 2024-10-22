@@ -26,16 +26,17 @@ import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Breeze;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Ghast;
+import org.bukkit.entity.Illusioner;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Piglin;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Villager;
-import org.bukkit.entity.Witch;
 import org.bukkit.entity.WitherSkeleton;
 import org.bukkit.entity.Villager.Profession;
 import org.bukkit.entity.Villager.Type;
@@ -511,10 +512,12 @@ public class NethercoreRaids extends Summoned implements Listener {
     		return newmob;
 		}
 		else if(in == 1) {
-    		ItemStack main = new ItemStack(Material.NETHERITE_HOE);
+    		ItemStack main = new ItemStack(Material.BOW);
     		main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
+    		ItemStack hel = new ItemStack(Material.SKELETON_SKULL);
+    		hel.addUnsafeEnchantment(Enchantment.KNOCKBACK, 3);
     		String reg = pm.getLocale().equalsIgnoreCase("ko_kr") ? "수확자":"Harvester";
-    		Witch newmob = (Witch) MobspawnLoc(esl, ChatColor.AQUA+reg, dif1, null, null, null, null, main, null, EntityType.WITCH);
+    		Illusioner newmob = (Illusioner) MobspawnLoc(esl, ChatColor.AQUA+reg, dif1, hel, null, null, null, main, null, EntityType.ILLUSIONER);
     		newmob.setGlowing(true);
     		newmob.getEquipment().setBootsDropChance(0);
     		newmob.getEquipment().setChestplateDropChance(0);
@@ -544,20 +547,44 @@ public class NethercoreRaids extends Summoned implements Listener {
     		bossbargen("soulboss", rn, newmob);
 
 
+    		final Object ht = getherotype(rn);
+
+    		ItemStack mainf = new ItemStack(Material.NETHERITE_HOE);
+    		ItemMeta mmf = mainf.getItemMeta();
+    		mmf.setCustomModelData(8008);
+    		mainf.setItemMeta(mmf);
+
+    		Bukkit.getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
+    		    @Override
+    		    public void run() {
+    				if(ht instanceof Player) {
+    					Player p = (Player) ht;
+    					p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+    					p.sendEquipmentChange(newmob, EquipmentSlot.OFF_HAND, new ItemStack(Material.TOTEM_OF_UNDYING));
+    				}
+    				else if(getherotype(rn) instanceof HashSet){
+    					@SuppressWarnings("unchecked")
+    					HashSet<Player> par = (HashSet<Player>) ht;
+    		    		par.forEach(p -> {
+    		    			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+        					p.sendEquipmentChange(newmob, EquipmentSlot.OFF_HAND, new ItemStack(Material.TOTEM_OF_UNDYING));
+    		    		});
+    				}
+    		    }
+    		}, 2L); 
+
     		return newmob;
 		}
 		else if(in == 2) {
     		String reg = pm.getLocale().equalsIgnoreCase("ko_kr") ? "뒤틀린정령":"WarpedDemon";
-    		Ghast newmob = (Ghast) MobspawnLoc(esl, ChatColor.DARK_BLUE+reg, dif1, null, null, null, null, null, null, EntityType.GHAST);
+    		Breeze newmob = (Breeze) MobspawnLoc(esl, ChatColor.DARK_BLUE+reg, dif1, null, null, null, null, null, null, EntityType.BREEZE);
     		newmob.setGlowing(true);
     		newmob.getEquipment().setBootsDropChance(0);
     		newmob.getEquipment().setChestplateDropChance(0);
     		newmob.getEquipment().setHelmetDropChance(0);
     		newmob.getEquipment().setItemInMainHandDropChance(0);
     		newmob.getEquipment().setItemInOffHandDropChance(0);
-    		newmob.getEquipment().setLeggingsDropChance(0);
-    		newmob.setCharging(true);
-    		newmob.setSilent(true);
+    		newmob.getEquipment().setLeggingsDropChance(0);;
     		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(0.9);
     		newmob.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 999999, 3, false, false));
     		
@@ -1070,6 +1097,22 @@ public class NethercoreRaids extends Summoned implements Listener {
 	{		
 		if(d.getEntity().hasMetadata("finalboss") && raider.containsValue(d.getEntity().getUniqueId())) {
 			LivingEntity le = d.getEntity();
+			Location lel = le.getLocation();
+        	for(int i =0; i<30; i++) {
+         	   Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		                @Override
+		                public void run() 
+		                {
+
+		        			le.getWorld().spawnParticle(Particle.TOTEM_OF_UNDYING, lel, 300,1,1,1);
+		        			le.getWorld().spawnParticle(Particle.CRIMSON_SPORE, lel, 100,1,1,1);
+		        			le.getWorld().spawnParticle(Particle.REVERSE_PORTAL, lel, 300,1,1,1);
+		        			le.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, lel, 300,1,1,1);
+		        			le.getWorld().spawnParticle(Particle.FLAME, lel, 100,1,1,1);
+		        			le.getWorld().spawnParticle(Particle.SOUL, lel, 100,1,1,1);
+		                }
+         	   }, i*3); 
+			}
 			String rn = le.getMetadata("raid").get(0).asString();
 			raider.remove(rn, le.getUniqueId());
 			if(raider.get(rn).size()<=0){
@@ -1436,6 +1479,118 @@ public class NethercoreRaids extends Summoned implements Listener {
 			d.setCancelled(true);
 		}
 	}
+	
+
+	@EventHandler
+	public void HarvesterBoss2(EntityDeathEvent d) 
+	{	
+		if(d.getEntity().hasMetadata("bosswave1") && d.getEntity().hasMetadata("soulboss") && raider.containsValue(d.getEntity().getUniqueId())) {
+			LivingEntity le = d.getEntity();
+			String rn = le.getMetadata("raid").get(0).asString();
+			raider.remove(rn, le.getUniqueId());
+			if(raider.get(rn).size()<=0){
+				bossphase2(le);
+				Location spl = raidloc.get(rn).clone();
+	        	spl.getWorld().spawnParticle(Particle.INSTANT_EFFECT, d.getEntity().getLocation(), 1000,1,1,1);
+	        	spl.getWorld().spawnParticle(Particle.SOUL, d.getEntity().getLocation(), 100,1,1,1);
+	        	spl.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, d.getEntity().getLocation(), 1000,1,1,1);
+	        	spl.getWorld().spawnParticle(Particle.SCULK_SOUL, d.getEntity().getLocation(), 200,1,1,1);
+	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_GHAST_SCREAM, 1, 0);
+	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.PARTICLE_SOUL_ESCAPE, 1, 0);
+	            int rat =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	                @Override
+	                public void run() {
+
+	                	Location esl = d.getEntity().getLocation().clone().add(0,0.5, 0);
+
+	            		ItemStack main = new ItemStack(Material.BOW);
+	            		main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
+	            		ItemStack hel = new ItemStack(Material.VERDANT_FROGLIGHT);
+	            		hel.addUnsafeEnchantment(Enchantment.KNOCKBACK, 3);
+	            		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "혼령의군주":"LordOfPhantoms";
+	            		Illusioner newmob = (Illusioner) MobspawnLoc(esl, ChatColor.AQUA+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, hel, null, null, null, main, null, EntityType.ILLUSIONER);
+	            		newmob.setGlowing(true);
+	            		newmob.getEquipment().setBootsDropChance(0);
+	            		newmob.getEquipment().setChestplateDropChance(0);
+	            		newmob.getEquipment().setHelmetDropChance(0);
+	            		newmob.getEquipment().setItemInMainHandDropChance(0);
+	            		newmob.getEquipment().setItemInOffHandDropChance(0);
+	            		newmob.getEquipment().setLeggingsDropChance(0);
+	            		newmob.setCanJoinRaid(false);
+	            		newmob.setPatrolTarget(null);
+	            		newmob.setPatrolLeader(false);
+	            		newmob.setSilent(true);
+	            		newmob.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 999999, 3, false, false));
+	            		
+
+	            		final Object ht = getherotype(rn);
+
+	            		ItemStack mainf = new ItemStack(Material.NETHERITE_HOE);
+	            		ItemMeta mmf = mainf.getItemMeta();
+	            		mmf.setCustomModelData(8008);
+	            		mainf.setItemMeta(mmf);
+
+	            		Bukkit.getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
+	            		    @Override
+	            		    public void run() {
+	            				if(ht instanceof Player) {
+	            					Player p = (Player) ht;
+	            					p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+	            					p.sendEquipmentChange(newmob, EquipmentSlot.OFF_HAND, new ItemStack(Material.TOTEM_OF_UNDYING));
+	            				}
+	            				else if(getherotype(rn) instanceof HashSet){
+	            					@SuppressWarnings("unchecked")
+	            					HashSet<Player> par = (HashSet<Player>) ht;
+	            		    		par.forEach(p -> {
+	            		    			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+	                					p.sendEquipmentChange(newmob, EquipmentSlot.OFF_HAND, new ItemStack(Material.TOTEM_OF_UNDYING));
+	            		    		});
+	            				}
+	            		    }
+	            		}, 2L); 
+	            		
+	    	    		newmob.setGlowing(true);
+	            		newmob.setMetadata("soulboss", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		newmob.setMetadata("ruined", new FixedMetadataValue(RMain.getInstance(), true));
+	            		newmob.setMetadata("nether", new FixedMetadataValue(RMain.getInstance(), true));
+	
+	    	    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), le.getMetadata("boss").get(0).asDouble()));
+	    	    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
+	    	    		newmob.setMetadata("finalboss", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		newmob.setLootTable(null);
+	    	    		
+	    	    		
+	    	    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.4);
+	    	    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+	    	    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		newmob.setRemoveWhenFarAway(false);
+	    	    		raider.put(rn, newmob.getUniqueId());
+	    	    		
+	
+	
+	    	    		bossbargen("LordOfPhantoms", rn, newmob);
+	    	    		
+	    	    		targeting(rn);
+	            		
+	                	heroes.get(rn).forEach(pu -> {
+							if(Bukkit.getPlayer(pu).getLocale().equalsIgnoreCase("ko_kr")) {
+		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "토벌작전 2단계"), null, 5, 69, 5);
+				        		Bukkit.getPlayer(pu).playSound(spl, Sound.EVENT_RAID_HORN, 1, 1);
+					    		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + "남은 목숨 "+ String.valueOf(lives.getOrDefault(rn, 0)));
+							}
+							else {
+		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "PHASE 2"), null, 5, 69, 5);
+				        		Bukkit.getPlayer(pu).playSound(spl, Sound.AMBIENT_CRIMSON_FOREST_ADDITIONS, 1, 1);
+		                		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + String.valueOf(lives.getOrDefault(rn, 0)) + "lives Left");
+							}
+	                	});
+	                }
+	            }, 50); 
+	            raidt.put(rn, rat);
+			}
+		}
+	}
+	
 	@EventHandler
 	public void PiglinBoss2(EntityDeathEvent d) 
 	{	
@@ -1451,8 +1606,8 @@ public class NethercoreRaids extends Summoned implements Listener {
 	        	spl.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, d.getEntity().getLocation(), 1000,1,1,1);
 	        	spl.getWorld().spawnParticle(Particle.SMOKE, d.getEntity().getLocation(), 1000,1,1,1);
 	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_GOAT_SCREAMING_AMBIENT, 1, 0);
-	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_HUSK_CONVERTED_TO_ZOMBIE, 1, 0);
-	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_HUSK_AMBIENT, 1, 0);
+	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_PIGLIN_ANGRY, 1, 0);
+	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_PIGLIN_CELEBRATE, 1, 0);
 	            int rat =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	                @Override
 	                public void run() {
@@ -1544,7 +1699,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 	    	    		
 	
 	
-	    	    		bossbargen("TheApocalyptic", rn, newmob);
+	    	    		bossbargen("CannibalPiglin", rn, newmob);
 	    	    		
 	    	    		targeting(rn);
 	            		

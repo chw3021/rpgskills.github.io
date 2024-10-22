@@ -417,23 +417,21 @@ public class Fireskills extends Pak implements Serializable, Listener {
 		                	sunct.put(p.getUniqueId(), task);
 
 			            	ArrayList<Location> ring = new ArrayList<Location>();
+	                    	final Location one = tl.clone().add(0, -0.2, 0);
 		                    for(double angle=0.1; angle<Math.PI*2; angle += Math.PI/90) {
-		                    	Location one = tl.clone().add(0, -0.2, 0);
-		                    	one.setDirection(one.getDirection().rotateAroundY(angle));
-		                    	one.add(one.getDirection().normalize().multiply(3.5));
-		                    	ring.add(one);
+		                    	ring.add(one.clone().add(one.getDirection().normalize().rotateAroundY(angle).multiply(3.5)));
 		                	} 
 			            	for(int i = 0; i <15; i++) {
 			                    AtomicInteger j = new AtomicInteger();	
 			                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					                @Override
 					                public void run() {
-										p.playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 0.2f, 0);
+										p.playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 0.1f, 0.5f);
 					                	ring.forEach(l -> {
 					                		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 								                @Override
 								                public void run() {
-													p.getWorld().spawnParticle(Particle.FLAME, l, 5, 0.5,0.2,0.5,0);								                    
+													p.getWorld().spawnParticle(Particle.FLAME, l, 3, 0.35,0.2,0.35,0);								                    
 								                }
 								            }, j.incrementAndGet()/60); 
 					                		
@@ -894,10 +892,9 @@ public class Fireskills extends Pak implements Serializable, Listener {
 			                public void run() 
 			                {
 
-		                    	p.getWorld().spawnParticle(Particle.FLAME,tl,100, 3,0.1,3,0);
+		                    	p.getWorld().spawnParticle(Particle.FLAME,tl,50, 3,0.1,3,0);
 			                	p.playSound(p.getLocation(), Sound.BLOCK_CONDUIT_ACTIVATE, 0.5f, 2f);
 			                	p.playSound(p.getLocation(), Sound.ITEM_GLOW_INK_SAC_USE,0.5f, 2f);
-			                	p.playSound(p.getLocation(), Sound.ITEM_GLOW_INK_SAC_USE, 0.5f, 0f);
 			                	p.playSound(p.getLocation(), Sound.ITEM_CROSSBOW_QUICK_CHARGE_2, 0.3f, 2f);
 			                }
              	   }, i*5); 
@@ -1044,13 +1041,14 @@ public class Fireskills extends Pak implements Serializable, Listener {
 		    	            }, 40); 
 		                	lavsht.put(p.getUniqueId(), task);
 		                	
+		                	final Location tl = p.getEyeLocation().clone().add(0, -0.65, 0);
+		                	Breath1(tl);
+		                	
 							p.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 40, 4, false, false));
 							for(int i = 0; i <3; i++) {
 			                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					                @Override
 					                public void run() {
-					                	final Location tl = p.getEyeLocation().clone().add(0, -0.65, 0);
-					                	Breath1(tl);
 										p.playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 0.8f, 1.2f);
 										p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_BREATH, 0.7f, 0);
 												for(Entity e :tl.getWorld().getNearbyEntities(tl.clone().add(tl.getDirection().clone().normalize().multiply(3)),4, 4, 4)) {
@@ -1226,7 +1224,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
 							p.playSound(l, Sound.BLOCK_LAVA_AMBIENT, 0.5f, 2);
 							l.getWorld().spawnParticle(Particle.DRIPPING_LAVA, l, 30, 0.51,0.51,0.51,0);
 							l.getWorld().spawnParticle(Particle.FLAME, l, 25, 0.51,0.51,0.51,0);
-							l.getWorld().spawnParticle(Particle.LAVA, l, 10, 0.3,0.3,0.3,0);
+							l.getWorld().spawnParticle(Particle.LAVA, l, 5, 0.3,0.3,0.3,0);
 		                }
 		            }, j.incrementAndGet()*2); 	
         		});

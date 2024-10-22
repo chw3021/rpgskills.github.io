@@ -168,6 +168,7 @@ public class NPCLoc implements Serializable, Listener{
 
 		Structure st = strrtr(ns);
 		
+		
 		if(w.hasMetadata("fake")||w.hasMetadata("rpgraidworld") || !w.canGenerateStructures()) {
 			return null;
 		}
@@ -182,6 +183,7 @@ public class NPCLoc implements Serializable, Listener{
 		}
 		
 		try {
+			System.out.println(w.getStructures(lel.getBlockX(), lel.getBlockZ(),st));
 			return w.getStructures(lel.getBlockX(), lel.getBlockZ(),st);
 		}
 		catch(NullPointerException e){
@@ -371,7 +373,7 @@ public class NPCLoc implements Serializable, Listener{
 					return;
 				}
 				stlc.forEach(stls -> {
-					Location stl = stls.getBoundingBox().getCenter().toLocation(w);
+					Location stl = stls.getBoundingBox().getMax().toLocation(w);
 					Spawn(stl, str.getKey().getKey());
 				});
 			});
@@ -398,8 +400,7 @@ public class NPCLoc implements Serializable, Listener{
 				return;
 			}
 			stlc.forEach(stls -> {
-				System.out.println(stls);
-				Location stl = stls.getBoundingBox().getCenter().toLocation(w);
+				Location stl = stls.getBoundingBox().getMax().toLocation(w);
 				Spawn(stl, str.getKey().getKey());
 			});
 		});
@@ -458,19 +459,22 @@ public class NPCLoc implements Serializable, Listener{
 	    }
 
 	    // 비동기 이벤트 안에서는 월드 변경 작업을 직접 하지 않고, 필요한 정보만 수집
-	    final Location stl = new Location(w, ev.getChunkX(), 0, ev.getChunkZ());
+	    final Location stcl = new Location(w, ev.getChunkX(), 0, ev.getChunkZ());
 	    final Structure str = ev.getStructure();
 
 	    // 동기 작업으로 넘겨서 실행
 	    Bukkit.getScheduler().runTask(RMain.getInstance(), () -> {
-	        HashSet<HashMap<Location, String>> hs = new HashSet<>();
-	        HashMap<Location, String> hm = new HashMap<>();
-	        hm.put(stl, str.getKey().getKey());
+		    strct2(w,stcl,str.getKey().getKey()).forEach(gs ->{
+		    	final Location stl = gs.getBoundingBox().getMax().toLocation(w);
+		        HashSet<HashMap<Location, String>> hs = new HashSet<>();
+		        HashMap<Location, String> hm = new HashMap<>();
+		        hm.put(stl, str.getKey().getKey());
 
-	        hs.add(hm);
-	        saver(w, hs); // saver는 월드 데이터를 처리하는 메서드로 가정
+		        hs.add(hm);
+		        saver(w, hs); // saver는 월드 데이터를 처리하는 메서드로 가정
 
-	        Spawn(stl, str.getKey().getKey()); // Spawn은 구조물 생성을 처리하는 메서드로 가정
+		        Spawn(stl, str.getKey().getKey()); // Spawn은 구조물 생성을 처리하는 메서드로 가정
+		    });
 	    });
 	}
 
@@ -494,7 +498,7 @@ public class NPCLoc implements Serializable, Listener{
 					}
 					HashMap<Location, String> hm = new HashMap<>();
 					stlc.forEach(stls -> {
-						Location stl = stls.getBoundingBox().getCenter().toLocation(w);
+						Location stl = stls.getBoundingBox().getMax().toLocation(w);
 						hm.put(stl, str.getKey().getKey());
 					});
 					hs.add(hm);

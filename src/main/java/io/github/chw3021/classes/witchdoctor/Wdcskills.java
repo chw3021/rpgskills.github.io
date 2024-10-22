@@ -301,6 +301,7 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 					                    ef.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 					                    ef.setMetadata("wdcfang", new FixedMetadataValue(RMain.getInstance(), true));
 					                	ef.setOwner(p);
+					                	ef.setAttackDelay(0);
 					                	ef.setInvulnerable(true);
 					                }
 					            }, j.getAndIncrement());   
@@ -508,6 +509,7 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 		                    ef.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 		                    ef.setMetadata("fakefang", new FixedMetadataValue(RMain.getInstance(), true));
 		                	ef.setOwner(p);
+		                	ef.setAttackDelay(0);
 		                	ef.setInvulnerable(true);
 		                	
 		                	ef.getWorld().spawnParticle(Particle.SOUL, ef.getLocation(), 100,0.1,2.5,0.1);

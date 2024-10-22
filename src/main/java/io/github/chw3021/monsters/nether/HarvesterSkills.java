@@ -21,12 +21,15 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.EvokerFangs;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Snowball;
+import org.bukkit.entity.Spellcaster.Spell;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.AreaEffectCloudApplyEvent;
@@ -34,6 +37,7 @@ import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDropItemEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.entity.EntitySpellCastEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -48,7 +52,7 @@ import io.github.chw3021.rmain.RMain;
 
 
 
-public class PiglinSkills extends Summoned{
+public class HarvesterSkills extends Summoned{
 
 	/**
 	 * 
@@ -68,12 +72,22 @@ public class PiglinSkills extends Summoned{
 	
 
 	
-	private static final PiglinSkills instance = new PiglinSkills ();
-	public static PiglinSkills getInstance()
+	private static final HarvesterSkills instance = new HarvesterSkills ();
+	public static HarvesterSkills getInstance()
 	{
 		return instance;
 	}
 	
+	
+	final private ArrayList<Location> raytrace(Location il, Double dis){
+    	ArrayList<Location> line = new ArrayList<Location>();
+        for(double d = 0.1; d <= dis; d += 0.3) {
+            Location pl = il.clone();
+			pl.add(il.getDirection().normalize().multiply(d));
+			line.add(pl);
+        }
+        return line;
+	}
 	
 	public void hit(ProjectileHitEvent d) 
 	{
@@ -114,33 +128,41 @@ public class PiglinSkills extends Summoned{
 	
 	public void bowshoot(EntityShootBowEvent ev) 
 	{
-		if(ev.getEntity().hasMetadata("volcanicboss")){
+		if(ev.getEntity().hasMetadata("soulboss")){
 
 			ev.setCancelled(true);
 			
 		    LivingEntity p = ev.getEntity();
 		    
-        	p.getWorld().playSound(p.getLocation(), Sound.BLOCK_SMOKER_SMOKE, 1f, 0f);
+        	p.getWorld().playSound(p.getLocation(), Sound.ENTITY_EVOKER_FANGS_ATTACK, 1f, 0f);
 
-			p.getWorld().spawnParticle(Particle.FLAME, p.getLocation(), 10);
-			p.getWorld().spawnParticle(Particle.SMOKE, p.getLocation(), 100, 0.1,0.1,0.1,2);
+			p.getWorld().spawnParticle(Particle.SOUL, p.getLocation(), 10);
 			AtomicInteger j = new AtomicInteger();
-
-
-			for(Material c : cookeds) {
+			
+			Location tl = gettargetblock(p,15);
+			if(((Mob)p).getTarget() != null) {
+				tl = ((Mob)p).getTarget().getLocation();
+			}
+            String rn = gethero(p);
+            
+			raytrace(p.getLocation(),tl.distance(p.getLocation())).forEach(l ->{
         		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	                @Override
 	                public void run() {
 	                	p.swingMainHand();
-	                	p.getWorld().playSound(p.getLocation(), Sound.BLOCK_FURNACE_FIRE_CRACKLE, 1f, 2f);
-	                    Snowball ws = (Snowball) p.launchProjectile(Snowball.class);
-	                    ws.setItem(new ItemStack(c));
-	                    ws.setShooter(p);
-	                    ws.setVelocity(p.getLocation().getDirection().normalize().multiply(1.4));
-	        			ws.setMetadata("cookedFoods", new FixedMetadataValue(RMain.getInstance(), true));
+	                	EvokerFangs ef = (EvokerFangs)p.getWorld().spawnEntity(l, EntityType.EVOKER_FANGS);
+	                	ef.setVelocity(l.getDirection().normalize().multiply(1.5));
+	                    ef.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+	                    ef.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
+	                    ef.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), true));
+	                    ef.setMetadata("soul", new FixedMetadataValue(RMain.getInstance(), true));
+	                	ef.setOwner(p);
+	                	ef.setAttackDelay(0);
+	                	ef.setInvulnerable(true);
+	                	
 	                }
-	            }, j.getAndIncrement()*4+15); 
-			}
+	            }, j.getAndIncrement()*2); 
+			});
 
 
 		 }
@@ -148,12 +170,12 @@ public class PiglinSkills extends Summoned{
 
 
 
-	private HashMap<UUID, Integer> grillable = new HashMap<UUID, Integer>();
-	public void grilled(EntityDamageByEntityEvent d) 
+	private HashMap<UUID, Integer> cursable = new HashMap<UUID, Integer>();
+	public void cursed(EntityDamageByEntityEvent d) 
 	{
 	    
 		int sec = 4;
-		if(d.getEntity().hasMetadata("volcanicboss") && grillable.containsKey(d.getEntity().getUniqueId())) 
+		if(d.getEntity().hasMetadata("soulboss") && cursable.containsKey(d.getEntity().getUniqueId())) 
 		{
 			LivingEntity p = (LivingEntity)d.getEntity();
 			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
@@ -172,14 +194,14 @@ public class PiglinSkills extends Summoned{
 	            {
 	            	rb3cooldown.remove(p.getUniqueId()); 
 
-	            	grillable.remove(p.getUniqueId());
+	            	cursable.remove(p.getUniqueId());
 	                Holding.holding(null, p, 20l);
 
 	                String rn = gethero(p);
 					
 	                Location tl = gettargetblock(p,4).clone();
 	                
-					p.getWorld().playSound(tl, Sound.BLOCK_FURNACE_FIRE_CRACKLE, 1f, 0f);
+					p.getWorld().playSound(tl, Sound.ENTITY_ILLUSIONER_CAST_SPELL, 1f, 0f);
                 	p.getWorld().spawnParticle(Particle.FLAME, tl, 500, 4, 1, 4, 0);
                 	p.getWorld().spawnParticle(Particle.SMOKE, tl, 500, 4, 1, 4, 0);
                 	
@@ -198,32 +220,27 @@ public class PiglinSkills extends Summoned{
 			                @Override
 			                public void run() 
 			                {
-			                	Random random=new Random();
-			                	int ri = random.nextInt(7);
-			                	Item meat = p.getWorld().dropItemNaturally(l, new ItemStack(Material.RABBIT_FOOT));
-			                	meat.setPickupDelay(9999);
-			                	meat.setItemStack(new ItemStack(cookeds[ri]));
-			                	meat.setOwner(p.getUniqueId());
-			                	meat.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
-			                	meat.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
-			                	meat.setMetadata("stuff", new FixedMetadataValue(RMain.getInstance(), rn));
-			                	p.getWorld().spawnParticle(Particle.FLAME, l, 50, 4, 4, 4, 0.2);
-			                	p.getWorld().spawnParticle(Particle.FALLING_LAVA, l, 50, 4, 4, 4, 0.2);
-								p.getWorld().playSound(p.getLocation(), Sound.ENTITY_GENERIC_EAT, 0.5f, 2f);
-								p.getWorld().playSound(meat.getLocation(), Sound.BLOCK_FURNACE_FIRE_CRACKLE, 0.8f, 2f);
-								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					                @Override
-					                public void run() 
-					                {
-					                	meat.remove();
-					                }
-								}, 10);
-			                	for(Entity e : p.getWorld().getNearbyEntities(tl, 4,4,4)) {
+			                	EvokerFangs ef = (EvokerFangs)p.getWorld().spawnEntity(l, EntityType.EVOKER_FANGS);
+			                	ef.setVelocity(l.getDirection().normalize().multiply(1.5));
+			                    ef.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+			                    ef.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
+			                    ef.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), true));
+			                    ef.setMetadata("soul", new FixedMetadataValue(RMain.getInstance(), true));
+			                	ef.setOwner(p);
+			                	ef.setAttackDelay(1);
+			                	ef.setInvulnerable(true);
+			                	p.getWorld().spawnParticle(Particle.SOUL, l, 10, 4, 0.2, 4, 0.2);
+			                	p.getWorld().spawnParticle(Particle.ASH, l, 50, 4, 0.2, 4, 0);
+			                	p.getWorld().spawnParticle(Particle.LANDING_OBSIDIAN_TEAR, l, 50, 4, 0.2, 4, 0.2);
+								p.getWorld().playSound(p.getLocation(), Sound.PARTICLE_SOUL_ESCAPE, 0.1f, 2f);
+			                	for(Entity e : p.getWorld().getNearbyEntities(l, 4,4,4)) {
 			                		if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && e!=p) {
 			                			LivingEntity le = (LivingEntity)e;
-
-										le.damage(4, p);
-										le.setFireTicks(100);
+			                			le.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS, 200,1,false,false,false));
+			                			le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 200,2,false,false,false));
+			                			le.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 200,2,false,false,false));
+										le.damage(3, p);
+										
 			    						
 			                		}
 			                	}
@@ -238,7 +255,7 @@ public class PiglinSkills extends Summoned{
 	        {
 
 
-            	grillable.remove(p.getUniqueId());
+            	cursable.remove(p.getUniqueId());
                 Holding.holding(null, p, 20l);
 
                 String rn = gethero(p);
@@ -305,132 +322,86 @@ public class PiglinSkills extends Summoned{
 	private HashMap<UUID, LivingEntity> blockToPiglin = new HashMap<>();
 	private HashMap<UUID, Integer> blockt = new HashMap<>();
 	
-	final private void createFallingRod(LivingEntity p, Location startLocation, Location targetLocation) {
-	    World world = startLocation.getWorld();
-	    Material rodMaterial = Material.FURNACE;
-	    int rodHeight = 5;
-	    List<FallingBlock> fallingBlocks = new ArrayList<>();
+	public void createHand(Location startLoc, LivingEntity p) {
+	    World world = startLoc.getWorld();
 
-	    // 세워진 막대기 생성
-	    for (int i = 0; i < rodHeight; i++) {
-	        Location blockLoc = startLocation.clone().add(0, i, 0);
-	        FallingBlock fallingBlock = world.spawnFallingBlock(blockLoc, rodMaterial.createBlockData());
-	        fallingBlock.setDropItem(true);
-	        fallingBlock.setHurtEntities(true);
-	        fallingBlock.setGravity(false);
-	        fallingBlocks.add(fallingBlock);
-	        blockToPiglin.put(fallingBlock.getUniqueId(), p);
+
+	    List<BlockDisplay> thumb = new ArrayList<>();
+	    List<BlockDisplay> indexFinger = new ArrayList<>();
+	    List<BlockDisplay> middleFinger = new ArrayList<>();
+	    List<BlockDisplay> ringFinger = new ArrayList<>();
+	    List<BlockDisplay> pinkyFinger = new ArrayList<>();
+
+	    for (int i = 0; i < 5; i++) {
+	    	if(i<3) {
+		        thumb.add(world.spawn(startLoc.clone().add(0.3, i * 0.2, 0), BlockDisplay.class, bd ->{
+		        	bd.setBlock(getBd(Material.SOUL_FIRE));
+		        }));
+		        pinkyFinger.add(world.spawn(startLoc.clone().add(-1.2, i * 0.2, 0), BlockDisplay.class, bd ->{
+		        	bd.setBlock(getBd(Material.SOUL_FIRE));
+		        }));
+	    	}
+	    	if(i<4) {
+	    		indexFinger.add(world.spawn(startLoc.clone().add(-0.3, i * 0.2, 0), BlockDisplay.class, bd ->{
+		        	bd.setBlock(getBd(Material.SOUL_FIRE));
+		        }));
+	    		ringFinger.add(world.spawn(startLoc.clone().add(-0.9, i * 0.2, 0), BlockDisplay.class, bd ->{
+		        	bd.setBlock(getBd(Material.SOUL_FIRE));
+		        }));
+	    	}
+	    	middleFinger.add(world.spawn(startLoc.clone().add(-0.6, i * 0.2, 0), BlockDisplay.class, bd ->{
+	        	bd.setBlock(getBd(Material.SOUL_FIRE));
+	        }));
 	    }
-
-	    // 목표 위치로 넘어지는 각도 계산
-	    Vector direction = targetLocation.clone().subtract(startLocation).toVector().normalize();
 	    
-	    // 일정 시간 동안 막대기가 목표 위치를 향해 넘어지게 회전
-	    int t = Bukkit.getScheduler().runTaskTimer(RMain.getInstance(), new Runnable() {
-	        double rotationAngle = 0;
-	        boolean hasFallen = false;
+	    Bukkit.getScheduler().runTaskTimer(RMain.getInstance(), new Runnable() {
+	        int step = 0;
 
 	        @Override
 	        public void run() {
-	            if (hasFallen) {
-	        		if(blockt.containsKey(p.getUniqueId())) {
-	        			Bukkit.getScheduler().cancelTask(blockt.remove(p.getUniqueId()));
-	        		}
-	            	return;
-	            }
+	            moveFingerToCenter(thumb, startLoc);
+	            moveFingerToCenter(indexFinger, startLoc);
+	            moveFingerToCenter(middleFinger, startLoc);
+	            moveFingerToCenter(ringFinger, startLoc);
+	            moveFingerToCenter(pinkyFinger, startLoc);
 
-	            // 넘어지는 각도 조절
-	            for (int i = 0; i < fallingBlocks.size(); i++) {
-	                FallingBlock block = fallingBlocks.get(i);
-	                Location loc = block.getLocation();
+	            if (step++ > 10) {
+	                removeFingers(thumb);
+	                removeFingers(indexFinger);
+	                removeFingers(middleFinger);
+	                removeFingers(ringFinger);
+	                removeFingers(pinkyFinger);
 
-	                // 막대기의 각도를 목표 위치를 향한 방향으로 변경
-	                double xOffset = direction.getX() * Math.cos(rotationAngle) * i;
-	                double zOffset = direction.getZ() * Math.cos(rotationAngle) * i;
-	                double yOffset = Math.sin(rotationAngle) * i;
-
-	                // 새로운 위치 설정 (목표 위치를 향해 넘어짐)
-	                loc.add(xOffset, -yOffset, zOffset);
-	                block.teleport(loc);
-
-	                rotationAngle += 0.02; // 점차 넘어짐
-
-	                // 막대기가 지면에 닿았을 때 충돌 효과
-	                if (loc.getY() <= startLocation.getY()) {
-	                    hasFallen = true;
+	                for(Entity e : cl.getWorld().getNearbyEntities(cl,2,2,2)) {
+						if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
+							LivingEntity le = (LivingEntity)e;
+							le.damage(7,p);
+							le.teleport(p);
+							Holding.holding(null, le, 50l);
+						}
 	                }
+	                target.damage(7.0);
+	                target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 2));
+	                target.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 60, 1));
 	            }
 	        }
-	    }, 0L, 1L).getTaskId(); // 1틱마다 실행
+	    }, 0L, 2L);
+
 	    
-	    blockt.put(p.getUniqueId(), t);
+	}
+	private void moveFingerToCenter(List<BlockDisplay> finger, Location center) {
+	    for (BlockDisplay block : finger) {
+	        Vector moveDirection = center.toVector().subtract(block.getLocation().toVector()).normalize().multiply(0.1);
+	        block.teleport(block.getLocation().add(moveDirection)); // 블록 이동
+	    }
 	}
 
-
-	final private void blockexplode(FallingBlock fallingb) {
-		LivingEntity p = (LivingEntity) Holding.ale(blockToPiglin.get(fallingb.getUniqueId()));
-		
-		if(blockt.containsKey(p.getUniqueId())) {
-			Bukkit.getScheduler().cancelTask(blockt.remove(p.getUniqueId()));
-		}
-		
-		Location tl = fallingb.getLocation();
-		
-		tl.getWorld().spawnParticle(Particle.FLAME, tl, 1);
-		tl.getWorld().spawnParticle(Particle.BLOCK, tl, 400,3,3,3,getBd(Material.FURNACE));
-
-		for (Entity e : p.getWorld().getNearbyEntities(tl, 3, 3, 3))
-		{
-			if(p!=e && e instanceof Player) {
-				Player le = (Player)e;
-        		le.damage(6, p);
-			}
-			
-		}
-		p.getWorld().playSound(tl, Sound.BLOCK_BLASTFURNACE_FIRE_CRACKLE, 1, 0);
-		fallingb.remove();
+	// 손가락 블록 제거 메서드
+	private void removeFingers(List<BlockDisplay> finger) {
+	    for (BlockDisplay block : finger) {
+	        block.remove();
+	    }
 	}
-	
-
-	public void Block(EntityDropItemEvent ev) 
-	{
-		if(ev.getEntity() instanceof FallingBlock){
-		    FallingBlock fallingb = (FallingBlock) ev.getEntity();
-	        if(blockToPiglin.containsKey(fallingb.getUniqueId())){
-	        	ev.setCancelled(true);
-	        	blockexplode(fallingb);
-	        }
-		 }
-	}
-
-
-
-	
-	public void Block(EntityDamageByEntityEvent ev) 
-	{
-		if(ev.getDamager() instanceof FallingBlock){
-		    FallingBlock fallingb = (FallingBlock) ev.getDamager();
-	        if(blockToPiglin.containsKey(fallingb.getUniqueId())){
-	        	ev.setCancelled(true);
-	        	blockexplode(fallingb);
-	        }
-		 }
-	}
-
-
-	
-	public void Block(EntityChangeBlockEvent ev) 
-	{
-		if(ev.getEntity() instanceof FallingBlock){
-		    FallingBlock fallingb = (FallingBlock) ev.getEntity();
-	        if(blockToPiglin.containsKey(fallingb.getUniqueId())){
-	        	ev.setCancelled(true);
-	        	blockexplode(fallingb);
-	        }
-		 }
-	}
-
-
 	
 	
 	private HashMap<UUID, Boolean> furable = new HashMap<UUID, Boolean>();
@@ -466,7 +437,7 @@ public class PiglinSkills extends Summoned{
 
 	public void furnace(EntityDamageByEntityEvent d) 
 	{
-		if(d.getEntity().hasMetadata("volcanicboss") && (d.getEntity() instanceof Mob)) 
+		if(d.getEntity().hasMetadata("soulboss") && (d.getEntity() instanceof Mob)) 
 		{
 			Mob p = (Mob)d.getEntity();
 			int sec = 8;
@@ -553,26 +524,25 @@ public class PiglinSkills extends Summoned{
      		@Override
         	public void run() 
             {	
-     			grillable.putIfAbsent(p.getUniqueId(), 1);
+     			cursable.putIfAbsent(p.getUniqueId(), 1);
             }
 	   	}, 80);
 	}
 	
-	public void porkchop(EntityDamageByEntityEvent d) 
+	public void porkchop(EntitySpellCastEvent d) 
 	{
-		if(d.getEntity().hasMetadata("volcanicboss") && (d.getEntity() instanceof Mob)) 
+		if(d.getEntity().hasMetadata("soulboss") && (d.getEntity() instanceof Mob)) 
 		{
 			Mob p = (Mob)d.getEntity();
 			int sec = 8;
-
-
-			if(p.hasMetadata("failed") || !porkable.containsKey(p.getUniqueId())) {
+			
+			if(d.getSpell() != Spell.BLINDNESS) {
 				return;
 			}
-			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
-                d.setCancelled(true);
-                ordealable.put(p.getUniqueId(), true);
+
+			d.setCancelled(true);
+
+			if(p.hasMetadata("failed") || !porkable.containsKey(p.getUniqueId())) {
 				return;
 			}
 					if(aicooldown.containsKey(p.getUniqueId()))
@@ -600,19 +570,15 @@ public class PiglinSkills extends Summoned{
 	
 
 	private HashMap<UUID, Boolean> chargable = new HashMap<UUID, Boolean>();
-	@SuppressWarnings("unchecked")
-	public void charge(EntityDamageByEntityEvent d) 
+	public void charge(EntitySpellCastEvent d) 
 	{
-		if(d.getEntity().hasMetadata("volcanicboss")) 
+		if(d.getEntity().hasMetadata("soulboss")) 
 		{
 			final LivingEntity p = (LivingEntity)d.getEntity();
-
-			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
-                d.setCancelled(true);
-                ordealable.put(p.getUniqueId(), true);
+			if(d.getSpell() != Spell.DISAPPEAR) {
 				return;
 			}
+			d.setCancelled(true);
 
 			if(p.hasMetadata("raid")) {
 				if(!NethercoreRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| p.hasMetadata("failed")) {
@@ -770,7 +736,7 @@ public class PiglinSkills extends Summoned{
 	
 	public void smoker(EntityDamageByEntityEvent d) 
 	{
-		if((d.getEntity() instanceof Mob) && d.getEntity().hasMetadata("volcanicboss")) 
+		if((d.getEntity() instanceof Mob) && d.getEntity().hasMetadata("soulboss")) 
 		{
 			Mob p = (Mob)d.getEntity();
 			int sec = 4;
@@ -837,7 +803,7 @@ public class PiglinSkills extends Summoned{
 
 	public static HashMap<UUID, Integer> count = new HashMap<UUID, Integer>();
 	private HashMap<UUID, Boolean> ordealable = new HashMap<UUID, Boolean>();
-	public static HashMap<UUID, Boolean> ordeal = new HashMap<UUID, Boolean>();//volcanicboss 패턴 시작 여부 저장
+	public static HashMap<UUID, Boolean> ordeal = new HashMap<UUID, Boolean>();//soulboss 패턴 시작 여부 저장
 
 	public HashMap<UUID, Integer> ast = new HashMap<UUID, Integer>();//ArmorStands damage 태스크 저장
 	public HashMap<UUID, Integer> asdt = new HashMap<UUID, Integer>();//ArmorStands remove 태스크 저장
@@ -1061,7 +1027,7 @@ public class PiglinSkills extends Summoned{
 	{
 	    
 		int sec =70;
-		if(d.getEntity().hasMetadata("volcanicboss") && d.getEntity().hasMetadata("ruined")&& !d.getEntity().hasMetadata("failed")) 
+		if(d.getEntity().hasMetadata("soulboss") && d.getEntity().hasMetadata("ruined")&& !d.getEntity().hasMetadata("failed")) 
 		{
 			LivingEntity p = (LivingEntity)d.getEntity();
 			if(!(p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2)|| !ordealable.containsKey(p.getUniqueId())) {

@@ -1199,6 +1199,22 @@ public class OverworldRaids extends Summoned implements Listener {
 	{		
 		if(d.getEntity().hasMetadata("finalboss") && raider.containsValue(d.getEntity().getUniqueId())) {
 			LivingEntity le = d.getEntity();
+			Location lel = le.getLocation();
+        	for(int i =0; i<30; i++) {
+          	   Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+ 		                @Override
+ 		                public void run() 
+ 		                {
+
+ 		        			le.getWorld().spawnParticle(Particle.TOTEM_OF_UNDYING, lel, 300,1,1,1);
+ 		        			le.getWorld().spawnParticle(Particle.CRIMSON_SPORE, lel, 100,1,1,1);
+ 		        			le.getWorld().spawnParticle(Particle.REVERSE_PORTAL, lel, 300,1,1,1);
+ 		        			le.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, lel, 300,1,1,1);
+ 		        			le.getWorld().spawnParticle(Particle.FLAME, lel, 100,1,1,1);
+ 		        			le.getWorld().spawnParticle(Particle.SOUL, lel, 100,1,1,1);
+ 		                }
+          	   }, i*3); 
+ 			}
 			String rn = le.getMetadata("raid").get(0).asString();
 			raider.remove(rn, le.getUniqueId());
 			if(raider.get(rn).size()<=0){
