@@ -173,17 +173,8 @@ public class Summoned extends Mobs implements Serializable{
 		else if(le.hasMetadata("wild")) {
 			return ChatColor.YELLOW;
 		}
-		else if(le.hasMetadata("soul")) {
-			return ChatColor.WHITE;
-		}
-		else if(le.hasMetadata("crimson")) {
+		else if(le.hasMetadata("nether")) {
 			return ChatColor.DARK_RED;
-		}
-		else if(le.hasMetadata("warped")) {
-			return ChatColor.DARK_AQUA;
-		}
-		else if(le.hasMetadata("volcanic")) {
-			return ChatColor.DARK_PURPLE;
 		}
 		else if(le.hasMetadata("ender")) {
 			return ChatColor.GOLD;
@@ -224,17 +215,8 @@ public class Summoned extends Mobs implements Serializable{
 		else if(meta.equals("wild")) {
 			return ChatColor.YELLOW;
 		}
-		else if(meta.equals("soul")) {
-			return ChatColor.WHITE;
-		}
-		else if(meta.equals("crimson")) {
+		else if(meta.equals("nether")) {
 			return ChatColor.DARK_RED;
-		}
-		else if(meta.equals("warped")) {
-			return ChatColor.DARK_AQUA;
-		}
-		else if(meta.equals("volcanic")) {
-			return ChatColor.DARK_PURPLE;
 		}
 		else if(meta.equals("ender")) {
 			return ChatColor.GOLD;
@@ -877,7 +859,7 @@ public class Summoned extends Mobs implements Serializable{
 			raidpor.get(rn).setType(Material.VOID_AIR);
 			raidpor.remove(rn);
 		}
-		Location sl = le.getLocation().clone().add(0, 1.5, 0);
+		Location sl = le.getLocation().clone().add(0, 1, 0);
 		if(!sl.getBlock().isEmpty()) {
 			sl = CommonEvents.getInstance().BlankFinder(sl);
 		}
@@ -892,7 +874,7 @@ public class Summoned extends Mobs implements Serializable{
 		raidpor.put(rn, eg.getBlock());
 
 		
-		TextDisplay as = le.getWorld().spawn(sl, TextDisplay.class, a ->{
+		TextDisplay as = le.getWorld().spawn(sl.clone().add(0, 2, 0), TextDisplay.class, a ->{
 			a.setInvulnerable(true);
 			a.setGravity(false);
 			a.setAlignment(TextAlignment.CENTER);
@@ -959,7 +941,7 @@ public class Summoned extends Mobs implements Serializable{
 			raidpor.get(rn).setType(Material.VOID_AIR);
 			raidpor.remove(rn);
 		}
-		Location sl = le.getLocation().clone().add(0, 0.5, 0);
+		Location sl = le.getLocation().clone().add(0, 1, 0);
 		if(!sl.getBlock().isEmpty()) {
 			sl = CommonEvents.getInstance().BlankFinder(sl);
 		}
@@ -974,7 +956,7 @@ public class Summoned extends Mobs implements Serializable{
 		raidpor.put(rn, eg.getBlock());
 
 
-		TextDisplay as = le.getWorld().spawn(sl, TextDisplay.class, a ->{
+		TextDisplay as = le.getWorld().spawn(sl.clone().add(0, 2, 0), TextDisplay.class, a ->{
 			a.setInvulnerable(true);
 			a.setGravity(false);
 			a.setAlignment(TextAlignment.CENTER);
@@ -991,6 +973,8 @@ public class Summoned extends Mobs implements Serializable{
 		
 		if(getherotype(rn) instanceof Player) {
 			Player p = (Player) getherotype(rn);
+			Holding.invur(p, 100l);
+			p.teleport(CommonEvents.getInstance().BlankFinder(sl.clone().add(2, 0, 2)));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 				as.setText(ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다");
 				p.sendTitle(ChatColor.RED +"네더 코어 포탈 소환", ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다", 10,35, 10);
@@ -1005,6 +989,11 @@ public class Summoned extends Mobs implements Serializable{
 		else if(getherotype(rn) instanceof HashSet){
 			HashSet<Player> par = (HashSet<Player>) getherotype(rn);
 			par.forEach(p ->{
+				Holding.invur(p, 100l);
+				Location lel = le.getLocation().clone().add(2, 1, 2);
+				if(!lel.getBlock().isEmpty()) {
+					lel = CommonEvents.getInstance().BlankFinder(lel);
+				}
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 					as.setText(ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다");
 					p.sendTitle(ChatColor.RED +"네더 코어 포탈 소환", ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다", 10,35, 10);

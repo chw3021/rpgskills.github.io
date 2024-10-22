@@ -297,6 +297,7 @@ public class MobsSkillsEvents extends Mobs implements Listener, Serializable  {
 		OceanRaids.getInstance().DamagerSave(d);
 		PoisonRaids.getInstance().DamagerSave(d);
 		WildRaids.getInstance().DamagerSave(d);
+		NetherRaids.getInstance().DamagerSave(d);
 
 		MountainsSkills.getInstance().GolemSmash(d);
 		MountainsSkills.getInstance().IronBody(d);

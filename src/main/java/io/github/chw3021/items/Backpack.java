@@ -196,10 +196,11 @@ public class Backpack implements Serializable, Listener{
             List<String> lore = inv.getItem(53).getItemMeta().getLore();
             if (lore != null && !lore.isEmpty()) {
                 try {
-                    return Integer.parseInt(lore.get(0)); // 로어의 첫 번째 항목을 정수로 변환
+                	String pagenum = ChatColor.stripColor(lore.get(0));
+                    return Integer.parseInt(pagenum); // 로어의 첫 번째 항목을 정수로 변환
                 } catch (NumberFormatException e) {
                     // 예외 처리: 페이지가 숫자가 아닐 경우 기본값 0 반환
-		            System.out.println(e.getCause());
+		            System.out.println(e.getMessage());
                     return 0;
                 }
             }

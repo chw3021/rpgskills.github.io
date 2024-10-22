@@ -171,7 +171,7 @@ public class CombatMode implements Serializable{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
 
-		if(isCombat(p) && (p.getInventory().getHeldItemSlot()>=0&&p.getInventory().getHeldItemSlot()<=6) && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK))
+		if(isCombat(p) && (p.getInventory().getHeldItemSlot()>=0&&p.getInventory().getHeldItemSlot()<=7) && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK))
 		{
 			ev.setCancelled(true);
 		}

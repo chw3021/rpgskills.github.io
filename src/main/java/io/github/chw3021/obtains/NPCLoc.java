@@ -172,10 +172,14 @@ public class NPCLoc implements Serializable, Listener{
 		if(w.hasMetadata("fake")||w.hasMetadata("rpgraidworld") || !w.canGenerateStructures()) {
 			return null;
 		}
+		if(st == Structure.NETHER_FOSSIL || st.getKey().getKey().contains("VILLAGE") || st == Structure.ANCIENT_CITY) {
+			return null;
+		}
+		
 		if(w.getEnvironment() == Environment.NORMAL && (st == Structure.END_CITY || st == Structure.FORTRESS || st == Structure.BASTION_REMNANT || st == Structure.NETHER_FOSSIL || st == Structure.RUINED_PORTAL_NETHER)) {
 			return null;
 		}
-		if(w.getEnvironment() == Environment.NETHER && (st != Structure.FORTRESS && st != Structure.NETHER_FOSSIL && st != Structure.BASTION_REMNANT && st != Structure.RUINED_PORTAL_NETHER)) {
+		if(w.getEnvironment() == Environment.NETHER && (st != Structure.FORTRESS && st != Structure.BASTION_REMNANT && st != Structure.RUINED_PORTAL_NETHER)) {
 			return null;
 		}
 		if(w.getEnvironment() == Environment.THE_END && st != Structure.END_CITY) {
@@ -183,7 +187,6 @@ public class NPCLoc implements Serializable, Listener{
 		}
 		
 		try {
-			System.out.println(w.getStructures(lel.getBlockX(), lel.getBlockZ(),st));
 			return w.getStructures(lel.getBlockX(), lel.getBlockZ(),st);
 		}
 		catch(NullPointerException e){

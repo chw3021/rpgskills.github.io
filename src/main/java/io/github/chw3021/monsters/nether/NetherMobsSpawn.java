@@ -31,7 +31,7 @@ public class NetherMobsSpawn extends Mobs implements Listener {
 				le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
 				le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(),
 				le.getEquipment().getItemInOffHand(), le.getType());
-		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
+		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), "nether"));
 		newmob.setMetadata("unmodified", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("nether", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("warped", new FixedMetadataValue(RMain.getInstance(), true));
@@ -67,7 +67,7 @@ public class NetherMobsSpawn extends Mobs implements Listener {
 				le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
 				le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(),
 				le.getEquipment().getItemInOffHand(), le.getType());
-		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
+		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), "nether"));
 		newmob.setMetadata("unmodified", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("nether", new FixedMetadataValue(RMain.getInstance(), true));
 		return newmob;

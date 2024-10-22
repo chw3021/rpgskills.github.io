@@ -43,6 +43,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 import io.github.chw3021.commons.Holding;
@@ -322,7 +323,7 @@ public class HarvesterSkills extends Summoned{
 	private HashMap<UUID, LivingEntity> blockToPiglin = new HashMap<>();
 	private HashMap<UUID, Integer> blockt = new HashMap<>();
 	
-	public void createHand(Location startLoc, LivingEntity p) {
+	public void createHand(LivingEntity p,Location startLoc) {
 	    World world = startLoc.getWorld();
 
 
@@ -354,7 +355,7 @@ public class HarvesterSkills extends Summoned{
 	        }));
 	    }
 	    
-	    Bukkit.getScheduler().runTaskTimer(RMain.getInstance(), new Runnable() {
+	    BukkitTask bt = Bukkit.getScheduler().runTaskTimer(RMain.getInstance(), new Runnable() {
 	        int step = 0;
 
 	        @Override
@@ -371,8 +372,13 @@ public class HarvesterSkills extends Summoned{
 	                removeFingers(middleFinger);
 	                removeFingers(ringFinger);
 	                removeFingers(pinkyFinger);
+	                
+	                
+	                if(blockt.containsKey(p.getUniqueId())) {
+	                	Bukkit.getScheduler().cancelTask(blockt.remove(p.getUniqueId()));
+	                }
 
-	                for(Entity e : cl.getWorld().getNearbyEntities(cl,2,2,2)) {
+	                for(Entity e : world.getNearbyEntities(startLoc,4,4,4)) {
 						if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
 							LivingEntity le = (LivingEntity)e;
 							le.damage(7,p);
@@ -380,14 +386,11 @@ public class HarvesterSkills extends Summoned{
 							Holding.holding(null, le, 50l);
 						}
 	                }
-	                target.damage(7.0);
-	                target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 2));
-	                target.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 60, 1));
 	            }
 	        }
 	    }, 0L, 2L);
-
-	    
+	    blockt.put(p.getUniqueId(), bt.getTaskId());
+	    ordt.put(gethero(p), bt.getTaskId());
 	}
 	private void moveFingerToCenter(List<BlockDisplay> finger, Location center) {
 	    for (BlockDisplay block : finger) {
@@ -406,7 +409,7 @@ public class HarvesterSkills extends Summoned{
 	
 	private HashMap<UUID, Boolean> furable = new HashMap<UUID, Boolean>();
 	
-	final private void furnace(LivingEntity p) {
+	final private void hand(LivingEntity p) {
 
     	final World w = p.getWorld();
         Holding.holding(null, p, 25l);
@@ -416,7 +419,7 @@ public class HarvesterSkills extends Summoned{
 		w.spawnParticle(Particle.LARGE_SMOKE, pl, 150, 2,2,2);
 		w.spawnParticle(Particle.GUST, pl, 150, 2,2,2);
 		
-		createFallingRod(p,p.getEyeLocation(),gettargetblock(p,5));
+		createHand(p,gettargetblock(p,5));
 		
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
      		@Override
@@ -435,7 +438,7 @@ public class HarvesterSkills extends Summoned{
 	}
 	
 
-	public void furnace(EntityDamageByEntityEvent d) 
+	public void hand(EntityDamageByEntityEvent d) 
 	{
 		if(d.getEntity().hasMetadata("soulboss") && (d.getEntity() instanceof Mob)) 
 		{
@@ -461,13 +464,13 @@ public class HarvesterSkills extends Summoned{
 		                else 
 		                {
 		                	shcooldown.remove(p.getUniqueId()); // removing player from HashMap
-		                	furnace(p);
+		                	hand(p);
 		                	shcooldown.put(p.getUniqueId(), System.currentTimeMillis());  
 		                }
 		            }
 		            else 
 		            {
-		            	furnace(p);
+		            	hand(p);
 		            	shcooldown.put(p.getUniqueId(), System.currentTimeMillis());  
 					}
 		}

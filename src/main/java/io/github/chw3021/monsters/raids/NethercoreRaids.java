@@ -120,7 +120,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 	Integer LIVES = 5;
 	Double BOSSHP = 250000d;
 	
-	Integer BOSSNUM = 6;
+	Integer BOSSNUM = 0;
 	
 	
 	private static final NethercoreRaids instance = new NethercoreRaids ();

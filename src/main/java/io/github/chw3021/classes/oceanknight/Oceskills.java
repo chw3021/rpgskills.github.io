@@ -62,6 +62,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRiptideEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.event.server.PluginEnableEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
@@ -495,16 +496,14 @@ public class Oceskills extends Pak implements Serializable {
 			if(p.getInventory().getItemInMainHand().getType()==Material.TRIDENT && shield.containsKey(p.getName()))
 			{
 				ev.setCancelled(true);
-				p.getInventory().getItemInOffHand().setType(Material.SHIELD);
-                p.getInventory().getItemInOffHand().setItemMeta(shield.get(p.getName()).getItemMeta());
+				p.sendEquipmentChange(p, EquipmentSlot.OFF_HAND, shield.get(p.getName()));
                 shield.remove(p.getName());
                 Bukkit.getScheduler().cancelTask(shieldt.get(p.getName()));
 			}
 			else if(p.getInventory().getItemInOffHand().getType()==Material.TRIDENT && shield.containsKey(p.getName()))
 			{
 				ev.setCancelled(true);
-				p.getInventory().getItemInMainHand().setType(Material.SHIELD);
-                p.getInventory().getItemInMainHand().setItemMeta(shield.get(p.getName()).getItemMeta());
+				p.sendEquipmentChange(p, EquipmentSlot.HAND, shield.get(p.getName()));
                 shield.remove(p.getName());
                 Bukkit.getScheduler().cancelTask(shieldt.get(p.getName()));
 			}
@@ -776,7 +775,7 @@ public class Oceskills extends Pak implements Serializable {
                 });
 
                 lls.forEach(l -> {
-                	l.getWorld().spawnParticle(Particle.GUST_EMITTER_SMALL, l, 10,0.2,0.2,0.2,0.1);
+                	l.getWorld().spawnParticle(Particle.SMALL_GUST, l, 10,0.2,0.2,0.2,0.1);
                 	l.getWorld().spawnParticle(Particle.SPLASH, l, 20,0.2,0.2,0.2,0.1);
                 	l.getWorld().spawnParticle(Particle.BUBBLE, l, 20,1,0,1);
                 	l.getWorld().spawnParticle(Particle.FALLING_WATER, l, 200,6,1,6);
@@ -1487,7 +1486,7 @@ public class Oceskills extends Pak implements Serializable {
 												p.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 20, 100, false, false));
 												p.setCooldown(CAREFUL, 3);
 												p.swingMainHand();
-												p.startRiptideAttack(20, 0f, p.getInventory().getItemInMainHand().clone());
+												//p.startRiptideAttack(20, 0f, p.getInventory().getItemInMainHand().clone());
 												p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS,20, 255, false, false));
 												Holding.superholding(p, le, 20l);
 												Holding.holding(null, p, 20l);
@@ -1576,8 +1575,8 @@ public class Oceskills extends Pak implements Serializable {
 						}
 	 					p.getWorld().spawnParticle(Particle.BUBBLE_POP, pel,50, 1,1,1,1);
 	 					p.getWorld().spawnParticle(Particle.SPLASH,pel,50, 1,1,1,1);
-	 					p.getWorld().spawnParticle(Particle.BUBBLE_POP, pel,50, 1);
-	 					p.getWorld().spawnParticle(Particle.SPLASH,pel,50, 1);
+	 					p.getWorld().spawnParticle(Particle.BUBBLE_POP, pel,50);
+	 					p.getWorld().spawnParticle(Particle.SPLASH,pel,50);
 	                    p.playSound(p.getLocation(), Sound.ENTITY_ZOMBIE_CONVERTED_TO_DROWNED, 0.35f, 2.0f);
 	                    p.playSound(p.getLocation(), Sound.ENTITY_BREEZE_WIND_BURST, 0.5f, 0.0f);
 					}
@@ -2090,12 +2089,11 @@ public class Oceskills extends Pak implements Serializable {
 			{
 				final ItemStack is = p.getInventory().getItemInOffHand();
 				shield.put(p.getName(), is.clone());
-				p.getInventory().getItemInOffHand().setType(Material.PRISMARINE_SHARD);
+				p.sendEquipmentChange(p, EquipmentSlot.OFF_HAND, new ItemStack(Material.VOID_AIR));
 				int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	                @Override
 	                public void run() {
-	    				p.getInventory().getItemInOffHand().setType(Material.SHIELD);
-	                    p.getInventory().getItemInOffHand().setItemMeta(shield.get(p.getName()).getItemMeta());
+	    				p.sendEquipmentChange(p, EquipmentSlot.OFF_HAND, shield.get(p.getName()));
 	                    shield.remove(p.getName());
 	                }
 	            }, 30);  
@@ -2105,12 +2103,11 @@ public class Oceskills extends Pak implements Serializable {
 			{
 				final ItemStack is = p.getInventory().getItemInMainHand();
 				shield.put(p.getName(), is.clone());
-				p.getInventory().getItemInOffHand().setType(Material.PRISMARINE_SHARD);
+				p.sendEquipmentChange(p, EquipmentSlot.HAND, new ItemStack(Material.VOID_AIR));
         		int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	                @Override
 	                public void run() {
-	    				p.getInventory().getItemInMainHand().setType(Material.SHIELD);
-	                    p.getInventory().getItemInMainHand().setItemMeta(shield.get(p.getName()).getItemMeta());
+	    				p.sendEquipmentChange(p, EquipmentSlot.HAND, shield.get(p.getName()));
 	                    shield.remove(p.getName());
 	                }
 	            }, 30);  
@@ -2129,16 +2126,14 @@ public class Oceskills extends Pak implements Serializable {
 				if(p.getInventory().getItemInMainHand().getType()==Material.TRIDENT && shield.containsKey(p.getName()))
 				{
 					ev.setCancelled(true);
-    				p.getInventory().getItemInOffHand().setType(Material.SHIELD);
-	                p.getInventory().getItemInOffHand().setItemMeta(shield.get(p.getName()).getItemMeta());
+    				p.sendEquipmentChange(p, EquipmentSlot.OFF_HAND, shield.get(p.getName()));
                     shield.remove(p.getName());
 	                Bukkit.getScheduler().cancelTask(shieldt.get(p.getName()));
 				}
 				else if(p.getInventory().getItemInOffHand().getType()==Material.TRIDENT && shield.containsKey(p.getName()))
 				{
 					ev.setCancelled(true);
-    				p.getInventory().getItemInMainHand().setType(Material.SHIELD);
-	                p.getInventory().getItemInMainHand().setItemMeta(shield.get(p.getName()).getItemMeta());
+    				p.sendEquipmentChange(p, EquipmentSlot.HAND, shield.get(p.getName()));
                     shield.remove(p.getName());
 	                Bukkit.getScheduler().cancelTask(shieldt.get(p.getName()));
 				}
@@ -2154,15 +2149,13 @@ public class Oceskills extends Pak implements Serializable {
 			if(p.isRiptiding()) {
 				if(p.getInventory().getItemInMainHand().getType()==Material.TRIDENT && shield.containsKey(p.getName()))
 				{
-    				p.getInventory().getItemInOffHand().setType(Material.SHIELD);
-	                p.getInventory().getItemInOffHand().setItemMeta(shield.get(p.getName()).getItemMeta());
+    				p.sendEquipmentChange(p, EquipmentSlot.OFF_HAND, shield.get(p.getName()));
                     shield.remove(p.getName());
 	                Bukkit.getScheduler().cancelTask(shieldt.get(p.getName()));
 				}
 				else if(p.getInventory().getItemInOffHand().getType()==Material.TRIDENT && shield.containsKey(p.getName()))
 				{
-    				p.getInventory().getItemInMainHand().setType(Material.SHIELD);
-	                p.getInventory().getItemInMainHand().setItemMeta(shield.get(p.getName()).getItemMeta());
+    				p.sendEquipmentChange(p, EquipmentSlot.HAND, shield.get(p.getName()));
                     shield.remove(p.getName());
 	                Bukkit.getScheduler().cancelTask(shieldt.get(p.getName()));
 				}
@@ -2216,14 +2209,12 @@ public class Oceskills extends Pak implements Serializable {
 			if(p.isRiptiding()) {
 				if(p.getInventory().getItemInMainHand().getType()==Material.TRIDENT && shield.containsKey(p.getName()))
 				{
-    				p.getInventory().getItemInOffHand().setType(Material.SHIELD);
-	                p.getInventory().getItemInOffHand().setItemMeta(shield.get(p.getName()).getItemMeta());
+    				p.sendEquipmentChange(p, EquipmentSlot.OFF_HAND, shield.get(p.getName()));
 	                Bukkit.getScheduler().cancelTask(shieldt.get(p.getName()));
 				}
 				else if(p.getInventory().getItemInOffHand().getType()==Material.TRIDENT && shield.containsKey(p.getName()))
 				{
-    				p.getInventory().getItemInMainHand().setType(Material.SHIELD);
-	                p.getInventory().getItemInMainHand().setItemMeta(shield.get(p.getName()).getItemMeta());
+    				p.sendEquipmentChange(p, EquipmentSlot.HAND, shield.get(p.getName()));
 	                Bukkit.getScheduler().cancelTask(shieldt.get(p.getName()));
 				}
 			}

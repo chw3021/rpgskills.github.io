@@ -110,7 +110,7 @@ public class NetherRaids extends Summoned {
 		return pe;
 	}
 	final private ItemStack mobleg() {
-		ItemStack pe = mobleg();
+		ItemStack pe = new ItemStack(Material.NETHERITE_LEGGINGS);
 		ArmorMeta arm = (ArmorMeta) pe.getItemMeta();
 		ArmorTrim t1 = new ArmorTrim(TrimMaterial.QUARTZ, TrimPattern.RIB);
 		arm.setTrim(t1);
@@ -318,7 +318,6 @@ public class NetherRaids extends Summoned {
 		
 		String reg = lang.equalsIgnoreCase("ko_kr") ? "네더격투가":"NetherFighter";
 		PigZombie newmob = (PigZombie) Summon(esl, ChatColor.GRAY+reg + "<"+rn+">", 47500.0, head, chest, leg, boots, main, main, EntityType.ZOMBIFIED_PIGLIN);
-		newmob.setConversionTime(-1);
 		newmob.setAdult();
 		newmob.setAnger(999999);
 		newmob.setAngry(true);
