@@ -31,11 +31,13 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Snowball;
 import org.bukkit.entity.Spellcaster.Spell;
 import org.bukkit.entity.Mob;
+import org.bukkit.entity.Phantom;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.AreaEffectCloudApplyEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDropItemEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.EntitySpellCastEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
@@ -46,9 +48,13 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
+import com.google.common.util.concurrent.AtomicDouble;
+
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.monsters.raids.NethercoreRaids;
+import io.github.chw3021.monsters.raids.OverworldRaids;
 import io.github.chw3021.monsters.raids.Summoned;
+import io.github.chw3021.party.Party;
 import io.github.chw3021.rmain.RMain;
 
 
@@ -89,44 +95,7 @@ public class HarvesterSkills extends Summoned{
         }
         return line;
 	}
-	
-	public void hit(ProjectileHitEvent d) 
-	{
-		if(d.getEntity() instanceof Snowball) 
-		{
-			Snowball po = (Snowball)d.getEntity();
-			if(po.getShooter() instanceof LivingEntity) {
-				LivingEntity p = (LivingEntity) po.getShooter();
-				if(po.hasMetadata("cookedFoods")) {
-            		final Location l = d.getHitEntity() != null ? d.getHitEntity().getLocation() : d.getHitBlock().getLocation();
 
-					l.getWorld().spawnParticle(Particle.SMALL_FLAME, l, 50);
-					l.getWorld().spawnParticle(Particle.BLOCK, l, 200,2.5,2.5,2.5,getBd(Material.FIRE_CORAL_BLOCK));
-					l.getWorld().playSound(l, Sound.BLOCK_CORAL_BLOCK_BREAK, 1f, 1.5f);
-					
-            		for(Entity e : l.getWorld().getNearbyEntities(l, 2.5, 2.5, 2.5)) {
-						if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
-							LivingEntity le = (LivingEntity)e;
-							le.damage(2.5,p);
-							Holding.holding(null, le, 5l);
-						}
-                	}
-				}
-			}
-			
-		}
-	}
-	
-
-	Material[] cookeds = new Material[] {Material.ROTTEN_FLESH, 
-			Material.SPIDER_EYE,
-			Material.RABBIT_FOOT,
-			Material.NETHER_WART, 
-			Material.MAGMA_CREAM,
-			Material.PHANTOM_MEMBRANE,
-			Material.GLISTERING_MELON_SLICE
-	};
-	
 	public void bowshoot(EntityShootBowEvent ev) 
 	{
 		if(ev.getEntity().hasMetadata("soulboss")){
@@ -172,6 +141,66 @@ public class HarvesterSkills extends Summoned{
 
 
 	private HashMap<UUID, Integer> cursable = new HashMap<UUID, Integer>();
+	
+	final private void cursed(LivingEntity p) {
+
+    	cursable.remove(p.getUniqueId());
+        Holding.holding(null, p, 20l);
+
+        String rn = gethero(p);
+		
+        Location tl = gettargetblock(p,4).clone();
+        
+		p.getWorld().playSound(tl, Sound.ENTITY_ILLUSIONER_CAST_SPELL, 1f, 0f);
+    	p.getWorld().spawnParticle(Particle.FLAME, tl, 500, 4, 1, 4, 0);
+    	p.getWorld().spawnParticle(Particle.SMOKE, tl, 500, 4, 1, 4, 0);
+    	
+    	
+        ArrayList<Location> meats = new ArrayList<>();
+        AtomicInteger j = new AtomicInteger();
+        for(int i=0; i<30; i++) {
+            Random random=new Random();
+        	double number = random.nextDouble() * 2 * (random.nextBoolean() ? -1 : 1);
+        	double number2 = random.nextDouble() * 2 * (random.nextBoolean() ? -1 : 1);
+        	meats.add(tl.clone().add(number, 1, number2));
+        }
+        
+        meats.forEach(l ->{
+			int t= Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                @Override
+                public void run() 
+                {
+                	EvokerFangs ef = (EvokerFangs)p.getWorld().spawnEntity(l, EntityType.EVOKER_FANGS);
+                	ef.setVelocity(l.getDirection().normalize().multiply(1.5));
+                    ef.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+                    ef.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
+                    ef.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), true));
+                    ef.setMetadata("soul", new FixedMetadataValue(RMain.getInstance(), true));
+                	ef.setOwner(p);
+                	ef.setAttackDelay(1);
+                	ef.setInvulnerable(true);
+                	p.getWorld().spawnParticle(Particle.SOUL, l, 10, 4, 0.2, 4, 0.2);
+                	p.getWorld().spawnParticle(Particle.ASH, l, 50, 4, 0.2, 4, 0);
+                	p.getWorld().spawnParticle(Particle.LANDING_OBSIDIAN_TEAR, l, 50, 4, 0.2, 4, 0.2);
+					p.getWorld().playSound(p.getLocation(), Sound.PARTICLE_SOUL_ESCAPE, 0.1f, 2f);
+                	for(Entity e : p.getWorld().getNearbyEntities(l, 4,4,4)) {
+                		if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && e!=p) {
+                			LivingEntity le = (LivingEntity)e;
+                			le.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS, 200,1,false,false,false));
+                			le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 200,2,false,false,false));
+                			le.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 200,2,false,false,false));
+							le.damage(3, p);
+							
+    						
+                		}
+                	}
+                }
+			}, j.incrementAndGet()*2+40);
+        	ordt.put(rn, t);
+        });
+	}
+	
+	
 	public void cursed(EntityDamageByEntityEvent d) 
 	{
 	    
@@ -195,135 +224,23 @@ public class HarvesterSkills extends Summoned{
 	            {
 	            	rb3cooldown.remove(p.getUniqueId()); 
 
-	            	cursable.remove(p.getUniqueId());
-	                Holding.holding(null, p, 20l);
-
-	                String rn = gethero(p);
-					
-	                Location tl = gettargetblock(p,4).clone();
-	                
-					p.getWorld().playSound(tl, Sound.ENTITY_ILLUSIONER_CAST_SPELL, 1f, 0f);
-                	p.getWorld().spawnParticle(Particle.FLAME, tl, 500, 4, 1, 4, 0);
-                	p.getWorld().spawnParticle(Particle.SMOKE, tl, 500, 4, 1, 4, 0);
-                	
-                	
-                    ArrayList<Location> meats = new ArrayList<>();
-                    AtomicInteger j = new AtomicInteger();
-                    for(int i=0; i<30; i++) {
-			            Random random=new Random();
-                    	double number = random.nextDouble() * 2 * (random.nextBoolean() ? -1 : 1);
-                    	double number2 = random.nextDouble() * 2 * (random.nextBoolean() ? -1 : 1);
-                    	meats.add(tl.clone().add(number, 1, number2));
-                    }
-                    
-                    meats.forEach(l ->{
-						int t= Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() 
-			                {
-			                	EvokerFangs ef = (EvokerFangs)p.getWorld().spawnEntity(l, EntityType.EVOKER_FANGS);
-			                	ef.setVelocity(l.getDirection().normalize().multiply(1.5));
-			                    ef.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-			                    ef.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
-			                    ef.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), true));
-			                    ef.setMetadata("soul", new FixedMetadataValue(RMain.getInstance(), true));
-			                	ef.setOwner(p);
-			                	ef.setAttackDelay(1);
-			                	ef.setInvulnerable(true);
-			                	p.getWorld().spawnParticle(Particle.SOUL, l, 10, 4, 0.2, 4, 0.2);
-			                	p.getWorld().spawnParticle(Particle.ASH, l, 50, 4, 0.2, 4, 0);
-			                	p.getWorld().spawnParticle(Particle.LANDING_OBSIDIAN_TEAR, l, 50, 4, 0.2, 4, 0.2);
-								p.getWorld().playSound(p.getLocation(), Sound.PARTICLE_SOUL_ESCAPE, 0.1f, 2f);
-			                	for(Entity e : p.getWorld().getNearbyEntities(l, 4,4,4)) {
-			                		if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && e!=p) {
-			                			LivingEntity le = (LivingEntity)e;
-			                			le.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS, 200,1,false,false,false));
-			                			le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 200,2,false,false,false));
-			                			le.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 200,2,false,false,false));
-										le.damage(3, p);
-										
-			    						
-			                		}
-			                	}
-			                }
-						}, j.incrementAndGet()*2+40);
-	                	ordt.put(rn, t);
-                    });
+	            	cursed(p);
+	            	
 					rb3cooldown.put(p.getUniqueId(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
 	            }
 	        }
 	        else 
 	        {
 
-
-            	cursable.remove(p.getUniqueId());
-                Holding.holding(null, p, 20l);
-
-                String rn = gethero(p);
-				
-                Location tl = gettargetblock(p,4).clone();
-                
-				p.getWorld().playSound(tl, Sound.BLOCK_FURNACE_FIRE_CRACKLE, 1f, 0f);
-            	p.getWorld().spawnParticle(Particle.FLAME, tl, 500, 4, 1, 4, 0);
-            	p.getWorld().spawnParticle(Particle.SMOKE, tl, 500, 4, 1, 4, 0);
-            	
-            	
-                ArrayList<Location> meats = new ArrayList<>();
-                AtomicInteger j = new AtomicInteger();
-                for(int i=0; i<30; i++) {
-		            Random random=new Random();
-                	double number = random.nextDouble() * 2 * (random.nextBoolean() ? -1 : 1);
-                	double number2 = random.nextDouble() * 2 * (random.nextBoolean() ? -1 : 1);
-                	meats.add(tl.clone().add(number, 1, number2));
-                }
-                
-                meats.forEach(l ->{
-					int t = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() 
-		                {
-		                	Random random=new Random();
-		                	int ri = random.nextInt(7);
-		                	Item meat = p.getWorld().dropItemNaturally(l, new ItemStack(Material.RABBIT_FOOT));
-		                	meat.setPickupDelay(9999);
-		                	meat.setItemStack(new ItemStack(cookeds[ri]));
-		                	meat.setOwner(p.getUniqueId());
-		                	meat.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
-		                	meat.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
-		                	meat.setMetadata("stuff", new FixedMetadataValue(RMain.getInstance(), rn));
-		                	p.getWorld().spawnParticle(Particle.FLAME, l, 50, 4, 4, 4, 0.2);
-		                	p.getWorld().spawnParticle(Particle.LANDING_OBSIDIAN_TEAR, l, 50, 4, 4, 4, 0.2);
-							p.getWorld().playSound(p.getLocation(), Sound.ENTITY_GENERIC_EAT, 0.5f, 2f);
-							p.getWorld().playSound(meat.getLocation(), Sound.BLOCK_FURNACE_FIRE_CRACKLE, 0.8f, 2f);
-							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() 
-				                {
-				                	meat.remove();
-				                }
-							}, 10);
-		                	for(Entity e : p.getWorld().getNearbyEntities(l, 4,4,4)) {
-		                		if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && e!=p) {
-		                			LivingEntity le = (LivingEntity)e;
-
-									le.damage(4, p);
-									le.setFireTicks(100);
-		    						
-		                		}
-		                	}
-		                }
-					}, j.incrementAndGet()*2+40);
-                	ordt.put(rn, t);
-                });
+            	cursed(p);
 				rb3cooldown.put(p.getUniqueId(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
 	        }
 		}					
 	}
 
-	private HashMap<UUID, LivingEntity> blockToPiglin = new HashMap<>();
 	private HashMap<UUID, Integer> blockt = new HashMap<>();
 	
-	public void createHand(LivingEntity p,Location startLoc) {
+	final private void createHand(LivingEntity p,Location startLoc) {
 	    World world = startLoc.getWorld();
 
 
@@ -366,6 +283,18 @@ public class HarvesterSkills extends Summoned{
 	            moveFingerToCenter(ringFinger, startLoc);
 	            moveFingerToCenter(pinkyFinger, startLoc);
 
+	            world.playSound(startLoc, Sound.BLOCK_SOUL_SAND_HIT, 1.0f, 0f);
+	            world.spawnParticle(Particle.SOUL_FIRE_FLAME, startLoc, 150, 2,0.2,2,0.1);
+
+                for(Entity e : world.getNearbyEntities(startLoc,2,5,2)) {
+					if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
+						LivingEntity le = (LivingEntity)e;
+						le.damage(7,p);
+						le.teleport(p);
+						Holding.holding(null, le, 50l);
+					}
+                }
+                
 	            if (step++ > 10) {
 	                removeFingers(thumb);
 	                removeFingers(indexFinger);
@@ -377,62 +306,66 @@ public class HarvesterSkills extends Summoned{
 	                if(blockt.containsKey(p.getUniqueId())) {
 	                	Bukkit.getScheduler().cancelTask(blockt.remove(p.getUniqueId()));
 	                }
-
-	                for(Entity e : world.getNearbyEntities(startLoc,4,4,4)) {
-						if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
-							LivingEntity le = (LivingEntity)e;
-							le.damage(7,p);
-							le.teleport(p);
-							Holding.holding(null, le, 50l);
-						}
-	                }
 	            }
 	        }
 	    }, 0L, 2L);
 	    blockt.put(p.getUniqueId(), bt.getTaskId());
 	    ordt.put(gethero(p), bt.getTaskId());
 	}
-	private void moveFingerToCenter(List<BlockDisplay> finger, Location center) {
+	final private void moveFingerToCenter(List<BlockDisplay> finger, Location center) {
 	    for (BlockDisplay block : finger) {
-	        Vector moveDirection = center.toVector().subtract(block.getLocation().toVector()).normalize().multiply(0.1);
-	        block.teleport(block.getLocation().add(moveDirection)); // 블록 이동
+	        Vector moveDirection = center.toVector().subtract(block.getLocation().toVector());
+	        double distance = moveDirection.length();  // 손가락과 중앙 사이의 거리 계산
+
+	        if (distance > 0) {  // 충분히 멀리 있을 때만 이동
+	            // 거리가 멀수록 빠르게, 가까워질수록 느리게: log(distance) 이용
+	            double speed = Math.log(distance + 1) * 0.2;  // 거리 기반으로 속도 설정
+	            moveDirection.normalize().multiply(speed);  // 속도 적용하여 이동
+	            block.teleport(block.getLocation().add(moveDirection));
+	        }
 	    }
 	}
 
 	// 손가락 블록 제거 메서드
-	private void removeFingers(List<BlockDisplay> finger) {
+	final private void removeFingers(List<BlockDisplay> finger) {
 	    for (BlockDisplay block : finger) {
 	        block.remove();
 	    }
 	}
 	
 	
-	private HashMap<UUID, Boolean> furable = new HashMap<UUID, Boolean>();
+	private HashMap<UUID, Boolean> handable = new HashMap<UUID, Boolean>();
 	
 	final private void hand(LivingEntity p) {
 
     	final World w = p.getWorld();
         Holding.holding(null, p, 25l);
-		Location pl = p.getEyeLocation().clone();
-		w.playSound(pl, Sound.BLOCK_SMOKER_SMOKE, 1.0f, 2f);
-		w.playSound(pl, Sound.ITEM_ARMOR_EQUIP_NETHERITE, 1.0f, 0f);
-		w.spawnParticle(Particle.LARGE_SMOKE, pl, 150, 2,2,2);
-		w.spawnParticle(Particle.GUST, pl, 150, 2,2,2);
+		Location pl = gettargetblock(p,6);
+		w.playSound(pl, Sound.ENTITY_SHULKER_TELEPORT, 1.0f, 0f);
+		w.spawnParticle(Particle.SOUL, pl, 150, 2,2,2);
+		w.spawnParticle(Particle.SCULK_SOUL, pl, 150, 2,2,2);
 		
-		createHand(p,gettargetblock(p,5));
-		
+
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
      		@Override
         	public void run() 
             {	
-            	furable.remove(p.getUniqueId());
+     			createHand(p,pl);
+            }
+	   	}, 25);
+	   	
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+     		@Override
+        	public void run() 
+            {	
+            	handable.remove(p.getUniqueId());
             }
 	   	}, 60);
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
      		@Override
         	public void run() 
             {	
-     			chargable.putIfAbsent(p.getUniqueId(), true);
+     			waveable.putIfAbsent(p.getUniqueId(), true);
             }
 	   	}, 80);
 	}
@@ -446,7 +379,7 @@ public class HarvesterSkills extends Summoned{
 			int sec = 8;
 	
 	
-			if(p.hasMetadata("failed") || !furable.containsKey(p.getUniqueId())) {
+			if(p.hasMetadata("failed") || !handable.containsKey(p.getUniqueId())) {
 				return;
 			}
 			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
@@ -477,40 +410,42 @@ public class HarvesterSkills extends Summoned{
 	}
 
 
-	private HashMap<UUID, Boolean> porkable = new HashMap<UUID, Boolean>();
+	private HashMap<UUID, Boolean> phantom = new HashMap<UUID, Boolean>();
 	
-	final private void porkchop(LivingEntity p) {
+	final private void phantom(LivingEntity p) {
 
     	final World w = p.getWorld();
         Holding.holding(null, p, 40l);
-		Location pfl = p.getEyeLocation().clone();
-		w.playSound(pfl, Sound.ENTITY_PIGLIN_BRUTE_DEATH, 1.0f, 0f);
-		w.playSound(pfl, Sound.ENTITY_PIGLIN_BRUTE_DEATH, 1.0f, 0f);
-		w.spawnParticle(Particle.SMOKE, pfl, 150, 2,2,2);
-		w.spawnParticle(Particle.BLOCK_MARKER, pfl, 20,1,1,1, getBd(Material.FURNACE));
+        for(Player pe : NethercoreRaids.getheroes(p)) {
+    		Location pfl = pe.getEyeLocation().clone();
+    		w.playSound(pfl, Sound.ENTITY_PHANTOM_FLAP, 1.0f, 0f);
+    		w.playSound(pfl, Sound.ENTITY_PHANTOM_SWOOP, 1.0f, 0f);
+    		w.spawnParticle(Particle.SCULK_SOUL, pfl, 150, 2,2,2);
+    		w.spawnParticle(Particle.BLOCK_MARKER, pfl, 20,1,1,1, getBd(Material.TRIAL_SPAWNER));
+        }
 		
-
-		
-        p.teleport(p.getLocation().clone().add(20, 0.3, 20));
+		String rn = gethero(p);
         
 		int t =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
             @Override
             public void run() 
             {
 
-        		w.playSound(pfl, Sound.ENTITY_ZOMBIFIED_PIGLIN_HURT, 1.0f, 0f);
-        		w.playSound(pfl, Sound.ENTITY_PIG_DEATH, 1.0f, 0f);
 		        for(Player pe : NethercoreRaids.getheroes(p)) {
-					for(int i = 0; i <25; i++) {
-						Arrow ar =p.getWorld().spawnArrow(pe.getLocation(), BlockFace.UP.getDirection() , 0.5f, 60);
-						ar.setShooter(p);
-	                    Snowball ws = (Snowball) p.launchProjectile(Snowball.class);
-	                    ws.setItem(new ItemStack(Material.COOKED_PORKCHOP));
-	                    ws.setShooter(p);
-	                    ws.setVelocity(ar.getVelocity());
-	        			ws.setMetadata("cookedFoods", new FixedMetadataValue(RMain.getInstance(), true));
-						ar.remove();
-					}
+	        		Location pfl = pe.getEyeLocation().clone();
+	        		w.playSound(pfl, Sound.ENTITY_PHANTOM_BITE, 1.0f, 0f);
+                    Phantom phant = pe.getWorld().spawn(pe.getLocation().add(0, 5, 0), Phantom.class);
+                    phant.setTarget(pe);
+                    phant.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+                    phant.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), rn));
+                    phant.setSize(25);
+                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                        @Override
+                        public void run() 
+                        {
+            		        phant.remove();
+                        }
+            		}, 100);
 		        }
 		        
             }
@@ -520,7 +455,7 @@ public class HarvesterSkills extends Summoned{
      		@Override
         	public void run() 
             {	
-            	porkable.remove(p.getUniqueId());
+            	phantom.remove(p.getUniqueId());
             }
 	   	}, 60);
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -529,10 +464,10 @@ public class HarvesterSkills extends Summoned{
             {	
      			cursable.putIfAbsent(p.getUniqueId(), 1);
             }
-	   	}, 80);
+	   	}, 180);
 	}
 	
-	public void porkchop(EntitySpellCastEvent d) 
+	public void phantom(EntitySpellCastEvent d) 
 	{
 		if(d.getEntity().hasMetadata("soulboss") && (d.getEntity() instanceof Mob)) 
 		{
@@ -545,7 +480,7 @@ public class HarvesterSkills extends Summoned{
 
 			d.setCancelled(true);
 
-			if(p.hasMetadata("failed") || !porkable.containsKey(p.getUniqueId())) {
+			if(p.hasMetadata("failed") || !phantom.containsKey(p.getUniqueId())) {
 				return;
 			}
 					if(aicooldown.containsKey(p.getUniqueId()))
@@ -557,14 +492,14 @@ public class HarvesterSkills extends Summoned{
 		                else 
 		                {
 		                	aicooldown.remove(p.getUniqueId()); // removing player from HashMap
-		                	porkchop(p);
+		                	phantom(p);
 		                	aicooldown.put(p.getUniqueId(), System.currentTimeMillis());  
 		                }
 		            }
 		            else 
 		            {
 
-		            	porkchop(p);
+		            	phantom(p);
 	                	aicooldown.put(p.getUniqueId(), System.currentTimeMillis());  
 					}
 		}
@@ -572,8 +507,8 @@ public class HarvesterSkills extends Summoned{
 
 	
 
-	private HashMap<UUID, Boolean> chargable = new HashMap<UUID, Boolean>();
-	public void charge(EntitySpellCastEvent d) 
+	private HashMap<UUID, Boolean> waveable = new HashMap<UUID, Boolean>();
+	public void wave(EntitySpellCastEvent d) 
 	{
 		if(d.getEntity().hasMetadata("soulboss")) 
 		{
@@ -589,7 +524,7 @@ public class HarvesterSkills extends Summoned{
 				}
 
 				final Location tl = NethercoreRaids.getheroes(p).stream().filter(pe -> pe.getWorld().equals(p.getWorld())).findAny().get().getLocation().clone().add(0,0.2,0);
-				charge(p,tl);
+				wave(p,tl);
 			}
 		}
 	}
@@ -597,7 +532,7 @@ public class HarvesterSkills extends Summoned{
 
 	private HashMap<UUID, Integer> hookt1 = new HashMap<UUID, Integer>();
 	
-	final private void chargeStart(LivingEntity p, Location tl) {
+	final private void waveStart(LivingEntity p, Location tl) {
 
         final Location pfl = p.getLocation().clone();
         
@@ -605,13 +540,13 @@ public class HarvesterSkills extends Summoned{
         
 
 		p.swingMainHand();
-		p.getWorld().playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_NETHERITE, 1.0f, 0f);
-		p.getWorld().playSound(p.getLocation(), Sound.BLOCK_BLASTFURNACE_FIRE_CRACKLE, 1.0f, 0f);
-			p.getWorld().spawnParticle(Particle.ASH ,p.getLocation(), 200, 0.2,1,0.2,1,0.5f);
-			p.getWorld().spawnParticle(Particle.LAVA ,p.getEyeLocation(), 10);
-			Holding.holding(null, p, 10l);
+		p.getWorld().playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 0f);
+		p.getWorld().playSound(p.getLocation(), Sound.ENTITY_EVOKER_PREPARE_SUMMON, 1.0f, 0f);
+			p.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME ,p.getLocation(), 200, 0.2,1,0.2,1,0.5f);
+			p.getWorld().spawnParticle(Particle.ENTITY_EFFECT ,p.getEyeLocation(), 10,Color.TEAL);
+			Holding.holding(null, p, 5l);
 
-		Location pl = pfl.clone();
+		AtomicDouble jd = new AtomicDouble(1);
 
     	int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
     		@Override
@@ -620,18 +555,20 @@ public class HarvesterSkills extends Summoned{
     			if(p.isDead()) {
     				return;
     			}
-    			p.getWorld().playSound(p.getLocation(), Sound.ENTITY_PIGLIN_ANGRY, 0.1f, 0f);
-    			p.getWorld().spawnParticle(Particle.TRIAL_SPAWNER_DETECTION_OMINOUS ,p.getLocation(), 50, 2,2,2,1);
+    			Location pl = pfl.clone().add(pv.clone().normalize().multiply(jd.getAndAdd(0.5)));
+    			
+    			p.getWorld().playSound(pl, Sound.ENTITY_PIGLIN_ANGRY, 0.1f, 0f);
+    			p.getWorld().spawnParticle(Particle.SCULK_SOUL ,pl, 50, 3,4,3,1);
+    			p.getWorld().spawnParticle(Particle.ENTITY_EFFECT ,pl, 50, 3,4,3,1,Color.BLUE);
+    			p.getWorld().spawnParticle(Particle.INSTANT_EFFECT ,pl, 50, 3,4,3,1);
+    			p.getWorld().spawnParticle(Particle.TRIAL_SPAWNER_DETECTION_OMINOUS ,pl, 50, 3,4,3,1);
                 
-                final Location cl = p.getLocation().clone();
-                
-    			pl.add(pv.clone().normalize().multiply(1.25));
     			
     			if(pl.getBlock().isPassable()) {
 					p.teleport(pl);
     			}
 
-                for(Entity e : cl.getWorld().getNearbyEntities(cl,2,2,2)) {
+                for(Entity e : pl.getWorld().getNearbyEntities(pl,3,4,3)) {
 					if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
 						LivingEntity le = (LivingEntity)e;
 						le.damage(3.5,p);
@@ -640,7 +577,7 @@ public class HarvesterSkills extends Summoned{
                 }
     			
             }
-    	},10,1);
+    	},5,2);
         hookt1.put(p.getUniqueId(), task);
         ordt.put(gethero(p), task);
         
@@ -658,14 +595,14 @@ public class HarvesterSkills extends Summoned{
      		@Override
         	public void run() 
             {	
-     			porkable.put(p.getUniqueId(), true);
+     			phantom.put(p.getUniqueId(), true);
             }
         }, 150); 
 	}
 	
-	final private void charge(LivingEntity p, Location tl) {
+	final private void wave(LivingEntity p, Location tl) {
 
-		if(p.hasMetadata("failed") || !chargable.containsKey(p.getUniqueId())) {
+		if(p.hasMetadata("failed") || !waveable.containsKey(p.getUniqueId())) {
 			return;
 		}
 		if(rb8cooldown.containsKey(p.getUniqueId()))
@@ -677,67 +614,66 @@ public class HarvesterSkills extends Summoned{
             else 
             {
             	rb8cooldown.remove(p.getUniqueId()); // removing player from HashMap
-            	chargeStart(p, tl);
+            	waveStart(p, tl);
                 
 				rb8cooldown.put(p.getUniqueId(), System.currentTimeMillis());  
             }
         }
         else 
         {
-        	chargeStart(p, tl);
+        	waveStart(p, tl);
 			rb8cooldown.put(p.getUniqueId(), System.currentTimeMillis());  
 		}
 	}
 
-	private HashMap<UUID, Boolean> smkable = new HashMap<UUID, Boolean>();
-	
-	final private void smoker(Location ptl, LivingEntity p, Integer dur) {
-		
-		String rn = gethero(p);
-		World w = ptl.getWorld();
-		p.getWorld().playSound(ptl, Sound.BLOCK_SMOKER_SMOKE, 1.0f, 0f);
-    	p.getWorld().playSound(ptl, Sound.BLOCK_FIRE_AMBIENT, 1.0f, 2f);
-    	
-    	w.spawnParticle(Particle.BLOCK_MARKER, ptl, 1, getBd(Material.SMOKER));
-    	
-        int t = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-            @Override
-            public void run() 
-            {
-                AreaEffectCloud cloud = (AreaEffectCloud) w.spawnEntity(ptl, EntityType.AREA_EFFECT_CLOUD);
-                cloud.setParticle(Particle.SMOKE);
-                cloud.addCustomEffect(new PotionEffect(PotionEffectType.HUNGER, 100, 1, false, false, false), false);
-        		cloud.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-        		cloud.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), rn));
-        		cloud.setMetadata("piglincloud", new FixedMetadataValue(RMain.getInstance(), rn));
-                cloud.setRadius(4f);
-                cloud.setSource(p);
-                cloud.setSilent(false);
-                cloud.setColor(Color.RED);
-                cloud.setDuration(dur);
 
-            	smkable.remove(p.getUniqueId());
-            }
-        }, 35); 
-        ordt.put(gethero(p), t);
+	final private double whirl(Location tl, Integer j, World w) {
+    	ArrayList<Location> ring = new ArrayList<Location>();
+
+    	w.playSound(tl, Sound.ENTITY_BREEZE_WHIRL, 0.2f, 2f);
+    	double an = 0;
+    	for(; an<Math.PI*2; an +=Math.PI/90) {
+    		ring.add(tl.clone().add(tl.getDirection().normalize().rotateAroundY(an+j*0.25).multiply(an+j*0.5)));
+    	}
+    	ring.forEach(l -> {
+			tl.getWorld().spawnParticle(Particle.TRIAL_OMEN, l, 2, 0.5,0.5,0.5,0);
+			tl.getWorld().spawnParticle(Particle.OMINOUS_SPAWNING, l, 2, 0.5,0.5,0.5,0.1);
+    		
+    	});
+    	
+    	return an+j*0.5;
 	}
-	
-	public void cloudApplied(AreaEffectCloudApplyEvent ev) {
-		if(ev.getEntity().hasMetadata("piglincloud")) {
-			 AreaEffectCloud cloud = ev.getEntity();
-			 LivingEntity p = (LivingEntity) cloud.getSource();
 
-             for(Entity e : cloud.getWorld().getNearbyEntities(cloud.getLocation().clone(),4,4,4)) {
+	
+	private HashMap<UUID, Boolean> stormable = new HashMap<UUID, Boolean>();
+	
+	final private void storm(Location tl, LivingEntity p) {
+		
+		World w = tl.getWorld();
+		tl.getWorld().playSound(tl, Sound.ENTITY_BREEZE_INHALE, 1.0f, 0f);
+		tl.getWorld().spawnParticle(Particle.OMINOUS_SPAWNING, tl, 150, 2,0.5,2,0.1);
+		
+    	AtomicInteger j = new AtomicInteger();	
+		for(int i = 0; i <15; i++) {
+            int t = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                @Override
+                public void run() {
+                	
+                	double off = whirl(tl.clone(),j.getAndIncrement(), w);
+					for(Entity e : tl.getWorld().getNearbyEntities(tl,off, 7, off)) {
 						if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
 							LivingEntity le = (LivingEntity)e;
 							le.damage(3.5,p);
+							le.teleport(tl);
 						}
-                 }
-			 
-		}
+					}
+                }
+            }, i*3+25); 	   
+            ordt.put(gethero(p), t);                 	
+        }
 	}
 	
-	public void smoker(EntityDamageByEntityEvent d) 
+	public void storm(EntityDamageByEntityEvent d) 
 	{
 		if((d.getEntity() instanceof Mob) && d.getEntity().hasMetadata("soulboss")) 
 		{
@@ -769,13 +705,13 @@ public class HarvesterSkills extends Summoned{
 		                	
 			                Holding.holding(null, p, 10l);
 
-			                smoker(ptl, p,300);
+			                storm(ptl, p);
 		                    
 		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		                 		@Override
 		                    	public void run() 
 		                        {	
-		                 			furable.put(p.getUniqueId(), true);
+		                 			handable.put(p.getUniqueId(), true);
 		        	            }
 		                    }, 46); 
 		                    
@@ -786,16 +722,16 @@ public class HarvesterSkills extends Summoned{
 		            else 
 		            {
 
-	                	
+
 		                Holding.holding(null, p, 10l);
 
-		                smoker(ptl, p,300);
+		                storm(ptl, p);
 	                    
 	                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	                 		@Override
 	                    	public void run() 
 	                        {	
-	                 			furable.put(p.getUniqueId(), true);
+	                 			handable.put(p.getUniqueId(), true);
 	        	            }
 	                    }, 46); 
 	                    
@@ -811,72 +747,54 @@ public class HarvesterSkills extends Summoned{
 	public HashMap<UUID, Integer> ast = new HashMap<UUID, Integer>();//ArmorStands damage 태스크 저장
 	public HashMap<UUID, Integer> asdt = new HashMap<UUID, Integer>();//ArmorStands remove 태스크 저장
 	
-	final private void asSpawn(Player pe, String rn, LivingEntity p, final Location fl, int a) {
+	final private void itemSpawn(Player pe, String rn, LivingEntity p, final Location fl) {
 
 		final World w = fl.getWorld();
 		
 
-		w.spawn(fl, ArmorStand.class, newmob -> {
+		w.spawn(fl, Item.class, newmob -> {
 
 			newmob.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
+			newmob.setItemStack(new ItemStack(Material.SKELETON_SKULL));
 			newmob.setGravity(false);
     		newmob.setCustomNameVisible(false);
     		newmob.setInvulnerable(true);
-    		newmob.setRemoveWhenFarAway(false);
     		newmob.setGravity(false);
-    		newmob.setMarker(true);
-    		newmob.setSmall(true);
-    		newmob.setInvisible(true);
-    		newmob.setCollidable(false);
-			newmob.setMetadata("cake"+rn, new FixedMetadataValue(RMain.getInstance(), true));
+			newmob.setMetadata("harvesterskull", new FixedMetadataValue(RMain.getInstance(), rn));
     		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), rn));
     		newmob.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
     		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
-    		newmob.setAI(false);
-    		newmob.getEquipment().setHelmet(new ItemStack(Material.RED_CANDLE_CAKE));
-    		if(a%4==0) {
-        		newmob.getEquipment().setHelmet(new ItemStack(Material.YELLOW_CANDLE_CAKE));
-        		newmob.setMetadata("yellowcake"+rn, new FixedMetadataValue(RMain.getInstance(), rn));
-    		}
-    		newmob.getEquipment().setItemInMainHand(new ItemStack(Material.COOKIE));
-    		newmob.getEquipment().setItemInOffHand(new ItemStack(Material.SUGAR));
 			
 			int t2 =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
+				int tick=0;
                 @Override
                 public void run() {
                 	
+                	if(tick%40==0) {
+                		changeFace(newmob);
+                	}
+                	
                 	Location pel = Holding.ale(pe).getLocation();
                 	Location arl = Holding.ale(newmob).getLocation();
-                	
-                	if(pel.getWorld().equals(arl.getWorld())) {
-                		Vector v = pel.clone().toVector().subtract(arl.clone().toVector()).clone().normalize().multiply(0.4);
-                		if(pel.distance(arl)>6) {
-                			v.multiply(10);
-                		}
-                		Holding.ale(newmob).setVelocity(v);
-                	}
-                	
-            		for(Entity e : newmob.getWorld().getNearbyEntities(newmob.getLocation().clone(), 1, 5, 1)) {
-						if(p!=e && e instanceof Player&& !(e.hasMetadata("fake"))) {
-							Player le = (Player)e;
-							if(Holding.ale(newmob).hasMetadata("yellowcake"+rn)) {
-								Bukkit.getScheduler().cancelTask(ast.get(newmob.getUniqueId()));
-			                	ast.remove(newmob.getUniqueId());
-			                	Holding.ale(newmob).remove();
-			                	newmob.getWorld().spawnParticle(Particle.HEART, newmob.getLocation(), 50,1,1,1);
-			                	pe.getWorld().playSound(pe.getLocation(), Sound.ENTITY_GENERIC_EAT, 1, 2);
-			                	pe.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 20, 20, false,false,false));
-			                	return;
-							}
-							
-							le.damage(5,p);
-						}
-                	}
+
+        	        Vector moveDirection = pel.toVector().subtract(arl.toVector());
+        	        double distance = moveDirection.length();  // 손가락과 중앙 사이의 거리 계산
+
+        	        if (distance > 0) {  // 충분히 멀리 있을 때만 이동
+        	            // 거리가 멀수록 빠르게, 가까워질수록 느리게: log(distance) 이용
+        	            double speed = Math.log(distance + 1) * 0.2;  // 거리 기반으로 속도 설정
+        	            moveDirection.normalize().multiply(speed);  // 속도 적용하여 이동
+        	            Holding.ale(newmob).setVelocity(moveDirection);
+        	        }
                 }
             }, 0,3);
 			ordt.put(rn, t2);
 			ast.put(newmob.getUniqueId(), t2);
 		});
+		
+	}
+	
+	final private void changeFace(Item i) {
 		
 	}
 
@@ -889,7 +807,6 @@ public class HarvesterSkills extends Summoned{
         		continue;
         	}
         	
-            smoker(pe.getLocation(), p, 500);
             
             final Location fl = pe.getLocation().clone();
 
@@ -901,7 +818,6 @@ public class HarvesterSkills extends Summoned{
                 @Override
                 public void run() {
                 	pe.playSound(p, Sound.BLOCK_CAKE_ADD_CANDLE, 1, 0);
-            		asSpawn(pe, rn, p, fl, a);
                 }
             }, 20); 
 			ordt.put(rn, t1);  
@@ -913,10 +829,10 @@ public class HarvesterSkills extends Summoned{
 		if(bool) {
             for(Player pe : NethercoreRaids.getheroes(p)) {
     			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-            		pe.sendMessage(ChatColor.BOLD+"피글린요리사: 그렇게는 배불리 먹지 못해!!!");
+            		pe.sendMessage(ChatColor.BOLD+"혼령의군주: 그렇게는 배불리 먹지 못해!!!");
     			}
     			else {
-            		pe.sendMessage(ChatColor.BOLD+"PiglinCook: That won't fill you up!!!");
+            		pe.sendMessage(ChatColor.BOLD+"LordOfPhantoms: That won't fill you up!!!");
     			}
         		Holding.invur(pe, 60l);
     			p.getWorld().playSound(pe.getLocation(), Sound.ENTITY_TNT_PRIMED, 1, 0);
@@ -964,10 +880,10 @@ public class HarvesterSkills extends Summoned{
         Holding.untouchable(p, 450l);
         for(Player pe : NethercoreRaids.getheroes(p)) {
 			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-        		pe.sendMessage(ChatColor.BOLD+"피글린요리사: 후식 시간이다!");
+        		pe.sendMessage(ChatColor.BOLD+"혼령의군주: 후식 시간이다!");
 			}
 			else {
-        		pe.sendMessage(ChatColor.BOLD+"PiglinCook: Dessert Time!");
+        		pe.sendMessage(ChatColor.BOLD+"LordOfPhantoms: Dessert Time!");
 			}
     		pe.teleport(rl.clone().add(0, 1.5, 0));
     		Holding.invur(pe, 40l);
@@ -1005,10 +921,10 @@ public class HarvesterSkills extends Summoned{
 		Bukkit.getWorld("NethercoreRaid").getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(e -> e.remove());
         for(Player pe : NethercoreRaids.getheroes(p)) {
 			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-        		pe.sendMessage(ChatColor.BOLD+"피글린요리사: 계산은... 필요 없다...");
+        		pe.sendMessage(ChatColor.BOLD+"혼령의군주: 계산은... 필요 없다...");
 			}
 			else {
-        		pe.sendMessage(ChatColor.BOLD+"PiglinCook: No need for payment... it's on the house...");
+        		pe.sendMessage(ChatColor.BOLD+"LordOfPhantoms: No need for payment... it's on the house...");
 			}
     		Holding.holding(pe, p, 300l);
     		p.removeMetadata("fake", RMain.getInstance());
@@ -1057,7 +973,19 @@ public class HarvesterSkills extends Summoned{
 			}
 	}
 	
-	
+
+	public void Ordeal(EntityPickupItemEvent d) 
+	{
+			if(d.getItem().hasMetadata("harvesterskull")) {
+				if(d.getEntity() instanceof Player) {
+					
+					d.setCancelled(true);
+					d.getEntity().getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_PHANTOM_SWOOP, 1, 0);
+					d.getItem().remove();
+					d.getEntity().setHealth(0);
+				}
+			}
+	}
 	
 	
 }

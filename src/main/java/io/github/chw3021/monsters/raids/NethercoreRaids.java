@@ -29,7 +29,6 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Breeze;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
-import org.bukkit.entity.Ghast;
 import org.bukkit.entity.Illusioner;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
@@ -81,10 +80,7 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 
 public class NethercoreRaids extends Summoned implements Listener {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8118960217265734839L;
+	private static final long serialVersionUID = -6949039354043906938L;
 	private static HashMap<UUID, Location> beforepl = new HashMap<UUID, Location>();
 	private Multimap<String, UUID> raider = ArrayListMultimap.create();
 	private static Multimap<String, UUID> heroes = ArrayListMultimap.create();
@@ -165,8 +161,6 @@ public class NethercoreRaids extends Summoned implements Listener {
 		Bukkit.getWorld("NethercoreRaid").getEntities().stream().filter(e -> e.hasMetadata("mirror"+rn)).forEach(e -> e.remove());
 		Bukkit.getWorld("NethercoreRaid").getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(e -> e.remove());
 
-		Bukkit.getWorld("NethercoreRaid").getEntities().stream().filter(e -> e.hasMetadata("redknightcharge"+rn)).forEach(e -> e.remove());
-		Bukkit.getWorld("NethercoreRaid").getEntities().stream().filter(e -> e.hasMetadata("redknightmagma"+rn)).forEach(e -> e.remove());
 
 		
 		ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
@@ -1521,6 +1515,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 	            		newmob.setPatrolLeader(false);
 	            		newmob.setSilent(true);
 	            		newmob.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 999999, 3, false, false));
+	            		newmob.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 999999, 3, false, false));
 	            		
 
 	            		final Object ht = getherotype(rn);

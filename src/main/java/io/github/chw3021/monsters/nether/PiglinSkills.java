@@ -2,7 +2,6 @@ package io.github.chw3021.monsters.nether;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -516,8 +515,6 @@ public class PiglinSkills extends Summoned{
 		w.spawnParticle(Particle.BLOCK_MARKER, pfl, 20,1,1,1, getBd(Material.FURNACE));
 		
 
-		
-        p.teleport(p.getLocation().clone().add(20, 0.3, 20));
         
 		int t =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
             @Override
@@ -600,7 +597,6 @@ public class PiglinSkills extends Summoned{
 	
 
 	private HashMap<UUID, Boolean> chargable = new HashMap<UUID, Boolean>();
-	@SuppressWarnings("unchecked")
 	public void charge(EntityDamageByEntityEvent d) 
 	{
 		if(d.getEntity().hasMetadata("volcanicboss")) 
@@ -652,7 +648,7 @@ public class PiglinSkills extends Summoned{
     				return;
     			}
     			p.getWorld().playSound(p.getLocation(), Sound.ENTITY_PIGLIN_ANGRY, 0.1f, 0f);
-    			p.getWorld().spawnParticle(Particle.TRIAL_SPAWNER_DETECTION_OMINOUS ,p.getLocation(), 50, 2,2,2,1);
+    			p.getWorld().spawnParticle(Particle.SMOKE ,p.getLocation(), 30, 2,2,2,1);
                 
                 final Location cl = p.getLocation().clone();
                 
@@ -913,7 +909,6 @@ public class PiglinSkills extends Summoned{
 
 	final private void cake(LivingEntity p, int a) {
 		String rn = p.getMetadata("raid").get(0).asString();
-		Bukkit.getWorld("NethercoreRaid").getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(e -> e.remove());
         for(Player pe : NethercoreRaids.getheroes(p)) {
         	
         	if(!pe.getWorld().equals(p.getWorld()) || pe.isDead()) {

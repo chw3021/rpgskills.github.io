@@ -1,3 +1,4 @@
+
 package io.github.chw3021.monsters.wild;
 
 import java.util.Random;

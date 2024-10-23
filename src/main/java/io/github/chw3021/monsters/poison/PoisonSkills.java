@@ -754,6 +754,10 @@ public class PoisonSkills extends Summoned{
 	private HashMap<UUID, Boolean> aimable = new HashMap<UUID, Boolean>();
 	
 	final private void aimshot(LivingEntity p, Location pl, Location pel) {
+		
+		if(!pl.getWorld().equals(pel.getWorld())) {
+			return;
+		}
 
         final ArrayList<Location> line1 = new ArrayList<Location>();
         
@@ -1252,8 +1256,6 @@ public class PoisonSkills extends Summoned{
             final Location pl = p.getEyeLocation().clone();
             final Location pel = pe.getEyeLocation().clone();
 
-            napalm(pel, p);
-            
 			AtomicInteger j = new AtomicInteger(3);
 			for(int i = 0; i <3; i++) {
                 int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -1322,8 +1324,11 @@ public class PoisonSkills extends Summoned{
             @Override
             public void run() {
 				Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(newmob -> {
-                	Bukkit.getScheduler().cancelTask(ast.get(newmob.getUniqueId()));
-                	ast.remove(newmob.getUniqueId());
+
+    				if(ast.containsKey(newmob.getUniqueId())) {
+                    	Bukkit.getScheduler().cancelTask(ast.get(newmob.getUniqueId()));
+                    	ast.remove(newmob.getUniqueId());
+    				}
                 	Holding.ale(newmob).remove();
 				});
 

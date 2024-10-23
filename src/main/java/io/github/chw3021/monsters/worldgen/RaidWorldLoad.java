@@ -57,8 +57,8 @@ public class RaidWorldLoad implements Listener {
 					rw.setGameRule(GameRule.MOB_GRIEFING, false);
 					rw.setGameRule(GameRule.SPAWN_RADIUS, 0);
 					rw.setGameRule(GameRule.SPAWN_CHUNK_RADIUS, 0);
-					for (int x = -10; x <= 10; x++) {
-					    for (int z = -10; z <= 10; z++) {
+					for (int x = -29999984; x <= -29999284; x+=100) {
+					    for (int z = -29999984; z <= 29999284; z+=100) {
 					        rw.loadChunk(x, z, true);
 					    }
 					}
@@ -104,8 +104,8 @@ public class RaidWorldLoad implements Listener {
 						rw.setGameRule(GameRule.MOB_GRIEFING, false);
 						rw.setGameRule(GameRule.SPAWN_RADIUS, 0);
 						rw.setGameRule(GameRule.SPAWN_CHUNK_RADIUS, 0);
-						for (int x = -10; x <= 10; x++) {
-						    for (int z = -10; z <= 10; z++) {
+						for (int x = -29999984; x <= -29999284; x+=100) {
+						    for (int z = -29999984; z <= 29999284; z+=100) {
 						        rw.loadChunk(x, z, true);
 						    }
 						}

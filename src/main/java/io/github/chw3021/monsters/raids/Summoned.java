@@ -874,7 +874,7 @@ public class Summoned extends Mobs implements Serializable{
 		raidpor.put(rn, eg.getBlock());
 
 		
-		TextDisplay as = le.getWorld().spawn(sl.clone().add(0, 2, 0), TextDisplay.class, a ->{
+		TextDisplay as = le.getWorld().spawn(sl.clone().add(0, 3, 0), TextDisplay.class, a ->{
 			a.setInvulnerable(true);
 			a.setGravity(false);
 			a.setAlignment(TextAlignment.CENTER);
@@ -956,7 +956,7 @@ public class Summoned extends Mobs implements Serializable{
 		raidpor.put(rn, eg.getBlock());
 
 
-		TextDisplay as = le.getWorld().spawn(sl.clone().add(0, 2, 0), TextDisplay.class, a ->{
+		TextDisplay as = le.getWorld().spawn(sl.clone().add(0, 3, 0), TextDisplay.class, a ->{
 			a.setInvulnerable(true);
 			a.setGravity(false);
 			a.setAlignment(TextAlignment.CENTER);

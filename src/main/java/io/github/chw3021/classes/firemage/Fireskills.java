@@ -421,7 +421,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
 		                    for(double angle=0.1; angle<Math.PI*2; angle += Math.PI/90) {
 		                    	ring.add(one.clone().add(one.getDirection().normalize().rotateAroundY(angle).multiply(3.5)));
 		                	} 
-			            	for(int i = 0; i <15; i++) {
+			            	for(int i = 0; i <5; i++) {
 			                    AtomicInteger j = new AtomicInteger();	
 			                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					                @Override
@@ -433,11 +433,11 @@ public class Fireskills extends Pak implements Serializable, Listener {
 								                public void run() {
 													p.getWorld().spawnParticle(Particle.FLAME, l, 3, 0.35,0.2,0.35,0);								                    
 								                }
-								            }, j.incrementAndGet()/60); 
+								            }, j.incrementAndGet()/20); 
 					                		
 					                	});
 					                }
-					            }, i*1); 	                    	
+					            }, i*4); 	                    	
 		                    }
 							for(int i = 0; i <15; i++) {
 			                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -586,7 +586,6 @@ public class Fireskills extends Pak implements Serializable, Listener {
     	}
     	ring.forEach(l -> {
 			tl.getWorld().spawnParticle(Particle.ASH, l, 2, 0.5,0.5,0.5,0);
-			tl.getWorld().spawnParticle(Particle.SMOKE, l, 1, 0.5,0.5,0.5,0);
 			tl.getWorld().spawnParticle(Particle.SMALL_FLAME, l, 2, 0.5,0.5,0.5,0.1);
     		
     	});
@@ -715,7 +714,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
 		                	
 							p.playSound(tl, Sound.BLOCK_FIRE_AMBIENT, 1, 0.5f);
 							p.playSound(tl, Sound.BLOCK_BLASTFURNACE_FIRE_CRACKLE, 1, 0);
-							tl.getWorld().spawnParticle(Particle.BLOCK_MARKER, tl, 15, 0.1,0.1,0.1,getBd(Material.FIRE));
+							tl.getWorld().spawnParticle(Particle.BLOCK_MARKER, tl, 4, 0.1,0.1,0.1,getBd(Material.FIRE));
 							for(int i = 0; i <20; i++) {
 			                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					                @Override
@@ -761,7 +760,6 @@ public class Fireskills extends Pak implements Serializable, Listener {
 			l.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l, 1, 0.1,0.1,0.1, 0); 
 			l.getWorld().spawnParticle(Particle.FLAME, l, 5, 0.15,0.15,0.15, 0); 
 			l.getWorld().spawnParticle(Particle.DRIPPING_LAVA, l, 2, 0.15,0.15,0.15, 0); 
-			l.getWorld().spawnParticle(Particle.ASH, l, 2, 0.15,0.14,0.15, 0.1); 
         	
         });
 	}
@@ -1207,7 +1205,6 @@ public class Fireskills extends Pak implements Serializable, Listener {
         			}
         		}
         		AtomicInteger j = new AtomicInteger();
-        		AtomicInteger k = new AtomicInteger();
 
 				p.playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 0.5f, 1.2f);
 				p.playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 0.5f, 0.6f);
@@ -1255,7 +1252,12 @@ public class Fireskills extends Pak implements Serializable, Listener {
 						p.playSound(tl, Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 0.78f, 0.8f);
 						p.playSound(tl, Sound.ENTITY_FIREWORK_ROCKET_LARGE_BLAST, 0.6f, 0.3f);
 						p.playSound(tl, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 0.6f, 0.2f);
-						
+
+	                	cir.forEach(l -> {
+							l.getWorld().spawnParticle(Particle.FLAME, l, 10, 3,3,3,0.4);
+							l.getWorld().spawnParticle(Particle.ASH, l, 5, 3,3,3,0.2);
+							
+	                	});
 	                }
 	            }, 30); 	
         		
@@ -1266,13 +1268,6 @@ public class Fireskills extends Pak implements Serializable, Listener {
 
 							p.playSound(tl, Sound.BLOCK_LAVA_EXTINGUISH, 0.2f, 0);
 							
-							final int ki = k.incrementAndGet();
-							
-		                	cir.forEach(l -> {
-								l.getWorld().spawnParticle(Particle.FLAME, l, 2*ki, 0.51*ki,0.51*ki,0.51*ki,0.4);
-								l.getWorld().spawnParticle(Particle.ASH, l, ki, 0.51*ki,0.51*ki,0.51*ki,0.2);
-								
-		                	});
 		                	
 							for(Entity e : tl.getWorld().getNearbyEntities(tl,6, 6, 6)) {
 	                    		if (e instanceof Player) 
@@ -1383,7 +1378,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
 			if(fb.getShooter() instanceof Player) {
 				Player p = (Player) fb.getShooter();
 				if(fb.hasMetadata("fb of"+p.getName())) {
-					fb.getWorld().spawnParticle(Particle.EXPLOSION, fb.getLocation(), 2,1,1,1);
+					fb.getWorld().spawnParticle(Particle.EXPLOSION, fb.getLocation(),1);
 					p.playSound(fb.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 1);
 					for(Entity n : fb.getNearbyEntities(4, 4, 4)) {
 						if(n!=p && n instanceof LivingEntity&& !(n.hasMetadata("fake"))&& !(n.hasMetadata("portal"))) {
@@ -1471,7 +1466,6 @@ public class Fireskills extends Pak implements Serializable, Listener {
 
 	final private void MagmaBlock(Player p, FallingBlock fallingb) {
 		Location tl = fallingb.getLocation();
-		tl.getWorld().spawnParticle(Particle.LAVA, tl, 5,5,5,5);
 		tl.getWorld().spawnParticle(Particle.FLAME, tl, 100,5,5,5);
 		tl.getWorld().spawnParticle(Particle.EXPLOSION, tl, 2,1,1,1);
 
@@ -2051,60 +2045,64 @@ public class Fireskills extends Pak implements Serializable, Listener {
 	
 	public void HotBodyre(EntityDamageByEntityEvent d) 
 	{		
-	    
-		if(d.getEntity() instanceof Player && d.getDamager() instanceof LivingEntity && d.getCause() != DamageCause.MAGIC && d.getCause() != DamageCause.THORNS) 
-		{
-		Player p = (Player)d.getEntity();
-		LivingEntity le = (LivingEntity)d.getDamager();
+		if(d.getCause() == DamageCause.MAGIC || d.getCause() == DamageCause.THORNS) {
+			return;
+		}
 		
-		
-			if(ClassData.pc.get(p.getUniqueId()) == 12 && le !=p) 
-			{	
-				if(!d.isCancelled()) {
-					if(le instanceof Player) {
-						if(ClassData.pc.getOrDefault(le.getUniqueId(),-1) == 12) {
-							return;
+	    if(d.getEntity() instanceof Player) {
+			Player p = (Player)d.getEntity();
+			if(p.getInventory().getItemInMainHand().getType()!=Material.BLAZE_ROD)
+			{
+				return;
+			}
+
+			if(ClassData.pc.get(p.getUniqueId()) == 12) 
+			{
+				if(d.getDamager() instanceof LivingEntity) 
+				{
+				LivingEntity le = (LivingEntity)d.getDamager();
+
+						if(!d.isCancelled() && le!=p) {
+							if(le instanceof Player) {
+								if(ClassData.pc.getOrDefault(le.getUniqueId(),-1) == 12) {
+									return;
+								}
+								le.damage(d.getDamage()*0.01,p);
+								
+							}
+							else {
+								le.damage(d.getDamage()*0.05,p);
+							}
 						}
-						p.setCooldown(Material.YELLOW_TERRACOTTA, 1);
-						le.damage(d.getDamage()*0.01,p);
+					
+				}
+				if(d.getDamager() instanceof Projectile) 
+				{
+				Projectile pr = (Projectile)d.getDamager();
+				if(pr.getShooter() instanceof LivingEntity) {
+					LivingEntity le = (LivingEntity) pr.getShooter();
+					
+					
+							if(!d.isCancelled() && le!=p) {
+								if(ClassData.pc.getOrDefault(le.getUniqueId(),-1) == 12) {
+									return;
+								}
+								if(le instanceof Player) {
+									le.damage(d.getDamage()*(0.01),p);
+									
+								}
+								else {
+									le.damage(d.getDamage()*0.05,p);
+									
+								}
+							}
 						
-					}
-					else {
-						p.setCooldown(Material.YELLOW_TERRACOTTA, 1);
-						le.damage(d.getDamage()*0.05,p);
-					}
+					}	
+					
 				}
 			}
-		}
-		if(d.getEntity() instanceof Player && d.getDamager() instanceof Projectile && d.getCause() != DamageCause.MAGIC && d.getCause() != DamageCause.THORNS) 
-		{
-		Player p = (Player)d.getEntity();
-		Projectile pr = (Projectile)d.getDamager();
-		if(pr.getShooter() instanceof LivingEntity) {
-			LivingEntity le = (LivingEntity) pr.getShooter();
-			
-			
-				if(ClassData.pc.get(p.getUniqueId()) == 12 && le !=p) 
-				{	
-					if(!d.isCancelled()) {
-						if(ClassData.pc.getOrDefault(le.getUniqueId(),-1) == 12) {
-							return;
-						}
-						if(le instanceof Player) {
-							p.setCooldown(Material.YELLOW_TERRACOTTA, 1);
-							le.damage(d.getDamage()*(0.01),p);
-							
-						}
-						else {
-							p.setCooldown(Material.YELLOW_TERRACOTTA, 1);
-							le.damage(d.getDamage()*0.05,p);
-							
-						}
-					}
-				}	
-			}	
-			
-		}
+				
+	    }
 	}
 
 	public void HotBody(EntityDamageEvent d) 

@@ -27,7 +27,6 @@ import org.bukkit.World.Environment;
 import org.bukkit.entity.Axolotl;
 import org.bukkit.entity.Drowned;
 import org.bukkit.entity.ElderGuardian;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Husk;
 import org.bukkit.entity.LivingEntity;
@@ -48,7 +47,6 @@ import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.event.world.AsyncStructureGenerateEvent;
 import org.bukkit.event.world.LootGenerateEvent;
 import org.bukkit.event.world.WorldLoadEvent;
-import org.bukkit.event.world.WorldUnloadEvent;
 import org.bukkit.generator.structure.GeneratedStructure;
 import org.bukkit.generator.structure.Structure;
 import org.bukkit.inventory.EntityEquipment;
@@ -276,6 +274,7 @@ public class NPCLoc implements Serializable, Listener{
 			sths.add(Structure.VILLAGE_SAVANNA);
 			sths.add(Structure.VILLAGE_SNOWY);
 			sths.add(Structure.VILLAGE_TAIGA);*/
+			
 		}
 		return sths;
 	}
@@ -460,70 +459,90 @@ public class NPCLoc implements Serializable, Listener{
 	    if (w.hasMetadata("fake") || w.hasMetadata("rpgraidworld") || !w.canGenerateStructures() || disabledWorlds.contains(w.getName())) {
 	        return;
 	    }
+		
 
 	    // 비동기 이벤트 안에서는 월드 변경 작업을 직접 하지 않고, 필요한 정보만 수집
-	    final Location stcl = new Location(w, ev.getChunkX(), 0, ev.getChunkZ());
-	    final Structure str = ev.getStructure();
+	    final Structure st = ev.getStructure();
 
+		if(w.getEnvironment() == Environment.NORMAL && (st == Structure.END_CITY || st == Structure.FORTRESS || st == Structure.BASTION_REMNANT || st == Structure.NETHER_FOSSIL || st == Structure.RUINED_PORTAL_NETHER)) {
+			return;
+		}
+		if(w.getEnvironment() == Environment.NETHER && (st != Structure.FORTRESS && st != Structure.NETHER_FOSSIL && st != Structure.BASTION_REMNANT && st != Structure.RUINED_PORTAL_NETHER)) {
+			return;
+		}
+		if(w.getEnvironment() == Environment.THE_END && st != Structure.END_CITY) {
+			return;
+		}
+	    final Location stl = new Location(w, ev.getChunkX(), 0, ev.getChunkZ());
+		
 	    // 동기 작업으로 넘겨서 실행
 	    Bukkit.getScheduler().runTask(RMain.getInstance(), () -> {
-		    strct2(w,stcl,str.getKey().getKey()).forEach(gs ->{
-		    	final Location stl = gs.getBoundingBox().getMax().toLocation(w);
-		        HashSet<HashMap<Location, String>> hs = new HashSet<>();
-		        HashMap<Location, String> hm = new HashMap<>();
-		        hm.put(stl, str.getKey().getKey());
+	    	HashSet<HashMap<Location, String>> hs = new HashSet<>();
+	        HashMap<Location, String> hm = new HashMap<>();
+	        hm.put(stl, st.getKey().getKey());
 
-		        hs.add(hm);
-		        saver(w, hs); // saver는 월드 데이터를 처리하는 메서드로 가정
+	        hs.add(hm);
+	        saver(w, hs); // saver는 월드 데이터를 처리하는 메서드로 가정
 
-		        Spawn(stl, str.getKey().getKey()); // Spawn은 구조물 생성을 처리하는 메서드로 가정
-		    });
+	        Spawn(stl, st.getKey().getKey()); // Spawn은 구조물 생성을 처리하는 메서드로 가정
+	    	
+//		    strct2(w,stcl,st.getKey().getKey()).forEach(gs ->{
+//		    	final Location stl = gs.getBoundingBox().getMax().toLocation(w);
+//		    	HashSet<HashMap<Location, String>> hs = new HashSet<>();
+//		        HashMap<Location, String> hm = new HashMap<>();
+//		        hm.put(stl, st.getKey().getKey());
+//
+//		        hs.add(hm);
+//		        saver(w, hs); // saver는 월드 데이터를 처리하는 메서드로 가정
+//
+//		        Spawn(stl, st.getKey().getKey()); // Spawn은 구조물 생성을 처리하는 메서드로 가정
+//		    });
 	    });
 	}
 
-	
-	@EventHandler	
-	public void despawning(WorldUnloadEvent ev) 
-	{
-		World w = ev.getWorld();
-		if(w.hasMetadata("fake")||w.hasMetadata("rpgraidworld") || !w.canGenerateStructures() || !w.canGenerateStructures()) {
-			return;
-		}
-		System.out.println(w.getName() +"'s NPC File Saving...");
-		if(PlayerLocs.containsKey(w.getUID())) {
-			HashSet<HashMap<Location, String>> hs = new HashSet<>();
-			PlayerLocs.get(w.getUID()).forEach(l -> {
-
-				strset().forEach(str -> {
-					Collection<GeneratedStructure> stlc = strct2(w, l, str.getKey().getKey());
-					if(stlc == null || stlc.isEmpty()) {
-						return;
-					}
-					HashMap<Location, String> hm = new HashMap<>();
-					stlc.forEach(stls -> {
-						Location stl = stls.getBoundingBox().getMax().toLocation(w);
-						hm.put(stl, str.getKey().getKey());
-					});
-					hs.add(hm);
-				});
-			});
-			saver(w,hs);
-		}
-		
-		/*if(NPCLocs.containsKey(w.getUID())) {
-			NPCLocs.get(w.getUID()).forEach(l -> {
-				for(Entity e : l.getChunk().getEntities()) {
-					e.remove();
-				};
-			});
-		}*/
-		npcloc.keySet().forEach(uid ->{
-			Entity entity = Bukkit.getEntity(uid);
-			if (entity != null) {
-			    entity.remove();
-			}
-		});
-	}
+//	
+//	@EventHandler	
+//	public void despawning(WorldUnloadEvent ev) 
+//	{
+//		World w = ev.getWorld();
+//		if(w.hasMetadata("fake")||w.hasMetadata("rpgraidworld") || !w.canGenerateStructures() || !w.canGenerateStructures()) {
+//			return;
+//		}
+//		System.out.println(w.getName() +"'s NPC File Saving...");
+//		if(PlayerLocs.containsKey(w.getUID())) {
+//			HashSet<HashMap<Location, String>> hs = new HashSet<>();
+//			PlayerLocs.get(w.getUID()).forEach(l -> {
+//
+//				strset().forEach(str -> {
+//					Collection<GeneratedStructure> stlc = strct2(w, l, str.getKey().getKey());
+//					if(stlc == null || stlc.isEmpty()) {
+//						return;
+//					}
+//					HashMap<Location, String> hm = new HashMap<>();
+//					stlc.forEach(stls -> {
+//						Location stl = stls.getBoundingBox().getMax().toLocation(w);
+//						hm.put(stl, str.getKey().getKey());
+//					});
+//					hs.add(hm);
+//				});
+//			});
+//			saver(w,hs);
+//		}
+//		
+//		/*if(NPCLocs.containsKey(w.getUID())) {
+//			NPCLocs.get(w.getUID()).forEach(l -> {
+//				for(Entity e : l.getChunk().getEntities()) {
+//					e.remove();
+//				};
+//			});
+//		}*/
+//		npcloc.keySet().forEach(uid ->{
+//			Entity entity = Bukkit.getEntity(uid);
+//			if (entity != null) {
+//			    entity.remove();
+//			}
+//		});
+//	}
 	
 	
 	public static HashMap<UUID,Location> npcloc = new HashMap<UUID,Location>();
@@ -1027,19 +1046,19 @@ public class NPCLoc implements Serializable, Listener{
     			ItemStack head = new ItemStack(Material.DRAGON_HEAD);
     			ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
     			LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
-    			chm.setColor(Color.BLACK);
+    			chm.setColor(Color.PURPLE);
     			chest.setItemMeta(chm);
     			ItemStack leg = new ItemStack(Material.LEATHER_LEGGINGS);
     			LeatherArmorMeta lem = (LeatherArmorMeta) leg.getItemMeta();
-    			lem.setColor(Color.BLACK);
+    			lem.setColor(Color.PURPLE);
     			leg.setItemMeta(lem);
     			ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
     			LeatherArmorMeta bom = (LeatherArmorMeta) boots.getItemMeta();
-    			bom.setColor(Color.BLACK);
+    			bom.setColor(Color.PURPLE);
     			boots.setItemMeta(bom);
 
-    			String reg = lang.contains("kr") ? "드래곤 나이트":"Dragon Knight";
-    			mnpc(w,lel, EntityType.STRAY, "endcity", reg,head,chest,leg,boots,new ItemStack(Material.DRAGON_BREATH),new ItemStack(Material.NETHERITE_SWORD));
+    			String reg = lang.contains("kr") ? "드래곤 사냥꾼":"Dragon Hunter";
+    			mnpc(w,lel, EntityType.DROWNED, "endcity", reg,head,chest,leg,boots,new ItemStack(Material.CROSSBOW),new ItemStack(Material.NETHERITE_SWORD));
     		
     	}
 		

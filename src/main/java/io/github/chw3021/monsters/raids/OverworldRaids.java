@@ -889,7 +889,6 @@ public class OverworldRaids extends Summoned implements Listener {
     			fiz = 29999984*2 - fiz;
     		}
         	p.setCooldown(Material.RAIL, 100);
-        	rw.loadChunk(fix, fiz);
     		Location spl = rw.getHighestBlockAt(fix, fiz).getLocation().clone().add(0, 1, 0);
     		
     		

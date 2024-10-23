@@ -164,10 +164,6 @@ public class JungleTempleQuest implements Listener {
 	        		mr2.setIngredients(poia);
 	        		mrl.add(mr2);
 	        		
-	        		MerchantRecipe mr3 = new MerchantRecipe(Elements.getpor(12,p), 1,64,true);
-	        		mr3.setIngredients(in1);
-	        		mrl.add(mr3);
-
 	        		Merchant mi = Bukkit.createMerchant(le.getCustomName());
 	        		mi.setRecipes(mrl);
 	        		p.openMerchant(mi, true);

@@ -194,6 +194,7 @@ public class CombatMode implements Serializable{
 	public void death(PlayerDeathEvent ev) {
 		if(isCombat(ev.getEntity())) {
 			ev.setKeepInventory(true);
+			ev.setKeepLevel(true);
 		}
 	}
 

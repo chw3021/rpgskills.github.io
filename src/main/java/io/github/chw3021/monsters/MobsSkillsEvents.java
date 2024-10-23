@@ -127,7 +127,7 @@ public class MobsSkillsEvents extends Mobs implements Listener, Serializable  {
 					return;
 				}
 			}
-			if(ev.getSpawnReason() == SpawnReason.PIGLIN_ZOMBIFIED) {
+			if(ev.getSpawnReason() == SpawnReason.PIGLIN_ZOMBIFIED || ev.getSpawnReason() == SpawnReason.BREEDING) {
 				return;
 			}
 			le.setCustomName(null);
