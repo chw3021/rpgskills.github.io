@@ -23,7 +23,6 @@ public class RaidWorldLoad implements Listener {
 	@EventHandler
 	public void raidworldload(PluginEnableEvent ev)   
     {
-		AtomicInteger j = new AtomicInteger();
 		if (Bukkit.getServer().getWorld("OverworldRaid") == null) {
 			WorldCreator rwc = new WorldCreator("OverworldRaid");
 			rwc.environment(Environment.NORMAL);
@@ -57,13 +56,9 @@ public class RaidWorldLoad implements Listener {
 					rw.setGameRule(GameRule.MOB_GRIEFING, false);
 					rw.setGameRule(GameRule.SPAWN_RADIUS, 0);
 					rw.setGameRule(GameRule.SPAWN_CHUNK_RADIUS, 0);
-					for (int x = -29999984; x <= -29999284; x+=100) {
-					    for (int z = -29999984; z <= 29999284; z+=100) {
-					        rw.loadChunk(x, z, true);
-					    }
-					}
+			        rw.loadChunk(0, 0, true);
 				}
-			}, j.incrementAndGet()*50);
+			},50);
 		}
 		return;
     }
@@ -104,11 +99,7 @@ public class RaidWorldLoad implements Listener {
 						rw.setGameRule(GameRule.MOB_GRIEFING, false);
 						rw.setGameRule(GameRule.SPAWN_RADIUS, 0);
 						rw.setGameRule(GameRule.SPAWN_CHUNK_RADIUS, 0);
-						for (int x = -29999984; x <= -29999284; x+=100) {
-						    for (int z = -29999984; z <= 29999284; z+=100) {
-						        rw.loadChunk(x, z, true);
-						    }
-						}
+				        rw.loadChunk(0, 0, true);
 					}
 				}, 50);
 			}

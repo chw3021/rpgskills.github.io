@@ -845,7 +845,71 @@ public class OverworldRaids extends Summoned implements Listener {
 		}, 50); 
 		ordt.put(rn, task);
 	}
-	
+
+	final private void diffGetter(Player p, String rn) {
+		int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() 
+            {
+        		if(Party.hasParty(p)) {
+        			if(Party.isOwner(p)) {
+        				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+        	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "난이도를 입력하세요 (최소: 0, 최대: "+RaidDifficulties.getMaxDifficulty(p, RaidCategory.OVERWORLD)+")").create());
+        	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BLUE + "5초안에 미입력 또는 올바른 입력이 아닐 시 도전 가능한 가장 높은 난이도로 자동 설정됩니다").create());
+        				}
+        				else {
+        	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "Enter difficulty level (min: 0, MAX: "+RaidDifficulties.getMaxDifficulty(p, RaidCategory.OVERWORLD)+")").create());
+        	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BLUE + "If you do not enter anything in 5 second or enter invalid inputs").create());
+        	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BLUE + "It will be automatically set to the highest level of difficulty you can challenge").create());
+
+        				}
+        				difen.put(rn, RaidDifficulties.getMaxDifficulty(p, RaidCategory.OVERWORLD));
+        				int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+        		            @Override
+        		            public void run() 
+        		            {
+        		            	OverworldRaidStart(p,rn,difen.get(rn));
+        		            	difent.remove(rn);
+        		            }
+        				}, 160); 
+        				difent.put(rn, task);
+
+        				Party.getMembers(Party.getParty(p)).forEach(pu -> {
+        					if(Bukkit.getPlayer(pu).getLocale().equalsIgnoreCase("ko_kr")) {
+        						Bukkit.getPlayer(pu).spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "파티장이 난이도를 선택중입니다").create());
+        					}
+        					else {
+        						Bukkit.getPlayer(pu).spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "Owner is selecting difficulty now").create());
+        					}
+        				});
+        			}
+        		}
+        		else {
+        			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+                    	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "난이도를 입력하세요 (최소: 0, 최대: "+RaidDifficulties.getMaxDifficulty(p, RaidCategory.OVERWORLD)+")").create());
+                    	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BLUE + "5초안에 미입력 또는 올바른 입력이 아닐 시 도전 가능한 가장 높은 난이도로 자동 설정됩니다").create());
+        			}
+        			else {
+                    	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "Enter difficulty level (min: 0, MAX: "+RaidDifficulties.getMaxDifficulty(p, RaidCategory.OVERWORLD)+")").create());
+                    	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BLUE + "If you do not enter anything in 5 second or enter invalid inputs").create());
+                    	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BLUE + "It will be automatically set to the highest level of difficulty you can challenge").create());
+
+        			}
+        			difen.put(rn, RaidDifficulties.getMaxDifficulty(p, RaidCategory.OVERWORLD));
+        			int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+        	            @Override
+        	            public void run() 
+        	            {
+        	            	OverworldRaidStart(p,rn,difen.get(rn));
+        	            	difent.remove(rn);
+        	            }
+        			}, 160); 
+        			difent.put(rn, task);
+        		}
+            }
+		}, 70); 
+		ordt.put(rn, task);
+	}
 	
 	@SuppressWarnings("deprecation")
 	@EventHandler
@@ -978,62 +1042,7 @@ public class OverworldRaids extends Summoned implements Listener {
     		timeout.put(rn, 420);
     		vil.put(rn, v.getUniqueId());
     		
-    		
-    		if(Party.hasParty(p)) {
-				if(Party.isOwner(p)) {
-					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "난이도를 입력하세요 (최소: 0, 최대: "+RaidDifficulties.getMaxDifficulty(p, RaidCategory.OVERWORLD)+")").create());
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BLUE + "5초안에 미입력 또는 올바른 입력이 아닐 시 도전 가능한 가장 높은 난이도로 자동 설정됩니다").create());
-					}
-					else {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "Enter difficulty level (min: 0, MAX: "+RaidDifficulties.getMaxDifficulty(p, RaidCategory.OVERWORLD)+")").create());
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BLUE + "If you do not enter anything in 5 second or enter invalid inputs").create());
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BLUE + "It will be automatically set to the highest level of difficulty you can challenge").create());
-
-					}
-					difen.put(rn, RaidDifficulties.getMaxDifficulty(p, RaidCategory.OVERWORLD));
-					int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			            @Override
-			            public void run() 
-			            {
-			            	OverworldRaidStart(p,rn,difen.get(rn));
-			            	difent.remove(rn);
-			            }
-					}, 160); 
-					difent.put(rn, task);
-
-					Party.getMembers(Party.getParty(p)).forEach(pu -> {
-						if(Bukkit.getPlayer(pu).getLocale().equalsIgnoreCase("ko_kr")) {
-							Bukkit.getPlayer(pu).spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "파티장이 난이도를 선택중입니다").create());
-						}
-						else {
-							Bukkit.getPlayer(pu).spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "Owner is selecting difficulty now").create());
-						}
-					});
-				}
-			}
-			else {
-				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "난이도를 입력하세요 (최소: 0, 최대: "+RaidDifficulties.getMaxDifficulty(p, RaidCategory.OVERWORLD)+")").create());
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BLUE + "5초안에 미입력 또는 올바른 입력이 아닐 시 도전 가능한 가장 높은 난이도로 자동 설정됩니다").create());
-				}
-				else {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "Enter difficulty level (min: 0, MAX: "+RaidDifficulties.getMaxDifficulty(p, RaidCategory.OVERWORLD)+")").create());
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BLUE + "If you do not enter anything in 5 second or enter invalid inputs").create());
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BLUE + "It will be automatically set to the highest level of difficulty you can challenge").create());
-
-				}
-				difen.put(rn, RaidDifficulties.getMaxDifficulty(p, RaidCategory.OVERWORLD));
-				int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		            @Override
-		            public void run() 
-		            {
-		            	OverworldRaidStart(p,rn,difen.get(rn));
-		            	difent.remove(rn);
-		            }
-				}, 160); 
-				difent.put(rn, task);
-			}
+    		diffGetter(p,rn);
     		
 		}
 	}
