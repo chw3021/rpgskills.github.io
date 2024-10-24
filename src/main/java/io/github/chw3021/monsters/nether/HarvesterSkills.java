@@ -645,7 +645,7 @@ public class HarvesterSkills extends Summoned{
 	}
 
 	
-	private HashMap<UUID, Boolean> stormable = new HashMap<UUID, Boolean>();
+	//private HashMap<UUID, Boolean> stormable = new HashMap<UUID, Boolean>();
 	
 	final private void storm(Location tl, LivingEntity p) {
 		

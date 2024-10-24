@@ -1089,7 +1089,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 		        		Location l = line.get(line.size()-1);
 		        		p.getWorld().spawnParticle(Particle.CRIT, l, 200,1,1,1);
 		        		p.getWorld().spawnParticle(Particle.ENCHANTED_HIT, l, 400,1,1,1);
-		        		p.getWorld().spawnParticle(Particle.SONIC_BOOM, l, 50,2,2,2);
+		        		p.getWorld().spawnParticle(Particle.GUST, l, 50,2,2,2);
 						p.setCooldown(CAREFUL, 3); p.swingMainHand();
 		        		
 		        		for (Entity e : l.getWorld().getNearbyEntities(l, 3, 3, 3))
@@ -1787,8 +1787,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 	                        }
 	                	}	
 	                	cir.forEach(l -> {
-	            			w.spawnParticle(Particle.CLOUD, l,1,0.02,0.02,0.02,0.3);
-	            			w.spawnParticle(Particle.ENCHANTED_HIT, l,5,0.02,0.02,0.02,0.1);
+	            			w.spawnParticle(Particle.GUST, l,1,0.02,0.02,0.02,0.3);
 	            	    });
 	    				
 	    				for(Entity e : p.getWorld().getNearbyEntities(tl,2.5, 2.5, 2.5)) {

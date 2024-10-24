@@ -509,7 +509,7 @@ public class Wreskills extends Pak implements Serializable {
 				             				{	
 												p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation().clone(), 350, 2,0.5,2,0 ,getBd(Material.DIRT));
 							                    p.playSound(p.getLocation(), Sound.ENTITY_GENERIC_BIG_FALL, 1f, 0);
-							                    p.playSound(p.getLocation(), Sound.ITEM_MACE_SMASH_GROUND_HEAVY, 1f, 0);
+							                    p.playSound(p.getLocation(), Sound.ITEM_MACE_SMASH_GROUND, 1f, 0);
 												
 								            }
 					            }, k.incrementAndGet()/30+5);
@@ -608,7 +608,7 @@ public class Wreskills extends Pak implements Serializable {
 				                		});
 										p.playSound(l, Sound.ENTITY_HOSTILE_BIG_FALL, 1f, 0);
 					                    p.playSound(p.getLocation(), Sound.ENTITY_FISHING_BOBBER_THROW, 0.2f, 2.0f);
-										p.playSound(p.getLocation(), Sound.ITEM_MACE_SMASH_GROUND_HEAVY, 1f, 0);
+										p.playSound(p.getLocation(), Sound.ITEM_MACE_SMASH_AIR, 1f, 0);
 										p.getWorld().spawnParticle(Particle.BLOCK, l, 550, 2,2,2,0 ,getBd(Material.STONE));
 										p.getWorld().spawnParticle(Particle.BLOCK, l, 550, 2,2,2,0 ,getBd(Material.DIRT));
 				                	}
@@ -988,12 +988,12 @@ public class Wreskills extends Pak implements Serializable {
 		double blocked = 0;
 		for(double doub = 0; doub <4; doub+=0.1) {
 			if(!pfl.clone().add(pv.clone().multiply(blocked)).getBlock().isPassable()){
-				final Location inl = pfl.clone().add(pv.clone().multiply(blocked));
+				final Location inl = pfl.clone().add(pv.clone().multiply(blocked)).clone().setDirection(new Vector(0,0,0));
 				line.add(inl.clone().setDirection(pv.rotateAroundY(angle).normalize().rotateAroundAxis(axis, angle).normalize()));
 			}
 			else {
 				blocked = doub;
-				final Location inl = pfl.clone().add(pv.clone().multiply(blocked));
+				final Location inl = pfl.clone().add(pv.clone().multiply(blocked)).clone().setDirection(new Vector(0,0,0));
 				line.add(inl.clone().setDirection(pv.rotateAroundY(angle).normalize().rotateAroundAxis(axis, angle).normalize()));
 			}
 			angle =+ rotationStep;
@@ -1026,8 +1026,7 @@ public class Wreskills extends Pak implements Serializable {
 						l.getWorld().spawnParticle(Particle.CHERRY_LEAVES, l, 5);
 						l.getWorld().spawnParticle(Particle.MYCELIUM, l, 5);
 		            	pa.teleport(l);
-		    			pa.setBodyPose(new EulerAngle(l.getX(),l.getY(),l.getZ()));
-		    			pa.setHeadPose(new EulerAngle(l.getX(),l.getY(),l.getZ()));
+		    			pa.setRotation(l.getYaw(), l.getPitch());
 		    			p.setSpectatorTarget(pa);
 
 						for(Entity e : p.getWorld().getNearbyEntities(p.getLocation(), 1.5, 1.5, 1.5)) {
