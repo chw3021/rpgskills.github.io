@@ -56,12 +56,11 @@ import com.google.common.util.concurrent.AtomicDouble;
 
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.monsters.raids.OverworldRaids;
-import io.github.chw3021.monsters.raids.Summoned;
 import io.github.chw3021.rmain.RMain;
 
 
 
-public class PoisonSkills extends Summoned{
+public class PoisonSkills extends OverworldRaids{
 
 	/**
 	 * 
@@ -1316,6 +1315,10 @@ public class PoisonSkills extends Summoned{
             public void run() {
                 ordeal.put(p.getUniqueId(), true);
 
+                for(Player pe : OverworldRaids.getheroes(p)) {
+            		pe.teleport(rl.clone().add(0, 1.5, 0));
+                }
+                
 				for(int i = 0; i <4; i++) {
                     int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		                @Override
@@ -1346,6 +1349,7 @@ public class PoisonSkills extends Summoned{
         		}
         		
         		ordeal.remove(p.getUniqueId());
+        		Holding.ale(p).teleport(getraidloc(Holding.ale(p)));
                 for(Player pe : OverworldRaids.getheroes(p)) {
         			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
                 		pe.sendMessage(ChatColor.BOLD+"종말론자: 게임 오버!!!");

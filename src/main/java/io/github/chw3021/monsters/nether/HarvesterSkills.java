@@ -2,11 +2,11 @@ package io.github.chw3021.monsters.nether;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -17,30 +17,21 @@ import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.block.BlockFace;
-import org.bukkit.entity.AreaEffectCloud;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.EvokerFangs;
-import org.bukkit.entity.FallingBlock;
+import org.bukkit.entity.Illusioner;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Snowball;
 import org.bukkit.entity.Spellcaster.Spell;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Phantom;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.AreaEffectCloudApplyEvent;
-import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDropItemEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.EntitySpellCastEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
@@ -52,14 +43,11 @@ import com.google.common.util.concurrent.AtomicDouble;
 
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.monsters.raids.NethercoreRaids;
-import io.github.chw3021.monsters.raids.OverworldRaids;
-import io.github.chw3021.monsters.raids.Summoned;
-import io.github.chw3021.party.Party;
 import io.github.chw3021.rmain.RMain;
 
 
 
-public class HarvesterSkills extends Summoned{
+public class HarvesterSkills extends NethercoreRaids{
 
 	/**
 	 * 
@@ -208,6 +196,9 @@ public class HarvesterSkills extends Summoned{
 		if(d.getEntity().hasMetadata("soulboss") && cursable.containsKey(d.getEntity().getUniqueId())) 
 		{
 			LivingEntity p = (LivingEntity)d.getEntity();
+			if(ordeal.containsKey(p.getUniqueId())) {
+				return;
+			}
 			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
 				p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
                 d.setCancelled(true);
@@ -379,7 +370,7 @@ public class HarvesterSkills extends Summoned{
 			int sec = 8;
 	
 	
-			if(p.hasMetadata("failed") || !handable.containsKey(p.getUniqueId())) {
+			if(p.hasMetadata("failed")|| ordeal.containsKey(p.getUniqueId()) || !handable.containsKey(p.getUniqueId())) {
 				return;
 			}
 			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
@@ -480,7 +471,7 @@ public class HarvesterSkills extends Summoned{
 
 			d.setCancelled(true);
 
-			if(p.hasMetadata("failed") || !phantom.containsKey(p.getUniqueId())) {
+			if(p.hasMetadata("failed")|| ordeal.containsKey(p.getUniqueId()) || !phantom.containsKey(p.getUniqueId())) {
 				return;
 			}
 					if(aicooldown.containsKey(p.getUniqueId()))
@@ -602,7 +593,7 @@ public class HarvesterSkills extends Summoned{
 	
 	final private void wave(LivingEntity p, Location tl) {
 
-		if(p.hasMetadata("failed") || !waveable.containsKey(p.getUniqueId())) {
+		if(p.hasMetadata("failed")|| ordeal.containsKey(p.getUniqueId()) || !waveable.containsKey(p.getUniqueId())) {
 			return;
 		}
 		if(rb8cooldown.containsKey(p.getUniqueId()))
@@ -687,7 +678,7 @@ public class HarvesterSkills extends Summoned{
                 ordealable.put(p.getUniqueId(), true);
 				return;
 			}
-			if(p.getTarget() == null|| !(p.getTarget() instanceof Player)||p.hasMetadata("failed")) {
+			if(p.getTarget() == null|| !(p.getTarget() instanceof Player)|| ordeal.containsKey(p.getUniqueId())||p.hasMetadata("failed")) {
 				return;
 			}
 			final Player tar = (Player) p.getTarget();
@@ -740,18 +731,24 @@ public class HarvesterSkills extends Summoned{
 		}
 	}
 
-	public static HashMap<UUID, Integer> count = new HashMap<UUID, Integer>();
 	private HashMap<UUID, Boolean> ordealable = new HashMap<UUID, Boolean>();
 	public static HashMap<UUID, Boolean> ordeal = new HashMap<UUID, Boolean>();//soulboss 패턴 시작 여부 저장
 
 	public HashMap<UUID, Integer> ast = new HashMap<UUID, Integer>();//ArmorStands damage 태스크 저장
 	public HashMap<UUID, Integer> asdt = new HashMap<UUID, Integer>();//ArmorStands remove 태스크 저장
 	
-	final private void itemSpawn(Player pe, String rn, LivingEntity p, final Location fl) {
+	final private void itemSpawn(String rn, LivingEntity p) {
+
+
+		Stream<Player> ps = NethercoreRaids.getheroes(p).stream();
+		Player pe = ps.findAny().get();
+    	if(!pe.getWorld().equals(p.getWorld()) || pe.isDead()) {
+    		return;
+    	}
+
+        final Location fl = pe.getLocation().clone().add(0, 2, 2);
 
 		final World w = fl.getWorld();
-		
-
 		w.spawn(fl, Item.class, newmob -> {
 
 			newmob.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
@@ -759,7 +756,6 @@ public class HarvesterSkills extends Summoned{
 			newmob.setGravity(false);
     		newmob.setCustomNameVisible(false);
     		newmob.setInvulnerable(true);
-    		newmob.setGravity(false);
 			newmob.setMetadata("harvesterskull", new FixedMetadataValue(RMain.getInstance(), rn));
     		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), rn));
     		newmob.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
@@ -769,9 +765,12 @@ public class HarvesterSkills extends Summoned{
 				int tick=0;
                 @Override
                 public void run() {
+            		ps.filter(rp -> pe!=rp && rp.isValid()).forEach(rp ->{
+            			Holding.holding(null, rp, 10l);
+            		});
                 	
-                	if(tick%40==0) {
-                		changeFace(newmob);
+                	if(tick++%40==0) {
+                		changeFace(newmob, tick);
                 	}
                 	
                 	Location pel = Holding.ale(pe).getLocation();
@@ -794,67 +793,112 @@ public class HarvesterSkills extends Summoned{
 		
 	}
 	
-	final private void changeFace(Item i) {
-		
+	final private void changeFace(Item i, int tick) {
+		i.getWorld().playSound(i.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 2);
+		i.getWorld().spawnParticle(Particle.SOUL, i.getLocation(), 5);
+		if((tick/40)%4==0) {
+			i.setItemStack(new ItemStack(Material.WITHER_SKELETON_SKULL));
+		}
+		else if((tick/40)%3==0) {
+			i.setItemStack(new ItemStack(Material.ZOMBIE_HEAD));
+		}
+		else if((tick/40)%2==0) {
+			i.setItemStack(new ItemStack(Material.PIGLIN_HEAD));
+		}
+		else {
+			i.setItemStack(new ItemStack(Material.SKELETON_SKULL));
+		}
 	}
 
-	final private void cake(LivingEntity p, int a) {
+	
+	private HashMap<UUID,UUID> getbossbytotem = new HashMap<>();
+	
+	final private void totems(LivingEntity p) {
 		String rn = p.getMetadata("raid").get(0).asString();
 		Bukkit.getWorld("NethercoreRaid").getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(e -> e.remove());
-        for(Player pe : NethercoreRaids.getheroes(p)) {
-        	
-        	if(!pe.getWorld().equals(p.getWorld()) || pe.isDead()) {
-        		continue;
-        	}
-        	
-            
-            final Location fl = pe.getLocation().clone();
+		
 
-			p.getWorld().playSound(pe.getLocation(), Sound.BLOCK_SMOKER_SMOKE, 1, 0);
-			p.getWorld().playSound(pe.getLocation(), Sound.BLOCK_HONEY_BLOCK_BREAK, 1, 0);
-			p.getWorld().spawnParticle(Particle.FALLING_HONEY, fl, 50,1,1,1);
+            Location rl = NethercoreRaids.getraidloc(p).clone();
+            World w = rl.getWorld();
             
-			int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-                @Override
-                public void run() {
-                	pe.playSound(p, Sound.BLOCK_CAKE_ADD_CANDLE, 1, 0);
-                }
-            }, 20); 
-			ordt.put(rn, t1);  
-        }
+			
+			for(int i = 0; i<4; i++) {
+
+				ItemStack head = new ItemStack(Material.SKELETON_SKULL);
+				
+				if(i==0) {
+					rl.add(4, 0.1, 4);
+					head.setType(Material.WITHER_SKELETON_SKULL);
+				}
+				else if(i==1) {
+					rl.add(-4, 0.1, 4);
+					head.setType(Material.ZOMBIE_HEAD);
+				}
+				else if(i==2) {
+					rl.add(-4, 0.1, -4);
+					head.setType(Material.PIGLIN_HEAD);
+				}
+				else if(i==3) {
+					rl.add(4, 0.1, -4);
+				}
+				
+				w.spawn(rl, Illusioner.class, newmob -> {
+
+					newmob.getEquipment().setHelmet(head);
+		    		newmob.setCustomNameVisible(false);
+					newmob.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
+					newmob.setMetadata("harvestertotem", new FixedMetadataValue(RMain.getInstance(), rn));
+		    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), rn));
+		    		newmob.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
+		    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
+					newmob.setGlowing(true);
+		    		newmob.setCanJoinRaid(false);
+		    		newmob.setPatrolTarget(null);
+		    		newmob.setPatrolLeader(false);
+		    		newmob.setSilent(true);
+		    		newmob.setAI(false);
+		    		newmob.setInvulnerable(true);
+		    		newmob.setCanPickupItems(true);
+		    		getbossbytotem.put(newmob.getUniqueId(), p.getUniqueId());
+				});
+			}
 	}
 	
 	final private boolean judge(LivingEntity p, String rn) {
-		Boolean bool = Bukkit.getWorld("NethercoreRaid").getEntities().stream().anyMatch(e -> e.hasMetadata("yellowcake"+rn));
+		Boolean bool = Bukkit.getWorld("NethercoreRaid").getEntities().stream().anyMatch(e -> e.hasMetadata("totem"+rn));
 		if(bool) {
             for(Player pe : NethercoreRaids.getheroes(p)) {
     			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-            		pe.sendMessage(ChatColor.BOLD+"혼령의군주: 그렇게는 배불리 먹지 못해!!!");
+            		pe.sendMessage(ChatColor.BOLD+"혼령의군주: 그들의 외침을 들어라...");
     			}
     			else {
-            		pe.sendMessage(ChatColor.BOLD+"LordOfPhantoms: That won't fill you up!!!");
+            		pe.sendMessage(ChatColor.BOLD+"LordOfPhantoms: Listen to them...");
     			}
         		Holding.invur(pe, 60l);
-    			p.getWorld().playSound(pe.getLocation(), Sound.ENTITY_TNT_PRIMED, 1, 0);
+    			p.getWorld().playSound(pe.getLocation(), Sound.AMBIENT_SOUL_SAND_VALLEY_ADDITIONS, 1, 2);
         	}
+			Bukkit.getWorld("NethercoreRaid").getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(newmob -> {
+            	if(ast.containsKey(newmob.getUniqueId())) {
+					Bukkit.getScheduler().cancelTask(ast.remove(newmob.getUniqueId()));
+            	}
+				if(getbossbytotem.containsKey(newmob.getUniqueId())) {
+					getbossbytotem.remove(newmob.getUniqueId());
+				}
+            	Holding.ale(newmob).remove();
+			});
+
+    		if(ordt.containsKey(rn)) {
+    			ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
+    		}
+            rb6cooldown.remove(p.getUniqueId());
 	        int t3 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	            @Override
 	            public void run() {
-					Bukkit.getWorld("NethercoreRaid").getEntities().stream().filter(e -> e.hasMetadata("cake"+rn)).forEach(newmob -> {
-	                	Bukkit.getScheduler().cancelTask(ast.get(newmob.getUniqueId()));
-	                	ast.remove(newmob.getUniqueId());
-	                	Holding.ale(newmob).remove();
-					});
-
-	        		if(ordt.containsKey(rn)) {
-	        			ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
-	        		}
 	        		
 	        		ordeal.remove(p.getUniqueId());
 	                for(Player pe : NethercoreRaids.getheroes(p)) {
 	            		pe.setHealth(0);
 	            	}
-	                rb6cooldown.remove(p.getUniqueId());
 	            }
 	        }, 20);
 			ordt.put(rn, t3);
@@ -865,6 +909,8 @@ public class HarvesterSkills extends Summoned{
 		return bool;
 	}
 
+	final long OrdealTime = 450;
+	
 	final private void ordeal(LivingEntity p, EntityDamageByEntityEvent d) {
 		String rn = p.getMetadata("raid").get(0).asString();
         if(ordt.containsKey(rn)) {
@@ -875,27 +921,35 @@ public class HarvesterSkills extends Summoned{
         Location rl = NethercoreRaids.getraidloc(p).clone();
 		p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
         d.setCancelled(true);
-    	p.teleport(rl.clone().add(30, 1, 25));
-        Holding.holding(null, p, 450l);
-        Holding.untouchable(p, 450l);
+    	p.teleport(rl.clone().add(0, 1, 0));
+        Holding.holding(null, p, OrdealTime);
+        Holding.untouchable(p, OrdealTime);
         for(Player pe : NethercoreRaids.getheroes(p)) {
 			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-        		pe.sendMessage(ChatColor.BOLD+"혼령의군주: 후식 시간이다!");
+        		pe.sendMessage(ChatColor.BOLD+"혼령의군주: 원혼들이 날뛰는 구나..");
 			}
 			else {
-        		pe.sendMessage(ChatColor.BOLD+"LordOfPhantoms: Dessert Time!");
+        		pe.sendMessage(ChatColor.BOLD+"LordOfPhantoms: The vengeful spirits are running wild...");
 			}
-    		pe.teleport(rl.clone().add(0, 1.5, 0));
+    		pe.teleport(rl.clone().add(2, 1.5, 2));
     		Holding.invur(pe, 40l);
         }
-        
-        AtomicInteger j = new AtomicInteger(1);
-        int t1 = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
+
+		p.getWorld().playSound(p.getLocation(), Sound.AMBIENT_SOUL_SAND_VALLEY_MOOD, 1, 2);
+		
+		
+        int t1 = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
             @Override
             public void run() {
-            	cake(p, j.getAndIncrement());
+        		p.getWorld().playSound(p.getLocation(), Sound.BLOCK_TRIAL_SPAWNER_SPAWN_MOB, 1, 0);
+        		p.getWorld().spawnParticle(Particle.TRIAL_SPAWNER_DETECTION, p.getLocation(), 100, 3,2,3);
+        		p.getWorld().spawnParticle(Particle.OMINOUS_SPAWNING, p.getLocation(), 100, 3,2,3);
+        		p.getWorld().spawnParticle(Particle.TRIAL_SPAWNER_DETECTION_OMINOUS, p.getLocation(), 100, 3,2,3);
+        		p.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, p.getLocation(), 100, 3,2,3);
+        		totems(p);
+        		itemSpawn(rn,p);
             }
-        }, 20, 20);
+        }, 40);
 		ordt.put(rn, t1);
 		
         int t3 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -903,7 +957,7 @@ public class HarvesterSkills extends Summoned{
             public void run() {
             	judge(p,rn);
             }
-        }, 450);
+        }, OrdealTime);
 		ordt.put(rn, t3);
 	}
 	
@@ -918,13 +972,24 @@ public class HarvesterSkills extends Summoned{
     	Holding.reset(Holding.ale(p));
     	Holding.ale(p).setMetadata("failed", new FixedMetadataValue(RMain.getInstance(),true));
 		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
-		Bukkit.getWorld("NethercoreRaid").getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(e -> e.remove());
-        for(Player pe : NethercoreRaids.getheroes(p)) {
+		p.getWorld().playSound(p.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_DEPLETE, 1, 2);
+		p.getWorld().spawnParticle(Particle.FLASH, p.getLocation(), 10, 2,2,2);
+
+		Bukkit.getWorld("NethercoreRaid").getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(newmob -> {
+        	if(ast.containsKey(newmob.getUniqueId())) {
+				Bukkit.getScheduler().cancelTask(ast.remove(newmob.getUniqueId()));
+        	}
+			if(getbossbytotem.containsKey(newmob.getUniqueId())) {
+				getbossbytotem.remove(newmob.getUniqueId());
+			}
+        	Holding.ale(newmob).remove();
+		});
+		for(Player pe : NethercoreRaids.getheroes(p)) {
 			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-        		pe.sendMessage(ChatColor.BOLD+"혼령의군주: 계산은... 필요 없다...");
+        		pe.sendMessage(ChatColor.BOLD+"혼령의군주: 네 운명이... 달라지지 않을 거다...!");
 			}
 			else {
-        		pe.sendMessage(ChatColor.BOLD+"LordOfPhantoms: No need for payment... it's on the house...");
+        		pe.sendMessage(ChatColor.BOLD+"LordOfPhantoms: Your fate... will not change...!");
 			}
     		Holding.holding(pe, p, 300l);
     		p.removeMetadata("fake", RMain.getInstance());
@@ -977,12 +1042,54 @@ public class HarvesterSkills extends Summoned{
 	public void Ordeal(EntityPickupItemEvent d) 
 	{
 			if(d.getItem().hasMetadata("harvesterskull")) {
+				Item it = d.getItem();
+				d.setCancelled(true);
 				if(d.getEntity() instanceof Player) {
-					
-					d.setCancelled(true);
-					d.getEntity().getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_PHANTOM_SWOOP, 1, 0);
-					d.getItem().remove();
-					d.getEntity().setHealth(0);
+					Player p = (Player) d.getEntity();
+					String rn =  getheroname(p);
+					if(rn.equals(it.getMetadata("harvesterskull").get(0).asString())) {
+						it.remove();
+						p.playSound(p, Sound.ENTITY_PHANTOM_SWOOP, 1, 0);
+						p.setHealth(0);
+						if(ast.containsKey(it.getUniqueId())) {
+							Bukkit.getScheduler().cancelTask(ast.remove(it.getUniqueId()));
+	                	}
+					}
+				}
+				else if(d.getEntity().hasMetadata("harvestertotem")){
+					LivingEntity le = d.getEntity();
+					LivingEntity p = (LivingEntity) Bukkit.getEntity(getbossbytotem.get(le.getUniqueId()));
+					String rn = le.getMetadata("harvestertotem").get(0).asString();
+					if(rn.equals(it.getMetadata("harvesterskull").get(0).asString())) {
+						it.remove();
+						if(ast.containsKey(it.getUniqueId())) {
+							Bukkit.getScheduler().cancelTask(ast.remove(it.getUniqueId()));
+	                	}
+						itemSpawn(rn,p);
+						
+						if(it.getItemStack().getType() == le.getEquipment().getHelmet().getType()) {
+							le.remove();
+							le.getWorld().playSound(le.getLocation(), Sound.ENTITY_BREEZE_INHALE, 1.0f, 0f);
+							le.getWorld().spawnParticle(Particle.TRIAL_OMEN, le.getLocation(), 150, 2,2,2);
+							getbossbytotem.remove(le.getUniqueId());
+							if(!getbossbytotem.containsValue(p.getUniqueId())) {
+								bossfailed(p,rn);
+							}
+						}
+						else {
+							le.getWorld().playSound(le.getLocation(), Sound.ENTITY_BREEZE_WIND_BURST, 1.0f, 0f);
+							le.getWorld().spawnParticle(Particle.SCULK_SOUL, le.getLocation(), 150, 2,2,2);
+							for(Entity e : le.getNearbyEntities(3, 3, 3)) {
+								if(le!=e && e instanceof LivingEntity) {
+									LivingEntity pe = (LivingEntity)e;
+									pe.damage(15,p);
+									Holding.holding(null, pe, 40l);
+								}
+							}
+						}
+						
+						
+					}
 				}
 			}
 	}

@@ -63,6 +63,7 @@ import io.github.chw3021.monsters.hyper.HyperSkills;
 import io.github.chw3021.monsters.mountains.MountainsMobsSpawn;
 import io.github.chw3021.monsters.mountains.MountainsRaids;
 import io.github.chw3021.monsters.mountains.MountainsSkills;
+import io.github.chw3021.monsters.nether.HarvesterSkills;
 import io.github.chw3021.monsters.nether.NetherMobsSpawn;
 import io.github.chw3021.monsters.nether.NetherRaids;
 import io.github.chw3021.monsters.nether.PiglinSkills;
@@ -373,7 +374,11 @@ public class MobsSkillsEvents extends Mobs implements Listener, Serializable  {
 		PiglinSkills.getInstance().charge(d);
 		PiglinSkills.getInstance().smoker(d);
 		PiglinSkills.getInstance().Ordeal(d);
-		
+
+		HarvesterSkills.getInstance().cursed(d);
+		HarvesterSkills.getInstance().hand(d);
+		HarvesterSkills.getInstance().storm(d);
+		HarvesterSkills.getInstance().Ordeal(d);
 	}
 
 
@@ -462,6 +467,9 @@ public class MobsSkillsEvents extends Mobs implements Listener, Serializable  {
 		HyperSkills.getInstance().RayCannon(d);
 		
 		PoisonSkills.getInstance().spell(d);
+
+		HarvesterSkills.getInstance().phantom(d);
+		HarvesterSkills.getInstance().wave(d);
 	}
 	
 
@@ -516,6 +524,8 @@ public class MobsSkillsEvents extends Mobs implements Listener, Serializable  {
 		RedSkills.getInstance().Sweep(e);
 
 		PiglinSkills.getInstance().bowshoot(e);
+		
+		HarvesterSkills.getInstance().bowshoot(e);
 	}
 		
 

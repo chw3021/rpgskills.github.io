@@ -155,6 +155,9 @@ public class PiglinSkills extends Summoned{
 		if(d.getEntity().hasMetadata("volcanicboss") && grillable.containsKey(d.getEntity().getUniqueId())) 
 		{
 			LivingEntity p = (LivingEntity)d.getEntity();
+			if(ordeal.containsKey(p.getUniqueId())) {
+				return;
+			}
 			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
 				p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
                 d.setCancelled(true);
@@ -469,7 +472,10 @@ public class PiglinSkills extends Summoned{
 		{
 			Mob p = (Mob)d.getEntity();
 			int sec = 8;
-	
+
+			if(ordeal.containsKey(p.getUniqueId())) {
+				return;
+			}
 	
 			if(p.hasMetadata("failed") || !furable.containsKey(p.getUniqueId())) {
 				return;
@@ -562,6 +568,9 @@ public class PiglinSkills extends Summoned{
 			Mob p = (Mob)d.getEntity();
 			int sec = 8;
 
+			if(ordeal.containsKey(p.getUniqueId())) {
+				return;
+			}
 
 			if(p.hasMetadata("failed") || !porkable.containsKey(p.getUniqueId())) {
 				return;
@@ -692,6 +701,9 @@ public class PiglinSkills extends Summoned{
 	
 	final private void charge(LivingEntity p, Location tl) {
 
+		if(ordeal.containsKey(p.getUniqueId())) {
+			return;
+		}
 		if(p.hasMetadata("failed") || !chargable.containsKey(p.getUniqueId())) {
 			return;
 		}
@@ -772,6 +784,9 @@ public class PiglinSkills extends Summoned{
 			int sec = 4;
 	        
 
+			if(ordeal.containsKey(p.getUniqueId())) {
+				return;
+			}
 			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
 				p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
                 d.setCancelled(true);
@@ -985,7 +1000,7 @@ public class PiglinSkills extends Summoned{
         Location rl = NethercoreRaids.getraidloc(p).clone();
 		p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
         d.setCancelled(true);
-    	p.teleport(rl.clone().add(30, 1, 25));
+    	p.teleport(rl.clone().add(0, 1, 0));
         Holding.holding(null, p, 450l);
         Holding.untouchable(p, 450l);
         for(Player pe : NethercoreRaids.getheroes(p)) {
@@ -1025,6 +1040,8 @@ public class PiglinSkills extends Summoned{
 		}
 		ordeal.remove(p.getUniqueId());
     	p.playHurtAnimation(0);
+		p.getWorld().playSound(p.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_DEPLETE, 1, 2);
+		p.getWorld().spawnParticle(Particle.FLASH, p.getLocation(), 10, 2,2,2);
     	Holding.reset(Holding.ale(p));
     	Holding.ale(p).setMetadata("failed", new FixedMetadataValue(RMain.getInstance(),true));
 		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
