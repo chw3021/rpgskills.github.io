@@ -42,9 +42,7 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.AbstractVillager;
 import org.bukkit.entity.Arrow;
-import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Breeze;
-import org.bukkit.entity.Display.Brightness;
 import org.bukkit.entity.Enderman;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -1245,7 +1243,6 @@ public class Snipskills extends Pak implements Serializable, Listener {
 		if (f.getEntity().getShooter() instanceof Player && f.getEntity().hasMetadata("flare")) {
 		    Firework fr = f.getEntity();
 		    Player p = (Player) fr.getShooter();
-		    World w = fr.getWorld();
 		    for (Entity e : f.getEntity().getNearbyEntities(30, 30, 30)) {
 		        if (e instanceof Player) {
 		            Player p1 = (Player) e;

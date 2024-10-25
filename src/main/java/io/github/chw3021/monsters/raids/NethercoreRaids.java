@@ -547,7 +547,7 @@ public class NethercoreRaids extends Summoned implements Listener {
     		ItemMeta mmf = mainf.getItemMeta();
     		mmf.setCustomModelData(8008);
     		mainf.setItemMeta(mmf);
-
+    		
     		Bukkit.getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
     		    @Override
     		    public void run() {
@@ -570,8 +570,12 @@ public class NethercoreRaids extends Summoned implements Listener {
     		return newmob;
 		}
 		else if(in == 2) {
+
+    		ItemStack hel = new ItemStack(Material.WARPED_NYLIUM);
+    		hel.addUnsafeEnchantment(Enchantment.KNOCKBACK, 3);
+    		
     		String reg = pm.getLocale().equalsIgnoreCase("ko_kr") ? "뒤틀린정령":"WarpedDemon";
-    		Breeze newmob = (Breeze) MobspawnLoc(esl, ChatColor.DARK_BLUE+reg, dif1, null, null, null, null, null, null, EntityType.BREEZE);
+    		Breeze newmob = (Breeze) MobspawnLoc(esl, ChatColor.DARK_BLUE+reg, dif1, hel, null, null, null, null, null, EntityType.BREEZE);
     		newmob.setGlowing(true);
     		newmob.getEquipment().setBootsDropChance(0);
     		newmob.getEquipment().setChestplateDropChance(0);
@@ -1475,6 +1479,84 @@ public class NethercoreRaids extends Summoned implements Listener {
 	}
 	
 
+	@EventHandler
+	public void WarpedBoss2(EntityDeathEvent d) 
+	{	
+		if(d.getEntity().hasMetadata("bosswave1") && d.getEntity().hasMetadata("warpedboss ") && raider.containsValue(d.getEntity().getUniqueId())) {
+			LivingEntity le = d.getEntity();
+			String rn = le.getMetadata("raid").get(0).asString();
+			raider.remove(rn, le.getUniqueId());
+			if(raider.get(rn).size()<=0){
+				bossphase2(le);
+				Location spl = raidloc.get(rn).clone();
+	        	spl.getWorld().spawnParticle(Particle.RAID_OMEN, d.getEntity().getLocation(), 1000,1,1,1);
+	        	spl.getWorld().spawnParticle(Particle.WARPED_SPORE, d.getEntity().getLocation(), 1000,1,1,1);
+	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.AMBIENT_WARPED_FOREST_MOOD, 1, 2);
+	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.PARTICLE_SOUL_ESCAPE, 1, 0);
+	            int rat =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	                @Override
+	                public void run() {
+
+	                	Location esl = d.getEntity().getLocation().clone().add(0,0.5, 0);
+
+
+	            		ItemStack hel = new ItemStack(Material.WARPED_NYLIUM);
+	            		hel.addUnsafeEnchantment(Enchantment.KNOCKBACK, 3);
+	            		
+	            		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "왜곡된망령":"DistortedWraith";
+	            		Breeze newmob = (Breeze) MobspawnLoc(esl, ChatColor.DARK_BLUE+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, hel, null, null, null, null, null, EntityType.BREEZE);
+	            		newmob.setGlowing(true);
+	            		newmob.getEquipment().setBootsDropChance(0);
+	            		newmob.getEquipment().setChestplateDropChance(0);
+	            		newmob.getEquipment().setHelmetDropChance(0);
+	            		newmob.getEquipment().setItemInMainHandDropChance(0);
+	            		newmob.getEquipment().setItemInOffHandDropChance(0);
+	            		newmob.getEquipment().setLeggingsDropChance(0);;
+	            		newmob.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 999999, 3, false, false));
+	            		
+	            		
+	    	    		newmob.setGlowing(true);
+	            		newmob.setMetadata("warpedboss", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		newmob.setMetadata("ruined", new FixedMetadataValue(RMain.getInstance(), true));
+	            		newmob.setMetadata("nether", new FixedMetadataValue(RMain.getInstance(), true));
+	
+	    	    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), le.getMetadata("boss").get(0).asDouble()));
+	    	    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
+	    	    		newmob.setMetadata("finalboss", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		newmob.setLootTable(null);
+	    	    		
+	    	    		
+	    	    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.4);
+	    	    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+	    	    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		newmob.setRemoveWhenFarAway(false);
+	    	    		raider.put(rn, newmob.getUniqueId());
+	    	    		
+	
+	
+	    	    		bossbargen("DistortedWraith", rn, newmob);
+	    	    		
+	    	    		targeting(rn);
+	            		
+	                	heroes.get(rn).forEach(pu -> {
+							if(Bukkit.getPlayer(pu).getLocale().equalsIgnoreCase("ko_kr")) {
+		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "토벌작전 2단계"), null, 5, 69, 5);
+				        		Bukkit.getPlayer(pu).playSound(spl, Sound.EVENT_RAID_HORN, 1, 1);
+					    		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + "남은 목숨 "+ String.valueOf(lives.getOrDefault(rn, 0)));
+							}
+							else {
+		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "PHASE 2"), null, 5, 69, 5);
+				        		Bukkit.getPlayer(pu).playSound(spl, Sound.AMBIENT_CRIMSON_FOREST_ADDITIONS, 1, 1);
+		                		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + String.valueOf(lives.getOrDefault(rn, 0)) + "lives Left");
+							}
+	                	});
+	                }
+	            }, 50); 
+	            raidt.put(rn, rat);
+			}
+		}
+	}
+	
 	@EventHandler
 	public void HarvesterBoss2(EntityDeathEvent d) 
 	{	
