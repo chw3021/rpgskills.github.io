@@ -26,6 +26,7 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
@@ -1008,6 +1009,8 @@ public class Illskills extends Pak implements Serializable {
 							lesl.add(lel);
 						}
 					}
+					Collections.shuffle(lesl);
+					
 					les.forEach(e -> {
 						LivingEntity le = (LivingEntity)e;
 						atk1(1.1*(1+isd.Distortion.get(p.getUniqueId())*0.05), p, le);

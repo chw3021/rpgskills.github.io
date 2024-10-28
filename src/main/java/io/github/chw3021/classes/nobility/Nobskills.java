@@ -24,9 +24,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -265,7 +267,20 @@ public class Nobskills extends Pak implements Serializable, Listener {
 		}
 		return false;
 	}
-
+	
+	private void spawnAxolotl(Player p, Location l, Variant variant, Vector offset) {
+	    Axolotl axolotl = (Axolotl) p.getWorld().spawnEntity(l.clone().add(offset), EntityType.AXOLOTL);
+	    axolotl.setInvulnerable(true);
+	    axolotl.setCustomName(p.getName());
+	    axolotl.setMetadata("untargetable", new FixedMetadataValue(RMain.getInstance(), p.getName()));
+	    axolotl.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+	    axolotl.setMetadata("rob" + p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+	    axolotl.setAdult();
+	    axolotl.setBreed(false);
+	    axolotl.setVariant(variant);
+	    axolotl.setCollidable(false);
+	    axs.put(p.getUniqueId(), axolotl);
+	}
 	
 	public void Transition(ProjectileHitEvent d) 
 	{
@@ -318,63 +333,17 @@ public class Nobskills extends Pak implements Serializable, Listener {
 						}
 					}
 					if(Proficiency.getpro(p)>=1) {
-						Axolotl cs = (Axolotl) t.getWorld().spawnEntity(l, EntityType.AXOLOTL);
-						cs.setInvulnerable(true);
-						cs.setCustomName(p.getName());
-						cs.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-						cs.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-						cs.setAdult();
-						cs.setBreed(false);
-						cs.setVariant(Variant.WILD);
-						cs.setCollidable(false);
-						axs.put(p.getUniqueId(), cs);
-						Axolotl cs1 = (Axolotl) t.getWorld().spawnEntity(l.clone().add(1, 1, 1), EntityType.AXOLOTL);
-						cs1.setInvulnerable(true);
-						cs1.setCustomName(p.getName());
-						cs1.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-						cs1.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-						cs1.setAdult();
-						cs1.setBreed(false);
-						cs1.setVariant(Variant.BLUE);
-						cs1.setCollidable(false);
-						axs.put(p.getUniqueId(), cs1);
-						Axolotl cs2 = (Axolotl) t.getWorld().spawnEntity(l.clone().add(-1, 1, 1), EntityType.AXOLOTL);
-						cs2.setInvulnerable(true);
-						cs2.setCustomName(p.getName());
-						cs2.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-						cs2.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-						cs2.setAdult();
-						cs2.setBreed(false);
-						cs2.setVariant(Variant.CYAN);
-						cs2.setCollidable(false);
-						axs.put(p.getUniqueId(), cs2);
-						Axolotl cs3 = (Axolotl) t.getWorld().spawnEntity(l.clone().add(1, 1, -1), EntityType.AXOLOTL);
-						cs3.setInvulnerable(true);
-						cs3.setCustomName(p.getName());
-						cs3.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-						cs3.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-						cs3.setAdult();
-						cs3.setBreed(false);
-						cs3.setVariant(Variant.GOLD);
-						cs3.setCollidable(false);
-						axs.put(p.getUniqueId(), cs3);
-						Axolotl cs4 = (Axolotl) t.getWorld().spawnEntity(l.clone().add(-1, 1, -1), EntityType.AXOLOTL);
-						cs4.setInvulnerable(true);
-						cs4.setCustomName(p.getName());
-						cs4.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-						cs4.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-						cs4.setAdult();
-						cs4.setBreed(false);
-						cs4.setVariant(Variant.LUCY);
-						cs4.setCollidable(false);
-						axs.put(p.getUniqueId(), cs4);
-                		Collection<Entity> ce = t.getWorld().getNearbyEntities(l,6, 6, 6);
-                		if(ce.stream().anyMatch(e -> e.hasMetadata("boss"))) {
-                			ce.removeIf(e -> !e.hasMetadata("boss"));
-                		}
-                		else if(ce.stream().anyMatch(e -> e.hasMetadata("leader"))) {
-                			ce.removeIf(e -> !e.hasMetadata("leader"));
-                		}
+						
+						spawnAxolotl(p, l, Variant.WILD, new Vector(0, 0, 0));
+						spawnAxolotl(p, l, Variant.BLUE, new Vector(1, 1, 1));
+						spawnAxolotl(p, l, Variant.CYAN, new Vector(-1, 1, 1));
+						spawnAxolotl(p, l, Variant.GOLD, new Vector(1, 1, -1));
+						spawnAxolotl(p, l, Variant.LUCY, new Vector(-1, 1, -1));
+						
+                		List<Entity> ce =  t.getWorld().getNearbyEntities(l,6, 6, 6).stream().filter(e -> e instanceof LivingEntity)
+                		   .sorted(Comparator.comparingDouble(e -> ((LivingEntity) e).getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()))
+                		   .toList();
+                		
 	                	for(Mob m: axs.get(p.getUniqueId())) {
 							for(Entity e : ce) {
 
@@ -458,7 +427,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 			        	            		if ((!(e == p))&& e instanceof LivingEntity&& !e.hasMetadata("fake") && !e.hasMetadata("portal")) 
 			        						{
 			        								LivingEntity le = (LivingEntity)e;
-			        			                	atk1(0.2*(1+fsd.Assault.get(p.getUniqueId())*0.026), p, le);
+			        			                	atk1(0.2*(1+fsd.Transition.get(p.getUniqueId())*0.026), p, le);
 			        			                	Holding.holding(p, le, 5l);
 			        						}
 										}
@@ -1272,7 +1241,18 @@ public class Nobskills extends Pak implements Serializable, Listener {
 		
 		}
 	}
-	
+	private void spawnEntity(Player p, Location baseLocation, EntityType entityType, Vector offset) {
+	    Mob entity = (Mob) p.getWorld().spawnEntity(baseLocation.add(offset), entityType);
+	    entity.setInvulnerable(true);
+	    entity.setAI(false);
+	    entity.setCollidable(false);
+	    entity.setCustomName(p.getName());
+	    entity.setMetadata("untargetable", new FixedMetadataValue(RMain.getInstance(), p.getName()));
+	    entity.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+	    entity.setMetadata("rob" + p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+	    as.put(p.getUniqueId(), entity);
+	}
+
 	public void Assault(PlayerSwapHandItemsEvent ev) 
 	{
 		Player p = ev.getPlayer();
@@ -1294,55 +1274,12 @@ public class Nobskills extends Pak implements Serializable, Listener {
 						.hm(thcooldown)
 						.skillUse(() -> {
 
-		                	PufferFish cs = (PufferFish) p.getWorld().spawnEntity(p.getEyeLocation().add(p.getLocation().getDirection().normalize().rotateAroundY(-Math.PI/6).multiply(1.5)), EntityType.PUFFERFISH);
-							cs.setInvulnerable(true);
-							cs.setAI(false);
-							cs.setCollidable(false);
-							cs.setCustomName(p.getName());
-							cs.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-							cs.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-							as.put(p.getUniqueId(), cs);
-		                	TropicalFish cs1 = (TropicalFish) p.getWorld().spawnEntity(p.getEyeLocation().add(p.getLocation().getDirection().normalize().rotateAroundY(Math.PI/6).multiply(1.5)), EntityType.TROPICAL_FISH);
-							cs1.setInvulnerable(true);
-							cs1.setAI(false);
-							cs.setCollidable(false);
-							cs1.setCustomName(p.getName());
-							cs1.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-							cs1.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-							as.put(p.getUniqueId(), cs1);
-							Cod cs2 = (Cod) p.getWorld().spawnEntity(p.getEyeLocation().add(p.getLocation().getDirection().normalize().rotateAroundY(Math.PI/2).multiply(1.5)), EntityType.COD);
-							cs2.setInvulnerable(true);
-							cs2.setAI(false);
-							cs.setCollidable(false);
-							cs2.setCustomName(p.getName());
-							cs2.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-							cs2.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-							as.put(p.getUniqueId(), cs2);
-							Salmon cs3 = (Salmon) p.getWorld().spawnEntity(p.getEyeLocation().add(p.getLocation().getDirection().normalize().rotateAroundY(-Math.PI/2).multiply(1.5)), EntityType.SALMON);
-							cs3.setInvulnerable(true);
-							cs3.setAI(false);
-							cs.setCollidable(false);
-							cs3.setCustomName(p.getName());
-							cs3.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-							cs3.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-							as.put(p.getUniqueId(), cs3);
-		                	Turtle cs4 = (Turtle) p.getWorld().spawnEntity(p.getLocation().add(p.getLocation().getDirection().multiply(1.5)), EntityType.TURTLE);
-							cs4.setInvulnerable(true);
-							cs4.setAI(false);
-							cs.setCollidable(false);
-							cs4.setCustomName(p.getName());
-							cs4.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-							cs4.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-							as.put(p.getUniqueId(), cs4);
-		                	Squid cs5 = (Squid) p.getWorld().spawnEntity(p.getEyeLocation().add(0, 2, 0), EntityType.SQUID);
-							cs5.setInvulnerable(true);
-							cs5.setGravity(false);
-							cs5.setAI(false);
-							cs.setCollidable(false);
-							cs5.setCustomName(p.getName());
-							cs5.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-							cs5.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-							as.put(p.getUniqueId(), cs5);
+						spawnEntity(p, p.getEyeLocation().add(p.getLocation().getDirection().normalize().rotateAroundY(-Math.PI/6).multiply(1.5)), EntityType.PUFFERFISH, new Vector(0, 0, 0));
+						spawnEntity(p, p.getEyeLocation().add(p.getLocation().getDirection().normalize().rotateAroundY(Math.PI/6).multiply(1.5)), EntityType.TROPICAL_FISH, new Vector(1, 1, 1));
+						spawnEntity(p, p.getEyeLocation().add(p.getLocation().getDirection().normalize().rotateAroundY(Math.PI/2).multiply(1.5)), EntityType.COD, new Vector(-1, 1, 1));
+						spawnEntity(p, p.getEyeLocation().add(p.getLocation().getDirection().normalize().rotateAroundY(-Math.PI/2).multiply(1.5)), EntityType.SALMON, new Vector(1, 1, -1));
+						spawnEntity(p, p.getLocation().add(p.getLocation().getDirection().multiply(1.5)), EntityType.TURTLE, new Vector(-1, 1, -1));
+						spawnEntity(p, p.getEyeLocation().add(0, 2, 0), EntityType.SQUID, new Vector(0, 2, 0));
 							
 							p.playSound(p.getLocation(), Sound.AMBIENT_UNDERWATER_ENTER, 1, 2);
 	                		int task1 = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
@@ -1350,6 +1287,8 @@ public class Nobskills extends Pak implements Serializable, Listener {
 				                public void run() {
 				                	
 				        			isTridentLaunched(p);
+				        			Mob cs = as.get(p.getUniqueId()).iterator().next();
+				        			
 				        			
 									cs.getWorld().spawnParticle(Particle.FALLING_WATER, cs.getLocation(), 20, 1,1,1,0);
 									cs.getWorld().spawnParticle(Particle.BUBBLE, cs.getLocation(), 10, 1,1,1,0.1);

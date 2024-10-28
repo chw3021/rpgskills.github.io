@@ -108,7 +108,8 @@ public class NethercoreRaids extends Summoned implements Listener {
 
 	private HashMap<String, UUID> inhibitor = new HashMap<String, UUID>();
 	private HashMap<String, Integer> inhibitorhp = new HashMap<String, Integer>();
-	
+
+	private HashMap<String, Integer> bossnum = new HashMap<String, Integer>();
 
 	private HashMap<String, String> language = new HashMap<String, String>();
 	
@@ -165,6 +166,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 		
 		ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
 		ordt.removeAll(rn);
+		
 		
 		if(raidbart.containsKey(rn)) {
 			Bukkit.getServer().getScheduler().cancelTask(raidbart.get(rn));
@@ -262,7 +264,7 @@ public class NethercoreRaids extends Summoned implements Listener {
             	raidcool.put(pu, System.currentTimeMillis());
             	
             	Random ran = new Random(p.getTicksLived());
-            	Elements.give(Elements.getel(ran.nextInt(-5,-1),p), 6*(int)(1+ 0.05*difen.get(rn)*(1 - 0.1*heroes.get(rn).size())), p);
+            	Elements.give(Elements.getel(bossnum.get(rn),p), 6*(int)(1+ 0.05*difen.get(rn)*(1 - 0.1*heroes.get(rn).size())), p);
             	p.spawnParticle(Particle.COMPOSTER, spl, 1000,6,6,6);
             	p.spawnParticle(Particle.HEART, spl, 1000,6,6,6);
             	
@@ -277,6 +279,9 @@ public class NethercoreRaids extends Summoned implements Listener {
             }, 160); 
     	});
 		heroes.removeAll(rn);
+		if(bossnum.containsKey(rn)) {
+			bossnum.remove(rn);
+		}
 
 		difen.remove(rn);
 	}
@@ -422,7 +427,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 		//Double dif = 100000 * BigDecimal.valueOf(1 + 0.1*RaidDifficulties.getPlayerDifficulty(p, RaidCategory.NETHER)).setScale(1, RoundingMode.HALF_EVEN).doubleValue();
 
 		
-		if(in == 0) {
+		if(in == -5) {
 			ItemStack main = new ItemStack(Material.BOW);
 			main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
 			ItemStack off = new ItemStack(Material.FURNACE);
@@ -506,7 +511,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 
     		return newmob;
 		}
-		else if(in == 1) {
+		else if(in == -2) {
     		ItemStack main = new ItemStack(Material.BOW);
     		main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
     		ItemStack hel = new ItemStack(Material.SKELETON_SKULL);
@@ -570,7 +575,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 
     		return newmob;
 		}
-		else if(in == 2) {
+		else if(in == -3) {
 
     		ItemStack hel = new ItemStack(Material.WARPED_NYLIUM);
     		hel.addUnsafeEnchantment(Enchantment.KNOCKBACK, 3);
@@ -603,7 +608,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 
     		return newmob;
 		}
-		else if(in ==3) {
+		else if(in ==-4) {
 			ItemStack main = new ItemStack(Material.BOW);
 			ItemMeta mm = main.getItemMeta();
 			mm.setCustomModelData(4010);
@@ -998,11 +1003,13 @@ public class NethercoreRaids extends Summoned implements Listener {
 		                	double number2 = (random.nextDouble()+1.5) * 5 * (random.nextBoolean() ? -1 : 1);
 		                	Location esl = spl.clone().add(number, 1, number2);
 	                    	
-		                	/*
-	                    	int ri = random.nextInt(7);
-	                    	bossgen(esl,p, rn, ri,dif);*/
 		                	
-	                    	bossgen(esl,p, rn, BOSSNUM,dif);
+	                    	int ri = random.nextInt(-5,-1);
+	                    	if(BOSSNUM<0) {
+		                    	ri=BOSSNUM;
+	                    	}
+	                    	bossgen(esl,p, rn, ri,dif);
+		                	bossnum.put(rn, ri);
 	                    	
 		                	heroes.get(rn).forEach(pu -> {
 		                		Player pa = Bukkit.getPlayer(pu);
