@@ -261,7 +261,8 @@ public class NethercoreRaids extends Summoned implements Listener {
             	spl.getWorld().spawn(spl, Firework.class);
             	raidcool.put(pu, System.currentTimeMillis());
             	
-            	Elements.give(Elements.getstel(12,p), 5*(int)(1+ 0.05*difen.get(rn)*(1 - 0.1*heroes.get(rn).size())), p);
+            	Random ran = new Random(p.getTicksLived());
+            	Elements.give(Elements.getel(ran.nextInt(-5,-1),p), 6*(int)(1+ 0.05*difen.get(rn)*(1 - 0.1*heroes.get(rn).size())), p);
             	p.spawnParticle(Particle.COMPOSTER, spl, 1000,6,6,6);
             	p.spawnParticle(Particle.HEART, spl, 1000,6,6,6);
             	

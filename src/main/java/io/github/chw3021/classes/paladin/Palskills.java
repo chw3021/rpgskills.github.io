@@ -1169,7 +1169,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 						h.setStyle(Style.WHITE);
 						h.getInventory().setSaddle(new ItemStack(Material.SADDLE));
 						h.getInventory().setArmor(new ItemStack(Material.DIAMOND_HORSE_ARMOR));
-						h.setLootTable(LootTables.EMPTY.getLootTable());
+						h.setLootTable(null);
 						griffon.put(p.getUniqueId(), h);
 						
                     });

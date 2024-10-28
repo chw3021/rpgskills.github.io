@@ -1,6 +1,7 @@
 package io.github.chw3021.items;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -853,7 +854,7 @@ public class Elements implements Listener {
 				imeta.setDisplayName(ChatColor.GOLD +"강력한 원소의 기운");
 				imeta.setItemName(ChatColor.GOLD +"강력한 원소의 기운");
 			}
-			else if(i == -2 || i== -3 || i == -4 || i == -5) {
+			else if(i == -2 || i== -3 || i == -4 || i == -5) {//-202
 				ii.setType(Material.ANCIENT_DEBRIS);
 				imeta.setLore(Arrays.asList("투구, 갑옷 강화에 사용됩니다(방어구당 한번만 가능)","",
 						ChatColor.GRAY +"+15% 공격력, +10 행운", "", "행운은 궁극기를 제외한 일반기술들의", "재사용 대기시간 감소에 영향을 줍니다"));
@@ -861,7 +862,7 @@ public class Elements implements Listener {
 				imeta.setItemName(ChatColor.GOLD +"융합된 네더의 핵");
 				imeta.setCustomModelData(200*(i>0?1:-1) + -2);
 			}
-			else if(i == -6 || i ==7) {
+			else if(i == -6 || i ==7) {//-206
 				ii.setType(Material.END_CRYSTAL);
 				imeta.setLore(Arrays.asList("레깅스, 부츠 강화에 사용됩니다(방어구당 한번만 가능)","",
 						ChatColor.GRAY +"+20% 공격력, +15 행운, +20% 속도", "", "행운은 궁극기를 제외한 일반기술들의", "재사용 대기시간 감소에 영향을 줍니다"));
@@ -1028,6 +1029,40 @@ public class Elements implements Listener {
 		}
 	}
 
+
+	private int netherChange(CraftingInventory inv, Integer cmdt) 
+	{
+		if(inv.getItem(5) != null && inv.getItem(5).getAmount() ==1 && inv.getItem(5).hasItemMeta() && inv.getItem(5).getItemMeta().hasCustomModelData() && inv.getItem(5).getItemMeta().getCustomModelData() == cmdt){
+			return 5;
+		}
+		else if(inv.getItem(1) != null && inv.getItem(1).getAmount() ==1 && inv.getItem(1).hasItemMeta() && inv.getItem(1).getItemMeta().hasCustomModelData() && inv.getItem(1).getItemMeta().getCustomModelData() == cmdt){
+			return 1;
+		}
+		else if(inv.getItem(2) != null && inv.getItem(2).getAmount() ==1 && inv.getItem(2).hasItemMeta() && inv.getItem(2).getItemMeta().hasCustomModelData() && inv.getItem(2).getItemMeta().getCustomModelData() == cmdt){
+			return 2;
+		}
+		else if(inv.getItem(3) != null && inv.getItem(3).getAmount() ==1 && inv.getItem(3).hasItemMeta() && inv.getItem(3).getItemMeta().hasCustomModelData() && inv.getItem(3).getItemMeta().getCustomModelData() == cmdt){
+			return 3;
+		}
+		else if(inv.getItem(4) != null && inv.getItem(4).getAmount() ==1 && inv.getItem(4).hasItemMeta() && inv.getItem(4).getItemMeta().hasCustomModelData() && inv.getItem(4).getItemMeta().getCustomModelData() == cmdt){
+			return 4;
+		}
+		else if(inv.getItem(6) != null && inv.getItem(6).getAmount() ==1 && inv.getItem(6).hasItemMeta() && inv.getItem(6).getItemMeta().hasCustomModelData() && inv.getItem(6).getItemMeta().getCustomModelData() == cmdt){
+			return 6;
+		}
+		else if(inv.getItem(7) != null && inv.getItem(7).getAmount() ==1 && inv.getItem(7).hasItemMeta() && inv.getItem(7).getItemMeta().hasCustomModelData() && inv.getItem(7).getItemMeta().getCustomModelData() == cmdt){
+			return 7;
+		}
+		else if(inv.getItem(8) != null && inv.getItem(8).getAmount() ==1 && inv.getItem(8).hasItemMeta() && inv.getItem(8).getItemMeta().hasCustomModelData() && inv.getItem(8).getItemMeta().getCustomModelData() == cmdt){
+			return 8;
+		}
+		else if(inv.getItem(9) != null && inv.getItem(9).getAmount() ==1 && inv.getItem(9).hasItemMeta() && inv.getItem(9).getItemMeta().hasCustomModelData() && inv.getItem(9).getItemMeta().getCustomModelData() == cmdt){
+			return 9;
+		}
+		else {
+			return -1;
+		}
+	}
 	private int eck(CraftingInventory inv, Integer cmdt) 
 	{
 		if(inv.getItem(5) != null && inv.getItem(5).getAmount() >=64 && inv.getItem(5).hasItemMeta() && inv.getItem(5).getItemMeta().hasCustomModelData() && inv.getItem(5).getItemMeta().getCustomModelData() == cmdt){
@@ -1062,13 +1097,78 @@ public class Elements implements Listener {
 		}
 	}
 
+	private HashSet<Integer> nconverged(CraftingInventory inv) 
+	{
+		ItemStack[] conts = inv.getContents();
+		HashSet<Integer> nindexes = new HashSet<>();
+		boolean soul =false;
+		boolean crimson =false;
+		boolean warped =false;
+		boolean volc =false;
+		
+		for(Integer i = 0; i<conts.length; i++) {
+			ItemStack is = conts[i];
+			if(is != null && is.getAmount()>0 && is.hasItemMeta() && is.getItemMeta().hasCustomModelData()) {
+				int cmdt = is.getItemMeta().getCustomModelData();
+				if(cmdt == -2) {
+					nindexes.add(i);
+					soul = true;
+				}
+				if(cmdt == -3) {
+					nindexes.add(i);
+					crimson = true;
+				}
+				if(cmdt == -4) {
+					nindexes.add(i);
+					warped = true;
+				}
+				if(cmdt == -5) {
+					nindexes.add(i);
+					volc = true;
+				}
+			}
+		}
+		if(soul&&crimson&&warped&&volc) {
+			return nindexes;
+		}
+		return null;
+	}
+	
+
+	private HashSet<Integer> econverged(CraftingInventory inv) 
+	{
+		ItemStack[] conts = inv.getContents();
+		HashSet<Integer> nindexes = new HashSet<>();
+		boolean ender =false;
+		boolean vo =false;
+		
+		for(Integer i = 0; i<conts.length; i++) {
+			ItemStack is = conts[i];
+			if(is != null && is.getAmount()>0 && is.hasItemMeta() && is.getItemMeta().hasCustomModelData()) {
+				int cmdt = is.getItemMeta().getCustomModelData();
+				if(cmdt == -6) {
+					nindexes.add(i);
+					ender = true;
+				}
+				if(cmdt == -7) {
+					nindexes.add(i);
+					vo = true;
+				}
+			}
+		}
+		if(ender&&vo) {
+			return nindexes;
+		}
+		return null;
+	}
+
 
 	@EventHandler
 	public void damageereduce(PlayerItemDamageEvent e) 
 	{
 		
-		if(e.getDamage() >= 2){
-			e.setDamage(2);
+		if(e.getDamage() >= 1){
+			e.setDamage(1);
 		}
 		
 	}
@@ -1124,208 +1224,141 @@ public class Elements implements Listener {
 			else if(eck(d.getInventory(), -108)>0) {
 				d.getInventory().setResult(getelcore(-8,p));
 			}
+			else if(netherChange(d.getInventory(), -2)>0) {
+				d.getInventory().setResult(getelcore(-3,p));
+			}
+			else if(netherChange(d.getInventory(), -3)>0) {
+				d.getInventory().setResult(getelcore(-4,p));
+			}
+			else if(netherChange(d.getInventory(), -4)>0) {
+				d.getInventory().setResult(getelcore(-5,p));
+			}
+			else if(netherChange(d.getInventory(), -5)>0) {
+				d.getInventory().setResult(getelcore(-2,p));
+			}
+			else if(!nconverged(d.getInventory()).isEmpty()) {
+				d.getInventory().setResult(getstel(-2,p));
+			}
+			else if(!econverged(d.getInventory()).isEmpty()) {
+				d.getInventory().setResult(getstel(-6,p));
+			}
 
 	}
-
 
 	@EventHandler
-	public void ICE(InventoryClickEvent d) 
-	{
-		if(d.getClickedInventory() == null)
-		{
-			return;
-		}
-		if(d.getClickedInventory().getType() == InventoryType.WORKBENCH || d.getClickedInventory().getType() == InventoryType.CRAFTING) {
-			CraftingInventory ci = (CraftingInventory) d.getClickedInventory();
-			Player p = (Player) d.getWhoClicked();
-				if(eck(ci, 114)>0) {
-					if(d.getCurrentItem().hasItemMeta() && d.getCurrentItem().getItemMeta().hasCustomModelData() && d.getCurrentItem().getItemMeta().getCustomModelData() == 14) {
-						d.setCancelled(true);
-						if(p.getInventory().firstEmpty() != -1) {
-						p.getInventory().addItem(getelcore(14, p));
-						ci.clear(eck(ci, 114));
-						ci.setResult(null);
-						}
-					}
-				}
-				else if(eck(ci, 105)>0) {
-					if(d.getCurrentItem().hasItemMeta() && d.getCurrentItem().getItemMeta().hasCustomModelData() && d.getCurrentItem().getItemMeta().getCustomModelData() == 5) {
-						d.setCancelled(true);
-						if(p.getInventory().firstEmpty() != -1) {
-						p.getInventory().addItem(getelcore(5, p));
-						ci.clear(eck(ci, 105));
-						ci.setResult(null);
-						}
-					}
-				}
-				else if(eck(ci, 106)>0) {
-					if(d.getCurrentItem().hasItemMeta() && d.getCurrentItem().getItemMeta().hasCustomModelData() && d.getCurrentItem().getItemMeta().getCustomModelData() == 6) {
-						d.setCancelled(true);
-						if(p.getInventory().firstEmpty() != -1) {
-						p.getInventory().addItem(getelcore(6, p));
-						ci.clear(eck(ci, 106));
-						ci.setResult(null);
-						}
-					}
-				}
-				else if(eck(ci, 107)>0) {
-					if(d.getCurrentItem().hasItemMeta() && d.getCurrentItem().getItemMeta().hasCustomModelData() && d.getCurrentItem().getItemMeta().getCustomModelData() == 7) {
-						d.setCancelled(true);
-						if(p.getInventory().firstEmpty() != -1) {
-						p.getInventory().addItem(getelcore(7, p));
-						ci.clear(eck(ci, 107));
-						ci.setResult(null);
-						}
-					}
-				}
-				else if(eck(ci, 108)>0) {
-					if(d.getCurrentItem().hasItemMeta() && d.getCurrentItem().getItemMeta().hasCustomModelData() && d.getCurrentItem().getItemMeta().getCustomModelData() == 8) {
-						d.setCancelled(true);
-						if(p.getInventory().firstEmpty() != -1) {
-						p.getInventory().addItem(getelcore(8, p));
-						ci.clear(eck(ci, 108));
-						ci.setResult(null);
-						}
-					}
-				}
-				else if(eck(ci, 109)>0) {
-					if(d.getCurrentItem().hasItemMeta() && d.getCurrentItem().getItemMeta().hasCustomModelData() && d.getCurrentItem().getItemMeta().getCustomModelData() == 9) {
-						d.setCancelled(true);
-						if(p.getInventory().firstEmpty() != -1) {
-						p.getInventory().addItem(getelcore(9, p));
-						ci.clear(eck(ci, 109));
-						ci.setResult(null);
-						}
-					}
-				}
-				else if(eck(ci, 110)>0) {
-					if(d.getCurrentItem().hasItemMeta() && d.getCurrentItem().getItemMeta().hasCustomModelData() && d.getCurrentItem().getItemMeta().getCustomModelData() == 10) {
-						d.setCancelled(true);
-						if(p.getInventory().firstEmpty() != -1) {
-						p.getInventory().addItem(getelcore(10, p));
-						ci.clear(eck(ci, 110));
-						ci.setResult(null);
-						}
-					}
-				}
-				else if(eck(ci, 111)>0) {
-					if(d.getCurrentItem().hasItemMeta() && d.getCurrentItem().getItemMeta().hasCustomModelData() && d.getCurrentItem().getItemMeta().getCustomModelData() == 11) {
-						d.setCancelled(true);
-						if(p.getInventory().firstEmpty() != -1) {
-						p.getInventory().addItem(getelcore(11, p));
-						ci.clear(eck(ci, 111));
-						ci.setResult(null);
-						}
-					}
-				}
-				else if(eck(ci, 112)>0) {
-					if(d.getCurrentItem().hasItemMeta() && d.getCurrentItem().getItemMeta().hasCustomModelData() && d.getCurrentItem().getItemMeta().getCustomModelData() == 12) {
-						d.setCancelled(true);
-						if(p.getInventory().firstEmpty() != -1) {
-						p.getInventory().addItem(getelcore(12, p));
-						ci.clear(eck(ci, 112));
-						ci.setResult(null);
-						}
-					}
-				}
-				else if(eck(ci, -102)>0) {
-					if(d.getCurrentItem().hasItemMeta() && d.getCurrentItem().getItemMeta().hasCustomModelData() && d.getCurrentItem().getItemMeta().getCustomModelData() == -2) {
-						d.setCancelled(true);
-						if(p.getInventory().firstEmpty() != -1) {
-						p.getInventory().addItem(getelcore(-2, p));
-						ci.clear(eck(ci, -102));
-						ci.setResult(null);
-						}
-					}
-				}
-				else if(eck(ci, -103)>0) {
-					if(d.getCurrentItem().hasItemMeta() && d.getCurrentItem().getItemMeta().hasCustomModelData() && d.getCurrentItem().getItemMeta().getCustomModelData() == -3) {
-						d.setCancelled(true);
-						if(p.getInventory().firstEmpty() != -1) {
-						p.getInventory().addItem(getelcore(-3, p));
-						ci.clear(eck(ci, -103));
-						ci.setResult(null);
-						}
-					}
-				}
-				else if(eck(ci, -104)>0) {
-					if(d.getCurrentItem().hasItemMeta() && d.getCurrentItem().getItemMeta().hasCustomModelData() && d.getCurrentItem().getItemMeta().getCustomModelData() == -4) {
-						d.setCancelled(true);
-						if(p.getInventory().firstEmpty() != -1) {
-						p.getInventory().addItem(getelcore(-4, p));
-						ci.clear(eck(ci, -104));
-						ci.setResult(null);
-						}
-					}
-				}
-				else if(eck(ci, -105)>0) {
-					if(d.getCurrentItem().hasItemMeta() && d.getCurrentItem().getItemMeta().hasCustomModelData() && d.getCurrentItem().getItemMeta().getCustomModelData() == -5) {
-						d.setCancelled(true);
-						if(p.getInventory().firstEmpty() != -1) {
-						p.getInventory().addItem(getelcore(-2, p));
-						ci.clear(eck(ci, -105));
-						ci.setResult(null);
-						}
-					}
-				}
-				else if(eck(ci, -106)>0) {
-					if(d.getCurrentItem().hasItemMeta() && d.getCurrentItem().getItemMeta().hasCustomModelData() && d.getCurrentItem().getItemMeta().getCustomModelData() == -6) {
-						d.setCancelled(true);
-						if(p.getInventory().firstEmpty() != -1) {
-						p.getInventory().addItem(getelcore(-6, p));
-						ci.clear(eck(ci, -106));
-						ci.setResult(null);
-						}
-					}
-				}
-				else if(eck(ci, -107)>0) {
-					if(d.getCurrentItem().hasItemMeta() && d.getCurrentItem().getItemMeta().hasCustomModelData() && d.getCurrentItem().getItemMeta().getCustomModelData() == -7) {
-						d.setCancelled(true);
-						if(p.getInventory().firstEmpty() != -1) {
-						p.getInventory().addItem(getelcore(-7, p));
-						ci.clear(eck(ci, -107));
-						ci.setResult(null);
-						}
-					}
-				}
-				else if(eck(ci, -108)>0) {
-					if(d.getCurrentItem().hasItemMeta() && d.getCurrentItem().getItemMeta().hasCustomModelData() && d.getCurrentItem().getItemMeta().getCustomModelData() == -8) {
-						d.setCancelled(true);
-						if(p.getInventory().firstEmpty() != -1) {
-						p.getInventory().addItem(getelcore(-8, p));
-						ci.clear(eck(ci, -108));
-						ci.setResult(null);
-						}
-					}
-				}
-		}
-		
+	public void ICE(InventoryClickEvent d) {
+	    if (d.getClickedInventory() == null) {
+	        return;
+	    }
 
-		if(ChatColor.stripColor(d.getView().getTitle()).equalsIgnoreCase("Elements"))
-		{
-			d.setCancelled(true);
-			if(d.getCurrentItem()==null||d.getCurrentItem().getType() == null|| !d.getCurrentItem().hasItemMeta())
-			{
-				d.setCancelled(false);
-			}
-			else
-			{
-				Player p = (Player) d.getWhoClicked();
-				ItemStack ci = d.getCurrentItem();
-				if(d.getClick().equals(ClickType.LEFT) && d.getClickedInventory() == d.getView().getTopInventory()) {
-					d.setCancelled(true);
-					p.getInventory().addItem(ci);
-				}
-				else if(d.getClick().equals(ClickType.SHIFT_LEFT) && d.getClickedInventory() == d.getView().getTopInventory()) {
-					d.setCancelled(true);
-					ci.setAmount(64);
-					p.getInventory().addItem(ci);
-				}
-				
-			}
-		}
+	    if (d.getClickedInventory().getType() == InventoryType.WORKBENCH || d.getClickedInventory().getType() == InventoryType.CRAFTING) {
+	        CraftingInventory ci = (CraftingInventory) d.getClickedInventory();
+	        Player p = (Player) d.getWhoClicked();
+
+	        elcore(d, p, ci, 114, 14);
+	        elcore(d, p, ci, 105, 5);
+	        elcore(d, p, ci, 106, 6);
+	        elcore(d, p, ci, 107, 7);
+	        elcore(d, p, ci, 108, 8);
+	        elcore(d, p, ci, 109, 9);
+	        elcore(d, p, ci, 110, 10);
+	        elcore(d, p, ci, 111, 11);
+	        elcore(d, p, ci, 112, 12);
+	        elcore(d, p, ci, -102, -2);
+	        elcore(d, p, ci, -103, -3);
+	        elcore(d, p, ci, -104, -4);
+	        elcore(d, p, ci, -105, -5);
+	        elcore(d, p, ci, -106, -6);
+	        elcore(d, p, ci, -107, -7);
+	        elcore(d, p, ci, -108, -8);
+	        netherChange(d, p, ci, -2, -3);
+	        netherChange(d, p, ci, -3, -4);
+	        netherChange(d, p, ci, -4, -5);
+	        netherChange(d, p, ci, -5, -2);
+	        nconverged(d,p,ci,-202);
+	        econverged(d,p,ci,-206);
+	    }
+
+	    if (ChatColor.stripColor(d.getView().getTitle()).equalsIgnoreCase("Elements")) {
+	        handleElementsInventory(d);
+	    }
 	}
-	
+
+	private void elcore(InventoryClickEvent d, Player p, CraftingInventory ci, int eckValue, int customModelDataValue) {
+	    if (eck(ci, eckValue) > 0) {
+	        if (d.getCurrentItem().hasItemMeta() && d.getCurrentItem().getItemMeta().hasCustomModelData()
+	            && d.getCurrentItem().getItemMeta().getCustomModelData() == customModelDataValue) {
+	            d.setCancelled(true);
+	            if (p.getInventory().firstEmpty() != -1) {
+	                p.getInventory().addItem(getelcore(customModelDataValue, p));
+	                ci.clear(eck(ci, eckValue));
+	                ci.setResult(null);
+	            }
+	        }
+	    }
+	}
+	private void netherChange(InventoryClickEvent d, Player p, CraftingInventory ci, int eckValue, int customModelDataValue) {
+	    if (eck(ci, eckValue) > 0) {
+	        if (d.getCurrentItem().hasItemMeta() && d.getCurrentItem().getItemMeta().hasCustomModelData()
+	            && d.getCurrentItem().getItemMeta().getCustomModelData() == customModelDataValue) {
+	            d.setCancelled(true);
+	            if (p.getInventory().firstEmpty() != -1) {
+	                p.getInventory().addItem(getelcore(customModelDataValue, p));
+	                ci.clear(netherChange(ci, eckValue));
+	                ci.setResult(null);
+	            }
+	        }
+	    }
+	}
+	private void nconverged(InventoryClickEvent d, Player p, CraftingInventory ci, int customModelDataValue) {
+	    if (!nconverged(ci).isEmpty()) {
+	        if (d.getCurrentItem().hasItemMeta() && d.getCurrentItem().getItemMeta().hasCustomModelData()
+	            && d.getCurrentItem().getItemMeta().getCustomModelData() == customModelDataValue) {
+	            d.setCancelled(true);
+	            if (p.getInventory().firstEmpty() != -1) {
+	                p.getInventory().addItem(getstel(customModelDataValue, p));
+	                nconverged(ci).forEach(i ->{
+	                	ci.clear(i);
+	                });
+	                ci.setResult(null);
+	            }
+	        }
+	    }
+	}
+	private void econverged(InventoryClickEvent d, Player p, CraftingInventory ci, int customModelDataValue) {
+		if (!econverged(ci).isEmpty()) {
+	        if (d.getCurrentItem().hasItemMeta() && d.getCurrentItem().getItemMeta().hasCustomModelData()
+	            && d.getCurrentItem().getItemMeta().getCustomModelData() == customModelDataValue) {
+	            d.setCancelled(true);
+	            if (p.getInventory().firstEmpty() != -1) {
+	                p.getInventory().addItem(getstel(customModelDataValue, p));
+	                econverged(ci).forEach(i ->{
+	                	ci.clear(i);
+	                });
+	                ci.setResult(null);
+	            }
+	        }
+	    }
+	}
+
+	private void handleElementsInventory(InventoryClickEvent d) {
+	    d.setCancelled(true);
+	    if (d.getCurrentItem() == null || d.getCurrentItem().getType() == null || !d.getCurrentItem().hasItemMeta()) {
+	        d.setCancelled(false);
+	    } else {
+	        Player p = (Player) d.getWhoClicked();
+	        ItemStack ci = d.getCurrentItem();
+	        if (d.getClick().equals(ClickType.LEFT) && d.getClickedInventory() == d.getView().getTopInventory()) {
+	            d.setCancelled(true);
+	            p.getInventory().addItem(ci);
+	        } else if (d.getClick().equals(ClickType.SHIFT_LEFT) && d.getClickedInventory() == d.getView().getTopInventory()) {
+	            d.setCancelled(true);
+	            ci.setAmount(64);
+	            p.getInventory().addItem(ci);
+	        }
+	    }
+	}
+
 
 	public static void itemset(ItemStack is,int loc, Inventory inv)
 	{
@@ -1391,27 +1424,6 @@ public class Elements implements Listener {
 	}
 
 	
-	public static void BedInv(Player p)
-	{
-		Inventory ElementsInv = Bukkit.createInventory(null, 36, "Beds");
-		itemset(getpor(5, p), 0, ElementsInv);
-		itemset(getpor(6, p), 1, ElementsInv);
-		itemset(getpor(7, p), 2, ElementsInv);
-		itemset(getpor(8,p), 3, ElementsInv);
-		itemset(getpor(9,p), 4, ElementsInv);
-		itemset(getpor(10,p), 5, ElementsInv);
-		itemset(getpor(12,p), 6, ElementsInv);
-		itemset(getpor(-2,p), 9, ElementsInv);
-		itemset(getpor(-3,p), 10, ElementsInv);
-		itemset(getpor(-4,p), 11, ElementsInv);
-		itemset(getpor(-5,p), 12, ElementsInv);
-		itemset(getpor(-6,p), 13, ElementsInv);
-		itemset(getpor(-7,p), 14, ElementsInv);
-		itemset(getpor(-8,p), 15, ElementsInv);
-		
-		
-		p.openInventory(ElementsInv);
-	}
 
 	
 	

@@ -396,7 +396,7 @@ public class Mobs extends Pak {
 		equipsum(creature,head,chest,leg,boots,main,off);
 		
 		Lootable cl = (Lootable) creature;
-		cl.setLootTable(LootTables.EMPTY.getLootTable());
+		cl.setLootTable(null);
 		return creature;
 	}
 	
@@ -416,7 +416,7 @@ public class Mobs extends Pak {
 		equipsum(creature,head,chest,leg,boots,main,off);
 		
 		Lootable cl = (Lootable) creature;
-		cl.setLootTable(LootTables.EMPTY.getLootTable());
+		cl.setLootTable(null);
 		return creature;
 	}
 

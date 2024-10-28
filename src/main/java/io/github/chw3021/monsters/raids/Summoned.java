@@ -495,17 +495,9 @@ public class Summoned extends Mobs implements Serializable{
 		else if(meta.equals("wild")) {
 			return 12;
 		}
-		else if(meta.equals("soul")) {
-			return -2;
-		}
-		else if(meta.equals("crimson")) {
-			return -3;
-		}
-		else if(meta.equals("warped")) {
-			return -4;
-		}
-		else if(meta.equals("volcanic")) {
-			return -5;
+		else if(meta.equals("nether")) {
+			Random ran = new Random();
+			return ran.nextInt(-5, -1);
 		}
 		else if(meta.equals("ender")) {
 			return -6;
@@ -546,17 +538,9 @@ public class Summoned extends Mobs implements Serializable{
 		else if(le.hasMetadata("wild")) {
 			return 12;
 		}
-		else if(le.hasMetadata("soul")) {
-			return -2;
-		}
-		else if(le.hasMetadata("crimson")) {
-			return -3;
-		}
-		else if(le.hasMetadata("warped")) {
-			return -4;
-		}
-		else if(le.hasMetadata("volcanic")) {
-			return -5;
+		else if(le.hasMetadata("nether")) {
+			Random ran = new Random();
+			return ran.nextInt(-5, -1);
 		}
 		else if(le.hasMetadata("ender")) {
 			return -6;
@@ -596,17 +580,8 @@ public class Summoned extends Mobs implements Serializable{
 		else if(le.hasMetadata("wild")) {
 			return "wild";
 		}
-		else if(le.hasMetadata("soul")) {
-			return "soul";
-		}
-		else if(le.hasMetadata("crimson")) {
-			return "crimson";
-		}
-		else if(le.hasMetadata("warped")) {
-			return "warped";
-		}
-		else if(le.hasMetadata("volcanic")) {
-			return "volcanic";
+		else if(le.hasMetadata("nether")) {
+			return "nether";
 		}
 		else if(le.hasMetadata("ender")) {
 			return "ender";
@@ -667,17 +642,8 @@ public class Summoned extends Mobs implements Serializable{
 		else if(meta.equals("wild")) {
 			return 9;
 		}
-		else if(meta.equals("soul")) {
-			return 10;
-		}
-		else if(meta.equals("crimson")) {
-			return 11;
-		}
-		else if(meta.equals("warped")) {
+		else if(meta.equals("nether")) {
 			return 12;
-		}
-		else if(meta.equals("volcanic")) {
-			return 13;
 		}
 		else if(meta.equals("ender")) {
 			return 14;
@@ -698,12 +664,15 @@ public class Summoned extends Mobs implements Serializable{
 		if(getherotype(rn) instanceof Player) {
 			Player p = (Player) getherotype(rn);
 			int count = com/COMBOPER;
-        	Elements.give(Material.DIAMOND, count, p);
-        	Elements.give(Material.GOLD_INGOT, count, p);
-        	Elements.give(Material.LAPIS_LAZULI, count, p);
-        	Elements.give(Material.EMERALD, count, p);
-        	Elements.give(Material.NETHERITE_SCRAP, count, p);
-        	Elements.give(Elements.getel(getelnum(meta), p), count, p);
+			if(meta.equals("nether")) {
+				
+			}
+			else if(meta.equals("ender")) {
+				
+			}
+			else {
+	        	Elements.give(Elements.getel(getelnum(meta), p), count, p);
+			}
 			if(com==-1) {
 				int exp = 2*getelexp(meta)*MAXCOMBO;
 	        	p.giveExp(exp);
@@ -774,11 +743,6 @@ public class Summoned extends Mobs implements Serializable{
 			
 			par.forEach(p ->{
 				int count = com/COMBOPER/par.size();
-	        	Elements.give(Material.DIAMOND, count, p);
-	        	Elements.give(Material.GOLD_INGOT, count, p);
-	        	Elements.give(Material.LAPIS_LAZULI, count, p);
-	        	Elements.give(Material.EMERALD, count, p);
-	        	Elements.give(Material.NETHERITE_SCRAP, count, p);
 	        	Elements.give(Elements.getel(getelnum(meta), p), count, p);
 				if(com>MAXCOMBO) {
 					int exp = 2*getelexp(meta)*MAXCOMBO;
@@ -1195,6 +1159,12 @@ public class Summoned extends Mobs implements Serializable{
 			else {
 	    		fp.sendTitle(ChatColor.BOLD +(ChatColor.GOLD  + "Hidden Treasure!"), ChatColor.BOLD +"Given to Your Inventory", 5, 60, 5);
 			}
+			Elements.give(Elements.getscroll(fp), 1, fp);
+        	Elements.give(Material.DIAMOND, 5, fp);
+        	Elements.give(Material.GOLD_INGOT, 5, fp);
+        	Elements.give(Material.LAPIS_LAZULI, 5, fp);
+        	Elements.give(Material.EMERALD, 5, fp);
+        	Elements.give(Material.NETHERITE_SCRAP, 5, fp);
 		}
 		else if(getherotype(rn) instanceof HashSet){
 
@@ -1204,11 +1174,17 @@ public class Summoned extends Mobs implements Serializable{
     		
     		
 			par.forEach(p ->{
+				Elements.give(Elements.getscroll(p), 1, p);
+	        	Elements.give(Material.DIAMOND, 5, p);
+	        	Elements.give(Material.GOLD_INGOT, 5, p);
+	        	Elements.give(Material.LAPIS_LAZULI, 5, p);
+	        	Elements.give(Material.EMERALD, 5, p);
+	        	Elements.give(Material.NETHERITE_SCRAP, 5, p);
 				if(fp.getLocale().equalsIgnoreCase("ko_kr")) {
-		    		fp.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + "숨겨진 보물 발견!"), ChatColor.BOLD +"인벤토리에 지급되었습니다", 5, 60, 5);
+		    		p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + "숨겨진 보물 발견!"), ChatColor.BOLD +"인벤토리에 지급되었습니다", 5, 60, 5);
 				}
 				else {
-		    		fp.sendTitle(ChatColor.BOLD +(ChatColor.GOLD  + "Hidden Treasure!"), ChatColor.BOLD +"Given to Your Inventory", 5, 60, 5);
+		    		p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD  + "Hidden Treasure!"), ChatColor.BOLD +"Given to Your Inventory", 5, 60, 5);
 				}
 			});
 		}
