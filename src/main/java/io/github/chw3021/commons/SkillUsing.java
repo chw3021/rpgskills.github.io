@@ -1257,7 +1257,6 @@ public class SkillUsing implements Listener, Serializable {
 		Frostskills.getInstance().CoolBody(ev);
 		
 		Holding.getInstance().holded(ev);
-		//CommonEvents.getInstance().ChangeBiome(ev);
 	}
 
 	@EventHandler

@@ -61,6 +61,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -834,16 +835,16 @@ public class OverworldRaids extends Summoned implements Listener {
 		final Location pl = p.getLocation();
 		beforepl.put(p.getUniqueId(), pl);
 		Holding.invur(p, 100l);
-		int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-            @Override
-            public void run() 
-            {
-				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 20,1,false,false));
-				p.teleport(spl.clone().add(0,0.5,0));
-				Holding.invur(p, 100l);
-            }
-		}, 50); 
-		ordt.put(rn, task);
+		p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 20,1,false,false));
+		p.teleport(spl.clone().add(0,0.5,0));
+		Holding.invur(p, 100l);
+//		int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+//            @Override
+//            public void run() 
+//            {
+//            }
+//		}, 25); 
+//		ordt.put(rn, task);
 	}
 
 	final private void diffGetter(Player p, String rn) {
@@ -911,7 +912,6 @@ public class OverworldRaids extends Summoned implements Listener {
 		ordt.put(rn, task);
 	}
 	
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void OverworldRaidStart(PlayerInteractEvent d)
 	{
@@ -1030,7 +1030,7 @@ public class OverworldRaids extends Summoned implements Listener {
     		v.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
     		v.setGravity(true);
     		v.setNoDamageTicks(0);
-    		v.setMaxHealth(4000);
+    		v.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(4000);
     		v.setHealth(4000);
     		v.setRemoveWhenFarAway(false);
     		v.setGlowing(true);
@@ -1326,7 +1326,7 @@ public class OverworldRaids extends Summoned implements Listener {
 		Player p = ev.getPlayer();
 		
 		if(!heroes.containsValue(p.getUniqueId()) && p.getWorld().getName().contains("Raid")) {
-			p.teleport(p.getRespawnLocation());
+			p.teleport(p.getRespawnLocation(), TeleportCause.PLUGIN);
 		}
 	}
 

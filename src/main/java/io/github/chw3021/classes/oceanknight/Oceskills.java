@@ -1483,11 +1483,8 @@ public class Oceskills extends Pak implements Serializable {
 												LivingEntity le = (LivingEntity)e;
 												atk1(0.6*(1+fsd.OceanCharge.get(p.getUniqueId())*0.055), p, le);
 												le.teleport(pel.clone());
-												p.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 20, 100, false, false));
 												p.setCooldown(CAREFUL, 3);
-												p.swingMainHand();
-												//p.startRiptideAttack(20, 0f, p.getInventory().getItemInMainHand().clone());
-												p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS,20, 255, false, false));
+												p.startRiptideAttack(25, 0f, p.getInventory().getItemInMainHand().clone());
 												Holding.superholding(p, le, 20l);
 												Holding.holding(null, p, 20l);
 							                    p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_LAND, 0.15f, 2.0f);

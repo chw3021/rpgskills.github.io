@@ -21,7 +21,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
-import org.bukkit.loot.LootTables;
 import org.bukkit.metadata.FixedMetadataValue;
 import io.github.chw3021.monsters.Mobs;
 import io.github.chw3021.rmain.RMain;
@@ -128,7 +127,7 @@ public class HyperMobsSpawn extends Mobs implements Listener {
 		newmob.setPatrolTarget(null);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("hyper", new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.setLootTable(LootTables.EMPTY.getLootTable());
+		newmob.setLootTable(null);
 		return newmob;
 	}
 

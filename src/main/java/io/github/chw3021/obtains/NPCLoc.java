@@ -684,7 +684,7 @@ public class NPCLoc implements Serializable, Listener{
 				ve.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 				ve.setMetadata("obnpc", new FixedMetadataValue(RMain.getInstance(), true));
 				ve.setPersistent(true);
-				((Lootable) ve).setLootTable(LootTables.EMPTY.getLootTable());
+				((Lootable) ve).setLootTable(null);
 			});
 			v.setAI(false);
 			v.setInvulnerable(false);
@@ -729,7 +729,7 @@ public class NPCLoc implements Serializable, Listener{
 				ve.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 				ve.setMetadata("obnpc", new FixedMetadataValue(RMain.getInstance(), true));
 				ve.setPersistent(true);
-				((Lootable) ve).setLootTable(LootTables.EMPTY.getLootTable());
+				((Lootable) ve).setLootTable(null);
 			});
 			v.setAI(false);
 			v.setInvulnerable(false);
@@ -766,7 +766,7 @@ public class NPCLoc implements Serializable, Listener{
 				ve.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 				ve.setMetadata("obnpc", new FixedMetadataValue(RMain.getInstance(), true));
 				ve.setPersistent(true);
-				((Lootable) ve).setLootTable(LootTables.EMPTY.getLootTable());
+				((Lootable) ve).setLootTable(null);
 			});
 			v.setAI(false);
 			v.setInvulnerable(false);

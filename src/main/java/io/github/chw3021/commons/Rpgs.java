@@ -356,10 +356,6 @@ public class Rpgs extends Summoned implements CommandExecutor, Serializable, Lis
 					p.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 999999, Integer.parseInt(args[1]), false, false));
 					p.addPotionEffect(new PotionEffect(PotionEffectType.CONDUIT_POWER, 999999, Integer.parseInt(args[1]), false, false));
 				}
-				else if((args[0].equalsIgnoreCase("portal")||args[0].equalsIgnoreCase("por")) && p.isOp())
-				{
-					Elements.BedInv(p);
-				}
 				else if((args[0].equalsIgnoreCase("enchant")||args[0].equalsIgnoreCase("ench")) && p.isOp() && !args[1].isEmpty())
 				{
 					if(args[1].equalsIgnoreCase("clear")) {

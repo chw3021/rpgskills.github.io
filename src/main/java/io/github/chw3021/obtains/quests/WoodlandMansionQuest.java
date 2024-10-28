@@ -30,7 +30,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Merchant;
 import org.bukkit.inventory.MerchantRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.loot.LootTables;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import io.github.chw3021.items.Elements;
@@ -122,7 +121,7 @@ public class WoodlandMansionQuest extends Mobs implements Listener {
 			newmob.setMetadata("mansionquest", new FixedMetadataValue(RMain.getInstance(),true));
 			newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 			newmob.setRemoveWhenFarAway(true);
-			newmob.setLootTable(LootTables.EMPTY.getLootTable());
+			newmob.setLootTable(null);
 
 			String reg1 = lang.contains("kr") ? "소환사":"Evoker";
 			Evoker newmob1 = (Evoker) MobspawnLoc(esl, reg1, 5000.0, null, null, null, null, null, null, EntityType.EVOKER);
@@ -139,7 +138,7 @@ public class WoodlandMansionQuest extends Mobs implements Listener {
 			newmob1.setMetadata("mansionquest", new FixedMetadataValue(RMain.getInstance(),true));
 			newmob1.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 			newmob1.setRemoveWhenFarAway(true);
-			newmob1.setLootTable(LootTables.EMPTY.getLootTable());
+			newmob1.setLootTable(null);
 	}
 	
 	private void QuestEnd(Player p, Integer factor) {

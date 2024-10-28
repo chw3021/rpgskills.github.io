@@ -1,8 +1,6 @@
 package io.github.chw3021.monsters.worldgen;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 import org.bukkit.GameRule;
@@ -55,7 +53,7 @@ public class RaidWorldLoad implements Listener {
 					rw.setGameRule(GameRule.DROWNING_DAMAGE, false);
 					rw.setGameRule(GameRule.MOB_GRIEFING, false);
 					rw.setGameRule(GameRule.SPAWN_RADIUS, 0);
-					rw.setGameRule(GameRule.SPAWN_CHUNK_RADIUS, 0);
+					rw.setGameRule(GameRule.SPAWN_CHUNK_RADIUS, 4);
 			        rw.loadChunk(0, 0, true);
 				}
 			},50);
@@ -98,7 +96,7 @@ public class RaidWorldLoad implements Listener {
 						rw.setGameRule(GameRule.DROWNING_DAMAGE, false);
 						rw.setGameRule(GameRule.MOB_GRIEFING, false);
 						rw.setGameRule(GameRule.SPAWN_RADIUS, 0);
-						rw.setGameRule(GameRule.SPAWN_CHUNK_RADIUS, 0);
+						rw.setGameRule(GameRule.SPAWN_CHUNK_RADIUS, 4);
 				        rw.loadChunk(0, 0, true);
 					}
 				}, 50);

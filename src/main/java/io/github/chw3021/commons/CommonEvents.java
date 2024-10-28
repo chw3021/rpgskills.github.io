@@ -239,6 +239,7 @@ public class CommonEvents extends Mobs implements Listener {
 	public void Teleport(PlayerTeleportEvent e)
 	{
 		Player p = (Player) e.getPlayer();
+		p.setPersistent(true);
 		p.setRemoveWhenFarAway(false);
 	}
 

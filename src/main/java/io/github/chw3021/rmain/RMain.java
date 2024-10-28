@@ -196,7 +196,7 @@ public class RMain extends JavaPlugin{
         Bukkit.getPluginManager().registerEvents(new Leggings(), this);
 
         Bukkit.getPluginManager().registerEvents(new OverworldRaids(), this);
-        Bukkit.getPluginManager().registerEvents(new NethercoreRaids(), this);
+        //Bukkit.getPluginManager().registerEvents(new NethercoreRaids(), this);
         
         Bukkit.getPluginManager().registerEvents(new Pak(), this);
 

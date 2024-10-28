@@ -34,7 +34,7 @@ public class ShulkerBag implements Listener {
 			im.setItemName(p.getUniqueId().toString());
 			key.setItemMeta(im);
 			p.getEquipment().setItemInMainHand(key);
-			skb.setLock(p.getUniqueId().toString());
+			skb.setLockItem(key);
 			Inventory si = skb.getInventory();
 			d.getPlayer().openInventory(si);
 			sisave.put(si,skb);

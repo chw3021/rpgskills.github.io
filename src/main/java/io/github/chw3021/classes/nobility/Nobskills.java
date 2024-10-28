@@ -15,6 +15,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 
 import io.github.chw3021.rmain.RMain;
@@ -22,7 +23,6 @@ import net.md_5.bungee.api.ChatColor;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -130,7 +130,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 	
 	private Multimap<UUID, LivingEntity> marked = HashMultimap.create();
 	private Multimap<UUID, Mob> gs = HashMultimap.create();
-	private Multimap<UUID, Mob> as = HashMultimap.create();
+	private Multimap<UUID, Mob> as = LinkedHashMultimap.create();
 	private static HashMap<UUID, Integer> gst = new HashMap<UUID, Integer>();
 	private static HashMap<UUID, Integer> ot = new HashMap<UUID, Integer>();
 	private static HashMap<UUID, UUID> trc = new HashMap<UUID, UUID>();
@@ -1295,7 +1295,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 									cs.getWorld().spawnParticle(Particle.SPLASH, cs.getLocation(), 10, 1,1,1,0.1);
 									p.playSound(cs.getLocation(), Sound.ITEM_ARMOR_EQUIP_CHAIN, 1, 0);
 									p.playSound(cs.getLocation(), Sound.ITEM_ARMOR_EQUIP_TURTLE, 1, 0);
-										for(Entity e : cs5.getWorld().getNearbyEntities(cs5.getLocation(),5, 5, 5)) {
+										for(Entity e : cs.getWorld().getNearbyEntities(cs.getLocation(),5, 5, 5)) {
 
 			        	            		if (e instanceof Player) 
 			        						{
