@@ -225,7 +225,7 @@ public class OceanMobsSpawn extends Mobs implements Listener {
 				new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 999999, 3, false, false));
 		newmob.addPotionEffect(
 				new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 3, false, false));
-		newmob.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(3);
+		newmob.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(3);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("ocean", new FixedMetadataValue(RMain.getInstance(), true));
 		return newmob;

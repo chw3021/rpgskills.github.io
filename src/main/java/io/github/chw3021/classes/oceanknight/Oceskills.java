@@ -201,7 +201,7 @@ public class Oceskills extends Pak implements Serializable {
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 20 && fsd.WaterBarrier.getOrDefault(p.getUniqueId(),0)>=1) {
-		double sec =7*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =7*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 			if(!p.hasPotionEffect(PotionEffectType.CONDUIT_POWER)) {
 				p.addPotionEffect(new PotionEffect(PotionEffectType.CONDUIT_POWER, 999999, 3, false, false));
 			}
@@ -488,7 +488,7 @@ public class Oceskills extends Pak implements Serializable {
 	public void WetSwing(PlayerSwapHandItemsEvent ev) 
 	{
 		Player p = ev.getPlayer();
-		double sec =6*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =6*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 	    
 		
 		
@@ -813,7 +813,7 @@ public class Oceskills extends Pak implements Serializable {
 	public void RipCurrent(PlayerSwapHandItemsEvent ev) 
 	{
 		Player p = ev.getPlayer();
-		double sec =2*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =2*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 	    
 		
 		
@@ -870,7 +870,7 @@ public class Oceskills extends Pak implements Serializable {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec =8*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =8*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
         
 		
 		
@@ -1102,7 +1102,7 @@ public class Oceskills extends Pak implements Serializable {
 	public void WaterSpear(PlayerSwapHandItemsEvent ev) 
 	{
 		Player p = ev.getPlayer();
-		double sec =7*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =7*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 	    
 		
 		
@@ -1390,7 +1390,7 @@ public class Oceskills extends Pak implements Serializable {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec =8*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =8*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
         
 		
 		

@@ -236,7 +236,7 @@ public class Tamskills extends Pak implements Listener, Serializable {
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 9 && tsd.PressTheAttack.getOrDefault(p.getUniqueId(), 0)>=1)
 		{
-			double sec =5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec =5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData() && !(p.isSneaking()) && tsd.PressTheAttack.get(p.getUniqueId())>=1)
 			{
 				ev.setCancelled(true);
@@ -261,7 +261,7 @@ public class Tamskills extends Pak implements Listener, Serializable {
 						if(tamed.containsKey(p.getUniqueId())) {
 							tamed.get(p.getUniqueId()).forEach(t -> {
 								if(t.getType() != EntityType.PARROT && t.getType() != EntityType.BAT&& t.getType() != EntityType.IRON_GOLEM&& t.getType() != EntityType.ENDER_DRAGON &&t.isValid() && !t.isDead()) {
-									damage.compute(p, (k,v) -> v+t.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue()) ;
+									damage.compute(p, (k,v) -> v+t.getAttribute(Attribute.ATTACK_DAMAGE).getBaseValue()) ;
 								}
 							});
 						}
@@ -288,7 +288,7 @@ public class Tamskills extends Pak implements Listener, Serializable {
 					if(tamed.containsKey(p.getUniqueId())) {
 						tamed.get(p.getUniqueId()).forEach(t -> {
 							if(t.getType() != EntityType.PARROT && t.getType() != EntityType.BAT&& t.getType() != EntityType.IRON_GOLEM&& t.getType() != EntityType.ENDER_DRAGON &&t.isValid() && !t.isDead()) {
-								damage.compute(p, (k,v) -> v+t.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue()) ;
+								damage.compute(p, (k,v) -> v+t.getAttribute(Attribute.ATTACK_DAMAGE).getBaseValue()) ;
 							}
 						});
 					}
@@ -390,7 +390,7 @@ public class Tamskills extends Pak implements Listener, Serializable {
 							}
 							attention.put(p.getUniqueId(), le);
 			                sdcooldown.put(p.getName(), System.currentTimeMillis());
-		                    Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d),5,"집중공격","PressTheAttack"));
+		                    Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d),5,"집중공격","PressTheAttack"));
 			                if(Proficiency.getpro(p)>=1) {
 								p.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 2, 0, false, false));
 			                }
@@ -464,7 +464,7 @@ public class Tamskills extends Pak implements Listener, Serializable {
 			{
 				p.setCooldown(CAREFUL, 2);
 				
-				double sec =7*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+				double sec =7*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
@@ -761,7 +761,7 @@ public class Tamskills extends Pak implements Listener, Serializable {
 			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData() && p.isSneaking())
 			{
 				ev.setCancelled(true);
-				double sec = 5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+				double sec = 5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
@@ -813,10 +813,10 @@ public class Tamskills extends Pak implements Listener, Serializable {
 		                    w.setAdult();
 		                    w.setBreed(false);
 		                    w.setAgeLock(true);
-							w.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
-							w.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(w.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()*(1+tsd.Pets.getOrDefault(p.getUniqueId(),0)*0.05)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.1));
-							w.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(w.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue()*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.015));
-							w.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(5*(1+tsd.Pets.getOrDefault(p.getUniqueId(),0)*0.02)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.015));
+							w.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
+							w.getAttribute(Attribute.MAX_HEALTH).setBaseValue(w.getAttribute(Attribute.MAX_HEALTH).getBaseValue()*(1+tsd.Pets.getOrDefault(p.getUniqueId(),0)*0.05)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.1));
+							w.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(w.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue()*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.015));
+							w.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(5*(1+tsd.Pets.getOrDefault(p.getUniqueId(),0)*0.02)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.015));
 							w.setHealth(w.getMaxHealth());
 							w.setMetadata("pet of "+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	
 							w.setMetadata("untargetable", new FixedMetadataValue(RMain.getInstance(), p.getName()));
@@ -830,9 +830,9 @@ public class Tamskills extends Pak implements Listener, Serializable {
 		                    cat.setAdult();
 		                    cat.setBreed(false);
 		                    cat.setAgeLock(true);
-							cat.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(cat.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()*(1+tsd.Pets.getOrDefault(p.getUniqueId(),0)*0.05)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.1));
-							cat.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(cat.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue()*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.01));
-							cat.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(3*(1+tsd.Pets.getOrDefault(p.getUniqueId(),0)*0.02)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.01));
+							cat.getAttribute(Attribute.MAX_HEALTH).setBaseValue(cat.getAttribute(Attribute.MAX_HEALTH).getBaseValue()*(1+tsd.Pets.getOrDefault(p.getUniqueId(),0)*0.05)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.1));
+							cat.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(cat.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue()*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.01));
+							cat.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(3*(1+tsd.Pets.getOrDefault(p.getUniqueId(),0)*0.02)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.01));
 							cat.setHealth(cat.getMaxHealth());
 							cat.setMetadata("pet of "+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	
 							cat.setMetadata("untargetable", new FixedMetadataValue(RMain.getInstance(), p.getName()));
@@ -845,8 +845,8 @@ public class Tamskills extends Pak implements Listener, Serializable {
 		                    par.setAdult();
 		                    par.setBreed(false);
 		                    par.setAgeLock(true);
-							par.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(par.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()*(1+tsd.Pets.getOrDefault(p.getUniqueId(),0)*0.05)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.1));
-							par.getAttribute(Attribute.GENERIC_FLYING_SPEED).setBaseValue(3*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.01));
+							par.getAttribute(Attribute.MAX_HEALTH).setBaseValue(par.getAttribute(Attribute.MAX_HEALTH).getBaseValue()*(1+tsd.Pets.getOrDefault(p.getUniqueId(),0)*0.05)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.1));
+							par.getAttribute(Attribute.FLYING_SPEED).setBaseValue(3*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.01));
 							par.setHealth(par.getMaxHealth());
 							par.setMetadata("pet of "+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	
 							par.setMetadata("untargetable", new FixedMetadataValue(RMain.getInstance(), p.getName()));
@@ -871,9 +871,9 @@ public class Tamskills extends Pak implements Listener, Serializable {
 			                    fox.setAdult();
 			                    fox.setBreed(false);
 			                    fox.setAgeLock(true);
-			                    fox.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(fox.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()*(1+tsd.Pets.getOrDefault(p.getUniqueId(),0)*0.05)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.1));
-			                    fox.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(fox.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue()*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.01));
-			                    fox.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(4*(1+tsd.Pets.getOrDefault(p.getUniqueId(),0)*0.03)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.02));
+			                    fox.getAttribute(Attribute.MAX_HEALTH).setBaseValue(fox.getAttribute(Attribute.MAX_HEALTH).getBaseValue()*(1+tsd.Pets.getOrDefault(p.getUniqueId(),0)*0.05)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.1));
+			                    fox.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(fox.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue()*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.01));
+			                    fox.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(4*(1+tsd.Pets.getOrDefault(p.getUniqueId(),0)*0.03)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.02));
 			                    fox.setHealth(fox.getMaxHealth());
 								fox.setMetadata("pet of "+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	
 								fox.setMetadata("untargetable", new FixedMetadataValue(RMain.getInstance(), p.getName()));
@@ -885,9 +885,9 @@ public class Tamskills extends Pak implements Listener, Serializable {
 			                    oce.setAdult();
 			                    oce.setBreed(false);
 			                    oce.setAgeLock(true);
-			                    oce.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(oce.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()*(1+tsd.Pets.getOrDefault(p.getUniqueId(),0)*0.05)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.1));
-			                    oce.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(oce.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue()*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.01));
-			                    oce.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(4*(1+tsd.Pets.getOrDefault(p.getUniqueId(),0)*0.03)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.02));
+			                    oce.getAttribute(Attribute.MAX_HEALTH).setBaseValue(oce.getAttribute(Attribute.MAX_HEALTH).getBaseValue()*(1+tsd.Pets.getOrDefault(p.getUniqueId(),0)*0.05)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.1));
+			                    oce.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(oce.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue()*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.01));
+			                    oce.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(4*(1+tsd.Pets.getOrDefault(p.getUniqueId(),0)*0.03)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.02));
 			                    oce.setHealth(oce.getMaxHealth());
 								oce.setMetadata("pet of "+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	
 								oce.setMetadata("untargetable", new FixedMetadataValue(RMain.getInstance(), p.getName()));
@@ -986,7 +986,7 @@ public class Tamskills extends Pak implements Listener, Serializable {
 		if(ClassData.pc.get(p.getUniqueId()) == 9&& tsd.BeeHive.getOrDefault(p.getUniqueId(), 0)>=1) {
 		if(!(p.isSneaking())&& !p.isOnGround() && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK))
 		{
-		double sec = 10*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec = 10*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
 			{
 				p.setCooldown(CAREFUL, 2);
@@ -1010,8 +1010,8 @@ public class Tamskills extends Pak implements Listener, Serializable {
 		                    for(int b =0; b<6; b++) {
 								Bee bees = (Bee) p.getWorld().spawnEntity(i, EntityType.BEE);
 								bees.setAdult();
-								bees.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(3*(1+tsd.BeeHive.getOrDefault(p.getUniqueId(),0)*0.03)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.023));
-								bees.getAttribute(Attribute.GENERIC_FLYING_SPEED).setBaseValue(bees.getAttribute(Attribute.GENERIC_FLYING_SPEED).getBaseValue()*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.01));
+								bees.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(3*(1+tsd.BeeHive.getOrDefault(p.getUniqueId(),0)*0.03)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.023));
+								bees.getAttribute(Attribute.FLYING_SPEED).setBaseValue(bees.getAttribute(Attribute.FLYING_SPEED).getBaseValue()*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.01));
 								bees.setInvulnerable(true);
 								bees.setHealth(bees.getMaxHealth());
 								bees.setMetadata("bees of "+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));	
@@ -1322,7 +1322,7 @@ public class Tamskills extends Pak implements Listener, Serializable {
 		if(ClassData.pc.get(p.getUniqueId()) == 9&& tsd.CreepBomb.getOrDefault(p.getUniqueId(), 0)>=1 && !p.hasCooldown(CAREFUL)) {	
 			if((a == Action.LEFT_CLICK_AIR || a == Action.LEFT_CLICK_BLOCK)&&(a!= Action.RIGHT_CLICK_AIR)&&(a!= Action.RIGHT_CLICK_AIR)&& p.isSneaking())
 			{	
-				double sec =10*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+				double sec =10*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 				if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
 					{
 					SkillBuilder bd = new SkillBuilder()
@@ -1458,7 +1458,7 @@ public class Tamskills extends Pak implements Listener, Serializable {
 			{	
 				if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
 				{
-					double sec = 7*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+					double sec = 7*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 					ev.setCancelled(true);
 					SkillBuilder bd = new SkillBuilder()
 							.player(p)
@@ -1506,10 +1506,10 @@ public class Tamskills extends Pak implements Listener, Serializable {
 			                	}
 			                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 2.0f);
 			                    Panda pd = (Panda) p.getWorld().spawnEntity(p.getLocation(), EntityType.PANDA);
-								pd.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
-								pd.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(pd.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()*(10+tsd.PandaSweep.getOrDefault(p.getUniqueId(),0)*10)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)));
-								pd.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(pd.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue()*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.01));
-								pd.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(8*(1+tsd.PandaSweep.getOrDefault(p.getUniqueId(),0)*0.04)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.02));
+								pd.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
+								pd.getAttribute(Attribute.MAX_HEALTH).setBaseValue(pd.getAttribute(Attribute.MAX_HEALTH).getBaseValue()*(10+tsd.PandaSweep.getOrDefault(p.getUniqueId(),0)*10)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)));
+								pd.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(pd.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue()*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.01));
+								pd.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(8*(1+tsd.PandaSweep.getOrDefault(p.getUniqueId(),0)*0.04)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)*0.02));
 			                    pd.setAdult();
 			                    pd.setBreed(false);
 			                    pd.setCustomName(p.getName());
@@ -1676,10 +1676,10 @@ public class Tamskills extends Pak implements Listener, Serializable {
 		                    Location i = gettargetblock(p,4);
 		                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_STRONG, 1.0f, 2.0f);
 							IronGolem ig = (IronGolem) p.getWorld().spawnEntity(i, EntityType.IRON_GOLEM);
-							ig.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
-							ig.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(ig.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()*(1+p.getLevel()*0.25)*(1+tsd.Taming.get(p.getUniqueId())));
-							ig.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(ig.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue()*(1+p.getLevel()*0.01));
-							ig.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20*(1+tsd.Taming.get(p.getUniqueId())*0.08));
+							ig.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
+							ig.getAttribute(Attribute.MAX_HEALTH).setBaseValue(ig.getAttribute(Attribute.MAX_HEALTH).getBaseValue()*(1+p.getLevel()*0.25)*(1+tsd.Taming.get(p.getUniqueId())));
+							ig.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(ig.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue()*(1+p.getLevel()*0.01));
+							ig.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(20*(1+tsd.Taming.get(p.getUniqueId())*0.08));
 		                    ig.setPlayerCreated(true);
 		                    ig.setHealth(ig.getMaxHealth());
 		                    ig.setSilent(true);
@@ -1846,11 +1846,11 @@ public class Tamskills extends Pak implements Listener, Serializable {
 		for (Entity e : ig.getNearbyEntities(20, 20, 20)) {
 		    e.setVelocity(new Vector(0, 0, 0));
 		}
-		ig.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
-		ig.getAttribute(Attribute.GENERIC_ATTACK_KNOCKBACK).setBaseValue(0);
-		ig.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(0);
-		ig.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(ig.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()*(1+p.getLevel()*0.25)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)));
-		ig.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0);
+		ig.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
+		ig.getAttribute(Attribute.ATTACK_KNOCKBACK).setBaseValue(0);
+		ig.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(0);
+		ig.getAttribute(Attribute.MAX_HEALTH).setBaseValue(ig.getAttribute(Attribute.MAX_HEALTH).getBaseValue()*(1+p.getLevel()*0.25)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)));
+		ig.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0);
 
 		ig.setCollidable(false);
         ig.setHealth(ig.getMaxHealth());

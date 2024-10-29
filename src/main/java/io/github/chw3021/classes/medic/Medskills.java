@@ -248,7 +248,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 		if(ev.getEntity() instanceof Player)
 		{
 			Player p = (Player) ev.getEntity();
-			double sec = 6*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec = 6*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 			if(wing.containsKey(p.getUniqueId())) {
 				sec=0;
@@ -491,7 +491,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 	public void Decontamination(PlayerSwapHandItemsEvent ev)
 	{
 		Player p = ev.getPlayer();
-		double sec = 11*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec = 11*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 
 
@@ -858,7 +858,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 	public void SupplyCart(PlayerSwapHandItemsEvent ev)
 	{
 		Player p = ev.getPlayer();
-		double sec = 22*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec = 22*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 
 
@@ -1244,7 +1244,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 		if(ClassData.pc.get(p.getUniqueId()) == 61 && ssd.AED.getOrDefault(p.getUniqueId(), 1) >=1 && !p.hasCooldown(CAREFUL)) {
 			if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK) && p.isSneaking())
 			{
-				double sec =3*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+				double sec =3*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 				if(p.isSneaking())
 				{
 					if(p.getInventory().getItemInMainHand().getType() == Material.CROSSBOW)
@@ -1659,7 +1659,7 @@ public class Medskills extends Pak implements Serializable, Listener {
 
 							SkillBuilder bd = new SkillBuilder()
 									.player(p)
-									.cooldown(30*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024))
+									.cooldown(30*(1-p.getAttribute(Attribute.LUCK).getValue()/1024))
 									.kname("빈사")
 									.ename("Groggy")
 									.slot(-1)

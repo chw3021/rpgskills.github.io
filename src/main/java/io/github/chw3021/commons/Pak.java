@@ -347,7 +347,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	
 			if(mi.getType().name().contains("SWORD")&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
+				player_damage.put(p.getName(), (p.getAttribute(Attribute.ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
 				
 				return true;
@@ -361,7 +361,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	
 			if(mi.getType().name().contains("SWORD")&&!oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
+				player_damage.put(p.getName(), (p.getAttribute(Attribute.ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
 				
 				return true;
@@ -376,7 +376,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		else if(classnum == 2) {	//Hunter				
 	
 			if(mi.getType().name().contains("_AXE")&& !oi.getType().name().contains("SHIELD")&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD)) {
-				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
+				player_damage.put(p.getName(), (p.getAttribute(Attribute.ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
 				
 				return true;
@@ -390,7 +390,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		else if(classnum == 3) {	//Paladin					
 	
 			if(mi.getType().name().contains("_AXE")&& oi.getType().name().contains("SHIELD")&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)) {
-				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
+				player_damage.put(p.getName(), (p.getAttribute(Attribute.ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
 				return true;
 			}
@@ -406,7 +406,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	
 			if(mi.getType() == Material.CROSSBOW&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.POWER)*0.10) + p.getLevel()*0.125);
+				player_damage.put(p.getName(), (p.getAttribute(Attribute.ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.POWER)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
 				return true;
 			}
@@ -419,7 +419,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 			if(mi.getType() == Material.BOW&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
 
-				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.POWER)*0.10) + p.getLevel()*0.125);
+				player_damage.put(p.getName(), (p.getAttribute(Attribute.ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.POWER)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
 				
 				return true;
@@ -433,7 +433,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	
 			if(mi.getType()==Material.BOW && !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.POWER)*0.10) + p.getLevel()*0.125);
+				player_damage.put(p.getName(), (p.getAttribute(Attribute.ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.POWER)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
 					
 					return true;
@@ -448,7 +448,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	
 			if(mi.getType() == Material.CROSSBOW&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.POWER)*0.10) + p.getLevel()*0.125);
+				player_damage.put(p.getName(), (p.getAttribute(Attribute.ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.POWER)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
 				
 				return true;
@@ -464,7 +464,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 					((mi.getItemMeta().getItemName().contains("CopiedKnuckle")&&!oi.getItemMeta().getItemName().contains("CopiedKnuckle")) ||
 							(!mi.getItemMeta().getItemName().contains("CopiedKnuckle")&&oi.getItemMeta().getItemName().contains("CopiedKnuckle"))) )
 			{
-				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
+				player_damage.put(p.getName(), (p.getAttribute(Attribute.ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
 				return true;
 			}
@@ -481,7 +481,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 							((mi.getItemMeta().getItemName().contains("CopiedKnuckle")&&!oi.getItemMeta().getItemName().contains("CopiedKnuckle")) ||
 									(!mi.getItemMeta().getItemName().contains("CopiedKnuckle")&&oi.getItemMeta().getItemName().contains("CopiedKnuckle"))) )
 			{
-					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
+					player_damage.put(p.getName(), (p.getAttribute(Attribute.ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					return true;
 			}
@@ -496,7 +496,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 							((mi.getItemMeta().getItemName().contains("CopiedKnuckle")&&!oi.getItemMeta().getItemName().contains("CopiedKnuckle")) ||
 									(!mi.getItemMeta().getItemName().contains("CopiedKnuckle")&&oi.getItemMeta().getItemName().contains("CopiedKnuckle"))) )
 			{
-					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
+					player_damage.put(p.getName(), (p.getAttribute(Attribute.ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
 					return true;
@@ -513,7 +513,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 							((mi.getItemMeta().getItemName().contains("CopiedKnuckle")&&!oi.getItemMeta().getItemName().contains("CopiedKnuckle")) ||
 									(!mi.getItemMeta().getItemName().contains("CopiedKnuckle")&&oi.getItemMeta().getItemName().contains("CopiedKnuckle"))) )
 			{
-					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
+					player_damage.put(p.getName(), (p.getAttribute(Attribute.ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
 					return true;
@@ -527,7 +527,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	
 			if(mi.getType()==Material.BLAZE_ROD && mi.hasItemMeta() && mi.getItemMeta().hasCustomModelData()&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
+					player_damage.put(p.getName(), (p.getAttribute(Attribute.ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
 					return true;
@@ -540,7 +540,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		else if(classnum == 12) {//Firemage
 			if(mi.getType()==Material.BLAZE_ROD && mi.hasItemMeta() && mi.getItemMeta().hasCustomModelData()&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
+					player_damage.put(p.getName(), (p.getAttribute(Attribute.ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
 					return true;
@@ -555,7 +555,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		else if(classnum == 13) { //Witherist
 			if(mi.getType().name().contains("HOE")&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
+				player_damage.put(p.getName(), (p.getAttribute(Attribute.ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
 				return true;
 			}
@@ -569,7 +569,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	
 			if(mi.getType().name().contains("HOE")&&!oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
+				player_damage.put(p.getName(), (p.getAttribute(Attribute.ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
 				return true;
 			}
@@ -581,7 +581,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		else if(classnum == 15) {//Chemist
 			if(mi.getType().name().contains("PICKAXE")&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
+					player_damage.put(p.getName(), (p.getAttribute(Attribute.ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
 					return true;
@@ -595,7 +595,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		else if(classnum == 16) {//Forger
 			if(mi.getType().name().contains("PICKAXE")&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
+					player_damage.put(p.getName(), (p.getAttribute(Attribute.ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					return true;
 			}
@@ -607,7 +607,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		else if(classnum == 17) {//Engineer
 			if(mi.getType().name().contains("PICKAXE")&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
+					player_damage.put(p.getName(), (p.getAttribute(Attribute.ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
 					return true;
@@ -620,7 +620,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		else if(classnum == 18) { // Cooker
 			if(mi.getType().name().contains("SHOVEL")&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-				player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
+				player_damage.put(p.getName(), (p.getAttribute(Attribute.ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 				effectdamage(p);
 				return true;
 			}
@@ -636,7 +636,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	
 			if(mi.getType()==Material.TRIDENT&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
+					player_damage.put(p.getName(), (p.getAttribute(Attribute.ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
 					return true;
@@ -653,14 +653,14 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	
 			if(mi.getType()==Material.TRIDENT&& oi.getType()==Material.SHIELD&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT))
 			{
-					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
+					player_damage.put(p.getName(), (p.getAttribute(Attribute.ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
 					return true;
 			}
 			else if(mi.getType()==Material.SHIELD&&oi.getType()==Material.TRIDENT&& !oi.getType().name().contains("BANNER_PATTERN")&& !(mi.getType()==Material.TRIDENT))
 			{
-					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + oi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
+					player_damage.put(p.getName(), (p.getAttribute(Attribute.ATTACK_DAMAGE).getValue()) * (1 + oi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
 					return true;
@@ -675,7 +675,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 				p.setFreezeTicks(0);
 				if(mi.getType() == Material.PRISMARINE_SHARD&& mi.hasItemMeta() && mi.getItemMeta().hasCustomModelData()&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 				{
-						player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
+						player_damage.put(p.getName(), (p.getAttribute(Attribute.ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 						effectdamage(p);
 						return true;
 				}
@@ -687,7 +687,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		else if(classnum == 22) {//Angler
 			if(mi.getType()==Material.FISHING_ROD && !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
+					player_damage.put(p.getName(), (p.getAttribute(Attribute.ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
 					return true;
@@ -703,7 +703,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 		else if(classnum == 25) { // Broiler
 			if(mi.getType().name().contains("SHOVEL")&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 			{
-					player_damage.put(p.getName(), (p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
+					player_damage.put(p.getName(), (p.getAttribute(Attribute.ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 					effectdamage(p);
 					
 					return true;
@@ -2076,7 +2076,7 @@ public class Pak extends CombatMode implements Serializable, Listener{
 	
 	protected final void Enderdragonhit(EnderDragon le, Player p, Double d) {
 		final Chicken ch = le.getWorld().spawn(le.getLocation().add(0, 1.25, 0), Chicken.class);
-		ch.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(9999999);
+		ch.getAttribute(Attribute.MAX_HEALTH).setBaseValue(9999999);
 		ch.setHealth(9999999);
 		ch.setSilent(true);
 		ch.setInvisible(true);

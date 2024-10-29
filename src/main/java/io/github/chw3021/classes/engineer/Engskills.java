@@ -151,7 +151,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 
 		if(ClassData.pc.get(p.getUniqueId()) == 17)
 		{
-			double sec =9*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec =9*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 			if((p.getInventory().getItemInMainHand().getType().name().contains("PICKAXE")) && p.isSneaking())
 			{
 				ev.setCancelled(true);
@@ -536,7 +536,6 @@ public class Engskills extends Pak implements Listener, Serializable {
 				as.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 				as.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 				as.setInvisible(true);
-				as.setMarker(true);
 				as.getEquipment().setHelmet(new ItemStack(Material.PURPLE_GLAZED_TERRACOTTA));
 				as.setInvulnerable(true);
 				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -641,7 +640,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 			line.add(snl.clone().add(v.clone().normalize().multiply(d)));
 		}
 		line.forEach(l -> {
-			snw.spawnParticle(Particle.BLOCK_MARKER, l, 1, 0.3,0.3,0.3,0, Material.DISPENSER.createBlockData());
+			snw.spawnParticle(Particle.DUST_PILLAR, l, 1, 0.3,0.3,0.3,0, Material.DISPENSER.createBlockData());
 		});
 	}
 
@@ -651,7 +650,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec =5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 		if(ClassData.pc.get(p.getUniqueId()) == 17) {
 			if((p.isSneaking()) && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK))
 			{
@@ -981,11 +980,33 @@ public class Engskills extends Pak implements Listener, Serializable {
 			d.setCancelled(true);
 		}
 	}
+	
+	private void Graviton(Location l,Player p) {
+		l.getWorld().spawn(l, EnderCrystal.class, graviton -> {
+			graviton.setInvulnerable(true);
+			graviton.setShowingBottom(false);
+			graviton.setMetadata("graviton of"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+			graviton.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), p.getName()));
+			graviton.setMetadata("graviton", new FixedMetadataValue(RMain.getInstance(), true));
+			graviton.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+			graviton.setGlowing(true);
+			graviton.setBeamTarget(null);
+			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+				@Override
+				public void run()
+				{
+					graviton.remove();
+					p.playSound(graviton.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f);
+					l.getWorld().spawnParticle(Particle.EXPLOSION, graviton.getLocation(), 1,1,1,1);
+				}
+			}, 42);
+		});
+	}
 
 	public void Graviton(PlayerSwapHandItemsEvent ev) //https://www.spigotmc.org/members/beefystick.28035/
 	{
 		Player p = ev.getPlayer();
-		double sec =8*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =8*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 		if(ClassData.pc.get(p.getUniqueId()) == 17) {
 			if((p.getInventory().getItemInMainHand().getType().name().contains("PICKAXE")) && !p.isSneaking())
@@ -1034,6 +1055,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 							EnderCrystal gravit = (EnderCrystal) p.getWorld().spawnEntity(l, EntityType.END_CRYSTAL);
 							gravit.setInvulnerable(true);
 							gravit.setShowingBottom(false);
+							gravit.setBeamTarget(null);
 							gravit.setMetadata("graviton of"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 							gravit.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), p.getName()));
 							gravit.setMetadata("graviton", new FixedMetadataValue(RMain.getInstance(), true));
@@ -1042,60 +1064,9 @@ public class Engskills extends Pak implements Listener, Serializable {
 
 							if(shipt.containsKey(p.getUniqueId())){
 								for(int i=-1; i<=1; i++){
-									p.getWorld().spawn(l.clone().add(0,i,0), EnderCrystal.class, graviton -> {
-										graviton.setInvulnerable(true);
-										graviton.setShowingBottom(false);
-										graviton.setMetadata("graviton of"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-										graviton.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), p.getName()));
-										graviton.setMetadata("graviton", new FixedMetadataValue(RMain.getInstance(), true));
-										graviton.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-										graviton.setGlowing(true);
-										Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-											@Override
-											public void run()
-											{
-												graviton.remove();
-												p.playSound(graviton.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f);
-												p.getWorld().spawnParticle(Particle.EXPLOSION, graviton.getLocation(), 1,1,1,1);
-											}
-										}, 42);
-									});
-									p.getWorld().spawn(l.clone().add(i,0,0), EnderCrystal.class, graviton -> {
-										graviton.setInvulnerable(true);
-										graviton.setShowingBottom(false);
-										graviton.setMetadata("graviton of"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-										graviton.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), p.getName()));
-										graviton.setMetadata("graviton", new FixedMetadataValue(RMain.getInstance(), true));
-										graviton.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-										graviton.setGlowing(true);
-										Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-											@Override
-											public void run()
-											{
-												graviton.remove();
-												p.playSound(graviton.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f);
-												p.getWorld().spawnParticle(Particle.EXPLOSION, graviton.getLocation(), 1,1,1,1);
-											}
-										}, 42);
-									});
-									p.getWorld().spawn(l.clone().add(0,0,i), EnderCrystal.class, graviton -> {
-										graviton.setInvulnerable(true);
-										graviton.setShowingBottom(false);
-										graviton.setMetadata("graviton of"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-										graviton.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), p.getName()));
-										graviton.setMetadata("graviton", new FixedMetadataValue(RMain.getInstance(), true));
-										graviton.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-										graviton.setGlowing(true);
-										Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-											@Override
-											public void run()
-											{
-												graviton.remove();
-												p.playSound(graviton.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f);
-												p.getWorld().spawnParticle(Particle.EXPLOSION, graviton.getLocation(), 1,1,1,1);
-											}
-										}, 42);
-									});
+									Graviton(l.clone().add(0, i, 0), p);
+									Graviton(l.clone().add(i, 0, 0), p);
+									Graviton(l.clone().add(0, 0, i), p);
 								}
 							}
 							for(int i =0; i<9; i++) {
@@ -1103,7 +1074,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 									@Override
 									public void run()
 									{
-										gravit.setBeamTarget(p.getLocation().add(0, -0.5, 0));
+										gravit.setBeamTarget(null);
 										p.playSound(p.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 0.5f, 2.0f);
 										Double area = 5.2;
 										if(shipt.containsKey(p.getUniqueId())){
@@ -1250,8 +1221,8 @@ public class Engskills extends Pak implements Listener, Serializable {
 						public void run()
 						{
 							p.playSound(sn.getLocation(), Sound.BLOCK_PORTAL_AMBIENT, 0.055f, 2.0f);
-							sn.getWorld().spawnParticle(Particle.END_ROD, sn.getLocation(), 10,1,1,1);
-							sn.getWorld().spawnParticle(Particle.FLASH, sn.getLocation(), 10,1,1,1);
+							sn.getWorld().spawnParticle(Particle.END_ROD, sn.getLocation(), 2,1,1,1);
+							sn.getWorld().spawnParticle(Particle.FLASH, sn.getLocation(), 1,1,1,1);
 							for (Entity e : p.getWorld().getNearbyEntities(sn.getLocation(), 5, 5, 5))
 							{
 								if (e instanceof Player)
@@ -1312,16 +1283,16 @@ public class Engskills extends Pak implements Listener, Serializable {
 			line3.add(pl.clone().add(pl.getDirection().rotateAroundY(an).normalize().multiply(2.6)));
 		}
 		line.forEach(l -> {
-			w.spawnParticle(Particle.WAX_ON, l,2,0.1,0.1,0.1,0.1);
+			w.spawnParticle(Particle.WAX_ON, l,1,0.1,0.1,0.1,0.1);
 		});
 		line2.forEach(l -> {
-			w.spawnParticle(Particle.WAX_OFF, l,2,0.1,0.1,0.1,0.1);
+			w.spawnParticle(Particle.WAX_OFF, l,1,0.1,0.1,0.1,0.1);
 		});
 		line3.forEach(l -> {
-			w.spawnParticle(Particle.EFFECT, l,2,0.1,0.1,0.1,0.1);
+			w.spawnParticle(Particle.DUST_PLUME, l,1,0.1,0.1,0.1,0.1);
 		});
 		line4.forEach(l -> {
-			w.spawnParticle(Particle.GLOW, l,2,0.1,0.1,0.1,0);
+			w.spawnParticle(Particle.GLOW, l,1,0.1,0.1,0.1,0);
 		});
 	}
 
@@ -1433,7 +1404,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec =7*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =7*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 
 
@@ -1686,20 +1657,20 @@ public class Engskills extends Pak implements Listener, Serializable {
 	final private void Arrow(Location tl) {
 		HashSet<Location> ls = new HashSet<>();
 		Location fl = tl.clone().add(0,3,0);
-		for(int i  = -3; i<3; i++) {
+		for(int i  = -5; i<5; i++) {
 			ls.add(fl.clone().add(0, i, 0));
 		}
-		ls.add(fl.clone().add(1, -3, 1));
-		ls.add(fl.clone().add(-1, -3, -1));
-		ls.add(fl.clone().add(2, -3, 2));
-		ls.add(fl.clone().add(-2, -3, -2));
-		ls.add(fl.clone().add(1, 3, 1));
-		ls.add(fl.clone().add(-1, 3, -1));
-		ls.add(fl.clone().add(2, 3, 2));
-		ls.add(fl.clone().add(-2, 3, -2));
+		ls.add(fl.clone().add(0.7, -4, 0.7));
+		ls.add(fl.clone().add(-0.7, -4, -0.7));
+		ls.add(fl.clone().add(1.5, -3, 1.5));
+		ls.add(fl.clone().add(-1.5, -3, -1.5));
+		ls.add(fl.clone().add(0.7, 3, 0.7));
+		ls.add(fl.clone().add(-0.7, 3, -0.7));
+		ls.add(fl.clone().add(1.5, 2, 1.5));
+		ls.add(fl.clone().add(-1.5, 2, -1.5));
 		
 		ls.forEach(l ->{
-			tl.getWorld().spawnParticle(Particle.BLOCK_MARKER, l, 3, 0.5,0.5,0.5, getBd(Material.COMMAND_BLOCK));
+			tl.getWorld().spawnParticle(Particle.BLOCK_MARKER, l, 1, getBd(Material.JIGSAW));
 		});
 	}
 
@@ -1819,7 +1790,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 			Location el =le.getLocation();
 
 
-			double sec =20*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec =20*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 
 
@@ -1893,7 +1864,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec =6*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =6*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 
 
@@ -2411,9 +2382,10 @@ public class Engskills extends Pak implements Listener, Serializable {
 						});
 						tlw.playSound(tl, Sound.AMBIENT_CAVE, 1f, 2);
 						tlw.playSound(tl, Sound.BLOCK_END_GATEWAY_SPAWN, 1f, 0f);
-						p.sendBlockChange(tl, Material.END_GATEWAY.createBlockData());
 
-						tlw.spawnParticle(Particle.BLOCK_MARKER, tl, 150, 2,2,2,0, Material.END_GATEWAY.createBlockData());
+						tlw.spawnParticle(Particle.BLOCK_MARKER, tl, 50, 2,2,2,0, Material.END_GATEWAY.createBlockData());
+						tlw.spawnParticle(Particle.BLOCK_MARKER, tl, 50, 2,2,2,0, Material.NETHER_PORTAL.createBlockData());
+						tlw.spawnParticle(Particle.BLOCK_MARKER, tl, 50, 2,2,2,0, Material.END_PORTAL.createBlockData());
 
 						for(int i =1; i<20; i++) {
 							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -2422,9 +2394,9 @@ public class Engskills extends Pak implements Listener, Serializable {
 								{
 									p.playSound(tl, Sound.BLOCK_BEACON_DEACTIVATE, 0.1f, 2);
 									p.playSound(tl, Sound.BLOCK_PORTAL_TRIGGER, 0.1f, 2);
-									tlw.spawnParticle(Particle.PORTAL, tl, 100, 1,1,1,0);
-									tlw.spawnParticle(Particle.REVERSE_PORTAL, tl, 100, 1,1,1,0);
-									tlw.spawnParticle(Particle.DRIPPING_OBSIDIAN_TEAR, tl, 200, 1,1,1,0);
+									tlw.spawnParticle(Particle.PORTAL, tl, 50, 1,1,1,0);
+									tlw.spawnParticle(Particle.REVERSE_PORTAL, tl, 50, 1,1,1,0);
+									tlw.spawnParticle(Particle.DRIPPING_OBSIDIAN_TEAR, tl, 50, 1,1,1,0);
 									for(LivingEntity le: les) {
 										BlackHole(p,le,tlw,tl);
 									}
@@ -2451,7 +2423,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 								p.playSound(tl, Sound.BLOCK_END_PORTAL_FRAME_FILL, 1, 0);
 								p.playSound(tl, Sound.ITEM_TRIDENT_THUNDER, 0.8f, 0);
 								tlw.spawnParticle(Particle.ENCHANT, tl, 2000, 3,3,3,1);
-								tlw.spawnParticle(Particle.END_ROD, tl, 500, 3,3,3,1);
+								tlw.spawnParticle(Particle.END_ROD, tl, 150, 3,3,3,1);
 
 								for(LivingEntity le: les) {
 									atk1(16.4, p, le);

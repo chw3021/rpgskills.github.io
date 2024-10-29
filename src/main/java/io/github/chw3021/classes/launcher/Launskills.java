@@ -586,7 +586,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 	{
 		Player p = ev.getPlayer();
 		Action a = ev.getAction();
-		double sec = 3*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec = 3*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 
 
@@ -913,7 +913,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 	public void ArrowRain(PlayerSwapHandItemsEvent ev)
 	{
 		Player p = ev.getPlayer();
-		double sec =9*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =9*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 
 
@@ -1298,7 +1298,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 	public void GiantArrow(PlayerSwapHandItemsEvent ev)
 	{
 		Player p = ev.getPlayer();
-		double sec = 12*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec = 12*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 
 
@@ -1719,7 +1719,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 		{
 			Player p = (Player) a.getEntity();
 
-			double sec =4*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec =4*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 
 			if(ClassData.pc.get(p.getUniqueId()) == 5 && lsd.Explosion.getOrDefault(p.getUniqueId(), 0)>=1 && p.isSneaking()) {
@@ -1893,7 +1893,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 	{
 		Player p = ev.getPlayer();
 		Action a = ev.getAction();
-		double sec = 10*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec = 10*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 		if(ClassData.pc.get(p.getUniqueId()) == 5 && lsd.ChargingShot.getOrDefault(p.getUniqueId(), 0)>=1) {
 
@@ -2008,7 +2008,7 @@ public class Launskills extends Pak implements Serializable, Listener {
 
 						final Location el = a.getLocation();
 						cscooldown.put(p.getName(), System.currentTimeMillis());
-						Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,10*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d),5,"응집","ChargingShot"));
+						Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,10*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d),5,"응집","ChargingShot"));
 
 						for (Entity e : el.getWorld().getNearbyEntities(el, 3, 3, 3))
 						{

@@ -154,7 +154,7 @@ public class MobsSkillsEvents extends Mobs implements Listener, Serializable  {
 				ev.getEntity().setMetadata("void", new FixedMetadataValue(RMain.getInstance(), true));
 			} else if (ev.getEntityType() == EntityType.GIANT) {
 				le.setAI(false);
-				le.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+				le.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 				le.setCustomName("SandBag");
 				ev.getEntity().setMaxHealth(9999999);
 				ev.getEntity().setHealth(9999999);
@@ -241,7 +241,7 @@ public class MobsSkillsEvents extends Mobs implements Listener, Serializable  {
 				reg = reg.substring(0, reg.indexOf("Hoglin"));
 			}
 			
-			LivingEntity newmob = Mobspawn(nle, reg + trans(nle), le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue(),
+			LivingEntity newmob = Mobspawn(nle, reg + trans(nle), le.getAttribute(Attribute.MAX_HEALTH).getValue(),
 					le.getEquipment().getHelmet(), le.getEquipment().getChestplate(),
 					le.getEquipment().getLeggings(), le.getEquipment().getBoots(),
 					le.getEquipment().getItemInMainHand(), le.getEquipment().getItemInOffHand(),

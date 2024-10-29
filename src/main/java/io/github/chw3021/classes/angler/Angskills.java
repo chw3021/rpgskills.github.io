@@ -187,7 +187,7 @@ public class Angskills extends Pak implements Serializable, Listener{
 			
 			
 			if(ClassData.pc.get(p.getUniqueId()) == 22) {
-				double sec = 6*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+				double sec = 6*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 				if(e.getEntity() instanceof FishHook && fsd.Bait.getOrDefault(p.getUniqueId(),0)>=1)
 				{
 					FishHook fh = (FishHook) e.getEntity();
@@ -291,7 +291,7 @@ public class Angskills extends Pak implements Serializable, Listener{
 	public void Fishing(PlayerFishEvent d) 
 	{
 		Player p = d.getPlayer();
-		double sec = (int) (4/(Proficiency.getpro(p)+1))*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec = (int) (4/(Proficiency.getpro(p)+1))*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 22 && (fsd.Fishing.getOrDefault(p.getUniqueId(),0) >= 1)) {
@@ -410,7 +410,7 @@ public class Angskills extends Pak implements Serializable, Listener{
 			{
 				final Location lel = gettargetblock(p,3);
 				final Location lel2 = gettargetblock(p,3).clone().add(0, 1, 0);
-				double sec = 9*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+				double sec = 9*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
@@ -779,7 +779,7 @@ public class Angskills extends Pak implements Serializable, Listener{
 			if(p.getInventory().getItemInMainHand().getType()==Material.FISHING_ROD && p.isSneaking())
 			{
 				
-				double sec = 8*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+				double sec = 8*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 				ev.setCancelled(true);
 
 				SkillBuilder bd = new SkillBuilder()
@@ -949,7 +949,7 @@ public class Angskills extends Pak implements Serializable, Listener{
 	public void DrunkenDance(PlayerSwapHandItemsEvent ev) 
 	{
 		Player p = ev.getPlayer();
-		double sec = 7*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec = 7*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 	    
 		
 		

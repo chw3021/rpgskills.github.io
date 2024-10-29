@@ -199,8 +199,8 @@ public class HarvesterSkills extends NethercoreRaids{
 			if(ordeal.containsKey(p.getUniqueId())) {
 				return;
 			}
-			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
+			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
+				p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
                 d.setCancelled(true);
                 ordealable.put(p.getUniqueId(), true);
 				return;
@@ -373,8 +373,8 @@ public class HarvesterSkills extends NethercoreRaids{
 			if(p.hasMetadata("failed")|| ordeal.containsKey(p.getUniqueId()) || !handable.containsKey(p.getUniqueId())) {
 				return;
 			}
-			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
+			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
+				p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
 	            d.setCancelled(true);
 	            ordealable.put(p.getUniqueId(), true);
 				return;
@@ -672,8 +672,8 @@ public class HarvesterSkills extends NethercoreRaids{
 			int sec = 4;
 	        
 
-			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
+			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
+				p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
                 d.setCancelled(true);
                 ordealable.put(p.getUniqueId(), true);
 				return;
@@ -919,7 +919,7 @@ public class HarvesterSkills extends NethercoreRaids{
         }
         ordeal.put(p.getUniqueId(), true);
         Location rl = NethercoreRaids.getraidloc(p).clone();
-		p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
+		p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
         d.setCancelled(true);
     	p.teleport(rl.clone().add(0, 1, 0));
         Holding.holding(null, p, OrdealTime);
@@ -1014,7 +1014,7 @@ public class HarvesterSkills extends NethercoreRaids{
 		if(d.getEntity().hasMetadata("soulboss") && d.getEntity().hasMetadata("ruined")&& !d.getEntity().hasMetadata("failed")) 
 		{
 			LivingEntity p = (LivingEntity)d.getEntity();
-			if(!(p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2)|| !ordealable.containsKey(p.getUniqueId())) {
+			if(!(p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2)|| !ordealable.containsKey(p.getUniqueId())) {
 				return;
 			}
 				if(rb6cooldown.containsKey(p.getUniqueId()))

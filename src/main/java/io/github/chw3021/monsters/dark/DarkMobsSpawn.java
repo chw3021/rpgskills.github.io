@@ -63,7 +63,7 @@ public class DarkMobsSpawn extends Mobs implements Listener {
 		String reg = lang.contains("kr") ? "잠식된기사":"ErodedKnight";
 		Zombie newmob = (Zombie) Mobspawn(le, reg, 6000.0, head, chest, leg, boots, main, off, EntityType.ZOMBIE);
 		newmob.setConversionTime(-1);
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.33);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.33);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("dark", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("ErodedKnight", new FixedMetadataValue(RMain.getInstance(), true));
@@ -102,7 +102,7 @@ public class DarkMobsSpawn extends Mobs implements Listener {
 		
 		String reg = lang.contains("kr") ? "잠식된약탈자":"ErodedPillager";
 		Pillager newmob = (Pillager) Mobspawn(le, reg, 5000.0, head, null, null, null, null, null, EntityType.PILLAGER);
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.33);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.33);
 		newmob.setCanJoinRaid(false);
 		newmob.setPatrolLeader(false);
 		newmob.setPatrolTarget(null);
@@ -124,7 +124,7 @@ public class DarkMobsSpawn extends Mobs implements Listener {
 	final private Spider SpiderV(LivingEntity le) {
 		String reg = lang.contains("kr") ? "밤거미":"NightSpider";
 		Spider newmob = (Spider) Mobspawn(le, reg, 4000.0, null, null, null, null, null, null, EntityType.CAVE_SPIDER);
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.43);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.43);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("dark", new FixedMetadataValue(RMain.getInstance(), true));
 		return newmob;

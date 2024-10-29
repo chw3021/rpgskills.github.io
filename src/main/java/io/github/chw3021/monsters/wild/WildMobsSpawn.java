@@ -69,7 +69,7 @@ public class WildMobsSpawn extends Mobs implements Listener {
 		
 		String reg = lang.contains("kr") ? "고대슬라임":"AncientSlime";
 		Slime newmob = (Slime) Mobspawn(le, reg, 20000.0, head, null, null, null, null, null, EntityType.SLIME);
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.33);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.33);
 		newmob.setSize(2);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("wild", new FixedMetadataValue(RMain.getInstance(), true));
@@ -90,7 +90,7 @@ public class WildMobsSpawn extends Mobs implements Listener {
 	final private Spider SpiderV(LivingEntity le) {
 		String reg = lang.contains("kr") ? "고대거미":"AncientSpider";
 		Spider newmob = (Spider) Mobspawn(le, reg, 27500.0, null, null, null, null, null, null, EntityType.CAVE_SPIDER);
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.43);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.43);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("wild", new FixedMetadataValue(RMain.getInstance(), true));
 		return newmob;

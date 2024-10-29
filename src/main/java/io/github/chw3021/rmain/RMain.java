@@ -196,7 +196,7 @@ public class RMain extends JavaPlugin{
         Bukkit.getPluginManager().registerEvents(new Leggings(), this);
 
         Bukkit.getPluginManager().registerEvents(new OverworldRaids(), this);
-        //Bukkit.getPluginManager().registerEvents(new NethercoreRaids(), this);
+        Bukkit.getPluginManager().registerEvents(new NethercoreRaids(), this);
         
         Bukkit.getPluginManager().registerEvents(new Pak(), this);
 
@@ -213,7 +213,7 @@ public class RMain extends JavaPlugin{
         Bukkit.getPluginManager().registerEvents(new CommonEvents(), this);
         Bukkit.getPluginManager().registerEvents(new Holding(), this);
         
-        Bukkit.getPluginManager().registerEvents(new NPCLoc(HashMultimap.create()), this);
+        Bukkit.getPluginManager().registerEvents(new NPCLoc(HashBasedTable.create()), this);
     }
     
     public static RMain getInstance()

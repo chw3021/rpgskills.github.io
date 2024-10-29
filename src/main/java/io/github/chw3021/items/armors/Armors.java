@@ -32,28 +32,28 @@ public class Armors {
 
 	public static ItemMeta maxHealthAdd(final ItemMeta im, Double amount, Operation op, EquipmentSlotGroup esg) {
 		
-		im.addAttributeModifier(Attribute.GENERIC_MAX_HEALTH, new AttributeModifier(getKey(), amount, op, esg));
+		im.addAttributeModifier(Attribute.MAX_HEALTH, new AttributeModifier(getKey(), amount, op, esg));
 		
 		return im;
 	}
 
 	public static ItemMeta armorAdd(final ItemMeta im, Double amount, Operation op, EquipmentSlotGroup esg) {
 		
-		im.addAttributeModifier(Attribute.GENERIC_ARMOR, new AttributeModifier(getKey(), amount, op, esg));
+		im.addAttributeModifier(Attribute.ARMOR, new AttributeModifier(getKey(), amount, op, esg));
 		
 		return im;
 	}
 
 	public static ItemMeta armorToughnessAdd(final ItemMeta im, Double amount, Operation op, EquipmentSlotGroup esg) {
 		
-		im.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(getKey(), amount, op, esg));
+		im.addAttributeModifier(Attribute.ARMOR_TOUGHNESS, new AttributeModifier(getKey(), amount, op, esg));
 		
 		return im;
 	}
 	
 	public static ItemMeta movementAdd(final ItemMeta im, Double amount, Operation op, EquipmentSlotGroup esg) {
 		
-		im.addAttributeModifier(Attribute.GENERIC_MOVEMENT_SPEED, new AttributeModifier(getKey(), amount, op, esg));
+		im.addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(getKey(), amount, op, esg));
 		
 		return im;
 	}
@@ -93,19 +93,19 @@ public class Armors {
 		String kname = "";
 		String ename = "";
 		ItemMeta rm = r.getItemMeta();
-		rm.removeAttributeModifier(Attribute.GENERIC_ARMOR);
-		rm.removeAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS);
+		rm.removeAttributeModifier(Attribute.ARMOR);
+		rm.removeAttributeModifier(Attribute.ARMOR_TOUGHNESS);
 
-		rm.addAttributeModifier(Attribute.GENERIC_MAX_HEALTH, new AttributeModifier(getKey(), 0.6, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
-		rm.addAttributeModifier(Attribute.GENERIC_ARMOR, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
-		rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+		rm.addAttributeModifier(Attribute.MAX_HEALTH, new AttributeModifier(getKey(), 0.6, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+		rm.addAttributeModifier(Attribute.ARMOR, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+		rm.addAttributeModifier(Attribute.ARMOR_TOUGHNESS, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
 
 		final Integer an = getan(r.getType());
 		
 		if(slot == 0) {
 			kname = "부츠";
 			ename = "Boots";
-			rm.addAttributeModifier(Attribute.GENERIC_MOVEMENT_SPEED,
+			rm.addAttributeModifier(Attribute.MOVEMENT_SPEED,
 					new AttributeModifier(getKey(), 0.06, Operation.ADD_SCALAR, EquipmentSlotGroup.FEET));
 		}
 		else if(slot == 1) {
@@ -150,12 +150,12 @@ public class Armors {
 		String kname = "";
 		String ename = "";
 		ItemMeta rm = r.getItemMeta();
-		rm.removeAttributeModifier(Attribute.GENERIC_ARMOR);
-		rm.removeAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS);
+		rm.removeAttributeModifier(Attribute.ARMOR);
+		rm.removeAttributeModifier(Attribute.ARMOR_TOUGHNESS);
 
-		rm.addAttributeModifier(Attribute.GENERIC_MAX_HEALTH, new AttributeModifier(getKey(), 0.7, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
-		rm.addAttributeModifier(Attribute.GENERIC_ARMOR, new AttributeModifier(getKey(), 7, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
-		rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(getKey(), 7, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+		rm.addAttributeModifier(Attribute.MAX_HEALTH, new AttributeModifier(getKey(), 0.7, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+		rm.addAttributeModifier(Attribute.ARMOR, new AttributeModifier(getKey(), 7, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+		rm.addAttributeModifier(Attribute.ARMOR_TOUGHNESS, new AttributeModifier(getKey(), 7, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
 		
 				
 		final String m = r.getType().name();
@@ -164,7 +164,7 @@ public class Armors {
 		if(m.contains("BOOTS")) {
 			kname = "부츠";
 			ename = "Boots";
-			rm.addAttributeModifier(Attribute.GENERIC_MOVEMENT_SPEED,
+			rm.addAttributeModifier(Attribute.MOVEMENT_SPEED,
 					new AttributeModifier(getKey(), 0.1, Operation.ADD_SCALAR, EquipmentSlotGroup.FEET));
 		}
 		else if(m.contains("CHESTPLATE")) {

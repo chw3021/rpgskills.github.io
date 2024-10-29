@@ -173,7 +173,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 		{
 			if(condition(p) && fistforce.containsKey(p.getUniqueId()))
 			{
-				double sec = 5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+				double sec = 5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 				
 				if(!(p.isSneaking())&& bsd.Parrying.get(p.getUniqueId())>=1)
 				{
@@ -300,7 +300,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 			{
 		    
 			Action ac = ev.getAction();
-			double sec = 4*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec = 4*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 	
 			
 			
@@ -589,7 +589,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 		if(ClassData.pc.get(p.getUniqueId()) == 7&& bsd.DempseyRoll.getOrDefault(p.getUniqueId(), 0)>=1 && p.isSneaking()) {
 			if(condition(p))
 			{
-			double sec = 7*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec = 7*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 	
 			
 		
@@ -1127,7 +1127,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 			if(condition(p))
 			{
 			Action ac = ev.getAction();
-			double sec = 3*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec = 3*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 	
 		    
 			
@@ -1476,7 +1476,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 			if(condition(p))
 			{
 			Action ac = ev.getAction();
-			double sec = 3*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec = 3*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 	
 		    
 			
@@ -2361,7 +2361,7 @@ public class Boxskills extends Pak implements Listener, Serializable {
 		{
 		Player p = (Player)d.getEntity();
 
-		double sec = 0.5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec = 0.5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 7&&condition(p)) {

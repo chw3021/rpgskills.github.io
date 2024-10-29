@@ -51,13 +51,13 @@ public class FishingRod extends Weapons implements Listener {
 				ItemStack r = i0.clone();
 				//r.addUnsafeEnchantments(i0.getEnchantments());
 				ItemMeta rm = r.getItemMeta();
-				rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+				rm.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
 				rm.setCustomModelData(cmdt + 12000);
-				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+				rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 						new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 26,
 								Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 	
-				rm.addAttributeModifier(Attribute.GENERIC_LUCK,
+				rm.addAttributeModifier(Attribute.LUCK,
 						new AttributeModifier(UUID.randomUUID(), "generic.luck", 30,
 								Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 				if (cmdt == 14) {
@@ -160,10 +160,10 @@ public class FishingRod extends Weapons implements Listener {
 				ItemStack r = i0.clone();
 				//r.addUnsafeEnchantments(i0.getEnchantments());
 				ItemMeta rm = r.getItemMeta();
-				rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+				rm.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
 				if (cmdt == 12) {
 					rm.setCustomModelData(cmdt + 12000);
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 26,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -185,10 +185,10 @@ public class FishingRod extends Weapons implements Listener {
 				ItemStack r = i0.clone();
 				//r.addUnsafeEnchantments(i0.getEnchantments());
 				ItemMeta rm = r.getItemMeta();
-				rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+				rm.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
 				if (cmdt == 14) {
 					rm.setCustomModelData(1 + 12000+100);
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 9,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -211,9 +211,9 @@ public class FishingRod extends Weapons implements Listener {
 				////r.addUnsafeEnchantments(i0.getEnchantments());
 				ItemMeta rm = r.getItemMeta();
 				rm.setCustomModelData(cmdt -3 + 12000 + 100);
-				rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+				rm.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
 				if (cmdt == 5) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 11,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -228,7 +228,7 @@ public class FishingRod extends Weapons implements Listener {
 					return r;
 				}
 				else if (cmdt == 6) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 13,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -243,7 +243,7 @@ public class FishingRod extends Weapons implements Listener {
 					return r;
 				}
 				else if (cmdt == 7) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 15,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -258,7 +258,7 @@ public class FishingRod extends Weapons implements Listener {
 					return r;
 				}
 				else if (cmdt == 8) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 17,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -273,7 +273,7 @@ public class FishingRod extends Weapons implements Listener {
 					return r;
 				}
 				else if (cmdt == 9) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 19,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -288,7 +288,7 @@ public class FishingRod extends Weapons implements Listener {
 					return r;
 				}
 				else if (cmdt == 10) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 21,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -303,7 +303,7 @@ public class FishingRod extends Weapons implements Listener {
 					return r;
 				}
 				else if (cmdt == 11) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 23,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -743,7 +743,7 @@ public class FishingRod extends Weapons implements Listener {
 	public void StoneFishingRod(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.FISHING_ROD);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(12000+1);
 		if(lang.contains("kr")){
 			meta.setDisplayName("돌 낚시대");
@@ -766,7 +766,7 @@ public class FishingRod extends Weapons implements Listener {
 	public void GoldFishingRod(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.FISHING_ROD);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(12000+2);
 		if(lang.contains("kr")){
 			meta.setDisplayName("금 낚시대");
@@ -789,7 +789,7 @@ public class FishingRod extends Weapons implements Listener {
 	public void IronFishingRod(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.FISHING_ROD);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 3, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 3, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(12000+3);
 		if(lang.contains("kr")){
 			meta.setDisplayName("철 낚시대");
@@ -812,7 +812,7 @@ public class FishingRod extends Weapons implements Listener {
 	public void DiamondFishingRod(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.FISHING_ROD);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 5, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 5, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(12000+4);
 		if(lang.contains("kr")){
 			meta.setDisplayName("다이아몬드 낚시대");
@@ -835,7 +835,7 @@ public class FishingRod extends Weapons implements Listener {
 	public void NetheriteFishingRod(PrepareSmithingEvent d) {
 		ItemStack r = new ItemStack(Material.FISHING_ROD);
 		ItemMeta rm = r.getItemMeta();
-		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 7, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 7, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		rm.setCustomModelData(12000+60);
 		
 		Player p = (Player) d.getView().getPlayer();
@@ -890,7 +890,7 @@ public class FishingRod extends Weapons implements Listener {
 					Player p = (Player) d.getWhoClicked();
 					ItemStack r = new ItemStack(Material.FISHING_ROD);
 					ItemMeta rm = r.getItemMeta();
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 7, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 7, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					rm.setCustomModelData(12000+60);
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName("네더라이트 낚시대");

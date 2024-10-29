@@ -51,13 +51,13 @@ public class Bow extends Weapons implements Listener {
 				ItemStack r = i0.clone();
 				//r.addUnsafeEnchantments(i0.getEnchantments());
 				ItemMeta rm = r.getItemMeta();
-				rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+				rm.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
 				rm.setCustomModelData(cmdt + 2000);
-				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+				rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 						new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 27,
 								Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 	
-				rm.addAttributeModifier(Attribute.GENERIC_LUCK,
+				rm.addAttributeModifier(Attribute.LUCK,
 						new AttributeModifier(UUID.randomUUID(), "generic.luck", 30,
 								Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 				if (cmdt == 14) {
@@ -160,10 +160,10 @@ public class Bow extends Weapons implements Listener {
 				ItemStack r = i0.clone();
 				//r.addUnsafeEnchantments(i0.getEnchantments());
 				ItemMeta rm = r.getItemMeta();
-				rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+				rm.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
 				if (cmdt == 12) {
 					rm.setCustomModelData(cmdt + 2000);
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 27,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -185,10 +185,10 @@ public class Bow extends Weapons implements Listener {
 				ItemStack r = i0.clone();
 				//r.addUnsafeEnchantments(i0.getEnchantments());
 				ItemMeta rm = r.getItemMeta();
-				rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+				rm.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
 				if (cmdt == 14) {
 					rm.setCustomModelData(1 + 2000+100);
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 10,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -211,9 +211,9 @@ public class Bow extends Weapons implements Listener {
 				////r.addUnsafeEnchantments(i0.getEnchantments());
 				ItemMeta rm = r.getItemMeta();
 				rm.setCustomModelData(cmdt -3 + 2000 + 100);
-				rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+				rm.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
 				if (cmdt == 5) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 12,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -228,7 +228,7 @@ public class Bow extends Weapons implements Listener {
 					return r;
 				}
 				else if (cmdt == 6) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 14,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -243,7 +243,7 @@ public class Bow extends Weapons implements Listener {
 					return r;
 				}
 				else if (cmdt == 7) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 16,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -258,7 +258,7 @@ public class Bow extends Weapons implements Listener {
 					return r;
 				}
 				else if (cmdt == 8) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 18,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -273,7 +273,7 @@ public class Bow extends Weapons implements Listener {
 					return r;
 				}
 				else if (cmdt == 9) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 20,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -288,7 +288,7 @@ public class Bow extends Weapons implements Listener {
 					return r;
 				}
 				else if (cmdt == 10) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 22,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -303,7 +303,7 @@ public class Bow extends Weapons implements Listener {
 					return r;
 				}
 				else if (cmdt == 11) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 24,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -744,7 +744,7 @@ public class Bow extends Weapons implements Listener {
 	public void StoneBow(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.BOW);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(2000 +1);
 		if(lang.contains("kr")){
 			meta.setDisplayName("돌 활");
@@ -767,7 +767,7 @@ public class Bow extends Weapons implements Listener {
 	public void GoldBow(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.BOW);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(2000 + 2);
 		if(lang.contains("kr")){
 			meta.setDisplayName("금 활");
@@ -790,7 +790,7 @@ public class Bow extends Weapons implements Listener {
 	public void IronBow(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.BOW);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(2000 + 3);
 		if(lang.contains("kr")){
 			meta.setDisplayName("철 활");
@@ -813,7 +813,7 @@ public class Bow extends Weapons implements Listener {
 	public void DiamondBow(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.BOW);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 6, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 6, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(2000 +4);
 		if(lang.contains("kr")){
 			meta.setDisplayName("다이아몬드 활");
@@ -836,7 +836,7 @@ public class Bow extends Weapons implements Listener {
 	public void NetheriteBow(PrepareSmithingEvent d) {
 		ItemStack r = new ItemStack(Material.BOW);
 		ItemMeta rm = r.getItemMeta();
-		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 8, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 8, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		rm.setCustomModelData(2000 +60);
 		Player p = (Player) d.getView().getPlayer();
 		
@@ -890,7 +890,7 @@ public class Bow extends Weapons implements Listener {
 					Player p = (Player) d.getWhoClicked();
 					ItemStack r = new ItemStack(Material.BOW);
 					ItemMeta rm = r.getItemMeta();
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 8, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 8, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					rm.setCustomModelData(2000 +60);
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName("네더라이트 활");

@@ -140,7 +140,7 @@ public class WildRaids extends Summoned {
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.3);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		
@@ -170,8 +170,8 @@ public class WildRaids extends Summoned {
 		
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
-		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.3);
+		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		
@@ -202,7 +202,7 @@ public class WildRaids extends Summoned {
 		newmob.setMetadata("vexLocked", new FixedMetadataValue(RMain.getInstance(), rn));
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.3);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		
@@ -255,7 +255,7 @@ public class WildRaids extends Summoned {
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
 		
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.35);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.35);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		
@@ -284,8 +284,8 @@ public class WildRaids extends Summoned {
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
-		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.3);
+		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		

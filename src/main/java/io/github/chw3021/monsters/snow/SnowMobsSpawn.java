@@ -130,7 +130,7 @@ public class SnowMobsSpawn extends Mobs implements Listener {
 		main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
 		String reg = lang.contains("kr") ? "서리마법사":"FrozenMage";
 		Stray newmob = (Stray) Mobspawn(le, reg, 600.0, null, chest, leg, boots, main, main, EntityType.STRAY);
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.2);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.2);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("snowy", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("frostmage", new FixedMetadataValue(RMain.getInstance(), true));
@@ -153,7 +153,7 @@ public class SnowMobsSpawn extends Mobs implements Listener {
 	final private Spider IceSpider(LivingEntity le) {
 		String reg = lang.contains("kr") ? "얼음거미":"IceSpider";
 		Spider newmob = (Spider) Mobspawn(le, reg, 580.0,null, null, null, null, null, null, EntityType.SPIDER);
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.25);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.25);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("snowy", new FixedMetadataValue(RMain.getInstance(), true));
 		return newmob;
@@ -163,7 +163,7 @@ public class SnowMobsSpawn extends Mobs implements Listener {
 
 		String reg = lang.contains("kr") ? "냉기크리퍼":"ColdCreeper";
 		Creeper newmob = (Creeper) Mobspawn(le, reg, 600.0, null, null, null, null, null, null, EntityType.CREEPER);
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.18);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.18);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("snowy", new FixedMetadataValue(RMain.getInstance(), true));
 		return newmob;
@@ -174,7 +174,7 @@ public class SnowMobsSpawn extends Mobs implements Listener {
 		Enderman newmob = (Enderman) Mobspawn(le, reg, 700.0, null, null, null, null, null, null, EntityType.ENDERMAN);
 		
 		newmob.setCarriedBlock(Material.ICE.createBlockData());
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.18);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.18);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("snowy", new FixedMetadataValue(RMain.getInstance(), true));
 		return newmob;

@@ -403,7 +403,7 @@ public class Rpgs extends Summoned implements CommandExecutor, Serializable, Lis
 				}
 				else if(args[0].equalsIgnoreCase("ad") || args[0].equalsIgnoreCase("atd") || args[0].equalsIgnoreCase("atdamage"))
 				{
-					p.sendMessage(String.valueOf(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue()) );
+					p.sendMessage(String.valueOf(p.getAttribute(Attribute.ATTACK_DAMAGE).getValue()) );
 				}
 				else if(args[0].equalsIgnoreCase("skill") || args[0].equalsIgnoreCase("s"))
 				{

@@ -127,14 +127,14 @@ public class Fighter extends Weapons implements Listener {
 	public void WoodenKnuckle(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.GLOBE_BANNER_PATTERN, 1);
 		ItemMeta meta = is.getItemMeta();
-		meta.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
-		meta.removeAttributeModifier(Attribute.GENERIC_ATTACK_SPEED);
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 1, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 1, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+		meta.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
+		meta.removeAttributeModifier(Attribute.ATTACK_SPEED);
+		meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 1, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
+		meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 1, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
+		meta.addAttributeModifier(Attribute.ATTACK_SPEED,
 				new AttributeModifier(getKey(), 8,
 						Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+		meta.addAttributeModifier(Attribute.ATTACK_SPEED,
 				new AttributeModifier(getKey(), 8,
 						Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		meta.setCustomModelData(1000);
@@ -162,14 +162,14 @@ public class Fighter extends Weapons implements Listener {
 	public void StoneKnuckle(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.GLOBE_BANNER_PATTERN, 1);
 		ItemMeta meta = is.getItemMeta();
-		meta.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
-		meta.removeAttributeModifier(Attribute.GENERIC_ATTACK_SPEED);
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 1, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+		meta.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
+		meta.removeAttributeModifier(Attribute.ATTACK_SPEED);
+		meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
+		meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 1, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
+		meta.addAttributeModifier(Attribute.ATTACK_SPEED,
 				new AttributeModifier(getKey(), 8,
 						Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+		meta.addAttributeModifier(Attribute.ATTACK_SPEED,
 				new AttributeModifier(getKey(), 8,
 						Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		meta.setCustomModelData(1000 +1);
@@ -196,14 +196,14 @@ public class Fighter extends Weapons implements Listener {
 	public void GoldKnuckle(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.GLOBE_BANNER_PATTERN, 1);
 		ItemMeta meta = is.getItemMeta();
-		meta.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
-		meta.removeAttributeModifier(Attribute.GENERIC_ATTACK_SPEED);
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 1, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+		meta.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
+		meta.removeAttributeModifier(Attribute.ATTACK_SPEED);
+		meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
+		meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 1, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
+		meta.addAttributeModifier(Attribute.ATTACK_SPEED,
 				new AttributeModifier(getKey(), 8,
 						Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+		meta.addAttributeModifier(Attribute.ATTACK_SPEED,
 				new AttributeModifier(getKey(), 8,
 						Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		meta.setCustomModelData(1000 + 2);
@@ -230,14 +230,14 @@ public class Fighter extends Weapons implements Listener {
 	public void IronKnuckle(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.GLOBE_BANNER_PATTERN, 1);
 		ItemMeta meta = is.getItemMeta();
-		meta.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
-		meta.removeAttributeModifier(Attribute.GENERIC_ATTACK_SPEED);
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 3, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+		meta.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
+		meta.removeAttributeModifier(Attribute.ATTACK_SPEED);
+		meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 3, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
+		meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
+		meta.addAttributeModifier(Attribute.ATTACK_SPEED,
 				new AttributeModifier(getKey(), 8,
 						Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+		meta.addAttributeModifier(Attribute.ATTACK_SPEED,
 				new AttributeModifier(getKey(), 8,
 						Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		meta.setCustomModelData(1000 + 3);
@@ -264,14 +264,14 @@ public class Fighter extends Weapons implements Listener {
 	public void DiamondKnuckle(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.GLOBE_BANNER_PATTERN, 1);
 		ItemMeta meta = is.getItemMeta();
-		meta.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
-		meta.removeAttributeModifier(Attribute.GENERIC_ATTACK_SPEED);
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 3, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+		meta.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
+		meta.removeAttributeModifier(Attribute.ATTACK_SPEED);
+		meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
+		meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 3, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
+		meta.addAttributeModifier(Attribute.ATTACK_SPEED,
 				new AttributeModifier(getKey(), 8,
 						Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+		meta.addAttributeModifier(Attribute.ATTACK_SPEED,
 				new AttributeModifier(getKey(), 8,
 						Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		meta.setCustomModelData(1000 + 4);
@@ -298,12 +298,12 @@ public class Fighter extends Weapons implements Listener {
 	public void NetheriteKnuckle(PrepareSmithingEvent d) {
 		ItemStack r = new ItemStack(Material.GLOBE_BANNER_PATTERN, 1);
 		ItemMeta rm = r.getItemMeta();
-		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 5, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
-		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
-		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+		rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 5, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
+		rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
+		rm.addAttributeModifier(Attribute.ATTACK_SPEED,
 				new AttributeModifier(getKey(), 8,
 						Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
-		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+		rm.addAttributeModifier(Attribute.ATTACK_SPEED,
 				new AttributeModifier(getKey(), 8,
 						Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		rm.setCustomModelData(1000 + 60);
@@ -363,8 +363,8 @@ public class Fighter extends Weapons implements Listener {
 					Player p = (Player) d.getWhoClicked();
 					ItemStack r = new ItemStack(Material.GLOBE_BANNER_PATTERN, 1);
 					ItemMeta rm = r.getItemMeta();
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 5, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 5, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 					rm.setCustomModelData(1000 + 60);
 					rm.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {

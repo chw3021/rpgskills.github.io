@@ -114,7 +114,7 @@ public class SnowRaids extends Summoned {
 
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.3);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setConversionTime(-1);
 		
@@ -162,8 +162,8 @@ public class SnowRaids extends Summoned {
 		
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
-		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.3);
+		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setAdult();
 		
@@ -208,8 +208,8 @@ public class SnowRaids extends Summoned {
 		
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
-		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.3);
+		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		addraider(rn,META,newmob);
@@ -280,7 +280,7 @@ public class SnowRaids extends Summoned {
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(),rn));
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("frosthunter", new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.26);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.26);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		newmob.setPersistent(true);
@@ -302,7 +302,7 @@ public class SnowRaids extends Summoned {
 		newmob.setMetadata("wsnowman", new FixedMetadataValue(RMain.getInstance(),rn));
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(),rn));
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.29);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.29);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		newmob.setPersistent(true);
@@ -349,8 +349,8 @@ public class SnowRaids extends Summoned {
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("arch", new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.4);
-		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.4);
+		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		
@@ -390,15 +390,15 @@ public class SnowRaids extends Summoned {
 		BossBar	newbar = Bukkit.getServer().createBossBar(new NamespacedKey(RMain.getInstance(), rn +"SnowWitch"),newmob.getName(), BarColor.WHITE, BarStyle.SEGMENTED_20, BarFlag.CREATE_FOG);
 	    newbar.setVisible(true);
 		raidbar.put(rn, META, newbar);
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
-		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.36);
+		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		addraider(rn,META,newmob);
 		
 	
 		final Object ht = getherotype(rn);
-		final double hp = Holding.ale(newmob).getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+		final double hp = Holding.ale(newmob).getAttribute(Attribute.MAX_HEALTH).getValue();
 	
 		if(ht instanceof Player) {
 			Player p = (Player) ht;

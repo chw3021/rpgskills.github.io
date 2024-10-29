@@ -620,7 +620,7 @@ public class Archskills extends Pak implements Serializable, Listener{
 		if(ClassData.pc.get(p.getUniqueId()) == 6 && !p.isSneaking()) {
 			if(p.getInventory().getItemInMainHand().getType() == Material.BOW && asd.Retrieve.getOrDefault(p.getUniqueId(),0)>=1)
 			{
-				double sec = 3*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+				double sec = 3*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 				ev.setCancelled(true);
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
@@ -704,7 +704,7 @@ public class Archskills extends Pak implements Serializable, Listener{
 		if(ClassData.pc.get(p.getUniqueId()) == 6 && p.isSneaking() && asd.RapidFire.getOrDefault(p.getUniqueId(),0)>=1) {
 			if(p.getInventory().getItemInMainHand().getType() == Material.BOW )
 			{
-				double sec = 9*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+				double sec = 9*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 				ev.setCancelled(true);
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
@@ -875,7 +875,7 @@ public class Archskills extends Pak implements Serializable, Listener{
 				{
 					if(a.getProjectile() instanceof AbstractArrow)
 					{
-						double sec = 4*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+						double sec = 4*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 						SkillBuilder bd = new SkillBuilder()
 								.player(p)
 								.cooldown(sec)
@@ -974,7 +974,7 @@ public class Archskills extends Pak implements Serializable, Listener{
 				if(p.getInventory().getItemInMainHand().getType() == Material.BOW)
 				{
 
-					double sec = 9*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+					double sec = 9*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 					SkillBuilder bd = new SkillBuilder()
 							.player(p)
 							.cooldown(sec)

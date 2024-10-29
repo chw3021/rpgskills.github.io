@@ -346,7 +346,7 @@ public class OverworldRaids extends Summoned implements Listener {
 
             	
 				if(Holding.ale(newmob)!=null) {
-					final double pr = Holding.ale(newmob).getHealth()/Holding.ale(newmob).getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+					final double pr = Holding.ale(newmob).getHealth()/Holding.ale(newmob).getAttribute(Attribute.MAX_HEALTH).getValue();
 					if(pr>=0 && pr<=1) {
 	                	raidbar.get(rn).setProgress(pr);
 					}
@@ -404,9 +404,9 @@ public class OverworldRaids extends Summoned implements Listener {
 			newmob.setPlayerCreated(false);
     		
 
-    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
-    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
-    		newmob.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(4);
+    		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.36);
+    		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
+    		newmob.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(4);
     		newmob.setRemoveWhenFarAway(false);
     		raider.put(rn, newmob.getUniqueId());
 			newmob.setMetadata("stoneboss", new FixedMetadataValue(RMain.getInstance(), true));
@@ -462,8 +462,8 @@ public class OverworldRaids extends Summoned implements Listener {
     		newmob.setPatrolTarget(null);
     		newmob.setPatrolLeader(false);
     		newmob.setSilent(true);
-    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
-    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(0.9);
+    		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.3);
+    		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(0.9);
     		newmob.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 999999, 3, false, false));
     		
     		newmob.setMetadata("snowyboss", new FixedMetadataValue(RMain.getInstance(), true));
@@ -491,7 +491,7 @@ public class OverworldRaids extends Summoned implements Listener {
     		inhb.setRemoveWhenFarAway(false);
     		inhb.setGlowing(true);
     		inhb.getEquipment().setHelmet(new ItemStack(Material.BEACON));
-    		inhb.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(dif1);;
+    		inhb.getAttribute(Attribute.MAX_HEALTH).setBaseValue(dif1);;
 			if(pm.getLocale().equalsIgnoreCase("ko_kr")) {
         		inhb.setCustomName(rn + " 엘더가디언 억제기");
 			}
@@ -550,9 +550,9 @@ public class OverworldRaids extends Summoned implements Listener {
     		newmob.setConversionTime(-1);
     		
     		newmob.setGlowing(true);
-    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
-    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
-    		newmob.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(4);
+    		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.36);
+    		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
+    		newmob.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(4);
     		
     		newmob.setMetadata("darkboss", new FixedMetadataValue(RMain.getInstance(), true));
     		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), armor));
@@ -619,8 +619,8 @@ public class OverworldRaids extends Summoned implements Listener {
     		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
     		newmob.setMetadata("bosswave1", new FixedMetadataValue(RMain.getInstance(), true));
     		
-    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
-    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+    		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.36);
+    		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
     		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
     		newmob.setRemoveWhenFarAway(false);
     		raider.put(rn, newmob.getUniqueId());
@@ -684,8 +684,8 @@ public class OverworldRaids extends Summoned implements Listener {
     		newmob.setMetadata("bosswave1", new FixedMetadataValue(RMain.getInstance(), true));
     		
     		
-    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
-    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+    		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.36);
+    		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
     		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
     		newmob.setRemoveWhenFarAway(false);
     		raider.put(rn, newmob.getUniqueId());
@@ -750,9 +750,9 @@ public class OverworldRaids extends Summoned implements Listener {
     		newmob.setConversionTime(-1);
     		
     		newmob.setGlowing(true);
-    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
-    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
-    		newmob.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(4);
+    		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.36);
+    		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
+    		newmob.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(4);
     		
     		newmob.setMetadata("poisonboss", new FixedMetadataValue(RMain.getInstance(), true));
     		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), armor));
@@ -1026,15 +1026,15 @@ public class OverworldRaids extends Summoned implements Listener {
     		v.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
     		v.setAdult();
     		v.setAgeLock(true);
-    		v.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0);
-    		v.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+    		v.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0);
+    		v.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
     		v.setGravity(true);
     		v.setNoDamageTicks(0);
-    		v.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(20);
-    		v.getAttribute(Attribute.GENERIC_OXYGEN_BONUS).setBaseValue(10000);
-    		v.getAttribute(Attribute.GENERIC_GRAVITY).setBaseValue(10000);
-    		v.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(10000);
-    		v.setHealth(10000);
+    		v.getAttribute(Attribute.SCALE).setBaseValue(0.5);
+    		v.getAttribute(Attribute.OXYGEN_BONUS).setBaseValue(10000);
+    		v.getAttribute(Attribute.GRAVITY).setBaseValue(10000);
+    		v.getAttribute(Attribute.MAX_HEALTH).setBaseValue(50000);
+    		v.setHealth(50000);
     		v.setRemoveWhenFarAway(false);
     		v.setGlowing(true);
     		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? rn + " 고고학자":rn + "'s Archaeologist";
@@ -1619,7 +1619,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	
 	    	    		
 		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "분노한골렘":"OutragedGolem";
-		        		IronGolem newmob = (IronGolem) MobspawnLoc(esl, ChatColor.RED+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, null, null, null, null, null, null, EntityType.IRON_GOLEM);
+		        		IronGolem newmob = (IronGolem) MobspawnLoc(esl, ChatColor.RED+reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, null, null, null, null, null, null, EntityType.IRON_GOLEM);
 		        		newmob.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 999999, 1, false, false));
 	    	    		newmob.setGlowing(true);
 	    	    		newmob.getEquipment().setBootsDropChance(0);
@@ -1637,8 +1637,9 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		
 	    	    		
 	    	    		
-	    	    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.4);
-	    	    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+	    	    		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.4);
+	    	    		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
+	    	    		newmob.getAttribute(Attribute.SCALE).setBaseValue(2);
 	    	    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		newmob.setRemoveWhenFarAway(false);
 	    	    		raider.put(rn, newmob.getUniqueId());
@@ -1696,7 +1697,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	
 	    	    		
 		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "차가운심장의마녀":"FrozenHeart";
-		        		Witch newmob = (Witch) MobspawnLoc(esl, ChatColor.RED+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, null, null, null, null, null, null, EntityType.WITCH);
+		        		Witch newmob = (Witch) MobspawnLoc(esl, ChatColor.RED+reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, null, null, null, null, null, null, EntityType.WITCH);
 	    	    		newmob.setGlowing(true);
 	    	    		newmob.getEquipment().setBootsDropChance(0);
 	    	    		newmob.getEquipment().setChestplateDropChance(0);
@@ -1714,8 +1715,8 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		
 	    	    		
 	    	    		
-	    	    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.4);
-	    	    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+	    	    		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.4);
+	    	    		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 	    	    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		newmob.setRemoveWhenFarAway(false);
 	    	    		raider.put(rn, newmob.getUniqueId());
@@ -1824,7 +1825,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	            	Location esl = spl.clone().add(number, -5, number2);
 	
 	        		String reg = lang.equalsIgnoreCase("ko_kr") ? "엘더가디언":"ElderGuardian";
-	        		ElderGuardian newmob = (ElderGuardian) MobspawnLoc(esl, ChatColor.BLUE+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, null, null, null, null, null, null, EntityType.ELDER_GUARDIAN);
+	        		ElderGuardian newmob = (ElderGuardian) MobspawnLoc(esl, ChatColor.BLUE+reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, null, null, null, null, null, null, EntityType.ELDER_GUARDIAN);
 		    		newmob.setGlowing(true);
 		    		newmob.getEquipment().setBootsDropChance(0);
 		    		newmob.getEquipment().setChestplateDropChance(0);
@@ -1839,8 +1840,8 @@ public class OverworldRaids extends Summoned implements Listener {
 		    		newmob.setMetadata("bosswave1", new FixedMetadataValue(RMain.getInstance(), true));
 		    		
 		    		
-		    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
-		    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+		    		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.36);
+		    		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 		    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		    		newmob.setRemoveWhenFarAway(false);
 		    		raider.put(rn, newmob.getUniqueId());
@@ -1897,7 +1898,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	
 	    	    		
 		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "잠식된 엘더가디언":"Encroached ElderGuardian";
-		        		ElderGuardian newmob = (ElderGuardian) MobspawnLoc(esl, ChatColor.BLUE+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, null, null, null, null, null, null, EntityType.ELDER_GUARDIAN);
+		        		ElderGuardian newmob = (ElderGuardian) MobspawnLoc(esl, ChatColor.BLUE+reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, null, null, null, null, null, null, EntityType.ELDER_GUARDIAN);
 	    	    		newmob.setGlowing(true);
 	    	    		newmob.getEquipment().setBootsDropChance(0);
 	    	    		newmob.getEquipment().setChestplateDropChance(0);
@@ -1914,8 +1915,8 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		
 	    	    		
 	    	    		
-	    	    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.4);
-	    	    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+	    	    		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.4);
+	    	    		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 	    	    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		newmob.setRemoveWhenFarAway(false);
 	    	    		raider.put(rn, newmob.getUniqueId());
@@ -1980,7 +1981,7 @@ public class OverworldRaids extends Summoned implements Listener {
 
 		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "악몽의형상":"NightMare";
 	        			
-	            		Skeleton newmob = (Skeleton) MobspawnLoc(le.getLocation(), ChatColor.GRAY+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, pe, null, null, null, main, null, EntityType.SKELETON);
+	            		Skeleton newmob = (Skeleton) MobspawnLoc(le.getLocation(), ChatColor.GRAY+reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, pe, null, null, null, main, null, EntityType.SKELETON);
 	            		
 	            		newmob.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 999999, 1, false, false));
 	    	    		
@@ -1996,8 +1997,8 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		newmob.setConversionTime(-1);
 	    	    		
 	    	    		
-	    	    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.4);
-	    	    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+	    	    		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.4);
+	    	    		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 	    	    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		newmob.setRemoveWhenFarAway(false);
 	    	    		raider.put(rn, newmob.getUniqueId());
@@ -2077,7 +2078,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	        			mm.setCustomModelData(7009);
 	        			main.setItemMeta(mm);
 		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "더비스트":"TheBeast";
-		        		Husk newmob = (Husk) MobspawnLoc(le.getLocation().clone().add(0, 0.5, 0), ChatColor.DARK_PURPLE+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2,  head, null, null, null, main, null, EntityType.HUSK);
+		        		Husk newmob = (Husk) MobspawnLoc(le.getLocation().clone().add(0, 0.5, 0), ChatColor.DARK_PURPLE+reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2,  head, null, null, null, main, null, EntityType.HUSK);
 	    	    		newmob.setGlowing(true);
 	    	    		newmob.setMetadata("hyperboss", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		newmob.setMetadata("ruined", new FixedMetadataValue(RMain.getInstance(), true));
@@ -2090,8 +2091,9 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		newmob.setConversionTime(-1);
 	    	    		
 	    	    		
-	    	    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.4);
-	    	    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+	    	    		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.4);
+	    	    		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
+	    	    		newmob.getAttribute(Attribute.SCALE).setBaseValue(1.1);
 	    	    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		newmob.setRemoveWhenFarAway(false);
 	    	    		raider.put(rn, newmob.getUniqueId());
@@ -2160,7 +2162,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		ItemStack off = new ItemStack(Material.SHIELD);
 	    	    		off.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
 		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "몰락한 붉은기사":"Ruined RedKnight";
-	    	    		Stray newmob = (Stray) MobspawnLoc(esl, ChatColor.RED+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, head, chest, leg, boots, main, main, EntityType.STRAY);
+	    	    		Stray newmob = (Stray) MobspawnLoc(esl, ChatColor.RED+reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, head, chest, leg, boots, main, main, EntityType.STRAY);
 	    	    		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
 	    	    		newmob.setGlowing(true);
 	    	    		newmob.getEquipment().setBootsDropChance(0);
@@ -2178,8 +2180,8 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		
 	    	    		
 	    	    		
-	    	    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.4);
-	    	    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+	    	    		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.4);
+	    	    		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 	    	    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		newmob.setRemoveWhenFarAway(false);
 	    	    		raider.put(rn, newmob.getUniqueId());
@@ -2274,7 +2276,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	        			main.setItemMeta(mm);
 	        			
 	            		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "종말론자":"TheApocalyptic";
-	            		Skeleton newmob = (Skeleton) MobspawnLoc(le.getLocation().clone().add(0, 0.5, 0), ChatColor.DARK_GREEN+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, pe, pe1, leg, pe11, main, null, EntityType.SKELETON);
+	            		Skeleton newmob = (Skeleton) MobspawnLoc(le.getLocation().clone().add(0, 0.5, 0), ChatColor.DARK_GREEN+reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, pe, pe1, leg, pe11, main, null, EntityType.SKELETON);
 	            		
 	    	    		newmob.setGlowing(true);
 	    	    		newmob.setMetadata("poisonboss", new FixedMetadataValue(RMain.getInstance(), true));
@@ -2288,8 +2290,8 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		newmob.setConversionTime(-1);
 	    	    		
 	    	    		
-	    	    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.4);
-	    	    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+	    	    		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.4);
+	    	    		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 	    	    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		newmob.setRemoveWhenFarAway(false);
 	    	    		raider.put(rn, newmob.getUniqueId());

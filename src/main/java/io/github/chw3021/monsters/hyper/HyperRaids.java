@@ -119,8 +119,8 @@ public class HyperRaids extends Summoned {
 		newmob.setConversionTime(-1);
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
-		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.3);
+		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		addraider(rn,META,newmob);
 
@@ -147,9 +147,9 @@ public class HyperRaids extends Summoned {
 		newmob.setConversionTime(-1);
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
-		newmob.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(5);
-		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.3);
+		newmob.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(5);
+		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		addraider(rn,META,newmob);
 		
@@ -182,7 +182,7 @@ public class HyperRaids extends Summoned {
 		newmob.setConversionTime(-1);
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.3);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("RayArcher", new FixedMetadataValue(RMain.getInstance(), true));
 		addraider(rn,META,newmob);
@@ -216,8 +216,8 @@ public class HyperRaids extends Summoned {
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
-		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.3);
+		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		addraider(rn,META,newmob);
 		
@@ -247,8 +247,8 @@ public class HyperRaids extends Summoned {
 		newmob.setCanJoinRaid(false);
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
-		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.3);
+		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		addraider(rn,META,newmob);
 	}
@@ -273,8 +273,8 @@ public class HyperRaids extends Summoned {
 		newmob.setConversionTime(-1);
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
-		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.3);
+		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		addraider(rn,META,newmob);
 		
@@ -301,7 +301,7 @@ public class HyperRaids extends Summoned {
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.3);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		newmob.setAI(true);
@@ -345,8 +345,8 @@ public class HyperRaids extends Summoned {
 		BossBar	newbar = Bukkit.getServer().createBossBar(new NamespacedKey(RMain.getInstance(), rn +"DrB"),newmob.getName(), BarColor.PURPLE, BarStyle.SEGMENTED_20, BarFlag.CREATE_FOG);
         newbar.setVisible(true);
 		raidbar.put(rn, META, newbar);
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
-		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.36);
+		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setRemoveWhenFarAway(false);
 		addraider(rn,META,newmob);

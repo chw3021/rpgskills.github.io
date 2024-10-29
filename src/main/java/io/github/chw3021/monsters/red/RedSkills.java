@@ -418,8 +418,8 @@ public class RedSkills extends Summoned{
 			final Skeleton p = (Skeleton)d.getEntity();
 
 			if(p.hasMetadata("raid")) {
-				if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-					p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
+				if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
+					p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
 	                d.setCancelled(true);
 	                ordealable.put(p.getUniqueId(), true);
 					return;
@@ -1036,8 +1036,8 @@ public class RedSkills extends Summoned{
 		if(d.getEntity() instanceof Stray && d.getEntity().hasMetadata("redboss") && d.getEntity().hasMetadata("ruined")) 
 		{
 			Stray p = (Stray)d.getEntity();
-			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
+			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
+				p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
                 d.setCancelled(true);
                 ordealable.put(p.getUniqueId(), true);
 				return;
@@ -1180,7 +1180,7 @@ public class RedSkills extends Summoned{
         	ordt.removeAll(rn);
         }
         Location rl = OverworldRaids.getraidloc(p).clone();
-		p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
+		p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
         d.setCancelled(true);
     	p.teleport(rl.clone().add(0, 0, 1));
         Holding.holding(null, p, 651l);
@@ -1340,7 +1340,7 @@ public class RedSkills extends Summoned{
 		if(d.getEntity() instanceof Stray && d.getEntity().hasMetadata("redboss") && d.getEntity().hasMetadata("ruined")&& !d.getEntity().hasMetadata("failed")) 
 		{
 			Stray p = (Stray)d.getEntity();
-			if(!(p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2)|| !ordealable.containsKey(p.getUniqueId())) {
+			if(!(p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2)|| !ordealable.containsKey(p.getUniqueId())) {
 				return;
 			}
 				if(rb6cooldown.containsKey(p.getUniqueId()))

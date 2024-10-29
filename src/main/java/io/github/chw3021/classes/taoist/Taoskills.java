@@ -349,6 +349,10 @@ public class Taoskills extends Pak implements Listener, Serializable {
 			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN")&& p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData() &&  p.isSneaking()) {
 
 				ev.setCancelled(true);
+				if(ev.getNewSlot() == 4 || ev.getNewSlot() == 3) {
+					return;
+				}
+				
 				if(!p.hasCooldown(Material.CANDLE)) {
 					p.playSound(p.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 0.8f, 0.6f);
 					p.setCooldown(Material.CANDLE, 2);
@@ -562,7 +566,7 @@ public class Taoskills extends Pak implements Listener, Serializable {
      				}
             	}, 40);
     		});
-			il.getWorld().spawnParticle(Particle.END_ROD, il.clone().add(0, 4, 0),400,4,1,4,0);
+			il.getWorld().spawnParticle(Particle.WARPED_SPORE, il.clone().add(0, 4, 0),200,4,1,4,0);
     	}
     	if(in == 1) {
     		p.playSound(p.getLocation(), Sound.BLOCK_FIRE_AMBIENT, 1, 1.5f);
@@ -588,8 +592,7 @@ public class Taoskills extends Pak implements Listener, Serializable {
      				}
             	}, 40);
     		});
-			il.getWorld().spawnParticle(Particle.SPORE_BLOSSOM_AIR, il.clone().add(0, 4, 0),400,4,1,4,0);
-			il.getWorld().spawnParticle(Particle.COMPOSTER, il.clone().add(0, 4, 0),400,4,1,4,0);
+			il.getWorld().spawnParticle(Particle.SPORE_BLOSSOM_AIR, il.clone().add(0, 4, 0),200,4,1,4,0);
     	}
     	return;
 	}
@@ -604,7 +607,7 @@ public class Taoskills extends Pak implements Listener, Serializable {
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 10&& tsd.Imagery.get(p.getUniqueId())>=1)
 		{
-		double sec = 5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec = 5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData() && !(p.isSneaking()))
 			{
 				ev.setCancelled(true);
@@ -898,7 +901,7 @@ public class Taoskills extends Pak implements Listener, Serializable {
 			{
 				if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
 				{
-					double sec =5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+					double sec =5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 					p.setCooldown(CAREFUL, 2);
 					ev.setCancelled(true);
@@ -1012,7 +1015,7 @@ public class Taoskills extends Pak implements Listener, Serializable {
 	            	mant.put(p.getUniqueId(), task);
 	            	
 	            	
-        			p.getWorld().spawnParticle(Particle.CLOUD, p.getLocation(),500,1,1,1);
+        			p.getWorld().spawnParticle(Particle.WHITE_ASH, p.getLocation(),50,1,0,1);
     				p.playSound(p.getLocation(), Sound.BLOCK_BELL_RESONATE, 0.5f, 1.5f);
 
     				cleans(p);
@@ -1077,8 +1080,8 @@ public class Taoskills extends Pak implements Listener, Serializable {
 					
 
                     
-        			p.getWorld().spawnParticle(Particle.WAX_OFF, p.getLocation(),300,1,1,1);
-        			p.getWorld().spawnParticle(Particle.WAX_ON, p.getLocation(),300,1,1,1);
+        			p.getWorld().spawnParticle(Particle.WAX_OFF, p.getLocation(),30,1,0,1);
+        			p.getWorld().spawnParticle(Particle.WAX_ON, p.getLocation(),30,1,0,1);
         			
     				p.playSound(p.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_CHARGE, 0.7f, 1.16f);
 	            	p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1,1, false,false));
@@ -1135,7 +1138,7 @@ public class Taoskills extends Pak implements Listener, Serializable {
 		if(ClassData.pc.get(p.getUniqueId()) == 10&& tsd.Charm.get(p.getUniqueId())>=1) {
 			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData() && p.isSneaking())
 			{
-				double sec = 7.5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+				double sec = 7.5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 				ev.setCancelled(true);
 				if(!auras.containsKey(p.getName())) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -1364,7 +1367,7 @@ public class Taoskills extends Pak implements Listener, Serializable {
 		                    p.playSound(p.getLocation(), Sound.BLOCK_ROOTS_PLACE, 1f, j.get()*0.2f);
 		                    
 		        			p.getWorld().spawnParticle(Particle.ENCHANT, l,200*j.get(),2+a,0.5,2+a,0);
-		        			p.getWorld().spawnParticle(Particle.TRIAL_OMEN, l,100*j.get(),2+a,0.5,2+a,0);
+		        			p.getWorld().spawnParticle(Particle.BLOCK_CRUMBLE, l,100*j.get(),2+a,0.5,2+a,0, getBd(Material.GRAY_GLAZED_TERRACOTTA));
 			        		
 			        		
 		                	for (Entity e : p.getWorld().getNearbyEntities(l, 2+a , 2+a, 2+a))
@@ -1508,7 +1511,7 @@ public class Taoskills extends Pak implements Listener, Serializable {
 			if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
 			{
 
-				double sec =2.5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+				double sec =2.5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 				p.setCooldown(CAREFUL, 2);
 				ev.setCancelled(true);
 				if(!auras.containsKey(p.getName())) {
@@ -1605,19 +1608,23 @@ public class Taoskills extends Pak implements Listener, Serializable {
 				                @Override
 				                public void run() 
 				                {
-				                    p.playSound(line.get(line.size()-1), Sound.ENTITY_BREEZE_WIND_BURST, 0.7f, 2f);
-									p.getWorld().spawnParticle(Particle.FLASH, line.get(line.size()-1), 1, 1,1,1);
+				                	Location l = p.getEyeLocation();
+				                	if(line.size() >= 0) {
+				                		l = line.get(line.size()-1);
+				                	}
+				                    p.playSound(l, Sound.ENTITY_BREEZE_WIND_BURST, 0.7f, 2f);
+									p.getWorld().spawnParticle(Particle.FLASH, l, 1, 1,1,1);
 			             			if(auras.get(p.getName()) == 0)
 									{ 
-										p.getWorld().spawnParticle(Particle.BLOCK, line.get(line.size()-1), 50, 1,1,1,1 ,Material.GRAY_GLAZED_TERRACOTTA.createBlockData());
-										p.getWorld().spawnParticle(Particle.BLOCK, line.get(line.size()-1), 50, 1,1,1,1 ,Material.WHITE_GLAZED_TERRACOTTA.createBlockData());
+										p.getWorld().spawnParticle(Particle.BLOCK,l, 50, 1,1,1,1 ,Material.GRAY_GLAZED_TERRACOTTA.createBlockData());
+										p.getWorld().spawnParticle(Particle.BLOCK, l, 50, 1,1,1,1 ,Material.WHITE_GLAZED_TERRACOTTA.createBlockData());
 									}
 				                    if(auras.get(p.getName()) == 1)
 									{
-										p.getWorld().spawnParticle(Particle.BLOCK, line.get(line.size()-1), 50, 1,1,1,1 ,Material.BLUE_GLAZED_TERRACOTTA.createBlockData());
-										p.getWorld().spawnParticle(Particle.BLOCK, line.get(line.size()-1), 50, 1,1,1,1 ,Material.RED_GLAZED_TERRACOTTA.createBlockData());
+										p.getWorld().spawnParticle(Particle.BLOCK, l, 50, 1,1,1,1 ,Material.BLUE_GLAZED_TERRACOTTA.createBlockData());
+										p.getWorld().spawnParticle(Particle.BLOCK, l, 50, 1,1,1,1 ,Material.RED_GLAZED_TERRACOTTA.createBlockData());
 									}
-				                	for (Entity e : p.getWorld().getNearbyEntities(line.get(line.size()-1), 3, 3, 3))
+				                	for (Entity e : p.getWorld().getNearbyEntities(l, 3, 3, 3))
 									{
 			                    		if (e instanceof Player) 
 										{
@@ -1816,11 +1823,9 @@ public class Taoskills extends Pak implements Listener, Serializable {
         }
     	cir.forEach(l -> {
     		if(in == 0) {
-    			l.getWorld().spawnParticle(Particle.BLOCK, l,2,0.1,0.1,0.1,0 ,Material.BLACK_STAINED_GLASS.createBlockData());
     			l.getWorld().spawnParticle(Particle.DRIPPING_OBSIDIAN_TEAR, l,1,0.1,0.1,0.1,0.3);
     		}
     		if(in == 1) {
-    			l.getWorld().spawnParticle(Particle.BLOCK, l,2,0.1,0.1,0.1,0 ,Material.RED_STAINED_GLASS.createBlockData());
     			l.getWorld().spawnParticle(Particle.DRIPPING_LAVA, l,1,0.1,0.1,0.1,0.3);
     		}
 	    });
@@ -1842,12 +1847,10 @@ public class Taoskills extends Pak implements Listener, Serializable {
         }
     	cir.forEach(l -> {
     		if(in == 0) {
-    			l.getWorld().spawnParticle(Particle.BLOCK, l,2,0.1,0.1,0.1,0 ,Material.WHITE_STAINED_GLASS.createBlockData());
-    			l.getWorld().spawnParticle(Particle.END_ROD, l,1,0.1,0.1,0.1,0.3);
+    			l.getWorld().spawnParticle(Particle.BLOCK, l,2,0.1,0.1,0.1,0 ,getBd(Material.WHITE_GLAZED_TERRACOTTA));
     		}
     		if(in == 1) {
-    			l.getWorld().spawnParticle(Particle.BLOCK, l,2,0.1,0.1,0.1,0 ,Material.GREEN_STAINED_GLASS.createBlockData());
-    			l.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, l,1,0.1,0.1,0.1,0.3);
+    			l.getWorld().spawnParticle(Particle.BLOCK, l,2,0.1,0.1,0.1,0 ,getBd(Material.JUNGLE_LEAVES));
     		}
 	    });
 	    return cir;
@@ -1971,7 +1974,7 @@ public class Taoskills extends Pak implements Listener, Serializable {
 			{	
 				if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
 				{
-					double sec =7*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+					double sec =7*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 					ev.setCancelled(true);
 
 					if(!auras.containsKey(p.getName())) {
@@ -2218,7 +2221,7 @@ public class Taoskills extends Pak implements Listener, Serializable {
 				}
 			}
 		    
-			double sec =6*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec =6*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 				if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData() && p.isSneaking()&&!d.isCancelled())
 				{
 					SkillBuilder bd = new SkillBuilder()
@@ -2625,7 +2628,7 @@ public class Taoskills extends Pak implements Listener, Serializable {
 
 		ItemStack is = p.getInventory().getItemInMainHand();
 		
-			if(ClassData.pc.get(p.getUniqueId()) == 10 && ev.getNewSlot()==4 && is.getType().name().contains("BANNER_PATTERN") && is.hasItemMeta() && is.getItemMeta().hasCustomModelData() && !p.isSneaking() && p.isSprinting()&& Proficiency.getpro(p) >=2)
+			if(ClassData.pc.get(p.getUniqueId()) == 10 && ev.getNewSlot()==4 && is.getType().name().contains("BANNER_PATTERN") && is.hasItemMeta() && is.getItemMeta().hasCustomModelData() && p.isSneaking()&& Proficiency.getpro(p) >=2)
 			{
 				ev.setCancelled(true);
 				p.setCooldown(CAREFUL, 2);

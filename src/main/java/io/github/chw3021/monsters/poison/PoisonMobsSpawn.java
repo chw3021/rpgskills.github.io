@@ -63,7 +63,7 @@ public class PoisonMobsSpawn extends Mobs implements Listener {
 		String reg = lang.contains("kr") ? "약물중독자":"DrugAddict";
 		Zombie newmob = (Zombie) Mobspawn(le, reg, 25000.0, head, chest, leg, boots, main, off, EntityType.ZOMBIE);
 		newmob.setConversionTime(-1);
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.43);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.43);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("poison", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("DrugAddict", new FixedMetadataValue(RMain.getInstance(), true));
@@ -98,7 +98,7 @@ public class PoisonMobsSpawn extends Mobs implements Listener {
 		
 		String reg = lang.contains("kr") ? "거대슬라임":"GiantSlime";
 		Slime newmob = (Slime) Mobspawn(le, reg, 20000.0, head, null, null, null, null, null, EntityType.SLIME);
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.33);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.33);
 		newmob.setSize(10);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("poison", new FixedMetadataValue(RMain.getInstance(), true));
@@ -119,7 +119,7 @@ public class PoisonMobsSpawn extends Mobs implements Listener {
 	final private Spider SpiderV(LivingEntity le) {
 		String reg = lang.contains("kr") ? "맹독거미":"VenomSpider";
 		Spider newmob = (Spider) Mobspawn(le, reg, 18000.0, null, null, null, null, null, null, EntityType.CAVE_SPIDER);
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.43);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.43);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("poison", new FixedMetadataValue(RMain.getInstance(), true));
 		return newmob;

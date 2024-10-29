@@ -525,8 +525,8 @@ public class PoisonSkills extends OverworldRaids{
 			if(ordeal.containsKey(p.getUniqueId())) {
 				return;
 			}
-			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
+			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
+				p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
                 d.setCancelled(true);
                 ordealable.put(p.getUniqueId(), true);
 				return;
@@ -726,8 +726,8 @@ public class PoisonSkills extends OverworldRaids{
 			if(p.getTarget() == null|| !(p.getTarget() instanceof Player)) {
 				return;
 			}
-			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
+			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
+				p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
 	            d.setCancelled(true);
 	            ordealable.put(p.getUniqueId(), true);
 				return;
@@ -862,8 +862,8 @@ public class PoisonSkills extends OverworldRaids{
 			if(p.hasMetadata("failed") || !aimable.containsKey(p.getUniqueId())) {
 				return;
 			}
-			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
+			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
+				p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
                 d.setCancelled(true);
                 ordealable.put(p.getUniqueId(), true);
 				return;
@@ -900,8 +900,8 @@ public class PoisonSkills extends OverworldRaids{
 		{
 			final Skeleton p = (Skeleton)d.getEntity();
 
-			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
+			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
+				p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
                 d.setCancelled(true);
                 ordealable.put(p.getUniqueId(), true);
 				return;
@@ -1109,8 +1109,8 @@ public class PoisonSkills extends OverworldRaids{
 			if(ordeal.containsKey(p.getUniqueId())) {
 				return;
 			}
-			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
+			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
+				p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
                 d.setCancelled(true);
                 ordealable.put(p.getUniqueId(), true);
 				return;
@@ -1295,7 +1295,7 @@ public class PoisonSkills extends OverworldRaids{
         	ordt.removeAll(rn);
         }
         Location rl = OverworldRaids.getraidloc(p).clone();
-		p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
+		p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
         d.setCancelled(true);
     	p.teleport(rl.clone().add(30, 1, 30));
         Holding.holding(null, p, ordealTime);
@@ -1426,7 +1426,7 @@ public class PoisonSkills extends OverworldRaids{
 		if(d.getEntity().hasMetadata("poisonboss") && d.getEntity().hasMetadata("ruined")&& !d.getEntity().hasMetadata("failed")) 
 		{
 			Skeleton p = (Skeleton)d.getEntity();
-			if(!(p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2)|| !ordealable.containsKey(p.getUniqueId())) {
+			if(!(p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2)|| !ordealable.containsKey(p.getUniqueId())) {
 				return;
 			}
 				if(rb6cooldown.containsKey(p.getUniqueId()))

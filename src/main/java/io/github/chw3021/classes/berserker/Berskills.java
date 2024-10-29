@@ -34,6 +34,7 @@ import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
@@ -169,7 +170,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 		
 		if(p.getInventory().getItemInMainHand().getType().name().contains("SWORD") && !p.hasCooldown(CAREFUL))
 		{
-		double sec = 8*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec = 8*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 
 		if((p.isSneaking()) && (ac == Action.LEFT_CLICK_AIR || ac== Action.LEFT_CLICK_BLOCK))
@@ -412,7 +413,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 		if(ClassData.pc.get(p.getUniqueId()) == 1&& bsd.Spray.getOrDefault(p.getUniqueId(), 0)>=1) {
 		if(p.isSneaking()&&p.getInventory().getItemInMainHand().getType().name().contains("SWORD"))
 		{
-		double sec = 3*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec = 3*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 	    
 		
@@ -563,9 +564,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 				ArrayList<Location> line = new ArrayList<Location>();
                 AtomicInteger j = new AtomicInteger(0);
                 for(double d = 0.1; d <= 5; d += 0.3) {
-	                    Location pl = tl.clone();
-						pl.add(0,d,0);
-						line.add(pl);
+						line.add(tl.clone().add(0, d, 0).setDirection(BlockFace.UP.getDirection()));
                 }
                 
                 line.forEach(l ->  {	
@@ -573,7 +572,7 @@ public class Berskills extends Pak implements Listener, Serializable {
             		@Override
 	                	public void run() 
 		                {	
-						tl.getWorld().spawnParticle(Particle.BLOCK, l, 500, 4,0.5,4,0 ,Material.CRIMSON_HYPHAE.createBlockData());
+						tl.getWorld().spawnParticle(Particle.DUST_PILLAR, l, 500, 4,0.5,4,0 ,getBd(Material.CRIMSON_HYPHAE));
 							if(ulton.containsKey(p.getUniqueId())) {
 								tl.getWorld().spawnParticle(Particle.DRIPPING_LAVA, l, 2, 1, 1, 1);
 								}
@@ -639,19 +638,15 @@ public class Berskills extends Pak implements Listener, Serializable {
             	}
 				rave.remove(p.getUniqueId());
             	
-                p.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_FLAP, 1.0f, 0f);
-                p.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, 1.0f, 1.85f);
-                p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_STRONG, 1.0f, 0f);
-                p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_STRONG, 1.0f, 2f);
+                p.playSound(p.getLocation(), Sound.ENTITY_WARDEN_SONIC_BOOM, 1.0f, 2f);
 
             	final Location tl = p.getEyeLocation().clone().add(0, -1, 0);
-            	p.getWorld().spawnParticle(Particle.SHRIEK, tl.clone(), 100, 1,1,1,1,10);
-				p.getWorld().spawnParticle(Particle.BLOCK, tl.clone().add(tl.getDirection().normalize().multiply(1.2)), 100, 1,1,1,0.5 ,Material.DEEPSLATE_REDSTONE_ORE.createBlockData());
-				p.getWorld().spawnParticle(Particle.BLOCK, tl.clone().add(tl.getDirection().normalize().multiply(2)), 200, 1.2,1.2,1.2,0.5 ,Material.DEEPSLATE_REDSTONE_ORE.createBlockData());
-				p.getWorld().spawnParticle(Particle.BLOCK, tl.clone().add(tl.getDirection().normalize().multiply(3)), 300, 1.4,1.4,1.4,0.5 ,Material.DEEPSLATE_REDSTONE_ORE.createBlockData());
-				p.getWorld().spawnParticle(Particle.BLOCK, tl.clone().add(tl.getDirection().normalize().multiply(4)), 400, 1.6,1.6,1.6,0.5 ,Material.DEEPSLATE_REDSTONE_ORE.createBlockData());
-				p.getWorld().spawnParticle(Particle.BLOCK, tl.clone().add(tl.getDirection().normalize().multiply(5)), 600, 1.8,1.8,1.8,0.5 ,Material.DEEPSLATE_REDSTONE_ORE.createBlockData());
-				p.getWorld().spawnParticle(Particle.BLOCK, tl.clone().add(tl.getDirection().normalize().multiply(6)), 800, 2,2,2,0.5 ,Material.DEEPSLATE_REDSTONE_ORE.createBlockData());
+				p.getWorld().spawnParticle(Particle.CRIMSON_SPORE, tl.clone().add(tl.getDirection().normalize().multiply(1.2)), 100, 1,1,1,0.5);
+				p.getWorld().spawnParticle(Particle.CRIMSON_SPORE, tl.clone().add(tl.getDirection().normalize().multiply(2)), 200, 1.2,1.2,1.2,0.5 );
+				p.getWorld().spawnParticle(Particle.CRIMSON_SPORE, tl.clone().add(tl.getDirection().normalize().multiply(3)), 300, 1.4,1.4,1.4,0.5);
+				p.getWorld().spawnParticle(Particle.CRIMSON_SPORE, tl.clone().add(tl.getDirection().normalize().multiply(4)), 400, 1.6,1.6,1.6,0.5 );
+				p.getWorld().spawnParticle(Particle.CRIMSON_SPORE, tl.clone().add(tl.getDirection().normalize().multiply(5)), 600, 1.8,1.8,1.8,0.5);
+				p.getWorld().spawnParticle(Particle.CRIMSON_SPORE, tl.clone().add(tl.getDirection().normalize().multiply(6)), 800, 2,2,2,0.5);
 				
 				
 				for(Entity e :tl.getWorld().getNearbyEntities(tl.clone().add(tl.getDirection().clone().normalize().multiply(3)),6, 6, 6)) {
@@ -708,7 +703,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 		if(ClassData.pc.get(p.getUniqueId()) == 1&& bsd.Inhale.getOrDefault(p.getUniqueId(), 0)>=1) {
 		if(!(p.isSneaking()) && !p.isOnGround() && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK))
 		{
-			double sec = 6*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec = 6*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 			final Location pl = p.getLocation().add(0, 0.35, 0).clone();
         	p.setCooldown(CAREFUL, 3);
@@ -760,9 +755,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 					                public void run() 
 					                {
 										p.playSound(pl.clone(), Sound.ENTITY_GENERIC_DRINK, 0.15f, 2f);
-										p.getWorld().spawnParticle(Particle.BLOCK, pl.clone(), 200, 0.31,0.31,0.31,1,Material.REDSTONE_BLOCK.createBlockData());
-										p.getWorld().spawnParticle(Particle.BLOCK, pl.clone(), 100, 0.1,0.1,0.1,1,Material.CRYING_OBSIDIAN.createBlockData());
-										p.getWorld().spawnParticle(Particle.BLOCK, pl.clone(), 200, 0.51,0.51,0.51,1,Material.FIRE_CORAL_BLOCK.createBlockData());
+										p.getWorld().spawnParticle(Particle.BLOCK_MARKER, pl.clone(), 3, 0.31,0.31,0.31,1,getBd(Material.REDSTONE_BLOCK));
 										
 										for (Entity a : p.getWorld().getNearbyEntities(pl.clone(), 5, 5, 5))
 										{
@@ -869,7 +862,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 		if(p.getInventory().getItemInMainHand().getType().name().contains("SWORD"))
 		{
 		Action ac = ev.getAction();
-		double sec = 4*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec = 4*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 	    
 		
@@ -1117,9 +1110,8 @@ public class Berskills extends Pak implements Listener, Serializable {
 			                    p.swingMainHand();
 			    				p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 0.5f,2f);
 								p.getWorld().playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.5f, 2f);
-								p.getWorld().spawnParticle(Particle.CRIMSON_SPORE, tl, 200, 3, 2, 3);
-								p.getWorld().spawnParticle(Particle.CRIT, p.getLocation(), 100, 3,3,3); 
-								p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, p.getLocation(), 100, 3,3,3); 
+								p.getWorld().spawnParticle(Particle.CRIMSON_SPORE, tl, 100, 3, 2, 3);
+								p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, p.getLocation(), 50, 3,3,3); 
 								for (Entity a : p.getWorld().getNearbyEntities(tl, 3, 3, 3))
 								{
 		                    		if (a instanceof Player) 
@@ -1158,7 +1150,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 		if(p.getInventory().getItemInMainHand().getType().name().contains("SWORD") && !p.isSneaking() && !p.hasCooldown(CAREFUL) )
 		{
 		Action ac = ev.getAction();
-		double sec = 9*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec = 9*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 		if(!p.isOnGround() && (ac == Action.LEFT_CLICK_AIR || ac== Action.LEFT_CLICK_BLOCK))
 		{
 
@@ -1421,7 +1413,7 @@ public class Berskills extends Pak implements Listener, Serializable {
 		{
 			Player p1 = (Player)d.getEntity();
 			if(ClassData.pc.get(p1.getUniqueId()) == 1) {
-				double sec = 60*(1-p1.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)- (Proficiency.getpro(p1)>=2 ? 40 : 0);
+				double sec = 60*(1-p1.getAttribute(Attribute.LUCK).getValue()/1024d)- (Proficiency.getpro(p1)>=2 ? 40 : 0);
 
 				if(Proficiency.getpro(p1)>=2) {
 					if(p1.hasPotionEffect(PotionEffectType.REGENERATION)) {
@@ -1971,11 +1963,11 @@ public class Berskills extends Pak implements Listener, Serializable {
 
 				if(p.getInventory().getItemInMainHand().getType().name().contains("SWORD")&& p.getInventory().getItemInOffHand().getType().name().contains("HOE")&&!p.getInventory().getItemInOffHand().getType().name().contains("NUGGET")&& !(p.getInventory().getItemInOffHand().getType()==Material.TRIDENT)&& !(p.getInventory().getItemInOffHand().getType()==Material.SHIELD)&& !(p.getInventory().getItemInOffHand().getType()==Material.TRIDENT)&& !(p.getInventory().getItemInOffHand().getType()==Material.SHIELD)&& !(p.getInventory().getItemInOffHand().getType()==Material.TRIDENT)&& !(p.getInventory().getItemInOffHand().getType()==Material.SHIELD))
 				{
-					player_damage.put(p.getName(), p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue() + p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.5 + p.getLevel()/10);
+					player_damage.put(p.getName(), p.getAttribute(Attribute.ATTACK_DAMAGE).getValue() + p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.5 + p.getLevel()/10);
 				}
 				else if(p.getInventory().getItemInMainHand().getType().name().contains("HOE")&&p.getInventory().getItemInOffHand().getType().name().contains("SWORD")&& !p.getInventory().getItemInOffHand().getType().name().contains("NUGGET")&& !(p.getInventory().getItemInOffHand().getType()==Material.TRIDENT)&& !(p.getInventory().getItemInOffHand().getType()==Material.SHIELD))
 				{
-					player_damage.put(p.getName(), p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue() + p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.5 + p.getLevel()/10);
+					player_damage.put(p.getName(), p.getAttribute(Attribute.ATTACK_DAMAGE).getValue() + p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.5 + p.getLevel()/10);
 				}
 				else {
 					player_damage.put(p.getName(),0d);

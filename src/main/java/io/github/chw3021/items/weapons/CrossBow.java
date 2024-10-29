@@ -50,13 +50,13 @@ public class CrossBow extends Weapons implements Listener {
 				ItemStack r = i0.clone();
 				//r.addUnsafeEnchantments(i0.getEnchantments());
 				ItemMeta rm = r.getItemMeta();
-				rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+				rm.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
 				rm.setCustomModelData(cmdt + 5000);
-				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+				rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 						new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 29,
 								Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 	
-				rm.addAttributeModifier(Attribute.GENERIC_LUCK,
+				rm.addAttributeModifier(Attribute.LUCK,
 						new AttributeModifier(UUID.randomUUID(), "generic.luck", 30,
 								Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 				if (cmdt == 14) {
@@ -159,10 +159,10 @@ public class CrossBow extends Weapons implements Listener {
 				ItemStack r = i0.clone();
 				//r.addUnsafeEnchantments(i0.getEnchantments());
 				ItemMeta rm = r.getItemMeta();
-				rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+				rm.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
 				if (cmdt == 12) {
 					rm.setCustomModelData(cmdt + 5000);
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 29,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -184,10 +184,10 @@ public class CrossBow extends Weapons implements Listener {
 				ItemStack r = i0.clone();
 				//r.addUnsafeEnchantments(i0.getEnchantments());
 				ItemMeta rm = r.getItemMeta();
-				rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+				rm.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
 				if (cmdt == 14) {
 					rm.setCustomModelData(1 + 5000+100);
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 12,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -210,9 +210,9 @@ public class CrossBow extends Weapons implements Listener {
 				////r.addUnsafeEnchantments(i0.getEnchantments());
 				ItemMeta rm = r.getItemMeta();
 				rm.setCustomModelData(cmdt -3 + 5000 + 100);
-				rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+				rm.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
 				if (cmdt == 5) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 14,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -227,7 +227,7 @@ public class CrossBow extends Weapons implements Listener {
 					return r;
 				}
 				else if (cmdt == 6) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 16,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -242,7 +242,7 @@ public class CrossBow extends Weapons implements Listener {
 					return r;
 				}
 				else if (cmdt == 7) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 18,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -257,7 +257,7 @@ public class CrossBow extends Weapons implements Listener {
 					return r;
 				}
 				else if (cmdt == 8) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 20,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -272,7 +272,7 @@ public class CrossBow extends Weapons implements Listener {
 					return r;
 				}
 				else if (cmdt == 9) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 22,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -287,7 +287,7 @@ public class CrossBow extends Weapons implements Listener {
 					return r;
 				}
 				else if (cmdt == 10) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 24,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -302,7 +302,7 @@ public class CrossBow extends Weapons implements Listener {
 					return r;
 				}
 				else if (cmdt == 11) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 26,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -743,7 +743,7 @@ public class CrossBow extends Weapons implements Listener {
 	public void StoneCrossBow(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.CROSSBOW);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(5000 + 1);
 		if(lang.contains("kr")){
 			meta.setDisplayName("돌 쇠뇌");
@@ -767,7 +767,7 @@ public class CrossBow extends Weapons implements Listener {
 	public void GoldCrossBow(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.CROSSBOW);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 6, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 6, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(5000 +2);
 		if(lang.contains("kr")){
 			meta.setDisplayName("금 쇠뇌");
@@ -791,7 +791,7 @@ public class CrossBow extends Weapons implements Listener {
 	public void IronCrossBow(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.CROSSBOW);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 8, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 8, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(5000 + 3 );
 		if(lang.contains("kr")){
 			meta.setDisplayName("철 쇠뇌");
@@ -815,7 +815,7 @@ public class CrossBow extends Weapons implements Listener {
 	public void DiamondCrossBow(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.CROSSBOW);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 10, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 10, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(5000 + 4);
 		if(lang.contains("kr")){
 			meta.setDisplayName("다이아몬드 쇠뇌");
@@ -839,7 +839,7 @@ public class CrossBow extends Weapons implements Listener {
 	public void NetheriteCrossBow(PrepareSmithingEvent d) {
 		ItemStack r = new ItemStack(Material.CROSSBOW);
 		ItemMeta rm = r.getItemMeta();
-		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 10, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 10, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		rm.setCustomModelData(5000 +60);
 		
 		Player p = (Player) d.getView().getPlayer();
@@ -893,7 +893,7 @@ public class CrossBow extends Weapons implements Listener {
 					Player p = (Player) d.getWhoClicked();
 					ItemStack r = new ItemStack(Material.CROSSBOW);
 					ItemMeta rm = r.getItemMeta();
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 10, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 10, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					rm.setCustomModelData(5000 +60);
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						rm.setDisplayName("네더라이트 쇠뇌");

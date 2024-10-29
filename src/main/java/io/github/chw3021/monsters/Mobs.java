@@ -349,7 +349,7 @@ public class Mobs extends Pak {
 		LivingEntity creature = (LivingEntity) le.getWorld().spawnEntity(le.getLocation(), type);
 		creature.setRemoveWhenFarAway(true);
 		creature.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
-		creature.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(health);
+		creature.getAttribute(Attribute.MAX_HEALTH).setBaseValue(health);
 		creature.setHealth(health);
 		creature.setCustomName(name);
 		
@@ -381,7 +381,7 @@ public class Mobs extends Pak {
 		creature.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), true));
 		creature.setMetadata("rmf", new FixedMetadataValue(RMain.getInstance(), true));
 		creature.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
-		creature.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(health);
+		creature.getAttribute(Attribute.MAX_HEALTH).setBaseValue(health);
 		creature.setHealth(health);
 		creature.setCustomName(name);
 		creature.setRemoveWhenFarAway(false);
@@ -408,7 +408,7 @@ public class Mobs extends Pak {
 		creature.setPersistent(true);
 		creature.setMetadata("rmf", new FixedMetadataValue(RMain.getInstance(), true));
 		creature.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
-		creature.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(health);
+		creature.getAttribute(Attribute.MAX_HEALTH).setBaseValue(health);
 		creature.setHealth(health);
 		creature.setCustomName(name);
 		

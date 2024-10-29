@@ -24,9 +24,9 @@ public class Chestplate extends Armors implements Listener {
 			rm.setColor(Color.TEAL);
 			rm.addEnchant(Enchantment.FIRE_PROTECTION, 5, true);
 			rm.addEnchant(Enchantment.BLAST_PROTECTION, 5, true);
-			rm.addAttributeModifier(Attribute.GENERIC_MAX_HEALTH, new AttributeModifier(getKey(), 0.36, Operation.ADD_SCALAR, EquipmentSlotGroup.CHEST));
-			rm.addAttributeModifier(Attribute.GENERIC_ARMOR, new AttributeModifier(getKey(), 6, Operation.ADD_NUMBER, EquipmentSlotGroup.CHEST));
-			rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.CHEST));
+			rm.addAttributeModifier(Attribute.MAX_HEALTH, new AttributeModifier(getKey(), 0.36, Operation.ADD_SCALAR, EquipmentSlotGroup.CHEST));
+			rm.addAttributeModifier(Attribute.ARMOR, new AttributeModifier(getKey(), 6, Operation.ADD_NUMBER, EquipmentSlotGroup.CHEST));
+			rm.addAttributeModifier(Attribute.ARMOR_TOUGHNESS, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.CHEST));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 				rm.setDisplayName("작업복 상의");
 				rm.setItemName("작업복 상의");
@@ -39,10 +39,10 @@ public class Chestplate extends Armors implements Listener {
 		}
 		else if(f == 1) {
 			rm.setColor(Color.WHITE);
-			rm.addAttributeModifier(Attribute.GENERIC_MAX_HEALTH, new AttributeModifier(getKey(), 0.3, Operation.ADD_SCALAR, EquipmentSlotGroup.CHEST));
-			rm.addAttributeModifier(Attribute.GENERIC_ARMOR, new AttributeModifier(getKey(), 6, Operation.ADD_NUMBER, EquipmentSlotGroup.CHEST));
-			rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.CHEST));
-			rm.addAttributeModifier(Attribute.GENERIC_MOVEMENT_SPEED, new AttributeModifier(getKey(), 0.15, Operation.ADD_SCALAR, EquipmentSlotGroup.CHEST));
+			rm.addAttributeModifier(Attribute.MAX_HEALTH, new AttributeModifier(getKey(), 0.3, Operation.ADD_SCALAR, EquipmentSlotGroup.CHEST));
+			rm.addAttributeModifier(Attribute.ARMOR, new AttributeModifier(getKey(), 6, Operation.ADD_NUMBER, EquipmentSlotGroup.CHEST));
+			rm.addAttributeModifier(Attribute.ARMOR_TOUGHNESS, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.CHEST));
+			rm.addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(getKey(), 0.15, Operation.ADD_SCALAR, EquipmentSlotGroup.CHEST));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 				rm.setDisplayName("설산 코트");
 				rm.setItemName("설산 코트");
@@ -55,9 +55,9 @@ public class Chestplate extends Armors implements Listener {
 		}
 		else if(f == 3) {
 			rm.setColor(Color.AQUA);
-			rm.addAttributeModifier(Attribute.GENERIC_MAX_HEALTH, new AttributeModifier(getKey(), 0.48, Operation.ADD_SCALAR, EquipmentSlotGroup.CHEST));
-			rm.addAttributeModifier(Attribute.GENERIC_ARMOR, new AttributeModifier(getKey(), 7, Operation.ADD_NUMBER, EquipmentSlotGroup.CHEST));
-			rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.CHEST));
+			rm.addAttributeModifier(Attribute.MAX_HEALTH, new AttributeModifier(getKey(), 0.48, Operation.ADD_SCALAR, EquipmentSlotGroup.CHEST));
+			rm.addAttributeModifier(Attribute.ARMOR, new AttributeModifier(getKey(), 7, Operation.ADD_NUMBER, EquipmentSlotGroup.CHEST));
+			rm.addAttributeModifier(Attribute.ARMOR_TOUGHNESS, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.CHEST));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 				rm.setDisplayName("프리즈머린 흉갑");
 				rm.setItemName("프리즈머린 흉갑");
@@ -70,10 +70,10 @@ public class Chestplate extends Armors implements Listener {
 		}
 		else if(f == 5) {
 			rm.setColor(Color.BLACK);
-			rm.addAttributeModifier(Attribute.GENERIC_MOVEMENT_SPEED, new AttributeModifier(getKey(), -0.08, Operation.ADD_SCALAR, EquipmentSlotGroup.CHEST));
-			rm.addAttributeModifier(Attribute.GENERIC_MAX_HEALTH, new AttributeModifier(getKey(), 0.65, Operation.ADD_SCALAR, EquipmentSlotGroup.CHEST));
-			rm.addAttributeModifier(Attribute.GENERIC_ARMOR, new AttributeModifier(getKey(), 8, Operation.ADD_NUMBER, EquipmentSlotGroup.CHEST));
-			rm.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(getKey(), 3, Operation.ADD_NUMBER, EquipmentSlotGroup.CHEST));
+			rm.addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(getKey(), -0.08, Operation.ADD_SCALAR, EquipmentSlotGroup.CHEST));
+			rm.addAttributeModifier(Attribute.MAX_HEALTH, new AttributeModifier(getKey(), 0.65, Operation.ADD_SCALAR, EquipmentSlotGroup.CHEST));
+			rm.addAttributeModifier(Attribute.ARMOR, new AttributeModifier(getKey(), 8, Operation.ADD_NUMBER, EquipmentSlotGroup.CHEST));
+			rm.addAttributeModifier(Attribute.ARMOR_TOUGHNESS, new AttributeModifier(getKey(), 3, Operation.ADD_NUMBER, EquipmentSlotGroup.CHEST));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 				rm.setDisplayName("방탄 야상");
 				rm.setItemName("방탄 야상");
@@ -88,10 +88,10 @@ public class Chestplate extends Armors implements Listener {
 		else if(f == 6) {
 			r.setType(Material.CHAINMAIL_CHESTPLATE);
 			ItemMeta im = (ItemMeta) r.getItemMeta();
-			rm.addAttributeModifier(Attribute.GENERIC_MOVEMENT_SPEED, new AttributeModifier(getKey(), 0.05, Operation.ADD_SCALAR, EquipmentSlotGroup.CHEST));
-			im.addAttributeModifier(Attribute.GENERIC_MAX_HEALTH, new AttributeModifier(getKey(), 0.67, Operation.ADD_SCALAR, EquipmentSlotGroup.CHEST));
-			im.addAttributeModifier(Attribute.GENERIC_ARMOR, new AttributeModifier(getKey(), 8, Operation.ADD_NUMBER, EquipmentSlotGroup.CHEST));
-			im.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(getKey(), 3, Operation.ADD_NUMBER, EquipmentSlotGroup.CHEST));
+			rm.addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(getKey(), 0.05, Operation.ADD_SCALAR, EquipmentSlotGroup.CHEST));
+			im.addAttributeModifier(Attribute.MAX_HEALTH, new AttributeModifier(getKey(), 0.67, Operation.ADD_SCALAR, EquipmentSlotGroup.CHEST));
+			im.addAttributeModifier(Attribute.ARMOR, new AttributeModifier(getKey(), 8, Operation.ADD_NUMBER, EquipmentSlotGroup.CHEST));
+			im.addAttributeModifier(Attribute.ARMOR_TOUGHNESS, new AttributeModifier(getKey(), 3, Operation.ADD_NUMBER, EquipmentSlotGroup.CHEST));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 				im.setDisplayName("합금 흉갑");
 				im.setItemName("합금 흉갑");

@@ -106,122 +106,122 @@ public class ClassData implements Serializable, Listener{
         }
     }
     
-    final private void setMaxHealth(Player p) {
+    public static void setMaxHealth(Player p) {
 
-	    p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
+	    p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.MAX_HEALTH).getDefaultValue());
 		if(pc.getOrDefault(p.getUniqueId(),-1) == 0) { //Swordman
-			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(36);
+			p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(36);
 		}
 		
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 1) {//berserker
-			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
+			p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(50);
 		}
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 2) {	//Hunter
-			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(18);
+			p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(18);
 		
 		}
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 3) {	//Paladin
-			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
+			p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(50);
 		
 		}
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 4) {//Sniper
-			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(16);
+			p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(16);
 		}
 		
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 5) {//Launcher
-			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
+			p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(20);
 		}
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 6) { //Archer
-			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(36);
+			p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(36);
 		}
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 61) { //Medic
-			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30);
+			p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(30);
 		}
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 7) { // Boxer
-			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
+			p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(50);
 		}
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 8) { //Wrestler
-			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(46);
+			p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(46);
 		}
 		
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 9) { //Tamer
-			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30);
+			p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(30);
 		}
 		
 	
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 10) { //Taoist
-			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
+			p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(40);
 		}
 		
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 11) { //Illusionist
-			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(18);
+			p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(18);
 		}
 		
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 12) {//Firemage
-			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(34);
+			p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(34);
 		}
 	
 	
 		
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 13) { //Witherist
-			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(28);
+			p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(28);
 		}
 		
 		
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 14) { //WitchDoctor
-			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30);
+			p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(30);
 		}
 		
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 15) {//Chemist
-			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(46);
+			p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(46);
 			
 		}
 		
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 16) {//Forger
-			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
+			p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(20);
 		}
 		
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 17) {//Engineer
-			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30);
+			p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(30);
 		}
 	
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 18) { // Cooker
-			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(24);
+			p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(24);
 		}
 	
 		
 	
 		
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 19) { //Nobility
-			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(22);
+			p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(22);
 		}
 		
 	
 		
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 20) { //OceanKnight
-			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
+			p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(40);
 			
 		}
 		
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 21) { //Frostman
-			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30);
+			p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(30);
 		}
 		
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 22) {//Angler
-			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(24);
+			p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(24);
 		}
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 23) { // 용병
-			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(36);
+			p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(36);
 		}
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 24) { // 단검사
-			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
+			p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(20);
 		}
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 25) { //원예가
-			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(25);
+			p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(25);
 			
 		}
 		else if(pc.getOrDefault(p.getUniqueId(),-1) == 26) { // 에술가
-			p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(18);
+			p.getAttribute(Attribute.MAX_HEALTH).setBaseValue(18);
 		}
     }
 	@EventHandler
@@ -385,9 +385,9 @@ public class ClassData implements Serializable, Listener{
 	            p.setDisplayName(p.getName());
 	            p.setPlayerListName(p.getName());
 				pak.remelmr(p);
-				p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getDefaultValue());
-				p.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(p.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).getDefaultValue());
-				p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).getDefaultValue());
+				p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.ATTACK_DAMAGE).getDefaultValue());
+				p.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(p.getAttribute(Attribute.KNOCKBACK_RESISTANCE).getDefaultValue());
+				p.getAttribute(Attribute.ATTACK_SPEED).setBaseValue(p.getAttribute(Attribute.ATTACK_SPEED).getDefaultValue());
 					switch (ChatColor.stripColor((e.getCurrentItem().getItemMeta().getDisplayName())))
 					{
 					case"SwordMan":
@@ -403,8 +403,8 @@ public class ClassData implements Serializable, Listener{
 					case"광전사":
 						playerclass.put(p.getUniqueId(), 1);
 
-						p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(100);
-						p.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+						p.getAttribute(Attribute.ATTACK_SPEED).setBaseValue(100);
+						p.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
 			            BerSkillsGui bsg = new BerSkillsGui();
 						bsg.Berskillsinv(p);

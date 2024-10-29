@@ -142,7 +142,7 @@ public class Cookskills extends Pak implements Listener, Serializable {
 	public void GrilledDishes(PlayerSwapHandItemsEvent ev) 
 	{
 		Player p = ev.getPlayer();
-		double sec =6*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024);
+		double sec =6*(1-p.getAttribute(Attribute.LUCK).getValue()/1024);
         
 		
 		
@@ -402,7 +402,7 @@ public class Cookskills extends Pak implements Listener, Serializable {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec = 12*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024);
+		double sec = 12*(1-p.getAttribute(Attribute.LUCK).getValue()/1024);
 		
 		if(playerclass.get(p.getUniqueId()) == 18) {
 		if((p.isSneaking()) && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK))
@@ -611,7 +611,7 @@ public class Cookskills extends Pak implements Listener, Serializable {
 	public void DessertRain(PlayerSwapHandItemsEvent ev) //https://www.spigotmc.org/members/beefystick.28035/
 	{
 		Player p = ev.getPlayer();
-		double sec = 13*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024);
+		double sec = 13*(1-p.getAttribute(Attribute.LUCK).getValue()/1024);
 
         
 		
@@ -950,7 +950,7 @@ public class Cookskills extends Pak implements Listener, Serializable {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec =5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024);
+		double sec =5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024);
 		
 		if(playerclass.get(p.getUniqueId()) == 18) {
 		if(!(p.isSneaking()) && (ac == Action.RIGHT_CLICK_AIR||ac == Action.RIGHT_CLICK_BLOCK))
@@ -1099,7 +1099,7 @@ public class Cookskills extends Pak implements Listener, Serializable {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec = 12*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024);
+		double sec = 12*(1-p.getAttribute(Attribute.LUCK).getValue()/1024);
 
         
 		

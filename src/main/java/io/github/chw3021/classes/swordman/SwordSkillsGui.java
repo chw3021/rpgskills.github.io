@@ -47,7 +47,7 @@ public class SwordSkillsGui extends SkillsGui{
 			
 			itemset("막기", Material.SHIELD, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.Guard.getOrDefault(p.getUniqueId(),0),"","웅크리기", 
 					"피해 감소량: "+ ChatColor.BOLD+""+BigDecimal.valueOf(1 - (0.2 - ssd.Guard.getOrDefault(p.getUniqueId(),0)*0.016)).setScale(2, RoundingMode.HALF_EVEN)+"%",
-					"막기를 ", 	Math.round(5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024)/(Proficiency.getpro(p)+1))/10.0+"초동안 미사용시","게이지가 서서히 회복됩니다","(Master LV.10)"), 6, Swordskillsinv);
+					"막기를 ", 	Math.round(5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024)/(Proficiency.getpro(p)+1))/10.0+"초동안 미사용시","게이지가 서서히 회복됩니다","(Master LV.10)"), 6, Swordskillsinv);
 			itemset("검술", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.Dualbladed.getOrDefault(p.getUniqueId(),0),"", "공격력이 상승합니다",
 					"",ChatColor.BOLD+" X "+BigDecimal.valueOf((1.7+ssd.Dualbladed.getOrDefault(p.getUniqueId(),0)*0.03896)).setScale(2, RoundingMode.HALF_EVEN)), 7, Swordskillsinv);
 			if(Proficiency.getpro(p)<1) {
@@ -138,7 +138,7 @@ public class SwordSkillsGui extends SkillsGui{
 			itemset("Guard", Material.SHIELD, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.Guard.getOrDefault(p.getUniqueId(),0),"","Sneaking", 
 					"Reduced Damage: "+ ChatColor.BOLD+""+BigDecimal.valueOf(1 - (0.2 - ssd.Guard.getOrDefault(p.getUniqueId(),0)*0.016)).setScale(2, RoundingMode.HALF_EVEN)+"%",
 					"Gage Will be Recovered Slowly", "When You Don't Use Guard for ", 
-					Math.round(5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024)/(Proficiency.getpro(p)+1))/10.0+"s","(Master LV.10)"), 6, Swordskillsinv);
+					Math.round(5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024)/(Proficiency.getpro(p)+1))/10.0+"s","(Master LV.10)"), 6, Swordskillsinv);
 			itemset("Swordsmanship", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+ssd.Dualbladed.getOrDefault(p.getUniqueId(),0),"","Increases Damage"
 					,"",ChatColor.BOLD+" X "+BigDecimal.valueOf((1.7+ssd.Dualbladed.getOrDefault(p.getUniqueId(),0)*0.03896)).setScale(2, RoundingMode.HALF_EVEN)), 7, Swordskillsinv);
 			if(Proficiency.getpro(p)<1) {

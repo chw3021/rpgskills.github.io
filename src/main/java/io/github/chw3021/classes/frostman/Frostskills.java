@@ -182,7 +182,7 @@ public class Frostskills extends Pak implements Listener, Serializable {
 			}
 			p.getWorld().getEntities().stream().filter(en -> en.hasMetadata("crystal of"+p.getName())).forEach(n -> n.remove());
 			sdcooldown.put(p.getName(), System.currentTimeMillis());
-			Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,3*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d),0,"얼음수정","FrozenCrystal"));
+			Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,3*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d),0,"얼음수정","FrozenCrystal"));
 			crystal.remove(p);
 		}
 	}
@@ -191,7 +191,7 @@ public class Frostskills extends Pak implements Listener, Serializable {
 	{
 
 		Player p = ev.getPlayer();
-		double sec =3*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =3*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 
 		if(ClassData.pc.get(p.getUniqueId()) == 21&& bsd.FrozenCrystal.getOrDefault(p.getUniqueId(), 0)>=1 && p.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD && !(p.isSneaking()) && !crystal.containsKey(p))
@@ -282,7 +282,7 @@ public class Frostskills extends Pak implements Listener, Serializable {
 	{
 
 		Player p = ev.getPlayer();
-		double sec =9*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =9*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 		if(ClassData.pc.get(p.getUniqueId()) == 21&& bsd.Hailstones.getOrDefault(p.getUniqueId(), 0)>=1) {
 			final Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR)), 6).getLocation().setDirection(p.getLocation().getDirection());
@@ -587,7 +587,7 @@ public class Frostskills extends Pak implements Listener, Serializable {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec =8*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =8*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 		if(ClassData.pc.get(p.getUniqueId()) == 21&& bsd.IceSpikes.getOrDefault(p.getUniqueId(), 0)>=1) {
             Location el = gettargetblock(p,6).clone();
 			if((p.isSneaking()) && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK))
@@ -971,7 +971,7 @@ public class Frostskills extends Pak implements Listener, Serializable {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec =4.5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =4.5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 		if(ClassData.pc.get(p.getUniqueId()) == 21&& bsd.SnowBreeze.getOrDefault(p.getUniqueId(), 0)>=1) {
 			final Location l = p.getLocation().clone();
 			if(p.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD &&!p.isSneaking()&& !p.isOnGround() &&!p.hasCooldown(CAREFUL))
@@ -1165,7 +1165,7 @@ public class Frostskills extends Pak implements Listener, Serializable {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec =3.5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =3.5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 		if(ClassData.pc.get(p.getUniqueId()) == 21&& bsd.IcicleShot.getOrDefault(p.getUniqueId(), 0)>=1) {
 			if(!(p.isSneaking()) && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK))
@@ -1434,7 +1434,7 @@ public class Frostskills extends Pak implements Listener, Serializable {
 		if(d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity&&!d.isCancelled() && d.getDamage()>0)
 		{
 			Player p = (Player)d.getDamager();
-			double sec =5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec =5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 			final LivingEntity le = (LivingEntity)d.getEntity();
 
 
@@ -1583,7 +1583,7 @@ public class Frostskills extends Pak implements Listener, Serializable {
 					else {
 						le.setFreezeTicks(45+le.getFreezeTicks());
 					}
-					double sec = 5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*(ArmorSet.setnum(p) == 6? 0.5:1)*(frosted.containsKey(le.getUniqueId())? 0:1);
+					double sec = 5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*(ArmorSet.setnum(p) == 6? 0.5:1)*(frosted.containsKey(le.getUniqueId())? 0:1);
 
 					d.setDamage(d.getDamage()*1.15*(1+bsd.Frostbite.get(p.getUniqueId())*0.045));
 					if(frostcooldown.containsKey(le.getUniqueId())) // if cooldown has players name in it (on first trow cooldown is empty)
@@ -1657,7 +1657,7 @@ public class Frostskills extends Pak implements Listener, Serializable {
 						else {
 							le.setFreezeTicks(45+le.getFreezeTicks());
 						}
-						double sec = 5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*(ArmorSet.setnum(p) == 6? 0.5:1)*(frosted.containsKey(le.getUniqueId())? 0:1);
+						double sec = 5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*(ArmorSet.setnum(p) == 6? 0.5:1)*(frosted.containsKey(le.getUniqueId())? 0:1);
 
 						d.setDamage(d.getDamage()*1.15*(1+bsd.Frostbite.get(p.getUniqueId())*0.045));
 						if(frostcooldown.containsKey(le.getUniqueId())) // if cooldown has players name in it (on first trow cooldown is empty)

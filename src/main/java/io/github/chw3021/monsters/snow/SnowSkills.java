@@ -1068,8 +1068,8 @@ public class SnowSkills extends Summoned implements Listener{
 			if(p.hasMetadata("failed") || ordeal.containsKey(p.getUniqueId())) {
 				return;
 			}
-			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
+			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
+				p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
                 ordealable.put(p.getUniqueId(), true);
                 d.setCancelled(true);
 				return;
@@ -1212,7 +1212,7 @@ public class SnowSkills extends Summoned implements Listener{
     		newmob.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY,10,1,false,false));
     		newmob.getEquipment().setItemInMainHand(main);
     		newmob.getEquipment().setItemInOffHand(off);
-    		newmob.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue((p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()));;
+    		newmob.getAttribute(Attribute.MAX_HEALTH).setBaseValue((p.getAttribute(Attribute.MAX_HEALTH).getValue()));;
     		newmob.setHealth(p.getHealth());
     		newmob.setCanJoinRaid(false);
     		newmob.setPatrolTarget(null);
@@ -1270,7 +1270,7 @@ public class SnowSkills extends Summoned implements Listener{
 		count.put(p.getUniqueId(), 4);
 		
         Location rl = OverworldRaids.getraidloc(p).clone();
-		p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
+		p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
         d.setCancelled(true);
     	p.teleport(rl.clone().add(0, 0, 1));
 		Holding.invur(p, 60l);

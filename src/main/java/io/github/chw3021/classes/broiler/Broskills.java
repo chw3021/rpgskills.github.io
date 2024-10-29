@@ -152,7 +152,7 @@ public class Broskills extends Pak implements Listener, Serializable {
 	public void TimeBomb(PlayerSwapHandItemsEvent ev)
 	{
 		Player p = ev.getPlayer();
-		double sec = 6*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024);
+		double sec = 6*(1-p.getAttribute(Attribute.LUCK).getValue()/1024);
 
 
 
@@ -307,7 +307,7 @@ public class Broskills extends Pak implements Listener, Serializable {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec = 6*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024);
+		double sec = 6*(1-p.getAttribute(Attribute.LUCK).getValue()/1024);
 
 		if(playerclass.get(p.getUniqueId()) == 25) {
 		if((p.isSneaking()) && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK))
@@ -493,7 +493,7 @@ public class Broskills extends Pak implements Listener, Serializable {
 	public void ChainHook(PlayerSwapHandItemsEvent ev) //https://www.spigotmc.org/members/beefystick.28035/
 	{
 		Player p = ev.getPlayer();
-		double sec = 6*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024);
+		double sec = 6*(1-p.getAttribute(Attribute.LUCK).getValue()/1024);
 
 
 
@@ -712,7 +712,7 @@ public class Broskills extends Pak implements Listener, Serializable {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec = 6*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024);
+		double sec = 6*(1-p.getAttribute(Attribute.LUCK).getValue()/1024);
 
 
 
@@ -868,7 +868,7 @@ public class Broskills extends Pak implements Listener, Serializable {
 		if(d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity && !d.isCancelled())
 		{
 		Player p = (Player)d.getDamager();
-		double sec = 5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024);
+		double sec = 5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024);
 		LivingEntity le = (LivingEntity)d.getEntity();
 		final Location el =le.getLocation();
 
@@ -982,7 +982,7 @@ public class Broskills extends Pak implements Listener, Serializable {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec =3*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024);
+		double sec =3*(1-p.getAttribute(Attribute.LUCK).getValue()/1024);
 
 
 

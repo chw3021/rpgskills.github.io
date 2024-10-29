@@ -172,7 +172,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 
 		Player p = ev.getPlayer();
 		Action a = ev.getAction();
-		double sec =6*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =6*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 
 		if(ClassData.pc.get(p.getUniqueId()) == 2) {
@@ -343,7 +343,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 	{
 			Player p = ev.getPlayer();
 			final Entity e = ev.getRightClicked();
-			double sec =2*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec =2*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 
 
@@ -428,7 +428,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 	public void Climb(PlayerSwapHandItemsEvent ev)
 	{
 		Player p = ev.getPlayer();
-		double sec =1*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =1*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 /*
 		if(p.getInventory().getItemInMainHand().getType().name().contains("RAIL") && p.getInventory().getItemInOffHand().getType().name().contains("RAIL") && !p.isOnGround()) {
 			ev.setCancelled(true);
@@ -606,7 +606,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 	public void Dodge(PlayerSwapHandItemsEvent ev)
 	{
 		Player p = ev.getPlayer();
-		double sec =2*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =2*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 		if(ClassData.pc.get(p.getUniqueId()) == 2 && hsd.Dodge.get(p.getUniqueId())>=1 && !p.isSneaking())	{
 
@@ -793,7 +793,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 
 		Player p = ev.getPlayer();
 		Action a = ev.getAction();
-		double sec =5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 
 		if(ClassData.pc.get(p.getUniqueId()) == 2 && hsd.HuntingStart.get(p.getUniqueId())>=1) {
@@ -887,7 +887,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 
 		Player p = ev.getPlayer();
 		Action a = ev.getAction();
-		double sec =6*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =6*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 
 		if(ClassData.pc.get(p.getUniqueId()) == 2) {
@@ -1071,7 +1071,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 										}
 									}
 									else {
-										double sec =6*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+										double sec =6*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 										if(Proficiency.getpro(p)>=1) {
 											hucooldown.put(p.getName(), System.currentTimeMillis()-2000);
 											Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,sec-2,3,"사냥","Hunting"));
@@ -1168,7 +1168,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 										}
 									}
 									else {
-										double sec =6*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+										double sec =6*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 										if(Proficiency.getpro(p)>=1) {
 											hucooldown.put(p.getName(), System.currentTimeMillis()-2000);
 											Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,sec-2,3,"사냥","Hunting"));
@@ -1197,7 +1197,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 		if(d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity&&!d.isCancelled())
 		{
 			Player p = (Player)d.getDamager();
-			double sec =5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec =5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 			final LivingEntity le = (LivingEntity)d.getEntity();
 
 
@@ -1351,7 +1351,7 @@ public class Hunskills extends Pak implements Serializable, Listener {
 		if(d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity&&!d.isCancelled())
 		{
 			Player p = (Player)d.getDamager();
-			double sec =10*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec =10*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 			LivingEntity le = (LivingEntity)d.getEntity();
 
 

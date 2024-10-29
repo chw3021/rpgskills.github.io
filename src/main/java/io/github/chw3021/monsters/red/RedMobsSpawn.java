@@ -57,7 +57,7 @@ public class RedMobsSpawn extends Mobs implements Listener {
 		String reg = lang.contains("kr") ? "워킹레드샌드":"WalkingRedSand";
 		Husk newmob = (Husk) Mobspawn(le, reg, 15000.0, head, chest, leg, boots, new ItemStack(Material.CAMPFIRE), new ItemStack(Material.CAMPFIRE), EntityType.HUSK);
 		newmob.setConversionTime(-1);
-		newmob.getAttribute(Attribute.GENERIC_FOLLOW_RANGE).setBaseValue(20);
+		newmob.getAttribute(Attribute.FOLLOW_RANGE).setBaseValue(20);
 		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("red", new FixedMetadataValue(RMain.getInstance(), true));
@@ -120,7 +120,7 @@ public class RedMobsSpawn extends Mobs implements Listener {
 		newmob.setPatrolLeader(false);
 		newmob.setPatrolTarget(null);
 		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.08);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.08);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("red", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("mage", new FixedMetadataValue(RMain.getInstance(), true));
@@ -152,7 +152,7 @@ public class RedMobsSpawn extends Mobs implements Listener {
 		Skeleton newmob = (Skeleton) Mobspawn(le, reg, 12000.0, head, chest, leg, boots, main, main, EntityType.SKELETON);
 		newmob.setConversionTime(-1);
 		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.3);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("jumper", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("red", new FixedMetadataValue(RMain.getInstance(), true));
@@ -165,7 +165,7 @@ public class RedMobsSpawn extends Mobs implements Listener {
 		Spider newmob = (Spider) Mobspawn(le, reg, 10000.0,null, null, null, null, new ItemStack(Material.CAMPFIRE), new ItemStack(Material.CAMPFIRE), EntityType.SPIDER);
 		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
 		
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.26);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.26);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("red", new FixedMetadataValue(RMain.getInstance(), true));
 		Pak.flamer.put(newmob.getUniqueId(), 0.3);
@@ -178,7 +178,7 @@ public class RedMobsSpawn extends Mobs implements Listener {
 		newmob.setPowered(true);
 		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
 		
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.18);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.18);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("red", new FixedMetadataValue(RMain.getInstance(), true));
 		Pak.flamer.put(newmob.getUniqueId(), 0.3);
@@ -190,7 +190,7 @@ public class RedMobsSpawn extends Mobs implements Listener {
 		Enderman newmob = (Enderman) Mobspawn(le, reg, 15000.0, new ItemStack(Material.MAGMA_BLOCK), null, null, null, new ItemStack(Material.MAGMA_BLOCK), new ItemStack(Material.MAGMA_BLOCK), EntityType.ENDERMAN);
 		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
 		newmob.setCarriedBlock(Material.MAGMA_BLOCK.createBlockData());
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.2);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.2);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("red", new FixedMetadataValue(RMain.getInstance(), true));
 		Pak.flamer.put(newmob.getUniqueId(), 0.3);

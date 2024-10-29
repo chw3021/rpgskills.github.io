@@ -472,7 +472,7 @@ public class Forskills extends Pak implements Serializable {
 					return;
 				}
 				Action ac = ev.getAction();
-				double sec = 10*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+				double sec = 10*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 				if((p.isSneaking()) && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK))
 				{
@@ -784,7 +784,7 @@ public class Forskills extends Pak implements Serializable {
 		if(ClassData.pc.get(p.getUniqueId()) == 16&& fsd.TNTLauncher.getOrDefault(p.getUniqueId(),0)>=1) {
 			if((p.getInventory().getItemInMainHand().getType().name().contains("PICKAXE")) && !p.isSneaking())
 			{
-				double sec = 10*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+				double sec = 10*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 				ev.setCancelled(true);
 				SkillBuilder bd = new SkillBuilder()
@@ -1199,7 +1199,7 @@ public class Forskills extends Pak implements Serializable {
 					return;
 				}
 				Action ac = ev.getAction();
-				double sec =4*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+				double sec =4*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 				if(!(p.isSneaking()) && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK))
 				{
 					p.setCooldown(CAREFUL, 2);
@@ -1331,7 +1331,7 @@ public class Forskills extends Pak implements Serializable {
 		if(d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity && !d.isCancelled())
 		{
 			Player p = (Player)d.getDamager();
-			double sec =7*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec =7*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 			d.getEntity();
 
 
@@ -1467,7 +1467,7 @@ public class Forskills extends Pak implements Serializable {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec = 20*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec = 20*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 
 		if(ClassData.pc.get(p.getUniqueId()) == 16 && fsd.HoneyMissile.getOrDefault(p.getUniqueId(), 0) >=1 && p.getInventory().getItemInMainHand().getType().name().contains("PICKAXE") && !p.hasCooldown(CAREFUL)) {
@@ -2059,7 +2059,7 @@ public class Forskills extends Pak implements Serializable {
 			if(ClassData.pc.get(p.getUniqueId()) == 16) {
 				if(p.getInventory().getItemInMainHand().getType().name().contains("PICKAXE")&& !p.getInventory().getItemInOffHand().getType().name().contains("NUGGET")&& !(p.getInventory().getItemInOffHand().getType()==Material.TRIDENT)&& !(p.getInventory().getItemInOffHand().getType()==Material.SHIELD))
 				{
-						player_damage.put(p.getName(), p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue() + p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.5 + p.getLevel()/10);
+						player_damage.put(p.getName(), p.getAttribute(Attribute.ATTACK_DAMAGE).getValue() + p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.5 + p.getLevel()/10);
 
 						if (p.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE))
 						{
@@ -2146,7 +2146,7 @@ public class Forskills extends Pak implements Serializable {
 						if(le.hasMetadata("leader") || le.hasMetadata("boss")) {
 							d.setDamage(d.getDamage()*2.5);
 						}
-							/*player_damage.put(p.getName(), p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue() + p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.5 + p.getLevel()/10);
+							/*player_damage.put(p.getName(), p.getAttribute(Attribute.ATTACK_DAMAGE).getValue() + p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.5 + p.getLevel()/10);
 
 							if (e.getType() == EntityType.ZOMBIE || e.getType() == EntityType.ZOMBIE_HORSE || e.getType() ==EntityType.ZOMBIE_VILLAGER || e.getType() == EntityType.ZOMBIFIED_PIGLIN|| e.getType() == EntityType.SKELETON || e.getType() == EntityType.SKELETON_HORSE || e.getType() == EntityType.WITHER_SKELETON || e.getType() == EntityType.HUSK || e.getType() == EntityType.WITHER || e.getType() == EntityType.STRAY || e.getType() == EntityType.PHANTOM || e.getType() == EntityType.DROWNED)
 							{

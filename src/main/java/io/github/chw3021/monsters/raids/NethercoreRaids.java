@@ -134,8 +134,8 @@ public class NethercoreRaids extends Summoned implements Listener {
 			heroes.get(rn).forEach(pu -> pc.add(Bukkit.getPlayer(pu)));
 			return pc;
 		}
-		else if(le.hasMetadata("raidvil")) {
-			String rn = le.getMetadata("raidvil").get(0).asString();
+		else if(le.hasMetadata("netherRaidVil")) {
+			String rn = le.getMetadata("netherRaidVil").get(0).asString();
 			Collection<Player> pc = new ArrayList<Player>();
 			heroes.get(rn).forEach(pu -> pc.add(Bukkit.getPlayer(pu)));
 			return pc;
@@ -340,7 +340,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 
             	
 				if(Holding.ale(newmob)!=null) {
-					final double pr = Holding.ale(newmob).getHealth()/Holding.ale(newmob).getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+					final double pr = Holding.ale(newmob).getHealth()/Holding.ale(newmob).getAttribute(Attribute.MAX_HEALTH).getValue();
 					if(pr>=0 && pr<=1) {
 	                	raidbar.get(rn).setProgress(pr);
 					}
@@ -468,9 +468,9 @@ public class NethercoreRaids extends Summoned implements Listener {
 			newmob.setIsAbleToHunt(false);
     		newmob.setLootTable(null);
 
-    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
-    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
-    		newmob.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(4);
+    		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.36);
+    		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
+    		newmob.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(4);
     		newmob.setRemoveWhenFarAway(false);
     		raider.put(rn, newmob.getUniqueId());
 			newmob.setMetadata("volcanicboss", new FixedMetadataValue(RMain.getInstance(), true));
@@ -528,8 +528,8 @@ public class NethercoreRaids extends Summoned implements Listener {
     		newmob.setPatrolTarget(null);
     		newmob.setPatrolLeader(false);
     		newmob.setSilent(true);
-    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
-    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(0.9);
+    		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.3);
+    		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(0.9);
     		newmob.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 999999, 3, false, false));
     		
     		newmob.setMetadata("soulboss", new FixedMetadataValue(RMain.getInstance(), true));
@@ -588,7 +588,7 @@ public class NethercoreRaids extends Summoned implements Listener {
     		newmob.getEquipment().setItemInMainHandDropChance(0);
     		newmob.getEquipment().setItemInOffHandDropChance(0);
     		newmob.getEquipment().setLeggingsDropChance(0);;
-    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(0.9);
+    		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(0.9);
     		newmob.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 999999, 3, false, false));
     		
     		newmob.setMetadata("warpedboss", new FixedMetadataValue(RMain.getInstance(), true));
@@ -618,9 +618,9 @@ public class NethercoreRaids extends Summoned implements Listener {
 
     		newmob.setLootTable(null);
     		newmob.setGlowing(true);
-    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
-    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
-    		newmob.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(4);
+    		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.36);
+    		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
+    		newmob.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(4);
     		
     		newmob.setMetadata("crimsonboss", new FixedMetadataValue(RMain.getInstance(), true));
     		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), armor));
@@ -859,13 +859,13 @@ public class NethercoreRaids extends Summoned implements Listener {
     		raidpor.put(rn, portal.getUniqueId());
 
     		Villager v = (Villager) spl.getWorld().spawn(spl.clone().add(1,1,0), Villager.class);
-    		v.setMetadata("raidvil", new FixedMetadataValue(RMain.getInstance(), rn));
+    		v.setMetadata("netherRaidVil", new FixedMetadataValue(RMain.getInstance(), rn));
     		v.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), rn));
     		v.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
     		v.setAdult();
     		v.setAgeLock(true);
-    		v.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0);
-    		v.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+    		v.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0);
+    		v.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
     		v.setGravity(true);
     		v.setNoDamageTicks(0);
     		v.setMaxHealth(4000);
@@ -1132,9 +1132,9 @@ public class NethercoreRaids extends Summoned implements Listener {
 	@EventHandler
 	public void Defeat(EntityDeathEvent d) 
 	{		
-		if(d.getEntity().hasMetadata("raidvil")) {
+		if(d.getEntity().hasMetadata("netherRaidVil")) {
 			LivingEntity le = d.getEntity();
-			String rn = le.getMetadata("raidvil").get(0).asString();
+			String rn = le.getMetadata("netherRaidVil").get(0).asString();
 
 			if(language.get(rn).equalsIgnoreCase("ko_kr")) {
 				NethercoreRaidFinish(rn, "패배..", "주민 보호 실패",0);
@@ -1301,10 +1301,10 @@ public class NethercoreRaids extends Summoned implements Listener {
 					}
 				}
 			}
-			if(d.getDamager() instanceof Player &&  heroes.containsValue(d.getDamager().getUniqueId()) && d.getEntity().hasMetadata("raidvil")) {
+			if(d.getDamager() instanceof Player &&  heroes.containsValue(d.getDamager().getUniqueId()) && d.getEntity().hasMetadata("netherRaidVil")) {
 				d.setCancelled(true);
 			}
-			if(d.getDamager() instanceof Projectile &&  d.getEntity().hasMetadata("raidvil")) {
+			if(d.getDamager() instanceof Projectile &&  d.getEntity().hasMetadata("netherRaidVil")) {
 
 				Projectile pr = (Projectile) d.getDamager();
 				if(pr.getShooter() instanceof Player ) {
@@ -1511,7 +1511,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 	            		hel.addUnsafeEnchantment(Enchantment.KNOCKBACK, 3);
 	            		
 	            		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "왜곡된망령":"DistortedWraith";
-	            		Breeze newmob = (Breeze) MobspawnLoc(esl, ChatColor.DARK_BLUE+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, hel, null, null, null, null, null, EntityType.BREEZE);
+	            		Breeze newmob = (Breeze) MobspawnLoc(esl, ChatColor.DARK_BLUE+reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, hel, null, null, null, null, null, EntityType.BREEZE);
 	            		newmob.setGlowing(true);
 	            		newmob.getEquipment().setBootsDropChance(0);
 	            		newmob.getEquipment().setChestplateDropChance(0);
@@ -1533,8 +1533,8 @@ public class NethercoreRaids extends Summoned implements Listener {
 	    	    		newmob.setLootTable(null);
 	    	    		
 	    	    		
-	    	    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.4);
-	    	    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+	    	    		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.4);
+	    	    		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 	    	    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		newmob.setRemoveWhenFarAway(false);
 	    	    		raider.put(rn, newmob.getUniqueId());
@@ -1591,7 +1591,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 	            		ItemStack hel = new ItemStack(Material.VERDANT_FROGLIGHT);
 	            		hel.addUnsafeEnchantment(Enchantment.KNOCKBACK, 3);
 	            		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "혼령의군주":"LordOfPhantoms";
-	            		Illusioner newmob = (Illusioner) MobspawnLoc(esl, ChatColor.AQUA+reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, hel, null, null, null, main, null, EntityType.ILLUSIONER);
+	            		Illusioner newmob = (Illusioner) MobspawnLoc(esl, ChatColor.AQUA+reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, hel, null, null, null, main, null, EntityType.ILLUSIONER);
 	            		newmob.setGlowing(true);
 	            		newmob.getEquipment().setBootsDropChance(0);
 	            		newmob.getEquipment().setChestplateDropChance(0);
@@ -1644,8 +1644,8 @@ public class NethercoreRaids extends Summoned implements Listener {
 	    	    		newmob.setLootTable(null);
 	    	    		
 	    	    		
-	    	    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.4);
-	    	    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+	    	    		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.4);
+	    	    		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 	    	    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		newmob.setRemoveWhenFarAway(false);
 	    	    		raider.put(rn, newmob.getUniqueId());
@@ -1730,7 +1730,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 	        			boots.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
 	        			boots.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 	            		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "식인피글린":"CannibalPiglin";
-	            		Piglin newmob = (Piglin) MobspawnLoc(esl, ChatColor.RED + reg, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*1.2, bloodTrim(hel),
+	            		Piglin newmob = (Piglin) MobspawnLoc(esl, ChatColor.RED + reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, bloodTrim(hel),
 	            				bloodTrim(chest), bloodTrim(leg), bloodTrim(boots), main, off, EntityType.PIGLIN);
 	        			newmob.setGlowing(true);
 	        			newmob.setAdult();
@@ -1775,8 +1775,8 @@ public class NethercoreRaids extends Summoned implements Listener {
 	    	    		newmob.setConversionTime(-1);
 	    	    		
 	    	    		
-	    	    		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.4);
-	    	    		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+	    	    		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.4);
+	    	    		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 	    	    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		newmob.setRemoveWhenFarAway(false);
 	    	    		raider.put(rn, newmob.getUniqueId());

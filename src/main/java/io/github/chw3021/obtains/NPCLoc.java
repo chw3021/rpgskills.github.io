@@ -198,7 +198,7 @@ public class NPCLoc implements Serializable, Listener{
 	{
 		Inventory ci = d.getInventory();
 		Player p = (Player) d.getPlayer();
-		if(ci.getLocation().getBlock() != null && ci.getLocation().getBlock().hasMetadata("structureChest")) {
+		if(ci.getLocation() != null &&  ci.getLocation().getBlock() != null && ci.getLocation().getBlock().hasMetadata("structureChest")) {
 			saver(p,ci.getLocation(),ci.getContents());
 		}
 	}

@@ -117,12 +117,12 @@ public class ArmorSet implements Listener{
     	ItemStack c = chestplateh.get(p.getUniqueId());
     	ItemStack lg = leggingsh.get(p.getUniqueId());
     	ItemStack h = helmeth.get(p.getUniqueId());
-			p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(0);
-			p.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).setBaseValue(0);
-			p.getAttribute(Attribute.GENERIC_LUCK).setBaseValue(0);
-			p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(2);
-			p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(4);
-			p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.1);
+			p.getAttribute(Attribute.ARMOR).setBaseValue(0);
+			p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(0);
+			p.getAttribute(Attribute.LUCK).setBaseValue(0);
+			p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(2);
+			p.getAttribute(Attribute.ATTACK_SPEED).setBaseValue(4);
+			p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.1);
 			if(b != null) {
         	 ItemMeta bm = b.getItemMeta();
 				 if (bm != null && bm.hasLore()) {
@@ -174,12 +174,12 @@ public class ArmorSet implements Listener{
 				}
 				ci.setItemMeta(hm);
 				helmeth.remove(p.getUniqueId());
-				p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(0);
-				p.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).setBaseValue(0);
-				p.getAttribute(Attribute.GENERIC_LUCK).setBaseValue(0);
-				p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(2);
-				p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(4);
-				p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.1);
+				p.getAttribute(Attribute.ARMOR).setBaseValue(0);
+				p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(0);
+				p.getAttribute(Attribute.LUCK).setBaseValue(0);
+				p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(2);
+				p.getAttribute(Attribute.ATTACK_SPEED).setBaseValue(4);
+				p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.1);
 	       	 }
 	       	 if(leggingsh.containsValue(ci)) {
 					ItemMeta hm = ci.getItemMeta();
@@ -190,12 +190,12 @@ public class ArmorSet implements Listener{
 					}
 					ci.setItemMeta(hm);
 	       		leggingsh.remove(p.getUniqueId());
-				p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(0);
-				p.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).setBaseValue(0);
-				p.getAttribute(Attribute.GENERIC_LUCK).setBaseValue(0);
-				p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(2);
-				p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(4);
-				p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.1);
+				p.getAttribute(Attribute.ARMOR).setBaseValue(0);
+				p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(0);
+				p.getAttribute(Attribute.LUCK).setBaseValue(0);
+				p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(2);
+				p.getAttribute(Attribute.ATTACK_SPEED).setBaseValue(4);
+				p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.1);
 	       	 }
 	       	 if(chestplateh.containsValue(ci)) {
 					ItemMeta hm = ci.getItemMeta();
@@ -206,12 +206,12 @@ public class ArmorSet implements Listener{
 					}
 					ci.setItemMeta(hm);
 	       		chestplateh.remove(p.getUniqueId());
-				p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(0);
-				p.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).setBaseValue(0);
-				p.getAttribute(Attribute.GENERIC_LUCK).setBaseValue(0);
-				p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(2);
-				p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(4);
-				p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.1);
+				p.getAttribute(Attribute.ARMOR).setBaseValue(0);
+				p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(0);
+				p.getAttribute(Attribute.LUCK).setBaseValue(0);
+				p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(2);
+				p.getAttribute(Attribute.ATTACK_SPEED).setBaseValue(4);
+				p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.1);
 	       	 }
 	       	 if(bootsh.containsValue(ci)) {
 					ItemMeta hm = ci.getItemMeta();
@@ -222,23 +222,23 @@ public class ArmorSet implements Listener{
 					}
 					ci.setItemMeta(hm);
 				bootsh.remove(p.getUniqueId());
-				p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(0);
-				p.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).setBaseValue(0);
-				p.getAttribute(Attribute.GENERIC_LUCK).setBaseValue(0);
-				p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(2);
-				p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(4);
-				p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.1);
+				p.getAttribute(Attribute.ARMOR).setBaseValue(0);
+				p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(0);
+				p.getAttribute(Attribute.LUCK).setBaseValue(0);
+				p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(2);
+				p.getAttribute(Attribute.ATTACK_SPEED).setBaseValue(4);
+				p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.1);
 	       	 }
 	 
 	}
 
 	private static void Setter(Player p, Integer boots, ItemStack b, ItemStack c, ItemStack lg, ItemStack h) {
-		p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(0);
-		p.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).setBaseValue(0);
-		p.getAttribute(Attribute.GENERIC_LUCK).setBaseValue(0);
-		p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(2);
-		p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(4);
-		p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.1);
+		p.getAttribute(Attribute.ARMOR).setBaseValue(0);
+		p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(0);
+		p.getAttribute(Attribute.LUCK).setBaseValue(0);
+		p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(2);
+		p.getAttribute(Attribute.ATTACK_SPEED).setBaseValue(4);
+		p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.1);
 	   	 ItemMeta bm = b.getItemMeta();
 	   	 ItemMeta cm = c.getItemMeta();
 	   	 ItemMeta lm = lg.getItemMeta();
@@ -325,11 +325,11 @@ public class ArmorSet implements Listener{
 				lore.add(ChatColor.GREEN + "<Set Effect>: +45 Luck");
 				hm.setLore(lore);
 			}
-				p.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
-				p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(p.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue()+5);
-				p.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).setBaseValue(p.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).getBaseValue()+5);
-				p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue()+12);
-				p.getAttribute(Attribute.GENERIC_LUCK).setBaseValue(p.getAttribute(Attribute.GENERIC_LUCK).getBaseValue()+45);
+				p.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
+				p.getAttribute(Attribute.ARMOR).setBaseValue(p.getAttribute(Attribute.ARMOR).getBaseValue()+5);
+				p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(p.getAttribute(Attribute.ARMOR_TOUGHNESS).getBaseValue()+5);
+				p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.ATTACK_DAMAGE).getBaseValue()+12);
+				p.getAttribute(Attribute.LUCK).setBaseValue(p.getAttribute(Attribute.LUCK).getBaseValue()+45);
 		 }
 		 if(boots == 6) {
 				if (bm.hasLore()) {
@@ -436,11 +436,11 @@ public class ArmorSet implements Listener{
 				lore.add(ChatColor.AQUA + "<Set Effect>: +20 Luck");
 				hm.setLore(lore);
 			}
-				p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(p.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue()+5);
-				p.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).setBaseValue(p.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).getBaseValue()+5);
-				p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue()*1.35);
-				p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue()+20);
-				p.getAttribute(Attribute.GENERIC_LUCK).setBaseValue(p.getAttribute(Attribute.GENERIC_LUCK).getBaseValue()+20);
+				p.getAttribute(Attribute.ARMOR).setBaseValue(p.getAttribute(Attribute.ARMOR).getBaseValue()+5);
+				p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(p.getAttribute(Attribute.ARMOR_TOUGHNESS).getBaseValue()+5);
+				p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(p.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue()*1.35);
+				p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.ATTACK_DAMAGE).getBaseValue()+20);
+				p.getAttribute(Attribute.LUCK).setBaseValue(p.getAttribute(Attribute.LUCK).getBaseValue()+20);
 		 }
 		 if(boots == 7) {
 				if (bm.hasLore()) {
@@ -531,11 +531,11 @@ public class ArmorSet implements Listener{
 				lore.add(ChatColor.BLUE + "<Set Effect>: +20 Luck");
 				hm.setLore(lore);
 			}
-				p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(p.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue()+5);
-				p.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).setBaseValue(p.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).getBaseValue()+5);
-				p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue()+14);
-				p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue()*1.15);
-				p.getAttribute(Attribute.GENERIC_LUCK).setBaseValue(p.getAttribute(Attribute.GENERIC_LUCK).getBaseValue()+20);
+				p.getAttribute(Attribute.ARMOR).setBaseValue(p.getAttribute(Attribute.ARMOR).getBaseValue()+5);
+				p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(p.getAttribute(Attribute.ARMOR_TOUGHNESS).getBaseValue()+5);
+				p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.ATTACK_DAMAGE).getBaseValue()+14);
+				p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(p.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue()*1.15);
+				p.getAttribute(Attribute.LUCK).setBaseValue(p.getAttribute(Attribute.LUCK).getBaseValue()+20);
 		 }
 		 if(boots == 8) {
 				if (bm.hasLore()) {
@@ -642,11 +642,11 @@ public class ArmorSet implements Listener{
 				lore.add(ChatColor.DARK_GREEN + "<Set Effect>: +20 Luck");
 				hm.setLore(lore);
 			}
-				p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(p.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue()+6);
-				p.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).setBaseValue(p.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).getBaseValue()+6);
-				p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue()*1.35);
-				p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue()+16);
-				p.getAttribute(Attribute.GENERIC_LUCK).setBaseValue(p.getAttribute(Attribute.GENERIC_LUCK).getBaseValue()+20);
+				p.getAttribute(Attribute.ARMOR).setBaseValue(p.getAttribute(Attribute.ARMOR).getBaseValue()+6);
+				p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(p.getAttribute(Attribute.ARMOR_TOUGHNESS).getBaseValue()+6);
+				p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(p.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue()*1.35);
+				p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.ATTACK_DAMAGE).getBaseValue()+16);
+				p.getAttribute(Attribute.LUCK).setBaseValue(p.getAttribute(Attribute.LUCK).getBaseValue()+20);
 		 }
 		 if(boots == 9) {
 				if (bm.hasLore()) {
@@ -729,12 +729,12 @@ public class ArmorSet implements Listener{
 				lore.add(ChatColor.LIGHT_PURPLE + "<Set Effect>: +90 Luck");
 				hm.setLore(lore);
 			}
-				p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(p.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue()+5);
-				p.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).setBaseValue(p.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).getBaseValue()+5);
-				p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue()*1.40);
-				p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).getBaseValue()*5);
-				p.getAttribute(Attribute.GENERIC_LUCK).setBaseValue(p.getAttribute(Attribute.GENERIC_LUCK).getBaseValue()+90);
-				p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue()+13);
+				p.getAttribute(Attribute.ARMOR).setBaseValue(p.getAttribute(Attribute.ARMOR).getBaseValue()+5);
+				p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(p.getAttribute(Attribute.ARMOR_TOUGHNESS).getBaseValue()+5);
+				p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(p.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue()*1.40);
+				p.getAttribute(Attribute.ATTACK_SPEED).setBaseValue(p.getAttribute(Attribute.ATTACK_SPEED).getBaseValue()*5);
+				p.getAttribute(Attribute.LUCK).setBaseValue(p.getAttribute(Attribute.LUCK).getBaseValue()+90);
+				p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.ATTACK_DAMAGE).getBaseValue()+13);
 		 }
 		 if(boots == 10) {
 				if (bm.hasLore()) {
@@ -817,10 +817,10 @@ public class ArmorSet implements Listener{
 				lore.add(ChatColor.RED + "<Set Effect>: Immune to Fire");
 				hm.setLore(lore);
 			}
-				p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(p.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue()+5);
-				p.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).setBaseValue(p.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).getBaseValue()+5);
-				p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue()+32);
-				p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue()*1.2);
+				p.getAttribute(Attribute.ARMOR).setBaseValue(p.getAttribute(Attribute.ARMOR).getBaseValue()+5);
+				p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(p.getAttribute(Attribute.ARMOR_TOUGHNESS).getBaseValue()+5);
+				p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.ATTACK_DAMAGE).getBaseValue()+32);
+				p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(p.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue()*1.2);
 		 }
 		 b.setItemMeta(bm);
 		 c.setItemMeta(cm);

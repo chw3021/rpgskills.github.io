@@ -28,16 +28,16 @@ public class Axe extends Weapons implements Listener {
 				ItemStack r = i0.clone();
 				//r.addUnsafeEnchantments(i0.getEnchantments());
 				ItemMeta rm = r.getItemMeta();
-				rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+				rm.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
 				rm.setCustomModelData(cmdt + 4000);
-				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+				rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 						new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 30,
 								Operation.ADD_NUMBER, EquipmentSlot.HAND));
 	
-				rm.addAttributeModifier(Attribute.GENERIC_LUCK,
+				rm.addAttributeModifier(Attribute.LUCK,
 						new AttributeModifier(UUID.randomUUID(), "generic.luck", 30,
 								Operation.ADD_NUMBER, EquipmentSlot.HAND));
-				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+				rm.addAttributeModifier(Attribute.ATTACK_SPEED,
 						new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 1.2,
 								Operation.ADD_NUMBER, EquipmentSlot.HAND));
 				if (cmdt == 14) {
@@ -140,13 +140,13 @@ public class Axe extends Weapons implements Listener {
 				ItemStack r = i0.clone();
 				//r.addUnsafeEnchantments(i0.getEnchantments());
 				ItemMeta rm = r.getItemMeta();
-				rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+				rm.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
 				if (cmdt == 12) {
 					rm.setCustomModelData(cmdt + 4000);
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 30,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+					rm.addAttributeModifier(Attribute.ATTACK_SPEED,
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 1.2,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -168,13 +168,13 @@ public class Axe extends Weapons implements Listener {
 				ItemStack r = i0.clone();
 				//r.addUnsafeEnchantments(i0.getEnchantments());
 				ItemMeta rm = r.getItemMeta();
-				rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+				rm.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
 				if (cmdt == 14) {
 					rm.setCustomModelData(1 + 4000+100);
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 12,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+					rm.addAttributeModifier(Attribute.ATTACK_SPEED,
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 1.2,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -197,12 +197,12 @@ public class Axe extends Weapons implements Listener {
 				////r.addUnsafeEnchantments(i0.getEnchantments());
 				ItemMeta rm = r.getItemMeta();
 				rm.setCustomModelData(cmdt -3 + 4000 + 100);
-				rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+				rm.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
 				if (cmdt == 5) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 14,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+					rm.addAttributeModifier(Attribute.ATTACK_SPEED,
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 1.2,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -217,10 +217,10 @@ public class Axe extends Weapons implements Listener {
 					return r;
 				}
 				else if (cmdt == 6) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 16,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+					rm.addAttributeModifier(Attribute.ATTACK_SPEED,
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 1.2,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -235,10 +235,10 @@ public class Axe extends Weapons implements Listener {
 					return r;
 				}
 				else if (cmdt == 7) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 18,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+					rm.addAttributeModifier(Attribute.ATTACK_SPEED,
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 1.2,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -253,10 +253,10 @@ public class Axe extends Weapons implements Listener {
 					return r;
 				}
 				else if (cmdt == 8) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 20,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+					rm.addAttributeModifier(Attribute.ATTACK_SPEED,
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 1.2,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -271,10 +271,10 @@ public class Axe extends Weapons implements Listener {
 					return r;
 				}
 				else if (cmdt == 9) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 22,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+					rm.addAttributeModifier(Attribute.ATTACK_SPEED,
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 1.2,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -289,10 +289,10 @@ public class Axe extends Weapons implements Listener {
 					return r;
 				}
 				else if (cmdt == 10) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 24,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+					rm.addAttributeModifier(Attribute.ATTACK_SPEED,
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 1.2,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -307,10 +307,10 @@ public class Axe extends Weapons implements Listener {
 					return r;
 				}
 				else if (cmdt == 11) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 26,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+					rm.addAttributeModifier(Attribute.ATTACK_SPEED,
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 1.2,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -392,9 +392,9 @@ public class Axe extends Weapons implements Listener {
 				ItemMeta rm = r.getItemMeta();
 				rm.setCustomModelData(cmdt + 4000);
 				if (cmdt == 5 && (inv.getItem(0).getType() == Material.DIAMOND_AXE || (inv.getItem(0).getType() == Material.NETHERITE_AXE) && !inv.getItem(0).getItemMeta().hasCustomModelData())) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
 							"generic.attackDamage", 20, Operation.ADD_NUMBER, EquipmentSlot.HAND));
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+					rm.addAttributeModifier(Attribute.ATTACK_SPEED,
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 1.2,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -409,9 +409,9 @@ public class Axe extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 6 && ((inv.getItem(0).getItemMeta().hasCustomModelData() && inv.getItem(0).getItemMeta().getCustomModelData() == cmdt + 4000 -1) || (inv.getItem(0).getType() == Material.NETHERITE_AXE) && !inv.getItem(0).getItemMeta().hasCustomModelData())) {
 
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
 							"generic.attackDamage", 26, Operation.ADD_NUMBER, EquipmentSlot.HAND));
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+					rm.addAttributeModifier(Attribute.ATTACK_SPEED,
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 1.2,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -426,9 +426,9 @@ public class Axe extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 7 && ((inv.getItem(0).getItemMeta().hasCustomModelData() && inv.getItem(0).getItemMeta().getCustomModelData() == cmdt + 4000 -1) || (inv.getItem(0).getType() == Material.NETHERITE_AXE) && !inv.getItem(0).getItemMeta().hasCustomModelData())) {
 
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
 							"generic.attackDamage", 33, Operation.ADD_NUMBER, EquipmentSlot.HAND));
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+					rm.addAttributeModifier(Attribute.ATTACK_SPEED,
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 1.2,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -443,9 +443,9 @@ public class Axe extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 8 && ((inv.getItem(0).getItemMeta().hasCustomModelData() && inv.getItem(0).getItemMeta().getCustomModelData() == cmdt + 4000 -1) || (inv.getItem(0).getType() == Material.NETHERITE_AXE) && !inv.getItem(0).getItemMeta().hasCustomModelData())) {
 
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(UUID.randomUUID(),
 							"generic.attackDamage", 40, Operation.ADD_NUMBER, EquipmentSlot.HAND));
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+					rm.addAttributeModifier(Attribute.ATTACK_SPEED,
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 1.2,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -460,14 +460,14 @@ public class Axe extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 9 && ((inv.getItem(0).getItemMeta().hasCustomModelData() && inv.getItem(0).getItemMeta().getCustomModelData() == cmdt + 4000 -1) || (inv.getItem(0).getType() == Material.NETHERITE_AXE) && !inv.getItem(0).getItemMeta().hasCustomModelData())) {
 
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 51,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 
-					rm.addAttributeModifier(Attribute.GENERIC_LUCK,
+					rm.addAttributeModifier(Attribute.LUCK,
 							new AttributeModifier(UUID.randomUUID(), "generic.luck", 35,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+					rm.addAttributeModifier(Attribute.ATTACK_SPEED,
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 3,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -482,10 +482,10 @@ public class Axe extends Weapons implements Listener {
 					return r;
 				} else if (cmdt == 10 && ((inv.getItem(0).getItemMeta().hasCustomModelData() && inv.getItem(0).getItemMeta().getCustomModelData() == cmdt + 4000 -1) || (inv.getItem(0).getType() == Material.NETHERITE_AXE) && !inv.getItem(0).getItemMeta().hasCustomModelData())) {
 
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.attackDamage", 60,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED,
+					rm.addAttributeModifier(Attribute.ATTACK_SPEED,
 							new AttributeModifier(UUID.randomUUID(), "generic.attack_speed", 1.2,
 									Operation.ADD_NUMBER, EquipmentSlot.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {

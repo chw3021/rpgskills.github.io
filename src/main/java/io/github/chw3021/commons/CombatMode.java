@@ -255,6 +255,7 @@ public class CombatMode implements Serializable{
 		final ItemStack[] fc = p.getInventory().getContents().clone();
 
 		if (weaponcheck(p, is) && p.isSneaking() && !p.hasCooldown(Material.WITHER_SKELETON_SPAWN_EGG)) {
+			ClassData.setMaxHealth(p);
 			ev.setCancelled(true);
 			if (mode.containsKey(p.getUniqueId())) {
 				p.setCooldown(Material.WITHER_SKELETON_SPAWN_EGG, 1);

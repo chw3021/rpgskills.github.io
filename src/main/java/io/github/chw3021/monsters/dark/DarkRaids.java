@@ -158,7 +158,7 @@ public class DarkRaids extends Summoned {
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.3);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("NightArcher", new FixedMetadataValue(RMain.getInstance(), true));
 		
@@ -209,8 +209,8 @@ public class DarkRaids extends Summoned {
 		
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
-		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.3);
+		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		
@@ -262,7 +262,7 @@ public class DarkRaids extends Summoned {
 
 		newmob.setMetadata("vexLocked", new FixedMetadataValue(RMain.getInstance(), rn));
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.3);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		
@@ -331,7 +331,7 @@ public class DarkRaids extends Summoned {
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
 		
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.35);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.35);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		newmob.setLootTable(null);
@@ -359,8 +359,8 @@ public class DarkRaids extends Summoned {
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
-		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.3);
+		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		
@@ -438,9 +438,9 @@ public class DarkRaids extends Summoned {
 		newmob.setConversionTime(-1);
 		newmob.setLootTable(null);
 		newmob.setGlowing(true);
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
-		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
-		newmob.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(4);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.36);
+		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
+		newmob.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(4);
 		
 		newmob.setMetadata(META+"boss", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), rn));

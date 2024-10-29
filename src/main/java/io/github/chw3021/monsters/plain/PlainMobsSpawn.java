@@ -23,7 +23,7 @@ public class PlainMobsSpawn extends Mobs implements Listener {
 		return instance;
 	}
 	final private LivingEntity Default(LivingEntity le) {
-		LivingEntity newmob = Mobspawn(le, trans(le), le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue(),
+		LivingEntity newmob = Mobspawn(le, trans(le), le.getAttribute(Attribute.MAX_HEALTH).getValue(),
 				le.getEquipment().getHelmet(), le.getEquipment().getChestplate(),
 				le.getEquipment().getLeggings(), le.getEquipment().getBoots(),
 				le.getEquipment().getItemInMainHand(), le.getEquipment().getItemInOffHand(),

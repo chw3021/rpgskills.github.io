@@ -158,8 +158,8 @@ public class PiglinSkills extends Summoned{
 			if(ordeal.containsKey(p.getUniqueId())) {
 				return;
 			}
-			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
+			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
+				p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
                 d.setCancelled(true);
                 ordealable.put(p.getUniqueId(), true);
 				return;
@@ -480,8 +480,8 @@ public class PiglinSkills extends Summoned{
 			if(p.hasMetadata("failed") || !furable.containsKey(p.getUniqueId())) {
 				return;
 			}
-			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
+			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
+				p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
 	            d.setCancelled(true);
 	            ordealable.put(p.getUniqueId(), true);
 				return;
@@ -575,8 +575,8 @@ public class PiglinSkills extends Summoned{
 			if(p.hasMetadata("failed") || !porkable.containsKey(p.getUniqueId())) {
 				return;
 			}
-			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
+			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
+				p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
                 d.setCancelled(true);
                 ordealable.put(p.getUniqueId(), true);
 				return;
@@ -612,8 +612,8 @@ public class PiglinSkills extends Summoned{
 		{
 			final LivingEntity p = (LivingEntity)d.getEntity();
 
-			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
+			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
+				p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
                 d.setCancelled(true);
                 ordealable.put(p.getUniqueId(), true);
 				return;
@@ -787,8 +787,8 @@ public class PiglinSkills extends Summoned{
 			if(ordeal.containsKey(p.getUniqueId())) {
 				return;
 			}
-			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
+			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
+				p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
                 d.setCancelled(true);
                 ordealable.put(p.getUniqueId(), true);
 				return;
@@ -998,7 +998,7 @@ public class PiglinSkills extends Summoned{
         }
         ordeal.put(p.getUniqueId(), true);
         Location rl = NethercoreRaids.getraidloc(p).clone();
-		p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
+		p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
         d.setCancelled(true);
     	p.teleport(rl.clone().add(0, 1, 0));
         Holding.holding(null, p, 450l);
@@ -1076,7 +1076,7 @@ public class PiglinSkills extends Summoned{
 		if(d.getEntity().hasMetadata("volcanicboss") && d.getEntity().hasMetadata("ruined")&& !d.getEntity().hasMetadata("failed")) 
 		{
 			LivingEntity p = (LivingEntity)d.getEntity();
-			if(!(p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2)|| !ordealable.containsKey(p.getUniqueId())) {
+			if(!(p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2)|| !ordealable.containsKey(p.getUniqueId())) {
 				return;
 			}
 				if(rb6cooldown.containsKey(p.getUniqueId()))

@@ -153,7 +153,7 @@ public class Swordskills extends Pak implements Listener, Serializable {
 		{
 			if(p.getInventory().getItemInMainHand().getType().name().contains("SWORD") && !(p.isSneaking()))
 			{
-				double sec =5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+				double sec =5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 				ev.setCancelled(true);
 
 				final Location l = gettargetblock(p,4);
@@ -334,7 +334,7 @@ public class Swordskills extends Pak implements Listener, Serializable {
 					if(p.getInventory().getItemInMainHand().getType().name().contains("SWORD"))
 					{
 
-						double sec =5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+						double sec =5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 						SkillBuilder bd = new SkillBuilder()
 								.player(p)
 								.cooldown(sec)
@@ -463,7 +463,7 @@ public class Swordskills extends Pak implements Listener, Serializable {
 				if(p.getInventory().getItemInMainHand().getType().name().contains("SWORD") )
 				{
 
-					double sec =5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+					double sec =5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 					ev.setCancelled(true);
 					if(sdnc.containsKey(p.getUniqueId())|| sdncu.containsKey(p.getUniqueId())) {
@@ -868,7 +868,7 @@ public class Swordskills extends Pak implements Listener, Serializable {
 				if(diva.containsKey(p.getUniqueId())|| divau.containsKey(p.getUniqueId())|| falls.containsKey(p.getUniqueId())) {
 					return;
 				}
-				double sec =6*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+				double sec =6*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
 						.cooldown(sec)
@@ -1398,7 +1398,7 @@ public class Swordskills extends Pak implements Listener, Serializable {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec =3.5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =3.5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 
 
@@ -1527,7 +1527,7 @@ public class Swordskills extends Pak implements Listener, Serializable {
 			{
 				if((ac == Action.LEFT_CLICK_AIR || ac== Action.LEFT_CLICK_BLOCK))
 				{
-					double sec =3*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+					double sec =3*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 					ev.setCancelled(true);
 					SkillBuilder bd = new SkillBuilder()
 							.player(p)
@@ -2250,7 +2250,7 @@ public class Swordskills extends Pak implements Listener, Serializable {
 			if(ClassData.pc.get(p.getUniqueId()) == 0 && d.getCause() != DamageCause.FLY_INTO_WALL&& d.getCause() != DamageCause.VOID && ssd.Guard.getOrDefault(p.getUniqueId(), 0)>=1) {
 				if(p.getInventory().getItemInMainHand().getType().name().contains("SWORD")&& (p.isSneaking()))
 				{
-					double sec =5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+					double sec =5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 					guard.putIfAbsent(p.getUniqueId(), 7*(Proficiency.getpro(p)+1));
 					if(guard.containsKey(p.getUniqueId()) && guard.get(p.getUniqueId()) >0) {
 						d.setDamage(d.getDamage()*(0.2 - ssd.Guard.get(p.getUniqueId())*0.016));

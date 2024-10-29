@@ -439,7 +439,7 @@ public class Summoned extends Mobs implements Serializable{
 	            {
 	
 					if(Holding.ale(newmob)!=null) {
-	                	raidbar.get(rn, META).setProgress((double)Holding.ale(newmob).getHealth()/Holding.ale(newmob).getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+	                	raidbar.get(rn, META).setProgress((double)Holding.ale(newmob).getHealth()/Holding.ale(newmob).getAttribute(Attribute.MAX_HEALTH).getValue());
 	                	raidbar.get(rn, META).setTitle(Holding.ale(newmob).getName());
 	    				raidbar.get(rn, META).addPlayer(p);
 					}
@@ -454,7 +454,7 @@ public class Summoned extends Mobs implements Serializable{
 	            public void run() 
 	            {
 					if(Holding.ale(newmob)!=null) {
-	                	raidbar.get(rn, META).setProgress((double)Holding.ale(newmob).getHealth()/Holding.ale(newmob).getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+	                	raidbar.get(rn, META).setProgress((double)Holding.ale(newmob).getHealth()/Holding.ale(newmob).getAttribute(Attribute.MAX_HEALTH).getValue());
 	                	raidbar.get(rn, META).setTitle(Holding.ale(newmob).getName());
 	            		par.forEach(p -> {
 	        				raidbar.get(rn, META).addPlayer(p);

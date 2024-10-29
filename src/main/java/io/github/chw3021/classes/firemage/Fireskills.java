@@ -180,7 +180,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
 		if( p.getInventory().getItemInMainHand().getType()==Material.BLAZE_ROD && !p.isSneaking()) 
 		{
 			Action ac = ev.getAction();
-			double sec =6*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec =6*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 	        
 			
 			
@@ -374,7 +374,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
 		{
 			final Location tl = gettargetblock(p,5);
 			Action ac = ev.getAction();
-			double sec =6*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec =6*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 	        
 			
 			
@@ -671,7 +671,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
 		if(ClassData.pc.get(p.getUniqueId()) == 12 && fsd.AliveFlame.getOrDefault(p.getUniqueId(),0)>=1) {
 		if( p.getInventory().getItemInMainHand().getType()==Material.BLAZE_ROD && p.isSneaking())
 		{
-			double sec =6*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec =6*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 
 			
@@ -1000,7 +1000,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
 		if(ClassData.pc.get(p.getUniqueId()) == 12 && fsd.Breath.getOrDefault(p.getUniqueId(),0)>=1) {
 		if( p.getInventory().getItemInMainHand().getType()==Material.BLAZE_ROD && !p.isSneaking())
 		{
-			double sec =7*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec =7*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 		    
 			
 			
@@ -1301,7 +1301,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
 		if( p.getInventory().getItemInMainHand().getType()==Material.BLAZE_ROD && !p.isSneaking()) 
 		{
 			Action ac = ev.getAction();
-			double sec =2*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec =2*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 	        
 			
 			
@@ -1542,7 +1542,7 @@ public class Fireskills extends Pak implements Serializable, Listener {
 		if(d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity&& !d.isCancelled()) 
 		{
 		Player p = (Player)d.getDamager();
-		double sec =4*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =4*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 		if( p.getInventory().getItemInMainHand().getType()==Material.BLAZE_ROD && (p.isSneaking()) && !(p.hasCooldown(Material.YELLOW_TERRACOTTA)))
 		{
 		LivingEntity le = (LivingEntity)d.getEntity();

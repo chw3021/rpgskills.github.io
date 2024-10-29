@@ -177,7 +177,7 @@ public class Illskills extends Pak implements Serializable {
 	public void JackoLantern(PlayerSwapHandItemsEvent ev)
 	{
 		Player p = ev.getPlayer();
-		double sec =5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 
 
@@ -546,7 +546,7 @@ public class Illskills extends Pak implements Serializable {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec = 13*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec = 13*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 		if(finstate.containsKey(p.getUniqueId())) {
 			sec = sec*0.2;
@@ -689,7 +689,7 @@ public class Illskills extends Pak implements Serializable {
 	public void FakeDoll(PlayerSwapHandItemsEvent ev)
 	{
 		Player p = ev.getPlayer();
-		double sec =5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 
 		if(ClassData.pc.get(p.getUniqueId()) == 11 && isd.FakeDoll.getOrDefault(p.getUniqueId(),0)>=1) {
@@ -822,7 +822,7 @@ public class Illskills extends Pak implements Serializable {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec = 10*((1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d));
+		double sec = 10*((1-p.getAttribute(Attribute.LUCK).getValue()/1024d));
 
 
 
@@ -1127,7 +1127,7 @@ public class Illskills extends Pak implements Serializable {
 		{
 			Player p = (Player)d.getDamager();
 			LivingEntity le = (LivingEntity)d.getEntity();
-			double sec =2*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec =2*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 			Location l = p.getLocation();
 			Location el =le.getLocation();
 
@@ -1180,7 +1180,7 @@ public class Illskills extends Pak implements Serializable {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec =5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 
 

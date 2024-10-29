@@ -174,7 +174,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec =2*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =2*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 
 
@@ -282,7 +282,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 
 
 		if(ClassData.pc.get(p.getUniqueId()) == 4 && ssd.ArmourPiercingArrow.getOrDefault(p.getUniqueId(), 0)>=1) {
-			double sec = 6*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec = 6*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 			if(((p.isSneaking()) && !(p.isSprinting())))
 			{
 				if(p.getInventory().getItemInMainHand().getType() == Material.CROSSBOW)
@@ -531,7 +531,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 				}
 				if(e instanceof LivingEntity && e!=p && !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
 					LivingEntity le = (LivingEntity)e;
-					atk1(1.3*(1+ssd.ArmourPiercingArrow.get(p.getUniqueId())*0.1)*(1+le.getAttribute(Attribute.GENERIC_ARMOR).getValue()*0.01), p, le);
+					atk1(1.3*(1+ssd.ArmourPiercingArrow.get(p.getUniqueId())*0.1)*(1+le.getAttribute(Attribute.ARMOR).getValue()*0.01), p, le);
 					Holding.holding(p, le, 30l);
 				}
 			}
@@ -550,7 +550,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 		if(ClassData.pc.get(p.getUniqueId()) == 4 && ssd.FlashBomb.getOrDefault(p.getUniqueId(), 0)>=1) {
 			if(!p.isOnGround() && !p.isSneaking())
 			{
-				double sec =10*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+				double sec =10*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 				if(p.getInventory().getItemInMainHand().getType() == Material.CROSSBOW)
 				{
 					SkillBuilder bd = new SkillBuilder()
@@ -908,7 +908,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 
 				if(p.getInventory().getItemInMainHand().getType() == Material.CROSSBOW)
 				{
-					double sec = 35*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+					double sec = 35*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 					ev.setCancelled(true);
 					SkillBuilder bd = new SkillBuilder()
 							.player(p)
@@ -1840,7 +1840,7 @@ public class Snipskills extends Pak implements Serializable, Listener {
 				if(ev.getHitEntity() instanceof Wither) {
 					Wither e =(Wither) ev.getHitEntity();
 					Arrow ar = (Arrow) ev.getEntity();
-					if(e.getHealth() <= e.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()/2)
+					if(e.getHealth() <= e.getAttribute(Attribute.MAX_HEALTH).getValue()/2)
 					{
 
 						if(Math.abs(ar.getLocation().getY() - (e.getEyeLocation().getY())) <= (0.5+ssd.HeadShot.get(p.getUniqueId())*0.01)|| Proficiency.getpro(p)>=2) {

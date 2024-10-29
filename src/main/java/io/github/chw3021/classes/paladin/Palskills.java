@@ -200,7 +200,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 3 && psd.Restraint.getOrDefault(p.getUniqueId(), 0)>=1) {
-			double sec =8*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec =8*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 			if(weaponCheck(p) && p.isBlocking() && p.isSneaking())
 			{
 				
@@ -489,7 +489,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 	public void Pray(PlayerSwapHandItemsEvent ev) 
 	{
 		Player p = ev.getPlayer();
-		double sec = 10*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);;
+		double sec = 10*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);;
 	    
 		
 		
@@ -563,7 +563,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 	public void Encourage(PlayerSwapHandItemsEvent ev) 
 	{
 		Player p = ev.getPlayer();
-		double sec = 16*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);;
+		double sec = 16*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);;
 	    
 		
 		
@@ -898,7 +898,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec = 10*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);;
+		double sec = 10*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);;
         
 		
 		
@@ -1331,7 +1331,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 	public void Thrust(PlayerSwapHandItemsEvent ev) 
 	{
 		Player p = ev.getPlayer();
-		double sec =4*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =4*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 	    
 		
 		
@@ -1561,7 +1561,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 		
 		
 			if(ClassData.pc.get(p.getUniqueId()) == 3 && psd.Punish.getOrDefault(p.getUniqueId(), 0)>=1 && (!griffon.containsKey(p.getUniqueId()) || (griffon.containsKey(p.getUniqueId()) && p.getVehicle() != griffon.get(p.getUniqueId())))) {				
-				double sec =5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+				double sec =5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 				if(p.getAttackCooldown()==1) 
 				{
 					
@@ -1596,7 +1596,7 @@ public class Palskills extends Pak implements Serializable, Listener {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec = 5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);;
+		double sec = 5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);;
         
 		
 		
@@ -1868,7 +1868,7 @@ public class Palskills extends Pak implements Serializable, Listener {
     	         				{	
 
 		    						p.setCooldown(Material.GLISTERING_MELON_SLICE, 1);
-		    						atk0(0d, le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*(0.01), p, le);
+		    						atk0(0d, le.getAttribute(Attribute.MAX_HEALTH).getValue()*(0.01), p, le);
     				            }
         	            }, 3);
 					}

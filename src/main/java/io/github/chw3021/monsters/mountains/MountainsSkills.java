@@ -630,8 +630,8 @@ public class MountainsSkills extends Summoned implements Listener{
 			if(ordeal.containsKey(p.getUniqueId()) || p.hasMetadata("failed")) {
 				return;
 			}
-			if((p.hasMetadata("ruined") && p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
+			if((p.hasMetadata("ruined") && p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
+				p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
                 d.setCancelled(true);
                 ordealable.put(p.getUniqueId(), true);
 				return;
@@ -946,7 +946,7 @@ public class MountainsSkills extends Summoned implements Listener{
         	ordt.removeAll(rn);
         }
         d.setCancelled(true);
-		p.setHealth(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*0.2);
+		p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
         p.teleport(rl.clone());
         Holding.holding(null, p, 1500l);
         Holding.invur(p, 100l);

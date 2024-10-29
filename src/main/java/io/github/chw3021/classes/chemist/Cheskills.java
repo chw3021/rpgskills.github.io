@@ -184,7 +184,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 		Player p = ev.getPlayer();
 		if(ClassData.pc.get(p.getUniqueId()) == 15&& csd.SlimeBall.getOrDefault(p.getUniqueId(), 0)>=1 && p.isSneaking())
 		{
-			double sec =8*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec =8*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 			if((p.getInventory().getItemInMainHand().getType().name().contains("PICKAXE")))
 			{
 				ev.setCancelled(true);
@@ -527,7 +527,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 		if(ClassData.pc.get(p.getUniqueId()) == 15&& csd.AcidCloud.getOrDefault(p.getUniqueId(), 0)>=1 && !p.isSneaking()) {
 		if((p.getInventory().getItemInMainHand().getType().name().contains("PICKAXE")))
 		{
-			double sec =8*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec =8*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 	
 	        
 			
@@ -878,7 +878,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 		if(p.getInventory().getItemInMainHand().getType().name().contains("PICKAXE"))
 		{
 			Action ac = ev.getAction();
-			double sec =11*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec =11*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 	
 	        
 			
@@ -1225,7 +1225,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 		if(p.getInventory().getItemInMainHand().getType().name().contains("PICKAXE"))
 		{
 			Action ac = ev.getAction();
-			double sec =2*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec =2*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 	
 	        
 			
@@ -1349,7 +1349,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 		Player p = ev.getPlayer();
 		if(ClassData.pc.get(p.getUniqueId()) == 15&& csd.MolotovCocktail.getOrDefault(p.getUniqueId(), 0)>=1 && p.getInventory().getItemInMainHand().getType().name().contains("PICKAXE")) {
 		Action ac = ev.getAction();
-		double sec =6*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =6*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
         
 		
@@ -1832,7 +1832,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 			if(ClassData.pc.get(p.getUniqueId()) == 15) {
 				if(p.getInventory().getItemInMainHand().getType().name().contains("PICKAXE")&& !p.getInventory().getItemInOffHand().getType().name().contains("NUGGET")&& !(p.getInventory().getItemInOffHand().getType()==Material.TRIDENT)&& !(p.getInventory().getItemInOffHand().getType()==Material.SHIELD))
 				{
-						player_damage.put(p.getName(), p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue() + p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.5 + p.getLevel()/10);
+						player_damage.put(p.getName(), p.getAttribute(Attribute.ATTACK_DAMAGE).getValue() + p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.5 + p.getLevel()/10);
 						
 						if (p.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE))
 						{
@@ -1862,7 +1862,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 		if(ClassData.pc.get(p.getUniqueId()) == 15) {
 			if(p.getInventory().getItemInMainHand().getType().name().contains("PICKAXE")&& !p.getInventory().getItemInOffHand().getType().name().contains("NUGGET")&& !(p.getInventory().getItemInOffHand().getType()==Material.TRIDENT)&& !(p.getInventory().getItemInOffHand().getType()==Material.SHIELD))
 			{
-					player_damage.put(p.getName(), p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue() + p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.5 + p.getLevel()/10);
+					player_damage.put(p.getName(), p.getAttribute(Attribute.ATTACK_DAMAGE).getValue() + p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.5 + p.getLevel()/10);
 					
 					if (e.getType() == EntityType.ZOMBIE || e.getType() == EntityType.ZOMBIE_HORSE || e.getType() ==EntityType.ZOMBIE_VILLAGER || e.getType() == EntityType.ZOMBIFIED_PIGLIN|| e.getType() == EntityType.SKELETON || e.getType() == EntityType.SKELETON_HORSE || e.getType() == EntityType.WITHER_SKELETON || e.getType() == EntityType.HUSK || e.getType() == EntityType.WITHER || e.getType() == EntityType.STRAY || e.getType() == EntityType.PHANTOM || e.getType() == EntityType.DROWNED)
 					{
@@ -1897,7 +1897,7 @@ public class Cheskills extends Pak implements Listener, Serializable {
 				if(ClassData.pc.get(p.getUniqueId()) == 15) {
 					if(p.getInventory().getItemInMainHand().getType().name().contains("PICKAXE")&& !p.getInventory().getItemInOffHand().getType().name().contains("NUGGET")&& !(p.getInventory().getItemInOffHand().getType()==Material.TRIDENT)&& !(p.getInventory().getItemInOffHand().getType()==Material.SHIELD))
 					{
-							player_damage.put(p.getName(), p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getValue() + p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.5 + p.getLevel()/10);
+							player_damage.put(p.getName(), p.getAttribute(Attribute.ATTACK_DAMAGE).getValue() + p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.DAMAGE_ALL)*0.5 + p.getLevel()/10);
 							
 							if (e.getType() == EntityType.ZOMBIE || e.getType() == EntityType.ZOMBIE_HORSE || e.getType() ==EntityType.ZOMBIE_VILLAGER || e.getType() == EntityType.ZOMBIFIED_PIGLIN|| e.getType() == EntityType.SKELETON || e.getType() == EntityType.SKELETON_HORSE || e.getType() == EntityType.WITHER_SKELETON || e.getType() == EntityType.HUSK || e.getType() == EntityType.WITHER || e.getType() == EntityType.STRAY || e.getType() == EntityType.PHANTOM || e.getType() == EntityType.DROWNED)
 							{

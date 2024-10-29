@@ -216,7 +216,7 @@ public class Wreskills extends Pak implements Serializable {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec =5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 8 && wsd.Tackle.getOrDefault(p.getUniqueId(), 0)>=1) {
@@ -427,7 +427,7 @@ public class Wreskills extends Pak implements Serializable {
 	public void ArmThrow(PlayerSwapHandItemsEvent ev) 
 	{
 		Player p = ev.getPlayer();
-		double sec =4*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =4*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 8 && wsd.ArmThrow.getOrDefault(p.getUniqueId(), 0)>=1) {
 		if(p.isSneaking())
@@ -550,7 +550,7 @@ public class Wreskills extends Pak implements Serializable {
 	public void ChokeSlam(PlayerSwapHandItemsEvent ev) 
 	{
 		Player p = ev.getPlayer();
-		double sec =4*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =4*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 8 && wsd.ChokeSlam.getOrDefault(p.getUniqueId(), 0)>=1) {
 		if(!p.isSneaking())
@@ -626,7 +626,7 @@ public class Wreskills extends Pak implements Serializable {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec =6*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =6*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
         
 		
@@ -746,7 +746,7 @@ public class Wreskills extends Pak implements Serializable {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec =5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
         
 		
@@ -903,7 +903,7 @@ public class Wreskills extends Pak implements Serializable {
 		
 		
 		if(ClassData.pc.get(p.getUniqueId()) == 8 && p.isSneaking() && wsd.GiantSwing.getOrDefault(p.getUniqueId(), 0)>=1 && !p.hasCooldown(Material.YELLOW_TERRACOTTA)) {
-			double sec = 26*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec = 26*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 			SkillBuilder bd = new SkillBuilder()
 				.player(p)
@@ -1183,7 +1183,7 @@ public class Wreskills extends Pak implements Serializable {
 				if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
 				{
 					dset2(d,p, 1.43 * (1+wsd.TakeDown.get(p.getUniqueId())*0.041),le,14);
-					p.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+					p.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 				}
 		}
 		}
@@ -1200,7 +1200,7 @@ public class Wreskills extends Pak implements Serializable {
 						if(p.getInventory().getItemInMainHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getType().name().contains("BANNER_PATTERN") && p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData())
 						{
 							dset2(d,p, 1.43 * (1+wsd.TakeDown.get(p.getUniqueId())*0.041),le,14);
-							p.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+							p.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 						}
 				}
 			}

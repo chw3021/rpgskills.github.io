@@ -754,7 +754,7 @@ public class CommonEvents extends Mobs implements Listener {
 				return;
 			}
 			Double lh = Math.round((le.getHealth())*10)/10.0;
-			final Double mh =Math.round(le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*10)/10.0;
+			final Double mh =Math.round(le.getAttribute(Attribute.MAX_HEALTH).getValue()*10)/10.0;
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 				@Override
 				public void run()
@@ -787,7 +787,7 @@ public class CommonEvents extends Mobs implements Listener {
 				return;
 			}
 
-			final Double mh =Math.round(le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*10)/10.0;
+			final Double mh =Math.round(le.getAttribute(Attribute.MAX_HEALTH).getValue()*10)/10.0;
 
 			if(!Holding.holded.containsKey(le.getUniqueId())) {
 				if(!le.hasAI()) {
@@ -833,7 +833,7 @@ public class CommonEvents extends Mobs implements Listener {
 				Player p = (Player) pr.getShooter();
 				LivingEntity le = (LivingEntity) d.getEntity();
 
-				final Double mh =Math.round(le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*10)/10.0;
+				final Double mh =Math.round(le.getAttribute(Attribute.MAX_HEALTH).getValue()*10)/10.0;
 
 				if(!Holding.holded.containsKey(le.getUniqueId())) {
 					if(!le.hasAI()) {
@@ -887,13 +887,13 @@ public class CommonEvents extends Mobs implements Listener {
 			le.setNoDamageTicks(0);
 
 			if(!le.hasMetadata("rpgspawned") && le.getCustomName() == null) {
-				le.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
+				le.getAttribute(Attribute.MAX_HEALTH).setBaseValue(le.getAttribute(Attribute.MAX_HEALTH).getDefaultValue());
 				le.setCustomName(trans(le));
 				le.setCustomNameVisible(true);
 				le.setMetadata("plain", new FixedMetadataValue(RMain.getInstance(),true));
 			}
 
-			final Double mh =Math.round(le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*10)/10.0;
+			final Double mh =Math.round(le.getAttribute(Attribute.MAX_HEALTH).getValue()*10)/10.0;
 
 			if(!Holding.holded.containsKey(le.getUniqueId())) {
 				if(!le.hasAI()) {
@@ -1023,12 +1023,12 @@ public class CommonEvents extends Mobs implements Listener {
 			p.closeInventory();
 			p.getScoreboard().getObjectives().forEach(o -> o.unregister());
 			p.setAbsorptionAmount(0);
-			p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(0);
-			p.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).setBaseValue(0);
-			p.getAttribute(Attribute.GENERIC_LUCK).setBaseValue(0);
-			p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(2);
-			p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(4);
-			p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.1);
+			p.getAttribute(Attribute.ARMOR).setBaseValue(0);
+			p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(0);
+			p.getAttribute(Attribute.LUCK).setBaseValue(0);
+			p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(2);
+			p.getAttribute(Attribute.ATTACK_SPEED).setBaseValue(4);
+			p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.1);
 		});
 	}
 
@@ -1072,12 +1072,12 @@ public class CommonEvents extends Mobs implements Listener {
 			Objective objective = board.registerNewObjective("Hearts" ,Criteria.HEALTH, "[Health]", RenderType.HEARTS);
 			objective.setDisplaySlot(DisplaySlot.BELOW_NAME);
 			p.setScoreboard(board);
-			p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(0);
-			p.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).setBaseValue(0);
-			p.getAttribute(Attribute.GENERIC_LUCK).setBaseValue(0);
-			p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(2);
-			p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(4);
-			p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.1);
+			p.getAttribute(Attribute.ARMOR).setBaseValue(0);
+			p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(0);
+			p.getAttribute(Attribute.LUCK).setBaseValue(0);
+			p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(2);
+			p.getAttribute(Attribute.ATTACK_SPEED).setBaseValue(4);
+			p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.1);
 		});
 	}
 
@@ -1173,12 +1173,12 @@ public class CommonEvents extends Mobs implements Listener {
 		Player p = ev.getPlayer();
 
 		p.setGravity(true);
-		p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(0);
-		p.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).setBaseValue(0);
-		p.getAttribute(Attribute.GENERIC_LUCK).setBaseValue(0);
-		p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(2);
-		p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(4);
-		p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.1);
+		p.getAttribute(Attribute.ARMOR).setBaseValue(0);
+		p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(0);
+		p.getAttribute(Attribute.LUCK).setBaseValue(0);
+		p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(2);
+		p.getAttribute(Attribute.ATTACK_SPEED).setBaseValue(4);
+		p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.1);
 
 		Scoreboard board = manager.getNewScoreboard();
 		Objective objective = board.registerNewObjective("Hearts" ,Criteria.HEALTH, "[Health]", RenderType.HEARTS);

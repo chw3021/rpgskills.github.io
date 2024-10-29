@@ -62,8 +62,8 @@ public class HyperMobsSpawn extends Mobs implements Listener {
 		String reg = lang.contains("kr") ? "추적자":"Stalker";
 		Husk newmob = (Husk) Mobspawn(le, reg, 12000.0, head, chest, leg, boots, main, off, EntityType.HUSK);
 		newmob.setConversionTime(-1);
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.33);
-		newmob.getAttribute(Attribute.GENERIC_FOLLOW_RANGE).setBaseValue(20);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.33);
+		newmob.getAttribute(Attribute.FOLLOW_RANGE).setBaseValue(20);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("hyper", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("Stalker", new FixedMetadataValue(RMain.getInstance(), true));
@@ -121,7 +121,7 @@ public class HyperMobsSpawn extends Mobs implements Listener {
 		String reg = lang.contains("kr") ? "경비로봇":"SecurityRobot";
 		Vindicator newmob = (Vindicator) Mobspawn(le, reg, 10000.0, head, null, null, null, main, off, EntityType.VINDICATOR);
 		newmob.setSilent(true);
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.33);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.33);
 		newmob.setCanJoinRaid(false);
 		newmob.setPatrolLeader(false);
 		newmob.setPatrolTarget(null);
@@ -147,7 +147,7 @@ public class HyperMobsSpawn extends Mobs implements Listener {
 	final private Spider ScoutSpider(LivingEntity le) {
 		String reg = lang.contains("kr") ? "정찰용거미":"ScoutSpider";
 		Spider newmob = (Spider) Mobspawn(le, reg, 9000.0, null, null, null, null, null, null, EntityType.SPIDER);
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.43);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.43);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("hyper", new FixedMetadataValue(RMain.getInstance(), true));
 		return newmob;

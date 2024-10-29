@@ -144,7 +144,7 @@ public class RedRaids extends Summoned {
 		newmob.getEquipment().setLeggingsDropChance(0);
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.3);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		
@@ -203,8 +203,8 @@ public class RedRaids extends Summoned {
 		newmob.getEquipment().setLeggingsDropChance(0);
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3);
-		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.3);
+		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 
@@ -327,7 +327,7 @@ public class RedRaids extends Summoned {
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("mage", new FixedMetadataValue(RMain.getInstance(), true));
 
-		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		
@@ -379,14 +379,14 @@ public class RedRaids extends Summoned {
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(),rn));
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("headthrower", new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.26);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.26);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		newmob.setConversionTime(-1);
 		
 		
 		
-		newmob.getAttribute(Attribute.ZOMBIE_SPAWN_REINFORCEMENTS).setBaseValue(0);
+		newmob.getAttribute(Attribute.SPAWN_REINFORCEMENTS).setBaseValue(0);
 		addraider(rn,META,newmob);
 	}
 	final private void Mob6(Location spl, String rn) {
@@ -434,7 +434,7 @@ public class RedRaids extends Summoned {
 		newmob.setPatrolLeader(false);
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(),rn));
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.29);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.29);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		
@@ -499,8 +499,8 @@ public class RedRaids extends Summoned {
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("arch", new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.4);
-		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.4);
+		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		
@@ -572,8 +572,8 @@ public class RedRaids extends Summoned {
 		BossBar	newbar = Bukkit.getServer().createBossBar(new NamespacedKey(RMain.getInstance(), rn +"RedKnight"),newmob.getName(), BarColor.RED, BarStyle.SEGMENTED_20, BarFlag.CREATE_FOG);
         newbar.setVisible(true);
 		raidbar.put(rn, META, newbar);
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
-		newmob.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.36);
+		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		addraider(rn,META,newmob);
@@ -622,7 +622,7 @@ public class RedRaids extends Summoned {
 	            {
 	
 					if(Holding.ale(newmob)!=null) {
-	                	raidbar.get(rn, META).setProgress((double)Holding.ale(newmob).getHealth()/Holding.ale(newmob).getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+	                	raidbar.get(rn, META).setProgress((double)Holding.ale(newmob).getHealth()/Holding.ale(newmob).getAttribute(Attribute.MAX_HEALTH).getValue());
 	                	raidbar.get(rn, META).setTitle(Holding.ale(newmob).getName());
 	    				raidbar.get(rn, META).addPlayer(p);
 					}
@@ -640,7 +640,7 @@ public class RedRaids extends Summoned {
 	            public void run() 
 	            {
 					if(Holding.ale(newmob)!=null) {
-	                	raidbar.get(rn, META).setProgress((double)Holding.ale(newmob).getHealth()/Holding.ale(newmob).getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+	                	raidbar.get(rn, META).setProgress((double)Holding.ale(newmob).getHealth()/Holding.ale(newmob).getAttribute(Attribute.MAX_HEALTH).getValue());
 	                	raidbar.get(rn, META).setTitle(Holding.ale(newmob).getName());
 	            		par.forEach(p -> {
 	        				raidbar.get(rn, META).addPlayer(p);

@@ -253,7 +253,7 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 			if(p.getInventory().getItemInMainHand().getType().name().contains("HOE") && p.getInventory().getItemInOffHand().getType().name().contains("TOTEM") && p.isSneaking())
 			{
 				
-				double sec =3*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+				double sec =3*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 				ev.setCancelled(true);
 
 
@@ -607,7 +607,7 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 				if((ac == Action.RIGHT_CLICK_AIR || ac == Action.RIGHT_CLICK_BLOCK))
 				{
 					p.setCooldown(CAREFUL, 2);
-					double sec =9*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+					double sec =9*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 					ev.setCancelled(true);
 
 					SkillBuilder bd = new SkillBuilder()
@@ -809,7 +809,7 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 			{
 				if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK) && !p.hasCooldown(CAREFUL))
 				{
-					double sec =3*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+					double sec =3*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 					ev.setCancelled(true);
 
 					SkillBuilder bd = new SkillBuilder()
@@ -1033,7 +1033,7 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 				if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK) && !p.hasCooldown(CAREFUL))
 				{
 					ev.setCancelled(true);
-					double sec =7*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+					double sec =7*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 					
 					
 
@@ -1403,11 +1403,11 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 				zom.setMetadata("untargetable", new FixedMetadataValue(RMain.getInstance(), p.getName()));
 				zom.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), p.getName()));
 				zom.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), p.getName()));
-				zom.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(wsd.Legba.get(p.getUniqueId())*0.065);
-				zom.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(wsd.Legba.get(p.getUniqueId())*100d);
-				zom.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(wsd.Legba.get(p.getUniqueId()));
-				zom.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).setBaseValue(wsd.Legba.get(p.getUniqueId()));
-				zom.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
+				zom.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(wsd.Legba.get(p.getUniqueId())*0.065);
+				zom.getAttribute(Attribute.MAX_HEALTH).setBaseValue(wsd.Legba.get(p.getUniqueId())*100d);
+				zom.getAttribute(Attribute.ARMOR).setBaseValue(wsd.Legba.get(p.getUniqueId()));
+				zom.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(wsd.Legba.get(p.getUniqueId()));
+				zom.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 				
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 					zom.setCustomName(p.getName()+"의 죽음의기사");
@@ -1447,10 +1447,10 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 			zom.setMetadata("untargetable", new FixedMetadataValue(RMain.getInstance(), p.getName()));
 			zom.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), p.getName()));
 			zom.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), p.getName()));
-			zom.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(wsd.Legba.get(p.getUniqueId())*0.03);
-			zom.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(wsd.Legba.get(p.getUniqueId())*100d);
-			zom.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(wsd.Legba.get(p.getUniqueId()));
-			zom.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS).setBaseValue(wsd.Legba.get(p.getUniqueId()));
+			zom.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(wsd.Legba.get(p.getUniqueId())*0.03);
+			zom.getAttribute(Attribute.MAX_HEALTH).setBaseValue(wsd.Legba.get(p.getUniqueId())*100d);
+			zom.getAttribute(Attribute.ARMOR).setBaseValue(wsd.Legba.get(p.getUniqueId()));
+			zom.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(wsd.Legba.get(p.getUniqueId()));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 				zom.setCustomName(p.getName()+"의 좀비");
 			}
@@ -1497,7 +1497,7 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 		if(ClassData.pc.get(p.getUniqueId()) == 14 && wsd.AstralProjection.getOrDefault(p.getUniqueId(),0)>=1) {
 			if(p.getInventory().getItemInMainHand().getType().name().contains("HOE") && p.getInventory().getItemInOffHand().getType().name().contains("TOTEM")&& !p.isSneaking()) 
 			{
-					double sec =8*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+					double sec =8*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 					ev.setCancelled(true);
 					
 					SkillBuilder bd = new SkillBuilder()
@@ -1634,7 +1634,7 @@ public class Wdcskills extends Pak implements Serializable, Listener {
 				if((ac == Action.RIGHT_CLICK_AIR || ac == Action.RIGHT_CLICK_BLOCK))
 				{
 					p.setCooldown(CAREFUL, 2);
-					double sec = 13*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+					double sec = 13*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 					ev.setCancelled(true);
 					
 					

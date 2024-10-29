@@ -54,13 +54,13 @@ public class Wand extends Weapons implements Listener {
 				ItemStack r = i0.clone();
 				//r.addUnsafeEnchantments(i0.getEnchantments());
 				ItemMeta rm = r.getItemMeta();
-				rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+				rm.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
 				rm.setCustomModelData(cmdt + 9000);
-				rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+				rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 						new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 29,
 								Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 	
-				rm.addAttributeModifier(Attribute.GENERIC_LUCK,
+				rm.addAttributeModifier(Attribute.LUCK,
 						new AttributeModifier(UUID.randomUUID(), "generic.luck", 30,
 								Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 				if (cmdt == 14) {
@@ -163,10 +163,10 @@ public class Wand extends Weapons implements Listener {
 				ItemStack r = i0.clone();
 				//r.addUnsafeEnchantments(i0.getEnchantments());
 				ItemMeta rm = r.getItemMeta();
-				rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+				rm.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
 				if (cmdt == 12) {
 					rm.setCustomModelData(cmdt + 9000);
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 29,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -188,10 +188,10 @@ public class Wand extends Weapons implements Listener {
 				ItemStack r = i0.clone();
 				//r.addUnsafeEnchantments(i0.getEnchantments());
 				ItemMeta rm = r.getItemMeta();
-				rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+				rm.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
 				if (cmdt == 14) {
 					rm.setCustomModelData(1 + 9000+100);
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 12,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -214,9 +214,9 @@ public class Wand extends Weapons implements Listener {
 				////r.addUnsafeEnchantments(i0.getEnchantments());
 				ItemMeta rm = r.getItemMeta();
 				rm.setCustomModelData(cmdt -3 + 9000 + 100);
-				rm.removeAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE);
+				rm.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
 				if (cmdt == 5) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 14,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -231,7 +231,7 @@ public class Wand extends Weapons implements Listener {
 					return r;
 				}
 				else if (cmdt == 6) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 16,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -246,7 +246,7 @@ public class Wand extends Weapons implements Listener {
 					return r;
 				}
 				else if (cmdt == 7) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 18,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -261,7 +261,7 @@ public class Wand extends Weapons implements Listener {
 					return r;
 				}
 				else if (cmdt == 8) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 20,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -276,7 +276,7 @@ public class Wand extends Weapons implements Listener {
 					return r;
 				}
 				else if (cmdt == 9) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 22,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -291,7 +291,7 @@ public class Wand extends Weapons implements Listener {
 					return r;
 				}
 				else if (cmdt == 10) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 24,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -306,7 +306,7 @@ public class Wand extends Weapons implements Listener {
 					return r;
 				}
 				else if (cmdt == 11) {
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE,
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 							new AttributeModifier(UUID.randomUUID(), "generic.getKey()", 26,
 									Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -793,7 +793,7 @@ public class Wand extends Weapons implements Listener {
 	public void WoodenWand(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.BLAZE_ROD);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 3, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 3, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(9000);
 		meta.setMaxStackSize(1);
 		if(lang.contains("kr")){
@@ -818,7 +818,7 @@ public class Wand extends Weapons implements Listener {
 	public void StoneWand(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.BLAZE_ROD);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 5, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 5, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(9000 + 1);
 		meta.setMaxStackSize(1);
 		if(lang.contains("kr")){
@@ -842,7 +842,7 @@ public class Wand extends Weapons implements Listener {
 	public void GoldWand(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.BLAZE_ROD);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(9000 + 2);
 		meta.setMaxStackSize(1);
 		if(lang.contains("kr")){
@@ -866,7 +866,7 @@ public class Wand extends Weapons implements Listener {
 	public void IronWand(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.BLAZE_ROD);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 7, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 7, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(9000 + 3);
 		meta.setMaxStackSize(1);
 		if(lang.contains("kr")){
@@ -890,7 +890,7 @@ public class Wand extends Weapons implements Listener {
 	public void DiamondWand(PluginEnableEvent d) {
 		ItemStack is = new ItemStack(Material.BLAZE_ROD);
 		ItemMeta meta = is.getItemMeta();
-		meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 8, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 8, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		meta.setCustomModelData(9000 + 4);
 		meta.setMaxStackSize(1);
 		if(lang.contains("kr")){
@@ -914,7 +914,7 @@ public class Wand extends Weapons implements Listener {
 	public void NetheriteWand(PrepareSmithingEvent d) {
 		ItemStack r = new ItemStack(Material.BLAZE_ROD);
 		ItemMeta rm = r.getItemMeta();
-		rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 10, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 10, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		rm.setCustomModelData(9000 + 60);
 		rm.setMaxStackSize(1);
 		Player p = (Player) d.getView().getPlayer();
@@ -971,7 +971,7 @@ public class Wand extends Weapons implements Listener {
 					Player p = (Player) d.getWhoClicked();
 					ItemStack r = new ItemStack(Material.BLAZE_ROD);
 					ItemMeta rm = r.getItemMeta();
-					rm.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(getKey(), 10, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+					rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 10, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 					rm.setCustomModelData(9000 + 60);
 					rm.setMaxStackSize(1);
 					

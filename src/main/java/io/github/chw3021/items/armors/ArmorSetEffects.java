@@ -77,7 +77,7 @@ public class ArmorSetEffects implements Listener{
                 
 				if(stuncool.containsKey(le.getUniqueId())) // if cooldown has players name in it (on first trow cooldown is empty)
 	            {
-	                double timer = (stuncool.get(le.getUniqueId())/1000 + 5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024)) - System.currentTimeMillis()/1000; // geting time in seconds
+	                double timer = (stuncool.get(le.getUniqueId())/1000 + 5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024)) - System.currentTimeMillis()/1000; // geting time in seconds
 	                if(!(timer < 0)) // if timer is still more then 0 or 0
 	                {
 	                }
@@ -117,7 +117,7 @@ public class ArmorSetEffects implements Listener{
 					
 					if(stuncool.containsKey(le.getUniqueId())) // if cooldown has players name in it (on first trow cooldown is empty)
 		            {
-		                double timer = (stuncool.get(le.getUniqueId())/1000 + 5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024)) - System.currentTimeMillis()/1000; // geting time in seconds
+		                double timer = (stuncool.get(le.getUniqueId())/1000 + 5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024)) - System.currentTimeMillis()/1000; // geting time in seconds
 		                if(!(timer < 0)) // if timer is still more then 0 or 0
 		                {
 		                }
@@ -179,7 +179,7 @@ public class ArmorSetEffects implements Listener{
 				
 				if(invcool.containsKey(p.getUniqueId())) // if cooldown has players name in it (on first trow cooldown is empty)
 	            {
-	                double timer = (invcool.get(p.getUniqueId())/1000 + 5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024)) - System.currentTimeMillis()/1000; // geting time in seconds
+	                double timer = (invcool.get(p.getUniqueId())/1000 + 5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024)) - System.currentTimeMillis()/1000; // geting time in seconds
 	                if(!(timer < 0)) // if timer is still more then 0 or 0
 	                {
 	                }

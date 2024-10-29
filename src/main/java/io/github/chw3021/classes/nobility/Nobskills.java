@@ -226,7 +226,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 		if(e.getEntity().getShooter() instanceof Player && e.getEntity() instanceof Trident)
 		{
 			Player p = (Player)e.getEntity().getShooter();
-			double sec =4*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec =4*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 			Trident t = (Trident) e.getEntity();
 
 			
@@ -341,7 +341,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 						spawnAxolotl(p, l, Variant.LUCY, new Vector(-1, 1, -1));
 						
                 		List<Entity> ce =  t.getWorld().getNearbyEntities(l,6, 6, 6).stream().filter(e -> e instanceof LivingEntity)
-                		   .sorted(Comparator.comparingDouble(e -> ((LivingEntity) e).getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()))
+                		   .sorted(Comparator.comparingDouble(e -> ((LivingEntity) e).getAttribute(Attribute.MAX_HEALTH).getValue()))
                 		   .toList();
                 		
 	                	for(Mob m: axs.get(p.getUniqueId())) {
@@ -936,7 +936,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 		Player p = ev.getPlayer();
 		if(ClassData.pc.get(p.getUniqueId()) == 19 && p.getInventory().getItemInMainHand().getType()==Material.TRIDENT &&  p.isSneaking() && gs.containsKey(p.getUniqueId())){
 			ev.setCancelled(true);
-			double sec = 6*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec = 6*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
             Location fl = gettargetblock(p,20).clone();
 			if(p.rayTraceBlocks(40) != null) {
 				fl = p.rayTraceBlocks(40).getHitPosition().toLocation(p.getWorld());
@@ -1156,7 +1156,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec =11*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =11*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
         
 		
 		
@@ -1256,7 +1256,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 	public void Assault(PlayerSwapHandItemsEvent ev) 
 	{
 		Player p = ev.getPlayer();
-		double sec = 11*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec = 11*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 	    
 		
 		
@@ -1547,7 +1547,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 	public void WaterWheel(PlayerSwapHandItemsEvent ev) 
 	{
 		Player p = ev.getPlayer();
-		double sec =10*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =10*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 	    
 		
 		
@@ -1855,7 +1855,7 @@ public class Nobskills extends Pak implements Serializable, Listener {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec =5.5*(1-p.getAttribute(Attribute.GENERIC_LUCK).getValue()/1024)/(Proficiency.getpro(p)>=2 ? 2:1);
+		double sec =5.5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024)/(Proficiency.getpro(p)>=2 ? 2:1);
         
 		
 		

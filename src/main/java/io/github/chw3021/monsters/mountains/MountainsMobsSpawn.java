@@ -144,7 +144,7 @@ public class MountainsMobsSpawn extends Mobs implements Listener {
 		ItemStack off = new ItemStack(Material.SUNFLOWER);
 		String reg = lang.contains("kr") ? "꽃요정":"FlowerFairy";
 		Vex newmob = (Vex) Mobspawn(le,reg, 45.0, head, chest, leg, boots, main, off, EntityType.VEX);
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.36);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.36);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("mountains", new FixedMetadataValue(RMain.getInstance(), true));
 		return newmob;
@@ -154,7 +154,7 @@ public class MountainsMobsSpawn extends Mobs implements Listener {
 		String reg = lang.contains("kr") ? "돌거미":"StoneSpider";
 		Spider newmob = (Spider) Mobspawn(le, reg, 100.0, null, null, null, null, null, null,
 				EntityType.SPIDER);
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.25);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.25);
 		
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("mountains", new FixedMetadataValue(RMain.getInstance(), true));
@@ -165,7 +165,7 @@ public class MountainsMobsSpawn extends Mobs implements Listener {
 		String reg = lang.contains("kr") ? "나무크리퍼":"WoodCreeper";
 		Creeper newmob = (Creeper) Mobspawn(le, reg, 100.0, null, null, null, null, null, null,
 				EntityType.CREEPER);
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.18);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.18);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("mountains", new FixedMetadataValue(RMain.getInstance(), true));
 		return newmob;
@@ -177,7 +177,7 @@ public class MountainsMobsSpawn extends Mobs implements Listener {
 				EntityType.ENDERMAN);
 
 		newmob.setCarriedBlock(Material.ACACIA_SAPLING.createBlockData());
-		newmob.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.18);
+		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.18);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("mountains", new FixedMetadataValue(RMain.getInstance(), true));
 		return newmob;
