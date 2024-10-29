@@ -944,7 +944,7 @@ public class PoisonSkills extends OverworldRaids{
 		p.getWorld().playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_NETHERITE, 1.0f, 0f);
 		p.getWorld().playSound(p.getLocation(), Sound.BLOCK_SCULK_CHARGE, 1.0f, 0f);
 			p.getWorld().spawnParticle(Particle.SCULK_CHARGE ,p.getLocation(), 200, 0.2,0.2,0.2,1,0.5f);
-			Holding.holding(null, p, 25l);
+			Holding.holding(null, p, 35l);
 
 		Location pl = pfl.clone();
 
@@ -981,9 +981,9 @@ public class PoisonSkills extends OverworldRaids{
 	                	public void run() 
 		                {	
                     		for(Entity e : cloud.getWorld().getNearbyEntities(cl,2,2,2)) {
-    							if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
-    								LivingEntity le = (LivingEntity)e;
-    								le.damage(3.5,p);
+    							if(p!=e && e instanceof Player&& !(e.hasMetadata("fake"))) {
+    								Player le = (Player)e;
+    								le.damage(3,p);
     								Holding.holding(null, le, 20l);
     							}
                     		}
@@ -992,7 +992,7 @@ public class PoisonSkills extends OverworldRaids{
                 }
     			
             }
-    	},25,2);
+    	},35,2);
         hookt1.put(p.getUniqueId(), task);
         ordt.put(gethero(p), task);
         

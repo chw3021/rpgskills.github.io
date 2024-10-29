@@ -790,7 +790,9 @@ public class CommonEvents extends Mobs implements Listener {
 			final Double mh =Math.round(le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*10)/10.0;
 
 			if(!Holding.holded.containsKey(le.getUniqueId())) {
-				le.setAI(true);
+				if(!le.hasAI()) {
+					le.setAI(true);
+				}
 			}
 			if(d.getDamage()>0) {
 				Double lh = Math.round((le.getHealth())*10)/10.0;
@@ -834,7 +836,9 @@ public class CommonEvents extends Mobs implements Listener {
 				final Double mh =Math.round(le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*10)/10.0;
 
 				if(!Holding.holded.containsKey(le.getUniqueId())) {
-					le.setAI(true);
+					if(!le.hasAI()) {
+						le.setAI(true);
+					}
 				}
 				if(d.getDamage()>0) {
 					Double lh = Math.round((le.getHealth())*10)/10.0;
@@ -892,7 +896,9 @@ public class CommonEvents extends Mobs implements Listener {
 			final Double mh =Math.round(le.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()*10)/10.0;
 
 			if(!Holding.holded.containsKey(le.getUniqueId())) {
-				le.setAI(true);
+				if(!le.hasAI()) {
+            		le.setAI(true);
+				}
 			}
 			if(d.getDamage()>0) {
 				Double lh = Math.round((le.getHealth())*10)/10.0;
@@ -958,36 +964,48 @@ public class CommonEvents extends Mobs implements Listener {
 			ed.setCustomNameVisible(false);
 		}
 		if(d.getNewPhase() == Phase.DYING) {
-			ed.setAI(true);
+			if(!ed.hasAI()) {
+				ed.setAI(true);
+			}
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 				@Override
 				public void run()
 				{
-					ed.setAI(true);
+					if(!ed.hasAI()) {
+						ed.setAI(true);
+					}
 					ed.setCustomName(null);
 					ed.setCustomNameVisible(false);
 				}
 			}, 1);
 		}
 		if(d.getCurrentPhase() == Phase.DYING) {
-			ed.setAI(true);
+			if(!ed.hasAI()) {
+				ed.setAI(true);
+			}
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 				@Override
 				public void run()
 				{
-					ed.setAI(true);
+					if(!ed.hasAI()) {
+						ed.setAI(true);
+					}
 					ed.setCustomName(null);
 					ed.setCustomNameVisible(false);
 				}
 			}, 1);
 		}
 		if(ed.getPhase() == Phase.DYING) {
-			ed.setAI(true);
+			if(!ed.hasAI()) {
+				ed.setAI(true);
+			}
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 				@Override
 				public void run()
 				{
-					ed.setAI(true);
+					if(!ed.hasAI()) {
+						ed.setAI(true);
+					}
 					ed.setCustomName(null);
 					ed.setCustomNameVisible(false);
 				}
@@ -1316,7 +1334,9 @@ public class CommonEvents extends Mobs implements Listener {
 					{
 						LivingEntity le = (LivingEntity)e;
 						if(!Holding.holded.containsKey(le.getUniqueId())) {
-							le.setAI(true);
+							if(!le.hasAI()) {
+								le.setAI(true);
+							}
 						}
 						le.setMaximumNoDamageTicks(0);
 						le.setNoDamageTicks(0);

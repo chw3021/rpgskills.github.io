@@ -30,6 +30,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Arrow;
@@ -56,6 +57,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 
 public class Taoskills extends Pak implements Listener, Serializable {
@@ -739,14 +741,12 @@ public class Taoskills extends Pak implements Listener, Serializable {
 	    					el.getWorld().spawnParticle(Particle.RAIN, el, 40, 2, 2, 2);
 	    					el.getWorld().spawnParticle(Particle.DRIPPING_WATER, el, 40, 2, 2, 2);
 	    					el.getWorld().spawnParticle(Particle.SNOWFLAKE, el, 300);
-	    					el.getWorld().spawnParticle(Particle.END_ROD, el, 300);
 	    				}
 	                    if(auras.getOrDefault(p.getName() ,-1) == 1)
 	    				{
 	    					el.getWorld().spawnParticle(Particle.SPORE_BLOSSOM_AIR, el, 30, 2, 2, 2);
 	    					el.getWorld().spawnParticle(Particle.FALLING_SPORE_BLOSSOM, el, 30, 2, 2, 2);
 	    					el.getWorld().spawnParticle(Particle.FLAME, el, 300);
-	    					el.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, el, 300);
 	    					el.getWorld().spawnParticle(Particle.LAVA, el, 40, 2, 2, 2, 0);
 	    				}
 	    				p.playSound(el, Sound.ENTITY_ELDER_GUARDIAN_HURT, 1, 1);
@@ -1250,8 +1250,7 @@ public class Taoskills extends Pak implements Listener, Serializable {
 						                public void run() 
 						                {
 						                    p.playSound(p.getLocation(), Sound.ENTITY_ILLUSIONER_CAST_SPELL, 1.0f, 2.0f);
-							        		p.getWorld().spawnParticle(Particle.CLOUD, l, 40,4,4,4);
-											p.getWorld().spawnParticle(Particle.SOUL, l, 300, 4,4,4,0);
+							        		p.getWorld().spawnParticle(Particle.SCULK_CHARGE_POP, l, 40,4,4,4);
 						                	for (Entity e : p.getWorld().getNearbyEntities(l, 4, 4, 4))
 											{
 					                    		if (e instanceof Player) 
@@ -1364,8 +1363,8 @@ public class Taoskills extends Pak implements Listener, Serializable {
 		                	double a = j.getAndIncrement()/2d;
 		                    p.playSound(p.getLocation(), Sound.BLOCK_ROOTS_PLACE, 1f, j.get()*0.2f);
 		                    
-		        			p.getWorld().spawnParticle(Particle.ENCHANT, l,200*j.get(),2+a,0.5,2+a);
-		        			p.getWorld().spawnParticle(Particle.TRIAL_OMEN, l,200*j.get(),2+a,0.5,2+a);
+		        			p.getWorld().spawnParticle(Particle.ENCHANT, l,200*j.get(),2+a,0.5,2+a,0);
+		        			p.getWorld().spawnParticle(Particle.TRIAL_OMEN, l,100*j.get(),2+a,0.5,2+a,0);
 			        		
 			        		
 		                	for (Entity e : p.getWorld().getNearbyEntities(l, 2+a , 2+a, 2+a))
@@ -1415,18 +1414,22 @@ public class Taoskills extends Pak implements Listener, Serializable {
 				karb.remove(p.getUniqueId());
 
                 p.playSound(p.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 1, 0.6f);
-            	p.getWorld().spawnParticle(Particle.FLASH, p.getLocation(),6, 2,1,2);
+            	ItemStack is = new ItemStack(Material.ENCHANTED_BOOK);
+            	ItemMeta im = is.getItemMeta();
+            	im.setMaxStackSize(1);
+            	is.setItemMeta(im);
+            	World w = p.getWorld();
 
                 for(int i = 0; i<12; i++) {
     				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
     	                @Override
     	                public void run() 
     	                {
-    	                	for(int i = 0; i <10; i ++) {
-        	                	Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation().clone().add(0, -0.5, 0), p.getEyeLocation().clone().getDirection().normalize().multiply(2.5), 1, 20);
+    	                	for(int i = 0; i <7; i ++) {
+        	                	Arrow ar = w.spawnArrow(p.getEyeLocation().clone().add(0, -0.5, 0), p.getEyeLocation().clone().getDirection().normalize().multiply(2.5), 1, 20);
         	                	ar.remove();
         	                	
-        	                	Item it = p.getWorld().dropItem(p.getEyeLocation().clone().add(0, -0.5, 0), new ItemStack(Material.ENCHANTED_BOOK));
+        	                	Item it = w.dropItem(p.getEyeLocation().clone().add(0, -0.5, 0), is);
         	                	it.setVelocity(ar.getVelocity());
         	                	it.setThrower(p.getUniqueId());
         	                	it.setOwner(p.getUniqueId());
@@ -1454,8 +1457,6 @@ public class Taoskills extends Pak implements Listener, Serializable {
     	                    p.playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 0.25f, 1.9f);
     	                    line.forEach(l -> {
 
-    	                    	p.getWorld().spawnParticle(Particle.FLASH, l,1, 0.1,0.1,0.1,0);
-    	                    	p.getWorld().spawnParticle(Particle.SCULK_SOUL, l,10, 2,2,2,0);
     	                    	for (Entity a : p.getWorld().getNearbyEntities(l, 2.5, 2.5, 2.5))
     							{
     								if ((!(a == p))&& a instanceof LivingEntity&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal"))) 
@@ -1606,7 +1607,6 @@ public class Taoskills extends Pak implements Listener, Serializable {
 				                {
 				                    p.playSound(line.get(line.size()-1), Sound.ENTITY_BREEZE_WIND_BURST, 0.7f, 2f);
 									p.getWorld().spawnParticle(Particle.FLASH, line.get(line.size()-1), 1, 1,1,1);
-					        		p.getWorld().spawnParticle(Particle.ENCHANTED_HIT, line.get(line.size()-1), 10,1,1,1);
 			             			if(auras.get(p.getName()) == 0)
 									{ 
 										p.getWorld().spawnParticle(Particle.BLOCK, line.get(line.size()-1), 50, 1,1,1,1 ,Material.GRAY_GLAZED_TERRACOTTA.createBlockData());
@@ -1885,7 +1885,6 @@ public class Taoskills extends Pak implements Listener, Serializable {
 				                @Override
 				                public void run() 
 				                {
-				        			tl.getWorld().spawnParticle(Particle.FLASH, tl,5,2,2,2);
 				                    p.playSound(p.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, 0.7f, 0.8f);
 				                    p.playSound(p.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, 0.7f, 1.8f);
 				                    p.playSound(p.getLocation(), Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, 0.7f, 1.7f);
@@ -2238,7 +2237,7 @@ public class Taoskills extends Pak implements Listener, Serializable {
 						                public void run() {
         									atk0(1.8, tsd.CombustInside.get(p.getUniqueId())*1.8, p, le);								
 											p.playSound(le.getLocation(), Sound.PARTICLE_SOUL_ESCAPE, 0.6f, 0f);
-											p.playSound(le.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, 0.6f, 2f);
+											p.playSound(le.getLocation(), Sound.ENTITY_WIND_CHARGE_WIND_BURST, 0.6f, 2f);
 											p.getWorld().spawnParticle(Particle.SOUL, le.getLocation(), 100, 1, 1, 1);
 											if(Proficiency.getpro(p)>=1) {
 							 					for(Entity e : le.getWorld().getNearbyEntities(le.getLocation(), 2.5, 2.5, 2.5)) {

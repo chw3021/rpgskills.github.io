@@ -122,7 +122,9 @@ public class Holding implements Listener{
                 {
                 	holded.computeIfPresent(le.getUniqueId(), (k, v) -> v-1);
                 	if(holded.getOrDefault(le.getUniqueId(),0l)<0) {
-                		ale(le).setAI(true);
+        				if(!le.hasAI()) {
+                    		ale(le).setAI(true);
+        				}
                 		holded.remove(le.getUniqueId());
                 	}
                 }
@@ -229,7 +231,9 @@ public class Holding implements Listener{
 	                {
 	                	holded.computeIfPresent(le.getUniqueId(), (k, v) -> v-1);
 	                	if(holded.getOrDefault(le.getUniqueId(),0l)<0) {
-	                		ale(le).setAI(true);
+	        				if(!le.hasAI()) {
+	                    		ale(le).setAI(true);
+	        				}
 	                		holded.remove(le.getUniqueId());
 	                	}
 	                }
@@ -349,7 +353,9 @@ public class Holding implements Listener{
 		{
         	holded.computeIfPresent(le.getUniqueId(), (k, v) -> v-1);
         	if(holded.getOrDefault(le.getUniqueId(),(long) -1)<0) {
-        		ale(le).setAI(true);
+        		if(!le.hasAI()) {
+            		ale(le).setAI(true);
+        		}
 				holded.remove(le.getUniqueId());
         	}
         	Bukkit.getServer().getScheduler().cancelTask(lasttask.getOrDefault(le.getUniqueId(),0));
@@ -381,7 +387,10 @@ public class Holding implements Listener{
 			ev.getRightClicked().setInvulnerable(false);
 		}
 		if(!holded.containsKey(ev.getRightClicked().getUniqueId()) && ev.getRightClicked() instanceof LivingEntity && !ev.getRightClicked().hasMetadata("fake")) {
-			((LivingEntity)ale(ev.getRightClicked())).setAI(true);
+			LivingEntity le = (LivingEntity) ev.getRightClicked();
+			if(!le.hasAI()) {
+				(ale(le)).setAI(true);
+			}
 		}
 	}
 
@@ -393,20 +402,24 @@ public class Holding implements Listener{
 			ev.getEntity().setInvulnerable(false);
 		}
 		if(!holded.containsKey(ev.getEntity().getUniqueId()) && ev.getEntity() instanceof LivingEntity && !ev.getEntity().hasMetadata("fake")) {
-			((LivingEntity)ale(ev.getEntity())).setAI(true);
+			LivingEntity le = (LivingEntity) ev.getEntity();
+			if(!le.hasAI()) {
+				(ale(le)).setAI(true);
+			}
 		}
 	}
 	
 	public void holded(PlayerTeleportEvent ev) {
-		ev.getTo().getWorld().getNearbyEntities(ev.getTo(), 60, 60, 60).forEach(e -> {
+		ev.getTo().getWorld().getNearbyEntities(ev.getTo(), 60, 60, 60).stream().filter(e -> e!=ev.getPlayer()).forEach(e -> {
 			if(!superholding.containsKey(e.getUniqueId()) && !e.hasMetadata("fake")) {
 				ale(e).setInvulnerable(false);
 			}
-			if(!holded.containsKey(e.getUniqueId()) && e instanceof LivingEntity && !e.hasMetadata("fake")) {
-				((LivingEntity)ale(e)).setAI(true);
+			if(!holded.containsKey(e.getUniqueId()) &&!(e instanceof Player) && e instanceof LivingEntity && !e.hasMetadata("fake")) {
+				LivingEntity le = (LivingEntity) e;
+				if(!le.hasAI()) {
+					(ale(le)).setAI(true);
+				}
 			}
-			
-
 			if(!untouchable.containsKey(e.getUniqueId()) && e.hasMetadata("boss")) {
             	ale(e).removeMetadata("fake", RMain.getInstance());
 			}

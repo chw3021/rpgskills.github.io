@@ -5,9 +5,11 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -24,10 +26,15 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
+import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Axolotl;
 import org.bukkit.entity.Drowned;
 import org.bukkit.entity.ElderGuardian;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Husk;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Piglin;
@@ -42,16 +49,23 @@ import org.bukkit.entity.Villager.Profession;
 import org.bukkit.entity.Villager.Type;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.event.world.AsyncStructureGenerateEvent;
 import org.bukkit.event.world.LootGenerateEvent;
 import org.bukkit.event.world.WorldLoadEvent;
+import org.bukkit.event.world.WorldUnloadEvent;
 import org.bukkit.generator.structure.GeneratedStructure;
 import org.bukkit.generator.structure.Structure;
 import org.bukkit.inventory.EntityEquipment;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.loot.LootTable;
 import org.bukkit.loot.LootTables;
 import org.bukkit.loot.Lootable;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -59,7 +73,9 @@ import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
 import org.jetbrains.annotations.Nullable;
 
+import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Table;
 
 import io.github.chw3021.commons.ConfigManager;
 import io.github.chw3021.rmain.RMain;
@@ -76,13 +92,12 @@ public class NPCLoc implements Serializable, Listener{
 	 * 
 	 */
 	//public HashMultimap<UUID, HashMap<Location, String>> Locs = HashMultimap.create();
-	public HashMultimap<UUID, HashMap<Location, String>> Locs = HashMultimap.create();
-	static public HashMultimap<UUID, Location> NPCLocs = HashMultimap.create();
-	static public HashMultimap<UUID, Location> PlayerLocs = HashMultimap.create();
-	private HashSet<Structure> sths = new HashSet<>();
+	public Table<UUID, Location, ItemStack[]> Locs = HashBasedTable.create();
+	static public HashSet<Location> NPCLocs = new HashSet<Location>();
+	static public HashSet<Location> ChestLocs = new HashSet<Location>();
 	
     // Can be used for saving
-    public NPCLoc(HashMultimap<UUID, HashMap<Location, String>> Locs) {
+    public NPCLoc(Table<UUID, Location, ItemStack[]> Locs) {
     	this.Locs = Locs;
     	}
     // Can be used for loading
@@ -113,9 +128,8 @@ public class NPCLoc implements Serializable, Listener{
 
 
             String path = new File("").getAbsolutePath();
-            NPCLoc data = new NPCLoc(HashMultimap.create()).saveData(path +"/plugins/RPGskills/NPCLoc.data");
+            NPCLoc data = new NPCLoc(HashBasedTable.create()).saveData(path +"/plugins/RPGskills/NPCLoc.data");
             Bukkit.getServer().getLogger().log(Level.INFO, "Data Saved");
-			System.out.println("Generating NPC Save File....");
             return data;
         }
     }
@@ -125,424 +139,119 @@ public class NPCLoc implements Serializable, Listener{
         NPCLoc data = new NPCLoc(NPCLoc.loadData(path +"/plugins/RPGskills/NPCLoc.data"));
 		return data;
 	}
-	final public static void saver(World w, HashSet<HashMap<Location, String>> hs) {
+	final public static void saver(Player p, Location sl, ItemStack[] is) {
 
-		HashMultimap<UUID, HashMap<Location, String>> Locs = getLocsdata().Locs;
-		Locs.putAll(w.getUID(), hs);
+		Table<UUID, Location, ItemStack[]> Locs = getLocsdata().Locs;
+		Locs.put(p.getUniqueId(), sl, is);
         String path = new File("").getAbsolutePath();
 		new NPCLoc(Locs).saveData(path +"/plugins/RPGskills/NPCLoc.data");
 	}
 	
 
-	final private Location strct(World w,Location lel, String ns, Boolean b) {
-
-		Structure st = strrtr(ns);
-		
-		if(w.hasMetadata("fake")||w.hasMetadata("rpgraidworld") || !w.canGenerateStructures()) {
-			return null;
-		}
-		if(w.getEnvironment() == Environment.NORMAL && (st == Structure.END_CITY || st == Structure.FORTRESS || st == Structure.BASTION_REMNANT || st == Structure.NETHER_FOSSIL || st == Structure.RUINED_PORTAL_NETHER)) {
-			return null;
-		}
-		if(w.getEnvironment() == Environment.NETHER && (st != Structure.FORTRESS && st != Structure.NETHER_FOSSIL && st != Structure.BASTION_REMNANT && st != Structure.RUINED_PORTAL_NETHER)) {
-			return null;
-		}
-		if(w.getEnvironment() == Environment.THE_END && st != Structure.END_CITY) {
-			return null;
-		}
-		
-		try {
-			if(w.locateNearestStructure(lel, st, 1, b) != null) {
-				return w.locateNearestStructure(lel, st, 1, b).getLocation();
-			}
-			return null;
-		}
-		catch(NullPointerException e){
-			return null;
-		}
-	}
-
-	final private Collection<GeneratedStructure> strct2(World w,Location lel, String ns) {
-
-		Structure st = strrtr(ns);
-		
-		
-		if(w.hasMetadata("fake")||w.hasMetadata("rpgraidworld") || !w.canGenerateStructures()) {
-			return null;
-		}
-		if(st == Structure.NETHER_FOSSIL || st.getKey().getKey().contains("VILLAGE") || st == Structure.ANCIENT_CITY) {
-			return null;
-		}
-		
-		if(w.getEnvironment() == Environment.NORMAL && (st == Structure.END_CITY || st == Structure.FORTRESS || st == Structure.BASTION_REMNANT || st == Structure.NETHER_FOSSIL || st == Structure.RUINED_PORTAL_NETHER)) {
-			return null;
-		}
-		if(w.getEnvironment() == Environment.NETHER && (st != Structure.FORTRESS && st != Structure.BASTION_REMNANT && st != Structure.RUINED_PORTAL_NETHER)) {
-			return null;
-		}
-		if(w.getEnvironment() == Environment.THE_END && st != Structure.END_CITY) {
-			return null;
-		}
-		
-		try {
-			return w.getStructures(lel.getBlockX(), lel.getBlockZ(),st);
-		}
-		catch(NullPointerException e){
-			return null;
-		}
-	}
-	
-	
-	
-	/*final private HashSet<Structure> strset(final Environment we, Location l){
-		HashSet<Structure> sths = new HashSet<>();
-		if(we == Environment.NETHER) {
-			sths.add(Structure.BASTION_REMNANT);
-			sths.add(Structure.RUINED_PORTAL);
-			sths.add(Structure.RUINED_PORTAL_NETHER);
-			sths.add(Structure.FORTRESS);
-		}
-		else if(we == Environment.THE_END) {
-			sths.add(Structure.END_CITY);
-		}
-		else {
-			sths.add(Structure.BURIED_TREASURE);
-			sths.add(Structure.PILLAGER_OUTPOST);
-			sths.add(Structure.MINESHAFT);
-			sths.add(Structure.RUINED_PORTAL);
-			sths.add(Structure.RUINED_PORTAL_DESERT);
-			sths.add(Structure.RUINED_PORTAL_JUNGLE);
-			sths.add(Structure.RUINED_PORTAL_MOUNTAIN);
-			sths.add(Structure.RUINED_PORTAL_OCEAN);
-			sths.add(Structure.RUINED_PORTAL_SWAMP);
-			sths.add(Structure.STRONGHOLD);
-			final String bn = l.getBlock().getBiome().name();
-			if(bn.contains("OCEAN") ||bn.contains("BEACH")) {
-				sths.add(Structure.OCEAN_RUIN_COLD);
-				sths.add(Structure.OCEAN_RUIN_WARM);
-				sths.add(Structure.MONUMENT);
-				sths.add(Structure.SHIPWRECK);
-			}
-			else if(bn.contains("DESERT")) {
-				sths.add(Structure.DESERT_PYRAMID);
-			}
-			else if(bn.contains("SNOW") || bn.contains("COLD")) {
-				sths.add(Structure.IGLOO);
-			}
-			else if(bn.contains("DEEP_DARK")) {
-				sths.add(Structure.ANCIENT_CITY);
-			}
-			else if(bn.contains("JUNGLE")) {
-				sths.add(Structure.JUNGLE_PYRAMID);
-			}
-			else if(bn.contains("BAD")) {
-				sths.add(Structure.MINESHAFT_MESA);
-			}
-		}
-		return sths;
-	}*/
-	
-	final private HashSet<Structure> strset(){
-		if(sths.isEmpty()) {
-			//sths.add(Structure.ANCIENT_CITY);
-			sths.add(Structure.BASTION_REMNANT);
-			sths.add(Structure.BURIED_TREASURE);
-			sths.add(Structure.DESERT_PYRAMID);
-			sths.add(Structure.END_CITY);
-			sths.add(Structure.FORTRESS);
-			sths.add(Structure.IGLOO);
-			sths.add(Structure.JUNGLE_PYRAMID);
-			sths.add(Structure.MANSION);
-			sths.add(Structure.MINESHAFT);
-			sths.add(Structure.MINESHAFT_MESA);
-			sths.add(Structure.MONUMENT);
-			sths.add(Structure.OCEAN_RUIN_COLD);
-			sths.add(Structure.OCEAN_RUIN_WARM);
-			sths.add(Structure.PILLAGER_OUTPOST);
-			sths.add(Structure.RUINED_PORTAL);
-			sths.add(Structure.RUINED_PORTAL_DESERT);
-			sths.add(Structure.RUINED_PORTAL_JUNGLE);
-			sths.add(Structure.RUINED_PORTAL_MOUNTAIN);
-			sths.add(Structure.RUINED_PORTAL_OCEAN);
-			sths.add(Structure.RUINED_PORTAL_SWAMP);
-			sths.add(Structure.RUINED_PORTAL_NETHER);
-			sths.add(Structure.SHIPWRECK);
-			sths.add(Structure.STRONGHOLD);
-			sths.add(Structure.SWAMP_HUT);
-			/*sths.add(Structure.VILLAGE_DESERT);
-			sths.add(Structure.VILLAGE_PLAINS);
-			sths.add(Structure.VILLAGE_SAVANNA);
-			sths.add(Structure.VILLAGE_SNOWY);
-			sths.add(Structure.VILLAGE_TAIGA);*/
-			
-		}
-		return sths;
-	}
-    
-	final private Structure strrtr(String name) {
-		return Registry.STRUCTURE.get(NamespacedKey.minecraft(name));
-	}
-	
-	@EventHandler	
-	public void spawning(PluginEnableEvent ev) 
-	{
-		HashMultimap<UUID, HashMap<Location, String>> Locs = getLocsdata().Locs;
-        AtomicInteger j = new AtomicInteger();
-
-		Bukkit.getWorlds().forEach(w -> {
-			if(w.hasMetadata("fake")||w.hasMetadata("rpgraidworld") || !w.canGenerateStructures() || disabledWorlds.contains(w.getName())) {
-				return;
-			}
-			
-			
-			Bukkit.getServer().getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
-                @Override
-                public void run() 
-                {
-        			if(!Locs.containsKey(w.getUID())) {
-        				System.out.println("Generating NPC Save File....");
-        				HashSet<HashMap<Location, String>> hs = new HashSet<>();
-        				strset().forEach(str -> {
-        					
-        					HashMap<Location, String> hm = new HashMap<>();
-        					
-        					Bukkit.getServer().getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
-        		                @Override
-        		                public void run() 
-        		                {
-        		                	Location stl = strct(w, new Location(w,0,64,0), str.getKey().getKey(), true);
-        							if(stl == null) {
-        								stl = strct(w, new Location(w,0,64,0), str.getKey().getKey(), false);
-        								if(stl == null) {
-        									return;
-        								}
-        							}
-        							hm.put(stl, str.getKey().getKey());
-
-        							Location stl1 = strct(w, w.getSpawnLocation(), str.getKey().getKey(), true);
-        							if(stl1 == null) {
-        								stl1 = strct(w, w.getSpawnLocation(), str.getKey().getKey(), false);
-        								if(stl1 == null) {
-        									return;
-        								}
-        							}
-        							hm.put(stl1, str.getKey().getKey());
-        							hs.add(hm);
-        		                }
-        					}, j.incrementAndGet()*20); 
-        					
-        				});
-
-        				Bukkit.getServer().getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
-        	                @Override
-        	                public void run() 
-        	                {
-        	                	if(hs.isEmpty()) {
-            	    				System.out.println("There's no Structure in " + w.getName());
-                    				return;
-        	                	}
-        	    				saver(w,hs);
-        	    				System.out.println(w.getName()+" NPC File Created");
-        	    				System.out.println("Please reload one more time after reload completed");
-        	                }
-        				}, j.incrementAndGet()*20); 
-        				return;
-        			}
-                }
-			}, 100); 
-			
-		});
-	}
-
-
-	@EventHandler	
-	public void spawning(EntityDeathEvent ev) 
-	{
-		if(ev.getEntity().hasMetadata("rpgspawned")) {
-			return;
-		}
-		if(ev.getEntity() instanceof ElderGuardian) {
-			final World w = ev.getEntity().getWorld();
-			if(w.hasMetadata("fake")||w.hasMetadata("rpgraidworld") || !w.canGenerateStructures() || disabledWorlds.contains(w.getName())) {
-				return;
-			}
-			final Location l = ev.getEntity().getLocation();
-			PlayerLocs.put(w.getUID(), l);
-
-			strset().forEach(str -> {
-				Collection<GeneratedStructure> stlc = strct2(w, l, str.getKey().getKey());
-				if(stlc == null || stlc.isEmpty()) {
-					return;
-				}
-				stlc.forEach(stls -> {
-					Location stl = stls.getBoundingBox().getMax().toLocation(w);
-					Spawn(stl, str.getKey().getKey());
-				});
-			});
-
-		}
-	}
 	
 	@EventHandler	
 	public void spawning(LootGenerateEvent ev) 
 	{
-		if(ev.getEntity() != null) {
-			return;
-		}
 		final World w = ev.getWorld();
 		if(w.hasMetadata("fake")||w.hasMetadata("rpgraidworld") || !w.canGenerateStructures() || disabledWorlds.contains(w.getName())) {
 			return;
 		}
-		final Location l = ev.getLootContext().getLocation();
-		PlayerLocs.put(w.getUID(), l);
+		String structureKey = ev.getLootTable().getKey().getKey();
+		if(ev.getInventoryHolder() == null) {
+			if(ev.getEntity() instanceof ElderGuardian && !ev.getEntity().hasMetadata("rpgspawned")) {
 
-		strset().forEach(str -> {
-			Collection<GeneratedStructure> stlc = strct2(w, l, str.getKey().getKey());
-			if(stlc == null || stlc.isEmpty()) {
-				return;
+				Location l = ev.getEntity().getLocation();
+				ev.setCancelled(true);
+				Block b = l.getBlock();
+				b.setType(Material.CHEST);
+				b.setMetadata("structureChest", new FixedMetadataValue(RMain.getInstance(),l.toString()));
+				Chest cstate = (Chest) b.getState();
+				cstate.setLootTable(ev.getLootTable());
+				cstate.setCustomName("ElderGuaridan Chest");
+				ChestLocs.add(l);
 			}
-			stlc.forEach(stls -> {
-				Location stl = stls.getBoundingBox().getMax().toLocation(w);
-				Spawn(stl, str.getKey().getKey());
-			});
-		});
+		}
+		
+		InventoryHolder ih = ev.getInventoryHolder();
+		
+		Location l = ih.getInventory().getLocation();
+		ev.setCancelled(true);
+
+		if(ChestLocs.add(l)) {
+			Spawn(l,structureKey);
+		}
+		
+		l.getBlock().setMetadata("structureChest", new FixedMetadataValue(RMain.getInstance(),l.toString()));
+		
+		if(structureKey.contains("trial")) {
+			return;
+		}
+
+		Table<UUID, Location, ItemStack[]> data = getLocsdata().Locs;
+
+		if(structureKey.contains("buried_treasure")) {
+			return;
+		}
+		List<HumanEntity> viewers = new ArrayList<>(ih.getInventory().getViewers());
+		for (HumanEntity he : viewers) {
+		    Player p = (Player) he;
+		    p.closeInventory();
+		    
+		    if (!data.contains(p.getUniqueId(), l)) {
+		        saver(p, l, ih.getInventory().getContents());
+		    	data = getLocsdata().Locs;
+		    }
+		    
+		    Inventory inv = Bukkit.createInventory(p, 54, p.getName());
+		    inv.setContents(data.get(p.getUniqueId(), l));
+		    p.openInventory(inv);
+		}
+		
 	}
 
 	@EventHandler	
-	public void spawning(WorldLoadEvent ev) 
+	public void Close(InventoryCloseEvent d) 
 	{
-		final World w = ev.getWorld();
+		Inventory ci = d.getInventory();
+		Player p = (Player) d.getPlayer();
+		if(ci.getLocation().getBlock() != null && ci.getLocation().getBlock().hasMetadata("structureChest")) {
+			saver(p,ci.getLocation(),ci.getContents());
+		}
+	}
 
-		HashMultimap<UUID, HashMap<Location, String>> Locs = getLocsdata().Locs;
-		
-		if(!Locs.containsKey(w.getUID())) {
-			return;
+	@EventHandler	
+	public void Break(BlockBreakEvent d) 
+	{
+		if(d.getBlock().getState() instanceof Chest) {
+			Chest c = (Chest) d.getBlock().getState();
+			if(c.hasMetadata("structureChest")) {
+				d.setCancelled(true);
+			}
 		}
-		if(w.hasMetadata("fake")||w.hasMetadata("rpgraidworld") || !w.canGenerateStructures() || disabledWorlds.contains(w.getName())) {
-			return;
-		}
-		
-        AtomicInteger j = new AtomicInteger();
-		Bukkit.getServer().getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
-            @Override
-            public void run() 
-            {
-        		System.out.println("Spawning NPCs of World: "+w.getName() +"...");
-        		Locs.get(w.getUID()).forEach(hm -> {
-        			hm.entrySet().forEach(en->{
-        				Bukkit.getServer().getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
-        	                @Override
-        	                public void run() 
-        	                {
-        						Spawn(en.getKey(), en.getValue());
-        	                }
-        				}, j.incrementAndGet()*20); 
-        			});
-        		});
-        		Bukkit.getServer().getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
-                    @Override
-                    public void run() 
-                    {
-        				System.out.println(w.getName() +"'s NPCs Spawned");
-                    }
-        		}, j.incrementAndGet()*20); 
-            }
-		}, 100); 
-		
 	}
 	
-	@EventHandler
-	public void spawning(AsyncStructureGenerateEvent ev) {
-	    final World w = ev.getWorld();
-
-	    // 월드가 특정 메타데이터를 가지고 있거나, 구조물을 생성할 수 없거나, 비활성화된 월드라면 중지
-	    if (w.hasMetadata("fake") || w.hasMetadata("rpgraidworld") || !w.canGenerateStructures() || disabledWorlds.contains(w.getName())) {
-	        return;
-	    }
+	@EventHandler	
+	public void despawning(WorldUnloadEvent ev) 
+	{
+		World w = ev.getWorld();
+		if(w.hasMetadata("fake")||w.hasMetadata("rpgraidworld") || !w.canGenerateStructures() || !w.canGenerateStructures()) {
+			return;
+		}
 		
-
-	    // 비동기 이벤트 안에서는 월드 변경 작업을 직접 하지 않고, 필요한 정보만 수집
-	    final Structure st = ev.getStructure();
-
-		if(w.getEnvironment() == Environment.NORMAL && (st == Structure.END_CITY || st == Structure.FORTRESS || st == Structure.BASTION_REMNANT || st == Structure.NETHER_FOSSIL || st == Structure.RUINED_PORTAL_NETHER)) {
-			return;
-		}
-		if(w.getEnvironment() == Environment.NETHER && (st != Structure.FORTRESS && st != Structure.NETHER_FOSSIL && st != Structure.BASTION_REMNANT && st != Structure.RUINED_PORTAL_NETHER)) {
-			return;
-		}
-		if(w.getEnvironment() == Environment.THE_END && st != Structure.END_CITY) {
-			return;
-		}
-	    final Location stl = new Location(w, ev.getChunkX(), 0, ev.getChunkZ());
-		
-	    // 동기 작업으로 넘겨서 실행
-	    Bukkit.getScheduler().runTask(RMain.getInstance(), () -> {
-	    	HashSet<HashMap<Location, String>> hs = new HashSet<>();
-	        HashMap<Location, String> hm = new HashMap<>();
-	        hm.put(stl, st.getKey().getKey());
-
-	        hs.add(hm);
-	        saver(w, hs); // saver는 월드 데이터를 처리하는 메서드로 가정
-
-	        Spawn(stl, st.getKey().getKey()); // Spawn은 구조물 생성을 처리하는 메서드로 가정
-	    	
-//		    strct2(w,stcl,st.getKey().getKey()).forEach(gs ->{
-//		    	final Location stl = gs.getBoundingBox().getMax().toLocation(w);
-//		    	HashSet<HashMap<Location, String>> hs = new HashSet<>();
-//		        HashMap<Location, String> hm = new HashMap<>();
-//		        hm.put(stl, st.getKey().getKey());
-//
-//		        hs.add(hm);
-//		        saver(w, hs); // saver는 월드 데이터를 처리하는 메서드로 가정
-//
-//		        Spawn(stl, st.getKey().getKey()); // Spawn은 구조물 생성을 처리하는 메서드로 가정
-//		    });
-	    });
+		/*if(NPCLocs.containsKey(w.getUID())) {
+			NPCLocs.get(w.getUID()).forEach(l -> {
+				for(Entity e : l.getChunk().getEntities()) {
+					e.remove();
+				};
+			});
+		}*/
+		npcloc.keySet().forEach(uid ->{
+			Entity entity = Bukkit.getEntity(uid);
+			if (entity != null) {
+			    entity.remove();
+			}
+		});
 	}
-
-//	
-//	@EventHandler	
-//	public void despawning(WorldUnloadEvent ev) 
-//	{
-//		World w = ev.getWorld();
-//		if(w.hasMetadata("fake")||w.hasMetadata("rpgraidworld") || !w.canGenerateStructures() || !w.canGenerateStructures()) {
-//			return;
-//		}
-//		System.out.println(w.getName() +"'s NPC File Saving...");
-//		if(PlayerLocs.containsKey(w.getUID())) {
-//			HashSet<HashMap<Location, String>> hs = new HashSet<>();
-//			PlayerLocs.get(w.getUID()).forEach(l -> {
-//
-//				strset().forEach(str -> {
-//					Collection<GeneratedStructure> stlc = strct2(w, l, str.getKey().getKey());
-//					if(stlc == null || stlc.isEmpty()) {
-//						return;
-//					}
-//					HashMap<Location, String> hm = new HashMap<>();
-//					stlc.forEach(stls -> {
-//						Location stl = stls.getBoundingBox().getMax().toLocation(w);
-//						hm.put(stl, str.getKey().getKey());
-//					});
-//					hs.add(hm);
-//				});
-//			});
-//			saver(w,hs);
-//		}
-//		
-//		/*if(NPCLocs.containsKey(w.getUID())) {
-//			NPCLocs.get(w.getUID()).forEach(l -> {
-//				for(Entity e : l.getChunk().getEntities()) {
-//					e.remove();
-//				};
-//			});
-//		}*/
-//		npcloc.keySet().forEach(uid ->{
-//			Entity entity = Bukkit.getEntity(uid);
-//			if (entity != null) {
-//			    entity.remove();
-//			}
-//		});
-//	}
 	
 	
 	public static HashMap<UUID,Location> npcloc = new HashMap<UUID,Location>();
@@ -660,8 +369,7 @@ public class NPCLoc implements Serializable, Listener{
 				}
 			}
 		}
-		NPCLocs.put(w.getUID(), tl);
-		return tl;
+		return NPCLocs.add(tl) ? tl : null;
 	}
 	
 	final private Villager vnpc(World w, Location l, String meta, String name,  @Nullable  Type vt,  @Nullable  Profession pr) {
@@ -670,9 +378,12 @@ public class NPCLoc implements Serializable, Listener{
 			return null;
 		}
 		else {
-			npcsloc.put(l, meta);
 			
 			Location tl = lfd(l,meta);
+			if(tl == null) {
+				return null;
+			}
+			npcsloc.put(l, meta);
 			final Villager v = (Villager) w.spawn(tl, Villager.class, ve ->{
 				npcloc.put(ve.getUniqueId(),l);
 				ve.setPersistent(false);
@@ -716,8 +427,11 @@ public class NPCLoc implements Serializable, Listener{
 			return null;
 		}
 		else {
-			npcsloc.put(l, meta);
 			Location tl = lfd(l,meta);
+			if(tl == null) {
+				return null;
+			}
+			npcsloc.put(l, meta);
 			final LivingEntity v = (LivingEntity) w.spawn(tl, type.getEntityClass(), ve ->{
 				npcloc.put(ve.getUniqueId(),l);
 				ve.setPersistent(false);
@@ -753,8 +467,11 @@ public class NPCLoc implements Serializable, Listener{
 			return null;
 		}
 		else {
-			npcsloc.put(l, meta);
 			Location tl = lfd(l,meta);
+			if(tl == null) {
+				return null;
+			}
+			npcsloc.put(l, meta);
 			final LivingEntity v = (LivingEntity) w.spawn(tl, type.getEntityClass(), ve ->{
 				npcloc.put(ve.getUniqueId(),l);
 				ve.setPersistent(false);
@@ -812,10 +529,7 @@ public class NPCLoc implements Serializable, Listener{
 
 		final World w = lel.getWorld();
 		
-
-		Structure st = strrtr(ns);
-		
-    	if(st == Structure.MINESHAFT) {
+    	if(ns.contains("abandoned_mineshaft")) {
 			String reg = lang.contains("kr") ? "길잃은 광부":"Stray Miner";
     		Villager v = vnpc(w,lel, "mineshaft",reg, Type.DESERT, Profession.ARMORER);
     		if(v != null) {
@@ -825,8 +539,9 @@ public class NPCLoc implements Serializable, Listener{
     		}
     		
     	}
-    	else if(st == Structure.BURIED_TREASURE) {
+    	else if(ns.contains("buried_treasure")) {
 			ItemStack head = new ItemStack(Material.CHEST);
+			head.addUnsafeEnchantment(Enchantment.BINDING_CURSE, 1);
 			ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
 			LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
 			chm.setColor(Color.TEAL);
@@ -847,7 +562,7 @@ public class NPCLoc implements Serializable, Listener{
     		}
     		
     	}
-    	else if(st == Structure.PILLAGER_OUTPOST) {
+    	else if(ns.contains("pillager_outpost")) {
 			String reg = lang.contains("kr") ? "약탈당한 상인":"Looted Trader";
     		WanderingTrader v = (WanderingTrader) mnpc(w,lel, EntityType.WANDERING_TRADER, "pillageroutpost", reg);
     		if(v != null) {
@@ -857,7 +572,7 @@ public class NPCLoc implements Serializable, Listener{
         		v.setDespawnDelay(-1);
     		}
     	}
-    	else if(st == Structure.STRONGHOLD) {
+    	else if(ns.contains("stronghold")) {
 
 			String reg = lang.contains("kr") ? "요새 청소부":"Stronghold Cleaner";
     		Villager v = vnpc(w,lel, "stronghold",reg, Type.SNOW, Profession.BUTCHER);
@@ -865,9 +580,10 @@ public class NPCLoc implements Serializable, Listener{
         		v.setVillagerLevel(5);
     		}
     	}
-    	else if(st == Structure.RUINED_PORTAL) {
+    	else if(ns.contains("ruined_portal")) {
 
     			ItemStack head = new ItemStack(Material.CRYING_OBSIDIAN);
+    			head.addUnsafeEnchantment(Enchantment.BINDING_CURSE, 1);
     			ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
     			LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
     			chm.setColor(Color.BLACK);
@@ -886,7 +602,7 @@ public class NPCLoc implements Serializable, Listener{
         }
 		
 
-    	else if(st == Structure.MANSION) {
+    	else if(ns.contains("woodland_mansion")) {
         		
 			lel.getWorld().getNearbyEntities(lel, 150, 60, 150).forEach(e -> {
     			if(!e.hasMetadata("rpgspawned") && !e.hasMetadata("fake") && (e.getType() == EntityType.EVOKER||e.getType() == EntityType.VINDICATOR||e.getType() == EntityType.WITCH)) {
@@ -904,16 +620,16 @@ public class NPCLoc implements Serializable, Listener{
     		}
     	}
 
-    	else if(st == Structure.SWAMP_HUT) {
+    	else if(ns.contains("ancient_city")) {
 
 			String reg = lang.contains("kr") ? "성직자":"Priest";
-    		Villager v = vnpc(w,lel, "swamphut",reg, Type.SWAMP, Profession.CLERIC);
+    		Villager v = vnpc(w,lel, "ancient",reg, Type.SWAMP, Profession.CLERIC);
     		if(v != null) {
         		v.setVillagerLevel(5);
     		}
     		
     	}
-    	else if(st == Structure.IGLOO) {
+    	else if(ns.contains("igloo_chest")) {
     		
     			ItemStack head = new ItemStack(Material.SNOW_BLOCK);
     			ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
@@ -936,7 +652,7 @@ public class NPCLoc implements Serializable, Listener{
         		}
     	}
 
-    	else if(st == Structure.DESERT_PYRAMID) {
+    	else if(ns.contains("desert_pyramid")) {
     		
     			ItemStack head = new ItemStack(Material.OBSERVER);
     			ItemStack chest = new ItemStack(Material.IRON_CHESTPLATE);
@@ -957,7 +673,7 @@ public class NPCLoc implements Serializable, Listener{
         		}
     		
     	}
-    	else if(st == Structure.JUNGLE_PYRAMID) {
+    	else if(ns.contains("jungle_temple")) {
 
 			String reg = lang.contains("kr") ? "고고학자":"Archaeologist";
     		Villager v = vnpc(w,lel, "junglepyramid" ,reg, Type.JUNGLE, Profession.LIBRARIAN);
@@ -965,7 +681,7 @@ public class NPCLoc implements Serializable, Listener{
         		v.setVillagerLevel(5);
     		}
     	}
-    	else if(st == Structure.OCEAN_RUIN_COLD || st == Structure.OCEAN_RUIN_WARM) {
+    	else if(ns.contains("underwater_ruin_small")) {
     		lel.getWorld().getNearbyEntities(lel, 100, 100, 100).forEach(e -> {
         			if(!e.hasMetadata("rpgspawned") && !e.hasMetadata("fake") && (e.getType() == EntityType.DROWNED)) {
 
@@ -982,7 +698,7 @@ public class NPCLoc implements Serializable, Listener{
         		}
     		
     	}
-    	else if(st == Structure.SHIPWRECK) {
+    	else if(ns.contains("shipwreck")) {
         		
     			ItemStack head = new ItemStack(Material.DEAD_BRAIN_CORAL_BLOCK);
     			ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
@@ -1004,10 +720,10 @@ public class NPCLoc implements Serializable, Listener{
             		v.setConversionTime(-1);
         		}
     	}
-    	else if(st == Structure.MONUMENT) {
+    	else if(ns.contains("underwater_ruin_big")) {
     		
         		lel.getWorld().getNearbyEntities(lel, 100, 100, 100).forEach(e -> {
-        			if(!e.hasMetadata("rpgspawned") && !e.hasMetadata("fake") && (e.getType() == EntityType.GUARDIAN||e.getType() == EntityType.ELDER_GUARDIAN)) {
+        			if(!e.hasMetadata("rpgspawned") && !e.hasMetadata("fake") && (e.getType() == EntityType.GUARDIAN)) {
         				e.remove();
         			}
         		});
@@ -1020,7 +736,7 @@ public class NPCLoc implements Serializable, Listener{
         		}
     		
     	}
-    	else if(st == Structure.FORTRESS) {
+    	else if(ns.contains("nether_bridge")) {
     			ItemStack head = new ItemStack(Material.IRON_HELMET);
     			ItemStack chest = new ItemStack(Material.IRON_CHESTPLATE);
     			ItemStack leg = new ItemStack(Material.IRON_LEGGINGS);;
@@ -1032,7 +748,7 @@ public class NPCLoc implements Serializable, Listener{
             		v.setImmuneToZombification(true);
         		}
     	}
-    	else if(st == Structure.NETHER_FOSSIL) {
+    	else if(ns.contains("bastion_treasure")) {
     			ItemStack head = new ItemStack(Material.IRON_HELMET);
     			ItemStack chest = new ItemStack(Material.IRON_CHESTPLATE);
     			ItemStack leg = new ItemStack(Material.IRON_LEGGINGS);;
@@ -1042,7 +758,7 @@ public class NPCLoc implements Serializable, Listener{
     			mnpc(w,lel, EntityType.WITHER_SKELETON, "bastionremnant", reg,head,chest,leg,boots,new ItemStack(Material.NETHERITE_SWORD),new ItemStack(Material.SHIELD));
     		
     	}
-    	else if(st == Structure.END_CITY) {
+    	else if(ns.contains("buried_treasure")) {
     			ItemStack head = new ItemStack(Material.DRAGON_HEAD);
     			ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
     			LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
@@ -1058,7 +774,7 @@ public class NPCLoc implements Serializable, Listener{
     			boots.setItemMeta(bom);
 
     			String reg = lang.contains("kr") ? "드래곤 사냥꾼":"Dragon Hunter";
-    			mnpc(w,lel, EntityType.DROWNED, "endcity", reg,head,chest,leg,boots,new ItemStack(Material.CROSSBOW),new ItemStack(Material.NETHERITE_SWORD));
+    			mnpc(w,lel, EntityType.DROWNED, "endcity", reg,head,chest,leg,boots,new ItemStack(Material.CROSSBOW),new ItemStack(Material.RED_BED));
     		
     	}
 		

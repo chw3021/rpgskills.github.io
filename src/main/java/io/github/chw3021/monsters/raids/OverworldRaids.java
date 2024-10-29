@@ -832,19 +832,19 @@ public class OverworldRaids extends Summoned implements Listener {
 	}
 	
 	final private void playerTP(Player p, Location spl, String rn) {
-		final Location pl = p.getLocation();
-		beforepl.put(p.getUniqueId(), pl);
-		Holding.invur(p, 100l);
-		p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 20,1,false,false));
-		p.teleport(spl.clone().add(0,0.5,0));
-		Holding.invur(p, 100l);
-//		int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-//            @Override
-//            public void run() 
-//            {
-//            }
-//		}, 25); 
-//		ordt.put(rn, task);
+		int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() 
+            {
+        		final Location pl = p.getLocation();
+        		beforepl.put(p.getUniqueId(), pl);
+        		Holding.invur(p, 100l);
+        		p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 20,1,false,false));
+        		p.teleport(spl.clone().add(0,0.5,0));
+        		Holding.invur(p, 100l);
+            }
+		}, 25); 
+		ordt.put(rn, task);
 	}
 
 	final private void diffGetter(Player p, String rn) {
@@ -1030,8 +1030,11 @@ public class OverworldRaids extends Summoned implements Listener {
     		v.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1);
     		v.setGravity(true);
     		v.setNoDamageTicks(0);
-    		v.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(4000);
-    		v.setHealth(4000);
+    		v.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(20);
+    		v.getAttribute(Attribute.GENERIC_OXYGEN_BONUS).setBaseValue(10000);
+    		v.getAttribute(Attribute.GENERIC_GRAVITY).setBaseValue(10000);
+    		v.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(10000);
+    		v.setHealth(10000);
     		v.setRemoveWhenFarAway(false);
     		v.setGlowing(true);
     		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? rn + " 고고학자":rn + "'s Archaeologist";

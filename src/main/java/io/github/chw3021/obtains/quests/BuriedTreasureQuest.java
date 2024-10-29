@@ -171,6 +171,7 @@ public class BuriedTreasureQuest extends Mobs implements Serializable  {
 				if(TrophyLoc.getLocsdata().Locs.containsEntry(p.getUniqueId(), NPCLoc.npcloc.get(le.getUniqueId()))) {
 
 					Location l = NPCLoc.npcloc.get(le.getUniqueId());
+					c.setMetadata("treasure", new FixedMetadataValue(RMain.getInstance(),l.toString()));
 					Inventory ci = Bukkit.createInventory(p, c.getInventory().getSize(), p.getName() + "'s Buried Treasure");
 					if(check(p)) {
 						ci.setContents(getinv(p,l));
@@ -195,6 +196,7 @@ public class BuriedTreasureQuest extends Mobs implements Serializable  {
 					
 				}
 				else {
+					p.sendHurtAnimation(0);
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "넌 아직 자격이 없다.").create());
 	        		}
@@ -243,7 +245,7 @@ public class BuriedTreasureQuest extends Mobs implements Serializable  {
 	{
 		if(d.getBlock().getState() instanceof Chest) {
 			Chest c = (Chest) d.getBlock().getState();
-			if(c.getWorld().getNearbyEntities(c.getLocation(),2,5,2).stream().anyMatch(e -> e.hasMetadata("treasure"))) {
+			if(c.hasMetadata("treasure")) {
 				d.setCancelled(true);
 			}
 		}
