@@ -123,6 +123,30 @@ public class Potions {
 				pom.setDisplayName(ChatColor.GREEN + "Wild Elixir");
 			}
 		}
+		else if(f==7) {
+			pom.setColor(Color.PURPLE);
+			pom.setBasePotionType(PotionType.STRONG_HEALING);
+			pom.addCustomEffect(new PotionEffect(PotionEffectType.REGENERATION, 24000, 4, true,true), false);
+			pom.addCustomEffect(new PotionEffect(PotionEffectType.ABSORPTION, 24000, 20, true,true), false);
+			pom.addCustomEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 24000, 5, true,true), false);
+			pom.addCustomEffect(new PotionEffect(PotionEffectType.STRENGTH, 24000, 2, true,true), false);
+			pom.addCustomEffect(new PotionEffect(PotionEffectType.HASTE, 24000, 2, true,true), false);
+			pom.addCustomEffect(new PotionEffect(PotionEffectType.SPEED, 24000, 2, true,true), false);
+			pom.addCustomEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 24000, 2, true,true), false);
+			pom.addCustomEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 24000, 2, true,true), false);
+			pom.addCustomEffect(new PotionEffect(PotionEffectType.LUCK, 24000, 2, true,true), false);
+			pom.addCustomEffect(new PotionEffect(PotionEffectType.RESISTANCE, 24000, 1, true,true), false);
+			pom.addCustomEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 24000, 1, true,true), false);
+			pom.addCustomEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 24000, 2, true,true), false);
+			pom.addCustomEffect(new PotionEffect(PotionEffectType.SATURATION, 24000, 0, true,true), false);
+			pom.addCustomEffect(new PotionEffect(PotionEffectType.LEVITATION, 40, 1, true,true), false);
+			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+				pom.setDisplayName(ChatColor.GREEN + "차원 여행자의 물약");
+			}
+			else {
+				pom.setDisplayName(ChatColor.GREEN + "Potion of Dimension Travler");
+			}
+		}
 		po.setItemMeta(pom);
 		
 		return po;

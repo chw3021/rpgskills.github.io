@@ -845,8 +845,8 @@ public class Elements implements Listener {
 				lore.addAll(Arrays.asList("",ChatColor.RED + "[고대의 방어구]는 네더 보스 몬스터드랍", ChatColor.RED + "또는 사신 npc에게 구매가능합니다"));
 				imeta.setLore(lore);
 				ii.setType(Material.LIME_GLAZED_TERRACOTTA);
-				imeta.setDisplayName(ChatColor.GOLD +"강력한 맹독의 핵");
-				imeta.setItemName(ChatColor.GOLD +"강력한 맹독의 핵");
+				imeta.setDisplayName(ChatColor.GOLD +"독사의 심장");
+				imeta.setItemName(ChatColor.GOLD +"독사의 심장");
 			}
 			else if(i == 12) {
 				ii.setType(Material.BLACK_GLAZED_TERRACOTTA);
@@ -1236,10 +1236,10 @@ public class Elements implements Listener {
 			else if(netherChange(d.getInventory(), -5)>0) {
 				d.getInventory().setResult(getelcore(-2,p));
 			}
-			else if(!nconverged(d.getInventory()).isEmpty()) {
+			else if(nconverged(d.getInventory())!=null) {
 				d.getInventory().setResult(getstel(-2,p));
 			}
-			else if(!econverged(d.getInventory()).isEmpty()) {
+			else if(econverged(d.getInventory())!=null) {
 				d.getInventory().setResult(getstel(-6,p));
 			}
 

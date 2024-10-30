@@ -35,11 +35,6 @@ import io.github.chw3021.rmain.RMain;
 
 public class PlainRaids extends Summoned {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6536664363548624595L;
-	
 	private static final PlainRaids instance = new PlainRaids ();
 	public static PlainRaids getInstance()
 	{

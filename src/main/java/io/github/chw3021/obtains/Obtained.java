@@ -67,7 +67,7 @@ public class Obtained implements Serializable, Listener {
 	public final HashMap<UUID, Integer> DesertPyramid;
 	public final HashMap<UUID, Integer> RuinedPortal;
 	public final HashMap<UUID, Integer> Stronghold;
-	public final HashMap<UUID, Integer> SwampHut;
+	public final HashMap<UUID, Integer> AncientCity;
 	public final HashMap<UUID, Integer> Village;
 	public final HashMap<UUID, Integer> NetherFortress;
 	public final HashMap<UUID, Integer> BastionRemnant;
@@ -157,7 +157,7 @@ public class Obtained implements Serializable, Listener {
 		HashMap<UUID, Integer> PillagerOutpost = d.PillagerOutpost;
 		HashMap<UUID, Integer> DesertPyramid = d.DesertPyramid;
 		HashMap<UUID, Integer> Stronghold = d.Stronghold;
-		HashMap<UUID, Integer> SwampHut = d.SwampHut;
+		HashMap<UUID, Integer> AncientCity = d.AncientCity;
 		HashMap<UUID, Integer> Village = d.Village;
 		HashMap<UUID, Integer> RuinedPortal = d.RuinedPortal;
 		HashMap<UUID, Integer> NetherFortress = d.NetherFortress;
@@ -308,9 +308,9 @@ public class Obtained implements Serializable, Listener {
 	    		}
 			}
 		} else if (f == 11) {
-			if (SwampHut.getOrDefault(p.getUniqueId(), 0) < 2) {
-				SwampHut.computeIfPresent(p.getUniqueId(), (k, v) -> v + add);
-				SwampHut.putIfAbsent(p.getUniqueId(), add);
+			if (AncientCity.getOrDefault(p.getUniqueId(), 0) < 2) {
+				AncientCity.computeIfPresent(p.getUniqueId(), (k, v) -> v + add);
+				AncientCity.putIfAbsent(p.getUniqueId(), add);
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -408,7 +408,7 @@ public class Obtained implements Serializable, Listener {
 		
 		
 		new Obtained(Mineshaft, BuriedTreasure, Igloo, OceanRuins, WoodlandMansion, Shipwreck, OceanMonument,
-				JungleTemple, PillagerOutpost, DesertPyramid, Stronghold, SwampHut, Village, RuinedPortal,
+				JungleTemple, PillagerOutpost, DesertPyramid, Stronghold, AncientCity, Village, RuinedPortal,
 				NetherFortress, BastionRemnant, EndCity, EnderDragon)
 						.saveData(path + "/plugins/RPGskills/Obtained.data");
 		
@@ -429,7 +429,7 @@ public class Obtained implements Serializable, Listener {
 		HashMap<UUID, Integer> PillagerOutpost = d.PillagerOutpost;
 		HashMap<UUID, Integer> DesertPyramid = d.DesertPyramid;
 		HashMap<UUID, Integer> Stronghold = d.Stronghold;
-		HashMap<UUID, Integer> SwampHut = d.SwampHut;
+		HashMap<UUID, Integer> AncientCity = d.AncientCity;
 		HashMap<UUID, Integer> Village = d.Village;
 		HashMap<UUID, Integer> RuinedPortal = d.RuinedPortal;
 		HashMap<UUID, Integer> NetherFortress = d.NetherFortress;
@@ -580,9 +580,9 @@ public class Obtained implements Serializable, Listener {
 	    		}
 			}
 		} else if (f.contains("swamp")) {
-			if (SwampHut.getOrDefault(p.getUniqueId(), 0) < 2) {
-				SwampHut.computeIfPresent(p.getUniqueId(), (k, v) -> v + add);
-				SwampHut.putIfAbsent(p.getUniqueId(), add);
+			if (AncientCity.getOrDefault(p.getUniqueId(), 0) < 2) {
+				AncientCity.computeIfPresent(p.getUniqueId(), (k, v) -> v + add);
+				AncientCity.putIfAbsent(p.getUniqueId(), add);
 			}
 			else {
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -680,7 +680,7 @@ public class Obtained implements Serializable, Listener {
 		
 		
 		new Obtained(Mineshaft, BuriedTreasure, Igloo, OceanRuins, WoodlandMansion, Shipwreck, OceanMonument,
-				JungleTemple, PillagerOutpost, DesertPyramid, Stronghold, SwampHut, Village, RuinedPortal,
+				JungleTemple, PillagerOutpost, DesertPyramid, Stronghold, AncientCity, Village, RuinedPortal,
 				NetherFortress, BastionRemnant, EndCity, EnderDragon)
 						.saveData(path + "/plugins/RPGskills/Obtained.data");
 		
@@ -893,11 +893,11 @@ public class Obtained implements Serializable, Listener {
 						46, inv);
 			}
 	
-			if (od.SwampHut.getOrDefault(p.getUniqueId(), 0) >= 2) {
-				itemset(ChatColor.GOLD + "늪지 오두막", my, 0, 1, Arrays.asList("방어력이 8% 증가합니다", "독에 면역이 됩니다"), 47, inv);
+			if (od.AncientCity.getOrDefault(p.getUniqueId(), 0) >= 2) {
+				itemset(ChatColor.GOLD + "고대 도시", my, 0, 1, Arrays.asList("방어력이 8% 증가합니다", "독에 면역이 됩니다"), 47, inv);
 			} else {
-				itemset(ChatColor.GOLD + "늪지 오두막(아직 모두 획득하지 못함)", Material.MYCELIUM, 0, 1,
-						Arrays.asList(ChatColor.GOLD + "" + od.SwampHut.getOrDefault(p.getUniqueId(), 0) + "/2 획득함"),
+				itemset(ChatColor.GOLD + "고대 도시(아직 모두 획득하지 못함)", Material.SCULK_CATALYST, 0, 1,
+						Arrays.asList(ChatColor.GOLD + "" + od.AncientCity.getOrDefault(p.getUniqueId(), 0) + "/2 획득함"),
 						47, inv);
 			}
 	
@@ -1081,13 +1081,13 @@ public class Obtained implements Serializable, Listener {
 						46, inv);
 			}
 	
-			if (od.SwampHut.getOrDefault(p.getUniqueId(), 0) >= 2) {
-				itemset(ChatColor.GOLD + "Trophy Of SwampHut", my, 0, 1,
+			if (od.AncientCity.getOrDefault(p.getUniqueId(), 0) >= 2) {
+				itemset(ChatColor.GOLD + "Trophy Of AncientCity", my, 0, 1,
 						Arrays.asList("Increase Armor 8%", "Immune To Poison"), 47, inv);
 			} else {
-				itemset(ChatColor.GOLD + "Trophy Of SwampHut(Not Obtained All Yet)", Material.MYCELIUM, 0, 1,
+				itemset(ChatColor.GOLD + "Trophy Of AncientCity(Not Obtained All Yet)", Material.SCULK_CATALYST, 0, 1,
 						Arrays.asList(
-								ChatColor.GOLD + "" + od.SwampHut.getOrDefault(p.getUniqueId(), 0) + "/2 Obtained"),
+								ChatColor.GOLD + "" + od.AncientCity.getOrDefault(p.getUniqueId(), 0) + "/2 Obtained"),
 						47, inv);
 			}
 	
@@ -1161,7 +1161,7 @@ public class Obtained implements Serializable, Listener {
 			HashMap<UUID, Integer> Igloo, HashMap<UUID, Integer> OceanRuins, HashMap<UUID, Integer> WoodlandMansion,
 			HashMap<UUID, Integer> Shipwreck, HashMap<UUID, Integer> OceanMonument, HashMap<UUID, Integer> JungleTemple,
 			HashMap<UUID, Integer> PillagerOutpost, HashMap<UUID, Integer> DesertPyramid,
-			HashMap<UUID, Integer> Stronghold, HashMap<UUID, Integer> SwampHut, HashMap<UUID, Integer> Village,
+			HashMap<UUID, Integer> Stronghold, HashMap<UUID, Integer> AncientCity, HashMap<UUID, Integer> Village,
 			HashMap<UUID, Integer> RuinedPortal, HashMap<UUID, Integer> NetherFortress,
 			HashMap<UUID, Integer> BastionRemnant, HashMap<UUID, Integer> EndCity, HashMap<UUID, Integer> EnderDragon) {
 		this.Mineshaft = Mineshaft;
@@ -1175,7 +1175,7 @@ public class Obtained implements Serializable, Listener {
 		this.PillagerOutpost = PillagerOutpost;
 		this.DesertPyramid = DesertPyramid;
 		this.Stronghold = Stronghold;
-		this.SwampHut = SwampHut;
+		this.AncientCity = AncientCity;
 		this.Village = Village;
 		this.RuinedPortal = RuinedPortal;
 		this.NetherFortress = NetherFortress;
@@ -1196,7 +1196,7 @@ public class Obtained implements Serializable, Listener {
 		this.PillagerOutpost = loadedData.PillagerOutpost;
 		this.DesertPyramid = loadedData.DesertPyramid;
 		this.Stronghold = loadedData.Stronghold;
-		this.SwampHut = loadedData.SwampHut;
+		this.AncientCity = loadedData.AncientCity;
 		this.Village = loadedData.Village;
 		this.RuinedPortal = loadedData.RuinedPortal;
 		this.NetherFortress = loadedData.NetherFortress;

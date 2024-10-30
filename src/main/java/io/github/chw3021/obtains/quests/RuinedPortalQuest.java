@@ -10,7 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
-import org.bukkit.StructureType;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
@@ -18,8 +18,8 @@ import org.bukkit.boss.BossBar;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Phantom;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Vex;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
@@ -29,8 +29,6 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Merchant;
 import org.bukkit.inventory.MerchantRecipe;
-import org.bukkit.inventory.meta.EnchantmentStorageMeta;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -39,8 +37,11 @@ import com.google.common.collect.Multimap;
 
 import io.github.chw3021.items.Elements;
 import io.github.chw3021.items.Potions;
+import io.github.chw3021.items.armors.Armors;
 import io.github.chw3021.items.armors.Boots;
+import io.github.chw3021.items.armors.Chestplate;
 import io.github.chw3021.items.armors.Helmet;
+import io.github.chw3021.items.armors.Leggings;
 import io.github.chw3021.monsters.Mobs;
 import io.github.chw3021.obtains.NPCLoc;
 import io.github.chw3021.obtains.Obtained;
@@ -52,7 +53,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
 
-public class ShipwreckQuest extends Mobs  {
+public class RuinedPortalQuest extends Mobs  {
 	
 	private HashMap<UUID, Integer> asked = new HashMap<UUID, Integer>();
 	private HashMap<UUID, Location> quested = new HashMap<UUID, Location>();
@@ -69,8 +70,8 @@ public class ShipwreckQuest extends Mobs  {
 	private ItemStack map = null;
 	
 
-	private static final ShipwreckQuest instance = new ShipwreckQuest ();
-	public static ShipwreckQuest getInstance()
+	private static final RuinedPortalQuest instance = new RuinedPortalQuest ();
+	public static RuinedPortalQuest getInstance()
 	{
 		return instance;
 	}
@@ -133,19 +134,19 @@ public class ShipwreckQuest extends Mobs  {
 		else if (factor == 4) {
     		p.playSound(p.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendTitle(ChatColor.BOLD + (ChatColor.GOLD + "퀘스트 완료!"),ChatColor.BOLD + (ChatColor.GOLD + "난파선 전리품을 획득했습니다!"),15,35,15);
-            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "익사한 선원과 거래를 할 수 있습니다").create());
+    			p.sendTitle(ChatColor.BOLD + (ChatColor.GOLD + "퀘스트 완료!"),ChatColor.BOLD + (ChatColor.GOLD + "무너진 차원문 전리품을 획득했습니다!"),15,35,15);
+            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "사신과 거래를 할 수 있습니다").create());
 		    }
     		else {
-    			p.sendTitle(ChatColor.GOLD + "Complete Quest!",ChatColor.GOLD + "You Just Obtained Shipwreck Trophy!",15,35,15);
-            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "Able To Trade With Drowned Sailor").create());
+    			p.sendTitle(ChatColor.GOLD + "Complete Quest!",ChatColor.GOLD + "You Just Obtained Ruined Portal Trophy!",15,35,15);
+            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "Able To Trade With Reaper").create());
     		}
-    		Obtained.saver(p, 5, 1);
+    		Obtained.saver(p, 13, 1);
     		TrophyLoc.saver(p, quested.get(p.getUniqueId()));
-        	Elements.give(Material.LAPIS_LAZULI, 5, p);
-        	Elements.give(Material.EMERALD, 5, p);
-			p.giveExp(150);
-			Bukkit.getServer().getPluginManager().callEvent(new PlayerExpChangeEvent(p,150));
+        	Elements.give(Material.LAPIS_LAZULI, 15, p);
+        	Elements.give(Material.EMERALD, 15, p);
+			p.giveExp(200);
+			Bukkit.getServer().getPluginManager().callEvent(new PlayerExpChangeEvent(p,200));
 		}
 		if(quested.containsKey(p.getUniqueId())) {
 			quested.remove(p.getUniqueId());
@@ -162,18 +163,30 @@ public class ShipwreckQuest extends Mobs  {
 			}
 		}
     	Random random=new Random();
-    	double number = (random.nextDouble()+1.5) * 3 * (random.nextBoolean() ? -1 : 1);
-    	double number2 = (random.nextDouble()+1.5) * 3 * (random.nextBoolean() ? -1 : 1);
-    	Location esl = l.clone().add(number, -18, number2);
+    	double number = (random.nextDouble()+1.5) * 2 * (random.nextBoolean() ? -1 : 1);
+    	double number2 = (random.nextDouble()+1.5) * 2 * (random.nextBoolean() ? -1 : 1);
+    	Location esl = l.clone().add(number, 5, number2);
     	
     	p.playSound(p.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_SET_SPAWN, 0.1f, 2f);
 
-		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "난파선 원귀 ("+p.getName()+")":"Ship Phantom ("+p.getName()+")";
-		Phantom newmob = (Phantom) MobspawnLoc(esl, reg, p.getLevel()*45.0, null, null, null, null, null, null, EntityType.PHANTOM);
-		newmob.setSize(10);
-		newmob.addPotionEffect(new PotionEffect(PotionEffectType.CONDUIT_POWER, 999999, 4, false, false));
-		newmob.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 999999, 4, false, false));
-		newmob.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 999999, 4, false, false));
+    	ItemStack head = new ItemStack(Material.CRYING_OBSIDIAN);
+    	head.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
+    	
+    	ItemStack main = new ItemStack(Material.NETHERITE_SWORD);
+    	head.addUnsafeEnchantment(Enchantment.KNOCKBACK, 1);
+
+    	ItemStack off = new ItemStack(Material.SHIELD);
+    	head.addUnsafeEnchantment(Enchantment.KNOCKBACK, 1);
+    	
+		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "차원문 혼령 ("+p.getName()+")":"Portal Spirit ("+p.getName()+")";
+		Vex newmob = (Vex) MobspawnLoc(esl, reg, p.getLevel()*250.0, head, null, null, null, main, off, EntityType.VEX);
+		newmob.setCharging(true);
+		newmob.getAttribute(Attribute.ENTITY_INTERACTION_RANGE).setBaseValue(5);
+		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
+		newmob.getAttribute(Attribute.SCALE).setBaseValue(2.5);
+		newmob.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 999999, 4, false, false));
+		newmob.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 999999, 4, false, false));
+		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 4, false, false));
 		newmob.getEquipment().setBootsDropChance(0);
 		newmob.getEquipment().setChestplateDropChance(0);
 		newmob.getEquipment().setHelmetDropChance(0);
@@ -181,7 +194,7 @@ public class ShipwreckQuest extends Mobs  {
 		newmob.getEquipment().setItemInOffHandDropChance(0);
 		newmob.getEquipment().setLeggingsDropChance(0);
 		newmob.setMetadata("quest", new FixedMetadataValue(RMain.getInstance(),true));
-		newmob.setMetadata("shipwreckquest", new FixedMetadataValue(RMain.getInstance(),p.getName()));
+		newmob.setMetadata("ruinedportalquest", new FixedMetadataValue(RMain.getInstance(),p.getName()));
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setRemoveWhenFarAway(true);
 		newmob.setTarget(p);
@@ -193,7 +206,7 @@ public class ShipwreckQuest extends Mobs  {
 	
 	public void QuestStart(PlayerInteractEntityEvent d)
 	{	
-		if(d.getRightClicked().hasMetadata("obnpc") && d.getRightClicked().hasMetadata("shipwreck")) {
+		if(d.getRightClicked().hasMetadata("obnpc") && d.getRightClicked().hasMetadata("ruinedportal")) {
 			d.setCancelled(true);
 				LivingEntity le = (LivingEntity)d.getRightClicked();
 				Player p = (Player) d.getPlayer();
@@ -207,64 +220,63 @@ public class ShipwreckQuest extends Mobs  {
 				}
 				if(TrophyLoc.getLocsdata().Locs.containsEntry(p.getUniqueId(), NPCLoc.npcloc.get(le.getUniqueId()))) {
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": 고마워요!").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": 넌 자격이 있다.").create());
 	        		}
 	        		else {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Thanks!").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": You're worthy").create());
 	        		}
 	        		List<MerchantRecipe> mrl = new ArrayList<MerchantRecipe>();
 
-	        		ArrayList<ItemStack> poia = new ArrayList<>();
-	        		poia.add(new ItemStack(Material.EMERALD,1));
-	        		ArrayList<ItemStack> aa = new ArrayList<>();
-	        		aa.add(new ItemStack(Material.EMERALD,5));
-	        		aa.add(new ItemStack(Material.GOLD_INGOT,5));
+	        		ArrayList<ItemStack> armorIngredients = new ArrayList<>();
+	        		ItemStack stel = Elements.getstel(12, p);
+	        		stel.setAmount(64);
+	        		armorIngredients.add(stel);
+	        		armorIngredients.add(stel);
 	        		
-	        		MerchantRecipe mr1 = new MerchantRecipe(Potions.get(2, p), 1,64,true);
+	        		ArrayList<ItemStack> poia = new ArrayList<>();
+	        		poia.add(new ItemStack(Material.EMERALD,15));
+	        		poia.add(new ItemStack(Material.GOLD_INGOT,15));
+	        		
+	        		ArrayList<ItemStack> aa = new ArrayList<>();
+	        		aa.add(new ItemStack(Material.EMERALD,64));
+	        		aa.add(new ItemStack(Material.GOLD_INGOT,64));
+	        		
+	        		MerchantRecipe mr1 = new MerchantRecipe(Potions.get(7, p), 1,64,true);
 	        		mr1.setIngredients(poia);
 	        		mrl.add(mr1);
 	        		
-					ItemStack enchbook = new ItemStack(Material.ENCHANTED_BOOK);
-					EnchantmentStorageMeta enchmeta = (EnchantmentStorageMeta) enchbook.getItemMeta();
-					enchmeta.addStoredEnchant(Enchantment.DEPTH_STRIDER, 10, true);
-	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	        			enchmeta.setDisplayName("물갈퀴 10LV");
-				    }
-	        		else {
-	        			enchmeta.setDisplayName("Depth Strider 10LV");
-	        		}
-	        		enchbook.setItemMeta(enchmeta);
-					
-	        		MerchantRecipe mr3 = new MerchantRecipe(Helmet.get(2, p), 1,64,true);
+	        		MerchantRecipe mr2 = new MerchantRecipe(Helmet.get(7, p), 1,64,true);
+	        		mr2.setIngredients(aa);
+	        		mrl.add(mr2);
+	        		
+	        		MerchantRecipe mr3 = new MerchantRecipe(Chestplate.get(7, p), 1,64,true);
 	        		mr3.setIngredients(aa);
 	        		mrl.add(mr3);
 
-	        		MerchantRecipe mr5 = new MerchantRecipe(Boots.get(2, p), 1,64,true);
+	        		MerchantRecipe mr4 = new MerchantRecipe(Leggings.get(7, p), 1,64,true);
+	        		mr4.setIngredients(aa);
+	        		mrl.add(mr4);
+	        		
+	        		MerchantRecipe mr5 = new MerchantRecipe(Boots.get(7, p), 1,64,true);
 	        		mr5.setIngredients(aa);
 	        		mrl.add(mr5);
 
-	        		if(map == null) {
-		        		map = Bukkit.createExplorerMap(p.getWorld(), p.getLocation(),  StructureType.BURIED_TREASURE,200,true);
-		        		ItemMeta mapm = map.getItemMeta();
-		        		
+	        		MerchantRecipe mr6 = new MerchantRecipe(Armors.acArmor(0, p), 1,64,true);
+	        		mr6.setIngredients(armorIngredients);
+	        		mrl.add(mr6);
 
-		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		        			mapm.setDisplayName(ChatColor.ITALIC+"보물 지도");
-					    }
-		        		else {
-		        			mapm.setDisplayName(ChatColor.ITALIC+"Treasure Map");
-		        		}
-		        		map.setItemMeta(mapm);
-		        		MerchantRecipe mr4 = new MerchantRecipe(map, 1,64,true);
-		        		mr4.setIngredients(aa);
-		        		mrl.add(mr4);
-		        		
-	        		}
-	        		else {
-		        		MerchantRecipe mr4 = new MerchantRecipe(map, 1,64,true);
-		        		mr4.setIngredients(aa);
-		        		mrl.add(mr4);
-	        		}
+	        		MerchantRecipe mr7 = new MerchantRecipe(Armors.acArmor(1, p), 1,64,true);
+	        		mr7.setIngredients(armorIngredients);
+	        		mrl.add(mr7);
+
+	        		MerchantRecipe mr8 = new MerchantRecipe(Armors.acArmor(2, p), 1,64,true);
+	        		mr8.setIngredients(armorIngredients);
+	        		mrl.add(mr8);
+	        		
+	        		MerchantRecipe mr9 = new MerchantRecipe(Armors.acArmor(3, p), 1,64,true);
+	        		mr9.setIngredients(armorIngredients);
+	        		mrl.add(mr9);
+	        		
 	        		Merchant mi = Bukkit.createMerchant(le.getCustomName());
 	        		mi.setRecipes(mrl);
 	        		p.openMerchant(mi, true);
@@ -300,17 +312,17 @@ public class ShipwreckQuest extends Mobs  {
             		}
             		asked.remove(p.getUniqueId());
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": 감사합니다. 죽고 나서도 원귀들의 괴롭힘이 끝이 없네요..").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": 시험은 시작되었다..").create());
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": (사망, 종료시 또는 너무 멀리 가면 퀘스트가 취소됩니다.)").create());
 				    }
 	        		else {
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Thanks So Much. Even after I die, phantoms continue to bully me..").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Test is just begun..").create());
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": (Quest Will be Canceled If You Die, Quit or go far away)").create());
 	        		}
 	        		quested.put(p.getUniqueId(), NPCLoc.npcloc.get(le.getUniqueId()));
 	        		startloc.put(p.getUniqueId(), le.getLocation().clone());
 
-    	    		BossBar	newbar = Bukkit.getServer().createBossBar(new NamespacedKey(RMain.getInstance(), p.getName()+"shipwreckquest"),"Killed Monsters: " + qmobskill.get(p.getName())  + "/" + 20, BarColor.BLUE, BarStyle.SEGMENTED_20, BarFlag.CREATE_FOG);
+    	    		BossBar	newbar = Bukkit.getServer().createBossBar(new NamespacedKey(RMain.getInstance(), p.getName()+"ruinedportalquest"),"Killed Monsters: " + qmobskill.get(p.getName())  + "/" + 20, BarColor.PURPLE, BarStyle.SEGMENTED_20, BarFlag.DARKEN_SKY);
     	            newbar.setVisible(true);
     	            qbar.put(p.getName(), newbar);
     	    		int btask = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
@@ -347,11 +359,11 @@ public class ShipwreckQuest extends Mobs  {
     	        	p.setCooldown(Material.RAIL, 10);
 
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": 으으.. 미치겠다!..").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": 새로운 도전자인가..").create());
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "(우클릭시 수락)").create());
 				    }
 	        		else {
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": They're Driving Me Crazy!..").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": New challenger..").create());
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "(RightClick To Accept)").create());
 	        		}
                 	asked.put(p.getUniqueId(), 1);

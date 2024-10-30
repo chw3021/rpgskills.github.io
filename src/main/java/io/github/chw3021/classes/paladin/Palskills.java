@@ -22,7 +22,6 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -51,7 +50,6 @@ import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -67,17 +65,11 @@ import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.event.vehicle.VehicleExitEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.loot.LootTables;
 import org.bukkit.metadata.FixedMetadataValue;
 
-public class Palskills extends Pak implements Serializable, Listener {
+public class Palskills extends Pak {
 	
 
-	/**
-	 * 
-	 */
-
-	private static transient final long serialVersionUID = -5692924289334744517L;
 	private HashMap<String, Long> rscooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> prcooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> jmcooldown = new HashMap<String, Long>();

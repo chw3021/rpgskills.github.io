@@ -18,7 +18,6 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -57,7 +56,6 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Snowball;
 import org.bukkit.entity.Witch;
 import org.bukkit.entity.Wither;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -79,14 +77,8 @@ import org.bukkit.inventory.meta.CrossbowMeta;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 
-public class Snipskills extends Pak implements Serializable, Listener {
+public class Snipskills extends Pak {
 
-	/**
-	 *
-	 */
-
-
-	private static transient final long serialVersionUID = 4721520680967536186L;
 	private HashMap<String, Long> wrcooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> cscooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> arcooldown = new HashMap<String, Long>();

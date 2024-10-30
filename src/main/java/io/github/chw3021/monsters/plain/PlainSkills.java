@@ -35,12 +35,8 @@ import io.github.chw3021.rmain.RMain;
 
 
 
-public class PlainSkills extends Summoned implements Listener{
+public class PlainSkills extends Summoned {
 
-	/**
-	 * 
-	 */
-	private static transient final long serialVersionUID = -5797940787526746118L;
 	Holding hold = Holding.getInstance();
 	private HashMap<UUID, Long> rb3cooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Long> rb8cooldown = new HashMap<UUID, Long>();

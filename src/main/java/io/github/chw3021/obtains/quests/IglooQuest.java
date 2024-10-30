@@ -48,10 +48,6 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 
 public class IglooQuest extends Mobs {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6062401298973525416L;
 	private HashMap<UUID, Integer> asked = new HashMap<UUID, Integer>();
 	private HashMap<UUID, Location> quested = new HashMap<UUID, Location>();
 	private HashMap<UUID, Location> startloc = new HashMap<UUID, Location>();

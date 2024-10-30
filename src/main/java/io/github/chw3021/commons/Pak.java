@@ -1,7 +1,6 @@
 package io.github.chw3021.commons;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -55,12 +54,11 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
-public class Pak extends CombatMode implements Serializable, Listener{
+public class Pak extends CombatMode implements Listener{
 
 	/**
 	 * 
 	 */
-	private static transient final long serialVersionUID = 7640637924717401070L;
 
 	public static HashMap<String, Double> player_damage = new HashMap<String, Double>();
 	

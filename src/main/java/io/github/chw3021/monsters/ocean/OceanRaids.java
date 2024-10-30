@@ -34,10 +34,6 @@ import io.github.chw3021.rmain.RMain;
 
 public class OceanRaids extends Summoned {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6536664363548624595L;
 	
 	private static final OceanRaids instance = new OceanRaids ();
 	public static OceanRaids getInstance()

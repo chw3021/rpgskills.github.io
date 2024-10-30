@@ -24,7 +24,6 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -61,7 +60,6 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Raider;
 import org.bukkit.entity.Snowball;
 import org.bukkit.entity.Wither;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -81,12 +79,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 
-public class Launskills extends Pak implements Serializable, Listener {
+public class Launskills extends Pak {
 
-	/**
-	 *
-	 */
-	private static transient final long serialVersionUID = 4490550598006463433L;
 	private HashMap<String, Long> cscooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> excooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> arcooldown = new HashMap<String, Long>();

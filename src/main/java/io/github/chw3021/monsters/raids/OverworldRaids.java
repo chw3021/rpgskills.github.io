@@ -86,10 +86,6 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 
 public class OverworldRaids extends Summoned implements Listener {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8118960217265734839L;
 	private static HashMap<UUID, Location> beforepl = new HashMap<UUID, Location>();
 	private Multimap<String, UUID> raider = ArrayListMultimap.create();
 	private static Multimap<String, UUID> heroes = ArrayListMultimap.create();

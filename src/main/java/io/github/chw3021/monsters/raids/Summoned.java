@@ -1,6 +1,5 @@
 package io.github.chw3021.monsters.raids;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
@@ -56,12 +55,8 @@ import io.github.chw3021.party.PartyJoinEvent;
 import io.github.chw3021.party.PartyLeaveEvent;
 import io.github.chw3021.rmain.RMain;
 
-public class Summoned extends Mobs implements Serializable{
+public class Summoned extends Mobs{
 	
-	/**
-	 * 
-	 */
-	private static transient final long serialVersionUID = 5729675216993105537L;
 
 	private static final Summoned instance = new Summoned ();
 	public static Summoned getInstance()

@@ -76,12 +76,8 @@ import io.github.chw3021.party.Party;
 import io.github.chw3021.rmain.RMain;
 
 
-public class CommonEvents extends Mobs implements Listener {
+public class CommonEvents extends Mobs implements Listener{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6423241072660814161L;
 	static public HashMap<UUID, String> damaged = new HashMap<UUID, String>();
 	private Multimap<UUID, UUID> ind = ArrayListMultimap.create();
 

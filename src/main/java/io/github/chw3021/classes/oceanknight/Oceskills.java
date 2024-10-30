@@ -22,7 +22,6 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -66,14 +65,8 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
-public class Oceskills extends Pak implements Serializable {
+public class Oceskills extends Pak {
 	
-
-	/**
-	 * 
-	 */
-	
-	private static transient final long serialVersionUID = 1343715876136938259L;
 	private HashMap<String, Long> rscooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> prcooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> jmcooldown = new HashMap<String, Long>();

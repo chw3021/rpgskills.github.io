@@ -50,10 +50,6 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 
 public class OceanSkills extends OverworldRaids{
 
-	/**
-	 * 
-	 */
-	private transient static final long serialVersionUID = -8250326581644953664L;
 	Holding hold = Holding.getInstance();
 	private HashMap<UUID, Long> rb1cooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Long> rb5cooldown = new HashMap<UUID, Long>();

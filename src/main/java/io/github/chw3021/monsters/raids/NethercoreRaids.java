@@ -80,7 +80,6 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 
 public class NethercoreRaids extends Summoned implements Listener {
 
-	private static final long serialVersionUID = -6949039354043906938L;
 	private static HashMap<UUID, Location> beforepl = new HashMap<UUID, Location>();
 	private Multimap<String, UUID> raider = ArrayListMultimap.create();
 	private static Multimap<String, UUID> heroes = ArrayListMultimap.create();

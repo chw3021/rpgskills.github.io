@@ -1,6 +1,5 @@
 package io.github.chw3021.commons;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -31,12 +30,8 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
 
-public class CombatMode implements Serializable{
+public class CombatMode {
 
-	/**
-	 * 
-	 */
-	private transient static final long serialVersionUID = 1745238346955426477L;
 
 	protected Material CAREFUL = Material.EVOKER_SPAWN_EGG;
 	

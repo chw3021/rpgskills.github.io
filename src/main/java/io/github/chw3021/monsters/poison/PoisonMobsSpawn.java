@@ -27,15 +27,8 @@ import io.github.chw3021.rmain.RMain;
 
 
 
-public class PoisonMobsSpawn extends Mobs implements Listener {
+public class PoisonMobsSpawn extends Mobs {
 
-	/**
-	 * 
-	 */
-	private static transient final long serialVersionUID = 6020250166279728279L;
-	/**
-	 * 
-	 */
 	
 	private static final PoisonMobsSpawn instance = new PoisonMobsSpawn ();
 	public static PoisonMobsSpawn getInstance()

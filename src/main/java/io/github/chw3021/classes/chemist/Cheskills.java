@@ -21,7 +21,6 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -71,12 +70,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 
-public class Cheskills extends Pak implements Listener, Serializable {
+public class Cheskills extends Pak {
 	
-	/**
-	 * 
-	 */
-	private static transient final long serialVersionUID = 2619374943549160864L;
 	private HashMap<String, Long> sdcooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> cdcooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> frcooldown = new HashMap<String, Long>();

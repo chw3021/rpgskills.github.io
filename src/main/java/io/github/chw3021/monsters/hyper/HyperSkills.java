@@ -46,10 +46,6 @@ import io.github.chw3021.rmain.RMain;
 
 public class HyperSkills extends Summoned{
 
-	/**
-	 * 
-	 */
-	private transient static final long serialVersionUID = 4263132774482281418L;
 	Holding hold = Holding.getInstance();
 	private HashMap<UUID, Long> rb1cooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Long> rb2cooldown = new HashMap<UUID, Long>();

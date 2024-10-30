@@ -22,7 +22,6 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Snowball;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDropItemEvent;
@@ -40,12 +39,8 @@ import io.github.chw3021.rmain.RMain;
 
 
 
-public class MountainsSkills extends Summoned implements Listener{
+public class MountainsSkills extends Summoned {
 
-	/**
-	 * 
-	 */
-	private static transient final long serialVersionUID = -5797940787526746118L;
 	Holding hold = Holding.getInstance();
 	private HashMap<UUID, Long> rb1cooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Long> rb3cooldown = new HashMap<UUID, Long>();

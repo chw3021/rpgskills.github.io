@@ -23,7 +23,6 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -48,7 +47,6 @@ import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -62,15 +60,8 @@ import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
-public class Fireskills extends Pak implements Serializable, Listener {
+public class Fireskills extends Pak {
 	
-
-	/**
-	 * 
-	 */
-
-	
-	private static transient final long serialVersionUID = 1343715876136938259L;
 	private HashMap<String, Long> rscooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> prcooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> jmcooldown = new HashMap<String, Long>();

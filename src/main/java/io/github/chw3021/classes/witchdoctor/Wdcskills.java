@@ -3,7 +3,6 @@ package io.github.chw3021.classes.witchdoctor;
 
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -50,7 +49,6 @@ import org.bukkit.entity.Vex;
 import org.bukkit.entity.WitherSkeleton;
 import org.bukkit.entity.Zoglin;
 import org.bukkit.entity.Zombie;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -97,12 +95,8 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
-public class Wdcskills extends Pak implements Serializable, Listener {
+public class Wdcskills extends Pak {
 	
-	/**
-	 * 
-	 */
-	private static transient final long serialVersionUID = 2112330324524706135L;
 	private HashMap<String, Long> rscooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> prcooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> jmcooldown = new HashMap<String, Long>();

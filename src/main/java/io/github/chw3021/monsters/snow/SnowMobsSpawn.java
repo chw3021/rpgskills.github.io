@@ -16,7 +16,6 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Spider;
 import org.bukkit.entity.Stray;
 import org.bukkit.entity.Witch;
-import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -24,12 +23,7 @@ import io.github.chw3021.monsters.Mobs;
 import io.github.chw3021.rmain.RMain;
 
 
-public class SnowMobsSpawn extends Mobs implements Listener {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6299011623941907681L;
+public class SnowMobsSpawn extends Mobs {
 	private static final SnowMobsSpawn instance = new SnowMobsSpawn ();
 	public static SnowMobsSpawn getInstance()
 	{

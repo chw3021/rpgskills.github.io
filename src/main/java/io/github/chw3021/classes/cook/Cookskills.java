@@ -16,11 +16,8 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -42,7 +39,6 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Snowball;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
@@ -57,12 +53,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 
-public class Cookskills extends Pak implements Listener, Serializable {
+public class Cookskills extends Pak {
 	
-	/**
-	 * 
-	 */
-	private static transient final long serialVersionUID = 6779511048929362121L;
 	private HashMap<String, Long> swcooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> sdcooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> cdcooldown = new HashMap<String, Long>();

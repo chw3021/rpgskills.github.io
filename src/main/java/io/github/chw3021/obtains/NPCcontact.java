@@ -19,6 +19,7 @@ import io.github.chw3021.obtains.quests.MineshaftQuest;
 import io.github.chw3021.obtains.quests.OceanMonumentQuest;
 import io.github.chw3021.obtains.quests.OceanRuinsQuest;
 import io.github.chw3021.obtains.quests.PillagerOutpostQuest;
+import io.github.chw3021.obtains.quests.RuinedPortalQuest;
 import io.github.chw3021.obtains.quests.ShipwreckQuest;
 import io.github.chw3021.obtains.quests.WoodlandMansionQuest;
 
@@ -37,6 +38,7 @@ public class NPCcontact implements Listener{
 		JungleTempleQuest.getInstance().QuestStart(ev);
 		PillagerOutpostQuest.getInstance().QuestStart(ev);
 		DesertPyramidQuest.getInstance().QuestStart(ev);
+		RuinedPortalQuest.getInstance().QuestStart(ev);
 	}
 
 	@EventHandler
@@ -52,6 +54,7 @@ public class NPCcontact implements Listener{
 		JungleTempleQuest.getInstance().QuestClear(d);
 		
 		DesertPyramidQuest.getInstance().QuestClear(d);
+		RuinedPortalQuest.getInstance().QuestClear(d);
 	}
 	
 	
@@ -68,7 +71,8 @@ public class NPCcontact implements Listener{
 		JungleTempleQuest.getInstance().GiveUp(ev);
 		PillagerOutpostQuest.getInstance().GiveUp(ev);
 		DesertPyramidQuest.getInstance().GiveUp(ev);
-		
+
+		RuinedPortalQuest.getInstance().GiveUp(ev);
 	}
 
 
@@ -85,6 +89,7 @@ public class NPCcontact implements Listener{
 		JungleTempleQuest.getInstance().Failed(ev);
 		PillagerOutpostQuest.getInstance().Failed(ev);
 		DesertPyramidQuest.getInstance().Failed(ev);
+		RuinedPortalQuest.getInstance().Failed(ev);
 	}
 	
 
@@ -100,6 +105,7 @@ public class NPCcontact implements Listener{
 		JungleTempleQuest.getInstance().Reset(ev);
 		PillagerOutpostQuest.getInstance().Reset(ev);
 		DesertPyramidQuest.getInstance().Reset(ev);
+		RuinedPortalQuest.getInstance().Reset(ev);
 	}
 
 
@@ -114,7 +120,6 @@ public class NPCcontact implements Listener{
 	public void Close(InventoryCloseEvent d) 
 	{
 		BuriedTreasureQuest.getInstance().Close(d);
-		
 	}
 
 	@EventHandler

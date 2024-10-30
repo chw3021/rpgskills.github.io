@@ -26,7 +26,6 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -68,7 +67,6 @@ import org.bukkit.entity.Wolf;
 import org.bukkit.entity.memory.MemoryKey;
 import org.bukkit.entity.AbstractArrow.PickupStatus;
 import org.bukkit.entity.AreaEffectCloud;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -94,12 +92,8 @@ import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
-public class Tamskills extends Pak implements Listener, Serializable {
+public class Tamskills extends Pak {
 	
-	/**
-	 * 
-	 */
-	private static transient final long serialVersionUID = -4588210529761002140L;
 	private HashMap<String, Long> swcooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> sdcooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> cdcooldown = new HashMap<String, Long>();

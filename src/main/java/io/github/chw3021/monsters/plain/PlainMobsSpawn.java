@@ -11,12 +11,8 @@ import io.github.chw3021.rmain.RMain;
 
 
 
-public class PlainMobsSpawn extends Mobs implements Listener {
+public class PlainMobsSpawn extends Mobs {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -781915509020560604L;
 	private static final PlainMobsSpawn instance = new PlainMobsSpawn ();
 	public static PlainMobsSpawn getInstance()
 	{

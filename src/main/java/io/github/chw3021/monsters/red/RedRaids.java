@@ -38,10 +38,6 @@ import io.github.chw3021.rmain.RMain;
 
 public class RedRaids extends Summoned {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6536664363548624595L;
 	
 	private static final RedRaids instance = new RedRaids ();
 	public static RedRaids getInstance()

@@ -21,7 +21,6 @@ import com.google.common.collect.Multimap;
 import io.github.chw3021.rmain.RMain;
 import net.md_5.bungee.api.ChatColor;
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -66,7 +65,6 @@ import org.bukkit.entity.Squid;
 import org.bukkit.entity.Trident;
 import org.bukkit.entity.TropicalFish;
 import org.bukkit.entity.Turtle;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -90,15 +88,8 @@ import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
-public class Nobskills extends Pak implements Serializable, Listener {
+public class Nobskills extends Pak {
 	
-
-	/**
-	 * 
-	 */
-
-	
-	private static transient final long serialVersionUID = 1343715876136938259L;
 	private HashMap<String, Long> rscooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> prcooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> jmcooldown = new HashMap<String, Long>();

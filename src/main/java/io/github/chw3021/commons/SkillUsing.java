@@ -2,8 +2,6 @@ package io.github.chw3021.commons;
 
 
 
-import java.io.Serializable;
-
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
@@ -79,13 +77,8 @@ import io.github.chw3021.classes.wreltler.Wreskills;
 import io.github.chw3021.items.weapons.Weapons;
 import io.github.chw3021.monsters.raids.Summoned;
 
-public class SkillUsing implements Listener, Serializable {
+public class SkillUsing implements Listener {
 	
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3182008353111479606L;
 	
 	Pak pak = new Pak();
 	Weapons w = new Weapons();

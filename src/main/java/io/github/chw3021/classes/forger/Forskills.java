@@ -25,7 +25,6 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -61,14 +60,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 
-public class Forskills extends Pak implements Serializable {
+public class Forskills extends Pak {
 
-	/**
-	 *
-	 */
-
-
-	private static transient final long serialVersionUID = 6779511048929362121L;
 	private HashMap<String, Long> cdcooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> frcooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> smcooldown = new HashMap<String, Long>();

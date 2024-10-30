@@ -49,14 +49,6 @@ import io.github.chw3021.rmain.RMain;
 
 public class HarvesterSkills extends NethercoreRaids{
 
-	/**
-	 * 
-	 */
-	private static transient final long serialVersionUID = -2543380479388196924L;
-	/**
-	 * 
-	 */
-	
 	Holding hold = Holding.getInstance();
 	private HashMap<UUID, Long> rb3cooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Long> rb4cooldown = new HashMap<UUID, Long>();

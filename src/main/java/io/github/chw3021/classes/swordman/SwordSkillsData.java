@@ -28,16 +28,20 @@ public class SwordSkillsData implements Serializable, Listener{
 	private static transient final long serialVersionUID = -4014081835907447552L;
 
 
-	public final HashMap<UUID, Integer> SwordDrive;
-	public final HashMap<UUID, Integer> CriticalDraw;
-	public final HashMap<UUID, Integer> FlashyRush;
-	public final HashMap<UUID, Integer> Rising;
-	public final HashMap<UUID, Integer> Strike;
-	public final HashMap<UUID, Integer> Swoop;
-	public final HashMap<UUID, Integer> Guard;
-	public final HashMap<UUID, Integer> Dualbladed;
-	public final HashMap<UUID, Integer> SkillPoints;
+
+	public HashMap<UUID, Integer> SwordDrive;
+	public HashMap<UUID, Integer> CriticalDraw;
+	public HashMap<UUID, Integer> FlashyRush;
+	public HashMap<UUID, Integer> Rising;
+	public HashMap<UUID, Integer> Strike;
+	public HashMap<UUID, Integer> Swoop;
+	public HashMap<UUID, Integer> Guard;
+	public HashMap<UUID, Integer> Dualbladed;
+	public HashMap<UUID, Integer> SkillPoints;
     // Can be used for saving
+
+	public SwordSkillsData() {
+	}
 	
     public SwordSkillsData(HashMap<UUID, Integer> SwordDrive, HashMap<UUID, Integer> CriticalDraw, HashMap<UUID, Integer> FlashyRush, HashMap<UUID, Integer> Rising, HashMap<UUID, Integer> Strike, HashMap<UUID, Integer> Swoop, HashMap<UUID, Integer> Guard, HashMap<UUID, Integer> Dualbladed, HashMap<UUID, Integer> SkillPoints) {
     	this.SwordDrive = SwordDrive;

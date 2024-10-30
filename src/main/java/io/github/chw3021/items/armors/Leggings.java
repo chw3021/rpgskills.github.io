@@ -103,6 +103,31 @@ public class Leggings extends Armors implements Listener {
 			im.addEnchant(Enchantment.PROTECTION, 1, true);
 			r.setItemMeta(im);
 		}
+		else if(f == 7) {
+			rm.setColor(Color.PURPLE);
+			rm.addAttributeModifier(Attribute.LUCK, new AttributeModifier(getKey(), 7, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.MAX_HEALTH, new AttributeModifier(getKey(), 0.75, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(getKey(), 0.11, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.MOVEMENT_EFFICIENCY, new AttributeModifier(getKey(), 0.16, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.JUMP_STRENGTH, new AttributeModifier(getKey(), 0.1, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.ARMOR, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 5, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.ARMOR_TOUGHNESS, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+				rm.setDisplayName("영혼의 각반");
+				rm.setItemName("영혼의 각반");
+			}
+			else {
+				rm.setDisplayName("Soul Leggings");
+				rm.setItemName("Soul Leggings");
+			}
+			rm.addEnchant(Enchantment.PROTECTION, 3, true);
+			rm.addEnchant(Enchantment.BLAST_PROTECTION, 3, true);
+			rm.addEnchant(Enchantment.PROJECTILE_PROTECTION, 3, true);
+			rm.addEnchant(Enchantment.FIRE_PROTECTION, 3, true);
+			rm.addEnchant(Enchantment.UNBREAKING, 255, true);
+			r.setItemMeta(rm);
+		}
 		return r;
 	}
 

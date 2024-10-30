@@ -20,10 +20,6 @@ import io.github.chw3021.rmain.RMain;
 
 public class Mobs extends Pak {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3620485680544888652L;
 	protected final String lang = ConfigManager.getInstance(RMain.getInstance()).getCustomConfig().getString("Language");
 
 	final protected String trans(LivingEntity le) {

@@ -13,7 +13,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Phantom;
 import org.bukkit.entity.Shulker;
-import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -23,12 +22,8 @@ import io.github.chw3021.monsters.Mobs;
 import io.github.chw3021.rmain.RMain;
 
 
-public class OceanMobsSpawn extends Mobs implements Listener {
+public class OceanMobsSpawn extends Mobs {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 111231948843036438L;
 	private static final OceanMobsSpawn instance = new OceanMobsSpawn ();
 	public static OceanMobsSpawn getInstance()
 	{

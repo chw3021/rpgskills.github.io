@@ -19,7 +19,6 @@ import com.google.common.collect.Multimap;
 import io.github.chw3021.rmain.RMain;
 import net.md_5.bungee.api.ChatColor;
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -55,14 +54,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
 
-public class Wreskills extends Pak implements Serializable {
+public class Wreskills extends Pak {
 	
 
-	
-	/**
-	 * 
-	 */
-	private static transient final long serialVersionUID = 8481741046360618590L;
 	private HashMap<String, Long> swcooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> sdcooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> cdcooldown = new HashMap<String, Long>();

@@ -21,7 +21,6 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -45,7 +44,6 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Wither;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -63,13 +61,9 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
-public class Archskills extends Pak implements Serializable, Listener{
+public class Archskills extends Pak{
 
 
-	/**
-	 *
-	 */
-	private static transient final long serialVersionUID = -7821279144455667112L;
 	private HashMap<String, Integer> sa = new HashMap<String, Integer>();
 	private HashMap<String, Long> hscooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> arcooldown = new HashMap<String, Long>();

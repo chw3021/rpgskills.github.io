@@ -34,10 +34,6 @@ import io.github.chw3021.rmain.RMain;
 
 public class SnowRaids extends Summoned {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8152354856668353552L;
 	private static final SnowRaids instance = new SnowRaids ();
 	public static SnowRaids getInstance()
 	{

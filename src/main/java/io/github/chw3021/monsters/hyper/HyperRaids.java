@@ -31,10 +31,6 @@ import io.github.chw3021.rmain.RMain;
 
 public class HyperRaids extends Summoned {
 
-	/**
-	 * 
-	 */
-	private static transient final long serialVersionUID = 6534716276049737277L;
 	
 	
 	private static final HyperRaids instance = new HyperRaids ();

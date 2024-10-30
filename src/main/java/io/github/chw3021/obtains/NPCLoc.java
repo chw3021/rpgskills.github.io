@@ -44,7 +44,9 @@ import org.bukkit.entity.Villager.Type;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.world.LootGenerateEvent;
 import org.bukkit.event.world.WorldUnloadEvent;
 import org.bukkit.inventory.EntityEquipment;
@@ -59,6 +61,7 @@ import org.bukkit.util.io.BukkitObjectOutputStream;
 import org.jetbrains.annotations.Nullable;
 
 import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Table;
 
 import io.github.chw3021.commons.ConfigManager;
@@ -75,19 +78,29 @@ public class NPCLoc implements Serializable, Listener{
 	/**
 	 * 
 	 */
-	//public HashMultimap<UUID, HashMap<Location, String>> Locs = HashMultimap.create();
+	public HashMultimap<Location, String> StructureKeys = HashMultimap.create();
 	public Table<UUID, Location, ItemStack[]> Locs = HashBasedTable.create();
 	static public HashSet<Location> NPCLocs = new HashSet<Location>();
 	static public HashSet<Location> ChestLocs = new HashSet<Location>();
 	
-    // Can be used for saving
+    public NPCLoc() {
+    	
+    }
+    public NPCLoc(Table<UUID, Location, ItemStack[]> Locs, HashMultimap<Location, String> StructureKeys) {
+    	this.Locs = Locs;
+    	this.StructureKeys = StructureKeys;
+    }
     public NPCLoc(Table<UUID, Location, ItemStack[]> Locs) {
     	this.Locs = Locs;
-    	}
+    }
+    public NPCLoc(HashMultimap<Location, String> StructureKeys) {
+    	this.StructureKeys = StructureKeys;
+    }
     // Can be used for loading
     public NPCLoc(NPCLoc loadedData) {
     	this.Locs = loadedData.Locs;
-    	}
+    	this.StructureKeys = loadedData.StructureKeys;
+    }
  
 	public NPCLoc saveData(String filePath) {
         try {
@@ -112,7 +125,7 @@ public class NPCLoc implements Serializable, Listener{
 
 
             String path = new File("").getAbsolutePath();
-            NPCLoc data = new NPCLoc(HashBasedTable.create()).saveData(path +"/plugins/RPGskills/NPCLoc.data");
+            NPCLoc data = new NPCLoc(HashBasedTable.create(),HashMultimap.create()).saveData(path +"/plugins/RPGskills/NPCLoc.data");
             Bukkit.getServer().getLogger().log(Level.INFO, "Data Saved");
             return data;
         }
@@ -123,12 +136,22 @@ public class NPCLoc implements Serializable, Listener{
         NPCLoc data = new NPCLoc(NPCLoc.loadData(path +"/plugins/RPGskills/NPCLoc.data"));
 		return data;
 	}
-	final public static void saver(Player p, Location sl, ItemStack[] is) {
+	final public static void chestSaver(Player p, Location sl, ItemStack[] is) {
 
 		Table<UUID, Location, ItemStack[]> Locs = getLocsdata().Locs;
 		Locs.put(p.getUniqueId(), sl, is);
+		
         String path = new File("").getAbsolutePath();
 		new NPCLoc(Locs).saveData(path +"/plugins/RPGskills/NPCLoc.data");
+	}
+
+	final public static void structureSaver(Location sl, String key) {
+
+		HashMultimap<Location, String> StructureKeys = getLocsdata().StructureKeys;
+		StructureKeys.put(sl, key);
+		
+        String path = new File("").getAbsolutePath();
+		new NPCLoc(StructureKeys).saveData(path +"/plugins/RPGskills/NPCLoc.data");
 	}
 	
 
@@ -152,7 +175,6 @@ public class NPCLoc implements Serializable, Listener{
 				Chest cstate = (Chest) b.getState();
 				cstate.setLootTable(ev.getLootTable());
 				cstate.setCustomName("ElderGuaridan Chest");
-				ChestLocs.add(l);
 			}
 		}
 		
@@ -171,7 +193,9 @@ public class NPCLoc implements Serializable, Listener{
 			return;
 		}
 
-		Table<UUID, Location, ItemStack[]> data = getLocsdata().Locs;
+		Table<UUID, Location, ItemStack[]> Locs = getLocsdata().Locs;
+		
+		structureSaver(l, structureKey);
 
 		if(structureKey.contains("buried_treasure")) {
 			return;
@@ -181,16 +205,47 @@ public class NPCLoc implements Serializable, Listener{
 		    Player p = (Player) he;
 		    p.closeInventory();
 		    
-		    if (!data.contains(p.getUniqueId(), l)) {
-		        saver(p, l, ih.getInventory().getContents());
-		    	data = getLocsdata().Locs;
+		    if (!Locs.contains(p.getUniqueId(), l)) {
+		        chestSaver(p, l, (ItemStack[]) ev.getLoot().toArray());
+		    	Locs = getLocsdata().Locs;
 		    }
 		    
-		    Inventory inv = Bukkit.createInventory(p, 54, p.getName());
-		    inv.setContents(data.get(p.getUniqueId(), l));
+		    Inventory inv = Bukkit.createInventory(p, 54, p.getName()+ " StructureChest");
+		    inv.setContents(Locs.get(p.getUniqueId(), l));
 		    p.openInventory(inv);
 		}
 		
+	}
+
+
+	@EventHandler	
+	public void Open(InventoryOpenEvent d) 
+	{
+		Inventory ci = d.getInventory();
+		Player p = (Player) d.getPlayer();
+		if(ci.getLocation() != null &&  ci.getLocation().getBlock() != null) {
+
+			HashMultimap<Location, String> StructureKeys = getLocsdata().StructureKeys;
+			Location l = ci.getLocation();
+			if(StructureKeys.containsKey(l)) {
+				Block b = l.getBlock();
+				if(!b.hasMetadata("structureChest")) {
+					b.setMetadata("structureChest", new FixedMetadataValue(RMain.getInstance(),l.toString()));
+				}
+				StructureKeys.entries().forEach(en->{
+					Spawn(en.getKey(),en.getValue());
+				});
+			}
+
+			Table<UUID, Location, ItemStack[]> Locs = getLocsdata().Locs;
+			if(Locs.contains(p.getUniqueId(), l)) {
+				p.closeInventory();
+			    Inventory inv = Bukkit.createInventory(p, 54, p.getName()+ " StructureChest");
+			    inv.setContents(Locs.get(p.getUniqueId(), l));
+			    p.openInventory(inv);
+			}
+			
+		}
 	}
 
 	@EventHandler	
@@ -199,7 +254,7 @@ public class NPCLoc implements Serializable, Listener{
 		Inventory ci = d.getInventory();
 		Player p = (Player) d.getPlayer();
 		if(ci.getLocation() != null &&  ci.getLocation().getBlock() != null && ci.getLocation().getBlock().hasMetadata("structureChest")) {
-			saver(p,ci.getLocation(),ci.getContents());
+			chestSaver(p,ci.getLocation(),ci.getContents());
 		}
 	}
 
@@ -208,6 +263,16 @@ public class NPCLoc implements Serializable, Listener{
 	{
 		if(d.getBlock().getState() instanceof Chest) {
 			Chest c = (Chest) d.getBlock().getState();
+			HashMultimap<Location, String> StructureKeys = getLocsdata().StructureKeys;
+			Location l = c.getLocation();
+			if(StructureKeys.containsKey(l)) {
+				if(!c.hasMetadata("structureChest")) {
+					c.setMetadata("structureChest", new FixedMetadataValue(RMain.getInstance(),l.toString()));
+				}
+				StructureKeys.entries().forEach(en->{
+					Spawn(en.getKey(),en.getValue());
+				});
+			}
 			if(c.hasMetadata("structureChest")) {
 				d.setCancelled(true);
 			}
@@ -236,7 +301,15 @@ public class NPCLoc implements Serializable, Listener{
 			}
 		});
 	}
-	
+
+	@EventHandler	
+	public void stopTargetNPC(EntityTargetEvent ev) 
+	{
+		if(ev.getTarget().hasMetadata("obnpc")) {
+			ev.setTarget(null);
+			ev.setCancelled(true);
+		}
+	}
 	
 	public static HashMap<UUID,Location> npcloc = new HashMap<UUID,Location>();
 	private static HashMap<Location,String> npcsloc = new HashMap<Location,String> ();

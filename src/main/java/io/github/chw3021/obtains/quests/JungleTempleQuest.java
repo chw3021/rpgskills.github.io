@@ -13,7 +13,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
@@ -36,7 +35,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
 
-public class JungleTempleQuest implements Listener {
+public class JungleTempleQuest {
 
 	private HashMap<UUID, Integer> asked = new HashMap<UUID, Integer>();
 	private HashMap<UUID, Location> quested = new HashMap<UUID, Location>();
@@ -142,8 +141,9 @@ public class JungleTempleQuest implements Listener {
 	        		List<MerchantRecipe> mrl = new ArrayList<MerchantRecipe>();
 
 	        		ArrayList<ItemStack> helia = new ArrayList<>();
-	        		helia.add(new ItemStack(Material.EMERALD,16));
-	        		helia.add(new ItemStack(Material.GOLD_INGOT,16));
+	        		ItemStack stel = Elements.getstel(12, p);
+	        		stel.setAmount(64);
+	        		helia.add(stel);
 	        		
 	        		ArrayList<ItemStack> in1 = new ArrayList<>();
 	        		in1.add(new ItemStack(Material.EMERALD,6));
@@ -163,6 +163,17 @@ public class JungleTempleQuest implements Listener {
 	        		MerchantRecipe mr2 = new MerchantRecipe(Elements.getel(12, p), 1,64,true);
 	        		mr2.setIngredients(poia);
 	        		mrl.add(mr2);
+
+	        		for(int i = 5; i<=14;i++) {
+	        			if(i==12||i==13) {
+	        				continue;
+	        			}
+		        		MerchantRecipe storm = new MerchantRecipe(Elements.getstel(i, p), 1,64,true);
+		        		storm.setIngredients(helia);
+		        		mrl.add(storm);
+	        		}
+	        		
+	        		
 	        		
 	        		Merchant mi = Bukkit.createMerchant(le.getCustomName());
 	        		mi.setRecipes(mrl);

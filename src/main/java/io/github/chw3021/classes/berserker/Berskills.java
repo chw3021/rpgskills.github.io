@@ -20,7 +20,6 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -57,13 +56,9 @@ import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
-public class Berskills extends Pak implements Listener, Serializable {
+public class Berskills extends Pak {
 	
 
-	/**
-	 * 
-	 */
-	private static transient final long serialVersionUID = -6205130125239201504L;
 	private HashMap<String, Long> sdcooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> cdcooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> frcooldown = new HashMap<String, Long>();
@@ -613,7 +608,49 @@ public class Berskills extends Pak implements Listener, Serializable {
 			}
 		}
 	}
-	
+	private void spawnDonutRings(Player p) {
+	    Location startLocation = p.getEyeLocation().clone();
+	    Vector direction = p.getEyeLocation().getDirection().normalize();
+	    
+	    int ringCount = 5; // 고리 개수
+	    double ringDistance = 1.2; // 고리 간의 거리
+	    double initialRadius = 1.0; // 첫 번째 고리의 반지름
+	    double radiusIncrement = 0.6; // 고리 반지름 증가량
+	    int particlesPerRing = 30; // 각 고리 당 파티클 개수
+
+	    for (int ring = 0; ring < ringCount; ring++) {
+	        // 각 고리의 중심을 계산 (시선 방향으로 점점 멀어짐)
+	        Location ringCenter = startLocation.clone().add(direction.clone().multiply(ring * ringDistance));
+	        double radius = initialRadius + (ring * radiusIncrement);
+	        
+	        // 현재 고리에서 파티클 위치 계산
+	        for (int i = 0; i < particlesPerRing; i++) {
+	            double angle = 2 * Math.PI * i / particlesPerRing;
+	            
+	            // 플레이어 시선 기준의 좌표 계산
+	            double xOffset = Math.cos(angle) * radius;
+	            double yOffset = Math.sin(angle) * radius;
+	            
+	            // 시선 벡터를 기준으로 회전된 평면에 파티클 위치 추가
+	            Vector offset = rotateAroundDirection(direction, xOffset, yOffset);
+	            Location particleLocation = ringCenter.clone().add(offset);
+	            
+	            // 파티클 생성
+	            p.getWorld().spawnParticle(Particle.CRIMSON_SPORE, particleLocation, 1, 0, 0, 0, 0.05);
+	        }
+	    }
+	}
+
+	// 방향 벡터를 기준으로 주어진 X, Y 오프셋을 회전시키는 메서드
+	private Vector rotateAroundDirection(Vector direction, double xOffset, double yOffset) {
+	    // 시선 벡터의 직교 벡터를 구함
+	    Vector perpendicular = new Vector(-direction.getZ(), 0, direction.getX()).normalize();
+	    Vector up = direction.clone().crossProduct(perpendicular).normalize();
+	    
+	    // 직교 벡터와 시선 벡터의 수직 벡터를 사용해 평면상 위치 계산
+	    Vector result = perpendicular.multiply(xOffset).add(up.multiply(yOffset));
+	    return result;
+	}
 
 	
 	public void Rave(PlayerSwapHandItemsEvent ev) 
@@ -641,14 +678,9 @@ public class Berskills extends Pak implements Listener, Serializable {
                 p.playSound(p.getLocation(), Sound.ENTITY_WARDEN_SONIC_BOOM, 1.0f, 2f);
 
             	final Location tl = p.getEyeLocation().clone().add(0, -1, 0);
-				p.getWorld().spawnParticle(Particle.CRIMSON_SPORE, tl.clone().add(tl.getDirection().normalize().multiply(1.2)), 100, 1,1,1,0.5);
-				p.getWorld().spawnParticle(Particle.CRIMSON_SPORE, tl.clone().add(tl.getDirection().normalize().multiply(2)), 200, 1.2,1.2,1.2,0.5 );
-				p.getWorld().spawnParticle(Particle.CRIMSON_SPORE, tl.clone().add(tl.getDirection().normalize().multiply(3)), 300, 1.4,1.4,1.4,0.5);
-				p.getWorld().spawnParticle(Particle.CRIMSON_SPORE, tl.clone().add(tl.getDirection().normalize().multiply(4)), 400, 1.6,1.6,1.6,0.5 );
-				p.getWorld().spawnParticle(Particle.CRIMSON_SPORE, tl.clone().add(tl.getDirection().normalize().multiply(5)), 600, 1.8,1.8,1.8,0.5);
-				p.getWorld().spawnParticle(Particle.CRIMSON_SPORE, tl.clone().add(tl.getDirection().normalize().multiply(6)), 800, 2,2,2,0.5);
 				
-				
+            	spawnDonutRings(p);
+            	
 				for(Entity e :tl.getWorld().getNearbyEntities(tl.clone().add(tl.getDirection().clone().normalize().multiply(3)),6, 6, 6)) {
             		if (e instanceof Player) 
 					{

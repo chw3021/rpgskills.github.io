@@ -23,7 +23,6 @@ import com.google.common.util.concurrent.AtomicDouble;
 import io.github.chw3021.rmain.RMain;
 import net.md_5.bungee.api.ChatColor;
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -51,12 +50,8 @@ import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
-public class Engskills extends Pak implements Listener, Serializable {
+public class Engskills extends Pak {
 
-	/**
-	 *
-	 */
-	private static transient final long serialVersionUID = 6779511048929362121L;
 	private HashMap<String, Long> sdcooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> cdcooldown = new HashMap<String, Long>();
 	private HashMap<String, Long> frcooldown = new HashMap<String, Long>();
@@ -919,7 +914,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 					}
 					grsh.remove(p.getUniqueId());
 
-					p.getWorld().spawnParticle(Particle.REVERSE_PORTAL, p.getLocation(), 50, 1,1,1);
+					p.getWorld().spawnParticle(Particle.PORTAL, p.getLocation(), 50, 1,1,1);
 					final Location pfel = p.getEyeLocation().clone();
 					Location tl = pfel.clone();
 
@@ -932,7 +927,6 @@ public class Engskills extends Pak implements Listener, Serializable {
 
 					p.teleport(tl);
 					p.playSound(tl, Sound.ENTITY_SHULKER_TELEPORT, 0.85f, 1.15f);
-					p.playSound(tl, Sound.ENTITY_SLIME_JUMP, 0.85f, 1.6f);
 					Holding.superholding(p, p, 8l);
 
 					final Location tel = tl.clone();
@@ -942,7 +936,6 @@ public class Engskills extends Pak implements Listener, Serializable {
 						public void run() {
 							p.teleport(pfel);
 							p.getWorld().spawnParticle(Particle.REVERSE_PORTAL, tel, 50, 1,1,1);
-							p.playSound(p.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_AMBIENT, 0.85f, 2f);
 							p.playSound(p.getLocation(), Sound.BLOCK_BUBBLE_COLUMN_WHIRLPOOL_INSIDE, 0.55f, 0f);
 							for(Entity e : p.getWorld().getNearbyEntities(p.getLocation(),5, 5, 5)) {
 								if (e instanceof Player)
@@ -1657,23 +1650,34 @@ public class Engskills extends Pak implements Listener, Serializable {
 	final private void Arrow(Location tl) {
 		HashSet<Location> ls = new HashSet<>();
 		Location fl = tl.clone().add(0,3,0);
-		for(int i  = -5; i<5; i++) {
+		for(int i  = 0; i<5; i++) {
 			ls.add(fl.clone().add(0, i, 0));
 		}
-		ls.add(fl.clone().add(0.7, -4, 0.7));
-		ls.add(fl.clone().add(-0.7, -4, -0.7));
-		ls.add(fl.clone().add(1.5, -3, 1.5));
-		ls.add(fl.clone().add(-1.5, -3, -1.5));
 		ls.add(fl.clone().add(0.7, 3, 0.7));
 		ls.add(fl.clone().add(-0.7, 3, -0.7));
 		ls.add(fl.clone().add(1.5, 2, 1.5));
 		ls.add(fl.clone().add(-1.5, 2, -1.5));
 		
 		ls.forEach(l ->{
-			tl.getWorld().spawnParticle(Particle.BLOCK_MARKER, l, 1, getBd(Material.JIGSAW));
+			tl.getWorld().spawnParticle(Particle.BLOCK_MARKER, l, 1, getBd(Material.WAXED_WEATHERED_COPPER_BULB));
 		});
 	}
 
+	final private void ArrowDown(Location tl) {
+		HashSet<Location> ls = new HashSet<>();
+		Location fl = tl.clone().add(0,3,0);
+		for(int i  = 0; i<-5; i--) {
+			ls.add(fl.clone().add(0, i, 0));
+		}
+		ls.add(fl.clone().add(0.7, -3, 0.7));
+		ls.add(fl.clone().add(-0.7, -3, -0.7));
+		ls.add(fl.clone().add(1.5, -2, 1.5));
+		ls.add(fl.clone().add(-1.5, -2, -1.5));
+		
+		ls.forEach(l ->{
+			tl.getWorld().spawnParticle(Particle.BLOCK_MARKER, l, 1, getBd(Material.EXPOSED_COPPER_BULB));
+		});
+	}
 
 	public void Anti_gravity(PlayerInteractEvent ev)
 	{
@@ -1700,7 +1704,7 @@ public class Engskills extends Pak implements Listener, Serializable {
 					}
 					angv.remove(p.getUniqueId());
 
-	                Location l = gettargetblock(p,4).clone();
+	                final Location l = gettargetblock(p,4).clone();
 
 					p.getWorld().playSound(l, Sound.BLOCK_BEACON_DEACTIVATE, 0.4f, 0);
 					p.getWorld().playSound(l, Sound.BLOCK_BEACON_DEACTIVATE, 0.4f, 0.5f);
@@ -1741,7 +1745,8 @@ public class Engskills extends Pak implements Listener, Serializable {
 						@Override
 						public void run()
 						{
-							l.getWorld().spawnParticle(Particle.END_ROD, l.clone().add(0,3,0), 400, 5,1,5);
+							ArrowDown(l);
+							l.getWorld().spawnParticle(Particle.SCULK_CHARGE_POP, l.clone().add(0,3,0), 400, 5,1,5,0.05);
 
 							l.getWorld().playSound(l, Sound.BLOCK_CONDUIT_ACTIVATE, 0.4f, 1.4f);
 							l.getWorld().playSound(l, Sound.BLOCK_CONDUIT_ACTIVATE, 0.4f, 1.8f);

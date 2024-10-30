@@ -28,12 +28,8 @@ import io.github.chw3021.rmain.RMain;
 
 
 
-public class DarkMobsSpawn extends Mobs implements Listener {
+public class DarkMobsSpawn extends Mobs {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -781915509020560604L;
 	private static final DarkMobsSpawn instance = new DarkMobsSpawn ();
 	public static DarkMobsSpawn getInstance()
 	{

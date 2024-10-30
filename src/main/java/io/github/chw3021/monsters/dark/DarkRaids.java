@@ -42,10 +42,6 @@ import io.github.chw3021.rmain.RMain;
 
 public class DarkRaids extends Summoned {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6536664363548624595L;
 	
 	private static final DarkRaids instance = new DarkRaids ();
 	public static DarkRaids getInstance()

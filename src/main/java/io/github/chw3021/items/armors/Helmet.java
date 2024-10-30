@@ -60,6 +60,7 @@ public class Helmet extends Armors implements Listener {
 			rm.addAttributeModifier(Attribute.MAX_HEALTH, new AttributeModifier(getKey(), 0.20, Operation.ADD_SCALAR, EquipmentSlotGroup.HEAD));
 			rm.addAttributeModifier(Attribute.ARMOR, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.HEAD));
 			rm.addAttributeModifier(Attribute.ARMOR_TOUGHNESS, new AttributeModifier(getKey(), 1, Operation.ADD_NUMBER, EquipmentSlotGroup.HEAD));
+			rm.addAttributeModifier(Attribute.OXYGEN_BONUS, new AttributeModifier(getKey(), 20, Operation.ADD_NUMBER, EquipmentSlotGroup.HEAD));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 				rm.setDisplayName("잠수헬멧");
 				rm.setItemName("잠수헬멧");
@@ -77,6 +78,7 @@ public class Helmet extends Armors implements Listener {
 			rm.addAttributeModifier(Attribute.MAX_HEALTH, new AttributeModifier(getKey(), 0.42, Operation.ADD_SCALAR, EquipmentSlotGroup.HEAD));
 			rm.addAttributeModifier(Attribute.ARMOR, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.HEAD));
 			rm.addAttributeModifier(Attribute.ARMOR_TOUGHNESS, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.HEAD));
+			rm.addAttributeModifier(Attribute.OXYGEN_BONUS, new AttributeModifier(getKey(), 5, Operation.ADD_NUMBER, EquipmentSlotGroup.HEAD));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 				rm.setDisplayName("프리즈머린 투구");
 				rm.setItemName("프리즈머린 투구");
@@ -120,6 +122,30 @@ public class Helmet extends Armors implements Listener {
 			}
 			im.addEnchant(Enchantment.PROTECTION, 1, true);
 			r.setItemMeta(im);
+		}
+		else if(f == 7) {
+			rm.setColor(Color.PURPLE);
+			rm.addAttributeModifier(Attribute.LUCK, new AttributeModifier(getKey(), 7, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.MAX_HEALTH, new AttributeModifier(getKey(), 0.75, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(getKey(), 0.11, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.JUMP_STRENGTH, new AttributeModifier(getKey(), 0.1, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.ARMOR, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 5, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.ARMOR_TOUGHNESS, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+				rm.setDisplayName("영혼의 헬멧");
+				rm.setItemName("영혼의 헬멧");
+			}
+			else {
+				rm.setDisplayName("Soul Helmet");
+				rm.setItemName("Soul Helmet");
+			}
+			rm.addEnchant(Enchantment.PROTECTION, 3, true);
+			rm.addEnchant(Enchantment.BLAST_PROTECTION, 3, true);
+			rm.addEnchant(Enchantment.PROJECTILE_PROTECTION, 3, true);
+			rm.addEnchant(Enchantment.FIRE_PROTECTION, 3, true);
+			rm.addEnchant(Enchantment.UNBREAKING, 255, true);
+			r.setItemMeta(rm);
 		}
 		return r;
 	}

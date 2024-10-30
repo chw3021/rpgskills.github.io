@@ -21,10 +21,6 @@ import io.github.chw3021.commons.Pak;
 
 public class MobDam extends Pak implements Listener {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8073991957831775472L;
 
 	final private void dammul(LivingEntity le, LivingEntity de, EntityDamageByEntityEvent d) {
 		if(!le.isValid()) {

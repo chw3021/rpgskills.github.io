@@ -33,11 +33,6 @@ import io.github.chw3021.rmain.RMain;
 
 
 public class MountainsRaids extends Summoned {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6536664363548624595L;
 	
 	private static final MountainsRaids instance = new MountainsRaids ();
 	public static MountainsRaids getInstance()

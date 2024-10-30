@@ -16,7 +16,6 @@ import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Spider;
 import org.bukkit.entity.Vex;
 import org.bukkit.entity.Zombie;
-import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -27,12 +26,8 @@ import io.github.chw3021.rmain.RMain;
 
 
 
-public class MountainsMobsSpawn extends Mobs implements Listener {
+public class MountainsMobsSpawn extends Mobs {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -781915509020560604L;
 	private static final MountainsMobsSpawn instance = new MountainsMobsSpawn ();
 	public static MountainsMobsSpawn getInstance()
 	{

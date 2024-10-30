@@ -1,6 +1,5 @@
 package io.github.chw3021.commons;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.HashSet;
@@ -66,12 +65,8 @@ import io.github.chw3021.items.weapons.Weapons;
 import io.github.chw3021.monsters.raids.Summoned;
 import net.md_5.bungee.api.ChatColor;
 
-public class Rpgs extends Summoned implements CommandExecutor, Serializable, Listener {
+public class Rpgs extends Summoned implements CommandExecutor, Listener {
 	
-	/**
-	 * 
-	 */
-	private static transient final long serialVersionUID = -712033656548621240L;
 
 	private static HashBasedTable<UUID, String, Double> damagedsdam = HashBasedTable.create();
 	private static HashBasedTable<UUID, String, Integer> damagedscount = HashBasedTable.create();

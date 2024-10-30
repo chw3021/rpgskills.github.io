@@ -26,6 +26,7 @@ public class Chestplate extends Armors implements Listener {
 			rm.addEnchant(Enchantment.BLAST_PROTECTION, 5, true);
 			rm.addAttributeModifier(Attribute.MAX_HEALTH, new AttributeModifier(getKey(), 0.36, Operation.ADD_SCALAR, EquipmentSlotGroup.CHEST));
 			rm.addAttributeModifier(Attribute.ARMOR, new AttributeModifier(getKey(), 6, Operation.ADD_NUMBER, EquipmentSlotGroup.CHEST));
+			rm.addAttributeModifier(Attribute.MINING_EFFICIENCY, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.CHEST));
 			rm.addAttributeModifier(Attribute.ARMOR_TOUGHNESS, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.CHEST));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 				rm.setDisplayName("작업복 상의");
@@ -57,6 +58,8 @@ public class Chestplate extends Armors implements Listener {
 			rm.setColor(Color.AQUA);
 			rm.addAttributeModifier(Attribute.MAX_HEALTH, new AttributeModifier(getKey(), 0.48, Operation.ADD_SCALAR, EquipmentSlotGroup.CHEST));
 			rm.addAttributeModifier(Attribute.ARMOR, new AttributeModifier(getKey(), 7, Operation.ADD_NUMBER, EquipmentSlotGroup.CHEST));
+			rm.addAttributeModifier(Attribute.SUBMERGED_MINING_SPEED, new AttributeModifier(getKey(), 3, Operation.ADD_NUMBER, EquipmentSlotGroup.CHEST));
+			rm.addAttributeModifier(Attribute.WATER_MOVEMENT_EFFICIENCY, new AttributeModifier(getKey(), 3, Operation.ADD_NUMBER, EquipmentSlotGroup.CHEST));
 			rm.addAttributeModifier(Attribute.ARMOR_TOUGHNESS, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.CHEST));
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 				rm.setDisplayName("프리즈머린 흉갑");
@@ -102,6 +105,30 @@ public class Chestplate extends Armors implements Listener {
 			}
 			im.addEnchant(Enchantment.PROTECTION, 3, true);
 			r.setItemMeta(im);
+		}
+		else if(f == 7) {
+			rm.setColor(Color.PURPLE);
+			rm.addAttributeModifier(Attribute.LUCK, new AttributeModifier(getKey(), 7, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.MAX_HEALTH, new AttributeModifier(getKey(), 0.75, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(getKey(), 0.11, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.JUMP_STRENGTH, new AttributeModifier(getKey(), 0.1, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.ARMOR, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 5, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.ARMOR_TOUGHNESS, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+				rm.setDisplayName("영혼의 흉갑");
+				rm.setItemName("영혼의 흉갑");
+			}
+			else {
+				rm.setDisplayName("Soul Chestplate");
+				rm.setItemName("Soul Chestplate");
+			}
+			rm.addEnchant(Enchantment.PROTECTION, 3, true);
+			rm.addEnchant(Enchantment.BLAST_PROTECTION, 3, true);
+			rm.addEnchant(Enchantment.PROJECTILE_PROTECTION, 3, true);
+			rm.addEnchant(Enchantment.FIRE_PROTECTION, 3, true);
+			rm.addEnchant(Enchantment.UNBREAKING, 255, true);
+			r.setItemMeta(rm);
 		}
 		return r;
 	}

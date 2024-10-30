@@ -29,7 +29,6 @@ import org.bukkit.entity.Snowman;
 import org.bukkit.entity.Stray;
 import org.bukkit.entity.ThrownPotion;
 import org.bukkit.entity.Witch;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDropItemEvent;
@@ -52,12 +51,8 @@ import io.github.chw3021.monsters.raids.Summoned;
 import io.github.chw3021.rmain.RMain;
 import net.md_5.bungee.api.ChatColor;
 
-public class SnowSkills extends Summoned implements Listener{
+public class SnowSkills extends Summoned{
 
-	/**
-	 * 
-	 */
-	private transient static final long serialVersionUID = -7048376562198783817L;
 	Holding hold = Holding.getInstance();
 	public HashMap<UUID, Long> rb1cooldown = new HashMap<UUID, Long>();
 	public HashMap<UUID, Long> rb2cooldown = new HashMap<UUID, Long>();

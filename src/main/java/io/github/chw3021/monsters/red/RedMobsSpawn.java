@@ -16,7 +16,6 @@ import org.bukkit.entity.Illusioner;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Spider;
-import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -28,12 +27,8 @@ import io.github.chw3021.monsters.Mobs;
 import io.github.chw3021.rmain.RMain;
 
 
-public class RedMobsSpawn extends Mobs implements Listener {
+public class RedMobsSpawn extends Mobs {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2293637895898323806L;
 	private static final RedMobsSpawn instance = new RedMobsSpawn ();
 	public static RedMobsSpawn getInstance()
 	{

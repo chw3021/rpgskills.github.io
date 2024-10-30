@@ -29,13 +29,6 @@ import io.github.chw3021.rmain.RMain;
 
 public class WildMobsSpawn extends Mobs implements Listener {
 
-	/**
-	 * 
-	 */
-	private static transient final long serialVersionUID = 6020250166279728279L;
-	/**
-	 * 
-	 */
 	
 	private static final WildMobsSpawn instance = new WildMobsSpawn ();
 	public static WildMobsSpawn getInstance()

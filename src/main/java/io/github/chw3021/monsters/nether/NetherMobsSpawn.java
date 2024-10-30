@@ -3,22 +3,14 @@ package io.github.chw3021.monsters.nether;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.event.Listener;
 import org.bukkit.metadata.FixedMetadataValue;
 import io.github.chw3021.monsters.Mobs;
 import io.github.chw3021.rmain.RMain;
 
 
 
-public class NetherMobsSpawn extends Mobs implements Listener {
+public class NetherMobsSpawn extends Mobs {
 
-	/**
-	 * 
-	 */
-	private static transient final long serialVersionUID = 6020250166279728279L;
-	/**
-	 * 
-	 */
 	
 	private static final NetherMobsSpawn instance = new NetherMobsSpawn ();
 	public static NetherMobsSpawn getInstance()

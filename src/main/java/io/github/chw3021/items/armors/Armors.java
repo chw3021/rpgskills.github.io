@@ -57,6 +57,7 @@ public class Armors {
 		
 		return im;
 	}
+
 	
 	public ItemStack[] giveElArmors(Integer el, Player p) {
 		ItemStack[] elArmors = new ItemStack[4];
@@ -70,7 +71,7 @@ public class Armors {
 	}
 
 
-	final private Integer getan(Material ma) {
+	final private static Integer getan(Material ma) {
 		final String m = ma.name();
 		if(m.contains("BOOTS")) {
 			return 23000;
@@ -87,7 +88,7 @@ public class Armors {
 		return 0;
 	}
 
-	final protected ItemStack acArmor(Integer slot, Player p) { //ruined portal quest 에서 습득
+	public static ItemStack acArmor(Integer slot, Player p) { //ruined portal quest 에서 습득
 
 		ItemStack r = new ItemStack(Material.NETHERITE_BOOTS);
 		String kname = "";

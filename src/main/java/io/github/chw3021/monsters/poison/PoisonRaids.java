@@ -32,14 +32,6 @@ import io.github.chw3021.rmain.RMain;
 
 public class PoisonRaids extends Summoned {
 
-	/**
-	 * 
-	 */
-	private static transient final long serialVersionUID = 490515503598935525L;
-	/**
-	 * 
-	 */
-	
 	private static final PoisonRaids instance = new PoisonRaids ();
 	public static PoisonRaids getInstance()
 	{

@@ -1,6 +1,7 @@
 package io.github.chw3021.monsters.hyper;
 
 import java.util.Random;
+
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -17,21 +18,17 @@ import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Spider;
 import org.bukkit.entity.Vindicator;
 import org.bukkit.entity.Witch;
-import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.metadata.FixedMetadataValue;
+
 import io.github.chw3021.monsters.Mobs;
 import io.github.chw3021.rmain.RMain;
 
 
-public class HyperMobsSpawn extends Mobs implements Listener {
+public class HyperMobsSpawn extends Mobs {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6665117211246203993L;
 	private static final HyperMobsSpawn instance = new HyperMobsSpawn ();
 	public static HyperMobsSpawn getInstance()
 	{

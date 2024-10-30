@@ -2,7 +2,6 @@ package io.github.chw3021.monsters;
 
 
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
 
@@ -89,13 +88,9 @@ import io.github.chw3021.monsters.wild.WildRaids;
 import io.github.chw3021.party.PartyLeaveEvent;
 import io.github.chw3021.rmain.RMain;
 
-public class MobsSkillsEvents extends Mobs implements Listener, Serializable  {
+public class MobsSkillsEvents extends Mobs implements Listener  {
 	
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3182008353111479606L;
 	private final String lang = ConfigManager.getInstance(RMain.getInstance()).getCustomConfig().getString("Language");
 	private final List<String> disabledWorlds = ConfigManager.getInstance(RMain.getInstance()).getCustomConfig().getStringList("Worlds");
 	Mobs mobs = new Mobs();                 
