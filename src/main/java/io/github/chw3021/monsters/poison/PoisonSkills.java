@@ -551,7 +551,7 @@ public class PoisonSkills extends OverworldRaids{
 		                    
 		                    if(p.hasMetadata("ruined")) {
 		                    	AtomicDouble ad = new AtomicDouble();
-								for(int i = 0; i<54; i++) {
+								for(int i = 0; i<36; i++) {
 				                    int t = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					             		@Override
 					                	public void run() 
@@ -656,7 +656,7 @@ public class PoisonSkills extends OverworldRaids{
 		w.spawnParticle(Particle.LARGE_SMOKE, pl, 150, 2,2,2);
 		w.spawnParticle(Particle.GUST, pl, 150, 2,2,2);
 		int i = 0;
-		int count = p.hasMetadata("ruined") ? 40 : 20;
+		int count = p.hasMetadata("ruined") ? 20 : 10;
 		for(; i<count; i++) {
             int t = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
          		@Override
@@ -672,7 +672,7 @@ public class PoisonSkills extends OverworldRaids{
 
                 	for(int a = 0; a <count; a ++) {
 	                	
-	                	Arrow ar = w.spawnArrow(pl.clone(), pl.clone().getDirection(), 1.85f, 15);
+	                	Arrow ar = w.spawnArrow(pl.clone(), pl.clone().getDirection(), 1.0f, 20);
 	                	Vector arv = ar.getVelocity().clone();
 	                	ar.remove();
 	                	
@@ -1279,7 +1279,7 @@ public class PoisonSkills extends OverworldRaids{
         }
 	}
 	
-	final Long ordealTime = 530l;
+	final Long ordealTime = 550l;
 
 	final private void ordeal(LivingEntity p, EntityDamageByEntityEvent d) {
 		String rn = p.getMetadata("raid").get(0).asString();
@@ -1301,11 +1301,13 @@ public class PoisonSkills extends OverworldRaids{
         		pe.sendMessage(ChatColor.BOLD+"TheApocalyptic: Let's Play The Game.");
 			}
     		pe.teleport(rl.clone().add(0, 1.5, 0));
-    		Holding.invur(pe, 40l);
+    		Holding.holding(null,pe , 60l);
+    		Holding.invur(pe, 60l);
         }
         int t1 = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
             @Override
             public void run() {
+            	p.teleport(rl.clone().add(30, 1, 30));
                 ordeal.put(p.getUniqueId(), true);
 
                 for(Player pe : OverworldRaids.getheroes(p)) {
@@ -1322,7 +1324,7 @@ public class PoisonSkills extends OverworldRaids{
 					ordt.put(rn, t1);                   	
                 }
             }
-        }, 20);
+        }, 60);
 		ordt.put(rn, t1);
 		
         int t3 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {

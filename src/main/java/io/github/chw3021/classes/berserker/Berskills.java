@@ -616,7 +616,7 @@ public class Berskills extends Pak {
 	    double ringDistance = 1.2; // 고리 간의 거리
 	    double initialRadius = 1.0; // 첫 번째 고리의 반지름
 	    double radiusIncrement = 0.6; // 고리 반지름 증가량
-	    int particlesPerRing = 30; // 각 고리 당 파티클 개수
+	    int particlesPerRing = 200; // 각 고리 당 파티클 개수
 
 	    for (int ring = 0; ring < ringCount; ring++) {
 	        // 각 고리의 중심을 계산 (시선 방향으로 점점 멀어짐)
@@ -636,7 +636,7 @@ public class Berskills extends Pak {
 	            Location particleLocation = ringCenter.clone().add(offset);
 	            
 	            // 파티클 생성
-	            p.getWorld().spawnParticle(Particle.CRIMSON_SPORE, particleLocation, 1, 0, 0, 0, 0.05);
+	            p.getWorld().spawnParticle(Particle.BLOCK_CRUMBLE, particleLocation, 1, 0, 0, 0, 0.05, getBd(Material.NETHER_GOLD_ORE));
 	        }
 	    }
 	}
@@ -1238,7 +1238,7 @@ public class Berskills extends Pak {
 				                    p.playSound(p.getLocation(), Sound.ENTITY_HUSK_STEP, 0.1f, 1.5f);
 		             				p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, pl, 25, 1.5,1.5,1.5);
 									for(Entity e : p.getWorld().getNearbyEntities(p.getLocation(),2.5, 2.5, 2.5)) {
-										if(e instanceof LivingEntity&&  !(e.hasMetadata("portal")) && e!=p) {
+										if(e instanceof LivingEntity&&  !(e.hasMetadata("portal"))&&  !(e.hasMetadata("fake")) && e!=p) {
 											LivingEntity le = (LivingEntity)e;
 					                    	atk0(0.18, bsd.Flurry.get(p.getUniqueId())*0.2, p, le);
 											le.teleport(tl);
@@ -1368,7 +1368,7 @@ public class Berskills extends Pak {
             	}
 				crs.remove(p.getUniqueId());
 
-            	final Location pl = p.getLocation().clone().add(0, 0.45, 0);
+            	final Location pl = p.getEyeLocation().clone().add(0, -0.35, 0);
             	
                 ArrayList<Location> fill = new ArrayList<Location>();
                 
@@ -1378,7 +1378,7 @@ public class Berskills extends Pak {
                 p.playSound(p.getLocation(), Sound.ENTITY_DROWNED_SHOOT, 0.6f, 0.5f);
                 p.playSound(p.getLocation(), Sound.PARTICLE_SOUL_ESCAPE, 0.6f, 0.5f);
                 for(double an = Math.PI; an>-Math.PI; an-=Math.PI/90) {
-                    for(double i = 0.1; i<7.5;i+=0.2) {
+                    for(double i = 0.5; i<8.5;i+=0.2) {
                     	fill.add(pl.clone().add(pl.clone().getDirection().normalize().rotateAroundY(an).multiply(i)));
                     }
                 }
@@ -1387,8 +1387,8 @@ public class Berskills extends Pak {
 		                @Override
 		                public void run() 
 		                {
-			        		p.getWorld().spawnParticle(Particle.CRIMSON_SPORE, l,5,0.1,0.1,0.1,0);
-			        		p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l,5,0.1,0.1,0.1,0);
+			        		p.getWorld().spawnParticle(Particle.CRIMSON_SPORE, l,5,0.1,0,0.1,0);
+			        		p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l,1,0.1,0,0.1,0);
 		                }
 					}, j.incrementAndGet()/900); 
                 	
@@ -1398,7 +1398,7 @@ public class Berskills extends Pak {
 	                public void run() 
 	                {
 	                    fill.forEach(l ->{
-	                    	for(Entity e: l.getWorld().getNearbyEntities(l,1,3,1)) {
+	                    	for(Entity e: l.getWorld().getNearbyEntities(l,1,4,1)) {
 		    					if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
 		    					{
 		                    		if (e instanceof Player) 

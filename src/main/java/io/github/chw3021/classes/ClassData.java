@@ -59,12 +59,15 @@ import org.bukkit.util.io.BukkitObjectOutputStream;
 
 
 public class ClassData implements Serializable, Listener{
-	private static transient final long serialVersionUID = -3472632196999457137L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5829258580777447087L;
 	public final HashMap<UUID, Integer> playerclass;
-	static public HashMap<UUID, Integer> pc;
-	Classgui Classgui = new Classgui();
-	Pak pak = new Pak();
-	CombatMode cm = new CombatMode();
+	static public HashMap<UUID, Integer> pc = new HashMap<>();
+	transient Classgui Classgui = new Classgui();
+	transient Pak pak = new Pak();
+	transient CombatMode cm = new CombatMode();
  
     // Can be used for saving
 	
@@ -278,16 +281,18 @@ public class ClassData implements Serializable, Listener{
     		classanounce(p);
             
 		}
-		ClassData cdata = new ClassData(ClassData.loadData(path +"/plugins/RPGskills/ClassData.data"));
-		pc = cdata.playerclass;
+		finally {
+			ClassData cdata = new ClassData(ClassData.loadData(path +"/plugins/RPGskills/ClassData.data"));
+			pc = cdata.playerclass;
 
-		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-            @Override
-            public void run() 
-            {
-        		setMaxHealth(p);
-            }
-        }, 12); 
+			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	            @Override
+	            public void run() 
+	            {
+	        		setMaxHealth(p);
+	            }
+	        }, 12); 
+		}
 	}
     @EventHandler
 	public void classopen(InventoryOpenEvent e)

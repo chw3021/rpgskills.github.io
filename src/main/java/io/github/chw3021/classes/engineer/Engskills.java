@@ -39,7 +39,6 @@ import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.BlockFace;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -531,8 +530,10 @@ public class Engskills extends Pak {
 				as.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 				as.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 				as.setInvisible(true);
-				as.getEquipment().setHelmet(new ItemStack(Material.PURPLE_GLAZED_TERRACOTTA));
+				as.getEquipment().setHelmet(new ItemStack(Material.DROPPER));
 				as.setInvulnerable(true);
+				as.setGravity(false);
+				as.getAttribute(Attribute.SCALE).setBaseValue(3);
 				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					@Override
 					public void run()
@@ -616,8 +617,8 @@ public class Engskills extends Pak {
 			line.add(snl.clone().add(v.clone().normalize().multiply(d)));
 		}
 		line.forEach(l -> {
-			snw.spawnParticle(Particle.BLOCK, l, 1, 0.3,0.3,0.3,0, Material.PURPLE_GLAZED_TERRACOTTA.createBlockData());
-			snw.spawnParticle(Particle.GLOW, l, 1, 0.1,0.1,0.1);
+			snw.spawnParticle(Particle.BLOCK, l, 1, 0.3,0.3,0.3,0, Material.REDSTONE_BLOCK.createBlockData());
+			snw.spawnParticle(Particle.ITEM, l, 1, 0.1,0.1,0.1, new ItemStack(Material.REDSTONE_TORCH));
 		});
 	}
 
@@ -635,7 +636,7 @@ public class Engskills extends Pak {
 			line.add(snl.clone().add(v.clone().normalize().multiply(d)));
 		}
 		line.forEach(l -> {
-			snw.spawnParticle(Particle.DUST_PILLAR, l, 1, 0.3,0.3,0.3,0, Material.DISPENSER.createBlockData());
+			snw.spawnParticle(Particle.FALLING_DUST, l, 1, 0.3,0.3,0.3,0, Material.DISPENSER.createBlockData());
 		});
 	}
 
@@ -1216,7 +1217,7 @@ public class Engskills extends Pak {
 							p.playSound(sn.getLocation(), Sound.BLOCK_PORTAL_AMBIENT, 0.055f, 2.0f);
 							sn.getWorld().spawnParticle(Particle.END_ROD, sn.getLocation(), 2,1,1,1);
 							sn.getWorld().spawnParticle(Particle.FLASH, sn.getLocation(), 1,1,1,1);
-							for (Entity e : p.getWorld().getNearbyEntities(sn.getLocation(), 5, 5, 5))
+							for (Entity e : sn.getWorld().getNearbyEntities(sn.getLocation(), 5, 5, 5))
 							{
 								if (e instanceof Player)
 								{
@@ -1458,8 +1459,8 @@ public class Engskills extends Pak {
 											if(shipt.containsKey(p.getUniqueId())){
 												area = 8;
 											}
-											p.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, l, area*50, area,1,area,0.3);
-											p.getWorld().spawnParticle(Particle.FIREWORK, l, area*50, area,1,area,0.3);
+											p.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, l, area*20, area,0.1,area,0);
+											p.getWorld().spawnParticle(Particle.FIREWORK, l, area*20, area,0.1,area,0);
 											p.getWorld().playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_TWINKLE, 0.8f, 2);
 											for (Entity a : p.getWorld().getNearbyEntities(l, area, 4, area))
 											{
@@ -1666,7 +1667,7 @@ public class Engskills extends Pak {
 	final private void ArrowDown(Location tl) {
 		HashSet<Location> ls = new HashSet<>();
 		Location fl = tl.clone().add(0,3,0);
-		for(int i  = 0; i<-5; i--) {
+		for(int i  = 0; i>-5; i--) {
 			ls.add(fl.clone().add(0, i, 0));
 		}
 		ls.add(fl.clone().add(0.7, -3, 0.7));
@@ -1746,7 +1747,7 @@ public class Engskills extends Pak {
 						public void run()
 						{
 							ArrowDown(l);
-							l.getWorld().spawnParticle(Particle.SCULK_CHARGE_POP, l.clone().add(0,3,0), 400, 5,1,5,0.05);
+							l.getWorld().spawnParticle(Particle.TRIAL_SPAWNER_DETECTION_OMINOUS, l.clone().add(0,3,0), 400, 5,1,5,0.05);
 
 							l.getWorld().playSound(l, Sound.BLOCK_CONDUIT_ACTIVATE, 0.4f, 1.4f);
 							l.getWorld().playSound(l, Sound.BLOCK_CONDUIT_ACTIVATE, 0.4f, 1.8f);

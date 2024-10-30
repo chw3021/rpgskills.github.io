@@ -71,8 +71,8 @@ public class OceanSkills extends OverworldRaids{
 
 	public void Mimic(EntityDamageByEntityEvent d) 
 	{
-		if(d.getEntity() instanceof Breeze) {
-			Breeze p = (Breeze) d.getEntity();
+		if(d.getEntity() instanceof LivingEntity) {
+			LivingEntity p = (LivingEntity) d.getEntity();
 			if(p.hasMetadata("mimic") && !p.hasAI() && p.isInvisible()) {
 				p.removeMetadata("fake", RMain.getInstance());
 				d.setCancelled(false);

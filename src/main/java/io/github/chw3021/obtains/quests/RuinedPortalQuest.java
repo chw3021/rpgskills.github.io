@@ -67,8 +67,6 @@ public class RuinedPortalQuest extends Mobs  {
 	private HashMap<String, Integer> qbart = new HashMap<String, Integer>();
 	
 	
-	private ItemStack map = null;
-	
 
 	private static final RuinedPortalQuest instance = new RuinedPortalQuest ();
 	public static RuinedPortalQuest getInstance()
@@ -181,7 +179,6 @@ public class RuinedPortalQuest extends Mobs  {
 		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "차원문 혼령 ("+p.getName()+")":"Portal Spirit ("+p.getName()+")";
 		Vex newmob = (Vex) MobspawnLoc(esl, reg, p.getLevel()*250.0, head, null, null, null, main, off, EntityType.VEX);
 		newmob.setCharging(true);
-		newmob.getAttribute(Attribute.ENTITY_INTERACTION_RANGE).setBaseValue(5);
 		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 		newmob.getAttribute(Attribute.SCALE).setBaseValue(2.5);
 		newmob.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 999999, 4, false, false));

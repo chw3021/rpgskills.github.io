@@ -133,7 +133,7 @@ public class NPCLoc implements Serializable, Listener{
     
     public static NPCLoc getLocsdata(){
         String path = new File("").getAbsolutePath();
-        NPCLoc data = new NPCLoc(NPCLoc.loadData(path +"/plugins/RPGskills/NPCLoc.data"));
+        NPCLoc data = loadData(path +"/plugins/RPGskills/NPCLoc.data");
 		return data;
 	}
 	final public static void chestSaver(Player p, Location sl, ItemStack[] is) {
@@ -181,7 +181,6 @@ public class NPCLoc implements Serializable, Listener{
 		InventoryHolder ih = ev.getInventoryHolder();
 		
 		Location l = ih.getInventory().getLocation();
-		ev.setCancelled(true);
 
 		if(ChestLocs.add(l)) {
 			Spawn(l,structureKey);
@@ -194,18 +193,20 @@ public class NPCLoc implements Serializable, Listener{
 		}
 
 		Table<UUID, Location, ItemStack[]> Locs = getLocsdata().Locs;
+    	System.out.println(l);
 		
 		structureSaver(l, structureKey);
 
 		if(structureKey.contains("buried_treasure")) {
 			return;
 		}
-		List<HumanEntity> viewers = new ArrayList<>(ih.getInventory().getViewers());
+		List<HumanEntity> viewers = ih.getInventory().getViewers();
 		for (HumanEntity he : viewers) {
 		    Player p = (Player) he;
 		    p.closeInventory();
 		    
 		    if (!Locs.contains(p.getUniqueId(), l)) {
+		    	System.out.println(ev.getLoot());
 		        chestSaver(p, l, (ItemStack[]) ev.getLoot().toArray());
 		    	Locs = getLocsdata().Locs;
 		    }
@@ -223,7 +224,7 @@ public class NPCLoc implements Serializable, Listener{
 	{
 		Inventory ci = d.getInventory();
 		Player p = (Player) d.getPlayer();
-		if(ci.getLocation() != null &&  ci.getLocation().getBlock() != null) {
+		if(ci.getLocation() != null &&  ci.getLocation().getBlock() != null ) {
 
 			HashMultimap<Location, String> StructureKeys = getLocsdata().StructureKeys;
 			Location l = ci.getLocation();
@@ -305,7 +306,7 @@ public class NPCLoc implements Serializable, Listener{
 	@EventHandler	
 	public void stopTargetNPC(EntityTargetEvent ev) 
 	{
-		if(ev.getTarget().hasMetadata("obnpc")) {
+		if(ev.getTarget() != null &&  ev.getTarget().hasMetadata("obnpc")) {
 			ev.setTarget(null);
 			ev.setCancelled(true);
 		}
@@ -455,7 +456,7 @@ public class NPCLoc implements Serializable, Listener{
 				((Lootable) ve).setLootTable(null);
 			});
 			v.setAI(false);
-			v.setInvulnerable(false);
+			v.setInvulnerable(true);
 			v.setCollidable(false);
 			v.getEquipment().setBootsDropChance(0);
 			v.getEquipment().setChestplateDropChance(0);
@@ -503,7 +504,7 @@ public class NPCLoc implements Serializable, Listener{
 				((Lootable) ve).setLootTable(null);
 			});
 			v.setAI(false);
-			v.setInvulnerable(false);
+			v.setInvulnerable(true);
 			v.setCollidable(false);
 			v.getEquipment().setBootsDropChance(0);
 			v.getEquipment().setChestplateDropChance(0);
@@ -543,7 +544,7 @@ public class NPCLoc implements Serializable, Listener{
 				((Lootable) ve).setLootTable(null);
 			});
 			v.setAI(false);
-			v.setInvulnerable(false);
+			v.setInvulnerable(true);
 			v.setCollidable(false);
 			v.getEquipment().setBootsDropChance(0);
 			v.getEquipment().setChestplateDropChance(0);

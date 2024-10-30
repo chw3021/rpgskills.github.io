@@ -37,11 +37,6 @@ public class CombatMode {
 	
 	private static final CombatMode instance = new CombatMode();
 	private HashMap<String, Long> hm = new HashMap<String, Long>();
-	
-	private Material[] mas = { Material.AXOLOTL_SPAWN_EGG, Material.BEE_SPAWN_EGG,
-			Material.CAT_SPAWN_EGG, Material.CHICKEN_SPAWN_EGG, Material.CREEPER_SPAWN_EGG,
-			Material.FROG_SPAWN_EGG, Material.PARROT_SPAWN_EGG, Material.GOAT_SPAWN_EGG};
-
 	public static CombatMode getInstance() {
 		return instance;
 	}
@@ -217,6 +212,11 @@ public class CombatMode {
 		}
 	}
 
+
+	
+	private Material[] mas = { Material.AXOLOTL_SPAWN_EGG, Material.BEE_SPAWN_EGG,
+			Material.CAT_SPAWN_EGG, Material.CHICKEN_SPAWN_EGG, Material.CREEPER_SPAWN_EGG,
+			Material.FROG_SPAWN_EGG, Material.PARROT_SPAWN_EGG, Material.GOAT_SPAWN_EGG};
 
 	public static void itemset(String display, ItemStack is, int data, int stack, List<String> Lore, int loc,
 			Inventory inv) {

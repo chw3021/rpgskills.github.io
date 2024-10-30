@@ -13,6 +13,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Phantom;
 import org.bukkit.entity.Shulker;
+import org.bukkit.entity.Stray;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -61,14 +62,19 @@ public class OceanMobsSpawn extends Mobs {
 		return newmob;
 	}
 
-	final private Breeze Mimic(LivingEntity le) {
+	final private Stray Mimic(LivingEntity le) {
 		ItemStack head = new ItemStack(Material.TRAPPED_CHEST);
 		String reg = lang.contains("kr") ? "미믹":"Mimic";
-		Breeze newmob = (Breeze) Mobspawn(le, reg, 3000.0, head,  new ItemStack(Material.VOID_AIR),  new ItemStack(Material.VOID_AIR),  new ItemStack(Material.VOID_AIR), new ItemStack(Material.VOID_AIR),  new ItemStack(Material.VOID_AIR), EntityType.BREEZE);
+		Stray newmob = (Stray) Mobspawn(le, reg, 3000.0, head,  new ItemStack(Material.VOID_AIR),  new ItemStack(Material.VOID_AIR),  new ItemStack(Material.VOID_AIR), new ItemStack(Material.VOID_AIR),  new ItemStack(Material.VOID_AIR), EntityType.STRAY);
 		newmob.setSwimming(true);
 		newmob.setGravity(true);
 		newmob.setAI(false);
 		newmob.setInvisible(true);
+		newmob.getAttribute(Attribute.WATER_MOVEMENT_EFFICIENCY).setBaseValue(20);
+		newmob.getAttribute(Attribute.OXYGEN_BONUS).setBaseValue(20);
+		newmob.getAttribute(Attribute.GRAVITY).setBaseValue(10000);
+		newmob.getAttribute(Attribute.STEP_HEIGHT).setBaseValue(30);
+		newmob.getAttribute(Attribute.JUMP_STRENGTH).setBaseValue(30);
 		newmob.addPotionEffect(
 				new PotionEffect(PotionEffectType.WATER_BREATHING, 999999, 255, false, false));
 		newmob.addPotionEffect(
