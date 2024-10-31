@@ -22,6 +22,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.server.PluginEnableEvent;
@@ -51,9 +52,11 @@ public class Obtained implements Serializable, Listener {
 	 * 
 	 */
 	private String path = new File("").getAbsolutePath();
-	private Obtained ob;
+	private static Obtained d;
 	public static HashMap<UUID, Double> ucd = new HashMap<UUID, Double>();
 	public static HashMap<UUID, Double> ncd = new HashMap<UUID, Double>();
+	public static HashMap<UUID, Double> Qdamage = new HashMap<UUID, Double>();
+	public static HashMap<UUID, Double> Qarmor = new HashMap<UUID, Double>();
 	
 	public final HashMap<UUID, Integer> Mineshaft;
 	public final HashMap<UUID, Integer> BuriedTreasure;
@@ -79,12 +82,14 @@ public class Obtained implements Serializable, Listener {
     @EventHandler
 	public void er(PluginEnableEvent ev) 
 	{
-		ob = loadData(path +"/plugins/RPGskills/Obtained.data");
+		d = loadData(path +"/plugins/RPGskills/Obtained.data");
 		Bukkit.getOnlinePlayers().forEach(p ->{
-			double ultc = 1 * (1 - (ob.JungleTemple.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0)) * (1 - (ob.RuinedPortal.getOrDefault(p.getUniqueId(), 0)>=4 ? 0.1:0))* (1 - (ob.EnderDragon.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0));
-			double norc = 1 * (1 - (ob.DesertPyramid.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0)) * (1 - (ob.Stronghold.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0)) * (1 - (ob.Village.getOrDefault(p.getUniqueId(), 0)>=5 ? 0.1:0)) * (1 - (ob.BastionRemnant.getOrDefault(p.getUniqueId(), 0)>=2 ? 0.06:0));
+			double ultc = 1 * (1 - (d.JungleTemple.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0)) * (1 - (d.RuinedPortal.getOrDefault(p.getUniqueId(), 0)>=4 ? 0.1:0))* (1 - (d.EnderDragon.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0));
+			double norc = 1 * (1 - (d.DesertPyramid.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0)) * (1 - (d.Stronghold.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0)) * (1 - (d.Village.getOrDefault(p.getUniqueId(), 0)>=5 ? 0.1:0)) * (1 - (d.BastionRemnant.getOrDefault(p.getUniqueId(), 0)>=2 ? 0.06:0));
 			ucd.put(p.getUniqueId(), (ultc));
 			ncd.put(p.getUniqueId(), norc);
+			damageAndArmor(p);
+			
 		});
 		
 	}
@@ -104,11 +109,12 @@ public class Obtained implements Serializable, Listener {
 			{	
 				Player p = (Player) e.getWhoClicked();
 				p.setCooldown(Material.STRUCTURE_VOID, 1);
-				ob = loadData(path +"/plugins/RPGskills/Obtained.data");
-				double ultc = 1 * (1 - (ob.JungleTemple.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0)) * (1 - (ob.RuinedPortal.getOrDefault(p.getUniqueId(), 0)>=4 ? 0.1:0))* (1 - (ob.EnderDragon.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0));
-				double norc = 1 * (1 - (ob.DesertPyramid.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0)) * (1 - (ob.Stronghold.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0)) * (1 - (ob.Village.getOrDefault(p.getUniqueId(), 0)>=5 ? 0.1:0)) * (1 - (ob.BastionRemnant.getOrDefault(p.getUniqueId(), 0)>=2 ? 0.06:0));
+				d = loadData(path +"/plugins/RPGskills/Obtained.data");
+				double ultc = 1 * (1 - (d.JungleTemple.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0)) * (1 - (d.RuinedPortal.getOrDefault(p.getUniqueId(), 0)>=4 ? 0.1:0))* (1 - (d.EnderDragon.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0));
+				double norc = 1 * (1 - (d.DesertPyramid.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0)) * (1 - (d.Stronghold.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0)) * (1 - (d.Village.getOrDefault(p.getUniqueId(), 0)>=5 ? 0.1:0)) * (1 - (d.BastionRemnant.getOrDefault(p.getUniqueId(), 0)>=2 ? 0.06:0));
 				ucd.put(p.getUniqueId(), (ultc));
 				ncd.put(p.getUniqueId(), norc);
+				damageAndArmor(p);
 			}
 			
 		}
@@ -117,11 +123,12 @@ public class Obtained implements Serializable, Listener {
 			e.setCancelled(true);
 			Player p = (Player) e.getWhoClicked();
 			p.setCooldown(Material.STRUCTURE_VOID, 1);
-			ob = loadData(path +"/plugins/RPGskills/Obtained.data");
-			double ultc = 1 * (1 - (ob.JungleTemple.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0)) * (1 - (ob.RuinedPortal.getOrDefault(p.getUniqueId(), 0)>=4 ? 0.1:0))* (1 - (ob.EnderDragon.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0));
-			double norc = 1 * (1 - (ob.DesertPyramid.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0)) * (1 - (ob.Stronghold.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0)) * (1 - (ob.Village.getOrDefault(p.getUniqueId(), 0)>=5 ? 0.1:0)) * (1 - (ob.BastionRemnant.getOrDefault(p.getUniqueId(), 0)>=2 ? 0.06:0));
+			d = loadData(path +"/plugins/RPGskills/Obtained.data");
+			double ultc = 1 * (1 - (d.JungleTemple.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0)) * (1 - (d.RuinedPortal.getOrDefault(p.getUniqueId(), 0)>=4 ? 0.1:0))* (1 - (d.EnderDragon.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0));
+			double norc = 1 * (1 - (d.DesertPyramid.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0)) * (1 - (d.Stronghold.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0)) * (1 - (d.Village.getOrDefault(p.getUniqueId(), 0)>=5 ? 0.1:0)) * (1 - (d.BastionRemnant.getOrDefault(p.getUniqueId(), 0)>=2 ? 0.06:0));
 			ucd.put(p.getUniqueId(), (ultc));
 			ncd.put(p.getUniqueId(), norc);
+			damageAndArmor(p);
 		}
 	}
 
@@ -130,13 +137,92 @@ public class Obtained implements Serializable, Listener {
 	public void nepreventer(PlayerJoinEvent ev) 
 	{
 		Player p = ev.getPlayer();
-		ob = loadData(path +"/plugins/RPGskills/Obtained.data");
-		double ultc = 1 * (1 - (ob.JungleTemple.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0)) * (1 - (ob.RuinedPortal.getOrDefault(p.getUniqueId(), 0)>=4 ? 0.1:0))* (1 - (ob.EnderDragon.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0));
-		double norc = 1 * (1 - (ob.DesertPyramid.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0)) * (1 - (ob.Stronghold.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0)) * (1 - (ob.Village.getOrDefault(p.getUniqueId(), 0)>=5 ? 0.1:0)) * (1 - (ob.BastionRemnant.getOrDefault(p.getUniqueId(), 0)>=2 ? 0.06:0));
+		d = loadData(path +"/plugins/RPGskills/Obtained.data");
+		double ultc = 1 * (1 - (d.JungleTemple.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0)) * (1 - (d.RuinedPortal.getOrDefault(p.getUniqueId(), 0)>=4 ? 0.1:0))* (1 - (d.EnderDragon.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0));
+		double norc = 1 * (1 - (d.DesertPyramid.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0)) * (1 - (d.Stronghold.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0)) * (1 - (d.Village.getOrDefault(p.getUniqueId(), 0)>=5 ? 0.1:0)) * (1 - (d.BastionRemnant.getOrDefault(p.getUniqueId(), 0)>=2 ? 0.06:0));
 		ucd.put(p.getUniqueId(), (ultc));
 		ncd.put(p.getUniqueId(), norc);
-		
+		damageAndArmor(p);
 	}
+
+    
+    //{@link io.github.chw3021.monsters.MobDam.PlayerArmor(EntityDamageEvent d)}
+    final private static void damageAndArmor(Player p) {
+        String path = new File("").getAbsolutePath();
+        Obtained d = new Obtained(Obtained.loadData(path + "/plugins/RPGskills/Obtained.data"));
+        double attackIncrease = 0;
+        double defenseIncrease = 0;
+
+        if (d.Mineshaft.getOrDefault(p.getUniqueId(), 0) >= 2) {  
+            attackIncrease += 0.02;
+            defenseIncrease += 0.02;
+        }
+        if (d.BuriedTreasure.getOrDefault(p.getUniqueId(), 0) >= 2) {
+            attackIncrease += 0.02;
+        }
+        if (d.Igloo.getOrDefault(p.getUniqueId(), 0) >= 2) {
+            attackIncrease += 0.025;
+            defenseIncrease += 0.025;
+        }
+        if (d.OceanRuins.getOrDefault(p.getUniqueId(), 0) >= 3) {
+            defenseIncrease += 0.05;
+        }
+        if (d.WoodlandMansion.getOrDefault(p.getUniqueId(), 0) >= 1) {
+            attackIncrease += 0.03;
+            defenseIncrease += 0.05;
+        }
+        if (d.Shipwreck.getOrDefault(p.getUniqueId(), 0) >= 3) {
+            attackIncrease += 0.03;
+            defenseIncrease += 0.03;
+        }
+        if (d.OceanMonument.getOrDefault(p.getUniqueId(), 0) >= 1) {
+            attackIncrease += 0.03;
+            defenseIncrease += 0.03;
+        }
+        if (d.JungleTemple.getOrDefault(p.getUniqueId(), 0) >= 1) {
+            attackIncrease += 0.04;
+            defenseIncrease += 0.04;
+        }
+        if (d.PillagerOutpost.getOrDefault(p.getUniqueId(), 0) >= 2) {
+            defenseIncrease += 0.06;
+        }
+        if (d.DesertPyramid.getOrDefault(p.getUniqueId(), 0) >= 1) {
+            attackIncrease += 0.02;
+        }
+        if (d.Stronghold.getOrDefault(p.getUniqueId(), 0) >= 1) {
+            attackIncrease += 0.05;
+        }
+        if (d.AncientCity.getOrDefault(p.getUniqueId(), 0) >= 2) {
+            defenseIncrease += 0.08;
+        }
+        if (d.Village.getOrDefault(p.getUniqueId(), 0) >= 5) {
+            attackIncrease += 0.025;
+            defenseIncrease += 0.025;
+        }
+        if (d.RuinedPortal.getOrDefault(p.getUniqueId(), 0) >= 4) {
+            attackIncrease += 0.05;
+            defenseIncrease += 0.05;
+        }
+        if (d.NetherFortress.getOrDefault(p.getUniqueId(), 0) >= 2) {
+            attackIncrease += 0.08;
+            defenseIncrease += 0.08;
+        }
+        if (d.BastionRemnant.getOrDefault(p.getUniqueId(), 0) >= 2) {
+            attackIncrease += 0.06;
+            defenseIncrease += 0.06;
+        }
+        if (d.EnderDragon.getOrDefault(p.getUniqueId(), 0) >= 1) {
+            attackIncrease += 0.1;
+        }
+        if (d.EndCity.getOrDefault(p.getUniqueId(), 0) >= 1) {
+            attackIncrease += 0.11;
+            defenseIncrease += 0.11;
+        }
+
+        // 최종 공격력과 방어력에 증가치 적용
+        Qdamage.put(p.getUniqueId(), 1 + attackIncrease);
+        Qarmor.put(p.getUniqueId(), 1 + defenseIncrease);
+    }
 
 
 	
@@ -405,6 +491,7 @@ public class Obtained implements Serializable, Listener {
 		double norc = 1 * (1 - (DesertPyramid.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0)) * (1 - (Stronghold.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0)) * (1 - (Village.getOrDefault(p.getUniqueId(), 0)>=5 ? 0.1:0)) * (1 - (BastionRemnant.getOrDefault(p.getUniqueId(), 0)>=2 ? 0.06:0));
 		ucd.put(p.getUniqueId(), (ultc));
 		ncd.put(p.getUniqueId(), norc);
+		damageAndArmor(p);
 		
 		
 		new Obtained(Mineshaft, BuriedTreasure, Igloo, OceanRuins, WoodlandMansion, Shipwreck, OceanMonument,
@@ -677,7 +764,8 @@ public class Obtained implements Serializable, Listener {
 		double norc = 1 * (1 - (DesertPyramid.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0)) * (1 - (Stronghold.getOrDefault(p.getUniqueId(), 0)>=1 ? 0.1:0)) * (1 - (Village.getOrDefault(p.getUniqueId(), 0)>=5 ? 0.1:0)) * (1 - (BastionRemnant.getOrDefault(p.getUniqueId(), 0)>=2 ? 0.06:0));
 		ucd.put(p.getUniqueId(), (ultc));
 		ncd.put(p.getUniqueId(), norc);
-		
+
+		damageAndArmor(p);
 		
 		new Obtained(Mineshaft, BuriedTreasure, Igloo, OceanRuins, WoodlandMansion, Shipwreck, OceanMonument,
 				JungleTemple, PillagerOutpost, DesertPyramid, Stronghold, AncientCity, Village, RuinedPortal,
@@ -798,15 +886,6 @@ public class Obtained implements Serializable, Listener {
 						36, inv);
 			}
 	
-			if (od.BuriedTreasure.getOrDefault(p.getUniqueId(), 0) >= 2) {
-				itemset(ChatColor.GOLD + "파묻힌 보물 전리품", mp, 0, 1,
-						Arrays.asList("공격력과 방어력이 3% 증가합니다", "경험치 획득량이 5% 증가합니다"), 37, inv);
-			} else {
-				itemset(ChatColor.GOLD + "파묻힌 보물 전리품(아직 모두 획득하지 못함)", Material.CHEST, 0, 1,
-						Arrays.asList(
-								ChatColor.GOLD + "" + od.BuriedTreasure.getOrDefault(p.getUniqueId(), 0) + "/2 획득함"),
-						37, inv);
-			}
 	
 			if (od.Igloo.getOrDefault(p.getUniqueId(), 0) >= 2) {
 				itemset(ChatColor.GOLD + "이글루 전리품", sb, 0, 1,

@@ -17,6 +17,7 @@ import org.bukkit.potion.PotionEffectType;
 import io.github.chw3021.classes.ClassData;
 import io.github.chw3021.classes.Proficiency;
 import io.github.chw3021.commons.Pak;
+import io.github.chw3021.obtains.Obtained;
 
 
 public class MobDam extends Pak implements Listener {
@@ -140,7 +141,7 @@ public class MobDam extends Pak implements Listener {
 		if (d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity) {
 			Player p = (Player) d.getDamager();
 			if (p.getCooldown(Material.GLISTERING_MELON_SLICE) <= 0) {
-				d.setDamage(d.getDamage() * (1 + Proficiency.getpro(p)*0.25));
+				d.setDamage(d.getDamage() * (1 + Proficiency.getpro(p)*0.25)*(1+Obtained.Qdamage.getOrDefault(p.getUniqueId(),0d)));
 			}
 			if(!d.getEntity().hasMetadata("raid") && d.getEntity() instanceof Mob && !p.hasMetadata("fake")) {
 				Mob m = (Mob) d.getEntity();
@@ -152,7 +153,7 @@ public class MobDam extends Pak implements Listener {
 			if (pr.getShooter() instanceof Player) {
 				Player p = (Player) pr.getShooter();
 				if (p.getCooldown(Material.GLISTERING_MELON_SLICE) <= 0) {
-					d.setDamage(d.getDamage() * (1 + Proficiency.getpro(p)*0.25));
+					d.setDamage(d.getDamage() * (1 + Proficiency.getpro(p)*0.25)*(1+Obtained.Qdamage.getOrDefault(p.getUniqueId(),0d)));
 				}
 				if(!d.getEntity().hasMetadata("raid") && d.getEntity() instanceof Mob && !p.hasMetadata("fake")) {
 					Mob m = (Mob) d.getEntity();
@@ -179,6 +180,7 @@ public class MobDam extends Pak implements Listener {
 			if (Proficiency.getpro(p) >= 2) {
 				d.setDamage(d.getDamage() * 0.75);
 			}
+			d.setDamage(d.getDamage()*(1-Obtained.Qarmor.getOrDefault(p.getUniqueId(), 0d)));
 		}
 	}
 }
