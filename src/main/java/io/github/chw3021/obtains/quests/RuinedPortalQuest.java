@@ -66,7 +66,7 @@ public class RuinedPortalQuest extends Mobs  {
 	private HashMap<String, BossBar> qbar = new HashMap<String, BossBar>();
 	private HashMap<String, Integer> qbart = new HashMap<String, Integer>();
 	
-	
+	final String meta = "ruinedportalquest";
 
 	private static final RuinedPortalQuest instance = new RuinedPortalQuest ();
 	public static RuinedPortalQuest getInstance()
@@ -191,7 +191,7 @@ public class RuinedPortalQuest extends Mobs  {
 		newmob.getEquipment().setItemInOffHandDropChance(0);
 		newmob.getEquipment().setLeggingsDropChance(0);
 		newmob.setMetadata("quest", new FixedMetadataValue(RMain.getInstance(),true));
-		newmob.setMetadata("ruinedportalquest", new FixedMetadataValue(RMain.getInstance(),p.getName()));
+		newmob.setMetadata(meta, new FixedMetadataValue(RMain.getInstance(),p.getName()));
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setRemoveWhenFarAway(true);
 		newmob.setTarget(p);
@@ -381,8 +381,8 @@ public class RuinedPortalQuest extends Mobs  {
 
 	public void QuestClear(EntityDeathEvent d) 
 	{
-		if(d.getEntity().hasMetadata("shipwreckquest")) {
-			Player p = Bukkit.getPlayerExact(d.getEntity().getMetadata("shipwreckquest").get(0).asString());
+		if(d.getEntity().hasMetadata(meta)) {
+			Player p = Bukkit.getPlayerExact(d.getEntity().getMetadata(meta).get(0).asString());
 			qmobskill.computeIfPresent(p.getName(), (k,v) -> v+1);
 			qmobskill.putIfAbsent(p.getName(), 1);
 			if(qmobskill.getOrDefault(p.getName(), 0) >= 20) {
