@@ -1165,9 +1165,8 @@ public class PoisonSkills extends OverworldRaids{
 	private HashMap<UUID, Boolean> ordealable = new HashMap<UUID, Boolean>();
 	public static HashMap<UUID, Boolean> ordeal = new HashMap<UUID, Boolean>();//poisonBoss 패턴 시작 여부 저장
 
-	private HashMultimap<UUID, UUID> pair = HashMultimap.create();//ArmorStands uuid 저장
-	public HashMap<UUID, Integer> ast = new HashMap<UUID, Integer>();//ArmorStands damage 태스크 저장
-	public HashMap<UUID, Integer> asdt = new HashMap<UUID, Integer>();//ArmorStands remove 태스크 저장
+	public HashMap<UUID, Integer> ast = new HashMap<UUID, Integer>();// damage 태스크 저장
+	public HashMap<UUID, Integer> asdt = new HashMap<UUID, Integer>();// remove 태스크 저장
 	
 	final private void asSpawn(Player pe, String rn, LivingEntity p) {
 		HashSet<Location> ls = new HashSet<>();
@@ -1179,69 +1178,42 @@ public class PoisonSkills extends OverworldRaids{
 		ls.add(fl.clone().add(0, 0, 1));
 		ls.add(fl.clone().add(0, 0, -1));
 		
-		final World w = fl.getWorld();
+		int t2 =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+        		
+        		if(Holding.ale(pe).isDead()) {
+    				if(ast.containsKey(pe.getUniqueId())) {
+                    	Bukkit.getScheduler().cancelTask(ast.get(pe.getUniqueId()));
+                    	ast.remove(pe.getUniqueId());
+    				}
+    				if(asdt.containsKey(pe.getUniqueId())) {
+                    	Bukkit.getScheduler().cancelTask(asdt.get(pe.getUniqueId()));
+                    	asdt.remove(pe.getUniqueId());
+    				}
+        		}
+        		if(fl.distance(p.getLocation()) > 1.1) {
+                	pe.playSound(pe, Sound.ENTITY_ELDER_GUARDIAN_HURT, 1, 0);
+            		pe.sendTitle(ChatColor.DARK_RED+"X",ChatColor.BOLD+"",10,20, 10);
+        			p.setHealth(0);
+        		}
+            }
+        }, 0,1);
+		ordt.put(rn, t2);
+		ast.put(pe.getUniqueId(), t2);
 		
-		ls.forEach(l ->{
-			w.spawn(l, ArmorStand.class, newmob -> {
+		int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() {
 
-				newmob.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
-				newmob.setGravity(false);
-        		newmob.setCustomNameVisible(false);
-        		newmob.setInvulnerable(true);
-        		newmob.setRemoveWhenFarAway(false);
-        		newmob.setGravity(false);
-        		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), rn));
-        		newmob.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
-        		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
-        		newmob.setAI(false);
-            	pair.put(pe.getUniqueId(), newmob.getUniqueId());
-				
-    			int t2 =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-                    @Override
-                    public void run() {
-	            		
-	            		if(Holding.ale(pe).isDead()) {
-	            			pair.get(pe.getUniqueId()).forEach(as ->{
-	            				if(ast.containsKey(as)) {
-		                        	Bukkit.getScheduler().cancelTask(ast.get(as));
-		                        	ast.remove(as);
-	            				}
-	            				if(asdt.containsKey(as)) {
-		                        	Bukkit.getScheduler().cancelTask(asdt.get(as));
-		                        	asdt.remove(as);
-	            				}
-	                        	if(Bukkit.getEntity(as) != null) {
-		                        	Bukkit.getEntity(as).remove();
-	                        	}
-	            			});
-	            		}
-	            		
-	            		for(Entity e : p.getWorld().getNearbyEntities(newmob.getLocation().clone(), 0.5, 0.1, 0.5)) {
-							if(p!=e && e instanceof Player&& !(e.hasMetadata("fake"))) {
-								Player le = (Player)e;
-								le.setHealth(0);
-							}
-	                	}
-                    }
-                }, 0,1);
-    			ordt.put(rn, t2);
-    			ast.put(newmob.getUniqueId(), t2);
-    			
-    			int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-                    @Override
-                    public void run() {
-
-        				if(ast.containsKey(newmob.getUniqueId())) {
-                        	Bukkit.getScheduler().cancelTask(ast.get(newmob.getUniqueId()));
-                        	ast.remove(newmob.getUniqueId());
-        				}
-                    	Holding.ale(newmob).remove();
-                    }
-                }, 45); 
-    			asdt.put(newmob.getUniqueId(), t1);
-    			ordt.put(rn, t1);
-			});
-		});
+				if(ast.containsKey(pe.getUniqueId())) {
+                	Bukkit.getScheduler().cancelTask(ast.get(pe.getUniqueId()));
+                	ast.remove(pe.getUniqueId());
+				}
+            }
+        }, 45); 
+		asdt.put(pe.getUniqueId(), t1);
+		ordt.put(rn, t1);
 		
 	}
 
@@ -1262,6 +1234,7 @@ public class PoisonSkills extends OverworldRaids{
 	                	aimshot(p, pl, pel);
 	                	Holding.holding(null, pe, 3l);
 	                	pe.playSound(pe, Sound.ENTITY_ELDER_GUARDIAN_HURT, 1, 0.3f);
+	                	pe.playSound(pe, Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 1, 0.4f);
 	            		pe.sendTitle(ChatColor.DARK_GREEN+""+j.getAndDecrement(),ChatColor.BOLD+"",10,20, 10);
 	                }
 	            }, i*20); 	 
@@ -1271,6 +1244,7 @@ public class PoisonSkills extends OverworldRaids{
                 @Override
                 public void run() {
                 	pe.playSound(pe, Sound.ENTITY_ELDER_GUARDIAN_HURT, 1, 0);
+                	pe.playSound(pe, Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 1, 0f);
             		pe.sendTitle(ChatColor.DARK_RED+"■",ChatColor.BOLD+"",10,20, 10);
             		asSpawn(pe, rn, p);
                 }
