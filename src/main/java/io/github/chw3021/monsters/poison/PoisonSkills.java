@@ -1245,7 +1245,7 @@ public class PoisonSkills extends OverworldRaids{
                 public void run() {
                 	pe.playSound(pe, Sound.ENTITY_ELDER_GUARDIAN_HURT, 1, 0);
                 	pe.playSound(pe, Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 1, 0f);
-            		pe.sendTitle(ChatColor.DARK_RED+"■",ChatColor.BOLD+"",10,20, 10);
+            		pe.sendTitle(ChatColor.DARK_RED+"██",ChatColor.BOLD+"",10,20, 10);
             		asSpawn(pe, rn, p);
                 }
             }, 75); 

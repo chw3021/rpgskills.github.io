@@ -134,11 +134,12 @@ public class RMain extends JavaPlugin{
         Bukkit.getPluginManager().registerEvents(new ClassData(new HashMap<UUID, Integer>()), this);
         Bukkit.getPluginManager().registerEvents(new Backpack(HashBasedTable.create()), this);
         Bukkit.getPluginManager().registerEvents(new ScrollPoint(new HashMap<UUID, Integer>()), this);
-        Bukkit.getPluginManager().registerEvents(new Party(), this);
-        this.getCommand("party").setExecutor(new Party());
 
         Bukkit.getPluginManager().registerEvents(new TrophyLoc(HashMultimap.create()), this);
         Bukkit.getPluginManager().registerEvents(new Obtained(new HashMap<UUID, Integer>(),new HashMap<UUID, Integer>(),new HashMap<UUID, Integer>(),new HashMap<UUID, Integer>(),new HashMap<UUID, Integer>(),new HashMap<UUID, Integer>(),new HashMap<UUID, Integer>(),new HashMap<UUID, Integer>(),new HashMap<UUID, Integer>(),new HashMap<UUID, Integer>(),new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
+
+        Bukkit.getPluginManager().registerEvents(new Party(), this);
+        this.getCommand("party").setExecutor(new Party());
         
         Bukkit.getPluginManager().registerEvents(new SwordSkillsData(), this);
         Bukkit.getPluginManager().registerEvents(new BerSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);

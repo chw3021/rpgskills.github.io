@@ -23,7 +23,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityPotionEffectEvent;
+import org.bukkit.event.entity.EntityToggleSwimEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.inventory.Inventory;
@@ -31,12 +34,17 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
 import org.jetbrains.annotations.NotNull;
 
 import io.github.chw3021.classes.ClassData;
+import io.github.chw3021.classes.Proficiency;
 import io.github.chw3021.classes.angler.AngSkillsData;
+import io.github.chw3021.items.armors.ArmorSet;
+import io.github.chw3021.rmain.RMain;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -57,6 +65,13 @@ public class Obtained implements Serializable, Listener {
 	public static HashMap<UUID, Double> ncd = new HashMap<UUID, Double>();
 	public static HashMap<UUID, Double> Qdamage = new HashMap<UUID, Double>();
 	public static HashMap<UUID, Double> Qarmor = new HashMap<UUID, Double>();
+	
+	public static HashMap<UUID, Double> Qexp = new HashMap<UUID, Double>();
+	
+	public static HashMap<UUID, Boolean> oceanRuined = new HashMap<UUID, Boolean>();
+	public static HashMap<UUID, Boolean> monument = new HashMap<UUID, Boolean>();
+	public static HashMap<UUID, Boolean> ancient = new HashMap<UUID, Boolean>();
+	public static HashMap<UUID, Boolean> igloo = new HashMap<UUID, Boolean>();
 	
 	public final HashMap<UUID, Integer> Mineshaft;
 	public final HashMap<UUID, Integer> BuriedTreasure;
@@ -152,10 +167,12 @@ public class Obtained implements Serializable, Listener {
         Obtained d = new Obtained(Obtained.loadData(path + "/plugins/RPGskills/Obtained.data"));
         double attackIncrease = 0;
         double defenseIncrease = 0;
+        double expIncrease = 0;
 
         if (d.Mineshaft.getOrDefault(p.getUniqueId(), 0) >= 2) {  
             attackIncrease += 0.02;
             defenseIncrease += 0.02;
+            expIncrease += 0.05;
         }
         if (d.BuriedTreasure.getOrDefault(p.getUniqueId(), 0) >= 2) {
             attackIncrease += 0.02;
@@ -163,9 +180,12 @@ public class Obtained implements Serializable, Listener {
         if (d.Igloo.getOrDefault(p.getUniqueId(), 0) >= 2) {
             attackIncrease += 0.025;
             defenseIncrease += 0.025;
+            expIncrease += 0.05;
+            igloo.put(p.getUniqueId(), true);
         }
         if (d.OceanRuins.getOrDefault(p.getUniqueId(), 0) >= 3) {
             defenseIncrease += 0.05;
+            oceanRuined.put(p.getUniqueId(), true);
         }
         if (d.WoodlandMansion.getOrDefault(p.getUniqueId(), 0) >= 1) {
             attackIncrease += 0.03;
@@ -174,10 +194,12 @@ public class Obtained implements Serializable, Listener {
         if (d.Shipwreck.getOrDefault(p.getUniqueId(), 0) >= 3) {
             attackIncrease += 0.03;
             defenseIncrease += 0.03;
+            expIncrease += 0.05;
         }
         if (d.OceanMonument.getOrDefault(p.getUniqueId(), 0) >= 1) {
             attackIncrease += 0.03;
             defenseIncrease += 0.03;
+            monument.put(p.getUniqueId(), true);
         }
         if (d.JungleTemple.getOrDefault(p.getUniqueId(), 0) >= 1) {
             attackIncrease += 0.04;
@@ -194,10 +216,12 @@ public class Obtained implements Serializable, Listener {
         }
         if (d.AncientCity.getOrDefault(p.getUniqueId(), 0) >= 2) {
             defenseIncrease += 0.08;
+            ancient.put(p.getUniqueId(), true);
         }
         if (d.Village.getOrDefault(p.getUniqueId(), 0) >= 5) {
             attackIncrease += 0.025;
             defenseIncrease += 0.025;
+            expIncrease += 0.1;
         }
         if (d.RuinedPortal.getOrDefault(p.getUniqueId(), 0) >= 4) {
             attackIncrease += 0.05;
@@ -220,12 +244,77 @@ public class Obtained implements Serializable, Listener {
         }
 
         // 최종 공격력과 방어력에 증가치 적용
-        Qdamage.put(p.getUniqueId(), 1 + attackIncrease);
-        Qarmor.put(p.getUniqueId(), 1 + defenseIncrease);
+        Qdamage.put(p.getUniqueId(), attackIncrease);
+        Qarmor.put(p.getUniqueId(), defenseIncrease);
+        Qexp.put(p.getUniqueId(), expIncrease);
     }
 
 
-	
+	@EventHandler
+	public void Expup (PlayerExpChangeEvent e)
+	{
+		Player p = e.getPlayer();
+		
+		if(Qexp.containsKey(p.getUniqueId())) {
+			e.setAmount((int) (e.getAmount()*(1+Qexp.get(p.getUniqueId()))));
+		}
+		
+	}
+
+	@EventHandler
+	public void effectRemove(EntityPotionEffectEvent d)
+	{
+		if(!(d.getEntity() instanceof Player)) {return;
+		}
+
+		else if(d.getEntity() instanceof Player) {
+			Player p = (Player)d.getEntity();
+			if(ancient.containsKey(p.getUniqueId()))
+			{
+				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+					@Override
+					public void run()
+					{
+						if(p.hasPotionEffect(PotionEffectType.BLINDNESS)) {
+							p.removePotionEffect(PotionEffectType.BLINDNESS);
+						}
+						if(p.hasPotionEffect(PotionEffectType.DARKNESS)) {
+							p.removePotionEffect(PotionEffectType.DARKNESS);
+						}
+					}
+				}, 5);
+			}
+			if(igloo.containsKey(p.getUniqueId()))
+			{
+				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+					@Override
+					public void run()
+					{
+						if(p.hasPotionEffect(PotionEffectType.SLOWNESS)) {
+							p.removePotionEffect(PotionEffectType.SLOWNESS);
+						}
+						if(p.hasPotionEffect(PotionEffectType.MINING_FATIGUE)) {
+							p.removePotionEffect(PotionEffectType.MINING_FATIGUE);
+						}
+					}
+				}, 5);
+			}
+		}
+	}
+
+	@EventHandler
+	public void Swimer(EntityToggleSwimEvent ev) 
+	{
+		if(ev.getEntity() instanceof Player) {
+			Player p = (Player) ev.getEntity();
+			if(oceanRuined.containsKey(p.getUniqueId())) {
+				p.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 2000, 30, false, false));
+			}
+			if(monument.containsKey(p.getUniqueId())) {
+				p.addPotionEffect(new PotionEffect(PotionEffectType.CONDUIT_POWER, 2000, 3, false, false));
+			}
+		}
+	}
 	
 	
 	
@@ -867,15 +956,6 @@ public class Obtained implements Serializable, Listener {
 			itemset(ChatColor.GOLD + "배낭", new ItemStack(Material.BARREL), 0, 1, Arrays.asList("클릭시 배낭을 엽니다"),
 					33, inv);
 			
-			if (od.Mineshaft.getOrDefault(p.getUniqueId(), 0) >= 2) {
-				itemset(ChatColor.GOLD + "페광 전리품", ms, 0, 1, Arrays.asList("공격력과 방어력이 2% 증가합니다", "경험치 획득량이 5% 증가합니다"),
-						36, inv);
-			} else {
-				itemset(ChatColor.GOLD + "페광 전리품(아직 모두 획득하지 못함)", Material.POWERED_RAIL, 0, 1,
-						Arrays.asList(ChatColor.GOLD + "" + od.Mineshaft.getOrDefault(p.getUniqueId(), 0) + "/2 획득함"),
-						36, inv);
-			}
-	
 			
 			if (od.Mineshaft.getOrDefault(p.getUniqueId(), 0) >= 2) {
 				itemset(ChatColor.GOLD + "페광 전리품", ms, 0, 1, Arrays.asList("공격력과 방어력이 2% 증가합니다", "경험치 획득량이 5% 증가합니다"),
@@ -973,7 +1053,7 @@ public class Obtained implements Serializable, Listener {
 			}
 	
 			if (od.AncientCity.getOrDefault(p.getUniqueId(), 0) >= 2) {
-				itemset(ChatColor.GOLD + "고대 도시", my, 0, 1, Arrays.asList("방어력이 8% 증가합니다", "독에 면역이 됩니다"), 47, inv);
+				itemset(ChatColor.GOLD + "고대 도시", my, 0, 1, Arrays.asList("방어력이 8% 증가합니다", "실명, 어둠에 면역이 됩니다"), 47, inv);
 			} else {
 				itemset(ChatColor.GOLD + "고대 도시(아직 모두 획득하지 못함)", Material.SCULK_CATALYST, 0, 1,
 						Arrays.asList(ChatColor.GOLD + "" + od.AncientCity.getOrDefault(p.getUniqueId(), 0) + "/2 획득함"),
@@ -1162,7 +1242,7 @@ public class Obtained implements Serializable, Listener {
 	
 			if (od.AncientCity.getOrDefault(p.getUniqueId(), 0) >= 2) {
 				itemset(ChatColor.GOLD + "Trophy Of AncientCity", my, 0, 1,
-						Arrays.asList("Increase Armor 8%", "Immune To Poison"), 47, inv);
+						Arrays.asList("Increase Armor 8%", "Immune To Blindness, Darkness"), 47, inv);
 			} else {
 				itemset(ChatColor.GOLD + "Trophy Of AncientCity(Not Obtained All Yet)", Material.SCULK_CATALYST, 0, 1,
 						Arrays.asList(
