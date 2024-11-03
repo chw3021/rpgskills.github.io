@@ -7,6 +7,7 @@ import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.WorldCreator;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
@@ -18,7 +19,7 @@ import io.github.chw3021.rmain.RMain;
 
 public class RaidWorldLoad implements Listener {
 
-	@EventHandler
+	//@EventHandler
 	public void raidworldload(PluginEnableEvent ev)   
     {
 		if (Bukkit.getServer().getWorld("OverworldRaid") == null) {
@@ -108,7 +109,15 @@ public class RaidWorldLoad implements Listener {
 		worlds.forEach(w -> {
 
 			if (w.hasMetadata("rpgraidworld")) {
-				w.getEntities().forEach(a -> a.remove());
+				w.getEntities().forEach(a -> {
+					if(a instanceof Player) {
+						Player p = (Player) a;
+						p.kickPlayer("");
+					}
+					else {
+						a.remove();
+					}
+				});
 				Bukkit.unloadWorld(w, false);
 			}
 		});

@@ -1075,108 +1075,55 @@ public class Forskills extends Pak {
 
 		p.getLocation();
 		HashSet<LivingEntity> les = new HashSet<LivingEntity>();
-		if(Proficiency.getpro(p)<1) {
-			for(int i =1; i<10; i++) {
-				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					@Override
-					public void run()
-					{
-						p.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_HURT, 1f, 2f);
-						p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_HURT, 1f, 2f);
-						ArrayList<Location> line = RailSMG(p.getEyeLocation().clone());
-						line.forEach(l -> {
-							p.getWorld().spawnParticle(Particle.BLOCK, l.add(0, -0.289, 0),4, 0.005,0.005,0.005,0, Material.LIGHT_BLUE_GLAZED_TERRACOTTA.createBlockData());
-							p.getWorld().spawnParticle(Particle.GLOW, l.add(0, -0.289, 0),1, 0.005,0.005,0.005,0);
+		for(int i =1; i<10; i++) {
+			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+				@Override
+				public void run()
+				{
+					p.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_HURT, 1f, 2f);
+					p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_HURT, 1f, 2f);
+					ArrayList<Location> line = RailSMG(p.getEyeLocation().clone());
+					line.forEach(l -> {
+						p.getWorld().spawnParticle(Particle.BLOCK, l.add(0, -0.289, 0),4, 0.005,0.005,0.005,0, Material.LIGHT_BLUE_GLAZED_TERRACOTTA.createBlockData());
+						p.getWorld().spawnParticle(Particle.GLOW, l.add(0, -0.289, 0),1, 0.005,0.005,0.005,0);
 
-							for (Entity a : p.getWorld().getNearbyEntities(l, 0.5, 0.5, 0.5))
+						for (Entity a : p.getWorld().getNearbyEntities(l, 0.5, 0.5, 0.5))
+						{
+							if ((!(a == p))&& a instanceof LivingEntity&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal")))
 							{
-								if ((!(a == p))&& a instanceof LivingEntity&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal")))
+								if (a instanceof Player)
 								{
-									if (a instanceof Player)
-									{
 
-										Player p1 = (Player) a;
-										if(Party.hasParty(p) && Party.hasParty(p1))	{
-											if(Party.getParty(p).equals(Party.getParty(p1)))
-											{
-												continue;
-											}
+									Player p1 = (Player) a;
+									if(Party.hasParty(p) && Party.hasParty(p1))	{
+										if(Party.getParty(p).equals(Party.getParty(p1)))
+										{
+											continue;
 										}
 									}
-									LivingEntity le = (LivingEntity)a;
-									les.add(le);
 								}
+								LivingEntity le = (LivingEntity)a;
+								les.add(le);
 							}
-						});
-					}
-				}, i);
-			}
-			for(int i =1; i<10; i++) {
-				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					@Override
-					public void run()
-					{
-						for(LivingEntity le : les) {
-							p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
-							atk1(0.073*(1+fsd.RailSMG.get(p.getUniqueId())*0.012), p, le,9);
-							le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,15,1,false,false));
 						}
-
-					}
-				}, i+1/10);
-			}
+					});
+				}
+			}, i);
 		}
-		else {
-			for(int i =0; i<3; i++) {
-				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					@Override
-					public void run()
-					{
-						p.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_HURT, 1f, 2f);
-						p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_HURT, 1f, 2f);
-						p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_CLUSTER_BREAK, 1f, 2f);
-						ArrayList<Location> line = RailSMG(p.getEyeLocation().clone());
-						line.forEach(l -> {
-							p.getWorld().spawnParticle(Particle.BLOCK, l.add(0, -0.289, 0),5, 0.005,0.005,0.005,0, Material.LIGHT_BLUE_GLAZED_TERRACOTTA.createBlockData());
-							p.getWorld().spawnParticle(Particle.GLOW, l.add(0, -0.289, 0),1, 0.005,0.005,0.005,0);
-
-							for (Entity a : p.getWorld().getNearbyEntities(l, 0.5, 0.5, 0.5))
-							{
-								if ((!(a == p))&& a instanceof LivingEntity&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal")))
-								{
-									if (a instanceof Player)
-									{
-
-										Player p1 = (Player) a;
-										if(Party.hasParty(p) && Party.hasParty(p1))	{
-											if(Party.getParty(p).equals(Party.getParty(p1)))
-											{
-												continue;
-											}
-										}
-									}
-									LivingEntity le = (LivingEntity)a;
-									les.add(le);
-								}
-							}
-						});
+		for(int i =1; i<10; i++) {
+			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+				@Override
+				public void run()
+				{
+					for(LivingEntity le : les) {
+						p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
+						atk1(0.113*(1+fsd.RailSMG.get(p.getUniqueId())*0.042), p, le,9);
+						le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,15,1,false,false));
 					}
-				}, i);
-			}
-			for(int i =0; i<3; i++) {
-				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					@Override
-					public void run()
-					{
-						for(LivingEntity le : les) {
-							p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
-							atk1(0.45*(1+fsd.RailSMG.get(p.getUniqueId())*0.05), p, le,9);
-							le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,15,1,false,false));
-						}
 
-					}
-				}, i+1/10);
-			}
+				}
+			}, i+1/10);
+		
 		}
 
 	}

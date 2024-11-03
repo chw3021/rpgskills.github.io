@@ -2395,7 +2395,7 @@ public class Tamskills extends Pak {
 			LivingEntity p = (LivingEntity)d.getEntity();
 			if(p.hasMetadata("untargetable")) {
 				Player o = Bukkit.getPlayer(p.getMetadata("untargetable").get(0).asString());
-				if(ClassData.pc.get(o.getUniqueId()) == 9) {
+				if(o!=null && ClassData.pc.get(o.getUniqueId()) == 9) {
 					if(Proficiency.getpro(o)>=1) {
 
 						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {

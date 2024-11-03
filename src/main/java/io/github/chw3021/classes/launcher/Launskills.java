@@ -585,7 +585,7 @@ public class Launskills extends Pak {
 
 
 		if(ClassData.pc.get(p.getUniqueId()) == 5 && lsd.Discharge.getOrDefault(p.getUniqueId(), 0)>=1) {
-			if((a == Action.LEFT_CLICK_AIR || a == Action.LEFT_CLICK_BLOCK) && !p.isSneaking()&& !p.hasCooldown(Material.FIREWORK_STAR))
+			if((a == Action.LEFT_CLICK_AIR || a == Action.LEFT_CLICK_BLOCK) && !p.isSneaking()&& !p.hasCooldown(CAREFUL))
 			{
 				if(p.getInventory().getItemInMainHand().getType() == Material.BOW)
 				{
@@ -1891,7 +1891,7 @@ public class Launskills extends Pak {
 
 		if(ClassData.pc.get(p.getUniqueId()) == 5 && lsd.ChargingShot.getOrDefault(p.getUniqueId(), 0)>=1) {
 
-			if((a == Action.LEFT_CLICK_AIR || a == Action.LEFT_CLICK_BLOCK) && p.isSneaking()&& !p.hasCooldown(Material.FIREWORK_STAR))
+			if((a == Action.LEFT_CLICK_AIR || a == Action.LEFT_CLICK_BLOCK) && p.isSneaking()&& !p.hasCooldown(CAREFUL))
 			{
 
 				if(p.getInventory().getItemInMainHand().getType() == Material.BOW)
@@ -1911,18 +1911,18 @@ public class Launskills extends Pak {
 						else // if timer is done
 						{
 							cscooldown.remove(p.getName()); // removing player from HashMap
-							Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 5, 0, Arrow.class);
+							Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation().add(0, -0.2, 0), p.getEyeLocation().getDirection(), 5, 0, Arrow.class);
 							ar.setShooter(p);
 							ar.setCritical(true);
 							ar.setInvulnerable(true);
-							ar1(ar, p, 1d);
+							ar.setDamage(0);
 							p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 0.1f, 1.6f);
 							p.playSound(p.getLocation(), Sound.BLOCK_DISPENSER_LAUNCH, 0.1f, 1.6f);
 							p.playSound(p.getLocation(), Sound.ENTITY_EVOKER_CAST_SPELL, 0.1f, 1.6f);
 							ar.setPickupStatus(PickupStatus.DISALLOWED);
 							ar.setMetadata("ChargingShot of" + p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 
-							for(int i = 0; i <20; i++) {
+							for(int i = 0; i <10; i++) {
 								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 									@Override
 									public void run()
@@ -1932,7 +1932,7 @@ public class Launskills extends Pak {
 										ar.getWorld().spawnParticle(Particle.SPLASH, ar.getLocation(), 5,0.1,0.1,0.1,0.05);
 										ar.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, ar.getLocation(), 5,0.1,0.1,0.1,0.05);
 									}
-								}, i);
+								}, i*2+10);
 
 							}
 
@@ -1943,18 +1943,18 @@ public class Launskills extends Pak {
 					}
 					else // if cooldown doesn't have players name in it
 					{
-						Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 5, 0, Arrow.class);
+						Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation().add(0, -0.2, 0), p.getEyeLocation().getDirection(), 5, 0, Arrow.class);
 						ar.setShooter(p);
 						ar.setCritical(true);
 						ar.setInvulnerable(true);
-						ar1(ar, p, 1d);
+						ar.setDamage(0);
 						p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 0.1f, 1.6f);
 						p.playSound(p.getLocation(), Sound.BLOCK_DISPENSER_LAUNCH, 0.1f, 1.6f);
 						p.playSound(p.getLocation(), Sound.ENTITY_EVOKER_CAST_SPELL, 0.1f, 1.6f);
 						ar.setPickupStatus(PickupStatus.DISALLOWED);
 						ar.setMetadata("ChargingShot of" + p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 
-						for(int i = 0; i <20; i++) {
+						for(int i = 0; i <10; i++) {
 							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 								@Override
 								public void run()
@@ -1964,7 +1964,7 @@ public class Launskills extends Pak {
 									ar.getWorld().spawnParticle(Particle.SPLASH, ar.getLocation(), 5,0.1,0.1,0.1,0.05);
 									ar.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, ar.getLocation(), 5,0.1,0.1,0.1,0.05);
 								}
-							}, i);
+							}, i*2+10);
 
 						}
 
@@ -1982,9 +1982,9 @@ public class Launskills extends Pak {
 
 	public void ChargingShot(ProjectileHitEvent d)
 	{
-		if(d.getEntity() instanceof Arrow && !d.isCancelled())
+		if(d.getEntity() instanceof Arrow)
 		{
-			final Projectile a = (Projectile) d.getEntity();
+			final Arrow a = (Arrow) d.getEntity();
 			if(a.getShooter() instanceof Player)
 			{
 				Player p = (Player) a.getShooter();
@@ -2000,7 +2000,7 @@ public class Launskills extends Pak {
 							return;
 						}
 
-						final Location el = a.getLocation();
+						final Location el = d.getHitEntity().getLocation();
 						cscooldown.put(p.getName(), System.currentTimeMillis());
 						Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,10*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d),5,"응집","ChargingShot"));
 
@@ -2050,33 +2050,33 @@ public class Launskills extends Pak {
 	}
 
 
-	@SuppressWarnings("deprecation")
 	public void EnderWitherHunter(ProjectileHitEvent ev)
 	{
 
 		if(ev.getEntity().getShooter() instanceof Player && ev.getEntity() instanceof Arrow)
 		{
 			Player p = (Player)ev.getEntity().getShooter();
+			Arrow ar = (Arrow) ev.getEntity();
 
 
 
 
-			if(ClassData.pc.get(p.getUniqueId()) == 5 && (arrowtype.getOrDefault(p, 0)==3 || arrowtype.getOrDefault(p, 0)==4))  {
+			if(ClassData.pc.get(p.getUniqueId()) == 5)  {
 				if(ev.getHitEntity() instanceof Wither) {
 					Wither e =(Wither) ev.getHitEntity();
-					Arrow ar = (Arrow) ev.getEntity();
-					if(e.getHealth() <= e.getMaxHealth()/2)
+					if(e.getHealth() <= e.getAttribute(Attribute.MAX_HEALTH).getValue()/2)
 					{
 						p.setCooldown(Material.YELLOW_TERRACOTTA, 1);
-						e.damage(bbArrow(ar), ar);
+						e.damage(bbArrow(ar), p);
+						ev.getEntity().remove();
 					}
 				}
 				if(ev.getHitEntity() instanceof Enderman || ev.getHitEntity() instanceof Breeze) {
 					LivingEntity e =(LivingEntity) ev.getHitEntity();
-					Arrow ar = (Arrow) ev.getEntity();
 					{
 						p.setCooldown(Material.YELLOW_TERRACOTTA, 1);
-						e.damage(bbArrow(ar), ar);
+						e.damage(bbArrow(ar), p);
+						ev.getEntity().remove();
 					}
 				}
 			}
@@ -2114,7 +2114,7 @@ public class Launskills extends Pak {
 		if(ClassData.pc.get(p.getUniqueId()) == 5 && (is.getType().name().equals("BOW"))  && ev.getNewSlot()==3 && p.isSneaking()&& Proficiency.getpro(p) >=1)
 		{
 			ev.setCancelled(true);
-			p.setCooldown(Material.FIREWORK_STAR, 1);
+			p.setCooldown(CAREFUL, 1);
 			SkillBuilder bd = new SkillBuilder()
 					.player(p)
 					.cooldown(75/Proficiency.getpro(p)*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d))
@@ -2321,7 +2321,7 @@ public class Launskills extends Pak {
 		if(ClassData.pc.get(p.getUniqueId()) == 5 && (is.getType().name().equals("BOW")) && p.isSneaking()  && ev.getNewSlot()==4&& Proficiency.getpro(p) >=2 )
 		{
 			ev.setCancelled(true);
-			p.setCooldown(Material.FIREWORK_STAR, 1);
+			p.setCooldown(CAREFUL, 1);
 
 			final Location tl = gettargetblock(p,30);
 

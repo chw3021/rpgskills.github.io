@@ -830,20 +830,18 @@ public class OverworldRaids extends Summoned implements Listener {
 	}
 	
 	final private void playerTP(Player p, Location spl, String rn) {
+		final Location pl = p.getLocation();
+		beforepl.put(p.getUniqueId(), pl);
+		Holding.invur(p, 100l);
 		int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
             @Override
             public void run() 
             {
-        		final Location pl = p.getLocation();
-        		beforepl.put(p.getUniqueId(), pl);
-        		Holding.invur(p, 100l);
         		p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 20,1,false,false));
         		try {
             		p.teleport(spl.clone().add(0,0.5,0));
         		}
         		catch(Exception e) {
-        			System.out.println(p.isValid());
-        			System.out.println(p.isEmpty());
         			Holding.ale(p).setPersistent(true);
         			Holding.ale(p).setRemoveWhenFarAway(false);
         			Holding.ale(p).teleport(spl.clone().add(0,0.5,0));

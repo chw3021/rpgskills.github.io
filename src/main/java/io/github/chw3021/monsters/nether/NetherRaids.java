@@ -160,7 +160,7 @@ public class NetherRaids extends Summoned {
 		
 		
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
-		newmob.setSize(6);
+		newmob.setSize(5);
 		
 		newmob.getAttribute(Attribute.MAX_HEALTH).setBaseValue(48000.0);
 		newmob.setHealth(48000);
@@ -256,6 +256,7 @@ public class NetherRaids extends Summoned {
 
 		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.35);
+		newmob.getAttribute(Attribute.SCALE).setBaseValue(1.35);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		
 		
@@ -280,6 +281,8 @@ public class NetherRaids extends Summoned {
 				null, EntityType.GHAST);
 		
 		newmob.setCharging(true);
+		newmob.setSilent(true);
+		newmob.getAttribute(Attribute.SCALE).setBaseValue(0.35);
 		
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
 		

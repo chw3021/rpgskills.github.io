@@ -984,7 +984,7 @@ public class Snipskills extends Pak {
 		Player p = ev.getPlayer();
 		if(ClassData.pc.get(p.getUniqueId()) == 4 && p.getInventory().getItemInMainHand().getType().name().contains("CROSSBOW") && sz.containsKey(p.getUniqueId())){
 
-			if(Proficiency.getpro(p)>=1 ) {
+			if(Proficiency.getpro(p)>=1 && ev.getNewSlot()!=3&&ev.getNewSlot()!=4) {
 				ev.setCancelled(true);
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)

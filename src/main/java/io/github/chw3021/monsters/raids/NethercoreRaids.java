@@ -736,9 +736,6 @@ public class NethercoreRaids extends Summoned implements Listener {
             @Override
             public void run() 
             {
-        		final Location pl = p.getLocation();
-        		beforepl.put(p.getUniqueId(), pl);
-        		Holding.invur(p, 100l);
         		p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 20,1,false,false));
         		try {
             		p.teleport(spl.clone().add(0,0.5,0));
@@ -857,7 +854,7 @@ public class NethercoreRaids extends Summoned implements Listener {
     		portal.setGravity(false);
     		portal.getEquipment().setHelmet(new ItemStack(Material.OBSIDIAN));
     		portal.setCollidable(false);
-    		portal.getAttribute(Attribute.SCALE).setBaseValue(6);
+    		portal.getAttribute(Attribute.SCALE).setBaseValue(4);
     		
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
         		portal.setCustomName(rn + "파티의 출구 (웅크린상태에서 맨손으로 가격)");
@@ -872,7 +869,7 @@ public class NethercoreRaids extends Summoned implements Listener {
     		raidloc.put(rn, spl);
     		raidpor.put(rn, portal.getUniqueId());
 
-    		Villager v = (Villager) spl.getWorld().spawn(spl.clone().add(1,1,0), Villager.class);
+    		Villager v = (Villager) spl.getWorld().spawn(spl.clone().add(3,1,3), Villager.class);
     		v.setMetadata("netherRaidVil", new FixedMetadataValue(RMain.getInstance(), rn));
     		v.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), rn));
     		v.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
@@ -1504,6 +1501,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 			}
 		}
 	}
+	
 	@EventHandler
 	public void BlockPlace(BlockPlaceEvent d) 
 	{
@@ -1526,7 +1524,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 	@EventHandler
 	public void WarpedBoss2(EntityDeathEvent d) 
 	{	
-		if(d.getEntity().hasMetadata("bosswave1") && d.getEntity().hasMetadata("warpedboss ") && raider.containsValue(d.getEntity().getUniqueId())) {
+		if(d.getEntity().hasMetadata("bosswave1") && d.getEntity().hasMetadata("warpedboss") && raider.containsValue(d.getEntity().getUniqueId())) {
 			LivingEntity le = d.getEntity();
 			String rn = le.getMetadata("raid").get(0).asString();
 			raider.remove(rn, le.getUniqueId());
@@ -1735,7 +1733,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 
 	                	Location esl = d.getEntity().getLocation().clone().add(0,0.5, 0);
 
-	        			ItemStack main = new ItemStack(Material.BOW);
+	        			ItemStack main = new ItemStack(Material.CROSSBOW);
 	        			main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
 	        			ItemStack off = new ItemStack(Material.PLAYER_HEAD);
 	        			ItemStack hel = new ItemStack(Material.LEATHER_HELMET);

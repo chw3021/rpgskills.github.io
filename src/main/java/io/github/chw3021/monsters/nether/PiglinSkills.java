@@ -129,7 +129,7 @@ public class PiglinSkills extends Summoned{
 	                    Snowball ws = (Snowball) p.launchProjectile(Snowball.class);
 	                    ws.setItem(new ItemStack(c));
 	                    ws.setShooter(p);
-	                    ws.setVelocity(p.getLocation().getDirection().normalize().multiply(1.4));
+	                    ws.setVelocity(p.getLocation().getDirection().normalize().multiply(1.1));
 	        			ws.setMetadata("cookedFoods", new FixedMetadataValue(RMain.getInstance(), true));
 	                }
 	            }, j.getAndIncrement()*4+15); 
@@ -357,7 +357,7 @@ public class PiglinSkills extends Summoned{
 	                }
 	            }
 	        }
-	    }, 0L, 1L).getTaskId(); // 1틱마다 실행
+	    }, 4L, 1L).getTaskId(); // 1틱마다 실행
 	    
 	    blockt.put(p.getUniqueId(), t);
 	}
@@ -369,8 +369,17 @@ public class PiglinSkills extends Summoned{
 		if(blockt.containsKey(p.getUniqueId())) {
 			Bukkit.getScheduler().cancelTask(blockt.remove(p.getUniqueId()));
 		}
-		
+
+		if(ast.containsKey(fallingb.getUniqueId())) {
+			Bukkit.getScheduler().cancelTask(ast.remove(fallingb.getUniqueId()));
+		}
 		Location tl = fallingb.getLocation();
+		
+		if(fallingb.hasMetadata("yellowcake"+gethero(p))) {
+			fallingb.remove();
+			return;
+		}
+			
 		
 		tl.getWorld().spawnParticle(Particle.FLAME, tl, 1);
 		tl.getWorld().spawnParticle(Particle.BLOCK, tl, 400,3,3,3,getBd(Material.FURNACE));
@@ -383,7 +392,9 @@ public class PiglinSkills extends Summoned{
 			}
 			
 		}
+		
 		p.getWorld().playSound(tl, Sound.BLOCK_BLASTFURNACE_FIRE_CRACKLE, 1, 0);
+		
 		fallingb.remove();
 	}
 	
@@ -637,7 +648,8 @@ public class PiglinSkills extends Summoned{
 		p.swingMainHand();
 		p.getWorld().playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_NETHERITE, 1.0f, 0f);
 		p.getWorld().playSound(p.getLocation(), Sound.BLOCK_BLASTFURNACE_FIRE_CRACKLE, 1.0f, 0f);
-			p.getWorld().spawnParticle(Particle.ASH ,p.getLocation(), 200, 0.2,1,0.2,1);
+			p.getWorld().spawnParticle(Particle.WHITE_ASH ,p.getLocation(), 100, 0.2,1,0.2,1);
+			p.getWorld().spawnParticle(Particle.WHITE_SMOKE ,p.getLocation(), 100, 0.2,1,0.2,1);
 			p.getWorld().spawnParticle(Particle.LAVA ,p.getEyeLocation(), 10);
 			Holding.holding(null, p, 10l);
 
@@ -662,7 +674,7 @@ public class PiglinSkills extends Summoned{
     			}
 
                 for(Entity e : cl.getWorld().getNearbyEntities(cl,2,2,2)) {
-					if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
+					if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
 						LivingEntity le = (LivingEntity)e;
 						le.damage(3.5,p);
 						le.teleport(p);
@@ -670,7 +682,7 @@ public class PiglinSkills extends Summoned{
                 }
     			
             }
-    	},10,1);
+    	},25,1);
         hookt1.put(p.getUniqueId(), task);
         ordt.put(gethero(p), task);
         
@@ -731,7 +743,7 @@ public class PiglinSkills extends Summoned{
 		p.getWorld().playSound(ptl, Sound.BLOCK_SMOKER_SMOKE, 1.0f, 0f);
     	p.getWorld().playSound(ptl, Sound.BLOCK_FIRE_AMBIENT, 1.0f, 2f);
     	
-    	w.spawnParticle(Particle.BLOCK_MARKER, ptl, 1, getBd(Material.SMOKER));
+    	w.spawnParticle(Particle.BLOCK_MARKER, ptl, 4,1,1,1, getBd(Material.SMOKER));
     	
         int t = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
             @Override
@@ -743,7 +755,7 @@ public class PiglinSkills extends Summoned{
         		cloud.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
         		cloud.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), rn));
         		cloud.setMetadata("piglincloud", new FixedMetadataValue(RMain.getInstance(), rn));
-                cloud.setRadius(4f);
+                cloud.setRadius(2f);
                 cloud.setSource(p);
                 cloud.setSilent(false);
                 cloud.setColor(Color.RED);
@@ -760,7 +772,7 @@ public class PiglinSkills extends Summoned{
 			 AreaEffectCloud cloud = ev.getEntity();
 			 LivingEntity p = (LivingEntity) cloud.getSource();
 
-             for(Entity e : cloud.getWorld().getNearbyEntities(cloud.getLocation().clone(),4,4,4)) {
+             for(Entity e : cloud.getWorld().getNearbyEntities(cloud.getLocation().clone(),2,2,2)) {
 						if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
 							LivingEntity le = (LivingEntity)e;
 							le.damage(3.5,p);
@@ -851,59 +863,92 @@ public class PiglinSkills extends Summoned{
 
 		final World w = fl.getWorld();
 		
-
-		w.spawn(fl, BlockDisplay.class, newmob -> {
-
-			newmob.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
-			newmob.setGravity(false);
+		if(a%4==0) {
+			FallingBlock newmob = w.spawnFallingBlock(fl, getBd(Material.YELLOW_CANDLE_CAKE));
+    		newmob.setMetadata("yellowcake"+rn, new FixedMetadataValue(RMain.getInstance(), rn));
+    		newmob.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
+    		newmob.setGravity(false);
     		newmob.setCustomNameVisible(false);
     		newmob.setInvulnerable(true);
-			newmob.setMetadata("cake"+rn, new FixedMetadataValue(RMain.getInstance(), true));
+    		newmob.setMetadata("cake"+rn, new FixedMetadataValue(RMain.getInstance(), true));
     		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), rn));
     		newmob.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
     		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
-    		newmob.setBlock(getBd(Material.RED_CANDLE_CAKE));
-    		if(a%4==0) {
-        		newmob.setBlock(getBd(Material.YELLOW_CANDLE_CAKE));
-        		newmob.setMetadata("yellowcake"+rn, new FixedMetadataValue(RMain.getInstance(), rn));
-    		}
-			
+	        blockToPiglin.put(newmob.getUniqueId(), p);
 			int t2 =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-                @Override
-                public void run() {
-                	
-                	Location pel = Holding.ale(pe).getLocation();
-                	Location arl = Holding.ale(newmob).getLocation();
-                	
-                	if(pel.getWorld().equals(arl.getWorld())) {
-                		Vector v = pel.clone().toVector().subtract(arl.clone().toVector()).clone().normalize().multiply(0.4);
-                		if(pel.distance(arl)>6) {
-                			v.multiply(10);
-                		}
-                		Holding.ale(newmob).setVelocity(v);
-                	}
-                	
-            		for(Entity e : newmob.getWorld().getNearbyEntities(newmob.getLocation().clone(), 1, 5, 1)) {
-						if(p!=e && e instanceof Player&& !(e.hasMetadata("fake"))) {
-							Player le = (Player)e;
-							if(Holding.ale(newmob).hasMetadata("yellowcake"+rn)) {
-								Bukkit.getScheduler().cancelTask(ast.get(newmob.getUniqueId()));
-			                	ast.remove(newmob.getUniqueId());
-			                	Holding.ale(newmob).remove();
-			                	newmob.getWorld().spawnParticle(Particle.HEART, newmob.getLocation(), 50,1,1,1);
-			                	pe.getWorld().playSound(pe.getLocation(), Sound.ENTITY_GENERIC_EAT, 1, 2);
-			                	pe.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 20, 20, false,false,false));
-			                	return;
+	            @Override
+	            public void run() {
+	            	
+	            	Location pel = Holding.ale(pe).getLocation();
+	            	Location arl = Holding.ale(newmob).getLocation();
+	            	
+	            	if(pel.getWorld().equals(arl.getWorld())) {
+	            		Vector v = pel.clone().toVector().subtract(arl.clone().toVector()).clone().normalize().multiply(0.1);
+	            		if(pel.distance(arl)>7) {
+	            			v.multiply(10);
+	            		}
+	            		Holding.ale(newmob).setVelocity(v);
+	            	}
+	            	
+	        		for(Entity e : newmob.getWorld().getNearbyEntities(newmob.getLocation().clone(), 1, 5, 1)) {
+						if(p!=e && e instanceof Player) {
+							if(ast.containsKey(newmob.getUniqueId())) {
+								Bukkit.getScheduler().cancelTask(ast.remove(newmob.getUniqueId()));
 							}
-							
-							le.damage(5,p);
+		                	Holding.ale(newmob).remove();
+		                	newmob.getWorld().spawnParticle(Particle.HEART, newmob.getLocation(), 50,1,1,1);
+		                	pe.getWorld().playSound(pe.getLocation(), Sound.ENTITY_GENERIC_EAT, 1, 2);
+		                	pe.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 20, 20, false,false,false));
+		                	return;
 						}
-                	}
-                }
-            }, 0,3);
+	            	}
+	            }
+	        }, 0,3);
 			ordt.put(rn, t2);
 			ast.put(newmob.getUniqueId(), t2);
-		});
+		}
+		else {
+			
+
+			FallingBlock newmob = w.spawnFallingBlock(fl, getBd(Material.RED_CANDLE_CAKE));
+
+			newmob.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
+			newmob.setGravity(false);
+			newmob.setCustomNameVisible(false);
+			newmob.setInvulnerable(true);
+			newmob.setMetadata("cake"+rn, new FixedMetadataValue(RMain.getInstance(), true));
+			newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), rn));
+			newmob.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
+			newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
+	        blockToPiglin.put(newmob.getUniqueId(), p);
+			
+			int t2 =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
+	            @Override
+	            public void run() {
+	            	
+	            	Location pel = Holding.ale(pe).getLocation();
+	            	Location arl = Holding.ale(newmob).getLocation();
+	            	
+	            	if(pel.getWorld().equals(arl.getWorld())) {
+	            		Vector v = pel.clone().toVector().subtract(arl.clone().toVector()).clone().normalize().multiply(0.13);
+	            		if(pel.distance(arl)>6) {
+	            			v.multiply(10);
+	            		}
+	            		Holding.ale(newmob).setVelocity(v);
+	            	}
+	            	
+	        		for(Entity e : newmob.getWorld().getNearbyEntities(newmob.getLocation().clone(), 1, 5, 1)) {
+						if(p!=e && e instanceof Player) {
+							Player le = (Player)e;
+							le.damage(5,p);
+						}
+	            	}
+	            }
+	        }, 0,3);
+			ordt.put(rn, t2);
+			ast.put(newmob.getUniqueId(), t2);
+		}
+		
 		
 	}
 
@@ -915,7 +960,7 @@ public class PiglinSkills extends Summoned{
         		continue;
         	}
         	
-            smoker(pe.getLocation(), p, 500);
+            smoker(pe.getLocation(), p, 40);
             
             final Location fl = pe.getLocation().clone();
 

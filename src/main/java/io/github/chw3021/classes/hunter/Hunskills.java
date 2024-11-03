@@ -479,7 +479,7 @@ public class Hunskills extends Pak {
 		Player p = ev.getPlayer();
 
 		if(ClassData.pc.getOrDefault(p.getUniqueId(),0) == 2 && climb.containsKey(p.getName()))	{
-			if(!p.getTargetBlock(null, 1).isPassable()) {
+			if(!gettargetblock(p,1).getBlock().isPassable()) {
 				p.setGravity(false);
 				p.setVelocity(p.getLocation().clone().add(0, 1, 0).toVector().subtract(p.getLocation().toVector()).normalize().multiply(0.35));
 			}

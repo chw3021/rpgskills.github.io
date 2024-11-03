@@ -79,7 +79,6 @@ import io.github.chw3021.obtains.NPCcontact;
 import io.github.chw3021.obtains.Obtained;
 import io.github.chw3021.obtains.TrophyLoc;
 import io.github.chw3021.party.Party;
-import net.md_5.bungee.api.ChatColor;
 
 public class RMain extends JavaPlugin{
 
@@ -106,6 +105,9 @@ public class RMain extends JavaPlugin{
         String language = config.getString("Language");
         List<String> disabledWorlds = config.getStringList("Worlds");
         
+        // 예시: 서버 콘솔에 언어 설정 출력
+        getLogger().info("Language set to: " + language);
+        getLogger().info("Disabled worlds: " + String.join(", ", disabledWorlds));
         
     	instance = this;
         System.out.println("Plugin is Activated");

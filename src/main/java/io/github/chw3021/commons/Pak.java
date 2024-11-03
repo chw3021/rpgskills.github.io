@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Stream;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -22,13 +24,19 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.EnderDragon;
+import org.bukkit.entity.Enderman;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
+import org.bukkit.event.entity.EntityTeleportEvent;
 import org.bukkit.event.entity.EntityToggleSwimEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
@@ -44,6 +52,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.RayTraceResult;
 
 import io.github.chw3021.classes.ClassData;
 import io.github.chw3021.items.Potions;
@@ -194,7 +203,68 @@ public class Pak extends CombatMode implements Listener{
 		
 	}
 
-	
+	public void EndermanKiller(EntityTeleportEvent ev) 
+	{
+		if(ev.getEntity() instanceof Enderman) {
+			Location from = ev.getFrom();
+			Enderman entity = (Enderman) ev.getEntity();
+			from.getWorld().getNearbyEntities(from, 0.5, 0.5, 0.5).forEach(e -> {
+				if(e instanceof AbstractArrow) {
+					AbstractArrow ar = (AbstractArrow) e;
+					if(ar.getShooter() instanceof Player) {
+						Player p = (Player) ar.getShooter();
+
+						if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 4|| ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 5|| ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 6 || ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 61) {
+							ev.setCancelled(true);
+							atk0(0d, bbArrow(ar), p, entity);
+						}
+					}
+				}
+			});
+		}
+	}
+
+	final private Entity rayTrace (Player p) {
+		final Location il = p.getEyeLocation().clone();
+		for(double d = 0.1; d <= p.getClientViewDistance()+10; d += 0.2) {
+			Location pl = il.clone();
+			pl.add(il.getDirection().normalize().multiply(d));
+			List<Entity> st = pl.getWorld().getNearbyEntities(pl, 0.2, 0.2, 0.2).stream().filter(e -> e.getType() == EntityType.BREEZE || e.getType() == EntityType.WITHER || e.getType() == EntityType.ENDERMAN).toList();
+			if(!st.isEmpty()) {
+				return st.getFirst();
+			}
+		}
+		return null;
+	}
+
+	public void BarrierBreaker(ProjectileLaunchEvent ev) 
+	{
+		if(ev.getEntity().getShooter() instanceof Player && ev.getEntity() instanceof AbstractArrow) {
+			Player p = (Player) ev.getEntity().getShooter();
+				Entity r = rayTrace(p);
+				
+				if(r != null && r instanceof LivingEntity&& !(r.hasMetadata("fake"))&& !(r.hasMetadata("portal"))) {
+					LivingEntity le = (LivingEntity) r;
+					AbstractArrow ar = (AbstractArrow) ev.getEntity();
+					Bukkit.getPluginManager().callEvent(new ProjectileHitEvent(ar, le));
+//					if(r.getType() == EntityType.WITHER) {
+//						if(le.getHealth() < le.getAttribute(Attribute.MAX_HEALTH).getValue()/2) {
+//							p.setCooldown(Material.YELLOW_TERRACOTTA, 1);
+//							le.damage(bbArrow(ar), p);
+//							ar.remove();
+//							return;
+//						}
+//					}
+//					else {
+//						AbstractArrow ar = (AbstractArrow) ev.getEntity();
+//						p.setCooldown(Material.YELLOW_TERRACOTTA, 1);
+//						le.damage(bbArrow(ar), p);
+//						ar.remove();
+//					}
+				}
+			
+		}
+	}
 	
 
 
@@ -326,7 +396,7 @@ public class Pak extends CombatMode implements Listener{
 		}
 	}
 	
-	final protected Double bbArrow(final Arrow ar) {
+	final protected Double bbArrow(final AbstractArrow ar) {
 		Double damage = ar.getVelocity().length()*ar.getDamage();
 		
 		return damage;
@@ -2083,6 +2153,7 @@ public class Pak extends CombatMode implements Listener{
 		ch.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		ch.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 		ch.setMetadata("enderdragondamager", new FixedMetadataValue(RMain.getInstance(), true));
+		p.setCooldown(Material.YELLOW_TERRACOTTA,1);
 		ch.damage(d*0.046, p);
 		Double dam = 9999999-ch.getHealth();
 		if(le.getHealth()-dam>0) {

@@ -1868,7 +1868,7 @@ public class Wdcskills extends Pak {
 
 		ItemStack is = p.getInventory().getItemInMainHand();
 		
-		if(ClassData.pc.get(p.getUniqueId()) == 145 && ev.getNewSlot()==3 && (is.getType().name().contains("HOE")) && p.isSneaking()&& Proficiency.getpro(p) >=1)
+		if(ClassData.pc.get(p.getUniqueId()) == 14 && ev.getNewSlot()==3 && (is.getType().name().contains("HOE")) && p.isSneaking()&& Proficiency.getpro(p) >=1)
 			{
 				ev.setCancelled(true);
 				p.setCooldown(CAREFUL, 2);
@@ -2068,7 +2068,7 @@ public class Wdcskills extends Pak {
         final Location l = p.getLocation().clone();
 		
 		
-		if(ClassData.pc.get(p.getUniqueId()) == 14 && ev.getNewSlot()==4 && (is.getType().name().contains("HOE")) && p.isSprinting()&& !p.isSneaking()&&Proficiency.getpro(p) >=2)
+		if(ClassData.pc.get(p.getUniqueId()) == 14 && ev.getNewSlot()==4 && (is.getType().name().contains("HOE")) && p.isSneaking()&&Proficiency.getpro(p) >=2)
 			{
 				ev.setCancelled(true);
 				p.setCooldown(CAREFUL, 2);
@@ -2415,7 +2415,7 @@ public class Wdcskills extends Pak {
 	    
 		
 		
-		if(d.getEntity() instanceof Player) 
+		if(d.getEntity() instanceof Player && !d.isCancelled()) 
 		{
 			Player p = (Player)d.getEntity();
 			double sec = 25;

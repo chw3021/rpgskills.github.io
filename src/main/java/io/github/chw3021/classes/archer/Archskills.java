@@ -1294,13 +1294,12 @@ public class Archskills extends Pak{
 							}
 						}
 					}
-					if(e.getHealth() <= e.getMaxHealth()/2)
+					if(e.getHealth() <= e.getAttribute(Attribute.MAX_HEALTH).getValue()/2)
 					{
 						p.setCooldown(Material.YELLOW_TERRACOTTA, 1);
-						atk0(0d, bbArrow(ar), p, e,5);
-						//e.damage(ar.getDamage()*3, p);
+						e.damage(bbArrow(ar), p);
+						ev.getEntity().remove();
 					}
-					ev.getEntity().remove();
 				}
 				if(ev.getHitEntity() instanceof Enderman || ev.getHitEntity() instanceof Breeze) {
 					LivingEntity e =(LivingEntity) ev.getHitEntity();
@@ -1321,8 +1320,7 @@ public class Archskills extends Pak{
 							}
 						}
 						p.setCooldown(Material.YELLOW_TERRACOTTA, 1);
-						atk0(0d, bbArrow(ar), p, e,5);
-						e.teleport(ev.getEntity().getLocation().clone().add(0, -0.5, 0));
+						e.damage(bbArrow(ar), p);
 						Holding.holding(p, e, 2l);
 						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 							@Override
