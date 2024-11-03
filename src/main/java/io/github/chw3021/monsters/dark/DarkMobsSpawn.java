@@ -152,8 +152,8 @@ public class DarkMobsSpawn extends Mobs {
 		return newmob;
 	}
 	final public void Spawn(LivingEntity le,Biome b) {
-		if (le.getLocation().getWorld().getEnvironment() != Environment.NORMAL || !(b.name().contains("CAVE")
-				|| b.name().contains("FOREST")|| b==Biome.DEEP_DARK)
+		if (le.getLocation().getWorld().getEnvironment() != Environment.NORMAL || !(b.toString().contains("CAVE")
+				|| b.toString().contains("FOREST")|| b==Biome.DEEP_DARK)
 				) {
 			return;
 		} 

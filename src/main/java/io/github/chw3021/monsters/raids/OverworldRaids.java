@@ -21,6 +21,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.World.Environment;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.block.banner.PatternType;
@@ -61,7 +62,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -276,7 +276,9 @@ public class OverworldRaids extends Summoned implements Listener {
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
                 @Override
                 public void run() {
-					p.teleport(beforepl.get(p.getUniqueId()));
+        			Holding.ale(p).setPersistent(true);
+        			Holding.ale(p).setRemoveWhenFarAway(false);
+        			Holding.ale(p).teleport(beforepl.get(p.getUniqueId()));
 					beforepl.remove(p.getUniqueId());
 					raidbart.remove(rn);
                 }
@@ -836,8 +838,16 @@ public class OverworldRaids extends Summoned implements Listener {
         		beforepl.put(p.getUniqueId(), pl);
         		Holding.invur(p, 100l);
         		p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 20,1,false,false));
-        		p.teleport(spl.clone().add(0,0.5,0));
-        		Holding.invur(p, 100l);
+        		try {
+            		p.teleport(spl.clone().add(0,0.5,0));
+        		}
+        		catch(Exception e) {
+        			System.out.println(p.isValid());
+        			System.out.println(p.isEmpty());
+        			Holding.ale(p).setPersistent(true);
+        			Holding.ale(p).setRemoveWhenFarAway(false);
+        			Holding.ale(p).teleport(spl.clone().add(0,0.5,0));
+        		}
             }
 		}, 25); 
 		ordt.put(rn, task);
@@ -991,7 +1001,7 @@ public class OverworldRaids extends Summoned implements Listener {
 				}
         		heroes.put(rn, p.getUniqueId());
         		
-        		playerTP(p, spl, rn);
+        		playerTP((Player) Holding.ale(p), spl, rn);
 			}
     		RaidFinish(rn,"","",0);
 			d.getClickedBlock().setType(Material.VOID_AIR);
@@ -1002,6 +1012,9 @@ public class OverworldRaids extends Summoned implements Listener {
     		portal.setRemoveWhenFarAway(false);
     		portal.setGlowing(true);
     		portal.setGravity(false);
+    		portal.setCollidable(false);
+    		portal.getEquipment().setHelmet(new ItemStack(Material.OBSIDIAN));
+    		portal.getAttribute(Attribute.SCALE).setBaseValue(6);
     		
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
         		portal.setCustomName(rn + "파티의 출구 (웅크린상태에서 맨손으로 가격)");
@@ -1108,11 +1121,10 @@ public class OverworldRaids extends Summoned implements Listener {
 		                	double number2 = (random.nextDouble()+1.5) * 5 * (random.nextBoolean() ? -1 : 1);
 		                	Location esl = spl.clone().add(number, 1, number2);
 	                    	
-		                	/*
-	                    	int ri = random.nextInt(7);
-	                    	bossgen(esl,p, rn, ri,dif);*/
 		                	
-	                    	bossgen(esl,p, rn, BOSSNUM,dif);
+	                    	int ri = random.nextInt(7);
+		                	
+	                    	bossgen(esl,p, rn, ri,dif);
 	                    	
 		                	heroes.get(rn).forEach(pu -> {
 		                		Player pa = Bukkit.getPlayer(pu);
@@ -1324,8 +1336,27 @@ public class OverworldRaids extends Summoned implements Listener {
 	{
 		Player p = ev.getPlayer();
 		
-		if(!heroes.containsValue(p.getUniqueId()) && p.getWorld().getName().contains("Raid")) {
-			p.teleport(p.getRespawnLocation(), TeleportCause.PLUGIN);
+		try {
+			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	            @Override
+	            public void run() 
+	            {
+	    			if(!heroes.containsValue(p.getUniqueId()) && p.getWorld().getName().contains("OverworldRaid")) {
+	    				p.teleport(p.getRespawnLocation());
+	    			}
+	            }
+			}, 50); 
+		}
+		catch(Exception e) {
+			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	            @Override
+	            public void run() 
+	            {
+	    			p.getWorld().addEntity(p);
+	    			p.teleport(p.getRespawnLocation());
+	    			p.getRespawnLocation().getWorld().addEntity(p);
+	            }
+			}, 50); 
 		}
 	}
 
@@ -1336,7 +1367,7 @@ public class OverworldRaids extends Summoned implements Listener {
 		List<World> worlds = Bukkit.getServer().getWorlds();
 		worlds.forEach(w -> w.getPlayers().forEach(b -> {
 				Player p = (Player) b;
-				if(!heroes.containsValue(p.getUniqueId()) && p.getWorld().getName().contains("Raid")) {
+				if(!heroes.containsValue(p.getUniqueId()) && p.getWorld().getName().contains("OverworldRaid")) {
 					p.teleport(p.getRespawnLocation());
 				}
 		}));

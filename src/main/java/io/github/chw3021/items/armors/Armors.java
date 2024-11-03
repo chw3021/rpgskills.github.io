@@ -138,6 +138,7 @@ public class Armors {
 			rm.setDisplayName(ChatColor.GOLD +"Ancient "+ename);
 			rm.setItemName(ChatColor.GOLD +"Ancient "+ename);
 		}
+		r.setItemMeta(rm);
 		
 		return r;
 		

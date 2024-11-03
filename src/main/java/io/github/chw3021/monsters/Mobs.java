@@ -8,6 +8,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.loot.LootTables;
 import org.bukkit.loot.Lootable;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffectType;
@@ -391,7 +392,7 @@ public class Mobs extends Pak {
 		equipsum(creature,head,chest,leg,boots,main,off);
 		
 		Lootable cl = (Lootable) creature;
-		cl.setLootTable(null);
+		cl.setLootTable(LootTables.UNEMPLOYED_GIFT.getLootTable());
 		return creature;
 	}
 	
@@ -411,7 +412,7 @@ public class Mobs extends Pak {
 		equipsum(creature,head,chest,leg,boots,main,off);
 		
 		Lootable cl = (Lootable) creature;
-		cl.setLootTable(null);
+		cl.setLootTable(LootTables.UNEMPLOYED_GIFT.getLootTable());
 		return creature;
 	}
 

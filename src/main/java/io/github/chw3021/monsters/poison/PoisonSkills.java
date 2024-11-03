@@ -18,7 +18,6 @@ import org.bukkit.World;
 import org.bukkit.FireworkEffect.Type;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AreaEffectCloud;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
@@ -51,7 +50,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
-import com.google.common.collect.HashMultimap;
 import com.google.common.util.concurrent.AtomicDouble;
 
 import io.github.chw3021.commons.Holding;
@@ -515,7 +513,7 @@ public class PoisonSkills extends OverworldRaids{
 		if(d.getEntity() instanceof Skeleton && d.getEntity().hasMetadata("poisonboss") && throwable.containsKey(d.getEntity().getUniqueId())) 
 		{
 			Skeleton p = (Skeleton)d.getEntity();
-			if(ordeal.containsKey(p.getUniqueId())) {
+			if(ordeal.containsKey(p.getUniqueId()) && d.getEntity().hasMetadata("failed")) {
 				return;
 			}
 			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
@@ -1074,9 +1072,9 @@ public class PoisonSkills extends OverworldRaids{
             	solid.getWorld().spawnParticle(Particle.SNEEZE, solid.getLocation(), 50,1,1,1,1);
             	solid.getWorld().spawnParticle(Particle.ITEM_SLIME, solid.getLocation(), 50,1,1,1,1);
             	solid.getWorld().spawnParticle(Particle.BLOCK, solid.getLocation(), 600,4.5,4.5,4.5,1,getBd(Material.GREEN_GLAZED_TERRACOTTA));
-                p.getWorld().playSound(solid.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1, 0);
-                p.getWorld().playSound(solid.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 0);
-        		for(Entity e : p.getWorld().getNearbyEntities(solid.getLocation(), 4.5, 4.5, 4.5)) {
+            	solid.getWorld().playSound(solid.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1, 0);
+            	solid.getWorld().playSound(solid.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 0);
+        		for(Entity e : solid.getWorld().getNearbyEntities(solid.getLocation(), 4.5, 4.5, 4.5)) {
 					if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
 						LivingEntity le = (LivingEntity)e;
 						le.damage(7,p);
@@ -1169,14 +1167,7 @@ public class PoisonSkills extends OverworldRaids{
 	public HashMap<UUID, Integer> asdt = new HashMap<UUID, Integer>();// remove 태스크 저장
 	
 	final private void asSpawn(Player pe, String rn, LivingEntity p) {
-		HashSet<Location> ls = new HashSet<>();
 		final Location fl = pe.getLocation().clone();
-		ls.add(fl.clone().add(0, 2.5, 0));
-		ls.add(fl.clone().add(0, -1, 0));
-		ls.add(fl.clone().add(1, 0, 0));
-		ls.add(fl.clone().add(-1, 0, 0));
-		ls.add(fl.clone().add(0, 0, 1));
-		ls.add(fl.clone().add(0, 0, -1));
 		
 		int t2 =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
             @Override
@@ -1192,10 +1183,21 @@ public class PoisonSkills extends OverworldRaids{
                     	asdt.remove(pe.getUniqueId());
     				}
         		}
-        		if(fl.distance(p.getLocation()) > 1.1) {
+        		if(fl.getWorld() != pe.getWorld()) {
+        			return;
+        		}
+        		if(fl.distance(pe.getLocation()) > 1.1) {
                 	pe.playSound(pe, Sound.ENTITY_ELDER_GUARDIAN_HURT, 1, 0);
             		pe.sendTitle(ChatColor.DARK_RED+"X",ChatColor.BOLD+"",10,20, 10);
-        			p.setHealth(0);
+        			pe.setHealth(0);
+    				if(ast.containsKey(pe.getUniqueId())) {
+                    	Bukkit.getScheduler().cancelTask(ast.get(pe.getUniqueId()));
+                    	ast.remove(pe.getUniqueId());
+    				}
+    				if(asdt.containsKey(pe.getUniqueId())) {
+                    	Bukkit.getScheduler().cancelTask(asdt.get(pe.getUniqueId()));
+                    	asdt.remove(pe.getUniqueId());
+    				}
         		}
             }
         }, 0,1);

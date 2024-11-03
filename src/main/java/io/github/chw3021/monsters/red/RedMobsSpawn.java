@@ -205,7 +205,7 @@ public class RedMobsSpawn extends Mobs {
 
 
 	final public void Spawn(LivingEntity le,Biome b) {
-		if (!b.name().contains("BADLANDS")) {
+		if (!b.toString().contains("BADLANDS")) {
 			return;
 		} 
 		if(Tag.ENTITY_TYPES_SENSITIVE_TO_SMITE.isTagged(le.getType()) && le.getType() != EntityType.PHANTOM) {

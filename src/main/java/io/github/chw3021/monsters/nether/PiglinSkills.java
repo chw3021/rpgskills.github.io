@@ -20,6 +20,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FallingBlock;
@@ -312,7 +313,7 @@ public class PiglinSkills extends Summoned{
 	        FallingBlock fallingBlock = world.spawnFallingBlock(blockLoc, rodMaterial.createBlockData());
 	        fallingBlock.setDropItem(true);
 	        fallingBlock.setHurtEntities(true);
-	        fallingBlock.setGravity(false);
+	        fallingBlock.setGravity(true);
 	        fallingBlocks.add(fallingBlock);
 	        blockToPiglin.put(fallingBlock.getUniqueId(), p);
 	    }
@@ -636,7 +637,7 @@ public class PiglinSkills extends Summoned{
 		p.swingMainHand();
 		p.getWorld().playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_NETHERITE, 1.0f, 0f);
 		p.getWorld().playSound(p.getLocation(), Sound.BLOCK_BLASTFURNACE_FIRE_CRACKLE, 1.0f, 0f);
-			p.getWorld().spawnParticle(Particle.ASH ,p.getLocation(), 200, 0.2,1,0.2,1,0.5f);
+			p.getWorld().spawnParticle(Particle.ASH ,p.getLocation(), 200, 0.2,1,0.2,1);
 			p.getWorld().spawnParticle(Particle.LAVA ,p.getEyeLocation(), 10);
 			Holding.holding(null, p, 10l);
 
@@ -851,30 +852,21 @@ public class PiglinSkills extends Summoned{
 		final World w = fl.getWorld();
 		
 
-		w.spawn(fl, ArmorStand.class, newmob -> {
+		w.spawn(fl, BlockDisplay.class, newmob -> {
 
 			newmob.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
 			newmob.setGravity(false);
     		newmob.setCustomNameVisible(false);
     		newmob.setInvulnerable(true);
-    		newmob.setRemoveWhenFarAway(false);
-    		newmob.setGravity(false);
-    		newmob.setMarker(true);
-    		newmob.setSmall(true);
-    		newmob.setInvisible(true);
-    		newmob.setCollidable(false);
 			newmob.setMetadata("cake"+rn, new FixedMetadataValue(RMain.getInstance(), true));
     		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), rn));
     		newmob.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
     		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
-    		newmob.setAI(false);
-    		newmob.getEquipment().setHelmet(new ItemStack(Material.RED_CANDLE_CAKE));
+    		newmob.setBlock(getBd(Material.RED_CANDLE_CAKE));
     		if(a%4==0) {
-        		newmob.getEquipment().setHelmet(new ItemStack(Material.YELLOW_CANDLE_CAKE));
+        		newmob.setBlock(getBd(Material.YELLOW_CANDLE_CAKE));
         		newmob.setMetadata("yellowcake"+rn, new FixedMetadataValue(RMain.getInstance(), rn));
     		}
-    		newmob.getEquipment().setItemInMainHand(new ItemStack(Material.COOKIE));
-    		newmob.getEquipment().setItemInOffHand(new ItemStack(Material.SUGAR));
 			
 			int t2 =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
                 @Override

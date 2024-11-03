@@ -106,9 +106,6 @@ public class RMain extends JavaPlugin{
         String language = config.getString("Language");
         List<String> disabledWorlds = config.getStringList("Worlds");
         
-        // 예시: 서버 콘솔에 언어 설정 출력
-        getLogger().info("Language set to: " + language);
-        getLogger().info("Disabled worlds: " + String.join(", ", disabledWorlds));
         
     	instance = this;
         System.out.println("Plugin is Activated");
@@ -196,8 +193,6 @@ public class RMain extends JavaPlugin{
         Bukkit.getPluginManager().registerEvents(new Chestplate(), this);
         Bukkit.getPluginManager().registerEvents(new Leggings(), this);
 
-        Bukkit.getPluginManager().registerEvents(new OverworldRaids(), this);
-        Bukkit.getPluginManager().registerEvents(new NethercoreRaids(), this);
         
         Bukkit.getPluginManager().registerEvents(new Pak(), this);
 
@@ -213,7 +208,9 @@ public class RMain extends JavaPlugin{
         Bukkit.getPluginManager().registerEvents(new Drops(), this);
         Bukkit.getPluginManager().registerEvents(new CommonEvents(), this);
         Bukkit.getPluginManager().registerEvents(new Holding(), this);
-        
+
+        Bukkit.getPluginManager().registerEvents(new OverworldRaids(), this);
+        Bukkit.getPluginManager().registerEvents(new NethercoreRaids(), this);
         Bukkit.getPluginManager().registerEvents(new NPCLoc(), this);
     }
     
@@ -236,9 +233,6 @@ public class RMain extends JavaPlugin{
 						le.setRemoveWhenFarAway(true);
 					}
 					b.remove();
-					if(b.hasMetadata("obnpc")) {
-	    				System.out.println(ChatColor.BLUE+ w.getName() +"'s "+b.getCustomName()+" despawned");
-					}
 				}
 			});
 			}

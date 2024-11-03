@@ -180,8 +180,8 @@ public class HyperMobsSpawn extends Mobs {
 		return newmob;
 	}
 	final public void Spawn(LivingEntity le,Biome b) {
-		if (!((b.name().contains("DESERT")
-				|| b.name().contains("SAVANNA"))
+		if (!((b.toString().contains("DESERT")
+				|| b.toString().contains("SAVANNA"))
 				&& le.getLocation().getWorld().getEnvironment() == Environment.NORMAL)) {
 			return;
 		} 

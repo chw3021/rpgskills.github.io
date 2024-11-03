@@ -332,10 +332,10 @@ public class CombatMode {
 			}
 			si.setItemMeta(sm);
 			if(ev.getTick()<0) {
-				p.setCooldown(si.getType(), 0);
+				p.setCooldown(si, 0);
 			}
 			else {
-				p.setCooldown(si.getType(), ev.getTick());
+				p.setCooldown(si, ev.getTick());
 			}
 		} 
 		else {

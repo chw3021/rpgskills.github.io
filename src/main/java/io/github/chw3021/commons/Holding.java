@@ -122,7 +122,7 @@ public class Holding implements Listener{
                 {
                 	holded.computeIfPresent(le.getUniqueId(), (k, v) -> v-1);
                 	if(holded.getOrDefault(le.getUniqueId(),0l)<0) {
-        				if(!le.hasAI()) {
+						if(!le.hasAI() && !(le instanceof Player)) {
                     		ale(le).setAI(true);
         				}
                 		holded.remove(le.getUniqueId());
@@ -353,7 +353,7 @@ public class Holding implements Listener{
 		{
         	holded.computeIfPresent(le.getUniqueId(), (k, v) -> v-1);
         	if(holded.getOrDefault(le.getUniqueId(),(long) -1)<0) {
-        		if(!le.hasAI()) {
+				if(!le.hasAI() && !(le instanceof Player)) {
             		ale(le).setAI(true);
         		}
 				holded.remove(le.getUniqueId());
@@ -388,7 +388,7 @@ public class Holding implements Listener{
 		}
 		if(!holded.containsKey(ev.getRightClicked().getUniqueId()) && ev.getRightClicked() instanceof LivingEntity && !ev.getRightClicked().hasMetadata("fake")) {
 			LivingEntity le = (LivingEntity) ev.getRightClicked();
-			if(!le.hasAI()) {
+			if(!le.hasAI() && !(le instanceof Player)) {
 				(ale(le)).setAI(true);
 			}
 		}
@@ -403,7 +403,7 @@ public class Holding implements Listener{
 		}
 		if(!holded.containsKey(ev.getEntity().getUniqueId()) && ev.getEntity() instanceof LivingEntity && !ev.getEntity().hasMetadata("fake")) {
 			LivingEntity le = (LivingEntity) ev.getEntity();
-			if(!le.hasAI()) {
+			if(!le.hasAI() && !(le instanceof Player)) {
 				(ale(le)).setAI(true);
 			}
 		}
@@ -416,7 +416,7 @@ public class Holding implements Listener{
 			}
 			if(!holded.containsKey(e.getUniqueId()) &&!(e instanceof Player) && e instanceof LivingEntity && !e.hasMetadata("fake")) {
 				LivingEntity le = (LivingEntity) e;
-				if(!le.hasAI()) {
+				if(!le.hasAI() && !(le instanceof Player)) {
 					(ale(le)).setAI(true);
 				}
 			}

@@ -125,7 +125,7 @@ public class WildMobsSpawn extends Mobs implements Listener {
 		return newmob;
 	}
 	final public void Spawn(LivingEntity le,Biome b) {
-		if (le.getLocation().getWorld().getEnvironment() != Environment.NORMAL || !b.name().contains("JUNGLE")) {
+		if (le.getLocation().getWorld().getEnvironment() != Environment.NORMAL || !b.toString().contains("JUNGLE")) {
 			return;
 		}
 		if (Tag.ENTITY_TYPES_SENSITIVE_TO_SMITE.isTagged(le.getType())

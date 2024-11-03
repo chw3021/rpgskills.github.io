@@ -19,6 +19,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.World.Environment;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
@@ -116,7 +117,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 	Integer LIVES = 5;
 	Double BOSSHP = 250000d;
 	
-	Integer BOSSNUM = 0;
+	Integer BOSSNUM = -5;
 	
 	
 	private static final NethercoreRaids instance = new NethercoreRaids ();
@@ -270,7 +271,9 @@ public class NethercoreRaids extends Summoned implements Listener {
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
                 @Override
                 public void run() {
-					p.teleport(beforepl.get(p.getUniqueId()));
+        			Holding.ale(p).setPersistent(true);
+        			Holding.ale(p).setRemoveWhenFarAway(false);
+        			Holding.ale(p).teleport(beforepl.get(p.getUniqueId()));
 					beforepl.remove(p.getUniqueId());
 					raidbart.remove(rn);
                 }
@@ -426,7 +429,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 
 		
 		if(in == -5) {
-			ItemStack main = new ItemStack(Material.BOW);
+			ItemStack main = new ItemStack(Material.CROSSBOW);
 			main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
 			ItemStack off = new ItemStack(Material.FURNACE);
 			ItemStack hel = new ItemStack(Material.LEATHER_HELMET);
@@ -733,11 +736,20 @@ public class NethercoreRaids extends Summoned implements Listener {
             @Override
             public void run() 
             {
-				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 20,1,false,false));
-				p.teleport(spl.clone().add(0,0.5,0));
-				Holding.invur(p, 100l);
+        		final Location pl = p.getLocation();
+        		beforepl.put(p.getUniqueId(), pl);
+        		Holding.invur(p, 100l);
+        		p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 20,1,false,false));
+        		try {
+            		p.teleport(spl.clone().add(0,0.5,0));
+        		}
+        		catch(Exception e) {
+        			Holding.ale(p).setPersistent(true);
+        			Holding.ale(p).setRemoveWhenFarAway(false);
+        			Holding.ale(p).teleport(spl.clone().add(0,0.5,0));
+        		}
             }
-		}, 50); 
+		}, 25); 
 		ordt.put(rn, task);
 	}
 	
@@ -843,6 +855,9 @@ public class NethercoreRaids extends Summoned implements Listener {
     		portal.setRemoveWhenFarAway(false);
     		portal.setGlowing(true);
     		portal.setGravity(false);
+    		portal.getEquipment().setHelmet(new ItemStack(Material.OBSIDIAN));
+    		portal.setCollidable(false);
+    		portal.getAttribute(Attribute.SCALE).setBaseValue(6);
     		
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
         		portal.setCustomName(rn + "파티의 출구 (웅크린상태에서 맨손으로 가격)");
@@ -865,10 +880,12 @@ public class NethercoreRaids extends Summoned implements Listener {
     		v.setAgeLock(true);
     		v.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0);
     		v.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
+    		v.getAttribute(Attribute.GRAVITY).setBaseValue(10000);
+    		v.getAttribute(Attribute.SCALE).setBaseValue(0.7);
     		v.setGravity(true);
     		v.setNoDamageTicks(0);
-    		v.setMaxHealth(4000);
-    		v.setHealth(4000);
+    		v.setMaxHealth(50000);
+    		v.setHealth(50000);
     		v.setRemoveWhenFarAway(false);
     		v.setGlowing(true);
     		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? rn + " 성직자":rn + "'s Cleric";
@@ -1218,9 +1235,30 @@ public class NethercoreRaids extends Summoned implements Listener {
 	public void NethercoreRaidExit(PlayerJoinEvent ev) 
 	{
 		Player p = ev.getPlayer();
-		
-		if(!heroes.containsValue(p.getUniqueId()) && p.getWorld().getName().contains("Raid")) {
-			p.teleport(p.getRespawnLocation());
+
+		try {
+			if(!heroes.containsValue(p.getUniqueId()) && p.getWorld().getName().contains("NethercoreRaid")) {
+
+				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		            @Override
+		            public void run() 
+		            {
+						Location l = Bukkit.getWorlds().stream().filter(w -> !w.hasMetadata("rpgraidworld") && w.getEnvironment() == Environment.NETHER).findAny().get().getSpawnLocation();
+						p.teleport(l);
+		            }
+				}, 50); 
+			}
+		}
+		catch(Exception e) {
+			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	            @Override
+	            public void run() 
+	            {
+	    			p.getWorld().addEntity(p);
+	    			Location l = Bukkit.getWorlds().stream().filter(w -> !w.hasMetadata("rpgraidworld") && w.getEnvironment() == Environment.NETHER).findAny().get().getSpawnLocation();
+	    			p.teleport(l);
+	            }
+			}, 50); 
 		}
 	}
 
@@ -1231,8 +1269,8 @@ public class NethercoreRaids extends Summoned implements Listener {
 		List<World> worlds = Bukkit.getServer().getWorlds();
 		worlds.forEach(w -> w.getPlayers().forEach(b -> {
 				Player p = (Player) b;
-				if(!heroes.containsValue(p.getUniqueId()) && p.getWorld().getName().contains("Raid")) {
-					p.teleport(p.getRespawnLocation());
+				if(!heroes.containsValue(p.getUniqueId()) && p.getWorld().getName().contains("NethercoreRaid")) {
+					p.teleport(w.getSpawnLocation());
 				}
 		}));
 	}

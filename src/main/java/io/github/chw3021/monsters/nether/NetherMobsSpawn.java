@@ -27,25 +27,25 @@ public class NetherMobsSpawn extends Mobs {
 		newmob.setMetadata("unmodified", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("nether", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("warped", new FixedMetadataValue(RMain.getInstance(), true));
-		if ((b.name().contains("WARPED"))
+		if ((b.toString().contains("WARPED"))
 				&& le.getLocation().getWorld().getEnvironment() == Environment.NETHER) {
 			reg = lang.contains("kr") ? "뒤틀린":"Warped";
 			newmob.setMetadata("warped", new FixedMetadataValue(RMain.getInstance(), true));
 		} 
 		
-		else if ((b.name().contains("CRIMSON"))
+		else if ((b.toString().contains("CRIMSON"))
 				&& le.getLocation().getWorld().getEnvironment() == Environment.NETHER) {
 			reg = lang.contains("kr") ? "진홍빛":"Crimson";
 			newmob.setMetadata("crimson", new FixedMetadataValue(RMain.getInstance(), true));
 		} 
 		
-		else if ((b.name().contains("SOUL"))
+		else if ((b.toString().contains("SOUL"))
 				&& le.getLocation().getWorld().getEnvironment() == Environment.NETHER) {
 			reg = lang.contains("kr") ? "영혼의":"Soul";
 			newmob.setMetadata("soul", new FixedMetadataValue(RMain.getInstance(), true));
 		} 
 		
-		else if ((b.name().contains("BASALT"))
+		else if ((b.toString().contains("BASALT"))
 				&& le.getLocation().getWorld().getEnvironment() == Environment.NETHER) {
 			reg = lang.contains("kr") ? "화산지대":"Volcanic";
 			newmob.setMetadata("volcanic", new FixedMetadataValue(RMain.getInstance(), true));
@@ -70,7 +70,7 @@ public class NetherMobsSpawn extends Mobs {
 			return;
 		}
 		
-		if (b.name().contains("WARPED")||b.name().contains("CRIMSON")||b.name().contains("SOUL")||b.name().contains("BASALT")) {
+		if (b.toString().contains("WARPED")||b.toString().contains("CRIMSON")||b.toString().contains("SOUL")||b.toString().contains("BASALT")) {
 			Variant(le,b);
 		}
 		else {

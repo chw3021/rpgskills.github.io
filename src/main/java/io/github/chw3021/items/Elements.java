@@ -1363,12 +1363,6 @@ public class Elements implements Listener {
 	public static void itemset(ItemStack is,int loc, Inventory inv)
 	{
 		ItemStack item = is;
-		ItemMeta items = item.getItemMeta();
-		items.setDisplayName(is.getItemMeta().getDisplayName());
-		items.removeItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		items.removeItemFlags(ItemFlag.HIDE_ENCHANTS);
-		items.setLore(is.getItemMeta().getLore());
-		item.setItemMeta(items);
 		inv.setItem(loc, item);
 	}
 	
@@ -1409,6 +1403,7 @@ public class Elements implements Listener {
 		itemset(getelcore(-7,p), 32, ElementsInv);
 		itemset(getelcore(-8,p), 33, ElementsInv);
 
+		itemset(getstel(12,p), 36, ElementsInv);
 		itemset(getstel(14,p), 37, ElementsInv);
 		itemset(getstel(5,p), 38, ElementsInv);
 		itemset(getstel(6,p), 39, ElementsInv);

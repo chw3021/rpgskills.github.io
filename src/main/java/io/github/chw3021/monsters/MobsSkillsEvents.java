@@ -100,13 +100,13 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void Mobspawn(CreatureSpawnEvent ev) {
-		if (ev.getEntityType() == EntityType.ARMOR_STAND) {
+		if (ev.getEntityType() == EntityType.ARMOR_STAND|| ev.getEntity() instanceof Player) {
 			return;
 		}
 		
 		final World world = ev.getEntity().getWorld();
 		final String worldName = world.getName();
-		if ((world.hasMetadata("rpgraidworld") || disabledWorlds.contains(worldName)) && ev.getSpawnReason() != SpawnReason.CUSTOM && ev.getSpawnReason() != SpawnReason.MOUNT
+		if ((world.hasMetadata("rpgraidworld") || disabledWorlds.contains(worldName)) && ev.getSpawnReason() != SpawnReason.CUSTOM && ev.getSpawnReason() != SpawnReason.DEFAULT && ev.getSpawnReason() != SpawnReason.MOUNT
 				&& !(ev.getEntity() instanceof Player) && !ev.getEntity().hasMetadata("rpgspawned")) {
 			ev.setCancelled(true);
 			return;
@@ -399,6 +399,7 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 	@EventHandler
 	public void entitydeath(EntityDeathEvent d) 
 	{
+		
 		
 		Summoned.getInstance().Victory(d);
 		

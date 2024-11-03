@@ -226,7 +226,6 @@ public class Proficiency implements Serializable, Listener{
 
             String path = new File("").getAbsolutePath();
             Proficiency data = new Proficiency(HashBasedTable.create() ,HashBasedTable.create()).saveData(path +"/plugins/RPGskills/Proficiency.data");
-            Bukkit.getServer().getLogger().log(Level.INFO, "Data Saved");
             e.printStackTrace();
             return data;
         }

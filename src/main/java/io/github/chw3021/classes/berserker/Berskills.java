@@ -39,7 +39,6 @@ import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -781,13 +780,13 @@ public class Berskills extends Pak {
 		            	p.setCooldown(CAREFUL, 3);
 		                p.swingMainHand();
 						p.playSound(pl.clone(), Sound.BLOCK_RESPAWN_ANCHOR_SET_SPAWN, 0.5f, 0.9f);
+						p.getWorld().spawnParticle(Particle.BLOCK_MARKER, pl.clone(), 5, 0.31,0.31,0.31,1,getBd(Material.REDSTONE_BLOCK));
 						for(int i =0; i<8; i++) {
 		                	   Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					                @Override
 					                public void run() 
 					                {
 										p.playSound(pl.clone(), Sound.ENTITY_GENERIC_DRINK, 0.15f, 2f);
-										p.getWorld().spawnParticle(Particle.BLOCK_MARKER, pl.clone(), 3, 0.31,0.31,0.31,1,getBd(Material.REDSTONE_BLOCK));
 										
 										for (Entity a : p.getWorld().getNearbyEntities(pl.clone(), 5, 5, 5))
 										{
@@ -1368,7 +1367,7 @@ public class Berskills extends Pak {
             	}
 				crs.remove(p.getUniqueId());
 
-            	final Location pl = p.getEyeLocation().clone().add(0, -0.35, 0);
+            	final Location pl = p.getEyeLocation().clone().add(0, -0.45, 0);
             	
                 ArrayList<Location> fill = new ArrayList<Location>();
                 
@@ -1378,7 +1377,7 @@ public class Berskills extends Pak {
                 p.playSound(p.getLocation(), Sound.ENTITY_DROWNED_SHOOT, 0.6f, 0.5f);
                 p.playSound(p.getLocation(), Sound.PARTICLE_SOUL_ESCAPE, 0.6f, 0.5f);
                 for(double an = Math.PI; an>-Math.PI; an-=Math.PI/90) {
-                    for(double i = 0.5; i<8.5;i+=0.2) {
+                    for(double i = 0.75; i<8.5;i+=0.3) {
                     	fill.add(pl.clone().add(pl.clone().getDirection().normalize().rotateAroundY(an).multiply(i)));
                     }
                 }

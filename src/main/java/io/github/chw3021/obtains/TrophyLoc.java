@@ -62,7 +62,6 @@ public class TrophyLoc implements Serializable, Listener{
 
             String path = new File("").getAbsolutePath();
             TrophyLoc data = new TrophyLoc(HashMultimap.create()).saveData(path +"/plugins/RPGskills/TrophyLoc.data");
-            Bukkit.getServer().getLogger().log(Level.INFO, "Data Saved");
             e.printStackTrace();
             return data;
         }

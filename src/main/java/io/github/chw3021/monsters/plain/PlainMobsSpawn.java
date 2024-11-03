@@ -4,7 +4,6 @@ import org.bukkit.World.Environment;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.event.Listener;
 import org.bukkit.metadata.FixedMetadataValue;
 import io.github.chw3021.monsters.Mobs;
 import io.github.chw3021.rmain.RMain;
@@ -30,14 +29,12 @@ public class PlainMobsSpawn extends Mobs {
 		return newmob;
 	}
 	
-	final public void Spawn(LivingEntity le,Biome b) {
-		if (!((b.name().contains("PLAINS")
-				|| b.name().contains("RIVER")|| b.name().contains("MEADOW")
-				|| b.name().contains("BEACH"))&& !b.name().contains("SNOWY")&& !b.name().contains("FROZEN")
-				&& le.getLocation().getWorld().getEnvironment() == Environment.NORMAL)) {
-			return;
+	final public void Spawn(LivingEntity le, Biome b) {
+		if ((b.toString().contains("PLAINS") || b.toString().contains("RIVER")|| b.toString().contains("MEADOW")
+				|| b.toString().contains("BEACH")) && !b.toString().contains("SNOWY") && !b.toString().contains("FROZEN")
+				&& le.getLocation().getWorld().getEnvironment() != Environment.NORMAL) {
+			Default(le);
 		}
-		Default(le);
 	}
 	
 

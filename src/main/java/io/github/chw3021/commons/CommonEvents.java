@@ -235,7 +235,7 @@ public class CommonEvents extends Mobs implements Listener{
 	public void Teleport(PlayerTeleportEvent e)
 	{
 		Player p = (Player) e.getPlayer();
-		p.setPersistent(true);
+		p.setAI(false);
 		p.setRemoveWhenFarAway(false);
 	}
 
@@ -786,7 +786,7 @@ public class CommonEvents extends Mobs implements Listener{
 			final Double mh =Math.round(le.getAttribute(Attribute.MAX_HEALTH).getValue()*10)/10.0;
 
 			if(!Holding.holded.containsKey(le.getUniqueId())) {
-				if(!le.hasAI()) {
+				if(!le.hasAI() && !(le instanceof Player)) {
 					le.setAI(true);
 				}
 			}
@@ -832,7 +832,8 @@ public class CommonEvents extends Mobs implements Listener{
 				final Double mh =Math.round(le.getAttribute(Attribute.MAX_HEALTH).getValue()*10)/10.0;
 
 				if(!Holding.holded.containsKey(le.getUniqueId())) {
-					if(!le.hasAI()) {
+
+					if(!le.hasAI() && !(le instanceof Player)) {
 						le.setAI(true);
 					}
 				}
@@ -892,7 +893,8 @@ public class CommonEvents extends Mobs implements Listener{
 			final Double mh =Math.round(le.getAttribute(Attribute.MAX_HEALTH).getValue()*10)/10.0;
 
 			if(!Holding.holded.containsKey(le.getUniqueId())) {
-				if(!le.hasAI()) {
+
+				if(!le.hasAI() && !(le instanceof Player)) {
             		le.setAI(true);
 				}
 			}
@@ -1050,6 +1052,10 @@ public class CommonEvents extends Mobs implements Listener{
 
 	public void er(PluginEnableEvent ev)
 	{
+		Bukkit.spigot().getConfig().set("settings.moved-wrongly-threshold", 0.1);
+		Bukkit.spigot().getConfig().set("settings.moved-too-quickly-multiplier", 300);
+		Bukkit.spigot().getConfig().set("settings.log-named-deaths", false);
+		Bukkit.spigot().getConfig().set("settings.log-villager-deaths", false);
 		Bukkit.spigot().getConfig().set("settings.attribute.maxHealth.max", 99999999);
 		Bukkit.spigot().getConfig().set("settings.attribute.attackDamage.max", 99999999);
 
@@ -1330,7 +1336,7 @@ public class CommonEvents extends Mobs implements Listener{
 					{
 						LivingEntity le = (LivingEntity)e;
 						if(!Holding.holded.containsKey(le.getUniqueId())) {
-							if(!le.hasAI()) {
+							if(!le.hasAI() && !(le instanceof Player)) {
 								le.setAI(true);
 							}
 						}

@@ -372,9 +372,9 @@ public class Witskills extends Pak {
 								lw.spawnParticle(Particle.BLOCK, l, 100*ji,ji,ji,ji,1, bd1);
 							}
 							lw.spawnParticle(Particle.BLOCK, l, 50*ji,ji,ji,ji,1, bd2);
-							lw.spawnParticle(Particle.SWEEP_ATTACK, l, 20*ji,ji,ji,ji,1);
+							lw.spawnParticle(Particle.SWEEP_ATTACK, l, 4*ji,ji,ji,ji,1);
 							lw.spawnParticle(Particle.WITCH, l, 200*ji,ji,ji,ji,1);
-							lw.spawnParticle(Particle.SONIC_BOOM, l, 5*ji,ji*0.8,ji*0.8,ji*0.8);
+							lw.spawnParticle(Particle.SONIC_BOOM, l, 2*ji,ji*0.8,ji*0.8,ji*0.8);
 
 							p.setCooldown(CAREFUL, 4);
 							p.swingMainHand();
@@ -417,7 +417,7 @@ public class Witskills extends Pak {
 		ArrayList<Location> line = new ArrayList<Location>();
 		HashSet<LivingEntity> les = new HashSet<LivingEntity>();
 
-		final Location eye = p.getEyeLocation().clone().add(0, 0.26, 0);
+		final Location eye = p.getEyeLocation().clone().add(0, 0.5, 0);
 		final World ew = eye.getWorld();
 
 
@@ -427,7 +427,7 @@ public class Witskills extends Pak {
 			}
 		}
 		line.forEach(l -> {
-			ew.spawnParticle(Particle.FLASH,l, 3,0.15,0.1,0.15);
+			ew.spawnParticle(Particle.FLASH,l, 1);
 			ew.spawnParticle(Particle.ENCHANT,l, 20,0.53,0.1,0.53,0);
 			ew.spawnParticle(Particle.SHRIEK,l, 5,0.1,0.1,0.1,0,5);
 
@@ -1417,7 +1417,7 @@ public class Witskills extends Pak {
 
 
 
-			if(ClassData.pc.get(p.getUniqueId()) == 13) {
+			if(ClassData.pc.get(p.getUniqueId()) == 13 && p.isSneaking() && !p.hasCooldown(Material.YELLOW_TERRACOTTA)) {
 				double sec =8*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 				SkillBuilder bd = new SkillBuilder()
@@ -1575,7 +1575,7 @@ public class Witskills extends Pak {
 		ItemStack is = p.getInventory().getItemInMainHand();
 
 
-		if(ClassData.pc.get(p.getUniqueId()) == 135 && ev.getNewSlot()==3 && ((is.getType().name().contains("HOE"))) && p.isSneaking()&& Proficiency.getpro(p) >=1)
+		if(ClassData.pc.get(p.getUniqueId()) == 13 && ev.getNewSlot()==3 && ((is.getType().name().contains("HOE"))) && p.isSneaking()&& Proficiency.getpro(p) >=1)
 		{
 			ev.setCancelled(true);
 			p.setCooldown(CAREFUL, 2);

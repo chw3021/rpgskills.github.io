@@ -250,7 +250,7 @@ public class OceanMobsSpawn extends Mobs {
 		return newmob;
 	}
 	final public void Spawn(LivingEntity le,Biome b) {
-		if (!b.name().contains("OCEAN") || b.name().contains("FROZEN")) {
+		if (!b.toString().contains("OCEAN") || b.toString().contains("FROZEN")) {
 			return;
 		}
 

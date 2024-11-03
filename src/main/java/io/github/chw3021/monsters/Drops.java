@@ -23,7 +23,7 @@ public class Drops implements Listener {
 	public void ItemDrops(EntityDropItemEvent d) 
 	{
 
-		if(d.getEntity().hasMetadata("raid")) {
+		if(d.getEntity().hasMetadata("raid")||d.getEntity().hasMetadata("summoned")) {
 			d.setCancelled(true);
 		}
 	}

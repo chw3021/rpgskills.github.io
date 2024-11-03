@@ -196,9 +196,9 @@ public class SnowMobsSpawn extends Mobs {
 	
 	final public void Spawn(LivingEntity le,Biome b) {
 
-		if (!(b.name().contains("SNOWY")
-				|| b.name().contains("ICE")
-				|| b.name().contains("FROZEN")|| b.name().contains("GROVE")|| b.name().contains("JAG"))) {
+		if (!(b.toString().contains("SNOWY")
+				|| b.toString().contains("ICE")
+				|| b.toString().contains("FROZEN")|| b.toString().contains("GROVE")|| b.toString().contains("JAG"))) {
 			return;
 		} 
 		if(Tag.ENTITY_TYPES_SENSITIVE_TO_SMITE.isTagged(le.getType()) && le.getType() != EntityType.PHANTOM ) {

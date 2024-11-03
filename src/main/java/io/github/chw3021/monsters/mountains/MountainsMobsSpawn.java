@@ -193,8 +193,8 @@ public class MountainsMobsSpawn extends Mobs {
 	}
 	
 	final public void Spawn(LivingEntity le,Biome b) {
-		if (!((b.name().contains("PEAKS") ||b.name().contains("HILLS") || b.name().contains("STONY") || b.name().contains("TAIGA")))
-				|| b.name().contains("SNOWY")|| b.name().contains("FROZEN")|| b.name().contains("JAG")) {
+		if (!((b.toString().contains("PEAKS") ||b.toString().contains("HILLS") || b.toString().contains("STONY") || b.toString().contains("TAIGA")))
+				|| b.toString().contains("SNOWY")|| b.toString().contains("FROZEN")|| b.toString().contains("JAG")) {
 			return;
 		}
 

@@ -143,7 +143,7 @@ public class PoisonMobsSpawn extends Mobs {
 		return newmob;
 	}
 	final public void Spawn(LivingEntity le,Biome b) {
-		if (le.getLocation().getWorld().getEnvironment() != Environment.NORMAL || !(b.name().contains("SWAMP") || b.name().contains("MUSHROOM"))
+		if (le.getLocation().getWorld().getEnvironment() != Environment.NORMAL || !(b.toString().contains("SWAMP") || b.toString().contains("MUSHROOM"))
 				) {
 			return;
 		} 

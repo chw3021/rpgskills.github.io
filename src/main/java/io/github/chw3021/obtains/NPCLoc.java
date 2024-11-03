@@ -27,7 +27,6 @@ import org.bukkit.entity.Drowned;
 import org.bukkit.entity.ElderGuardian;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Husk;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Piglin;
@@ -43,6 +42,7 @@ import org.bukkit.entity.Villager.Type;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
@@ -53,6 +53,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.loot.LootTables;
 import org.bukkit.loot.Lootable;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.io.BukkitObjectInputStream;
@@ -125,7 +126,6 @@ public class NPCLoc implements Serializable, Listener{
 
             String path = new File("").getAbsolutePath();
             NPCLoc data = new NPCLoc(HashBasedTable.create(),HashMultimap.create()).saveData(path +"/plugins/RPGskills/NPCLoc.data");
-            Bukkit.getServer().getLogger().log(Level.INFO, "Data Saved");
             return data;
         }
     }
@@ -165,19 +165,6 @@ public class NPCLoc implements Serializable, Listener{
 			return;
 		}
 		String structureKey = ev.getLootTable().getKey().getKey();
-		if(ev.getInventoryHolder() == null) {
-			if(ev.getEntity() instanceof ElderGuardian && !ev.getEntity().hasMetadata("rpgspawned")) {
-
-				Location l = ev.getEntity().getLocation();
-				ev.setCancelled(true);
-				Block b = l.getBlock();
-				b.setType(Material.CHEST);
-				b.setMetadata("structureChest", new FixedMetadataValue(RMain.getInstance(),l.toString()));
-				Chest cstate = (Chest) b.getState();
-				cstate.setLootTable(ev.getLootTable());
-				cstate.setCustomName("ElderGuaridan Chest");
-			}
-		}
 		
 		InventoryHolder ih = ev.getInventoryHolder();
 		
@@ -218,12 +205,15 @@ public class NPCLoc implements Serializable, Listener{
 				}
 				
 				StructureKeys.entries().forEach(en->{
-					Spawn(en.getKey(),en.getValue());
+					if(ChestLocs.add(en.getKey())) {
+						Spawn(en.getKey(),en.getValue());
+					}
 				});
 			}
 
 			if(b.hasMetadata("structureChest")) {
-			    p.closeInventory();
+				
+				d.setCancelled(true);
 
 				Table<UUID, Location, ItemStack[]> Locs = getLocsdata().Locs;
 			    if (!Locs.contains(p.getUniqueId(), l)) {
@@ -240,6 +230,23 @@ public class NPCLoc implements Serializable, Listener{
 		}
 	}
 
+	@EventHandler	
+	public void ElderGuardian(EntityDeathEvent ev) 
+	{
+		if(ev.getEntity() != null) {
+			if(ev.getEntity() instanceof ElderGuardian && !ev.getEntity().hasMetadata("rpgspawned")) {
+
+				Location l = ev.getEntity().getLocation();
+				Block b = l.getBlock();
+				b.setType(Material.CHEST);
+				b.setMetadata("structureChest", new FixedMetadataValue(RMain.getInstance(),l.toString()));
+				Chest cstate = (Chest) b.getState();
+				cstate.setLootTable(LootTables.ELDER_GUARDIAN.getLootTable());
+				cstate.setCustomName("ElderGuaridan Chest");
+			}
+		}
+	}
+	
 	@EventHandler	
 	public void Close(InventoryCloseEvent d) 
 	{
@@ -483,7 +490,6 @@ public class NPCLoc implements Serializable, Listener{
 			npcsloc.put(l, meta);
 			final LivingEntity v = (LivingEntity) w.spawn(tl, type.getEntityClass(), ve ->{
 				npcloc.put(ve.getUniqueId(),l);
-				ve.setPersistent(false);
 				ve.setGlowing(true);
 				ve.setCustomName(name);
 				ve.setCustomNameVisible(true);
@@ -523,7 +529,6 @@ public class NPCLoc implements Serializable, Listener{
 			npcsloc.put(l, meta);
 			final LivingEntity v = (LivingEntity) w.spawn(tl, type.getEntityClass(), ve ->{
 				npcloc.put(ve.getUniqueId(),l);
-				ve.setPersistent(false);
 				ve.setGlowing(true);
 				ve.setCustomName(name);
 				ve.setCustomNameVisible(true);
@@ -730,7 +735,7 @@ public class NPCLoc implements Serializable, Listener{
         		v.setVillagerLevel(5);
     		}
     	}
-    	else if(ns.contains("underwater_ruin_small")) {
+    	else if(ns.contains("underwater_ruin_big")) {
     		lel.getWorld().getNearbyEntities(lel, 100, 100, 100).forEach(e -> {
         			if(!e.hasMetadata("rpgspawned") && !e.hasMetadata("fake") && (e.getType() == EntityType.DROWNED)) {
 

@@ -129,7 +129,6 @@ public class BuriedTreasureQuest extends Mobs implements Serializable  {
 
             String path = new File("").getAbsolutePath();
             BuriedTreasureQuest data = new BuriedTreasureQuest(HashBasedTable.create()).saveData(path +"/plugins/RPGskills/BuriedTreasureQuest.data");
-            Bukkit.getServer().getLogger().log(Level.INFO, "Data Saved");
             e.printStackTrace();
             return data;
         }

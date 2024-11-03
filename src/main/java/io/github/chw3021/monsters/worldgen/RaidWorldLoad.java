@@ -38,7 +38,7 @@ public class RaidWorldLoad implements Listener {
 					rw.setSpawnFlags(false, false);
 					rw.setGameRule(GameRule.KEEP_INVENTORY, true);
 					rw.setGameRule(GameRule.DO_INSOMNIA, false);
-					rw.setGameRule(GameRule.DO_IMMEDIATE_RESPAWN, true);
+					rw.setGameRule(GameRule.DO_IMMEDIATE_RESPAWN, false);
 					rw.setGameRule(GameRule.DISABLE_RAIDS, true);
 					rw.setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
 					rw.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
@@ -53,8 +53,6 @@ public class RaidWorldLoad implements Listener {
 					rw.setGameRule(GameRule.DROWNING_DAMAGE, false);
 					rw.setGameRule(GameRule.MOB_GRIEFING, false);
 					rw.setGameRule(GameRule.SPAWN_RADIUS, 0);
-					rw.setGameRule(GameRule.SPAWN_CHUNK_RADIUS, 4);
-			        rw.loadChunk(0, 0, true);
 				}
 			},50);
 		}
@@ -96,8 +94,6 @@ public class RaidWorldLoad implements Listener {
 						rw.setGameRule(GameRule.DROWNING_DAMAGE, false);
 						rw.setGameRule(GameRule.MOB_GRIEFING, false);
 						rw.setGameRule(GameRule.SPAWN_RADIUS, 0);
-						rw.setGameRule(GameRule.SPAWN_CHUNK_RADIUS, 4);
-				        rw.loadChunk(0, 0, true);
 					}
 				}, 50);
 			}
