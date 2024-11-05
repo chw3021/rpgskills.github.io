@@ -349,6 +349,7 @@ public class SkillUsing implements Listener {
 		
 		Archskills.getInstance().RapidFire(ev);
 		Archskills.getInstance().Retrieve(ev);
+		Archskills.getInstance().ArcShot(ev);
 		Archskills.getInstance().SpinShots(ev);
 		
 
@@ -591,6 +592,7 @@ public class SkillUsing implements Listener {
 		Forskills.getInstance().LightningCannon(ev);
 		Forskills.getInstance().RailScrew(ev);
 		Forskills.getInstance().RailSMG(ev);
+		Forskills.getInstance().RailCannon(ev);
 		Forskills.getInstance().Spectral(ev);
 
 		Frostskills.getInstance().IceBlades(ev);
@@ -1247,13 +1249,6 @@ public class SkillUsing implements Listener {
 
 		Wdcskills.getInstance().delete(d);
 	}
-	
-	@EventHandler
-	public void Tp(EntityTeleportEvent d) 
-	{
-		pak.EndermanKiller(d);
-	}
-
 	@EventHandler
 	public void Move(PlayerMoveEvent ev) {
 		

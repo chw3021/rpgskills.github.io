@@ -1708,7 +1708,7 @@ public class Frostskills extends Pak {
 		if((ArmorSet.setnum(p) == 6|| ClassData.pc.get(p.getUniqueId()) == 21))
 		{
 		    if (block.getType() == Material.POWDER_SNOW) {
-		        p.setVelocity(new Vector(0, 0.1, 0));
+		        p.setVelocity(new Vector(0, 0.15, 0));
 		        p.setFreezeTicks(0);
 		    }
 		}

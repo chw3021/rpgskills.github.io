@@ -4,7 +4,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -203,64 +205,48 @@ public class Pak extends CombatMode implements Listener{
 		
 	}
 
-	public void EndermanKiller(EntityTeleportEvent ev) 
-	{
-		if(ev.getEntity() instanceof Enderman) {
-			Location from = ev.getFrom();
-			Enderman entity = (Enderman) ev.getEntity();
-			from.getWorld().getNearbyEntities(from, 0.5, 0.5, 0.5).forEach(e -> {
-				if(e instanceof AbstractArrow) {
-					AbstractArrow ar = (AbstractArrow) e;
-					if(ar.getShooter() instanceof Player) {
-						Player p = (Player) ar.getShooter();
-
-						if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 4|| ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 5|| ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 6 || ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 61) {
-							ev.setCancelled(true);
-							atk0(0d, bbArrow(ar), p, entity);
-						}
-					}
-				}
-			});
-		}
-	}
-
-	final private Entity rayTrace (Player p) {
+	final private List<LivingEntity> rayTrace (Player p, AbstractArrow ar) {
 		final Location il = p.getEyeLocation().clone();
-		for(double d = 0.1; d <= p.getClientViewDistance()+10; d += 0.2) {
+		List<LivingEntity> st = new ArrayList<>();
+		int plv = ar.getPierceLevel()+1;
+		int count = 0;
+		
+		for(double d = 0.1; d <= ar.getVelocity().length(); d += 0.2) {
 			Location pl = il.clone();
 			pl.add(il.getDirection().normalize().multiply(d));
-			List<Entity> st = pl.getWorld().getNearbyEntities(pl, 0.2, 0.2, 0.2).stream().filter(e -> e.getType() == EntityType.BREEZE || e.getType() == EntityType.WITHER || e.getType() == EntityType.ENDERMAN).toList();
-			if(!st.isEmpty()) {
-				return st.getFirst();
+			for(Entity e : pl.getWorld().getNearbyEntities(pl, 0.3, 0.3, 0.3)) {
+				if (e instanceof Player)
+				{
+					Player p1 = (Player) e;
+					if(Party.isInSameParty(p,p1))	{
+						continue;
+					}
+				}
+				if(e instanceof LivingEntity && e!=p&& !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
+					st.add((LivingEntity) e);
+					if(++count >= plv) {
+						return st;
+					}
+				}
 			}
 		}
-		return null;
+		return st;
 	}
 
 	public void BarrierBreaker(ProjectileLaunchEvent ev) 
 	{
 		if(ev.getEntity().getShooter() instanceof Player && ev.getEntity() instanceof AbstractArrow) {
 			Player p = (Player) ev.getEntity().getShooter();
-				Entity r = rayTrace(p);
+			AbstractArrow ar = (AbstractArrow) ev.getEntity();
+				List<LivingEntity> r = rayTrace(p,ar);
 				
-				if(r != null && r instanceof LivingEntity&& !(r.hasMetadata("fake"))&& !(r.hasMetadata("portal"))) {
-					LivingEntity le = (LivingEntity) r;
-					AbstractArrow ar = (AbstractArrow) ev.getEntity();
-					Bukkit.getPluginManager().callEvent(new ProjectileHitEvent(ar, le));
-//					if(r.getType() == EntityType.WITHER) {
-//						if(le.getHealth() < le.getAttribute(Attribute.MAX_HEALTH).getValue()/2) {
-//							p.setCooldown(Material.YELLOW_TERRACOTTA, 1);
-//							le.damage(bbArrow(ar), p);
-//							ar.remove();
-//							return;
-//						}
-//					}
-//					else {
-//						AbstractArrow ar = (AbstractArrow) ev.getEntity();
-//						p.setCooldown(Material.YELLOW_TERRACOTTA, 1);
-//						le.damage(bbArrow(ar), p);
-//						ar.remove();
-//					}
+				if(r != null && !r.isEmpty()) {
+					for(int i = 0; i<r.size(); i++) {
+						EntityType etype = r.get(i).getType();
+						if(etype == EntityType.ENDERMAN || etype == EntityType.BREEZE || etype == EntityType.WITHER) {
+							Bukkit.getPluginManager().callEvent(new ProjectileHitEvent(ar, r.get(i)));
+						}
+					}
 				}
 			
 		}

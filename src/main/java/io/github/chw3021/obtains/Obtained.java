@@ -73,17 +73,17 @@ public class Obtained implements Serializable, Listener {
 	public static HashMap<UUID, Boolean> ancient = new HashMap<UUID, Boolean>();
 	public static HashMap<UUID, Boolean> igloo = new HashMap<UUID, Boolean>();
 	
-	public final HashMap<UUID, Integer> Mineshaft;
-	public final HashMap<UUID, Integer> BuriedTreasure;
-	public final HashMap<UUID, Integer> Igloo;
-	public final HashMap<UUID, Integer> OceanRuins;
-	public final HashMap<UUID, Integer> WoodlandMansion;
-	public final HashMap<UUID, Integer> Shipwreck;
-	public final HashMap<UUID, Integer> OceanMonument;
-	public final HashMap<UUID, Integer> JungleTemple;
-	public final HashMap<UUID, Integer> PillagerOutpost;
-	public final HashMap<UUID, Integer> DesertPyramid;
-	public final HashMap<UUID, Integer> RuinedPortal;
+	public final HashMap<UUID, Integer> Mineshaft;//
+	public final HashMap<UUID, Integer> BuriedTreasure;//
+	public final HashMap<UUID, Integer> Igloo;//
+	public final HashMap<UUID, Integer> OceanRuins;//
+	public final HashMap<UUID, Integer> WoodlandMansion;//
+	public final HashMap<UUID, Integer> Shipwreck;//
+	public final HashMap<UUID, Integer> OceanMonument;//
+	public final HashMap<UUID, Integer> JungleTemple;//
+	public final HashMap<UUID, Integer> PillagerOutpost;//
+	public final HashMap<UUID, Integer> DesertPyramid;//
+	public final HashMap<UUID, Integer> RuinedPortal;//
 	public final HashMap<UUID, Integer> Stronghold;
 	public final HashMap<UUID, Integer> AncientCity;
 	public final HashMap<UUID, Integer> Village;

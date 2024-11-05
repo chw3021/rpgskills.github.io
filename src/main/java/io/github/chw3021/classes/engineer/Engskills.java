@@ -29,9 +29,11 @@ import java.util.HashSet;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.Particle.TargetColor;
 import org.bukkit.Sound;
 import org.bukkit.Vibration;
 import org.bukkit.Vibration.Destination;
@@ -524,7 +526,7 @@ public class Engskills extends Pak {
 				Holding.invur(p, 20l);
 
 
-                Location tl = gettargetblock(p,5).clone().add(1, 2, 0);
+                Location tl = gettargetblock(p,5).clone().add(1, -2, 0);
                 ArmorStand as = tl.getWorld().spawn(tl, ArmorStand.class);
 
 				as.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
@@ -617,8 +619,8 @@ public class Engskills extends Pak {
 			line.add(snl.clone().add(v.clone().normalize().multiply(d)));
 		}
 		line.forEach(l -> {
-			snw.spawnParticle(Particle.BLOCK, l, 1, 0.3,0.3,0.3,0, Material.REDSTONE_BLOCK.createBlockData());
-			snw.spawnParticle(Particle.ITEM, l, 1, 0.1,0.1,0.1, new ItemStack(Material.REDSTONE_TORCH));
+			snw.spawnParticle(Particle.BLOCK, l, 1, 0.3,0.3,0.3,0, getBd(Material.RAW_IRON_BLOCK));
+			snw.spawnParticle(Particle.TRAIL, l, 1, 0.1,0.1,0.1, new TargetColor(lel, Color.SILVER));
 		});
 	}
 
@@ -708,7 +710,8 @@ public class Engskills extends Pak {
 
 								p.playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1, 2);
 								pie.forEach(l ->{
-									p.getWorld().spawnParticle(Particle.FLASH, l.add(0, -0.56, 0), 1, 0.5,0.5,0.5,0);
+									p.getWorld().spawnParticle(Particle.FLASH, l.clone().add(0, -0.56, 0), 1, 0.5,0.5,0.5,0);
+									p.getWorld().spawnParticle(Particle.WHITE_ASH, l.clone().add(0, -0.56, 0), 1, 0.5,0.5,0.5,0);
 
 									for (Entity a : p.getWorld().getNearbyEntities(l, 1.5, 1.5, 1.5))
 									{
@@ -2004,7 +2007,7 @@ public class Engskills extends Pak {
 	}
 
 
-	private ArrayListMultimap<UUID, LivingEntity> ars = ArrayListMultimap.create();
+	private HashMap<UUID, ArmorStand> ars = new HashMap<>();
 
 	private HashMap<UUID, Integer> shipt = new HashMap<UUID, Integer>();
 
@@ -2017,6 +2020,8 @@ public class Engskills extends Pak {
 
 		return new EulerAngle(angle,0,0);
 	}
+	/*
+	@SuppressWarnings("unused")
 	final private void battleCrus(Player p) {
 
 
@@ -2265,13 +2270,55 @@ public class Engskills extends Pak {
 
 
 	}
+*/
+	
+	final private void energyCube(Player p) {
 
+		final Location l = p.getLocation().clone().add(0, -6, 0);
+		final Location pel = p.getEyeLocation().clone();
+		
+		p.getWorld().spawn(l.clone(), ArmorStand.class, ar -> {
+			ar.setGravity(false);
+			ar.setInvisible(true);
+			ar.setCollidable(false);
+			ar.setAI(true);
+			ar.getAttribute(Attribute.SCALE).setBaseValue(10);
+
+			ar.setBasePlate(false);
+			ar.setInvulnerable(true);
+			ar.getEquipment().setHelmet(new ItemStack(Material.LIGHT_BLUE_STAINED_GLASS));
+			ar.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+			ar.setMetadata("rob" + p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+			ar.setHeadPose(conv(pel.getPitch()));
+			ars.put(p.getUniqueId(), ar);
+		});
+		
+		int q =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
+			@Override
+			public void run()
+			{
+				if(p.isDead() || !p.isOnline()){
+					endRiding(p);
+				}
+				p.playSound(p.getLocation(), Sound.BLOCK_BEACON_AMBIENT, 0.02f, 2f);
+
+				final Location l = p.getLocation().clone().add(0, -6, 0);
+				if(!shipt.containsKey(p.getUniqueId())) {
+					return;
+				}
+				ArmorStand ar = ars.get(p.getUniqueId());
+				ar.teleport(l);
+				ar.setHeadPose(conv(pel.getPitch()));
+			}
+
+		}, 0,1);
+		shipt.put(p.getUniqueId(), q);
+	}
 
 	private void endRiding(Player p){
 
 		if(ars.containsKey(p.getUniqueId())) {
-			ars.get(p.getUniqueId()).forEach(ar -> Holding.ale(ar).remove());
-			ars.removeAll(p.getUniqueId());
+			Holding.ale(ars.remove(p.getUniqueId())).remove();
 		}
 
 		if(shipt.containsKey(p.getUniqueId())) {
@@ -2303,7 +2350,7 @@ public class Engskills extends Pak {
 					.skillUse(() -> {
 						Holding.fly(p,300L);
 						Holding.invur(p, 300L);
-						battleCrus(p);
+						energyCube(p);
 						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 							@Override
 							public void run()

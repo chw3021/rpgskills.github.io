@@ -242,13 +242,13 @@ public class Classgui implements Serializable {
 				break;
 			}
 			if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-				p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "Manufacturer");
-				p.setDisplayName(ChatColor.LIGHT_PURPLE + "[[Manufacturer]]" + p.getDisplayName());
-				p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[[Manufacturer]]" + p.getPlayerListName());
+				p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "FusionMage");
+				p.setDisplayName(ChatColor.LIGHT_PURPLE + "[[FusionMage]]" + p.getDisplayName());
+				p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[[FusionMage]]" + p.getPlayerListName());
 			} else if (Proficiency.getpro(p) >= 2) {
-				p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "Mysterious");
-				p.setDisplayName(ChatColor.LIGHT_PURPLE + "[[[Mysterious]]]" + p.getDisplayName());
-				p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[[[Mysterious]]]" + p.getPlayerListName());
+				p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "Mystic");
+				p.setDisplayName(ChatColor.LIGHT_PURPLE + "[[[Mystic]]]" + p.getDisplayName());
+				p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[[[Mystic]]]" + p.getPlayerListName());
 			} else {
 				p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "Elementalist");
 				p.setDisplayName(ChatColor.LIGHT_PURPLE + "[Elementalist]" + p.getDisplayName());
@@ -278,9 +278,9 @@ public class Classgui implements Serializable {
 				p.setDisplayName(ChatColor.BLUE + "[[Combatant]]" + p.getDisplayName());
 				p.setPlayerListName(ChatColor.BLUE + "[[Combatant]]" + p.getPlayerListName());
 			} else if (Proficiency.getpro(p) >= 2) {
-				p.addScoreboardTag(ChatColor.BLUE + "BattleMaster");
-				p.setDisplayName(ChatColor.BLUE + "[[[BattleMaster]]]" + p.getDisplayName());
-				p.setPlayerListName(ChatColor.BLUE + "[[[BattleMaster]]]" + p.getPlayerListName());
+				p.addScoreboardTag(ChatColor.BLUE + "Legendary");
+				p.setDisplayName(ChatColor.BLUE + "[[[Legendary]]]" + p.getDisplayName());
+				p.setPlayerListName(ChatColor.BLUE + "[[[Legendary]]]" + p.getPlayerListName());
 			} else {
 				p.addScoreboardTag(ChatColor.BLUE + "Archer");
 				p.setDisplayName(ChatColor.BLUE + "[Archer]" + p.getDisplayName());
@@ -321,7 +321,7 @@ public class Classgui implements Serializable {
 			break;
 		}
 		case 7: {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// 대지, 번개
+			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// 바람
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
 					p.addScoreboardTag(ChatColor.GRAY + "철권");
 					p.setDisplayName(ChatColor.GRAY + "[[철권]]" + p.getDisplayName());
@@ -353,15 +353,15 @@ public class Classgui implements Serializable {
 			break;
 		}
 		case 8: {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// 바람
+			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// 대지
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-					p.addScoreboardTag(ChatColor.GOLD + "일류");
-					p.setDisplayName(ChatColor.GOLD + "[[일류]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.GOLD + "[[일류]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.GOLD + "고수");
+					p.setDisplayName(ChatColor.GOLD + "[[고수]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.GOLD + "[[고수]]" + p.getPlayerListName());
 				} else if (Proficiency.getpro(p) >= 2) {
-					p.addScoreboardTag(ChatColor.GOLD + "극상");
-					p.setDisplayName(ChatColor.GOLD + "[[[극상]]]" + p.getDisplayName());
-					p.setPlayerListName(ChatColor.GOLD + "[[[극상]]]" + p.getPlayerListName());
+					p.addScoreboardTag(ChatColor.GOLD + "패왕");
+					p.setDisplayName(ChatColor.GOLD + "[[[패왕]]]" + p.getDisplayName());
+					p.setPlayerListName(ChatColor.GOLD + "[[[패왕]]]" + p.getPlayerListName());
 				} else {
 					p.addScoreboardTag(ChatColor.GOLD + "유술가");
 					p.setDisplayName(ChatColor.GOLD + "[유술가]" + p.getDisplayName());
@@ -370,13 +370,13 @@ public class Classgui implements Serializable {
 				break;
 			}
 			if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-				p.addScoreboardTag(ChatColor.GOLD + "Champion");
-				p.setDisplayName(ChatColor.GOLD + "[[Champion]]" + p.getDisplayName());
-				p.setPlayerListName(ChatColor.GOLD + "[[Champion]]" + p.getPlayerListName());
+				p.addScoreboardTag(ChatColor.GOLD + "Adept");
+				p.setDisplayName(ChatColor.GOLD + "[[Adept]]" + p.getDisplayName());
+				p.setPlayerListName(ChatColor.GOLD + "[[Adept]]" + p.getPlayerListName());
 			} else if (Proficiency.getpro(p) >= 2) {
-				p.addScoreboardTag(ChatColor.GOLD + "Greatest");
-				p.setDisplayName(ChatColor.GOLD + "[[[Greatest]]]" + p.getDisplayName());
-				p.setPlayerListName(ChatColor.GOLD + "[[[Greatest]]]" + p.getPlayerListName());
+				p.addScoreboardTag(ChatColor.GOLD + "Champion");
+				p.setDisplayName(ChatColor.GOLD + "[[[Champion]]]" + p.getDisplayName());
+				p.setPlayerListName(ChatColor.GOLD + "[[[Champion]]]" + p.getPlayerListName());
 			} else {
 				p.addScoreboardTag(ChatColor.GOLD + "Wrestler");
 				p.setDisplayName(ChatColor.GOLD + "[Wrestler]" + p.getDisplayName());
@@ -801,7 +801,7 @@ public class Classgui implements Serializable {
 			break;
 		}
 		case 22: {
-			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// 바, 물
+			if (p.getLocale().equalsIgnoreCase("ko_kr")) {// 독, 물
 				if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
 					p.addScoreboardTag(ChatColor.AQUA + "달인");
 					p.setDisplayName(ChatColor.AQUA + "[[달인]]" + p.getDisplayName());

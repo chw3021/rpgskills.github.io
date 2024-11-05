@@ -41,7 +41,7 @@ public class ForSkillsGui extends SkillsGui{
 			itemset("개발", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+fsd.Development.getOrDefault(p.getUniqueId(),0),"","공격력이 증가합니다","기관총 재장전시간이 감소합니다","",ChatColor.BOLD+"X "+BigDecimal.valueOf(1+fsd.Development.getOrDefault(p.getUniqueId(),0)*0.057).setScale(2, RoundingMode.HALF_EVEN)), 7, Forskillsinv);
 			if(Proficiency.getpro(p)<1) {
 				itemset("압축공기(잠김)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/29315"), 9, Forskillsinv);
-				itemset("응축(잠김)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/29315"), 10, Forskillsinv);
+				itemset("전자나선(잠김)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/29315"), 10, Forskillsinv);
 				itemset("충격(잠김)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/29315"), 11, Forskillsinv);
 				itemset("분광(잠김)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/29315"), 12, Forskillsinv);
 				itemset("뇌관(잠김)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/29315"), 13, Forskillsinv);
@@ -51,7 +51,7 @@ public class ForSkillsGui extends SkillsGui{
 			}
 			else if(Proficiency.getpro(p)<2 && Proficiency.getpro(p)>=1) {
 				itemset("압축공기", Material.PISTON, 0, 1, Arrays.asList(ChatColor. UNDERLINE+"[대지 계열]","재입력시 압축공기를 발사해 위로 올라갑니다", "(피해량은 TNT발사기 레벨에 비례합니다)","",ChatColor.BOLD+"X "+BigDecimal.valueOf(0.42*(1+fsd.TNTLauncher.getOrDefault(p.getUniqueId(),0)*0.04)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 9, Forskillsinv);
-				itemset("응축", Material.CYAN_DYE, 0, 1, Arrays.asList("공격 횟수가 감소하고 피해량이 상승합니다","",ChatColor.BOLD+"3 X"+0.45*(1+fsd.RailSMG.getOrDefault(p.getUniqueId(),0)*0.05)+"D"), 10, Forskillsinv);
+				itemset("전자나선", Material.CYAN_DYE, 0, 1, Arrays.asList(ChatColor. UNDERLINE+"[번개 계열]","재입력시 전자나선을 사용합니다", "(피해량은 전자기관단총 레벨에 비례합니다)","",ChatColor.BOLD+"5 X"+0.32*(1+fsd.RailSMG.get(p.getUniqueId())*0.092)+"D"), 10, Forskillsinv);
 				itemset("충격", Material.CREEPER_HEAD, 0, 1, Arrays.asList("적을 기절시킵니다"), 11, Forskillsinv);
 				itemset("분광기", Material.TINTED_GLASS, 0, 1, Arrays.asList(ChatColor. UNDERLINE+"[번개 계열]","재입력시 분광기를 사용해", "적들의 위치를 재정렬합니다", "(피해량은 천둥포 레벨에 비례합니다)","",ChatColor.BOLD+"X "+BigDecimal.valueOf(0.5*(1+fsd.LightningCannon.getOrDefault(p.getUniqueId(),0)*0.05)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 12, Forskillsinv);
 				itemset("뇌관", Material.FIREWORK_STAR, 0, 1, Arrays.asList("재입력시 미사일들을 즉시 폭발시킵니다","폭발 피해량이 증가합니다","뇌관을 이용해서 폭발시", "더높은 피해를 입힙니다","",ChatColor.BOLD+"X "+BigDecimal.valueOf(1.1*(1+fsd.HoneyMissile.getOrDefault(p.getUniqueId(),0)*0.0789)*(Proficiency.getpro(p))).setScale(2, RoundingMode.HALF_EVEN)+"D"), 13, Forskillsinv);
@@ -60,7 +60,7 @@ public class ForSkillsGui extends SkillsGui{
 				itemset("용의숨결발사기", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[대지 계열]","웅크리기 + num4","",ChatColor.BOLD+"30 X 1.05D"), 17, Forskillsinv);
 
 				itemset("플라즈마류탄(잠김)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/155015"), 18, Forskillsinv);
-				itemset("전자나선(잠김)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/155015"), 19, Forskillsinv);
+				itemset("전자포(잠김)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/155015"), 19, Forskillsinv);
 				itemset("광자방벽(잠김)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/155015"), 19, Forskillsinv);
 				itemset("광자파도(잠김)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/155015"), 21, Forskillsinv);
 				itemset("에너지순환(잠김)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/155015"), 23, Forskillsinv);
@@ -69,7 +69,7 @@ public class ForSkillsGui extends SkillsGui{
 			}
 			else {
 				itemset("압축공기", Material.PISTON, 0, 1, Arrays.asList(ChatColor. UNDERLINE+"[대지 계열]","재입력시 압축공기를 발사해 위로 올라갑니다", "(피해량은 TNT발사기 레벨에 비례합니다)","",ChatColor.BOLD+"X "+BigDecimal.valueOf(0.42*(1+fsd.TNTLauncher.getOrDefault(p.getUniqueId(),0)*0.04)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 9, Forskillsinv);
-				itemset("응축", Material.CYAN_DYE, 0, 1, Arrays.asList("공격 횟수가 감소하고 피해량이 상승합니다","",ChatColor.BOLD+"3 X"+0.45*(1+fsd.RailSMG.getOrDefault(p.getUniqueId(),0)*0.05)+"D"), 10, Forskillsinv);
+				itemset("전자나선", Material.CYAN_DYE, 0, 1, Arrays.asList(ChatColor. UNDERLINE+"[번개 계열]","재입력시 전자나선을 사용합니다", "(피해량은 전자기관단총 레벨에 비례합니다)","",ChatColor.BOLD+"5 X"+0.32*(1+fsd.RailSMG.get(p.getUniqueId())*0.092)+"D"), 10, Forskillsinv);
 				itemset("충격", Material.CREEPER_HEAD, 0, 1, Arrays.asList("적을 기절시킵니다"), 11, Forskillsinv);
 				itemset("분광기", Material.TINTED_GLASS, 0, 1, Arrays.asList(ChatColor. UNDERLINE+"[번개 계열]","재입력시 분광기를 사용해", "적들의 위치를 재정렬합니다", "(피해량은 천둥포 레벨에 비례합니다)","",ChatColor.BOLD+"X "+BigDecimal.valueOf(0.5*(1+fsd.LightningCannon.getOrDefault(p.getUniqueId(),0)*0.05)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 12, Forskillsinv);
 				itemset("뇌관", Material.FIREWORK_STAR, 0, 1, Arrays.asList("재입력시 미사일들을 즉시 폭발시킵니다","폭발 피해량이 증가합니다","뇌관을 이용해서 폭발시", "더높은 피해를 입힙니다","",ChatColor.BOLD+"X "+BigDecimal.valueOf(1.1*(1+fsd.HoneyMissile.getOrDefault(p.getUniqueId(),0)*0.0789)*(Proficiency.getpro(p))).setScale(2, RoundingMode.HALF_EVEN)+"D"), 13, Forskillsinv);
@@ -78,7 +78,7 @@ public class ForSkillsGui extends SkillsGui{
 				itemset("용의숨결발사기", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[대지 계열]","웅크리기 + num4","",ChatColor.BOLD+"30 X 1.05D"), 17, Forskillsinv);
 
 				itemset("플라즈마류탄", Material.CYAN_GLAZED_TERRACOTTA, 0, 1, Arrays.asList(ChatColor. UNDERLINE+"[번개 계열]","재입력시 플라즈마류탄을 발사합니다", "(피해량은 TNT발사기 레벨에 비례합니다)","",ChatColor.BOLD+"X "+BigDecimal.valueOf(1.42*(1+fsd.TNTLauncher.getOrDefault(p.getUniqueId(),0)*0.1)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 18, Forskillsinv);
-				itemset("전자나선", Material.WARPED_ROOTS, 0, 1, Arrays.asList(ChatColor. UNDERLINE+"[번개 계열]","재입력시 전자나선을 사용합니다", "(피해량은 전자기관단총 레벨에 비례합니다)","",ChatColor.BOLD+"5 X "+BigDecimal.valueOf(0.32*(1+fsd.RailSMG.getOrDefault(p.getUniqueId(),0)*0.092)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 19, Forskillsinv);
+				itemset("전자포", Material.WARPED_ROOTS, 0, 1, Arrays.asList(ChatColor. UNDERLINE+"[번개 계열]","재입력시 전자포을 사용합니다", "(피해량은 전자기관단총 레벨에 비례합니다)","",ChatColor.BOLD+"1 X "+BigDecimal.valueOf(1.66*(1+fsd.RailSMG.get(p.getUniqueId())*1.16)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 19, Forskillsinv);
 				itemset("광자방벽", Material.CYAN_STAINED_GLASS, 0, 1, Arrays.asList("전방에서 받는 피해가 50% 감소합니다"), 20, Forskillsinv);
 				itemset("광자파도", Material.SOUL_TORCH, 0, 1, Arrays.asList(ChatColor. UNDERLINE+"[번개 계열]","재입력시 광자파도를 사용합니다", "(피해량은 천둥포 레벨에 비례합니다)","",ChatColor.BOLD+"45 X "+BigDecimal.valueOf(0.5*(1+fsd.LightningCannon.getOrDefault(p.getUniqueId(),0)*0.03)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 21, Forskillsinv);
 				itemset("에너지순환", Material.CYAN_STAINED_GLASS, 0, 1, Arrays.asList("다른 기술들도 과열을 5% 유발합니다"), 23, Forskillsinv);
@@ -101,7 +101,7 @@ public class ForSkillsGui extends SkillsGui{
 			itemset("Development", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+fsd.Development.getOrDefault(p.getUniqueId(),0),"","Increases Weapon damage","Reduce MachineGun Reloading Duration","",ChatColor.BOLD+"X "+BigDecimal.valueOf(1+fsd.Development.getOrDefault(p.getUniqueId(),0)*0.057).setScale(2, RoundingMode.HALF_EVEN)), 7, Forskillsinv);
 			if(Proficiency.getpro(p)<1) {
 				itemset("Compressor(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 9, Forskillsinv);
-				itemset("Condensation(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 10, Forskillsinv);
+				itemset("RailScrew(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 10, Forskillsinv);
 				itemset("Impulse(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 11, Forskillsinv);
 				itemset("Spectral(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 12, Forskillsinv);
 				itemset("Detonator(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 13, Forskillsinv);
@@ -111,7 +111,7 @@ public class ForSkillsGui extends SkillsGui{
 			}
 			else if(Proficiency.getpro(p)<2 && Proficiency.getpro(p)>=1) {
 				itemset("Compressor", Material.PISTON, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Earth]","Use Compressor When Use Once More", "(Damage Affected By TNTLauncher)","",ChatColor.BOLD+"X "+BigDecimal.valueOf(0.42*(1+fsd.TNTLauncher.getOrDefault(p.getUniqueId(),0)*0.04)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 9, Forskillsinv);
-				itemset("Condensation", Material.CYAN_DYE, 0, 1, Arrays.asList("Increases Damage & Decrease Hit Counts","",ChatColor.BOLD+"3 X"+0.45*(1+fsd.RailSMG.getOrDefault(p.getUniqueId(),0)*0.05)+"D"), 10, Forskillsinv);
+				itemset("RailScrew", Material.CYAN_DYE, 0, 1, Arrays.asList("Use RailScrew When Use Once More","",ChatColor.BOLD+"5 X"+0.32*(1+fsd.RailSMG.get(p.getUniqueId())*0.092)+"D"), 10, Forskillsinv);
 				itemset("Impulse", Material.CREEPER_HEAD, 0, 1, Arrays.asList("Stuns Hit Enemies"), 11, Forskillsinv);
 				itemset("Spectral", Material.TINTED_GLASS, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Lightning]","Use Spectral When Use Once More", "(Damage Affected By LightningCannon)","",ChatColor.BOLD+"X "+BigDecimal.valueOf(0.5*(1+fsd.LightningCannon.getOrDefault(p.getUniqueId(),0)*0.05)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 12, Forskillsinv);
 				itemset("Detonator", Material.FIREWORK_STAR, 0, 1, Arrays.asList("Explode Instantly When Use Once More","Increases Explode Damage","Higher Explode Damage By Detonator","",ChatColor.BOLD+"X "+BigDecimal.valueOf(1.1*(1+fsd.HoneyMissile.getOrDefault(p.getUniqueId(),0)*0.0789)*(Proficiency.getpro(p))).setScale(2, RoundingMode.HALF_EVEN)+"D"), 13, Forskillsinv);
@@ -120,7 +120,7 @@ public class ForSkillsGui extends SkillsGui{
 				itemset("DragonBreather", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Earth]","Sneaking + num4","",ChatColor.BOLD+"30 X 1.05D"), 17, Forskillsinv);
 
 				itemset("PlazmaGrenade(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 18, Forskillsinv);
-				itemset("RailScrew(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 19, Forskillsinv);
+				itemset("RailCannon(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 19, Forskillsinv);
 				itemset("PhotonBarrier(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 20, Forskillsinv);
 				itemset("BeamSlash(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 21, Forskillsinv);
 				itemset("EnergyCycle(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/155015"), 23, Forskillsinv);
@@ -129,7 +129,7 @@ public class ForSkillsGui extends SkillsGui{
 			}
 			else {
 				itemset("Compressor", Material.PISTON, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Earth]","Use Compressor When Use Once More", "(Damage Affected By TNTLauncher)","",ChatColor.BOLD+"X "+BigDecimal.valueOf(0.42*(1+fsd.TNTLauncher.getOrDefault(p.getUniqueId(),0)*0.04)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 9, Forskillsinv);
-				itemset("Condensation", Material.CYAN_DYE, 0, 1, Arrays.asList("Increases Damage & Decrease Hit Counts","",ChatColor.BOLD+"3 X"+0.45*(1+fsd.RailSMG.getOrDefault(p.getUniqueId(),0)*0.05)+"D"), 10, Forskillsinv);
+				itemset("RailScrew", Material.CYAN_DYE, 0, 1, Arrays.asList("Use RailScrew When Use Once More","",ChatColor.BOLD+"5 X"+0.32*(1+fsd.RailSMG.get(p.getUniqueId())*0.092)+"D"), 10, Forskillsinv);
 				itemset("Impulse", Material.CREEPER_HEAD, 0, 1, Arrays.asList("Stuns Hit Enemies"), 11, Forskillsinv);
 				itemset("Spectral", Material.TINTED_GLASS, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Lightning]","Use Spectral When Use Once More", "(Damage Affected By LightningCannon)","",ChatColor.BOLD+"X "+BigDecimal.valueOf(0.5*(1+fsd.LightningCannon.getOrDefault(p.getUniqueId(),0)*0.05)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 12, Forskillsinv);
 				itemset("Detonator", Material.FIREWORK_STAR, 0, 1, Arrays.asList("Explode Instantly When Use Once More","Increases Explode Damage","Higher Explode Damage By Detonator","",ChatColor.BOLD+"X "+BigDecimal.valueOf(1.1*(1+fsd.HoneyMissile.getOrDefault(p.getUniqueId(),0)*0.0789)*(Proficiency.getpro(p))).setScale(2, RoundingMode.HALF_EVEN)+"D"), 13, Forskillsinv);
@@ -138,7 +138,7 @@ public class ForSkillsGui extends SkillsGui{
 				itemset("DragonBreather", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Earth]","Sneaking + num4","",ChatColor.BOLD+"30 X 1.05D"), 17, Forskillsinv);
 
 				itemset("PlazmaGrenade", Material.CYAN_GLAZED_TERRACOTTA, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Lightning]","Use PlazmaGrenade When Use Once More", "(Damage Affected By TNTLauncher)","",ChatColor.BOLD+"X "+BigDecimal.valueOf(1.42*(1+fsd.TNTLauncher.getOrDefault(p.getUniqueId(),0)*0.1)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 18, Forskillsinv);
-				itemset("RailScrew", Material.WARPED_ROOTS, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Lightning]","Use RailScrew When Use Once More", "(Damage Affected By RailSMG)","",ChatColor.BOLD+"5 X "+BigDecimal.valueOf(0.32*(1+fsd.RailSMG.getOrDefault(p.getUniqueId(),0)*0.092)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 19, Forskillsinv);
+				itemset("RailCannon", Material.WARPED_ROOTS, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Lightning]","Use RailCannon When Use Once More", "(Damage Affected By RailSMG)","",ChatColor.BOLD+"1 X "+BigDecimal.valueOf(1.66*(1+fsd.RailSMG.get(p.getUniqueId())*1.16)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 19, Forskillsinv);
 				itemset("PhotonBarrier", Material.CYAN_STAINED_GLASS, 0, 1, Arrays.asList("Reduce Damage 65% From Foward While Shooting"), 20, Forskillsinv);
 				itemset("BeamWave", Material.SOUL_TORCH, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"[Lightning]","Use BeamSlash When Use Once More", "(Damage Affected By LightningCannon)","",ChatColor.BOLD+"45 X "+BigDecimal.valueOf(0.5*(1+fsd.LightningCannon.getOrDefault(p.getUniqueId(),0)*0.03)).setScale(2, RoundingMode.HALF_EVEN)+"D"), 21, Forskillsinv);
 				itemset("EnergyCycle", Material.CYAN_STAINED_GLASS, 0, 1, Arrays.asList("Other Skills also trigger 5% of Overheat"), 23, Forskillsinv);

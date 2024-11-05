@@ -33,6 +33,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bukkit.attribute.Attribute;
 import org.bukkit.FireworkEffect.Type;
+import org.bukkit.Particle.TargetColor;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -86,6 +87,8 @@ public class Forskills extends Pak {
 
 	private HashMap<UUID, Integer> railsc = new HashMap<UUID, Integer>();
 	private HashMap<UUID, Integer> railsct = new HashMap<UUID, Integer>();
+	private HashMap<UUID, Integer> railcan = new HashMap<UUID, Integer>();
+	private HashMap<UUID, Integer> railcant = new HashMap<UUID, Integer>();
 
 	private HashMap<UUID, Integer> spctr = new HashMap<UUID, Integer>();
 	private HashMap<UUID, Integer> spctrt = new HashMap<UUID, Integer>();
@@ -828,6 +831,10 @@ public class Forskills extends Pak {
 										solid.setGlowing(true);
 										solid.setPickupDelay(9999);
 										solid.setVelocity(p.getLocation().getDirection().normalize().multiply(3));
+										
+										p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 60, 100, false, false));
+										Vector v = p.getLocation().getDirection().clone().normalize().multiply(-0.4);
+										p.setVelocity(v);
 									}
 								}, i*2);
 							}
@@ -917,7 +924,6 @@ public class Forskills extends Pak {
 
 
                 Location tl = gettargetblock(p,9).clone();
-				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 80, 100, false, false));
 				p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_HURT, 1, 2);
 				p.playSound(p.getLocation(), Sound.BLOCK_METAL_HIT, 1, 0);
 				p.playSound(p.getLocation(), Sound.BLOCK_DRIPSTONE_BLOCK_BREAK, 1, 0);
@@ -946,14 +952,9 @@ public class Forskills extends Pak {
 					}
 
 				}
-				for(int i =0; i<10; i++) {
-					Location knockback = p.getEyeLocation().clone().add(p.getLocation().getDirection().clone().normalize().multiply(-0.32));
-					knockback.setDirection(tl.clone().toVector().subtract(knockback.clone().toVector()));
-					if(knockback.getBlock().isPassable()) {
-						p.teleport(knockback);
-					}
-				}
-
+				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 80, 100, false, false));
+				Vector v = p.getLocation().getDirection().clone().normalize().multiply(-3.2);
+				p.setVelocity(v);
 			}
 		}
 
@@ -981,9 +982,11 @@ public class Forskills extends Pak {
 				plzgrd.remove(p.getUniqueId());
 
 
-				p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_HURT, 1, 2);
-				p.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_HURT, 1f, 0.5f);
-				p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_HURT, 1f, 0.5f);
+				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 80, 100, false, false));
+				Vector v = p.getLocation().getDirection().clone().normalize().multiply(-1.1);
+				p.setVelocity(v);
+				
+				p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_BLAST_FAR, 1, 0);
 
 
 				Snowball sn = p.launchProjectile(Snowball.class);
@@ -1031,7 +1034,7 @@ public class Forskills extends Pak {
 					{
 						p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
 						atk1(1.42*(1+fsd.TNTLauncher.get(p.getUniqueId())*0.1), p, le,9);
-						Holding.holding(p, le, 30l);
+						Holding.holding(p, le, 50l);
 
 					}
 				}
@@ -1059,7 +1062,7 @@ public class Forskills extends Pak {
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 			@Override
 			public void run() {
-				if(Proficiency.getpro(p)>=2) {
+				if(Proficiency.getpro(p)>=1) {
 					railsc.putIfAbsent(p.getUniqueId(), 0);
 				}
 			}
@@ -1084,7 +1087,8 @@ public class Forskills extends Pak {
 					p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_HURT, 1f, 2f);
 					ArrayList<Location> line = RailSMG(p.getEyeLocation().clone());
 					line.forEach(l -> {
-						p.getWorld().spawnParticle(Particle.BLOCK, l.add(0, -0.289, 0),4, 0.005,0.005,0.005,0, Material.LIGHT_BLUE_GLAZED_TERRACOTTA.createBlockData());
+
+						p.getWorld().spawnParticle(Particle.BLOCK, l.add(0, -0.289, 0),4, 0.005,0.005,0.005,0, getBd(Material.CYAN_GLAZED_TERRACOTTA));
 						p.getWorld().spawnParticle(Particle.GLOW, l.add(0, -0.289, 0),1, 0.005,0.005,0.005,0);
 
 						for (Entity a : p.getWorld().getNearbyEntities(l, 0.5, 0.5, 0.5))
@@ -1165,6 +1169,32 @@ public class Forskills extends Pak {
 			}}
 	}
 
+	private void screw(Location il) {
+	    World w = il.getWorld();
+	    double maxDistance = 25.0; // 드릴 길이 최대값
+	    double initialMultiplier = 0.2; // 시작 크기
+	    double angleStep = Math.PI / 60;
+
+	    // 25블럭까지 확장되도록 설정
+	    for (double angle = 0; angle < Math.PI * 4; angle += angleStep) {
+	        double distanceFactor = (angle / (Math.PI * 4)) * maxDistance;
+	        
+	        for (double directionAngle : new double[]{Math.PI / 6, -Math.PI / 6}) {
+	            Location particleLocation = il.clone();
+	            particleLocation.add(
+	                particleLocation.getDirection()
+	                    .clone()
+	                    .rotateAroundY(directionAngle)
+	                    .rotateAroundAxis(il.getDirection(), angle)
+	                    .normalize()
+	                    .multiply(initialMultiplier + distanceFactor)
+	            );
+	            w.spawnParticle(Particle.GLOW, particleLocation, 2, 0.1, 0.1, 0.1, 0.1);
+	            w.spawnParticle(Particle.BLOCK, particleLocation, 2, 0.1, 0.1, 0.1, 0.1,getBd(Material.CYAN_GLAZED_TERRACOTTA));
+	        }
+	    }
+	}
+
 
 	public void RailScrew(PlayerInteractEvent ev)
 	{
@@ -1182,15 +1212,36 @@ public class Forskills extends Pak {
 						railsct.remove(p.getUniqueId());
 					}
 					railsc.remove(p.getUniqueId());
+					
+
+					if(railcant.containsKey(p.getUniqueId())) {
+						Bukkit.getScheduler().cancelTask(railcant.get(p.getUniqueId()));
+						railcant.remove(p.getUniqueId());
+					}
+
+					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+						@Override
+						public void run() {
+							if(Proficiency.getpro(p)>=2) {
+								railcan.putIfAbsent(p.getUniqueId(), 0);
+							}
+						}
+					}, 3);
+
+					int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+						@Override
+						public void run() {
+							railcan.remove(p.getUniqueId());
+						}
+					}, 35);
+					railcant.put(p.getUniqueId(), task);
+					
+					
 					if(Proficiency.getpro(p)>=2) {
 						overHeating(p);
 					}
-
-
-					Arrow firstarrow = p.launchProjectile(Arrow.class);
-					firstarrow.setDamage(0);
-					firstarrow.remove();
-					p.getLocation();
+					
+					
 					HashSet<LivingEntity> les = new HashSet<LivingEntity>();
 					for(int i =1; i<5; i++) {
 						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -1202,16 +1253,12 @@ public class Forskills extends Pak {
 								p.playSound(p.getLocation(), Sound.BLOCK_GRINDSTONE_USE, 1f, 2f);
 
 								HashSet<Location> line = new HashSet<Location>();
-								AtomicDouble j = new AtomicDouble(1.2);
+								final Location pl = p.getEyeLocation().clone();
 								for(double d = 0; d <= 26; d += 0.5) {
-									Location pl = p.getEyeLocation().clone();
-									pl.add(p.getEyeLocation().getDirection().normalize().multiply(d));
-									line.add(pl);
+									line.add(pl.clone().add(p.getEyeLocation().getDirection().normalize().multiply(d)));
 								}
+								screw(pl.clone().add(0, -0.2, 0));
 								line.forEach(l ->{
-									p.getWorld().spawnParticle(Particle.BLOCK, l.clone().add(0, -0.35, 0),45, j.addAndGet(-0.023),j.get(),j.get(),0, Material.CYAN_GLAZED_TERRACOTTA.createBlockData());
-									p.getWorld().spawnParticle(Particle.GLOW, l.clone().add(0, -0.35, 0),3);
-
 									for (Entity a : p.getWorld().getNearbyEntities(l, 1, 1, 1))
 									{
 										if ((!(a == p))&& a instanceof LivingEntity&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal")))
@@ -1239,22 +1286,6 @@ public class Forskills extends Pak {
 								les.forEach(le ->{
 									p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
 									atk1(0.32*(1+fsd.RailSMG.get(p.getUniqueId())*0.092), p, le);
-									/*
-									if(le instanceof EnderDragon) {
-										Arrow enar = (Arrow) p.getWorld().spawn(le.getLocation().add(0, 5.163, 0), Arrow.class, ar->{
-											ar.setShooter(p);
-											ar.setCritical(false);
-											ar.setSilent(true);
-											ar.setPickupStatus(PickupStatus.DISALLOWED);
-											ar.setVelocity(le.getLocation().clone().add(0, -1, 0).toVector().subtract(le.getLocation().toVector()).normalize().multiply(2.6));
-										});
-										enar.setDamage(player_damage.get(p.getName())*0.42*(1+fsd.RailSMG.get(p.getUniqueId())*0.0912));
-									}
-									p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
-									le.damage(0,p);
-									le.damage(player_damage.get(p.getName())*0.42*(1+fsd.RailSMG.get(p.getUniqueId())*0.0912),p);
-									le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,15,1,false,false));
-										*/
 								});
 							}
 						}, i*3);
@@ -1266,6 +1297,76 @@ public class Forskills extends Pak {
 	}
 
 
+	public void RailCannon(PlayerInteractEvent ev)
+	{
+		Player p = ev.getPlayer();
+		if(p.getInventory().getItemInMainHand().getType().name().contains("PICKAXE"))
+		{
+			Action ac = ev.getAction();
+
+			if(ClassData.pc.get(p.getUniqueId()) == 16) {
+				if(!(p.isSneaking()) && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK)&&railcan.containsKey(p.getUniqueId()))
+				{
+
+					if(railcant.containsKey(p.getUniqueId())) {
+						Bukkit.getScheduler().cancelTask(railcant.get(p.getUniqueId()));
+						railcant.remove(p.getUniqueId());
+					}
+					railcan.remove(p.getUniqueId());
+					if(Proficiency.getpro(p)>=2) {
+						overHeating(p);
+					}
+					
+					HashSet<LivingEntity> les = new HashSet<LivingEntity>();
+
+					p.playSound(p.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_CHARGE, 1f, 2f);
+					p.playSound(p.getLocation(), Sound.BLOCK_TRIAL_SPAWNER_OMINOUS_ACTIVATE, 1f, 2f);
+
+					HashSet<Location> line = new HashSet<Location>();
+					
+					final Location pl = p.getEyeLocation().clone();
+					for(double d = 0; d <= 26; d += 0.5) {
+						line.add(pl.clone().add(p.getEyeLocation().getDirection().normalize().multiply(d)));
+					}
+					line.forEach(l ->{
+						final Location parl = l.clone().add(0, -0.289, 0);
+						p.getWorld().spawnParticle(Particle.BLOCK, parl,6, 0.05,0.05,0.05,0, getBd(Material.CYAN_GLAZED_TERRACOTTA));
+						p.getWorld().spawnParticle(Particle.BLOCK_CRUMBLE, parl,6, 0.05,0.05,0.05,0, getBd(Material.CYAN_GLAZED_TERRACOTTA));
+						p.getWorld().spawnParticle(Particle.TRAIL, parl,6, 0.05,0.05,0.05,0, new TargetColor(pl, Color.AQUA));
+						for (Entity a : p.getWorld().getNearbyEntities(l, 1, 1, 1))
+						{
+							if ((!(a == p))&& a instanceof LivingEntity&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal")))
+							{
+								if (a instanceof Player)
+								{
+
+									Player p1 = (Player) a;
+									if(Party.hasParty(p) && Party.hasParty(p1))	{
+										if(Party.getParty(p).equals(Party.getParty(p1)))
+										{
+											continue;
+										}
+									}
+								}
+								LivingEntity le = (LivingEntity)a;
+								les.add(le);
+								if(l.getBlock().isPassable() && le.hasAI()) {
+									le.teleport(l);
+								}
+								Holding.holding(p, le, 3l);
+							}
+						}
+					});
+					les.forEach(le ->{
+						p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
+						atk1(1.66*(1+fsd.RailSMG.get(p.getUniqueId())*1.16), p, le);
+						Holding.holding(p, le, 10l);
+					});
+
+				}
+
+			}}
+	}
 	public void Shockwave(EntityDamageByEntityEvent d)
 	{
 		if(d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity && !d.isCancelled())
@@ -1292,78 +1393,56 @@ public class Forskills extends Pak {
 								if(Proficiency.getpro(p)>=2) {
 									overHeating(p);
 								}
-								ArrayList<Location> line = new ArrayList<Location>();
-								ArrayList<Location> pie = new ArrayList<Location>();
-								HashSet<LivingEntity> les = new HashSet<LivingEntity>();
-								for(double dou = -Math.PI/6; dou<= Math.PI/6; dou += Math.PI/180) {
-									Location l = p.getLocation();
-									l.setDirection(l.getDirection().normalize().rotateAroundY(dou));
-									l.add(l.getDirection().normalize().multiply(5.1));
-									line.add(l);
-
-								}
-								for(double dou = 0.1; dou <= 5.1; dou += 1) {
-									for (Location l : line){
-										Location pl = p.getLocation();
-										Vector ltr = l.toVector().subtract(pl.toVector());
-										pl.add(ltr.normalize().multiply(dou));
-										pie.add(pl);
-									}
-								}
+								
+								
+								
 								for(int i = 0; i<2; i++) {
 									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 										@Override
 										public void run()
 										{
-											for (Location l : line){
-												Item barrel = p.getWorld().dropItemNaturally(p.getEyeLocation(), new ItemStack(Material.STRUCTURE_VOID));
-												barrel.setVelocity(l.toVector().subtract(p.getEyeLocation().toVector()));
+											Location t = gettargetblock(p,3);
+											
+											for(int i = 0; i < 15; i++) {
+												Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation().add(0, -0.8, 0), p.getEyeLocation().getDirection(), 2f, 20f);
+												ar.remove();
+												Item barrel = p.getWorld().dropItemNaturally(p.getEyeLocation(), new ItemStack(Material.BEACON));
+												barrel.setVelocity(ar.getVelocity());
 												barrel.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 												barrel.setMetadata("barrel of"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 												barrel.setGlowing(true);
 												barrel.setPickupDelay(9999);
 											}
-											p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_HURT, 0.8f, 0.2f);
-											p.playSound(p.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_HURT, 0.8f, 1.4f);
-											pie.forEach(t -> {
-												for(Entity e: t.getWorld().getNearbyEntities(t,1,1,1)) {
-													if (e instanceof Player)
-													{
+											
+											p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 0.8f, 0.2f);
+											p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 0.8f, 1.4f);
 
-														Player p1 = (Player) e;
-														if(Party.hasParty(p) && Party.hasParty(p1))	{
-															if(Party.getParty(p).equals(Party.getParty(p1)))
-															{
-																continue;
-															}
+											for(Entity e: t.getWorld().getNearbyEntities(t,4,4,4)) {
+												if (e instanceof Player)
+												{
+
+													Player p1 = (Player) e;
+													if(Party.hasParty(p) && Party.hasParty(p1))	{
+														if(Party.getParty(p).equals(Party.getParty(p1)))
+														{
+															continue;
 														}
 													}
-													if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")))
-													{
-														LivingEntity le = (LivingEntity)e;
-														les.add(le);
+												}
+												if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")))
+												{
+													LivingEntity le = (LivingEntity)e;
+													le.setVelocity(p.getEyeLocation().getDirection().normalize().multiply(2.5));
+													le.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 5, 5, false, false));
+
+													p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
+													atk1(0.135, p, le);
+
+													if(Proficiency.getpro(p)>=1) {
+														Holding.holding(p, le, 30l);
 													}
-
 												}
-											});
-										}
-									}, i*5);
 
-								}
-								for(int i = 0; i<2; i++) {
-									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-										@Override
-										public void run()
-										{
-											for(LivingEntity le: les) {
-												le.teleport(le.getLocation().add(p.getLocation().getDirection().normalize().multiply(5)));
-
-												p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
-												atk1(0.135, p, le);
-
-												if(Proficiency.getpro(p)>=1) {
-													Holding.holding(p, le, 20l);
-												}
 											}
 										}
 									}, i*5);

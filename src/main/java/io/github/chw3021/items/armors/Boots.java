@@ -34,6 +34,7 @@ public class Boots extends Armors implements Listener {
 				rm.setDisplayName("Safety Shoes");
 				rm.setItemName("Safety Shoes");
 			}
+			rm.addEnchant(Enchantment.UNBREAKING, 255, true);
 			r.setItemMeta(rm);
 		}
 		else if(f == 1) {
@@ -51,6 +52,7 @@ public class Boots extends Armors implements Listener {
 				rm.setDisplayName("Snowy Boots");
 				rm.setItemName("Snowy Boots");
 			}
+			rm.addEnchant(Enchantment.UNBREAKING, 255, true);
 			r.setItemMeta(rm);
 		}
 		else if(f == 2) {
@@ -68,6 +70,7 @@ public class Boots extends Armors implements Listener {
 				rm.setDisplayName("Flippers");
 				rm.setItemName("Flippers");
 			}
+			rm.addEnchant(Enchantment.UNBREAKING, 255, true);
 			r.setItemMeta(rm);
 		}
 		else if(f == 3) {
@@ -85,6 +88,7 @@ public class Boots extends Armors implements Listener {
 				rm.setDisplayName("Prismarine Boots");
 				rm.setItemName("Prismarine Boots");
 			}
+			rm.addEnchant(Enchantment.UNBREAKING, 255, true);
 			r.setItemMeta(rm);
 		}
 		else if(f == 5) {
@@ -103,12 +107,13 @@ public class Boots extends Armors implements Listener {
 				rm.setDisplayName("Combat Boots");
 				rm.setItemName("Combat Boots");
 			}
+			rm.addEnchant(Enchantment.UNBREAKING, 255, true);
 			r.setItemMeta(rm);
 		}
 		else if(f == 6) {
 			r.setType(Material.CHAINMAIL_BOOTS);
 			ItemMeta im = (ItemMeta) r.getItemMeta();
-			rm.addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(getKey(), 0.08, Operation.ADD_SCALAR, EquipmentSlotGroup.FEET));
+			im.addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(getKey(), 0.08, Operation.ADD_SCALAR, EquipmentSlotGroup.FEET));
 			im.addAttributeModifier(Attribute.MAX_HEALTH, new AttributeModifier(getKey(), 0.56, Operation.ADD_SCALAR, EquipmentSlotGroup.FEET));
 			im.addAttributeModifier(Attribute.ARMOR, new AttributeModifier(getKey(), 3, Operation.ADD_NUMBER, EquipmentSlotGroup.FEET));
 			im.addAttributeModifier(Attribute.ARMOR_TOUGHNESS, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.FEET));
@@ -140,6 +145,33 @@ public class Boots extends Armors implements Listener {
 			else {
 				rm.setDisplayName("Soul Boots");
 				rm.setItemName("Soul Boots");
+			}
+			rm.addEnchant(Enchantment.PROTECTION, 3, true);
+			rm.addEnchant(Enchantment.BLAST_PROTECTION, 3, true);
+			rm.addEnchant(Enchantment.PROJECTILE_PROTECTION, 3, true);
+			rm.addEnchant(Enchantment.SOUL_SPEED, 5, true);
+			rm.addEnchant(Enchantment.FIRE_PROTECTION, 3, true);
+			rm.addEnchant(Enchantment.UNBREAKING, 255, true);
+			r.setItemMeta(rm);
+		}
+		else if(f == 8) {
+			rm.setColor(Color.TEAL);
+			rm.addAttributeModifier(Attribute.LUCK, new AttributeModifier(getKey(), 7, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.MAX_HEALTH, new AttributeModifier(getKey(), 0.75, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(getKey(), 0.16, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.MOVEMENT_EFFICIENCY, new AttributeModifier(getKey(), 0.28, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.JUMP_STRENGTH, new AttributeModifier(getKey(), 0.23, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.ARMOR, new AttributeModifier(getKey(), 3, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.ATTACK_SPEED, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.ARMOR_TOUGHNESS, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+				rm.setDisplayName("바람의 장화");
+				rm.setItemName("바람의 장화");
+			}
+			else {
+				rm.setDisplayName("Windy Boots");
+				rm.setItemName("Windy Boots");
 			}
 			rm.addEnchant(Enchantment.PROTECTION, 3, true);
 			rm.addEnchant(Enchantment.BLAST_PROTECTION, 3, true);

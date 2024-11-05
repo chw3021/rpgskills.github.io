@@ -963,26 +963,23 @@ public class Fireskills extends Pak {
 		}
 	}
 	
-
 	final private void Breath1(Location il) {
-
-
-        ArrayList<Location> cir = new ArrayList<Location>();
-        final World w = il.getWorld();
-        for(double angle=0; angle<Math.PI*4; angle += Math.PI/60) {
-        	Location one = il.clone();
-        	one.add(one.getDirection().clone().rotateAroundY(Math.PI/6).rotateAroundAxis(il.clone().getDirection(),angle).normalize().multiply(angle+0.2));
-        	cir.add(one);
-        	Location one1 = il.clone();
-        	one1.add(one1.getDirection().clone().rotateAroundY(-Math.PI/6).rotateAroundAxis(il.clone().getDirection(),angle).normalize().multiply(angle+0.2));
-        	cir.add(one1);
-        }
-    	cir.forEach(l -> {
-			w.spawnParticle(Particle.FLAME, l,2,0.1,0.1,0.1,0.1);
-	    });
-	    return ;
+	    World w = il.getWorld();
+	    for (double angle = 0; angle < Math.PI * 4; angle += Math.PI / 60) {
+	        for (double directionAngle : new double[]{Math.PI / 6, -Math.PI / 6}) {
+	            Location particleLocation = il.clone();
+	            particleLocation.add(
+	                particleLocation.getDirection()
+	                    .clone()
+	                    .rotateAroundY(directionAngle)
+	                    .rotateAroundAxis(il.getDirection(), angle)
+	                    .normalize()
+	                    .multiply(angle + 0.2)
+	            );
+	            w.spawnParticle(Particle.FLAME, particleLocation, 2, 0.1, 0.1, 0.1, 0.1);
+	        }
+	    }
 	}
-
 
 	
 	public void Breath(PlayerSwapHandItemsEvent ev) 
