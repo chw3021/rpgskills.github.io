@@ -35,7 +35,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
 
-public class JungleTempleQuest {
+public class JungleTempleQuest implements Quest {
 
 	private HashMap<UUID, Integer> asked = new HashMap<UUID, Integer>();
 	private HashMap<UUID, Location> quested = new HashMap<UUID, Location>();

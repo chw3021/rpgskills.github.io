@@ -19,6 +19,7 @@ public class Leggings extends Armors implements Listener {
 
 		ItemStack r = new ItemStack(Material.LEATHER_LEGGINGS);
 		LeatherArmorMeta rm = (LeatherArmorMeta) r.getItemMeta();
+		rm.addEnchant(Enchantment.UNBREAKING, 255, true);
 		if(f == 0) {
 			rm.setColor(Color.TEAL);
 			rm.addEnchant(Enchantment.FIRE_PROTECTION, 3, true);
@@ -88,7 +89,7 @@ public class Leggings extends Armors implements Listener {
 		else if(f == 6) {
 			r.setType(Material.CHAINMAIL_LEGGINGS);
 			ItemMeta im = (ItemMeta) r.getItemMeta();
-			rm.addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(getKey(), 0.03, Operation.ADD_SCALAR, EquipmentSlotGroup.LEGS));
+			im.addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(getKey(), 0.03, Operation.ADD_SCALAR, EquipmentSlotGroup.LEGS));
 			im.addAttributeModifier(Attribute.MAX_HEALTH, new AttributeModifier(getKey(), 0.68, Operation.ADD_SCALAR, EquipmentSlotGroup.LEGS));
 			im.addAttributeModifier(Attribute.ARMOR, new AttributeModifier(getKey(), 6, Operation.ADD_NUMBER, EquipmentSlotGroup.LEGS));
 			im.addAttributeModifier(Attribute.ARMOR_TOUGHNESS, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.LEGS));
@@ -101,6 +102,7 @@ public class Leggings extends Armors implements Listener {
 				im.setItemName("Alloy Leggings");
 			}
 			im.addEnchant(Enchantment.PROTECTION, 1, true);
+			im.addEnchant(Enchantment.UNBREAKING, 255, true);
 			r.setItemMeta(im);
 		}
 		else if(f == 7) {
@@ -124,6 +126,33 @@ public class Leggings extends Armors implements Listener {
 			rm.addEnchant(Enchantment.PROTECTION, 3, true);
 			rm.addEnchant(Enchantment.BLAST_PROTECTION, 3, true);
 			rm.addEnchant(Enchantment.PROJECTILE_PROTECTION, 3, true);
+			rm.addEnchant(Enchantment.FIRE_PROTECTION, 3, true);
+			rm.addEnchant(Enchantment.UNBREAKING, 255, true);
+			r.setItemMeta(rm);
+		}
+		else if(f == 8) {
+			rm.setColor(Color.TEAL);
+			rm.addAttributeModifier(Attribute.GRAVITY, new AttributeModifier(getKey(), -0.1, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.LUCK, new AttributeModifier(getKey(), 7, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.MAX_HEALTH, new AttributeModifier(getKey(), 0.4, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(getKey(), 0.3, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.MOVEMENT_EFFICIENCY, new AttributeModifier(getKey(), 0.28, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.JUMP_STRENGTH, new AttributeModifier(getKey(), 0.23, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.ARMOR, new AttributeModifier(getKey(), 3, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.ATTACK_SPEED, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.ARMOR_TOUGHNESS, new AttributeModifier(getKey(), 3, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+				rm.setDisplayName("바람의 각반");
+				rm.setItemName("바람의 각반");
+			}
+			else {
+				rm.setDisplayName("Windy Leggings");
+				rm.setItemName("Windy Leggings");
+			}
+			rm.addEnchant(Enchantment.PROTECTION, 3, true);
+			rm.addEnchant(Enchantment.PROJECTILE_PROTECTION, 3, true);
+			rm.addEnchant(Enchantment.SOUL_SPEED, 5, true);
 			rm.addEnchant(Enchantment.FIRE_PROTECTION, 3, true);
 			rm.addEnchant(Enchantment.UNBREAKING, 255, true);
 			r.setItemMeta(rm);

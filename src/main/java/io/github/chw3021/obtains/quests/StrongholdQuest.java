@@ -26,6 +26,10 @@ import org.bukkit.inventory.MerchantRecipe;
 import io.github.chw3021.items.Elements;
 import io.github.chw3021.items.Potions;
 import io.github.chw3021.items.armors.Armors;
+import io.github.chw3021.items.armors.Boots;
+import io.github.chw3021.items.armors.Chestplate;
+import io.github.chw3021.items.armors.Helmet;
+import io.github.chw3021.items.armors.Leggings;
 import io.github.chw3021.obtains.NPCLoc;
 import io.github.chw3021.obtains.Obtained;
 import io.github.chw3021.obtains.TrophyLoc;
@@ -36,7 +40,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
 
-public class StrongholdQuest {
+public class StrongholdQuest implements Quest {
 
 	private final String META = "stronghold";
 	
@@ -155,6 +159,10 @@ public class StrongholdQuest {
 	        		ArrayList<ItemStack> poia = new ArrayList<>();
 	        		poia.add(new ItemStack(Material.EMERALD,2));
 	        		poia.add(new ItemStack(Material.LAPIS_LAZULI,2));
+	        		
+	        		ArrayList<ItemStack> aa = new ArrayList<>();
+	        		aa.add(new ItemStack(Material.EMERALD,50));
+	        		aa.add(new ItemStack(Material.GOLD_INGOT,50));
 
 	        		ArrayList<ItemStack> po = new ArrayList<>();
 	        		po.add(new ItemStack(Material.EMERALD,1));
@@ -162,11 +170,22 @@ public class StrongholdQuest {
 	        		MerchantRecipe mr1 = new MerchantRecipe(Potions.get(1, p), 1,64,true);
 	        		mr1.setIngredients(po);
 	        		mrl.add(mr1);
-	        		
-	        		MerchantRecipe mr2 = new MerchantRecipe(new ItemStack(Material.ENDER_PEARL), 1,64,true);
-	        		mr2.setIngredients(poia);
-	        		mrl.add(mr2);
 
+	        		MerchantRecipe mr2 = new MerchantRecipe(Helmet.get(8, p), 1,64,true);
+	        		mr2.setIngredients(aa);
+	        		mrl.add(mr2);
+	        		
+	        		MerchantRecipe mr3 = new MerchantRecipe(Chestplate.get(8, p), 1,64,true);
+	        		mr3.setIngredients(aa);
+	        		mrl.add(mr3);
+
+	        		MerchantRecipe mr4 = new MerchantRecipe(Leggings.get(8, p), 1,64,true);
+	        		mr4.setIngredients(aa);
+	        		mrl.add(mr4);
+	        		
+	        		MerchantRecipe mr5 = new MerchantRecipe(Boots.get(8, p), 1,64,true);
+	        		mr5.setIngredients(aa);
+	        		mrl.add(mr5);
 	        		
 	        		Merchant mi = Bukkit.createMerchant(le.getCustomName());
 	        		mi.setRecipes(mrl);
@@ -201,14 +220,14 @@ public class StrongholdQuest {
             		}
             		asked.remove(p.getUniqueId());
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": 고맙네! 사원을 조사중인데 아무래도 몬스터들이 유물을 죄다 가져간 모양이야.").create());
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": 근처 몬스터들한테서 유물을 가져와줄수 있겠나?").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": 몬스터들좀 처리해 주실수 있을까요?").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": 처리하고 다시 저한테 와주세요. 감사합니다.").create());
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": (사망, 종료, 우클릭시 또는 너무 멀리 가면 퀘스트가 취소됩니다.)").create());
 				    }
 	        		else {
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Thank you! I'm researching the temple, but monsters seem to have taken all the Relics.").create());
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Can you bring Relics from nearby monsters??").create());
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": (Quest Will be Canceled If You Die, Quit, RightClick or go far away)").create());
+	        		    p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Could you help me deal with the monsters?").create());
+	        		    p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": After you're done, please come back to me. Thank you.").create());
+	        		    p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": (The quest will be canceled if you die, quit, right-click, or go too far.)").create());
 	        		}
 	        		quested.put(p.getUniqueId(), NPCLoc.npcloc.get(le.getUniqueId()));
 	        		startloc.put(p.getUniqueId(), le.getLocation().clone());
@@ -223,7 +242,7 @@ public class StrongholdQuest {
     	                		QuestEnd(p,0);
     	                	}
     	                	for(Entity e : sl.getWorld().getNearbyEntities(sl.clone(), 3,3,3)) {
-    	                		if(e == p && clearable.getOrDefault(p.getUniqueId(), 0) >=10) {
+    	                		if(e == p && clearable.getOrDefault(p.getUniqueId(), 0) >=20) {
     	                			QuestEnd(p,4);
     	                		}
     	                	}
@@ -236,11 +255,11 @@ public class StrongholdQuest {
     	        	p.setCooldown(Material.RAIL, 10);
 
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": 여기도 없고...저기도 없고..").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": 너무 더러워..! 더럽다고!").create());
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "(우클릭시 수락)").create());
 				    }
 	        		else {
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Neither here nor there..").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Dirty..! Too Dirty!!!").create());
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "(RightClick To Accept)").create());
 	        		}
                 	asked.put(p.getUniqueId(), 1);
@@ -261,21 +280,19 @@ public class StrongholdQuest {
 
 	public void QuestClear(EntityDeathEvent d) 
 	{
-		if(d.getEntity().hasMetadata("wild")) {
-			LivingEntity le = d.getEntity();
-			if(le.getKiller() != null) {
-				Player p = le.getKiller();
-				if(quested.containsKey(p.getUniqueId())) {
-	        		p.playSound(p.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
-	        		clearable.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
-	        		clearable.putIfAbsent(p.getUniqueId(), 1);
-	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		        		p.sendTitle(ChatColor.BOLD + "유물", ChatColor.BOLD + "("+ clearable.get(p.getUniqueId())+ "/10)", 10, 20, 10);
-				    }
-	        		else {
-		        		p.sendTitle(ChatColor.BOLD + "Relic", ChatColor.BOLD + "("+ clearable.get(p.getUniqueId())+ "/10)", 10, 20, 10);
-	        		}
-				}
+		LivingEntity le = d.getEntity();
+		if(le.getKiller() != null) {
+			Player p = le.getKiller();
+			if(quested.containsKey(p.getUniqueId())) {
+        		p.playSound(p.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
+        		clearable.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
+        		clearable.putIfAbsent(p.getUniqueId(), 1);
+        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+	        		p.sendTitle(ChatColor.BOLD + "몬스터", ChatColor.BOLD + "("+ clearable.get(p.getUniqueId())+ "/20)", 10, 20, 10);
+			    }
+        		else {
+	        		p.sendTitle(ChatColor.BOLD + "Monster", ChatColor.BOLD + "("+ clearable.get(p.getUniqueId())+ "/20)", 10, 20, 10);
+        		}
 			}
 		}
 	}

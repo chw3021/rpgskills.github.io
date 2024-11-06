@@ -461,7 +461,7 @@ public class ClassData implements Serializable, Listener{
 						asg.Archskillsinv(p);
 						asg.Archskillsinv(p);
 						break;
-					case"Medic":
+					case"ArrowMedic":
 					case"의궁":
 						playerclass.put(p.getUniqueId(), 61);
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");

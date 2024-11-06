@@ -48,7 +48,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
 
-public class WoodlandMansionQuest extends Mobs {
+public class WoodlandMansionQuest extends Mobs implements Quest {
 
 	private HashMap<UUID, Integer> asked = new HashMap<UUID, Integer>();
 	private HashMap<UUID, Location> quested = new HashMap<UUID, Location>();

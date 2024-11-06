@@ -84,8 +84,8 @@ public class Obtained implements Serializable, Listener {
 	public final HashMap<UUID, Integer> PillagerOutpost;//
 	public final HashMap<UUID, Integer> DesertPyramid;//
 	public final HashMap<UUID, Integer> RuinedPortal;//
-	public final HashMap<UUID, Integer> Stronghold;
-	public final HashMap<UUID, Integer> AncientCity;
+	public final HashMap<UUID, Integer> Stronghold;//
+	public final HashMap<UUID, Integer> AncientCity;//
 	public final HashMap<UUID, Integer> Village;
 	public final HashMap<UUID, Integer> NetherFortress;
 	public final HashMap<UUID, Integer> BastionRemnant;
@@ -716,7 +716,7 @@ public class Obtained implements Serializable, Listener {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
 	    		}
 			}
-		} else if (f.contains("pill")) {
+		} else if (f.contains("pilla")) {
 			if (PillagerOutpost.getOrDefault(p.getUniqueId(), 0) < 2) {
 				PillagerOutpost.computeIfPresent(p.getUniqueId(), (k, v) -> v + add);
 				PillagerOutpost.putIfAbsent(p.getUniqueId(), add);
@@ -755,7 +755,7 @@ public class Obtained implements Serializable, Listener {
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You Already Obtained All Trophies Of This Structure").create());
 	    		}
 			}
-		} else if (f.contains("swamp")) {
+		} else if (f.contains("ancient")) {
 			if (AncientCity.getOrDefault(p.getUniqueId(), 0) < 2) {
 				AncientCity.computeIfPresent(p.getUniqueId(), (k, v) -> v + add);
 				AncientCity.putIfAbsent(p.getUniqueId(), add);

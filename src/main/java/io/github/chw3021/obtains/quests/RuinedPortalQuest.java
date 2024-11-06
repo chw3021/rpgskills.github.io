@@ -53,7 +53,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
 
-public class RuinedPortalQuest extends Mobs  {
+public class RuinedPortalQuest extends Mobs  implements Quest {
 	
 	private HashMap<UUID, Integer> asked = new HashMap<UUID, Integer>();
 	private HashMap<UUID, Location> quested = new HashMap<UUID, Location>();
@@ -200,6 +200,67 @@ public class RuinedPortalQuest extends Mobs  {
 		
 	}
 
+	private void openMerchant(Player p, LivingEntity le) {
+
+		List<MerchantRecipe> mrl = new ArrayList<MerchantRecipe>();
+
+		ArrayList<ItemStack> armorIngredients = new ArrayList<>();
+		ItemStack stel = Elements.getstel(12, p);
+		stel.setAmount(64);
+		armorIngredients.add(stel);
+		armorIngredients.add(stel);
+		
+		ArrayList<ItemStack> poia = new ArrayList<>();
+		poia.add(new ItemStack(Material.EMERALD,15));
+		poia.add(new ItemStack(Material.GOLD_INGOT,15));
+		
+		ArrayList<ItemStack> aa = new ArrayList<>();
+		aa.add(new ItemStack(Material.EMERALD,64));
+		aa.add(new ItemStack(Material.GOLD_INGOT,64));
+		
+		MerchantRecipe mr1 = new MerchantRecipe(Potions.get(7, p), 1,64,true);
+		mr1.setIngredients(poia);
+		mrl.add(mr1);
+		
+		MerchantRecipe mr2 = new MerchantRecipe(Helmet.get(7, p), 1,64,true);
+		mr2.setIngredients(aa);
+		mrl.add(mr2);
+		
+		MerchantRecipe mr3 = new MerchantRecipe(Chestplate.get(7, p), 1,64,true);
+		mr3.setIngredients(aa);
+		mrl.add(mr3);
+
+		MerchantRecipe mr4 = new MerchantRecipe(Leggings.get(7, p), 1,64,true);
+		mr4.setIngredients(aa);
+		mrl.add(mr4);
+		
+		MerchantRecipe mr5 = new MerchantRecipe(Boots.get(7, p), 1,64,true);
+		mr5.setIngredients(aa);
+		mrl.add(mr5);
+
+		MerchantRecipe mr6 = new MerchantRecipe(Armors.acArmor(0, p), 1,64,true);
+		mr6.setIngredients(armorIngredients);
+		mrl.add(mr6);
+
+		MerchantRecipe mr7 = new MerchantRecipe(Armors.acArmor(1, p), 1,64,true);
+		mr7.setIngredients(armorIngredients);
+		mrl.add(mr7);
+
+		MerchantRecipe mr8 = new MerchantRecipe(Armors.acArmor(2, p), 1,64,true);
+		mr8.setIngredients(armorIngredients);
+		mrl.add(mr8);
+		
+		MerchantRecipe mr9 = new MerchantRecipe(Armors.acArmor(3, p), 1,64,true);
+		mr9.setIngredients(armorIngredients);
+		mrl.add(mr9);
+		
+		Merchant mi = Bukkit.createMerchant(le.getCustomName());
+		mi.setRecipes(mrl);
+		p.openMerchant(mi, true);
+		
+		p.setCooldown(Material.RAIL, 3);
+		p.setCooldown(Material.RAIL, 3);
+	}
 	
 	public void QuestStart(PlayerInteractEntityEvent d)
 	{	
@@ -222,64 +283,6 @@ public class RuinedPortalQuest extends Mobs  {
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": You're worthy").create());
 	        		}
-	        		List<MerchantRecipe> mrl = new ArrayList<MerchantRecipe>();
-
-	        		ArrayList<ItemStack> armorIngredients = new ArrayList<>();
-	        		ItemStack stel = Elements.getstel(12, p);
-	        		stel.setAmount(64);
-	        		armorIngredients.add(stel);
-	        		armorIngredients.add(stel);
-	        		
-	        		ArrayList<ItemStack> poia = new ArrayList<>();
-	        		poia.add(new ItemStack(Material.EMERALD,15));
-	        		poia.add(new ItemStack(Material.GOLD_INGOT,15));
-	        		
-	        		ArrayList<ItemStack> aa = new ArrayList<>();
-	        		aa.add(new ItemStack(Material.EMERALD,64));
-	        		aa.add(new ItemStack(Material.GOLD_INGOT,64));
-	        		
-	        		MerchantRecipe mr1 = new MerchantRecipe(Potions.get(7, p), 1,64,true);
-	        		mr1.setIngredients(poia);
-	        		mrl.add(mr1);
-	        		
-	        		MerchantRecipe mr2 = new MerchantRecipe(Helmet.get(7, p), 1,64,true);
-	        		mr2.setIngredients(aa);
-	        		mrl.add(mr2);
-	        		
-	        		MerchantRecipe mr3 = new MerchantRecipe(Chestplate.get(7, p), 1,64,true);
-	        		mr3.setIngredients(aa);
-	        		mrl.add(mr3);
-
-	        		MerchantRecipe mr4 = new MerchantRecipe(Leggings.get(7, p), 1,64,true);
-	        		mr4.setIngredients(aa);
-	        		mrl.add(mr4);
-	        		
-	        		MerchantRecipe mr5 = new MerchantRecipe(Boots.get(7, p), 1,64,true);
-	        		mr5.setIngredients(aa);
-	        		mrl.add(mr5);
-
-	        		MerchantRecipe mr6 = new MerchantRecipe(Armors.acArmor(0, p), 1,64,true);
-	        		mr6.setIngredients(armorIngredients);
-	        		mrl.add(mr6);
-
-	        		MerchantRecipe mr7 = new MerchantRecipe(Armors.acArmor(1, p), 1,64,true);
-	        		mr7.setIngredients(armorIngredients);
-	        		mrl.add(mr7);
-
-	        		MerchantRecipe mr8 = new MerchantRecipe(Armors.acArmor(2, p), 1,64,true);
-	        		mr8.setIngredients(armorIngredients);
-	        		mrl.add(mr8);
-	        		
-	        		MerchantRecipe mr9 = new MerchantRecipe(Armors.acArmor(3, p), 1,64,true);
-	        		mr9.setIngredients(armorIngredients);
-	        		mrl.add(mr9);
-	        		
-	        		Merchant mi = Bukkit.createMerchant(le.getCustomName());
-	        		mi.setRecipes(mrl);
-	        		p.openMerchant(mi, true);
-	        		
-	        		p.setCooldown(Material.RAIL, 3);
-	        		p.setCooldown(Material.RAIL, 3);
 					return;
 				}
 
@@ -299,6 +302,7 @@ public class RuinedPortalQuest extends Mobs  {
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You should empty inventory least one space").create());
 	        		}
+	        		openMerchant(p, le);
 					return;
 				}
 				

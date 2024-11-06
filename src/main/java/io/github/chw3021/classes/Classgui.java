@@ -306,17 +306,17 @@ public class Classgui implements Serializable {
 				break;
 			}
 			if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-				p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "Surgeon");
-				p.setDisplayName(ChatColor.LIGHT_PURPLE + "[[Surgeon]]" + p.getDisplayName());
-				p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[[Surgeon]]" + p.getPlayerListName());
+				p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "Restorer");
+				p.setDisplayName(ChatColor.LIGHT_PURPLE + "[[Restorer]]" + p.getDisplayName());
+				p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[[Restorer]]" + p.getPlayerListName());
 			} else if (Proficiency.getpro(p) >= 2) {
 				p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "Rescuer");
 				p.setDisplayName(ChatColor.LIGHT_PURPLE + "[[[Rescuer]]]" + p.getDisplayName());
 				p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[[[Rescuer]]]" + p.getPlayerListName());
 			} else {
-				p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "Medic");
-				p.setDisplayName(ChatColor.LIGHT_PURPLE + "[Medic]" + p.getDisplayName());
-				p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[Medic]" + p.getPlayerListName());
+				p.addScoreboardTag(ChatColor.LIGHT_PURPLE + "ArrowMedic");
+				p.setDisplayName(ChatColor.LIGHT_PURPLE + "[ArrowMedic]" + p.getDisplayName());
+				p.setPlayerListName(ChatColor.LIGHT_PURPLE + "[ArrowMedic]" + p.getPlayerListName());
 			}
 			break;
 		}
@@ -818,13 +818,13 @@ public class Classgui implements Serializable {
 				break;
 			}
 			if (Proficiency.getpro(p) >= 1 && Proficiency.getpro(p) < 2) {
-				p.addScoreboardTag(ChatColor.AQUA + "Swell");
-				p.setDisplayName(ChatColor.AQUA + "[[Swell]]" + p.getDisplayName());
-				p.setPlayerListName(ChatColor.AQUA + "[[Swell]]" + p.getPlayerListName());
+				p.addScoreboardTag(ChatColor.AQUA + "Savant");
+				p.setDisplayName(ChatColor.AQUA + "[[Savant]]" + p.getDisplayName());
+				p.setPlayerListName(ChatColor.AQUA + "[[Savant]]" + p.getPlayerListName());
 			} else if (Proficiency.getpro(p) >= 2) {
-				p.addScoreboardTag(ChatColor.AQUA + "Gatsby");
-				p.setDisplayName(ChatColor.AQUA + "[[[Gatsby]]]" + p.getDisplayName());
-				p.setPlayerListName(ChatColor.AQUA + "[[[Gatsby]]]" + p.getPlayerListName());
+				p.addScoreboardTag(ChatColor.AQUA + "Idler");
+				p.setDisplayName(ChatColor.AQUA + "[[[Idler]]]" + p.getDisplayName());
+				p.setPlayerListName(ChatColor.AQUA + "[[[Idler]]]" + p.getPlayerListName());
 			} else {
 				p.addScoreboardTag(ChatColor.AQUA + "Angler");
 				p.setDisplayName(ChatColor.AQUA + "[Angler]" + p.getDisplayName());
@@ -1140,7 +1140,7 @@ public class Classgui implements Serializable {
 					Arrays.asList("Recommended equipment:", "Bow", "", "Attack: 3/5", "Defence: 2/5", "Control: 4/5",
 							"Support: 1/5", "Area: 3.5/5", "Range: 4/5", "Mobility: 2/5", "Difficulty: Normal"),
 					29, inv);
-			itemset(ChatColor.BLUE + "Medic", Material.TIPPED_ARROW, 0, 1,
+			itemset(ChatColor.BLUE + "ArrowMedic", Material.TIPPED_ARROW, 0, 1,
 					Arrays.asList("Recommended equipment:", "Crossbow", "", "Attack: 2/5", "Defence: 3.5/5",
 							"Control: 3.5/5", "Support: 5/5", "Area: 2.5/5", "Range: 3.5/5", "Mobility: 2/5",
 							"Difficulty: Hard"),

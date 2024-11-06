@@ -676,8 +676,8 @@ public class NPCLoc implements Serializable, Listener{
 
     	else if(ns.contains("ancient_city")) {
 
-			String reg = lang.contains("kr") ? "성직자":"Priest";
-    		Villager v = vnpc(w,lel, "ancient",reg, Type.SWAMP, Profession.CLERIC);
+			String reg = lang.contains("kr") ? "탐험가":"Explorer";
+    		Villager v = vnpc(w,lel, "ancient",reg, Type.JUNGLE, Profession.WEAPONSMITH);
     		if(v != null) {
         		v.setVillagerLevel(5);
     		}

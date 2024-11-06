@@ -36,6 +36,7 @@ public class Chestplate extends Armors implements Listener {
 				rm.setDisplayName("Miner Jacket");
 				rm.setItemName("Miner Jacket");
 			}
+			rm.addEnchant(Enchantment.UNBREAKING, 255, true);
 			r.setItemMeta(rm);
 		}
 		else if(f == 1) {
@@ -52,6 +53,7 @@ public class Chestplate extends Armors implements Listener {
 				rm.setDisplayName("Snowy Coat");
 				rm.setItemName("Snowy Coat");
 			}
+			rm.addEnchant(Enchantment.UNBREAKING, 255, true);
 			r.setItemMeta(rm);
 		}
 		else if(f == 3) {
@@ -69,6 +71,7 @@ public class Chestplate extends Armors implements Listener {
 				rm.setDisplayName("Prismarine ChestPlate");
 				rm.setItemName("Prismarine ChestPlate");
 			}
+			rm.addEnchant(Enchantment.UNBREAKING, 255, true);
 			r.setItemMeta(rm);
 		}
 		else if(f == 5) {
@@ -86,12 +89,13 @@ public class Chestplate extends Armors implements Listener {
 				rm.setItemName("Flak jacket");
 			}
 			rm.addEnchant(Enchantment.PROJECTILE_PROTECTION, 10, true);
+			rm.addEnchant(Enchantment.UNBREAKING, 255, true);
 			r.setItemMeta(rm);
 		}
 		else if(f == 6) {
 			r.setType(Material.CHAINMAIL_CHESTPLATE);
 			ItemMeta im = (ItemMeta) r.getItemMeta();
-			rm.addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(getKey(), 0.05, Operation.ADD_SCALAR, EquipmentSlotGroup.CHEST));
+			im.addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(getKey(), 0.05, Operation.ADD_SCALAR, EquipmentSlotGroup.CHEST));
 			im.addAttributeModifier(Attribute.MAX_HEALTH, new AttributeModifier(getKey(), 0.67, Operation.ADD_SCALAR, EquipmentSlotGroup.CHEST));
 			im.addAttributeModifier(Attribute.ARMOR, new AttributeModifier(getKey(), 8, Operation.ADD_NUMBER, EquipmentSlotGroup.CHEST));
 			im.addAttributeModifier(Attribute.ARMOR_TOUGHNESS, new AttributeModifier(getKey(), 3, Operation.ADD_NUMBER, EquipmentSlotGroup.CHEST));
@@ -104,6 +108,7 @@ public class Chestplate extends Armors implements Listener {
 				im.setItemName("Alloy Chestplate");
 			}
 			im.addEnchant(Enchantment.PROTECTION, 3, true);
+			im.addEnchant(Enchantment.UNBREAKING, 255, true);
 			r.setItemMeta(im);
 		}
 		else if(f == 7) {
@@ -126,6 +131,33 @@ public class Chestplate extends Armors implements Listener {
 			rm.addEnchant(Enchantment.PROTECTION, 3, true);
 			rm.addEnchant(Enchantment.BLAST_PROTECTION, 3, true);
 			rm.addEnchant(Enchantment.PROJECTILE_PROTECTION, 3, true);
+			rm.addEnchant(Enchantment.FIRE_PROTECTION, 3, true);
+			rm.addEnchant(Enchantment.UNBREAKING, 255, true);
+			r.setItemMeta(rm);
+		}
+		else if(f == 8) {
+			rm.setColor(Color.TEAL);
+			rm.addAttributeModifier(Attribute.GRAVITY, new AttributeModifier(getKey(), -0.1, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.LUCK, new AttributeModifier(getKey(), 7, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.MAX_HEALTH, new AttributeModifier(getKey(), 0.4, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(getKey(), 0.3, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.MOVEMENT_EFFICIENCY, new AttributeModifier(getKey(), 0.28, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.JUMP_STRENGTH, new AttributeModifier(getKey(), 0.23, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.ARMOR, new AttributeModifier(getKey(), 3, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.ATTACK_SPEED, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.ARMOR_TOUGHNESS, new AttributeModifier(getKey(), 3, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+				rm.setDisplayName("바람의 흉갑");
+				rm.setItemName("바람의 흉갑");
+			}
+			else {
+				rm.setDisplayName("Windy Chestplate");
+				rm.setItemName("Windy Chestplate");
+			}
+			rm.addEnchant(Enchantment.PROTECTION, 3, true);
+			rm.addEnchant(Enchantment.PROJECTILE_PROTECTION, 3, true);
+			rm.addEnchant(Enchantment.SOUL_SPEED, 5, true);
 			rm.addEnchant(Enchantment.FIRE_PROTECTION, 3, true);
 			rm.addEnchant(Enchantment.UNBREAKING, 255, true);
 			r.setItemMeta(rm);

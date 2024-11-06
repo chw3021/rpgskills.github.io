@@ -20,6 +20,7 @@ public class Helmet extends Armors implements Listener {
 
 		ItemStack r = new ItemStack(Material.LEATHER_HELMET);
 		LeatherArmorMeta rm = (LeatherArmorMeta) r.getItemMeta();
+		rm.addEnchant(Enchantment.UNBREAKING, 255, true);
 		if(f == 0) {
 			rm.setColor(Color.YELLOW);
 			rm.addEnchant(Enchantment.BLAST_PROTECTION, 5, true);
@@ -121,6 +122,7 @@ public class Helmet extends Armors implements Listener {
 				im.setItemName("Alloy Helmet");
 			}
 			im.addEnchant(Enchantment.PROTECTION, 1, true);
+			im.addEnchant(Enchantment.UNBREAKING, 255, true);
 			r.setItemMeta(im);
 		}
 		else if(f == 7) {
@@ -143,6 +145,33 @@ public class Helmet extends Armors implements Listener {
 			rm.addEnchant(Enchantment.PROTECTION, 3, true);
 			rm.addEnchant(Enchantment.BLAST_PROTECTION, 3, true);
 			rm.addEnchant(Enchantment.PROJECTILE_PROTECTION, 3, true);
+			rm.addEnchant(Enchantment.FIRE_PROTECTION, 3, true);
+			rm.addEnchant(Enchantment.UNBREAKING, 255, true);
+			r.setItemMeta(rm);
+		}
+		else if(f == 8) {
+			rm.setColor(Color.TEAL);
+			rm.addAttributeModifier(Attribute.GRAVITY, new AttributeModifier(getKey(), -0.1, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.LUCK, new AttributeModifier(getKey(), 7, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.MAX_HEALTH, new AttributeModifier(getKey(), 0.4, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(getKey(), 0.3, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.MOVEMENT_EFFICIENCY, new AttributeModifier(getKey(), 0.28, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.JUMP_STRENGTH, new AttributeModifier(getKey(), 0.23, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.ARMOR, new AttributeModifier(getKey(), 3, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.ATTACK_SPEED, new AttributeModifier(getKey(), 2, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.ARMOR_TOUGHNESS, new AttributeModifier(getKey(), 3, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+				rm.setDisplayName("바람의 헬멧");
+				rm.setItemName("바람의 헬멧");
+			}
+			else {
+				rm.setDisplayName("Windy Helmet");
+				rm.setItemName("Windy Helmet");
+			}
+			rm.addEnchant(Enchantment.PROTECTION, 3, true);
+			rm.addEnchant(Enchantment.PROJECTILE_PROTECTION, 3, true);
+			rm.addEnchant(Enchantment.SOUL_SPEED, 5, true);
 			rm.addEnchant(Enchantment.FIRE_PROTECTION, 3, true);
 			rm.addEnchant(Enchantment.UNBREAKING, 255, true);
 			r.setItemMeta(rm);

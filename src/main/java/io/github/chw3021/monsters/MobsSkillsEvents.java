@@ -128,12 +128,14 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 			}
 			le.setCustomName(null);
 			if (ev.getEntityType() == EntityType.WITHER) {
+				le.setCustomName(mobs.trans(le));
 				ev.getEntity().setMaxHealth(900000);
 				ev.getEntity().setHealth(900000);
 				ev.getEntity().setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 				ev.getEntity().setMetadata("nether", new FixedMetadataValue(RMain.getInstance(), true));
 				ev.getEntity().setMetadata("wither", new FixedMetadataValue(RMain.getInstance(), true));
 			} else if (ev.getEntityType() == EntityType.WARDEN) {
+				le.setCustomName(mobs.trans(le));
 				ev.getEntity().setMaxHealth(9999999);
 				ev.getEntity().setHealth(9999999);
 				ev.getEntity().setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
@@ -142,6 +144,7 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 				ev.getEntity().setMetadata("wither", new FixedMetadataValue(RMain.getInstance(), true));
 				ev.getEntity().setMetadata("void", new FixedMetadataValue(RMain.getInstance(), true));
 			}else if (ev.getEntityType() == EntityType.ENDER_DRAGON) {
+				le.setCustomName(mobs.trans(le));
 				ev.getEntity().setMaxHealth(200000);
 				ev.getEntity().setHealth(200000);
 				ev.getEntity().setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));

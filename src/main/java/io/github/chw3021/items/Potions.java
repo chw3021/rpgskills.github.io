@@ -40,8 +40,8 @@ public class Potions {
 			pom.setColor(Color.WHITE);
 			pom.setBasePotionType(PotionType.STRONG_HEALING);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 2400, 3, true,true), false);
-			pom.addCustomEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 2400, 3, true,true), false);
-			pom.addCustomEffect(new PotionEffect(PotionEffectType.SPEED, 2400, 3, true,true), false);
+			pom.addCustomEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 2400, 4, true,true), false);
+			pom.addCustomEffect(new PotionEffect(PotionEffectType.SPEED, 2400, 4, true,true), false);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 2400, 3, true,true), false);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 3, true,true), false);
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {

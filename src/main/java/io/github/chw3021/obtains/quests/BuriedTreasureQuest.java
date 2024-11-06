@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.UUID;
-import java.util.logging.Level;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
@@ -65,7 +64,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
 
-public class BuriedTreasureQuest extends Mobs implements Serializable  {
+public class BuriedTreasureQuest extends Mobs implements Serializable, Quest  {
 	
 	
 

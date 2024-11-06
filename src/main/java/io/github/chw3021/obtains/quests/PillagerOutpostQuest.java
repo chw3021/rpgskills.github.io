@@ -16,6 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.WanderingTrader;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
@@ -42,7 +43,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
 
-public class PillagerOutpostQuest {
+public class PillagerOutpostQuest implements Quest {
 
 	private HashMap<UUID, Integer> asked = new HashMap<UUID, Integer>();
 	private HashMap<UUID, Location> quested = new HashMap<UUID, Location>();
@@ -382,6 +383,11 @@ public class PillagerOutpostQuest {
 	    		QuestEnd(p,3);
 			}
 		});
+	}
+
+	@Override
+	public void QuestClear(EntityDeathEvent ev) {
+		
 	}
 
 

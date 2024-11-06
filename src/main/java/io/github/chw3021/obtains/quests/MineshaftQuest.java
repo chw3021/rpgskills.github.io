@@ -18,6 +18,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MerchantRecipe;
 
@@ -37,7 +38,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
 
-public class MineshaftQuest {
+public class MineshaftQuest implements Quest {
 
 	private HashMap<UUID, Integer> asked = new HashMap<UUID, Integer>();
 	private HashMap<UUID, Location> quested = new HashMap<UUID, Location>();
@@ -284,6 +285,16 @@ public class MineshaftQuest {
 		if(quested.containsKey(p.getUniqueId())) {
     		QuestEnd(p,2);
 		}
+	}
+
+	public void Reset(PluginDisableEvent ev) 
+	{
+		Bukkit.getOnlinePlayers().forEach(p -> {
+
+			if(quested.containsKey(p.getUniqueId())) {
+	    		QuestEnd(p,3);
+			}
+		});
 	}
 	
 	
