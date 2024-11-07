@@ -35,7 +35,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
 
-public class JungleTempleQuest implements Quest {
+public class NetherFortressQuest implements Quest {
 
 	private HashMap<UUID, Integer> asked = new HashMap<UUID, Integer>();
 	private HashMap<UUID, Location> quested = new HashMap<UUID, Location>();
@@ -44,10 +44,10 @@ public class JungleTempleQuest implements Quest {
 
 	private HashMap<UUID, Integer> qt = new HashMap<UUID, Integer>();
 
-	private String META = "junglepyramid";
+	private String META = "netherfortress";
 
-	private static final JungleTempleQuest instance = new JungleTempleQuest ();
-	public static JungleTempleQuest getInstance()
+	private static final NetherFortressQuest instance = new NetherFortressQuest ();
+	public static NetherFortressQuest getInstance()
 	{
 		return instance;
 	}
@@ -244,11 +244,11 @@ public class JungleTempleQuest implements Quest {
     	        	p.setCooldown(Material.RAIL, 10);
 
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": 여기도 없고...저기도 없고..").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": 금.. 금이 필요해...").create());
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "(우클릭시 수락)").create());
 				    }
 	        		else {
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Neither here nor there..").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Gold... I need Gold...").create());
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "(RightClick To Accept)").create());
 	        		}
                 	asked.put(p.getUniqueId(), 1);

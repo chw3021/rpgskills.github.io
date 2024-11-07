@@ -11,14 +11,12 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.inventory.ItemStack;
@@ -27,7 +25,6 @@ import org.bukkit.inventory.MerchantRecipe;
 
 import io.github.chw3021.items.Elements;
 import io.github.chw3021.items.Potions;
-import io.github.chw3021.items.armors.Armors;
 import io.github.chw3021.items.armors.Boots;
 import io.github.chw3021.items.armors.Chestplate;
 import io.github.chw3021.items.armors.Helmet;
@@ -49,6 +46,7 @@ public class AncientCityQuest implements Quest {
 	private HashMap<UUID, Integer> asked = new HashMap<UUID, Integer>();
 	private HashMap<UUID, Location> quested = new HashMap<UUID, Location>();
 	private HashMap<UUID, Location> startloc = new HashMap<UUID, Location>();
+	private HashMap<UUID, Location> foods = new HashMap<UUID, Location>();
 	private HashMap<UUID, Integer> clearable = new HashMap<UUID, Integer>();
 
 	private HashMap<UUID, Integer> qt = new HashMap<UUID, Integer>();
@@ -74,6 +72,9 @@ public class AncientCityQuest implements Quest {
 		}
 		if(startloc.containsKey(p.getUniqueId())) {
 			startloc.remove(p.getUniqueId());
+		}
+		if(foods.containsKey(p.getUniqueId())) {
+			foods.remove(p.getUniqueId());
 		}
 
 		if(factor ==0) {
@@ -291,8 +292,14 @@ public class AncientCityQuest implements Quest {
 	{
 		if(quested.containsKey(p.getUniqueId())) {
 			Random ran = new Random();
+			foods.putIfAbsent(p.getUniqueId(), p.getLocation());
 			if(ran.nextDouble()<0.05 && startloc.get(p.getUniqueId()).clone().distance(p.getLocation()) >10) {
-	    		p.playSound(p.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
+				if(foods.containsKey(p.getUniqueId())) {
+					if(foods.get(p.getUniqueId()).distance(p.getLocation())<2) {
+						return;
+					}
+				}
+				p.playSound(p.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
 	    		clearable.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
 	    		clearable.putIfAbsent(p.getUniqueId(), 1);
 	    		if(p.getLocale().equalsIgnoreCase("ko_kr")) {

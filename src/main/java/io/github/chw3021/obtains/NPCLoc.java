@@ -791,13 +791,13 @@ public class NPCLoc implements Serializable, Listener{
     		
     	}
     	else if(ns.contains("nether_bridge")) {
-    			ItemStack head = new ItemStack(Material.IRON_HELMET);
-    			ItemStack chest = new ItemStack(Material.IRON_CHESTPLATE);
-    			ItemStack leg = new ItemStack(Material.IRON_LEGGINGS);;
-    			ItemStack boots = new ItemStack(Material.IRON_BOOTS);
+    			ItemStack head = new ItemStack(Material.GOLD_BLOCK);
+    			ItemStack chest = new ItemStack(Material.GOLDEN_CHESTPLATE);
+    			ItemStack leg = new ItemStack(Material.GOLDEN_LEGGINGS);;
+    			ItemStack boots = new ItemStack(Material.GOLDEN_BOOTS);
 
     			String reg = lang.contains("kr") ? "피글린 기사":"Piglin Knight";
-    			Piglin v = (Piglin) mnpc(w,lel, EntityType.PIGLIN, "netherfortress", reg,head,chest,leg,boots,new ItemStack(Material.DIAMOND_AXE),new ItemStack(Material.SHIELD));
+    			Piglin v = (Piglin) mnpc(w,lel, EntityType.PIGLIN, "netherfortress", reg,head,chest,leg,boots,new ItemStack(Material.GOLDEN_AXE),new ItemStack(Material.GOLDEN_CARROT));
         		if(v != null) {
             		v.setImmuneToZombification(true);
         		}
