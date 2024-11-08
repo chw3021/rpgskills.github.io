@@ -87,9 +87,9 @@ public class Obtained implements Serializable, Listener {
 	public final HashMap<UUID, Integer> Stronghold;//
 	public final HashMap<UUID, Integer> AncientCity;//
 	public final HashMap<UUID, Integer> Village;//
-	public final HashMap<UUID, Integer> NetherFortress;
-	public final HashMap<UUID, Integer> BastionRemnant;
-	public final HashMap<UUID, Integer> EndCity;
+	public final HashMap<UUID, Integer> NetherFortress;//
+	public final HashMap<UUID, Integer> BastionRemnant;//
+	public final HashMap<UUID, Integer> EndCity;//
 	public final HashMap<UUID, Integer> EnderDragon;
 	// Can be used for saving
 

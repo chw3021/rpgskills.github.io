@@ -10,6 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
@@ -35,7 +36,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
 
-public class JungleTempleQuest implements Quest {
+public class BastionRemnantQuest implements Quest {
 
 	private HashMap<UUID, Integer> asked = new HashMap<UUID, Integer>();
 	private HashMap<UUID, Location> quested = new HashMap<UUID, Location>();
@@ -44,10 +45,10 @@ public class JungleTempleQuest implements Quest {
 
 	private HashMap<UUID, Integer> qt = new HashMap<UUID, Integer>();
 
-	private String META = "junglepyramid";
+	private String META = "bastionremnant";
 
-	private static final JungleTempleQuest instance = new JungleTempleQuest ();
-	public static JungleTempleQuest getInstance()
+	private static final BastionRemnantQuest instance = new BastionRemnantQuest ();
+	public static BastionRemnantQuest getInstance()
 	{
 		return instance;
 	}
@@ -95,19 +96,20 @@ public class JungleTempleQuest implements Quest {
 		else if (factor == 4) {
     		p.playSound(p.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    			p.sendTitle(ChatColor.GOLD + "퀘스트 완료!",ChatColor.GOLD + "정글 사원 전리품을 획득했습니다!",15,35,15);
-            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "고고학자와 거래를 할 수 있습니다").create());
+    			p.sendTitle(ChatColor.GOLD + "퀘스트 완료!",ChatColor.GOLD + "보루 잔해 전리품을 획득했습니다!",15,35,15);
+            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "데스나이트와 거래를 할 수 있습니다").create());
 		    }
     		else {
-    			p.sendTitle(ChatColor.GOLD + "Complete Quest!",ChatColor.GOLD + "You Just Obtained Jungle Temple Trophy!",15,35,15);
-            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "Able To Trade With Archaeologist").create());
+    			p.sendTitle(ChatColor.GOLD + "Complete Quest!",ChatColor.GOLD + "You Just Obtained Bastion Remnant Trophy!",15,35,15);
+            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "Able To Trade With Death Knight").create());
     		}
     		Obtained.saver(p, META, 1);
     		TrophyLoc.saver(p, quested.get(p.getUniqueId()));
-        	Elements.give(Material.LAPIS_LAZULI, 5, p);
-        	Elements.give(Material.EMERALD, 5, p);
-        	Elements.give(Elements.getel(12, p),5, p);
-			p.giveExp(150);
+        	Elements.give(Material.LAPIS_LAZULI, 20, p);
+        	Elements.give(Material.EMERALD, 20, p);
+        	Elements.give(Material.NETHERITE_INGOT, 20, p);
+        	Elements.give(Material.GOLD_INGOT, 20, p);
+			p.giveExp(250);
 			Bukkit.getServer().getPluginManager().callEvent(new PlayerExpChangeEvent(p,150));
 		}
 		if(quested.containsKey(p.getUniqueId())) {
@@ -134,47 +136,30 @@ public class JungleTempleQuest implements Quest {
 				if(TrophyLoc.getLocsdata().Locs.containsEntry(p.getUniqueId(), NPCLoc.npcloc.get(le.getUniqueId()))) {
 					
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": 감사합니다.").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + le.getCustomName() + ": 고맙군.").create());
 	        		}
 	        		else {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Thank you.").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + le.getCustomName() + ": Thanks.").create());
 	        		}
 	        		List<MerchantRecipe> mrl = new ArrayList<MerchantRecipe>();
 
-	        		ArrayList<ItemStack> helia = new ArrayList<>();
-	        		ItemStack stel = Elements.getstel(12, p);
-	        		stel.setAmount(64);
-	        		helia.add(stel);
-	        		
-	        		ArrayList<ItemStack> in1 = new ArrayList<>();
-	        		in1.add(new ItemStack(Material.EMERALD,6));
-	        		in1.add(new ItemStack(Material.LAPIS_LAZULI,6));
 	        		
 	        		ArrayList<ItemStack> poia = new ArrayList<>();
-	        		poia.add(new ItemStack(Material.EMERALD,5));
-	        		poia.add(new ItemStack(Material.LAPIS_LAZULI,5));
+	        		poia.add(new ItemStack(Material.EMERALD,64));
+	        		poia.add(new ItemStack(Material.LAPIS_LAZULI,64));
 
 	        		ArrayList<ItemStack> po = new ArrayList<>();
-	        		po.add(new ItemStack(Material.EMERALD,1));
+	        		po.add(new ItemStack(Material.EMERALD,32));
 	        		
-	        		MerchantRecipe mr1 = new MerchantRecipe(Potions.get(6, p), 1,64,true);
+	        		MerchantRecipe mr1 = new MerchantRecipe(Potions.get(8, p), 1,64,true);
 	        		mr1.setIngredients(po);
 	        		mrl.add(mr1);
 	        		
-	        		MerchantRecipe mr2 = new MerchantRecipe(Elements.getel(12, p), 1,64,true);
-	        		mr2.setIngredients(poia);
-	        		mrl.add(mr2);
-
-	        		for(int i = 5; i<=14;i++) {
-	        			if(i==12||i==13) {
-	        				continue;
-	        			}
-		        		MerchantRecipe storm = new MerchantRecipe(Elements.getstel(i, p), 1,64,true);
-		        		storm.setIngredients(helia);
-		        		mrl.add(storm);
+	        		for(int i = -2; i>=-5; i--) {
+		        		MerchantRecipe mr2 = new MerchantRecipe(Elements.getel(i, p), 1,64,true);
+		        		mr2.setIngredients(poia);
+		        		mrl.add(mr2);
 	        		}
-	        		
-	        		
 	        		
 	        		Merchant mi = Bukkit.createMerchant(le.getCustomName());
 	        		mi.setRecipes(mrl);
@@ -209,14 +194,12 @@ public class JungleTempleQuest implements Quest {
             		}
             		asked.remove(p.getUniqueId());
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": 고맙네! 사원을 조사중인데 아무래도 몬스터들이 유물을 죄다 가져간 모양이야.").create());
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": 근처 몬스터들한테서 유물을 가져와줄수 있겠나?").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + le.getCustomName() + ": 저 시끄러운 가스트들좀 없애줄수 있나? 내가 하고싶은데 보다시피 난 원거리공격이 없어서..").create());
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": (사망, 종료, 우클릭시 또는 너무 멀리 가면 퀘스트가 취소됩니다.)").create());
 				    }
 	        		else {
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Thank you! I'm researching the temple, but monsters seem to have taken all the Relics.").create());
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Can you bring Relics from nearby monsters??").create());
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": (Quest Will be Canceled If You Die, Quit, RightClick or go far away)").create());
+	        			p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + le.getCustomName() + ": Could you take care of those noisy Ghasts for me? I'd do it myself, but as you can see, I don’t have any long-range attacks...").create());
+	        			p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": (The quest will be canceled upon death, exit, right-click, or if you go too far away.)").create());
 	        		}
 	        		quested.put(p.getUniqueId(), NPCLoc.npcloc.get(le.getUniqueId()));
 	        		startloc.put(p.getUniqueId(), le.getLocation().clone());
@@ -231,7 +214,7 @@ public class JungleTempleQuest implements Quest {
     	                		QuestEnd(p,0);
     	                	}
     	                	for(Entity e : sl.getWorld().getNearbyEntities(sl.clone(), 3,3,3)) {
-    	                		if(e == p && clearable.getOrDefault(p.getUniqueId(), 0) >=10) {
+    	                		if(e == p && clearable.getOrDefault(p.getUniqueId(), 0) >=5) {
     	                			QuestEnd(p,4);
     	                		}
     	                	}
@@ -244,12 +227,12 @@ public class JungleTempleQuest implements Quest {
     	        	p.setCooldown(Material.RAIL, 10);
 
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": 여기도 없고...저기도 없고..").create());
+	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + le.getCustomName() + ": 아...진짜 너무 시끄럽네").create());
 	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "(우클릭시 수락)").create());
 				    }
 	        		else {
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": Neither here nor there..").create());
-	                	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "(RightClick To Accept)").create());
+	        			p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + le.getCustomName() + ": Ugh... it's really loud here.").create());
+	        			p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "(RightClick To Accept)").create());
 	        		}
                 	asked.put(p.getUniqueId(), 1);
                 	
@@ -269,19 +252,18 @@ public class JungleTempleQuest implements Quest {
 
 	public void QuestClear(EntityDeathEvent d) 
 	{
-		if(d.getEntity().hasMetadata("wild")) {
+		if(d.getEntity().getType() == EntityType.GHAST) {
 			LivingEntity le = d.getEntity();
 			if(le.getKiller() != null) {
 				Player p = le.getKiller();
 				if(quested.containsKey(p.getUniqueId())) {
-	        		p.playSound(p.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1, 1);
 	        		clearable.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
 	        		clearable.putIfAbsent(p.getUniqueId(), 1);
 	        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		        		p.sendTitle(ChatColor.BOLD + "유물", ChatColor.BOLD + "("+ clearable.get(p.getUniqueId())+ "/10)", 10, 20, 10);
+		        		p.sendTitle(ChatColor.GOLD + "가스트", ChatColor.GOLD + "("+ clearable.get(p.getUniqueId())+ "/5)", 10, 20, 10);
 				    }
 	        		else {
-		        		p.sendTitle(ChatColor.BOLD + "Relic", ChatColor.BOLD + "("+ clearable.get(p.getUniqueId())+ "/10)", 10, 20, 10);
+		        		p.sendTitle(ChatColor.GOLD + "Ghast", ChatColor.GOLD + "("+ clearable.get(p.getUniqueId())+ "/5)", 10, 20, 10);
 	        		}
 				}
 			}

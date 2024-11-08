@@ -134,7 +134,7 @@ public class Potions {
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.SPEED, 24000, 2, true,true), false);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 24000, 2, true,true), false);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 24000, 2, true,true), false);
-			pom.addCustomEffect(new PotionEffect(PotionEffectType.LUCK, 24000, 2, true,true), false);
+			pom.addCustomEffect(new PotionEffect(PotionEffectType.LUCK, 24000, 5, true,true), false);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.RESISTANCE, 24000, 1, true,true), false);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 24000, 1, true,true), false);
 			pom.addCustomEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 24000, 2, true,true), false);
@@ -145,6 +145,25 @@ public class Potions {
 			}
 			else {
 				pom.setDisplayName(ChatColor.GREEN + "Potion of Dimension Travler");
+			}
+		}
+		else if(f==8) {
+			pom.setColor(Color.RED);
+			pom.setBasePotionType(PotionType.LONG_FIRE_RESISTANCE);
+			pom.addCustomEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 24000, 0, true,true), false);
+			pom.addCustomEffect(new PotionEffect(PotionEffectType.REGENERATION, 24000, 15, true,true), false);
+			pom.addCustomEffect(new PotionEffect(PotionEffectType.ABSORPTION, 24000, 20, true,true), false);
+			pom.addCustomEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 24000, 20, true,true), false);
+			pom.addCustomEffect(new PotionEffect(PotionEffectType.STRENGTH, 24000, 3, true,true), false);
+			pom.addCustomEffect(new PotionEffect(PotionEffectType.RESISTANCE, 24000, 1, true,true), false);
+			pom.addCustomEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 24000, 1, true,true), false);
+			pom.addCustomEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 24000, 2, true,true), false);
+			pom.addCustomEffect(new PotionEffect(PotionEffectType.SATURATION, 24000, 1, true,true), false);
+			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+				pom.setDisplayName(ChatColor.GREEN + "네더의 영약");
+			}
+			else {
+				pom.setDisplayName(ChatColor.GREEN + "Nether Elixir");
 			}
 		}
 		po.setItemMeta(pom);

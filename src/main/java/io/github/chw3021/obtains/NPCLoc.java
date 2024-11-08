@@ -156,7 +156,6 @@ public class NPCLoc implements Serializable, Listener{
 	}
 	
 
-	
 	@EventHandler	
 	public void spawning(LootGenerateEvent ev) 
 	{
@@ -185,7 +184,6 @@ public class NPCLoc implements Serializable, Listener{
 		if(structureKey.contains("buried_treasure")) {
 			return;
 		}
-		
 	}
 
 
@@ -797,7 +795,7 @@ public class NPCLoc implements Serializable, Listener{
     			ItemStack boots = new ItemStack(Material.GOLDEN_BOOTS);
 
     			String reg = lang.contains("kr") ? "피글린 기사":"Piglin Knight";
-    			Piglin v = (Piglin) mnpc(w,lel, EntityType.PIGLIN, "netherfortress", reg,head,chest,leg,boots,new ItemStack(Material.GOLDEN_AXE),new ItemStack(Material.GOLDEN_CARROT));
+    			Piglin v = (Piglin) mnpc(w,lel, EntityType.PIGLIN, "netherfortress", reg,head,chest,leg,boots,new ItemStack(Material.GOLDEN_AXE),new ItemStack(Material.RAW_GOLD_BLOCK));
         		if(v != null) {
             		v.setImmuneToZombification(true);
         		}
@@ -812,7 +810,7 @@ public class NPCLoc implements Serializable, Listener{
     			mnpc(w,lel, EntityType.WITHER_SKELETON, "bastionremnant", reg,head,chest,leg,boots,new ItemStack(Material.NETHERITE_SWORD),new ItemStack(Material.SHIELD));
     		
     	}
-    	else if(ns.contains("buried_treasure")) {
+    	else if(ns.contains("end_city_treasure")) {
     			ItemStack head = new ItemStack(Material.DRAGON_HEAD);
     			ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
     			LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();

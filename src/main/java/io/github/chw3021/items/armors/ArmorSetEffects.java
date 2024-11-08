@@ -34,12 +34,12 @@ public class ArmorSetEffects implements Listener{
 			Player p = (Player) d.getDamager();
 			if(Party.hasParty(p))	{
 				if(Party.getMembers(Party.getParty(p)).anyMatch(pu -> ArmorSet.setnum(Bukkit.getPlayer(pu)) == 5)) {
-					d.setDamage(d.getDamage()*1.1);
+					d.setDamage(d.getDamage()*1.15);
 				}
 			}
 			if(ArmorSet.setnum(p) == 5) {
 				if(!Party.hasParty(p))	{
-					d.setDamage(d.getDamage()*1.1);
+					d.setDamage(d.getDamage()*1.15);
 				}
 			}
 		}
@@ -49,12 +49,12 @@ public class ArmorSetEffects implements Listener{
 				Player p = (Player) pr.getShooter();
 				if(Party.hasParty(p))	{
 					if(Party.getMembers(Party.getParty(p)).anyMatch(pu -> ArmorSet.setnum(Bukkit.getPlayer(pu)) == 5)) {
-						d.setDamage(d.getDamage()*1.1);
+						d.setDamage(d.getDamage()*1.15);
 					}
 				}
 				if(ArmorSet.setnum(p) == 5) {
 					if(!Party.hasParty(p))	{
-						d.setDamage(d.getDamage()*1.1);
+						d.setDamage(d.getDamage()*1.15);
 					}
 				}
 			}
@@ -169,11 +169,11 @@ public class ArmorSetEffects implements Listener{
 	}		
 
 	@EventHandler
-	public void DarkSet(EntityDamageByEntityEvent d) 
+	public void PoisonSet(EntityDamageByEntityEvent d) 
 	{
 		if(d.getEntity() instanceof Player && !d.isCancelled()) {
 			Player p = (Player) d.getEntity();
-			if(ArmorSet.setnum(p) == 8) {
+			if(ArmorSet.setnum(p) == 11) {
 
 				p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 20,20, true,true));
 				
@@ -208,7 +208,7 @@ public class ArmorSetEffects implements Listener{
 	}	
 
 	@EventHandler
-	public void DarkSet(EntityPotionEffectEvent d) 
+	public void DarkAndPoisonSet(EntityPotionEffectEvent d) 
 	{
 		if(!(d.getEntity() instanceof Player)) {return;
 		}
@@ -225,6 +225,19 @@ public class ArmorSetEffects implements Listener{
 		        		{
 		        			p.removePotionEffect(PotionEffectType.BLINDNESS);
 		        		}
+		        		if(p.hasPotionEffect(PotionEffectType.DARKNESS))
+		        		{
+		        			p.removePotionEffect(PotionEffectType.DARKNESS);
+		        		}
+	                }
+				}, 10); 
+			}
+			if(ArmorSet.setnum(p) == 11) 
+			{
+				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	                @Override
+	                public void run() 
+	                {
 		        		if(p.hasPotionEffect(PotionEffectType.POISON))
 		        		{
 		        			p.removePotionEffect(PotionEffectType.POISON);
