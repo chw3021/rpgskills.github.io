@@ -1,9 +1,11 @@
 package io.github.chw3021.items.armors;
 
 import java.util.HashMap;
+import java.util.Random;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
@@ -37,7 +39,7 @@ public class ArmorSetEffects implements Listener{
 					d.setDamage(d.getDamage()*1.15);
 				}
 			}
-			if(ArmorSet.setnum(p) == 5) {
+			if(ArmorSet.setnum(p) == 14) {
 				if(!Party.hasParty(p))	{
 					d.setDamage(d.getDamage()*1.15);
 				}
@@ -52,7 +54,7 @@ public class ArmorSetEffects implements Listener{
 						d.setDamage(d.getDamage()*1.15);
 					}
 				}
-				if(ArmorSet.setnum(p) == 5) {
+				if(ArmorSet.setnum(p) == 14) {
 					if(!Party.hasParty(p))	{
 						d.setDamage(d.getDamage()*1.15);
 					}
@@ -150,7 +152,7 @@ public class ArmorSetEffects implements Listener{
 			if(ArmorSet.setnum(p) == 7) {
 				if(ClassData.pc.get(p.getUniqueId()) == 19 || ClassData.pc.get(p.getUniqueId()) == 20 ||ClassData.pc.get(p.getUniqueId()) == 21 ||ClassData.pc.get(p.getUniqueId()) == 22) {
 
-					d.setDamage(d.getDamage()*1.4);
+					d.setDamage(d.getDamage()*1.35);
 				}
 			}
 		}
@@ -169,38 +171,28 @@ public class ArmorSetEffects implements Listener{
 	}		
 
 	@EventHandler
-	public void PoisonSet(EntityDamageByEntityEvent d) 
+	public void Armor(EntityDamageByEntityEvent d) 
 	{
+		if(d.getDamager().hasMetadata("fake") || d.getDamager()==d.getEntity()) {
+			return;
+		}
+		
 		if(d.getEntity() instanceof Player && !d.isCancelled()) {
 			Player p = (Player) d.getEntity();
+			if(ArmorSet.setnum(p) == 8) {
+				Random ran = new Random();
+				if(ran.nextDouble()<=0.05) {
+					d.setCancelled(true);
+					Holding.invur(p, 40l);
+                    p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, 1, 0);
+					p.getWorld().spawnParticle(Particle.FALLING_OBSIDIAN_TEAR, p.getLocation(), 10,1,1,1);
+				}
+			}
 			if(ArmorSet.setnum(p) == 11) {
-
-				p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 20,20, true,true));
-				
-				if(invcool.containsKey(p.getUniqueId())) // if cooldown has players name in it (on first trow cooldown is empty)
-	            {
-	                double timer = (invcool.get(p.getUniqueId())/1000 + 5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024)) - System.currentTimeMillis()/1000; // geting time in seconds
-	                if(!(timer < 0)) // if timer is still more then 0 or 0
-	                {
-	                }
-	                else // if timer is done
-	                {
-	                	invcool.remove(p.getUniqueId()); // removing player from HashMap
-	                	d.setCancelled(true);
-	                	Holding.invur(p, 20l);
-	            		invcool.put(p.getUniqueId(), System.currentTimeMillis()); 
-                	}
-	                	
-	            }
-	            else // if cooldown doesn't have players name in it
-	            {
-                	d.setCancelled(true);
-                	Holding.invur(p, 20l);
-            		invcool.put(p.getUniqueId(), System.currentTimeMillis()); 
-	            }
-				
-
 				if(d.getDamager() instanceof Projectile) {
+					d.setDamage(d.getDamage()*0.5);
+				}
+				if(d.getDamager().getLocation().distance(p.getLocation())>12) {
 					d.setDamage(d.getDamage()*0.5);
 				}
 			}
@@ -252,12 +244,16 @@ public class ArmorSetEffects implements Listener{
 
 
 	@EventHandler
-	public void BurningSet(EntityDamageByEntityEvent d) 
+	public void Critical(EntityDamageByEntityEvent d) 
 	{
 		if(d.getDamager() instanceof Player && !d.isCancelled()) {
 			Player p = (Player) d.getDamager();
-			if(ArmorSet.setnum(p) == 10) {
-				d.setDamage(d.getDamage()*1.15);
+			if(ArmorSet.setnum(p) == 11) {
+				Random ran = new Random();
+				if(ran.nextDouble()<=0.2) {
+                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1, 2);
+                    d.setDamage(d.getDamage()*1.5);
+				}
 			}
 		}
 	}	

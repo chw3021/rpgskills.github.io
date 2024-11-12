@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
-import java.util.logging.Level;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
@@ -334,7 +333,13 @@ public class NPCLoc implements Serializable, Listener{
 	}
 	
 	final private Location lfd(Location l, String s) {
-		final World w = l.getWorld();
+		Location tl = l.add(0, 0, 1);
+		if(s.equalsIgnoreCase("pillageroutpost")) {
+			pil.put(l, clf(tl));
+			Location al = l.getWorld().getHighestBlockAt(tl.clone().add(50, 0, 50), HeightMap.OCEAN_FLOOR).getLocation().add(0, 1, 0);
+			tl = al;
+		}
+		/*final World w = l.getWorld();
 		HashSet<Location> lhs = new HashSet<>();
 		Location tl = w.getHighestBlockAt(l.clone(), HeightMap.OCEAN_FLOOR).getLocation().add(0, 1, 0);
 		
@@ -422,7 +427,7 @@ public class NPCLoc implements Serializable, Listener{
 					break;
 				}
 			}
-		}
+		}*/
 		return NPCLocs.add(tl) ? tl : null;
 	}
 	

@@ -25,7 +25,6 @@ import org.bukkit.inventory.MerchantRecipe;
 
 import io.github.chw3021.items.Elements;
 import io.github.chw3021.items.Potions;
-import io.github.chw3021.items.armors.Armors;
 import io.github.chw3021.items.armors.Boots;
 import io.github.chw3021.items.armors.Chestplate;
 import io.github.chw3021.items.armors.Helmet;

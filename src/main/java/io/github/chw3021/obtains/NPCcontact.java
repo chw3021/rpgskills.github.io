@@ -14,34 +14,37 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.reflections.Reflections;
+import org.reflections.scanners.Scanners;
+import org.reflections.util.ConfigurationBuilder;
 
 import io.github.chw3021.obtains.quests.BuriedTreasureQuest;
-import io.github.chw3021.obtains.quests.DesertPyramidQuest;
-import io.github.chw3021.obtains.quests.IglooQuest;
-import io.github.chw3021.obtains.quests.JungleTempleQuest;
-import io.github.chw3021.obtains.quests.MineshaftQuest;
-import io.github.chw3021.obtains.quests.OceanMonumentQuest;
-import io.github.chw3021.obtains.quests.OceanRuinsQuest;
 import io.github.chw3021.obtains.quests.PillagerOutpostQuest;
 import io.github.chw3021.obtains.quests.Quest;
-import io.github.chw3021.obtains.quests.RuinedPortalQuest;
-import io.github.chw3021.obtains.quests.ShipwreckQuest;
-import io.github.chw3021.obtains.quests.StrongholdQuest;
-import io.github.chw3021.obtains.quests.WoodlandMansionQuest;
 
 public class NPCcontact implements Listener{
 
-    final private Reflections reflections = new Reflections("io.github.chw3021.obtains.quests"); // Replace with your package name
-    final private Set<Class<? extends Quest>> questClasses = reflections.getSubTypesOf(Quest.class);
+    final private Reflections reflections = new Reflections(
+            new ConfigurationBuilder()
+            .forPackages("io.github.chw3021.obtains.quests") // 패키지 경로 설정
+            .addScanners(Scanners.SubTypes) // 서브타입 스캐너 추가
+    		);
 
 	@EventHandler
 	public void Start(PlayerInteractEntityEvent ev) 
 	{
+		Reflections reflections = new Reflections(
+			    new ConfigurationBuilder()
+			        .forPackages("io.github.chw3021.obtains.quests")
+			        .addScanners(Scanners.SubTypes, Scanners.Resources)
+			        .addClassLoaders(ClassLoader.getSystemClassLoader())
+			);
+	    final Set<Class<? extends Quest>> questClasses = reflections.getSubTypesOf(Quest.class);
         for (Class<? extends Quest> questClass : questClasses) {
             try {
                 Quest quest = questClass.getDeclaredConstructor().newInstance();
                 quest.QuestStart(ev);
             } catch (Exception e) {
+            	e.printStackTrace();
             }
         }
 	}
@@ -49,6 +52,7 @@ public class NPCcontact implements Listener{
 	@EventHandler
 	public void Clear(EntityDeathEvent d) 
 	{
+	    final Set<Class<? extends Quest>> questClasses = reflections.getSubTypesOf(Quest.class);
         for (Class<? extends Quest> questClass : questClasses) {
             try {
                 Quest quest = questClass.getDeclaredConstructor().newInstance();
@@ -62,6 +66,7 @@ public class NPCcontact implements Listener{
 	@EventHandler
 	public void Quit(PlayerQuitEvent ev) 
 	{
+	    final Set<Class<? extends Quest>> questClasses = reflections.getSubTypesOf(Quest.class);
         for (Class<? extends Quest> questClass : questClasses) {
             try {
                 Quest quest = questClass.getDeclaredConstructor().newInstance();
@@ -75,6 +80,7 @@ public class NPCcontact implements Listener{
 	@EventHandler
 	public void Die(PlayerDeathEvent ev) 
 	{
+	    final Set<Class<? extends Quest>> questClasses = reflections.getSubTypesOf(Quest.class);
         for (Class<? extends Quest> questClass : questClasses) {
             try {
                 Quest quest = questClass.getDeclaredConstructor().newInstance();
@@ -88,6 +94,7 @@ public class NPCcontact implements Listener{
 	//@EventHandler
 	public void Off(PluginDisableEvent ev) 
 	{
+	    final Set<Class<? extends Quest>> questClasses = reflections.getSubTypesOf(Quest.class);
         for (Class<? extends Quest> questClass : questClasses) {
             try {
                 Quest quest = questClass.getDeclaredConstructor().newInstance();

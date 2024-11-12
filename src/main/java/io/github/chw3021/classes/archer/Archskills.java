@@ -919,7 +919,7 @@ public class Archskills extends Pak{
 	        initialDirection.setZ(initialDirection.getZ() + (ran.nextBoolean() ? 0.5 : -0.5));
 
 	        // 화살의 초기 속도 설정
-	        arrow.setVelocity(initialDirection.multiply(1.5)); 
+	        arrow.setVelocity(initialDirection.multiply(0.9)); 
 	        
 	        long startTime = System.currentTimeMillis(); // 시작 시간 기록
 	        
@@ -942,7 +942,7 @@ public class Archskills extends Pak{
 
 	                // 목표 방향으로 점진적으로 수정
 	                Vector targetDirection = tl.clone().toVector().subtract(arrow.getLocation().toVector()).normalize();
-	                arrow.setVelocity(arrow.getVelocity().add(targetDirection.multiply(0.05))); // 약간의 힘으로 방향을 변경
+	                arrow.setVelocity(arrow.getVelocity().add(targetDirection.multiply(0.1))); // 약간의 힘으로 방향을 변경
 	                
 	                // 곡선 효과를 위해 중력 적용
 	                arrow.setGravity(true);

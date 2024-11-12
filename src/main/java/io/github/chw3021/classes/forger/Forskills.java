@@ -17,8 +17,6 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import com.google.common.collect.HashMultimap;
-import com.google.common.util.concurrent.AtomicDouble;
-
 import io.github.chw3021.rmain.RMain;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
@@ -35,11 +33,11 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.FireworkEffect.Type;
 import org.bukkit.Particle.TargetColor;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Item;
-import org.bukkit.entity.LightningStrike;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -567,13 +565,14 @@ public class Forskills extends Pak {
 									{
 										for(LivingEntity le: les) {
 											p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
-											w.spawn(le.getLocation(), LightningStrike.class, lightning ->{
+											w.spawn(le.getLocation(), BlockDisplay.class, lightning ->{
 												lightning.setSilent(true);
-												lightning.setCausingPlayer(p);
-												lightning.setFlashes(0);
+												lightning.setBlock(getBd(Material.WHITE_GLAZED_TERRACOTTA));
+												lightning.setGlowColorOverride(Color.YELLOW);
+												lightning.setGlowing(true);
 												Bukkit.getScheduler().runTaskLater(RMain.getInstance(), () -> {
 												    lightning.remove();
-												}, 1L);
+												}, 10L);
 											});
 											atk1(0.9*(1+fsd.LightningCannon.get(p.getUniqueId())*0.06), p, le,9);
 											le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,60,1,false,false));
@@ -813,7 +812,7 @@ public class Forskills extends Pak {
 								public void run() {
 									compr.remove(p.getUniqueId());
 								}
-							}, 25);
+							}, 50);
 							comprt.put(p.getUniqueId(), task);
 
 							ItemStack is = new ItemStack(Material.TNT);
@@ -919,7 +918,7 @@ public class Forskills extends Pak {
 					public void run() {
 						plzgrd.remove(p.getUniqueId());
 					}
-				}, 25);
+				}, 50);
 				plzgrdt.put(p.getUniqueId(), task);
 
 
@@ -952,7 +951,7 @@ public class Forskills extends Pak {
 					}
 
 				}
-				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 80, 100, false, false));
+				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 120, 100, false, false));
 				Vector v = p.getLocation().getDirection().clone().normalize().multiply(-3.2);
 				p.setVelocity(v);
 			}
@@ -982,10 +981,11 @@ public class Forskills extends Pak {
 				plzgrd.remove(p.getUniqueId());
 
 
-				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 80, 100, false, false));
-				Vector v = p.getLocation().getDirection().clone().normalize().multiply(-1.1);
+				p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 100, 100, false, false));
+				Vector v = p.getLocation().getDirection().clone().normalize().multiply(-2.1);
 				p.setVelocity(v);
-				
+
+				p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 0);
 				p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_BLAST_FAR, 1, 0);
 
 
@@ -1007,15 +1007,18 @@ public class Forskills extends Pak {
 	{
 		if(d.getEntity().hasMetadata("plzg")) {
 			Player p = (Player) d.getEntity().getShooter();
-			p.getWorld().spawnParticle(Particle.END_ROD, d.getEntity().getLocation(), 100, 5,5,14);
-			p.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, d.getEntity().getLocation(), 100, 5,5,14);
-			p.getWorld().spawnParticle(Particle.ENCHANTED_HIT, d.getEntity().getLocation(), 200, 5,5,14);
-			p.playSound(p.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1, 2);
-			p.playSound(p.getLocation(), Sound.BLOCK_LODESTONE_HIT, 1, 0);
-			p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_BREAK, 1, 0);
-			p.playSound(p.getLocation(), Sound.BLOCK_SCULK_SENSOR_BREAK, 1, 2);
-			p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 1, 0);
-			for (Entity e : d.getEntity().getLocation().getWorld().getNearbyEntities(d.getEntity().getLocation(), 6, 5, 6))
+			
+			Location tl = d.getHitBlock() == null ? d.getEntity().getLocation() : d.getHitBlock().getLocation();
+			
+			p.getWorld().spawnParticle(Particle.END_ROD, tl, 100, 5,5,5);
+			p.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, tl, 100, 5,5,5);
+			p.getWorld().spawnParticle(Particle.GLOW_SQUID_INK, tl, 200, 5,5,5);
+			p.playSound(tl, Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1, 2);
+			p.playSound(tl, Sound.BLOCK_LODESTONE_HIT, 1, 0);
+			p.playSound(tl, Sound.BLOCK_AMETHYST_BLOCK_BREAK, 1, 0);
+			p.playSound(tl, Sound.BLOCK_SCULK_SENSOR_BREAK, 1, 2);
+			p.playSound(tl, Sound.ENTITY_PLAYER_ATTACK_KNOCKBACK, 1, 0);
+			for (Entity e : tl.getWorld().getNearbyEntities(tl, 7, 6, 7))
 			{
 				if (e instanceof Player)
 				{
@@ -1035,6 +1038,7 @@ public class Forskills extends Pak {
 						p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
 						atk1(1.42*(1+fsd.TNTLauncher.get(p.getUniqueId())*0.1), p, le,9);
 						Holding.holding(p, le, 50l);
+						le.teleport(tl);
 
 					}
 				}
@@ -1189,7 +1193,6 @@ public class Forskills extends Pak {
 	                    .normalize()
 	                    .multiply(initialMultiplier + distanceFactor)
 	            );
-	            w.spawnParticle(Particle.GLOW, particleLocation, 2, 0.1, 0.1, 0.1, 0.1);
 	            w.spawnParticle(Particle.BLOCK, particleLocation, 2, 0.1, 0.1, 0.1, 0.1,getBd(Material.CYAN_GLAZED_TERRACOTTA));
 	        }
 	    }
@@ -1226,7 +1229,7 @@ public class Forskills extends Pak {
 								railcan.putIfAbsent(p.getUniqueId(), 0);
 							}
 						}
-					}, 3);
+					}, 5);
 
 					int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 						@Override
@@ -1332,7 +1335,7 @@ public class Forskills extends Pak {
 						final Location parl = l.clone().add(0, -0.289, 0);
 						p.getWorld().spawnParticle(Particle.BLOCK, parl,6, 0.05,0.05,0.05,0, getBd(Material.CYAN_GLAZED_TERRACOTTA));
 						p.getWorld().spawnParticle(Particle.BLOCK_CRUMBLE, parl,6, 0.05,0.05,0.05,0, getBd(Material.CYAN_GLAZED_TERRACOTTA));
-						p.getWorld().spawnParticle(Particle.TRAIL, parl,6, 0.05,0.05,0.05,0, new TargetColor(pl, Color.AQUA));
+						p.getWorld().spawnParticle(Particle.TRAIL, pl,4, 0.05,0.05,0.05,0, new TargetColor(parl, Color.AQUA));
 						for (Entity a : p.getWorld().getNearbyEntities(l, 1, 1, 1))
 						{
 							if ((!(a == p))&& a instanceof LivingEntity&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal")))
@@ -1359,7 +1362,7 @@ public class Forskills extends Pak {
 					});
 					les.forEach(le ->{
 						p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
-						atk1(1.66*(1+fsd.RailSMG.get(p.getUniqueId())*1.16), p, le);
+						atk1(1.66*(1+fsd.RailSMG.get(p.getUniqueId())*0.06), p, le);
 						Holding.holding(p, le, 10l);
 					});
 

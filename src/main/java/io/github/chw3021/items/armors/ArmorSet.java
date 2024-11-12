@@ -3,6 +3,7 @@ package io.github.chw3021.items.armors;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -110,134 +111,89 @@ public class ArmorSet implements Listener{
 			}
 		}
 	}
-	private static void WholeRemover(Player p) {
+	
+	private static void attributeRemover(Player p) {
 
-
+		p.getAttribute(Attribute.ARMOR).setBaseValue(0);
+		p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(0);
+		p.getAttribute(Attribute.LUCK).setBaseValue(0);
+		p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(2);
+		p.getAttribute(Attribute.ATTACK_SPEED).setBaseValue(4);
+		p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.1);
+		p.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(0);
+		p.getAttribute(Attribute.MOVEMENT_EFFICIENCY).setBaseValue(0);
+		p.getAttribute(Attribute.SNEAKING_SPEED).setBaseValue(0.3);
+		p.getAttribute(Attribute.JUMP_STRENGTH).setBaseValue(0.42);
+		p.getAttribute(Attribute.SAFE_FALL_DISTANCE).setBaseValue(3);
+		p.getAttribute(Attribute.GRAVITY).setBaseValue(0.08);
+	}
+	
+	
+	private void applyDarkGrayColorToLore(ItemStack item) {
+	    if (item != null) {
+	        ItemMeta meta = item.getItemMeta();
+	        if (meta != null && meta.hasLore()) {
+	            List<String> lore = meta.getLore();
+	            for (int i = 0; i < lore.size(); i++) {
+	                String l = lore.get(i);
+	                if (l.contains(setFactor)) {
+	                    l = ChatColor.stripColor(l); // 기존 색상 제거
+	                    lore.set(i, ChatColor.DARK_GRAY + l); // 새로운 색상 적용
+	                }
+	            }
+	            meta.setLore(lore);
+	        }
+	        item.setItemMeta(meta);
+	    }
+	}
+	
+	
+	private void WholeRemover(Player p) {
 
 		ItemStack b = bootsh.get(p.getUniqueId());
     	ItemStack c = chestplateh.get(p.getUniqueId());
     	ItemStack lg = leggingsh.get(p.getUniqueId());
     	ItemStack h = helmeth.get(p.getUniqueId());
-			p.getAttribute(Attribute.ARMOR).setBaseValue(0);
-			p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(0);
-			p.getAttribute(Attribute.LUCK).setBaseValue(0);
-			p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(2);
-			p.getAttribute(Attribute.ATTACK_SPEED).setBaseValue(4);
-			p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.1);
-			if(b != null) {
-        	 ItemMeta bm = b.getItemMeta();
-				 if (bm != null && bm.hasLore()) {
-				List<String> lore = bm.getLore();
-				lore.removeIf(l -> l.contains(setFactor));
-				bm.setLore(lore);
-			 }
-    		 b.setItemMeta(bm);
-			}
-			if(c != null) {
-
-				ItemMeta cm = c.getItemMeta();
-				if (cm != null && cm.hasLore()) {
-				List<String> lore = cm.getLore();
-				lore.removeIf(l -> l.contains(setFactor));
-				cm.setLore(lore);
-			}
-    		c.setItemMeta(cm);
-			}
-			if(lg != null) {
-        	 ItemMeta lm = lg.getItemMeta();
-				if (lm != null && lm.hasLore()) {
-				List<String> lore = lm.getLore();
-				lore.removeIf(l -> l.contains(setFactor));
-				lm.setLore(lore);
-			}
-    		lg.setItemMeta(lm);
-			}
-			if(h != null) {
-				ItemMeta hm = h.getItemMeta();
-				if (hm != null && hm.hasLore()) {
-				List<String> lore = hm.getLore();
-				lore.removeIf(l -> l.contains(setFactor));
-				hm.setLore(lore);
-			}
-    		h.setItemMeta(hm);
-			}
+		attributeRemover(p);
+		applyDarkGrayColorToLore(b);
+		applyDarkGrayColorToLore(c);
+		applyDarkGrayColorToLore(lg);
+		applyDarkGrayColorToLore(h);
 	 	setmap(p,0);
 	}
 	
-	private static void OneRemover(Player p, ItemStack ci) {
-
-      	 if(helmeth.containsValue(ci)) {
-				ItemMeta hm = ci.getItemMeta();
-				if (hm != null && hm.hasLore()) {
-					List<String> lore = hm.getLore();
-					lore.removeIf(l -> l.contains(setFactor));
-					hm.setLore(lore);
-				}
-				ci.setItemMeta(hm);
-				helmeth.remove(p.getUniqueId());
-				p.getAttribute(Attribute.ARMOR).setBaseValue(0);
-				p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(0);
-				p.getAttribute(Attribute.LUCK).setBaseValue(0);
-				p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(2);
-				p.getAttribute(Attribute.ATTACK_SPEED).setBaseValue(4);
-				p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.1);
-	       	 }
-	       	 if(leggingsh.containsValue(ci)) {
-					ItemMeta hm = ci.getItemMeta();
-					if (hm != null && hm.hasLore()) {
-						List<String> lore = hm.getLore();
-						lore.removeIf(l -> l.contains(setFactor));
-						hm.setLore(lore);
-					}
-					ci.setItemMeta(hm);
-	       		leggingsh.remove(p.getUniqueId());
-				p.getAttribute(Attribute.ARMOR).setBaseValue(0);
-				p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(0);
-				p.getAttribute(Attribute.LUCK).setBaseValue(0);
-				p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(2);
-				p.getAttribute(Attribute.ATTACK_SPEED).setBaseValue(4);
-				p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.1);
-	       	 }
-	       	 if(chestplateh.containsValue(ci)) {
-					ItemMeta hm = ci.getItemMeta();
-					if (hm != null && hm.hasLore()) {
-						List<String> lore = hm.getLore();
-						lore.removeIf(l -> l.contains(setFactor));
-						hm.setLore(lore);
-					}
-					ci.setItemMeta(hm);
-	       		chestplateh.remove(p.getUniqueId());
-				p.getAttribute(Attribute.ARMOR).setBaseValue(0);
-				p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(0);
-				p.getAttribute(Attribute.LUCK).setBaseValue(0);
-				p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(2);
-				p.getAttribute(Attribute.ATTACK_SPEED).setBaseValue(4);
-				p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.1);
-	       	 }
-	       	 if(bootsh.containsValue(ci)) {
-					ItemMeta hm = ci.getItemMeta();
-					if (hm != null && hm.hasLore()) {
-						List<String> lore = hm.getLore();
-						lore.removeIf(l -> l.contains(setFactor));
-						hm.setLore(lore);
-					}
-					ci.setItemMeta(hm);
-				bootsh.remove(p.getUniqueId());
-				p.getAttribute(Attribute.ARMOR).setBaseValue(0);
-				p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(0);
-				p.getAttribute(Attribute.LUCK).setBaseValue(0);
-				p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(2);
-				p.getAttribute(Attribute.ATTACK_SPEED).setBaseValue(4);
-				p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.1);
-	       	 }
-	 
+	private void updateLoreAndRemove(Player p, ItemStack ci, Map<UUID, ItemStack> equipmentMap) {
+	    if (equipmentMap.containsValue(ci)) {
+	        ItemMeta meta = ci.getItemMeta();
+	        if (meta != null && meta.hasLore()) {
+	            List<String> lore = meta.getLore();
+	            for (int i = 0; i < lore.size(); i++) {
+	                String l = lore.get(i);
+	                if (l.contains(setFactor)) {
+	                    l = ChatColor.stripColor(l); // 기존 색상 제거
+	                    lore.set(i, ChatColor.DARK_GRAY + l); // 새로운 색상 적용
+	                }
+	            }
+	            meta.setLore(lore);
+	        }
+	        ci.setItemMeta(meta);
+	        equipmentMap.remove(p.getUniqueId());
+	        attributeRemover(p);
+	    }
+	}
+	private void OneRemover(Player p, ItemStack ci) {
+	    updateLoreAndRemove(p, ci, helmeth);
+	    updateLoreAndRemove(p, ci, leggingsh);
+	    updateLoreAndRemove(p, ci, chestplateh);
+	    updateLoreAndRemove(p, ci, bootsh);
 	}
 
-	final private static List<String> setLore(Player p, Integer i, Boolean activated){
+
+	final public static List<String> setLore(Player p, Integer i, Boolean activated){
 		List<String> lore = new ArrayList<String>();
 		ChatColor cc = ChatColor.DARK_GRAY;
-		
-		if(i == 5) {
+
+		if(i == 14) {
 			if(activated) {
 				cc = ChatColor.GREEN;
 			}
@@ -258,6 +214,31 @@ public class ArmorSet implements Listener{
 				lore.add(cc + setFactor+ ": +45 Luck");
 			}
 		}
+		if(i == 5) {
+			if(activated) {
+				cc = ChatColor.WHITE;
+			}
+			if(p.getLocale().contains("ko_kr")) {
+				lore.add(cc + setFactor + ": +5 방어력");
+				lore.add(cc + setFactor + ": +5 방어강도");
+				lore.add(cc + setFactor + ": +35 공격력");
+				lore.add(cc + setFactor + ": +45% 이동속도");
+				lore.add(cc + setFactor + ": +1 이동속도효율");
+				lore.add(cc + setFactor + ": +200% 점프력");
+				lore.add(cc + setFactor + ": +500% 공격속도");
+				lore.add(cc + setFactor + ": +20 행운");
+			}
+			else {
+				lore.add(cc + setFactor + ": +5 Armor");
+				lore.add(cc + setFactor + ": +5 Armor Toughness");
+				lore.add(cc + setFactor + ": +35 Attack_Damage");
+				lore.add(cc + setFactor + ": +45% Movement Speed");
+				lore.add(cc + setFactor + ": +1 Movement Effeciency");
+				lore.add(cc + setFactor + ": +200% Jump Strength");
+				lore.add(cc + setFactor + ": +500% Attack Speed");
+				lore.add(cc + setFactor + ": +20 Luck");
+			}
+		}
 		if(i == 6) {
 			if(activated) {
 				cc = ChatColor.AQUA;
@@ -265,8 +246,8 @@ public class ArmorSet implements Listener{
 			if(p.getLocale().contains("ko_kr")) {
 				lore.add(cc + setFactor + ": +5 방어력");
 				lore.add(cc + setFactor + ": +5 방어강도");
-				lore.add(cc + setFactor + ": +20 공격력");
-				lore.add(cc + setFactor + ": +35% 이동속도");
+				lore.add(cc + setFactor + ": +32 공격력");
+				lore.add(cc + setFactor + ": +20% 이동속도");
 				lore.add(cc + setFactor + ": 둔화, 동상에 면역");
 				lore.add(cc + setFactor + ": 적을 1초동안 기절시킴(대기시간 5초)");
 				lore.add(cc + setFactor + ": 적에게 동상시간을 2초 추가");
@@ -276,8 +257,8 @@ public class ArmorSet implements Listener{
 			else {
 				lore.add(cc + setFactor + ": +5 Armor");
 				lore.add(cc + setFactor + ": +5 Armor Toughness");
-				lore.add(cc + setFactor + ": +20 Attack_Damage");
-				lore.add(cc + setFactor + ": +35% Movement Speed");
+				lore.add(cc + setFactor + ": +32 Attack_Damage");
+				lore.add(cc + setFactor + ": +20% Movement Speed");
 				lore.add(cc + setFactor + ": Immune to Slow & Frost");
 				lore.add(cc + setFactor + ": Stuns Hit Enemy for 1s(Cooldown 5s)");
 				lore.add(cc + setFactor + ": Add Enemy's FreezeTick 2s");
@@ -292,7 +273,7 @@ public class ArmorSet implements Listener{
 			if(p.getLocale().contains("ko_kr")) {
 				lore.add(ChatColor.BLUE + setFactor + ": +5 방어력");
 				lore.add(ChatColor.BLUE + setFactor + ": +5 방어강도");
-				lore.add(ChatColor.BLUE + setFactor + ": +14 공격력");
+				lore.add(ChatColor.BLUE + setFactor + ": +18 공격력");
 				lore.add(ChatColor.BLUE + setFactor + ": +15% 이동속도");
 				lore.add(ChatColor.BLUE + setFactor + ": 수영시 물속에서 이로운 효과 획득");
 				lore.add(ChatColor.BLUE + setFactor + ": [해상] 스킬 공격력 35% 증가");
@@ -301,7 +282,7 @@ public class ArmorSet implements Listener{
 			else {
 				lore.add(ChatColor.BLUE + setFactor + ": +5 Armor");
 				lore.add(ChatColor.BLUE + setFactor + ": +5 Armor Toughness");
-				lore.add(ChatColor.BLUE + setFactor + ": +14 Attack_Damage");
+				lore.add(ChatColor.BLUE + setFactor + ": +18 Attack_Damage");
 				lore.add(ChatColor.BLUE + setFactor + ": +15% Movement Speed");
 				lore.add(ChatColor.BLUE + setFactor + ": Give Positive Ocean Effect When Swim");
 				lore.add(ChatColor.BLUE + setFactor + ": [Marine] Increases Skill Damage 35%");
@@ -310,21 +291,88 @@ public class ArmorSet implements Listener{
 		}
 		if(i == 8) {
 			if(activated) {
-				cc = ChatColor.GRAY;
+				cc = ChatColor.DARK_PURPLE;
 			}
 			if(p.getLocale().contains("ko_kr")) {
 				lore.add(cc + setFactor + ": +6 방어력");
 				lore.add(cc + setFactor + ": +6 방어강도");
-				lore.add(cc + setFactor + ": +16 공격력");
+				lore.add(cc + setFactor + ": +28 공격력");
 				lore.add(cc + setFactor + ": 어둠, 실명에 면역");
-				lore.add(cc + setFactor + ": +20 Luck");
+				lore.add(cc + setFactor + ": +40 행운");
+				lore.add(cc + setFactor + ": 피격시 5% 확률로 2초동안 무적");
 			}
 			else {
 				lore.add(cc + setFactor + ": +6 Armor");
 				lore.add(cc + setFactor + ": +6 Armor Toughness");
-				lore.add(cc + setFactor + ": +16 Attack_Damage");
+				lore.add(cc + setFactor + ": +28 Attack_Damage");
 				lore.add(cc + setFactor + ": Immune to Darkness&Blind Effect");
-				lore.add(cc + setFactor + ": +20 Luck");
+				lore.add(cc + setFactor + ": +40 Luck");
+				lore.add(cc + setFactor + ": 5% chance to become invulnerable for 2s when hit");
+			}
+		}
+		if(i == 9) {
+			if(activated) {
+				cc = ChatColor.LIGHT_PURPLE;
+			}
+			if(p.getLocale().contains("ko_kr")) {
+				lore.add(cc + setFactor + ": +5 방어력");
+				lore.add(cc + setFactor + ": +5 방어강도");
+				lore.add(cc + setFactor + ": +20% 이동속도");
+				lore.add(cc + setFactor + ": +17 공격력");
+				lore.add(cc + setFactor + ": +90 행운");
+				lore.add(cc + setFactor + ": 스킬 사용시 1% 확률로 행운 두배로 증가(10초)");
+			}
+			else {
+				lore.add(cc + setFactor + ": +5 Armor");
+				lore.add(cc + setFactor + ": +5 Armor Toughness");
+				lore.add(cc + setFactor + ": +20% Movement Speed");
+				lore.add(cc + setFactor + ": +17 Attack_Damage");
+				lore.add(cc + setFactor + ": +90 Luck");
+				lore.add(cc + setFactor + ": 1% chance to double luck for 10s when use skill");
+			}
+		}
+		if(i == 10) {
+			if(activated) {
+				cc = ChatColor.RED;
+			}
+			if(p.getLocale().contains("ko_kr")) {
+				lore.add(cc + setFactor + ": +5 방어");
+				lore.add(cc + setFactor + ": +5 방어강도");
+				lore.add(cc + setFactor + ": +20% 이동속도");
+				lore.add(cc + setFactor + ": +42 공격력");
+				lore.add(cc + setFactor + ": 화상에 면역");
+			}
+			else {
+				lore.add(cc + setFactor + ": +5 Armor");
+				lore.add(cc + setFactor + ": +5 Armor Toughness");
+				lore.add(cc + setFactor + ": +20% Movement Speed");
+				lore.add(cc + setFactor + ": +42 Attack_Damage");
+				lore.add(cc + setFactor + ": Immune to Fire");
+			}
+		}
+		if(i == 11) {
+			if(activated) {
+				cc = ChatColor.DARK_GREEN;
+			}
+			if(p.getLocale().contains("ko_kr")) {
+				lore.add(cc + setFactor + ": +5 방어");
+				lore.add(cc + setFactor + ": +5 방어강도");
+				lore.add(cc + setFactor + ": +50% 이동속도");
+				lore.add(cc + setFactor + ": +1 이동속도효율");
+				lore.add(cc + setFactor + ": +14 공격력");
+				lore.add(cc + setFactor + ": 치명타 확률 20% 증가");
+				lore.add(cc + setFactor + ": 치명타 공격력 50% 증가");;
+				lore.add(cc + setFactor + ": 원거리 공격에 대한 피해 50% 감소");
+			}
+			else {
+				lore.add(cc + setFactor + ": +5 Defense");
+				lore.add(cc + setFactor + ": +5 Toughness");
+				lore.add(cc + setFactor + ": +50% Movement Speed");
+				lore.add(cc + setFactor + ": +1 Movement Efficiency");
+				lore.add(cc + setFactor + ": +14 Attack Damage");
+				lore.add(cc + setFactor + ": Critical Hit Chance increased by 20%");
+				lore.add(cc + setFactor + ": Critical Hit Damage increased by 50%");
+				lore.add(cc + setFactor + ": 50% reduced damage from ranged attacks");
 			}
 		}
 	
@@ -332,13 +380,7 @@ public class ArmorSet implements Listener{
 	}
 
 	private static void Setter(Player p, Integer boots, ItemStack b, ItemStack c, ItemStack lg, ItemStack h) {
-		p.getAttribute(Attribute.ARMOR).setBaseValue(0);
-		p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(0);
-		p.getAttribute(Attribute.LUCK).setBaseValue(0);
-		p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(2);
-		p.getAttribute(Attribute.ATTACK_SPEED).setBaseValue(4);
-		p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.1);
-		p.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(0);
+		attributeRemover(p);
 	   	ItemMeta bm = b.getItemMeta();
 	   	ItemMeta cm = c.getItemMeta();
 	   	ItemMeta lm = lg.getItemMeta();
@@ -351,24 +393,36 @@ public class ArmorSet implements Listener{
 			}
 			im.setLore(setLore(p,boots,true));
 		}
-		if(boots == 5) {
+		if(boots == 14) {
 			p.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 			p.getAttribute(Attribute.ARMOR).setBaseValue(p.getAttribute(Attribute.ARMOR).getBaseValue()+5);
 			p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(p.getAttribute(Attribute.ARMOR_TOUGHNESS).getBaseValue()+5);
 			p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.ATTACK_DAMAGE).getBaseValue()+12);
 			p.getAttribute(Attribute.LUCK).setBaseValue(p.getAttribute(Attribute.LUCK).getBaseValue()+45);
 		 }
+		 if(boots == 5) {
+			p.getAttribute(Attribute.ARMOR).setBaseValue(p.getAttribute(Attribute.ARMOR).getBaseValue()+5);
+			p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(p.getAttribute(Attribute.ARMOR_TOUGHNESS).getBaseValue()+5);
+			p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(p.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue()*1.45);
+			p.getAttribute(Attribute.MOVEMENT_EFFICIENCY).setBaseValue(1);
+			p.getAttribute(Attribute.JUMP_STRENGTH).setBaseValue(p.getAttribute(Attribute.JUMP_STRENGTH).getBaseValue()*2);
+			p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.ATTACK_DAMAGE).getBaseValue()+35);
+			p.getAttribute(Attribute.LUCK).setBaseValue(p.getAttribute(Attribute.LUCK).getBaseValue()+20);
+			p.getAttribute(Attribute.ATTACK_SPEED).setBaseValue(p.getAttribute(Attribute.ATTACK_SPEED).getBaseValue()*5);
+			p.getAttribute(Attribute.SAFE_FALL_DISTANCE).setBaseValue(20);
+			p.getAttribute(Attribute.GRAVITY).setBaseValue(0.04);
+		 }
 		 if(boots == 6) {
 			p.getAttribute(Attribute.ARMOR).setBaseValue(p.getAttribute(Attribute.ARMOR).getBaseValue()+5);
 			p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(p.getAttribute(Attribute.ARMOR_TOUGHNESS).getBaseValue()+5);
 			p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(p.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue()*1.35);
-			p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.ATTACK_DAMAGE).getBaseValue()+20);
+			p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.ATTACK_DAMAGE).getBaseValue()+32);
 			p.getAttribute(Attribute.LUCK).setBaseValue(p.getAttribute(Attribute.LUCK).getBaseValue()+20);
 		 }
 		 if(boots == 7) {
 			p.getAttribute(Attribute.ARMOR).setBaseValue(p.getAttribute(Attribute.ARMOR).getBaseValue()+5);
 			p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(p.getAttribute(Attribute.ARMOR_TOUGHNESS).getBaseValue()+5);
-			p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.ATTACK_DAMAGE).getBaseValue()+14);
+			p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.ATTACK_DAMAGE).getBaseValue()+18);
 			p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(p.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue()*1.15);
 			p.getAttribute(Attribute.LUCK).setBaseValue(p.getAttribute(Attribute.LUCK).getBaseValue()+20);
 		 }
@@ -376,182 +430,29 @@ public class ArmorSet implements Listener{
 			p.getAttribute(Attribute.ARMOR).setBaseValue(p.getAttribute(Attribute.ARMOR).getBaseValue()+6);
 			p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(p.getAttribute(Attribute.ARMOR_TOUGHNESS).getBaseValue()+6);
 			p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(p.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue()*1.35);
-			p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.ATTACK_DAMAGE).getBaseValue()+16);
-			p.getAttribute(Attribute.LUCK).setBaseValue(p.getAttribute(Attribute.LUCK).getBaseValue()+20);
+			p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.ATTACK_DAMAGE).getBaseValue()+28);
+			p.getAttribute(Attribute.LUCK).setBaseValue(p.getAttribute(Attribute.LUCK).getBaseValue()+40);
 		 }
 		 if(boots == 9) {
-				if (bm.hasLore()) {
-				List<String> lore = bm.getLore();
-				lore.removeIf(l -> l.contains(setFactor));
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +5 Armor");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +5 Armor Toughness");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +40% Movement Speed");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +500% Attack Speed");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +14 Attack_Damage");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +90 Luck");
-				bm.setLore(lore);
-			} else {
-				List<String> lore = new ArrayList<>();
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +5 Armor");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +5 Armor Toughness");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +40% Movement Speed");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +500% Attack Speed");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +14 Attack_Damage");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +90 Luck");
-				bm.setLore(lore);
-			}
-				if (cm.hasLore()) {
-				List<String> lore = cm.getLore();
-				lore.removeIf(l -> l.contains(setFactor));
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +5 Armor");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +5 Armor Toughness");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +40% Movement Speed");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +500% Attack Speed");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +14 Attack_Damage");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +90 Luck");
-				cm.setLore(lore);
-			} else {
-				List<String> lore = new ArrayList<>();
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +5 Armor");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +5 Armor Toughness");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +40% Movement Speed");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +500% Attack Speed");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +14 Attack_Damage");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +90 Luck");
-				cm.setLore(lore);
-			}
-				if (lm.hasLore()) {
-				List<String> lore = lm.getLore();
-				lore.removeIf(l -> l.contains(setFactor));
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +5 Armor");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +5 Armor Toughness");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +40% Movement Speed");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +500% Attack Speed");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +14 Attack_Damage");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +90 Luck");
-				lm.setLore(lore);
-			} else {
-				List<String> lore = new ArrayList<>();
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +5 Armor");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +5 Armor Toughness");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +40% Movement Speed");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +500% Attack Speed");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +14 Attack_Damage");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +90 Luck");
-				lm.setLore(lore);
-			}
-				if (hm.hasLore()) {
-				List<String> lore = hm.getLore();
-				lore.removeIf(l -> l.contains(setFactor));
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +5 Armor");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +5 Armor Toughness");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +40% Movement Speed");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +500% Attack Speed");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +14 Attack_Damage");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +90 Luck");
-				hm.setLore(lore);
-			} else {
-				List<String> lore = new ArrayList<>();
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +5 Armor");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +5 Armor Toughness");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +40% Movement Speed");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +500% Attack Speed");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +14 Attack_Damage");
-				lore.add(ChatColor.LIGHT_PURPLE + setFactor + ": +90 Luck");
-				hm.setLore(lore);
-			}
-				p.getAttribute(Attribute.ARMOR).setBaseValue(p.getAttribute(Attribute.ARMOR).getBaseValue()+5);
-				p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(p.getAttribute(Attribute.ARMOR_TOUGHNESS).getBaseValue()+5);
-				p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(p.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue()*1.40);
-				p.getAttribute(Attribute.ATTACK_SPEED).setBaseValue(p.getAttribute(Attribute.ATTACK_SPEED).getBaseValue()*5);
-				p.getAttribute(Attribute.LUCK).setBaseValue(p.getAttribute(Attribute.LUCK).getBaseValue()+90);
-				p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.ATTACK_DAMAGE).getBaseValue()+13);
+			p.getAttribute(Attribute.ARMOR).setBaseValue(p.getAttribute(Attribute.ARMOR).getBaseValue()+5);
+			p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(p.getAttribute(Attribute.ARMOR_TOUGHNESS).getBaseValue()+5);
+			p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(p.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue()*1.20);
+			p.getAttribute(Attribute.LUCK).setBaseValue(p.getAttribute(Attribute.LUCK).getBaseValue()+90);
+			p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.ATTACK_DAMAGE).getBaseValue()+17);
 		 }
 		 if(boots == 10) {
-				if (bm.hasLore()) {
-				List<String> lore = bm.getLore();
-				lore.removeIf(l -> l.contains(setFactor));
-				lore.add(ChatColor.RED + setFactor + ": +5 Armor");
-				lore.add(ChatColor.RED + setFactor + ": +5 Armor Toughness");
-				lore.add(ChatColor.RED + setFactor + ": +20% Movement Speed");
-				lore.add(ChatColor.RED + setFactor + ": +32 Attack_Damage");
-				lore.add(ChatColor.RED + setFactor + ": +15% Damage");
-				lore.add(ChatColor.RED + setFactor + ": Immune to Fire");
-				bm.setLore(lore);
-			} else {
-				List<String> lore = new ArrayList<>();
-				lore.add(ChatColor.RED + setFactor + ": +5 Armor");
-				lore.add(ChatColor.RED + setFactor + ": +5 Armor Toughness");
-				lore.add(ChatColor.RED + setFactor + ": +20% Movement Speed");
-				lore.add(ChatColor.RED + setFactor + ": +32 Attack_Damage");
-				lore.add(ChatColor.RED + setFactor + ": +15% Damage");
-				lore.add(ChatColor.RED + setFactor + ": Immune to Fire");
-				bm.setLore(lore);
-			}
-				if (cm.hasLore()) {
-				List<String> lore = cm.getLore();
-				lore.removeIf(l -> l.contains(setFactor));
-				lore.add(ChatColor.RED + setFactor + ": +5 Armor");
-				lore.add(ChatColor.RED + setFactor + ": +5 Armor Toughness");
-				lore.add(ChatColor.RED + setFactor + ": +20% Movement Speed");
-				lore.add(ChatColor.RED + setFactor + ": +32 Attack_Damage");
-				lore.add(ChatColor.RED + setFactor + ": +15% Damage");
-				lore.add(ChatColor.RED + setFactor + ": Immune to Fire");
-				cm.setLore(lore);
-			} else {
-				List<String> lore = new ArrayList<>();
-				lore.add(ChatColor.RED + setFactor + ": +5 Armor");
-				lore.add(ChatColor.RED + setFactor + ": +5 Armor Toughness");
-				lore.add(ChatColor.RED + setFactor + ": +20% Movement Speed");
-				lore.add(ChatColor.RED + setFactor + ": +32 Attack_Damage");
-				lore.add(ChatColor.RED + setFactor + ": +15% Damage");
-				lore.add(ChatColor.RED + setFactor + ": Immune to Fire");
-				cm.setLore(lore);
-			}
-				if (lm.hasLore()) {
-				List<String> lore = lm.getLore();
-				lore.removeIf(l -> l.contains(setFactor));
-				lore.add(ChatColor.RED + setFactor + ": +5 Armor");
-				lore.add(ChatColor.RED + setFactor + ": +5 Armor Toughness");
-				lore.add(ChatColor.RED + setFactor + ": +20% Movement Speed");
-				lore.add(ChatColor.RED + setFactor + ": +32 Attack_Damage");
-				lore.add(ChatColor.RED + setFactor + ": +15% Damage");
-				lore.add(ChatColor.RED + setFactor + ": Immune to Fire");
-				lm.setLore(lore);
-			} else {
-				List<String> lore = new ArrayList<>();
-				lore.add(ChatColor.RED + setFactor + ": +5 Armor");
-				lore.add(ChatColor.RED + setFactor + ": +5 Armor Toughness");
-				lore.add(ChatColor.RED + setFactor + ": +20% Movement Speed");
-				lore.add(ChatColor.RED + setFactor + ": +32 Attack_Damage");
-				lore.add(ChatColor.RED + setFactor + ": +15% Damage");
-				lore.add(ChatColor.RED + setFactor + ": Immune to Fire");
-				lm.setLore(lore);
-			}
-				if (hm.hasLore()) {
-				List<String> lore = hm.getLore();
-				lore.removeIf(l -> l.contains(setFactor));
-				lore.add(ChatColor.RED + setFactor + ": +5 Armor");
-				lore.add(ChatColor.RED + setFactor + ": +5 Armor Toughness");
-				lore.add(ChatColor.RED + setFactor + ": +20% Movement Speed");
-				lore.add(ChatColor.RED + setFactor + ": +32 Attack_Damage");
-				lore.add(ChatColor.RED + setFactor + ": +15% Damage");
-				lore.add(ChatColor.RED + setFactor + ": Immune to Fire");
-				hm.setLore(lore);
-			} else {
-				List<String> lore = new ArrayList<>();
-				lore.add(ChatColor.RED + setFactor + ": +5 Armor");
-				lore.add(ChatColor.RED + setFactor + ": +5 Armor Toughness");
-				lore.add(ChatColor.RED + setFactor + ": +20% Movement Speed");
-				lore.add(ChatColor.RED + setFactor + ": +32 Attack_Damage");
-				lore.add(ChatColor.RED + setFactor + ": +15% Damage");
-				lore.add(ChatColor.RED + setFactor + ": Immune to Fire");
-				hm.setLore(lore);
-			}
-				p.getAttribute(Attribute.ARMOR).setBaseValue(p.getAttribute(Attribute.ARMOR).getBaseValue()+5);
-				p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(p.getAttribute(Attribute.ARMOR_TOUGHNESS).getBaseValue()+5);
-				p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.ATTACK_DAMAGE).getBaseValue()+32);
-				p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(p.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue()*1.2);
+			p.getAttribute(Attribute.ARMOR).setBaseValue(p.getAttribute(Attribute.ARMOR).getBaseValue()+5);
+			p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(p.getAttribute(Attribute.ARMOR_TOUGHNESS).getBaseValue()+5);
+			p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.ATTACK_DAMAGE).getBaseValue()+42);
+			p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(p.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue()*1.2);
+		 }
+		 if(boots == 11) {
+			p.getAttribute(Attribute.ARMOR).setBaseValue(p.getAttribute(Attribute.ARMOR).getBaseValue()+5);
+			p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(p.getAttribute(Attribute.ARMOR_TOUGHNESS).getBaseValue()+5);
+			p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.ATTACK_DAMAGE).getBaseValue()+14);
+			p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(p.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue()*1.5);
+			p.getAttribute(Attribute.SNEAKING_SPEED).setBaseValue(1);
+			p.getAttribute(Attribute.MOVEMENT_EFFICIENCY).setBaseValue(1);
 		 }
 		 b.setItemMeta(bm);
 		 c.setItemMeta(cm);

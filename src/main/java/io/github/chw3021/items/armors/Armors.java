@@ -187,6 +187,8 @@ public class Armors {
 		
 		rm.setCustomModelData(cmdt -200 + an);
 		final int el = cmdt - 200;
+		
+		rm.setLore(ArmorSet.setLore(p, el, false));
 	
 		if (cmdt == 214) {
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
