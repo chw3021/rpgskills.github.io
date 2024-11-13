@@ -15,7 +15,9 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
+import org.reflections.scanners.Scanners.*;
 import org.reflections.util.ConfigurationBuilder;
+import org.reflections.util.FilterBuilder;
 
 import io.github.chw3021.obtains.quests.BuriedTreasureQuest;
 import io.github.chw3021.obtains.quests.PillagerOutpostQuest;
@@ -33,15 +35,16 @@ public class NPCcontact implements Listener{
 	public void Start(PlayerInteractEntityEvent ev) 
 	{
 		Reflections reflections = new Reflections(
-			    new ConfigurationBuilder()
-			        .forPackages("io.github.chw3021.obtains.quests")
-			        .addScanners(Scanners.SubTypes, Scanners.Resources)
-			        .addClassLoaders(ClassLoader.getSystemClassLoader())
-			);
-	    final Set<Class<? extends Quest>> questClasses = reflections.getSubTypesOf(Quest.class);
-        for (Class<? extends Quest> questClass : questClasses) {
+				  new ConfigurationBuilder()
+				    .forPackage("io.github.chw3021.obtains.quests")
+				    .filterInputsBy(new FilterBuilder().includePackage("io.github.chw3021.obtains.quests"))
+				    .setScanners(Scanners.TypesAnnotated, Scanners.MethodsAnnotated, Scanners.MethodsReturn));
+		
+		Set<Class<?>> questClasses = 
+				  reflections.get(Scanners.SubTypes.of(Quest.class).asClass());
+        for (Class<?> questClass : questClasses) {
             try {
-                Quest quest = questClass.getDeclaredConstructor().newInstance();
+                Quest quest = (Quest) questClass.getDeclaredConstructor().newInstance();
                 quest.QuestStart(ev);
             } catch (Exception e) {
             	e.printStackTrace();
