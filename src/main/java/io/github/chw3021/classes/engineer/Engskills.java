@@ -2,7 +2,6 @@ package io.github.chw3021.classes.engineer;
 
 
 
-import com.google.common.collect.ArrayListMultimap;
 import io.github.chw3021.classes.ClassData;
 import io.github.chw3021.classes.Proficiency;
 import io.github.chw3021.commons.Holding;
@@ -2273,8 +2272,10 @@ public class Engskills extends Pak {
 */
 	
 	final private void energyCube(Player p) {
+		
+		final Integer yoff = -16;
 
-		final Location l = p.getLocation().clone().add(0, -6, 0);
+		final Location l = p.getLocation().clone().add(0, yoff, 0);
 		final Location pel = p.getEyeLocation().clone();
 		
 		p.getWorld().spawn(l.clone(), ArmorStand.class, ar -> {
@@ -2283,10 +2284,12 @@ public class Engskills extends Pak {
 			ar.setCollidable(false);
 			ar.setAI(true);
 			ar.getAttribute(Attribute.SCALE).setBaseValue(10);
+			ar.getAttribute(Attribute.BURNING_TIME).setBaseValue(0);
 
 			ar.setBasePlate(false);
 			ar.setInvulnerable(true);
-			ar.getEquipment().setHelmet(new ItemStack(Material.LIGHT_BLUE_STAINED_GLASS));
+			ar.getEquipment().setHelmet(new ItemStack(Material.BLUE_STAINED_GLASS));
+			ar.getEquipment().setChestplate(new ItemStack(Material.IRON_CHESTPLATE));
 			ar.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 			ar.setMetadata("rob" + p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 			ar.setHeadPose(conv(pel.getPitch()));
@@ -2302,7 +2305,7 @@ public class Engskills extends Pak {
 				}
 				p.playSound(p.getLocation(), Sound.BLOCK_BEACON_AMBIENT, 0.02f, 2f);
 
-				final Location l = p.getLocation().clone().add(0, -6, 0);
+				final Location l = p.getLocation().clone().add(0, yoff, 0);
 				if(!shipt.containsKey(p.getUniqueId())) {
 					return;
 				}
@@ -2367,11 +2370,7 @@ public class Engskills extends Pak {
 
 	final private void BlackHole(Player p, LivingEntity le, World tlw, Location tl) {
 
-		tlw.spawnParticle(Particle.VIBRATION, le.getLocation(), 20, 3,3,3, new Vibration(le.getLocation(), new Destination.BlockDestination(tl), 10));
-		tlw.spawnParticle(Particle.VIBRATION, le.getLocation(), 20, 3,3,3, new Vibration(le.getLocation(), new Destination.BlockDestination(tl), 20));
-		tlw.spawnParticle(Particle.VIBRATION, le.getLocation(), 20, 3,3,3, new Vibration(le.getLocation(), new Destination.BlockDestination(tl), 40));
-		tlw.spawnParticle(Particle.VIBRATION, le.getLocation(), 20, 3,3,3, new Vibration(le.getLocation(), new Destination.BlockDestination(tl), 80));
-		tlw.spawnParticle(Particle.VIBRATION, le.getLocation(), 20, 3,3,3, new Vibration(le.getLocation(), new Destination.BlockDestination(tl), 160));
+		tlw.spawnParticle(Particle.VIBRATION, le.getLocation(), 5, 1,1,1, new Vibration(le.getLocation(), new Destination.BlockDestination(tl), 160));
 	}
 
 
@@ -2427,7 +2426,7 @@ public class Engskills extends Pak {
 											}
 										}
 									}
-									Holding.holding(p, le, 120l);
+									Holding.holding(p, le, 160l);
 									les.add(le);
 								}
 							}
@@ -2437,9 +2436,7 @@ public class Engskills extends Pak {
 						tlw.playSound(tl, Sound.BLOCK_END_GATEWAY_SPAWN, 1f, 0f);
 
 						tlw.spawnParticle(Particle.BLOCK_MARKER, tl, 50, 2,2,2,0, Material.END_GATEWAY.createBlockData());
-						tlw.spawnParticle(Particle.BLOCK_MARKER, tl, 50, 2,2,2,0, Material.NETHER_PORTAL.createBlockData());
-						tlw.spawnParticle(Particle.BLOCK_MARKER, tl, 50, 2,2,2,0, Material.END_PORTAL.createBlockData());
-
+						
 						for(int i =1; i<20; i++) {
 							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 								@Override

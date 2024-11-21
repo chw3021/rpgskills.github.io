@@ -33,20 +33,20 @@ public class NPCcontact implements Listener{
 	public void Start(PlayerInteractEntityEvent ev) 
 	{
 		Reflections reflections = new Reflections(
-			    new ConfigurationBuilder()
-			        .forPackages("io.github.chw3021.obtains.quests")
-			        .addScanners(Scanners.SubTypes, Scanners.Resources)
-			        .addClassLoaders(ClassLoader.getSystemClassLoader())
-			);
-	    final Set<Class<? extends Quest>> questClasses = reflections.getSubTypesOf(Quest.class);
-        for (Class<? extends Quest> questClass : questClasses) {
-            try {
-                Quest quest = questClass.getDeclaredConstructor().newInstance();
-                quest.QuestStart(ev);
-            } catch (Exception e) {
-            	e.printStackTrace();
-            }
-        }
+	            "io.github.chw3021.obtains.quests",
+	            Scanners.SubTypes // JAR 파일 내부 스캔 활성화
+	        );
+
+	        Set<Class<? extends Quest>> questClasses = reflections.getSubTypesOf(Quest.class);
+
+	        for (Class<? extends Quest> questClass : questClasses) {
+	            try {
+	                Quest quest = questClass.getDeclaredConstructor().newInstance();
+	                quest.QuestStart(ev);
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
 	}
 
 	@EventHandler

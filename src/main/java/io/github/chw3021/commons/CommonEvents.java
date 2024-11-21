@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.EntityEffect;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
@@ -39,6 +41,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityKnockbackEvent;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
@@ -116,6 +119,16 @@ public class CommonEvents extends Mobs implements Listener{
 
 	private static final ScoreboardManager manager = Bukkit.getScoreboardManager();
 
+
+	@EventHandler
+	public void mobKnockBackReducer(EntityKnockbackEvent d)
+	{
+		d.setFinalKnockback(d.getKnockback().multiply(0.25));
+		Location lel = d.getEntity().getEyeLocation().clone();
+		lel.getWorld().spawnParticle(Particle.DUST_PILLAR, lel, 6, 0.3,0.5,0.3, 0.5, getBd(Material.REDSTONE_BLOCK));
+	}
+	
+	
 	public void Thorndamcan(EntityDamageByEntityEvent d)
 	{
 		if(d.getCause() == DamageCause.THORNS && d.getDamager() == d.getEntity()) {
