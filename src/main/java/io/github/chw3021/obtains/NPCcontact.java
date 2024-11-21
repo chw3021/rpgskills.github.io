@@ -15,7 +15,9 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
+import org.reflections.scanners.Scanners.*;
 import org.reflections.util.ConfigurationBuilder;
+import org.reflections.util.FilterBuilder;
 
 import io.github.chw3021.obtains.quests.BuriedTreasureQuest;
 import io.github.chw3021.obtains.quests.PillagerOutpostQuest;
@@ -32,21 +34,6 @@ public class NPCcontact implements Listener{
 	@EventHandler
 	public void Start(PlayerInteractEntityEvent ev) 
 	{
-		Reflections reflections = new Reflections(
-	            "io.github.chw3021.obtains.quests",
-	            Scanners.SubTypes // JAR 파일 내부 스캔 활성화
-	        );
-
-	        Set<Class<? extends Quest>> questClasses = reflections.getSubTypesOf(Quest.class);
-
-	        for (Class<? extends Quest> questClass : questClasses) {
-	            try {
-	                Quest quest = questClass.getDeclaredConstructor().newInstance();
-	                quest.QuestStart(ev);
-	            } catch (Exception e) {
-	                e.printStackTrace();
-	            }
-	        }
 	}
 
 	@EventHandler
