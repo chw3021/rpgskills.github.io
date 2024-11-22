@@ -5,6 +5,7 @@ import java.util.Random;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
@@ -20,14 +21,29 @@ import org.bukkit.potion.PotionEffectType;
 
 import io.github.chw3021.classes.ClassData;
 import io.github.chw3021.commons.Holding;
+import io.github.chw3021.commons.SkillUseEvent;
 import io.github.chw3021.party.Party;
 import io.github.chw3021.rmain.RMain;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
 
 
 public class ArmorSetEffects implements Listener{
 
 	private HashMap<UUID, Long> stuncool = new HashMap<UUID, Long>();
-	private HashMap<UUID, Long> invcool = new HashMap<UUID, Long>();
+	
+	private void sendSetMessage(Player p) {
+
+		if(p.getLocale().contains("ko_kr")) {
+			p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.LIGHT_PURPLE + "✦세트 효과 발동!✦").create());
+        	p.playSound(p, Sound.BLOCK_NOTE_BLOCK_PLING, 0.2f, 1.2f);
+		}
+		else {
+			p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.LIGHT_PURPLE + "✦Set Effect Activated!✦").create());
+        	p.playSound(p, Sound.BLOCK_NOTE_BLOCK_PLING, 0.2f, 1.2f);
+		}
+	}
 
 	@EventHandler
 	public void EarthSet(EntityDamageByEntityEvent d) 
@@ -88,6 +104,7 @@ public class ArmorSetEffects implements Listener{
 	                	stuncool.remove(le.getUniqueId()); // removing player from HashMap
 	                	p.playSound(p.getLocation(), Sound.BLOCK_DRIPSTONE_BLOCK_PLACE, 1f, 0f);
 	            		Holding.holding(p, le, (22l));
+	            		sendSetMessage(p);
 	                	stuncool.put(le.getUniqueId(), System.currentTimeMillis()); 
                 	}
 	                	
@@ -96,6 +113,7 @@ public class ArmorSetEffects implements Listener{
 	            {
                 	p.playSound(p.getLocation(), Sound.BLOCK_DRIPSTONE_BLOCK_PLACE, 1f, 0f);
             		Holding.holding(p, le, (22l));
+            		sendSetMessage(p);
                 	stuncool.put(le.getUniqueId(), System.currentTimeMillis()); 
 	            }
             }
@@ -128,6 +146,7 @@ public class ArmorSetEffects implements Listener{
 		                	stuncool.remove(le.getUniqueId()); // removing player from HashMap
 		                	p.playSound(p.getLocation(), Sound.BLOCK_DRIPSTONE_BLOCK_PLACE, 1f, 0f);
 		            		Holding.holding(p, le, (22l));
+		            		sendSetMessage(p);
 		                	stuncool.put(le.getUniqueId(), System.currentTimeMillis()); 
 	                	}
 		                	
@@ -136,6 +155,7 @@ public class ArmorSetEffects implements Listener{
 			            {
 		                	p.playSound(p.getLocation(), Sound.BLOCK_DRIPSTONE_BLOCK_PLACE, 1f, 0f);
 		            		Holding.holding(p, le, (22l));
+		            		sendSetMessage(p);
 		                	stuncool.put(le.getUniqueId(), System.currentTimeMillis()); 
 			            }
 	            }
@@ -186,6 +206,7 @@ public class ArmorSetEffects implements Listener{
 					Holding.invur(p, 40l);
                     p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, 1, 0);
 					p.getWorld().spawnParticle(Particle.FALLING_OBSIDIAN_TEAR, p.getLocation(), 10,1,1,1);
+            		sendSetMessage(p);
 				}
 			}
 			if(ArmorSet.setnum(p) == 11) {
@@ -197,7 +218,7 @@ public class ArmorSetEffects implements Listener{
 				}
 			}
 		}
-	}	
+	}
 
 	@EventHandler
 	public void DarkAndPoisonSet(EntityPotionEffectEvent d) 
@@ -244,6 +265,20 @@ public class ArmorSetEffects implements Listener{
 
 
 	@EventHandler
+	public void HyperSet(SkillUseEvent d) 
+	{
+		Player p = (Player) d.getPlayer();
+		if(ArmorSet.setnum(p) == 9) {
+			Random ran = new Random();
+			if(ran.nextDouble()<=0.01) {
+        		sendSetMessage(p);
+        		d.resetCooldown();
+			}
+		}
+		
+	}
+
+	@EventHandler
 	public void Critical(EntityDamageByEntityEvent d) 
 	{
 		if(d.getDamager() instanceof Player && !d.isCancelled()) {
@@ -253,10 +288,11 @@ public class ArmorSetEffects implements Listener{
 				if(ran.nextDouble()<=0.2) {
                     p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 1, 2);
                     d.setDamage(d.getDamage()*1.5);
+            		sendSetMessage(p);
 				}
 			}
 		}
-	}	
+	}
 	
 	
 	

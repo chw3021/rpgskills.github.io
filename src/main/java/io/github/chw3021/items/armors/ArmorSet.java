@@ -319,16 +319,16 @@ public class ArmorSet implements Listener{
 				lore.add(cc + setFactor + ": +5 방어강도");
 				lore.add(cc + setFactor + ": +20% 이동속도");
 				lore.add(cc + setFactor + ": +17 공격력");
-				lore.add(cc + setFactor + ": +90 행운");
-				lore.add(cc + setFactor + ": 스킬 사용시 1% 확률로 행운 두배로 증가(10초)");
+				lore.add(cc + setFactor + ": +100 행운");
+				lore.add(cc + setFactor + ": 스킬 사용시 1% 확률로 대기시간 초기화");
 			}
 			else {
 				lore.add(cc + setFactor + ": +5 Armor");
 				lore.add(cc + setFactor + ": +5 Armor Toughness");
 				lore.add(cc + setFactor + ": +20% Movement Speed");
 				lore.add(cc + setFactor + ": +17 Attack_Damage");
-				lore.add(cc + setFactor + ": +90 Luck");
-				lore.add(cc + setFactor + ": 1% chance to double luck for 10s when use skill");
+				lore.add(cc + setFactor + ": +100 Luck");
+				lore.add(cc + setFactor + ": 1% chance to reset cooldown upon skill use");
 			}
 		}
 		if(i == 10) {
@@ -437,7 +437,7 @@ public class ArmorSet implements Listener{
 			p.getAttribute(Attribute.ARMOR).setBaseValue(p.getAttribute(Attribute.ARMOR).getBaseValue()+5);
 			p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(p.getAttribute(Attribute.ARMOR_TOUGHNESS).getBaseValue()+5);
 			p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(p.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue()*1.20);
-			p.getAttribute(Attribute.LUCK).setBaseValue(p.getAttribute(Attribute.LUCK).getBaseValue()+90);
+			p.getAttribute(Attribute.LUCK).setBaseValue(p.getAttribute(Attribute.LUCK).getBaseValue()+100);
 			p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.ATTACK_DAMAGE).getBaseValue()+17);
 		 }
 		 if(boots == 10) {

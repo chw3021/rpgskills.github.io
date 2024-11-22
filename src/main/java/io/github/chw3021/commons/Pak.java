@@ -113,33 +113,6 @@ public class Pak extends CombatMode implements Listener{
 	    public void skilluse();
 	}
 	 
-    public void skilluse(SkillUse s, Player p, Double cl, String kname, String ename, HashMap<String,Long> hm) {
-		if(hm.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
-        {
-            double timer = (hm.get(p.getName())/1000d + cl) - System.currentTimeMillis()/1000d; // geting time in seconds
-            if(!(timer < 0)) // if timer is still more then 0 or 0
-            {
-            	if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-            		p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(kname+" 재사용 대기시간이 " + String.valueOf(Math.round(timer*10)/10.0) + "초 남았습니다").create());
-            	}
-            	else {
-                	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("You have to wait for " + String.valueOf(Math.round(timer*10)/10.0) + " seconds to use "+ename).create());
-            	}
-            }
-            else // if timer is done
-            {
-            	hm.remove(p.getName()); // removing player from HashMap	
-                s.skilluse();
-                hm.put(p.getName(), System.currentTimeMillis());
-            }
-                
-        }
-        else // if cooldown doesn't have players name in it
-        {
-            s.skilluse();
-            hm.put(p.getName(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
-        }
-    }
 	
 	public void er(PluginEnableEvent ev) 
 	{

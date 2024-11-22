@@ -14,9 +14,11 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
@@ -141,9 +143,6 @@ public class CombatMode {
 			
 			pin.remove(p.getUniqueId());
 			dis.remove(p.getUniqueId());
-			for(Material m : mas) {
-				p.setCooldown(m, 0);
-			}
 			if (p.getLocale().equalsIgnoreCase("ko_kr")) {
 				p.spigot().sendMessage(ChatMessageType.ACTION_BAR,
 						new ComponentBuilder(ChatColor.BLUE + "비전투 상태").create());
@@ -156,12 +155,24 @@ public class CombatMode {
 		}
 	}
 
+	public void useCancel(PlayerSwapHandItemsEvent ev) 
+	{
+		Player p = ev.getPlayer();
+		ItemStack is = p.getEquipment().getItemInMainHand();
+
+		if(is!=null && is.hasItemMeta() && is.getItemMeta().hasItemName() && is.getItemMeta().getItemName().equals("forRpgSkill"))
+		{
+			ev.setCancelled(true);
+		}
+	}
+	
 	public void useCancel(PlayerInteractEvent ev) 
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
+		ItemStack is = p.getEquipment().getItemInMainHand();
 
-		if(isCombat(p) && (p.getInventory().getHeldItemSlot()>=0&&p.getInventory().getHeldItemSlot()<=7) && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK))
+		if(is!=null && is.hasItemMeta() && is.getItemMeta().hasItemName() && is.getItemMeta().getItemName().equals("forRpgSkill") && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK))
 		{
 			ev.setCancelled(true);
 		}
@@ -171,10 +182,21 @@ public class CombatMode {
 	}
 
 	public void classinv(InventoryClickEvent d) {
-		Player p = (Player) d.getWhoClicked();
-		if (mode.containsKey(p.getUniqueId()) && !(d.getView().getTitle().equals(p.getName() + "'s Backpack") || d.getView().getTitle().equals(p.getName() + "의 배낭"))) {
+//		Player p = (Player) d.getWhoClicked();
+//		if (mode.containsKey(p.getUniqueId()) && !(d.getView().getTitle().equals(p.getName() + "'s Backpack") || d.getView().getTitle().equals(p.getName() + "의 배낭"))) {
+//			d.setCancelled(true);
+//		}
+		if(d.getSlotType() == SlotType.ARMOR) {
 			d.setCancelled(true);
 		}
+		
+		ItemStack is = d.getCurrentItem();
+		if(is!=null && is.hasItemMeta() && is.getItemMeta().hasItemName() && is.getItemMeta().getItemName().equals("forRpgSkill"))
+		{
+			d.setCancelled(true);
+		}
+		
+		
 	}
 
 	public void nepreventer(PlayerQuitEvent ev) {
@@ -206,7 +228,7 @@ public class CombatMode {
 				ev.setCancelled(true);
 				ev.getItem().teleport(p);
 				ev.getItem().remove();
-				p.playSound(p, Sound.ENTITY_ITEM_PICKUP, 1, 1);
+				p.playSound(p, Sound.ENTITY_ITEM_PICKUP, 0.6f, 1);
 				Backpack.add(p, ev.getItem().getItemStack());
 			}
 		}
@@ -214,9 +236,9 @@ public class CombatMode {
 
 
 	
-	private Material[] mas = { Material.AXOLOTL_SPAWN_EGG, Material.BEE_SPAWN_EGG,
-			Material.CAT_SPAWN_EGG, Material.CHICKEN_SPAWN_EGG, Material.CREEPER_SPAWN_EGG,
-			Material.FROG_SPAWN_EGG, Material.PARROT_SPAWN_EGG, Material.GOAT_SPAWN_EGG};
+	private Material[] mas = { Material.BORDURE_INDENTED_BANNER_PATTERN, Material.CREEPER_BANNER_PATTERN,
+			Material.FIELD_MASONED_BANNER_PATTERN, Material.FLOW_BANNER_PATTERN, Material.FLOWER_BANNER_PATTERN,
+			Material.GUSTER_BANNER_PATTERN, Material.SPIRE_ARMOR_TRIM_SMITHING_TEMPLATE, Material.SILENCE_ARMOR_TRIM_SMITHING_TEMPLATE};
 
 	public static void itemset(String display, ItemStack is, int data, int stack, List<String> Lore, int loc,
 			Inventory inv) {
@@ -278,6 +300,7 @@ public class CombatMode {
 				ItemStack skillcool = new ItemStack(Material.ALLAY_SPAWN_EGG);
 				ItemMeta smet = skillcool.getItemMeta();
 				smet.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_DESTROYS, ItemFlag.HIDE_DYE);
+				smet.setItemName("forRpgSkill");
 
 				if (p.getLocale().equalsIgnoreCase("ko_kr")) {
 

@@ -340,6 +340,7 @@ public class SkillUsing implements Listener {
 	public void Swap(PlayerSwapHandItemsEvent ev) 
 	{
 		pak.DamageGetter(ev);
+		CombatMode.getInstance().useCancel(ev);
 		
 		Angskills.getInstance().CoralLiquor(ev);
 		Angskills.getInstance().Ddash(ev);

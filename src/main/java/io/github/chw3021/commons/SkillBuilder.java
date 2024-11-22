@@ -83,7 +83,9 @@ public class SkillBuilder {
                 }
             } else {
                 if(slot >-1) {
-                    Bukkit.getPluginManager().callEvent(new SkillUseEvent(player,cooldown,slot,kname,ename));
+                    SkillUseEvent event = new SkillUseEvent(player, cooldown, slot, kname, ename,hm);
+                    Bukkit.getPluginManager().callEvent(event);
+                    if (event.isCancelled()) return;
                 }
                 hm.remove(player.getName());
                 skillUse.skilluse();
@@ -91,7 +93,9 @@ public class SkillBuilder {
             }
         } else {
             if(slot >-1) {
-                Bukkit.getPluginManager().callEvent(new SkillUseEvent(player,cooldown,slot,kname,ename));
+                SkillUseEvent event = new SkillUseEvent(player, cooldown, slot, kname, ename,hm);
+                Bukkit.getPluginManager().callEvent(event);
+                if (event.isCancelled()) return;
             }
             skillUse.skilluse();
             hm.put(player.getName(), System.currentTimeMillis());
