@@ -1172,6 +1172,8 @@ public class PoisonSkills extends OverworldRaids{
 		int t2 =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
             @Override
             public void run() {
+                Location rl = OverworldRaids.getraidloc(p).clone();
+            	p.teleport(rl.clone().add(30, 1, 30));
         		
         		if(Holding.ale(pe).isDead()) {
     				if(ast.containsKey(pe.getUniqueId())) {
@@ -1230,6 +1232,8 @@ public class PoisonSkills extends OverworldRaids{
                 int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	                @Override
 	                public void run() {
+	                    Location rl = OverworldRaids.getraidloc(p).clone();
+	                	p.teleport(rl.clone().add(30, 1, 30));
 	                    final Location pl = p.getEyeLocation().clone();
 	                    final Location pel = pe.getEyeLocation().clone();
 	                	napalm(pel,p);
@@ -1263,9 +1267,9 @@ public class PoisonSkills extends OverworldRaids{
         	ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
         	ordt.removeAll(rn);
         }
-        Location rl = OverworldRaids.getraidloc(p).clone();
 		p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
         d.setCancelled(true);
+        Location rl = OverworldRaids.getraidloc(p).clone();
     	p.teleport(rl.clone().add(30, 1, 30));
         Holding.holding(null, p, ordealTime);
         Holding.untouchable(p, ordealTime);
@@ -1291,6 +1295,7 @@ public class PoisonSkills extends OverworldRaids{
                 }
                 
 				for(int i = 0; i <4; i++) {
+			    	p.teleport(rl.clone().add(30, 1, 30));
                     int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		                @Override
 		                public void run() {
