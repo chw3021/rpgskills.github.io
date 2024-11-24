@@ -780,7 +780,7 @@ public class Swordskills extends Pak {
 						@Override
 						public void run()
 						{
-							p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 10, 255, false,false));
+							//p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 10, 255, false,false));
 							Holding.holding(p, p, 20l);
 							w.spawnParticle(Particle.SWEEP_ATTACK, fl,400,4,4,4);
 							w.spawnParticle(Particle.ENCHANTED_HIT, fl,500,4,4,4);
@@ -788,7 +788,7 @@ public class Swordskills extends Pak {
 							p.playSound(p.getLocation(), Sound.BLOCK_CONDUIT_AMBIENT_SHORT, 1.0f, 2f);
 							p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_STRONG, 1.0f, 2f);
 							p.playSound(p.getLocation(), Sound.ENTITY_GOAT_LONG_JUMP, 1.0f, 0f);
-							p.teleport(sl);
+							p.teleport(sl.clone());
 							les.forEach(le -> {
 								le.teleport(fl);
 								Holding.holding(p, le, 20l);
@@ -2224,7 +2224,7 @@ public class Swordskills extends Pak {
 
 		if(ClassData.pc.get(p.getUniqueId()) == 0)
 		{
-			if(p.getInventory().getItemInMainHand().getType().name().contains("SWORD") && (p.getInventory().getItemInOffHand().getType().name().contains("SWORD")))
+			if(p.getInventory().getItemInMainHand().getType().name().contains("SWORD"))
 			{
 				e.setCancelled(true);
 			}

@@ -108,7 +108,6 @@ public class NPCLoc implements Serializable, Listener{
             out.close();
             return this;
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             return this;
         }
@@ -120,7 +119,6 @@ public class NPCLoc implements Serializable, Listener{
             in.close();
             return data;
         } catch (ClassNotFoundException | IOException |NullPointerException e) {
-            // TODO Auto-generated catch block
 
 
             String path = new File("").getAbsolutePath();

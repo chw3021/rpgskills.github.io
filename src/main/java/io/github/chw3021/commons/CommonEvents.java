@@ -1,5 +1,6 @@
 package io.github.chw3021.commons;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -1268,6 +1269,17 @@ public class CommonEvents extends Mobs implements Listener{
 	{
 		Player p = (Player) d.getPlayer();
 		if(d.getFrom().getWorld() != d.getTo().getWorld()) {
+			Collection<PotionEffect> pes = p.getActivePotionEffects();
+			pes.forEach(pe -> {
+				p.removePotionEffect(pe.getType());
+			});
+
+			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), () ->{
+				pes.forEach(pe -> {
+					p.addPotionEffect(pe);
+				});
+			}, 3);
+			
 			Bukkit.getWorlds().forEach(w -> {
 				w.getEntities().forEach(e -> {
 					if(e.hasMetadata("din of "+p.getName())  || e.hasMetadata("rob"+p.getName()) || e.hasMetadata("rob of"+p.getName())) {

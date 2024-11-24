@@ -10,6 +10,7 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event.Result;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -186,14 +187,11 @@ public class CombatMode {
 //		if (mode.containsKey(p.getUniqueId()) && !(d.getView().getTitle().equals(p.getName() + "'s Backpack") || d.getView().getTitle().equals(p.getName() + "의 배낭"))) {
 //			d.setCancelled(true);
 //		}
-		if(d.getSlotType() == SlotType.ARMOR) {
-			d.setCancelled(true);
-		}
 		
 		ItemStack is = d.getCurrentItem();
 		if(is!=null && is.hasItemMeta() && is.getItemMeta().hasItemName() && is.getItemMeta().getItemName().equals("forRpgSkill"))
 		{
-			d.setCancelled(true);
+			d.setResult(Result.DENY);
 		}
 		
 		

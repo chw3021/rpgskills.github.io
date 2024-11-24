@@ -175,7 +175,8 @@ public class Obtained implements Serializable, Listener {
             expIncrease += 0.05;
         }
         if (d.BuriedTreasure.getOrDefault(p.getUniqueId(), 0) >= 2) {
-            attackIncrease += 0.02;
+            attackIncrease += 0.03;
+            expIncrease += 0.05;
         }
         if (d.Igloo.getOrDefault(p.getUniqueId(), 0) >= 2) {
             attackIncrease += 0.025;
@@ -965,7 +966,18 @@ public class Obtained implements Serializable, Listener {
 						Arrays.asList(ChatColor.GOLD + "" + od.Mineshaft.getOrDefault(p.getUniqueId(), 0) + "/2 획득함"),
 						36, inv);
 			}
-	
+
+
+			if (od.BuriedTreasure.getOrDefault(p.getUniqueId(), 0) >= 2) {
+				itemset(ChatColor.GOLD + "파묻힌 보물 전리품", mp, 0, 1,
+						Arrays.asList("공격력과 방어력이 3% 증가합니다", "경험치 획득량이 5% 증가합니다"), 37,
+						inv);
+			} else {
+				itemset(ChatColor.GOLD + "파묻힌 보물 전리품(아직 모두 획득하지 못함)", Material.SPAWNER, 0, 1,
+						Arrays.asList(
+								ChatColor.GOLD + "" + od.BuriedTreasure.getOrDefault(p.getUniqueId(), 0) + "/2 획득함"),
+						37, inv);
+			}
 	
 			if (od.Igloo.getOrDefault(p.getUniqueId(), 0) >= 2) {
 				itemset(ChatColor.GOLD + "이글루 전리품", sb, 0, 1,
@@ -1144,7 +1156,7 @@ public class Obtained implements Serializable, Listener {
 			} else {
 				itemset(ChatColor.GOLD + "Trophy Of BuriedTreasure(Not Obtained All Yet)", Material.SPAWNER, 0, 1,
 						Arrays.asList(
-								ChatColor.GOLD + "" + od.BuriedTreasure.getOrDefault(p.getUniqueId(), 0) + "/2 획득함"),
+								ChatColor.GOLD + "" + od.BuriedTreasure.getOrDefault(p.getUniqueId(), 0) + "/2 Obtained"),
 						37, inv);
 			}
 	

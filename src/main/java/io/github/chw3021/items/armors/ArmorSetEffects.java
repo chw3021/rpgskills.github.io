@@ -25,7 +25,6 @@ import io.github.chw3021.commons.SkillUseEvent;
 import io.github.chw3021.party.Party;
 import io.github.chw3021.rmain.RMain;
 import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
 
@@ -37,11 +36,11 @@ public class ArmorSetEffects implements Listener{
 
 		if(p.getLocale().contains("ko_kr")) {
 			p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.LIGHT_PURPLE + "✦세트 효과 발동!✦").create());
-        	p.playSound(p, Sound.BLOCK_NOTE_BLOCK_PLING, 0.2f, 1.2f);
+        	p.playSound(p, Sound.BLOCK_NOTE_BLOCK_CHIME, 0.2f, 1.2f);
 		}
 		else {
 			p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.LIGHT_PURPLE + "✦Set Effect Activated!✦").create());
-        	p.playSound(p, Sound.BLOCK_NOTE_BLOCK_PLING, 0.2f, 1.2f);
+        	p.playSound(p, Sound.BLOCK_NOTE_BLOCK_CHIME, 0.2f, 1.2f);
 		}
 	}
 
@@ -270,9 +269,13 @@ public class ArmorSetEffects implements Listener{
 		Player p = (Player) d.getPlayer();
 		if(ArmorSet.setnum(p) == 9) {
 			Random ran = new Random();
-			if(ran.nextDouble()<=0.01) {
+			if(ran.nextDouble()<=0.07 && d.resetCooldown()) {
         		sendSetMessage(p);
-        		d.resetCooldown();
+            	p.playSound(p, Sound.ENTITY_ILLUSIONER_CAST_SPELL, 0.2f, 1.6f);
+			}
+			if(ran.nextDouble()<=0.77 && !d.isCooldown()) {
+        		sendSetMessage(p);
+        		p.addPotionEffect(new PotionEffect(PotionEffectType.LUCK,340,77,false,false));
 			}
 		}
 		

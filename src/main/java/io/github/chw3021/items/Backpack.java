@@ -18,6 +18,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -144,7 +145,7 @@ public class Backpack implements Serializable, Listener{
 		}
 		Inventory ci = Bukkit.createInventory(p, 54, name);
 		if(check(p)) {
-			ci = page(p,1);
+			ci = page(p,0);
 		}
 		p.openInventory(ci);
 		save(p,ci);
@@ -170,7 +171,7 @@ public class Backpack implements Serializable, Listener{
 		pagerm.setItemName("RpgBagpackPage");
 		pager.setItemMeta(pagerm);
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			if(page>1) {
+			if(page>0) {
 				itemset(ChatColor.GOLD + "이전 페이지", pager, 0, 1,
 						Arrays.asList(ChatColor.GOLD + "" + (page)), 52, ci);
 			}
@@ -178,7 +179,7 @@ public class Backpack implements Serializable, Listener{
 					Arrays.asList(ChatColor.GOLD + "" + (page)), 53, ci);
 		}
 		else {
-			if(page>1) {
+			if(page>0) {
 				itemset(ChatColor.GOLD + "Prev", pager, 0, 1,
 						Arrays.asList(ChatColor.GOLD + "" + (page)), 52, ci);
 			}
@@ -223,7 +224,7 @@ public class Backpack implements Serializable, Listener{
 			{
 				String s = ChatColor.stripColor((e.getCurrentItem().getItemMeta().getDisplayName()));
 				if(s.equals("Backpack") || s.equals("배낭")) {
-					e.setCancelled(false);
+					e.setResult(Result.DENY);
 					try {
 						checkoff(p);
 					}
@@ -266,7 +267,6 @@ public class Backpack implements Serializable, Listener{
 		            // 다음 페이지로 이동
 		            Inventory newInventory = page(p, currentPage + 1);
 		            p.openInventory(newInventory);
-		            System.out.println(currentPage);
 		        }
 	    }
 	}
@@ -367,6 +367,7 @@ public class Backpack implements Serializable, Listener{
 	        HashSet<Integer> emptyIndexes = new HashSet<>();  // 빈 슬롯 추적
 
 	        ItemStack[] inventory = null;
+	        
 
 	        // 현재 페이지별로 빈 슬롯 탐색 (52, 53번 슬롯 제외)
 	        for (int currentPage = 0; currentPage < chest.row(player.getUniqueId()).keySet().size(); currentPage++) {

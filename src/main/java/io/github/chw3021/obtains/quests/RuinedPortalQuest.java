@@ -283,6 +283,7 @@ public class RuinedPortalQuest extends Mobs implements Quest {
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + le.getCustomName() + ": You're worthy").create());
 	        		}
+	        		openMerchant(p, le);
 					return;
 				}
 
@@ -302,7 +303,6 @@ public class RuinedPortalQuest extends Mobs implements Quest {
 	        		else {
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BOLD + "You should empty inventory least one space").create());
 	        		}
-	        		openMerchant(p, le);
 					return;
 				}
 				

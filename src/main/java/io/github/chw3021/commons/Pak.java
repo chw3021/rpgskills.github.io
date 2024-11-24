@@ -175,7 +175,7 @@ public class Pak extends CombatMode implements Listener{
 		int plv = ar.getPierceLevel()+1;
 		int count = 0;
 		
-		for(double d = 0.1; d <= ar.getVelocity().length(); d += 0.2) {
+		for(double d = 0.1; d <= ar.getVelocity().length()+25; d += 0.2) {
 			Location pl = il.clone();
 			pl.add(il.getDirection().normalize().multiply(d));
 			for(Entity e : pl.getWorld().getNearbyEntities(pl, 0.3, 0.3, 0.3)) {
@@ -2540,6 +2540,7 @@ public class Pak extends CombatMode implements Listener{
 			LivingEntity le = (LivingEntity) d.getEntity();
 			if(pr.getShooter() instanceof Player) {
 				Player p = (Player) pr.getShooter();
+				Bukkit.getPluginManager().callEvent(new ProjectileHitEvent(pr, le));
 				if(Tag.ENTITY_TYPES_SENSITIVE_TO_SMITE.isTagged(le.getType())) {
 					d.setDamage(d.getDamage()+p.getInventory().getItemInMainHand().getEnchantmentLevel(Enchantment.SMITE)*2.5);
 				}

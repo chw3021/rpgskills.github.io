@@ -153,6 +153,8 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 			} else if (ev.getEntityType() == EntityType.GIANT) {
 				le.setAI(false);
 				le.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
+				le.getAttribute(Attribute.GRAVITY).setBaseValue(10);
+				le.getAttribute(Attribute.SCALE).setBaseValue(0.2);
 				le.setCustomName("SandBag");
 				ev.getEntity().setMaxHealth(9999999);
 				ev.getEntity().setHealth(9999999);

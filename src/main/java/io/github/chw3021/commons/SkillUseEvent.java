@@ -9,7 +9,6 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
 import org.jetbrains.annotations.NotNull;
 
-import io.github.chw3021.commons.Pak.SkillUse;
 import io.github.chw3021.rmain.RMain;
 
 
@@ -79,9 +78,17 @@ public class SkillUseEvent extends PlayerEvent implements Cancellable{
         this.cancelled = cancelled;
 	}
 	
-	public void resetCooldown() {
-		Bukkit.getScheduler().runTaskLater(RMain.getInstance(), () -> {
-		    hm.remove(player.getName());
-		}, 1);
+	public boolean isCooldown() {
+		return hm == null;
+	}
+	
+	public boolean resetCooldown() {
+		if(hm != null) {
+			Bukkit.getScheduler().runTaskLater(RMain.getInstance(), () -> {
+			    hm.remove(player.getName());
+			}, 1);
+			return true;
+		}
+		return false;
 	}
 }

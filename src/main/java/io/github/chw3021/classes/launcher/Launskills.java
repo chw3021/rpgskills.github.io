@@ -7,6 +7,7 @@ import io.github.chw3021.commons.SkillBuilder;
 import io.github.chw3021.commons.SkillUseEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import com.google.common.collect.HashMultimap;
@@ -45,6 +46,7 @@ import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
+import org.bukkit.entity.AbstractArrow;
 import org.bukkit.entity.AbstractArrow.PickupStatus;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Breeze;
@@ -329,12 +331,16 @@ public class Launskills extends Pak {
 			p.setCooldown(Material.ARROW, 2);
 			final int prof = Proficiency.getpro(p);
 			if(prof>=1) {
-				p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 40 + 20*(1+prof), (int) prof, false, false));
-				p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 40 + 20*(1+prof), (int) prof, false, false));
+				p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 80 + 20*(1+prof), (int) prof, false, false));
+				p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 80 + 20*(1+prof), (int) prof, false, false));
 			}
 			if(prof>=2) {
-				p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 40 + 20*(1+prof), (int) prof, false, false));
+				p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 80 + 20*(1+prof), (int) prof, false, false));
 			}
+			if(ev.getNewSlot()==3 || ev.getNewSlot() == 4) {
+				return;
+			}
+			
 			if(ev.getPreviousSlot()==0) {
 				if(ev.getNewSlot()!=8) {
 					ArrowChange(p,1,prof);
@@ -413,7 +419,6 @@ public class Launskills extends Pak {
 								}
 								p.getWorld().spawnParticle(Particle.FLASH, el, 3, 1, 1, 1);
 								p.getWorld().spawnParticle(Particle.WAX_ON, el, 3, 1, 1, 1);
-								p.getWorld().strikeLightningEffect(el);
 								le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 40, 0, false, false));
 							}
 							if(arrowtype.get(p.getName()) == 1 || arrowtype.get(p.getName()) == 4)
@@ -492,7 +497,6 @@ public class Launskills extends Pak {
 							}
 							p.getWorld().spawnParticle(Particle.FLASH, el, 3, 1, 1, 1);
 							p.getWorld().spawnParticle(Particle.WAX_ON, el, 3, 1, 1, 1);
-							p.getWorld().strikeLightningEffect(el);
 							le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 40, 0, false, false));
 						}
 						if(arrowtype.get(p.getName()) == 1 || arrowtype.get(p.getName()) == 4)
@@ -990,9 +994,17 @@ public class Launskills extends Pak {
 											absorbing(p,l);
 											Arrow ar =p.getWorld().spawnArrow(el, l.toVector().subtract(el.toVector()), 0.5f, 60);
 											ar.setShooter(p);
+											ar.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+											ar.setMetadata("rob"+ p.getName(), new FixedMetadataValue(RMain.getInstance(), p.getName()));
 											ar.setMetadata("arrowrain "+ p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 											ar.setDamage(0);
 											ar.setPickupStatus(PickupStatus.DISALLOWED);
+									        new BukkitRunnable() {
+									            @Override
+									            public void run() {
+									            	ar.remove();
+									            }
+									        }.runTaskLater(RMain.getInstance(), 70); // 매 틱마다 실행
 											for (Entity e : l.getWorld().getNearbyEntities(l, 5, 10, 5))
 											{
 												if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")))
@@ -1020,13 +1032,6 @@ public class Launskills extends Pak {
 									}, i*5);
 
 								}
-								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-									@Override
-									public void run()
-									{
-										p.getWorld().getEntities().stream().filter(a -> a.hasMetadata("arrowrain "+p.getName())).forEach(a -> a.remove());
-									}
-								}, 71);
 								p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1.0f, 2f);
 								p.playSound(p.getLocation(), Sound.WEATHER_RAIN_ABOVE, 1.0f, 2f);
 							});
@@ -1108,10 +1113,18 @@ public class Launskills extends Pak {
 								for(int i = 0; i <25; i++) {
 									Arrow ar =p.getWorld().spawnArrow(l, el.toVector().subtract(l.toVector()), 0.5f, 60);
 									ar.setShooter(p);
+									ar.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), p.getName()));
 									ar.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 									ar.setMetadata("arrowfountain"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 									ar.setDamage(0);
 									ar.setPickupStatus(PickupStatus.DISALLOWED);
+
+							        new BukkitRunnable() {
+							            @Override
+							            public void run() {
+							            	ar.remove();
+							            }
+							        }.runTaskLater(RMain.getInstance(), 70); // 매 틱마다 실행
 								}
 								for (Entity e : l.getWorld().getNearbyEntities(l, 5, 10, 5))
 								{
@@ -1157,13 +1170,6 @@ public class Launskills extends Pak {
 						}, i*10);
 
 					}
-					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-						@Override
-						public void run()
-						{
-							p.getWorld().getEntities().stream().filter(a -> a.hasMetadata("arrowfountain"+p.getName())).forEach(a -> a.remove());
-						}
-					}, 71);
 
 
 
@@ -1911,10 +1917,10 @@ public class Launskills extends Pak {
 						else // if timer is done
 						{
 							cscooldown.remove(p.getName()); // removing player from HashMap
-							Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation().add(0, -0.2, 0), p.getEyeLocation().getDirection(), 5, 0, Arrow.class);
+							AbstractArrow ar = (AbstractArrow) p.launchProjectile(AbstractArrow.class);
 							ar.setShooter(p);
+		                    ar.setVelocity(ar.getVelocity().add(p.getLocation().getDirection().normalize().multiply(5)));
 							ar.setCritical(true);
-							ar.setInvulnerable(true);
 							ar.setDamage(0);
 							p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 0.1f, 1.6f);
 							p.playSound(p.getLocation(), Sound.BLOCK_DISPENSER_LAUNCH, 0.1f, 1.6f);
@@ -1935,18 +1941,18 @@ public class Launskills extends Pak {
 								}, i*2+10);
 
 							}
-
-							if(Proficiency.getpro(p)>=1) {
+							if(Proficiency.getpro(p) >= 1) {
 								ar.setPierceLevel(5);
 							}
+
 						}
 					}
 					else // if cooldown doesn't have players name in it
 					{
-						Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation().add(0, -0.2, 0), p.getEyeLocation().getDirection(), 5, 0, Arrow.class);
+						AbstractArrow ar = (AbstractArrow) p.launchProjectile(AbstractArrow.class);
 						ar.setShooter(p);
+	                    ar.setVelocity(ar.getVelocity().add(p.getLocation().getDirection().normalize().multiply(5)));
 						ar.setCritical(true);
-						ar.setInvulnerable(true);
 						ar.setDamage(0);
 						p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 0.1f, 1.6f);
 						p.playSound(p.getLocation(), Sound.BLOCK_DISPENSER_LAUNCH, 0.1f, 1.6f);
@@ -1967,10 +1973,10 @@ public class Launskills extends Pak {
 							}, i*2+10);
 
 						}
-
-						if(Proficiency.getpro(p)>=1) {
+						if(Proficiency.getpro(p) >= 1) {
 							ar.setPierceLevel(5);
 						}
+
 					}
 
 				}
@@ -1982,71 +1988,63 @@ public class Launskills extends Pak {
 
 	public void ChargingShot(ProjectileHitEvent d)
 	{
-		if(d.getEntity() instanceof Arrow)
-		{
-			final Arrow a = (Arrow) d.getEntity();
+			Projectile a = d.getEntity();
 			if(a.getShooter() instanceof Player)
 			{
 				Player p = (Player) a.getShooter();
 
 				if(ClassData.pc.get(p.getUniqueId()) == 5 && a.hasMetadata("ChargingShot of"+p.getName()))
 				{
-					if(p.getInventory().getItemInMainHand().getType() == Material.BOW )
+					Location el = a.getLocation();
+
+					if(d.getHitEntity()!=null) {
+						el = d.getHitEntity().getLocation();
+					}
+
+					cscooldown.put(p.getName(), System.currentTimeMillis());
+					Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,10*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d),5,"응집","ChargingShot"));
+
+					for (Entity e : el.getWorld().getNearbyEntities(el, 3, 3, 3))
 					{
-
-						if(d.getHitBlock() !=null && d.getHitEntity()==null) {
-							a.removeMetadata("ChargingShot of"+p.getName(), RMain.getInstance());
-							a.remove();
-							return;
-						}
-
-						final Location el = d.getHitEntity().getLocation();
-						cscooldown.put(p.getName(), System.currentTimeMillis());
-						Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,10*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d),5,"응집","ChargingShot"));
-
-						for (Entity e : el.getWorld().getNearbyEntities(el, 3, 3, 3))
+						if (e instanceof Player)
 						{
-							if (e instanceof Player)
-							{
 
-								Player p1 = (Player) e;
-								if(Party.hasParty(p) && Party.hasParty(p1))	{
-									if(Party.getParty(p).equals(Party.getParty(p1)))
-									{
-										continue;
-									}
+							Player p1 = (Player) e;
+							if(Party.hasParty(p) && Party.hasParty(p1))	{
+								if(Party.getParty(p).equals(Party.getParty(p1)))
+								{
+									continue;
 								}
 							}
-							if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")))
-							{
-								LivingEntity le = (LivingEntity)e;
-								atk0(1.8, lsd.ChargingShot.get(p.getUniqueId())*1.8, p, le);
-								absorbing(p,el);
-
-								Holding.superholding(p, le, 20l);
-								p.playSound(el, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 1);
-								p.getWorld().spawnParticle(Particle.FLASH, el, 10, 3, 1, 3);
-								le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 40, 0, false, false));
-								p.getWorld().spawnParticle(Particle.FALLING_WATER, el, 40, 3, 1, 3);
-								p.getWorld().spawnParticle(Particle.DRIPPING_WATER, el, 40, 3, 1, 3);
-								p.playSound(le.getLocation(), Sound.ENTITY_PLAYER_SPLASH, 1, 1);
-								le.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 40, 0, false, false));
-								le.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 40, 0, false, false));
-								p.getWorld().spawnParticle(Particle.FLAME, el, 40, 3, 1, 3, 0);
-								p.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, el, 40, 3, 1, 3, 0);
-								p.getWorld().spawnParticle(Particle.LAVA, el, 40, 3, 1, 3, 0);
-								le.setFireTicks(40);
-								p.getWorld().spawnParticle(Particle.EFFECT, el, 40, 3, 1, 3, 0);
-								p.getWorld().spawnParticle(Particle.END_ROD, el, 40, 3, 1, 3, 0);
-								p.getWorld().spawnParticle(Particle.PORTAL, el, 40, 3, 1, 3, 0);
-								le.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 15, 0, false, false));
-							}
 						}
+						if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")))
+						{
+							LivingEntity le = (LivingEntity)e;
+							atk0(1.8, lsd.ChargingShot.get(p.getUniqueId())*1.8, p, le);
+							absorbing(p,el);
 
+							Holding.superholding(p, le, 20l);
+							p.playSound(el, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 1);
+							p.getWorld().spawnParticle(Particle.FLASH, el, 10, 3, 1, 3);
+							le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 40, 0, false, false));
+							p.getWorld().spawnParticle(Particle.FALLING_WATER, el, 40, 3, 1, 3);
+							p.getWorld().spawnParticle(Particle.DRIPPING_WATER, el, 40, 3, 1, 3);
+							p.playSound(le.getLocation(), Sound.ENTITY_PLAYER_SPLASH, 1, 1);
+							le.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 40, 0, false, false));
+							le.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 40, 0, false, false));
+							p.getWorld().spawnParticle(Particle.FLAME, el, 40, 3, 1, 3, 0);
+							p.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, el, 40, 3, 1, 3, 0);
+							p.getWorld().spawnParticle(Particle.LAVA, el, 40, 3, 1, 3, 0);
+							le.setFireTicks(40);
+							p.getWorld().spawnParticle(Particle.EFFECT, el, 40, 3, 1, 3, 0);
+							p.getWorld().spawnParticle(Particle.END_ROD, el, 40, 3, 1, 3, 0);
+							p.getWorld().spawnParticle(Particle.PORTAL, el, 40, 3, 1, 3, 0);
+							le.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 15, 0, false, false));
+						}
 					}
 				}
 			}
-		}
+		
 	}
 
 

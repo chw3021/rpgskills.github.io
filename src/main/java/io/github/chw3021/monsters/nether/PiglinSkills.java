@@ -79,14 +79,14 @@ public class PiglinSkills extends Summoned{
             		final Location l = d.getHitEntity() != null ? d.getHitEntity().getLocation() : d.getHitBlock().getLocation();
 
 					l.getWorld().spawnParticle(Particle.SMALL_FLAME, l, 50);
-					l.getWorld().spawnParticle(Particle.BLOCK, l, 200,2.5,2.5,2.5,getBd(Material.FIRE_CORAL_BLOCK));
+					l.getWorld().spawnParticle(Particle.BLOCK, l, 200,1.5,1.5,1.5,getBd(Material.FIRE_CORAL_BLOCK));
 					l.getWorld().playSound(l, Sound.BLOCK_CORAL_BLOCK_BREAK, 1f, 1.5f);
 					
-            		for(Entity e : l.getWorld().getNearbyEntities(l, 2.5, 2.5, 2.5)) {
+            		for(Entity e : l.getWorld().getNearbyEntities(l, 1.5, 1.5, 1.5)) {
 						if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
 							LivingEntity le = (LivingEntity)e;
 							le.damage(2.5,p);
-							Holding.holding(null, le, 5l);
+							Holding.holding(null, le, 1l);
 						}
                 	}
 				}
@@ -129,6 +129,7 @@ public class PiglinSkills extends Summoned{
 	                    Snowball ws = (Snowball) p.launchProjectile(Snowball.class);
 	                    ws.setItem(new ItemStack(c));
 	                    ws.setShooter(p);
+	                    ws.setGlowing(true);
 	                    ws.setVelocity(p.getLocation().getDirection().normalize().multiply(1.1));
 	        			ws.setMetadata("cookedFoods", new FixedMetadataValue(RMain.getInstance(), true));
 	                }
@@ -203,8 +204,10 @@ public class PiglinSkills extends Summoned{
 			                	meat.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
 			                	meat.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
 			                	meat.setMetadata("stuff", new FixedMetadataValue(RMain.getInstance(), rn));
-			                	p.getWorld().spawnParticle(Particle.FLAME, l, 50, 4, 4, 4, 0.2);
-			                	p.getWorld().spawnParticle(Particle.FALLING_LAVA, l, 50, 4, 4, 4, 0.2);
+			                	p.getWorld().spawnParticle(Particle.FLAME, tl, 150, 4, 1, 4, 0.2);
+			                	p.getWorld().spawnParticle(Particle.WHITE_SMOKE, tl, 50, 4, 1, 4, 0.2);
+			                	p.getWorld().spawnParticle(Particle.DUST_PILLAR, tl, 150, 4, 1, 4, 0.2,getBd(Material.WHITE_WOOL));
+			                	p.getWorld().spawnParticle(Particle.WHITE_ASH, tl, 150, 4, 1, 4, 0.2);
 								p.getWorld().playSound(p.getLocation(), Sound.ENTITY_GENERIC_EAT, 0.5f, 2f);
 								p.getWorld().playSound(meat.getLocation(), Sound.BLOCK_FURNACE_FIRE_CRACKLE, 0.8f, 2f);
 								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -304,12 +307,12 @@ public class PiglinSkills extends Summoned{
 	final private void createFallingRod(LivingEntity p, Location startLocation, Location targetLocation) {
 	    World world = startLocation.getWorld();
 	    Material rodMaterial = Material.FURNACE;
-	    int rodHeight = 5;
+	    int rodHeight = 8;
 	    List<FallingBlock> fallingBlocks = new ArrayList<>();
 
 	    // 세워진 막대기 생성
 	    for (int i = 0; i < rodHeight; i++) {
-	        Location blockLoc = startLocation.clone().add(0, i, 0);
+	        Location blockLoc = startLocation.clone().add(0, i*1.5, 0);
 	        FallingBlock fallingBlock = world.spawnFallingBlock(blockLoc, rodMaterial.createBlockData());
 	        fallingBlock.setDropItem(true);
 	        fallingBlock.setHurtEntities(true);
@@ -535,7 +538,7 @@ public class PiglinSkills extends Summoned{
         		w.playSound(pfl, Sound.ENTITY_ZOMBIFIED_PIGLIN_HURT, 1.0f, 0f);
         		w.playSound(pfl, Sound.ENTITY_PIG_DEATH, 1.0f, 0f);
 		        for(Player pe : NethercoreRaids.getheroes(p)) {
-					for(int i = 0; i <25; i++) {
+					for(int i = 0; i <50; i++) {
 						Arrow ar =p.getWorld().spawnArrow(pe.getLocation(), BlockFace.UP.getDirection() , 0.5f, 60);
 						ar.setShooter(p);
 	                    Snowball ws = (Snowball) p.launchProjectile(Snowball.class);
@@ -743,14 +746,14 @@ public class PiglinSkills extends Summoned{
 		p.getWorld().playSound(ptl, Sound.BLOCK_SMOKER_SMOKE, 1.0f, 0f);
     	p.getWorld().playSound(ptl, Sound.BLOCK_FIRE_AMBIENT, 1.0f, 2f);
     	
-    	w.spawnParticle(Particle.BLOCK_MARKER, ptl, 4,1,1,1, getBd(Material.SMOKER));
+    	w.spawnParticle(Particle.DUST_PILLAR, ptl, 300,2,1,2, getBd(Material.WHITE_WOOL));
     	
         int t = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
             @Override
             public void run() 
             {
                 AreaEffectCloud cloud = (AreaEffectCloud) w.spawnEntity(ptl, EntityType.AREA_EFFECT_CLOUD);
-                cloud.setParticle(Particle.SMOKE);
+                cloud.setParticle(Particle.WHITE_SMOKE);
                 cloud.addCustomEffect(new PotionEffect(PotionEffectType.HUNGER, 100, 1, false, false, false), false);
         		cloud.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
         		cloud.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), rn));
@@ -758,7 +761,7 @@ public class PiglinSkills extends Summoned{
                 cloud.setRadius(2f);
                 cloud.setSource(p);
                 cloud.setSilent(false);
-                cloud.setColor(Color.RED);
+                cloud.setColor(Color.WHITE);
                 cloud.setDuration(dur);
 
             	smkable.remove(p.getUniqueId());
@@ -883,8 +886,8 @@ public class PiglinSkills extends Summoned{
 	            	Location arl = Holding.ale(newmob).getLocation();
 	            	
 	            	if(pel.getWorld().equals(arl.getWorld())) {
-	            		Vector v = pel.clone().toVector().subtract(arl.clone().toVector()).clone().normalize().multiply(0.1);
-	            		if(pel.distance(arl)>7) {
+	            		Vector v = pel.clone().toVector().subtract(arl.clone().toVector()).clone().normalize().multiply(0.025);
+	            		if(pel.distance(arl)>10) {
 	            			v.multiply(10);
 	            		}
 	            		Holding.ale(newmob).setVelocity(v);
@@ -928,14 +931,15 @@ public class PiglinSkills extends Summoned{
 	            	
 	            	Location pel = Holding.ale(pe).getLocation();
 	            	Location arl = Holding.ale(newmob).getLocation();
-	            	
+
 	            	if(pel.getWorld().equals(arl.getWorld())) {
-	            		Vector v = pel.clone().toVector().subtract(arl.clone().toVector()).clone().normalize().multiply(0.13);
-	            		if(pel.distance(arl)>6) {
+	            		Vector v = pel.clone().toVector().subtract(arl.clone().toVector()).clone().normalize().multiply(0.03);
+	            		if(pel.distance(arl)>10) {
 	            			v.multiply(10);
 	            		}
 	            		Holding.ale(newmob).setVelocity(v);
 	            	}
+	            	
 	            	
 	        		for(Entity e : newmob.getWorld().getNearbyEntities(newmob.getLocation().clone(), 1, 5, 1)) {
 						if(p!=e && e instanceof Player) {
@@ -1030,9 +1034,13 @@ public class PiglinSkills extends Summoned{
         Location rl = NethercoreRaids.getraidloc(p).clone();
 		p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
         d.setCancelled(true);
+        
+        Long ordealTime = 480L;
+        
+        
     	p.teleport(rl.clone().add(0, 1, 0));
-        Holding.holding(null, p, 450l);
-        Holding.untouchable(p, 450l);
+        Holding.holding(null, p, ordealTime);
+        Holding.untouchable(p, ordealTime);
         for(Player pe : NethercoreRaids.getheroes(p)) {
 			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
         		pe.sendMessage(ChatColor.BOLD+"피글린요리사: 후식 시간이다!");
@@ -1058,7 +1066,7 @@ public class PiglinSkills extends Summoned{
             public void run() {
             	judge(p,rn);
             }
-        }, 450);
+        }, ordealTime);
 		ordt.put(rn, t3);
 	}
 	

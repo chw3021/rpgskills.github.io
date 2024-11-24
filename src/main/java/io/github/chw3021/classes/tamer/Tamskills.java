@@ -41,10 +41,12 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Bat;
 import org.bukkit.entity.Bee;
+import org.bukkit.entity.Breeze;
 import org.bukkit.entity.Cat;
 import org.bukkit.entity.CaveSpider;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Creeper;
+import org.bukkit.entity.Damageable;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.EnderDragon.Phase;
 import org.bukkit.entity.EnderDragonPart;
@@ -66,6 +68,7 @@ import org.bukkit.entity.Wither;
 import org.bukkit.entity.Wolf;
 import org.bukkit.entity.memory.MemoryKey;
 import org.bukkit.entity.AbstractArrow.PickupStatus;
+import org.bukkit.entity.AbstractArrow;
 import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
@@ -249,7 +252,7 @@ public class Tamskills extends Pak {
 	                else // if timer is done
 	                {
 	                    sdcooldown.remove(p.getName()); // removing player from HashMap
-	                    Arrow sn = (Arrow) p.getWorld().spawnEntity(p.getEyeLocation(), EntityType.ARROW);
+						AbstractArrow sn = (AbstractArrow) p.launchProjectile(AbstractArrow.class);
 	                	HashMap<Player, Double> damage = new HashMap<Player, Double>();
 	                	damage.put(p,(double) 0);
 						if(tamed.containsKey(p.getUniqueId())) {
@@ -276,7 +279,7 @@ public class Tamskills extends Pak {
 	            }
 	            else // if cooldown doesn't have players name in it
 	            {
-                    Arrow sn = (Arrow) p.getWorld().spawnEntity(p.getEyeLocation(), EntityType.ARROW);
+					AbstractArrow sn = (AbstractArrow) p.launchProjectile(AbstractArrow.class);
                 	HashMap<Player, Double> damage = new HashMap<Player, Double>();
                 	damage.put(p,(double) 0);
 					if(tamed.containsKey(p.getUniqueId())) {
@@ -398,15 +401,15 @@ public class Tamskills extends Pak {
 									{
 				                		if (w.getHealth()<=w.getMaxHealth()/2) 
 										{
-		        		                    w.damage(ar.getDamage()*10, p);
+		        		                    w.damage(bbArrow(ar), p);
 										}
 									}
 								}
-								if(ev.getHitEntity() instanceof Enderman) {
-									Enderman en =(Enderman) ev.getHitEntity();
+								if(ev.getHitEntity() instanceof Enderman || ev.getHitEntity() instanceof Breeze) {
+									Entity en = ev.getHitEntity();
 									Arrow ar = (Arrow) ev.getEntity();
 									{
-		    		                    en.damage(ar.getDamage()*10, p);
+		    		                    ((Damageable) en).damage(bbArrow(ar), p);
 									}
 								}
 								pta(p,le);
@@ -1842,7 +1845,6 @@ public class Tamskills extends Pak {
 		}
 		ig.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 		ig.getAttribute(Attribute.ATTACK_KNOCKBACK).setBaseValue(0);
-		ig.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(0);
 		ig.getAttribute(Attribute.MAX_HEALTH).setBaseValue(ig.getAttribute(Attribute.MAX_HEALTH).getBaseValue()*(1+p.getLevel()*0.25)*(1+tsd.Taming.getOrDefault(p.getUniqueId(),0)));
 		ig.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0);
 

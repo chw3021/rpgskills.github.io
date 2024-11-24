@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameEvent;
+import org.bukkit.GameMode;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -62,6 +63,12 @@ public class ArmorSet implements Listener{
        	 		}
        	 		else if(boots == 10) {
        	 			return 10;
+       	 		}
+       	 		else if(boots == 11) {
+       	 			return 11;
+       	 		}
+       	 		else if(boots == 14) {
+       	 			return 14;
        	 		}
        			else {
        				return -1;
@@ -319,16 +326,18 @@ public class ArmorSet implements Listener{
 				lore.add(cc + setFactor + ": +5 방어강도");
 				lore.add(cc + setFactor + ": +20% 이동속도");
 				lore.add(cc + setFactor + ": +17 공격력");
-				lore.add(cc + setFactor + ": +100 행운");
-				lore.add(cc + setFactor + ": 스킬 사용시 1% 확률로 대기시간 초기화");
+				lore.add(cc + setFactor + ": +107 행운");
+				lore.add(cc + setFactor + ": 스킬 사용시 7% 확률로 대기시간 초기화");
+				lore.add(cc + setFactor + ": 스킬 사용시 77% 확률로 행운 77lv, 17초 획득");
 			}
 			else {
 				lore.add(cc + setFactor + ": +5 Armor");
 				lore.add(cc + setFactor + ": +5 Armor Toughness");
 				lore.add(cc + setFactor + ": +20% Movement Speed");
 				lore.add(cc + setFactor + ": +17 Attack_Damage");
-				lore.add(cc + setFactor + ": +100 Luck");
-				lore.add(cc + setFactor + ": 1% chance to reset cooldown upon skill use");
+				lore.add(cc + setFactor + ": +107 Luck");
+				lore.add(cc + setFactor + ": 7% chance to reset cooldown upon skill use");
+				lore.add(cc + setFactor + ": 77% chance to get 77lv, 17s Luck Effect");
 			}
 		}
 		if(i == 10) {
@@ -437,7 +446,7 @@ public class ArmorSet implements Listener{
 			p.getAttribute(Attribute.ARMOR).setBaseValue(p.getAttribute(Attribute.ARMOR).getBaseValue()+5);
 			p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(p.getAttribute(Attribute.ARMOR_TOUGHNESS).getBaseValue()+5);
 			p.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(p.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue()*1.20);
-			p.getAttribute(Attribute.LUCK).setBaseValue(p.getAttribute(Attribute.LUCK).getBaseValue()+100);
+			p.getAttribute(Attribute.LUCK).setBaseValue(p.getAttribute(Attribute.LUCK).getBaseValue()+107);
 			p.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.ATTACK_DAMAGE).getBaseValue()+17);
 		 }
 		 if(boots == 10) {
@@ -469,6 +478,9 @@ public class ArmorSet implements Listener{
 	             public void run() 
 	             {
 	            	 Player p = (Player) ev.getWhoClicked();
+	            	 if(p.getGameMode() == GameMode.CREATIVE) {
+	            		 return;
+	            	 }
 	            	 if(p.getEquipment().getBoots() != null && p.getEquipment().getChestplate()!= null && p.getEquipment().getLeggings()!= null && p.getEquipment().getHelmet()!= null) {
 
 		            	 if(p.getEquipment().getBoots().getItemMeta().hasCustomModelData() && p.getEquipment().getChestplate().getItemMeta().hasCustomModelData() && p.getEquipment().getLeggings().getItemMeta().hasCustomModelData() && p.getEquipment().getHelmet().getItemMeta().hasCustomModelData()) {

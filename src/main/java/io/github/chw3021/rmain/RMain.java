@@ -126,7 +126,7 @@ public class RMain extends JavaPlugin{
         	w.setTicksPerSpawns(SpawnCategory.WATER_ANIMAL, 1);
         	w.setTicksPerSpawns(SpawnCategory.WATER_UNDERGROUND_CREATURE, 1);
         });
-        Bukkit.getPluginManager().registerEvents(new RaidWorldLoad(), this);
+        //Bukkit.getPluginManager().registerEvents(new RaidWorldLoad(), this);
         Bukkit.getPluginManager().registerEvents(new MobsSkillsEvents(), this);
         
         this.getDataFolder().mkdir();

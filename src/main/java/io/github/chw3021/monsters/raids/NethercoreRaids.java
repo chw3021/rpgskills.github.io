@@ -271,8 +271,6 @@ public class NethercoreRaids extends Summoned implements Listener {
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
                 @Override
                 public void run() {
-        			Holding.ale(p).setPersistent(true);
-        			Holding.ale(p).setRemoveWhenFarAway(false);
         			Holding.ale(p).teleport(beforepl.get(p.getUniqueId()));
 					beforepl.remove(p.getUniqueId());
 					raidbart.remove(rn);

@@ -19,7 +19,7 @@ import io.github.chw3021.rmain.RMain;
 
 public class RaidWorldLoad implements Listener {
 
-	//@EventHandler
+	@EventHandler
 	public void raidworldload(PluginEnableEvent ev)   
     {
 		if (Bukkit.getServer().getWorld("OverworldRaid") == null) {
