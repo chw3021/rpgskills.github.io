@@ -166,7 +166,7 @@ public class NetherRaids extends Summoned {
 		newmob.setHealth(48000);
 		
 		newmob.setMetadata(META, new FixedMetadataValue(RMain.getInstance(), true));
-		newmob.getAttribute(Attribute.JUMP_STRENGTH).setBaseValue(10);
+		newmob.getAttribute(Attribute.JUMP_STRENGTH).setBaseValue(0.5);
 		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(0.9);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("GiantSlime", new FixedMetadataValue(RMain.getInstance(), true));
@@ -283,6 +283,7 @@ public class NetherRaids extends Summoned {
 		newmob.setCharging(true);
 		newmob.setSilent(true);
 		newmob.getAttribute(Attribute.SCALE).setBaseValue(0.35);
+		newmob.getAttribute(Attribute.GRAVITY).setBaseValue(10);
 		
 		newmob.setMetadata("summoned", new FixedMetadataValue(RMain.getInstance(), rn));
 		

@@ -177,7 +177,7 @@ public class Pak extends CombatMode implements Listener{
 		
 		for(double d = 0.1; d <= ar.getVelocity().length()+25; d += 0.2) {
 			Location pl = il.clone();
-			pl.add(il.getDirection().normalize().multiply(d));
+			pl.add(il.clone().getDirection().normalize().multiply(d));
 			for(Entity e : pl.getWorld().getNearbyEntities(pl, 0.3, 0.3, 0.3)) {
 				if (e instanceof Player)
 				{
@@ -202,7 +202,9 @@ public class Pak extends CombatMode implements Listener{
 		if(ev.getEntity().getShooter() instanceof Player && ev.getEntity() instanceof AbstractArrow) {
 			Player p = (Player) ev.getEntity().getShooter();
 			AbstractArrow ar = (AbstractArrow) ev.getEntity();
-				List<LivingEntity> r = rayTrace(p,ar);
+			
+			
+			List<LivingEntity> r = rayTrace(p,ar);
 				
 				if(r != null && !r.isEmpty()) {
 					for(int i = 0; i<r.size(); i++) {
@@ -230,6 +232,33 @@ public class Pak extends CombatMode implements Listener{
 		}
 	}
 	
+	final protected Location getTargetEntity(LivingEntity p, Integer in) {
+		final Location pl = p.getEyeLocation().clone();
+		for(int i =0; i<in; i++) {
+			Location tl = pl.clone().add(pl.clone().getDirection().normalize().multiply(i));
+			Boolean bool = tl.getWorld().getNearbyEntities(tl,1,1,1).stream().anyMatch(e ->{
+
+					if (e instanceof Player && p instanceof Player)
+					{
+
+						Player p1 = (Player) e;
+						if(Party.isInSameParty((Player) p,p1))	{
+							return false;
+						}
+					}
+					if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")))
+					{
+						return true;
+					}
+					return false;
+			});
+			if(!tl.getBlock().isPassable() || bool) {
+				return pl.clone().add(pl.clone().getDirection().normalize().multiply(i));
+			}
+		}
+		return pl.clone().add(pl.clone().getDirection().normalize().multiply(in));
+	}
+	
 	protected final Location gettargetblock(LivingEntity p, Integer in) {
 		if(p.rayTraceBlocks(in) == null) {
 
@@ -249,6 +278,15 @@ public class Pak extends CombatMode implements Listener{
 					}
 				}
 				return pl.clone().add(pl.clone().getDirection().normalize().multiply(in));
+			}
+		}
+		else if(p.rayTraceBlocks(in).getHitEntity() != null) {
+			final Location rl = p.rayTraceBlocks(in).getHitEntity().getLocation();
+			if(rl.getBlock().getType().isOccluding()) {
+				return rl.clone().add(0, 0.75, 0);
+			}
+			else {
+				return rl;
 			}
 		}
 		final Location rl = p.rayTraceBlocks(in).getHitPosition().toLocation(p.getWorld());

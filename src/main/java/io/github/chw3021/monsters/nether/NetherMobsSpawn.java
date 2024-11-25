@@ -2,6 +2,7 @@ package io.github.chw3021.monsters.nether;
 
 import org.bukkit.World.Environment;
 import org.bukkit.block.Biome;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.metadata.FixedMetadataValue;
 import io.github.chw3021.monsters.Mobs;
@@ -51,6 +52,9 @@ public class NetherMobsSpawn extends Mobs {
 			newmob.setMetadata("volcanic", new FixedMetadataValue(RMain.getInstance(), true));
 		}
 		newmob.setCustomName(reg+trans(le));
+		if(le.getType() == EntityType.GHAST) {
+			newmob.setSilent(true);
+		}
 		return newmob;
 	}
 	
@@ -62,6 +66,10 @@ public class NetherMobsSpawn extends Mobs {
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), "nether"));
 		newmob.setMetadata("unmodified", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("nether", new FixedMetadataValue(RMain.getInstance(), true));
+		if(le.getType() == EntityType.GHAST) {
+			newmob.setSilent(true);
+			newmob.setMetadata("nether", new FixedMetadataValue(RMain.getInstance(), true));
+		}
 		return newmob;
 	}
 	

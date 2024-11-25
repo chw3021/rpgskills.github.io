@@ -82,6 +82,7 @@ import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -252,7 +253,6 @@ public class Tamskills extends Pak {
 	                else // if timer is done
 	                {
 	                    sdcooldown.remove(p.getName()); // removing player from HashMap
-						AbstractArrow sn = (AbstractArrow) p.launchProjectile(AbstractArrow.class);
 	                	HashMap<Player, Double> damage = new HashMap<Player, Double>();
 	                	damage.put(p,(double) 0);
 						if(tamed.containsKey(p.getUniqueId())) {
@@ -262,12 +262,13 @@ public class Tamskills extends Pak {
 								}
 							});
 						}
+						AbstractArrow sn = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 50, 0, Arrow.class);
 	                    sn.setDamage(damage.get(p)*0.05);
 	                    sn.setShooter(p);
 	                    sn.setVelocity(sn.getVelocity().add(p.getLocation().getDirection().normalize().multiply(50)));
 	                    sn.setMetadata("Target", new FixedMetadataValue(RMain.getInstance(), true));
-	                    sn.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 						sn.setPickupStatus(PickupStatus.DISALLOWED);
+						Bukkit.getPluginManager().callEvent(new ProjectileLaunchEvent(sn));
 	                	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		             		@Override
 		                	public void run() 
@@ -279,7 +280,6 @@ public class Tamskills extends Pak {
 	            }
 	            else // if cooldown doesn't have players name in it
 	            {
-					AbstractArrow sn = (AbstractArrow) p.launchProjectile(AbstractArrow.class);
                 	HashMap<Player, Double> damage = new HashMap<Player, Double>();
                 	damage.put(p,(double) 0);
 					if(tamed.containsKey(p.getUniqueId())) {
@@ -289,12 +289,13 @@ public class Tamskills extends Pak {
 							}
 						});
 					}
-                    sn.setDamage(damage.get(p)/20);
+					AbstractArrow sn = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 50, 0, Arrow.class);
+                    sn.setDamage(damage.get(p)*0.05);
                     sn.setShooter(p);
                     sn.setVelocity(sn.getVelocity().add(p.getLocation().getDirection().normalize().multiply(50)));
                     sn.setMetadata("Target", new FixedMetadataValue(RMain.getInstance(), true));
-                    sn.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 					sn.setPickupStatus(PickupStatus.DISALLOWED);
+					Bukkit.getPluginManager().callEvent(new ProjectileLaunchEvent(sn));
                 	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	             		@Override
 	                	public void run() 

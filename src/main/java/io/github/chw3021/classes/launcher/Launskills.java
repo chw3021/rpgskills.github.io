@@ -41,6 +41,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Particle.DustOptions;
+import org.bukkit.Particle.TargetColor;
 import org.bukkit.Sound;
 import org.bukkit.Tag;
 import org.bukkit.World;
@@ -70,6 +71,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.FireworkExplodeEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
@@ -929,7 +931,7 @@ public class Launskills extends Pak {
 						}
 						return;
 					}
-					final Location l = gettargetblock(p,30);
+					final Location l = getTargetEntity(p,30);
 
 					SkillBuilder bd = new SkillBuilder()
 							.player(p)
@@ -1007,25 +1009,22 @@ public class Launskills extends Pak {
 									        }.runTaskLater(RMain.getInstance(), 70); // 매 틱마다 실행
 											for (Entity e : l.getWorld().getNearbyEntities(l, 5, 10, 5))
 											{
+												if (e instanceof Player)
+												{
+
+													Player p1 = (Player) e;
+													if(Party.hasParty(p) && Party.hasParty(p1))	{
+														if(Party.getParty(p).equals(Party.getParty(p1)))
+														{
+															continue;
+														}
+													}
+												}
 												if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")))
 												{
 													LivingEntity le = (LivingEntity)e;
-													{
-														if (le instanceof Player)
-														{
-
-															Player p1 = (Player) le;
-															if(Party.hasParty(p) && Party.hasParty(p1))	{
-																if(Party.getParty(p).equals(Party.getParty(p1)))
-																{
-																	continue;
-																}
-															}
-														}
-														atk0(0.08, lsd.ArrowRain.get(p.getUniqueId())*0.08, p, le);
-														Holding.holding(p, le, (long) 10);
-
-													}
+													atk0(0.08, lsd.ArrowRain.get(p.getUniqueId())*0.08, p, le);
+													Holding.holding(p, le, (long) 40);
 												}
 											}
 										}
@@ -1054,7 +1053,7 @@ public class Launskills extends Pak {
 				{
 					ev.setCancelled(true);
 
-					final Location l = gettargetblock(p,30);
+					final Location l = getTargetEntity(p,30);
 
 					if(arrftnt.containsKey(p.getUniqueId())) {
 						Bukkit.getScheduler().cancelTask(arrftnt.get(p.getUniqueId()));
@@ -1145,7 +1144,7 @@ public class Launskills extends Pak {
 											}
 
 											atk0(0.28, lsd.ArrowRain.get(p.getUniqueId())*0.34, p, le);
-											Holding.holding(p, le, (long) 10);
+											Holding.holding(p, le, (long) 30);
 												/*
 												if(le instanceof EnderDragon) {
 								                    Arrow firstarrow = p.launchProjectile(Arrow.class);
@@ -1192,7 +1191,7 @@ public class Launskills extends Pak {
 					ev.setCancelled(true);
 
 
-					final Location tl = gettargetblock(p,30);
+					final Location tl = getTargetEntity(p,30).clone();
 					if(glxyt.containsKey(p.getUniqueId())) {
 						Bukkit.getScheduler().cancelTask(glxyt.get(p.getUniqueId()));
 						glxyt.remove(p.getUniqueId());
@@ -1249,7 +1248,7 @@ public class Launskills extends Pak {
 												}
 											}
 											atk0(0.5, lsd.ArrowRain.get(p.getUniqueId())*0.5, p, le);
-											Holding.holding(p, le, (long) 10);
+											Holding.holding(p, le, (long) 30);
 											le.teleport(tl);
 										}
 									}
@@ -1271,6 +1270,8 @@ public class Launskills extends Pak {
 			els.add(el.clone().add(0,i,0));
 		}
 		els.forEach(l -> {
+			p.getWorld().spawnParticle(Particle.TRAIL, l.clone(), 100, 3,1,3,1, new TargetColor(el, Color.FUCHSIA));
+			p.getWorld().spawnParticle(Particle.TRAIL, l.clone(), 100, 3,1,3,1, new TargetColor(el, Color.TEAL));
 			p.getWorld().spawnParticle(Particle.BLOCK_MARKER, l, 50, 0.1, 1, 0.1,1,Material.OAK_LOG.createBlockData());
 		});
 		p.getWorld().spawnParticle(Particle.BLOCK_MARKER, el.clone().add(0, 10, 0), 600, 0.6, 1, 0.6,1,Material.WHITE_WOOL.createBlockData());
@@ -1290,11 +1291,11 @@ public class Launskills extends Pak {
 		{
 			p.getWorld().spawnParticle(Particle.BLOCK_MARKER, el.clone(), 200, 0.43, 0.6, 0.43,1,Material.PURPLE_GLAZED_TERRACOTTA.createBlockData());
 		}
+
 	}
 
 
 
-	@SuppressWarnings("deprecation")
 	public void GiantArrow(PlayerSwapHandItemsEvent ev)
 	{
 		Player p = ev.getPlayer();
@@ -1303,7 +1304,7 @@ public class Launskills extends Pak {
 
 
 		if(ClassData.pc.get(p.getUniqueId()) == 5 && lsd.GiantArrow.getOrDefault(p.getUniqueId(), 0)>=1) {
-			if((!(p.isSneaking()) && !(p.isOnGround())))
+			if(!p.isSneaking())
 			{
 				if(p.getInventory().getItemInMainHand().getType() == Material.BOW)
 				{
@@ -1317,7 +1318,7 @@ public class Launskills extends Pak {
 						}
 						return;
 					}
-					final Location l = gettargetblock(p,30);
+					final Location l = getTargetEntity(p,30);
 					SkillBuilder bd = new SkillBuilder()
 							.player(p)
 							.cooldown(sec)
@@ -1352,7 +1353,7 @@ public class Launskills extends Pak {
 													}
 												}
 												atk0(1.3, lsd.GiantArrow.get(p.getUniqueId())*1.56, p, le);
-												Holding.holding(p, le, (long) 60);
+												Holding.holding(p, le, (long) 85);
 											}
 										}
 
@@ -1404,7 +1405,7 @@ public class Launskills extends Pak {
 				{
 					ev.setCancelled(true);
 
-					final Location tl = gettargetblock(p,30);
+					final Location tl = getTargetEntity(p,30);
 
 					if(metrt.containsKey(p.getUniqueId())) {
 						Bukkit.getScheduler().cancelTask(metrt.get(p.getUniqueId()));
@@ -1492,7 +1493,7 @@ public class Launskills extends Pak {
 	}
 
 	final private void meteor(Location tl, Player p) {
-		tl.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, tl, 2,1,1,1);
+		tl.getWorld().spawnParticle(Particle.EXPLOSION, tl, 1);
 		absorbing(p,tl);
 
 		if(arrowtype.getOrDefault(p.getName(), 0)==4) {
@@ -1635,7 +1636,7 @@ public class Launskills extends Pak {
 				{
 					ev.setCancelled(true);
 
-					final Location el = gettargetblock(p,30).clone().add(0, 3, 0);
+					final Location el = getTargetEntity(p,30).clone().add(0, 3, 0);
 
 					if(neblt.containsKey(p.getUniqueId())) {
 						Bukkit.getScheduler().cancelTask(neblt.get(p.getUniqueId()));
@@ -1664,7 +1665,7 @@ public class Launskills extends Pak {
 										}
 									}
 								}
-								Holding.holding(p, le, (long) 25);
+								Holding.holding(p, le, (long) 45);
 								le.teleport(el);
 							}
 						}
@@ -1840,6 +1841,7 @@ public class Launskills extends Pak {
 										}
 									}
 									atk0(0.7, lsd.Explosion.get(p.getUniqueId())*0.76, p, le);
+									Holding.holding(p, le, 35l);
 								}
 							}
 						}
@@ -1917,9 +1919,8 @@ public class Launskills extends Pak {
 						else // if timer is done
 						{
 							cscooldown.remove(p.getName()); // removing player from HashMap
-							AbstractArrow ar = (AbstractArrow) p.launchProjectile(AbstractArrow.class);
+							AbstractArrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 5, 0, Arrow.class);
 							ar.setShooter(p);
-		                    ar.setVelocity(ar.getVelocity().add(p.getLocation().getDirection().normalize().multiply(5)));
 							ar.setCritical(true);
 							ar.setDamage(0);
 							p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 0.1f, 1.6f);
@@ -1927,6 +1928,10 @@ public class Launskills extends Pak {
 							p.playSound(p.getLocation(), Sound.ENTITY_EVOKER_CAST_SPELL, 0.1f, 1.6f);
 							ar.setPickupStatus(PickupStatus.DISALLOWED);
 							ar.setMetadata("ChargingShot of" + p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+							if(Proficiency.getpro(p) >= 1) {
+								ar.setPierceLevel(5);
+							}
+							Bukkit.getPluginManager().callEvent(new ProjectileLaunchEvent(ar));
 
 							for(int i = 0; i <10; i++) {
 								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -1938,20 +1943,16 @@ public class Launskills extends Pak {
 										ar.getWorld().spawnParticle(Particle.SPLASH, ar.getLocation(), 5,0.1,0.1,0.1,0.05);
 										ar.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, ar.getLocation(), 5,0.1,0.1,0.1,0.05);
 									}
-								}, i*2+10);
+								}, i*2);
 
-							}
-							if(Proficiency.getpro(p) >= 1) {
-								ar.setPierceLevel(5);
 							}
 
 						}
 					}
 					else // if cooldown doesn't have players name in it
 					{
-						AbstractArrow ar = (AbstractArrow) p.launchProjectile(AbstractArrow.class);
+						AbstractArrow ar = p.getWorld().spawnArrow(p.getEyeLocation(), p.getEyeLocation().getDirection(), 5, 0, Arrow.class);
 						ar.setShooter(p);
-	                    ar.setVelocity(ar.getVelocity().add(p.getLocation().getDirection().normalize().multiply(5)));
 						ar.setCritical(true);
 						ar.setDamage(0);
 						p.playSound(p.getLocation(), Sound.ENTITY_ARROW_SHOOT, 0.1f, 1.6f);
@@ -1959,6 +1960,10 @@ public class Launskills extends Pak {
 						p.playSound(p.getLocation(), Sound.ENTITY_EVOKER_CAST_SPELL, 0.1f, 1.6f);
 						ar.setPickupStatus(PickupStatus.DISALLOWED);
 						ar.setMetadata("ChargingShot of" + p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+						if(Proficiency.getpro(p) >= 1) {
+							ar.setPierceLevel(5);
+						}
+						Bukkit.getPluginManager().callEvent(new ProjectileLaunchEvent(ar));
 
 						for(int i = 0; i <10; i++) {
 							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -1970,11 +1975,8 @@ public class Launskills extends Pak {
 									ar.getWorld().spawnParticle(Particle.SPLASH, ar.getLocation(), 5,0.1,0.1,0.1,0.05);
 									ar.getWorld().spawnParticle(Particle.ELECTRIC_SPARK, ar.getLocation(), 5,0.1,0.1,0.1,0.05);
 								}
-							}, i*2+10);
+							}, i*2);
 
-						}
-						if(Proficiency.getpro(p) >= 1) {
-							ar.setPierceLevel(5);
 						}
 
 					}
@@ -2022,6 +2024,7 @@ public class Launskills extends Pak {
 							LivingEntity le = (LivingEntity)e;
 							atk0(1.8, lsd.ChargingShot.get(p.getUniqueId())*1.8, p, le);
 							absorbing(p,el);
+							Holding.holding(p, le, 55l);
 
 							Holding.superholding(p, le, 20l);
 							p.playSound(el, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 1);
@@ -2321,7 +2324,7 @@ public class Launskills extends Pak {
 			ev.setCancelled(true);
 			p.setCooldown(CAREFUL, 1);
 
-			final Location tl = gettargetblock(p,30);
+			final Location tl = getTargetEntity(p,30);
 
 			if(!arrowtype.containsKey(p.getName())) {
 				arrowtype.put(p.getName(), 0);

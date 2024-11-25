@@ -17,6 +17,7 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Evoker;
+import org.bukkit.entity.Ghast;
 import org.bukkit.entity.Husk;
 import org.bukkit.entity.Illusioner;
 import org.bukkit.entity.LivingEntity;
@@ -634,6 +635,10 @@ public class HyperSkills extends Summoned{
 			d.getEntity().getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_ARMOR_STAND_BREAK, 1, 0);
 		}
 
+		if((d.getEntity() instanceof Ghast)&& !d.isCancelled() &&d.getEntity().hasMetadata("nether")) 
+		{
+			d.getEntity().getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_GENERIC_HURT, 0.6f, 0.5f);
+		}
 			
 	}
 

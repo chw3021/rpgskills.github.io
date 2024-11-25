@@ -52,7 +52,7 @@ public class LaunSkillsGui extends SkillsGui {
 					2, Launskillsinv);
 			itemset("거대화살", Material.TIPPED_ARROW, 4, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + lsd.GiantArrow.getOrDefault(p.getUniqueId(), 0), "",
-							"점프 + 손바꾸기", "",
+							"손바꾸기", "",
 							ChatColor.BOLD +""+ BigDecimal.valueOf(1.3*(1+lsd.GiantArrow.getOrDefault(p.getUniqueId(), 0) * 0.156))
 									.setScale(2, RoundingMode.HALF_EVEN)
 									+ "D",
@@ -243,7 +243,7 @@ public class LaunSkillsGui extends SkillsGui {
 					2, Launskillsinv);
 			itemset("GiantArrow", Material.TIPPED_ARROW, 4, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + lsd.GiantArrow.getOrDefault(p.getUniqueId(), 0), "",
-							"Jump + SwapHand", "",
+							"SwapHand", "",
 							ChatColor.BOLD +""+ BigDecimal.valueOf(1.3*(1+lsd.GiantArrow.getOrDefault(p.getUniqueId(), 0) * 0.156))
 									.setScale(2, RoundingMode.HALF_EVEN)+ "D",
 							"Master LV.50"),
