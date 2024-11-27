@@ -810,7 +810,7 @@ public class Weapons {
 	
 		rm.addAttributeModifier(Attribute.LUCK,
 				new AttributeModifier(getKey(), 30,
-						Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
+						Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
 		
 				
 		final String m = r.getType().name();
@@ -921,13 +921,6 @@ public class Weapons {
 							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
 			rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 					new AttributeModifier(getKey(), 27,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
-	
-			rm.addAttributeModifier(Attribute.LUCK,
-					new AttributeModifier(getKey(), 30,
-							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
-			rm.addAttributeModifier(Attribute.LUCK,
-					new AttributeModifier(getKey(), 30,
 							Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 			
 			rm.addAttributeModifier(Attribute.ATTACK_SPEED,

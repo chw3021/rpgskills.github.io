@@ -962,7 +962,7 @@ public class Frostskills extends Pak {
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec =4.5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =3.5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 		if(ClassData.pc.get(p.getUniqueId()) == 21&& bsd.SnowBreeze.getOrDefault(p.getUniqueId(), 0)>=1) {
 			final Location l = p.getLocation().clone();
 			if(p.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD &&!p.isSneaking()&& !p.isOnGround() &&!p.hasCooldown(CAREFUL))
@@ -1018,6 +1018,8 @@ public class Frostskills extends Pak {
 								p.playSound(p.getLocation(), Sound.ENTITY_SNOW_GOLEM_AMBIENT, 1f, 0f);
 								p.playSound(p.getLocation(), Sound.ENTITY_HORSE_BREATHE, 1f, 0f);
 								p.playSound(p.getLocation(), Sound.ENTITY_ZOMBIE_INFECT, 1f, 0f);
+								p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 50,1,false,false));
+								p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 50,1,false,false));
 								for(Entity e : p.getNearbyEntities(4, 3, 4)) {
 									if (e instanceof Player)
 									{
@@ -1102,6 +1104,8 @@ public class Frostskills extends Pak {
 					p.playSound(p.getLocation(), Sound.BLOCK_POWDER_SNOW_FALL, 1f, 0f);
 					p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_CLUSTER_BREAK, 1f, 2f);
 					p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 50,0,false,false));
+					p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 50,1,false,false));
+					p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 50,1,false,false));
 
 				}
 			}
