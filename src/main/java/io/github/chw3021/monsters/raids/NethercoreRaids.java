@@ -81,10 +81,10 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 
 public class NethercoreRaids extends Summoned implements Listener {
 
-	private static HashMap<UUID, Location> beforepl = new HashMap<UUID, Location>();
+	public static HashMap<UUID, Location> beforepl = new HashMap<UUID, Location>();
 	private Multimap<String, UUID> raider = ArrayListMultimap.create();
-	private static Multimap<String, UUID> heroes = ArrayListMultimap.create();
-	private static HashMap<String, Location> raidloc = new HashMap<String, Location>();
+	public static Multimap<String, UUID> heroes = ArrayListMultimap.create();
+	public static HashMap<String, Location> raidloc = new HashMap<String, Location>();
 	private HashMap<String, UUID> raidpor = new HashMap<String, UUID>();
 	private HashMap<String, Integer> raidt = new HashMap<String, Integer>();
 	private HashMap<String, BossBar> raidbar = new HashMap<String, BossBar>();
@@ -111,11 +111,11 @@ public class NethercoreRaids extends Summoned implements Listener {
 
 	private HashMap<String, Integer> bossnum = new HashMap<String, Integer>();
 
-	private HashMap<String, String> language = new HashMap<String, String>();
+	public HashMap<String, String> language = new HashMap<String, String>();
 	
 	Integer DelayTime =  100;
 	Integer LIVES = 5;
-	Double BOSSHP = 250000d;
+	final public Double BOSSHP = 250000d;
 	
 	Integer BOSSNUM = -5;
 	
@@ -156,7 +156,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 		}
 	}
 	
-	protected final void NethercoreRaidFinish(String rn, String title, String sub, Integer factor) {
+	public final void NethercoreRaidFinish(String rn, String title, String sub, Integer factor) {
 		RaidFinish(rn,title,sub,factor);
 
 		Bukkit.getWorld("NethercoreRaid").getEntities().stream().filter(e -> e.hasMetadata("mirror"+rn)).forEach(e -> e.remove());
@@ -313,7 +313,9 @@ public class NethercoreRaids extends Summoned implements Listener {
         		raider.get(rn).forEach(re -> {
         			Mob rm = (Mob)Bukkit.getEntity(re);
         			if(rm!=null) {
-            			rm.setTarget((LivingEntity) Bukkit.getEntity(vil.get(rn)));
+        				if(vil.containsKey(rn)) {
+                			rm.setTarget((LivingEntity) Bukkit.getEntity(vil.get(rn)));
+        				}
             			Location rml = rm.getLocation().clone();
             			rml.setY(rl.getY());
             			if(rml.clone().distance(rl) >80) {
@@ -404,7 +406,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 		return pe;
 	}
 	
-	final private LivingEntity bossgen(Location spl, Player pm, String rn, Integer in, Double dif) {
+	final public LivingEntity bossgen(Location spl, Player pm, String rn, Integer in, Double dif) {
 		
     	Random random=new Random();
     	double number = (random.nextDouble()+1.5) * 2 * (random.nextBoolean() ? -1 : 1);

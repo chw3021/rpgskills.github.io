@@ -2285,6 +2285,7 @@ public class Engskills extends Pak {
 			ar.setAI(true);
 			ar.getAttribute(Attribute.SCALE).setBaseValue(10);
 			ar.getAttribute(Attribute.BURNING_TIME).setBaseValue(0);
+			ar.setBodyPose(new EulerAngle(85, 0, 0));
 
 			ar.setBasePlate(false);
 			ar.setInvulnerable(true);

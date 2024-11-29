@@ -133,7 +133,7 @@ public class PiglinSkills extends Summoned{
 	                    ws.setVelocity(p.getLocation().getDirection().normalize().multiply(1.1));
 	        			ws.setMetadata("cookedFoods", new FixedMetadataValue(RMain.getInstance(), true));
 	                }
-	            }, j.getAndIncrement()*4+15); 
+	            }, j.getAndIncrement()*3+10); 
 			}
 
 
@@ -667,6 +667,7 @@ public class PiglinSkills extends Summoned{
     			}
     			p.getWorld().playSound(p.getLocation(), Sound.ENTITY_PIGLIN_ANGRY, 0.1f, 0f);
     			p.getWorld().spawnParticle(Particle.SMOKE ,p.getLocation(), 30, 2,2,2,1);
+    			p.getWorld().spawnParticle(Particle.WHITE_SMOKE ,p.getLocation(), 30, 2,2,2,1);
                 
                 final Location cl = p.getLocation().clone();
                 
@@ -718,7 +719,7 @@ public class PiglinSkills extends Summoned{
 		}
 		if(rb8cooldown.containsKey(p.getUniqueId()))
         {
-            long timer = (rb8cooldown.get(p.getUniqueId())/1000 + 9) - System.currentTimeMillis()/1000; 
+            long timer = (rb8cooldown.get(p.getUniqueId())/1000 + 7) - System.currentTimeMillis()/1000; 
             if(!(timer < 0))
             {
             }
@@ -899,7 +900,7 @@ public class PiglinSkills extends Summoned{
 								Bukkit.getScheduler().cancelTask(ast.remove(newmob.getUniqueId()));
 							}
 		                	Holding.ale(newmob).remove();
-		                	newmob.getWorld().spawnParticle(Particle.HEART, newmob.getLocation(), 50,1,1,1);
+		                	newmob.getWorld().spawnParticle(Particle.HEART, newmob.getLocation(), 20,1,1,1);
 		                	pe.getWorld().playSound(pe.getLocation(), Sound.ENTITY_GENERIC_EAT, 1, 2);
 		                	pe.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 20, 20, false,false,false));
 		                	return;
@@ -933,7 +934,7 @@ public class PiglinSkills extends Summoned{
 	            	Location arl = Holding.ale(newmob).getLocation();
 
 	            	if(pel.getWorld().equals(arl.getWorld())) {
-	            		Vector v = pel.clone().toVector().subtract(arl.clone().toVector()).clone().normalize().multiply(0.03);
+	            		Vector v = pel.clone().toVector().subtract(arl.clone().toVector()).clone().normalize().multiply(0.04);
 	            		if(pel.distance(arl)>10) {
 	            			v.multiply(10);
 	            		}
@@ -944,7 +945,7 @@ public class PiglinSkills extends Summoned{
 	        		for(Entity e : newmob.getWorld().getNearbyEntities(newmob.getLocation().clone(), 1, 5, 1)) {
 						if(p!=e && e instanceof Player) {
 							Player le = (Player)e;
-							le.damage(5,p);
+							le.damage(6,p);
 						}
 	            	}
 	            }
