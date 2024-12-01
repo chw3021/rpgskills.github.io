@@ -318,7 +318,7 @@ public class NethercoreRaids extends Summoned implements Listener {
         				}
             			Location rml = rm.getLocation().clone();
             			rml.setY(rl.getY());
-            			if(rml.clone().distance(rl) >80) {
+            			if(rml.getWorld()!=rl.getWorld() || rml.clone().distance(rl) >80) {
             				rm.teleport(rl.clone().add(1, 1, 0));
             			}
         			}
@@ -1170,7 +1170,9 @@ public class NethercoreRaids extends Summoned implements Listener {
         		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + String.valueOf(lives.getOrDefault(rn, 0)) + "lives Left");
         	});
         	if(lives.getOrDefault(rn, 0)<=0) {
-
+        		if(!language.containsKey(rn)) {
+    				NethercoreRaidFinish(rn, "패배..", "모든 목숨 소진",0);
+        		}
     			if(language.get(rn).equalsIgnoreCase("ko_kr")) {
     				NethercoreRaidFinish(rn, "패배..", "모든 목숨 소진",0);
     			}

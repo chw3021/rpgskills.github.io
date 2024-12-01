@@ -525,7 +525,7 @@ public class HarvesterSkills extends NethercoreRaids{
 		p.swingMainHand();
 		p.getWorld().playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 0f);
 		p.getWorld().playSound(p.getLocation(), Sound.ENTITY_EVOKER_PREPARE_SUMMON, 1.0f, 0f);
-			p.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME ,p.getLocation(), 200, 0.2,1,0.2,1,0.5f);
+			p.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME ,p.getLocation(), 200, 0.2,1,0.2,1);
 			p.getWorld().spawnParticle(Particle.ENTITY_EFFECT ,p.getEyeLocation(), 10,Color.TEAL);
 			Holding.holding(null, p, 5l);
 

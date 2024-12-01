@@ -41,6 +41,8 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
+import com.google.common.util.concurrent.AtomicDouble;
+
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.monsters.raids.NethercoreRaids;
 import io.github.chw3021.monsters.raids.Summoned;
@@ -177,8 +179,9 @@ public class PiglinSkills extends Summoned{
 	                Location tl = gettargetblock(p,4).clone();
 	                
 					p.getWorld().playSound(tl, Sound.BLOCK_FURNACE_FIRE_CRACKLE, 1f, 0f);
-                	p.getWorld().spawnParticle(Particle.FLAME, tl, 500, 4, 1, 4, 0);
+                	p.getWorld().spawnParticle(Particle.ASH, tl, 500, 4, 1, 4, 0);
                 	p.getWorld().spawnParticle(Particle.SMOKE, tl, 500, 4, 1, 4, 0);
+                	p.getWorld().spawnParticle(Particle.INSTANT_EFFECT, tl, 500, 4, 1, 4, 0);
                 	
                 	
                     ArrayList<Location> meats = new ArrayList<>();
@@ -303,66 +306,74 @@ public class PiglinSkills extends Summoned{
 
 	private HashMap<UUID, LivingEntity> blockToPiglin = new HashMap<>();
 	private HashMap<UUID, Integer> blockt = new HashMap<>();
-	
 	final private void createFallingRod(LivingEntity p, Location startLocation, Location targetLocation) {
 	    World world = startLocation.getWorld();
 	    Material rodMaterial = Material.FURNACE;
 	    int rodHeight = 8;
 	    List<FallingBlock> fallingBlocks = new ArrayList<>();
+	    List<Double> offsets = new ArrayList<>();
 
 	    // 세워진 막대기 생성
 	    for (int i = 0; i < rodHeight; i++) {
-	        Location blockLoc = startLocation.clone().add(0, i*1.5, 0);
+	        Location blockLoc = startLocation.clone().add(0, i * 1.5, 0);
 	        FallingBlock fallingBlock = world.spawnFallingBlock(blockLoc, rodMaterial.createBlockData());
-	        fallingBlock.setDropItem(true);
+	        fallingBlock.setDropItem(false);
 	        fallingBlock.setHurtEntities(true);
-	        fallingBlock.setGravity(true);
+	        fallingBlock.setGravity(false); // 중력 비활성화
 	        fallingBlocks.add(fallingBlock);
+	        offsets.add(i * 1.5); // 각 블록의 초기 높이 저장
 	        blockToPiglin.put(fallingBlock.getUniqueId(), p);
 	    }
 
-	    // 목표 위치로 넘어지는 각도 계산
+	    // 목표 위치로 넘어지는 방향 계산
 	    Vector direction = targetLocation.clone().subtract(startLocation).toVector().normalize();
-	    
-	    // 일정 시간 동안 막대기가 목표 위치를 향해 넘어지게 회전
-	    int t = Bukkit.getScheduler().runTaskTimer(RMain.getInstance(), new Runnable() {
-	        double rotationAngle = 0;
-	        boolean hasFallen = false;
+	    AtomicInteger tickCounter = new AtomicInteger(0);
 
+	    // 스케줄러를 사용해 넘어지는 동작 구현
+	    int taskId = Bukkit.getScheduler().runTaskTimer(RMain.getInstance(), new Runnable() {
 	        @Override
 	        public void run() {
-	            if (hasFallen) {
-	        		if(blockt.containsKey(p.getUniqueId())) {
-	        			Bukkit.getScheduler().cancelTask(blockt.remove(p.getUniqueId()));
-	        		}
-	            	return;
-	            }
+	            int tick = tickCounter.getAndIncrement();
 
-	            // 넘어지는 각도 조절
+	            boolean hasFallen = false;
+
 	            for (int i = 0; i < fallingBlocks.size(); i++) {
 	                FallingBlock block = fallingBlocks.get(i);
-	                Location loc = block.getLocation();
 
-	                // 막대기의 각도를 목표 위치를 향한 방향으로 변경
-	                double xOffset = direction.getX() * Math.cos(rotationAngle) * i;
-	                double zOffset = direction.getZ() * Math.cos(rotationAngle) * i;
-	                double yOffset = Math.sin(rotationAngle) * i;
+	                // 계단 효과를 위한 개별 블록 타이밍 계산
+	                if (tick < i * 5) continue;
 
-	                // 새로운 위치 설정 (목표 위치를 향해 넘어짐)
-	                loc.add(xOffset, -yOffset, zOffset);
-	                block.teleport(loc);
+	                // 넘어지는 위치 계산
+	                double rotationAngle = (tick - i * 5) * 0.1; // 각 블록이 시간 차를 두고 회전
+	                double heightFactor = offsets.get(i); // 블록의 높이에 비례한 이동량
+	                double xOffset = direction.getX() * heightFactor * Math.sin(rotationAngle); // 수평 이동량 계산
+	                double zOffset = direction.getZ() * heightFactor * Math.sin(rotationAngle); // 수평 이동량 계산
+	                double yOffset = -Math.abs(Math.cos(rotationAngle)) * 0.5; // 계단식 수직 이동
 
-	                rotationAngle += 0.02; // 점차 넘어짐
+	                Vector velocity = new Vector(xOffset, yOffset, zOffset);
 
-	                // 막대기가 지면에 닿았을 때 충돌 효과
-	                if (loc.getY() <= startLocation.getY()) {
-	                    hasFallen = true;
+	                // 블록이 넘어지는 듯한 물리적 움직임 적용
+	                block.setVelocity(velocity);
+
+	                // 바닥에 닿았는지 확인
+	                if (block.getLocation().getY() <= startLocation.getY() - 0.5) {
+	                    //hasFallen = true;
+	                }
+	            }
+
+	            // 막대기가 완전히 넘어졌을 때 작업 종료
+	            if (hasFallen) {
+	                for (FallingBlock block : fallingBlocks) {
+	                    blockexplode(block); // 블록 폭발 처리 메서드 호출
+	                }
+	                if (blockt.containsKey(p.getUniqueId())) {
+	                    Bukkit.getScheduler().cancelTask(blockt.remove(p.getUniqueId()));
 	                }
 	            }
 	        }
-	    }, 4L, 1L).getTaskId(); // 1틱마다 실행
-	    
-	    blockt.put(p.getUniqueId(), t);
+	    }, 4L, 1L).getTaskId();
+
+	    blockt.put(p.getUniqueId(), taskId);
 	}
 
 
@@ -408,7 +419,7 @@ public class PiglinSkills extends Summoned{
 		    FallingBlock fallingb = (FallingBlock) ev.getEntity();
 	        if(blockToPiglin.containsKey(fallingb.getUniqueId())){
 	        	ev.setCancelled(true);
-	        	blockexplode(fallingb);
+	        	//blockexplode(fallingb);
 	        }
 		 }
 	}
@@ -422,7 +433,7 @@ public class PiglinSkills extends Summoned{
 		    FallingBlock fallingb = (FallingBlock) ev.getDamager();
 	        if(blockToPiglin.containsKey(fallingb.getUniqueId())){
 	        	ev.setCancelled(true);
-	        	blockexplode(fallingb);
+	        	//blockexplode(fallingb);
 	        }
 		 }
 	}
@@ -435,7 +446,7 @@ public class PiglinSkills extends Summoned{
 		    FallingBlock fallingb = (FallingBlock) ev.getEntity();
 	        if(blockToPiglin.containsKey(fallingb.getUniqueId())){
 	        	ev.setCancelled(true);
-	        	blockexplode(fallingb);
+	        	//blockexplode(fallingb);
 	        }
 		 }
 	}
@@ -524,7 +535,7 @@ public class PiglinSkills extends Summoned{
         Holding.holding(null, p, 40l);
 		Location pfl = p.getEyeLocation().clone();
 		w.playSound(pfl, Sound.ENTITY_PIGLIN_BRUTE_DEATH, 1.0f, 0f);
-		w.playSound(pfl, Sound.ENTITY_PIGLIN_BRUTE_DEATH, 1.0f, 0f);
+		w.playSound(pfl, Sound.ENTITY_PIGLIN_BRUTE_DEATH, 1.0f, 2f);
 		w.spawnParticle(Particle.SMOKE, pfl, 150, 2,2,2);
 		w.spawnParticle(Particle.BLOCK_MARKER, pfl, 20,1,1,1, getBd(Material.FURNACE));
 		
@@ -574,7 +585,7 @@ public class PiglinSkills extends Summoned{
 		if(d.getEntity().hasMetadata("volcanicboss") && (d.getEntity() instanceof Mob)) 
 		{
 			Mob p = (Mob)d.getEntity();
-			int sec = 8;
+			int sec = 10;
 
 			if(ordeal.containsKey(p.getUniqueId())) {
 				return;
@@ -653,10 +664,9 @@ public class PiglinSkills extends Summoned{
 		p.getWorld().playSound(p.getLocation(), Sound.BLOCK_BLASTFURNACE_FIRE_CRACKLE, 1.0f, 0f);
 			p.getWorld().spawnParticle(Particle.WHITE_ASH ,p.getLocation(), 100, 0.2,1,0.2,1);
 			p.getWorld().spawnParticle(Particle.WHITE_SMOKE ,p.getLocation(), 100, 0.2,1,0.2,1);
-			p.getWorld().spawnParticle(Particle.LAVA ,p.getEyeLocation(), 10);
-			Holding.holding(null, p, 10l);
+			p.getWorld().spawnParticle(Particle.BLOCK_MARKER, pfl, 20,1,1,1, getBd(Material.PIGLIN_HEAD));
+			Holding.holding(null, p, 25l);
 
-		Location pl = pfl.clone();
 
     	int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
     		@Override
@@ -666,27 +676,22 @@ public class PiglinSkills extends Summoned{
     				return;
     			}
     			p.getWorld().playSound(p.getLocation(), Sound.ENTITY_PIGLIN_ANGRY, 0.1f, 0f);
-    			p.getWorld().spawnParticle(Particle.SMOKE ,p.getLocation(), 30, 2,2,2,1);
+    			p.getWorld().spawnParticle(Particle.SWEEP_ATTACK ,p.getLocation(), 30, 2,2,2,1);
     			p.getWorld().spawnParticle(Particle.WHITE_SMOKE ,p.getLocation(), 30, 2,2,2,1);
                 
                 final Location cl = p.getLocation().clone();
                 
-    			pl.add(pv.clone().normalize().multiply(1.25));
-    			
-    			if(pl.getBlock().isPassable()) {
-					p.teleport(pl);
-    			}
+    			p.setVelocity(pv.normalize().multiply(0.33));
 
                 for(Entity e : cl.getWorld().getNearbyEntities(cl,2,2,2)) {
 					if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
 						LivingEntity le = (LivingEntity)e;
 						le.damage(3.5,p);
-						le.teleport(p);
 					}
                 }
     			
             }
-    	},25,1);
+    	},25,2);
         hookt1.put(p.getUniqueId(), task);
         ordt.put(gethero(p), task);
         
@@ -698,15 +703,16 @@ public class PiglinSkills extends Summoned{
     				Bukkit.getScheduler().cancelTask(hookt1.get(p.getUniqueId()));
     				hookt1.remove(p.getUniqueId());
     			}
+     			chargable.remove(p.getUniqueId());
             }
-    	},20);
+    	},65);
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
      		@Override
         	public void run() 
             {	
      			porkable.put(p.getUniqueId(), true);
             }
-        }, 150); 
+        }, 180); 
 	}
 	
 	final private void charge(LivingEntity p, Location tl) {
@@ -719,7 +725,7 @@ public class PiglinSkills extends Summoned{
 		}
 		if(rb8cooldown.containsKey(p.getUniqueId()))
         {
-            long timer = (rb8cooldown.get(p.getUniqueId())/1000 + 7) - System.currentTimeMillis()/1000; 
+            long timer = (rb8cooldown.get(p.getUniqueId())/1000 + 8) - System.currentTimeMillis()/1000; 
             if(!(timer < 0))
             {
             }

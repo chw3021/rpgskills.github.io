@@ -1457,7 +1457,7 @@ public class Fireskills extends Pak {
 		tl.getWorld().spawnParticle(Particle.FLAME, tl, 100,5,5,5);
 		tl.getWorld().spawnParticle(Particle.EXPLOSION, tl, 2,1,1,1);
 
-		for (Entity e : p.getWorld().getNearbyEntities(tl, 5, 5, 5))
+		for (Entity e : tl.getWorld().getNearbyEntities(tl, 5, 5, 5))
 		{
     		if (e instanceof Player) 
 			{
