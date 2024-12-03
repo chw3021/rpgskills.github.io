@@ -306,7 +306,7 @@ public class PiglinSkills extends Summoned{
 
 	private HashMap<UUID, LivingEntity> blockToPiglin = new HashMap<>();
 	private HashMap<UUID, Integer> blockt = new HashMap<>();
-	final private void createFallingRod(LivingEntity p, Location startLocation, Location targetLocation) {
+	final private void createFallingRod(LivingEntity p, final Location startLocation, final Location targetLocation, String rn) {
 	    World world = startLocation.getWorld();
 	    Material rodMaterial = Material.FURNACE;
 	    int rodHeight = 8;
@@ -316,64 +316,65 @@ public class PiglinSkills extends Summoned{
 	    // 세워진 막대기 생성
 	    for (int i = 0; i < rodHeight; i++) {
 	        Location blockLoc = startLocation.clone().add(0, i * 1.5, 0);
-	        FallingBlock fallingBlock = world.spawnFallingBlock(blockLoc, rodMaterial.createBlockData());
+	        FallingBlock fallingBlock = world.spawnFallingBlock(blockLoc, getBd(rodMaterial));
 	        fallingBlock.setDropItem(false);
-	        fallingBlock.setHurtEntities(true);
+	        fallingBlock.setHurtEntities(false);
 	        fallingBlock.setGravity(false); // 중력 비활성화
+	        fallingBlock.setCancelDrop(true);
+	        fallingBlock.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), rn));
 	        fallingBlocks.add(fallingBlock);
 	        offsets.add(i * 1.5); // 각 블록의 초기 높이 저장
 	        blockToPiglin.put(fallingBlock.getUniqueId(), p);
 	    }
 
-	    // 목표 위치로 넘어지는 방향 계산
-	    Vector direction = targetLocation.clone().subtract(startLocation).toVector().normalize();
-	    AtomicInteger tickCounter = new AtomicInteger(0);
+	    Vector startVector = targetLocation.clone().subtract(startLocation.clone()).toVector().normalize();
 
 	    // 스케줄러를 사용해 넘어지는 동작 구현
 	    int taskId = Bukkit.getScheduler().runTaskTimer(RMain.getInstance(), new Runnable() {
 	        @Override
 	        public void run() {
-	            int tick = tickCounter.getAndIncrement();
 
 	            boolean hasFallen = false;
 
 	            for (int i = 0; i < fallingBlocks.size(); i++) {
 	                FallingBlock block = fallingBlocks.get(i);
+	                Location tbl = targetLocation.clone().add(startVector.clone().multiply(i));
+	                tbl.setY(startLocation.getY()-1);
+		    	    Vector direction = tbl.clone().subtract(block.getLocation().clone()).toVector().normalize();
 
 	                // 계단 효과를 위한 개별 블록 타이밍 계산
-	                if (tick < i * 5) continue;
 
 	                // 넘어지는 위치 계산
-	                double rotationAngle = (tick - i * 5) * 0.1; // 각 블록이 시간 차를 두고 회전
 	                double heightFactor = offsets.get(i); // 블록의 높이에 비례한 이동량
-	                double xOffset = direction.getX() * heightFactor * Math.sin(rotationAngle); // 수평 이동량 계산
-	                double zOffset = direction.getZ() * heightFactor * Math.sin(rotationAngle); // 수평 이동량 계산
-	                double yOffset = -Math.abs(Math.cos(rotationAngle)) * 0.5; // 계단식 수직 이동
 
-	                Vector velocity = new Vector(xOffset, yOffset, zOffset);
+	                Vector velocity = direction.clone().normalize().multiply(heightFactor*0.1);
 
 	                // 블록이 넘어지는 듯한 물리적 움직임 적용
 	                block.setVelocity(velocity);
-
-	                // 바닥에 닿았는지 확인
-	                if (block.getLocation().getY() <= startLocation.getY() - 0.5) {
-	                    //hasFallen = true;
-	                }
 	            }
 
 	            // 막대기가 완전히 넘어졌을 때 작업 종료
 	            if (hasFallen) {
-	                for (FallingBlock block : fallingBlocks) {
-	                    blockexplode(block); // 블록 폭발 처리 메서드 호출
-	                }
-	                if (blockt.containsKey(p.getUniqueId())) {
-	                    Bukkit.getScheduler().cancelTask(blockt.remove(p.getUniqueId()));
-	                }
 	            }
 	        }
 	    }, 4L, 1L).getTaskId();
 
 	    blockt.put(p.getUniqueId(), taskId);
+	    ordt.put(rn, taskId);
+	    
+	    int taskId1 = Bukkit.getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
+	        @Override
+	        public void run() {
+
+                for (FallingBlock block : fallingBlocks) {
+                    blockexplode(block); // 블록 폭발 처리 메서드 호출
+                }
+                if (blockt.containsKey(p.getUniqueId())) {
+                    Bukkit.getScheduler().cancelTask(blockt.remove(p.getUniqueId()));
+                }
+	        }
+	    }, 20).getTaskId();
+	    ordt.put(rn, taskId1);
 	}
 
 
@@ -466,7 +467,7 @@ public class PiglinSkills extends Summoned{
 		w.spawnParticle(Particle.LARGE_SMOKE, pl, 150, 2,2,2);
 		w.spawnParticle(Particle.GUST, pl, 150, 2,2,2);
 		
-		createFallingRod(p,p.getEyeLocation(),gettargetblock(p,5));
+		createFallingRod(p,p.getEyeLocation(),gettargetblock(p,5), gethero(p));
 		
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
      		@Override
