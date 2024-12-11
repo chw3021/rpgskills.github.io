@@ -334,8 +334,6 @@ public class PiglinSkills extends Summoned{
 	        @Override
 	        public void run() {
 
-	            boolean hasFallen = false;
-
 	            for (int i = 0; i < fallingBlocks.size(); i++) {
 	                FallingBlock block = fallingBlocks.get(i);
 	                Location tbl = targetLocation.clone().add(startVector.clone().multiply(i));
@@ -353,9 +351,6 @@ public class PiglinSkills extends Summoned{
 	                block.setVelocity(velocity);
 	            }
 
-	            // 막대기가 완전히 넘어졌을 때 작업 종료
-	            if (hasFallen) {
-	            }
 	        }
 	    }, 4L, 1L).getTaskId();
 

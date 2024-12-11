@@ -32,6 +32,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.EntitySpellCastEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
@@ -76,44 +77,45 @@ public class HarvesterSkills extends NethercoreRaids{
         return line;
 	}
 
-	public void bowshoot(EntityShootBowEvent ev) 
+	public void bowshoot(ProjectileLaunchEvent ev) 
 	{
-		if(ev.getEntity().hasMetadata("soulboss")){
-
-			ev.setCancelled(true);
+		if(ev.getEntity().getShooter() instanceof LivingEntity){
 			
-		    LivingEntity p = ev.getEntity();
+		    LivingEntity p = (LivingEntity) ev.getEntity().getShooter();
 		    
-        	p.getWorld().playSound(p.getLocation(), Sound.ENTITY_EVOKER_FANGS_ATTACK, 1f, 0f);
+		    if(p.hasMetadata("soulboss")) {
 
-			p.getWorld().spawnParticle(Particle.SOUL, p.getLocation(), 10);
-			AtomicInteger j = new AtomicInteger();
-			
-			Location tl = gettargetblock(p,15);
-			if(((Mob)p).getTarget() != null) {
-				tl = ((Mob)p).getTarget().getLocation();
-			}
-            String rn = gethero(p);
-            
-			raytrace(p.getLocation(),tl.distance(p.getLocation())).forEach(l ->{
-        		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	                @Override
-	                public void run() {
-	                	p.swingMainHand();
-	                	EvokerFangs ef = (EvokerFangs)p.getWorld().spawnEntity(l, EntityType.EVOKER_FANGS);
-	                	ef.setVelocity(l.getDirection().normalize().multiply(1.5));
-	                    ef.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-	                    ef.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
-	                    ef.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), true));
-	                    ef.setMetadata("soul", new FixedMetadataValue(RMain.getInstance(), true));
-	                	ef.setOwner(p);
-	                	ef.setAttackDelay(0);
-	                	ef.setInvulnerable(true);
-	                	
-	                }
-	            }, j.getAndIncrement()*2); 
-			});
+	        	p.getWorld().playSound(p.getLocation(), Sound.ENTITY_EVOKER_FANGS_ATTACK, 1f, 0f);
 
+				p.getWorld().spawnParticle(Particle.SOUL, p.getLocation(), 10);
+				AtomicInteger j = new AtomicInteger();
+				
+				Location tl = gettargetblock(p,15);
+				if(((Mob)p).getTarget() != null) {
+					tl = ((Mob)p).getTarget().getLocation();
+				}
+	            String rn = gethero(p);
+	            
+				raytrace(p.getLocation(),tl.distance(p.getLocation())).forEach(l ->{
+	        		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		                @Override
+		                public void run() {
+		                	p.swingMainHand();
+		                	EvokerFangs ef = (EvokerFangs)p.getWorld().spawnEntity(l, EntityType.EVOKER_FANGS);
+		                	ef.setVelocity(l.getDirection().normalize().multiply(1.5));
+		                    ef.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+		                    ef.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
+		                    ef.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), true));
+		                    ef.setMetadata("soul", new FixedMetadataValue(RMain.getInstance(), true));
+		                	ef.setOwner(p);
+		                	ef.setAttackDelay(0);
+		                	ef.setInvulnerable(true);
+		                	
+		                }
+		            }, j.getAndIncrement()*2); 
+				});
+		    }
+		    
 
 		 }
 	}
