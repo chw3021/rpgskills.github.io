@@ -10,7 +10,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -23,7 +22,7 @@ import org.jetbrains.annotations.Nullable;
 import io.github.chw3021.party.Party;
 import io.github.chw3021.rmain.RMain;
 
-public class Holding implements Listener{
+public class Holding{
 	
 	static public HashMap<UUID, Long> holded = new HashMap<UUID, Long>();
 	static public HashMap<UUID, Long> slowed = new HashMap<UUID, Long>();

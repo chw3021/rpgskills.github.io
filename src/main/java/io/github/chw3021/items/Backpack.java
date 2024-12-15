@@ -3,7 +3,6 @@ package io.github.chw3021.items;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
@@ -112,7 +111,7 @@ public class Backpack implements Serializable, Listener{
 
     final private static ItemStack[] getinv(Player p, Integer page) {
         Table<UUID, Integer, ItemStack[]> chest = getdata();
-        if(!chest.contains(p.getUniqueId(), page)) {
+        if(!chest.containsRow(p.getUniqueId()) || !chest.contains(p.getUniqueId(), page)) {
         	chest.put(p.getUniqueId(), page, new ItemStack[54]);
         }
 		return chest.get(p.getUniqueId(), page);
@@ -133,23 +132,6 @@ public class Backpack implements Serializable, Listener{
 		inv.setItem(loc, item);
 	}
 
-    final private void checkoff(Player p) throws FileNotFoundException {
-
-		
-		String name = null;
-		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			name = p.getName() + "의 배낭";
-		}
-		else {
-			name = p.getName() + "'s Backpack";
-		}
-		Inventory ci = Bukkit.createInventory(p, 54, name);
-		if(check(p)) {
-			ci = page(p,0);
-		}
-		p.openInventory(ci);
-		save(p,ci);
-    }
     
     final private static Inventory page(Player p, int page){
 
@@ -186,6 +168,12 @@ public class Backpack implements Serializable, Listener{
 			itemset(ChatColor.GOLD + "Next", pager, 0, 1,
 					Arrays.asList(ChatColor.GOLD + "" + (page)), 53, ci);
 		}
+        Table<UUID, Integer, ItemStack[]> chest = getdata();  // 가방 데이터 가져오기
+        chest.put(p.getUniqueId(), page, ci.getContents());
+
+        // 데이터 저장
+        String path = new File("").getAbsolutePath();
+        new Backpack(chest).saveData(path + "/plugins/RPGskills/BackPack.data");
 		return ci;
     }
 
@@ -225,12 +213,7 @@ public class Backpack implements Serializable, Listener{
 				String s = ChatColor.stripColor((e.getCurrentItem().getItemMeta().getDisplayName()));
 				if(s.equals("Backpack") || s.equals("배낭")) {
 					e.setResult(Result.DENY);
-					try {
-						checkoff(p);
-					}
-					catch(FileNotFoundException ex) {
-						p.closeInventory();
-					}
+					p.openInventory(page(p,0));
 					p.setItemOnCursor(null);
 				}
 				else if(s.equals("Dumpster") || s.equals("쓰레기통")) {
@@ -357,6 +340,64 @@ public class Backpack implements Serializable, Listener{
 	    }
 	    return inv; // 갱신된 인벤토리 반환
 	}
+
+	public static void add(Player player, ItemStack item, int startPage) {
+		Table<UUID, Integer, ItemStack[]> chest = null;
+	    try {
+	        chest = getdata();  // 가방 데이터 가져오기
+
+	    } catch (Exception e) {
+	        // 가방 데이터가 없을 경우 새 페이지 생성
+	    	chest = HashBasedTable.create();
+	        chest.put(player.getUniqueId(), 0, new ItemStack[54]);  // 첫 페이지 생성
+	        String path = new File("").getAbsolutePath();
+	        new Backpack(chest).saveData(path + "/plugins/RPGskills/BackPack.data");
+	    }
+	    finally {
+
+	        int totalItems = item.getAmount();  // 아이템 총 개수
+	        int stackSize = item.getMaxStackSize();  // 최대 스택 크기
+	        int requiredSlots = (int) Math.ceil((double) totalItems / stackSize);  // 필요한 슬롯 수 계산
+	        HashSet<Integer> emptyIndexes = new HashSet<>();  // 빈 슬롯 추적
+	        int currentPage = startPage;
+
+	        ItemStack[] inventory = null;
+
+	        // 현재 페이지별로 빈 슬롯 탐색 (52, 53번 슬롯 제외)
+            ItemStack[] currentPageItems = getinv(player, currentPage);
+
+            for (int slot = 0; slot < 52; slot++) {  // 52번과 53번 슬롯은 페이지 전환용이므로 제외
+                ItemStack currentItem = currentPageItems[slot];
+                if (currentItem == null || (currentItem.isSimilar(item) && currentItem.getAmount() < stackSize)) {
+                    emptyIndexes.add(slot);
+                    if (--requiredSlots <= 0) {
+                        inventory = currentPageItems;
+                        break;
+                    }
+                }
+            }
+
+	        // 빈 슬롯을 찾지 못한 경우 새로운 페이지 생성
+	        if (emptyIndexes.isEmpty() || inventory == null) {
+	            if (currentPage >= 100) { // 최대 페이지 제한
+	                player.sendMessage(ChatColor.RED + "더 이상 페이지를 생성할 수 없습니다!");
+	                return;
+	            }
+
+	            // 재귀 호출로 다음 페이지 처리
+	            add(player, item, currentPage + 1);
+	            return; // 재귀 호출 후 현재 호출 종료
+	        }
+
+	        // 아이템 추가
+	        ItemStack[] updatedInventory = Add(inventory, item, totalItems, emptyIndexes);
+	        chest.put(player.getUniqueId(), currentPage, updatedInventory);
+
+	        // 데이터 저장
+	        String path = new File("").getAbsolutePath();
+	        new Backpack(chest).saveData(path + "/plugins/RPGskills/BackPack.data");
+	    }
+	}
 	
 	public static void add(Player player, ItemStack item) {
 	    try {
@@ -367,11 +408,11 @@ public class Backpack implements Serializable, Listener{
 	        HashSet<Integer> emptyIndexes = new HashSet<>();  // 빈 슬롯 추적
 
 	        ItemStack[] inventory = null;
-	        
+	        int currentPage = 0;
 
 	        // 현재 페이지별로 빈 슬롯 탐색 (52, 53번 슬롯 제외)
-	        for (int currentPage = 0; currentPage < chest.row(player.getUniqueId()).keySet().size(); currentPage++) {
-	            ItemStack[] currentPageItems = chest.get(player.getUniqueId(), currentPage);
+	        for (;currentPage < chest.row(player.getUniqueId()).keySet().size(); currentPage++) {
+	            ItemStack[] currentPageItems = getinv(player, currentPage);
 
 	            for (int slot = 0; slot < 52; slot++) {  // 52번과 53번 슬롯은 페이지 전환용이므로 제외
 	                ItemStack currentItem = currentPageItems[slot];
@@ -389,18 +430,13 @@ public class Backpack implements Serializable, Listener{
 
 	        // 빈 슬롯을 찾지 못한 경우 새로운 페이지 생성
 	        if (emptyIndexes.isEmpty()) {
-	            int nextPage = chest.row(player.getUniqueId()).keySet().size();
-	            inventory = new ItemStack[54];  // 새로운 페이지 생성
-	            chest.put(player.getUniqueId(), nextPage, inventory);
-	            
 	            // 새로운 페이지에 "이전"과 "다음" 페이지 버튼 추가
-	            Inventory newInventory = page(player, nextPage);  // 페이지 전환 아이템을 포함한 새 페이지 생성
-	            chest.put(player.getUniqueId(), nextPage, newInventory.getContents());  // 새 페이지의 인벤토리 저장
+	            inventory = page(player, ++currentPage).getContents();  // 페이지 전환 아이템을 포함한 새 페이지 생성
 	        }
 
 	        // 아이템 추가
 	        ItemStack[] updatedInventory = Add(inventory, item, totalItems, emptyIndexes);
-	        chest.put(player.getUniqueId(), chest.row(player.getUniqueId()).keySet().size() - 1, updatedInventory);
+	        chest.put(player.getUniqueId(), currentPage, updatedInventory);
 
 	        // 데이터 저장
 	        String path = new File("").getAbsolutePath();

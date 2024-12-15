@@ -7,7 +7,7 @@ public class Axe extends Weapons implements Listener {
 	final private NamespacedKey nethercore = new NamespacedKey(RMain.getInstance(), "axe_nether_core");
 	final private NamespacedKey endercore = new NamespacedKey(RMain.getInstance(), "axe_ender_core");
 	final private NamespacedKey herocore = new NamespacedKey(RMain.getInstance(), "axe_hero_core");
-	Pak pak = new Pak();
+	Pak pak = Pak.getInstance();
 
 	private ItemStack csc(Inventory inv, Integer cmdt, Player p) {
 	

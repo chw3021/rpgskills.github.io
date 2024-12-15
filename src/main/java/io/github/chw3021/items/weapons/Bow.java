@@ -30,7 +30,7 @@ public class Bow extends Weapons implements Listener {
 	final static private NamespacedKey herocore = new NamespacedKey(RMain.getInstance(), "bow_hero_core");*/
 
 	final String lang = ConfigManager.getInstance(RMain.getInstance()).getCustomConfig().getString("Language");
-	Pak pak = new Pak();
+	Pak pak = Pak.getInstance();
 	/*
 	private ItemStack csc(Inventory inv, Integer cmdt, Player p) {
 	

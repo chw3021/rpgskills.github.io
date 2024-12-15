@@ -82,7 +82,7 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 public class NethercoreRaids extends Summoned implements Listener {
 
 	public static HashMap<UUID, Location> beforepl = new HashMap<UUID, Location>();
-	private Multimap<String, UUID> raider = ArrayListMultimap.create();
+	public Multimap<String, UUID> raider = ArrayListMultimap.create();
 	public static Multimap<String, UUID> heroes = ArrayListMultimap.create();
 	public static HashMap<String, Location> raidloc = new HashMap<String, Location>();
 	private HashMap<String, UUID> raidpor = new HashMap<String, UUID>();
@@ -407,6 +407,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 	}
 	
 	final public LivingEntity bossgen(Location spl, Player pm, String rn, Integer in, Double dif) {
+
 		
     	Random random=new Random();
     	double number = (random.nextDouble()+1.5) * 2 * (random.nextBoolean() ? -1 : 1);
@@ -475,6 +476,7 @@ public class NethercoreRaids extends Summoned implements Listener {
     		newmob.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(4);
     		newmob.setRemoveWhenFarAway(false);
     		raider.put(rn, newmob.getUniqueId());
+    		System.out.println(raider.toString());
 			newmob.setMetadata("volcanicboss", new FixedMetadataValue(RMain.getInstance(), true));
     		newmob.setMetadata("nether", new FixedMetadataValue(RMain.getInstance(), true));
 			newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), armor));
@@ -672,8 +674,14 @@ public class NethercoreRaids extends Summoned implements Listener {
 	final private void bossphase2(LivingEntity le) {
 		String rn = le.getMetadata("raid").get(0).asString();
 		raider.remove(rn, le.getUniqueId());
-		Bukkit.getServer().getScheduler().cancelTask(raidbart.get(rn));
-		Bukkit.getServer().getScheduler().cancelTask(raidt.get(rn));
+		if(raidbart.containsKey(rn)) {
+			Bukkit.getServer().getScheduler().cancelTask(raidbart.get(rn));
+			raidbart.remove(rn);
+		}
+		if(raidt.containsKey(rn)) {
+			Bukkit.getServer().getScheduler().cancelTask(raidt.get(rn));
+			raidt.remove(rn);
+		}
 		BossBar	newbar = raidbar.get(rn);
 		newbar.setVisible(false);
 		if(leadert.containsKey(rn)) {
@@ -1715,6 +1723,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 	@EventHandler
 	public void PiglinBoss2(EntityDeathEvent d) 
 	{	
+
 		if(d.getEntity().hasMetadata("bosswave1") && d.getEntity().hasMetadata("volcanicboss") && raider.containsValue(d.getEntity().getUniqueId())) {
 			LivingEntity le = d.getEntity();
 			String rn = le.getMetadata("raid").get(0).asString();

@@ -15,14 +15,12 @@ import java.util.zip.GZIPOutputStream;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
-import org.bukkit.advancement.AdvancementProgress;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.block.banner.PatternType;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.event.entity.EntityToggleSwimEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -38,18 +36,11 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
-import org.jetbrains.annotations.NotNull;
-
-import io.github.chw3021.classes.ClassData;
-import io.github.chw3021.classes.Proficiency;
-import io.github.chw3021.classes.angler.AngSkillsData;
-import io.github.chw3021.items.armors.ArmorSet;
 import io.github.chw3021.rmain.RMain;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
-@SuppressWarnings("unused")
 public class Obtained implements Serializable, Listener {
 
 	/**
@@ -60,7 +51,6 @@ public class Obtained implements Serializable, Listener {
 	 * 
 	 */
 	private String path = new File("").getAbsolutePath();
-	private static Obtained d;
 	public static HashMap<UUID, Double> ucd = new HashMap<UUID, Double>();
 	public static HashMap<UUID, Double> ncd = new HashMap<UUID, Double>();
 	public static HashMap<UUID, Double> Qdamage = new HashMap<UUID, Double>();
@@ -72,6 +62,7 @@ public class Obtained implements Serializable, Listener {
 	public static HashMap<UUID, Boolean> monument = new HashMap<UUID, Boolean>();
 	public static HashMap<UUID, Boolean> ancient = new HashMap<UUID, Boolean>();
 	public static HashMap<UUID, Boolean> igloo = new HashMap<UUID, Boolean>();
+	private static Obtained d;
 	
 	public final HashMap<UUID, Integer> Mineshaft;//
 	public final HashMap<UUID, Integer> BuriedTreasure;//
@@ -92,6 +83,33 @@ public class Obtained implements Serializable, Listener {
 	public final HashMap<UUID, Integer> EndCity;//
 	public final HashMap<UUID, Integer> EnderDragon;
 	// Can be used for saving
+
+	private static final Obtained instance = new Obtained();
+	public static Obtained getInstance()
+	{
+		return instance;
+	}
+
+    public Obtained() {
+        this.Mineshaft = new HashMap<>();
+        this.BuriedTreasure = new HashMap<>();
+        this.Igloo = new HashMap<>();
+        this.OceanRuins = new HashMap<>();
+        this.WoodlandMansion = new HashMap<>();
+        this.Shipwreck = new HashMap<>();
+        this.OceanMonument = new HashMap<>();
+        this.JungleTemple = new HashMap<>();
+        this.PillagerOutpost = new HashMap<>();
+        this.DesertPyramid = new HashMap<>();
+        this.RuinedPortal = new HashMap<>();
+        this.Stronghold = new HashMap<>();
+        this.AncientCity = new HashMap<>();
+        this.Village = new HashMap<>();
+        this.NetherFortress = new HashMap<>();
+        this.BastionRemnant = new HashMap<>();
+        this.EndCity = new HashMap<>();
+        this.EnderDragon = new HashMap<>();
+    }
 
 
     @EventHandler
@@ -1375,6 +1393,8 @@ public class Obtained implements Serializable, Listener {
 		this.EndCity = loadedData.EndCity;
 		this.EnderDragon = loadedData.EnderDragon;
 	}
+
+
 
 	public Obtained saveData(String filePath) {
 		try {

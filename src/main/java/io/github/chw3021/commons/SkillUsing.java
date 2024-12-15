@@ -79,10 +79,21 @@ import io.github.chw3021.monsters.raids.Summoned;
 
 public class SkillUsing implements Listener {
 	
-	
-	Pak pak = new Pak();
-	Weapons w = new Weapons();
 
+    // 싱글톤 인스턴스 생성
+    private static final SkillUsing instance = new SkillUsing();
+
+    // Pak 인스턴스
+    private Pak pak = Pak.getInstance();
+    private Weapons w = new Weapons();
+
+    // 외부에서 생성자 호출 방지
+    private SkillUsing() {}
+
+    // 싱글톤 인스턴스 반환 메서드
+    public static SkillUsing getInstance() {
+        return instance;
+    }
 
 	@EventHandler
 	public void skilluse(SkillUseEvent e) {

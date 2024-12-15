@@ -40,7 +40,7 @@ import net.md_5.bungee.api.ChatColor;
 public class Weapons {
 
 	
-	private Pak pak = new Pak();
+	private Pak pak = Pak.getInstance();
 
 	final static protected NamespacedKey nethercore = new NamespacedKey(RMain.getInstance(), "weapon_nether_core");
 	final static protected NamespacedKey endercore = new NamespacedKey(RMain.getInstance(), "weapon_ender_core");

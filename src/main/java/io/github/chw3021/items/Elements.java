@@ -36,7 +36,7 @@ public class Elements implements Listener {
 		is.setAmount(count);
 		
 		if(CombatMode.getInstance().isCombat(p)) {
-			Backpack.add(p, is);
+			Backpack.add(p, is,0);
 		}
 		else {
 	    	p.getInventory().addItem(is);
@@ -59,7 +59,7 @@ public class Elements implements Listener {
 
 		is.setAmount(count);
 		if(CombatMode.getInstance().isCombat(p)) {
-			Backpack.add(p, is);
+			Backpack.add(p, is,0);
 		}
 		else {
 	    	p.getInventory().addItem(is);

@@ -77,7 +77,6 @@ public class Wreskills extends Pak {
 	private WreSkillsData wsd;
 
 
-	Pak pak = new Pak();
 
 
 	private static final Wreskills instance = new Wreskills ();

@@ -20,7 +20,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import io.github.chw3021.commons.ConfigManager;
-import io.github.chw3021.commons.Pak;
 import io.github.chw3021.rmain.RMain;
 
 public class CrossBow extends Weapons implements Listener {
@@ -29,7 +28,6 @@ public class CrossBow extends Weapons implements Listener {
 	final static private NamespacedKey endercore = new NamespacedKey(RMain.getInstance(), "crossbow_ender_core");
 	final static private NamespacedKey herocore = new NamespacedKey(RMain.getInstance(), "crossbow_hero_core");*/
 	final private String lang = ConfigManager.getInstance(RMain.getInstance()).getCustomConfig().getString("Language");
-	Pak pak = new Pak();
 /*
 	private ItemStack csc(Inventory inv, Integer cmdt, Player p) {
 	

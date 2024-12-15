@@ -17,20 +17,18 @@ import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.entity.BlockDisplay;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.EvokerFangs;
 import org.bukkit.entity.Illusioner;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Spellcaster.Spell;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Phantom;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
-import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.EntitySpellCastEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.inventory.ItemStack;
@@ -69,7 +67,7 @@ public class HarvesterSkills extends NethercoreRaids{
 	
 	final private ArrayList<Location> raytrace(Location il, Double dis){
     	ArrayList<Location> line = new ArrayList<Location>();
-        for(double d = 0.1; d <= dis; d += 0.3) {
+        for(double d = 0.1; d <= dis+2; d += 0.6) {
             Location pl = il.clone();
 			pl.add(il.getDirection().normalize().multiply(d));
 			line.add(pl);
@@ -84,6 +82,7 @@ public class HarvesterSkills extends NethercoreRaids{
 		    LivingEntity p = (LivingEntity) ev.getEntity().getShooter();
 		    
 		    if(p.hasMetadata("soulboss")) {
+		    	ev.setCancelled(true);
 
 	        	p.getWorld().playSound(p.getLocation(), Sound.ENTITY_EVOKER_FANGS_ATTACK, 1f, 0f);
 
@@ -102,7 +101,7 @@ public class HarvesterSkills extends NethercoreRaids{
 		                public void run() {
 		                	p.swingMainHand();
 		                	EvokerFangs ef = (EvokerFangs)p.getWorld().spawnEntity(l, EntityType.EVOKER_FANGS);
-		                	ef.setVelocity(l.getDirection().normalize().multiply(1.5));
+		                	ef.setVelocity(l.getDirection().normalize().multiply(2));
 		                    ef.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 		                    ef.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
 		                    ef.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), true));
@@ -161,15 +160,15 @@ public class HarvesterSkills extends NethercoreRaids{
                 	ef.setOwner(p);
                 	ef.setAttackDelay(1);
                 	ef.setInvulnerable(true);
-                	p.getWorld().spawnParticle(Particle.SOUL, l, 10, 4, 0.2, 4, 0.2);
-                	p.getWorld().spawnParticle(Particle.ASH, l, 50, 4, 0.2, 4, 0);
-                	p.getWorld().spawnParticle(Particle.LANDING_OBSIDIAN_TEAR, l, 50, 4, 0.2, 4, 0.2);
+                	p.getWorld().spawnParticle(Particle.SOUL, tl, 10, 4, 0.2, 4, 0.2);
+                	p.getWorld().spawnParticle(Particle.ASH, tl, 50, 4, 0.2, 4, 0);
+                	p.getWorld().spawnParticle(Particle.LANDING_OBSIDIAN_TEAR, tl, 50, 4, 0.2, 4, 0.2);
 					p.getWorld().playSound(p.getLocation(), Sound.PARTICLE_SOUL_ESCAPE, 0.1f, 2f);
-                	for(Entity e : p.getWorld().getNearbyEntities(l, 4,4,4)) {
+                	for(Entity e : p.getWorld().getNearbyEntities(tl, 3,4,3)) {
                 		if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && e!=p) {
                 			LivingEntity le = (LivingEntity)e;
                 			le.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS, 200,1,false,false,false));
-                			le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 200,2,false,false,false));
+                			le.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 200,2,false,false,false));
                 			le.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 200,2,false,false,false));
 							le.damage(3, p);
 							
@@ -224,39 +223,44 @@ public class HarvesterSkills extends NethercoreRaids{
 	}
 
 	private HashMap<UUID, Integer> blockt = new HashMap<>();
-	
+
+    private ArmorStand spawnArmorStand(World world, Location location, String rn) {
+        return world.spawn(location, ArmorStand.class, stand -> {
+            stand.setGravity(false);
+            stand.setInvulnerable(true);
+            stand.setInvisible(true);
+            stand.setBasePlate(false);
+            stand.setCollidable(false);
+            stand.setMetadata("stuff" + rn, new FixedMetadataValue(RMain.getInstance(), rn));
+            stand.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
+            stand.getEquipment().setHelmet(new ItemStack(Material.VERDANT_FROGLIGHT));
+        });
+    }
 	final private void createHand(LivingEntity p,Location startLoc) {
 	    World world = startLoc.getWorld();
 
+        List<ArmorStand> thumb = new ArrayList<>();
+        List<ArmorStand> indexFinger = new ArrayList<>();
+        List<ArmorStand> middleFinger = new ArrayList<>();
+        List<ArmorStand> ringFinger = new ArrayList<>();
+        List<ArmorStand> pinkyFinger = new ArrayList<>();
+        String rn = gethero(p);
 
-	    List<BlockDisplay> thumb = new ArrayList<>();
-	    List<BlockDisplay> indexFinger = new ArrayList<>();
-	    List<BlockDisplay> middleFinger = new ArrayList<>();
-	    List<BlockDisplay> ringFinger = new ArrayList<>();
-	    List<BlockDisplay> pinkyFinger = new ArrayList<>();
-
-	    for (int i = 0; i < 5; i++) {
-	    	if(i<3) {
-		        thumb.add(world.spawn(startLoc.clone().add(0.3, i * 0.2, 0), BlockDisplay.class, bd ->{
-		        	bd.setBlock(getBd(Material.SOUL_FIRE));
-		        }));
-		        pinkyFinger.add(world.spawn(startLoc.clone().add(-1.2, i * 0.2, 0), BlockDisplay.class, bd ->{
-		        	bd.setBlock(getBd(Material.SOUL_FIRE));
-		        }));
-	    	}
-	    	if(i<4) {
-	    		indexFinger.add(world.spawn(startLoc.clone().add(-0.3, i * 0.2, 0), BlockDisplay.class, bd ->{
-		        	bd.setBlock(getBd(Material.SOUL_FIRE));
-		        }));
-	    		ringFinger.add(world.spawn(startLoc.clone().add(-0.9, i * 0.2, 0), BlockDisplay.class, bd ->{
-		        	bd.setBlock(getBd(Material.SOUL_FIRE));
-		        }));
-	    	}
-	    	middleFinger.add(world.spawn(startLoc.clone().add(-0.6, i * 0.2, 0), BlockDisplay.class, bd ->{
-	        	bd.setBlock(getBd(Material.SOUL_FIRE));
-	        }));
-	    }
-	    
+        Double ver = 4d;
+        Double hor = 0.8d;
+        
+        for (int i = 0; i < 5; i++) {
+            if (i < 3) {
+                thumb.add(spawnArmorStand(world, startLoc.clone().add(0.3*ver, i * hor, 0.2*ver), rn));
+                pinkyFinger.add(spawnArmorStand(world, startLoc.clone().add(-1.2*ver, i * hor, 0.2*ver), rn));
+            }
+            if (i < 4) {
+                indexFinger.add(spawnArmorStand(world, startLoc.clone().add(-0.3*ver, i * hor, 0.1*ver), rn));
+                ringFinger.add(spawnArmorStand(world, startLoc.clone().add(-0.9*ver, i * hor, 0.1*ver), rn));
+            }
+            middleFinger.add(spawnArmorStand(world, startLoc.clone().add(-0.6*ver, i * hor, -0.1*ver), rn));
+        }
+        
 	    BukkitTask bt = Bukkit.getScheduler().runTaskTimer(RMain.getInstance(), new Runnable() {
 	        int step = 0;
 
@@ -274,13 +278,13 @@ public class HarvesterSkills extends NethercoreRaids{
                 for(Entity e : world.getNearbyEntities(startLoc,2,5,2)) {
 					if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
 						LivingEntity le = (LivingEntity)e;
-						le.damage(7,p);
-						le.teleport(p);
+						le.damage(4,p);
+						le.teleport(startLoc);
 						Holding.holding(null, le, 50l);
 					}
                 }
                 
-	            if (step++ > 10) {
+	            if (step++ > 20) {
 	                removeFingers(thumb);
 	                removeFingers(indexFinger);
 	                removeFingers(middleFinger);
@@ -297,14 +301,14 @@ public class HarvesterSkills extends NethercoreRaids{
 	    blockt.put(p.getUniqueId(), bt.getTaskId());
 	    ordt.put(gethero(p), bt.getTaskId());
 	}
-	final private void moveFingerToCenter(List<BlockDisplay> finger, Location center) {
-	    for (BlockDisplay block : finger) {
+	final private void moveFingerToCenter(List<ArmorStand> finger, Location center) {
+	    for (ArmorStand block : finger) {
 	        Vector moveDirection = center.toVector().subtract(block.getLocation().toVector());
 	        double distance = moveDirection.length();  // 손가락과 중앙 사이의 거리 계산
 
 	        if (distance > 0) {  // 충분히 멀리 있을 때만 이동
 	            // 거리가 멀수록 빠르게, 가까워질수록 느리게: log(distance) 이용
-	            double speed = Math.log(distance + 1) * 0.2;  // 거리 기반으로 속도 설정
+	            double speed = Math.log(distance + 1) * 0.1;  // 거리 기반으로 속도 설정
 	            moveDirection.normalize().multiply(speed);  // 속도 적용하여 이동
 	            block.teleport(block.getLocation().add(moveDirection));
 	        }
@@ -312,8 +316,8 @@ public class HarvesterSkills extends NethercoreRaids{
 	}
 
 	// 손가락 블록 제거 메서드
-	final private void removeFingers(List<BlockDisplay> finger) {
-	    for (BlockDisplay block : finger) {
+	final private void removeFingers(List<ArmorStand> finger) {
+	    for (ArmorStand block : finger) {
 	        block.remove();
 	    }
 	}
@@ -327,8 +331,9 @@ public class HarvesterSkills extends NethercoreRaids{
         Holding.holding(null, p, 25l);
 		Location pl = gettargetblock(p,6);
 		w.playSound(pl, Sound.ENTITY_SHULKER_TELEPORT, 1.0f, 0f);
-		w.spawnParticle(Particle.SOUL, pl, 150, 2,2,2);
-		w.spawnParticle(Particle.SCULK_SOUL, pl, 150, 2,2,2);
+		w.spawnParticle(Particle.SOUL_FIRE_FLAME, pl, 150, 2,2,2);
+		w.spawnParticle(Particle.WHITE_SMOKE, pl, 10, 2,2,2);
+		w.spawnParticle(Particle.TRIAL_OMEN, pl, 150, 2,2,2);
 		
 
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -361,7 +366,7 @@ public class HarvesterSkills extends NethercoreRaids{
 		if(d.getEntity().hasMetadata("soulboss") && (d.getEntity() instanceof Mob)) 
 		{
 			Mob p = (Mob)d.getEntity();
-			int sec = 8;
+			int sec = 6;
 	
 	
 			if(p.hasMetadata("failed")|| ordeal.containsKey(p.getUniqueId()) || !handable.containsKey(p.getUniqueId())) {
@@ -457,12 +462,8 @@ public class HarvesterSkills extends NethercoreRaids{
 		if(d.getEntity().hasMetadata("soulboss") && (d.getEntity() instanceof Mob)) 
 		{
 			Mob p = (Mob)d.getEntity();
-			int sec = 8;
+			int sec = 4;
 			
-			if(d.getSpell() != Spell.BLINDNESS) {
-				return;
-			}
-
 			d.setCancelled(true);
 
 			if(p.hasMetadata("failed")|| ordeal.containsKey(p.getUniqueId()) || !phantom.containsKey(p.getUniqueId())) {
@@ -498,9 +499,6 @@ public class HarvesterSkills extends NethercoreRaids{
 		if(d.getEntity().hasMetadata("soulboss")) 
 		{
 			final LivingEntity p = (LivingEntity)d.getEntity();
-			if(d.getSpell() != Spell.DISAPPEAR) {
-				return;
-			}
 			d.setCancelled(true);
 
 			if(p.hasMetadata("raid")) {
@@ -540,7 +538,7 @@ public class HarvesterSkills extends NethercoreRaids{
     			if(p.isDead()) {
     				return;
     			}
-    			Location pl = pfl.clone().add(pv.clone().normalize().multiply(jd.getAndAdd(0.5)));
+    			Location pl = pfl.clone().add(pv.clone().normalize().multiply(jd.getAndAdd(0.8)));
     			
     			p.getWorld().playSound(pl, Sound.ENTITY_PIGLIN_ANGRY, 0.1f, 0f);
     			p.getWorld().spawnParticle(Particle.SCULK_SOUL ,pl, 50, 3,4,3,1);
@@ -618,15 +616,15 @@ public class HarvesterSkills extends NethercoreRaids{
     	w.playSound(tl, Sound.ENTITY_BREEZE_WHIRL, 0.2f, 2f);
     	double an = 0;
     	for(; an<Math.PI*2; an +=Math.PI/90) {
-    		ring.add(tl.clone().add(tl.getDirection().normalize().rotateAroundY(an+j*0.25).multiply(an+j*0.5)));
+    		ring.add(tl.clone().add(tl.getDirection().normalize().rotateAroundY(an+j*0.25).multiply(an*0.45+j*0.06)));
     	}
     	ring.forEach(l -> {
-			tl.getWorld().spawnParticle(Particle.TRIAL_OMEN, l, 2, 0.5,0.5,0.5,0);
-			tl.getWorld().spawnParticle(Particle.OMINOUS_SPAWNING, l, 2, 0.5,0.5,0.5,0.1);
+			tl.getWorld().spawnParticle(Particle.TRIAL_OMEN, l, 1, 0.5,0.5,0.5,0);
+			tl.getWorld().spawnParticle(Particle.OMINOUS_SPAWNING, l, 1, 0.5,0.5,0.5,0.1);
     		
     	});
     	
-    	return an+j*0.5;
+    	return an*0.35+j*0.05;
 	}
 
 	
@@ -639,7 +637,7 @@ public class HarvesterSkills extends NethercoreRaids{
 		tl.getWorld().spawnParticle(Particle.OMINOUS_SPAWNING, tl, 150, 2,0.5,2,0.1);
 		
     	AtomicInteger j = new AtomicInteger();	
-		for(int i = 0; i <15; i++) {
+		for(int i = 0; i <12; i++) {
             int t = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
                 @Override
                 public void run() {
@@ -663,7 +661,7 @@ public class HarvesterSkills extends NethercoreRaids{
 		if((d.getEntity() instanceof Mob) && d.getEntity().hasMetadata("soulboss")) 
 		{
 			Mob p = (Mob)d.getEntity();
-			int sec = 4;
+			int sec = 6;
 	        
 
 			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {

@@ -235,8 +235,9 @@ public class Rpgs extends Summoned implements CommandExecutor, Listener {
 			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party list: Show Current Existing Parties & Owners");
 		}
 	}
-	NethercoreRaids ncr = new NethercoreRaids();
-	OverworldRaids owr = new OverworldRaids();
+	NethercoreRaids ncr = NethercoreRaids.getInstance();
+	
+	OverworldRaids owr = OverworldRaids.getInstance();
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String alias, String [] args)         
@@ -292,7 +293,7 @@ public class Rpgs extends Summoned implements CommandExecutor, Listener {
 
 				else if(args[0].equalsIgnoreCase("element")||args[0].equalsIgnoreCase("el"))
 				{
-					Pak pak = new Pak();
+					Pak pak = Pak.getInstance();
 					pak.eldmes(p);
 				}
 				else if(args[0].equalsIgnoreCase("exp") && p.isOp()&& !args[1].isEmpty())
@@ -352,7 +353,8 @@ public class Rpgs extends Summoned implements CommandExecutor, Listener {
 						NethercoreRaids.heroes.put(rn, p.getUniqueId());
 						NethercoreRaids.raidloc.put(rn, p.getLocation());
 						ncr.language.put(rn, p.getLocale());
-						ncr.bossgen(p.getLocation(), p, p.getName(), input, ncr.BOSSHP);
+						ncr.bossgen(p.getLocation(), p, rn, input, ncr.BOSSHP);
+						
 					}
 					else {
 						OverworldRaids.beforepl.put(p.getUniqueId(), p.getLocation());

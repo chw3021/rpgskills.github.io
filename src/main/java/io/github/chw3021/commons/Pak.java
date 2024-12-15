@@ -53,8 +53,6 @@ import io.github.chw3021.items.armors.ArmorSet;
 import io.github.chw3021.party.Party;
 import io.github.chw3021.rmain.RMain;
 import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.ComponentBuilder;
 
 public class Pak extends CombatMode implements Listener{
 
@@ -108,6 +106,23 @@ public class Pak extends CombatMode implements Listener{
 	final public static NamespacedKey lightningrn = new NamespacedKey(RMain.getInstance(), "lightningr");
 	final public static NamespacedKey flamern = new NamespacedKey(RMain.getInstance(), "flamer");
 	final public static NamespacedKey poisonrn = new NamespacedKey(RMain.getInstance(), "poisonr");
+
+    // 인스턴스를 직접 초기화하지 않음
+    private static Pak instance;
+
+    // private 생성자
+    public Pak() {
+        // 필요한 초기화 로직
+    }
+
+    // 싱글톤 인스턴스 반환
+    public static Pak getInstance() {
+        // null 체크 후 초기화
+        if (instance == null) {
+            instance = new Pak();
+        }
+        return instance;
+    }
 	
 	public interface SkillUse {
 	    public void skilluse();

@@ -44,7 +44,6 @@ import io.github.chw3021.classes.witherist.WitSkillsData;
 import io.github.chw3021.classes.wreltler.WreSkillsData;
 import io.github.chw3021.commons.CommonEvents;
 import io.github.chw3021.commons.ConfigManager;
-import io.github.chw3021.commons.Holding;
 import io.github.chw3021.commons.Pak;
 import io.github.chw3021.commons.Rpgs;
 import io.github.chw3021.commons.ShulkerBag;
@@ -56,17 +55,12 @@ import io.github.chw3021.items.NamingPrevent;
 import io.github.chw3021.items.ScrollPoint;
 import io.github.chw3021.items.armors.ArmorSet;
 import io.github.chw3021.items.armors.ArmorSetEffects;
-import io.github.chw3021.items.armors.Boots;
-import io.github.chw3021.items.armors.Chestplate;
-import io.github.chw3021.items.armors.Helmet;
-import io.github.chw3021.items.armors.Leggings;
 import io.github.chw3021.items.weapons.Bow;
 import io.github.chw3021.items.weapons.CrossBow;
 import io.github.chw3021.items.weapons.Fighter;
 import io.github.chw3021.items.weapons.FishingRod;
 import io.github.chw3021.items.weapons.Tridentnaming;
 import io.github.chw3021.items.weapons.Wand;
-import io.github.chw3021.monsters.worldgen.RaidWorldLoad;
 import io.github.chw3021.monsters.Drops;
 import io.github.chw3021.monsters.MobArmor;
 import io.github.chw3021.monsters.MobDam;
@@ -92,7 +86,6 @@ public class RMain extends JavaPlugin{
     
 	@Override
     public void onEnable() {
-
         configManager = new ConfigManager(this);
         // 설정 파일 생성
         configManager.createCustomConfig();
@@ -127,7 +120,7 @@ public class RMain extends JavaPlugin{
         	w.setTicksPerSpawns(SpawnCategory.WATER_UNDERGROUND_CREATURE, 1);
         });
         //Bukkit.getPluginManager().registerEvents(new RaidWorldLoad(), this);
-        Bukkit.getPluginManager().registerEvents(new MobsSkillsEvents(), this);
+        Bukkit.getPluginManager().registerEvents(MobsSkillsEvents.getInstance(), this);
         
         this.getDataFolder().mkdir();
         Bukkit.getPluginManager().registerEvents(new ClassData(new HashMap<UUID, Integer>()), this);
@@ -135,7 +128,7 @@ public class RMain extends JavaPlugin{
         Bukkit.getPluginManager().registerEvents(new ScrollPoint(new HashMap<UUID, Integer>()), this);
 
         Bukkit.getPluginManager().registerEvents(new TrophyLoc(HashMultimap.create()), this);
-        Bukkit.getPluginManager().registerEvents(new Obtained(new HashMap<UUID, Integer>(),new HashMap<UUID, Integer>(),new HashMap<UUID, Integer>(),new HashMap<UUID, Integer>(),new HashMap<UUID, Integer>(),new HashMap<UUID, Integer>(),new HashMap<UUID, Integer>(),new HashMap<UUID, Integer>(),new HashMap<UUID, Integer>(),new HashMap<UUID, Integer>(),new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
+        Bukkit.getPluginManager().registerEvents(Obtained.getInstance(), this);
 
         Bukkit.getPluginManager().registerEvents(new Party(), this);
         this.getCommand("party").setExecutor(new Party());
@@ -176,7 +169,7 @@ public class RMain extends JavaPlugin{
 
         Bukkit.getPluginManager().registerEvents(new NPCcontact(), this);
 
-        Bukkit.getPluginManager().registerEvents(new SkillUsing(), this);
+        Bukkit.getPluginManager().registerEvents(SkillUsing.getInstance(), this);
         Bukkit.getPluginManager().registerEvents(new ShulkerBag(), this);
 
         Bukkit.getPluginManager().registerEvents(new ArmorSet(), this);
@@ -189,14 +182,9 @@ public class RMain extends JavaPlugin{
         Bukkit.getPluginManager().registerEvents(new CrossBow(), this);
         Bukkit.getPluginManager().registerEvents(new Wand(), this);
         Bukkit.getPluginManager().registerEvents(new FishingRod(), this);
-        
-        Bukkit.getPluginManager().registerEvents(new Helmet(), this);
-        Bukkit.getPluginManager().registerEvents(new Boots(), this);
-        Bukkit.getPluginManager().registerEvents(new Chestplate(), this);
-        Bukkit.getPluginManager().registerEvents(new Leggings(), this);
 
         
-        Bukkit.getPluginManager().registerEvents(new Pak(), this);
+        Bukkit.getPluginManager().registerEvents(Pak.getInstance(), this);
 
         Bukkit.getPluginManager().registerEvents(new MobArmor(), this);
         Bukkit.getPluginManager().registerEvents(new MobDam(), this);
@@ -208,12 +196,11 @@ public class RMain extends JavaPlugin{
         
         this.getCommand("rpg").setExecutor(new Rpgs());
         Bukkit.getPluginManager().registerEvents(new Drops(), this);
-        Bukkit.getPluginManager().registerEvents(new CommonEvents(), this);
-        Bukkit.getPluginManager().registerEvents(new Holding(), this);
+        Bukkit.getPluginManager().registerEvents(CommonEvents.getInstance(), this);
 
-        Bukkit.getPluginManager().registerEvents(new OverworldRaids(), this);
-        Bukkit.getPluginManager().registerEvents(new NethercoreRaids(), this);
-        Bukkit.getPluginManager().registerEvents(new NPCLoc(), this);
+        Bukkit.getPluginManager().registerEvents(OverworldRaids.getInstance(), this);
+        Bukkit.getPluginManager().registerEvents(NethercoreRaids.getInstance(), this);
+        Bukkit.getPluginManager().registerEvents(NPCLoc.getInstance(), this);
     }
     
     public static RMain getInstance()

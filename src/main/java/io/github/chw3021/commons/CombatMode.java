@@ -227,7 +227,7 @@ public class CombatMode {
 				ev.getItem().teleport(p);
 				ev.getItem().remove();
 				p.playSound(p, Sound.ENTITY_ITEM_PICKUP, 0.6f, 1);
-				Backpack.add(p, ev.getItem().getItemStack());
+				Backpack.add(p, ev.getItem().getItemStack(),0);
 			}
 		}
 	}

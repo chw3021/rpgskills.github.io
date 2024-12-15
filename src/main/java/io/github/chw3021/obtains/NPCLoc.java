@@ -81,6 +81,14 @@ public class NPCLoc implements Serializable, Listener{
 	public Table<UUID, Location, ItemStack[]> Locs = HashBasedTable.create();
 	static public HashSet<Location> NPCLocs = new HashSet<Location>();
 	static public HashSet<Location> ChestLocs = new HashSet<Location>();
+
+
+	private static final NPCLoc instance = new NPCLoc ();
+	public static NPCLoc getInstance()
+	{
+		return instance;
+	}
+
 	
     public NPCLoc() {
     	

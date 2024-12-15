@@ -36,7 +36,7 @@ public class Fighter extends Weapons implements Listener {
 
 	
 	final private String lang = ConfigManager.getInstance(RMain.getInstance()).getCustomConfig().getString("Language");
-	Pak pak = new Pak();
+	Pak pak = Pak.getInstance();
 
 
 	@EventHandler

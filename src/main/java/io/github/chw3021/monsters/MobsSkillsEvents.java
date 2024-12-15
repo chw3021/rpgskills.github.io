@@ -92,9 +92,20 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 	
 
 	private final String lang = ConfigManager.getInstance(RMain.getInstance()).getCustomConfig().getString("Language");
-	private final List<String> disabledWorlds = ConfigManager.getInstance(RMain.getInstance()).getCustomConfig().getStringList("Worlds");
-	Mobs mobs = new Mobs();                 
+	private final List<String> disabledWorlds = ConfigManager.getInstance(RMain.getInstance()).getCustomConfig().getStringList("Worlds");         
 
+    // 싱글톤 인스턴스 생성
+    private static final MobsSkillsEvents instance = new MobsSkillsEvents();
+
+    // private 생성자
+    private MobsSkillsEvents() {
+        super(); // Mobs의 생성자 호출
+    }
+
+    // 싱글톤 인스턴스 반환 메서드
+    public static MobsSkillsEvents getInstance() {
+        return instance;
+    }
 
 	
 	@SuppressWarnings("deprecation")
@@ -128,14 +139,14 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 			}
 			le.setCustomName(null);
 			if (ev.getEntityType() == EntityType.WITHER) {
-				le.setCustomName(mobs.trans(le));
+				le.setCustomName(trans(le));
 				ev.getEntity().setMaxHealth(900000);
 				ev.getEntity().setHealth(900000);
 				ev.getEntity().setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 				ev.getEntity().setMetadata("nether", new FixedMetadataValue(RMain.getInstance(), true));
 				ev.getEntity().setMetadata("wither", new FixedMetadataValue(RMain.getInstance(), true));
 			} else if (ev.getEntityType() == EntityType.WARDEN) {
-				le.setCustomName(mobs.trans(le));
+				le.setCustomName(trans(le));
 				ev.getEntity().setMaxHealth(9999999);
 				ev.getEntity().setHealth(9999999);
 				ev.getEntity().setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
@@ -144,7 +155,7 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 				ev.getEntity().setMetadata("wither", new FixedMetadataValue(RMain.getInstance(), true));
 				ev.getEntity().setMetadata("void", new FixedMetadataValue(RMain.getInstance(), true));
 			}else if (ev.getEntityType() == EntityType.ENDER_DRAGON) {
-				le.setCustomName(mobs.trans(le));
+				le.setCustomName(trans(le));
 				ev.getEntity().setMaxHealth(200000);
 				ev.getEntity().setHealth(200000);
 				ev.getEntity().setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
@@ -170,7 +181,7 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
     			int ri = random.nextInt(200);
     			if (ri == 0) {
 					String reg = lang.contains("kr") ? "보물돼지":"TreasurePig";
-					LivingEntity newmob = mobs.Mobspawn(le, reg, 1d, null,	null, null,	null, null,	null, EntityType.PIG);
+					LivingEntity newmob = Mobspawn(le, reg, 1d, null,	null, null,	null, null,	null, EntityType.PIG);
 					newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 					newmob.setMetadata("treasurepig", new FixedMetadataValue(RMain.getInstance(), true));
     			} 
@@ -190,7 +201,7 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 				
 				if (b == Biome.THE_END
 						&& le.getLocation().getWorld().getEnvironment() == Environment.THE_END) {
-					LivingEntity newmob = mobs.Mobspawn(le, trans(le), 80000.0, le.getEquipment().getHelmet(),
+					LivingEntity newmob = Mobspawn(le, trans(le), 80000.0, le.getEquipment().getHelmet(),
 							le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
 							le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(),
 							le.getEquipment().getItemInOffHand(), le.getType());
@@ -199,7 +210,7 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 				} else if (b != Biome.THE_END
 						&& le.getLocation().getWorld().getEnvironment() == Environment.THE_END) {
 					String reg = lang.contains("kr") ? "공허":"Void";
-					LivingEntity newmob = mobs.Mobspawn(le, reg + trans(le), 80000.0, le.getEquipment().getHelmet(),
+					LivingEntity newmob = Mobspawn(le, reg + trans(le), 80000.0, le.getEquipment().getHelmet(),
 							le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
 							le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(),
 							le.getEquipment().getItemInOffHand(), le.getType());
@@ -490,6 +501,8 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 		DarkSkills.getInstance().darkwitch(e);
 
 		PoisonSkills.getInstance().launch(e);
+		
+		HarvesterSkills.getInstance().bowshoot(e);
 	}
 	@EventHandler
 	public void Hit(ProjectileHitEvent e) 
@@ -525,8 +538,6 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 		RedSkills.getInstance().Sweep(e);
 
 		PiglinSkills.getInstance().bowshoot(e);
-		
-		HarvesterSkills.getInstance().bowshoot(e);
 	}
 		
 

@@ -27,7 +27,7 @@ public class Armors {
 		return new NamespacedKey(RMain.getInstance(), UUID.randomUUID().toString());
 	}
 	
-	private Pak pak = new Pak();
+	private Pak pak = Pak.getInstance();
 
 
 	public static ItemMeta maxHealthAdd(final ItemMeta im, Double amount, Operation op, EquipmentSlotGroup esg) {

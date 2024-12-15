@@ -31,7 +31,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bukkit.attribute.Attribute;
 import org.bukkit.FireworkEffect.Type;
-import org.bukkit.Particle.TargetColor;
+import org.bukkit.Particle.Trail;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Entity;
@@ -1335,7 +1335,7 @@ public class Forskills extends Pak {
 						final Location parl = l.clone().add(0, -0.289, 0);
 						p.getWorld().spawnParticle(Particle.BLOCK, parl,6, 0.05,0.05,0.05,0, getBd(Material.CYAN_GLAZED_TERRACOTTA));
 						p.getWorld().spawnParticle(Particle.BLOCK_CRUMBLE, parl,6, 0.05,0.05,0.05,0, getBd(Material.CYAN_GLAZED_TERRACOTTA));
-						p.getWorld().spawnParticle(Particle.TRAIL, pl,4, 0.05,0.05,0.05,0, new TargetColor(parl, Color.AQUA));
+						p.getWorld().spawnParticle(Particle.TRAIL, pl,4, 0.05,0.05,0.05,0, new Trail(parl, Color.AQUA,20));
 						for (Entity a : p.getWorld().getNearbyEntities(l, 1, 1, 1))
 						{
 							if ((!(a == p))&& a instanceof LivingEntity&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal")))

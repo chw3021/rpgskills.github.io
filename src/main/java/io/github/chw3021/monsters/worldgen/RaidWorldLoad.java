@@ -118,7 +118,7 @@ public class RaidWorldLoad implements Listener {
 						a.remove();
 					}
 				});
-				Bukkit.unloadWorld(w, false);
+				//Bukkit.unloadWorld(w, false);
 			}
 		});
 	}

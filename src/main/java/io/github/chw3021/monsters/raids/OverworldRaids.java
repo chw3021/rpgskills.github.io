@@ -773,11 +773,19 @@ public class OverworldRaids extends Summoned implements Listener {
 		
 	}
 	
+
+	
 	final private void bossphase2(LivingEntity le) {
 		String rn = le.getMetadata("raid").get(0).asString();
 		raider.remove(rn, le.getUniqueId());
-		Bukkit.getServer().getScheduler().cancelTask(raidbart.get(rn));
-		Bukkit.getServer().getScheduler().cancelTask(raidt.get(rn));
+		if(raidbart.containsKey(rn)) {
+			Bukkit.getServer().getScheduler().cancelTask(raidbart.get(rn));
+			raidbart.remove(rn);
+		}
+		if(raidt.containsKey(rn)) {
+			Bukkit.getServer().getScheduler().cancelTask(raidt.get(rn));
+			raidt.remove(rn);
+		}
 		BossBar	newbar = raidbar.get(rn);
 		newbar.setVisible(false);
 		if(leadert.containsKey(rn)) {
@@ -795,7 +803,6 @@ public class OverworldRaids extends Summoned implements Listener {
 		return;
 	}
 
-	
 	
 	@EventHandler
 	public void Escape(PlayerQuitEvent ev) 

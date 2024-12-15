@@ -66,7 +66,7 @@ public class ClassData implements Serializable, Listener{
 	public final HashMap<UUID, Integer> playerclass;
 	static public HashMap<UUID, Integer> pc = new HashMap<>();
 	transient Classgui Classgui = new Classgui();
-	transient Pak pak = new Pak();
+	transient Pak pak = Pak.getInstance();
 	transient CombatMode cm = new CombatMode();
  
     // Can be used for saving
