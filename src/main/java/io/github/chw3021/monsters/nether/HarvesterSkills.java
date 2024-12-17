@@ -1,6 +1,7 @@
 package io.github.chw3021.monsters.nether;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -11,6 +12,7 @@ import java.util.stream.Stream;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
+import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -280,7 +282,7 @@ public class HarvesterSkills extends NethercoreRaids{
 						LivingEntity le = (LivingEntity)e;
 						le.damage(4,p);
 						le.teleport(startLoc);
-						Holding.holding(null, le, 50l);
+						Holding.holding(null, le, 5l);
 					}
                 }
                 
@@ -731,70 +733,68 @@ public class HarvesterSkills extends NethercoreRaids{
 	
 	final private void itemSpawn(String rn, LivingEntity p) {
 
+		Collection<Player> playerList = NethercoreRaids.getheroes(p);
+		Player pe = playerList.stream().findAny().orElse(null);
 
-		Stream<Player> ps = NethercoreRaids.getheroes(p).stream();
-		Player pe = ps.findAny().get();
-    	if(!pe.getWorld().equals(p.getWorld()) || pe.isDead()) {
-    		return;
-    	}
+		if (pe == null || !pe.getWorld().equals(p.getWorld()) || pe.isDead()) {
+		    return;
+		}
 
-        final Location fl = pe.getLocation().clone().add(0, 2, 2);
-
+		final Location fl = pe.getLocation().clone().add(0, 3, 0);
 		final World w = fl.getWorld();
-		w.spawn(fl, Item.class, newmob -> {
 
-			newmob.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
-			newmob.setItemStack(new ItemStack(Material.SKELETON_SKULL));
-			newmob.setGravity(false);
-    		newmob.setCustomNameVisible(false);
-    		newmob.setInvulnerable(true);
-			newmob.setMetadata("harvesterskull", new FixedMetadataValue(RMain.getInstance(), rn));
-    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), rn));
-    		newmob.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
-    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
-			
-			int t2 =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-				int tick=0;
-                @Override
-                public void run() {
-            		ps.filter(rp -> pe!=rp && rp.isValid()).forEach(rp ->{
-            			Holding.holding(null, rp, 10l);
-            		});
-                	
-                	if(tick++%40==0) {
-                		changeFace(newmob, tick);
-                	}
-                	
-                	Location pel = Holding.ale(pe).getLocation();
-                	Location arl = Holding.ale(newmob).getLocation();
+		Item newmob = w.dropItem(fl, new ItemStack(Material.SKELETON_SKULL));
+		newmob.setThrower(p.getUniqueId());
+	    newmob.setMetadata("stuff" + rn, new FixedMetadataValue(RMain.getInstance(), true));
+	    newmob.setGravity(false);
+	    newmob.setCustomNameVisible(false);
+	    newmob.setInvulnerable(true);
+	    newmob.setGlowing(true);
+	    newmob.setMetadata("harvesterskull", new FixedMetadataValue(RMain.getInstance(), rn));
+	    newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), rn));
+	    newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
 
-        	        Vector moveDirection = pel.toVector().subtract(arl.toVector());
-        	        double distance = moveDirection.length();  // 손가락과 중앙 사이의 거리 계산
+	    int t2 = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
+	        int tick = 0;
 
-        	        if (distance > 0) {  // 충분히 멀리 있을 때만 이동
-        	            // 거리가 멀수록 빠르게, 가까워질수록 느리게: log(distance) 이용
-        	            double speed = Math.log(distance + 1) * 0.2;  // 거리 기반으로 속도 설정
-        	            moveDirection.normalize().multiply(speed);  // 속도 적용하여 이동
-        	            Holding.ale(newmob).setVelocity(moveDirection);
-        	        }
-                }
-            }, 0,3);
-			ordt.put(rn, t2);
-			ast.put(newmob.getUniqueId(), t2);
-		});
-		
+	        @Override
+	        public void run() {
+	            playerList.stream()
+	                      .filter(rp -> pe != rp && rp.isValid())
+	                      .forEach(rp -> Holding.holding(null, rp, 10L));
+	            if ((tick += 2) % 80 == 0) {
+	                changeFace(newmob, tick);
+	            }
+
+	            Location pel = Holding.ale(pe).getLocation().add(0, 1, 0);
+	            Location arl = Holding.ale(newmob).getLocation();
+
+	            Vector moveDirection = pel.toVector().subtract(arl.toVector());
+	            double distance = moveDirection.length();
+
+	            if (distance > 0) {
+	                double speed = Math.log(distance + 1) * 0.09;
+	                moveDirection.normalize().multiply(speed);
+	                Holding.ale(newmob).setVelocity(moveDirection);
+	            }
+	        }
+	    }, 0, 2);
+
+	    ordt.put(rn, t2);
+	    ast.put(newmob.getUniqueId(), t2);
+
 	}
 	
 	final private void changeFace(Item i, int tick) {
 		i.getWorld().playSound(i.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 2);
 		i.getWorld().spawnParticle(Particle.SOUL, i.getLocation(), 5);
-		if((tick/40)%4==0) {
+		if((tick/80)%4==0) {
 			i.setItemStack(new ItemStack(Material.WITHER_SKELETON_SKULL));
 		}
-		else if((tick/40)%3==0) {
+		else if((tick/80)%3==0) {
 			i.setItemStack(new ItemStack(Material.ZOMBIE_HEAD));
 		}
-		else if((tick/40)%2==0) {
+		else if((tick/80)%2==0) {
 			i.setItemStack(new ItemStack(Material.PIGLIN_HEAD));
 		}
 		else {
@@ -807,38 +807,43 @@ public class HarvesterSkills extends NethercoreRaids{
 	
 	final private void totems(LivingEntity p) {
 		String rn = p.getMetadata("raid").get(0).asString();
-		Bukkit.getWorld("NethercoreRaid").getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(e -> e.remove());
+		p.getWorld().getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(e -> e.remove());
 		
 
-            Location rl = NethercoreRaids.getraidloc(p).clone();
-            World w = rl.getWorld();
+            final Location rfl = NethercoreRaids.getraidloc(p).clone();
+            final World w = rfl.getWorld();
+            
             
 			
 			for(int i = 0; i<4; i++) {
 
 				ItemStack head = new ItemStack(Material.SKELETON_SKULL);
+	            Location rl = null;
 				
 				if(i==0) {
-					rl.add(4, 0.1, 4);
+					rl = rfl.clone().add(4, 0.1, 4);
 					head.setType(Material.WITHER_SKELETON_SKULL);
 				}
 				else if(i==1) {
-					rl.add(-4, 0.1, 4);
+					rl = rfl.clone().add(-4, 0.1, 4);
 					head.setType(Material.ZOMBIE_HEAD);
 				}
 				else if(i==2) {
-					rl.add(-4, 0.1, -4);
+					rl = rfl.clone().add(-4, 0.1, -4);
 					head.setType(Material.PIGLIN_HEAD);
 				}
-				else if(i==3) {
-					rl.add(4, 0.1, -4);
+				else {
+					rl = rfl.clone().add(4, 0.1, -4);
 				}
-				
+
+	            
 				w.spawn(rl, Illusioner.class, newmob -> {
 
 					newmob.getEquipment().setHelmet(head);
+		    		newmob.setCanPickupItems(true);
 		    		newmob.setCustomNameVisible(false);
 					newmob.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
+					newmob.setMetadata("totem"+rn, new FixedMetadataValue(RMain.getInstance(), rn));
 					newmob.setMetadata("harvestertotem", new FixedMetadataValue(RMain.getInstance(), rn));
 		    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), rn));
 		    		newmob.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
@@ -857,7 +862,7 @@ public class HarvesterSkills extends NethercoreRaids{
 	}
 	
 	final private boolean judge(LivingEntity p, String rn) {
-		Boolean bool = Bukkit.getWorld("NethercoreRaid").getEntities().stream().anyMatch(e -> e.hasMetadata("totem"+rn));
+		Boolean bool = p.getWorld().getEntities().stream().anyMatch(e -> e.hasMetadata("totem"+rn));
 		if(bool) {
             for(Player pe : NethercoreRaids.getheroes(p)) {
     			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -869,7 +874,7 @@ public class HarvesterSkills extends NethercoreRaids{
         		Holding.invur(pe, 60l);
     			p.getWorld().playSound(pe.getLocation(), Sound.AMBIENT_SOUL_SAND_VALLEY_ADDITIONS, 1, 2);
         	}
-			Bukkit.getWorld("NethercoreRaid").getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(newmob -> {
+			p.getWorld().getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(newmob -> {
             	if(ast.containsKey(newmob.getUniqueId())) {
 					Bukkit.getScheduler().cancelTask(ast.remove(newmob.getUniqueId()));
             	}
@@ -901,7 +906,7 @@ public class HarvesterSkills extends NethercoreRaids{
 		return bool;
 	}
 
-	final long OrdealTime = 450;
+	final long OrdealTime = 650;
 	
 	final private void ordeal(LivingEntity p, EntityDamageByEntityEvent d) {
 		String rn = p.getMetadata("raid").get(0).asString();
@@ -910,7 +915,7 @@ public class HarvesterSkills extends NethercoreRaids{
         	ordt.removeAll(rn);
         }
         ordeal.put(p.getUniqueId(), true);
-        Location rl = NethercoreRaids.getraidloc(p).clone();
+        final Location rl = NethercoreRaids.getraidloc(p).clone();
 		p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
         d.setCancelled(true);
     	p.teleport(rl.clone().add(0, 1, 0));
@@ -967,7 +972,7 @@ public class HarvesterSkills extends NethercoreRaids{
 		p.getWorld().playSound(p.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_DEPLETE, 1, 2);
 		p.getWorld().spawnParticle(Particle.FLASH, p.getLocation(), 10, 2,2,2);
 
-		Bukkit.getWorld("NethercoreRaid").getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(newmob -> {
+		p.getWorld().getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(newmob -> {
         	if(ast.containsKey(newmob.getUniqueId())) {
 				Bukkit.getScheduler().cancelTask(ast.remove(newmob.getUniqueId()));
         	}
@@ -1034,18 +1039,13 @@ public class HarvesterSkills extends NethercoreRaids{
 	public void Ordeal(EntityPickupItemEvent d) 
 	{
 			if(d.getItem().hasMetadata("harvesterskull")) {
-				Item it = d.getItem();
 				d.setCancelled(true);
+				Item it = d.getItem();
 				if(d.getEntity() instanceof Player) {
-					Player p = (Player) d.getEntity();
-					String rn =  getheroname(p);
+					Player pe = (Player) d.getEntity();
+					String rn =  getheroname(pe);
 					if(rn.equals(it.getMetadata("harvesterskull").get(0).asString())) {
-						it.remove();
-						p.playSound(p, Sound.ENTITY_PHANTOM_SWOOP, 1, 0);
-						p.setHealth(0);
-						if(ast.containsKey(it.getUniqueId())) {
-							Bukkit.getScheduler().cancelTask(ast.remove(it.getUniqueId()));
-	                	}
+						pe.playSound(pe, Sound.ENTITY_PHANTOM_SWOOP, 0.1f, 2);
 					}
 				}
 				else if(d.getEntity().hasMetadata("harvestertotem")){
@@ -1075,7 +1075,9 @@ public class HarvesterSkills extends NethercoreRaids{
 								if(le!=e && e instanceof LivingEntity) {
 									LivingEntity pe = (LivingEntity)e;
 									pe.damage(15,p);
-									Holding.holding(null, pe, 40l);
+									Holding.holding(null, pe, 20l);
+							        final Location rl = NethercoreRaids.getraidloc(p).clone();
+							        pe.teleport(rl);
 								}
 							}
 						}

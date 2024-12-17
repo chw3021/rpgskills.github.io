@@ -507,6 +507,7 @@ public class Swordskills extends Pak {
 											p.setCooldown(CAREFUL, 4);
 											p.swingOffHand();
 											Location fl = p.getEyeLocation().clone();
+											Location monsters = gettargetblock(p,1);
 											for(double d = 0; d <= 2.5; d += 0.1) {
 												Location pl = fl.clone();
 												pl.add(pl.clone().getDirection().normalize().multiply(d));
@@ -536,7 +537,7 @@ public class Swordskills extends Pak {
 												{
 													LivingEntity le = (LivingEntity)e;
 													atk1(0.45*(1+ssd.Rising.get(p.getUniqueId())*0.036), p, le,5);
-													le.teleport(p);
+													le.teleport(monsters);
 
 												}
 											}
@@ -627,6 +628,7 @@ public class Swordskills extends Pak {
 							{
 								p.setCooldown(CAREFUL, 3);
 								p.swingOffHand();
+								Location monsters = gettargetblock(p,1);
 								ArrayList<Location> line = new ArrayList<Location>();
 								p.playSound(p.getLocation(), Sound.BLOCK_AZALEA_LEAVES_FALL, 0.5f, 2f);
 								p.playSound(p.getLocation(), Sound.BLOCK_AZALEA_LEAVES_FALL, 0.5f, 1f);
@@ -664,7 +666,7 @@ public class Swordskills extends Pak {
 									{
 										LivingEntity le = (LivingEntity)e;
 										atk1(0.45*(1+ssd.Rising.get(p.getUniqueId())*0.04), p, le);
-										le.teleport(p);
+										le.teleport(monsters);
 
 									}
 								}
@@ -714,6 +716,7 @@ public class Swordskills extends Pak {
 					Holding.invur(p, 30l);
 
 					Location fl = p.getLocation().clone();
+					final Location monsters = gettargetblock(p,1).clone();
 					final Location pl = p.getEyeLocation().clone();
 					final Location sl = pl.clone().add(pl.clone().getDirection().normalize().multiply(-7)).setDirection(pl.clone().getDirection()).clone().add(0, 3, 0);
 					final World w = sl.getWorld();
@@ -790,7 +793,7 @@ public class Swordskills extends Pak {
 							p.playSound(p.getLocation(), Sound.ENTITY_GOAT_LONG_JUMP, 1.0f, 0f);
 							p.teleport(sl.clone());
 							les.forEach(le -> {
-								le.teleport(fl);
+								le.teleport(monsters);
 								Holding.holding(p, le, 20l);
 							});
 						}
@@ -830,7 +833,7 @@ public class Swordskills extends Pak {
 							p.playSound(p.getLocation(), Sound.ENTITY_GOAT_LONG_JUMP, 1.0f, 0f);
 							les.forEach(le -> {
 								atk1(1.5*(1+ssd.Rising.get(p.getUniqueId())*0.09), p, le);
-								le.teleport(fl);
+								le.teleport(monsters);
 							});
 
 							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {

@@ -1,5 +1,6 @@
 package io.github.chw3021.monsters.worldgen;
 
+import java.io.File;
 import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
@@ -19,88 +20,83 @@ import io.github.chw3021.rmain.RMain;
 
 public class RaidWorldLoad implements Listener {
 
-	@EventHandler
-	public void raidworldload(PluginEnableEvent ev)   
-    {
-		if (Bukkit.getServer().getWorld("OverworldRaid") == null) {
-			WorldCreator rwc = new WorldCreator("OverworldRaid");
-			rwc.environment(Environment.NORMAL);
-			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				@Override
-				public void run() {
-					rwc.generator(new OverworldRaidChunkGenerator());
-					World rw = rwc.createWorld();
-					rw.setMetadata("rpgraidworld", new FixedMetadataValue(RMain.getInstance(),true));
-					rwc.environment(Environment.NORMAL);
-					rw.setDifficulty(Difficulty.HARD);
-					rw.setTime(12000);
-					rw.setAutoSave(false);
-					rw.setPVP(false);
-					rw.setSpawnFlags(false, false);
-					rw.setGameRule(GameRule.KEEP_INVENTORY, true);
-					rw.setGameRule(GameRule.DO_INSOMNIA, false);
-					rw.setGameRule(GameRule.DO_IMMEDIATE_RESPAWN, false);
-					rw.setGameRule(GameRule.DISABLE_RAIDS, true);
-					rw.setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
-					rw.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
-					rw.setGameRule(GameRule.DO_WEATHER_CYCLE, false);
-					rw.setGameRule(GameRule.DO_PATROL_SPAWNING, false);
-					rw.setGameRule(GameRule.DO_TILE_DROPS, false);
-					rw.setGameRule(GameRule.DO_TRADER_SPAWNING, false);
-					rw.setGameRule(GameRule.DO_WARDEN_SPAWNING, false);
-					rw.setGameRule(GameRule.DO_ENTITY_DROPS, false);
-					rw.setGameRule(GameRule.DO_MOB_LOOT, false);
-					rw.setGameRule(GameRule.DO_MOB_SPAWNING, false);
-					rw.setGameRule(GameRule.DROWNING_DAMAGE, false);
-					rw.setGameRule(GameRule.MOB_GRIEFING, false);
-					rw.setGameRule(GameRule.SPAWN_RADIUS, 0);
-				}
-			},50);
-		}
-		return;
+    private boolean worldExists(String worldName) {
+        // 서버의 월드 컨테이너에서 해당 월드 폴더가 존재하는지 확인
+        File worldFolder = new File(Bukkit.getWorldContainer(), worldName);
+        return worldFolder.exists() && worldFolder.isDirectory();
     }
-	
-	@EventHandler
-	public void raidworldload(WorldLoadEvent ev) {
-		if(ev.getWorld().getName().equals("OverworldRaid")) {
-			if (Bukkit.getServer().getWorld("NethercoreRaid") == null) {
-				WorldCreator rwc = new WorldCreator("NethercoreRaid");
-				rwc.environment(Environment.NETHER);
-				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					@Override
-					public void run() {
-						rwc.generator(new NetherRaidChunkGenerator());
-						World rw = rwc.createWorld();
-						rw.setMetadata("rpgraidworld", new FixedMetadataValue(RMain.getInstance(),true));
-						rwc.environment(Environment.NETHER);
-						rw.setDifficulty(Difficulty.HARD);
-						rw.setTime(12000);
-						rw.setAutoSave(false);
-						rw.setPVP(false);
-						rw.setSpawnFlags(false, false);
-						rw.setGameRule(GameRule.KEEP_INVENTORY, true);
-						rw.setGameRule(GameRule.DO_INSOMNIA, false);
-						rw.setGameRule(GameRule.DO_IMMEDIATE_RESPAWN, true);
-						rw.setGameRule(GameRule.DISABLE_RAIDS, true);
-						rw.setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
-						rw.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
-						rw.setGameRule(GameRule.DO_WEATHER_CYCLE, false);
-						rw.setGameRule(GameRule.DO_PATROL_SPAWNING, false);
-						rw.setGameRule(GameRule.DO_TILE_DROPS, false);
-						rw.setGameRule(GameRule.DO_TRADER_SPAWNING, false);
-						rw.setGameRule(GameRule.DO_WARDEN_SPAWNING, false);
-						rw.setGameRule(GameRule.DO_ENTITY_DROPS, false);
-						rw.setGameRule(GameRule.DO_MOB_LOOT, false);
-						rw.setGameRule(GameRule.DO_MOB_SPAWNING, false);
-						rw.setGameRule(GameRule.DROWNING_DAMAGE, false);
-						rw.setGameRule(GameRule.MOB_GRIEFING, false);
-						rw.setGameRule(GameRule.SPAWN_RADIUS, 0);
-					}
-				}, 50);
-			}
-		}
-	}
-	
+
+    @EventHandler
+    public void raidWorldLoad(PluginEnableEvent ev) {
+        if (Bukkit.getServer().getWorld("OverworldRaid") == null) {
+            if (worldExists("OverworldRaid")) {
+                // 월드가 존재하면 바로 불러오기
+                World rw = Bukkit.getServer().createWorld(new WorldCreator("OverworldRaid"));
+                configureRaidWorld(rw, Environment.NORMAL); // 메타데이터 설정 및 월드 설정
+            } else {
+                // 월드가 존재하지 않으면 새로 생성
+                WorldCreator rwc = new WorldCreator("OverworldRaid");
+                rwc.environment(Environment.NORMAL);
+                rwc.generator(new OverworldRaidChunkGenerator());
+
+                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), () -> {
+                    World rw = rwc.createWorld();
+                    configureRaidWorld(rw, Environment.NORMAL);
+                }, 50);
+            }
+        }
+    }
+
+    @EventHandler
+    public void netherRaidWorldLoad(WorldLoadEvent ev) {
+        if (ev.getWorld().getName().equals("OverworldRaid")) {
+            if (Bukkit.getServer().getWorld("NethercoreRaid") == null) {
+                if (worldExists("NethercoreRaid")) {
+                    // 월드가 존재하면 바로 불러오기
+                    World rw = Bukkit.getServer().createWorld(new WorldCreator("NethercoreRaid"));
+                    configureRaidWorld(rw, Environment.NETHER); // 메타데이터 설정 및 월드 설정
+                } else {
+                    // 월드가 존재하지 않으면 새로 생성
+                    WorldCreator rwc = new WorldCreator("NethercoreRaid");
+                    rwc.environment(Environment.NETHER);
+                    rwc.generator(new NetherRaidChunkGenerator());
+
+                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), () -> {
+                        World rw = rwc.createWorld();
+                        configureRaidWorld(rw, Environment.NETHER);
+                    }, 50);
+                }
+            }
+        }
+    }
+
+    private void configureRaidWorld(World world, Environment environment) {
+        world.setMetadata("rpgraidworld", new FixedMetadataValue(RMain.getInstance(), true));
+        world.setDifficulty(Difficulty.HARD);
+        world.setTime(12000);
+        world.setAutoSave(false);
+        world.setPVP(false);
+        world.setSpawnFlags(false, false);
+
+        // 게임 규칙 설정
+        world.setGameRule(GameRule.KEEP_INVENTORY, true);
+        world.setGameRule(GameRule.DO_INSOMNIA, false);
+        world.setGameRule(GameRule.DO_IMMEDIATE_RESPAWN, environment == Environment.NETHER);
+        world.setGameRule(GameRule.DISABLE_RAIDS, true);
+        world.setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
+        world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
+        world.setGameRule(GameRule.DO_WEATHER_CYCLE, false);
+        world.setGameRule(GameRule.DO_PATROL_SPAWNING, false);
+        world.setGameRule(GameRule.DO_TILE_DROPS, false);
+        world.setGameRule(GameRule.DO_TRADER_SPAWNING, false);
+        world.setGameRule(GameRule.DO_WARDEN_SPAWNING, false);
+        world.setGameRule(GameRule.DO_ENTITY_DROPS, false);
+        world.setGameRule(GameRule.DO_MOB_LOOT, false);
+        world.setGameRule(GameRule.DO_MOB_SPAWNING, false);
+        world.setGameRule(GameRule.DROWNING_DAMAGE, false);
+        world.setGameRule(GameRule.MOB_GRIEFING, false);
+        world.setGameRule(GameRule.SPAWN_RADIUS, 0);
+    }
 	
 	@EventHandler
 	public void raidworldunload(PluginDisableEvent ev) {

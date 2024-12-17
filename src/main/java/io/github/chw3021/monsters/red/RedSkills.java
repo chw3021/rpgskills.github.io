@@ -9,6 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -1129,12 +1130,22 @@ public class RedSkills extends Summoned{
 	{
 		if(ev.getEntity().hasMetadata("redboss")){
 
-			ev.setCancelled(true);
 			
 		    LivingEntity p = ev.getEntity();
 		    
-		    final Vector v = ev.getProjectile().getVelocity().normalize().clone();
-            
+		    Vector velocity = p.getEyeLocation().getDirection();
+		    final Vector v;
+
+		    // 벡터의 길이가 0인지 확인
+		    if (velocity.lengthSquared() > 0) {
+		        v = velocity.normalize().clone();
+		    } else {
+		        v = new Vector(0, 0, 0); // 기본값으로 설정 (이동이 발생하지 않도록)
+		    }
+
+			ev.setCancelled(true);
+		    p.swingMainHand();
+		    p.playEffect(EntityEffect.ZOGLIN_ATTACK);
             p.getWorld().playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 0.5f);
             p.getWorld().playSound(p.getLocation(), Sound.ENTITY_SKELETON_STEP, 1.0f, 0f);
             p.getWorld().playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 1.0f, 0.5f);

@@ -579,7 +579,8 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 	public void PickupItem(EntityPickupItemEvent ev) 
 	{
 		RedSkills.getInstance().Ordeal(ev);
-		
+
+		HarvesterSkills.getInstance().Ordeal(ev);
 	}
 
 	@EventHandler

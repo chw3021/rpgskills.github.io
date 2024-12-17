@@ -149,7 +149,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 	{
 		if(le.hasMetadata("raid")) {
 			String rn = le.getMetadata("raid").get(0).asString();
-			return raidloc.get(rn);
+			return raidloc.get(rn).clone();
 		}
 		else{
 			return null;
@@ -203,7 +203,6 @@ public class NethercoreRaids extends Summoned implements Listener {
 			leadert.remove(rn);
 		}
 		
-		Location spl = raidloc.get(rn).clone();
 		if(tart.containsKey(rn)) {
 			Bukkit.getServer().getScheduler().cancelTask(tart.get(rn));
 			tart.remove(rn);
@@ -242,47 +241,54 @@ public class NethercoreRaids extends Summoned implements Listener {
 				Bukkit.getEntity(raidpor.get(rn)).remove();
 			}
 		}
-		
-    	heroes.get(rn).forEach(pu -> {
-    		Player p = Bukkit.getPlayer(pu);
-    		if(factor ==0) {
-        		p.sendTitle(ChatColor.BOLD +(ChatColor.DARK_GRAY + title), ChatColor.BOLD +sub, 5, 60, 5);
-        		p.playSound(spl, Sound.ENTITY_WITCH_AMBIENT, 1, 0);
-        		p.playSound(spl, Sound.ENTITY_RAVAGER_DEATH, 1, 0);
-            	p.spawnParticle(Particle.ANGRY_VILLAGER, spl, 1000,6,6,6);
-    		}
-    		else {
-    			if(RaidDifficulties.getMaxDifficulty(p, RaidCategory.NETHER) <= difen.get(rn)) {
-        			RaidDifficulties.saver(p, RaidCategory.NETHER, difen.get(rn)+2);
-    			}
-    			
-        		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "승리":"Victory!";
-        		p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + reg), null, 5, 60, 5);
-        		p.playSound(spl, Sound.ENTITY_VILLAGER_CELEBRATE, 1, 1);
-        		p.playSound(spl, Sound.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
-            	spl.getWorld().spawn(spl, Firework.class);
-            	raidcool.put(pu, System.currentTimeMillis());
-            	
-            	Elements.give(Elements.getel(bossnum.get(rn),p), 6*(int)(1+ 0.05*difen.get(rn)*(1 - 0.1*heroes.get(rn).size())), p);
-            	p.spawnParticle(Particle.COMPOSTER, spl, 1000,6,6,6);
-            	p.spawnParticle(Particle.HEART, spl, 1000,6,6,6);
-            	
-    		}
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-                @Override
-                public void run() {
-        			Holding.ale(p).teleport(beforepl.get(p.getUniqueId()));
-					beforepl.remove(p.getUniqueId());
-					raidbart.remove(rn);
-                }
-            }, 160); 
-    	});
-		heroes.removeAll(rn);
-		if(bossnum.containsKey(rn)) {
-			bossnum.remove(rn);
-		}
 
-		difen.remove(rn);
+		if(heroes.containsKey(rn)) {
+
+	    	heroes.get(rn).forEach(pu -> {
+	    		Player p = Bukkit.getPlayer(pu);
+	    		Location spl = p.getLocation();
+	    		if(raidloc.containsKey(rn)) {
+	        		spl = raidloc.get(rn).clone();
+	    		}
+	    		if(factor ==0) {
+	        		p.sendTitle(ChatColor.BOLD +(ChatColor.DARK_GRAY + title), ChatColor.BOLD +sub, 5, 60, 5);
+	        		p.playSound(spl, Sound.ENTITY_WITCH_AMBIENT, 1, 0);
+	        		p.playSound(spl, Sound.ENTITY_RAVAGER_DEATH, 1, 0);
+	            	p.spawnParticle(Particle.ANGRY_VILLAGER, spl, 1000,6,6,6);
+	    		}
+	    		else {
+	    			if(RaidDifficulties.getMaxDifficulty(p, RaidCategory.NETHER) <= difen.get(rn)) {
+	        			RaidDifficulties.saver(p, RaidCategory.NETHER, difen.get(rn)+2);
+	    			}
+	    			
+	        		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "승리":"Victory!";
+	        		p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + reg), null, 5, 60, 5);
+	        		p.playSound(spl, Sound.ENTITY_VILLAGER_CELEBRATE, 1, 1);
+	        		p.playSound(spl, Sound.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
+	            	spl.getWorld().spawn(spl, Firework.class);
+	            	raidcool.put(pu, System.currentTimeMillis());
+	            	
+	            	Elements.give(Elements.getel(bossnum.get(rn),p), 6*(int)(1+ 0.05*difen.get(rn)*(1 - 0.1*heroes.get(rn).size())), p);
+	            	p.spawnParticle(Particle.COMPOSTER, spl, 1000,6,6,6);
+	            	p.spawnParticle(Particle.HEART, spl, 1000,6,6,6);
+	            	
+	    		}
+	            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	                @Override
+	                public void run() {
+	        			Holding.ale(p).teleport(beforepl.get(p.getUniqueId()));
+						beforepl.remove(p.getUniqueId());
+						raidbart.remove(rn);
+	                }
+	            }, 160); 
+	    	});
+			heroes.removeAll(rn);
+			if(bossnum.containsKey(rn)) {
+				bossnum.remove(rn);
+			}
+
+			difen.remove(rn);
+		}
 	}
 	
 

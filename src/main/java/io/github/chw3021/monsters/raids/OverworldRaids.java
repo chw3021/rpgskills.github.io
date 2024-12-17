@@ -208,7 +208,6 @@ public class OverworldRaids extends Summoned implements Listener {
 			leadert.remove(rn);
 		}
 		
-		Location spl = raidloc.get(rn).clone();
 		if(tart.containsKey(rn)) {
 			Bukkit.getServer().getScheduler().cancelTask(tart.get(rn));
 			tart.remove(rn);
@@ -247,46 +246,52 @@ public class OverworldRaids extends Summoned implements Listener {
 				Bukkit.getEntity(raidpor.get(rn)).remove();
 			}
 		}
-		
-    	heroes.get(rn).forEach(pu -> {
-    		Player p = Bukkit.getPlayer(pu);
-    		if(factor ==0) {
-        		p.sendTitle(ChatColor.BOLD +(ChatColor.DARK_GRAY + title), ChatColor.BOLD +sub, 5, 60, 5);
-        		p.playSound(spl, Sound.ENTITY_WITCH_AMBIENT, 1, 0);
-        		p.playSound(spl, Sound.ENTITY_RAVAGER_DEATH, 1, 0);
-            	p.spawnParticle(Particle.ANGRY_VILLAGER, spl, 1000,6,6,6);
-    		}
-    		else {
-    			if(RaidDifficulties.getMaxDifficulty(p, RaidCategory.OVERWORLD) <= difen.get(rn)) {
-        			RaidDifficulties.saver(p, RaidCategory.OVERWORLD, difen.get(rn)+2);
-    			}
-    			
-        		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "승리":"Victory!";
-        		p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + reg), null, 5, 60, 5);
-        		p.playSound(spl, Sound.ENTITY_VILLAGER_CELEBRATE, 1, 1);
-        		p.playSound(spl, Sound.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
-            	spl.getWorld().spawn(spl, Firework.class);
-            	raidcool.put(pu, System.currentTimeMillis());
-            	
-            	Elements.give(Elements.getstel(12,p), 5*(int)(1+ 0.05*difen.get(rn)*(1 - 0.1*heroes.get(rn).size())), p);
-            	p.spawnParticle(Particle.COMPOSTER, spl, 1000,6,6,6);
-            	p.spawnParticle(Particle.HEART, spl, 1000,6,6,6);
-            	
-    		}
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-                @Override
-                public void run() {
-        			Holding.ale(p).setPersistent(true);
-        			Holding.ale(p).setRemoveWhenFarAway(false);
-        			Holding.ale(p).teleport(beforepl.get(p.getUniqueId()));
-					beforepl.remove(p.getUniqueId());
-					raidbart.remove(rn);
-                }
-            }, 160); 
-    	});
-		heroes.removeAll(rn);
+		if(heroes.containsKey(rn)) {
+	    	heroes.get(rn).forEach(pu -> {
+	    		Player p = Bukkit.getPlayer(pu);
+	    		Location spl = p.getLocation();
+	    		if(raidloc.containsKey(rn)) {
+	        		spl = raidloc.get(rn).clone();
+	    		}
+	    		if(factor ==0) {
+	        		p.sendTitle(ChatColor.BOLD +(ChatColor.DARK_GRAY + title), ChatColor.BOLD +sub, 5, 60, 5);
+	        		p.playSound(spl, Sound.ENTITY_WITCH_AMBIENT, 1, 0);
+	        		p.playSound(spl, Sound.ENTITY_RAVAGER_DEATH, 1, 0);
+	            	p.spawnParticle(Particle.ANGRY_VILLAGER, spl, 1000,6,6,6);
+	    		}
+	    		else {
+	    			if(RaidDifficulties.getMaxDifficulty(p, RaidCategory.OVERWORLD) <= difen.get(rn)) {
+	        			RaidDifficulties.saver(p, RaidCategory.OVERWORLD, difen.get(rn)+2);
+	    			}
+	    			
+	        		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "승리":"Victory!";
+	        		p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + reg), null, 5, 60, 5);
+	        		p.playSound(spl, Sound.ENTITY_VILLAGER_CELEBRATE, 1, 1);
+	        		p.playSound(spl, Sound.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
+	            	spl.getWorld().spawn(spl, Firework.class);
+	            	raidcool.put(pu, System.currentTimeMillis());
+	            	
+	            	Elements.give(Elements.getstel(12,p), 5*(int)(1+ 0.05*difen.get(rn)*(1 - 0.1*heroes.get(rn).size())), p);
+	            	p.spawnParticle(Particle.COMPOSTER, spl, 1000,6,6,6);
+	            	p.spawnParticle(Particle.HEART, spl, 1000,6,6,6);
+	            	
+	    		}
+	            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	                @Override
+	                public void run() {
+	        			Holding.ale(p).setPersistent(true);
+	        			Holding.ale(p).setRemoveWhenFarAway(false);
+	        			Holding.ale(p).teleport(beforepl.get(p.getUniqueId()));
+						beforepl.remove(p.getUniqueId());
+						raidbart.remove(rn);
+	                }
+	            }, 160); 
+	    	});
+			heroes.removeAll(rn);
 
-		difen.remove(rn);
+			difen.remove(rn);
+		}
+		
 	}
 	
 
@@ -561,6 +566,7 @@ public class OverworldRaids extends Summoned implements Listener {
     		
     		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
     		newmob.setMetadata("bosswave1", new FixedMetadataValue(RMain.getInstance(), true));
+    		newmob.setMetadata("NightArcher", new FixedMetadataValue(RMain.getInstance(), true));
     		
     		newmob.setRemoveWhenFarAway(false);
     		raider.put(rn, newmob.getUniqueId());
@@ -2030,6 +2036,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	
 	    	    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), le.getMetadata("boss").get(0).asDouble()));
 	    	    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
+	    	    		newmob.setMetadata("NightArcher", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		newmob.setMetadata("finalboss", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		
 	    	    		newmob.setConversionTime(-1);
@@ -2177,7 +2184,6 @@ public class OverworldRaids extends Summoned implements Listener {
 	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_SKELETON_AMBIENT, 1, 0);
 	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.BLOCK_FIRE_AMBIENT, 1, 2);
 	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_GENERIC_EXTINGUISH_FIRE, 1, 0);
-	        	Bukkit.getEntity(vil.get(rn)).teleport(spl.clone().add(1,2.5,1));
 	            int rat =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	                @Override
 	                public void run() {

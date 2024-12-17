@@ -68,6 +68,7 @@ import io.github.chw3021.monsters.MobsSkillsEvents;
 import io.github.chw3021.monsters.raids.NethercoreRaids;
 import io.github.chw3021.monsters.raids.OverworldRaids;
 import io.github.chw3021.monsters.raids.RaidDifficulties;
+import io.github.chw3021.monsters.worldgen.RaidWorldLoad;
 import io.github.chw3021.obtains.NPCLoc;
 import io.github.chw3021.obtains.NPCcontact;
 import io.github.chw3021.obtains.Obtained;
@@ -119,7 +120,7 @@ public class RMain extends JavaPlugin{
         	w.setTicksPerSpawns(SpawnCategory.WATER_ANIMAL, 1);
         	w.setTicksPerSpawns(SpawnCategory.WATER_UNDERGROUND_CREATURE, 1);
         });
-        //Bukkit.getPluginManager().registerEvents(new RaidWorldLoad(), this);
+        Bukkit.getPluginManager().registerEvents(new RaidWorldLoad(), this);
         Bukkit.getPluginManager().registerEvents(MobsSkillsEvents.getInstance(), this);
         
         this.getDataFolder().mkdir();
