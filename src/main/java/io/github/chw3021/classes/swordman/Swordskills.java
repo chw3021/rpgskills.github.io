@@ -1271,7 +1271,6 @@ public class Swordskills extends Pak {
 							{
 								LivingEntity le = (LivingEntity)e;
 								atk1(0.6*(1+ ssd.CriticalDraw.get(p.getUniqueId())*0.045), p, le);
-								le.teleport(p);
 								Holding.superholding(p, le, 10l);
 
 							}

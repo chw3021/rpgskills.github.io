@@ -14,6 +14,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -23,6 +24,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -65,6 +67,7 @@ import io.github.chw3021.items.weapons.Weapons;
 import io.github.chw3021.monsters.raids.NethercoreRaids;
 import io.github.chw3021.monsters.raids.OverworldRaids;
 import io.github.chw3021.monsters.raids.Summoned;
+import io.github.chw3021.rmain.RMain;
 import net.md_5.bungee.api.ChatColor;
 
 public class Rpgs extends Summoned implements CommandExecutor, Listener {
@@ -245,6 +248,15 @@ public class Rpgs extends Summoned implements CommandExecutor, Listener {
 		if(!(sender instanceof Player) &&alias.equals("rpg"))
 		{
 		}
+		if (sender instanceof ConsoleCommandSender && alias.equals("rpg")) { 
+	        if (args.length > 0 && args[0].equalsIgnoreCase("jjj")) {
+	            Bukkit.getWorlds().forEach(w -> {
+	                Bukkit.unloadWorld(w, false);
+	            });
+	            sender.sendMessage("모든 월드를 언로드했습니다.");
+	            return true; // 명령어 처리 성공
+	        }
+	    }
 		if(sender instanceof Player && alias.equals("rpg"))
 		{
 			Player p = (Player)sender;

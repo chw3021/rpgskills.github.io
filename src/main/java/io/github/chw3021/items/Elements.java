@@ -1029,40 +1029,48 @@ public class Elements implements Listener {
 		}
 	}
 
-
 	private int netherChange(CraftingInventory inv, Integer cmdt) 
 	{
-		if(inv.getItem(5) != null && inv.getItem(5).getAmount() ==1 && inv.getItem(5).hasItemMeta() && inv.getItem(5).getItemMeta().hasCustomModelData() && inv.getItem(5).getItemMeta().getCustomModelData() == cmdt){
-			return 5;
-		}
-		else if(inv.getItem(1) != null && inv.getItem(1).getAmount() ==1 && inv.getItem(1).hasItemMeta() && inv.getItem(1).getItemMeta().hasCustomModelData() && inv.getItem(1).getItemMeta().getCustomModelData() == cmdt){
-			return 1;
-		}
-		else if(inv.getItem(2) != null && inv.getItem(2).getAmount() ==1 && inv.getItem(2).hasItemMeta() && inv.getItem(2).getItemMeta().hasCustomModelData() && inv.getItem(2).getItemMeta().getCustomModelData() == cmdt){
-			return 2;
-		}
-		else if(inv.getItem(3) != null && inv.getItem(3).getAmount() ==1 && inv.getItem(3).hasItemMeta() && inv.getItem(3).getItemMeta().hasCustomModelData() && inv.getItem(3).getItemMeta().getCustomModelData() == cmdt){
-			return 3;
-		}
-		else if(inv.getItem(4) != null && inv.getItem(4).getAmount() ==1 && inv.getItem(4).hasItemMeta() && inv.getItem(4).getItemMeta().hasCustomModelData() && inv.getItem(4).getItemMeta().getCustomModelData() == cmdt){
-			return 4;
-		}
-		else if(inv.getItem(6) != null && inv.getItem(6).getAmount() ==1 && inv.getItem(6).hasItemMeta() && inv.getItem(6).getItemMeta().hasCustomModelData() && inv.getItem(6).getItemMeta().getCustomModelData() == cmdt){
-			return 6;
-		}
-		else if(inv.getItem(7) != null && inv.getItem(7).getAmount() ==1 && inv.getItem(7).hasItemMeta() && inv.getItem(7).getItemMeta().hasCustomModelData() && inv.getItem(7).getItemMeta().getCustomModelData() == cmdt){
-			return 7;
-		}
-		else if(inv.getItem(8) != null && inv.getItem(8).getAmount() ==1 && inv.getItem(8).hasItemMeta() && inv.getItem(8).getItemMeta().hasCustomModelData() && inv.getItem(8).getItemMeta().getCustomModelData() == cmdt){
-			return 8;
-		}
-		else if(inv.getItem(9) != null && inv.getItem(9).getAmount() ==1 && inv.getItem(9).hasItemMeta() && inv.getItem(9).getItemMeta().hasCustomModelData() && inv.getItem(9).getItemMeta().getCustomModelData() == cmdt){
-			return 9;
-		}
-		else {
-			return -1;
-		}
+	    // 체크하는 슬롯 목록
+	    List<Integer> checkSlots = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
+
+	    // 체크하는 슬롯의 조건 검사
+	    for (int slot : checkSlots) {
+	        if (inv.getItem(slot) != null && 
+	            inv.getItem(slot).getAmount() == 1 && 
+	            inv.getItem(slot).hasItemMeta() && 
+	            inv.getItem(slot).getItemMeta().hasCustomModelData() && 
+	            inv.getItem(slot).getItemMeta().getCustomModelData() == cmdt) {
+	            
+	            // 다른 슬롯이 전부 빈칸인지 확인
+	            if (areOtherSlotsEmpty(inv, checkSlots, slot)) {
+	                return slot;
+	            } else {
+	                return -1; // 빈칸이 아닌 경우
+	            }
+	        }
+	    }
+
+	    return -1; // 조건에 맞는 슬롯이 없을 경우
 	}
+
+	// 체크하는 슬롯 외에 전부 빈칸인지 확인하는 메서드
+	private boolean areOtherSlotsEmpty(CraftingInventory inv, List<Integer> checkSlots, int targetSlot) 
+	{
+	    for (int slot = 0; slot < inv.getSize(); slot++) {
+	        // 체크하는 슬롯 목록에 없거나, 현재 검사 중인 슬롯은 무시
+	        if (!checkSlots.contains(slot) || slot == targetSlot) {
+	            continue;
+	        }
+
+	        // 슬롯이 비어있지 않다면 false 반환
+	        if (inv.getItem(slot) != null) {
+	            return false;
+	        }
+	    }
+	    return true; // 모든 슬롯이 비어있다면 true 반환
+	}
+
 	private int eck(CraftingInventory inv, Integer cmdt) 
 	{
 		if(inv.getItem(5) != null && inv.getItem(5).getAmount() >=64 && inv.getItem(5).hasItemMeta() && inv.getItem(5).getItemMeta().hasCustomModelData() && inv.getItem(5).getItemMeta().getCustomModelData() == cmdt){
@@ -1176,6 +1184,9 @@ public class Elements implements Listener {
 	public void PICE(PrepareItemCraftEvent d) 
 	{
 		Player p = (Player) d.getView().getPlayer();
+		if(d.getInventory() == null) {
+			return;
+		}
 			if(eck(d.getInventory(), 114)>0) {
 				d.getInventory().setResult(getelcore(14, p));
 			}
@@ -1311,12 +1322,12 @@ public class Elements implements Listener {
 	    }
 	}
 	private void nconverged(InventoryClickEvent d, Player p, CraftingInventory ci, int customModelDataValue) {
-	    if (!nconverged(ci).isEmpty()) {
+	    if (nconverged(ci) != null) {
 	        if (d.getCurrentItem().hasItemMeta() && d.getCurrentItem().getItemMeta().hasCustomModelData()
 	            && d.getCurrentItem().getItemMeta().getCustomModelData() == customModelDataValue) {
 	            d.setCancelled(true);
 	            if (p.getInventory().firstEmpty() != -1) {
-	                p.getInventory().addItem(getstel(customModelDataValue, p));
+	                p.getInventory().addItem(getstel(-2, p));
 	                nconverged(ci).forEach(i ->{
 	                	ci.clear(i);
 	                });
@@ -1326,12 +1337,12 @@ public class Elements implements Listener {
 	    }
 	}
 	private void econverged(InventoryClickEvent d, Player p, CraftingInventory ci, int customModelDataValue) {
-		if (!econverged(ci).isEmpty()) {
+		if (econverged(ci) != null) {
 	        if (d.getCurrentItem().hasItemMeta() && d.getCurrentItem().getItemMeta().hasCustomModelData()
 	            && d.getCurrentItem().getItemMeta().getCustomModelData() == customModelDataValue) {
 	            d.setCancelled(true);
 	            if (p.getInventory().firstEmpty() != -1) {
-	                p.getInventory().addItem(getstel(customModelDataValue, p));
+	                p.getInventory().addItem(getstel(-6, p));
 	                econverged(ci).forEach(i ->{
 	                	ci.clear(i);
 	                });

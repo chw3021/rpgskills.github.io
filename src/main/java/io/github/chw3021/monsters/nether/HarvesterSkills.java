@@ -731,7 +731,7 @@ public class HarvesterSkills extends NethercoreRaids{
 	public HashMap<UUID, Integer> ast = new HashMap<UUID, Integer>();//ArmorStands damage 태스크 저장
 	public HashMap<UUID, Integer> asdt = new HashMap<UUID, Integer>();//ArmorStands remove 태스크 저장
 	
-	final private void itemSpawn(String rn, LivingEntity p) {
+	private void itemSpawn(String rn, LivingEntity p) {
 
 		Collection<Player> playerList = NethercoreRaids.getheroes(p);
 		Player pe = playerList.stream().findAny().orElse(null);
@@ -740,19 +740,15 @@ public class HarvesterSkills extends NethercoreRaids{
 		    return;
 		}
 
-		final Location fl = pe.getLocation().clone().add(0, 3, 0);
-		final World w = fl.getWorld();
+		Location fl = pe.getLocation().clone().add(0, 3, 0);
+		World w = fl.getWorld();
 
-		Item newmob = w.dropItem(fl, new ItemStack(Material.SKELETON_SKULL));
-		newmob.setThrower(p.getUniqueId());
+		Item newmob = w.dropItem(fl.clone(), new ItemStack(Material.SKELETON_SKULL));
 	    newmob.setMetadata("stuff" + rn, new FixedMetadataValue(RMain.getInstance(), true));
+	    newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 	    newmob.setGravity(false);
-	    newmob.setCustomNameVisible(false);
-	    newmob.setInvulnerable(true);
 	    newmob.setGlowing(true);
 	    newmob.setMetadata("harvesterskull", new FixedMetadataValue(RMain.getInstance(), rn));
-	    newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), rn));
-	    newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
 
 	    int t2 = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
 	        int tick = 0;
@@ -805,7 +801,7 @@ public class HarvesterSkills extends NethercoreRaids{
 	
 	private HashMap<UUID,UUID> getbossbytotem = new HashMap<>();
 	
-	final private void totems(LivingEntity p) {
+	private void totems(LivingEntity p) {
 		String rn = p.getMetadata("raid").get(0).asString();
 		p.getWorld().getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(e -> e.remove());
 		
@@ -847,7 +843,6 @@ public class HarvesterSkills extends NethercoreRaids{
 					newmob.setMetadata("harvestertotem", new FixedMetadataValue(RMain.getInstance(), rn));
 		    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), rn));
 		    		newmob.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
-		    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
 					newmob.setGlowing(true);
 		    		newmob.setCanJoinRaid(false);
 		    		newmob.setPatrolTarget(null);
@@ -1039,16 +1034,17 @@ public class HarvesterSkills extends NethercoreRaids{
 	public void Ordeal(EntityPickupItemEvent d) 
 	{
 			if(d.getItem().hasMetadata("harvesterskull")) {
-				d.setCancelled(true);
 				Item it = d.getItem();
 				if(d.getEntity() instanceof Player) {
 					Player pe = (Player) d.getEntity();
+					d.setCancelled(true);
 					String rn =  getheroname(pe);
 					if(rn.equals(it.getMetadata("harvesterskull").get(0).asString())) {
 						pe.playSound(pe, Sound.ENTITY_PHANTOM_SWOOP, 0.1f, 2);
 					}
+					return;
 				}
-				else if(d.getEntity().hasMetadata("harvestertotem")){
+				if(d.getEntity().hasMetadata("harvestertotem")){
 					LivingEntity le = d.getEntity();
 					LivingEntity p = (LivingEntity) Bukkit.getEntity(getbossbytotem.get(le.getUniqueId()));
 					String rn = le.getMetadata("harvestertotem").get(0).asString();
