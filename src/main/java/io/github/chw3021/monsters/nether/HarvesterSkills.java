@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.bukkit.Bukkit;
@@ -368,6 +371,9 @@ public class HarvesterSkills extends NethercoreRaids{
 		if(d.getEntity().hasMetadata("soulboss") && (d.getEntity() instanceof Mob)) 
 		{
 			Mob p = (Mob)d.getEntity();
+			p.getWorld().playSound(p, Sound.ENTITY_BREEZE_CHARGE, 0.6f, 0.6f);
+			p.getWorld().playSound(p, Sound.PARTICLE_SOUL_ESCAPE, 0.6f, 1.5f);
+			
 			int sec = 6;
 	
 	
@@ -376,8 +382,8 @@ public class HarvesterSkills extends NethercoreRaids{
 			}
 			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
 				p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
-	            d.setCancelled(true);
-	            ordealable.put(p.getUniqueId(), true);
+                d.setCancelled(true);
+                ordealable.put(p.getUniqueId(), true);
 				return;
 			}
 					if(shcooldown.containsKey(p.getUniqueId()))
@@ -743,12 +749,18 @@ public class HarvesterSkills extends NethercoreRaids{
 		Location fl = pe.getLocation().clone().add(0, 3, 0);
 		World w = fl.getWorld();
 
-		Item newmob = w.dropItem(fl.clone(), new ItemStack(Material.SKELETON_SKULL));
+		Item newmob = w.dropItem(fl.clone(), new ItemStack(Material.WITHER_SKELETON_SKULL));
+		newmob.setPickupDelay(20);
+	    newmob.setMetadata("harvesterskull", new FixedMetadataValue(RMain.getInstance(), rn));
 	    newmob.setMetadata("stuff" + rn, new FixedMetadataValue(RMain.getInstance(), true));
 	    newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
+	    newmob.setThrower(p.getUniqueId());
 	    newmob.setGravity(false);
+	    newmob.setInvulnerable(true);
 	    newmob.setGlowing(true);
-	    newmob.setMetadata("harvesterskull", new FixedMetadataValue(RMain.getInstance(), rn));
+	    newmob.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+        changeFace(newmob, 0);
+	    
 
 	    int t2 = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
 	        int tick = 0;
@@ -781,21 +793,40 @@ public class HarvesterSkills extends NethercoreRaids{
 
 	}
 	
+	
 	final private void changeFace(Item i, int tick) {
-		i.getWorld().playSound(i.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 2);
-		i.getWorld().spawnParticle(Particle.SOUL, i.getLocation(), 5);
-		if((tick/80)%4==0) {
-			i.setItemStack(new ItemStack(Material.WITHER_SKELETON_SKULL));
-		}
-		else if((tick/80)%3==0) {
-			i.setItemStack(new ItemStack(Material.ZOMBIE_HEAD));
-		}
-		else if((tick/80)%2==0) {
-			i.setItemStack(new ItemStack(Material.PIGLIN_HEAD));
-		}
-		else {
-			i.setItemStack(new ItemStack(Material.SKELETON_SKULL));
-		}
+	    i.getWorld().playSound(i.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 2);
+	    i.getWorld().spawnParticle(Particle.SOUL, i.getLocation(), 5);
+
+	    UUID targetValue = i.getThrower(); // 찾고자 하는 value
+	    Set<UUID> keys = getbossbytotem.entrySet()
+	        .stream()
+	        .filter(entry -> entry.getValue().equals(targetValue))
+	        .map(Map.Entry::getKey)
+	        .collect(Collectors.toSet());
+
+	    // 헬멧 아이템 리스트 생성
+	    List<ItemStack> helmetItems = new ArrayList<>();
+	    for (UUID key : keys) {
+	        Entity entity = Bukkit.getEntity(key);
+	        if (entity instanceof LivingEntity) {
+	            ItemStack helmet = ((LivingEntity) entity).getEquipment().getHelmet();
+	            if (helmet != null) {
+	                helmetItems.add(helmet);
+	            }
+	        }
+	    }
+
+	    // 헬멧 아이템이 없으면 기본값 사용
+	    if (helmetItems.isEmpty()) {
+	    	return;
+	    }
+
+	    // 4초(80 ticks)마다 순차적으로 아이템을 변경
+	    int index = (tick / 80) % helmetItems.size(); // 리스트 크기에 따라 순환
+	    ItemStack newItem = helmetItems.get(index);
+
+	    i.setItemStack(newItem);
 	}
 
 	
@@ -882,11 +913,11 @@ public class HarvesterSkills extends NethercoreRaids{
     		if(ordt.containsKey(rn)) {
     			ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
     		}
-            rb6cooldown.remove(p.getUniqueId());
 	        int t3 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	            @Override
 	            public void run() {
-	        		
+
+	                rb6cooldown.remove(p.getUniqueId());
 	        		ordeal.remove(p.getUniqueId());
 	                for(Player pe : NethercoreRaids.getheroes(p)) {
 	            		pe.setHealth(0);
@@ -913,6 +944,7 @@ public class HarvesterSkills extends NethercoreRaids{
         final Location rl = NethercoreRaids.getraidloc(p).clone();
 		p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
         d.setCancelled(true);
+        p.playEffect(EntityEffect.WARDEN_TENDRIL_SHAKE);
     	p.teleport(rl.clone().add(0, 1, 0));
         Holding.holding(null, p, OrdealTime);
         Holding.untouchable(p, OrdealTime);
@@ -1006,7 +1038,7 @@ public class HarvesterSkills extends NethercoreRaids{
 		if(d.getEntity().hasMetadata("soulboss") && d.getEntity().hasMetadata("ruined")&& !d.getEntity().hasMetadata("failed")) 
 		{
 			LivingEntity p = (LivingEntity)d.getEntity();
-			if(!(p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2)|| !ordealable.containsKey(p.getUniqueId())) {
+			if(!(p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2)|| !ordealable.containsKey(p.getUniqueId())|| ordeal.containsKey(p.getUniqueId())) {
 				return;
 			}
 				if(rb6cooldown.containsKey(p.getUniqueId()))
@@ -1035,14 +1067,11 @@ public class HarvesterSkills extends NethercoreRaids{
 	{
 			if(d.getItem().hasMetadata("harvesterskull")) {
 				Item it = d.getItem();
-				if(d.getEntity() instanceof Player) {
-					Player pe = (Player) d.getEntity();
-					d.setCancelled(true);
-					String rn =  getheroname(pe);
-					if(rn.equals(it.getMetadata("harvesterskull").get(0).asString())) {
-						pe.playSound(pe, Sound.ENTITY_PHANTOM_SWOOP, 0.1f, 2);
-					}
-					return;
+				d.setCancelled(true);
+				if(d.getEntity() instanceof Player){
+					Player p = (Player) d.getEntity();
+					p.playSound(p.getLocation(), Sound.ENTITY_ILLUSIONER_CAST_SPELL, 0.1f, 0f);
+					p.setVelocity(p.getVelocity().multiply(0.5));
 				}
 				if(d.getEntity().hasMetadata("harvestertotem")){
 					LivingEntity le = d.getEntity();
@@ -1058,7 +1087,7 @@ public class HarvesterSkills extends NethercoreRaids{
 						if(it.getItemStack().getType() == le.getEquipment().getHelmet().getType()) {
 							le.remove();
 							le.getWorld().playSound(le.getLocation(), Sound.ENTITY_BREEZE_INHALE, 1.0f, 0f);
-							le.getWorld().spawnParticle(Particle.TRIAL_OMEN, le.getLocation(), 150, 2,2,2);
+							le.getWorld().spawnParticle(Particle.TRIAL_OMEN, le.getLocation(), 300, 2,2,2);
 							getbossbytotem.remove(le.getUniqueId());
 							if(!getbossbytotem.containsValue(p.getUniqueId())) {
 								bossfailed(p,rn);
@@ -1066,7 +1095,7 @@ public class HarvesterSkills extends NethercoreRaids{
 						}
 						else {
 							le.getWorld().playSound(le.getLocation(), Sound.ENTITY_BREEZE_WIND_BURST, 1.0f, 0f);
-							le.getWorld().spawnParticle(Particle.SCULK_SOUL, le.getLocation(), 150, 2,2,2);
+							le.getWorld().spawnParticle(Particle.SCULK_SOUL, le.getLocation(), 300, 2,2,2);
 							for(Entity e : le.getNearbyEntities(3, 3, 3)) {
 								if(le!=e && e instanceof LivingEntity) {
 									LivingEntity pe = (LivingEntity)e;

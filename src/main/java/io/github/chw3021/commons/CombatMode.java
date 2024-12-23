@@ -15,7 +15,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -203,6 +202,8 @@ public class CombatMode {
 	}
 	public void death(PlayerDeathEvent ev) {
 		if(isCombat(ev.getEntity())) {
+			ev.getDrops().clear();
+			ev.setDroppedExp(0);
 			ev.setKeepInventory(true);
 			ev.setKeepLevel(true);
 		}
@@ -220,7 +221,7 @@ public class CombatMode {
 	
 
 	public void item(EntityPickupItemEvent ev) {
-		if(ev.getEntity() instanceof Player) {
+		if(ev.getEntity() instanceof Player && !ev.getItem().hasMetadata("fake")) {
 			Player p = (Player) ev.getEntity();
 			if(isCombat(p)) {
 				ev.setCancelled(true);

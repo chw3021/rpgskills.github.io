@@ -32,7 +32,8 @@ import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
-import org.bukkit.Particle.Trail;
+import org.bukkit.Particle.TargetColor;
+//import org.bukkit.Particle.Trail;
 import org.bukkit.Sound;
 import org.bukkit.Vibration;
 import org.bukkit.Vibration.Destination;
@@ -619,7 +620,8 @@ public class Engskills extends Pak {
 		}
 		line.forEach(l -> {
 			snw.spawnParticle(Particle.BLOCK, l, 1, 0.3,0.3,0.3,0, getBd(Material.RAW_IRON_BLOCK));
-			snw.spawnParticle(Particle.TRAIL, l, 1, 0.1,0.1,0.1, new Trail(lel, Color.SILVER,20));
+			snw.spawnParticle(Particle.TRAIL, l, 1, 0.1,0.1,0.1, new TargetColor(lel,  Color.SILVER));
+			//snw.spawnParticle(Particle.TRAIL, l, 1, 0.1,0.1,0.1, new Trail(lel, Color.SILVER,20));
 		});
 	}
 

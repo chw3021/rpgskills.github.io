@@ -103,13 +103,13 @@ public class NethercoreRaids extends Summoned implements Listener {
 	private HashMap<String, BossBar> timebar = new HashMap<String, BossBar>();
 
 
-	private HashMap<String, Integer> difen = new HashMap<String, Integer>();
+	public HashMap<String, Integer> difen = new HashMap<String, Integer>();
 	private HashMap<String, Integer> difent = new HashMap<String, Integer>();
 
 	private HashMap<String, UUID> inhibitor = new HashMap<String, UUID>();
 	private HashMap<String, Integer> inhibitorhp = new HashMap<String, Integer>();
 
-	private HashMap<String, Integer> bossnum = new HashMap<String, Integer>();
+	public HashMap<String, Integer> bossnum = new HashMap<String, Integer>();
 
 	public HashMap<String, String> language = new HashMap<String, String>();
 	

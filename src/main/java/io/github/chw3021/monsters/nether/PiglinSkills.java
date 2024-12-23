@@ -943,7 +943,7 @@ public class PiglinSkills extends Summoned{
 	        		for(Entity e : newmob.getWorld().getNearbyEntities(newmob.getLocation().clone(), 1, 5, 1)) {
 						if(p!=e && e instanceof Player) {
 							Player le = (Player)e;
-							le.damage(6,p);
+							le.damage(4,p);
 						}
 	            	}
 	            }
@@ -983,7 +983,7 @@ public class PiglinSkills extends Summoned{
 	}
 	
 	final private boolean judge(LivingEntity p, String rn) {
-		Boolean bool = Bukkit.getWorld("NethercoreRaid").getEntities().stream().anyMatch(e -> e.hasMetadata("yellowcake"+rn));
+		Boolean bool = p.getWorld().getEntities().stream().anyMatch(e -> e.hasMetadata("yellowcake"+rn));
 		if(bool) {
             for(Player pe : NethercoreRaids.getheroes(p)) {
     			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {

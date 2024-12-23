@@ -21,6 +21,7 @@ import org.bukkit.entity.Ageable;
 import org.bukkit.entity.Armadillo;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Chicken;
+import org.bukkit.entity.Display.Billboard;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.EnderDragon.Phase;
 import org.bukkit.entity.Endermite;
@@ -32,6 +33,7 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Rabbit;
 import org.bukkit.entity.Silverfish;
 import org.bukkit.entity.Snowball;
+import org.bukkit.entity.TextDisplay;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -70,6 +72,10 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.RenderType;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
+import org.bukkit.util.Transformation;
+import org.bukkit.util.Vector;
+import org.joml.Vector3f;
+
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
@@ -335,24 +341,26 @@ public class CommonEvents extends Mobs implements Listener{
 
 	final private Location disloc(final Player p, final LivingEntity le, Location pl, Location elf) {
 
+        double randomX = -0.5 + Math.random(); // -0.5 ~ 0.5
+        double randomZ = -0.5 + Math.random(); // -0.5 ~ 0.5
 		if(elf.getWorld() != pl.getWorld()) {
 			if(p.hasPotionEffect(PotionEffectType.SLOWNESS)) {
-				return pl.clone().add(pl.clone().getDirection().rotateAroundY(Math.PI/20).normalize().multiply(2.8)).add(0, 0.1, 0);
+				return pl.clone().add(pl.clone().getDirection().rotateAroundY(Math.PI/20).normalize().multiply(2.8)).add(randomX, 0.1, randomZ);
 			}
 			else {
-				return pl.clone().add(pl.clone().getDirection().rotateAroundY(Math.PI/10).normalize().multiply(2.2)).add(0, 0.3, 0);
+				return pl.clone().add(pl.clone().getDirection().rotateAroundY(Math.PI/10).normalize().multiply(2.2)).add(randomX, 0.3, randomZ);
 			}
 		}
 		final Double disd = elf.distance(pl);
 		if(disd<12) {
-			return elf.clone().add(le.getLocation().clone().getDirection().rotateAroundY(Math.PI/2).normalize().multiply(0.76)).add(0, 0.68, 0);
+			return elf.clone().add(le.getLocation().clone().getDirection().rotateAroundY(Math.PI/2).normalize().multiply(0.76)).add(randomX, 0.68, randomZ);
 		}
 		else {
 			if(p.hasPotionEffect(PotionEffectType.SLOWNESS)) {
-				return pl.clone().add(pl.clone().getDirection().rotateAroundY(Math.PI/20).normalize().multiply(2.8)).add(0, 0.1, 0);
+				return pl.clone().add(pl.clone().getDirection().rotateAroundY(Math.PI/20).normalize().multiply(2.8)).add(randomX, 0.1, randomZ);
 			}
 			else {
-				return pl.clone().add(pl.clone().getDirection().rotateAroundY(Math.PI/10).normalize().multiply(2.2)).add(0, 0.3, 0);
+				return pl.clone().add(pl.clone().getDirection().rotateAroundY(Math.PI/10).normalize().multiply(2.2)).add(randomX, 0.3, randomZ);
 			}
 		}
 		/*final double dis = (disd<12) ? (disd - 1.5*Math.log(disd)): 0;
@@ -363,7 +371,82 @@ public class CommonEvents extends Mobs implements Listener{
 		Vector dinvv = dinv.clone();*/
 		//return el.add(0, 1.1, 0).clone().add(dinvv.clone().multiply(0.1));
 	}
+	
+	
+	final private TextDisplay dinspawn(final Player p, Location l, Double d) {
+	    // TextDisplay 엔티티 생성
+	    final TextDisplay textDisplay = l.getWorld().spawn(l, TextDisplay.class);
 
+	    // TextDisplay 기본 설정
+	    textDisplay.setBillboard(Billboard.CENTER); // 텍스트가 플레이어를 따라오도록 설정
+	    textDisplay.setViewRange(100); // 표시 거리 설정
+	    textDisplay.setGlowing(true); // 글자에 발광 효과
+	    textDisplay.setPersistent(false); // 임시 엔티티로 설정
+	    textDisplay.setCustomNameVisible(false); // CustomName 사용 안 함
+	    textDisplay.setInvulnerable(true); // 파괴되지 않도록 설정
+	    textDisplay.setSeeThrough(true);
+
+	    // 데미지에 따라 표시할 텍스트 설정
+	    String damageText;
+	    if (d < 0.1) {
+	        damageText = ChatColor.AQUA + String.valueOf(Math.round(d * 1000) / 1000.000) + " [" + p.getName() + "]";
+	    } else if (d >= 9999999) {
+	        damageText = ChatColor.RED + "!9999999!" + " [" + p.getName() + "]";
+	    } else {
+	        damageText = ChatColor.AQUA + String.valueOf(Math.round(d * 10) / 10.0) + " [" + p.getName() + "]";
+	    }
+	    textDisplay.setText(damageText);
+
+	    return textDisplay;
+	}
+
+	final private void damageind(final Player p, final LivingEntity le, Double d) {
+		final Location elf = le.getLocation().clone().add(0, 0.05, 0);
+		final Location pl = p.getLocation().clone().add(0, 0.1, 0);
+
+	    // TextDisplay 생성
+	    final TextDisplay din = dinspawn(p, disloc(p,le,pl,elf), d);
+
+		ind.put(p.getUniqueId(), din.getUniqueId());
+		if(ind.containsKey(p.getUniqueId()) && ind.get(p.getUniqueId()).size() > 5) {
+			UUID enu = ind.get(p.getUniqueId()).stream().findFirst().get();
+			if(Bukkit.getEntity(enu) != null) {
+				Bukkit.getEntity(enu).remove();
+			}
+			ind.remove(p.getUniqueId(), enu);
+		}
+
+        // 현재 Transformation 가져오기
+        Transformation currentTransform = din.getTransformation();
+
+        // Y축으로 부드럽게 상승
+        float newY = (float) (currentTransform.getTranslation().y() + 0.5); // 매 틱마다 0.05씩 상승
+        Transformation updatedTransform = new Transformation(
+            new Vector3f(currentTransform.getTranslation().x(), newY, currentTransform.getTranslation().z()), // 위치
+            currentTransform.getLeftRotation(),
+            currentTransform.getScale(),
+            currentTransform.getRightRotation()
+        );
+
+        // 새 Transformation 적용
+        din.setTransformation(updatedTransform);
+
+        // 텔레포트 지속 시간 설정 (부드러운 이동)
+        din.setInterpolationDuration(30); // 1틱(0.05초) 동안 부드럽게 이동
+
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				din.remove();
+				ind.remove(p.getUniqueId(), din.getUniqueId());
+			}
+		}, 30);
+	}
+
+	
+	/*
 	final private ArmorStand dinspawn(final Player p,Location l, Double d) {
 
 		final ArmorStand din = l.getWorld().spawn(l, ArmorStand.class, e -> e.setVisible(false));
@@ -392,12 +475,6 @@ public class CommonEvents extends Mobs implements Listener{
 		final Location elf = le.getLocation().clone().add(0, 0.05, 0);
 		final Location pl = p.getLocation().clone().add(0, 0.1, 0);
 		
-		/*if(el.getY()<pel.getY()) {
-			dinvv.rotateAroundAxis(dinv.clone().rotateAroundY(Math.PI/2), -Math.PI/6).normalize();
-		}
-		else {
-			dinvv.rotateAroundAxis(dinv.clone().rotateAroundY(Math.PI/2), -Math.PI/45).normalize();
-		}*/
 		final ArmorStand din = dinspawn(p, disloc(p,le,pl,elf), d);
 
 		ind.put(p.getUniqueId(), din.getUniqueId());
@@ -419,7 +496,7 @@ public class CommonEvents extends Mobs implements Listener{
 				ind.remove(p.getUniqueId(), din.getUniqueId());
 			}
 		}, 30);
-	}
+	}*/
 
 	final private void damagebar(Double max, Double cur, Double last, Double dam, final ArmorStand ar) {
 		final double rat =  (cur/max)*40d;

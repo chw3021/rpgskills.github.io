@@ -24,7 +24,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
-import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -67,7 +66,6 @@ import io.github.chw3021.items.weapons.Weapons;
 import io.github.chw3021.monsters.raids.NethercoreRaids;
 import io.github.chw3021.monsters.raids.OverworldRaids;
 import io.github.chw3021.monsters.raids.Summoned;
-import io.github.chw3021.rmain.RMain;
 import net.md_5.bungee.api.ChatColor;
 
 public class Rpgs extends Summoned implements CommandExecutor, Listener {
@@ -102,6 +100,33 @@ public class Rpgs extends Summoned implements CommandExecutor, Listener {
 				damagedscount.put(k, len, 1);
 			}
 		});
+	}
+
+	NethercoreRaids ncr = NethercoreRaids.getInstance();
+	
+	OverworldRaids owr = OverworldRaids.getInstance();
+	private void bossTest(String args, Player p) {
+
+		Integer input = Integer.parseInt(args);
+		String rn = getheroname(p);
+		if(input<0) {
+			NethercoreRaids.beforepl.put(p.getUniqueId(), p.getLocation());
+			NethercoreRaids.heroes.put(rn, p.getUniqueId());
+			NethercoreRaids.raidloc.put(rn, p.getLocation());
+			ncr.bossnum.put(rn, input);
+			ncr.difen.put(rn, 0);
+			ncr.language.put(rn, p.getLocale());
+			ncr.bossgen(p.getLocation(), p, rn, input, ncr.BOSSHP);
+			
+		}
+		else {
+			OverworldRaids.beforepl.put(p.getUniqueId(), p.getLocation());
+			OverworldRaids.heroes.put(rn, p.getUniqueId());
+			OverworldRaids.raidloc.put(rn, p.getLocation());
+			owr.language.put(rn, p.getLocale());
+			owr.difen.put(rn, 0);
+			owr.bossgen(p.getLocation(), p, p.getName(), input, owr.BOSSHP);
+		}
 	}
 	
 	@EventHandler
@@ -238,9 +263,6 @@ public class Rpgs extends Summoned implements CommandExecutor, Listener {
 			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party list: Show Current Existing Parties & Owners");
 		}
 	}
-	NethercoreRaids ncr = NethercoreRaids.getInstance();
-	
-	OverworldRaids owr = OverworldRaids.getInstance();
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String alias, String [] args)         
@@ -358,23 +380,7 @@ public class Rpgs extends Summoned implements CommandExecutor, Listener {
 				}
 				else if(args[0].equalsIgnoreCase("bosstest") && p.isOp()&& !args[1].isEmpty())
 				{
-					Integer input = Integer.parseInt(args[1]);
-					String rn = getheroname(p);
-					if(input<0) {
-						NethercoreRaids.beforepl.put(p.getUniqueId(), p.getLocation());
-						NethercoreRaids.heroes.put(rn, p.getUniqueId());
-						NethercoreRaids.raidloc.put(rn, p.getLocation());
-						ncr.language.put(rn, p.getLocale());
-						ncr.bossgen(p.getLocation(), p, rn, input, ncr.BOSSHP);
-						
-					}
-					else {
-						OverworldRaids.beforepl.put(p.getUniqueId(), p.getLocation());
-						OverworldRaids.heroes.put(rn, p.getUniqueId());
-						OverworldRaids.raidloc.put(rn, p.getLocation());
-						owr.language.put(rn, p.getLocale());
-						owr.bossgen(p.getLocation(), p, p.getName(), input, owr.BOSSHP);
-					}
+					bossTest(args[1], p);
 				}
 				else if(args[0].equalsIgnoreCase("god") && p.isOp()&& !args[1].isEmpty())
 				{

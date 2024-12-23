@@ -41,7 +41,8 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Particle.DustOptions;
-import org.bukkit.Particle.Trail;
+import org.bukkit.Particle.TargetColor;
+//import org.bukkit.Particle.Trail;
 import org.bukkit.Sound;
 import org.bukkit.Tag;
 import org.bukkit.World;
@@ -1270,8 +1271,10 @@ public class Launskills extends Pak {
 			els.add(el.clone().add(0,i,0));
 		}
 		els.forEach(l -> {
-			p.getWorld().spawnParticle(Particle.TRAIL, l.clone(), 100, 3,1,3,1, new Trail(el, Color.FUCHSIA,20));
-			p.getWorld().spawnParticle(Particle.TRAIL, l.clone(), 100, 3,1,3,1, new Trail(el, Color.TEAL,20));
+//			p.getWorld().spawnParticle(Particle.TRAIL, l.clone(), 100, 3,1,3,1, new Trail(el, Color.FUCHSIA,20));
+//			p.getWorld().spawnParticle(Particle.TRAIL, l.clone(), 100, 3,1,3,1, new Trail(el, Color.TEAL,20));
+			p.getWorld().spawnParticle(Particle.TRAIL, l.clone(), 100, 3,1,3,1, new TargetColor(el, Color.FUCHSIA));
+			p.getWorld().spawnParticle(Particle.TRAIL, l.clone(), 100, 3,1,3,1, new TargetColor(el, Color.TEAL));
 			p.getWorld().spawnParticle(Particle.BLOCK_MARKER, l, 50, 0.1, 1, 0.1,1,Material.OAK_LOG.createBlockData());
 		});
 		p.getWorld().spawnParticle(Particle.BLOCK_MARKER, el.clone().add(0, 10, 0), 600, 0.6, 1, 0.6,1,Material.WHITE_WOOL.createBlockData());
