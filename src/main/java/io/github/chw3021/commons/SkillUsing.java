@@ -601,6 +601,7 @@ public class SkillUsing implements Listener {
 		Forskills.getInstance().RailSMG(ev);
 		Forskills.getInstance().RailCannon(ev);
 		Forskills.getInstance().Spectral(ev);
+		Forskills.getInstance().Shockwave(ev);
 
 		Frostskills.getInstance().IceBlades(ev);
 		Frostskills.getInstance().Icefall(ev);
@@ -755,7 +756,6 @@ public class SkillUsing implements Listener {
 		Forskills.getInstance().Barrier(d);
 		Forskills.getInstance().Damagegetter(d);
 		Forskills.getInstance().HESH(d);
-		Forskills.getInstance().Shockwave(d);
 
 		Frostskills.getInstance().Crack(d);
 		Frostskills.getInstance().Frostbite(d);

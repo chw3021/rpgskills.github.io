@@ -31,7 +31,12 @@ public class Drops implements Listener {
 	@EventHandler
 	public void ItemDrops(EntityDeathEvent d) 
 	{
-		if(!d.getEntity().hasMetadata("raid") && d.getEntity().getKiller() != null) {
+
+		if(d.getEntity().hasMetadata("raid")||d.getEntity().hasMetadata("summoned")) {
+			d.getDrops().clear();
+			d.setDroppedExp(0);
+		}
+		if(d.getEntity().getKiller() != null) {
 			Player p = d.getEntity().getKiller();
 			if(d.getEntity().hasMetadata("treasurepig")) {
 				LivingEntity le = d.getEntity();

@@ -16,7 +16,6 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Breeze;
 import org.bukkit.entity.ElderGuardian;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Guardian;
@@ -56,7 +55,6 @@ public class OceanSkills extends OverworldRaids{
 	private HashMap<UUID, Long> rb2cooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Long> rb3cooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Long> rb4cooldown = new HashMap<UUID, Long>();
-	private HashMap<UUID, Boolean> ordealable = new HashMap<UUID, Boolean>();
 	
 	private Multimap<String, Integer> ript = ArrayListMultimap.create();
 	
@@ -201,6 +199,7 @@ public class OceanSkills extends OverworldRaids{
 				if(!OverworldRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| p.hasMetadata("failed") || count.containsKey(p.getUniqueId())) {
 					return;
 				}
+	            if (checkAndApplyCharge(p, d)) return;
 
 				final Player tl = OverworldRaids.getheroes(p).stream().filter(pe -> pe.getWorld().equals(p.getWorld())).findAny().get();
 				Shoot(p,tl);
@@ -350,6 +349,7 @@ public class OceanSkills extends OverworldRaids{
 			if(p.hasMetadata("failed") || count.containsKey(p.getUniqueId())) {
 				return;
 			}
+            if (checkAndApplyCharge(p, d)) return;
 				if(rb4cooldown.containsKey(p.getUniqueId()))
 		        {
 		            long timer = (rb4cooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
@@ -495,7 +495,6 @@ public class OceanSkills extends OverworldRaids{
 	}
 
 
-	@SuppressWarnings("deprecation")
 	public void Spikes(EntityDamageByEntityEvent d) 
 	{
 	    
@@ -506,12 +505,7 @@ public class OceanSkills extends OverworldRaids{
 			if(p.hasMetadata("failed") || count.containsKey(p.getUniqueId())) {
 				return;
 			}
-			if((p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getMaxHealth()*0.2);
-                ordealable.put(p.getUniqueId(), true);
-                d.setCancelled(true);
-				return;
-			}
+            if (checkAndApplyCharge(p, d)) return;
 				if(rb2cooldown.containsKey(p.getUniqueId()))
 		        {
 		            long timer = (rb2cooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 

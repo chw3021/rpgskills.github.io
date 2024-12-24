@@ -868,7 +868,7 @@ public class NethercoreRaids extends Summoned implements Listener {
     		portal.setGravity(false);
     		portal.getEquipment().setHelmet(new ItemStack(Material.OBSIDIAN));
     		portal.setCollidable(false);
-    		portal.getAttribute(Attribute.SCALE).setBaseValue(4);
+    		portal.getAttribute(Attribute.SCALE).setBaseValue(3);
     		
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
         		portal.setCustomName(rn + "파티의 출구 (웅크린상태에서 맨손으로 가격)");
@@ -892,7 +892,7 @@ public class NethercoreRaids extends Summoned implements Listener {
     		v.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0);
     		v.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
     		v.getAttribute(Attribute.GRAVITY).setBaseValue(10000);
-    		v.getAttribute(Attribute.SCALE).setBaseValue(0.7);
+    		v.getAttribute(Attribute.SCALE).setBaseValue(0.75);
     		v.setGravity(true);
     		v.setNoDamageTicks(0);
     		v.setMaxHealth(50000);
@@ -1183,16 +1183,12 @@ public class NethercoreRaids extends Summoned implements Listener {
         	heroes.get(rn).forEach(pu -> {
         		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + String.valueOf(lives.getOrDefault(rn, 0)) + "lives Left");
         	});
-        	if(lives.getOrDefault(rn, 0)<=0) {
-        		if(!language.containsKey(rn)) {
-    				NethercoreRaidFinish(rn, "패배..", "모든 목숨 소진",0);
-        		}
-    			if(language.get(rn).equalsIgnoreCase("ko_kr")) {
-    				NethercoreRaidFinish(rn, "패배..", "모든 목숨 소진",0);
-    			}
-    			else {
-                	NethercoreRaidFinish(rn, "Defeated..", "All Lives Exhausted", 0);
-    			}
+        	if (lives.computeIfAbsent(rn, key -> 1) <= 0) {
+        	    NethercoreRaidFinish(rn, 
+        	        language.getOrDefault(rn, "en_us").equalsIgnoreCase("ko_kr") ? "패배.." : "Defeated..", 
+        	        language.getOrDefault(rn, "en_us").equalsIgnoreCase("ko_kr") ? "모든 목숨 소진" : "All Lives Exhausted", 
+        	        0
+        	    );
         	}
 		}
 	}

@@ -516,12 +516,7 @@ public class PoisonSkills extends OverworldRaids{
 			if(ordeal.containsKey(p.getUniqueId()) && d.getEntity().hasMetadata("failed")) {
 				return;
 			}
-			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
-                d.setCancelled(true);
-                ordealable.put(p.getUniqueId(), true);
-				return;
-			}
+            if (checkAndApplyCharge(p, d)) return;
 			if(rb3cooldown.containsKey(p.getUniqueId()))
 	        {
 	            long timer = (rb3cooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
@@ -717,12 +712,8 @@ public class PoisonSkills extends OverworldRaids{
 			if(p.getTarget() == null|| !(p.getTarget() instanceof Player)) {
 				return;
 			}
-			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
-	            d.setCancelled(true);
-	            ordealable.put(p.getUniqueId(), true);
-				return;
-			}
+
+            if (checkAndApplyCharge(p, d)) return;
 					if(shcooldown.containsKey(p.getUniqueId()))
 		            {
 		                long timer = (shcooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
@@ -853,31 +844,27 @@ public class PoisonSkills extends OverworldRaids{
 			if(p.hasMetadata("failed") || !aimable.containsKey(p.getUniqueId())) {
 				return;
 			}
-			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
-                d.setCancelled(true);
-                ordealable.put(p.getUniqueId(), true);
-				return;
-			}
-					if(aicooldown.containsKey(p.getUniqueId()))
-		            {
-		                long timer = (aicooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
-		                if(!(timer < 0))
-		                {
-		                }
-		                else 
-		                {
-		                	aicooldown.remove(p.getUniqueId()); // removing player from HashMap
-		                	aiming(p);
-		                	aicooldown.put(p.getUniqueId(), System.currentTimeMillis());  
-		                }
-		            }
-		            else 
-		            {
 
-		            	aiming(p);
-	                	aicooldown.put(p.getUniqueId(), System.currentTimeMillis());  
-					}
+            if (checkAndApplyCharge(p, d)) return;
+			if(aicooldown.containsKey(p.getUniqueId()))
+            {
+                long timer = (aicooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
+                if(!(timer < 0))
+                {
+                }
+                else 
+                {
+                	aicooldown.remove(p.getUniqueId()); // removing player from HashMap
+                	aiming(p);
+                	aicooldown.put(p.getUniqueId(), System.currentTimeMillis());  
+                }
+            }
+            else 
+            {
+
+            	aiming(p);
+            	aicooldown.put(p.getUniqueId(), System.currentTimeMillis());  
+			}
 		}
 	}
 
@@ -891,12 +878,7 @@ public class PoisonSkills extends OverworldRaids{
 		{
 			final Skeleton p = (Skeleton)d.getEntity();
 
-			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
-                d.setCancelled(true);
-                ordealable.put(p.getUniqueId(), true);
-				return;
-			}
+            if (checkAndApplyCharge(p, d)) return;
 
 			if(p.hasMetadata("raid")) {
 				if(!OverworldRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| p.hasMetadata("failed")) {
@@ -1100,12 +1082,8 @@ public class PoisonSkills extends OverworldRaids{
 			if(ordeal.containsKey(p.getUniqueId())) {
 				return;
 			}
-			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
-                d.setCancelled(true);
-                ordealable.put(p.getUniqueId(), true);
-				return;
-			}
+
+            if (checkAndApplyCharge(p, d)) return;
 			if(p.getTarget() == null|| !(p.getTarget() instanceof Player)||p.hasMetadata("failed")) {
 				return;
 			}
@@ -1160,8 +1138,6 @@ public class PoisonSkills extends OverworldRaids{
 	}
 
 	public static HashMap<UUID, Integer> count = new HashMap<UUID, Integer>();
-	private HashMap<UUID, Boolean> ordealable = new HashMap<UUID, Boolean>();
-	public static HashMap<UUID, Boolean> ordeal = new HashMap<UUID, Boolean>();//poisonBoss 패턴 시작 여부 저장
 
 	public HashMap<UUID, Integer> ast = new HashMap<UUID, Integer>();// damage 태스크 저장
 	public HashMap<UUID, Integer> asdt = new HashMap<UUID, Integer>();// remove 태스크 저장

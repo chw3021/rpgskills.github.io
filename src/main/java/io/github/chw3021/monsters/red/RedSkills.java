@@ -47,13 +47,12 @@ import org.bukkit.util.Vector;
 
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.monsters.raids.OverworldRaids;
-import io.github.chw3021.monsters.raids.Summoned;
 import io.github.chw3021.rmain.RMain;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
 
 
-public class RedSkills extends Summoned{
+public class RedSkills extends OverworldRaids{
 
 	Holding hold = Holding.getInstance();
 	private HashMap<UUID, Long> rb1cooldown = new HashMap<UUID, Long>();
@@ -65,7 +64,6 @@ public class RedSkills extends Summoned{
 	private HashMap<UUID, Long> chcooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Integer> redcharge = new HashMap<UUID, Integer>();
 	
-	private HashMap<UUID, Boolean> ordealable = new HashMap<UUID, Boolean>();
 	private HashMap<UUID, Boolean> dazable = new HashMap<UUID, Boolean>();
 	private HashMap<UUID, Boolean> backable = new HashMap<UUID, Boolean>();
 	private HashMap<UUID, Boolean> stab = new HashMap<UUID, Boolean>();
@@ -202,7 +200,7 @@ public class RedSkills extends Summoned{
 				                p.getWorld().strikeLightningEffect(le.getLocation());
 								for(int i = 0; i <10; i++) {
 				                    AtomicInteger j = new AtomicInteger();	
-				                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+				                    int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 						                @Override
 						                public void run() {
 							            	ArrayList<Location> ring = new ArrayList<Location>();
@@ -223,10 +221,12 @@ public class RedSkills extends Summoned{
 						                		
 						                	});
 						                }
-						            }, i*5); 	                    	
+						            }, i*5); 	  
+
+				                    ordt.put(gethero(p), task);
 			                    }
 								for(int i = 0; i <10; i++) {
-				                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+				                    int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 						                @Override
 						                public void run() {
 											for(Entity e : tl.getWorld().getNearbyEntities(tl,3.5, 3.5, 3.5)) {
@@ -239,17 +239,18 @@ public class RedSkills extends Summoned{
 												}
 											}
 						                }
-						            }, i*5); 	                    	
+						            }, i*5); 	  
+				                    ordt.put(gethero(p), task);                  	
 			                    }
 					            rb1cooldown.put(p.getUniqueId(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
 				            }
 				        }
 				        else 
 				        {
-				        	p.getWorld().strikeLightningEffect(le.getLocation());
+			                p.getWorld().strikeLightningEffect(le.getLocation());
 							for(int i = 0; i <10; i++) {
 			                    AtomicInteger j = new AtomicInteger();	
-			                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+			                    int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					                @Override
 					                public void run() {
 						            	ArrayList<Location> ring = new ArrayList<Location>();
@@ -264,16 +265,18 @@ public class RedSkills extends Summoned{
 					                		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 								                @Override
 								                public void run() {
-													p.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, l, 6, 0.5,0.5,0.5,0);				                    
+													p.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, l, 6, 0.5,0.5,0.5,0);		
 								                }
 								            }, j.incrementAndGet()/60); 
 					                		
 					                	});
 					                }
-					            }, i*5); 	                    	
+					            }, i*5); 	  
+
+			                    ordt.put(gethero(p), task);
 		                    }
 							for(int i = 0; i <10; i++) {
-			                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+			                    int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					                @Override
 					                public void run() {
 										for(Entity e : tl.getWorld().getNearbyEntities(tl,3.5, 3.5, 3.5)) {
@@ -286,7 +289,8 @@ public class RedSkills extends Summoned{
 											}
 										}
 					                }
-					            }, i*5); 	                    	
+					            }, i*5); 	  
+			                    ordt.put(gethero(p), task);                  	
 		                    }
 				            rb1cooldown.put(p.getUniqueId(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
 				        }
@@ -343,7 +347,7 @@ public class RedSkills extends Summoned{
      				p.getWorld().spawnParticle(Particle.FLAME, l, 60, 1.5,1.5,1.5,0);
                     p.getWorld().playSound(l, Sound.ITEM_FIRECHARGE_USE, 0.1f, 1.1f);
                 });
-            	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            	int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
         		@Override
                 	public void run() 
 	                {	
@@ -363,6 +367,7 @@ public class RedSkills extends Summoned{
 	                	dazable.put(p.getUniqueId(), true);
 		            }
             	}, 21); 
+                ordt.put(gethero(p), task);
 				chcooldown.put(p.getUniqueId(), System.currentTimeMillis());  
             }
         }
@@ -415,12 +420,8 @@ public class RedSkills extends Summoned{
 			final Skeleton p = (Skeleton)d.getEntity();
 
 			if(p.hasMetadata("raid")) {
-				if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-					p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
-	                d.setCancelled(true);
-	                ordealable.put(p.getUniqueId(), true);
-					return;
-				}
+
+	            if (checkAndApplyCharge(p, d)) return;
 				if(!OverworldRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| backable.containsKey(p.getUniqueId()) || !rb3cooldown.containsKey(p.getUniqueId()) || !chargable.containsKey(p.getUniqueId())) {
 					return;
 				}
@@ -480,7 +481,7 @@ public class RedSkills extends Summoned{
             	}, 30); 
 
 				for(int i = 0; i <8; i++) {
-                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                    int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		                @Override
 		                public void run() {
 							for(Entity e : p.getWorld().getNearbyEntities(tl,3, 3, 3)) {
@@ -491,6 +492,7 @@ public class RedSkills extends Summoned{
 							}
 		                }
 		            }, i*2+30);
+                    ordt.put(gethero(p), task);
                 }
             	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
         		@Override
@@ -564,6 +566,7 @@ public class RedSkills extends Summoned{
 	        
 
 			if(p.hasMetadata("raid")) {
+	            if (checkAndApplyCharge(p, ev)) return;
 				if(!OverworldRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| p.hasMetadata("failed")) {
 					return;
 				}
@@ -623,7 +626,8 @@ public class RedSkills extends Summoned{
 		{
 			Mob p = (Mob)d.getEntity();
 			int sec = 8;
-	        
+
+            if (checkAndApplyCharge(p, d)) return;
 
 			if(p.getTarget() == null|| !(p.getTarget() instanceof Player)||p.hasMetadata("failed") || !backable.containsKey(p.getUniqueId())) {
 				return;
@@ -655,7 +659,7 @@ public class RedSkills extends Summoned{
 					                    p.getWorld().playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 1.0f, 0.5f);
 				    	    			final Location pel = tar.getLocation().clone();
 										for(int i = 0; i<4; i++) {
-						                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+						                    int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 							             		@Override
 							                	public void run() 
 								                {	
@@ -678,6 +682,7 @@ public class RedSkills extends Summoned{
 								                	
 									            }
 					                	   	}, i);
+						                    ordt.put(gethero(p), task);
 										}
 					                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 						             		@Override
@@ -691,7 +696,7 @@ public class RedSkills extends Summoned{
 						            }
 		                	   	}, i*6+25);
 							}
-							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+							int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 			             		@Override
 			                	public void run() 
 				                {	
@@ -703,6 +708,7 @@ public class RedSkills extends Summoned{
 				                	backable.remove(p.getUniqueId());
 					            }
 	                	   	}, 45);
+		                    ordt.put(gethero(p), task);
 							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 			             		@Override
 			                	public void run() 
@@ -715,12 +721,12 @@ public class RedSkills extends Summoned{
 		            }
 		            else 
 		            {
+	                    Holding.holding(null, p, 24l);
     	    			Location pl = p.getEyeLocation().clone();
 						p.getWorld().playSound(pl, Sound.ENTITY_SKELETON_AMBIENT, 1.0f, 0f);
 						p.getWorld().playSound(pl, Sound.ENTITY_SKELETON_HORSE_AMBIENT, 1.0f, 0f);
 						p.getWorld().playSound(pl, Sound.ITEM_ARMOR_EQUIP_NETHERITE, 1.0f, 0f);
 						p.getWorld().spawnParticle(Particle.FLASH, pl, 20, 2,2,2);
-	                    Holding.holding(null, p, 24l);
 						for(int i = 0; i<3; i++) {
 		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 			             		@Override
@@ -732,7 +738,7 @@ public class RedSkills extends Summoned{
 				                    p.getWorld().playSound(p.getLocation(), Sound.ITEM_FIRECHARGE_USE, 1.0f, 0.5f);
 			    	    			final Location pel = tar.getLocation().clone();
 									for(int i = 0; i<4; i++) {
-					                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+					                    int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 						             		@Override
 						                	public void run() 
 							                {	
@@ -752,8 +758,10 @@ public class RedSkills extends Summoned{
 														le.damage(1,p);
 													}
 												}
+							                	
 								            }
 				                	   	}, i);
+					                    ordt.put(gethero(p), task);
 									}
 				                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					             		@Override
@@ -767,7 +775,7 @@ public class RedSkills extends Summoned{
 					            }
 	                	   	}, i*6+25);
 						}
-						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+						int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		             		@Override
 		                	public void run() 
 			                {	
@@ -779,6 +787,7 @@ public class RedSkills extends Summoned{
 			                	backable.remove(p.getUniqueId());
 				            }
                 	   	}, 45);
+	                    ordt.put(gethero(p), task);
 						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		             		@Override
 		                	public void run() 
@@ -920,7 +929,7 @@ public class RedSkills extends Summoned{
 
 							p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 40, 2, false, false));
 							for(int i = 0; i <6; i++) {
-			                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+			                    int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					                @Override
 					                public void run() {
 					                    ArrayList<Location> cir = new ArrayList<Location>();
@@ -963,7 +972,10 @@ public class RedSkills extends Summoned{
 							                }
 							            }, j.incrementAndGet()/2000); 
 					                }
-					            }, i*5); 	                    	
+					            }, i*5); 	          
+			                    
+
+			                    ordt.put(gethero(p), task);
 		                    }
 							ev.setCancelled(true);
 							rb5cooldown.put(p.getUniqueId(), System.currentTimeMillis());  
@@ -973,9 +985,10 @@ public class RedSkills extends Summoned{
 		            {
 
 
-						p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 40, 3, false, false));
+
+						p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 40, 2, false, false));
 						for(int i = 0; i <6; i++) {
-		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		                    int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 				                @Override
 				                public void run() {
 				                    ArrayList<Location> cir = new ArrayList<Location>();
@@ -1018,7 +1031,10 @@ public class RedSkills extends Summoned{
 						                }
 						            }, j.incrementAndGet()/2000); 
 				                }
-				            }, i*5); 	                    	
+				            }, i*5); 	          
+		                    
+
+		                    ordt.put(gethero(p), task);
 	                    }
 						ev.setCancelled(true);
 						rb5cooldown.put(p.getUniqueId(), System.currentTimeMillis());  
@@ -1033,12 +1049,8 @@ public class RedSkills extends Summoned{
 		if(d.getEntity() instanceof Stray && d.getEntity().hasMetadata("redboss") && d.getEntity().hasMetadata("ruined")) 
 		{
 			Stray p = (Stray)d.getEntity();
-			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
-                d.setCancelled(true);
-                ordealable.put(p.getUniqueId(), true);
-				return;
-			}
+
+            if (checkAndApplyCharge(p, d)) return;
 			if(p.hasMetadata("failed") || !dazable.containsKey(p.getUniqueId())) {
 				return;
 			}
@@ -1069,7 +1081,7 @@ public class RedSkills extends Summoned{
 		    					}
 		                	}
 		                }
-	                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	                    int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 			                @Override
 			                public void run() {
 				                for(Entity e : OverworldRaids.getheroes(p)) {
@@ -1084,6 +1096,7 @@ public class RedSkills extends Summoned{
 				                }
 			                }
 			            }, 100);
+	                    ordt.put(gethero(p), task);
 	                    rb2cooldown.put(p.getUniqueId(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
 		            }
 		        }
@@ -1106,7 +1119,7 @@ public class RedSkills extends Summoned{
 	    					}
 	                	}
 	                }
-	                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                    int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		                @Override
 		                public void run() {
 			                for(Entity e : OverworldRaids.getheroes(p)) {
@@ -1121,6 +1134,7 @@ public class RedSkills extends Summoned{
 			                }
 		                }
 		            }, 100);
+                    ordt.put(gethero(p), task);
 		            rb2cooldown.put(p.getUniqueId(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
 		        }
 			}
@@ -1163,8 +1177,8 @@ public class RedSkills extends Summoned{
 						for(Entity e : p.getWorld().getNearbyEntities(p.getLocation(),1.5, 1.5, 1.5)) {
 							if(e instanceof LivingEntity&&  !(e.hasMetadata("portal")) && e!=p) {
 								LivingEntity le = (LivingEntity)e;
-								le.damage(1,p);
-								Holding.holding(null, le, 10l);
+								le.damage(1.2,p);
+								Holding.holding(null, le, 5l);
 							}
 						}
 	                	

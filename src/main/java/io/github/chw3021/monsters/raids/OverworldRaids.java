@@ -21,7 +21,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.World;
-import org.bukkit.World.Environment;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.block.banner.PatternType;
@@ -1027,7 +1026,7 @@ public class OverworldRaids extends Summoned implements Listener {
     		portal.setGravity(false);
     		portal.setCollidable(false);
     		portal.getEquipment().setHelmet(new ItemStack(Material.OBSIDIAN));
-    		portal.getAttribute(Attribute.SCALE).setBaseValue(6);
+    		portal.getAttribute(Attribute.SCALE).setBaseValue(3);
     		
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
         		portal.setCustomName(rn + "파티의 출구 (웅크린상태에서 맨손으로 가격)");
@@ -1052,7 +1051,7 @@ public class OverworldRaids extends Summoned implements Listener {
     		v.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
     		v.setGravity(true);
     		v.setNoDamageTicks(0);
-    		v.getAttribute(Attribute.SCALE).setBaseValue(0.5);
+    		v.getAttribute(Attribute.SCALE).setBaseValue(0.75);
     		v.getAttribute(Attribute.OXYGEN_BONUS).setBaseValue(10000);
     		v.getAttribute(Attribute.GRAVITY).setBaseValue(10000);
     		v.getAttribute(Attribute.MAX_HEALTH).setBaseValue(50000);

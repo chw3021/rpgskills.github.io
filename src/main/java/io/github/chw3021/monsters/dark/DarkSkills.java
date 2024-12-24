@@ -62,8 +62,6 @@ public class DarkSkills extends Summoned{
 	private HashMap<UUID, Boolean> unreapable = new HashMap<UUID, Boolean>();
 	private HashMap<UUID, Boolean> cageable = new HashMap<UUID, Boolean>();
 	
-	private HashMap<UUID, Boolean> ordealable = new HashMap<UUID, Boolean>();
-	static private HashMap<UUID, Boolean> ordeal = new HashMap<UUID, Boolean>();
 
 	private static HashMap<UUID, Boolean> counterable = new HashMap<UUID, Boolean>();
 	
@@ -118,7 +116,7 @@ public class DarkSkills extends Summoned{
 
                         	for (Entity e : p.getWorld().getNearbyEntities(l, 0.7, 0.7, 0.7))
             				{
-            					if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
+            					if(p!=e && e instanceof LivingEntity) {
             						LivingEntity le = (LivingEntity)e;
             						le.damage(1.2,p);
             					}
@@ -178,7 +176,7 @@ public class DarkSkills extends Summoned{
 		if((d.getDamager() instanceof LivingEntity) && d.getEntity() instanceof LivingEntity &&d.getDamager().hasMetadata("dark")&& !d.isCancelled()) 
 		{
 			LivingEntity le = (LivingEntity) d.getEntity();
-			le.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 6,6,false,false));
+			le.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS, 16,16,false,false));
 		}
 	}
 	
@@ -241,12 +239,8 @@ public class DarkSkills extends Summoned{
 		{
 			Skeleton p = (Skeleton)d.getEntity();
 			String rn = gethero(p);
-			if((p.hasMetadata("ruined") && p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getMaxHealth()*0.2);
-                d.setCancelled(true);
-                ordealable.put(p.getUniqueId(), true);
-				return;
-			}
+
+            if (checkAndApplyCharge(p, d)) return;
 			if(ordeal.containsKey(p.getUniqueId()) || p.hasMetadata("failed")) {
 				return;
 			}
@@ -344,7 +338,6 @@ public class DarkSkills extends Summoned{
 							le.damage(3.25,p);
 						}
 						else {
-							d.setCancelled(true);
 							le.damage(1.3,p);
 						}
 					}
@@ -368,7 +361,7 @@ public class DarkSkills extends Summoned{
 	}
 
 
-	@SuppressWarnings({ "unchecked", "deprecation" })
+	@SuppressWarnings({ "unchecked" })
 	public void reapingHook(EntityDamageByEntityEvent d) 
 	{
 		if(d.getEntity().hasMetadata("darkboss") && !unreapable.containsKey(d.getEntity().getUniqueId())) 
@@ -381,12 +374,7 @@ public class DarkSkills extends Summoned{
 					return;
 				}
 
-				if((p.hasMetadata("ruined") && p.hasMetadata("ruined") && p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-					p.setHealth(p.getMaxHealth()*0.2);
-	                d.setCancelled(true);
-	                ordealable.put(p.getUniqueId(), true);
-					return;
-				}
+	            if (checkAndApplyCharge(p, d)) return;
 				final Location tl = OverworldRaids.getheroes(p).stream().filter(pe -> pe.getWorld().equals(p.getWorld())).findAny().get().getLocation().clone().add(0,0.2,0);
 				reapingHook(p,tl);
 			}
@@ -664,7 +652,6 @@ public class DarkSkills extends Summoned{
 	}
 	
 
-	@SuppressWarnings("deprecation")
 	public void cage(EntityDamageByEntityEvent d) 
 	{
 		if((d.getEntity() instanceof Skeleton)&& !d.isCancelled() && d.getEntity().hasMetadata("darkboss")) 
@@ -676,12 +663,7 @@ public class DarkSkills extends Summoned{
 			if(p.getTarget() == null|| !(p.getTarget() instanceof Player)||p.hasMetadata("failed") || !cageable.containsKey(p.getUniqueId()) || ordeal.containsKey(p.getUniqueId())) {
 				return;
 			}
-			if((p.hasMetadata("ruined") && p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getMaxHealth()*0.2);
-                d.setCancelled(true);
-                ordealable.put(p.getUniqueId(), true);
-				return;
-			}
+            if (checkAndApplyCharge(p, d)) return;
 			final Player tar = (Player) p.getTarget();
 			final Location ptl = tar.getLocation().clone();
 					if(rb4cooldown.containsKey(p.getUniqueId()))
@@ -1089,20 +1071,13 @@ public class DarkSkills extends Summoned{
 	}
 
 
-	@SuppressWarnings("deprecation")
 	public void darkcircle(EntityDamageByEntityEvent d) 
 	{
 		if(d.getEntity().hasMetadata("darkboss")&& !d.isCancelled()) 
 		{
 			final Skeleton p = (Skeleton)d.getEntity();
 
-			if((p.hasMetadata("ruined") && p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getMaxHealth()*0.2);
-                d.setCancelled(true);
-                ordealable.put(p.getUniqueId(), true);
-				return;
-			}
-
+            if (checkAndApplyCharge(p, d)) return;
 			if(p.hasMetadata("raid") && p.hasMetadata("ruined")) {
 				if(!OverworldRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| p.hasMetadata("failed")|| ordeal.containsKey(p.getUniqueId())) {
 					return;

@@ -991,7 +991,6 @@ public class Forskills extends Pak {
 
 
 				Snowball sn = p.launchProjectile(Snowball.class);
-				sn.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 				sn.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 				sn.setMetadata("plzg", new FixedMetadataValue(RMain.getInstance(), true));
 				sn.setShooter(p);
@@ -1372,106 +1371,139 @@ public class Forskills extends Pak {
 
 			}}
 	}
-	public void Shockwave(EntityDamageByEntityEvent d)
+	
+	private void shockWave(Location pfl) {
+
+        // **파티클 효과: 안쪽에서부터 바깥쪽으로 퍼지는 효과**
+        Bukkit.getScheduler().runTaskTimer(RMain.getInstance(), new Runnable() {
+            private double currentRadius = 1; // 초기 반경
+            private final double maxRadius = 4; // 최대 반경
+            private final double increment = 0.4; // 반경 증가량
+
+            @Override
+            public void run() {
+                if (currentRadius > maxRadius) {
+                    Bukkit.getScheduler().cancelTask(this.hashCode());
+                    return;
+                }
+
+                // 반경에 따라 원형으로 파티클 생성
+                for (double angle = 0; angle < 360; angle += 10) {
+                    double radians = Math.toRadians(angle);
+                    double x = Math.cos(radians) * currentRadius;
+                    double z = Math.sin(radians) * currentRadius;
+                    Location particleLoc = pfl.clone().add(x, 0, z);
+
+                    // 푸른색 계열의 파티클 생성
+                    Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(50, 150, 255), 1.5f); // RGB 값으로 파란색 설정
+                    pfl.getWorld().spawnParticle(Particle.DUST, particleLoc, 1, dustOptions);
+                }
+
+                currentRadius += increment; // 반경 증가
+            }
+        }, 0, 1/100); // 0틱 딜레이로 시작, 매 2틱(0.1초)마다 실행
+        
+        
+	}
+	
+	private void shockWaveKnockBack(Player p, LivingEntity target, Location pfl) {
+
+        // **파티클 효과: 안쪽에서부터 바깥쪽으로 퍼지는 효과**
+        Bukkit.getScheduler().runTaskTimer(RMain.getInstance(), new Runnable() {
+
+        	int tick=0;
+            @Override
+            public void run() {
+                if (pfl.distance(target.getLocation()) >= 4 || tick++ >=10) {
+                    Bukkit.getScheduler().cancelTask(this.hashCode());
+                    return;
+                }
+
+                Vector knockbackDir = target.getLocation().toVector().subtract(pfl.toVector()).normalize();
+                knockbackDir.setY(0.2); // 적을 공중으로 살짝 띄움
+
+                // 적에게 밀치는 효과 적용
+                target.setVelocity(knockbackDir.multiply(0.8)); // 밀리는 힘 조정
+                target.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 10, 1, false, false)); // 잠깐의 부유 효과
+
+            }
+        }, 0, 1); // 0틱 딜레이로 시작, 매 2틱(0.1초)마다 실행
+        
+	}
+	
+	public void Shockwave(PlayerInteractEvent ev)
 	{
-		if(d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity && !d.isCancelled())
-		{
-			Player p = (Player)d.getDamager();
-			double sec =7*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
-			d.getEntity();
+
+			Player p = ev.getPlayer();
+			Action ac = ev.getAction();
+			double sec = 4*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 
-
-
-
-			if(ClassData.pc.get(p.getUniqueId()) == 16 && fsd.DoubleBarrel.getOrDefault(p.getUniqueId(),0)>=1) {
-				if((p.getInventory().getItemInMainHand().getType().name().contains("PICKAXE")) && (p.isSneaking()) && !(p.hasCooldown(Material.YELLOW_TERRACOTTA)))
+			if(ClassData.pc.get(p.getUniqueId()) == 16 && fsd.HoneyMissile.getOrDefault(p.getUniqueId(), 0) >=1 && p.getInventory().getItemInMainHand().getType().name().contains("PICKAXE") && !p.hasCooldown(CAREFUL)) {
+				if(rayt1.containsKey(p.getUniqueId())){
+					ult2ActivateReady(p,raygm.get(p.getUniqueId()), rayfl.get(p.getUniqueId()));
+					ult2Activate(p);
+					return;
+				}
+				if((!p.isSneaking()) && (ac == Action.LEFT_CLICK_AIR || ac== Action.LEFT_CLICK_BLOCK))
 				{
+
 					SkillBuilder bd = new SkillBuilder()
-							.player(p)
-							.cooldown(sec)
-							.kname("충격파")
-							.ename("Shockwave")
-							.slot(4)
-							.hm(stcooldown)
-							.skillUse(() -> {
-								if(Proficiency.getpro(p)>=2) {
-									overHeating(p);
-								}
-								
-								
-								
-								for(int i = 0; i<2; i++) {
-									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-										@Override
-										public void run()
-										{
-											Location t = gettargetblock(p,3);
-											
-											for(int i = 0; i < 15; i++) {
-												Arrow ar = p.getWorld().spawnArrow(p.getEyeLocation().add(0, -0.8, 0), p.getEyeLocation().getDirection(), 2f, 20f);
-												ar.remove();
-												Item barrel = p.getWorld().dropItemNaturally(p.getEyeLocation(), new ItemStack(Material.BEACON));
-												barrel.setVelocity(ar.getVelocity());
-												barrel.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-												barrel.setMetadata("barrel of"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-												barrel.setGlowing(true);
-												barrel.setPickupDelay(9999);
-											}
-											
-											p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 0.8f, 0.2f);
-											p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 0.8f, 1.4f);
+					        .player(p)
+					        .cooldown(sec)
+					        .kname("충격파")
+					        .ename("Shockwave")
+					        .slot(4)
+					        .hm(stcooldown)
+					        .skillUse(() -> {
+					            if (Proficiency.getpro(p) >= 2) {
+					                overHeating(p);
+					            }
 
-											for(Entity e: t.getWorld().getNearbyEntities(t,4,4,4)) {
-												if (e instanceof Player)
-												{
+					            final Location pfl = p.getLocation().clone();
+					            // 플레이어를 살짝 공중으로 띄움
 
-													Player p1 = (Player) e;
-													if(Party.hasParty(p) && Party.hasParty(p1))	{
-														if(Party.getParty(p).equals(Party.getParty(p1)))
-														{
-															continue;
-														}
-													}
-												}
-												if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")))
-												{
-													LivingEntity le = (LivingEntity)e;
-													le.setVelocity(p.getEyeLocation().getDirection().normalize().multiply(11.5));
-													le.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 3, 5, false, false));
-													le.setVelocity(p.getEyeLocation().getDirection().normalize().multiply(11.5));
+					            // 일정 딜레이로 두 번 발동
+					            for (int i = 0; i < 2; i++) {
+					                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), () -> {
+							            p.setVelocity(new Vector(0, 0.33, 0)); // Y축으로 살짝 상승
+										p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 40, 100, false, false));
+							            
+					                    double radius = 4;
+					                    shockWave(pfl);
+					                    
+					                    pfl.getWorld().getNearbyEntities(pfl, radius, radius, radius).forEach(e -> {
+					                        if (e instanceof Player targetPlayer) {
+					                            if (Party.hasParty(p) && Party.hasParty(targetPlayer)) {
+					                                if (Party.getParty(p).equals(Party.getParty(targetPlayer))) {
+					                                    return; 
+					                                }
+					                            }
+					                        }
 
-													p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
-													atk1(0.135, p, le);
+					                        if (!(e == p) && e instanceof LivingEntity target && !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
+					                            // 밀리는 방향 계산: 적과 플레이어 간의 방향 벡터
+					                        	shockWaveKnockBack(p, target, pfl);
+					                            atk1(0.135, p, target); // 추가 피해 계산
+					                            if (Proficiency.getpro(p) >= 1) {
+					                                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), () -> {
+					                                    Holding.holding(p, target, 20L);
+					                                }, 14);
+					                            }
+					                        }
+					                    });
 
-													if(Proficiency.getpro(p)>=1) {
-														Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-															@Override
-															public void run()
-															{
-																Holding.holding(p, le, 30l);
-															}
-														}, 20);
-													}
-												}
+					                    p.playSound(p.getLocation(), Sound.BLOCK_SCULK_SHRIEKER_STEP, 0.3f, 2f);
+					                    p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 0.8f, 1.4f);
+					                }, i * 3); 
+					            }
+					        });
 
-											}
-										}
-									}, i*5);
-
-								}
-								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-									@Override
-									public void run()
-									{
-										p.getWorld().getEntities().stream().filter(e -> e.hasMetadata("barrel of"+p.getName())).forEach(t ->t.remove());
-									}
-								}, 13);
-							});
 					bd.execute();
 
+
 				}
-			}
+			
 		}
 	}
 
@@ -1493,12 +1525,11 @@ public class Forskills extends Pak {
 	}
 
 
-	@SuppressWarnings("deprecation")
 	public void HoneyMissile(PlayerInteractEvent ev)
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
-		double sec = 20*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec = 14*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 
 		if(ClassData.pc.get(p.getUniqueId()) == 16 && fsd.HoneyMissile.getOrDefault(p.getUniqueId(), 0) >=1 && p.getInventory().getItemInMainHand().getType().name().contains("PICKAXE") && !p.hasCooldown(CAREFUL)) {
@@ -1507,7 +1538,7 @@ public class Forskills extends Pak {
 				ult2Activate(p);
 				return;
 			}
-			if((!p.isSneaking())&& !p.isOnGround() && (ac == Action.LEFT_CLICK_AIR || ac== Action.LEFT_CLICK_BLOCK))
+			if((p.isSneaking()) && (ac == Action.LEFT_CLICK_AIR || ac== Action.LEFT_CLICK_BLOCK))
 			{
 				ev.setCancelled(true);
 				SkillBuilder bd = new SkillBuilder()
@@ -1551,7 +1582,7 @@ public class Forskills extends Pak {
 							hesh.setMetadata("hesh of"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 							hesh.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 							hesh.setShooter(p);
-							hesh.setVelocity(l.toVector().subtract(p.getLocation().toVector()).normalize().multiply(1));
+							hesh.setVelocity(l.toVector().subtract(p.getLocation().toVector()).normalize().multiply(2.5));
 							FireworkMeta fm = hesh.getFireworkMeta();
 
 							FireworkEffect effect = FireworkEffect.builder()
@@ -1560,7 +1591,7 @@ public class Forskills extends Pak {
 									.flicker(true)
 									.trail(true)
 									.build();
-							fm.setPower(3);
+							fm.setPower(1);
 							fm.addEffect(effect);
 							hesh.setFireworkMeta(fm);
 						});
@@ -1716,14 +1747,13 @@ public class Forskills extends Pak {
 
 
 
-	@SuppressWarnings("deprecation")
 	public void Detonator(PlayerInteractEvent ev)
 	{
 		Player p = ev.getPlayer();
 		Action ac = ev.getAction();
 
 		if(ClassData.pc.get(p.getUniqueId()) == 16 && p.getInventory().getItemInMainHand().getType().name().contains("PICKAXE")) {
-			if((!p.isSneaking())&& !p.isOnGround() && (ac == Action.LEFT_CLICK_AIR || ac== Action.LEFT_CLICK_BLOCK) &&(ac!= Action.RIGHT_CLICK_AIR)&&(ac!= Action.RIGHT_CLICK_AIR)&& prmig.containsKey(p.getUniqueId()))
+			if((p.isSneaking())&& (ac == Action.LEFT_CLICK_AIR || ac== Action.LEFT_CLICK_BLOCK) &&(ac!= Action.RIGHT_CLICK_AIR)&&(ac!= Action.RIGHT_CLICK_AIR)&& prmig.containsKey(p.getUniqueId()))
 			{
 				ev.setCancelled(true);
 				if(!heshpair.containsKey(p.getUniqueId())) {
@@ -1809,7 +1839,7 @@ public class Forskills extends Pak {
 									p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, 1, 2);
 
 									line.forEach(l -> {
-										for(Entity e: l.getWorld().getNearbyEntities(l,1,1,1)) {
+										for(Entity e: l.getWorld().getNearbyEntities(l,2,2,2)) {
 											if (e instanceof Player)
 											{
 												Player p1 = (Player) e;

@@ -121,7 +121,6 @@ public class RMain extends JavaPlugin{
         	w.setTicksPerSpawns(SpawnCategory.WATER_UNDERGROUND_CREATURE, 1);
         });
         Bukkit.getPluginManager().registerEvents(new RaidWorldLoad(), this);
-        Bukkit.getPluginManager().registerEvents(MobsSkillsEvents.getInstance(), this);
         
         this.getDataFolder().mkdir();
         Bukkit.getPluginManager().registerEvents(new ClassData(new HashMap<UUID, Integer>()), this);
@@ -171,6 +170,7 @@ public class RMain extends JavaPlugin{
         Bukkit.getPluginManager().registerEvents(new NPCcontact(), this);
 
         Bukkit.getPluginManager().registerEvents(SkillUsing.getInstance(), this);
+        Bukkit.getPluginManager().registerEvents(MobsSkillsEvents.getInstance(), this);
         Bukkit.getPluginManager().registerEvents(new ShulkerBag(), this);
 
         Bukkit.getPluginManager().registerEvents(new ArmorSet(), this);

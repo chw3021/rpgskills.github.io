@@ -151,12 +151,7 @@ public class PiglinSkills extends Summoned{
 			if(ordeal.containsKey(p.getUniqueId())) {
 				return;
 			}
-			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
-                d.setCancelled(true);
-                ordealable.put(p.getUniqueId(), true);
-				return;
-			}
+            if (checkAndApplyCharge(p, d)) return;
 			if(rb3cooldown.containsKey(p.getUniqueId()))
 	        {
 	            long timer = (rb3cooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
@@ -491,12 +486,7 @@ public class PiglinSkills extends Summoned{
 			if(p.hasMetadata("failed") || !furable.containsKey(p.getUniqueId())) {
 				return;
 			}
-			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
-	            d.setCancelled(true);
-	            ordealable.put(p.getUniqueId(), true);
-				return;
-			}
+            if (checkAndApplyCharge(p, d)) return;
 					if(shcooldown.containsKey(p.getUniqueId()))
 		            {
 		                long timer = (shcooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
@@ -586,12 +576,7 @@ public class PiglinSkills extends Summoned{
 			if(p.hasMetadata("failed") || !porkable.containsKey(p.getUniqueId())) {
 				return;
 			}
-			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
-                d.setCancelled(true);
-                ordealable.put(p.getUniqueId(), true);
-				return;
-			}
+            if (checkAndApplyCharge(p, d)) return;
 					if(aicooldown.containsKey(p.getUniqueId()))
 		            {
 		                long timer = (aicooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
@@ -623,12 +608,7 @@ public class PiglinSkills extends Summoned{
 		{
 			final LivingEntity p = (LivingEntity)d.getEntity();
 
-			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
-                d.setCancelled(true);
-                ordealable.put(p.getUniqueId(), true);
-				return;
-			}
+            if (checkAndApplyCharge(p, d)) return;
 
 			if(p.hasMetadata("raid")) {
 				if(!NethercoreRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| p.hasMetadata("failed")) {
@@ -795,12 +775,7 @@ public class PiglinSkills extends Summoned{
 			if(ordeal.containsKey(p.getUniqueId())) {
 				return;
 			}
-			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
-                d.setCancelled(true);
-                ordealable.put(p.getUniqueId(), true);
-				return;
-			}
+            if (checkAndApplyCharge(p, d)) return;
 			if(p.getTarget() == null|| !(p.getTarget() instanceof Player)||p.hasMetadata("failed")) {
 				return;
 			}
@@ -855,8 +830,6 @@ public class PiglinSkills extends Summoned{
 	}
 
 	public static HashMap<UUID, Integer> count = new HashMap<UUID, Integer>();
-	private HashMap<UUID, Boolean> ordealable = new HashMap<UUID, Boolean>();
-	public static HashMap<UUID, Boolean> ordeal = new HashMap<UUID, Boolean>();//volcanicboss 패턴 시작 여부 저장
 
 	public HashMap<UUID, Integer> ast = new HashMap<UUID, Integer>();//ArmorStands damage 태스크 저장
 	public HashMap<UUID, Integer> asdt = new HashMap<UUID, Integer>();//ArmorStands remove 태스크 저장

@@ -50,7 +50,7 @@ import io.github.chw3021.rmain.RMain;
 
 
 
-public class HarvesterSkills extends NethercoreRaids{
+public class WarpSkills extends NethercoreRaids{
 
 	Holding hold = Holding.getInstance();
 	private HashMap<UUID, Long> rb3cooldown = new HashMap<UUID, Long>();
@@ -62,8 +62,8 @@ public class HarvesterSkills extends NethercoreRaids{
 	
 
 	
-	private static final HarvesterSkills instance = new HarvesterSkills ();
-	public static HarvesterSkills getInstance()
+	private static final WarpSkills instance = new WarpSkills ();
+	public static WarpSkills getInstance()
 	{
 		return instance;
 	}
@@ -85,7 +85,7 @@ public class HarvesterSkills extends NethercoreRaids{
 			
 		    LivingEntity p = (LivingEntity) ev.getEntity().getShooter();
 		    
-		    if(p.hasMetadata("soulboss")) {
+		    if(p.hasMetadata("warpedboss")) {
 		    	ev.setCancelled(true);
 
 	        	p.getWorld().playSound(p.getLocation(), Sound.ENTITY_EVOKER_FANGS_ATTACK, 1f, 0f);
@@ -190,7 +190,7 @@ public class HarvesterSkills extends NethercoreRaids{
 	{
 	    
 		int sec = 4;
-		if(d.getEntity().hasMetadata("soulboss") && cursable.containsKey(d.getEntity().getUniqueId())) 
+		if(d.getEntity().hasMetadata("warpedboss") && cursable.containsKey(d.getEntity().getUniqueId())) 
 		{
 			LivingEntity p = (LivingEntity)d.getEntity();
 			if(ordeal.containsKey(p.getUniqueId())) {
@@ -362,7 +362,7 @@ public class HarvesterSkills extends NethercoreRaids{
 
 	public void hand(EntityDamageByEntityEvent d) 
 	{
-		if(d.getEntity().hasMetadata("soulboss") && (d.getEntity() instanceof Mob)) 
+		if(d.getEntity().hasMetadata("warpedboss") && (d.getEntity() instanceof Mob)) 
 		{
 			Mob p = (Mob)d.getEntity();
 			p.getWorld().playSound(p, Sound.ENTITY_BREEZE_CHARGE, 0.6f, 0.6f);
@@ -456,7 +456,7 @@ public class HarvesterSkills extends NethercoreRaids{
 	
 	public void phantom(EntitySpellCastEvent d) 
 	{
-		if(d.getEntity().hasMetadata("soulboss") && (d.getEntity() instanceof Mob)) 
+		if(d.getEntity().hasMetadata("warpedboss") && (d.getEntity() instanceof Mob)) 
 		{
 			Mob p = (Mob)d.getEntity();
 			int sec = 4;
@@ -493,7 +493,7 @@ public class HarvesterSkills extends NethercoreRaids{
 	private HashMap<UUID, Boolean> waveable = new HashMap<UUID, Boolean>();
 	public void wave(EntitySpellCastEvent d) 
 	{
-		if(d.getEntity().hasMetadata("soulboss")) 
+		if(d.getEntity().hasMetadata("warpedboss")) 
 		{
 			final LivingEntity p = (LivingEntity)d.getEntity();
 			d.setCancelled(true);
@@ -655,7 +655,7 @@ public class HarvesterSkills extends NethercoreRaids{
 	
 	public void storm(EntityDamageByEntityEvent d) 
 	{
-		if((d.getEntity() instanceof Mob) && d.getEntity().hasMetadata("soulboss")) 
+		if((d.getEntity() instanceof Mob) && d.getEntity().hasMetadata("warpedboss")) 
 		{
 			Mob p = (Mob)d.getEntity();
 			int sec = 6;
@@ -1029,7 +1029,7 @@ public class HarvesterSkills extends NethercoreRaids{
 	{
 	    
 		int sec =70;
-		if(d.getEntity().hasMetadata("soulboss") && d.getEntity().hasMetadata("ruined")&& !d.getEntity().hasMetadata("failed")) 
+		if(d.getEntity().hasMetadata("warpedboss") && d.getEntity().hasMetadata("ruined")&& !d.getEntity().hasMetadata("failed")) 
 		{
 			LivingEntity p = (LivingEntity)d.getEntity();
 			if(!(p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2)|| !ordealable.containsKey(p.getUniqueId())|| ordeal.containsKey(p.getUniqueId())) {

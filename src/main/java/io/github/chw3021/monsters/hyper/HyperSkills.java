@@ -56,7 +56,6 @@ public class HyperSkills extends Summoned{
 	private HashMap<UUID, Long> rb6cooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Boolean> chargable = new HashMap<UUID, Boolean>();
 	private HashMap<UUID, Boolean> scratchable = new HashMap<UUID, Boolean>();
-	private HashMap<UUID, Boolean> ordealable = new HashMap<UUID, Boolean>();
 	private HashMap<UUID, Integer> guud = new HashMap<UUID, Integer>();
 	
 
@@ -343,6 +342,7 @@ public class HyperSkills extends Summoned{
 		if(d.getEntity() instanceof Illusioner && d.getEntity().hasMetadata("hyperboss") ) 
 		{
 			Illusioner p = (Illusioner)d.getEntity();
+            if (checkAndApplyCharge(p, d)) return;
 			if(rb3cooldown.containsKey(p.getUniqueId()))
 	        {
 	            long timer = (rb3cooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
@@ -463,6 +463,7 @@ public class HyperSkills extends Summoned{
 		if(d.getEntity() instanceof Illusioner && d.getEntity().hasMetadata("hyperboss") ) 
 		{
 			Illusioner p = (Illusioner)d.getEntity();
+            if (checkAndApplyCharge(p, d)) return;
 			if(rb4cooldown.containsKey(p.getUniqueId()))
 	        {
 	            long timer = (rb4cooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
@@ -604,6 +605,7 @@ public class HyperSkills extends Summoned{
 		{
 			final Illusioner p = (Illusioner)d.getEntity();
 			if(p.hasMetadata("raid")) {
+	            if (checkAndApplyCharge(p, d)) return;
 				if(!OverworldRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| p.hasMetadata("failed")) {
 					return;
 				}
@@ -715,7 +717,6 @@ public class HyperSkills extends Summoned{
 	}
 	
 	
-	@SuppressWarnings("deprecation")
 	public void Charging(EntityDamageByEntityEvent d) 
 	{
 	    
@@ -727,12 +728,7 @@ public class HyperSkills extends Summoned{
 			if(p.hasMetadata("failed")) {
 				return;
 			}
-			if((p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getMaxHealth()*0.2);
-                d.setCancelled(true);
-                ordealable.put(p.getUniqueId(), true);
-				return;
-			}
+            if (checkAndApplyCharge(p, d)) return;
 			if(!chargable.containsKey(p.getUniqueId()) || !OverworldRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))) {
 				return;
 			}
@@ -859,7 +855,6 @@ public class HyperSkills extends Summoned{
 		}					
 	}
 
-	@SuppressWarnings("deprecation")
 	public void Scraching(EntityDamageByEntityEvent d) 
 	{
 	    
@@ -870,12 +865,7 @@ public class HyperSkills extends Summoned{
 			if(p.hasMetadata("failed")) {
 				return;
 			}
-			if((p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getMaxHealth()*0.2);
-                d.setCancelled(true);
-                ordealable.put(p.getUniqueId(), true);
-				return;
-			}
+            if (checkAndApplyCharge(p, d)) return;
 			if(!scratchable.containsKey(p.getUniqueId()) || chargable.containsKey(p.getUniqueId()) || !OverworldRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))) {
 				return;
 			}

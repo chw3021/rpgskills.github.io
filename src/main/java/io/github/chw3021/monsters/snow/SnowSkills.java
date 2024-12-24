@@ -62,8 +62,7 @@ public class SnowSkills extends Summoned{
 	public HashMap<UUID, Long> rb6cooldown = new HashMap<UUID, Long>();
 	public HashMap<UUID, Long> rb7cooldown = new HashMap<UUID, Long>();
 	
-	public static HashMap<UUID, Boolean> ordealable = new HashMap<UUID, Boolean>();
-	public static HashMap<UUID, UUID> ordeal = new HashMap<UUID, UUID>();//분신 uuid 저장
+	public static HashMap<UUID, UUID> ordealMirrors = new HashMap<UUID, UUID>();//분신 uuid 저장
 	public static HashMap<UUID, Integer> count = new HashMap<UUID, Integer>();
 
 	private HashMap<UUID, LivingEntity> snowblock = new HashMap<UUID, LivingEntity>();
@@ -84,7 +83,7 @@ public class SnowSkills extends Summoned{
 			ThrownPotion po = (ThrownPotion)d.getEntity();
 			if(po.getShooter() instanceof Witch) {
 				Witch p = (Witch) po.getShooter();
-				if(ordeal.containsKey(p.getUniqueId())) {
+				if(ordealMirrors.containsKey(p.getUniqueId())) {
 					return;
 				}
 				if(p.hasMetadata("snowy")) {
@@ -163,7 +162,7 @@ public class SnowSkills extends Summoned{
 			ThrownPotion po = (ThrownPotion)d.getEntity();
 			if(po.getShooter() instanceof Witch) {
 				Witch p = (Witch) po.getShooter();
-				if(ordeal.containsKey(p.getUniqueId())) {
+				if(ordealMirrors.containsKey(p.getUniqueId())) {
 					d.setCancelled(true);
 					return;
 				}
@@ -610,7 +609,8 @@ public class SnowSkills extends Summoned{
 			LivingEntity p = (LivingEntity)ev.getEntity();
 
 			if(p.hasMetadata("raid")) {
-				if(!OverworldRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| p.hasMetadata("failed")|| ordeal.containsKey(p.getUniqueId())) {
+	            if (checkAndApplyCharge(p, ev)) return;
+				if(!OverworldRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| p.hasMetadata("failed")|| ordealMirrors.containsKey(p.getUniqueId())) {
 					return;
 				}
 
@@ -741,7 +741,6 @@ public class SnowSkills extends Summoned{
 	
 	
 	
-	@SuppressWarnings("deprecation")
 	public void Cyclone(EntityDamageByEntityEvent d) 
 	{
 	    
@@ -752,13 +751,8 @@ public class SnowSkills extends Summoned{
 			if(p.hasMetadata("failed")||p.hasMetadata("summoned")) {
 				return;
 			}
-			if(p.hasMetadata("ruined") && (p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getMaxHealth()*0.2);
-                ordealable.put(p.getUniqueId(), true);
-                d.setCancelled(true);
-				return;
-			}
-			if(p.hasMetadata("snowyboss") &&  !ordeal.containsKey(p.getUniqueId())) {
+            if (checkAndApplyCharge(p, d)) return;
+			if(p.hasMetadata("snowyboss") &&  !ordealMirrors.containsKey(p.getUniqueId())) {
 				p.getWorld().playSound(p.getEyeLocation(), Sound.ENTITY_WITCH_AMBIENT, 1,2);
 				p.getWorld().playSound(p.getEyeLocation(), Sound.ENTITY_WITCH_DRINK, 1,0);
 						if(rb1cooldown.containsKey(p.getUniqueId())) 
@@ -1060,15 +1054,10 @@ public class SnowSkills extends Summoned{
 		if(d.getEntity() instanceof Witch && d.getEntity().hasMetadata("snowyboss") && d.getEntity().hasMetadata("ruined") ) 
 		{
 			Witch p = (Witch)d.getEntity();
-			if(p.hasMetadata("failed") || ordeal.containsKey(p.getUniqueId())) {
+			if(p.hasMetadata("failed") || ordealMirrors.containsKey(p.getUniqueId())) {
 				return;
 			}
-			if((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
-                ordealable.put(p.getUniqueId(), true);
-                d.setCancelled(true);
-				return;
-			}
+            if (checkAndApplyCharge(p, d)) return;
 				if(rb7cooldown.containsKey(p.getUniqueId()))
 		        {
 		            long timer = (rb7cooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
@@ -1093,7 +1082,7 @@ public class SnowSkills extends Summoned{
 
 	public void mirrored(EntityDamageByEntityEvent d) 
 	{
-		if(ordeal.containsKey(d.getEntity().getUniqueId())) {
+		if(ordealMirrors.containsKey(d.getEntity().getUniqueId())) {
 			Witch p = (Witch)d.getEntity();
 			d.setCancelled(true);
 			if(d.getDamager() instanceof Witch) {
@@ -1107,8 +1096,8 @@ public class SnowSkills extends Summoned{
 			}
 			String rn = gethero(p);
 			if(p.hasMetadata("mirror")) {
-        		ordeal.remove(ordeal.get(p.getUniqueId()));
-                rb6cooldown.remove(ordeal.get(p.getUniqueId()));
+        		ordealMirrors.remove(ordealMirrors.get(p.getUniqueId()));
+                rb6cooldown.remove(ordealMirrors.get(p.getUniqueId()));
 				Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("mirror"+rn)).forEach(e -> e.remove());
         		if(ordt.containsKey(rn)) {
         			ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
@@ -1145,7 +1134,7 @@ public class SnowSkills extends Summoned{
 
 	            	p.playHurtAnimation(0);
 					Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("mirror"+rn)).forEach(e -> e.remove());
-	        		ordeal.remove(p.getUniqueId());
+	        		ordealMirrors.remove(p.getUniqueId());
 
 	        		if(ordt.containsKey(rn)) {
 	        			ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
@@ -1192,7 +1181,7 @@ public class SnowSkills extends Summoned{
     	double number2 = (random.nextDouble()+0.5) * 2.5 * (random.nextBoolean() ? -1 : 1);
     	Location esl = rl.clone().add(number, 0.5, number2);
     	p.teleport(esl);
-    	ordeal.put(p.getUniqueId(), p.getUniqueId());
+    	ordealMirrors.put(p.getUniqueId(), p.getUniqueId());
     	
     	for(int i =0; i<9; i++) {
         	Random random1=new Random();
@@ -1218,7 +1207,7 @@ public class SnowSkills extends Summoned{
     		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
     		newmob.setMetadata("mirror"+rn, new FixedMetadataValue(RMain.getInstance(), rn));
     		Holding.invur(newmob, 10l);
-        	ordeal.put(newmob.getUniqueId(), p.getUniqueId());
+        	ordealMirrors.put(newmob.getUniqueId(), p.getUniqueId());
     	}
             	
 
@@ -1227,9 +1216,9 @@ public class SnowSkills extends Summoned{
 		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
             @Override
             public void run() {
-        		ordeal.remove(p.getUniqueId());
+        		ordealMirrors.remove(p.getUniqueId());
 				Bukkit.getWorld("OverworldRaid").getEntities().stream().filter(e -> e.hasMetadata("mirror"+rn)).forEach(e -> {
-					ordeal.remove(e.getUniqueId());
+					ordealMirrors.remove(e.getUniqueId());
 					e.remove();
 				});
 
@@ -1309,7 +1298,7 @@ public class SnowSkills extends Summoned{
 			if(p.hasMetadata("failed")||p.hasMetadata("summoned")) {
 				return;
 			}
-			if(!(p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2) || !rb1cooldown.containsKey(p.getUniqueId())|| !ordealable.containsKey(p.getUniqueId()) || ordeal.containsKey(p.getUniqueId())) {
+			if(!(p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2) || !rb1cooldown.containsKey(p.getUniqueId())|| !ordealable.containsKey(p.getUniqueId()) || ordealMirrors.containsKey(p.getUniqueId())) {
 				return;
 			}
 				if(rb6cooldown.containsKey(p.getUniqueId()))

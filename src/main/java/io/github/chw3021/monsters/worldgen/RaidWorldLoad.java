@@ -25,14 +25,13 @@ public class RaidWorldLoad implements Listener {
         File worldFolder = new File(Bukkit.getWorldContainer(), worldName);
         return worldFolder.exists() && worldFolder.isDirectory();
     }
-
     @EventHandler
     public void raidWorldLoad(PluginEnableEvent ev) {
         if (Bukkit.getServer().getWorld("OverworldRaid") == null) {
             if (worldExists("OverworldRaid")) {
-                // 월드가 존재하면 바로 불러오기
-                World rw = Bukkit.getServer().createWorld(new WorldCreator("OverworldRaid"));
-                configureRaidWorld(rw, Environment.NORMAL); // 메타데이터 설정 및 월드 설정
+                // 월드가 존재하면 불러오기 (청크 생성기 강제 적용)
+                World rw = Bukkit.getServer().createWorld(new WorldCreator("OverworldRaid").generator(new OverworldRaidChunkGenerator()));
+                configureRaidWorld(rw, Environment.NORMAL); // 월드 설정
             } else {
                 // 월드가 존재하지 않으면 새로 생성
                 WorldCreator rwc = new WorldCreator("OverworldRaid");
@@ -52,9 +51,9 @@ public class RaidWorldLoad implements Listener {
         if (ev.getWorld().getName().equals("OverworldRaid")) {
             if (Bukkit.getServer().getWorld("NethercoreRaid") == null) {
                 if (worldExists("NethercoreRaid")) {
-                    // 월드가 존재하면 바로 불러오기
-                    World rw = Bukkit.getServer().createWorld(new WorldCreator("NethercoreRaid"));
-                    configureRaidWorld(rw, Environment.NETHER); // 메타데이터 설정 및 월드 설정
+                    // 월드가 존재하면 불러오기 (청크 생성기 강제 적용)
+                    World rw = Bukkit.getServer().createWorld(new WorldCreator("NethercoreRaid").generator(new NetherRaidChunkGenerator()));
+                    configureRaidWorld(rw, Environment.NETHER);
                 } else {
                     // 월드가 존재하지 않으면 새로 생성
                     WorldCreator rwc = new WorldCreator("NethercoreRaid");
@@ -69,14 +68,14 @@ public class RaidWorldLoad implements Listener {
             }
         }
     }
-
+    
     private void configureRaidWorld(World world, Environment environment) {
         world.setMetadata("rpgraidworld", new FixedMetadataValue(RMain.getInstance(), true));
         world.setDifficulty(Difficulty.HARD);
         world.setTime(12000);
-        world.setAutoSave(false);
         world.setPVP(false);
         world.setSpawnFlags(false, false);
+        world.setAutoSave(false);
 
         // 게임 규칙 설정
         world.setGameRule(GameRule.KEEP_INVENTORY, true);
@@ -94,7 +93,7 @@ public class RaidWorldLoad implements Listener {
         world.setGameRule(GameRule.DO_MOB_LOOT, false);
         world.setGameRule(GameRule.DO_MOB_SPAWNING, false);
         world.setGameRule(GameRule.DROWNING_DAMAGE, false);
-        world.setGameRule(GameRule.MOB_GRIEFING, false);
+        world.setGameRule(GameRule.MOB_GRIEFING, true);
         world.setGameRule(GameRule.SPAWN_RADIUS, 0);
     }
 	

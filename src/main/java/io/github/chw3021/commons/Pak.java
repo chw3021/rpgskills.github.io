@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -18,7 +19,6 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.AbstractArrow;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Entity;
@@ -26,6 +26,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
+import org.bukkit.entity.TextDisplay;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
@@ -2424,80 +2425,27 @@ public class Pak extends CombatMode implements Listener{
 		le.damage(fd , p);
 	}
 	
+	CommonEvents come = CommonEvents.getInstance();
 
-	final private Location disloc(final Player p, final LivingEntity le, Location pl, Location elf) {
-
-		if(elf.getWorld() != pl.getWorld()) {
-			if(p.hasPotionEffect(PotionEffectType.SLOWNESS)) {
-				return pl.clone().add(pl.clone().getDirection().rotateAroundY(Math.PI/22).normalize().multiply(2.8)).add(0, 0.1, 0);
-			}
-			else {
-				return pl.clone().add(pl.clone().getDirection().rotateAroundY(Math.PI/12).normalize().multiply(2.2)).add(0, 0.3, 0);
-			}
-		}
-		final Double disd = elf.distance(pl);
-		if(disd<12) {
-			return elf.clone().add(le.getLocation().clone().getDirection().rotateAroundY(Math.PI/2).normalize().multiply(0.76)).add(0, 0.68, 0);
-		}
-		else {
-			if(p.hasPotionEffect(PotionEffectType.SLOWNESS)) {
-				return pl.clone().add(pl.clone().getDirection().rotateAroundY(Math.PI/22).normalize().multiply(2.8)).add(0, 0.1, 0);
-			}
-			else {
-				return pl.clone().add(pl.clone().getDirection().rotateAroundY(Math.PI/12).normalize().multiply(2.2)).add(0, 0.3, 0);
-			}
-		}
-	}
-	
-
-	final private ArmorStand dinspawn(final Player p,Location l, Double d) {
-
-		final ArmorStand din = l.getWorld().spawn(l, ArmorStand.class, e -> e.setVisible(false));
-		din.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 12,2,false,false));
-		din.setMetadata("din", new FixedMetadataValue(RMain.getInstance(),true));
-		din.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
-		din.setMetadata("din of "+p.getName(), new FixedMetadataValue(RMain.getInstance(),true));
-		din.setSilent(true);
-		din.setSmall(true);
-		din.setCollidable(false);
-		din.setInvulnerable(true);
-		if(d<0.1) {
-			din.setCustomName( ChatColor.GRAY + String.valueOf(Math.round(d*1000)/1000.000) + " <"+ p.getName()+">");
-		}
-		else if(d>=9999999) {
-			din.setCustomName( ChatColor.GRAY + "!9999999!" + " <"+ p.getName()+">");
-		}
-		else {
-			din.setCustomName( ChatColor.GRAY + String.valueOf(Math.round(d*10)/10.0) + " <"+ p.getName()+">");
-		}
-		din.setCustomNameVisible(true);
-		return din;
-	}
 
 	final private void damageind(final Player p, final LivingEntity le, Double d) {
 		final Location elf = le.getLocation().clone().add(0, 0.05, 0);
 		final Location pl = p.getLocation().clone().add(0, 0.1, 0);
-		
-		/*if(el.getY()<pel.getY()) {
-			dinvv.rotateAroundAxis(dinv.clone().rotateAroundY(Math.PI/2), -Math.PI/6).normalize();
-		}
-		else {
-			dinvv.rotateAroundAxis(dinv.clone().rotateAroundY(Math.PI/2), -Math.PI/45).normalize();
-		}*/
-		final ArmorStand din = dinspawn(p, disloc(p,le,pl,elf), d);
-		
-		
-		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() 
-		{
-     	@Override
-                public void run() 
-     				{	
-     					din.remove();
-		            }
-        }, 30);
-	}
-	
 
+	    // TextDisplay 생성
+	    final TextDisplay din = come.dinspawn(p, come.disloc(p,le,pl,elf), d);
+	    din.setGlowColorOverride(Color.GRAY);
+
+
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				din.remove();
+			}
+		}, 30);
+	}
 	/**
 	 * pd*dou1 + dou2
 	 */

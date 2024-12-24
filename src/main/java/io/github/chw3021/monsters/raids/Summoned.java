@@ -88,8 +88,26 @@ public class Summoned extends Mobs{
 	static private HashMap<String, Block> raidpor = new HashMap<String, Block>();
 	
 	static public Multimap<String, Integer> ordt = ArrayListMultimap.create();
+	static public HashMap<UUID, Boolean> ordealable = new HashMap<UUID, Boolean>();
+	public static HashMap<UUID, Boolean> ordeal = new HashMap<UUID, Boolean>();
 
 	private Multimap<UUID, String> damaged = HashMultimap.create();
+	
+	public boolean checkAndApplyCharge(LivingEntity p, EntityDamageByEntityEvent d) {
+	    // 체력 조건 확인 및 적용
+		if(!p.hasMetadata("raid")) {
+			return false;
+		}
+	    if ((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue() * 0.2) 
+	            && !ordealable.containsKey(p.getUniqueId()) 
+	            && p.hasMetadata("ruined")) {
+	        p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue() * 0.2); // 체력 고정
+	        d.setCancelled(true); // 이벤트 취소
+	        ordealable.put(p.getUniqueId(), true); // 유니크 ID 저장
+	        return true; // 조건이 충족됨
+	    }
+	    return false; // 조건이 충족되지 않음
+	}
 
 	protected final void addraider(String rn, String meta, LivingEntity le)
 	{

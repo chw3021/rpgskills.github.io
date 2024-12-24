@@ -56,8 +56,6 @@ public class MountainsSkills extends Summoned {
 	
 	private HashMap<UUID, Integer> strong = new HashMap<UUID, Integer>();
 	private HashMap<UUID, Integer> strongt = new HashMap<UUID, Integer>();
-	private HashMap<UUID, Boolean> ordealable = new HashMap<UUID, Boolean>();
-	static private HashMap<UUID, Boolean> ordeal = new HashMap<UUID, Boolean>();
 
 	
 	private static final MountainsSkills instance = new MountainsSkills ();
@@ -184,6 +182,7 @@ public class MountainsSkills extends Summoned {
 		if(d.getEntity() instanceof IronGolem && d.getEntity().hasMetadata("stoneboss") && throwable.containsKey(d.getEntity().getUniqueId())) 
 		{
 			IronGolem p = (IronGolem)Holding.ale(d.getEntity());
+            if (checkAndApplyCharge(p, d)) return;
 			if(ordeal.containsKey(p.getUniqueId()) || p.hasMetadata("failed")) {
 				return;
 			}
@@ -283,7 +282,8 @@ public class MountainsSkills extends Summoned {
 		if(ev.getEntity().hasMetadata("stoneboss")) 
 		{
 			final LivingEntity p = (LivingEntity)ev.getEntity();
-	        
+
+            if (checkAndApplyCharge(p, ev)) return;
 
 			if(ordeal.containsKey(p.getUniqueId()) || p.hasMetadata("failed")) {
 				return;
@@ -625,12 +625,8 @@ public class MountainsSkills extends Summoned {
 			if(ordeal.containsKey(p.getUniqueId()) || p.hasMetadata("failed")) {
 				return;
 			}
-			if((p.hasMetadata("ruined") && p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2) && !ordealable.containsKey(p.getUniqueId())) {
-				p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
-                d.setCancelled(true);
-                ordealable.put(p.getUniqueId(), true);
-				return;
-			}
+
+            if (checkAndApplyCharge(p, d)) return;
 
 				if(rb6cooldown.containsKey(p.getUniqueId()))
 		        {
