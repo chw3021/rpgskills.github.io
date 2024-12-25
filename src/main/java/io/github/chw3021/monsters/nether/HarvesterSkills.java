@@ -1065,7 +1065,7 @@ public class HarvesterSkills extends NethercoreRaids{
 				if(d.getEntity() instanceof Player){
 					Player p = (Player) d.getEntity();
 					p.playSound(p.getLocation(), Sound.ENTITY_ILLUSIONER_CAST_SPELL, 0.1f, 0f);
-					p.setVelocity(p.getVelocity().multiply(0.5));
+					p.setVelocity(p.getVelocity().multiply(0.2));
 				}
 				if(d.getEntity().hasMetadata("harvestertotem")){
 					LivingEntity le = d.getEntity();

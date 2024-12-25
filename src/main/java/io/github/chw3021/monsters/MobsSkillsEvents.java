@@ -66,6 +66,7 @@ import io.github.chw3021.monsters.nether.HarvesterSkills;
 import io.github.chw3021.monsters.nether.NetherMobsSpawn;
 import io.github.chw3021.monsters.nether.NetherRaids;
 import io.github.chw3021.monsters.nether.PiglinSkills;
+import io.github.chw3021.monsters.nether.WarpSkills;
 import io.github.chw3021.monsters.ocean.OceanMobsSpawn;
 import io.github.chw3021.monsters.ocean.OceanRaids;
 import io.github.chw3021.monsters.ocean.OceanSkills;
@@ -390,6 +391,14 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 		HarvesterSkills.getInstance().hand(d);
 		HarvesterSkills.getInstance().storm(d);
 		HarvesterSkills.getInstance().Ordeal(d);
+		
+
+		WarpSkills.getInstance().cursed(d);
+		WarpSkills.getInstance().hand(d);
+		WarpSkills.getInstance().storm(d);
+		WarpSkills.getInstance().wave(d);
+		WarpSkills.getInstance().phantom(d);
+		//WarpSkills.getInstance().Ordeal(d);
 	}
 
 
@@ -503,6 +512,8 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 		PoisonSkills.getInstance().launch(e);
 		
 		HarvesterSkills.getInstance().bowshoot(e);
+		
+		WarpSkills.getInstance().bowshoot(e);
 	}
 	@EventHandler
 	public void Hit(ProjectileHitEvent e) 
@@ -522,6 +533,8 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 		PoisonSkills.getInstance().hit(e);
 		
 		PiglinSkills.getInstance().hit(e);
+		
+		WarpSkills.getInstance().hit(e);
 	}
 
 	@EventHandler
@@ -628,6 +641,7 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 		PoisonSkills.getInstance().poisoncreep(d);
 		
 		BloodNight.getInstance().SummonedTarget(d);
+
 	}
 	
 	@EventHandler

@@ -586,11 +586,9 @@ public class NethercoreRaids extends Summoned implements Listener {
 		}
 		else if(in == -3) {
 
-    		ItemStack hel = new ItemStack(Material.WARPED_NYLIUM);
-    		hel.addUnsafeEnchantment(Enchantment.KNOCKBACK, 3);
     		
     		String reg = pm.getLocale().equalsIgnoreCase("ko_kr") ? "뒤틀린정령":"WarpedDemon";
-    		Breeze newmob = (Breeze) MobspawnLoc(esl, ChatColor.DARK_BLUE+reg, dif1, hel, null, null, null, null, null, EntityType.BREEZE);
+    		Breeze newmob = (Breeze) MobspawnLoc(esl, ChatColor.DARK_BLUE+reg, dif1, null, null, null, null, null, null, EntityType.BREEZE);
     		newmob.setGlowing(true);
     		newmob.getEquipment().setBootsDropChance(0);
     		newmob.getEquipment().setChestplateDropChance(0);
@@ -599,6 +597,7 @@ public class NethercoreRaids extends Summoned implements Listener {
     		newmob.getEquipment().setItemInOffHandDropChance(0);
     		newmob.getEquipment().setLeggingsDropChance(0);;
     		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(0.9);
+    		newmob.getAttribute(Attribute.SCALE).setBaseValue(2);
     		newmob.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 999999, 3, false, false));
     		
     		newmob.setMetadata("warpedboss", new FixedMetadataValue(RMain.getInstance(), true));
@@ -1581,6 +1580,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 	    	    		
 	    	    		
 	    	    		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.4);
+	    	    		newmob.getAttribute(Attribute.SCALE).setBaseValue(2.2);
 	    	    		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 	    	    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		newmob.setRemoveWhenFarAway(false);

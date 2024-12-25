@@ -61,9 +61,9 @@ public class FrostSkillsGui extends SkillsGui {
 					3, Frostskillsinv);
 			itemset("균열", Material.DIAMOND_PICKAXE, 0, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + bsd.Crack.getOrDefault(p.getUniqueId(), 0), "",
-							ChatColor.UNDERLINE + "[서리 계열]", "동상입은 적에게 근접공격 + 웅크리기", "",
+							ChatColor.UNDERLINE + "[서리 계열]", "좌클릭 + 웅크리기", "시야 내의 적들에게만 피해를 줍니다", "",
 							ChatColor.BOLD + " X "
-									+ BigDecimal.valueOf(2.5+bsd.Crack.getOrDefault(p.getUniqueId(), 0) * 2.6).setScale(2,
+									+ BigDecimal.valueOf(2.5*(1+ bsd.Crack.getOrDefault(p.getUniqueId(), 0) * 0.26)).setScale(2,
 									RoundingMode.HALF_EVEN)+"D",
 							"Master LV.50"),
 					4, Frostskillsinv);
@@ -126,9 +126,9 @@ public class FrostSkillsGui extends SkillsGui {
 										.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						12, Frostskillsinv);
-				itemset("크레바스", Material.WHITE_CONCRETE_POWDER, 0, 1, Arrays.asList("광역피해를 입힙니다"), 13, Frostskillsinv);
+				itemset("크레바스", Material.WHITE_CONCRETE_POWDER, 0, 1, Arrays.asList("1초동안 경직상태로 만듭니다"), 13, Frostskillsinv);
 				itemset("빙폭", Material.INFESTED_CHISELED_STONE_BRICKS, 0, 1,
-						Arrays.asList("재입력시 빙폭을 사용합니다", "빙폭을 타는중에는 무적상태가 됩니다"), 14, Frostskillsinv);
+						Arrays.asList("재입력시 빙폭을 사용합니다", "2초동안 무적상태가 됩니다"), 14, Frostskillsinv);
 				itemset("냉혈", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("공격력과 동상의 경직지속시간이 증가합니다"), 16,
 						Frostskillsinv);
 				itemset("서리폭풍", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE + "[서리 계열]",
@@ -178,9 +178,9 @@ public class FrostSkillsGui extends SkillsGui {
 										.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						12, Frostskillsinv);
-				itemset("크레바스", Material.WHITE_CONCRETE_POWDER, 0, 1, Arrays.asList("광역피해를 입힙니다"), 13, Frostskillsinv);
+				itemset("크레바스", Material.WHITE_CONCRETE_POWDER, 0, 1, Arrays.asList("1초동안 경직상태로 만듭니다"), 13, Frostskillsinv);
 				itemset("빙폭", Material.INFESTED_CHISELED_STONE_BRICKS, 0, 1,
-						Arrays.asList("재입력시 빙폭을 사용합니다", "빙폭을 타는중에는 무적상태가 됩니다"), 14, Frostskillsinv);
+						Arrays.asList("재입력시 빙폭을 사용합니다", "2초동안 무적상태가 됩니다"), 14, Frostskillsinv);
 				itemset("냉혈", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("공격력과 동상의 경직지속시간이 증가합니다"), 16,
 						Frostskillsinv);
 				itemset("서리폭풍", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE + "[서리 계열]",
@@ -264,9 +264,9 @@ public class FrostSkillsGui extends SkillsGui {
 					3, Frostskillsinv);
 			itemset("Crack", Material.DIAMOND_PICKAXE, 0, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + bsd.Crack.getOrDefault(p.getUniqueId(), 0), "",
-							ChatColor.UNDERLINE + "[Frost]", "Hit + Sneaking to Frostbite enemy", "",
+							ChatColor.UNDERLINE + "[Frost]", "Sneaking + LeftClick", "Only to enemies within line of sight.", "",
 							ChatColor.BOLD + " X "
-									+ BigDecimal.valueOf(2.5+bsd.Crack.getOrDefault(p.getUniqueId(), 0) * 2.6).setScale(2,
+									+ BigDecimal.valueOf(2.5*(1+ bsd.Crack.getOrDefault(p.getUniqueId(), 0) * 0.26)).setScale(2,
 									RoundingMode.HALF_EVEN)+"D",
 							"Master LV.50"),
 					4, Frostskillsinv);
@@ -341,10 +341,10 @@ public class FrostSkillsGui extends SkillsGui {
 										.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						12, Frostskillsinv);
-				itemset("Crevasse", Material.WHITE_CONCRETE_POWDER, 0, 1, Arrays.asList("Inflicts Splash Damage"), 13,
+				itemset("Crevasse", Material.WHITE_CONCRETE_POWDER, 0, 1, Arrays.asList("Freezes 1s"), 13,
 						Frostskillsinv);
 				itemset("Icefall", Material.INFESTED_CHISELED_STONE_BRICKS, 0, 1,
-						Arrays.asList("Use Icefall When Use Once More", "Set Invulnerable While Riding Icefall"), 14,
+						Arrays.asList("Use Icefall When Use Once More", "Get Invulnerable for 2s"), 14,
 						Frostskillsinv);
 				itemset("ColdBlood", Material.ENCHANTED_BOOK, 0, 1,
 						Arrays.asList("Increases Whole Skills Damage", "Increases Frostbite Duration"), 16,
@@ -406,10 +406,10 @@ public class FrostSkillsGui extends SkillsGui {
 										.setScale(2, RoundingMode.HALF_EVEN)
 										+ "D"),
 						12, Frostskillsinv);
-				itemset("Crevasse", Material.WHITE_CONCRETE_POWDER, 0, 1, Arrays.asList("Inflicts Splash Damage"), 13,
+				itemset("Crevasse", Material.WHITE_CONCRETE_POWDER, 0, 1, Arrays.asList("Freezes 1s"), 13,
 						Frostskillsinv);
 				itemset("Icefall", Material.INFESTED_CHISELED_STONE_BRICKS, 0, 1,
-						Arrays.asList("Use Icefall When Use Once More", "Set Invulnerable While Riding Icefall"), 14,
+						Arrays.asList("Use Icefall When Use Once More", "Get Invulnerable for 2s"), 14,
 						Frostskillsinv);
 				itemset("ColdBlood", Material.ENCHANTED_BOOK, 0, 1,
 						Arrays.asList("Increases Whole Skills Damage", "Increases Frostbite Duration"), 16,

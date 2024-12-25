@@ -611,6 +611,7 @@ public class SkillUsing implements Listener {
 		Frostskills.getInstance().PolarVortex(ev);
 		Frostskills.getInstance().SnowBall(ev);
 		Frostskills.getInstance().SnowBreeze(ev);
+		Frostskills.getInstance().Crack(ev);
 
 		Hunskills.getInstance().HuntingStart(ev);
 		Hunskills.getInstance().HuntingStart2(ev);
@@ -757,7 +758,6 @@ public class SkillUsing implements Listener {
 		Forskills.getInstance().Damagegetter(d);
 		Forskills.getInstance().HESH(d);
 
-		Frostskills.getInstance().Crack(d);
 		Frostskills.getInstance().Frostbite(d);
 		Frostskills.getInstance().GlacialDrift(d);
 

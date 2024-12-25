@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -1081,7 +1082,7 @@ public class Frostskills extends Pak {
 
 					ArrayList<Location> br = new ArrayList<>();
 					AtomicInteger j = new AtomicInteger();
-					Holding.invur(p, 40l);
+					Holding.invur(p, 45l);
 					for(double d = 0; d<7 ; d+=0.3) {
 						br.add(hpl.clone().add(tl.toVector().subtract(hpl.toVector()).normalize().multiply(d)));
 					}
@@ -1200,9 +1201,7 @@ public class Frostskills extends Pak {
 								}, 40);
 								snballt.put(p.getUniqueId(), task);
 
-								p.playSound(p.getLocation(), Sound.ENTITY_SNOW_GOLEM_AMBIENT, 1f, 2f);
-								p.playSound(p.getLocation(), Sound.BLOCK_SNOW_STEP, 1f, 2f);
-								p.playSound(p.getLocation(), Sound.ITEM_CROSSBOW_QUICK_CHARGE_3, 1f, 1f);
+								p.playSound(p.getLocation(), Sound.ITEM_CROSSBOW_QUICK_CHARGE_3, 1f, 2f);
 
 								final World w = p.getWorld();
 
@@ -1213,7 +1212,7 @@ public class Frostskills extends Pak {
 										{
 											icicleshot(p,w);
 										}
-									}, i+20);
+									}, i+5);
 								}
 							});
 					bd.execute();
@@ -1295,7 +1294,7 @@ public class Frostskills extends Pak {
 									}
 								}, 40);
 							}
-						}, i*2);
+						}, i);
 					}
 				}
 			}
@@ -1423,21 +1422,16 @@ public class Frostskills extends Pak {
 
 
 
-	public void Crack(EntityDamageByEntityEvent d)
+	public void Crack(PlayerInteractEvent ev)
 	{
 
-		if(d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity&&!d.isCancelled() && d.getDamage()>0)
-		{
-			Player p = (Player)d.getDamager();
-			double sec =5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
-			final LivingEntity le = (LivingEntity)d.getEntity();
-
-
-			Holding.getInstance();
-			if(ClassData.pc.get(p.getUniqueId()) == 21&& bsd.Crack.getOrDefault(p.getUniqueId(), 0)>=1 &&p.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD && frostcooldown.containsKey(le.getUniqueId()))
+		Player p = ev.getPlayer();
+		Action ac = ev.getAction();
+		double sec =5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		if(ClassData.pc.get(p.getUniqueId()) == 21&& bsd.SnowBreeze.getOrDefault(p.getUniqueId(), 0)>=1) {
+			if(p.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD && p.isSneaking()&& !p.hasCooldown(CAREFUL))
 			{
-
-				if(p.isSneaking() && !(p.hasCooldown(Material.YELLOW_TERRACOTTA)))
+				if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK))
 				{
 					SkillBuilder bd = new SkillBuilder()
 							.player(p)
@@ -1447,61 +1441,54 @@ public class Frostskills extends Pak {
 							.slot(5)
 							.hm(swcooldown)
 							.skillUse(() -> {
-								if (le instanceof Player)
-								{
-									Player p1 = (Player) le;
-									if(Party.hasParty(p) && Party.hasParty(p1))	{
-										if(Party.getParty(p).equals(Party.getParty(p1)))
-										{
-											return;
-										}
-									}
-								}
-								le.setVelocity(p.getLocation().getDirection());
-								d.setDamage(d.getDamage()*2.5 + bsd.Crack.get(p.getUniqueId())*2.6);
+
 								p.playSound(p.getLocation(), Sound.BLOCK_GLASS_BREAK, 1.0f, 1.0f);
 								p.playSound(p.getLocation(), Sound.BLOCK_CHAIN_BREAK, 1.0f, 0f);
 								p.playSound(p.getLocation(), Sound.ENTITY_ITEM_BREAK, 1.0f, 2.0f);
-								p.getWorld().spawnParticle(Particle.BLOCK, le.getLocation(), 5, 1, 0, 1, Material.ICE.createBlockData());
-								Holding.holding(p, le, (long) 20);
-								if(Proficiency.getpro(p)>=1) {
+								
+								List<LivingEntity> les = p.getWorld().getLivingEntities().stream().filter(le -> frostcooldown.containsKey(le.getUniqueId()) && p.hasLineOfSight(le)).toList();
 
-									ArrayList<Location> line = new ArrayList<Location>();
-
-									for(double an = Math.PI/6; an>-Math.PI/6; an-=Math.PI/90) {
-										Location pl = p.getEyeLocation();
-										pl.add(pl.getDirection().rotateAroundY(an).normalize().multiply(4.5));
-										line.add(pl);
-									}
-									line.forEach(l -> {
-										p.getWorld().spawnParticle(Particle.BLOCK, l, 5, 1, 0, 1, Material.INFESTED_CRACKED_STONE_BRICKS.createBlockData());
-										p.getWorld().spawnParticle(Particle.BLOCK, l, 5, 1, 0, 1, Material.ICE.createBlockData());
-
-									});
-
-									for (Entity e : p.getWorld().getNearbyEntities(le.getLocation(), 3, 3, 3))
+								for (Entity e : les)
+								{
+									if (e instanceof Player)
 									{
-										if (e instanceof Player)
-										{
 
-											Player p1 = (Player) e;
-											if(Party.hasParty(p) && Party.hasParty(p1))	{
-												if(Party.getParty(p).equals(Party.getParty(p1)))
-												{
-													continue;
-												}
+										Player p1 = (Player) e;
+										if(Party.hasParty(p) && Party.hasParty(p1))	{
+											if(Party.getParty(p).equals(Party.getParty(p1)))
+											{
+												continue;
 											}
 										}
-										if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")))
-										{
-											LivingEntity lle = (LivingEntity)e;
-											atk0(2.5, bsd.Crack.get(p.getUniqueId())*2.6, p, lle);
+									}
+									if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")))
+									{
+										LivingEntity le = (LivingEntity)e;
+										le.setVelocity(p.getLocation().getDirection());
+										p.getWorld().spawnParticle(Particle.BLOCK, le.getLocation(), 5, 1, 0, 1, Material.ICE.createBlockData());
+										atk0(2.5, bsd.Crack.get(p.getUniqueId())*2.6, p, le);
+										if(Proficiency.getpro(p)>=1) {
+											Holding.holding(p, le, (long) 25);
+
+											ArrayList<Location> line = new ArrayList<Location>();
+
+											for(double an = Math.PI/6; an>-Math.PI/6; an-=Math.PI/90) {
+												Location pl = p.getEyeLocation();
+												pl.add(pl.getDirection().rotateAroundY(an).normalize().multiply(4.5));
+												line.add(pl);
+											}
+											line.forEach(l -> {
+												p.getWorld().spawnParticle(Particle.BLOCK, l, 5, 1, 0, 1, Material.INFESTED_CRACKED_STONE_BRICKS.createBlockData());
+												p.getWorld().spawnParticle(Particle.BLOCK, l, 5, 1, 0, 1, Material.ICE.createBlockData());
+
+											});
+										}
+										if(Proficiency.getpro(p)>2) {
+											frostcooldown.remove(le.getUniqueId());
 										}
 									}
 								}
-								if(Proficiency.getpro(p)>2) {
-									frostcooldown.remove(le.getUniqueId());
-								}
+								
 							});
 					bd.execute();
 

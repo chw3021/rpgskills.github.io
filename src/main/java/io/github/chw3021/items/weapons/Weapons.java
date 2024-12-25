@@ -595,6 +595,7 @@ public class Weapons {
 		}
 		
 		rm.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
+		rm.setMaxStackSize(1);
 		
 		if(m == Material.GLOBE_BANNER_PATTERN) {
 			kname = "너클";
@@ -811,6 +812,7 @@ public class Weapons {
 		rm.addAttributeModifier(Attribute.LUCK,
 				new AttributeModifier(getKey(), 30,
 						Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+		rm.setMaxStackSize(1);
 		
 				
 		final String m = r.getType().name();
