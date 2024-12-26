@@ -893,7 +893,7 @@ public class Berskills extends Pak {
 		if(p.getInventory().getItemInMainHand().getType().name().contains("SWORD"))
 		{
 		Action ac = ev.getAction();
-		double sec = 4*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec = 3.5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 	    
 		

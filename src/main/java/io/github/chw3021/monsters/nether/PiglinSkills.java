@@ -2,6 +2,7 @@ package io.github.chw3021.monsters.nether;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -33,7 +34,9 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDropItemEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -116,6 +119,30 @@ public class PiglinSkills extends Summoned{
 			p.getWorld().spawnParticle(Particle.FLAME, p.getLocation(), 10);
 			p.getWorld().spawnParticle(Particle.SMOKE, p.getLocation(), 100, 0.1,0.1,0.1,2);
 			AtomicInteger j = new AtomicInteger();
+
+    		ItemStack mainf = new ItemStack(Material.NETHERITE_SHOVEL);
+    		ItemMeta mmf = mainf.getItemMeta();
+    		mmf.setCustomModelData(3010);
+    		mainf.setItemMeta(mmf);
+
+    		String rn = gethero(p);
+    		final Object ht = getherotype(rn);
+    		Bukkit.getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
+    		    @Override
+    		    public void run() {
+    				if(ht instanceof Player) {
+    					Player pe = (Player) ht;
+    					pe.sendEquipmentChange(p, EquipmentSlot.HAND, mainf);
+    				}
+    				else if(getherotype(rn) instanceof HashSet){
+    					@SuppressWarnings("unchecked")
+    					HashSet<Player> par = (HashSet<Player>) ht;
+    		    		par.forEach(pe -> {
+    		    			pe.sendEquipmentChange(p, EquipmentSlot.HAND, mainf);
+    		    		});
+    				}
+    		    }
+    		}, 2L); 
 
 
 			for(Material c : cookeds) {
