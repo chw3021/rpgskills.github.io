@@ -211,7 +211,7 @@ public class CrimsonSkills extends Summoned{
 	public void curse(EntityDamageByEntityEvent d) 
 	{
 	    
-		int sec = 4;
+		int sec = 8;
 		if(d.getEntity().hasMetadata("crimsonboss") && cursable.containsKey(d.getEntity().getUniqueId())) 
 		{
 			LivingEntity p = (LivingEntity)d.getEntity();
@@ -304,14 +304,14 @@ public class CrimsonSkills extends Summoned{
 
                 movePillarTowardsPlayer(pillars, target.getLocation());
 
-                for (Entity e : world.getNearbyEntities(pillars.get(0).getLocation(), 4, 4, 4)) {
+                for (Entity e : world.getNearbyEntities(pillars.get(0).getLocation(), 2, 2, 2)) {
                     if (e instanceof Player && e != boss) {
                         Player player = (Player) e;
                         player.damage(2, boss);
                         player.setVelocity(player.getVelocity().multiply(0.3));
                         player.playSound(player.getLocation(), Sound.ENTITY_WITCH_DRINK, 0.05f, 0.1f);
 						Ray(pillars.get(0).getLocation(),player);
-                        boss.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 5,5,false,false));
+                        boss.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_DAMAGE, 5,5,false,false));
                     }
                 }
 
@@ -353,6 +353,8 @@ public class CrimsonSkills extends Summoned{
 	private HashMap<UUID, Boolean> handable = new HashMap<UUID, Boolean>();
 	
 	final private void hand(LivingEntity p) {
+		p.getWorld().playSound(p, Sound.ENTITY_BREEZE_CHARGE, 0.6f, 0.6f);
+		p.getWorld().playSound(p, Sound.BLOCK_END_PORTAL_SPAWN, 0.3f, 1.5f);
 
     	final World w = p.getWorld();
         Holding.holding(null, p, 25l);
@@ -393,8 +395,6 @@ public class CrimsonSkills extends Summoned{
 		if(d.getEntity().hasMetadata("crimsonboss")) 
 		{
 			Mob p = (Mob)d.getEntity();
-			p.getWorld().playSound(p, Sound.ENTITY_BREEZE_CHARGE, 0.6f, 0.6f);
-			p.getWorld().playSound(p, Sound.BLOCK_END_PORTAL_SPAWN, 0.3f, 1.5f);
 			
 			int sec = 15;
 	
@@ -425,14 +425,15 @@ public class CrimsonSkills extends Summoned{
 	}
 
 
-	
+
+	private HashMap<UUID, Boolean> phantomable = new HashMap<UUID, Boolean>();
 	final private void phantom(LivingEntity p) {
 
 		World w = p.getWorld();
 		
 		Location pl = p.getEyeLocation().clone();
 
-        w.playSound(p.getLocation(), Sound.ENTITY_ZOGLIN_ANGRY, 1f, 0.5f);
+        w.playSound(p.getLocation(), Sound.ENTITY_ZOGLIN_ANGRY, 1.2f, 0.5f);
 		p.getWorld().spawnParticle(Particle.ANGRY_VILLAGER, pl, 100, 2,2,2);
 		for(int i = 0; i<10; i++) {
             int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -465,6 +466,13 @@ public class CrimsonSkills extends Summoned{
      		@Override
         	public void run() 
             {	
+     			phantomable.putIfAbsent(p.getUniqueId(), true);
+            }
+	   	}, 80);
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+     		@Override
+        	public void run() 
+            {	
      			cursable.putIfAbsent(p.getUniqueId(), 1);
             }
 	   	}, 180);
@@ -475,12 +483,13 @@ public class CrimsonSkills extends Summoned{
 		if(d.getEntity().hasMetadata("crimsonboss")) 
 		{
 			Mob p = (Mob)d.getEntity();
-			int sec = 11;
+			int sec = 6;
 			
 
-			if(p.hasMetadata("failed")|| ordeal.containsKey(p.getUniqueId())) {
+			if(p.hasMetadata("failed")|| ordeal.containsKey(p.getUniqueId()) || !phantomable.containsKey(p.getUniqueId())) {
 				return;
 			}
+            if (checkAndApplyCharge(p, d)) return;
 					if(aicooldown.containsKey(p.getUniqueId()))
 		            {
 		                long timer = (aicooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
@@ -581,14 +590,16 @@ public class CrimsonSkills extends Summoned{
 	}
 	
 	final private void jumpAndHit(final Location tl, LivingEntity p) {
+		
+		Holding.holding(null, p, 22l);
 	    Location fl = p.getLocation().clone(); // 시작 위치
 	    Location jl = tl.clone().add(0, 4, 0); // 목표 도약 위치
 	    World world = p.getWorld();
         world.spawnParticle(Particle.WHITE_SMOKE, tl, 20, 2, 0.2, 2, 0);
-	    world.playSound(tl, Sound.ENTITY_ENDER_DRAGON_GROWL, 2.0f, 2f);
+	    world.playSound(tl, Sound.ENTITY_ENDER_DRAGON_GROWL, 1f, 2f);
 
 	    // 초기 이동 설정
-	    double totalTicks = 40; // 도약에 걸리는 전체 시간 (tick 단위)
+	    double totalTicks = 18; // 도약에 걸리는 전체 시간 (tick 단위)
 	    double tickInterval = 1; // 각 tick 간격 (1tick = 50ms)
 	    AtomicInteger currentTick = new AtomicInteger(0); // 현재 진행 중인 tick
 
@@ -596,15 +607,17 @@ public class CrimsonSkills extends Summoned{
 	    Vector horizontalDirection = jl.toVector().subtract(fl.toVector()).normalize(); // 수평 이동 방향
 	    double totalDistance = fl.distance(jl); // 총 이동 거리
 	    double speed = totalDistance / totalTicks; // 수평 속도
+	    
 
-	    int taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
+	    AtomicInteger j = new AtomicInteger();
+	    j.set(Bukkit.getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
 	        @Override
 	        public void run() {
 	            int tick = currentTick.getAndIncrement();
 	            if (tick > totalTicks) {
 	                // 도착 후 공격 동작 실행
 	                performAttack(tl, p);
-	                Bukkit.getScheduler().cancelTask(this.hashCode());
+	                Bukkit.getScheduler().cancelTask(j.get());
 	                return;
 	            }
 
@@ -622,16 +635,16 @@ public class CrimsonSkills extends Summoned{
 	            // 이동 중 파티클 효과
 	            world.spawnParticle(Particle.CRIMSON_SPORE, newLocation, 5, 0.2, 0.2, 0.2, 0);
 	        }
-	    }, 0L, (long) tickInterval);
+	    }, 22L, (long) tickInterval)); 
 
 	    // 태스크 저장 (필요 시 추가 관리)
-	    ordt.put(gethero(p), taskId);
+	    ordt.put(gethero(p), j.get());
 	}
 
 	private void performAttack(Location tl, LivingEntity p) {
 	    World world = p.getWorld();
-	    p.teleport(tl);
 
+	    p.teleport(tl);
 	    // 내려찍기 공격 효과
 	    world.playSound(tl, Sound.ENTITY_ELDER_GUARDIAN_HURT, 2.0f, 0f);
 	    world.spawnParticle(Particle.EXPLOSION, tl, 10, 3, 1, 3, 0);
@@ -640,8 +653,8 @@ public class CrimsonSkills extends Summoned{
 	    for (Entity entity : world.getNearbyEntities(tl, 3, 3, 3)) {
 	        if (entity instanceof LivingEntity && entity != p) {
 	            LivingEntity target = (LivingEntity) entity;
-	            target.damage(10.0, p);
-	            target.setVelocity(tl.toVector().subtract(target.getLocation().toVector()).normalize().multiply(0.5).setY(0.5));
+	            target.damage(6.0, p);
+	            target.setVelocity(tl.toVector().subtract(target.getLocation().toVector()).normalize().multiply(0.5).setY(-5));
 	        }
 	    }
 	}
@@ -653,7 +666,7 @@ public class CrimsonSkills extends Summoned{
 		if((d.getEntity() instanceof Mob) && d.getEntity().hasMetadata("crimsonboss")) 
 		{
 			Mob p = (Mob)d.getEntity();
-			int sec = 7;
+			int sec = 5;
 	        
 
             if (checkAndApplyCharge(p, d)) return;
@@ -684,7 +697,14 @@ public class CrimsonSkills extends Summoned{
 		                 			handable.put(p.getUniqueId(), true);
 		        	            }
 		                    }, 46); 
-		                    
+
+		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		                 		@Override
+		                    	public void run() 
+		                        {	
+		                 			phantomable.put(p.getUniqueId(), true);
+		        	            }
+		                    }, 50); 
 	             			
 							rb4cooldown.put(p.getUniqueId(), System.currentTimeMillis());  
 		                }
@@ -704,7 +724,15 @@ public class CrimsonSkills extends Summoned{
 	                 			handable.put(p.getUniqueId(), true);
 	        	            }
 	                    }, 46); 
-	                    
+
+	                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	                 		@Override
+	                    	public void run() 
+	                        {	
+	                 			phantomable.put(p.getUniqueId(), true);
+	        	            }
+	                    }, 50); 
+             			
 						rb4cooldown.put(p.getUniqueId(), System.currentTimeMillis());  
 					}
 		}

@@ -145,7 +145,7 @@ public class WarpSkills extends NethercoreRaids{
 	    	        Vector direction2 = targetEyeLoc2.toVector().subtract(currentLocation.clone().toVector()).normalize();
 	                currentLocation.add(direction.clone().multiply(0.23));
     				if(shooter.hasMetadata("ruined")) {
-    					currentLocation.add(direction2.clone().multiply(0.2));
+    					currentLocation.add(direction2.clone().multiply(0.1));
     				}
 	                world.spawnParticle(Particle.DUST, currentLocation, 1, new Particle.DustOptions(Color.TEAL, 2f));
 	                world.spawnParticle(Particle.DUST, currentLocation, 5,0.2,0.2,0.2, new Particle.DustOptions(Color.fromRGB(200, 200, 250), 2f));
@@ -160,10 +160,8 @@ public class WarpSkills extends NethercoreRaids{
 	                    target.damage(5, shooter);
 
 	                    // 추적 중단
-	    				if(!shooter.hasMetadata("ruined")) {
-		                    Bukkit.getScheduler().cancelTask(task.get()); // AtomicInteger에서 ID 가져오기
-		                    return;
-	    				}
+	                    Bukkit.getScheduler().cancelTask(task.get()); // AtomicInteger에서 ID 가져오기
+	                    return;
 	                }
 
 	                tick++;

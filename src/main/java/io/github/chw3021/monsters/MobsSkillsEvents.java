@@ -62,6 +62,7 @@ import io.github.chw3021.monsters.hyper.HyperSkills;
 import io.github.chw3021.monsters.mountains.MountainsMobsSpawn;
 import io.github.chw3021.monsters.mountains.MountainsRaids;
 import io.github.chw3021.monsters.mountains.MountainsSkills;
+import io.github.chw3021.monsters.nether.CrimsonSkills;
 import io.github.chw3021.monsters.nether.HarvesterSkills;
 import io.github.chw3021.monsters.nether.NetherMobsSpawn;
 import io.github.chw3021.monsters.nether.NetherRaids;
@@ -399,6 +400,12 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 		WarpSkills.getInstance().wave(d);
 		WarpSkills.getInstance().phantom(d);
 		//WarpSkills.getInstance().Ordeal(d);
+		
+		CrimsonSkills.getInstance().curse(d);
+		CrimsonSkills.getInstance().hand(d);
+		CrimsonSkills.getInstance().storm(d);
+		CrimsonSkills.getInstance().wave(d);
+		CrimsonSkills.getInstance().phantom(d);
 	}
 
 
@@ -551,6 +558,8 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 		RedSkills.getInstance().Sweep(e);
 
 		PiglinSkills.getInstance().bowshoot(e);
+		
+		CrimsonSkills.getInstance().bowshoot(e);
 	}
 		
 
