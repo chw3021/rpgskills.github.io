@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.EntityEffect;
 import org.bukkit.Location;
@@ -19,39 +17,25 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.FallingBlock;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Snowball;
-import org.bukkit.entity.Vex;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.AreaEffectCloudApplyEvent;
-import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDropItemEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
-import com.google.common.util.concurrent.AtomicDouble;
-
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.monsters.raids.NethercoreRaids;
 import io.github.chw3021.monsters.raids.Summoned;
-import io.github.chw3021.party.Party;
 import io.github.chw3021.rmain.RMain;
 
 
@@ -595,70 +579,74 @@ public class CrimsonSkills extends Summoned{
 	        rb8cooldown.put(p.getUniqueId(), System.currentTimeMillis());
 	    }
 	}
-	final private double whirl(final Location tl, Integer j, World w) {
-	    ArrayList<Location> treeLocations = new ArrayList<>();
+	
+	final private void jumpAndHit(final Location tl, LivingEntity p) {
+	    Location fl = p.getLocation().clone(); // 시작 위치
+	    Location jl = tl.clone().add(0, 4, 0); // 목표 도약 위치
+	    World world = p.getWorld();
+        world.spawnParticle(Particle.WHITE_SMOKE, tl, 20, 2, 0.2, 2, 0);
+	    world.playSound(tl, Sound.ENTITY_ENDER_DRAGON_GROWL, 2.0f, 2f);
 
-	    w.playSound(tl, Sound.BLOCK_END_PORTAL_FRAME_FILL, 0.2f, 0.5f);
+	    // 초기 이동 설정
+	    double totalTicks = 40; // 도약에 걸리는 전체 시간 (tick 단위)
+	    double tickInterval = 1; // 각 tick 간격 (1tick = 50ms)
+	    AtomicInteger currentTick = new AtomicInteger(0); // 현재 진행 중인 tick
 
-	    // 트렁크(나무 줄기) 생성
-	    double trunkHeight = 4 + j; // 줄기의 높이는 j 값에 따라 증가
-	    for (double y = 0; y < trunkHeight; y += 0.2) {
-	        treeLocations.add(tl.clone().add(0, y, 0)); // 줄기는 y 축으로 올라감
-	    }
+	    // 방향 벡터 계산
+	    Vector horizontalDirection = jl.toVector().subtract(fl.toVector()).normalize(); // 수평 이동 방향
+	    double totalDistance = fl.distance(jl); // 총 이동 거리
+	    double speed = totalDistance / totalTicks; // 수평 속도
 
-	    // 브랜치(나뭇가지) 생성
-	    double branchLength = 2 + j * 0.5; // 나뭇가지 길이
-	    double angleStep = Math.PI / 4; // 각도 간격
-	    for (double angle = 0; angle < Math.PI * 2; angle += angleStep) {
-	        for (double length = 0; length < branchLength; length += 0.3) {
-	            // 나뭇가지는 줄기 상단에서 시작
-	            Location branchBase = tl.clone().add(0, trunkHeight, 0);
-	            treeLocations.add(branchBase.clone().add(
-	                Math.cos(angle) * length, // x 방향
-	                length * 0.5,             // 가지는 위로 살짝 기울어짐
-	                Math.sin(angle) * length  // z 방향
-	            ));
+	    int taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
+	        @Override
+	        public void run() {
+	            int tick = currentTick.getAndIncrement();
+	            if (tick > totalTicks) {
+	                // 도착 후 공격 동작 실행
+	                performAttack(tl, p);
+	                Bukkit.getScheduler().cancelTask(this.hashCode());
+	                return;
+	            }
+
+	            // 로그 곡선 기반 높이 계산
+	            double progress = (double) tick / totalTicks; // 진행 비율 (0 ~ 1)
+	            double height = 4 * Math.log10(1 + 9 * progress); // 높이 값 (로그 함수: log10(1 + 9x))
+
+	            // 새로운 위치 계산
+	            Location newLocation = fl.clone().add(horizontalDirection.clone().multiply(speed * tick)); // 수평 이동
+	            newLocation.setY(fl.getY() + height); // 높이 적용
+
+	            // 보스몹 이동
+	            p.teleport(newLocation);
+
+	            // 이동 중 파티클 효과
+	            world.spawnParticle(Particle.CRIMSON_SPORE, newLocation, 5, 0.2, 0.2, 0.2, 0);
+	        }
+	    }, 0L, (long) tickInterval);
+
+	    // 태스크 저장 (필요 시 추가 관리)
+	    ordt.put(gethero(p), taskId);
+	}
+
+	private void performAttack(Location tl, LivingEntity p) {
+	    World world = p.getWorld();
+	    p.teleport(tl);
+
+	    // 내려찍기 공격 효과
+	    world.playSound(tl, Sound.ENTITY_ELDER_GUARDIAN_HURT, 2.0f, 0f);
+	    world.spawnParticle(Particle.EXPLOSION, tl, 10, 3, 1, 3, 0);
+
+	    // 피해 판정
+	    for (Entity entity : world.getNearbyEntities(tl, 3, 3, 3)) {
+	        if (entity instanceof LivingEntity && entity != p) {
+	            LivingEntity target = (LivingEntity) entity;
+	            target.damage(10.0, p);
+	            target.setVelocity(tl.toVector().subtract(target.getLocation().toVector()).normalize().multiply(0.5).setY(0.5));
 	        }
 	    }
-
-	    // 각 위치에 파티클 생성
-	    treeLocations.forEach(location -> {
-	        w.spawnParticle(Particle.BLOCK, location, 60, 0.1, 0.1, 0.1, 0, getBd(Material.WARPED_STEM));
-	    });
-        w.spawnParticle(Particle.BLOCK, tl.clone().add(0, trunkHeight+3, 0), 350*j, j, j, j, 0.05, getBd(Material.WARPED_WART_BLOCK));
-
-	    return 2 + j * 0.5;
 	}
 
 	
-	
-	//private HashMap<UUID, Boolean> stormable = new HashMap<UUID, Boolean>();
-	
-	final private void storm(Location tl, LivingEntity p) {
-		
-		World w = tl.getWorld();
-		tl.getWorld().playSound(tl, Sound.ENTITY_BREEZE_INHALE, 1.0f, 0f);
-		tl.getWorld().spawnParticle(Particle.OMINOUS_SPAWNING, tl, 150, 2,0.5,2,0.1);
-		
-    	AtomicInteger j = new AtomicInteger();	
-		for(int i = 0; i <4; i++) {
-            int t = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-                @Override
-                public void run() {
-                	
-                	double off = whirl(tl.clone(),j.getAndIncrement(), w);
-					for(Entity e : tl.getWorld().getNearbyEntities(tl,off, 7, off)) {
-						if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
-							LivingEntity le = (LivingEntity)e;
-							le.damage(2.5,p);
-							Holding.holding(null, le, 10l);
-						}
-					}
-                }
-            }, i*3+28); 	   
-            ordt.put(gethero(p), t);                 	
-        }
-	}
 	
 	public void storm(EntityDamageByEntityEvent d) 
 	{
@@ -687,7 +675,7 @@ public class CrimsonSkills extends Summoned{
 		                	
 			                Holding.holding(null, p, 10l);
 
-			                storm(ptl, p);
+			                jumpAndHit(ptl, p);
 		                    
 		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		                 		@Override
@@ -707,7 +695,7 @@ public class CrimsonSkills extends Summoned{
 
 		                Holding.holding(null, p, 10l);
 
-		                storm(ptl, p);
+		                jumpAndHit(ptl, p);
 	                    
 	                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	                 		@Override
