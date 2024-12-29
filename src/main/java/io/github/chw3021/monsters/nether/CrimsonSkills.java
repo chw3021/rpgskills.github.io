@@ -129,7 +129,7 @@ public class CrimsonSkills extends Summoned{
                          		@Override
                             	public void run() 
             	                {	
-                         			p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 1,0,false,false));
+                         			p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 5,0,false,false));
             	                	p.setVelocity(v.clone().multiply(0.6));
             						for(Entity e : p.getWorld().getNearbyEntities(p.getLocation(),2, 2, 2)) {
             							if(e instanceof LivingEntity&&  !(e.hasMetadata("portal")) && e!=p) {
@@ -159,7 +159,6 @@ public class CrimsonSkills extends Summoned{
 
 	private void burst(LivingEntity p) {
 
-		cursable.remove(p.getUniqueId());
         
         Holding.holding(null, p, 35l);
 
@@ -205,6 +204,13 @@ public class CrimsonSkills extends Summoned{
                 }
             }, i*2+35);
         }
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+     		@Override
+        	public void run() 
+            {	
+            	cursable.remove(p.getUniqueId());
+            }
+	   	}, 60);
 	}
 	
 	private HashMap<UUID, Integer> cursable = new HashMap<UUID, Integer>();
@@ -296,7 +302,7 @@ public class CrimsonSkills extends Summoned{
                         .min((p1, p2) -> Double.compare(p1.getLocation().distance(startLoc), p2.getLocation().distance(startLoc)))
                         .orElse(null);
 
-                if (target == null || tick >= 120) { // 3초 이후 또는 대상 없음
+                if (target == null || tick >= 100) {
                     removeFingers(pillars);
                     this.cancel();
                     return;
@@ -308,14 +314,14 @@ public class CrimsonSkills extends Summoned{
                     if (e instanceof Player && e != boss) {
                         Player player = (Player) e;
                         player.damage(2, boss);
-                        player.setVelocity(player.getVelocity().multiply(0.3));
+                        player.setVelocity(player.getVelocity().multiply(0.25));
                         player.playSound(player.getLocation(), Sound.ENTITY_WITCH_DRINK, 0.05f, 0.1f);
 						Ray(pillars.get(0).getLocation(),player);
                         boss.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_DAMAGE, 5,5,false,false));
                     }
                 }
 
-                tick++;
+                tick = tick +2;
             }
 
             private void cancel() {
@@ -442,8 +448,10 @@ public class CrimsonSkills extends Summoned{
                 {	
                 	Location tl = p.getLocation().clone().add(p.getLocation().clone().getDirection().normalize().multiply(1.8));
 	    			Location pl = p.getEyeLocation().clone();
-                	p.setVelocity(p.getEyeLocation().getDirection().clone().normalize().multiply(0.6));
-            		w.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.2f, 0f);
+         			p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 5,0,false,false));
+                	p.setVelocity(p.getEyeLocation().getDirection().clone().normalize().multiply(0.7));
+                	p.swingMainHand();
+                	w.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.2f, 0f);
                     w.playSound(p.getLocation(), Sound.ENTITY_HUSK_STEP, 0.1f, 1.5f);
      				w.spawnParticle(Particle.SWEEP_ATTACK, pl, 25, 4,4,4);
      				w.spawnParticle(Particle.CRIMSON_SPORE, pl, 25, 1.5,1.5,1.5);
@@ -466,7 +474,7 @@ public class CrimsonSkills extends Summoned{
      		@Override
         	public void run() 
             {	
-     			phantomable.putIfAbsent(p.getUniqueId(), true);
+     			phantomable.remove(p.getUniqueId());
             }
 	   	}, 80);
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -475,7 +483,7 @@ public class CrimsonSkills extends Summoned{
             {	
      			cursable.putIfAbsent(p.getUniqueId(), 1);
             }
-	   	}, 180);
+	   	}, 100);
 	}
 	
 	public void phantom(EntityDamageByEntityEvent d) 
@@ -483,7 +491,7 @@ public class CrimsonSkills extends Summoned{
 		if(d.getEntity().hasMetadata("crimsonboss")) 
 		{
 			Mob p = (Mob)d.getEntity();
-			int sec = 6;
+			int sec = 8;
 			
 
 			if(p.hasMetadata("failed")|| ordeal.containsKey(p.getUniqueId()) || !phantomable.containsKey(p.getUniqueId())) {
@@ -534,33 +542,37 @@ public class CrimsonSkills extends Summoned{
 	
 	final private void waveStart(LivingEntity p, Location tl) {
 		p.getWorld().playSound(p.getLocation(), Sound.ENTITY_LLAMA_SPIT, 1.0f, 0.1f);
+		p.getWorld().playSound(p.getLocation(), Sound.ENTITY_PIGLIN_ANGRY, 1.0f, 0.1f);
+		p.getWorld().spawnParticle(Particle.DUST_PILLAR, p.getLocation(), 100, 1,1,1,0 ,Material.BRAIN_CORAL_BLOCK.createBlockData());
 
-        HashSet<Location> line = new HashSet<Location>();
         AtomicInteger j = new AtomicInteger(0);
+        Holding.holding(null, p, 20l);
+        
     	j.set(Bukkit.getServer().getScheduler().runTaskTimer(RMain.getInstance(), new Runnable() {
     		
 	    	int tick = 0;
 			@Override
         	public void run() 
             {	
-				if(tick>=50) {
+		        HashSet<Location> line = new HashSet<Location>();
+				if(tick++>=65) {
 					Bukkit.getScheduler().cancelTask(j.get());
 				}
-    	        for(double d = -Math.PI/6; d<= Math.PI/6; d += Math.PI/180) {
+    	        for(double d = -Math.PI/6; d<= Math.PI/6; d += Math.PI/90) {
     	            Location l = p.getLocation();
     	            l.setDirection(l.getDirection().normalize().rotateAroundY(d));
-    	            l.add(l.getDirection().normalize().multiply((tick++)*0.2));
+    	            l.add(l.getDirection().normalize().multiply((tick)*0.15));
     	            line.add(l);
     	        }
     	        line.forEach(l ->{
-					p.getWorld().spawnParticle(Particle.BLOCK, l, 2, 0.5,0.5,0.5,0 ,Material.CRIMSON_PLANKS.createBlockData());
+					p.getWorld().spawnParticle(Particle.BLOCK, l, 2, 0.5,0.5,0.5,0 ,Material.BRAIN_CORAL_BLOCK.createBlockData());
 
 		        	for (Entity a : p.getWorld().getNearbyEntities(l, 1, 1, 1))
 					{
 						if ((!(a == p))&& a instanceof LivingEntity&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal"))) 
 						{
 							LivingEntity le = (LivingEntity)a;
-							le.damage(1, p);
+							le.damage(0.5, p);
 						}
 					}
     	        });
@@ -568,16 +580,23 @@ public class CrimsonSkills extends Summoned{
             }
     	}, 30, 1).getTaskId());
     	ordt.put(gethero(p), j.get());
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+     		@Override
+        	public void run() 
+            {	
+     			waveable.remove(p.getUniqueId());
+            }
+	   	}, 70);
 	}
 	
 
 	final private void wave(LivingEntity p, Location tl) {
-	    if (p.hasMetadata("failed") || ordeal.containsKey(p.getUniqueId()) || !waveable.containsKey(p.getUniqueId())) {
+	    if (p.hasMetadata("failed") || ordeal.containsKey(p.getUniqueId()) || !waveable.containsKey(p.getUniqueId()) || cursable.containsKey(p.getUniqueId())) {
 	        return;
 	    }
 
 	    if (rb8cooldown.containsKey(p.getUniqueId())) {
-	        long timer = (rb8cooldown.get(p.getUniqueId()) / 1000 + 6) - System.currentTimeMillis() / 1000;
+	        long timer = (rb8cooldown.get(p.getUniqueId()) / 1000 + 4) - System.currentTimeMillis() / 1000;
 	        if (timer < 0) {
 	            rb8cooldown.remove(p.getUniqueId());
 	            waveStart(p, tl);
@@ -599,7 +618,7 @@ public class CrimsonSkills extends Summoned{
 	    world.playSound(tl, Sound.ENTITY_ENDER_DRAGON_GROWL, 1f, 2f);
 
 	    // 초기 이동 설정
-	    double totalTicks = 18; // 도약에 걸리는 전체 시간 (tick 단위)
+	    double totalTicks = 10; // 도약에 걸리는 전체 시간 (tick 단위)
 	    double tickInterval = 1; // 각 tick 간격 (1tick = 50ms)
 	    AtomicInteger currentTick = new AtomicInteger(0); // 현재 진행 중인 tick
 
@@ -670,7 +689,7 @@ public class CrimsonSkills extends Summoned{
 	        
 
             if (checkAndApplyCharge(p, d)) return;
-			if(p.getTarget() == null|| !(p.getTarget() instanceof Player)|| ordeal.containsKey(p.getUniqueId())||p.hasMetadata("failed")) {
+			if(p.getTarget() == null|| !(p.getTarget() instanceof Player) || phantomable.containsKey(p.getUniqueId()) || waveable.containsKey(p.getUniqueId()) || cursable.containsKey(p.getUniqueId())|| ordeal.containsKey(p.getUniqueId())||p.hasMetadata("failed")) {
 				return;
 			}
 			final Player tar = (Player) p.getTarget();
