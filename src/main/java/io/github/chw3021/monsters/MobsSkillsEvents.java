@@ -51,6 +51,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.util.Vector;
 
 import io.github.chw3021.commons.ConfigManager;
 import io.github.chw3021.monsters.dark.DarkMobsSpawn;
@@ -119,7 +120,10 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 		
 		final World world = ev.getEntity().getWorld();
 		final String worldName = world.getName();
-		if ((world.hasMetadata("rpgraidworld") || disabledWorlds.contains(worldName)) && ev.getSpawnReason() != SpawnReason.CUSTOM && ev.getSpawnReason() != SpawnReason.DEFAULT && ev.getSpawnReason() != SpawnReason.MOUNT
+		if(disabledWorlds.contains(worldName)){
+			return;
+		}
+		if ((world.hasMetadata("rpgraidworld")) && ev.getSpawnReason() != SpawnReason.CUSTOM && ev.getSpawnReason() != SpawnReason.DEFAULT && ev.getSpawnReason() != SpawnReason.MOUNT
 				&& !(ev.getEntity() instanceof Player) && !ev.getEntity().hasMetadata("rpgspawned")) {
 			ev.setCancelled(true);
 			return;
@@ -600,9 +604,14 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 	@EventHandler
 	public void PickupItem(EntityPickupItemEvent ev) 
 	{
-		RedSkills.getInstance().Ordeal(ev);
-
-		HarvesterSkills.getInstance().Ordeal(ev);
+		if(ev.isCancelled()) {
+			ev.getItem().setVelocity(new Vector(0,0,0));
+		}
+		
+		 RedSkills.getInstance().Ordeal(ev);
+		 
+		 HarvesterSkills.getInstance().Ordeal(ev);
+		 
 	}
 
 	@EventHandler

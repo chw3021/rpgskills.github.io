@@ -84,9 +84,9 @@ public class PiglinSkills extends Summoned{
 					l.getWorld().playSound(l, Sound.BLOCK_CORAL_BLOCK_BREAK, 1f, 1.5f);
 					
             		for(Entity e : l.getWorld().getNearbyEntities(l, 1.5, 1.5, 1.5)) {
-						if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
+						if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("portal"))) {
 							LivingEntity le = (LivingEntity)e;
-							le.damage(2.5,p);
+							le.damage(3.3,p);
 							Holding.holding(null, le, 1l);
 						}
                 	}
@@ -242,7 +242,7 @@ public class PiglinSkills extends Summoned{
 			                		if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && e!=p) {
 			                			LivingEntity le = (LivingEntity)e;
 
-										le.damage(4, p);
+										le.damage(4.5, p);
 										le.setFireTicks(100);
 			    						
 			                		}
@@ -416,7 +416,7 @@ public class PiglinSkills extends Summoned{
 		{
 			if(p!=e && e instanceof Player) {
 				Player le = (Player)e;
-        		le.damage(6, p);
+        		le.damage(9, p);
 			}
 			
 		}
@@ -594,7 +594,7 @@ public class PiglinSkills extends Summoned{
 		if(d.getEntity().hasMetadata("volcanicboss") && (d.getEntity() instanceof Mob)) 
 		{
 			Mob p = (Mob)d.getEntity();
-			int sec = 10;
+			int sec = 7;
 
 			if(ordeal.containsKey(p.getUniqueId())) {
 				return;

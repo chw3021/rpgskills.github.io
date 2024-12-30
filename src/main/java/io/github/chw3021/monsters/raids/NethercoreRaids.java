@@ -476,6 +476,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 			newmob.setImmuneToZombification(true);
 			newmob.setIsAbleToHunt(false);
     		newmob.setLootTable(null);
+    		newmob.setItemInUseTicks(5);
 
     		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.36);
     		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
@@ -1721,6 +1722,150 @@ public class NethercoreRaids extends Summoned implements Listener {
 			}
 		}
 	}
+
+	final private ItemStack mobhead2() {
+		ItemStack pe = new ItemStack(Material.CRIMSON_HYPHAE);
+		pe.addUnsafeEnchantment(Enchantment.BINDING_CURSE, 1);
+		return pe;
+	}
+	final private ItemStack mobchest2() {
+		ItemStack pe = new ItemStack(Material.NETHERITE_CHESTPLATE);
+		ArmorMeta arm = (ArmorMeta) pe.getItemMeta();
+		ArmorTrim t1 = new ArmorTrim(TrimMaterial.REDSTONE, TrimPattern.DUNE);
+		arm.setTrim(t1);
+		pe.setItemMeta(arm);
+		return pe;
+	}
+	final private ItemStack mobleg2() {
+		ItemStack pe = new ItemStack(Material.NETHERITE_LEGGINGS);
+		ArmorMeta arm = (ArmorMeta) pe.getItemMeta();
+		ArmorTrim t1 = new ArmorTrim(TrimMaterial.REDSTONE, TrimPattern.DUNE);
+		arm.setTrim(t1);
+		pe.setItemMeta(arm);
+		return pe;
+	}
+	final private ItemStack mobboots2() {
+		ItemStack pe = new ItemStack(Material.NETHERITE_BOOTS);
+		ArmorMeta arm = (ArmorMeta) pe.getItemMeta();
+		ArmorTrim t1 = new ArmorTrim(TrimMaterial.REDSTONE, TrimPattern.DUNE);
+		arm.setTrim(t1);
+		pe.setItemMeta(arm);
+		return pe;
+	}
+
+	@EventHandler
+	public void CrimsonBoss2(EntityDeathEvent d) 
+	{	
+
+		if(d.getEntity().hasMetadata("bosswave1") && d.getEntity().hasMetadata("crimsonboss") && raider.containsValue(d.getEntity().getUniqueId())) {
+			LivingEntity le = d.getEntity();
+			String rn = le.getMetadata("raid").get(0).asString();
+			raider.remove(rn, le.getUniqueId());
+			if(raider.get(rn).size()<=0){
+				bossphase2(le);
+				Location spl = raidloc.get(rn).clone();
+	        	spl.getWorld().spawnParticle(Particle.INSTANT_EFFECT, d.getEntity().getLocation(), 1000,1,1,1);
+	        	spl.getWorld().spawnParticle(Particle.FLAME, d.getEntity().getLocation(), 1000,1,1,1);
+	        	spl.getWorld().spawnParticle(Particle.CRIMSON_SPORE, d.getEntity().getLocation(), 1000,1,1,1);
+	        	spl.getWorld().spawnParticle(Particle.SMOKE, d.getEntity().getLocation(), 1000,1,1,1);
+	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_WITHER_SKELETON_AMBIENT, 1, 0);
+	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_PIGLIN_ANGRY, 1, 0);
+	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_PIGLIN_CELEBRATE, 1, 0);
+	            int rat =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	                @Override
+	                public void run() {
+
+	                	Location esl = d.getEntity().getLocation().clone().add(0,0.5, 0);
+
+	        			ItemStack main = new ItemStack(Material.BOW);
+	        			ItemMeta mm = main.getItemMeta();
+	        			mm.setCustomModelData(4010);
+	        			main.setItemMeta(mm);
+
+	            		ItemStack mainf = new ItemStack(Material.NETHERITE_SWORD);
+	            		ItemMeta mmf = mainf.getItemMeta();
+	            		mmf.setCustomModelData(3010);
+	            		mainf.setItemMeta(mmf);
+	            		
+	            		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "진홍빛학살자":"CrimsonSavager";
+	            		WitherSkeleton newmob = (WitherSkeleton) MobspawnLoc(esl, ChatColor.DARK_RED+reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, mobhead2(), mobchest2(), mobleg2(), mobboots2(), main, mainf, EntityType.WITHER_SKELETON);
+
+	            		newmob.setLootTable(null);
+	            		newmob.setGlowing(true);
+	            		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
+	            		newmob.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(4);
+	            		
+	            		newmob.setMetadata("crimsonboss", new FixedMetadataValue(RMain.getInstance(), true));
+	            		
+	            		newmob.setLootTable(null);
+	            		newmob.setRemoveWhenFarAway(false);
+	            		raider.put(rn, newmob.getUniqueId());
+	            		
+
+	            		bossbargen("crimsonboss", rn, newmob);
+	            		
+
+	            		final Object ht = getherotype(rn);
+
+
+	            		Bukkit.getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
+	            		    @Override
+	            		    public void run() {
+	            				if(ht instanceof Player) {
+	            					Player p = (Player) ht;
+	            					p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+	            				}
+	            				else if(getherotype(rn) instanceof HashSet){
+	            					@SuppressWarnings("unchecked")
+	            					HashSet<Player> par = (HashSet<Player>) ht;
+	            		    		par.forEach(p -> {
+	            		    			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+	            		    		});
+	            				}
+	            		    }
+	            		}, 2L); 
+
+	    	    		newmob.setGlowing(true);
+	    	    		newmob.setMetadata("crimsonboss", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		newmob.setMetadata("ruined", new FixedMetadataValue(RMain.getInstance(), true));
+	            		newmob.setMetadata("nether", new FixedMetadataValue(RMain.getInstance(), true));
+	
+	    	    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), le.getMetadata("boss").get(0).asDouble()));
+	    	    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
+	    	    		newmob.setMetadata("finalboss", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		newmob.setLootTable(null);
+	    	    		
+	    	    		
+	    	    		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.4);
+	    	    		newmob.getAttribute(Attribute.SCALE).setBaseValue(1.1);
+	    	    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		newmob.setRemoveWhenFarAway(false);
+	    	    		raider.put(rn, newmob.getUniqueId());
+	    	    		
+	
+	
+	    	    		bossbargen("CannibalPiglin", rn, newmob);
+	    	    		
+	    	    		targeting(rn);
+	            		
+	                	heroes.get(rn).forEach(pu -> {
+							if(Bukkit.getPlayer(pu).getLocale().equalsIgnoreCase("ko_kr")) {
+		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "토벌작전 2단계"), null, 5, 69, 5);
+				        		Bukkit.getPlayer(pu).playSound(spl, Sound.EVENT_RAID_HORN, 1, 1);
+					    		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + "남은 목숨 "+ String.valueOf(lives.getOrDefault(rn, 0)));
+							}
+							else {
+		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "PHASE 2"), null, 5, 69, 5);
+				        		Bukkit.getPlayer(pu).playSound(spl, Sound.AMBIENT_CRIMSON_FOREST_ADDITIONS, 1, 1);
+		                		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + String.valueOf(lives.getOrDefault(rn, 0)) + "lives Left");
+							}
+	                	});
+	                }
+	            }, 50); 
+	            raidt.put(rn, rat);
+			}
+		}
+	}
 	
 	@EventHandler
 	public void PiglinBoss2(EntityDeathEvent d) 
@@ -1749,13 +1894,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 	        			ItemStack main = new ItemStack(Material.CROSSBOW);
 	        			main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
 	        			ItemStack off = new ItemStack(Material.PLAYER_HEAD);
-	        			ItemStack hel = new ItemStack(Material.LEATHER_HELMET);
-	        			LeatherArmorMeta hem = (LeatherArmorMeta) hel.getItemMeta();
-	        			hem.setColor(Color.ORANGE);
-	        			hel.setItemMeta(hem);
-	        			hel.addUnsafeEnchantment(Enchantment.FIRE_PROTECTION, 5);
-	        			hel.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
-	        			hel.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
+	        			ItemStack hel = new ItemStack(Material.PLAYER_HEAD);
 	        			ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
 	        			LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
 	        			chm.setColor(Color.ORANGE);

@@ -8,6 +8,7 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.EntityEffect;
 import org.bukkit.Location;
@@ -26,7 +27,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -115,6 +118,24 @@ public class CrimsonSkills extends Summoned{
 		        v = new Vector(0, 0, 0); // 기본값으로 설정 (이동이 발생하지 않도록)
 		    }
 
+    		ItemStack mainf = new ItemStack(Material.NETHERITE_SWORD);
+    		ItemMeta mmf = mainf.getItemMeta();
+    		mmf.setCustomModelData(3010);
+    		mainf.setItemMeta(mmf);
+
+
+    		final Object ht = getherotype(rn);
+			if(ht instanceof Player) {
+				Player p1 = (Player) ht;
+				p1.sendEquipmentChange(p, EquipmentSlot.HAND, mainf);
+			}
+			else if(getherotype(rn) instanceof HashSet){
+				@SuppressWarnings("unchecked")
+				HashSet<Player> par = (HashSet<Player>) ht;
+	    		par.forEach(p1 -> {
+	    			p1.sendEquipmentChange(p, EquipmentSlot.HAND, mainf);
+	    		});
+			}
 			ev.setCancelled(true);
 		    p.swingMainHand();
 		    p.playEffect(EntityEffect.ZOGLIN_ATTACK);
@@ -448,8 +469,9 @@ public class CrimsonSkills extends Summoned{
                 {	
                 	Location tl = p.getLocation().clone().add(p.getLocation().clone().getDirection().normalize().multiply(1.8));
 	    			Location pl = p.getEyeLocation().clone();
+	    	        final Vector pv = tl.clone().toVector().subtract(pl.clone().toVector()).normalize();
          			p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 5,0,false,false));
-                	p.setVelocity(p.getEyeLocation().getDirection().clone().normalize().multiply(0.7));
+        			p.setVelocity(pv.normalize().multiply(0.7));
                 	p.swingMainHand();
                 	w.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.2f, 0f);
                     w.playSound(p.getLocation(), Sound.ENTITY_HUSK_STEP, 0.1f, 1.5f);
@@ -545,6 +567,7 @@ public class CrimsonSkills extends Summoned{
 		p.getWorld().playSound(p.getLocation(), Sound.ENTITY_PIGLIN_ANGRY, 1.0f, 0.1f);
 		p.getWorld().spawnParticle(Particle.DUST_PILLAR, p.getLocation(), 100, 1,1,1,0 ,Material.BRAIN_CORAL_BLOCK.createBlockData());
 
+        final Location fl = p.getLocation().clone();
         AtomicInteger j = new AtomicInteger(0);
         Holding.holding(null, p, 20l);
         
@@ -559,7 +582,7 @@ public class CrimsonSkills extends Summoned{
 					Bukkit.getScheduler().cancelTask(j.get());
 				}
     	        for(double d = -Math.PI/6; d<= Math.PI/6; d += Math.PI/90) {
-    	            Location l = p.getLocation();
+    	        	Location l = fl.clone();
     	            l.setDirection(l.getDirection().normalize().rotateAroundY(d));
     	            l.add(l.getDirection().normalize().multiply((tick)*0.15));
     	            line.add(l);
@@ -618,7 +641,7 @@ public class CrimsonSkills extends Summoned{
 	    world.playSound(tl, Sound.ENTITY_ENDER_DRAGON_GROWL, 1f, 2f);
 
 	    // 초기 이동 설정
-	    double totalTicks = 10; // 도약에 걸리는 전체 시간 (tick 단위)
+	    double totalTicks = 7; // 도약에 걸리는 전체 시간 (tick 단위)
 	    double tickInterval = 1; // 각 tick 간격 (1tick = 50ms)
 	    AtomicInteger currentTick = new AtomicInteger(0); // 현재 진행 중인 tick
 
@@ -758,5 +781,155 @@ public class CrimsonSkills extends Summoned{
 	}
 
 
+	final private boolean judge(LivingEntity p, String rn) {
+		Boolean bool = true; //플레이어들이 패턴 파훼 실패시 true, 성공시 false
+		if(bool) {
+            for(Player pe : NethercoreRaids.getheroes(p)) {
+    			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
+            		pe.sendMessage(ChatColor.BOLD+"진홍빛학살자: ");
+    			}
+    			else {
+            		pe.sendMessage(ChatColor.BOLD+"CrimsonSavager: ");
+    			}
+        		Holding.invur(pe, 60l);
+    			p.getWorld().playSound(pe.getLocation(), Sound.ENTITY_TNT_PRIMED, 1, 0);
+        	}
+	        int t3 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	            @Override
+	            public void run() {
+	            	
+	        		if(ordt.containsKey(rn)) {
+	        			ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
+	        		}
+	        		
+	        		ordeal.remove(p.getUniqueId());
+	                for(Player pe : NethercoreRaids.getheroes(p)) {
+	            		pe.setHealth(0);
+	            	}
+	                rb6cooldown.remove(p.getUniqueId());
+	            }
+	        }, 20);
+			ordt.put(rn, t3);
+		}
+		else {
+			bossfailed(p,rn);
+		}
+		return bool;
+	}
+
+	final private void ordeal(LivingEntity p, EntityDamageByEntityEvent d) {
+		String rn = p.getMetadata("raid").get(0).asString();
+        if(ordt.containsKey(rn)) {
+        	ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
+        	ordt.removeAll(rn);
+        }
+        ordeal.put(p.getUniqueId(), true);
+        Location rl = NethercoreRaids.getraidloc(p).clone();
+		p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
+        d.setCancelled(true);
+        
+        Long ordealTime = 480L;//제한시간(예시)
+        
+        
+    	p.teleport(rl.clone().add(0, 1, 0));
+        Holding.holding(null, p, ordealTime);
+        Holding.untouchable(p, ordealTime);
+        for(Player pe : NethercoreRaids.getheroes(p)) {
+			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
+        		pe.sendMessage(ChatColor.BOLD+"진홍빛학살자: ");
+			}
+			else {
+        		pe.sendMessage(ChatColor.BOLD+"CrimsonSavager: ");
+			}
+    		pe.teleport(rl.clone().add(0, 1.5, 0));
+    		Holding.invur(pe, 40l);
+        }
+        
+        AtomicInteger j = new AtomicInteger(1);
+        int t1 = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+            	//뭔가 지속적으로 해야할 작업은 이쪽으로
+            }
+        }, 20, 20);
+		ordt.put(rn, t1);
+		
+        int t3 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+            	judge(p,rn);
+            }
+        }, ordealTime);
+		ordt.put(rn, t3);
+	}
+	
+
+	final private void bossfailed(LivingEntity p, String rn) {
+		if(ordt.containsKey(rn)) {
+			ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
+        	ordt.removeAll(rn);
+		}
+		ordeal.remove(p.getUniqueId());
+    	p.playHurtAnimation(0);
+		p.getWorld().playSound(p.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_DEPLETE, 1, 2);
+		p.getWorld().spawnParticle(Particle.FLASH, p.getLocation(), 10, 2,2,2);
+    	Holding.reset(Holding.ale(p));
+    	Holding.ale(p).setMetadata("failed", new FixedMetadataValue(RMain.getInstance(),true));
+		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
+		Bukkit.getWorld("NethercoreRaid").getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(e -> e.remove());
+        for(Player pe : NethercoreRaids.getheroes(p)) {
+			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
+        		pe.sendMessage(ChatColor.BOLD+"진홍빛학살자: ");
+			}
+			else {
+        		pe.sendMessage(ChatColor.BOLD+"CrimsonSavager: ");
+			}
+    		Holding.holding(pe, p, 300l);
+    		p.removeMetadata("fake", RMain.getInstance());
+    		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
+        }
+        rb6cooldown.put(p.getUniqueId(), System.currentTimeMillis());
+        int t3 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+            	p.removeMetadata("failed", RMain.getInstance());
+        		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
+            }
+        }, 300);
+		ordt.put(rn, t3);
+	}
+	    
+	
+	public void Ordeal(EntityDamageByEntityEvent d) 
+	{
+	    
+		int sec =70;
+		if(d.getEntity().hasMetadata("crimsonboss") && d.getEntity().hasMetadata("ruined")&& !d.getEntity().hasMetadata("failed")) 
+		{
+			LivingEntity p = (LivingEntity)d.getEntity();
+			if(!(p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2)|| !ordealable.containsKey(p.getUniqueId())) {
+				return;
+			}
+				if(rb6cooldown.containsKey(p.getUniqueId()))
+		        {
+		            long timer = (rb6cooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
+		            if(!(timer < 0))
+		            {
+		            }
+		            else 
+		            {
+		                rb6cooldown.remove(p.getUniqueId()); // removing player from HashMap
+		                ordeal(p,d);
+			            rb6cooldown.put(p.getUniqueId(), System.currentTimeMillis());
+		            }
+		        }
+		        else 
+		        {
+	                ordeal(p,d);
+		            rb6cooldown.put(p.getUniqueId(), System.currentTimeMillis());
+		        }
+			}
+	}
+	
 	
 }

@@ -1872,12 +1872,11 @@ public class Weapons {
 
 	public void AttributeChange(EntityPickupItemEvent ev) 
 	{
-		if(ev.getEntity() instanceof Player) {
+		if(ev.getEntity() instanceof Player p) {
 			ItemStack is = ev.getItem().getItemStack();
 			ItemMeta im = is.getItemMeta();
 			Material m = is.getType();
 			if(availableWeapons(m,im)) {
-				Player p = (Player) ev.getEntity();
 				wealore(is, p);
 			}
 		}

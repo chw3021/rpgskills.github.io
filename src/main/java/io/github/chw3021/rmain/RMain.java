@@ -170,7 +170,6 @@ public class RMain extends JavaPlugin{
         Bukkit.getPluginManager().registerEvents(new NPCcontact(), this);
 
         Bukkit.getPluginManager().registerEvents(SkillUsing.getInstance(), this);
-        Bukkit.getPluginManager().registerEvents(MobsSkillsEvents.getInstance(), this);
         Bukkit.getPluginManager().registerEvents(new ShulkerBag(), this);
 
         Bukkit.getPluginManager().registerEvents(new ArmorSet(), this);
@@ -190,6 +189,7 @@ public class RMain extends JavaPlugin{
         Bukkit.getPluginManager().registerEvents(new MobArmor(), this);
         Bukkit.getPluginManager().registerEvents(new MobDam(), this);
         Bukkit.getPluginManager().registerEvents(new Rpgs(), this);
+        Bukkit.getPluginManager().registerEvents(MobsSkillsEvents.getInstance(), this);
 
 
 

@@ -341,6 +341,7 @@ public class Mobs extends Pak {
 			@Nullable ItemStack chest, @Nullable ItemStack leg, @Nullable ItemStack boots, @Nullable ItemStack main,
 			@Nullable ItemStack off, @Nullable EntityType type) {
 		if(le.getType() == EntityType.ARMOR_STAND) {
+			le.setMetadata("portal", new FixedMetadataValue(RMain.getInstance(), true));
 			return le;
 		}
 		LivingEntity creature = (LivingEntity) le.getWorld().spawnEntity(le.getLocation(), type);
@@ -408,6 +409,12 @@ public class Mobs extends Pak {
 		creature.getAttribute(Attribute.MAX_HEALTH).setBaseValue(health);
 		creature.setHealth(health);
 		creature.setCustomName(name);
+		creature.getEquipment().setBootsDropChance(0);
+		creature.getEquipment().setChestplateDropChance(0);
+		creature.getEquipment().setHelmetDropChance(0);
+		creature.getEquipment().setItemInMainHandDropChance(0);
+		creature.getEquipment().setItemInOffHandDropChance(0);
+		creature.getEquipment().setLeggingsDropChance(0);
 		
 		equipsum(creature,head,chest,leg,boots,main,off);
 		

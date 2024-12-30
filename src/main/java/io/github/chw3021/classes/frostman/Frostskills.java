@@ -1334,7 +1334,7 @@ public class Frostskills extends Pak {
 		}
 	}
 
-	final private void blade(Player p, Location tl, Integer j, World w) {
+	final private void blade(Player p, final Location tl, Integer j, World w) {
 
 		HashSet<Location> line = new HashSet<Location>();
 		HashSet<Location> fill = new HashSet<Location>();
@@ -1354,7 +1354,7 @@ public class Frostskills extends Pak {
 			}
 
 		});
-		for (Entity e : tl.getWorld().getNearbyEntities(tl, 3.5, 3.5, 3.5))
+		for (Entity e : tl.getWorld().getNearbyEntities(tl, 4, 4, 4))
 		{
 			if (e instanceof Player)
 			{
@@ -1394,6 +1394,7 @@ public class Frostskills extends Pak {
 					}
 					icebl.remove(p.getUniqueId());
 
+					
 					final World w = p.getWorld();
 
 					p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_CHAIN, 1f, 2f);
@@ -1405,11 +1406,12 @@ public class Frostskills extends Pak {
 							@Override
 							public void run()
 							{
+								Location tl = p.getEyeLocation().add(p.getEyeLocation().getDirection().normalize().multiply(2));
 								p.playSound(p.getLocation(), Sound.BLOCK_GLASS_HIT, 1f, 2f);
 								p.playSound(p.getLocation(), Sound.BLOCK_GLASS_BREAK, 0.5f, 2f);
 								p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_BREAK, 0.5f, 2f);
 								p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 2f);
-								blade(p,p.getEyeLocation().clone(),j.getAndIncrement(),w);
+								blade(p,tl.clone(),j.getAndIncrement(),w);
 
 							}
 						}, i*2+5);
@@ -1508,10 +1510,10 @@ public class Frostskills extends Pak {
 				Vector pv = pl.clone().add(1, 0, 0).toVector().subtract(pl.clone().toVector());
 
 				for(double an = 0; an<Math.PI*2; an+=Math.PI/90) {
-					draw.add(pl.clone().add(pv.rotateAroundY(an).normalize().multiply(i*1.6)));
+					draw.add(pl.clone().add(pv.rotateAroundY(an).normalize().multiply(i*1.3)));
 				}
 				draw.forEach(l -> {
-					p.spawnParticle(Particle.BLOCK, l.clone().add(0, 0.2, 0),5,0.1,0.1,0.1,Material.BLUE_ICE.createBlockData());
+					p.spawnParticle(Particle.BLOCK, l.clone().add(0, 0.2, 0),1,Material.BLUE_ICE.createBlockData());
 
 				});
 			}
@@ -1527,11 +1529,14 @@ public class Frostskills extends Pak {
 					@Override
 					public void run()
 					{
+						if(le.isDead() || !le.isValid()) {
+							return;
+						}
 						Location pl = le.getLocation().clone().add(0, 1, 0);
 						Vector pv = pl.clone().add(1, 0, 0).toVector().subtract(pl.clone().toVector());
-						Location particlel = pl.clone().add(pv.clone().rotateAroundY((Math.PI*2/(cool*20))*j.getAndIncrement()).normalize().multiply(1.9));
-						p.spawnParticle(Particle.BLOCK, particlel.clone(),1,Material.SNOW_BLOCK.createBlockData());
-						p.spawnParticle(Particle.BLOCK, pl.clone().add(pv.clone().normalize().multiply(1.9)),1,Material.SNOW_BLOCK.createBlockData());
+						Location particlel = pl.clone().add(pv.clone().rotateAroundY((Math.PI*2/(cool*20))*j.getAndIncrement()).normalize().multiply(1.1));
+						p.spawnParticle(Particle.BLOCK_CRUMBLE, particlel.clone(),1,getBd(Material.SNOW_BLOCK));
+						p.spawnParticle(Particle.BLOCK_CRUMBLE, pl.clone().add(pv.clone().normalize().multiply(1.1)),1,getBd(Material.SNOW_BLOCK));
 					}
 				}, an);
 			}
@@ -1792,136 +1797,129 @@ public class Frostskills extends Pak {
 		}
 	}
 
+	public void ULT(PlayerItemHeldEvent ev) {
+	    Player p = ev.getPlayer();
+	    if (!isCombat(p)) return;
 
+	    ItemStack is = p.getInventory().getItemInMainHand();
+	    if (ClassData.pc.get(p.getUniqueId()) == 21 &&
+	        is.getType() == Material.PRISMARINE_SHARD &&
+	        ev.getNewSlot() == 3 &&
+	        p.isSneaking() &&
+	        Proficiency.getpro(p) >= 1) {
+	        
+	        p.setCooldown(CAREFUL, 2);
+	        final Location el = gettargetblock(p, 6);
+	        ev.setCancelled(true);
 
-	public void ULT(PlayerItemHeldEvent ev)
-	{
-		Player p = (Player)ev.getPlayer();
-		if(!isCombat(p)) {
-			return;
-		}
-		ItemStack is = p.getInventory().getItemInMainHand();
-		if(ClassData.pc.get(p.getUniqueId()) == 21 && (is.getType() == Material.PRISMARINE_SHARD && ev.getNewSlot()==3 && p.isSneaking() && Proficiency.getpro(p) >=1))
-		{
-			p.setCooldown(CAREFUL, 2);
-			final Location el = gettargetblock(p,6);
-			ev.setCancelled(true);
-			SkillBuilder bd = new SkillBuilder()
-					.player(p)
-					.cooldown( 50/Proficiency.getpro(p)*Obtained.ucd.getOrDefault(p.getUniqueId(), 1d))
-					.kname("서리폭풍")
-					.ename("Blizzard")
-					.slot(6)
-					.hm(sultcooldown)
-					.skillUse(() -> {
-						ArrayList<Location> desl = new ArrayList<>();
-						AtomicInteger j = new AtomicInteger();
-						for(int i=0; i<60; i++) {
-							Random random=new Random();
-							double number = random.nextDouble() * 6.5 * (random.nextBoolean() ? -1 : 1);
-							double number2 = random.nextDouble() * 6.5 * (random.nextBoolean() ? -1 : 1);
-							double number3 = random.nextDouble() * 6.5;
-							desl.add(el.clone().add(number, number3, number2));
-						}
-						Snowball firstarrow = p.launchProjectile(Snowball.class);
-						firstarrow.remove();
-						Snowman as = (Snowman)p.getWorld().spawnEntity(el, EntityType.SNOW_GOLEM);
-						ItemStack right = new ItemStack(Material.ICE);
-						ItemStack left = new ItemStack(Material.BLUE_ICE);
-						as.setCustomName(p.getName());
-						as.setCollidable(false);
-						as.setInvulnerable(true);
-						as.getEquipment().setItemInMainHand(left);
-						as.getEquipment().setItemInOffHand(right);
-						as.setCanPickupItems(false);
-						as.setAI(false);
-						as.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-						as.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-						p.playSound(p.getLocation(), Sound.WEATHER_RAIN, 1, 0);
-						Holding.invur(p, 100l);
-						if(p.isDead()) {
-							as.remove();
-						}
-						desl.forEach(dl ->{
-							Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-								@Override
-								public void run()
-								{
-									Random random=new Random();
-									int ri = random.nextInt(2);
-									Material type = null;
-									if(ri == 0) {
-										type = Material.SNOW_BLOCK;
-									}
-									else if(ri == 1) {
-										type = Material.SNOWBALL;
-									}
-									else if(ri == 2) {
-										type = Material.BLUE_ICE;
-									}
-									Item des = p.getWorld().dropItem(dl, new ItemStack(Material.SNOWBALL));
-									des.setItemStack(new ItemStack(type));
-									des.setPickupDelay(9999);
-									des.setOwner(p.getUniqueId());
-									des.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-									des.setMetadata("des of "+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-									p.getWorld().spawnParticle(Particle.ITEM_SNOWBALL, el, 100, 6.4, 6.4, 6.4, 0.2);
-									p.playSound(des.getLocation(), Sound.ENTITY_SNOW_GOLEM_SHEAR, 0.8f, 2f);
-									p.playSound(des.getLocation(), Sound.ENTITY_SNOW_GOLEM_AMBIENT, 0.8f, 2f);
-									p.playSound(des.getLocation(), Sound.ENTITY_HORSE_BREATHE, 0.8f, 0f);
-									p.playSound(des.getLocation(), Sound.ENTITY_PLAYER_BREATH, 0.8f, 2f);
-									for(int i = 0; i<20; i++) {
-										Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-											@Override
-											public void run()
-											{
-												desl.get(random.nextInt(60));
-											}
-										}, i*2);
-									}
-									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-										@Override
-										public void run()
-										{
-											des.remove();
-										}
-									}, 120);
-									for(Entity e : as.getWorld().getNearbyEntities(as.getLocation(), 6.4, 6.4, 6.4)) {
-										if (e instanceof Player)
-										{
-											Player p1 = (Player) e;
-											if(Party.hasParty(p) && Party.hasParty(p1))	{
-												if(Party.getParty(p).equals(Party.getParty(p1)))
-												{
-													continue;
-												}
-											}
-										}
-										if(e instanceof LivingEntity&& !(e.hasMetadata("fake")) && e!=p&& !(e.hasMetadata("portal"))) {
-											LivingEntity le = (LivingEntity)e;
-											p.setCooldown(Material.YELLOW_TERRACOTTA, 1);
+	        SkillBuilder bd = new SkillBuilder()
+	            .player(p)
+	            .cooldown(50 / Proficiency.getpro(p) * Obtained.ucd.getOrDefault(p.getUniqueId(), 1d))
+	            .kname("서리폭풍")
+	            .ename("Blizzard")
+	            .slot(6)
+	            .hm(sultcooldown)
+	            .skillUse(() -> {
+	                Snowman snowman = summonSnowman(el, p);
+	                List<Location> particleLocations = generateParticleLocations(el);
 
-											atk0(0.32, 0d, p, le);
+	                pullEntitiesToSnowman(snowman, particleLocations, p);
+	            });
 
-											le.teleport(le.getLocation().add(as.getLocation().toVector().subtract(le.getLocation().toVector()).normalize().multiply(0.92)));
-
-										}
-									}
-								}
-							}, j.incrementAndGet()*2);
-						});
-						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-							@Override
-							public void run()
-							{
-								as.remove();
-							}
-						}, 126);
-					});
-			bd.execute();
-
-		}
+	        bd.execute();
+	    }
 	}
+
+	private Snowman summonSnowman(Location el, Player p) {
+	    World world = p.getWorld();
+	    Snowman snowman = (Snowman) world.spawnEntity(el, EntityType.SNOW_GOLEM);
+
+	    ItemStack right = new ItemStack(Material.ICE);
+	    ItemStack left = new ItemStack(Material.BLUE_ICE);
+
+	    snowman.setCustomName(p.getName());
+	    snowman.setCollidable(false);
+	    snowman.setInvulnerable(true);
+	    snowman.getEquipment().setItemInMainHand(left);
+	    snowman.getEquipment().setItemInOffHand(right);
+	    snowman.setCanPickupItems(false);
+	    snowman.setAI(false);
+	    snowman.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+	    snowman.setMetadata("rob" + p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+
+	    p.playSound(p.getLocation(), Sound.WEATHER_RAIN, 1, 0);
+	    Holding.invur(p, 100L);
+
+	    return snowman;
+	}
+
+	private List<Location> generateParticleLocations(Location center) {
+	    List<Location> locations = new ArrayList<>();
+	    Random random = new Random();
+
+	    for (int i = 0; i < 60; i++) {
+	        double xOffset = random.nextDouble() * 6.5 * (random.nextBoolean() ? -1 : 1);
+	        double yOffset = random.nextDouble() * 6.5;
+	        double zOffset = random.nextDouble() * 6.5 * (random.nextBoolean() ? -1 : 1);
+
+	        locations.add(center.clone().add(xOffset, yOffset, zOffset));
+	    }
+
+	    return locations;
+	}
+
+	private void pullEntitiesToSnowman(Snowman snowman, List<Location> particleLocations, Player p) {
+	    World world = snowman.getWorld();
+	    AtomicInteger delay = new AtomicInteger();
+
+	    for (Location loc : particleLocations) {
+	        Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), () -> {
+	            spawnParticlesAndItems(world, loc, p);
+	            pullNearbyEntities(world, snowman, p);
+	        }, delay.getAndIncrement() * 2);
+	    }
+
+	    Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), snowman::remove, 126);
+	}
+
+	private void spawnParticlesAndItems(World world, Location loc, Player p) {
+	    Random random = new Random();
+	    Material[] materials = {Material.SNOW_BLOCK, Material.SNOWBALL, Material.BLUE_ICE};
+	    Material type = materials[random.nextInt(materials.length)];
+
+	    Item item = world.dropItem(loc, new ItemStack(type));
+	    item.setPickupDelay(9999);
+	    item.setOwner(p.getUniqueId());
+	    item.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+	    item.setMetadata("des of " + p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+
+	    world.spawnParticle(Particle.ITEM_SNOWBALL, loc, 100, 6.4, 6.4, 6.4, 0.2);
+	    world.playSound(loc, Sound.ENTITY_SNOW_GOLEM_SHEAR, 0.8f, 2f);
+	    world.playSound(loc, Sound.ENTITY_SNOW_GOLEM_AMBIENT, 0.8f, 2f);
+	    world.playSound(loc, Sound.ENTITY_HORSE_BREATHE, 0.8f, 0f);
+	    world.playSound(loc, Sound.ENTITY_PLAYER_BREATH, 0.8f, 2f);
+
+	    Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), item::remove, 120);
+	}
+
+	private void pullNearbyEntities(World world, Snowman snowman, Player p) {
+	    for (Entity entity : world.getNearbyEntities(snowman.getLocation(), 6.4, 6.4, 6.4)) {
+	        if (entity instanceof Player target) {
+	            if (Party.hasParty(p) && Party.hasParty(target) && Party.getParty(p).equals(Party.getParty(target))) {
+	                continue;
+	            }
+	        }
+
+	        if (entity instanceof LivingEntity le && !entity.hasMetadata("fake") && entity != p && !entity.hasMetadata("portal")) {
+	            Vector direction = snowman.getLocation().toVector().subtract(le.getLocation().toVector());
+	            le.damage(0.32, p);
+	            if (direction.lengthSquared() < 0.01) continue; // 방향 벡터가 0인 경우 건너뜀
+
+	            le.teleport(le.getLocation().add(direction.normalize().multiply(0.92)));
+	        }
+	    }
+	}
+
 
 	public void ULT2(PlayerItemHeldEvent ev)
 	{

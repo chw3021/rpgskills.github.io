@@ -26,6 +26,7 @@ public class Drops implements Listener {
 		if(d.getEntity().hasMetadata("raid")||d.getEntity().hasMetadata("summoned")) {
 			d.setCancelled(true);
 		}
+		
 	}
 	
 	@EventHandler
