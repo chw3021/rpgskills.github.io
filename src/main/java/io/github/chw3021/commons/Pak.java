@@ -2427,25 +2427,6 @@ public class Pak extends CombatMode implements Listener{
 	
 	CommonEvents come = CommonEvents.getInstance();
 
-
-	final private void damageind(final Player p, final LivingEntity le, Double d) {
-		final Location elf = le.getLocation().clone().add(0, 0.05, 0);
-		final Location pl = p.getLocation().clone().add(0, 0.1, 0);
-
-	    // TextDisplay 생성
-	    final TextDisplay din = come.dinspawn(p, come.disloc(p,le,pl,elf), d);
-	    din.setGlowColorOverride(Color.GRAY);
-
-
-		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				din.remove();
-			}
-		}, 30);
-	}
 	/**
 	 * pd*dou1 + dou2
 	 */
@@ -2477,7 +2458,7 @@ public class Pak extends CombatMode implements Listener{
      	@Override
             public void run() 
 			{	
-     			damageind(p,le,player_damage.get(p.getName())*dou + dou2);
+     			come.damageind(p,le,player_damage.get(p.getName())*dou + dou2);
 			}
         }, 1);
 	}
@@ -2513,7 +2494,7 @@ public class Pak extends CombatMode implements Listener{
      	@Override
             public void run() 
 			{	
-     			damageind(p,le,player_damage.get(p.getName())*dou);
+     			come.damageind(p,le,player_damage.get(p.getName())*dou);
 			}
         }, 1);
 	}

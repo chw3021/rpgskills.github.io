@@ -291,6 +291,7 @@ public class CommonEvents extends Mobs implements Listener{
 		if(d.getEntity() instanceof LivingEntity && (d.getCause() == DamageCause.SUFFOCATION))
 		{
 			LivingEntity le = (LivingEntity) d.getEntity();
+			
 			try {
 				le.teleport(le.getLocation().clone().add(le.getVelocity().clone().multiply(-1.5)));
 				le.setVelocity(le.getVelocity().clone().multiply(-0.5));

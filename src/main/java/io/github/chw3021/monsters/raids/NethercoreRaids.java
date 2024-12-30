@@ -1844,7 +1844,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 	    	    		
 	
 	
-	    	    		bossbargen("CannibalPiglin", rn, newmob);
+	    	    		bossbargen("CrimsonSavager", rn, newmob);
 	    	    		
 	    	    		targeting(rn);
 	            		

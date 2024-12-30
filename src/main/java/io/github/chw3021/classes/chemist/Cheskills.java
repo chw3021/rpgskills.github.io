@@ -36,6 +36,7 @@ import org.bukkit.Sound;
 import org.bukkit.Tag;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AreaEffectCloud;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Entity;
@@ -456,8 +457,11 @@ public class Cheskills extends Pak {
 
 
 	
-	public void Cloud(PlayerItemHeldEvent ev) //https://www.spigotmc.org/members/beefystick.28035/
+	public void Cloud(PlayerItemHeldEvent ev)
 	{
+		if(ev.isCancelled()) {
+			return;
+		}
 		Player p = ev.getPlayer();
     	if(cloudh.containsKey(p.getUniqueId())) {
         		cloudh.remove(p.getUniqueId());
@@ -472,7 +476,7 @@ public class Cheskills extends Pak {
 	}
 	
 	
-	public void Cloud(PlayerQuitEvent ev) //https://www.spigotmc.org/members/beefystick.28035/
+	public void Cloud(PlayerQuitEvent ev)
 	{
 		Player p = ev.getPlayer();
     	if(cloudh.containsKey(p.getUniqueId())) {
@@ -488,7 +492,7 @@ public class Cheskills extends Pak {
 	}
 
 	
-	public void Cloud(PlayerDeathEvent ev) //https://www.spigotmc.org/members/beefystick.28035/
+	public void Cloud(PlayerDeathEvent ev)
 	{
 		Player p = ev.getEntity();
     	if(cloudh.containsKey(p.getUniqueId())) {
@@ -515,7 +519,7 @@ public class Cheskills extends Pak {
 		});
 	}
 	
-	public void Napalm(PlayerSwapHandItemsEvent ev) //https://www.spigotmc.org/members/beefystick.28035/
+	public void Napalm(PlayerSwapHandItemsEvent ev)
 	{
 		Player p = ev.getPlayer();
 		if(ClassData.pc.get(p.getUniqueId()) == 15&& csd.AcidCloud.getOrDefault(p.getUniqueId(), 0)>=1 && !p.isSneaking()) {
@@ -1100,7 +1104,7 @@ public class Cheskills extends Pak {
                     p.playSound(p.getLocation(), Sound.WEATHER_RAIN_ABOVE, 1, 2);
                     p.playSound(p.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 1, 0);
 					p.getWorld().spawnParticle(Particle.WHITE_ASH, p.getLocation(), 200,2,2,2);
-					p.getWorld().spawnParticle(Particle.ENTITY_EFFECT, p.getLocation(), 200,1,1,1);
+					p.getWorld().spawnParticle(Particle.ENTITY_EFFECT, p.getLocation(), 200,1,1,1, Color.LIME);
 					p.getWorld().spawnParticle(Particle.EFFECT, p.getLocation(), 200,1,1,1);
 					p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 40,0,false,false));
 
@@ -1579,6 +1583,9 @@ public class Cheskills extends Pak {
 						.slot(6)
 						.hm(sultcooldown)
 						.skillUse(() -> {
+						if(!cloudh.containsKey(p.getUniqueId())) {
+				    		AcidCloud(p);
+						}
 						if(vxt.containsKey(p.getUniqueId())) {
 	                    	Bukkit.getScheduler().cancelTask(vxt.get(p.getUniqueId()));
 	                    }
@@ -1639,16 +1646,17 @@ public class Cheskills extends Pak {
 						.skillUse(() -> {
 
 	                	final Location tl =gettargetblock(p,3).clone();
-	                    TNTPrimed tp = tl.getWorld().spawn(tl, TNTPrimed.class);
+	                    ArmorStand tp = tl.getWorld().spawn(tl, ArmorStand.class);
 	                    tp.setCustomName("NUKE");
-	                    tp.setYield(0);
-	                    tp.setFuseTicks(80);
-	                    tp.setFireTicks(80);
-	                    tp.setGlowing(true);
+	                    tp.setInvisible(true);
+	                    tp.setCollidable(false);
+	                    tp.playEffect(EntityEffect.TNT_MINECART_IGNITE);
+	                    tp.playEffect(EntityEffect.ENTITY_DEATH);
+	                    tp.getAttribute(Attribute.SCALE).setBaseValue(3);
 	                    tp.setInvulnerable(true);
 	                    tp.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-	                    tp.setIsIncendiary(false);
-	                    tp.setSource(p);
+	                    tp.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), "rob"+p.getName()));
+	                    tp.getEquipment().setHelmet(new ItemStack(Material.TNT));
 	                    p.playSound(tp.getLocation(), Sound.ENTITY_TNT_PRIMED, 1f, 0);
 						for(int n = 0; n<25; n++) {
 		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -1657,7 +1665,6 @@ public class Cheskills extends Pak {
 				                {
 				                    p.playSound(tp.getLocation(), Sound.BLOCK_CAVE_VINES_STEP, 0.15f, 0);
 				                    p.playSound(tp.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_CHARGE, 0.15f, 0);
-									p.getWorld().spawnParticle(Particle.DUST, tp.getLocation(), 100,2,2,2, Material.YELLOW_CONCRETE_POWDER.createBlockData());
 									p.getWorld().spawnParticle(Particle.BLOCK, tp.getLocation(), 100,3,3,3, Material.YELLOW_GLAZED_TERRACOTTA.createBlockData());
 									p.getWorld().spawnParticle(Particle.BLOCK, tp.getLocation(), 100,4,4,4, Material.RAW_GOLD_BLOCK.createBlockData());
 									p.getWorld().spawnParticle(Particle.BLOCK, tp.getLocation(), 100,3,3,3, Material.BLACK_GLAZED_TERRACOTTA.createBlockData());
@@ -1715,8 +1722,9 @@ public class Cheskills extends Pak {
 												}
 		             						}
 		             					}
+			             		tp.remove();
 				             			
-						            }
+						       }
 	                    }, 80); 
 						});
 				bd.execute();
