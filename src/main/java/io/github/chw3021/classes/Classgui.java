@@ -1006,7 +1006,7 @@ public class Classgui implements Serializable {
 					"방어: 4/5", "제어: 3/5", "지원: 0/5", "범위: 5/5", "사거리: 2.5/5", "기동: 3.5/5", "난이도: 보통"), 10, inv);
 			itemset(ChatColor.BLUE + "사냥꾼", Material.IRON_AXE, 0, 1, Arrays.asList("추천 장비:", "도끼", "", "공격: 5/5",
 					"방어: 2.5/5", "제어: 2.5/5", "지원: 1/5", "범위: 1/5", "사거리: 1/5", "기동: 5/5", "난이도: 어려움"), 19, inv);
-			itemset(ChatColor.BLUE + "투사", Material.CHAIN, 0, 1, Arrays.asList("추천 장비:", "철퇴", "", "공격: 3/5",
+			itemset(ChatColor.BLUE + "투사[제작중]", Material.MACE, 0, 1, Arrays.asList("추천 장비:", "철퇴", "", "공격: 3/5",
 					"방어: 2.5/5", "제어: 4/5", "지원: 1/5", "범위: 4/5", "사거리: 2/5", "기동: 2.5/5", "난이도: 보통"), 28, inv);
 			itemset(ChatColor.BLUE + "성기사", Material.SHIELD, 0, 1, Arrays.asList("추천 장비:", "주:도끼 또는 철퇴, 보조:방패", "",
 					"공격: 1.5/5", "방어: 5/5", "제어: 3/5", "지원: 4.5/5", "범위: 2/5", "사거리: 2/5", "기동: 2/5", "난이도: 쉬움"), 37,
@@ -1025,7 +1025,7 @@ public class Classgui implements Serializable {
 					"방어: 5/5", "제어: 2.5/5", "지원: 0/5", "범위: 2/5", "사거리: 1.5/5", "기동: 3/5", "난이도: 어려움"), 12, inv);
 			itemset(ChatColor.BLUE + "조련사", Material.LEAD, 0, 1, Arrays.asList("추천 장비:", "양손 너클", "공격: 4/5", "방어: 1/5",
 					"제어: 3/5", "지원: 0/5", "범위: 3/5", "사거리: 4/5", "기동: 1/5", "난이도: 보통"), 21, inv);
-			itemset(ChatColor.BLUE + "유술가", Material.GOLDEN_CHESTPLATE, 0, 1, Arrays.asList("추천 장비:", "양손 너클", "",
+			itemset(ChatColor.BLUE + "유술가[제작중]", Material.GOLDEN_CHESTPLATE, 0, 1, Arrays.asList("추천 장비:", "양손 너클", "",
 					"공격: 3/5", "방어: 4/5", "제어: 4.5/5", "지원: 0/5", "범위: 2.5/5", "사거리: 2.5/5", "기동: 2/5", "난이도: 보통"), 30,
 					inv);
 			itemset(ChatColor.BLUE + "도사", Material.SOUL_CAMPFIRE, 0, 1,
@@ -1038,10 +1038,10 @@ public class Classgui implements Serializable {
 			itemset(ChatColor.BLUE + "환술사", Material.JACK_O_LANTERN, 0, 1, Arrays.asList("추천 장비:", "완드", "",
 					"공격: 4.5/5", "방어: 1.5/5", "제어: 2.5/5", "지원: 0/5", "범위: 3/5", "사거리: 2/5", "기동: 4/5", "난이도: 어려움"), 22,
 					inv);
-			itemset(ChatColor.BLUE + "원예가", Material.FLOWERING_AZALEA_LEAVES, 0, 1, Arrays.asList("추천 장비:", "삽", "",
+			itemset(ChatColor.BLUE + "원예가[제작중]", Material.FLOWERING_AZALEA_LEAVES, 0, 1, Arrays.asList("추천 장비:", "삽", "",
 					"공격: 3.5/5", "방어: 2.5/5", "제어: 4.5/5", "지원: 1/5", "범위: 3/5", "사거리: 3/5", "기동: 1/5", "난이도: 쉬움"), 31,
 					inv);
-			itemset(ChatColor.BLUE + "예술가", Material.JUKEBOX, 0, 1, Arrays.asList("추천 장비:", "완드", "", "공격: 3/5",
+			itemset(ChatColor.BLUE + "예술가[제작중]", Material.JUKEBOX, 0, 1, Arrays.asList("추천 장비:", "완드", "", "공격: 3/5",
 					"방어: 1/5", "제어: 3/5", "지원: 4/5", "범위: 3.5/5", "사거리: 4/5", "기동: 2/5", "난이도: 보통"), 40, inv);
 
 			itemset(ChatColor.BLUE + "화학자", Material.POTION, 0, 1, Arrays.asList("추천 장비:", "곡괭이", "", "공격: 3/5",
@@ -1050,7 +1050,7 @@ public class Classgui implements Serializable {
 					"방어: 2/5", "제어: 2.5/5", "지원: 1/5", "범위: 3/5", "사거리: 5/5", "기동: 1.5/5", "난이도: 보통"), 23, inv);
 			itemset(ChatColor.BLUE + "공학자", Material.IRON_PICKAXE, 0, 1, Arrays.asList("추천 장비:", "곡괭이", "", "공격: 3/5",
 					"방어: 4/5", "제어: 5/5", "지원: 1/5", "범위: 2.5/5", "사거리: 2/5", "기동: 2.5/5", "난이도: 보통"), 32, inv);
-			itemset(ChatColor.BLUE + "요리사", Material.COOKED_BEEF, 0, 1, Arrays.asList("추천 장비:", "삽", "", "공격: 2.5/5",
+			itemset(ChatColor.BLUE + "요리사[제작중]", Material.COOKED_BEEF, 0, 1, Arrays.asList("추천 장비:", "삽", "", "공격: 2.5/5",
 					"방어: 3/5", "제어: 3/5", "지원: 4/5", "범위: 3.5/5", "사거리: 3/5", "기동: 1/5", "난이도: 쉬움"), 41, inv);
 
 			itemset(ChatColor.BLUE + "바다기사", Material.TRIDENT, 0, 1, Arrays.asList("추천 장비:", "삼지창, 방패 ", "",
@@ -1068,7 +1068,7 @@ public class Classgui implements Serializable {
 
 			itemset(ChatColor.BLUE + "광전사", Material.CRIMSON_ROOTS, 0, 1, Arrays.asList("추천 장비:", "검", "", "공격: 4/5",
 					"방어: 3/5", "제어: 3/5", "지원: 0/5", "범위: 3.5/5", "사거리: 3.5/5", "기동: 2.5/5", "난이도: 보통"), 16, inv);
-			itemset(ChatColor.BLUE + "단검사", Material.SHEARS, 0, 1, Arrays.asList("추천 장비:", "단검", "", "공격: 4.75/5",
+			itemset(ChatColor.BLUE + "단검사[제작중]", Material.SHEARS, 0, 1, Arrays.asList("추천 장비:", "단검", "", "공격: 4.75/5",
 					"방어: 1.5/5", "제어: 2/5", "지원: 0/5", "범위: 3/5", "사거리: 1.5/5", "기동: 4.5/5", "난이도: 어려움"), 25, inv);
 			itemset(ChatColor.BLUE + "위더리스트", Material.WITHER_ROSE, 0, 1, Arrays.asList("추천 장비:", "괭이", "", "공격: 3/5",
 					"방어: 3/5", "제어: 4/5", "지원: 2/5", "범위: 3/5", "사거리: 4/5", "기동: 5/5", "난이도: 보통"), 34, inv);
@@ -1115,7 +1115,7 @@ public class Classgui implements Serializable {
 							"Control: 2.5/5", "Support: 1/5", "Area: 1/5", "Range: 1/5", "Mobility: 5/5",
 							"Difficulty: Hard"),
 					19, inv);
-			itemset(ChatColor.BLUE + "Broiler", Material.MACE, 0, 1,
+			itemset(ChatColor.BLUE + "Broiler[To be updated]", Material.MACE, 0, 1,
 					Arrays.asList("Recommended equipment:", "Mace", "", "Attack: 3/5", "Defence: 2.5/5",
 							"Control: 4/5", "Support: 1/5", "Area: 4/5", "Range: 2/5", "Mobility: 2/5",
 							"Difficulty: Normal"),
@@ -1156,7 +1156,7 @@ public class Classgui implements Serializable {
 							"Control: 3/5", "Support: 0/5", "Area: 3/5", "Range: 4/5", "Mobility: 1/5",
 							"Difficulty: Normal"),
 					21, inv);
-			itemset(ChatColor.BLUE + "Wrestler", Material.GOLDEN_CHESTPLATE, 0, 1,
+			itemset(ChatColor.BLUE + "Wrestler[To be updated]", Material.GOLDEN_CHESTPLATE, 0, 1,
 					Arrays.asList("Recommended equipment:", "Knuckles in both hands", "", "Attack: 3/5", "Defence: 4/5",
 							"Control: 4.5/5", "Support: 0/5", "Area: 2.5/5", "Range: 2.5/5", "Mobility: 2/5",
 							"Difficulty: Normal"),
@@ -1177,12 +1177,12 @@ public class Classgui implements Serializable {
 							"Control: 2.5/5", "Support: 0/5", "Area: 3/5", "Range: 2/5", "Mobility: 4/5",
 							"Difficulty: Hard"),
 					22, inv);
-			itemset(ChatColor.BLUE + "Gardener", Material.FLOWERING_AZALEA_LEAVES, 0, 1,
+			itemset(ChatColor.BLUE + "Gardener[To be updated]", Material.FLOWERING_AZALEA_LEAVES, 0, 1,
 					Arrays.asList("Recommended equipment:", "Shovel", "", "Attack: 3.5/5", "Defence: 2.5/5",
 							"Control: 4.5/5", "Support: 1/5", "Area: 3.5/5", "Range: 3/5", "Mobility: 1/5",
 							"Difficulty: Easy"),
 					31, inv);
-			itemset(ChatColor.BLUE + "Musician", Material.JUKEBOX, 0, 1,
+			itemset(ChatColor.BLUE + "Musician[To be updated]", Material.JUKEBOX, 0, 1,
 					Arrays.asList("Recommended equipment:", "Rod", "", "Attack: 3/5", "Defence: 1.5/5",
 							"Control: 3.5/5", "Support: 4/5", "Area: 3.5/5", "Range: 4/5", "Mobility: 2/5",
 							"Difficulty: Normal"),
@@ -1203,7 +1203,7 @@ public class Classgui implements Serializable {
 							"Control: 5/5", "Support: 1/5", "Area: 2.5/5", "Range: 2/5", "Mobility: 2.5/5",
 							"Difficulty: Normal"),
 					32, inv);
-			itemset(ChatColor.BLUE + "Cook", Material.COOKED_BEEF, 0, 1,
+			itemset(ChatColor.BLUE + "Cook[To be updated]", Material.COOKED_BEEF, 0, 1,
 					Arrays.asList("Recommended equipment:", "Shovel, ", "", "Attack: 2.5/5", "Defence: 3/5",
 							"Control: 3/5", "Support: 4/5", "Area: 3.5/5", "Range: 3/5", "Mobility: 1/5",
 							"Difficulty: Easy"),
@@ -1235,7 +1235,7 @@ public class Classgui implements Serializable {
 							"Control: 4/5", "Support: 0/5", "Area: 3.5/5", "Range: 3.5/5", "Mobility: 2.5/5",
 							"Difficulty: Normal"),
 					16, inv);
-			itemset(ChatColor.BLUE + "Daggerist", Material.SHEARS, 0, 1,
+			itemset(ChatColor.BLUE + "Daggerist[To be updated]", Material.SHEARS, 0, 1,
 					Arrays.asList("Recommended equipment:", "Dagger in both Hands", "", "Attack: 4.75/5",
 							"Defence: 1.5/5", "Control: 2/5", "Support: 0/5", "Area: 3/5", "Range: 1.5/5",
 							"Mobility: 4.5/5", "Difficulty: Hard"),
