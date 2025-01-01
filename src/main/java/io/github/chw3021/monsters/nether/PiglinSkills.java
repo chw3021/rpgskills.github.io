@@ -175,7 +175,7 @@ public class PiglinSkills extends Summoned{
 		if(d.getEntity().hasMetadata("volcanicboss") && grillable.containsKey(d.getEntity().getUniqueId())) 
 		{
 			LivingEntity p = (LivingEntity)d.getEntity();
-			if(ordeal.containsKey(p.getUniqueId())) {
+			if(ordeal.containsKey(p.getUniqueId()) || p.hasMetadata("failed")) {
 				return;
 			}
             if (checkAndApplyCharge(p, d)) return;
@@ -985,6 +985,7 @@ public class PiglinSkills extends Summoned{
 	final private boolean judge(LivingEntity p, String rn) {
 		Boolean bool = p.getWorld().getEntities().stream().anyMatch(e -> e.hasMetadata("yellowcake"+rn));
 		if(bool) {
+    		Holding.invur(p, 20l);
             for(Player pe : NethercoreRaids.getheroes(p)) {
     			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
             		pe.sendMessage(ChatColor.BOLD+"피글린요리사: 그렇게는 배불리 먹지 못해!!!");

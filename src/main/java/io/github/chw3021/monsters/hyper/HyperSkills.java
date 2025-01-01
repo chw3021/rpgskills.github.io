@@ -38,6 +38,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
+
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.monsters.raids.OverworldRaids;
 import io.github.chw3021.monsters.raids.Summoned;
@@ -947,8 +949,8 @@ public class HyperSkills extends Summoned{
 	}
 	
 	
-	final private void Ordeal(final Husk h, Location rl, Integer f, String rn) {
-		Husk p = (Husk) Holding.ale(h);
+	final private void Ordeal(final LivingEntity h, Location rl, Integer f, String rn) {
+		LivingEntity p = (LivingEntity) Holding.ale(h);
 		HashSet<Location> mls1 = new HashSet<>();
 		if(f%2 ==0) {
 			for(int i = 0; i<30; i++) {
@@ -993,10 +995,10 @@ public class HyperSkills extends Summoned{
 		                	p.playHurtAnimation(0);
 			                for(Player pe : OverworldRaids.getheroes(p)) {
 		    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-			                		pe.sendMessage(ChatColor.BOLD+"타격횟수: "+(10-guud.getOrDefault(p.getUniqueId(),0) + "/10"));
+			                		pe.sendMessage(ChatColor.BOLD+"타격횟수: "+(15-guud.getOrDefault(p.getUniqueId(),0) + "/15"));
 		    					}
 		    					else {
-			                		pe.sendMessage(ChatColor.BOLD+"Hit: "+(10-guud.getOrDefault(p.getUniqueId(),0) + "/10"));
+			                		pe.sendMessage(ChatColor.BOLD+"Hit: "+(15-guud.getOrDefault(p.getUniqueId(),0) + "/15"));
 		    					}
 			                }
 			                if(guud.getOrDefault(p.getUniqueId(),0) <=0) {
@@ -1044,6 +1046,138 @@ public class HyperSkills extends Summoned{
             }
         }, 10); 
 	}
+	@SuppressWarnings("deprecation")
+	private void ordealStart(LivingEntity p, Location rl) {
+	    p.setHealth(p.getMaxHealth() * 0.2);
+	    scratchable.remove(p.getUniqueId());
+	    chargable.remove(p.getUniqueId());
+
+	    Long ORDEALTIME = 500L;
+
+	    Holding.untouchable(p, 40L);
+	    Holding.invur(p, 40L);
+	    guud.put(p.getUniqueId(), 15);
+
+	    String rn = p.getMetadata("raid").get(0).asString();
+	    if (ordt.containsKey(rn)) {
+	        ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
+	        ordt.removeAll(rn);
+	    }
+	    p.teleport(rl.clone());
+
+	    for (Entity e : OverworldRaids.getheroes(p)) {
+	        if (e instanceof Player) {
+	            Player pe = (Player) e;
+	            Holding.invur(pe, 40L);
+	            if (pe.getLocale().equalsIgnoreCase("ko_kr")) {
+	                pe.sendMessage(ChatColor.BOLD + "더비스트: 이것도 막아보아라!");
+	            } else {
+	                pe.sendMessage(ChatColor.BOLD + "TheBeast: You can't stop me!");
+	            }
+	            pe.getWorld().playSound(pe.getLocation(), Sound.ENTITY_WOLF_GROWL, 0.3f, 0);
+	            if (pe.getWorld() == p.getWorld()) {
+	                pe.teleport(rl.clone());
+	            }
+	        }
+	    }
+
+	    AtomicInteger taskCounter = new AtomicInteger();
+	    BukkitRunnable ordealTask = new BukkitRunnable() {
+	        private int tick = 0;
+
+	        @Override
+	        public void run() {
+	            if (tick % 20 == 0) { // 1초마다 실행
+	                Holding.untouchable(p, 20L);
+	                Holding.invur(p, 20L);
+
+	                for (Player pe : OverworldRaids.getheroes(p)) {
+	                    if (pe.getWorld().equals(p.getWorld()) && rl.clone().distance(p.getLocation()) > 30) {
+	                        if (pe.getLocale().equalsIgnoreCase("ko_kr")) {
+	                            pe.sendMessage(ChatColor.BOLD + "더비스트: 원위치!");
+	                        } else {
+	                            pe.sendMessage(ChatColor.BOLD + "TheBeast: You Can't Get Away!");
+	                        }
+	                        pe.teleport(rl);
+	                    }
+	                }
+	                Ordeal(p, rl.clone(), taskCounter.getAndIncrement(), rn);
+	            }
+
+	            if (tick % 30 == 0) { // 1.5초마다 실행
+	                if (OverworldRaids.getheroes(Holding.ale(p)).stream()
+	                        .anyMatch(pe -> pe.getWorld().equals(Holding.ale(p).getWorld()))) {
+	                    Location tl = OverworldRaids.getheroes(Holding.ale(p)).stream()
+	                            .filter(pe -> pe.getWorld().equals(p.getWorld())).findAny().get().getEyeLocation();
+
+	                    p.getWorld().playSound(tl, Sound.ENTITY_HUSK_AMBIENT, 1.0f, 0f);
+	                    p.getWorld().playSound(tl, Sound.ENTITY_HUSK_CONVERTED_TO_ZOMBIE, 1.0f, 0f);
+	                    p.getWorld().spawnParticle(Particle.PORTAL, tl, 100, 2, 2, 2);
+
+	                    for (int i = 0; i < 10; i++) {
+	                        Bukkit.getScheduler().runTaskLater(RMain.getInstance(), () -> {
+	                            Holding.ale(p).teleport(tl);
+	                            p.getWorld().playSound(p.getLocation(), Sound.ENTITY_HUSK_AMBIENT, 0.15f, 2f);
+	                            p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ZOMBIE_BREAK_WOODEN_DOOR, 0.15f, 2f);
+	                            p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, tl, 50, 2.5, 2.5, 2.5);
+	                            for (Entity e : tl.getWorld().getNearbyEntities(tl, 2.8, 2.8, 2.8)) {
+	                                if (Holding.ale(p) != e && e instanceof Player && !e.hasMetadata("fake")) {
+	                                    LivingEntity le = (LivingEntity) e;
+	                                    le.damage(12, Holding.ale(p));
+	                                    le.teleport(tl);
+	                                    Holding.holding(null, le, 3L);
+	                                }
+	                            }
+	                        }, i * 2 + 25);
+	                    }
+	                }
+	            }
+
+	            tick++;
+	            if (tick >= ORDEALTIME) {
+	                cancel();
+	                endOrdeal(p, rn, rl);
+	            }
+	        }
+	    };
+
+	    ordealTask.runTaskTimer(RMain.getInstance(), 0L, 1L); // 1 tick마다 실행
+	    ordt.put(rn, ordealTask.getTaskId());
+	}
+
+	private void endOrdeal(LivingEntity p, String rn, Location rl) {
+	    if (ordt.containsKey(rn)) {
+	        ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
+	        ordt.removeAll(rn);
+	    }
+	    for (Player pe : OverworldRaids.getheroes(p)) {
+	        if (pe.getWorld().equals(p.getWorld())) {
+	            if (pe.getLocale().equalsIgnoreCase("ko_kr")) {
+	                pe.sendMessage(ChatColor.BOLD + "더비스트: 진화는 필연적인 것이다..");
+	            } else {
+	                pe.sendMessage(ChatColor.BOLD + "TheBeast: Evolution is inevitable..");
+	            }
+	            p.getWorld().playSound(pe.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_CHARGE, 1, 0);
+	            Holding.invur(pe, 60L);
+	            pe.teleport(p);
+	            pe.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 60, 255, false, false));
+	            pe.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 60, 255, false, false));
+	        }
+	    }
+	    Bukkit.getScheduler().runTaskLater(RMain.getInstance(), () -> {
+	        rb6cooldown.remove(p.getUniqueId());
+	        p.removeMetadata("fake", RMain.getInstance());
+	        Holding.ale(p).removeMetadata("fake", RMain.getInstance());
+	        p.setInvulnerable(false);
+	        Holding.ale(p).setInvulnerable(false);
+	        p.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, p.getLocation(), 100, 10, 10, 10);
+	        p.getWorld().spawnParticle(Particle.FLAME, p.getLocation(), 3000, 10, 10, 10);
+	        for (Player pe : OverworldRaids.getheroes(p)) {
+	            p.getWorld().playSound(pe.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1, 0);
+	            pe.setHealth(0);
+	        }
+	    }, 60);
+	}
 
 	@SuppressWarnings("deprecation")
 	public void Ordeal(EntityDamageByEntityEvent d) 
@@ -1053,7 +1187,7 @@ public class HyperSkills extends Summoned{
 		if(d.getEntity() instanceof Husk && !d.isCancelled() && d.getEntity().hasMetadata("hyperboss") && d.getEntity().hasMetadata("ruined")&& !d.getEntity().hasMetadata("failed")) 
 		{
 			Husk p = (Husk)d.getEntity();
-			if(!(p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2) || !ordealable.containsKey(p.getUniqueId())|| !OverworldRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))) {
+			if(!(p.getHealth() - d.getDamage() <= p.getMaxHealth()*0.2)||guud.containsKey(p.getUniqueId()) || !ordealable.containsKey(p.getUniqueId())|| !OverworldRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))) {
 				return;
 			}
             final Location rl = OverworldRaids.getraidloc(p).clone();
@@ -1067,291 +1201,14 @@ public class HyperSkills extends Summoned{
 		            {
 		                rb6cooldown.remove(p.getUniqueId()); 
 		                d.setCancelled(true);
-						p.setHealth(p.getMaxHealth()*0.2);
-		                scratchable.remove(p.getUniqueId());
-		            	chargable.remove(p.getUniqueId());
-		                
-
-		                Holding.untouchable(p, 40l);
-		                Holding.invur(p, 40l);
-		                guud.put(p.getUniqueId(), 10);
-		                
-		    			String rn = p.getMetadata("raid").get(0).asString();
-	                    if(ordt.containsKey(rn)) {
-	                    	ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
-	                    	ordt.removeAll(rn);
-	                    }
-	                    p.teleport(rl.clone());
-		                
-		                for(Entity e : OverworldRaids.getheroes(p)) {
-		                	if(e instanceof Player ) {
-		                		Player pe = (Player) e;
-		                		Holding.invur(pe, 40l);
-		    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-			                		pe.sendMessage(ChatColor.BOLD+"더비스트: 이것도 막아보아라!");
-		    					}
-		    					else {
-			                		pe.sendMessage(ChatColor.BOLD+"TheBeast: You can't stop me!");
-		    					}
-								pe.getWorld().playSound(pe.getLocation(), Sound.ENTITY_WOLF_GROWL, 0.3f, 0);
-								if(pe.getWorld() == p.getWorld()) {
-									pe.teleport(rl.clone());
-								}
-		                	}
-		                }
-	                    AtomicInteger j = new AtomicInteger();
-	                    int t1 = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() {
-
-								for(int i = 0; i <30; i++) {
-									int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-						                @Override
-						                public void run() {
-							                Holding.untouchable(p, 20l);
-							                Holding.invur(p, 20l);
-
-							                for(Player pe : OverworldRaids.getheroes(p)) {
-						                		if(pe.getWorld().equals(p.getWorld()) && rl.clone().distance(p.getLocation()) > 30 && pe.getWorld() == p.getWorld()) {
-							    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-								                		pe.sendMessage(ChatColor.BOLD+"더비스트: 원위치!");
-							    					}
-							    					else {
-								                		pe.sendMessage(ChatColor.BOLD+"TheBeast: You Can't Get Away!");
-							    					}
-						                    		pe.teleport(rl);
-						                		}
-							                }
-							                Ordeal(p,rl.clone(),j.getAndIncrement(),rn);
-						                }
-						            }, i*20); 	 
-									ordt.put(rn, t1);
-			                    }
-								for(int i = 0; i <20; i++) {
-									int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-						                @Override
-						                public void run() {
-							                if(OverworldRaids.getheroes(Holding.ale(p)).stream().anyMatch(pe -> pe.getWorld().equals(Holding.ale(p).getWorld()))) {
-							        			final Location tl = OverworldRaids.getheroes(Holding.ale(p)).stream().filter(pe -> pe.getWorld().equals(p.getWorld())).findAny().get().getEyeLocation();
-
-												p.getWorld().playSound(tl, Sound.ENTITY_HUSK_AMBIENT, 1.0f, 0f);
-												p.getWorld().playSound(tl, Sound.ENTITY_HUSK_CONVERTED_TO_ZOMBIE, 1.0f, 0f);
-												p.getWorld().spawnParticle(Particle.PORTAL, tl, 100, 2,2,2);
-												for(int i = 0; i<10; i++) {
-								                    int t = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-								             		@Override
-								                	public void run() 
-									                {	
-								             			Holding.ale(p).teleport(tl);
-														p.getWorld().playSound(p.getLocation(), Sound.ENTITY_HUSK_AMBIENT, 0.15f, 2f);
-														p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ZOMBIE_BREAK_WOODEN_DOOR, 0.15f, 2f);
-														p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, tl, 50, 2.5,2.5,2.5);
-							             					for(Entity e: tl.getWorld().getNearbyEntities(tl,2.8, 2.8, 2.8)) {
-							            						if(Holding.ale(p)!=e && e instanceof Player&& !(e.hasMetadata("fake"))) {
-							            							LivingEntity le = (LivingEntity)e;
-							            							le.damage(10,Holding.ale(p));
-							            							le.teleport(tl);
-							        				                Holding.holding(null, le, 3l);
-							            						}
-							             					}
-											            }
-							                	   	}, i*2 + 25);
-													ordt.put(rn, t);
-												}
-							                }
-						                }
-						            }, i*30); 	 
-									ordt.put(rn, t1);
-			                    
-			                                	
-								}
-			                }
-			            }, 40);
-						ordt.put(rn, t1);
-	                    int t3 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() {
-				                for(Player pe : OverworldRaids.getheroes(p)) {
-			                		if(pe.getWorld().equals(p.getWorld()) && pe.getWorld() == p.getWorld()) {
-				    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-					                		pe.sendMessage(ChatColor.BOLD+"더비스트: 진화는 필연적인 것이다..");
-				    					}
-				    					else {
-					                		pe.sendMessage(ChatColor.BOLD+"TheBeast: Evolution is inevitable..");
-				    					}
-				            			p.getWorld().playSound(pe.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_CHARGE, 1, 0);
-				                		Holding.invur(pe, 60l);
-					            		pe.teleport(p);
-					            		pe.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 60, 255 ,false,false));
-					            		pe.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 60, 255 ,false,false));
-			                		}
-				                }
-				 				Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					                @Override
-					                public void run() {	
-						                rb6cooldown.remove(p.getUniqueId()); 
-				                		p.removeMetadata("fake", RMain.getInstance());
-				                		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
-				    	                p.setInvulnerable(false);
-				    	                Holding.ale(p).setInvulnerable(false);
-										p.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, p.getLocation(), 100, 10,10,10);	
-										p.getWorld().spawnParticle(Particle.FLAME, p.getLocation(), 3000, 10,10,10);	
-					                    for(Player pe : OverworldRaids.getheroes(p)) {
-					                		p.removeMetadata("fake", RMain.getInstance());
-					            			p.getWorld().playSound(pe.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1, 0);
-					                		pe.setHealth(0);
-					                    }
-					                }
-					            }, 60); 
-				 				
-			                }
-			            }, 640);
-						ordt.put(rn, t3);
+						ordealStart(p, rl);
 			            rb6cooldown.put(p.getUniqueId(), System.currentTimeMillis());
 		            }
 		        }
 		        else 
 		        {
 	                d.setCancelled(true);
-					p.setHealth(p.getMaxHealth()*0.2);
-	                scratchable.remove(p.getUniqueId());
-	            	chargable.remove(p.getUniqueId());
-	                
-
-	                Holding.untouchable(p, 40l);
-	                Holding.invur(p, 40l);
-	                guud.put(p.getUniqueId(), 10);
-	                
-	    			String rn = p.getMetadata("raid").get(0).asString();
-                    if(ordt.containsKey(rn)) {
-                    	ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
-                    	ordt.removeAll(rn);
-                    }
-                    p.teleport(rl.clone());
-	                for(Entity e : OverworldRaids.getheroes(p)) {
-	                	if(e instanceof Player) {
-	                		Player pe = (Player) e;
-	                		Holding.invur(pe, 40l);
-	    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-		                		pe.sendMessage(ChatColor.BOLD+"더비스트: 이것도 막아보아라!");
-	    					}
-	    					else {
-		                		pe.sendMessage(ChatColor.BOLD+"TheBeast: You can't stop me!");
-	    					}
-							pe.getWorld().playSound(pe.getLocation(), Sound.ENTITY_WOLF_GROWL, 0.3f, 0);
-							if(pe.getWorld() == p.getWorld()) {
-								pe.teleport(rl.clone());
-							}
-	                	}
-	                }
-                    AtomicInteger j = new AtomicInteger();
-                    int t1 = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() {
-
-							for(int i = 0; i <30; i++) {
-								int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					                @Override
-					                public void run() {
-						                Holding.untouchable(p, 20l);
-						                Holding.invur(p, 20l);
-
-						                for(Player pe : OverworldRaids.getheroes(p)) {
-					                		if(pe.getWorld().equals(p.getWorld()) && rl.clone().distance(p.getLocation()) > 30 && pe.getWorld() == p.getWorld()) {
-						    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-							                		pe.sendMessage(ChatColor.BOLD+"더비스트: 원위치!");
-						    					}
-						    					else {
-							                		pe.sendMessage(ChatColor.BOLD+"TheBeast: You Can't Get Away!");
-						    					}
-					                    		pe.teleport(rl);
-					                		}
-						                }
-						                Ordeal(p,rl.clone(),j.getAndIncrement(),rn);
-					                }
-					            }, i*20); 	 
-								ordt.put(rn, t1);
-		                    }
-							for(int i = 0; i <20; i++) {
-								int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					                @Override
-					                public void run() {
-						                if(OverworldRaids.getheroes(Holding.ale(p)).stream().anyMatch(pe -> pe.getWorld().equals(Holding.ale(p).getWorld()))) {
-						        			final Location tl = OverworldRaids.getheroes(Holding.ale(p)).stream().filter(pe -> pe.getWorld().equals(p.getWorld())).findAny().get().getEyeLocation();
-
-											p.getWorld().playSound(tl, Sound.ENTITY_HUSK_AMBIENT, 1.0f, 0f);
-											p.getWorld().playSound(tl, Sound.ENTITY_HUSK_CONVERTED_TO_ZOMBIE, 1.0f, 0f);
-											p.getWorld().spawnParticle(Particle.PORTAL, tl, 100, 2,2,2);
-											for(int i = 0; i<10; i++) {
-							                    int t = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-							             		@Override
-							                	public void run() 
-								                {	
-							             			Holding.ale(p).teleport(tl);
-													p.getWorld().playSound(p.getLocation(), Sound.ENTITY_HUSK_AMBIENT, 0.15f, 2f);
-													p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ZOMBIE_BREAK_WOODEN_DOOR, 0.15f, 2f);
-													p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, tl, 50, 2.5,2.5,2.5);
-						             					for(Entity e: tl.getWorld().getNearbyEntities(tl,2.8, 2.8, 2.8)) {
-						            						if(Holding.ale(p)!=e && e instanceof Player&& !(e.hasMetadata("fake"))) {
-						            							LivingEntity le = (LivingEntity)e;
-						            							le.damage(10,Holding.ale(p));
-						            							le.teleport(tl);
-						        				                Holding.holding(null, le, 3l);
-						            						}
-						             					}
-										            }
-						                	   	}, i*2 + 25);
-												ordt.put(rn, t);
-											}
-						                }
-					                }
-					            }, i*30); 	 
-								ordt.put(rn, t1);
-		                    
-		                                	
-							}
-		                }
-		            }, 40);
-					ordt.put(rn, t1);
-                    int t3 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() {
-			                for(Player pe : OverworldRaids.getheroes(p)) {
-		                		if(pe.getWorld().equals(p.getWorld()) && pe.getWorld() == p.getWorld()) {
-			    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-				                		pe.sendMessage(ChatColor.BOLD+"더비스트: 진화는 필연적인 것이다..");
-			    					}
-			    					else {
-				                		pe.sendMessage(ChatColor.BOLD+"TheBeast: Evolution is inevitable..");
-			    					}
-			            			p.getWorld().playSound(pe.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_CHARGE, 1, 0);
-			                		Holding.invur(pe, 60l);
-				            		pe.teleport(p);
-				            		pe.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 60, 255 ,false,false));
-				            		pe.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 60, 255 ,false,false));
-		                		}
-			                }
-			 				Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				                @Override
-				                public void run() {	
-					                rb6cooldown.remove(p.getUniqueId()); 
-			                		p.removeMetadata("fake", RMain.getInstance());
-			                		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
-			    	                p.setInvulnerable(false);
-			    	                Holding.ale(p).setInvulnerable(false);
-									p.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, p.getLocation(), 100, 10,10,10);	
-									p.getWorld().spawnParticle(Particle.FLAME, p.getLocation(), 3000, 10,10,10);	
-				                    for(Player pe : OverworldRaids.getheroes(p)) {
-				                		p.removeMetadata("fake", RMain.getInstance());
-				            			p.getWorld().playSound(pe.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1, 0);
-				                		pe.setHealth(0);
-				                    }
-				                }
-				            }, 60); 
-			 				
-		                }
-		            }, 640);
-					ordt.put(rn, t3);
+					ordealStart(p, rl);
 		            rb6cooldown.put(p.getUniqueId(), System.currentTimeMillis());
 		        }
 			}
