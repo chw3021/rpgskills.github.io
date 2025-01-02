@@ -1,5 +1,7 @@
 package io.github.chw3021.items.armors;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Material;
@@ -16,6 +18,7 @@ import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import io.github.chw3021.commons.Pak;
 import io.github.chw3021.rmain.RMain;
@@ -29,6 +32,81 @@ public class Armors {
 	
 	private Pak pak = Pak.getInstance();
 
+
+	final static protected NamespacedKey nethercore = new NamespacedKey(RMain.getInstance(), "armor_nether_core");
+	final static protected NamespacedKey endercore = new NamespacedKey(RMain.getInstance(), "armor_ender_core");
+	
+	
+	final protected ItemStack nethercore(NamespacedKey nethercore, Integer cmdt, ItemStack r, ItemMeta rm, Player p) {
+
+		if(!(r.getType().name().contains("HELMET")||r.getType().name().contains("CHESTPLATE"))) {
+			return null;
+		}
+		
+		if (cmdt == -202) {
+			rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 0.15, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.LUCK, new AttributeModifier(getKey(), 10, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+				if (rm.hasLore()) {
+					List<String> lore = rm.getLore();
+					lore.add(ChatColor.RED + "[네더] 융합된 네더의 핵 부여");
+					rm.setLore(lore);
+				} else {
+					rm.setLore(Arrays.asList(ChatColor.RED + "[네더] 융합된 네더의 핵 부여"));
+				}
+			}
+			else {
+				if (rm.hasLore()) {
+					List<String> lore = rm.getLore();
+					lore.add(ChatColor.RED + "[Nether] Converged NetherCore Applied");
+					rm.setLore(lore);
+				} else {
+					rm.setLore(Arrays.asList(ChatColor.RED + "[Nether] Converged NetherCore Applied"));
+				}
+			}
+			rm.getPersistentDataContainer().set(nethercore, PersistentDataType.STRING, "netherCore");
+			r.setItemMeta(pak.addelm(rm, 0, 0.25, p));
+			return r;
+		} else {
+			return null;
+		}
+	}
+
+	final protected ItemStack endercore(NamespacedKey endercore, Integer cmdt, ItemStack r, ItemMeta rm, Player p) {
+
+		if(!(r.getType().name().contains("LEGGINGS")||r.getType().name().contains("BOOTS"))) {
+			return null;
+		}
+		if (cmdt == -206) {
+			rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 0.2, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.LUCK, new AttributeModifier(getKey(), 15, Operation.ADD_NUMBER, EquipmentSlotGroup.ARMOR));
+			rm.addAttributeModifier(Attribute.MOVEMENT_SPEED, new AttributeModifier(getKey(), 0.2, Operation.ADD_SCALAR, EquipmentSlotGroup.ARMOR));
+			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+				if (rm.hasLore()) {
+					List<String> lore = rm.getLore();
+					lore.add(ChatColor.DARK_GRAY + "[엔더] 엔더 핵 부여");
+					rm.setLore(lore);
+				} else {
+					rm.setLore(Arrays.asList(ChatColor.DARK_GRAY + "[엔더] 엔더 핵 부여"));
+				}
+			}
+			else {
+				if (rm.hasLore()) {
+					List<String> lore = rm.getLore();
+					lore.add(ChatColor.DARK_GRAY + "[Ender] Converged EnderCore Applied");
+					rm.setLore(lore);
+				} else {
+					rm.setLore(Arrays.asList(ChatColor.DARK_GRAY + "[Ender] Converged EnderCore Applied"));
+				}
+			}
+			r.setItemMeta(pak.addelm(rm, 2, 0.35, p));
+			return r;
+		} 
+		else {
+			return null;
+		}
+		
+	}
 
 	public static ItemMeta maxHealthAdd(final ItemMeta im, Double amount, Operation op, EquipmentSlotGroup esg) {
 		
@@ -292,7 +370,12 @@ public class Armors {
 		final ItemStack i1 = inv.getItem(1);
 		if (i0 != null && i0.getAmount() >= 1
 				&& i1 != null
-				&& i1.getItemMeta().hasCustomModelData()) {
+				&& i1.getItemMeta().hasCustomModelData()
+				&& !i0.getItemMeta().getPersistentDataContainer()
+						.getOrDefault(nethercore, PersistentDataType.STRING, "none").equals("netherCore")
+				&& !i0.getItemMeta().getPersistentDataContainer()
+						.getOrDefault(endercore, PersistentDataType.STRING, "none").equals("enderCore")
+				) {
 			final Integer cmdt = i1.getItemMeta().getCustomModelData();
 			final Integer an = getan(i0.getType());
 			
@@ -329,7 +412,16 @@ public class Armors {
 								.getCustomModelData()
 								&& inv.getItem(1).getItemMeta().hasCustomModelData()
 						&& (!i0.getItemMeta().hasCustomModelData() || i0.getItemMeta().getCustomModelData() != ci.getItemMeta()
-								.getCustomModelData())) {
+								.getCustomModelData())
+						&& !ci.getItemMeta().getPersistentDataContainer().has(nethercore,
+								PersistentDataType.STRING)
+						&& !ci.getItemMeta().getPersistentDataContainer().has(endercore,
+								PersistentDataType.STRING)
+						&& !i2.getItemMeta().getPersistentDataContainer().has(nethercore,
+								PersistentDataType.STRING)
+						&& !i2.getItemMeta().getPersistentDataContainer().has(endercore,
+								PersistentDataType.STRING)
+						) {
 					final Integer cmdt = i1.getItemMeta().getCustomModelData();
 					if((cmdt >=5 && cmdt <=14) || (cmdt >=205 && cmdt <=214)) {
 						return inv.getItem(2).clone();
@@ -345,6 +437,136 @@ public class Armors {
 			return null;
 		}
 	}
+	
+
+	private ItemStack nsc(Inventory inv, Player p) {
+
+		final ItemStack i0 = inv.getItem(0);
+		final ItemStack i1 = inv.getItem(1);
+		if (i0 != null
+				&& !i0.getItemMeta().getPersistentDataContainer().has(nethercore, PersistentDataType.STRING)
+				&& !i0.getItemMeta().getPersistentDataContainer().has(endercore, PersistentDataType.STRING)
+				&& i0.getAmount() >= 1 && i0.getItemMeta().hasCustomModelData()
+				&& i1 != null && i1.getItemMeta().hasCustomModelData()) {
+
+			final Integer cmdt = i1.getItemMeta().getCustomModelData();
+			final Integer wn = getwn(i0.getType());
+			if (((wn + 1 <= i0.getItemMeta().getCustomModelData()
+					&& i0.getItemMeta().getCustomModelData() < wn + 1000))
+					&& i1.getItemMeta().getCustomModelData() == cmdt) {
+	
+				ItemStack r = i0.clone();
+				ItemMeta rm = r.getItemMeta();
+				return nethercore(nethercore, cmdt, r, rm, p);
+			} else {
+				return null;
+			}
+		} else {
+			return null;
+		}
+	}
+
+	private ItemStack ncc(SmithItemEvent d, Inventory inv) {
+	
+		if (d.getClickedInventory().getType() == InventoryType.SMITHING) {
+			if (d.getClickedInventory().getItem(2) != null && d.getCurrentItem().getItemMeta().hasCustomModelData()
+					&& d.getCurrentItem().getItemMeta().getPersistentDataContainer().has(nethercore,
+							PersistentDataType.STRING)
+					&& !d.getCurrentItem().getItemMeta().getPersistentDataContainer().has(endercore,
+							PersistentDataType.STRING)
+					&& inv.getItem(2).getItemMeta().getPersistentDataContainer().has(nethercore,
+							PersistentDataType.STRING)
+					&& !inv.getItem(2).getItemMeta().getPersistentDataContainer().has(endercore,
+							PersistentDataType.STRING)) {
+	
+				Player p = (Player) d.getWhoClicked();
+				ItemStack r = d.getInventory().getItem(0).clone();
+				ItemMeta rm = r.getItemMeta();
+
+				if (p.getInventory().firstEmpty() != -1 && inv.getItem(1).getItemMeta().hasCustomModelData()) {
+					final Integer cmdt = d.getClickedInventory().getItem(1).getItemMeta().getCustomModelData();
+					if(cmdt >=-5 && cmdt <=-2&& d.getInventory().getItem(1).getItemMeta().getCustomModelData() == cmdt) {
+						return nethercore(nethercore, cmdt, r, rm, p);
+					}
+					else {
+						return null;
+					}
+				} else {
+					return null;
+				}
+			} else {
+				return null;
+			}
+		} else {
+			return null;
+		}
+	}
+
+	private ItemStack esc(Inventory inv, Player p) {
+	
+		if (inv.getItem(0) != null
+				&& inv.getItem(0).getItemMeta().getPersistentDataContainer()
+						.getOrDefault(nethercore, PersistentDataType.STRING, "none").equals("netherCore")
+				&& !inv.getItem(0).getItemMeta().getPersistentDataContainer()
+						.getOrDefault(endercore, PersistentDataType.STRING, "none").equals("enderCore")
+				&& inv.getItem(0).getAmount() >= 1 && inv.getItem(0).getItemMeta().hasCustomModelData()
+				&& inv.getItem(1) != null && inv.getItem(1).getItemMeta().hasCustomModelData()) {
+
+			final Integer cmdt = inv.getItem(1).getItemMeta().getCustomModelData();
+			final Integer wn = getwn(inv.getItem(0).getType());
+			if (((wn + 1 <= inv.getItem(0).getItemMeta().getCustomModelData()
+					&& inv.getItem(0).getItemMeta().getCustomModelData() < wn + 1000))
+					&& inv.getItem(1).getItemMeta().getCustomModelData() == cmdt) {
+	
+				ItemStack r = inv.getItem(0).clone();
+				ItemMeta rm = r.getItemMeta();
+				return endercore(endercore, cmdt, r, rm, p);
+			} else {
+				return null;
+			}
+		} else {
+			return null;
+		}
+	}
+
+	private ItemStack ecc(SmithItemEvent d, Inventory inv) {
+	
+		if (d.getClickedInventory().getType() == InventoryType.SMITHING) {
+			if (d.getClickedInventory().getItem(2) != null && d.getCurrentItem().getItemMeta().hasCustomModelData()
+					&& d.getCurrentItem().getItemMeta().getPersistentDataContainer().has(nethercore,
+							PersistentDataType.STRING)
+					&& d.getCurrentItem().getItemMeta().getPersistentDataContainer().has(endercore,
+							PersistentDataType.STRING)
+					&& inv.getItem(2).getItemMeta().getPersistentDataContainer().has(nethercore,
+							PersistentDataType.STRING)
+					&& inv.getItem(2).getItemMeta().getPersistentDataContainer().has(endercore,
+							PersistentDataType.STRING)) {
+	
+				Player p = (Player) d.getWhoClicked();
+				ItemStack r = d.getInventory().getItem(0).clone();
+				ItemMeta rm = r.getItemMeta();
+
+				if (p.getInventory().firstEmpty() != -1 && inv.getItem(1).getItemMeta().hasCustomModelData()) {
+					final Integer cmdt = d.getClickedInventory().getItem(1).getItemMeta().getCustomModelData();
+					if(cmdt >=-7 && cmdt <=-6&& d.getInventory().getItem(1).getItemMeta().getCustomModelData() == cmdt) {
+						return endercore(endercore, cmdt, r, rm, p);
+					}
+					else {
+						return null;
+					}
+				} else {
+					return null;
+				}
+			} else {
+				return null;
+			}
+		} else {
+			return null;
+		}
+	}
+	
+	
+	
 	
 	@EventHandler
 	public void PICE(PrepareSmithingEvent d) 

@@ -959,8 +959,8 @@ public class Elements implements Listener {
 			else if(i == 12) {
 				ii.setType(Material.BLACK_GLAZED_TERRACOTTA);
 				imeta.setLore(Arrays.asList("You can buy Strong Core from [Archaeologist]","(Archaeologist Locates on the Jungle Pyramid)"));
-				imeta.setDisplayName(ChatColor.GOLD +"강력한 원소의 기운");
-				imeta.setItemName(ChatColor.GOLD +"강력한 원소의 기운");
+				imeta.setDisplayName(ChatColor.GOLD +"Strong Core");
+				imeta.setItemName(ChatColor.GOLD +"Strong Core");
 			}
 			else if(i == -2 || i == -3 || 3==-4||i==-5) {
 				ii.setType(Material.ANCIENT_DEBRIS);
