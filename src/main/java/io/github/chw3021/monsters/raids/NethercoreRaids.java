@@ -1799,10 +1799,8 @@ public class NethercoreRaids extends Summoned implements Listener {
 	            		
 	            		newmob.setLootTable(null);
 	            		newmob.setRemoveWhenFarAway(false);
-	            		raider.put(rn, newmob.getUniqueId());
 	            		
 
-	            		bossbargen("crimsonboss", rn, newmob);
 	            		
 
 	            		final Object ht = getherotype(rn);

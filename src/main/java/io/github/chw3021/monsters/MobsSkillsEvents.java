@@ -410,6 +410,8 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 		CrimsonSkills.getInstance().storm(d);
 		CrimsonSkills.getInstance().wave(d);
 		CrimsonSkills.getInstance().phantom(d);
+		CrimsonSkills.getInstance().breakBloodAltar(d);
+		CrimsonSkills.getInstance().Ordeal(d);
 	}
 
 

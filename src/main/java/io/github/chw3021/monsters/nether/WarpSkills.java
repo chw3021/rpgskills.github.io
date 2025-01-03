@@ -231,7 +231,7 @@ public class WarpSkills extends NethercoreRaids{
 		if(d.getEntity().hasMetadata("warpedboss") && cursable.containsKey(d.getEntity().getUniqueId())) 
 		{
 			LivingEntity p = (LivingEntity)d.getEntity();
-			if(ordeal.containsKey(p.getUniqueId())) {
+			if(ordeal.containsKey(p.getUniqueId()) || p.hasMetadata("failed")) {
 				return;
 			}
             if (checkAndApplyCharge(p, d)) return;
@@ -906,6 +906,7 @@ public class WarpSkills extends NethercoreRaids{
 	final private boolean judge(LivingEntity p, String rn) {
 		Boolean bool = p.getWorld().getEntities().stream().anyMatch(e -> e.hasMetadata("totem"+rn));
 		if(bool) {
+    		Holding.invur(p, 20l);
             for(Player pe : NethercoreRaids.getheroes(p)) {
     			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
             		pe.sendMessage(ChatColor.BOLD+"혼령의군주: 그들의 외침을 들어라...");
