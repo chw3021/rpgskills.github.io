@@ -187,8 +187,7 @@ public class CrimsonSkills extends Summoned{
 
 	private void burst(LivingEntity p) {
 
-        
-        Holding.holding(null, p, 35l);
+       
 
         Location tl = gettargetblock(p,4).clone();
         
@@ -230,7 +229,7 @@ public class CrimsonSkills extends Summoned{
                 		}
                 	}
                 }
-            }, i*2+35);
+            }, i*2+30);
         }
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
      		@Override
@@ -316,7 +315,7 @@ public class CrimsonSkills extends Summoned{
 
         List<ArmorStand> pillars = new ArrayList<>();
         for (int i = 0; i < 1; i++) {
-            Location pillarLoc = startLoc.clone().add(0, i * 1.3, 0); // 기둥 블록 간격 1
+            Location pillarLoc = startLoc.clone().add(0, i * 0.5, 0); // 기둥 블록 간격 1
             pillars.add(spawnArmorStand(world, pillarLoc, rn));
         }
 
@@ -391,7 +390,6 @@ public class CrimsonSkills extends Summoned{
 		p.getWorld().playSound(p, Sound.BLOCK_END_PORTAL_SPAWN, 0.3f, 1.5f);
 
     	final World w = p.getWorld();
-        Holding.holding(null, p, 25l);
 		Location pl = gettargetblock(p,6);
 		w.playSound(pl, Sound.ENTITY_SHULKER_TELEPORT, 1.0f, 0f);
 		w.spawnParticle(Particle.FLAME, pl, 150, 2,2,2);
@@ -1000,7 +998,7 @@ public class CrimsonSkills extends Summoned{
 	            Double distance = bossLocation.distance(targetLocation);
 
 	            // 보스가 타겟 방향으로 이동
-	            Vector direction = targetLocation.subtract(bossLocation).toVector().normalize().multiply(0.01*(distance)+0.15);
+	            Vector direction = targetLocation.subtract(bossLocation).toVector().normalize().multiply(0.015*(distance)+0.11);
 	            bossLocation.add(direction); // 보스 위치를 타겟 방향으로 이동
 	            bossLocation.setDirection(direction); // 보스 방향 설정
 	            p.teleport(bossLocation);
@@ -1008,6 +1006,7 @@ public class CrimsonSkills extends Summoned{
 	            // 빠르게 회전시키기 (1틱마다 방향 변경)
 	            bossLocation.setDirection(bossLocation.clone().getDirection().normalize().rotateAroundY(Math.toRadians(angle.addAndGet(75))));
 	            p.teleport(bossLocation);
+	            p.swingOffHand();
 
 	            double radius = 3; // 원 반지름
 	            int points = 18; // 원의 점 개수
@@ -1039,9 +1038,10 @@ public class CrimsonSkills extends Summoned{
 	    ordt.put(rn, rotateTask);
 
 	    // 제단 소환
+	    int size = NethercoreRaids.getheroes(p).size();
 	    int altarTask = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), () -> {
 	        asSpawn(rn, p, rl);
-	    }, 0, 100); // 100틱마다 실행
+	    }, 0, size>1 ? 100:60); // 100틱마다 실행
 
 	    ordt.put(rn, altarTask);
 

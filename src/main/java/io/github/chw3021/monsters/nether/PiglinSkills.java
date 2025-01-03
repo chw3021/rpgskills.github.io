@@ -933,8 +933,8 @@ public class PiglinSkills extends Summoned{
 
 	            	if(pel.getWorld().equals(arl.getWorld())) {
 	            		Vector v = pel.clone().toVector().subtract(arl.clone().toVector()).clone().normalize().multiply(0.04);
-	            		if(pel.distance(arl)>10) {
-	            			v.multiply(10);
+	            		if(pel.distance(arl)>5) {
+	            			v.multiply(5);
 	            		}
 	            		Holding.ale(newmob).setVelocity(v);
 	            	}
@@ -943,7 +943,7 @@ public class PiglinSkills extends Summoned{
 	        		for(Entity e : newmob.getWorld().getNearbyEntities(newmob.getLocation().clone(), 1, 5, 1)) {
 						if(p!=e && e instanceof Player) {
 							Player le = (Player)e;
-							le.damage(4,p);
+							le.damage(3,p);
 						}
 	            	}
 	            }

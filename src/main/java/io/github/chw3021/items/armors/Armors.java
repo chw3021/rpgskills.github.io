@@ -65,7 +65,6 @@ public class Armors {
 				}
 			}
 			rm.getPersistentDataContainer().set(nethercore, PersistentDataType.STRING, "netherCore");
-			r.setItemMeta(pak.addelm(rm, 0, 0.25, p));
 			return r;
 		} else {
 			return null;
@@ -99,7 +98,6 @@ public class Armors {
 					rm.setLore(Arrays.asList(ChatColor.DARK_GRAY + "[Ender] Converged EnderCore Applied"));
 				}
 			}
-			r.setItemMeta(pak.addelm(rm, 2, 0.35, p));
 			return r;
 		} 
 		else {
@@ -445,15 +443,11 @@ public class Armors {
 		final ItemStack i1 = inv.getItem(1);
 		if (i0 != null
 				&& !i0.getItemMeta().getPersistentDataContainer().has(nethercore, PersistentDataType.STRING)
-				&& !i0.getItemMeta().getPersistentDataContainer().has(endercore, PersistentDataType.STRING)
 				&& i0.getAmount() >= 1 && i0.getItemMeta().hasCustomModelData()
 				&& i1 != null && i1.getItemMeta().hasCustomModelData()) {
 
 			final Integer cmdt = i1.getItemMeta().getCustomModelData();
-			final Integer wn = getwn(i0.getType());
-			if (((wn + 1 <= i0.getItemMeta().getCustomModelData()
-					&& i0.getItemMeta().getCustomModelData() < wn + 1000))
-					&& i1.getItemMeta().getCustomModelData() == cmdt) {
+			if (i1.getItemMeta().getCustomModelData() == cmdt) {
 	
 				ItemStack r = i0.clone();
 				ItemMeta rm = r.getItemMeta();
@@ -472,11 +466,7 @@ public class Armors {
 			if (d.getClickedInventory().getItem(2) != null && d.getCurrentItem().getItemMeta().hasCustomModelData()
 					&& d.getCurrentItem().getItemMeta().getPersistentDataContainer().has(nethercore,
 							PersistentDataType.STRING)
-					&& !d.getCurrentItem().getItemMeta().getPersistentDataContainer().has(endercore,
-							PersistentDataType.STRING)
 					&& inv.getItem(2).getItemMeta().getPersistentDataContainer().has(nethercore,
-							PersistentDataType.STRING)
-					&& !inv.getItem(2).getItemMeta().getPersistentDataContainer().has(endercore,
 							PersistentDataType.STRING)) {
 	
 				Player p = (Player) d.getWhoClicked();
@@ -485,7 +475,7 @@ public class Armors {
 
 				if (p.getInventory().firstEmpty() != -1 && inv.getItem(1).getItemMeta().hasCustomModelData()) {
 					final Integer cmdt = d.getClickedInventory().getItem(1).getItemMeta().getCustomModelData();
-					if(cmdt >=-5 && cmdt <=-2&& d.getInventory().getItem(1).getItemMeta().getCustomModelData() == cmdt) {
+					if(cmdt ==-202&& d.getInventory().getItem(1).getItemMeta().getCustomModelData() == cmdt) {
 						return nethercore(nethercore, cmdt, r, rm, p);
 					}
 					else {
@@ -505,18 +495,13 @@ public class Armors {
 	private ItemStack esc(Inventory inv, Player p) {
 	
 		if (inv.getItem(0) != null
-				&& inv.getItem(0).getItemMeta().getPersistentDataContainer()
-						.getOrDefault(nethercore, PersistentDataType.STRING, "none").equals("netherCore")
 				&& !inv.getItem(0).getItemMeta().getPersistentDataContainer()
 						.getOrDefault(endercore, PersistentDataType.STRING, "none").equals("enderCore")
 				&& inv.getItem(0).getAmount() >= 1 && inv.getItem(0).getItemMeta().hasCustomModelData()
 				&& inv.getItem(1) != null && inv.getItem(1).getItemMeta().hasCustomModelData()) {
 
 			final Integer cmdt = inv.getItem(1).getItemMeta().getCustomModelData();
-			final Integer wn = getwn(inv.getItem(0).getType());
-			if (((wn + 1 <= inv.getItem(0).getItemMeta().getCustomModelData()
-					&& inv.getItem(0).getItemMeta().getCustomModelData() < wn + 1000))
-					&& inv.getItem(1).getItemMeta().getCustomModelData() == cmdt) {
+			if (inv.getItem(1).getItemMeta().getCustomModelData() == cmdt) {
 	
 				ItemStack r = inv.getItem(0).clone();
 				ItemMeta rm = r.getItemMeta();
@@ -533,11 +518,7 @@ public class Armors {
 	
 		if (d.getClickedInventory().getType() == InventoryType.SMITHING) {
 			if (d.getClickedInventory().getItem(2) != null && d.getCurrentItem().getItemMeta().hasCustomModelData()
-					&& d.getCurrentItem().getItemMeta().getPersistentDataContainer().has(nethercore,
-							PersistentDataType.STRING)
 					&& d.getCurrentItem().getItemMeta().getPersistentDataContainer().has(endercore,
-							PersistentDataType.STRING)
-					&& inv.getItem(2).getItemMeta().getPersistentDataContainer().has(nethercore,
 							PersistentDataType.STRING)
 					&& inv.getItem(2).getItemMeta().getPersistentDataContainer().has(endercore,
 							PersistentDataType.STRING)) {
@@ -548,7 +529,7 @@ public class Armors {
 
 				if (p.getInventory().firstEmpty() != -1 && inv.getItem(1).getItemMeta().hasCustomModelData()) {
 					final Integer cmdt = d.getClickedInventory().getItem(1).getItemMeta().getCustomModelData();
-					if(cmdt >=-7 && cmdt <=-6&& d.getInventory().getItem(1).getItemMeta().getCustomModelData() == cmdt) {
+					if(cmdt ==-206&& d.getInventory().getItem(1).getItemMeta().getCustomModelData() == cmdt) {
 						return endercore(endercore, cmdt, r, rm, p);
 					}
 					else {
@@ -575,6 +556,12 @@ public class Armors {
 		if (csc(d.getInventory(), p) != null) {
 			d.setResult(csc(d.getInventory(), p));
 		}
+		if (nsc(d.getInventory(), p) != null) {
+			d.setResult(nsc(d.getInventory(), p));
+		}
+		if (esc(d.getInventory(), p) != null) {
+			d.setResult(esc(d.getInventory(), p));
+		}
 	
 	}
 
@@ -586,6 +573,22 @@ public class Armors {
 		}
 		if (ccc(d, d.getClickedInventory()) != null) {
 			ItemStack r = ccc(d, d.getClickedInventory());
+			Player p = (Player) d.getWhoClicked();
+			p.getInventory().addItem(r);
+			d.getClickedInventory().getItem(0).setAmount(d.getInventory().getItem(0).getAmount() - 1);
+			d.getClickedInventory().getItem(1).setAmount(d.getInventory().getItem(1).getAmount() - 1);
+			d.getClickedInventory().getItem(2).setAmount(0);
+		}
+		if (ncc(d, d.getClickedInventory()) != null) {
+			ItemStack r = ncc(d, d.getClickedInventory());
+			Player p = (Player) d.getWhoClicked();
+			p.getInventory().addItem(r);
+			d.getClickedInventory().getItem(0).setAmount(d.getInventory().getItem(0).getAmount() - 1);
+			d.getClickedInventory().getItem(1).setAmount(d.getInventory().getItem(1).getAmount() - 1);
+			d.getClickedInventory().getItem(2).setAmount(0);
+		}
+		if (ecc(d, d.getClickedInventory()) != null) {
+			ItemStack r = ecc(d, d.getClickedInventory());
 			Player p = (Player) d.getWhoClicked();
 			p.getInventory().addItem(r);
 			d.getClickedInventory().getItem(0).setAmount(d.getInventory().getItem(0).getAmount() - 1);

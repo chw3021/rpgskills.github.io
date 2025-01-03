@@ -3,36 +3,31 @@ package io.github.chw3021.monsters.nether;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
-import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Illusioner;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.entity.Vex;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.inventory.ItemStack;
@@ -40,6 +35,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
+import com.google.common.collect.HashMultimap;
 import com.google.common.util.concurrent.AtomicDouble;
 
 import io.github.chw3021.commons.Holding;
@@ -737,220 +733,171 @@ public class WarpSkills extends NethercoreRaids{
 		}
 	}
 
+	private HashMultimap<UUID, LivingEntity> armorstands = HashMultimap.create();
 
 	public HashMap<UUID, Integer> ast = new HashMap<UUID, Integer>();//ArmorStands damage 태스크 저장
 	public HashMap<UUID, Integer> asdt = new HashMap<UUID, Integer>();//ArmorStands remove 태스크 저장
-	private void itemSpawn(String rn, LivingEntity p) {
-	    Collection<Player> playerList = NethercoreRaids.getheroes(p);
+	
+	final private void asSpawn(Player pe, String rn, LivingEntity p, final Location fl) {
 
-	    // 조건을 filter로 처리
-	    Player pe = playerList.stream()
-	                          .filter(player -> player.getWorld().equals(p.getWorld()) && !player.isDead())
-	                          .findAny()
-	                          .orElse(null);
+		final World w = fl.getWorld();
+		
+		if(pe.getLocation().distance(p.getLocation())>7) {
+			pe.teleport(p);
+	        p.getWorld().playSound(p.getLocation(), Sound.ENTITY_BREEZE_INHALE, 1.2f, 0);
+		}
 
-	    if (pe == null) {
-	        // 조건에 맞는 플레이어가 없을 경우 재시도
-	        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), () -> itemSpawn(rn, p), 20);
-	        return;
-	    }
+	    Location spawnLocation = fl.clone();
+	    spawnLocation.setY(w.getHighestBlockYAt(spawnLocation) + 1); // 지형에 맞게 Y 좌표 조정
+        p.getWorld().playSound(p.getLocation(), Sound.ITEM_NETHER_WART_PLANT, 1.2f, 0);
 
-	    Location fl = pe.getLocation().clone().add(0, 2.5, 0);
-	    World w = fl.getWorld();
-
-	    Item newmob = w.dropItem(fl.clone(), new ItemStack(Material.WITHER_SKELETON_SKULL));
-	    newmob.setPickupDelay(20);
-	    newmob.setMetadata("harvesterskull", new FixedMetadataValue(RMain.getInstance(), rn));
+	    ArmorStand newmob = w.spawn(spawnLocation, ArmorStand.class);
 	    newmob.setMetadata("stuff" + rn, new FixedMetadataValue(RMain.getInstance(), true));
-	    newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
-	    newmob.setThrower(p.getUniqueId());
 	    newmob.setGravity(false);
-	    newmob.setInvulnerable(true);
-	    newmob.setGlowing(true);
-	    newmob.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-	    changeFace(newmob, 0);
+	    newmob.setCollidable(false);
+	    newmob.setCustomNameVisible(false);
+	    newmob.setVisible(false);
+	    newmob.getEquipment().setHelmet(new ItemStack(Material.WARPED_HYPHAE));
+	    newmob.setInvulnerable(false);
+	    newmob.setMetadata("warpedSeed", new FixedMetadataValue(RMain.getInstance(), rn));
+	    newmob.setMetadata("warpedSeed"+rn, new FixedMetadataValue(RMain.getInstance(), rn));
+	    newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), rn));
+	    newmob.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
+	    newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
+	    armorstands.put(p.getUniqueId(), newmob);
+
 
 	    int t2 = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-	        int tick = 0;
-
 	        @Override
 	        public void run() {
-	            playerList.stream()
-	                      .filter(rp -> pe != rp && rp.isValid())
-	                      .forEach(rp -> Holding.holding(null, rp, 10L));
-	            if ((tick += 2) % 80 == 0) {
-	                changeFace(newmob, tick);
-	            }
+            	for(Entity e : p.getWorld().getNearbyEntities(spawnLocation, 1,1,1)) {
+            		if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && e!=p) {
+            			LivingEntity le = (LivingEntity)e;
 
-	            Location pel = Holding.ale(pe).getLocation().add(0, 1, 0);
-	            Location arl = Holding.ale(newmob).getLocation();
-
-	            if (!pel.getWorld().equals(arl.getWorld()) || pe.isDead()) {
-	                Holding.ale(newmob).remove();
-	                if (ast.containsKey(newmob.getUniqueId())) {
-	                    Bukkit.getScheduler().cancelTask(ast.remove(newmob.getUniqueId()));
-	                }
-	                itemSpawn(rn, p);
-	            }
-
-	            Vector moveDirection = pel.toVector().subtract(arl.toVector());
-	            double distance = moveDirection.length();
-
-	            if (distance > 0) {
-	                double speed = Math.log(distance + 0.8) * 0.06;
-	                moveDirection.normalize().multiply(speed);
-	                Holding.ale(newmob).setVelocity(moveDirection);
-	            }
+						le.damage(4, p);
+						
+            		}
+            	}
 	        }
-	    }, 0, 2);
+	    }, 0, 1);
 
 	    ordt.put(rn, t2);
 	    ast.put(newmob.getUniqueId(), t2);
-	}
-
-	
-	
-	final private void changeFace(Item i, int tick) {
-	    i.getWorld().playSound(i.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 1, 2);
-	    i.getWorld().spawnParticle(Particle.SOUL, i.getLocation(), 5);
-
-	    UUID targetValue = i.getThrower(); // 찾고자 하는 value
-	    Set<UUID> keys = getbossbytotem.entrySet()
-	        .stream()
-	        .filter(entry -> entry.getValue().equals(targetValue))
-	        .map(Map.Entry::getKey)
-	        .collect(Collectors.toSet());
-
-	    // 헬멧 아이템 리스트 생성
-	    List<ItemStack> helmetItems = new ArrayList<>();
-	    for (UUID key : keys) {
-	        Entity entity = Bukkit.getEntity(key);
-	        if (entity instanceof LivingEntity) {
-	            ItemStack helmet = ((LivingEntity) entity).getEquipment().getHelmet();
-	            if (helmet != null) {
-	                helmetItems.add(helmet);
-	            }
-	        }
-	    }
-
-	    // 헬멧 아이템이 없으면 기본값 사용
-	    if (helmetItems.isEmpty()) {
-	    	return;
-	    }
-
-	    // 4초(80 ticks)마다 순차적으로 아이템을 변경
-	    int index = (tick / 80) % helmetItems.size(); // 리스트 크기에 따라 순환
-	    ItemStack newItem = helmetItems.get(index);
-
-	    i.setItemStack(newItem);
-	}
-
-	
-	private HashMap<UUID,UUID> getbossbytotem = new HashMap<>();
-	
-	private void totems(LivingEntity p) {
-		String rn = p.getMetadata("raid").get(0).asString();
-		p.getWorld().getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(e -> e.remove());
 		
+	}
 
-            final Location rfl = NethercoreRaids.getraidloc(p).clone();
-            final World w = rfl.getWorld();
+	// 원형 파티클 위치를 미리 계산하는 메서드
+	private HashSet<Location> calculateParticleLocations(Location center, double radius, int particleCount) {
+	    HashSet<Location> locations = new HashSet<>();
+	    World world = center.getWorld();
+	    for (int i = 0; i < particleCount; i++) {
+	        double angle = (2 * Math.PI / particleCount) * i;
+	        double x = center.getX() + (radius * Math.cos(angle));
+	        double z = center.getZ() + (radius * Math.sin(angle));
+	        locations.add(new Location(world, x, center.getY() + 0.5, z));
+	    }
+	    return locations;
+	}
+	
+	final private void seed(LivingEntity p) {
+	    HashSet<Location> particleLocations = calculateParticleLocations(p.getLocation(), 7, 150);
+
+		final World w = p.getWorld();
+		
+        for (Location particleLocation : particleLocations) {
+        	Particle.DustOptions dustOptions =  new Particle.DustOptions(Color.fromRGB(204,249,248), 1.5f); 
+            w.spawnParticle(Particle.DUST, particleLocation, 1, dustOptions);
+
+        }
+        
+		String rn = p.getMetadata("raid").get(0).asString();
+        for(Player pe : NethercoreRaids.getheroes(p)) {
+        	
+        	if(!pe.getWorld().equals(p.getWorld()) || pe.isDead()) {
+        		continue;
+        	}
+        	
             
+            final Location fl = pe.getLocation().clone();
+            pe.setVelocity(pe.getVelocity().add(BlockFace.DOWN.getDirection().multiply(4.5)));
+
+			p.getWorld().playSound(pe.getLocation(), Sound.ENTITY_BREEZE_DEFLECT, 1, 2);
+			p.getWorld().spawnParticle(Particle.WARPED_SPORE, fl, 60,1,1,1);
             
-			
-			for(int i = 0; i<4; i++) {
-
-				ItemStack head = new ItemStack(Material.SKELETON_SKULL);
-	            Location rl = null;
-				
-				if(i==0) {
-					rl = rfl.clone().add(4, 0.1, 4);
-					head.setType(Material.WITHER_SKELETON_SKULL);
-				}
-				else if(i==1) {
-					rl = rfl.clone().add(-4, 0.1, 4);
-					head.setType(Material.ZOMBIE_HEAD);
-				}
-				else if(i==2) {
-					rl = rfl.clone().add(-4, 0.1, -4);
-					head.setType(Material.PIGLIN_HEAD);
-				}
-				else {
-					rl = rfl.clone().add(4, 0.1, -4);
-				}
-
-	            
-				w.spawn(rl, Illusioner.class, newmob -> {
-
-					newmob.getEquipment().setHelmet(head);
-		    		newmob.setCanPickupItems(true);
-		    		newmob.setCustomNameVisible(false);
-					newmob.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
-					newmob.setMetadata("totem"+rn, new FixedMetadataValue(RMain.getInstance(), rn));
-					newmob.setMetadata("harvestertotem", new FixedMetadataValue(RMain.getInstance(), rn));
-		    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), rn));
-		    		newmob.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
-					newmob.setGlowing(true);
-		    		newmob.setCanJoinRaid(false);
-		    		newmob.setPatrolTarget(null);
-		    		newmob.setPatrolLeader(false);
-		    		newmob.setSilent(true);
-		    		newmob.setAI(false);
-		    		newmob.setInvulnerable(true);
-		    		newmob.setCanPickupItems(true);
-		    		getbossbytotem.put(newmob.getUniqueId(), p.getUniqueId());
-				});
-			}
+			int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                @Override
+                public void run() {
+            		asSpawn(pe, rn, p, fl);
+                }
+            }, 10); 
+			ordt.put(rn, t1);  
+        }
 	}
 	
 	final private boolean judge(LivingEntity p, String rn) {
-		Boolean bool = p.getWorld().getEntities().stream().anyMatch(e -> e.hasMetadata("totem"+rn));
-		if(bool) {
-    		Holding.invur(p, 20l);
-            for(Player pe : NethercoreRaids.getheroes(p)) {
-    			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-            		pe.sendMessage(ChatColor.BOLD+"혼령의군주: 그들의 외침을 들어라...");
-    			}
-    			else {
-            		pe.sendMessage(ChatColor.BOLD+"LordOfPhantoms: Listen to them...");
-    			}
-        		Holding.invur(pe, 60l);
-    			p.getWorld().playSound(pe.getLocation(), Sound.AMBIENT_SOUL_SAND_VALLEY_ADDITIONS, 1, 2);
-        	}
-			p.getWorld().getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(newmob -> {
-            	if(ast.containsKey(newmob.getUniqueId())) {
-					Bukkit.getScheduler().cancelTask(ast.remove(newmob.getUniqueId()));
-            	}
-				if(getbossbytotem.containsKey(newmob.getUniqueId())) {
-					getbossbytotem.remove(newmob.getUniqueId());
-				}
-            	Holding.ale(newmob).remove();
-			});
 
-    		if(ordt.containsKey(rn)) {
-    			ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
-    		}
-	        int t3 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	            @Override
-	            public void run() {
+		Holding.invur(p, 20l);
+		AtomicBoolean bool = new AtomicBoolean(false);
+        for(Player pe : NethercoreRaids.getheroes(p)) {
+			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
+        		pe.sendMessage(ChatColor.BOLD+"왜곡된망령: 아직 끝나지 않았다.");
+			}
+			else {
+        		pe.sendMessage(ChatColor.BOLD+"DistortedWraith: It’s not over yet.");
+			}
+    		Holding.invur(pe, 60l);
+			p.getWorld().playSound(pe.getLocation(), Sound.ENTITY_TNT_PRIMED, 1, 0);
+    	}
 
-	                rb6cooldown.remove(p.getUniqueId());
-	        		ordeal.remove(p.getUniqueId());
-	                for(Player pe : NethercoreRaids.getheroes(p)) {
-	            		pe.setHealth(0);
-	            	}
-	            }
-	        }, 20);
-			ordt.put(rn, t3);
-		}
-		else {
-			bossfailed(p,rn);
-		}
-		return bool;
+        int t3 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+    			p.getWorld().playSound(p.getLocation(), Sound.ENTITY_BREEZE_WIND_BURST, 2, 0);
+            	armorstands.get(p.getUniqueId()).forEach(ars ->{
+            		final Location al = ars.getLocation().clone();
+        			p.getWorld().spawnParticle(Particle.EXPLOSION, al, 1);
+
+                	for(Entity e : p.getWorld().getNearbyEntities(al, 2.2, 4, 2.2)) {
+                		if(e instanceof Player&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && e!=p) {
+                			Player pe = (Player)e;
+                			if(NethercoreRaids.getheroes(p).contains(pe)) {
+                    			bool.set(true);
+                			}
+    						
+                		}
+                	}
+                	Bukkit.getScheduler().cancelTask(ast.remove(ars.getUniqueId()));
+                	Bukkit.getScheduler().cancelTask(ast.remove(ars.getUniqueId()));
+                	Holding.ale(ars).remove();
+            	});
+
+        		Holding.invur(p, 20l);
+        		
+    			armorstands.removeAll(p.getUniqueId());
+
+        		if(bool.get()) {
+
+            		if(ordt.containsKey(rn)) {
+            			ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
+            		}
+            		
+            		ordeal.remove(p.getUniqueId());
+                    for(Player pe : NethercoreRaids.getheroes(p)) {
+                		pe.setHealth(0);
+                	}
+                    rb6cooldown.remove(p.getUniqueId());
+        		}
+        		else {
+        			bossfailed(p,rn);
+        		}
+            }
+        }, 20);
+		ordt.put(rn, t3);
+		
+		
+		return bool.get();
 	}
 
-	final long OrdealTime = 520;
-	
 	final private void ordeal(LivingEntity p, EntityDamageByEntityEvent d) {
 		String rn = p.getMetadata("raid").get(0).asString();
         if(ordt.containsKey(rn)) {
@@ -958,39 +905,33 @@ public class WarpSkills extends NethercoreRaids{
         	ordt.removeAll(rn);
         }
         ordeal.put(p.getUniqueId(), true);
-        final Location rl = NethercoreRaids.getraidloc(p).clone();
+        Location rl = NethercoreRaids.getraidloc(p).clone();
 		p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
         d.setCancelled(true);
-        p.playEffect(EntityEffect.WARDEN_TENDRIL_SHAKE);
-    	p.teleport(rl.clone().add(0, 1, 0));
-        Holding.holding(null, p, OrdealTime);
-        Holding.untouchable(p, OrdealTime);
+        
+        Long ordealTime = 480L;
+        
+        
+    	p.teleport(rl.clone().add(1, 0.5, 1));
+        Holding.holding(null, p, ordealTime);
+        Holding.untouchable(p, ordealTime);
         for(Player pe : NethercoreRaids.getheroes(p)) {
 			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-        		pe.sendMessage(ChatColor.BOLD+"혼령의군주: 원혼들이 날뛰는 구나..");
+        		pe.sendMessage(ChatColor.BOLD+"왜곡된망령: 조용히 흩어져라.");
 			}
 			else {
-        		pe.sendMessage(ChatColor.BOLD+"LordOfPhantoms: The vengeful spirits are running wild...");
+        		pe.sendMessage(ChatColor.BOLD+"DistortedWraith: Scatter quietly.");
 			}
-    		pe.teleport(rl.clone().add(2, 1.5, 2));
+    		pe.teleport(rl.clone().add(-2, 1.5, 0));
     		Holding.invur(pe, 40l);
         }
-
-		p.getWorld().playSound(p.getLocation(), Sound.AMBIENT_SOUL_SAND_VALLEY_MOOD, 1, 2);
-		
-		
-        int t1 = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+        
+        int t1 = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
             @Override
             public void run() {
-        		p.getWorld().playSound(p.getLocation(), Sound.BLOCK_TRIAL_SPAWNER_SPAWN_MOB, 1, 0);
-        		p.getWorld().spawnParticle(Particle.TRIAL_SPAWNER_DETECTION, p.getLocation(), 100, 3,2,3);
-        		p.getWorld().spawnParticle(Particle.OMINOUS_SPAWNING, p.getLocation(), 100, 3,2,3);
-        		p.getWorld().spawnParticle(Particle.TRIAL_SPAWNER_DETECTION_OMINOUS, p.getLocation(), 100, 3,2,3);
-        		p.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, p.getLocation(), 100, 3,2,3);
-        		totems(p);
-        		itemSpawn(rn,p);
+            	seed(p);
             }
-        }, 40);
+        }, 20, 1);
 		ordt.put(rn, t1);
 		
         int t3 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -998,7 +939,7 @@ public class WarpSkills extends NethercoreRaids{
             public void run() {
             	judge(p,rn);
             }
-        }, OrdealTime);
+        }, ordealTime);
 		ordt.put(rn, t3);
 	}
 	
@@ -1010,27 +951,18 @@ public class WarpSkills extends NethercoreRaids{
 		}
 		ordeal.remove(p.getUniqueId());
     	p.playHurtAnimation(0);
+		p.getWorld().playSound(p.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_DEPLETE, 1, 2);
+		p.getWorld().spawnParticle(Particle.FLASH, p.getLocation(), 10, 2,2,2);
     	Holding.reset(Holding.ale(p));
     	Holding.ale(p).setMetadata("failed", new FixedMetadataValue(RMain.getInstance(),true));
 		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
-		p.getWorld().playSound(p.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_DEPLETE, 1, 2);
-		p.getWorld().spawnParticle(Particle.FLASH, p.getLocation(), 10, 2,2,2);
-
-		p.getWorld().getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(newmob -> {
-        	if(ast.containsKey(newmob.getUniqueId())) {
-				Bukkit.getScheduler().cancelTask(ast.remove(newmob.getUniqueId()));
-        	}
-			if(getbossbytotem.containsKey(newmob.getUniqueId())) {
-				getbossbytotem.remove(newmob.getUniqueId());
-			}
-        	Holding.ale(newmob).remove();
-		});
-		for(Player pe : NethercoreRaids.getheroes(p)) {
+		Bukkit.getWorld("NethercoreRaid").getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(e -> e.remove());
+        for(Player pe : NethercoreRaids.getheroes(p)) {
 			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-        		pe.sendMessage(ChatColor.BOLD+"혼령의군주: 네 운명이... 달라지지 않을 거다...!");
+        		pe.sendMessage(ChatColor.BOLD+"왜곡된망령: 내가 졌군. 잠시 숲이 조용해질 거다.");
 			}
 			else {
-        		pe.sendMessage(ChatColor.BOLD+"LordOfPhantoms: Your fate... will not change...!");
+        		pe.sendMessage(ChatColor.BOLD+"DistortedWraith: You’ve defeated me. The forest will rest for now.");
 			}
     		Holding.holding(pe, p, 300l);
     		p.removeMetadata("fake", RMain.getInstance());
@@ -1078,57 +1010,5 @@ public class WarpSkills extends NethercoreRaids{
 		        }
 			}
 	}
-	
-
-	public void Ordeal(EntityPickupItemEvent d) 
-	{
-			if(d.getItem().hasMetadata("harvesterskull")) {
-				Item it = d.getItem();
-				d.setCancelled(true);
-				if(d.getEntity() instanceof Player){
-					Player p = (Player) d.getEntity();
-					p.playSound(p.getLocation(), Sound.ENTITY_ILLUSIONER_CAST_SPELL, 0.1f, 0f);
-					p.setVelocity(p.getVelocity().multiply(0.5));
-				}
-				if(d.getEntity().hasMetadata("harvestertotem")){
-					LivingEntity le = d.getEntity();
-					LivingEntity p = (LivingEntity) Bukkit.getEntity(getbossbytotem.get(le.getUniqueId()));
-					String rn = le.getMetadata("harvestertotem").get(0).asString();
-					if(rn.equals(it.getMetadata("harvesterskull").get(0).asString())) {
-						it.remove();
-						if(ast.containsKey(it.getUniqueId())) {
-							Bukkit.getScheduler().cancelTask(ast.remove(it.getUniqueId()));
-	                	}
-						itemSpawn(rn,p);
-						
-						if(it.getItemStack().getType() == le.getEquipment().getHelmet().getType()) {
-							le.remove();
-							le.getWorld().playSound(le.getLocation(), Sound.ENTITY_BREEZE_INHALE, 1.0f, 0f);
-							le.getWorld().spawnParticle(Particle.TRIAL_OMEN, le.getLocation(), 300, 2,2,2);
-							getbossbytotem.remove(le.getUniqueId());
-							if(!getbossbytotem.containsValue(p.getUniqueId())) {
-								bossfailed(p,rn);
-							}
-						}
-						else {
-							le.getWorld().playSound(le.getLocation(), Sound.ENTITY_BREEZE_WIND_BURST, 1.0f, 0f);
-							le.getWorld().spawnParticle(Particle.SCULK_SOUL, le.getLocation(), 300, 2,2,2);
-							for(Entity e : le.getNearbyEntities(3, 3, 3)) {
-								if(le!=e && e instanceof LivingEntity) {
-									LivingEntity pe = (LivingEntity)e;
-									pe.damage(15,p);
-									Holding.holding(null, pe, 20l);
-							        final Location rl = NethercoreRaids.getraidloc(p).clone();
-							        pe.teleport(rl);
-								}
-							}
-						}
-						
-						
-					}
-				}
-			}
-	}
-	
 	
 }

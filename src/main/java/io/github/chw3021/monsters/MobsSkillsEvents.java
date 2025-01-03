@@ -403,7 +403,7 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 		WarpSkills.getInstance().storm(d);
 		WarpSkills.getInstance().wave(d);
 		WarpSkills.getInstance().phantom(d);
-		//WarpSkills.getInstance().Ordeal(d);
+		WarpSkills.getInstance().Ordeal(d);
 		
 		CrimsonSkills.getInstance().curse(d);
 		CrimsonSkills.getInstance().hand(d);

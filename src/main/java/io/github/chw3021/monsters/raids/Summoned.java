@@ -66,7 +66,8 @@ public class Summoned extends Mobs{
 
 	Double TC = 100d;
 	Integer MINCOMBO = 5;
-	Integer MAXCOMBO = 20;
+	Integer BOSSCOMBO = 20;
+	Integer MAXCOMBO = 200;
 	Integer COMBOPER = 12;
 	public Integer SUMMONCOUNT = 2;
 	
@@ -261,8 +262,8 @@ public class Summoned extends Mobs{
 	                public void run() 
 	                {
 	                	final BossBar rb = combobar.get(rn,meta);
-	                	double comt = (double)COMBOTIME*(1.2-combo.get(rn, meta)/(double)MAXCOMBO);
-	        			if(combo.get(rn, meta)>=MAXCOMBO) {
+	                	double comt = (double)COMBOTIME*(1.2-combo.get(rn, meta)/(double)BOSSCOMBO);
+	        			if(combo.get(rn, meta)>=BOSSCOMBO) {
 	        				comt = 40d;
 	        			}
 	                	
@@ -285,8 +286,8 @@ public class Summoned extends Mobs{
 	                {
 
 	                	final BossBar rb = combobar.get(rn,meta);
-	                	double comt = (double)COMBOTIME*(1.2-combo.get(rn, meta)/(double)MAXCOMBO);
-	        			if(combo.get(rn, meta)>=MAXCOMBO) {
+	                	double comt = (double)COMBOTIME*(1.2-combo.get(rn, meta)/(double)BOSSCOMBO);
+	        			if(combo.get(rn, meta)>=BOSSCOMBO) {
 	        				comt = 40d;
 	        			}
 	                	final double prg = rb.getProgress() - 1d/comt;
@@ -325,8 +326,8 @@ public class Summoned extends Mobs{
 			final int com = combo.get(rn, meta)+1;
 			combo.put(rn, meta, com);
 			
-			double comt = (double)COMBOTIME*(1.2-combo.get(rn, meta)/(double)MAXCOMBO);
-			if(combo.get(rn, meta)>=MAXCOMBO) {
+			double comt = (double)COMBOTIME*(1.2-combo.get(rn, meta)/(double)BOSSCOMBO);
+			if(combo.get(rn, meta)>=BOSSCOMBO) {
 				comt = 40d;
 			}
 			combobar(rn,meta);
@@ -344,8 +345,8 @@ public class Summoned extends Mobs{
 		}
 		else {
 			combo.put(rn, meta, 1);
-			double comt = (double)COMBOTIME*(1.2-combo.get(rn, meta)/(double)MAXCOMBO);
-			if(combo.get(rn, meta)>=MAXCOMBO) {
+			double comt = (double)COMBOTIME*(1.2-combo.get(rn, meta)/(double)BOSSCOMBO);
+			if(combo.get(rn, meta)>=BOSSCOMBO) {
 				comt = 40d;
 			}
 			combobar(rn,meta);
@@ -687,7 +688,7 @@ public class Summoned extends Mobs{
 	        	Elements.give(Elements.getel(getelnum(meta), p), count, p);
 			}
 			if(com==-1) {
-				int exp = 2*getelexp(meta)*MAXCOMBO;
+				int exp = 2*getelexp(meta)*BOSSCOMBO;
 	        	p.giveExp(exp);
 				Bukkit.getServer().getPluginManager().callEvent(new PlayerExpChangeEvent(p,exp));
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -701,8 +702,8 @@ public class Summoned extends Mobs{
 					p.sendMessage(ChatColor.GOLD + "You've just got Boss Reward");
 				}
 			}
-			else if(com>=MINCOMBO && com<MAXCOMBO){
-				int exp = getelexp(meta)*MAXCOMBO/2/(2+MAXCOMBO-com);
+			else if(com>=MINCOMBO && com<BOSSCOMBO){
+				int exp = getelexp(meta)*BOSSCOMBO/2/(2+BOSSCOMBO-com);
 	        	p.giveExp(exp);
 				Bukkit.getServer().getPluginManager().callEvent(new PlayerExpChangeEvent(p,exp));
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -714,8 +715,8 @@ public class Summoned extends Mobs{
 					p.sendMessage(ChatColor.GOLD + "You've just got " + com + " Combo Reward");
 				}
 			}
-			else if(com>=MAXCOMBO){
-				int exp = getelexp(meta)*MAXCOMBO*(1+com/COMBOPER);
+			else if(com>=BOSSCOMBO){
+				int exp = getelexp(meta)*BOSSCOMBO*(1+com/COMBOPER);
 	        	p.giveExp(exp);
 				Bukkit.getServer().getPluginManager().callEvent(new PlayerExpChangeEvent(p,exp));
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -739,17 +740,17 @@ public class Summoned extends Mobs{
 			}
 
 			if(com==-1) {
-				int exp = 2*getelexp(meta)*MAXCOMBO;
+				int exp = 2*getelexp(meta)*BOSSCOMBO;
 				f.giveExp(exp);
 				Bukkit.getServer().getPluginManager().callEvent(new PlayerExpChangeEvent(f,exp));
 			}
-			else if(com>=MINCOMBO && com<MAXCOMBO){
-				int exp = getelexp(meta)*MAXCOMBO/2/(2+MAXCOMBO-com);
+			else if(com>=MINCOMBO && com<BOSSCOMBO){
+				int exp = getelexp(meta)*BOSSCOMBO/2/(2+BOSSCOMBO-com);
 				f.giveExp(exp);
 				Bukkit.getServer().getPluginManager().callEvent(new PlayerExpChangeEvent(f,exp));
 			}
-			else if(com>=MAXCOMBO) {
-				int	exp = getelexp(meta)*MAXCOMBO*(1+com/COMBOPER);
+			else if(com>=BOSSCOMBO) {
+				int	exp = getelexp(meta)*BOSSCOMBO*(1+com/COMBOPER);
 				f.giveExp(exp);
 				Bukkit.getServer().getPluginManager().callEvent(new PlayerExpChangeEvent(f,exp));
 			}
@@ -757,8 +758,8 @@ public class Summoned extends Mobs{
 			par.forEach(p ->{
 				int count = com/COMBOPER/par.size();
 	        	Elements.give(Elements.getel(getelnum(meta), p), count, p);
-				if(com>MAXCOMBO) {
-					int exp = 2*getelexp(meta)*MAXCOMBO;
+				if(com>BOSSCOMBO) {
+					int exp = 2*getelexp(meta)*BOSSCOMBO;
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						p.sendMessage(ChatColor.GOLD + "" + exp + " 경험치를 획득했습니다");
 			        	Effect(p);
@@ -771,7 +772,7 @@ public class Summoned extends Mobs{
 					}
 				}
 				else if(com>=MINCOMBO){
-					int exp = getelexp(meta)*MAXCOMBO/2/(2+MAXCOMBO-com);;
+					int exp = getelexp(meta)*BOSSCOMBO/2/(2+BOSSCOMBO-com);;
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 						p.sendMessage(ChatColor.GOLD + "" + exp + " 경험치를 획득했습니다");
 						p.sendMessage(ChatColor.GOLD + "" + com + " 콤보 보상이 지급되었습니다");
@@ -1054,6 +1055,9 @@ public class Summoned extends Mobs{
 						ComboMessage(rn,combo,false);
 						return rn;
 					}
+					else if(combo >= MAXCOMBO) {
+                		RaidFinish(rn,"","",0,meta);
+					}
 				}
 				else if(meta.equals("nether")) {
 
@@ -1065,18 +1069,21 @@ public class Summoned extends Mobs{
 						ComboMessage(rn,combo,false);
 						return rn;
 					}
+					else if(combo >= MAXCOMBO) {
+                		RaidFinish(rn,"","",0,meta);
+					}
 				}
 				else {
 					if(combo==MINCOMBO) {
 						ComboMessage(rn,combo,false);
 						return rn;
 					}
-					else if(combo % COMBOPER == 0 && combo>=COMBOPER && combo < MAXCOMBO) {
+					else if(combo % COMBOPER == 0 && combo>=COMBOPER && combo < BOSSCOMBO) {
 						ComboMessage(rn,combo,false);
 						return rn;
 
 					}
-					else if(combo == MAXCOMBO) {
+					else if(combo == BOSSCOMBO) {
 						ComboMessage(rn,combo,true);
 						Boss(rn,meta, le.getLocation().clone());
 					}
@@ -1120,11 +1127,11 @@ public class Summoned extends Mobs{
 								ComboMessage(rn,combo,false);
 								hs.add(rn);
 							}
-							else if(combo % COMBOPER == 0 && combo>=COMBOPER && combo < MAXCOMBO) {
+							else if(combo % COMBOPER == 0 && combo>=COMBOPER && combo < BOSSCOMBO) {
 								ComboMessage(rn,combo,false);
 								hs.add(rn);
 							}
-							else if(combo == MAXCOMBO) {
+							else if(combo == BOSSCOMBO) {
 								ComboMessage(rn,combo,true);
 								Boss(rn,meta, le.getLocation().clone());
 							}
@@ -1283,7 +1290,7 @@ public class Summoned extends Mobs{
 			}
 			Random random=new Random();
 	    	double ri = random.nextDouble()*TC;
-	    	if(ri <= 50d * (combo.get(rn, meta)-MINCOMBO) / MAXCOMBO) {
+	    	if(ri <= 50d * (combo.get(rn, meta)-MINCOMBO) / BOSSCOMBO) {
 				combo.remove(rn, meta);
 	    		TreasureRaid(rn,meta);
 	    		return;
