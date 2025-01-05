@@ -300,9 +300,33 @@ public class PoisonSkills extends OverworldRaids{
 
 	public void bowshoot(EntityShootBowEvent ev) 
 	{
-		if(!ev.getEntity().hasMetadata("poison")) {
-			return;
-		}
+		if(ev.getEntity().hasMetadata("enderRifleman")){
+
+			ev.setCancelled(true);
+			
+		    LivingEntity p = ev.getEntity();
+		    
+        	p.getWorld().playSound(p.getLocation(), Sound.ITEM_CROSSBOW_LOADING_END, 1f, 2f);
+			p.getWorld().spawnParticle(Particle.ASH, p.getLocation(), 10);
+
+			for(int i = 0 ; i < 3; i++) {
+        		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	                @Override
+	                public void run() {
+
+	                	p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDER_EYE_LAUNCH, 1f, 1.1f);
+	                	
+	                    Snowball ws = (Snowball) p.launchProjectile(Snowball.class);
+	                    ws.setItem(new ItemStack(Material.ENDER_EYE));
+	                    ws.setShooter(p);
+	                    ws.setVelocity(p.getLocation().getDirection().normalize().multiply(1.95));
+	    				ws.setMetadata("Rifleman", new FixedMetadataValue(RMain.getInstance(), true));
+	                	
+	                }
+	            }, i*2+10); 
+			}
+
+		 }
 		if(ev.getEntity().hasMetadata("Rifleman")){
 
 			ev.setCancelled(true);

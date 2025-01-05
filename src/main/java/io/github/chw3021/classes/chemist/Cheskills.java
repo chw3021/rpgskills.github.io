@@ -374,11 +374,11 @@ public class Cheskills extends Pak {
 					}
                     if(vx.containsKey(p.getUniqueId())) {
 	                    cloud.setRadius((float) (1.5f+Proficiency.getpro(p)) + 3);
-	                    cloud.setColor(Color.GREEN);
+	                    cloud.setColor(Color.FUCHSIA);
                     }
                     cloud.setDuration(12);
                     p.playSound(fl, Sound.BLOCK_BREWING_STAND_BREW, 0.1f, 0.2f);
-                    for(int i = 0; i<3; i++) {
+                    for(int i = 0; i<5; i++) {
                     	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
                 		@Override
 		                	public void run() 
@@ -403,7 +403,7 @@ public class Cheskills extends Pak {
 		    								LivingEntity le = (LivingEntity)e;
 		    								atk3(0.31*(1+csd.AcidCloud.get(p.getUniqueId())*0.04), (vx.containsKey(p.getUniqueId()) ? 0.5 : 0), p, le);
 		    								if(acidstorming.containsKey(p.getUniqueId())) {
-		    									le.teleport(fl.clone().add(0, -0.6, 0));
+		    									le.teleport(fl.clone());
 		    									Holding.superholding(p, le, 10l);
 		    				                	atk1(0.58*(1+csd.Charge.get(p.getUniqueId())*0.07), p, le);
 		    								}
@@ -417,7 +417,7 @@ public class Cheskills extends Pak {
 	                	   }, i*4); 
                     }
                 }
-			}, 1, 3); 
+			}, 0, 3); 
 			cloudt.put(p.getUniqueId(),task);
 		}
 	}
@@ -436,7 +436,7 @@ public class Cheskills extends Pak {
 			if(ClassData.pc.get(p.getUniqueId()) == 15&& csd.AcidCloud.getOrDefault(p.getUniqueId(), 0)>=1) {
 				if(!(p.isSneaking()) && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK))
 				{
-					Double sec = 1d;
+					Double sec = 0.5d;
 					p.setCooldown(CAREFUL,3);
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
@@ -446,7 +446,7 @@ public class Cheskills extends Pak {
 						.slot(1)
 						.hm(gdcooldown)
 						.skillUse(() -> {
-		                AcidCloud(p);
+							AcidCloud(p);
 						});
 				bd.execute();
 			}
@@ -459,7 +459,7 @@ public class Cheskills extends Pak {
 	
 	public void Cloud(PlayerItemHeldEvent ev)
 	{
-		if(ev.isCancelled()) {
+		if(ev.isCancelled() || ev.getNewSlot() == 4 || ev.getNewSlot() == 3) {
 			return;
 		}
 		Player p = ev.getPlayer();
@@ -1583,37 +1583,42 @@ public class Cheskills extends Pak {
 						.slot(6)
 						.hm(sultcooldown)
 						.skillUse(() -> {
-						if(!cloudh.containsKey(p.getUniqueId())) {
-				    		AcidCloud(p);
-						}
-						if(vxt.containsKey(p.getUniqueId())) {
-	                    	Bukkit.getScheduler().cancelTask(vxt.get(p.getUniqueId()));
-	                    }
-	                    Holding.invur(p, 100l);
-	                	p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 200,3,false,true));
-	                	p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200,3,false,true));
-
-             			p.playSound(p.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 0f, 1f);
-             			p.playSound(p.getLocation(), Sound.BLOCK_BEACON_AMBIENT, 0f, 1f);
-             			p.playSound(p.getLocation(), Sound.BLOCK_BREWING_STAND_BREW, 0f, 1f);
-             			
-	                    vx.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
-	                    vx.putIfAbsent(p.getUniqueId(), 0);
-
-		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-							p.sendTitle(ChatColor.DARK_GREEN + "신경독 활성화", ChatColor.DARK_GREEN +"산성구름이 강화됩니다", 20, 30, 20);
-		        		}
-		        		else {
-							p.sendTitle(ChatColor.DARK_GREEN + "VX Activate", ChatColor.DARK_GREEN +"Acid Cloud Enhanced", 20, 30, 20);
-		        		}
-	                    int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		             		@Override
-				                	public void run() 
-					                {
-			                    	vx.remove(p.getUniqueId());
-						            }
-			                	   }, 200); 
-	                    vxt.put(p.getUniqueId(), task);
+							
+							if(vxt.containsKey(p.getUniqueId())) {
+		                    	Bukkit.getScheduler().cancelTask(vxt.get(p.getUniqueId()));
+		                    }
+		                    Holding.invur(p, 100l);
+		                    p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 200,3,false,true));
+		                	p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200,3,false,true));
+	
+	             			p.playSound(p.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 1f, 0f);
+	             			p.playSound(p.getLocation(), Sound.BLOCK_BEACON_AMBIENT, 1f, 0f);
+	             			p.playSound(p.getLocation(), Sound.BLOCK_BREWING_STAND_BREW, 1f, 0f);
+	             			
+		                    vx.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
+		                    vx.putIfAbsent(p.getUniqueId(), 0);
+	
+			        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+								p.sendTitle(ChatColor.DARK_GREEN + "신경독 활성화", ChatColor.DARK_GREEN +"산성구름이 강화됩니다", 20, 30, 20);
+			        		}
+			        		else {
+								p.sendTitle(ChatColor.DARK_GREEN + "VX Activate", ChatColor.DARK_GREEN +"Acid Cloud Enhanced", 20, 30, 20);
+			        		}
+		                    int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+			             		@Override
+					                	public void run() 
+						                {
+				                    	vx.remove(p.getUniqueId());
+							            }
+				                	   }, 200); 
+		                    vxt.put(p.getUniqueId(), task);
+		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+			             		@Override
+					                	public void run() 
+						                {
+				                    	AcidCloud(p);
+							            }
+				                	   }, 5); 
 						});
 				bd.execute();
 				
@@ -1645,9 +1650,15 @@ public class Cheskills extends Pak {
 						.hm(sult2cooldown)
 						.skillUse(() -> {
 
+		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+			             		@Override
+					                	public void run() 
+						                {
+				                    	AcidCloud(p);
+							            }
+				                	   }, 5); 
 	                	final Location tl =gettargetblock(p,3).clone();
 	                    ArmorStand tp = tl.getWorld().spawn(tl, ArmorStand.class);
-	                    tp.setCustomName("NUKE");
 	                    tp.setInvisible(true);
 	                    tp.setCollidable(false);
 	                    tp.playEffect(EntityEffect.TNT_MINECART_IGNITE);

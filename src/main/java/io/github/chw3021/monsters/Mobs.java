@@ -396,12 +396,38 @@ public class Mobs extends Pak {
 		cl.setLootTable(LootTables.UNEMPLOYED_GIFT.getLootTable());
 		return creature;
 	}
-	
+
 	final protected LivingEntity MobspawnLoc(Location l, @Nullable String name, Double health, @Nullable ItemStack head,
 			@Nullable ItemStack chest, @Nullable ItemStack leg, @Nullable ItemStack boots, @Nullable ItemStack main,
 			@Nullable ItemStack off, @Nullable EntityType type) {
 		final LivingEntity creature = (LivingEntity) l.getWorld().spawnEntity(l.clone().add(0, 20, 0), type);
 		Holding.invur(creature, 40l);
+		creature.setRemoveWhenFarAway(false);
+		creature.setPersistent(true);
+		creature.setMetadata("rmf", new FixedMetadataValue(RMain.getInstance(), true));
+		creature.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
+		creature.getAttribute(Attribute.MAX_HEALTH).setBaseValue(health);
+		creature.setHealth(health);
+		creature.setCustomName(name);
+		creature.getEquipment().setBootsDropChance(0);
+		creature.getEquipment().setChestplateDropChance(0);
+		creature.getEquipment().setHelmetDropChance(0);
+		creature.getEquipment().setItemInMainHandDropChance(0);
+		creature.getEquipment().setItemInOffHandDropChance(0);
+		creature.getEquipment().setLeggingsDropChance(0);
+		
+		equipsum(creature,head,chest,leg,boots,main,off);
+		
+		Lootable cl = (Lootable) creature;
+		cl.setLootTable(LootTables.UNEMPLOYED_GIFT.getLootTable());
+		return creature;
+	}
+	
+	final protected LivingEntity phaseChange(Location l, @Nullable String name, Double health, @Nullable ItemStack head,
+			@Nullable ItemStack chest, @Nullable ItemStack leg, @Nullable ItemStack boots, @Nullable ItemStack main,
+			@Nullable ItemStack off, @Nullable EntityType type) {
+		final LivingEntity creature = (LivingEntity) SummonEffect(l,type);
+		Holding.invur(creature, 20l);
 		creature.setRemoveWhenFarAway(false);
 		creature.setPersistent(true);
 		creature.setMetadata("rmf", new FixedMetadataValue(RMain.getInstance(), true));

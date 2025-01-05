@@ -100,6 +100,35 @@ public class OceanSkills extends OverworldRaids{
 				ee.setItemInOffHand(main);
 				p.removeMetadata("mimic", RMain.getInstance());
 			}
+			else if(p.hasMetadata("enderMimic") && !p.hasAI() && p.isInvisible()) {
+				p.removeMetadata("fake", RMain.getInstance());
+				d.setCancelled(false);
+				p.setAI(true);
+				p.setInvisible(false);
+				ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
+				LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
+				chm.setColor(Color.PURPLE);
+				chest.setItemMeta(chm);
+				ItemStack leg = new ItemStack(Material.LEATHER_LEGGINGS);
+				LeatherArmorMeta lem = (LeatherArmorMeta) leg.getItemMeta();
+				lem.setColor(Color.PURPLE);
+				leg.setItemMeta(lem);
+				ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
+				LeatherArmorMeta bom = (LeatherArmorMeta) boots.getItemMeta();
+				bom.setColor(Color.PURPLE);
+				boots.setItemMeta(bom);
+				boots.addUnsafeEnchantment(Enchantment.FEATHER_FALLING, 3);
+				ItemStack main = new ItemStack(Material.END_CRYSTAL);
+				main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
+				
+				EntityEquipment ee = p.getEquipment();
+				ee.setChestplate(chest);
+				ee.setLeggings(leg);
+				ee.setBoots(boots);
+				ee.setItemInMainHand(main);
+				ee.setItemInOffHand(main);
+				p.removeMetadata("enderMimic", RMain.getInstance());
+			}
 		}
 	}
 	    
@@ -114,8 +143,32 @@ public class OceanSkills extends OverworldRaids{
 				LivingEntity p = (LivingEntity) po.getShooter();
 				if(p.hasMetadata("riptider")) {
 					d.setCancelled(true);
-					p.setVelocity(po.getVelocity());
-					p.playEffect(EntityEffect.ZOGLIN_ATTACK);
+					final Vector pv = po.getVelocity().clone();
+					p.getWorld().playSound(p.getLocation(), Sound.ITEM_TRIDENT_RIPTIDE_1, 1.0f, 0.6f);
+					p.setVelocity(pv.clone().multiply(1.1));
+					p.setRiptiding(true);
+	                int task = Bukkit.getServer().getScheduler().runTaskTimer(RMain.getInstance(), new Runnable() {
+	             		@Override
+	                	public void run() 
+		                {	
+	    					p.setVelocity(p.getVelocity().add(pv.clone().multiply(0.05)));
+	    					for(Entity e : p.getWorld().getNearbyEntities(p.getLocation(),1, 1, 1)) {
+	    						if(p!=e && e instanceof Player&& !(e.hasMetadata("fake"))) {
+	    							Player le = (Player)e;
+	    							le.damage(2);
+	    						}
+	    					}
+	             			
+			            }
+	        	   	}, 0,1).getTaskId();
+	                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	             		@Override
+	                	public void run() 
+		                {	
+	             			p.setRiptiding(false);
+	             			Bukkit.getScheduler().cancelTask(task);
+			            }
+	        	   	}, 14);
 				}
 			}
 		}					

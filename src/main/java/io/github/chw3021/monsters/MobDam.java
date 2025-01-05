@@ -107,10 +107,6 @@ public class MobDam extends Pak implements Listener {
 			mdset(d, le, 6.2, de, 6);
 			mdset(d, le, 1.0, de, 8);
 		}
-		if (le.hasMetadata("void")) {
-			mdset(d, le, 7.3, de, 5);
-			mdset(d, le, 1.0, de, 14);
-		}
 		if (le.hasMetadata("boss")) {
 			d.setDamage(d.getDamage() * 2.5);
 		}

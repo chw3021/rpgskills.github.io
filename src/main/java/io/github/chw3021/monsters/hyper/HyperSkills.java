@@ -155,9 +155,9 @@ public class HyperSkills extends Summoned{
 	
 	public void CreepJumper(EntityTargetEvent ev) 
 	{
-		if((ev.getEntity() instanceof Creeper) && ev.getEntity().hasMetadata("hyper") && ev.getEntity().hasMetadata("CreepJumper")  && ev.getTarget() instanceof Player) 
+		if(ev.getEntity().hasMetadata("CreepJumper")  && ev.getTarget() instanceof Player) 
 		{
-			Creeper p = (Creeper)ev.getEntity();
+			LivingEntity p = (LivingEntity) ev.getEntity();
 			final Player pe = (Player) ev.getTarget();
 
 			p.getWorld().playSound(p.getLocation(), Sound.ENTITY_CREEPER_PRIMED, 1f, 0.2f);
@@ -170,7 +170,7 @@ public class HyperSkills extends Summoned{
 
 	public void Stalker(EntityTargetEvent ev) 
 	{
-		if((ev.getEntity() instanceof Husk) && ev.getEntity().hasMetadata("hyper") && ev.getEntity().hasMetadata("Stalker")  && ev.getTarget() instanceof Player) 
+		if((ev.getEntity() instanceof Husk)  && ev.getEntity().hasMetadata("Stalker")  && ev.getTarget() instanceof Player) 
 		{
 			final Husk p = (Husk)ev.getEntity();
 			final Player pe = (Player) ev.getTarget();

@@ -79,7 +79,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 
 
-public class NethercoreRaids extends Summoned implements Listener {
+public class EndercoreRaids extends Summoned implements Listener {
 
 	public static HashMap<UUID, Location> beforepl = new HashMap<UUID, Location>();
 	public Multimap<String, UUID> raider = ArrayListMultimap.create();
@@ -120,8 +120,8 @@ public class NethercoreRaids extends Summoned implements Listener {
 	Integer BOSSNUM = -5;
 	
 	
-	private static final NethercoreRaids instance = new NethercoreRaids ();
-	public static NethercoreRaids getInstance()
+	private static final EndercoreRaids instance = new EndercoreRaids ();
+	public static EndercoreRaids getInstance()
 	{
 		return instance;
 	}
@@ -156,11 +156,11 @@ public class NethercoreRaids extends Summoned implements Listener {
 		}
 	}
 	
-	public final void NethercoreRaidFinish(String rn, String title, String sub, Integer factor) {
+	public final void EndercoreRaidFinish(String rn, String title, String sub, Integer factor) {
 		RaidFinish(rn,title,sub,factor);
 
-		Bukkit.getWorld("NethercoreRaid").getEntities().stream().filter(e -> e.hasMetadata("mirror"+rn)).forEach(e -> e.remove());
-		Bukkit.getWorld("NethercoreRaid").getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(e -> e.remove());
+		Bukkit.getWorld("EndercoreRaid").getEntities().stream().filter(e -> e.hasMetadata("mirror"+rn)).forEach(e -> e.remove());
+		Bukkit.getWorld("EndercoreRaid").getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(e -> e.remove());
 
 
 		
@@ -435,7 +435,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 		//Double dif = 100000 * BigDecimal.valueOf(1 + 0.1*RaidDifficulties.getPlayerDifficulty(p, RaidCategory.NETHER)).setScale(1, RoundingMode.HALF_EVEN).doubleValue();
 
 		
-		if(in == -5) {
+		if(in == -6) {
 			ItemStack main = new ItemStack(Material.CROSSBOW);
 			main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
 			ItemStack off = new ItemStack(Material.FURNACE);
@@ -467,7 +467,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 			boots.addUnsafeEnchantment(Enchantment.FIRE_PROTECTION, 5);
 			boots.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
 			boots.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
-    		String reg = pm.getLocale().equalsIgnoreCase("ko_kr") ? "피글린요리사":"PiglinCook";
+    		String reg = pm.getLocale().equalsIgnoreCase("ko_kr") ? "차원훼방꾼":"Dimention";
     		Piglin newmob = (Piglin) MobspawnLoc(esl, ChatColor.RED + reg, dif1, bloodTrim(hel),
     				bloodTrim(chest), bloodTrim(leg), bloodTrim(boots), main, off, EntityType.PIGLIN);
 			newmob.setGlowing(true);
@@ -521,7 +521,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 
     		return newmob;
 		}
-		else if(in == -2) {
+		else if(in == -7) {
     		ItemStack main = new ItemStack(Material.BOW);
     		main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
     		ItemStack hel = new ItemStack(Material.SKELETON_SKULL);
@@ -716,10 +716,10 @@ public class NethercoreRaids extends Summoned implements Listener {
 			if(Party.hasParty(p)) {
 				if(Party.isOwner(p)) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						NethercoreRaidFinish(getheroname(p), "탈주","파티장이 떠났습니다",0);
+						EndercoreRaidFinish(getheroname(p), "탈주","파티장이 떠났습니다",0);
 					}
 					else {
-						NethercoreRaidFinish(getheroname(p), "Escaped","Party Owner Left",0);
+						EndercoreRaidFinish(getheroname(p), "Escaped","Party Owner Left",0);
 					}
 				}
 				else {
@@ -731,10 +731,10 @@ public class NethercoreRaids extends Summoned implements Listener {
 			}
 			else {
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					NethercoreRaidFinish(getheroname(p), "탈주","파티장이 떠났습니다",0);
+					EndercoreRaidFinish(getheroname(p), "탈주","파티장이 떠났습니다",0);
 				}
 				else {
-					NethercoreRaidFinish(getheroname(p), "Escaped","Party Owner Left",0);
+					EndercoreRaidFinish(getheroname(p), "Escaped","Party Owner Left",0);
 				}
 			}
 			
@@ -767,9 +767,9 @@ public class NethercoreRaids extends Summoned implements Listener {
 	
 	@SuppressWarnings("deprecation")
 	@EventHandler
-	public void NethercoreRaidStart(PlayerInteractEvent d)
+	public void EndercoreRaidStart(PlayerInteractEvent d)
 	{
-		if(d.getClickedBlock() != null && d.getClickedBlock().hasMetadata("NethercoreRaidPortal") && d.getAction() == Action.RIGHT_CLICK_BLOCK && d.getAction() != Action.LEFT_CLICK_BLOCK) {
+		if(d.getClickedBlock() != null && d.getClickedBlock().hasMetadata("EndercoreRaidPortal") && d.getAction() == Action.RIGHT_CLICK_BLOCK && d.getAction() != Action.LEFT_CLICK_BLOCK) {
 
 			Player p = (Player) d.getPlayer();
 			if(!p.getInventory().getItemInMainHand().getType().isAir() || heroes.containsValue(p.getUniqueId())|| raider.containsKey(getheroname(p)) || beforepl.containsKey(p.getUniqueId()) || p.hasCooldown(Material.RAIL)) {
@@ -798,8 +798,8 @@ public class NethercoreRaids extends Summoned implements Listener {
 	            	raidcool.remove(p.getUniqueId());
 	            }
 			}
-    		String rn = d.getClickedBlock().getMetadata("NethercoreRaidPortal").get(0).asString();
-    		World rw = Bukkit.getServer().getWorld("NethercoreRaid");
+    		String rn = d.getClickedBlock().getMetadata("EndercoreRaidPortal").get(0).asString();
+    		World rw = Bukkit.getServer().getWorld("EndercoreRaid");
     		int fix = p.getEntityId()*100-29999984;
     		int fiz = p.getEntityId()*100-29999984;
     		if(fix >= 29999984) {
@@ -861,7 +861,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 			d.getClickedBlock().setType(Material.VOID_AIR);
     		ArmorStand portal = (ArmorStand) spl.getWorld().spawn(spl, ArmorStand.class);
     		portal.setMetadata("portal", new FixedMetadataValue(RMain.getInstance(), true));
-    		portal.setMetadata("NethercoreRaidExit", new FixedMetadataValue(RMain.getInstance(), true));
+    		portal.setMetadata("EndercoreRaidExit", new FixedMetadataValue(RMain.getInstance(), true));
     		portal.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
     		portal.setRemoveWhenFarAway(false);
     		portal.setGlowing(true);
@@ -925,7 +925,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 			            @Override
 			            public void run() 
 			            {
-			            	NethercoreRaidStart(p,rn,difen.get(rn));
+			            	EndercoreRaidStart(p,rn,difen.get(rn));
 			            	difent.remove(rn);
 			            }
 					}, 160); 
@@ -957,7 +957,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 		            @Override
 		            public void run() 
 		            {
-		            	NethercoreRaidStart(p,rn,difen.get(rn));
+		            	EndercoreRaidStart(p,rn,difen.get(rn));
 		            	difent.remove(rn);
 		            }
 				}, 160); 
@@ -967,7 +967,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 		}
 	}
 	
-	final private void NethercoreRaidStart(Player p, String rn, Integer endif) {
+	final private void EndercoreRaidStart(Player p, String rn, Integer endif) {
 
 		
 		final Location spl = raidloc.get(rn).clone();
@@ -1054,7 +1054,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 	        	    		targeting(rn);
 
 		        			String t = p.getLocale().equalsIgnoreCase("ko_kr") ? "남은시간 - ":"TimeLeft - ";
-	        	    		BossBar	timeb = Bukkit.getServer().createBossBar(new NamespacedKey(RMain.getInstance(), rn+"NethercoreRaidTime"),t + String.valueOf((int)timeout.get(rn)/20/60) + ":" + String.valueOf((int)(timeout.get(rn)/20)%60), BarColor.WHITE, BarStyle.SEGMENTED_6);
+	        	    		BossBar	timeb = Bukkit.getServer().createBossBar(new NamespacedKey(RMain.getInstance(), rn+"EndercoreRaidTime"),t + String.valueOf((int)timeout.get(rn)/20/60) + ":" + String.valueOf((int)(timeout.get(rn)/20)%60), BarColor.WHITE, BarStyle.SEGMENTED_6);
 	        	    		timeb.setVisible(true);
 	        	    		timebar.put(rn, timeb);
 	        	    		int timetask = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
@@ -1073,10 +1073,10 @@ public class NethercoreRaids extends Summoned implements Listener {
 	        	            		if(timeout.get(rn) <=0) {
 
 	    								if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-    	        	            			NethercoreRaidFinish(rn,"패배..", "시간초과",0);
+    	        	            			EndercoreRaidFinish(rn,"패배..", "시간초과",0);
 	    								}
 	    								else {
-    	        	            			NethercoreRaidFinish(rn,"Defeated..", "TimeOut",0);
+    	        	            			EndercoreRaidFinish(rn,"Defeated..", "TimeOut",0);
 	    								}
 	        	                    	
 	        	                    	spl.getWorld().spawnParticle(Particle.ANGRY_VILLAGER, spl, 1000,6,6,6);
@@ -1095,7 +1095,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 	
 	
 	@EventHandler
-	public void NethercoreRaidStart(AsyncPlayerChatEvent d) 
+	public void EndercoreRaidStart(AsyncPlayerChatEvent d) 
 	{	
 			Player p = (Player) d.getPlayer();
 
@@ -1120,7 +1120,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 			}
 
 			difen.put(rn, endif);
-			NethercoreRaidStart(p,rn,endif);
+			EndercoreRaidStart(p,rn,endif);
 		
 	}
 
@@ -1148,7 +1148,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 			String rn = le.getMetadata("raid").get(0).asString();
 			raider.remove(rn, le.getUniqueId());
 			if(raider.get(rn).size()<=0){
-	        	NethercoreRaidFinish(rn, "", "",1);
+	        	EndercoreRaidFinish(rn, "", "",1);
 			}
 		}
 	}
@@ -1164,10 +1164,10 @@ public class NethercoreRaids extends Summoned implements Listener {
 			String rn = le.getMetadata("netherRaidVil").get(0).asString();
 
 			if(language.get(rn).equalsIgnoreCase("ko_kr")) {
-				NethercoreRaidFinish(rn, "패배..", "주민 보호 실패",0);
+				EndercoreRaidFinish(rn, "패배..", "주민 보호 실패",0);
 			}
 			else {
-				NethercoreRaidFinish(rn, "Defeated..", "Fail to Protect the Villager",0);
+				EndercoreRaidFinish(rn, "Defeated..", "Fail to Protect the Villager",0);
 			}
 		}
 	}
@@ -1184,7 +1184,7 @@ public class NethercoreRaids extends Summoned implements Listener {
         		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + String.valueOf(lives.getOrDefault(rn, 0)) + "lives Left");
         	});
         	if (lives.computeIfAbsent(rn, key -> 1) <= 0) {
-        	    NethercoreRaidFinish(rn, 
+        	    EndercoreRaidFinish(rn, 
         	        language.getOrDefault(rn, "en_us").equalsIgnoreCase("ko_kr") ? "패배.." : "Defeated..", 
         	        language.getOrDefault(rn, "en_us").equalsIgnoreCase("ko_kr") ? "모든 목숨 소진" : "All Lives Exhausted", 
         	        0
@@ -1194,9 +1194,9 @@ public class NethercoreRaids extends Summoned implements Listener {
 	}
 
 	@EventHandler
-	public void NethercoreRaidExit(EntityDamageByEntityEvent d) 
+	public void EndercoreRaidExit(EntityDamageByEntityEvent d) 
 	{	
-		if(d.getEntity().hasMetadata("NethercoreRaidExit")) {
+		if(d.getEntity().hasMetadata("EndercoreRaidExit")) {
 			d.setCancelled(true);
 			if(d.getDamager() instanceof Player) {
 	
@@ -1208,10 +1208,10 @@ public class NethercoreRaids extends Summoned implements Listener {
 					if(Party.hasParty(p)) {
 						if(Party.isOwner(p)) {
 			    			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								NethercoreRaidFinish(getheroname(p), "항복","",0);
+								EndercoreRaidFinish(getheroname(p), "항복","",0);
 			    			}
 			    			else {
-								NethercoreRaidFinish(getheroname(p), "Surrender","",0);
+								EndercoreRaidFinish(getheroname(p), "Surrender","",0);
 			    			}
 						}
 						else {
@@ -1226,10 +1226,10 @@ public class NethercoreRaids extends Summoned implements Listener {
 					}
 					else {
 		    			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-							NethercoreRaidFinish(getheroname(p), "항복","",0);
+							EndercoreRaidFinish(getheroname(p), "항복","",0);
 		    			}
 		    			else {
-							NethercoreRaidFinish(getheroname(p), "Surrender","",0);
+							EndercoreRaidFinish(getheroname(p), "Surrender","",0);
 		    			}
 					}
 					
@@ -1241,12 +1241,12 @@ public class NethercoreRaids extends Summoned implements Listener {
 
 
 	@EventHandler
-	public void NethercoreRaidExit(PlayerJoinEvent ev) 
+	public void EndercoreRaidExit(PlayerJoinEvent ev) 
 	{
 		Player p = ev.getPlayer();
 
 		try {
-			if(!heroes.containsValue(p.getUniqueId()) && p.getWorld().getName().contains("NethercoreRaid")) {
+			if(!heroes.containsValue(p.getUniqueId()) && p.getWorld().getName().contains("EndercoreRaid")) {
 
 				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		            @Override
@@ -1273,19 +1273,19 @@ public class NethercoreRaids extends Summoned implements Listener {
 
 
 	@EventHandler
-	public void NethercoreRaidExit(PluginEnableEvent ev) 
+	public void EndercoreRaidExit(PluginEnableEvent ev) 
 	{
 		List<World> worlds = Bukkit.getServer().getWorlds();
 		worlds.forEach(w -> w.getPlayers().forEach(b -> {
 				Player p = (Player) b;
-				if(!heroes.containsValue(p.getUniqueId()) && p.getWorld().getName().contains("NethercoreRaid")) {
+				if(!heroes.containsValue(p.getUniqueId()) && p.getWorld().getName().contains("EndercoreRaid")) {
 					p.teleport(w.getSpawnLocation());
 				}
 		}));
 	}
 
 	@EventHandler
-	public void NethercoreRaidExit(PluginDisableEvent ev) 
+	public void EndercoreRaidExit(PluginDisableEvent ev) 
 	{
 		List<World> worlds = Bukkit.getServer().getWorlds();
 		worlds.forEach(w -> w.getPlayers().forEach(b -> {
@@ -1502,12 +1502,12 @@ public class NethercoreRaids extends Summoned implements Listener {
 	public void Teleport(PlayerTeleportEvent e)
 	{
 		Player p = e.getPlayer();
-		if(e.getTo().getWorld().getName().contains("NethercoreRaid")) {
+		if(e.getTo().getWorld().getName().contains("EndercoreRaid")) {
 			if(!heroes.containsValue(p.getUniqueId())) {
 				e.setCancelled(true);
 			}
 		}
-		if(e.getFrom().getWorld().getName().contains("NethercoreRaid") && !e.getTo().getWorld().getName().contains("NethercoreRaid") && !e.getTo().getWorld().getName().contains("FakeDimension")) {
+		if(e.getFrom().getWorld().getName().contains("EndercoreRaid") && !e.getTo().getWorld().getName().contains("EndercoreRaid") && !e.getTo().getWorld().getName().contains("FakeDimension")) {
 			if(heroes.containsValue(p.getUniqueId())) {
 				e.setCancelled(true);
 			}

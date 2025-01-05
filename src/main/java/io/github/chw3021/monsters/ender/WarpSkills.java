@@ -1,4 +1,4 @@
-package io.github.chw3021.monsters.nether;
+package io.github.chw3021.monsters.ender;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -175,6 +175,7 @@ public class WarpSkills extends NethercoreRaids{
 	final private void cursed(LivingEntity p) {
 
     	cursable.remove(p.getUniqueId());
+        Holding.holding(null, p, 20l);
 
         String rn = gethero(p);
 		
@@ -420,6 +421,7 @@ public class WarpSkills extends NethercoreRaids{
 	final private void phantom(LivingEntity p) {
 
     	final World w = p.getWorld();
+        Holding.holding(null, p, 40l);
         for(Player pe : NethercoreRaids.getheroes(p)) {
     		Location pfl = pe.getEyeLocation().clone();
     		w.playSound(pfl, Sound.ENTITY_PHANTOM_FLAP, 1.0f, 2f);
@@ -740,7 +742,7 @@ public class WarpSkills extends NethercoreRaids{
 
 		final World w = fl.getWorld();
 		
-		if(pe.getLocation().distance(p.getLocation())>17) {
+		if(pe.getLocation().distance(p.getLocation())>7) {
 			pe.teleport(p);
 	        p.getWorld().playSound(p.getLocation(), Sound.ENTITY_BREEZE_INHALE, 1.2f, 0);
 		}
@@ -798,7 +800,7 @@ public class WarpSkills extends NethercoreRaids{
 	}
 	
 	final private void seed(LivingEntity p) {
-	    HashSet<Location> particleLocations = calculateParticleLocations(p.getLocation(), 17, 300);
+	    HashSet<Location> particleLocations = calculateParticleLocations(p.getLocation(), 7, 150);
 
 		final World w = p.getWorld();
 		
@@ -817,9 +819,9 @@ public class WarpSkills extends NethercoreRaids{
         	
             
             final Location fl = pe.getLocation().clone();
-            pe.setVelocity(pe.getVelocity().add(BlockFace.DOWN.getDirection().multiply(10)));
+            pe.setVelocity(pe.getVelocity().add(BlockFace.DOWN.getDirection().multiply(4.5)));
 
-			p.getWorld().playSound(pe.getLocation(), Sound.ENTITY_BREEZE_IDLE_GROUND, 1, 2);
+			p.getWorld().playSound(pe.getLocation(), Sound.ENTITY_BREEZE_DEFLECT, 1, 2);
 			p.getWorld().spawnParticle(Particle.WARPED_SPORE, fl, 60,1,1,1);
             
 			int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -865,6 +867,7 @@ public class WarpSkills extends NethercoreRaids{
                 		}
                 	}
                 	Bukkit.getScheduler().cancelTask(ast.remove(ars.getUniqueId()));
+                	Bukkit.getScheduler().cancelTask(ast.remove(ars.getUniqueId()));
                 	Holding.ale(ars).remove();
             	});
 
@@ -906,7 +909,7 @@ public class WarpSkills extends NethercoreRaids{
 		p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
         d.setCancelled(true);
         
-        Long ordealTime = 450L;
+        Long ordealTime = 480L;
         
         
     	p.teleport(rl.clone().add(1, 0.5, 1));
@@ -928,7 +931,7 @@ public class WarpSkills extends NethercoreRaids{
             public void run() {
             	seed(p);
             }
-        }, 40, 10);
+        }, 20, 1);
 		ordt.put(rn, t1);
 		
         int t3 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -956,10 +959,10 @@ public class WarpSkills extends NethercoreRaids{
 		Bukkit.getWorld("NethercoreRaid").getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(e -> e.remove());
         for(Player pe : NethercoreRaids.getheroes(p)) {
 			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-        		pe.sendMessage(ChatColor.BOLD+"왜곡된망령: 잠시 숲이 조용해질 거다.");
+        		pe.sendMessage(ChatColor.BOLD+"왜곡된망령: 내가 졌군. 잠시 숲이 조용해질 거다.");
 			}
 			else {
-        		pe.sendMessage(ChatColor.BOLD+"DistortedWraith: The forest will rest for now.");
+        		pe.sendMessage(ChatColor.BOLD+"DistortedWraith: You’ve defeated me. The forest will rest for now.");
 			}
     		Holding.holding(pe, p, 300l);
     		p.removeMetadata("fake", RMain.getInstance());

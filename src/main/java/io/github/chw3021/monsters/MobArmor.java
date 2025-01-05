@@ -1,5 +1,6 @@
 package io.github.chw3021.monsters;
 
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -8,7 +9,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 
 public class MobArmor implements Listener {
 
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void MobDam(EntityDamageEvent d) 
 	{
@@ -57,19 +57,16 @@ public class MobArmor implements Listener {
 			d.setDamage(d.getDamage()*2.2);
 		}
 		if(d.getEntity().hasMetadata("nether")) {
-			d.setDamage(d.getDamage()*0.25);
+			d.setDamage(d.getDamage()*0.22);
 		} 
 		if(d.getEntity().hasMetadata("ender")) {
-			d.setDamage(d.getDamage()*0.2);
-		}
-		if(d.getEntity().hasMetadata("void")) {
-			d.setDamage(d.getDamage()*0.2);
+			d.setDamage(d.getDamage()*0.14);
 		}
 		if(d.getEntity().hasMetadata("wither")) {
 			LivingEntity le = (LivingEntity) d.getEntity();
 			d.setDamage(d.getDamage()*0.2);
-			if(d.getDamage() >= le.getMaxHealth()*0.15) {
-				d.setDamage(le.getMaxHealth()*0.15);
+			if(d.getDamage() >= le.getAttribute(Attribute.MAX_HEALTH).getValue()*0.15) {
+				d.setDamage(le.getAttribute(Attribute.MAX_HEALTH).getValue()*0.15);
 			}
 		} 
 		if(d.getEntity().hasMetadata("sandbag")) {

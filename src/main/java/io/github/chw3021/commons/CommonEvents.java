@@ -1020,7 +1020,7 @@ public class CommonEvents extends Mobs implements Listener{
 		EnderDragon ed = (EnderDragon) d.getEntity();
 		if(ed.getHealth()<=d.getDamage()) {
 			ed.setAI(true);
-			ed.setCustomName(null);
+			trans(ed);
 			ed.setCustomNameVisible(false);
 			if(ed.getDragonBattle() != null) {
 				ed.getDragonBattle().getBossBar().setTitle(ed.getName());
@@ -1035,6 +1035,13 @@ public class CommonEvents extends Mobs implements Listener{
 			ev.getEntity().setCustomName(null);
 			ev.getEntity().setCustomNameVisible(false);
 
+			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+				@Override
+				public void run()
+				{
+					trans(ev.getEntity());
+				}
+			}, 1);
 		}
 	}
 
@@ -1044,6 +1051,9 @@ public class CommonEvents extends Mobs implements Listener{
 		EnderDragon ed = (EnderDragon) d.getEntity();
 		d.getEntity().setCustomName(null);
 		d.getEntity().setCustomNameVisible(false);
+		if(ed.getDragonBattle() == null) {
+			return;
+		}
 		if(ed.getLocation().getWorld().getEnvironment() == Environment.THE_END && ed.getDragonBattle().getRespawnPhase() == RespawnPhase.END) {
 			ed.setCustomName(null);
 			ed.setCustomNameVisible(false);

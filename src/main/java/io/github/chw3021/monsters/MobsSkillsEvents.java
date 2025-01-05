@@ -57,6 +57,7 @@ import io.github.chw3021.commons.ConfigManager;
 import io.github.chw3021.monsters.dark.DarkMobsSpawn;
 import io.github.chw3021.monsters.dark.DarkRaids;
 import io.github.chw3021.monsters.dark.DarkSkills;
+import io.github.chw3021.monsters.ender.EnderMobsSpawn;
 import io.github.chw3021.monsters.hyper.HyperMobsSpawn;
 import io.github.chw3021.monsters.hyper.HyperRaids;
 import io.github.chw3021.monsters.hyper.HyperSkills;
@@ -203,26 +204,8 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 				WildMobsSpawn.getInstance().Spawn(le,b);
 				
 				NetherMobsSpawn.getInstance().Spawn(le, b);
+				EnderMobsSpawn.getInstance().Spawn(le, b);
 				
-				
-				if (b == Biome.THE_END
-						&& le.getLocation().getWorld().getEnvironment() == Environment.THE_END) {
-					LivingEntity newmob = Mobspawn(le, trans(le), 80000.0, le.getEquipment().getHelmet(),
-							le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
-							le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(),
-							le.getEquipment().getItemInOffHand(), le.getType());
-					newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
-					newmob.setMetadata("ender", new FixedMetadataValue(RMain.getInstance(), true));
-				} else if (b != Biome.THE_END
-						&& le.getLocation().getWorld().getEnvironment() == Environment.THE_END) {
-					String reg = lang.contains("kr") ? "공허":"Void";
-					LivingEntity newmob = Mobspawn(le, reg + trans(le), 80000.0, le.getEquipment().getHelmet(),
-							le.getEquipment().getChestplate(), le.getEquipment().getLeggings(),
-							le.getEquipment().getBoots(), le.getEquipment().getItemInMainHand(),
-							le.getEquipment().getItemInOffHand(), le.getType());
-					newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
-					newmob.setMetadata("void", new FixedMetadataValue(RMain.getInstance(), true));
-				}
 
 			}
 		}

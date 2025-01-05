@@ -1658,7 +1658,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	
 	    	    		
 		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "분노한골렘":"OutragedGolem";
-		        		IronGolem newmob = (IronGolem) MobspawnLoc(esl, ChatColor.RED+reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, null, null, null, null, null, null, EntityType.IRON_GOLEM);
+		        		IronGolem newmob = (IronGolem) phaseChange(esl, ChatColor.RED+reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, null, null, null, null, null, null, EntityType.IRON_GOLEM);
 		        		newmob.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 999999, 1, false, false));
 	    	    		newmob.setGlowing(true);
 	    	    		newmob.getEquipment().setBootsDropChance(0);
@@ -1736,7 +1736,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	
 	    	    		
 		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "차가운심장의마녀":"FrozenHeart";
-		        		Witch newmob = (Witch) MobspawnLoc(esl, ChatColor.RED+reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, null, null, null, null, null, null, EntityType.WITCH);
+		        		Witch newmob = (Witch) phaseChange(esl, ChatColor.RED+reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, null, null, null, null, null, null, EntityType.WITCH);
 	    	    		newmob.setGlowing(true);
 	    	    		newmob.getEquipment().setBootsDropChance(0);
 	    	    		newmob.getEquipment().setChestplateDropChance(0);
@@ -1941,7 +1941,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	
 	    	    		
 		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "잠식된 엘더가디언":"Encroached ElderGuardian";
-		        		ElderGuardian newmob = (ElderGuardian) MobspawnLoc(esl, ChatColor.BLUE+reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, null, null, null, null, null, null, EntityType.ELDER_GUARDIAN);
+		        		ElderGuardian newmob = (ElderGuardian) phaseChange(esl, ChatColor.BLUE+reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, null, null, null, null, null, null, EntityType.ELDER_GUARDIAN);
 	    	    		newmob.setGlowing(true);
 	    	    		newmob.getEquipment().setBootsDropChance(0);
 	    	    		newmob.getEquipment().setChestplateDropChance(0);
@@ -2024,7 +2024,7 @@ public class OverworldRaids extends Summoned implements Listener {
 
 		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "악몽의형상":"NightMare";
 	        			
-	            		Skeleton newmob = (Skeleton) MobspawnLoc(le.getLocation(), ChatColor.GRAY+reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, pe, null, null, null, main, null, EntityType.SKELETON);
+	            		Skeleton newmob = (Skeleton) phaseChange(le.getLocation(), ChatColor.GRAY+reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, pe, null, null, null, main, null, EntityType.SKELETON);
 	            		
 	            		newmob.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 999999, 1, false, false));
 	    	    		
@@ -2205,7 +2205,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	    	    		ItemStack off = new ItemStack(Material.SHIELD);
 	    	    		off.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 3);
 		        		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "몰락한 붉은기사":"Ruined RedKnight";
-	    	    		Stray newmob = (Stray) MobspawnLoc(esl, ChatColor.RED+reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, head, chest, leg, boots, main, main, EntityType.STRAY);
+	    	    		Stray newmob = (Stray) phaseChange(esl, ChatColor.RED+reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, head, chest, leg, boots, main, main, EntityType.STRAY);
 	    	    		newmob.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 255, false, false));
 	    	    		newmob.setGlowing(true);
 	    	    		newmob.getEquipment().setBootsDropChance(0);
@@ -2319,7 +2319,7 @@ public class OverworldRaids extends Summoned implements Listener {
 	        			main.setItemMeta(mm);
 	        			
 	            		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "종말론자":"TheApocalyptic";
-	            		Skeleton newmob = (Skeleton) MobspawnLoc(le.getLocation().clone().add(0, 0.5, 0), ChatColor.DARK_GREEN+reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, pe, pe1, leg, pe11, main, null, EntityType.SKELETON);
+	            		Skeleton newmob = (Skeleton) phaseChange(le.getLocation().clone().add(0, 0.5, 0), ChatColor.DARK_GREEN+reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, pe, pe1, leg, pe11, main, null, EntityType.SKELETON);
 	            		
 	    	    		newmob.setGlowing(true);
 	    	    		newmob.setMetadata("poisonboss", new FixedMetadataValue(RMain.getInstance(), true));

@@ -10,6 +10,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
+import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -128,7 +129,22 @@ public class Rpgs extends Summoned implements CommandExecutor, Listener {
 			owr.bossgen(p.getLocation(), p, p.getName(), input, owr.BOSSHP);
 		}
 	}
-	
+
+    public static void teleportToDimension(Player player, String dimension) {
+        World targetWorld = Bukkit.getWorld(dimension);
+        if (targetWorld == null) {
+            player.sendMessage("§c해당 차원은 존재하지 않습니다: " + dimension);
+            return;
+        }
+
+        // 이동할 위치 설정 (월드 스폰 지점 또는 안전한 기본 위치)
+        Location targetLocation = targetWorld.getSpawnLocation();
+        targetLocation.setY(targetWorld.getHighestBlockYAt(targetLocation)); // 안전한 높이 계산
+
+        // 플레이어 이동
+        player.teleport(targetLocation);
+        player.sendMessage("§a" + dimension + " 차원으로 이동했습니다!");
+    }
 	@EventHandler
 	public void Damagegetter(EntityDamageByEntityEvent d) 
 	{
@@ -351,6 +367,10 @@ public class Rpgs extends Summoned implements CommandExecutor, Listener {
 				else if((args[0].equalsIgnoreCase("elements")||args[0].equalsIgnoreCase("elm")) && p.isOp())
 				{
 					Elements.ElementsInv(p);
+				}
+				else if((args[0].equalsIgnoreCase("dimen")||args[0].equalsIgnoreCase("dim"))&& !args[1].isEmpty() && p.isOp())
+				{
+					teleportToDimension(p, args[1]);
 				}
 				else if((args[0].equalsIgnoreCase("armor")||args[0].equalsIgnoreCase("ar")) && p.isOp())
 				{

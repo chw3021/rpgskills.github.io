@@ -1,4 +1,4 @@
-package io.github.chw3021.monsters.nether;
+package io.github.chw3021.monsters.ender;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -1008,7 +1008,7 @@ public class CrimsonSkills extends Summoned{
 	            p.teleport(bossLocation);
 	            p.swingOffHand();
 
-	            double radius = 2.5; // 원 반지름
+	            double radius = 3; // 원 반지름
 	            int points = 18; // 원의 점 개수
 	            for (int i = 0; i < points; i++) {
 	                double radians = Math.toRadians(i * (360.0 / points) + angle.get()); // 각도 계산
@@ -1019,7 +1019,7 @@ public class CrimsonSkills extends Summoned{
 	                bossLocation.getWorld().spawnParticle(Particle.SWEEP_ATTACK, particleLocation, 1, 0, 0, 0, 0.1);
 	            }
 	            // 범위 공격
-	            double attackRadius = 2.2; 
+	            double attackRadius = 2.8; 
 
 	            // 범위 내의 엔티티들에게 피해 입히기
 	            bossLocation.getWorld().getNearbyEntities(bossLocation, attackRadius, attackRadius, attackRadius).stream()
