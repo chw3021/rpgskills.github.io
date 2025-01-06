@@ -20,6 +20,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Creeper;
+import org.bukkit.entity.EnderPearl;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Evoker;
@@ -31,6 +32,7 @@ import org.bukkit.entity.Snowball;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.entity.ThrownPotion;
 import org.bukkit.entity.Witch;
 import org.bukkit.entity.Zombie;
@@ -226,74 +228,80 @@ public class PoisonSkills extends OverworldRaids{
 	}
 	public void hit(ProjectileHitEvent d) 
 	{
-		if(d.getEntity() instanceof Snowball) 
-		{
-			Snowball po = (Snowball)d.getEntity();
-			if(po.getShooter() instanceof LivingEntity) {
-				LivingEntity p = (LivingEntity) po.getShooter();
-				if(po.hasMetadata("grenadier")) {
-					po.getWorld().playSound(po.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1f, 1f);
-					po.getWorld().spawnParticle(Particle.EXPLOSION, po.getLocation(), 5,2,2,2);
-					po.getWorld().spawnParticle(Particle.ITEM_SLIME, po.getLocation(), 200,2,2,2);
-            		for(Entity e : p.getWorld().getNearbyEntities(po.getLocation(), 2.5, 2.5, 2.5)) {
-						if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
-							LivingEntity le = (LivingEntity)e;
-							le.damage(4,p);
-						}
-                	}
-				}
-				else if(po.hasMetadata("PoisonGrenadier")) {
-					po.getWorld().playSound(po.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1f, 1f);
-					po.getWorld().playSound(p.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 2);
-					po.getWorld().spawnParticle(Particle.EXPLOSION, po.getLocation(), 5,2,2,2);
-					for(int n = 0; n<8; n++) {
-	                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() 
-			                {
-								po.getWorld().spawnParticle(Particle.ITEM_SLIME, po.getLocation(), 100,2,2,2);
-			            		for(Entity e : p.getWorld().getNearbyEntities(po.getLocation(), 2.5, 2.5, 2.5)) {
-									if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
-										LivingEntity le = (LivingEntity)e;
-										le.damage(4,p);
-									}
-			                	}
-			                }
-	                	 }, n*3); 														
-					}
-				}
-				else if(po.hasMetadata("Rifleman") && d.getHitEntity()!=null) {
-            		Entity e = d.getHitEntity();
-					if(p!=e && e instanceof LivingEntity) {
+		Projectile po = d.getEntity();
+		if(po.getShooter() instanceof LivingEntity) {
+			LivingEntity p = (LivingEntity) po.getShooter();
+			if(po.hasMetadata("grenadier")) {
+				po.getWorld().playSound(po.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1f, 1f);
+				po.getWorld().spawnParticle(Particle.EXPLOSION, po.getLocation(), 5,2,2,2);
+				po.getWorld().spawnParticle(Particle.ITEM_SLIME, po.getLocation(), 200,2,2,2);
+        		for(Entity e : p.getWorld().getNearbyEntities(po.getLocation(), 2.5, 2.5, 2.5)) {
+					if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
 						LivingEntity le = (LivingEntity)e;
-						le.damage(3.1,p);
+						le.damage(4,p);
 					}
-				}
-				else if(po.hasMetadata("bossmotov")) {
-					po.getWorld().playSound(po.getLocation(), Sound.ENTITY_SPLASH_POTION_BREAK, 1f, 0.8f);
-					po.getWorld().playSound(p.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 2);
-					po.getWorld().spawnParticle(Particle.FLAME, po.getLocation(), 100,2,2,2);
-					po.getWorld().spawnParticle(Particle.ITEM_SLIME, po.getLocation(), 100,2,2,2);
-					for(int n = 0; n<8; n++) {
-	                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() 
-			                {
-								po.getWorld().spawnParticle(Particle.FLAME, po.getLocation(), 100,2,2,2);
-								po.getWorld().spawnParticle(Particle.ITEM_SLIME, po.getLocation(), 100,2,2,2);
-			            		for(Entity e : p.getWorld().getNearbyEntities(po.getLocation(), 2.5, 2.5, 2.5)) {
-									if(p!=e && e instanceof LivingEntity) {
-										LivingEntity le = (LivingEntity)e;
-										le.damage(2.5,p);
-										Holding.holding(null, le, 5l);
-									}
-			                	}
-			                }
-	                	 }, n*3); 														
-					}
+            	}
+			}
+			else if(po.hasMetadata("PoisonGrenadier")) {
+				po.getWorld().playSound(po.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1f, 1f);
+				po.getWorld().playSound(p.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 2);
+				po.getWorld().spawnParticle(Particle.EXPLOSION, po.getLocation(), 5,2,2,2);
+				for(int n = 0; n<8; n++) {
+                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		                @Override
+		                public void run() 
+		                {
+							po.getWorld().spawnParticle(Particle.ITEM_SLIME, po.getLocation(), 100,2,2,2);
+		            		for(Entity e : p.getWorld().getNearbyEntities(po.getLocation(), 2.5, 2.5, 2.5)) {
+								if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
+									LivingEntity le = (LivingEntity)e;
+									le.damage(4,p);
+								}
+		                	}
+		                }
+                	 }, n*3); 														
 				}
 			}
-			
+			if(po.hasMetadata("enderRifleman")) {
+				po.getWorld().playSound(po.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
+				po.getWorld().spawnParticle(Particle.REVERSE_PORTAL, po.getLocation(), 50,1,1,1);
+        		for(Entity e : p.getWorld().getNearbyEntities(po.getLocation(), 1, 1, 1)) {
+					if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
+						LivingEntity le = (LivingEntity)e;
+						le.damage(3.5,p);
+					}
+            	}
+			}
+			else if(po.hasMetadata("Rifleman") && d.getHitEntity()!=null) {
+        		Entity e = d.getHitEntity();
+				if(p!=e && e instanceof LivingEntity) {
+					LivingEntity le = (LivingEntity)e;
+					le.damage(3.1,p);
+				}
+			}
+			else if(po.hasMetadata("bossmotov")) {
+				po.getWorld().playSound(po.getLocation(), Sound.ENTITY_SPLASH_POTION_BREAK, 1f, 0.8f);
+				po.getWorld().playSound(p.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 2);
+				po.getWorld().spawnParticle(Particle.FLAME, po.getLocation(), 100,2,2,2);
+				po.getWorld().spawnParticle(Particle.ITEM_SLIME, po.getLocation(), 100,2,2,2);
+				for(int n = 0; n<8; n++) {
+                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		                @Override
+		                public void run() 
+		                {
+							po.getWorld().spawnParticle(Particle.FLAME, po.getLocation(), 100,2,2,2);
+							po.getWorld().spawnParticle(Particle.ITEM_SLIME, po.getLocation(), 100,2,2,2);
+		            		for(Entity e : p.getWorld().getNearbyEntities(po.getLocation(), 2.5, 2.5, 2.5)) {
+								if(p!=e && e instanceof LivingEntity) {
+									LivingEntity le = (LivingEntity)e;
+									le.damage(2.5,p);
+									Holding.holding(null, le, 5l);
+								}
+		                	}
+		                }
+                	 }, n*3); 														
+				}
+			}
 		}
 	}
 	
@@ -316,14 +324,13 @@ public class PoisonSkills extends OverworldRaids{
 
 	                	p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDER_EYE_LAUNCH, 1f, 1.1f);
 	                	
-	                    Snowball ws = (Snowball) p.launchProjectile(Snowball.class);
-	                    ws.setItem(new ItemStack(Material.ENDER_EYE));
+	                	EnderPearl ws = (EnderPearl) p.launchProjectile(EnderPearl.class);
 	                    ws.setShooter(p);
 	                    ws.setVelocity(p.getLocation().getDirection().normalize().multiply(1.95));
-	    				ws.setMetadata("Rifleman", new FixedMetadataValue(RMain.getInstance(), true));
+	    				ws.setMetadata("enderRifleman", new FixedMetadataValue(RMain.getInstance(), true));
 	                	
 	                }
-	            }, i*2+10); 
+	            }, i*5+10); 
 			}
 
 		 }

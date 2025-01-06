@@ -751,6 +751,8 @@ public class Weapons {
 		StringBuffer sbe = new StringBuffer();
 		rm.setCustomModelData(lev + 100 + wn);
 		
+		
+		
 		if(cmdt == 12) {
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 				sb.append("자연의 ");

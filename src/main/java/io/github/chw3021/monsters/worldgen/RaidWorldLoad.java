@@ -68,6 +68,29 @@ public class RaidWorldLoad implements Listener {
             }
         }
     }
+
+    @EventHandler
+    public void enderRaidWorldLoad(WorldLoadEvent ev) {
+        if (ev.getWorld().getName().equals("NethercoreRaid")) {
+            if (Bukkit.getServer().getWorld("EndercoreRaid") == null) {
+                if (worldExists("EndercoreRaid")) {
+                    // 월드가 존재하면 불러오기 (청크 생성기 강제 적용)
+                    World rw = Bukkit.getServer().createWorld(new WorldCreator("EndercoreRaid").generator(new EnderRaidChunkGenerator()));
+                    configureRaidWorld(rw, Environment.THE_END);
+                } else {
+                    // 월드가 존재하지 않으면 새로 생성
+                    WorldCreator rwc = new WorldCreator("EndercoreRaid");
+                    rwc.environment(Environment.THE_END);
+                    rwc.generator(new EnderRaidChunkGenerator());
+
+                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), () -> {
+                        World rw = rwc.createWorld();
+                        configureRaidWorld(rw, Environment.THE_END);
+                    }, 50);
+                }
+            }
+        }
+    }
     
     private void configureRaidWorld(World world, Environment environment) {
         world.setMetadata("rpgraidworld", new FixedMetadataValue(RMain.getInstance(), true));
@@ -80,7 +103,7 @@ public class RaidWorldLoad implements Listener {
         // 게임 규칙 설정
         world.setGameRule(GameRule.KEEP_INVENTORY, true);
         world.setGameRule(GameRule.DO_INSOMNIA, false);
-        world.setGameRule(GameRule.DO_IMMEDIATE_RESPAWN, environment == Environment.NETHER);
+        world.setGameRule(GameRule.DO_IMMEDIATE_RESPAWN, environment != Environment.NORMAL);
         world.setGameRule(GameRule.DISABLE_RAIDS, true);
         world.setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
         world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);

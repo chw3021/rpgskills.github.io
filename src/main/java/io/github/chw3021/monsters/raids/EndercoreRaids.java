@@ -27,18 +27,14 @@ import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Breeze;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
-import org.bukkit.entity.Illusioner;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
-import org.bukkit.entity.Piglin;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Stray;
 import org.bukkit.entity.Villager;
-import org.bukkit.entity.WitherSkeleton;
 import org.bukkit.entity.Villager.Profession;
 import org.bukkit.entity.Villager.Type;
 import org.bukkit.event.EventHandler;
@@ -74,7 +70,6 @@ import com.google.common.collect.Multimap;
 
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.items.Elements;
-import io.github.chw3021.items.weapons.Weapons;
 import io.github.chw3021.party.Party;
 import io.github.chw3021.rmain.RMain;
 import net.md_5.bungee.api.ChatMessageType;
@@ -117,7 +112,7 @@ public class EndercoreRaids extends Summoned implements Listener {
 	
 	Integer DelayTime =  100;
 	Integer LIVES = 5;
-	final public Double BOSSHP = 250000d;
+	final public Double BOSSHP = 800000d;
 	
 	Integer BOSSNUM = -5;
 	
@@ -136,8 +131,8 @@ public class EndercoreRaids extends Summoned implements Listener {
 			heroes.get(rn).forEach(pu -> pc.add(Bukkit.getPlayer(pu)));
 			return pc;
 		}
-		else if(le.hasMetadata("netherRaidVil")) {
-			String rn = le.getMetadata("netherRaidVil").get(0).asString();
+		else if(le.hasMetadata("enderRaidVil")) {
+			String rn = le.getMetadata("enderRaidVil").get(0).asString();
 			Collection<Player> pc = new ArrayList<Player>();
 			heroes.get(rn).forEach(pu -> pc.add(Bukkit.getPlayer(pu)));
 			return pc;
@@ -429,7 +424,7 @@ public class EndercoreRaids extends Summoned implements Listener {
 			ItemStack main = new ItemStack(Material.BOW);
 			main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
 			ItemStack off = new ItemStack(Material.FURNACE);
-		    Color enderColor = Color.fromRGB(0, 0, 0); 
+		    Color enderColor = Color.fromRGB(33, 0, 22); 
 
 		    // 가죽 방어구 생성 및 염색
 		    ItemStack hel = createDyedArmor(Material.LEATHER_HELMET, enderColor);
@@ -448,7 +443,6 @@ public class EndercoreRaids extends Summoned implements Listener {
     		newmob.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(4);
     		newmob.setRemoveWhenFarAway(false);
     		raider.put(rn, newmob.getUniqueId());
-    		System.out.println(raider.toString());
 			newmob.setMetadata("enderboss", new FixedMetadataValue(RMain.getInstance(), true));
     		newmob.setMetadata("ender", new FixedMetadataValue(RMain.getInstance(), true));
 			newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), armor));
@@ -462,9 +456,7 @@ public class EndercoreRaids extends Summoned implements Listener {
 
     		final Object ht = getherotype(rn);
 
-    		Weapons w = new Weapons();
-    		
-    		ItemStack mainf = w.giveElWeapon(14, pm);
+    		ItemStack mainf = new ItemStack(Material.BLAZE_ROD);
     		ItemMeta mmf = mainf.getItemMeta();
     		mmf.setCustomModelData(3010);
     		mainf.setItemMeta(mmf);
@@ -531,9 +523,6 @@ public class EndercoreRaids extends Summoned implements Listener {
     		final Object ht = getherotype(rn);
 
     		ItemStack mainf = new ItemStack(Material.BRUSH);
-    		ItemMeta mmf = mainf.getItemMeta();
-    		mmf.setCustomModelData(8008);
-    		mainf.setItemMeta(mmf);
     		
     		Bukkit.getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
     		    @Override
@@ -687,14 +676,6 @@ public class EndercoreRaids extends Summoned implements Listener {
     			fix = fix - 29999984*2;
     			fiz = 29999984*2 - fiz;
     		}
-    		for(int in = 0; in<20; in++) {
-	    		if(rw.getHighestBlockAt(fix, fiz).getType().name().contains("LEAVES")) {
-	    			fix++;
-	    		}
-	    		else {
-	    			break;
-	    		}
-    		}
         	p.setCooldown(Material.RAIL, 100);
     		Location spl = rw.getHighestBlockAt(fix, fiz).getLocation().clone().add(0, 1, 0);
     		if(Party.hasParty(p)) {
@@ -765,7 +746,7 @@ public class EndercoreRaids extends Summoned implements Listener {
     		raidpor.put(rn, portal.getUniqueId());
 
     		Villager v = (Villager) spl.getWorld().spawn(spl.clone().add(3,1,3), Villager.class);
-    		v.setMetadata("netherRaidVil", new FixedMetadataValue(RMain.getInstance(), rn));
+    		v.setMetadata("enderRaidVil", new FixedMetadataValue(RMain.getInstance(), rn));
     		v.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), rn));
     		v.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
     		v.setAdult();
@@ -776,13 +757,13 @@ public class EndercoreRaids extends Summoned implements Listener {
     		v.getAttribute(Attribute.SCALE).setBaseValue(0.75);
     		v.setGravity(true);
     		v.setNoDamageTicks(0);
-    		v.setMaxHealth(50000);
-    		v.setHealth(50000);
+    		v.setMaxHealth(65000);
+    		v.setHealth(65000);
     		v.setRemoveWhenFarAway(false);
     		v.setGlowing(true);
-    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? rn + " 성직자":rn + "'s Cleric";
-    		v.setVillagerType(Type.SAVANNA);
-    		v.setProfession(Profession.CLERIC);
+    		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? rn + " 요원":rn + "'s Agent";
+    		v.setVillagerType(Type.TAIGA);
+    		v.setProfession(Profession.TOOLSMITH);
     		v.setCustomName(reg);
     		v.setCustomNameVisible(true);
     		timeout.put(rn, 420);
@@ -1040,9 +1021,9 @@ public class EndercoreRaids extends Summoned implements Listener {
 	@EventHandler
 	public void Defeat(EntityDeathEvent d) 
 	{		
-		if(d.getEntity().hasMetadata("netherRaidVil")) {
+		if(d.getEntity().hasMetadata("enderRaidVil")) {
 			LivingEntity le = d.getEntity();
-			String rn = le.getMetadata("netherRaidVil").get(0).asString();
+			String rn = le.getMetadata("enderRaidVil").get(0).asString();
 
 			if(language.get(rn).equalsIgnoreCase("ko_kr")) {
 				EndercoreRaidFinish(rn, "패배..", "주민 보호 실패",0);
@@ -1228,10 +1209,10 @@ public class EndercoreRaids extends Summoned implements Listener {
 					}
 				}
 			}
-			if(d.getDamager() instanceof Player &&  heroes.containsValue(d.getDamager().getUniqueId()) && d.getEntity().hasMetadata("netherRaidVil")) {
+			if(d.getDamager() instanceof Player &&  heroes.containsValue(d.getDamager().getUniqueId()) && d.getEntity().hasMetadata("enderRaidVil")) {
 				d.setCancelled(true);
 			}
-			if(d.getDamager() instanceof Projectile &&  d.getEntity().hasMetadata("netherRaidVil")) {
+			if(d.getDamager() instanceof Projectile &&  d.getEntity().hasMetadata("enderRaidVil")) {
 
 				Projectile pr = (Projectile) d.getDamager();
 				if(pr.getShooter() instanceof Player ) {
@@ -1414,88 +1395,58 @@ public class EndercoreRaids extends Summoned implements Listener {
 	}
 	
 
-	final private ItemStack mobhead2() {
-		ItemStack pe = new ItemStack(Material.END_PORTAL_FRAME);
-		pe.addUnsafeEnchantment(Enchantment.BINDING_CURSE, 1);
-		return pe;
-	}
-	final private ItemStack mobchest2() {
-		ItemStack pe = new ItemStack(Material.NETHERITE_CHESTPLATE);
-		ArmorMeta arm = (ArmorMeta) pe.getItemMeta();
-		ArmorTrim t1 = new ArmorTrim(TrimMaterial.REDSTONE, TrimPattern.DUNE);
-		arm.setTrim(t1);
-		pe.setItemMeta(arm);
-		return pe;
-	}
-	final private ItemStack mobleg2() {
-		ItemStack pe = new ItemStack(Material.NETHERITE_LEGGINGS);
-		ArmorMeta arm = (ArmorMeta) pe.getItemMeta();
-		ArmorTrim t1 = new ArmorTrim(TrimMaterial.REDSTONE, TrimPattern.DUNE);
-		arm.setTrim(t1);
-		pe.setItemMeta(arm);
-		return pe;
-	}
-	final private ItemStack mobboots2() {
-		ItemStack pe = new ItemStack(Material.NETHERITE_BOOTS);
-		ArmorMeta arm = (ArmorMeta) pe.getItemMeta();
-		ArmorTrim t1 = new ArmorTrim(TrimMaterial.REDSTONE, TrimPattern.DUNE);
-		arm.setTrim(t1);
-		pe.setItemMeta(arm);
-		return pe;
-	}
-
 	@EventHandler
-	public void CrimsonBoss2(EntityDeathEvent d) 
+	public void EnderBoss2(EntityDeathEvent d) 
 	{	
 
-		if(d.getEntity().hasMetadata("bosswave1") && d.getEntity().hasMetadata("crimsonboss") && raider.containsValue(d.getEntity().getUniqueId())) {
+		if(d.getEntity().hasMetadata("bosswave1") && d.getEntity().hasMetadata("enderboss") && raider.containsValue(d.getEntity().getUniqueId())) {
 			LivingEntity le = d.getEntity();
 			String rn = le.getMetadata("raid").get(0).asString();
 			raider.remove(rn, le.getUniqueId());
 			if(raider.get(rn).size()<=0){
 				bossphase2(le);
 				Location spl = raidloc.get(rn).clone();
-	        	spl.getWorld().spawnParticle(Particle.INSTANT_EFFECT, d.getEntity().getLocation(), 1000,1,1,1);
-	        	spl.getWorld().spawnParticle(Particle.FLAME, d.getEntity().getLocation(), 1000,1,1,1);
-	        	spl.getWorld().spawnParticle(Particle.CRIMSON_SPORE, d.getEntity().getLocation(), 1000,1,1,1);
+	        	spl.getWorld().spawnParticle(Particle.PORTAL, d.getEntity().getLocation(), 1000,1,1,1);
+	        	spl.getWorld().spawnParticle(Particle.REVERSE_PORTAL, d.getEntity().getLocation(), 1000,1,1,1);
+	        	spl.getWorld().spawnParticle(Particle.END_ROD, d.getEntity().getLocation(), 1000,1,1,1);
 	        	spl.getWorld().spawnParticle(Particle.SMOKE, d.getEntity().getLocation(), 1000,1,1,1);
-	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_WITHER_SKELETON_AMBIENT, 1, 0);
-	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_PIGLIN_ANGRY, 1, 0);
-	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_PIGLIN_CELEBRATE, 1, 0);
+	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_SKELETON_CONVERTED_TO_STRAY, 1, 0);
+	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.BLOCK_PORTAL_AMBIENT, 0.2f, 2);
 	            int rat =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	                @Override
 	                public void run() {
 
 	                	Location esl = d.getEntity().getLocation().clone().add(0,0.5, 0);
 
+
 	        			ItemStack main = new ItemStack(Material.BOW);
-	        			ItemMeta mm = main.getItemMeta();
-	        			mm.setCustomModelData(4010);
-	        			main.setItemMeta(mm);
+	        			main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
+	        			ItemStack off = new ItemStack(Material.FURNACE);
+	        		    Color enderColor = Color.fromRGB(12, 0, 43); 
 
-	            		ItemStack mainf = new ItemStack(Material.NETHERITE_SWORD);
-	            		ItemMeta mmf = mainf.getItemMeta();
-	            		mmf.setCustomModelData(3010);
-	            		mainf.setItemMeta(mmf);
-	            		
-	            		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "진홍빛학살자":"CrimsonSavager";
-	            		Stray newmob = (Stray) phaseChange(esl, ChatColor.DARK_RED+reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, mobhead2(), mobchest2(), mobleg2(), mobboots2(), main, mainf, EntityType.STRAY);
-
+	        		    // 가죽 방어구 생성 및 염색
+	        		    ItemStack hel = new ItemStack(Material.OBSIDIAN);
+	        		    ItemStack chest = createDyedArmor(Material.LEATHER_CHESTPLATE, enderColor);
+	        		    ItemStack leg = createDyedArmor(Material.LEATHER_LEGGINGS, enderColor);
+	        		    ItemStack boots = createDyedArmor(Material.LEATHER_BOOTS, enderColor);
+	            		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "차원파괴자":"Distroyer";
+	            		Stray newmob = (Stray) MobspawnLoc(esl, ChatColor.RED + reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, hel,
+	            				bloodTrim2(chest, TrimPattern.COAST), bloodTrim2(leg,TrimPattern.DUNE), bloodTrim2(boots,TrimPattern.SHAPER), main, off, EntityType.STRAY);
+	        			newmob.setGlowing(true);
 	            		newmob.setLootTable(null);
-	            		newmob.setGlowing(true);
+	            		newmob.setItemInUseTicks(5);
+
 	            		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 	            		newmob.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(4);
-	            		
-	            		newmob.setMetadata("crimsonboss", new FixedMetadataValue(RMain.getInstance(), true));
-	            		
-	            		newmob.setLootTable(null);
-	            		newmob.setRemoveWhenFarAway(false);
-	            		
-
-	            		
+	            			            		
 
 	            		final Object ht = getherotype(rn);
 
+	            		
+	            		ItemStack mainf = new ItemStack(Material.BLAZE_ROD);
+	            		ItemMeta mmf = mainf.getItemMeta();
+	            		mmf.setCustomModelData(3010);
+	            		mainf.setItemMeta(mmf);
 
 	            		Bukkit.getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
 	            		    @Override
@@ -1515,9 +1466,9 @@ public class EndercoreRaids extends Summoned implements Listener {
 	            		}, 2L); 
 
 	    	    		newmob.setGlowing(true);
-	    	    		newmob.setMetadata("crimsonboss", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		newmob.setMetadata("enderboss", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		newmob.setMetadata("ruined", new FixedMetadataValue(RMain.getInstance(), true));
-	            		newmob.setMetadata("nether", new FixedMetadataValue(RMain.getInstance(), true));
+	            		newmob.setMetadata("ender", new FixedMetadataValue(RMain.getInstance(), true));
 	
 	    	    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), le.getMetadata("boss").get(0).asDouble()));
 	    	    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
@@ -1533,7 +1484,7 @@ public class EndercoreRaids extends Summoned implements Listener {
 	    	    		
 	
 	
-	    	    		bossbargen("CrimsonSavager", rn, newmob);
+	    	    		bossbargen("Distroyer", rn, newmob);
 	    	    		
 	    	    		targeting(rn);
 	            		
@@ -1555,5 +1506,112 @@ public class EndercoreRaids extends Summoned implements Listener {
 			}
 		}
 	}
+
+	@EventHandler
+	public void VoidBoss2(EntityDeathEvent d) 
+	{	
+
+		if(d.getEntity().hasMetadata("bosswave1") && d.getEntity().hasMetadata("voidboss") && raider.containsValue(d.getEntity().getUniqueId())) {
+			LivingEntity le = d.getEntity();
+			String rn = le.getMetadata("raid").get(0).asString();
+			raider.remove(rn, le.getUniqueId());
+			if(raider.get(rn).size()<=0){
+				bossphase2(le);
+				Location spl = raidloc.get(rn).clone();
+	        	spl.getWorld().spawnParticle(Particle.PORTAL, d.getEntity().getLocation(), 1000,1,1,1);
+	        	spl.getWorld().spawnParticle(Particle.REVERSE_PORTAL, d.getEntity().getLocation(), 1000,1,1,1);
+	        	spl.getWorld().spawnParticle(Particle.END_ROD, d.getEntity().getLocation(), 1000,1,1,1);
+	        	spl.getWorld().spawnParticle(Particle.SMOKE, d.getEntity().getLocation(), 1000,1,1,1);
+	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.ENTITY_SKELETON_CONVERTED_TO_STRAY, 1, 0);
+	        	spl.getWorld().playSound(d.getEntity().getLocation(), Sound.BLOCK_PORTAL_AMBIENT, 0.2f, 2);
+	            int rat =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	                @Override
+	                public void run() {
+
+	                	Location esl = d.getEntity().getLocation().clone().add(0,0.5, 0);
+
+	            		ItemStack main = new ItemStack(Material.BOW);
+	            		main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
+	            		ItemStack  off = new ItemStack(Material.PAINTING);
+	            		off.addUnsafeEnchantment(Enchantment.KNOCKBACK, 3);
+	        		    Color enderColor = Color.fromRGB(75, 0, 130); // 신비로운 보라색
+
+	        		    // 가죽 방어구 생성 및 염색
+	        		    ItemStack hel = createDyedArmor(Material.LEATHER_HELMET, enderColor);
+	        		    ItemStack chest = createDyedArmor(Material.LEATHER_CHESTPLATE, enderColor);
+	        		    ItemStack leg = createDyedArmor(Material.LEATHER_LEGGINGS, enderColor);
+	        		    ItemStack boots = createDyedArmor(Material.LEATHER_BOOTS, enderColor);
+	            		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "공허의화신":"VoidGod";
+	            		Stray newmob = (Stray) MobspawnLoc(esl, ChatColor.RED + reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, bloodTrim(hel, TrimPattern.SILENCE),
+	            				bloodTrim(chest, TrimPattern.EYE), bloodTrim(leg,TrimPattern.SILENCE), bloodTrim(boots,TrimPattern.DUNE), main, off, EntityType.STRAY);
+	            		newmob.setGlowing(true);
+	            		newmob.setLootTable(null);
+	            		newmob.setItemInUseTicks(5);
+
+	            		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
+	            		newmob.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(4);
+	            			            		
+
+	            		final Object ht = getherotype(rn);
+
+	            		
+	            		ItemStack mainf = new ItemStack(Material.BRUSH);
+	            		Bukkit.getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
+	            		    @Override
+	            		    public void run() {
+	            				if(ht instanceof Player) {
+	            					Player p = (Player) ht;
+	            					p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+	            				}
+	            				else if(getherotype(rn) instanceof HashSet){
+	            					@SuppressWarnings("unchecked")
+	            					HashSet<Player> par = (HashSet<Player>) ht;
+	            		    		par.forEach(p -> {
+	            		    			p.sendEquipmentChange(newmob, EquipmentSlot.HAND, mainf);
+	            		    		});
+	            				}
+	            		    }
+	            		}, 2L); 
+
+	    	    		newmob.setGlowing(true);
+	    	    		newmob.setMetadata("voidboss", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		newmob.setMetadata("ruined", new FixedMetadataValue(RMain.getInstance(), true));
+	            		newmob.setMetadata("ender", new FixedMetadataValue(RMain.getInstance(), true));
 	
+	    	    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), le.getMetadata("boss").get(0).asDouble()));
+	    	    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
+	    	    		newmob.setMetadata("finalboss", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		newmob.setLootTable(null);
+	    	    		
+	    	    		
+	    	    		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.35);
+	    	    		newmob.getAttribute(Attribute.SCALE).setBaseValue(1.4);
+	    	    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
+	    	    		newmob.setRemoveWhenFarAway(false);
+	    	    		raider.put(rn, newmob.getUniqueId());
+	    	    		
+	
+	
+	    	    		bossbargen("VoidGod", rn, newmob);
+	    	    		
+	    	    		targeting(rn);
+	            		
+	                	heroes.get(rn).forEach(pu -> {
+							if(Bukkit.getPlayer(pu).getLocale().equalsIgnoreCase("ko_kr")) {
+		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "토벌작전 2단계"), null, 5, 69, 5);
+				        		Bukkit.getPlayer(pu).playSound(spl, Sound.EVENT_RAID_HORN, 1, 1);
+					    		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + "남은 목숨 "+ String.valueOf(lives.getOrDefault(rn, 0)));
+							}
+							else {
+		                		Bukkit.getPlayer(pu).sendTitle(ChatColor.BOLD+(ChatColor.DARK_PURPLE + "PHASE 2"), null, 5, 69, 5);
+				        		Bukkit.getPlayer(pu).playSound(spl, Sound.AMBIENT_CRIMSON_FOREST_ADDITIONS, 1, 1);
+		                		Bukkit.getPlayer(pu).sendMessage(ChatColor.BOLD + String.valueOf(lives.getOrDefault(rn, 0)) + "lives Left");
+							}
+	                	});
+	                }
+	            }, 50); 
+	            raidt.put(rn, rat);
+			}
+		}
+	}
 }
