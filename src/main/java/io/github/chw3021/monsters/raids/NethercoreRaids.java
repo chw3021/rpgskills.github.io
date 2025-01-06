@@ -1915,7 +1915,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 	        			boots.addUnsafeEnchantment(Enchantment.PROTECTION, 1);
 	        			boots.addUnsafeEnchantment(Enchantment.PROJECTILE_PROTECTION, 1);
 	            		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "식인피글린":"CannibalPiglin";
-	            		Piglin newmob = (Piglin) phaseChange(esl, ChatColor.RED + reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, bloodTrim(hel),
+	            		Piglin newmob = (Piglin) phaseChange(esl, ChatColor.RED + reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, hel,
 	            				bloodTrim(chest), bloodTrim(leg), bloodTrim(boots), main, off, EntityType.PIGLIN);
 	        			newmob.setGlowing(true);
 	        			newmob.setAdult();

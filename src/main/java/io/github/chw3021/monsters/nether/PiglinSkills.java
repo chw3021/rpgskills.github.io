@@ -541,7 +541,7 @@ public class PiglinSkills extends Summoned{
 	final private void porkchop(LivingEntity p) {
 
     	final World w = p.getWorld();
-        Holding.holding(null, p, 40l);
+        Holding.holding(null, p, 30l);
 		Location pfl = p.getEyeLocation().clone();
 		w.playSound(pfl, Sound.ENTITY_PIGLIN_BRUTE_DEATH, 1.0f, 0f);
 		w.playSound(pfl, Sound.ENTITY_GENERIC_EXTINGUISH_FIRE, 1.0f, 0f);
@@ -550,17 +550,14 @@ public class PiglinSkills extends Summoned{
 
         for(Player pe : NethercoreRaids.getheroes(p)) {
     		w.spawnParticle(Particle.BLOCK_MARKER, pe.getLocation(), 20,1,1,1, getBd(Material.FURNACE));
-        }
-        
-		int t =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-            @Override
-            public void run() 
-            {
+    		int t =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                @Override
+                public void run() 
+                {
 
-        		w.playSound(pfl, Sound.ENTITY_ZOMBIFIED_PIGLIN_HURT, 1.0f, 0f);
-        		w.playSound(pfl, Sound.ENTITY_PIG_DEATH, 1.0f, 0f);
-		        for(Player pe : NethercoreRaids.getheroes(p)) {
-					for(int i = 0; i <25; i++) {
+            		w.playSound(pfl, Sound.ENTITY_ZOMBIFIED_PIGLIN_HURT, 1.0f, 0f);
+            		w.playSound(pfl, Sound.ENTITY_PIG_DEATH, 1.0f, 0f);
+					for(int i = 0; i <30; i++) {
 						Arrow ar =p.getWorld().spawnArrow(pe.getLocation(), BlockFace.UP.getDirection() , 0.5f, 60);
 						ar.setShooter(p);
 	                    Snowball ws = (Snowball) p.getWorld().spawn(pe.getLocation(), Snowball.class);
@@ -570,11 +567,12 @@ public class PiglinSkills extends Summoned{
 	        			ws.setMetadata("cookedFoods", new FixedMetadataValue(RMain.getInstance(), true));
 						ar.remove();
 					}
-		        }
-		        
-            }
-		}, 40);
-        ordt.put(gethero(p), t);
+    		        
+                }
+    		}, 30);
+            ordt.put(gethero(p), t);
+        }
+        
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
      		@Override
         	public void run() 
