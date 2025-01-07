@@ -73,6 +73,8 @@ import org.bukkit.scoreboard.RenderType;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.util.Vector;
+import org.joml.Matrix4f;
+
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
@@ -494,7 +496,7 @@ public class CommonEvents extends Mobs implements Listener{
 	}
 
 	
-	final private void damagebar(Double max, Double cur, Double last, Double dam, final Entity ar) {
+	final private void damagebar(Double max, Double cur, Double last, Double dam, final TextDisplay ar) {
 		final double rat =  (cur/max)*10d;
 		final double lr =  (last/max)*10d;
 		double d = (dam/max)*10d;
@@ -513,7 +515,7 @@ public class CommonEvents extends Mobs implements Listener{
 			for(int i = 0; i<10-lr; i++) {
 				bar.append(ChatColor.BLACK+"|");
 			}
-			ar.setCustomName(bar.toString());
+			ar.setText(bar.toString());
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 				@Override
 				public void run()
@@ -525,7 +527,7 @@ public class CommonEvents extends Mobs implements Listener{
 					for(int i = 0; i<40-rat; i++) {
 						bar.append(ChatColor.BLACK+"|");
 					}
-					ar.setCustomName(bar.toString());
+					ar.setText(bar.toString());
 				}
 			}, 10);
 		}
@@ -537,12 +539,12 @@ public class CommonEvents extends Mobs implements Listener{
 			for(int i = 0; i<10-rat; i++) {
 				bar.append(ChatColor.BLACK+"|");
 			}
-			ar.setCustomName(bar.toString());
+			ar.setText(bar.toString());
 		}
 		return ;
 	}
 
-	final private void healbar(Double max, Double cur, Double last, Double dam, final Entity ar) {
+	final private void healbar(Double max, Double cur, Double last, Double dam, final TextDisplay ar) {
 		final double rat =  (cur/max)*10d;
 
 		StringBuffer bar = new StringBuffer();
@@ -552,7 +554,7 @@ public class CommonEvents extends Mobs implements Listener{
 		for(int i = 0; i<10-rat; i++) {
 			bar.append(ChatColor.BLACK+"|");
 		}
-		ar.setCustomName(bar.toString());
+		ar.setText(bar.toString());
 		return ;
 	}
 
@@ -583,26 +585,47 @@ public class CommonEvents extends Mobs implements Listener{
 		}
 		return false;
 	}
-	
+
+    private static void rotateAndScaleDisplay(TextDisplay display) {
+        // 4x4 매트릭스를 기반으로 회전 및 스케일 적용
+        Matrix4f transformationMatrix = new Matrix4f()
+            .m00(1f)    // 첫 번째 행, 첫 번째 값
+            .m01(0f)    // 첫 번째 행, 두 번째 값
+            .m02(0f)    // 첫 번째 행, 세 번째 값
+            .m03(0f)    // 첫 번째 행, 네 번째 값
+            .m10(0f)    // 두 번째 행, 첫 번째 값
+            .m11(-0.002f) // 두 번째 행, 두 번째 값
+            .m12(-1.42f)  // 두 번째 행, 세 번째 값
+            .m13(1f)     // 두 번째 행, 네 번째 값
+            .m20(0f)     // 세 번째 행, 첫 번째 값
+            .m21(0.398f) // 세 번째 행, 두 번째 값
+            .m22(-0.008f) // 세 번째 행, 세 번째 값
+            .m23(1f)     // 세 번째 행, 네 번째 값
+            .m30(0f)     // 네 번째 행, 첫 번째 값
+            .m31(0f)     // 네 번째 행, 두 번째 값
+            .m32(0f)     // 네 번째 행, 세 번째 값
+            .m33(1f);    // 네 번째 행, 네 번째 값
+
+        // 변환 행렬 적용
+        display.setTransformationMatrix(transformationMatrix);
+
+        // 텍스트가 플레이어를 향하도록 설정 (세로 표시)
+        display.setBillboard(TextDisplay.Billboard.FIXED);
+    }
+
 	private Class<? extends Entity> BARTYPE = TextDisplay.class;
 	
 	final private Entity bardamaged(Double max, Double cur, Double last, Double dam, LivingEntity le) {
 	    if (!bar.containsKey(le.getUniqueId())) {
-	        // 몹의 시야 방향을 가져옴
-	        Vector direction = le.getLocation().getDirection();
 	        
-	        // 시야 방향을 기준으로 90도 회전시킨 벡터를 계산 (옆으로 이동)
-	        Vector perpendicular = new Vector(-direction.getZ(), 0, direction.getX());
 	        
-	        // 몹의 위치에서 벡터를 더해 머리 옆으로 위치 설정
-	        Location lel = le.getLocation().clone().add(perpendicular.multiply(0.5)).add(0, 1.5, 0); // 머리 옆으로 이동
+	        Location lel = le.getLocation().clone().add(0, 1.5, 0); 
 	        
-	        // 작은 크기의 몹에 대해 위치를 다르게 조정
 	        if (issmall(le)) {
-	            lel = le.getLocation().clone().add(perpendicular.multiply(0.5)).add(0, 0.5, 0);
+	            lel = le.getLocation().clone().add(0, 0.5, 0);
 	        }
 
-	        final Entity din = le.getWorld().spawn(lel, BARTYPE, e -> {
+	        final TextDisplay din = (TextDisplay) le.getWorld().spawn(lel, BARTYPE, e -> {
 	            e.setVisibleByDefault(false);
 	            e.setInvulnerable(true);
 	            e.setSilent(true);
@@ -610,20 +633,24 @@ public class CommonEvents extends Mobs implements Listener{
 	            e.setMetadata("din", new FixedMetadataValue(RMain.getInstance(), true));
 	            e.setMetadata("bar", new FixedMetadataValue(RMain.getInstance(), true));
 	            e.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-	            e.setCustomNameVisible(true);
+	            e.setCustomNameVisible(false);
 	        });
-	        din.setMetadata("din", new FixedMetadataValue(RMain.getInstance(), true));
-	        din.setMetadata("bar", new FixedMetadataValue(RMain.getInstance(), true));
-	        din.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-	        din.setCustomNameVisible(true);
 	        bar.put(le.getUniqueId(), din.getUniqueId());
 	        damagebar(max, cur, last, dam, din);
+	        rotateAndScaleDisplay(din);
+	        din.setGlowColorOverride(Color.RED);  // 글로우 효과 추가
+	        din.setViewRange(10f);  // 뷰 범위 설정
 
 	        int track = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
 	            @Override
 	            public void run() {
 	                // 체력바의 위치를 계속해서 업데이트
-	                din.teleport(le.getLocation().clone().add(perpendicular.multiply(0.5)).add(0, 1.5, 0));
+	    	        Location lel = le.getLocation().clone().add(0, 1.5, 0); 
+	    	        
+	    	        if (issmall(le)) {
+	    	            lel = le.getLocation().clone().add(0, 0.5, 0);
+	    	        }
+	                din.teleport(lel.clone().add(0, 1.5, 0));
 	                if (!le.isValid() || le.isInvisible()) {
 	                    Bukkit.getScheduler().cancelTask(trackt.get(le.getUniqueId()));
 	                    if (din != null) {
@@ -646,11 +673,11 @@ public class CommonEvents extends Mobs implements Listener{
 	                    bar.remove(le.getUniqueId());
 	                }
 	            }
-	        }, 100);
+	        }, 25);
 	        bart.put(le.getUniqueId(), task);
 	        return din;
 	    } else if (Bukkit.getEntity(bar.get(le.getUniqueId())) != null) {
-	    	Entity din = Bukkit.getEntity(bar.get(le.getUniqueId()));
+	    	TextDisplay din = (TextDisplay) Bukkit.getEntity(bar.get(le.getUniqueId()));
 	        damagebar(max, cur, last, dam, din);
 
 	        if (bart.containsKey(le.getUniqueId())) {
@@ -666,7 +693,7 @@ public class CommonEvents extends Mobs implements Listener{
 	                        bar.remove(le.getUniqueId());
 	                    }
 	                }
-	            }, 100);
+	            }, 25);
 	            bart.put(le.getUniqueId(), task);
 	        }
 
@@ -679,7 +706,7 @@ public class CommonEvents extends Mobs implements Listener{
 	final private Entity barhealed(Double max, Double cur, Double last, Double dam, LivingEntity le) {
 
 		if (Bukkit.getEntity(bar.get(le.getUniqueId())) != null){
-			Entity din =  Bukkit.getEntity(bar.get(le.getUniqueId()));
+			TextDisplay din =  (TextDisplay) Bukkit.getEntity(bar.get(le.getUniqueId()));
 			healbar(max,cur,last,dam,din);
 
 			if(bart.containsKey(le.getUniqueId())) {
@@ -773,84 +800,50 @@ public class CommonEvents extends Mobs implements Listener{
 		}, 2);
 	}
 
+	private void updateEntityHealthDisplay(LivingEntity le, double currentHealth, double maxHealth) {
+	    String formattedHealth = formatHealth(currentHealth);
+	    String formattedMaxHealth = formatHealth(maxHealth);
 
-	@EventHandler
-	public void Damagegetter(EntityRegainHealthEvent d)
-	{
-		if(d.getEntity() instanceof LivingEntity)
-		{
-			LivingEntity le = (LivingEntity) d.getEntity();
-			if(!damaged.containsKey(le.getUniqueId())) {
-				return;
-			}
-			Double lh = Math.round((le.getHealth())*10)/10.0;
-			final Double mh =Math.round(le.getAttribute(Attribute.MAX_HEALTH).getValue()*10)/10.0;
-			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-				@Override
-				public void run()
-				{
-					final Double ch = Math.round((le.getHealth())*10)/10.0;
-					if(bar.containsKey(le.getUniqueId())) {
-						barhealed(mh, ch, lh ,d.getAmount(), le);
-					}
-					if(damaged.containsKey(le.getUniqueId())) {
-						le.setCustomName(damaged.get(le.getUniqueId()) + (ChatColor.UNDERLINE + " ("+ String.valueOf(ch) + "/" + String.valueOf(mh) + ")"));
-						le.setCustomNameVisible(true);
-						le.setMetadata("damaged", new FixedMetadataValue(RMain.getInstance(),true));
-					}
-				}
-			}, 1);
-		}
+	    if (!damaged.containsKey(le.getUniqueId())) {
+	        damaged.put(le.getUniqueId(), le.getName());
+	    }
+
+	    le.setCustomName(damaged.get(le.getUniqueId()) + 
+	        ChatColor.UNDERLINE + " (" + formattedHealth + "/" + formattedMaxHealth + ")");
+	    le.setCustomNameVisible(true);
+	    le.setMetadata("damaged", new FixedMetadataValue(RMain.getInstance(), true));
+	}
+
+	private String formatHealth(double health) {
+	    if (health >= 10000) {
+	        return String.format("%.1fK", health / 1000);
+	    } else {
+	        return String.valueOf(health);
+	    }
 	}
 
 	@EventHandler
-	public void Damagegetter(EntityDamageByEntityEvent d)
-	{
-		if(d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity && !d.isCancelled()) {
-			Player p = (Player) d.getDamager();
-			LivingEntity le = (LivingEntity) d.getEntity();
-			le.setMaximumNoDamageTicks(0);
-			le.setNoDamageTicks(0);
-			if(d.getEntity().hasMetadata("fake") || d.getEntity().hasMetadata("portal"))
-			{
-				d.setCancelled(true);
-				return;
-			}
+	public void Damagegetter(EntityRegainHealthEvent d) {
+	    if (d.getEntity() instanceof LivingEntity) {
+	        LivingEntity le = (LivingEntity) d.getEntity();
+	        if (!damaged.containsKey(le.getUniqueId())) {
+	            return;
+	        }
+	        double initialHealth = Math.round(le.getHealth() * 10) / 10.0;
+	        double maxHealth = Math.round(le.getAttribute(Attribute.MAX_HEALTH).getValue() * 10) / 10.0;
 
-			final Double mh =Math.round(le.getAttribute(Attribute.MAX_HEALTH).getValue()*10)/10.0;
+	        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), () -> {
+	            double currentHealth = Math.round(le.getHealth() * 10) / 10.0;
+	            if (bar.containsKey(le.getUniqueId())) {
+	                barhealed(maxHealth, currentHealth, initialHealth, d.getAmount(), le);
+	            }
+	            updateEntityHealthDisplay(le, currentHealth, maxHealth);
+	        }, 1);
+	    }
+	}
 
-			if(!Holding.holded.containsKey(le.getUniqueId())) {
-				if(!le.hasAI() && !(le instanceof Player)) {
-					le.setAI(true);
-				}
-			}
-			if(d.getDamage()>0) {
-				Double lh = Math.round((le.getHealth())*10)/10.0;
-
-				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					@Override
-					public void run()
-					{
-						final Double ch = Math.round((le.getHealth())*10)/10.0;
-						bardamaged(mh, ch, lh ,d.getFinalDamage(), le);
-						if(!damaged.containsKey(le.getUniqueId())) {
-							damaged.put(le.getUniqueId(), le.getName());
-							le.setCustomName((le.getName()) + (ChatColor.UNDERLINE + " ("+ String.valueOf(ch) + "/" + String.valueOf(mh) + ")"
-							));
-							le.setCustomNameVisible(true);
-							le.setMetadata("damaged", new FixedMetadataValue(RMain.getInstance(),true));
-						}
-						else {
-							le.setCustomName(damaged.get(le.getUniqueId()) + (ChatColor.UNDERLINE + " ("+ String.valueOf(ch) + "/" + String.valueOf(mh) + ")"));
-							le.setCustomNameVisible(true);
-							le.setMetadata("damaged", new FixedMetadataValue(RMain.getInstance(),true));
-						}
-					}
-				}, 1);
-				damageind(p, le, d.getFinalDamage());
-
-			}
-		}
+	@EventHandler
+	public void Damagegetter(EntityDamageByEntityEvent d) {
 		if(d.getDamager() instanceof Projectile && d.getEntity() instanceof LivingEntity&& !d.isCancelled()) {
 			if(d.getEntity().hasMetadata("fake") || d.getEntity().hasMetadata("portal"))
 			{
@@ -862,100 +855,70 @@ public class CommonEvents extends Mobs implements Listener{
 			if(pr.getShooter() instanceof Player && !(pr instanceof Snowball)) {
 				Player p = (Player) pr.getShooter();
 				LivingEntity le = (LivingEntity) d.getEntity();
-
-				final Double mh =Math.round(le.getAttribute(Attribute.MAX_HEALTH).getValue()*10)/10.0;
-
-				if(!Holding.holded.containsKey(le.getUniqueId())) {
-
-					if(!le.hasAI() && !(le instanceof Player)) {
-						le.setAI(true);
-					}
-				}
-				if(d.getDamage()>0) {
-					Double lh = Math.round((le.getHealth())*10)/10.0;
-
-					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-						@Override
-						public void run()
-						{
-							final Double ch = Math.round((le.getHealth())*10)/10.0 ;
-							bardamaged(mh, ch, lh ,d.getFinalDamage(), le);
-							if(!damaged.containsKey(le.getUniqueId())) {
-								damaged.put(le.getUniqueId(), le.getName());
-								le.setCustomName((le.getName()) + (ChatColor.UNDERLINE + " ("+ String.valueOf(ch) + "/" + String.valueOf(mh) + ")"
-								));
-								le.setCustomNameVisible(true);
-								le.setMetadata("damaged", new FixedMetadataValue(RMain.getInstance(),true));
-							}
-							else {
-								le.setCustomName(damaged.get(le.getUniqueId()) + (ChatColor.UNDERLINE + " ("+ String.valueOf(ch) + "/" + String.valueOf(mh) + ")"));
-								le.setCustomNameVisible(true);
-								le.setMetadata("damaged", new FixedMetadataValue(RMain.getInstance(),true));
-							}
-						}
-					}, 1);
-					damageind(p, le, d.getFinalDamage());
-
-				}
-			}
-
+		        double maxHealth = Math.round(le.getAttribute(Attribute.MAX_HEALTH).getValue() * 10) / 10.0;
+	
+		        if (d.getDamage() > 0) {
+		            double initialHealth = Math.round(le.getHealth() * 10) / 10.0;
+	
+		            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), () -> {
+		                double currentHealth = Math.round(le.getHealth() * 10) / 10.0;
+		                bardamaged(maxHealth, currentHealth, initialHealth, d.getFinalDamage(), le);
+		                updateEntityHealthDisplay(le, currentHealth, maxHealth);
+		            }, 1);
+		            damageind(p, le, d.getFinalDamage());
+		        }
+		    }
 		}
+	    if (d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity && !d.isCancelled()) {
+	        Player p = (Player) d.getDamager();
+	        LivingEntity le = (LivingEntity) d.getEntity();
+	        le.setMaximumNoDamageTicks(0);
+	        le.setNoDamageTicks(0);
+
+	        if (d.getEntity().hasMetadata("fake") || d.getEntity().hasMetadata("portal")) {
+	            d.setCancelled(true);
+	            return;
+	        }
+
+	        double maxHealth = Math.round(le.getAttribute(Attribute.MAX_HEALTH).getValue() * 10) / 10.0;
+
+	        if (d.getDamage() > 0) {
+	            double initialHealth = Math.round(le.getHealth() * 10) / 10.0;
+
+	            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), () -> {
+	                double currentHealth = Math.round(le.getHealth() * 10) / 10.0;
+	                bardamaged(maxHealth, currentHealth, initialHealth, d.getFinalDamage(), le);
+	                updateEntityHealthDisplay(le, currentHealth, maxHealth);
+	            }, 1);
+	            damageind(p, le, d.getFinalDamage());
+	        }
+	    }
 	}
 
-
 	@EventHandler
-	public void Damagegetter(EntityDamageEvent d)
-	{
-		if(d.getEntity().hasMetadata("portal")) {
-			d.setCancelled(true);
-		}
-		if(d.getEntity().hasMetadata("fake") && !d.getEntity().hasMetadata("raidvil") && d.getEntityType() != EntityType.PLAYER) {
-			d.setCancelled(true);
-		}
-		if(d.getEntity() instanceof LivingEntity && !d.isCancelled()&& !d.getEntity().isInvulnerable()) {
-			final LivingEntity le = (LivingEntity) d.getEntity();
-			le.setMaximumNoDamageTicks(0);
-			le.setNoDamageTicks(0);
+	public void Damagegetter(EntityDamageEvent d) {
+	    if (d.getEntity().hasMetadata("portal") || d.getEntity().hasMetadata("fake")) {
+	        d.setCancelled(true);
+	        return;
+	    }
 
-			if(!le.hasMetadata("rpgspawned") && le.getCustomName() == null) {
-				le.getAttribute(Attribute.MAX_HEALTH).setBaseValue(le.getAttribute(Attribute.MAX_HEALTH).getDefaultValue());
-				le.setCustomName(trans(le));
-				le.setCustomNameVisible(true);
-				le.setMetadata("plain", new FixedMetadataValue(RMain.getInstance(),true));
-			}
+	    if (d.getEntity() instanceof LivingEntity && !d.isCancelled() && !d.getEntity().isInvulnerable()) {
+	        LivingEntity le = (LivingEntity) d.getEntity();
+	        le.setMaximumNoDamageTicks(0);
+	        le.setNoDamageTicks(0);
 
-			final Double mh =Math.round(le.getAttribute(Attribute.MAX_HEALTH).getValue()*10)/10.0;
+	        double maxHealth = Math.round(le.getAttribute(Attribute.MAX_HEALTH).getValue() * 10) / 10.0;
 
-			if(!Holding.holded.containsKey(le.getUniqueId())) {
+	        if (d.getDamage() > 0) {
+	            double initialHealth = Math.round(le.getHealth() * 10) / 10.0;
 
-				if(!le.hasAI() && !(le instanceof Player)) {
-            		le.setAI(true);
-				}
-			}
-			if(d.getDamage()>0) {
-				Double lh = Math.round((le.getHealth())*10)/10.0;
-
-				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					@Override
-					public void run()
-					{
-						final Double ch = Math.round((le.getHealth())*10)/10.0 ;
-						bardamaged(mh, ch, lh,d.getFinalDamage(), le);
-						if(!damaged.containsKey(le.getUniqueId())) {
-							damaged.put(le.getUniqueId(), le.getName());
-							le.setCustomName((le.getName()) + (ChatColor.UNDERLINE + " ("+ String.valueOf(ch) + "/" + String.valueOf(mh) + ")"));
-							le.setCustomNameVisible(true);
-							le.setMetadata("damaged", new FixedMetadataValue(RMain.getInstance(),true));
-						}
-						else {
-							le.setCustomName(damaged.get(le.getUniqueId()) + (ChatColor.UNDERLINE + " ("+ String.valueOf(ch) + "/" + String.valueOf(mh) + ")"));
-							le.setCustomNameVisible(true);
-							le.setMetadata("damaged", new FixedMetadataValue(RMain.getInstance(),true));
-						}
-					}
-				}, 1);
-			}
-		}
+	            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), () -> {
+	                double currentHealth = Math.round(le.getHealth() * 10) / 10.0;
+	                bardamaged(maxHealth, currentHealth, initialHealth, d.getFinalDamage(), le);
+	                updateEntityHealthDisplay(le, currentHealth, maxHealth);
+	            }, 1);
+	        }
+	    }
 	}
 
 	@EventHandler
@@ -996,8 +959,6 @@ public class CommonEvents extends Mobs implements Listener{
 	public void Enderdragon(EnderDragonChangePhaseEvent d)
 	{
 		EnderDragon ed = (EnderDragon) d.getEntity();
-		d.getEntity().setCustomName(null);
-		d.getEntity().setCustomNameVisible(false);
 		if(ed.getDragonBattle() == null) {
 			return;
 		}
