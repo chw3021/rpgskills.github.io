@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
+
+import org.apache.commons.math3.complex.Quaternion;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -18,6 +20,7 @@ import org.bukkit.World.Environment;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.boss.DragonBattle.RespawnPhase;
 import org.bukkit.entity.Ageable;
+import org.bukkit.entity.Animals;
 import org.bukkit.entity.Armadillo;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Chicken;
@@ -27,13 +30,17 @@ import org.bukkit.entity.EnderDragon.Phase;
 import org.bukkit.entity.Endermite;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Fish;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Rabbit;
 import org.bukkit.entity.Silverfish;
+import org.bukkit.entity.Slime;
 import org.bukkit.entity.Snowball;
+import org.bukkit.entity.Spider;
 import org.bukkit.entity.TextDisplay;
+import org.bukkit.entity.TextDisplay.TextAlignment;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -72,8 +79,12 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.RenderType;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
+import org.bukkit.util.Transformation;
 import org.bukkit.util.Vector;
 import org.joml.Matrix4f;
+import org.joml.Quaternionf;
+import org.joml.Quaternionfc;
+import org.joml.Vector3f;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -406,66 +417,96 @@ public class CommonEvents extends Mobs implements Listener{
 	    // 위치 조정(랜덤한 X, Z 추가)
 	    double randomX = -0.3 + Math.random()*0.6; // -0.3 ~ 0.3
 	    double randomZ = -0.3 + Math.random()*0.6; // -0.3 ~ 0.3
-	    resultLocation.add(randomX, 0, randomZ);
+        double randomY = -0.1 + Math.random()*0.2;
+	    resultLocation.add(randomX, randomY, randomZ);
 
 	    return resultLocation;
 	}
 	
 	final public Location disloc(final Player p, final LivingEntity le, Location pl, Location elf) {
 
-        double randomX = -0.5 + Math.random(); // -0.5 ~ 0.5
-        double randomZ = -0.5 + Math.random(); // -0.5 ~ 0.5
+        double randomX = -0.3 + Math.random()*0.6;
+        double randomY = -0.1 + Math.random()*0.2;
+        double randomZ = -0.3 + Math.random()*0.6;
 		if(elf.getWorld() != pl.getWorld()) {
 			if(p.hasPotionEffect(PotionEffectType.SLOWNESS)) {
-				return pl.clone().add(pl.clone().getDirection().rotateAroundY(Math.PI/20).normalize().multiply(2.8)).add(randomX, 1.8, randomZ);
+				return pl.clone().add(pl.clone().getDirection().rotateAroundY(Math.PI/20).normalize().multiply(2.8)).add(randomX, 1.6+randomY, randomZ);
 			}
 			else {
-				return pl.clone().add(pl.clone().getDirection().rotateAroundY(Math.PI/10).normalize().multiply(2.2)).add(randomX, 2.6, randomZ);
+				return pl.clone().add(pl.clone().getDirection().rotateAroundY(Math.PI/10).normalize().multiply(2.2)).add(randomX, 2.4+randomY, randomZ);
 			}
 		}
 		final Double disd = elf.distance(pl);
-		if(disd<12) {
+		if(disd<9) {
 			return rightUp(pl,elf);
 		}
 		else {
 			if(p.hasPotionEffect(PotionEffectType.SLOWNESS)) {
-				return pl.clone().add(pl.clone().getDirection().rotateAroundY(Math.PI/20).normalize().multiply(2.8)).add(randomX, 1.8, randomZ);
+				return pl.clone().add(pl.clone().getDirection().rotateAroundY(Math.PI/20).normalize().multiply(2.8)).add(randomX, 1.6+randomY, randomZ);
 			}
 			else {
-				return pl.clone().add(pl.clone().getDirection().rotateAroundY(Math.PI/10).normalize().multiply(2.2)).add(randomX, 2.6, randomZ);
+				return pl.clone().add(pl.clone().getDirection().rotateAroundY(Math.PI/10).normalize().multiply(2.2)).add(randomX, 2.4+randomY, randomZ);
 			}
 		}
 	}
+
 	
+	private static void scaleDisplay(TextDisplay display) {
+	    // 변환 데이터 생성
+	    Vector3f translation = new Vector3f(-0.3f, -0.5f, 0.4f); // 위치
+	    Quaternionf leftRotation = new Quaternionf(0f, 0f, 0f, 1f); 
+	    Vector3f scale = new Vector3f(0.5f, 0.5f, 1f);
+	    Quaternionf rightRotation = new Quaternionf(0f, 0f, 0f, 1f);
+
+	    // Transformation 생성
+	    Transformation transformation = new Transformation(translation, leftRotation, scale, rightRotation);
+
+	    display.setTransformation(transformation);
+
+	    // 텍스트가 고정된 위치로 표시되도록 설정
+	    display.setBillboard(TextDisplay.Billboard.CENTER);
+	}
+
 	
 	final public TextDisplay dinspawn(final Player p, Location l, Double d) {
 	    // TextDisplay 엔티티 생성
-	    final TextDisplay textDisplay = l.getWorld().spawn(l, TextDisplay.class);
+	    final TextDisplay td = l.getWorld().spawn(l, TextDisplay.class, textDisplay ->{
 
-	    // TextDisplay 기본 설정
-	    textDisplay.setBillboard(Billboard.CENTER); // 텍스트가 플레이어를 따라오도록 설정
-	    textDisplay.setGlowing(true); // 글자에 발광 효과
-	    textDisplay.setGlowColorOverride(Color.BLUE);
-	    textDisplay.setPersistent(false); // 임시 엔티티로 설정
-	    textDisplay.setCustomNameVisible(false); // CustomName 사용 안 함
-	    textDisplay.setInvulnerable(true); // 파괴되지 않도록 설정
-	    textDisplay.setSeeThrough(true);
-	    textDisplay.setGravity(false);
-	    textDisplay.setVisibleByDefault(false);
-	    p.showEntity(RMain.getInstance(), textDisplay);
 
+		    // TextDisplay 기본 설정
+		    textDisplay.setVisibleByDefault(false);
+		    p.showEntity(RMain.getInstance(), textDisplay);
+		    textDisplay.setBillboard(Billboard.CENTER); // 텍스트가 플레이어를 따라오도록 설정
+		    textDisplay.setGlowing(true); // 글자에 발광 효과
+		    textDisplay.setGlowColorOverride(Color.BLUE);
+		    textDisplay.setPersistent(false); // 임시 엔티티로 설정
+		    textDisplay.setCustomNameVisible(false); // CustomName 사용 안 함
+		    textDisplay.setSeeThrough(true);
+		    textDisplay.setGravity(false);
+	        textDisplay.setTextOpacity((byte) 245);
+		    scaleDisplay(textDisplay);
+		    textDisplay.setTeleportDuration(15);
+	    });
+	    final Location tdl = td.getLocation().clone();
+
+        Bukkit.getServer().getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+            	td.teleport(tdl.clone().add(0, 0.6, 0));
+            }
+        }, 1);
 	    // 데미지에 따라 표시할 텍스트 설정
 	    String damageText;
 	    if (d < 0.1) {
-	        damageText = ChatColor.AQUA + String.valueOf(Math.round(d * 1000) / 1000.000) + " [" + p.getName() + "]";
+	        damageText = ChatColor.AQUA + String.valueOf(Math.round(d * 1000) / 1000.000);
 	    } else if (d >= 9999999) {
 	        damageText = ChatColor.RED + "!9999999!" + " [" + p.getName() + "]";
 	    } else {
-	        damageText = ChatColor.AQUA + String.valueOf(Math.round(d * 10) / 10.0) + " [" + p.getName() + "]";
+	        damageText = ChatColor.AQUA + String.valueOf(Math.round(d * 10) / 10.0);
 	    }
-	    textDisplay.setText(damageText);
+	    td.setText(damageText);
 
-	    return textDisplay;
+	    return td;
 	}
 
 	final public void damageind(final Player p, final LivingEntity le, Double d) {
@@ -495,25 +536,30 @@ public class CommonEvents extends Mobs implements Listener{
 		}, 30);
 	}
 
+	final int barCount = 20;
+	//final String barChar = "❤"; // 하트 모양 문자
+	//final String barChar = "▇";
+	//final String barChar = "󠄀🀫";
+	final String barChar = "█";
 	
 	final private void damagebar(Double max, Double cur, Double last, Double dam, final TextDisplay ar) {
-		final double rat =  (cur/max)*10d;
-		final double lr =  (last/max)*10d;
-		double d = (dam/max)*10d;
+		final double rat =  (cur/max)*barCount*1d;
+		final double lr =  (last/max)*barCount*1d;
+		double d = (dam/max)*barCount*1d;
 
 		if(d >= 1) {
 			StringBuffer bar = new StringBuffer();
 			for(int i = 0; i<rat; i++) {
-				bar.append(ChatColor.GREEN+"|");
+				bar.append(ChatColor.GREEN+barChar);
 			}
 			for(int i = 0; i<d; i++) {
-				bar.append(ChatColor.RED+"|");
+				bar.append(ChatColor.RED+barChar);
 				if(lr<i) {
 					break;
 				}
 			}
-			for(int i = 0; i<10-lr; i++) {
-				bar.append(ChatColor.BLACK+"|");
+			for(int i = 0; i<barCount-lr; i++) {
+				bar.append(ChatColor.BLACK+barChar);
 			}
 			ar.setText(bar.toString());
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -522,10 +568,10 @@ public class CommonEvents extends Mobs implements Listener{
 				{
 					StringBuffer bar = new StringBuffer();
 					for(int i = 0; i<rat; i++) {
-						bar.append(ChatColor.GREEN+"|");
+						bar.append(ChatColor.GREEN+barChar);
 					}
-					for(int i = 0; i<40-rat; i++) {
-						bar.append(ChatColor.BLACK+"|");
+					for(int i = 0; i<barCount-rat; i++) {
+						bar.append(ChatColor.BLACK+barChar);
 					}
 					ar.setText(bar.toString());
 				}
@@ -534,10 +580,10 @@ public class CommonEvents extends Mobs implements Listener{
 		else {
 			StringBuffer bar = new StringBuffer();
 			for(int i = 0; i<rat; i++) {
-				bar.append(ChatColor.GREEN+"|");
+				bar.append(ChatColor.GREEN+barChar);
 			}
-			for(int i = 0; i<10-rat; i++) {
-				bar.append(ChatColor.BLACK+"|");
+			for(int i = 0; i<barCount-rat; i++) {
+				bar.append(ChatColor.BLACK+barChar);
 			}
 			ar.setText(bar.toString());
 		}
@@ -545,34 +591,24 @@ public class CommonEvents extends Mobs implements Listener{
 	}
 
 	final private void healbar(Double max, Double cur, Double last, Double dam, final TextDisplay ar) {
-		final double rat =  (cur/max)*10d;
+		final double rat =  (cur/max)*barCount*1d;
 
 		StringBuffer bar = new StringBuffer();
 		for(int i = 0; i<rat; i++) {
-			bar.append(ChatColor.GREEN+"|");
+			bar.append(ChatColor.GREEN+barChar);
 		}
-		for(int i = 0; i<10-rat; i++) {
-			bar.append(ChatColor.BLACK+"|");
+		for(int i = 0; i<barCount-rat; i++) {
+			bar.append(ChatColor.BLACK+barChar);
 		}
 		ar.setText(bar.toString());
 		return ;
 	}
 
 	final private boolean issmall(LivingEntity le) {
-		if(le instanceof Chicken) {
-			return true;
-		}
-		if(le instanceof Rabbit) {
-			return true;
-		}
-		if(le instanceof Ageable) {
-			Ageable al = (Ageable) le;
+		if(le instanceof Ageable al) {
 			if(!al.isAdult()) {
 				return true;
 			}
-		}
-		if (le instanceof Armadillo) {
-			return true;
 		}
 		if (le instanceof Silverfish) {
 			return true;
@@ -580,77 +616,89 @@ public class CommonEvents extends Mobs implements Listener{
 		if (le instanceof Endermite) {
 			return true;
 		}
-		if(Tag.ENTITY_TYPES_SENSITIVE_TO_IMPALING.isTagged(le.getType())) {
+		if (le instanceof Spider) {
 			return true;
+		}
+		if (le instanceof Animals) {
+			return true;
+		}
+		if(le instanceof Fish) {
+			return true;
+		}
+		if(le instanceof Slime slime) {
+			if(slime.getSize() <=2) {
+				return true;
+			}
 		}
 		return false;
 	}
+	
+	private static void rotateAndScaleDisplay(TextDisplay display, Boolean small) {
+	    // 변환 데이터 생성
+	    Vector3f translation = new Vector3f(-0.4f, -0.73f, 0.7f); // 위치
+	    Quaternionf leftRotation = new Quaternionf(0f, 0f, 0f, 1f); 
+	    Vector3f scale = new Vector3f(0.15f, 0.06f, 1f); // 세로로 길게 스케일 조정
+	    Quaternionf rightRotation = new Quaternionf(0f, 0f, 1f, 1f); 
+	    if(small) {
+	    	translation.set(0f, 0.2f, 0f);
+	    	rightRotation.set(0f, 0f, 0f, 1f);
+	    	scale.set(0.11f, 0.2f, 1f);
+	    }
 
-    private static void rotateAndScaleDisplay(TextDisplay display) {
-        // 4x4 매트릭스를 기반으로 회전 및 스케일 적용
-        Matrix4f transformationMatrix = new Matrix4f()
-            .m00(1f)    // 첫 번째 행, 첫 번째 값
-            .m01(0f)    // 첫 번째 행, 두 번째 값
-            .m02(0f)    // 첫 번째 행, 세 번째 값
-            .m03(0f)    // 첫 번째 행, 네 번째 값
-            .m10(0f)    // 두 번째 행, 첫 번째 값
-            .m11(-0.002f) // 두 번째 행, 두 번째 값
-            .m12(-1.42f)  // 두 번째 행, 세 번째 값
-            .m13(1f)     // 두 번째 행, 네 번째 값
-            .m20(0f)     // 세 번째 행, 첫 번째 값
-            .m21(0.398f) // 세 번째 행, 두 번째 값
-            .m22(-0.008f) // 세 번째 행, 세 번째 값
-            .m23(1f)     // 세 번째 행, 네 번째 값
-            .m30(0f)     // 네 번째 행, 첫 번째 값
-            .m31(0f)     // 네 번째 행, 두 번째 값
-            .m32(0f)     // 네 번째 행, 세 번째 값
-            .m33(1f);    // 네 번째 행, 네 번째 값
+	    // Transformation 생성
+	    Transformation transformation = new Transformation(translation, leftRotation, scale, rightRotation);
 
-        // 변환 행렬 적용
-        display.setTransformationMatrix(transformationMatrix);
+	    display.setTransformation(transformation);
 
-        // 텍스트가 플레이어를 향하도록 설정 (세로 표시)
-        display.setBillboard(TextDisplay.Billboard.FIXED);
-    }
+	    // 텍스트가 고정된 위치로 표시되도록 설정
+	    display.setBillboard(TextDisplay.Billboard.CENTER);
+	}
 
-	private Class<? extends Entity> BARTYPE = TextDisplay.class;
+
+	final int removeTick = 45;
 	
 	final private Entity bardamaged(Double max, Double cur, Double last, Double dam, LivingEntity le) {
 	    if (!bar.containsKey(le.getUniqueId())) {
 	        
 	        
 	        Location lel = le.getLocation().clone().add(0, 1.5, 0); 
+	        final Boolean small = issmall(le);
 	        
-	        if (issmall(le)) {
+	        if (small) {
 	            lel = le.getLocation().clone().add(0, 0.5, 0);
 	        }
 
-	        final TextDisplay din = (TextDisplay) le.getWorld().spawn(lel, BARTYPE, e -> {
-	            e.setVisibleByDefault(false);
-	            e.setInvulnerable(true);
-	            e.setSilent(true);
+	        final TextDisplay din = (TextDisplay) le.getWorld().spawn(lel, TextDisplay.class, e -> {
 	            e.setGravity(false);
+	            e.setVisibleByDefault(true);
 	            e.setMetadata("din", new FixedMetadataValue(RMain.getInstance(), true));
 	            e.setMetadata("bar", new FixedMetadataValue(RMain.getInstance(), true));
 	            e.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-	            e.setCustomNameVisible(false);
+		        damagebar(max, cur, last, dam, e);
+		        rotateAndScaleDisplay(e, small);
+		        e.setTextOpacity((byte) 188);
+		        e.setGlowColorOverride(Color.GREEN);
+		        e.setGlowing(true);
+		        e.setTeleportDuration(1);
+		        e.setSeeThrough(false);
+		        e.setShadowed(false);
+		        e.setDefaultBackground(false);
+		        e.setBackgroundColor(Color.fromARGB(0, 0, 0, 0));
+		        e.setAlignment(TextAlignment.CENTER);
 	        });
 	        bar.put(le.getUniqueId(), din.getUniqueId());
-	        damagebar(max, cur, last, dam, din);
-	        rotateAndScaleDisplay(din);
-	        din.setGlowColorOverride(Color.RED);  // 글로우 효과 추가
-	        din.setViewRange(10f);  // 뷰 범위 설정
 
 	        int track = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
 	            @Override
 	            public void run() {
 	                // 체력바의 위치를 계속해서 업데이트
-	    	        Location lel = le.getLocation().clone().add(0, 1.5, 0); 
+	    	        Location lel = le.getEyeLocation().clone().add(0, -0.2, 0);
 	    	        
 	    	        if (issmall(le)) {
 	    	            lel = le.getLocation().clone().add(0, 0.5, 0);
 	    	        }
-	                din.teleport(lel.clone().add(0, 1.5, 0));
+	    	        lel.setYaw(0);
+	                din.teleport(lel.clone().add(0, 0.8, 0));
 	                if (!le.isValid() || le.isInvisible()) {
 	                    Bukkit.getScheduler().cancelTask(trackt.get(le.getUniqueId()));
 	                    if (din != null) {
@@ -660,7 +708,7 @@ public class CommonEvents extends Mobs implements Listener{
 	                    }
 	                }
 	            }
-	        }, 0, 1);
+	        }, 0, 1/2);
 	        trackt.put(le.getUniqueId(), track);
 
 	        int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -673,7 +721,7 @@ public class CommonEvents extends Mobs implements Listener{
 	                    bar.remove(le.getUniqueId());
 	                }
 	            }
-	        }, 25);
+	        }, removeTick);
 	        bart.put(le.getUniqueId(), task);
 	        return din;
 	    } else if (Bukkit.getEntity(bar.get(le.getUniqueId())) != null) {
@@ -693,7 +741,7 @@ public class CommonEvents extends Mobs implements Listener{
 	                        bar.remove(le.getUniqueId());
 	                    }
 	                }
-	            }, 25);
+	            }, removeTick);
 	            bart.put(le.getUniqueId(), task);
 	        }
 
@@ -723,7 +771,7 @@ public class CommonEvents extends Mobs implements Listener{
 							bar.remove(le.getUniqueId());
 						}
 					}
-				}, 100);
+				}, removeTick);
 				bart.put(le.getUniqueId(), task);
 			}
 
@@ -805,11 +853,12 @@ public class CommonEvents extends Mobs implements Listener{
 	    String formattedMaxHealth = formatHealth(maxHealth);
 
 	    if (!damaged.containsKey(le.getUniqueId())) {
+	    	
 	        damaged.put(le.getUniqueId(), le.getName());
 	    }
 
 	    le.setCustomName(damaged.get(le.getUniqueId()) + 
-	        ChatColor.UNDERLINE + " (" + formattedHealth + "/" + formattedMaxHealth + ")");
+	        ChatColor.BOLD + " (" + formattedHealth + "/" + formattedMaxHealth + ")");
 	    le.setCustomNameVisible(true);
 	    le.setMetadata("damaged", new FixedMetadataValue(RMain.getInstance(), true));
 	}
@@ -906,6 +955,12 @@ public class CommonEvents extends Mobs implements Listener{
 	        LivingEntity le = (LivingEntity) d.getEntity();
 	        le.setMaximumNoDamageTicks(0);
 	        le.setNoDamageTicks(0);
+			if(!le.hasMetadata("rpgspawned") && le.getCustomName() == null) {
+				le.getAttribute(Attribute.MAX_HEALTH).setBaseValue(le.getAttribute(Attribute.MAX_HEALTH).getDefaultValue());
+				le.setCustomName(trans(le));
+				le.setCustomNameVisible(true);
+				le.setMetadata("plain", new FixedMetadataValue(RMain.getInstance(),true));
+			}
 
 	        double maxHealth = Math.round(le.getAttribute(Attribute.MAX_HEALTH).getValue() * 10) / 10.0;
 
