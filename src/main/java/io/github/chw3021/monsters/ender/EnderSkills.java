@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -590,38 +591,40 @@ public class EnderSkills extends EndercoreRaids{
 	    return locations;
 	}
 	public void illusionCharge(EntityDamageByEntityEvent d) {
-	    if(d.getEntity().hasMetadata("enderboss")) {
+	    if(d.getEntity().hasMetadata("illusionboss")) {
 	        final LivingEntity p = (LivingEntity)d.getEntity();
 
 	        if (checkAndApplyCharge(p, d)) return;
 
 	        if(p.hasMetadata("raid")) {
-	            if(!NethercoreRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld())) || p.hasMetadata("failed")) {
+	            Optional<Player> hero = NethercoreRaids.getheroes(p).stream()
+	                .filter(pe -> pe.getWorld().equals(p.getWorld()))
+	                .findAny();
+
+	            if(!hero.isPresent() || p.hasMetadata("failed")) {
 	                return;
 	            }
 
-	            final Location tl = NethercoreRaids.getheroes(p).stream()
-	                    .filter(pe -> pe.getWorld().equals(p.getWorld()))
-	                    .findAny().get().getLocation().clone().add(0, 0.2, 0);
+	            final Location tl = hero.get().getLocation().clone().add(0, 0.2, 0);
 	            illusionCharge(p, tl);
 	        }
 	    }
 	}
 
-	
 	private void illusionStart(LivingEntity p, final Location tl) {
+	    final Location cl = tl.clone();
+	    final World w = cl.getWorld();
 
-        final Location cl = tl.clone();
-        final World w = cl.getWorld();
 	    p.swingMainHand();
 	    p.getWorld().playSound(cl, Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, 1.0f, 0f);
 	    p.getWorld().playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_CHAIN, 1.0f, 2f);
 	    p.playEffect(EntityEffect.WARDEN_TENDRIL_SHAKE);
-        p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 65, 1));
-        p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 65, 3));
-        p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 65, 1));
+	    p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 65, 1));
+	    p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 65, 3));
+	    p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 65, 1));
 	    p.getWorld().spawnParticle(Particle.ENTITY_EFFECT, cl, 500, 5, 1, 5, 1, Color.PURPLE);
 	    p.getWorld().spawnParticle(Particle.EFFECT, cl, 1000, 5, 1, 5, 1);
+
 	    HashSet<Location> particleLocations = calculateParticleLocations(cl, 4, 80);
 
 	    int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
@@ -635,17 +638,28 @@ public class EnderSkills extends EndercoreRaids{
 	                Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(255, 105, 180), 1.5f); // 진한 분홍색
 	                w.spawnParticle(Particle.DUST, particleLocation, 1, dustOptions);
 	            }
-	            p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 0.1f, 2f);
-	    	    p.getWorld().spawnParticle(Particle.ENTITY_EFFECT, cl, 500, 4, 1, 4, 1, Color.PURPLE);
 
+	            p.getWorld().spawnParticle(Particle.ENTITY_EFFECT, cl, 500, 4, 1, 4, 1, Color.PURPLE);
 
+                double offsetX = (Math.random() - 0.5) * 6; // -3 ~ 3 범위의 x좌표
+                double offsetY = (Math.random() - 0.5) * 6; // -3 ~ 3 범위의 y좌표
+                double offsetZ = (Math.random() - 0.5) * 6; // -3 ~ 3 범위의 z좌표
+
+                Location randomLocation = cl.clone().add(offsetX, offsetY, offsetZ);
+	            p.getWorld().spawnParticle(Particle.REVERSE_PORTAL, randomLocation, 10);
+	            p.getWorld().playSound(randomLocation, Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 0.1f, 2f);
+	            // 4범위 내 적들에게 랜덤한 위치로 순간이동 및 피해 적용
 	            for(Entity e : cl.getWorld().getNearbyEntities(cl, 4, 4, 4)) {
 	                if(p != e && e instanceof LivingEntity && !(e.hasMetadata("fake")) && !(e.hasMetadata("portal"))) {
 	                    LivingEntity le = (LivingEntity)e;
-                        le.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 60, 1));
-                        le.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 60, 1));
-                        le.damage(3.0, p);
-                        
+
+	                    // 적을 랜덤한 위치로 순간이동
+	                    le.teleport(randomLocation);
+
+	                    // 순간이동 후 피해
+	                    le.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 60, 1));
+	                    le.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 60, 1));
+	                    le.damage(3.0, p);
 	                }
 	            }
 	        }
@@ -661,17 +675,19 @@ public class EnderSkills extends EndercoreRaids{
 	                Bukkit.getScheduler().cancelTask(illusionTask.get(p.getUniqueId()));
 	                illusionTask.remove(p.getUniqueId());
 	            }
-     			chargable.remove(p.getUniqueId());
+	            chargable.remove(p.getUniqueId());
 	        }
 	    }, 85);
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-     		@Override
-        	public void run() 
-            {	
-     			porkable.put(p.getUniqueId(), true);
-            }
-        }, 180); 
+
+	    // 일정 시간 후 복원 가능 상태로 변경
+	    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	        @Override
+	        public void run() {
+	            porkable.put(p.getUniqueId(), true);
+	        }
+	    }, 180);
 	}
+
 
 	private void illusionCharge(LivingEntity p, Location tl) {
 	    if(ordeal.containsKey(p.getUniqueId())) {
