@@ -558,7 +558,7 @@ public class PiglinSkills extends Summoned{
             		w.playSound(pfl, Sound.ENTITY_ZOMBIFIED_PIGLIN_HURT, 1.0f, 0f);
             		w.playSound(pfl, Sound.ENTITY_PIG_DEATH, 1.0f, 0f);
 					for(int i = 0; i <30; i++) {
-						Arrow ar =p.getWorld().spawnArrow(pe.getLocation(), BlockFace.UP.getDirection() , 0.5f, 60);
+						Arrow ar =p.getWorld().spawnArrow(pe.getLocation(), BlockFace.UP.getDirection() , 0.5f, 50);
 						ar.setShooter(p);
 	                    Snowball ws = (Snowball) p.getWorld().spawn(pe.getLocation(), Snowball.class);
 	                    ws.setItem(new ItemStack(Material.COOKED_PORKCHOP));

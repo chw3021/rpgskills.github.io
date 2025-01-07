@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
+import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -574,82 +575,95 @@ public class EnderSkills extends EndercoreRaids{
 	
 
 	private HashMap<UUID, Boolean> chargable = new HashMap<UUID, Boolean>();
-	public void charge(EntityDamageByEntityEvent d) 
-	{
-		if(d.getEntity().hasMetadata("enderboss")) 
-		{
-			final LivingEntity p = (LivingEntity)d.getEntity();
+	private HashMap<UUID, Integer> illusionTask = new HashMap<UUID, Integer>();
 
-            if (checkAndApplyCharge(p, d)) return;
+	// 원형 파티클 위치를 미리 계산하는 메서드
+	private HashSet<Location> calculateParticleLocations(Location center, double radius, int particleCount) {
+	    HashSet<Location> locations = new HashSet<>();
+	    World world = center.getWorld();
+	    for (int i = 0; i < particleCount; i++) {
+	        double angle = (2 * Math.PI / particleCount) * i;
+	        double x = center.getX() + (radius * Math.cos(angle));
+	        double z = center.getZ() + (radius * Math.sin(angle));
+	        locations.add(new Location(world, x, center.getY() + 0.5, z));
+	    }
+	    return locations;
+	}
+	public void illusionCharge(EntityDamageByEntityEvent d) {
+	    if(d.getEntity().hasMetadata("enderboss")) {
+	        final LivingEntity p = (LivingEntity)d.getEntity();
 
-			if(p.hasMetadata("raid")) {
-				if(!NethercoreRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| p.hasMetadata("failed")) {
-					return;
-				}
+	        if (checkAndApplyCharge(p, d)) return;
 
-				final Location tl = NethercoreRaids.getheroes(p).stream().filter(pe -> pe.getWorld().equals(p.getWorld())).findAny().get().getLocation().clone().add(0,0.2,0);
-				charge(p,tl);
-			}
-		}
+	        if(p.hasMetadata("raid")) {
+	            if(!NethercoreRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld())) || p.hasMetadata("failed")) {
+	                return;
+	            }
+
+	            final Location tl = NethercoreRaids.getheroes(p).stream()
+	                    .filter(pe -> pe.getWorld().equals(p.getWorld()))
+	                    .findAny().get().getLocation().clone().add(0, 0.2, 0);
+	            illusionCharge(p, tl);
+	        }
+	    }
 	}
 
-
-	private HashMap<UUID, Integer> hookt1 = new HashMap<UUID, Integer>();
 	
-	final private void chargeStart(LivingEntity p, Location tl) {
+	private void illusionStart(LivingEntity p, final Location tl) {
 
-        final Location pfl = p.getLocation().clone();
-        
-        final Vector pv = tl.clone().toVector().subtract(pfl.clone().toVector()).normalize();
-        
+        final Location cl = tl.clone();
+        final World w = cl.getWorld();
+	    p.swingMainHand();
+	    p.getWorld().playSound(cl, Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, 1.0f, 0f);
+	    p.getWorld().playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_CHAIN, 1.0f, 2f);
+	    p.playEffect(EntityEffect.WARDEN_TENDRIL_SHAKE);
+        p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 65, 1));
+        p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 65, 3));
+        p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 65, 1));
+	    p.getWorld().spawnParticle(Particle.ENTITY_EFFECT, cl, 500, 5, 1, 5, 1, Color.PURPLE);
+	    p.getWorld().spawnParticle(Particle.EFFECT, cl, 1000, 5, 1, 5, 1);
+	    HashSet<Location> particleLocations = calculateParticleLocations(cl, 4, 80);
 
-		p.swingMainHand();
-		p.getWorld().playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_NETHERITE, 1.0f, 0f);
-		p.getWorld().playSound(p.getLocation(), Sound.BLOCK_BLASTFURNACE_FIRE_CRACKLE, 1.0f, 0f);
-			p.getWorld().spawnParticle(Particle.WHITE_ASH ,p.getLocation(), 100, 0.2,1,0.2,1);
-			p.getWorld().spawnParticle(Particle.WHITE_SMOKE ,p.getLocation(), 100, 0.2,1,0.2,1);
-			p.getWorld().spawnParticle(Particle.BLOCK_MARKER, pfl, 20,1,1,1, getBd(Material.PIGLIN_HEAD));
-			Holding.holding(null, p, 25l);
+	    int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
+	        @Override
+	        public void run() {
+	            if(p.isDead()) {
+	                return;
+	            }
+
+	            for (Location particleLocation : particleLocations) {
+	                Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(255, 105, 180), 1.5f); // 진한 분홍색
+	                w.spawnParticle(Particle.DUST, particleLocation, 1, dustOptions);
+	            }
+	            p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 0.1f, 2f);
+	    	    p.getWorld().spawnParticle(Particle.ENTITY_EFFECT, cl, 500, 4, 1, 4, 1, Color.PURPLE);
 
 
-    	int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-    		@Override
-        	public void run() 
-            {
-    			if(p.isDead()) {
-    				return;
-    			}
-    			p.getWorld().playSound(p.getLocation(), Sound.ENTITY_PIGLIN_ANGRY, 0.1f, 0f);
-    			p.getWorld().spawnParticle(Particle.SWEEP_ATTACK ,p.getLocation(), 30, 2,2,2,1);
-    			p.getWorld().spawnParticle(Particle.WHITE_SMOKE ,p.getLocation(), 30, 2,2,2,1);
-                
-                final Location cl = p.getLocation().clone();
-                
-    			p.setVelocity(pv.normalize().multiply(0.33));
+	            for(Entity e : cl.getWorld().getNearbyEntities(cl, 4, 4, 4)) {
+	                if(p != e && e instanceof LivingEntity && !(e.hasMetadata("fake")) && !(e.hasMetadata("portal"))) {
+	                    LivingEntity le = (LivingEntity)e;
+                        le.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 60, 1));
+                        le.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 60, 1));
+                        le.damage(3.0, p);
+                        
+	                }
+	            }
+	        }
+	    }, 40, 3);
 
-                for(Entity e : cl.getWorld().getNearbyEntities(cl,2,2,2)) {
-					if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
-						LivingEntity le = (LivingEntity)e;
-						le.damage(3.5,p);
-					}
-                }
-    			
-            }
-    	},25,2);
-        hookt1.put(p.getUniqueId(), task);
-        ordt.put(gethero(p), task);
-        
-    	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-    		@Override
-        	public void run() 
-            {
-    			if(hookt1.containsKey(p.getUniqueId())) {
-    				Bukkit.getScheduler().cancelTask(hookt1.get(p.getUniqueId()));
-    				hookt1.remove(p.getUniqueId());
-    			}
+	    illusionTask.put(p.getUniqueId(), task);
+
+	    // 일정 시간이 지나면 환각 효과와 스킬을 종료
+	    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	        @Override
+	        public void run() {
+	            if(illusionTask.containsKey(p.getUniqueId())) {
+	                Bukkit.getScheduler().cancelTask(illusionTask.get(p.getUniqueId()));
+	                illusionTask.remove(p.getUniqueId());
+	            }
      			chargable.remove(p.getUniqueId());
-            }
-    	},65);
+	        }
+	    }, 85);
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
      		@Override
         	public void run() 
@@ -658,35 +672,28 @@ public class EnderSkills extends EndercoreRaids{
             }
         }, 180); 
 	}
-	
-	final private void charge(LivingEntity p, Location tl) {
 
-		if(ordeal.containsKey(p.getUniqueId())) {
-			return;
-		}
-		if(p.hasMetadata("failed") || !chargable.containsKey(p.getUniqueId())) {
-			return;
-		}
-		if(rb8cooldown.containsKey(p.getUniqueId()))
-        {
-            long timer = (rb8cooldown.get(p.getUniqueId())/1000 + 8) - System.currentTimeMillis()/1000; 
-            if(!(timer < 0))
-            {
-            }
-            else 
-            {
-            	rb8cooldown.remove(p.getUniqueId()); // removing player from HashMap
-            	chargeStart(p, tl);
-                
-				rb8cooldown.put(p.getUniqueId(), System.currentTimeMillis());  
-            }
-        }
-        else 
-        {
-        	chargeStart(p, tl);
-			rb8cooldown.put(p.getUniqueId(), System.currentTimeMillis());  
-		}
+	private void illusionCharge(LivingEntity p, Location tl) {
+	    if(ordeal.containsKey(p.getUniqueId())) {
+	        return;
+	    }
+	    if(p.hasMetadata("failed") || !chargable.containsKey(p.getUniqueId())) {
+	        return;
+	    }
+	    if(rb8cooldown.containsKey(p.getUniqueId())) {
+	        long timer = (rb8cooldown.get(p.getUniqueId()) / 1000 + 8) - System.currentTimeMillis() / 1000;
+	        if (timer < 0) {
+	            rb8cooldown.remove(p.getUniqueId()); // 쿨타임 끝났으면
+	            illusionStart(p, tl);
+	            rb8cooldown.put(p.getUniqueId(), System.currentTimeMillis());
+	        }
+	    } else {
+	        illusionStart(p, tl);
+	        rb8cooldown.put(p.getUniqueId(), System.currentTimeMillis());
+	    }
 	}
+	
+
 
 	private HashMap<UUID, Boolean> smkable = new HashMap<UUID, Boolean>();
 	
