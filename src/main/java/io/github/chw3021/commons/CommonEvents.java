@@ -494,10 +494,10 @@ public class CommonEvents extends Mobs implements Listener{
 	}
 
 	
-	final private void damagebar(Double max, Double cur, Double last, Double dam, final ArmorStand ar) {
-		final double rat =  (cur/max)*40d;
-		final double lr =  (last/max)*40d;
-		double d = (dam/max)*40d;
+	final private void damagebar(Double max, Double cur, Double last, Double dam, final Entity ar) {
+		final double rat =  (cur/max)*10d;
+		final double lr =  (last/max)*10d;
+		double d = (dam/max)*10d;
 
 		if(d >= 1) {
 			StringBuffer bar = new StringBuffer();
@@ -510,7 +510,7 @@ public class CommonEvents extends Mobs implements Listener{
 					break;
 				}
 			}
-			for(int i = 0; i<40-lr; i++) {
+			for(int i = 0; i<10-lr; i++) {
 				bar.append(ChatColor.BLACK+"|");
 			}
 			ar.setCustomName(bar.toString());
@@ -534,7 +534,7 @@ public class CommonEvents extends Mobs implements Listener{
 			for(int i = 0; i<rat; i++) {
 				bar.append(ChatColor.GREEN+"|");
 			}
-			for(int i = 0; i<40-rat; i++) {
+			for(int i = 0; i<10-rat; i++) {
 				bar.append(ChatColor.BLACK+"|");
 			}
 			ar.setCustomName(bar.toString());
@@ -542,14 +542,14 @@ public class CommonEvents extends Mobs implements Listener{
 		return ;
 	}
 
-	final private void healbar(Double max, Double cur, Double last, Double dam, final ArmorStand ar) {
-		final double rat =  (cur/max)*40d;
+	final private void healbar(Double max, Double cur, Double last, Double dam, final Entity ar) {
+		final double rat =  (cur/max)*10d;
 
 		StringBuffer bar = new StringBuffer();
 		for(int i = 0; i<rat; i++) {
 			bar.append(ChatColor.GREEN+"|");
 		}
-		for(int i = 0; i<40-rat; i++) {
+		for(int i = 0; i<10-rat; i++) {
 			bar.append(ChatColor.BLACK+"|");
 		}
 		ar.setCustomName(bar.toString());
@@ -583,145 +583,103 @@ public class CommonEvents extends Mobs implements Listener{
 		}
 		return false;
 	}
+	
+	private Class<? extends Entity> BARTYPE = TextDisplay.class;
+	
+	final private Entity bardamaged(Double max, Double cur, Double last, Double dam, LivingEntity le) {
+	    if (!bar.containsKey(le.getUniqueId())) {
+	        // 몹의 시야 방향을 가져옴
+	        Vector direction = le.getLocation().getDirection();
+	        
+	        // 시야 방향을 기준으로 90도 회전시킨 벡터를 계산 (옆으로 이동)
+	        Vector perpendicular = new Vector(-direction.getZ(), 0, direction.getX());
+	        
+	        // 몹의 위치에서 벡터를 더해 머리 옆으로 위치 설정
+	        Location lel = le.getLocation().clone().add(perpendicular.multiply(0.5)).add(0, 1.5, 0); // 머리 옆으로 이동
+	        
+	        // 작은 크기의 몹에 대해 위치를 다르게 조정
+	        if (issmall(le)) {
+	            lel = le.getLocation().clone().add(perpendicular.multiply(0.5)).add(0, 0.5, 0);
+	        }
 
-	final private ArmorStand bardamaged(Double max, Double cur, Double last, Double dam, LivingEntity le) {
+	        final Entity din = le.getWorld().spawn(lel, BARTYPE, e -> {
+	            e.setVisibleByDefault(false);
+	            e.setInvulnerable(true);
+	            e.setSilent(true);
+	            e.setGravity(false);
+	            e.setMetadata("din", new FixedMetadataValue(RMain.getInstance(), true));
+	            e.setMetadata("bar", new FixedMetadataValue(RMain.getInstance(), true));
+	            e.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+	            e.setCustomNameVisible(true);
+	        });
+	        din.setMetadata("din", new FixedMetadataValue(RMain.getInstance(), true));
+	        din.setMetadata("bar", new FixedMetadataValue(RMain.getInstance(), true));
+	        din.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+	        din.setCustomNameVisible(true);
+	        bar.put(le.getUniqueId(), din.getUniqueId());
+	        damagebar(max, cur, last, dam, din);
 
-		if(!bar.containsKey(le.getUniqueId())) {
+	        int track = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
+	            @Override
+	            public void run() {
+	                // 체력바의 위치를 계속해서 업데이트
+	                din.teleport(le.getLocation().clone().add(perpendicular.multiply(0.5)).add(0, 1.5, 0));
+	                if (!le.isValid() || le.isInvisible()) {
+	                    Bukkit.getScheduler().cancelTask(trackt.get(le.getUniqueId()));
+	                    if (din != null) {
+	                        din.remove();
+	                        bart.remove(le.getUniqueId());
+	                        bar.remove(le.getUniqueId());
+	                    }
+	                }
+	            }
+	        }, 0, 1);
+	        trackt.put(le.getUniqueId(), track);
 
-			if(le instanceof Player) {
-				final ArmorStand din = le.getWorld().spawn(le.getEyeLocation().add(0, -0.05, 0), ArmorStand.class, e -> {
-					e.setVisible(false);
-					e.setSmall(true);
-					e.setSilent(true);
-					e.setGravity(false);
-					e.setCollidable(false);
-					e.setMetadata("din", new FixedMetadataValue(RMain.getInstance(),le.getName()));
-					e.setMetadata("bar", new FixedMetadataValue(RMain.getInstance(),true));
-					e.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
-					e.setCustomNameVisible(true);
-					e.setRemoveWhenFarAway(true);
-					bar.put(le.getUniqueId(), e.getUniqueId());
-					damagebar(max,cur, last ,dam,e);
-					int track = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-						@Override
-						public void run()
-						{
-							e.teleport(le.getEyeLocation().clone().add(0, -0.05, 0));
-							if(!le.isValid() || le.isInvisible()) {
-								Bukkit.getScheduler().cancelTask(trackt.get(le.getUniqueId()));
-								if (e != null) {
-									e.remove();
-									bart.remove(le.getUniqueId());
-									bar.remove(le.getUniqueId());
-								}
-							}
-						}
-					}, 0,1);
-					trackt.put(le.getUniqueId(), track);
-				});
+	        int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	            @Override
+	            public void run() {
+	                Bukkit.getScheduler().cancelTask(trackt.get(le.getUniqueId()));
+	                if (din != null) {
+	                    din.remove();
+	                    bart.remove(le.getUniqueId());
+	                    bar.remove(le.getUniqueId());
+	                }
+	            }
+	        }, 100);
+	        bart.put(le.getUniqueId(), task);
+	        return din;
+	    } else if (Bukkit.getEntity(bar.get(le.getUniqueId())) != null) {
+	    	Entity din = Bukkit.getEntity(bar.get(le.getUniqueId()));
+	        damagebar(max, cur, last, dam, din);
 
-				int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					@Override
-					public void run()
-					{
-						Bukkit.getScheduler().cancelTask(trackt.get(le.getUniqueId()));
-						if (din != null) {
-							din.remove();
-							bart.remove(le.getUniqueId());
-							bar.remove(le.getUniqueId());
-						}
-					}
-				}, 100);
-				bart.put(le.getUniqueId(), task);
-				return din;
-			}
-			else {
-				Location lel = le.getEyeLocation().clone().add(0, -0.15, 0);
-				if(issmall(le)) {
-					lel = le.getEyeLocation().clone().add(0, 0.1, 0);
-				}
-				final ArmorStand din = le.getWorld().spawn(lel, ArmorStand.class, e -> {
-					e.setVisible(false);
-					e.setSilent(true);
-					e.setGravity(false);
-					e.setCollidable(false);
-					e.setSmall(true);
-				});
-				din.setMetadata("din", new FixedMetadataValue(RMain.getInstance(),true));
-				din.setMetadata("bar", new FixedMetadataValue(RMain.getInstance(),true));
-				din.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
-				din.setCustomNameVisible(true);
-				din.setRemoveWhenFarAway(true);
-				bar.put(le.getUniqueId(), din.getUniqueId());
-				damagebar(max,cur, last ,dam,din);
-				int track = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-					@Override
-					public void run()
-					{
-						din.teleport(le.getEyeLocation().clone().add(0, -0.15, 0));
-						if(!le.isValid()|| le.isInvisible()) {
-							Bukkit.getScheduler().cancelTask(trackt.get(le.getUniqueId()));
-							if (din != null) {
-								din.remove();
-								bart.remove(le.getUniqueId());
-								bar.remove(le.getUniqueId());
-							}
-						}
-					}
-				}, 0,1);
-				trackt.put(le.getUniqueId(), track);
+	        if (bart.containsKey(le.getUniqueId())) {
+	            Bukkit.getScheduler().cancelTask(bart.get(le.getUniqueId()));
 
-				int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					@Override
-					public void run()
-					{
-						Bukkit.getScheduler().cancelTask(trackt.get(le.getUniqueId()));
-						if (din != null) {
-							din.remove();
-							bart.remove(le.getUniqueId());
-							bar.remove(le.getUniqueId());
-						}
-					}
-				}, 100);
-				bart.put(le.getUniqueId(), task);
-				return din;
-			}
-		}
-		else if (Bukkit.getEntity(bar.get(le.getUniqueId())) != null){
-			ArmorStand din = (ArmorStand) Bukkit.getEntity(bar.get(le.getUniqueId()));
-			damagebar(max,cur,last,dam,din);
+	            int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	                @Override
+	                public void run() {
+	                    Bukkit.getScheduler().cancelTask(trackt.get(le.getUniqueId()));
+	                    if (din != null) {
+	                        din.remove();
+	                        bart.remove(le.getUniqueId());
+	                        bar.remove(le.getUniqueId());
+	                    }
+	                }
+	            }, 100);
+	            bart.put(le.getUniqueId(), task);
+	        }
 
-			if(bart.containsKey(le.getUniqueId())) {
-				Bukkit.getScheduler().cancelTask(bart.get(le.getUniqueId()));
-
-				int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-					@Override
-					public void run()
-					{
-						Bukkit.getScheduler().cancelTask(trackt.get(le.getUniqueId()));
-						if (din != null) {
-							din.remove();
-							bart.remove(le.getUniqueId());
-							bar.remove(le.getUniqueId());
-						}
-					}
-				}, 100);
-				bart.put(le.getUniqueId(), task);
-			}
-
-			return din;
-		}
-		else {
-			return null;
-		}
-
+	        return din;
+	    } else {
+	        return null;
+	    }
 	}
 
-
-	final private ArmorStand barhealed(Double max, Double cur, Double last, Double dam, LivingEntity le) {
+	final private Entity barhealed(Double max, Double cur, Double last, Double dam, LivingEntity le) {
 
 		if (Bukkit.getEntity(bar.get(le.getUniqueId())) != null){
-			ArmorStand din = (ArmorStand) Bukkit.getEntity(bar.get(le.getUniqueId()));
+			Entity din =  Bukkit.getEntity(bar.get(le.getUniqueId()));
 			healbar(max,cur,last,dam,din);
 
 			if(bart.containsKey(le.getUniqueId())) {
@@ -750,6 +708,19 @@ public class CommonEvents extends Mobs implements Listener{
 
 	}
 
+	private void barremove(LivingEntity le) {
+
+		if(le.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
+			Entity din = Bukkit.getEntity(bar.get(le.getUniqueId()));
+			Bukkit.getScheduler().cancelTask(trackt.get(le.getUniqueId()));
+			if (din != null) {
+				din.setCustomNameVisible(false);
+				din.remove();
+				bart.remove(le.getUniqueId());
+				bar.remove(le.getUniqueId());
+			}
+		}
+	}
 
 
 	@EventHandler
@@ -761,17 +732,7 @@ public class CommonEvents extends Mobs implements Listener{
 			{
 				if(d.getEntity() instanceof LivingEntity && bar.containsKey(d.getEntity().getUniqueId())) {
 					LivingEntity le = (LivingEntity) d.getEntity();
-					if(le.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
-						ArmorStand din = (ArmorStand) Bukkit.getEntity(bar.get(le.getUniqueId()));
-						Bukkit.getScheduler().cancelTask(trackt.get(le.getUniqueId()));
-						if (din != null) {
-							din.setCustomNameVisible(false);
-							din.remove();
-							bart.remove(le.getUniqueId());
-							bar.remove(le.getUniqueId());
-						}
-					}
-
+					barremove(le);
 				}
 			}
 		}, 2);
@@ -788,14 +749,7 @@ public class CommonEvents extends Mobs implements Listener{
 			{
 				if(bar.containsKey(d.getEntity().getUniqueId())) {
 					LivingEntity le = d.getEntity();
-					ArmorStand din = (ArmorStand) Bukkit.getEntity(bar.get(le.getUniqueId()));
-					Bukkit.getScheduler().cancelTask(trackt.get(le.getUniqueId()));
-					if (din != null) {
-						din.setCustomNameVisible(false);
-						din.remove();
-						bart.remove(le.getUniqueId());
-						bar.remove(le.getUniqueId());
-					}
+					barremove(le);
 				}
 			}
 		}, 2);
@@ -813,14 +767,7 @@ public class CommonEvents extends Mobs implements Listener{
 			{
 				if(bar.containsKey(d.getPlayer().getUniqueId())) {
 					Player le = d.getPlayer();
-					ArmorStand din = (ArmorStand) Bukkit.getEntity(bar.get(le.getUniqueId()));
-					Bukkit.getScheduler().cancelTask(trackt.get(le.getUniqueId()));
-					if (din != null) {
-						din.setCustomNameVisible(false);
-						din.remove();
-						bart.remove(le.getUniqueId());
-						bar.remove(le.getUniqueId());
-					}
+					barremove(le);
 				}
 			}
 		}, 2);
