@@ -64,6 +64,7 @@ import io.github.chw3021.items.armors.Chestplate;
 import io.github.chw3021.items.armors.Helmet;
 import io.github.chw3021.items.armors.Leggings;
 import io.github.chw3021.items.weapons.Weapons;
+import io.github.chw3021.monsters.raids.EndercoreRaids;
 import io.github.chw3021.monsters.raids.NethercoreRaids;
 import io.github.chw3021.monsters.raids.OverworldRaids;
 import io.github.chw3021.monsters.raids.Summoned;
@@ -104,13 +105,14 @@ public class Rpgs extends Summoned implements CommandExecutor, Listener {
 	}
 
 	NethercoreRaids ncr = NethercoreRaids.getInstance();
-	
+
+	EndercoreRaids ecr = EndercoreRaids.getInstance();
 	OverworldRaids owr = OverworldRaids.getInstance();
 	private void bossTest(String args, Player p) {
 
 		Integer input = Integer.parseInt(args);
 		String rn = getheroname(p);
-		if(input<0) {
+		if(input<0 && input >-6) {
 			NethercoreRaids.beforepl.put(p.getUniqueId(), p.getLocation());
 			NethercoreRaids.heroes.put(rn, p.getUniqueId());
 			NethercoreRaids.raidloc.put(rn, p.getLocation());
@@ -118,6 +120,16 @@ public class Rpgs extends Summoned implements CommandExecutor, Listener {
 			ncr.difen.put(rn, 0);
 			ncr.language.put(rn, p.getLocale());
 			ncr.bossgen(p.getLocation(), p, rn, input, ncr.BOSSHP);
+			
+		}
+		else if(input <= -6) {
+			EndercoreRaids.beforepl.put(p.getUniqueId(), p.getLocation());
+			EndercoreRaids.heroes.put(rn, p.getUniqueId());
+			EndercoreRaids.raidloc.put(rn, p.getLocation());
+			ecr.bossnum.put(rn, input);
+			ecr.difen.put(rn, 0);
+			ecr.language.put(rn, p.getLocale());
+			ecr.bossgen(p.getLocation(), p, rn, input, ecr.BOSSHP);
 			
 		}
 		else {

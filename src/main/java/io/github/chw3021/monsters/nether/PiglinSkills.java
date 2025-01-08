@@ -742,8 +742,6 @@ public class PiglinSkills extends Summoned{
 			rb8cooldown.put(p.getUniqueId(), System.currentTimeMillis());  
 		}
 	}
-
-	private HashMap<UUID, Boolean> smkable = new HashMap<UUID, Boolean>();
 	
 	final private void smoker(Location ptl, LivingEntity p, Integer dur) {
 		
@@ -769,8 +767,6 @@ public class PiglinSkills extends Summoned{
                 cloud.setSilent(false);
                 cloud.setColor(Color.WHITE);
                 cloud.setDuration(dur);
-
-            	smkable.remove(p.getUniqueId());
             }
         }, 35); 
         ordt.put(gethero(p), t);

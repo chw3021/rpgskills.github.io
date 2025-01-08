@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Random;
 
 import org.bukkit.World;
-import org.bukkit.World.Environment;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Entity;
@@ -58,6 +57,7 @@ import io.github.chw3021.monsters.dark.DarkMobsSpawn;
 import io.github.chw3021.monsters.dark.DarkRaids;
 import io.github.chw3021.monsters.dark.DarkSkills;
 import io.github.chw3021.monsters.ender.EnderMobsSpawn;
+import io.github.chw3021.monsters.ender.EnderSkills;
 import io.github.chw3021.monsters.hyper.HyperMobsSpawn;
 import io.github.chw3021.monsters.hyper.HyperRaids;
 import io.github.chw3021.monsters.hyper.HyperSkills;
@@ -395,6 +395,14 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 		CrimsonSkills.getInstance().phantom(d);
 		CrimsonSkills.getInstance().breakBloodAltar(d);
 		CrimsonSkills.getInstance().Ordeal(d);
+		
+		EnderSkills.getInstance().grilled(d);
+		EnderSkills.getInstance().hand(d);
+		EnderSkills.getInstance().illusionCharge(d);
+		EnderSkills.getInstance().nightCounter(d);
+		EnderSkills.getInstance().nightMare(d);
+		EnderSkills.getInstance().teleportAndScatterEnderPearls(d);
+		EnderSkills.getInstance().teleportEx(d);
 	}
 
 

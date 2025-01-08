@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
-import org.apache.commons.math3.complex.Quaternion;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -14,16 +13,13 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
-import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.boss.DragonBattle.RespawnPhase;
 import org.bukkit.entity.Ageable;
 import org.bukkit.entity.Animals;
-import org.bukkit.entity.Armadillo;
 import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Display.Billboard;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.EnderDragon.Phase;
@@ -34,7 +30,6 @@ import org.bukkit.entity.Fish;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
-import org.bukkit.entity.Rabbit;
 import org.bukkit.entity.Silverfish;
 import org.bukkit.entity.Slime;
 import org.bukkit.entity.Snowball;
@@ -81,9 +76,7 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.util.Transformation;
 import org.bukkit.util.Vector;
-import org.joml.Matrix4f;
 import org.joml.Quaternionf;
-import org.joml.Quaternionfc;
 import org.joml.Vector3f;
 
 import com.google.common.collect.ArrayListMultimap;
@@ -409,7 +402,7 @@ public class CommonEvents extends Mobs implements Listener{
 	    Vector rightDirection = monsterDirection.clone().rotateAroundY(-Math.PI / 2).normalize();
 
 	    // 우측 상단으로 이동할 오프셋 벡터
-	    Vector offset = rightDirection.multiply(1.15).add(new Vector(0, 2.0, 0));
+	    Vector offset = rightDirection.multiply(1.15).add(new Vector(0, 1.0, 0));
 
 	    // 최종 위치 계산
 	    Location resultLocation = elf.clone().add(offset);
@@ -455,7 +448,23 @@ public class CommonEvents extends Mobs implements Listener{
 	    // 변환 데이터 생성
 	    Vector3f translation = new Vector3f(-0.3f, -0.5f, 0.4f); // 위치
 	    Quaternionf leftRotation = new Quaternionf(0f, 0f, 0f, 1f); 
-	    Vector3f scale = new Vector3f(0.5f, 0.5f, 1f);
+	    Vector3f scale = new Vector3f(0.3f, 0.3f, 1f);
+	    Quaternionf rightRotation = new Quaternionf(0f, 0f, 0f, 1f);
+
+	    // Transformation 생성
+	    Transformation transformation = new Transformation(translation, leftRotation, scale, rightRotation);
+
+	    display.setTransformation(transformation);
+
+	    // 텍스트가 고정된 위치로 표시되도록 설정
+	    display.setBillboard(TextDisplay.Billboard.CENTER);
+	}
+
+	private static void scaleDisplayAf(TextDisplay display) {
+	    // 변환 데이터 생성
+	    Vector3f translation = new Vector3f(-0.3f, 0f, 0.4f); // 위치
+	    Quaternionf leftRotation = new Quaternionf(0f, 0f, 0f, 1f); 
+	    Vector3f scale = new Vector3f(0.75f, 0.75f, 1f);
 	    Quaternionf rightRotation = new Quaternionf(0f, 0f, 0f, 1f);
 
 	    // Transformation 생성
@@ -486,13 +495,13 @@ public class CommonEvents extends Mobs implements Listener{
 	        textDisplay.setTextOpacity((byte) 245);
 		    scaleDisplay(textDisplay);
 		    textDisplay.setTeleportDuration(15);
-	    });
-	    final Location tdl = td.getLocation().clone();
+		    textDisplay.setInterpolationDuration(15);
+		});
 
         Bukkit.getServer().getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
             @Override
             public void run() {
-            	td.teleport(tdl.clone().add(0, 0.6, 0));
+    		    scaleDisplayAf(td);
             }
         }, 1);
 	    // 데미지에 따라 표시할 텍스트 설정
@@ -655,7 +664,7 @@ public class CommonEvents extends Mobs implements Listener{
 	}
 
 
-	final int removeTick = 45;
+	final int removeTick = 75;
 	
 	final private Entity bardamaged(Double max, Double cur, Double last, Double dam, LivingEntity le) {
 	    if (!bar.containsKey(le.getUniqueId())) {
@@ -859,7 +868,7 @@ public class CommonEvents extends Mobs implements Listener{
 
 	    le.setCustomName(damaged.get(le.getUniqueId()) + 
 	        ChatColor.BOLD + " (" + formattedHealth + "/" + formattedMaxHealth + ")");
-	    le.setCustomNameVisible(true);
+	    le.setCustomNameVisible(false);
 	    le.setMetadata("damaged", new FixedMetadataValue(RMain.getInstance(), true));
 	}
 

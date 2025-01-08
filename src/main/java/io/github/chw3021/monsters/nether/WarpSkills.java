@@ -827,7 +827,7 @@ public class WarpSkills extends NethercoreRaids{
                 public void run() {
             		asSpawn(pe, rn, p, fl);
                 }
-            }, 10); 
+            }, 6); 
 			ordt.put(rn, t1);  
         }
 	}
@@ -855,7 +855,7 @@ public class WarpSkills extends NethercoreRaids{
             		final Location al = ars.getLocation().clone();
         			p.getWorld().spawnParticle(Particle.EXPLOSION, al, 1);
 
-                	for(Entity e : p.getWorld().getNearbyEntities(al, 2.2, 4, 2.2)) {
+                	for(Entity e : p.getWorld().getNearbyEntities(al, 2.2, 35, 2.2)) {
                 		if(e instanceof Player&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && e!=p) {
                 			Player pe = (Player)e;
                 			if(NethercoreRaids.getheroes(p).contains(pe)) {

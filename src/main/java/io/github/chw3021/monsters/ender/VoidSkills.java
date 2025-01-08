@@ -38,6 +38,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
@@ -49,7 +50,7 @@ import io.github.chw3021.rmain.RMain;
 
 
 
-public class EnderSkills extends EndercoreRaids{
+public class VoidSkills extends EndercoreRaids{
 
 	
 	Holding hold = Holding.getInstance();
@@ -62,8 +63,8 @@ public class EnderSkills extends EndercoreRaids{
 	
 
 	
-	private static final EnderSkills instance = new EnderSkills ();
-	public static EnderSkills getInstance()
+	private static final VoidSkills instance = new VoidSkills ();
+	public static VoidSkills getInstance()
 	{
 		return instance;
 	}
@@ -104,42 +105,91 @@ public class EnderSkills extends EndercoreRaids{
 			Material.END_ROD,
 			Material.ENDER_PEARL
 	};
-	
-	public void bowshoot(EntityShootBowEvent ev) 
-	{
-		if(ev.getEntity().hasMetadata("enderboss")){
+	public void bowshoot(EntityShootBowEvent ev) {
+	    if (ev.getEntity().hasMetadata("voidboss")) {
+	        ev.setCancelled(true);
+	        LivingEntity boss = (LivingEntity) ev.getEntity();
 
-			ev.setCancelled(true);
-			
-		    LivingEntity p = ev.getEntity();
-		    
-        	p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_SHOOT, 0.5f, 2f);
+	        // 붓의 휘두름 방향 계산
+	        Vector direction = boss.getEyeLocation().getDirection().normalize();
+	        Location startLocation = boss.getEyeLocation().add(direction.clone().multiply(1.5)); // 붓의 시작 위치
+	        String rn = gethero(boss);
 
-			p.getWorld().spawnParticle(Particle.END_ROD, p.getLocation(), 10);
-			AtomicInteger j = new AtomicInteger();
+	        // 파티클 색상 정의 (붉은 물감)
+	        Particle.DustOptions paintColor = new Particle.DustOptions(Color.OLIVE, 1.5f);
 
+	        // 물감 궤적 저장
+	        List<Location> paintLocations = new ArrayList<>();
+	        World world = boss.getWorld();
 
+	        // 부채꼴 형태로 물감 생성
+	        double angle = 30; // 부채꼴 각도 (30도)
+	        int pointsPerLine = 10; // 한 곡선당 점 개수
+	        for (int i = 0; i < pointsPerLine; i++) {
+	            double progress = (double) i / pointsPerLine; // 진행도 (0 ~ 1)
+	            double currentAngle = -angle / 2 + angle * progress; // 부채꼴 각도 내 분배
+	            Vector rotatedDir = direction.clone().rotateAroundY(Math.toRadians(currentAngle)); // Y축 회전
 
-			for(Material c : cookeds) {
-        		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	                @Override
-	                public void run() {
-	                	p.swingMainHand();
-	                	p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDER_PEARL_THROW, 1f, 1.2f);
-	                    EnderPearl ws = (EnderPearl) p.launchProjectile(EnderPearl.class);
-	                    ws.setItem(new ItemStack(c));
-	                    ws.setShooter(p);
-	                    ws.setGlowing(true);
-	                    ws.setVelocity(p.getLocation().getDirection().normalize().multiply(1.3));
-	        			ws.setMetadata("enderbossPearl", new FixedMetadataValue(RMain.getInstance(), true));
-	                }
-	            }, j.getAndIncrement()*4+5); 
-			}
+	            Location paintLoc = startLocation.clone().add(rotatedDir.multiply(3)); // 궤적 위치 (3블록 거리)
+	            paintLocations.add(paintLoc);
+	        }
 
+            scheduleExplosion(rn, paintLocations, paintColor, world, boss);
 
-		 }
+	        // 보스 붓 휘두름 효과
+	        boss.swingMainHand();
+	        boss.getWorld().playSound(boss.getLocation(), Sound.ITEM_ARMOR_EQUIP_CHAIN, 1.0f, 1.2f);
+	    }
 	}
-	
+
+	/**
+	 * 일정 시간 후 폭발 처리 메서드
+	 *
+	 * @param location 폭발 위치
+	 * @param paintColor 폭발 전 파티클 색상
+	 */private void scheduleExplosion(String rn, List<Location> locations, Particle.DustOptions paintColor, World world, LivingEntity p) {
+		    p.getWorld().playSound(locations.get(0), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 0.5f, 0.5f);
+
+		    // BukkitRunnable을 사용하여 틱당 3개의 위치를 처리
+		    new BukkitRunnable() {
+		        private int index = 0; // 현재 처리 중인 인덱스
+
+		        @Override
+		        public void run() {
+		            // 리스트가 끝났으면 작업 종료
+		            if (index >= locations.size()) {
+		                this.cancel();
+		                return;
+		            }
+
+		            // 현재 틱에서 처리할 위치들을 가져옴 (최대 3개)
+		            for (int i = 0; i < 3 && index < locations.size(); i++, index++) {
+		                Location location = locations.get(index);
+		                
+		                // 물감 파티클 생성
+		                world.spawnParticle(Particle.DUST, location, 10, 0.1, 0.1, 0.1, 0, paintColor);
+
+		                // 지연된 폭발 처리
+		                int task = Bukkit.getScheduler().runTaskLater(RMain.getInstance(), () -> {
+		                    // 폭발 효과
+		                    p.getWorld().spawnParticle(Particle.EXPLOSION, location, 1);
+
+		                    // 근처 엔티티에게 피해
+		                    for (Entity e : world.getNearbyEntities(location, 1.5, 1.5, 1.5)) {
+		                        if (e instanceof LivingEntity && !e.hasMetadata("portal") && e != p) {
+		                            LivingEntity le = (LivingEntity) e;
+		                            le.damage(2.5, p);
+		                        }
+		                    }
+		                }, 15L).getTaskId(); // 15틱 (0.75초) 후 폭발
+
+		                ordt.put(rn, task); // 작업 ID 저장
+		            }
+		        }
+		    }.runTaskTimer(RMain.getInstance(), 0L, 1L); // 매 틱마다 실행
+		}
+
+
 	private void teleportExplosion(LivingEntity p, final Location tl, final Location fl) {
     	p.getWorld().playSound(tl, Sound.ENTITY_EVOKER_CAST_SPELL, 0.5f, 2f);
 		p.getWorld().spawnParticle(Particle.END_ROD, tl, 20);
@@ -150,7 +200,7 @@ public class EnderSkills extends EndercoreRaids{
             @Override
             public void run() 
             {
-        		p.getWorld().spawnParticle(Particle.PORTAL, tl, 20);
+        		p.getWorld().spawnParticle(Particle.DUST, tl, 20);
             	p.getWorld().playSound(tl, Sound.ENTITY_ENDERMAN_TELEPORT, 0.5f, 1.5f);
             	p.teleport(tl);
             	for(Entity e : p.getWorld().getNearbyEntities(tl, 2,2,2)) {
@@ -189,7 +239,7 @@ public class EnderSkills extends EndercoreRaids{
 	{
 	    
 		int sec = 4;
-		if(d.getEntity().hasMetadata("enderboss") && grillable.containsKey(d.getEntity().getUniqueId())) 
+		if(d.getEntity().hasMetadata("voidboss") && grillable.containsKey(d.getEntity().getUniqueId())) 
 		{
 			LivingEntity p = (LivingEntity)d.getEntity();
 			if(ordeal.containsKey(p.getUniqueId()) || p.hasMetadata("failed")) {
@@ -426,7 +476,7 @@ public class EnderSkills extends EndercoreRaids{
 
 	public void hand(EntityDamageByEntityEvent d) 
 	{
-		if(d.getEntity().hasMetadata("enderboss")) 
+		if(d.getEntity().hasMetadata("voidboss")) 
 		{
 			Mob p = (Mob)d.getEntity();
 			
@@ -534,7 +584,7 @@ public class EnderSkills extends EndercoreRaids{
 	
 	public void teleportAndScatterEnderPearls(EntityDamageByEntityEvent d) 
 	{
-		if(d.getEntity().hasMetadata("enderboss") && (d.getEntity() instanceof Mob)) 
+		if(d.getEntity().hasMetadata("voidboss") && (d.getEntity() instanceof Mob)) 
 		{
 			Mob p = (Mob)d.getEntity();
 			int sec = 7;
@@ -716,7 +766,7 @@ public class EnderSkills extends EndercoreRaids{
 	}
 	public void teleportEx(EntityDamageByEntityEvent d) 
 	{
-		if((d.getEntity() instanceof Mob) && d.getEntity().hasMetadata("enderboss")) 
+		if((d.getEntity() instanceof Mob) && d.getEntity().hasMetadata("voidboss")) 
 		{
 			Mob p = (Mob)d.getEntity();
 			int sec = 4;
@@ -961,7 +1011,7 @@ public class EnderSkills extends EndercoreRaids{
 	
 	public void nightCounter(EntityDamageByEntityEvent d) 
 	{
-		if(d.getEntity().hasMetadata("enderboss") && d.getEntity() instanceof Skeleton&& !d.isCancelled() && d.getEntity().hasMetadata("ruined")) 
+		if(d.getEntity().hasMetadata("voidboss") && d.getEntity() instanceof Skeleton&& !d.isCancelled() && d.getEntity().hasMetadata("ruined")) 
 		{
 			Skeleton p = (Skeleton)d.getEntity();
 			String rn = gethero(p);
@@ -1098,7 +1148,7 @@ public class EnderSkills extends EndercoreRaids{
 	{
 	    
 		int sec = 70;
-		if(d.getEntity().hasMetadata("enderboss") && d.getEntity() instanceof LivingEntity&& !d.isCancelled() && d.getEntity().hasMetadata("ruined")) 
+		if(d.getEntity().hasMetadata("voidboss") && d.getEntity() instanceof LivingEntity&& !d.isCancelled() && d.getEntity().hasMetadata("ruined")) 
 		{
 			LivingEntity p = (LivingEntity)d.getEntity();
 			if(p.hasMetadata("failed")) {
