@@ -23,6 +23,7 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.DragonFireball;
 import org.bukkit.entity.EnderPearl;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -30,7 +31,6 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
-import org.bukkit.entity.Skeleton;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
@@ -43,8 +43,6 @@ import org.bukkit.util.Vector;
 
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.monsters.raids.EndercoreRaids;
-import io.github.chw3021.monsters.raids.NethercoreRaids;
-import io.github.chw3021.monsters.raids.OverworldRaids;
 import io.github.chw3021.rmain.RMain;
 
 
@@ -78,15 +76,14 @@ public class EnderSkills extends EndercoreRaids{
         		final Location l = d.getHitEntity() != null ? d.getHitEntity().getLocation() : d.getHitBlock().getLocation();
 
 				l.getWorld().spawnParticle(Particle.REVERSE_PORTAL, l, 100);
-				l.getWorld().spawnParticle(Particle.END_ROD, l, 100);
 				l.getWorld().playSound(l, Sound.ENTITY_SHULKER_TELEPORT, 1f, 1.5f);
 
         		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	                @Override
 	                public void run() {
-						l.getWorld().spawnParticle(Particle.PORTAL, l, 300);
-						l.getWorld().playSound(l, Sound.BLOCK_AMETHYST_BLOCK_BREAK, 1f, 1.5f);
-	            		for(Entity e : l.getWorld().getNearbyEntities(l, 1.5, 1.5, 1.5)) {
+						l.getWorld().spawnParticle(Particle.DRAGON_BREATH, l, 300,2,2,2,0.05);
+						l.getWorld().playSound(l, Sound.ENTITY_ENDER_DRAGON_SHOOT, 1f, 0.2f);
+	            		for(Entity e : l.getWorld().getNearbyEntities(l, 2, 2, 2)) {
 							if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("portal"))) {
 								LivingEntity le = (LivingEntity)e;
 								le.damage(4.3,p);
@@ -100,10 +97,6 @@ public class EnderSkills extends EndercoreRaids{
 	}
 	
 
-	Material[] cookeds = new Material[] {Material.END_CRYSTAL, 
-			Material.END_ROD,
-			Material.ENDER_PEARL
-	};
 	
 	public void bowshoot(EntityShootBowEvent ev) 
 	{
@@ -116,33 +109,27 @@ public class EnderSkills extends EndercoreRaids{
         	p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_SHOOT, 0.5f, 2f);
 
 			p.getWorld().spawnParticle(Particle.END_ROD, p.getLocation(), 10);
-			AtomicInteger j = new AtomicInteger();
 
-
-
-			for(Material c : cookeds) {
-        		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	                @Override
-	                public void run() {
-	                	p.swingMainHand();
-	                	p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDER_PEARL_THROW, 1f, 1.2f);
-	                    EnderPearl ws = (EnderPearl) p.launchProjectile(EnderPearl.class);
-	                    ws.setItem(new ItemStack(c));
-	                    ws.setShooter(p);
-	                    ws.setGlowing(true);
-	                    ws.setVelocity(p.getLocation().getDirection().normalize().multiply(1.3));
-	        			ws.setMetadata("enderbossPearl", new FixedMetadataValue(RMain.getInstance(), true));
-	                }
-	            }, j.getAndIncrement()*4+5); 
-			}
+    		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                @Override
+                public void run() {
+                	p.swingMainHand();
+                	p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDER_PEARL_THROW, 1f, 1.2f);
+                    EnderPearl ws = (EnderPearl) p.launchProjectile(EnderPearl.class);
+                    ws.setShooter(p);
+                    ws.setGlowing(true);
+                    ws.setVelocity(p.getLocation().getDirection().normalize().multiply(1.3));
+        			ws.setMetadata("enderbossPearl", new FixedMetadataValue(RMain.getInstance(), true));
+                }
+            }, 10); 
 
 
 		 }
 	}
 	
-	private void teleportExplosion(LivingEntity p, final Location tl, final Location fl) {
+	private void Explosion(LivingEntity p, final Location tl, final Location fl) {
     	p.getWorld().playSound(tl, Sound.ENTITY_EVOKER_CAST_SPELL, 0.5f, 2f);
-		p.getWorld().spawnParticle(Particle.END_ROD, tl, 20);
+		p.getWorld().spawnParticle(Particle.ENCHANT, tl, 200);
 		
 		String rn = gethero(p);
 		
@@ -150,9 +137,45 @@ public class EnderSkills extends EndercoreRaids{
             @Override
             public void run() 
             {
-        		p.getWorld().spawnParticle(Particle.PORTAL, tl, 20);
+        		p.getWorld().spawnParticle(Particle.PORTAL, tl, 150);
             	p.getWorld().playSound(tl, Sound.ENTITY_ENDERMAN_TELEPORT, 0.5f, 1.5f);
+            }
+		}, 13));
+		
+		ordt.put(rn, Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() 
+            {
+        		p.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, tl,1);
+            	p.getWorld().playSound(tl, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 0.5f, 0.5f);
+            	for(Entity e : p.getWorld().getNearbyEntities(tl, 3,3,3)) {
+            		if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && e!=p) {
+            			LivingEntity le = (LivingEntity)e;
+            			le.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA,100,100,false,false));
+            			le.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS,100,100,false,false));
+						le.damage(4.5, p);
+						
+            		}
+            	}
+            }
+		}, 26));
+	}
+
+
+	
+	private void tExplosion(LivingEntity p, final Location tl) {
+    	p.getWorld().playSound(tl, Sound.ENTITY_EVOKER_CAST_SPELL, 0.5f, 2f);
+		p.getWorld().spawnParticle(Particle.ENCHANT, tl, 200);
+		
+		String rn = gethero(p);
+		
+		ordt.put(rn, Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() 
+            {
             	p.teleport(tl);
+        		p.getWorld().spawnParticle(Particle.PORTAL, tl, 150);
+            	p.getWorld().playSound(tl, Sound.ENTITY_ENDERMAN_TELEPORT, 0.5f, 1.5f);
             	for(Entity e : p.getWorld().getNearbyEntities(tl, 2,2,2)) {
             		if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && e!=p) {
             			LivingEntity le = (LivingEntity)e;
@@ -170,7 +193,6 @@ public class EnderSkills extends EndercoreRaids{
             {
         		p.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, tl,1);
             	p.getWorld().playSound(tl, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 0.5f, 0.5f);
-            	p.teleport(fl);
             	for(Entity e : p.getWorld().getNearbyEntities(tl, 3,3,3)) {
             		if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && e!=p) {
             			LivingEntity le = (LivingEntity)e;
@@ -182,13 +204,60 @@ public class EnderSkills extends EndercoreRaids{
 		}, 26));
 	}
 
+	private void tExplosionChain(LivingEntity p) {
 
+    	grillable.remove(p.getUniqueId());
+        Holding.holding(null, p, 25l);
+
+        String rn = gethero(p);
+		
+        final Location tl = gettargetblock(p,5).clone();
+        final Location fl = p.getLocation().clone();
+        
+		p.getWorld().playSound(tl, Sound.BLOCK_TRIAL_SPAWNER_OMINOUS_ACTIVATE, 1.1f, 0f);
+    	p.getWorld().spawnParticle(Particle.DRAGON_BREATH, tl, 500, 4, 1, 4, 0);
+    	p.getWorld().spawnParticle(Particle.PORTAL, tl, 500, 4, 1, 4, 0);
+    	p.getWorld().spawnParticle(Particle.INSTANT_EFFECT, tl, 500, 4, 1, 4, 0);
+    	
+    	
+        ArrayList<Location> meats = new ArrayList<>();
+        AtomicInteger j = new AtomicInteger();
+        for(int i=0; i<20; i++) {
+            Random random=new Random();
+        	double number = random.nextDouble() * 3 * (random.nextBoolean() ? -1 : 1);
+        	double number2 = random.nextDouble() * 3 * (random.nextBoolean() ? -1 : 1);
+        	double number3 = random.nextDouble() * 7;
+        	meats.add(tl.clone().add(number, number3, number2));
+        }
+        
+        meats.forEach(l ->{
+			int t= Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                @Override
+                public void run() 
+                {
+                    Holding.holding(null, p, 10l);
+                	tExplosion(p, l);
+                }
+			}, j.incrementAndGet()*4+25);
+        	ordt.put(rn, t);
+        });
+		int t= Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() 
+            {
+            	p.teleport(fl);
+            }
+		}, j.incrementAndGet()*4+30);
+    	ordt.put(rn, t);
+	}
+	
+	
 
 	private HashMap<UUID, Integer> grillable = new HashMap<UUID, Integer>();
 	public void grilled(EntityDamageByEntityEvent d) 
 	{
 	    
-		int sec = 4;
+		int sec = 9;
 		if(d.getEntity().hasMetadata("enderboss") && grillable.containsKey(d.getEntity().getUniqueId())) 
 		{
 			LivingEntity p = (LivingEntity)d.getEntity();
@@ -205,40 +274,7 @@ public class EnderSkills extends EndercoreRaids{
 	            else 
 	            {
 	            	rb3cooldown.remove(p.getUniqueId()); 
-
-	            	grillable.remove(p.getUniqueId());
-	                Holding.holding(null, p, 25l);
-
-	                String rn = gethero(p);
-					
-	                Location tl = gettargetblock(p,5).clone();
-	                
-					p.getWorld().playSound(tl, Sound.BLOCK_TRIAL_SPAWNER_OMINOUS_ACTIVATE, 1.1f, 0f);
-                	p.getWorld().spawnParticle(Particle.DRAGON_BREATH, tl, 500, 4, 1, 4, 0);
-                	p.getWorld().spawnParticle(Particle.PORTAL, tl, 500, 4, 1, 4, 0);
-                	p.getWorld().spawnParticle(Particle.INSTANT_EFFECT, tl, 500, 4, 1, 4, 0);
-                	
-                	
-                    ArrayList<Location> meats = new ArrayList<>();
-                    AtomicInteger j = new AtomicInteger();
-                    for(int i=0; i<41; i++) {
-			            Random random=new Random();
-                    	double number = random.nextDouble() * 3 * (random.nextBoolean() ? -1 : 1);
-                    	double number2 = random.nextDouble() * 3 * (random.nextBoolean() ? -1 : 1);
-                    	double number3 = random.nextDouble() * 7;
-                    	meats.add(tl.clone().add(number, number3, number2));
-                    }
-                    
-                    meats.forEach(l ->{
-						int t= Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() 
-			                {
-			                	teleportExplosion(p, l, tl);
-			                }
-						}, j.incrementAndGet()*2+25);
-	                	ordt.put(rn, t);
-                    });
+	            	tExplosionChain(p);
 					rb3cooldown.put(p.getUniqueId(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
 	            }
 	        }
@@ -246,39 +282,7 @@ public class EnderSkills extends EndercoreRaids{
 	        {
 
 
-            	grillable.remove(p.getUniqueId());
-                Holding.holding(null, p, 25l);
-
-                String rn = gethero(p);
-				
-                Location tl = gettargetblock(p,5).clone();
-                
-				p.getWorld().playSound(tl, Sound.BLOCK_TRIAL_SPAWNER_OMINOUS_ACTIVATE, 1.1f, 0f);
-            	p.getWorld().spawnParticle(Particle.DRAGON_BREATH, tl, 500, 4, 1, 4, 0);
-            	p.getWorld().spawnParticle(Particle.PORTAL, tl, 500, 4, 1, 4, 0);
-            	p.getWorld().spawnParticle(Particle.INSTANT_EFFECT, tl, 500, 4, 1, 4, 0);
-            	
-            	
-                ArrayList<Location> meats = new ArrayList<>();
-                AtomicInteger j = new AtomicInteger();
-                for(int i=0; i<41; i++) {
-		            Random random=new Random();
-                	double number = random.nextDouble() * 3 * (random.nextBoolean() ? -1 : 1);
-                	double number2 = random.nextDouble() * 3 * (random.nextBoolean() ? -1 : 1);
-                	double number3 = random.nextDouble() * 7;
-                	meats.add(tl.clone().add(number, number3, number2));
-                }
-                
-                meats.forEach(l ->{
-					int t= Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() 
-		                {
-		                	teleportExplosion(p, l, tl);
-		                }
-					}, j.incrementAndGet()*2+25);
-                	ordt.put(rn, t);
-                });
+            	tExplosionChain(p);
 				rb3cooldown.put(p.getUniqueId(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
 	        }
 		}					
@@ -297,7 +301,10 @@ public class EnderSkills extends EndercoreRaids{
             stand.setMetadata("stuff" + rn, new FixedMetadataValue(RMain.getInstance(), rn));
             stand.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
             stand.getEquipment().setHelmet(new ItemStack(Material.CLOCK));
-            stand.getAttribute(Attribute.SCALE).setBaseValue(4);
+            stand.getEquipment().setChestplate(new ItemStack(Material.CLOCK));
+            stand.getEquipment().setItemInMainHand(new ItemStack(Material.CLOCK));
+            stand.getEquipment().setItemInOffHand(new ItemStack(Material.CLOCK));
+            stand.getAttribute(Attribute.SCALE).setBaseValue(5);
         });
     }
     
@@ -309,7 +316,7 @@ public class EnderSkills extends EndercoreRaids{
 
         List<ArmorStand> pillars = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            Location pillarLoc = startLoc.clone().add(0, i * 0.5, 0);
+            Location pillarLoc = startLoc.clone().add(0, i * 2, 0);
             pillars.add(spawnArmorStand(world, pillarLoc, rn));
         }
 
@@ -318,7 +325,7 @@ public class EnderSkills extends EndercoreRaids{
 
             @Override
             public void run() {
-                Player target = NethercoreRaids.getheroes(boss).stream()
+                Player target = EndercoreRaids.getheroes(boss).stream()
                         .filter(p -> p.isValid() && p.getWorld().equals(world))
                         .min((p1, p2) -> Double.compare(p1.getLocation().distance(startLoc), p2.getLocation().distance(startLoc)))
                         .orElse(null);
@@ -334,9 +341,8 @@ public class EnderSkills extends EndercoreRaids{
                 for (Entity e : world.getNearbyEntities(pillars.get(0).getLocation(), 2.5, 2.5, 2.5)) {
                     if (e instanceof Player && e != boss) {
                         Player player = (Player) e;
-                        player.damage(2, boss);
-                        player.setVelocity(player.getVelocity().multiply(0.1));
-                        boss.setVelocity(boss.getVelocity().multiply(2));
+                        player.setVelocity(new Vector());
+                        boss.setVelocity(boss.getVelocity().multiply(2.5));
                     }
                 }
 
@@ -344,7 +350,7 @@ public class EnderSkills extends EndercoreRaids{
             }
 
             private void cancel() {
-                Bukkit.getScheduler().cancelTask(this.hashCode());
+                Bukkit.getScheduler().cancelTask(blockt.remove(boss.getUniqueId()));
             }
         }, 0L, 2L); // 0틱 지연, 2틱 간격으로 실행
 
@@ -359,8 +365,8 @@ public class EnderSkills extends EndercoreRaids{
             Vector moveDirection = targetLoc.toVector().subtract(block.getLocation().toVector());
             double distance = moveDirection.length();
 
-            if (distance > 0.5) {
-                double speed = Math.log(distance + 0.5) * 0.1;
+            if (distance > 0.6) {
+                double speed = Math.log(distance + 0.6) * 0.2;
                 moveDirection.normalize().multiply(speed);
                 block.teleport(block.getLocation().add(moveDirection));
             }
@@ -373,10 +379,10 @@ public class EnderSkills extends EndercoreRaids{
             Location tl = pillar.getLocation().clone();
     		p.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, tl,1);
         	p.getWorld().playSound(tl, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 0.5f, 0.5f);
-        	for(Entity e : pillar.getWorld().getNearbyEntities(tl, 3,3,3)) {
+        	for(Entity e : pillar.getWorld().getNearbyEntities(tl, 4,4,4)) {
         		if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && e!=p) {
         			LivingEntity le = (LivingEntity)e;
-					le.damage(4.5, p);
+					le.damage(6.5, p);
 					le.teleport(tl);
         		}
         	}
@@ -392,7 +398,7 @@ public class EnderSkills extends EndercoreRaids{
 		p.getWorld().playSound(p, Sound.BLOCK_END_PORTAL_SPAWN, 0.3f, 1.5f);
 
     	final World w = p.getWorld();
-		Location pl = gettargetblock(p,6);
+		final Location pl = gettargetblock(p,6).clone().add(0,-5,0);
 		w.playSound(pl, Sound.ENTITY_SHULKER_TELEPORT, 1.0f, 0f);
 		w.spawnParticle(Particle.END_ROD, pl, 150, 2,2,2);
 		w.spawnParticle(Particle.REVERSE_PORTAL, pl, 150, 2,2,2);
@@ -405,7 +411,7 @@ public class EnderSkills extends EndercoreRaids{
             {	
      			summonWoodPillar(p,pl);
             }
-	   	}, 25);
+	   	}, 35);
 	   	
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
      		@Override
@@ -430,7 +436,7 @@ public class EnderSkills extends EndercoreRaids{
 		{
 			Mob p = (Mob)d.getEntity();
 			
-			int sec = 15;
+			int sec = 10;
 	
 	
 			if(p.hasMetadata("failed")|| ordeal.containsKey(p.getUniqueId()) || !handable.containsKey(p.getUniqueId())) {
@@ -459,7 +465,7 @@ public class EnderSkills extends EndercoreRaids{
 	}
 
 	public void teleportAndScatterEnderPearls(LivingEntity boss) {
-	    List<Player> heroes = NethercoreRaids.getheroes(boss).stream()
+	    List<Player> heroes = EndercoreRaids.getheroes(boss).stream()
 	            .filter(hero -> hero.getWorld().equals(boss.getWorld())) // 같은 월드의 플레이어만 필터링
 	            .collect(Collectors.toList());
 
@@ -469,12 +475,12 @@ public class EnderSkills extends EndercoreRaids{
 	    Random random = new Random();
 
 	    // 플레이어들의 위치에 랜덤 오프셋 추가하여 8개의 위치 생성
-	    for (int i = 0; i < 6; i++) {
+	    for (int i = 0; i < 7; i++) {
 	        Player randomPlayer = heroes.get(random.nextInt(heroes.size()));
 	        Location baseLocation = randomPlayer.getLocation();
 	        double offsetX = random.nextDouble() * 10 - 5; // -5 ~ 5 사이의 랜덤값
 	        double offsetZ = random.nextDouble() * 10 - 5;
-	        double offsetY = random.nextDouble() * 3; // 약간의 높이 차이
+	        double offsetY = random.nextDouble() * 2.5; // 약간의 높이 차이
 	        Location randomLocation = baseLocation.clone().add(offsetX, offsetY, offsetZ);
 	        teleportLocations.add(randomLocation);
 	    }
@@ -496,22 +502,33 @@ public class EnderSkills extends EndercoreRaids{
 	            world.playSound(teleportLocation, Sound.ENTITY_SHULKER_TELEPORT, 1.0f, 0f);
 	            world.spawnParticle(Particle.END_ROD, teleportLocation, 150, 2,2,2);
 
-	            for (int j = 0; j < 6; j++) {
-	                EnderPearl enderPearl = (EnderPearl) world.spawnEntity(teleportLocation, EntityType.ENDER_PEARL);
+	            for (int j = 0; j < 4; j++) {
+	                DragonFireball enderPearl = (DragonFireball) world.spawnEntity(teleportLocation, EntityType.DRAGON_FIREBALL);
 	                enderPearl.setShooter(boss);
 	                enderPearl.setGlowing(true);
+	                enderPearl.setGravity(true);
+	                enderPearl.setYield(-1);
+	                enderPearl.setIsIncendiary(false);
 	                enderPearl.setVelocity(new Vector(
-	                        random.nextDouble() * 2 - 1, // X 방향 랜덤
-	                        random.nextDouble() * 0.5 + 0.5, // Y 방향 위로 상승
-	                        random.nextDouble() * 2 - 1 // Z 방향 랜덤
+	                        random.nextDouble() * 1.5 - 0.8, // X 방향 랜덤
+	                        random.nextDouble() * -0.1 +0.5, // Y 방향 위로 상승
+	                        random.nextDouble() * 1.5 - 0.8 // Z 방향 랜덤
 	                ));
 	                enderPearl.setMetadata("enderbossPearl", new FixedMetadataValue(RMain.getInstance(), true));
+	                enderPearl.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+	        		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	             		@Override
+	                	public void run() 
+	                    {	
+	    	                enderPearl.setVelocity(new Vector(0,-2,0));
+	                    }
+	        	   	}, 13);
 	            }
 
 	            // 다음 위치로 이동
 	            currentIndex++;
 	        }
-	    }, 20L, 10L).getTaskId(); // 10틱(0.5초)마다 실행
+	    }, 20L, 12L).getTaskId(); // 10틱(0.5초)마다 실행
         ordt.put(gethero(boss), t);
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
      		@Override
@@ -537,7 +554,7 @@ public class EnderSkills extends EndercoreRaids{
 		if(d.getEntity().hasMetadata("enderboss") && (d.getEntity() instanceof Mob)) 
 		{
 			Mob p = (Mob)d.getEntity();
-			int sec = 7;
+			int sec = 13;
 
 			if(ordeal.containsKey(p.getUniqueId())) {
 				return;
@@ -587,13 +604,13 @@ public class EnderSkills extends EndercoreRaids{
 	    return locations;
 	}
 	public void illusionCharge(EntityDamageByEntityEvent d) {
-	    if(d.getEntity().hasMetadata("illusionboss")) {
+	    if(d.getEntity().hasMetadata("enderboss")) {
 	        final LivingEntity p = (LivingEntity)d.getEntity();
 
 	        if (checkAndApplyCharge(p, d)) return;
 
 	        if(p.hasMetadata("raid")) {
-	            Optional<Player> hero = NethercoreRaids.getheroes(p).stream()
+	            Optional<Player> hero = EndercoreRaids.getheroes(p).stream()
 	                .filter(pe -> pe.getWorld().equals(p.getWorld()))
 	                .findAny();
 
@@ -695,7 +712,7 @@ public class EnderSkills extends EndercoreRaids{
 	    if(rb8cooldown.containsKey(p.getUniqueId())) {
 	        long timer = (rb8cooldown.get(p.getUniqueId()) / 1000 + 8) - System.currentTimeMillis() / 1000;
 	        if (timer < 0) {
-	            rb8cooldown.remove(p.getUniqueId()); // 쿨타임 끝났으면
+	            rb8cooldown.remove(p.getUniqueId()); 
 	            illusionStart(p, tl);
 	            rb8cooldown.put(p.getUniqueId(), System.currentTimeMillis());
 	        }
@@ -712,7 +729,7 @@ public class EnderSkills extends EndercoreRaids{
 		
 		final Location fl = p.getLocation().clone();
     	
-    	teleportExplosion(p, ptl, fl);
+    	Explosion(p, ptl, fl);
 	}
 	public void teleportEx(EntityDamageByEntityEvent d) 
 	{
@@ -792,12 +809,12 @@ public class EnderSkills extends EndercoreRaids{
                     int i1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
                         @Override
                         public void run() {
-                            Player tpe = OverworldRaids.getheroes(p).stream().filter(pe ->!pe.isDead()&&pe.getWorld().equals(p.getWorld())).findAny().get();
+                            Player tpe = EndercoreRaids.getheroes(p).stream().filter(pe ->!pe.isDead()&&pe.getWorld().equals(p.getWorld())).findAny().get();
                             final Location tpel = tpe.getLocation().clone();
-                            final Location tl = tpel.clone().add(tpel.clone().getDirection().normalize().multiply(3.5)).add(0, 0.5, 0);
+                            final Location tl = tpel.clone().add(tpel.clone().getDirection().normalize().multiply(-2.3)).add(1, 0.5, 1);
                             p.teleport(tl);
                 			p.getWorld().spawnParticle(Particle.PORTAL, p.getLocation().clone(), 50,0.5,0.5,0.5,0.02);
-                            OverworldRaids.getheroes(p).forEach(pe ->{
+                            EndercoreRaids.getheroes(p).forEach(pe ->{
                             	pe.playSound(p, Sound.ENTITY_SHULKER_TELEPORT, 1f, 1.26f);
                             });
                             int i1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -817,12 +834,12 @@ public class EnderSkills extends EndercoreRaids{
         	}
         	else {
 
-                Player tpe = OverworldRaids.getheroes(p).stream().filter(pe ->!pe.isDead()&&pe.getWorld().equals(p.getWorld())).findAny().get();
+                Player tpe = EndercoreRaids.getheroes(p).stream().filter(pe ->!pe.isDead()&&pe.getWorld().equals(p.getWorld())).findAny().get();
                 final Location tpel = tpe.getLocation().clone();
-                final Location tl = tpel.clone().add(tpel.clone().getDirection().normalize().multiply(3.5)).add(0, 0.5, 0);
+                final Location tl = tpel.clone().add(tpel.clone().getDirection().normalize().multiply(-2.2)).add(1, 0.5, 0);
                 p.teleport(tl);
     			p.getWorld().spawnParticle(Particle.PORTAL, p.getLocation().clone(), 50,0.5,0.5,0.5,0.02);
-                OverworldRaids.getheroes(p).forEach(pe ->{
+                EndercoreRaids.getheroes(p).forEach(pe ->{
                 	pe.playSound(p, Sound.ENTITY_SHULKER_TELEPORT, 0.6f, 1.26f);
                 	pe.playSound(p, Sound.BLOCK_VAULT_ACTIVATE, 1.2f, 0.9f);
                 });
@@ -842,7 +859,7 @@ public class EnderSkills extends EndercoreRaids{
             			p.getWorld().spawnParticle(Particle.FLASH, p.getLocation().clone(), 3,0.2,0.2,0.2);
                     	counterable.put(p.getUniqueId(), true);
                     }
-                }, 15);
+                }, 12);
         		ordt.put(rn, i11); 
 
                 int i2 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -862,13 +879,13 @@ public class EnderSkills extends EndercoreRaids{
                                     	tpe.damage(2,p);
                                 	}
                                 }
-                            }, i*6);
+                            }, i*4);
                     		ordt.put(rn, i1); 
                 		}
                     	counterable.remove(p.getUniqueId());
                 		
                     }
-                }, 30);
+                }, 35);
         		ordt.put(rn, i2); 
         		countt.put(p.getUniqueId(), i2);
             
@@ -885,12 +902,12 @@ public class EnderSkills extends EndercoreRaids{
         List<Location> line = new ArrayList<>();
         final Vector vec = tl.clone().toVector().subtract(pl.clone().toVector());
 
-        double increasement = 0.2;
+        double increasement = 0.1;
         if(j) {
-        	increasement = 0.4;
+        	increasement = 0.2;
         }
-        for(double an =0; an<tl.distance(pl)-0.1; an+=0.4) {
-        	line.add(pl.clone().add(vec.clone().normalize().multiply(increasement)));
+        for(double an =0; an<tl.distance(pl)+0.3; an+=increasement) {
+        	line.add(pl.clone().add(vec.clone().normalize().multiply(an)));
         }
 
     	AtomicInteger u = new AtomicInteger();
@@ -907,11 +924,11 @@ public class EnderSkills extends EndercoreRaids{
     	                if(p != e && e instanceof Player && !(e.hasMetadata("fake")) && !(e.hasMetadata("portal"))) {
     	                	Player le = (Player)e;
 
-    	                    le.damage(2.0, p);
+    	                    le.damage(3.0, p);
     	                }
     	            }
                 }
-    		},u.getAndIncrement()/12);
+    		},u.getAndIncrement()/5);
     	});
 	}
 	
@@ -925,7 +942,7 @@ public class EnderSkills extends EndercoreRaids{
         }
     	ordeal.remove(p.getUniqueId());
     	rb5cooldown.remove(p.getUniqueId()); 
-        for(Player pe : OverworldRaids.getheroes(p)) {
+        for(Player pe : EndercoreRaids.getheroes(p)) {
     		if(pe.getWorld().equals(p.getWorld()) && pe.getWorld() == p.getWorld()) {
     			count.remove(p.getUniqueId());
 				if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -951,7 +968,7 @@ public class EnderSkills extends EndercoreRaids{
                 p.setInvulnerable(false);
                 Holding.ale(p).setInvulnerable(false);
 				p.getWorld().spawnParticle(Particle.SQUID_INK, p.getLocation(), 3000, 10,10,10);	
-                for(Player pe : OverworldRaids.getheroes(p)) {
+                for(Player pe : EndercoreRaids.getheroes(p)) {
             		p.removeMetadata("fake", RMain.getInstance());
             		pe.setHealth(0);
                 }
@@ -961,9 +978,9 @@ public class EnderSkills extends EndercoreRaids{
 	
 	public void nightCounter(EntityDamageByEntityEvent d) 
 	{
-		if(d.getEntity().hasMetadata("enderboss") && d.getEntity() instanceof Skeleton&& !d.isCancelled() && d.getEntity().hasMetadata("ruined")) 
+		if(d.getEntity().hasMetadata("enderboss") && d.getEntity() instanceof LivingEntity&& d.getEntity().hasMetadata("ruined")) 
 		{
-			Skeleton p = (Skeleton)d.getEntity();
+			LivingEntity p = (LivingEntity)d.getEntity();
 			String rn = gethero(p);
 			
 			if(ordeal.containsKey(p.getUniqueId())) {
@@ -975,13 +992,13 @@ public class EnderSkills extends EndercoreRaids{
 					count.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
 					count.putIfAbsent(p.getUniqueId(), 1);
 					
-	                Location rl = OverworldRaids.getraidloc(p).clone();
+	                Location rl = EndercoreRaids.getraidloc(p).clone();
 			        p.playHurtAnimation(0);
 			        Bukkit.getScheduler().cancelTask(countt.get(p.getUniqueId()));
                 	counterable.remove(p.getUniqueId());
 	                p.teleport(rl);
 
-			        OverworldRaids.getheroes(p).forEach(pe ->{
+			        EndercoreRaids.getheroes(p).forEach(pe ->{
 			        	pe.playSound(pe, Sound.BLOCK_RESPAWN_ANCHOR_DEPLETE, 1, 1.1f);
 			        	pe.sendMessage(ChatColor.AQUA + "[" + count.get(p.getUniqueId()) + "/5]");
 			        	Random random1=new Random();
@@ -1009,7 +1026,7 @@ public class EnderSkills extends EndercoreRaids{
     		            rb5cooldown.put(p.getUniqueId(), System.currentTimeMillis());
     		            
 		            	Holding.ale(p).setMetadata("failed", new FixedMetadataValue(RMain.getInstance(),true));
-		                for(Player pe : OverworldRaids.getheroes(p)) {
+		                for(Player pe : EndercoreRaids.getheroes(p)) {
 							if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
 								pe.sendMessage(ChatColor.BOLD + "차원파괴자: " + ChatColor.GRAY + "이 정도라면, 너희를 인정하지 않을 수 없군.");
 							}
@@ -1044,20 +1061,20 @@ public class EnderSkills extends EndercoreRaids{
 
     	ordeal.put(p.getUniqueId(), true);
 		String rn = gethero(p);
-        Location rl = OverworldRaids.getraidloc(p).clone();
+        Location rl = EndercoreRaids.getraidloc(p).clone();
 
         if(ordt.containsKey(rn)) {
         	ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
         	ordt.removeAll(rn);
         }
+		p.getWorld().getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(e -> e.remove());
         d.setCancelled(true);
-        p.teleport(rl.clone().add(0, 50, 0));
         Holding.holding(null, p, ORDEALTIME);
         Holding.invur(p, 100l);
         Holding.untouchable(p, ORDEALTIME);
         p.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
         
-        OverworldRaids.getheroes(p).forEach(pe ->{
+        EndercoreRaids.getheroes(p).forEach(pe ->{
         	Holding.invur(pe, 60l);
         	AtomicReference<String> msg = new AtomicReference<String>(ChatColor.BOLD+"Attack the enemy at the right time");
         	if(pe.getLocale().equalsIgnoreCase("ko_kr")) {

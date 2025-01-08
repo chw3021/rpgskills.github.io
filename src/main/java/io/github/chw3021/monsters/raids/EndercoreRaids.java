@@ -167,11 +167,11 @@ public class EndercoreRaids extends Summoned implements Listener {
 		
 		if(raidbart.containsKey(rn)) {
 			Bukkit.getServer().getScheduler().cancelTask(raidbart.get(rn));
-		raidbart.remove(rn);
+			raidbart.remove(rn);
 		}
 		if(raidt.containsKey(rn)) {
 			Bukkit.getServer().getScheduler().cancelTask(raidt.get(rn));
-		raidt.remove(rn);
+			raidt.remove(rn);
 		}
 		if(timet.containsKey(rn)) {
 			Bukkit.getServer().getScheduler().cancelTask(timet.get(rn));
@@ -303,7 +303,7 @@ public class EndercoreRaids extends Summoned implements Listener {
             {
             	heroes.get(rn).forEach(pu -> {
             		Player p = Bukkit.getPlayer(pu);
-        			if(p.getWorld().equals(rl.getWorld()) && p.getLocation().clone().distance(rl) >90) {
+        			if(p.getWorld().equals(rl.getWorld()) && (p.getLocation().clone().distance(rl) >90 ||p.getLocation().getY()<-100)) {
         				p.teleport(rl.clone().add(1, 1, 0));
         				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 							p.sendMessage("너무 멀리왔습니다");
@@ -321,7 +321,7 @@ public class EndercoreRaids extends Summoned implements Listener {
         				}
             			Location rml = rm.getLocation().clone();
             			rml.setY(rl.getY());
-            			if(rml.getWorld()!=rl.getWorld() || rml.clone().distance(rl) >80) {
+            			if(rml.getWorld()!=rl.getWorld() || rml.clone().distance(rl) >80 || rml.getY()<-100) {
             				rm.teleport(rl.clone().add(1, 1, 0));
             			}
         			}
@@ -423,7 +423,7 @@ public class EndercoreRaids extends Summoned implements Listener {
 		if(in == -6) {
 			ItemStack main = new ItemStack(Material.BOW);
 			main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
-			ItemStack off = new ItemStack(Material.FURNACE);
+			ItemStack off = new ItemStack(Material.END_ROD);
 		    Color enderColor = Color.fromRGB(33, 0, 22); 
 
 		    // 가죽 방어구 생성 및 염색
@@ -507,7 +507,7 @@ public class EndercoreRaids extends Summoned implements Listener {
     		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(0.9);
     		newmob.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 999999, 3, false, false));
 
-			newmob.setMetadata("bossboss", new FixedMetadataValue(RMain.getInstance(), true));
+			newmob.setMetadata("voidboss", new FixedMetadataValue(RMain.getInstance(), true));
     		newmob.setMetadata("ender", new FixedMetadataValue(RMain.getInstance(), true));
 			newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), armor));
 			newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
@@ -517,7 +517,7 @@ public class EndercoreRaids extends Summoned implements Listener {
     		newmob.setRemoveWhenFarAway(false);
     		raider.put(rn, newmob.getUniqueId());
 
-    		bossbargen("soulboss", rn, newmob);
+    		bossbargen("voidboss", rn, newmob);
 
 
     		final Object ht = getherotype(rn);
@@ -1164,7 +1164,7 @@ public class EndercoreRaids extends Summoned implements Listener {
 	@EventHandler
 	public void RaiderHeoresDam(EntityDamageByEntityEvent d) 
 	{	
-		if(d.getEntity().getWorld().getName().contains("Raid")) {
+		if(d.getEntity().getWorld().hasMetadata("rpgraidworld")) {
 			if(d.getEntity() instanceof Player &&  heroes.containsValue(d.getEntity().getUniqueId()) && d.getDamager().hasMetadata("raid")) {
 				
 				String rn1 = heroes.keySet().stream().filter(k -> heroes.containsEntry(k, d.getEntity().getUniqueId())).findFirst().get();
@@ -1421,7 +1421,7 @@ public class EndercoreRaids extends Summoned implements Listener {
 
 	        			ItemStack main = new ItemStack(Material.BOW);
 	        			main.addUnsafeEnchantment(Enchantment.SHARPNESS, 3);
-	        			ItemStack off = new ItemStack(Material.FURNACE);
+	        			ItemStack off = new ItemStack(Material.END_CRYSTAL);
 	        		    Color enderColor = Color.fromRGB(12, 0, 43); 
 
 	        		    // 가죽 방어구 생성 및 염색

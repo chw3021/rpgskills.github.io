@@ -104,9 +104,9 @@ public class Rpgs extends Summoned implements CommandExecutor, Listener {
 		});
 	}
 
+	EndercoreRaids ecr = EndercoreRaids.getInstance();
 	NethercoreRaids ncr = NethercoreRaids.getInstance();
 
-	EndercoreRaids ecr = EndercoreRaids.getInstance();
 	OverworldRaids owr = OverworldRaids.getInstance();
 	private void bossTest(String args, Player p) {
 

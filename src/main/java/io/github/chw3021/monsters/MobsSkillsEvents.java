@@ -539,6 +539,8 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 		PiglinSkills.getInstance().hit(e);
 		
 		WarpSkills.getInstance().hit(e);
+		
+		EnderSkills.getInstance().hit(e);
 	}
 
 	@EventHandler
@@ -557,6 +559,8 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 		PiglinSkills.getInstance().bowshoot(e);
 		
 		CrimsonSkills.getInstance().bowshoot(e);
+		
+		EnderSkills.getInstance().bowshoot(e);
 	}
 		
 

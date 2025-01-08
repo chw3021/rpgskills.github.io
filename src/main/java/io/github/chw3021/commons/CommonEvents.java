@@ -446,9 +446,9 @@ public class CommonEvents extends Mobs implements Listener{
 	
 	private static void scaleDisplay(TextDisplay display) {
 	    // 변환 데이터 생성
-	    Vector3f translation = new Vector3f(-0.3f, -0.5f, 0.4f); // 위치
+	    Vector3f translation = new Vector3f(-0.3f, -0.3f, 0.4f); // 위치
 	    Quaternionf leftRotation = new Quaternionf(0f, 0f, 0f, 1f); 
-	    Vector3f scale = new Vector3f(0.3f, 0.3f, 1f);
+	    Vector3f scale = new Vector3f(0.5f, 0.5f, 1f);
 	    Quaternionf rightRotation = new Quaternionf(0f, 0f, 0f, 1f);
 
 	    // Transformation 생성
@@ -460,23 +460,6 @@ public class CommonEvents extends Mobs implements Listener{
 	    display.setBillboard(TextDisplay.Billboard.CENTER);
 	}
 
-	private static void scaleDisplayAf(TextDisplay display) {
-	    // 변환 데이터 생성
-	    Vector3f translation = new Vector3f(-0.3f, 0f, 0.4f); // 위치
-	    Quaternionf leftRotation = new Quaternionf(0f, 0f, 0f, 1f); 
-	    Vector3f scale = new Vector3f(0.75f, 0.75f, 1f);
-	    Quaternionf rightRotation = new Quaternionf(0f, 0f, 0f, 1f);
-
-	    // Transformation 생성
-	    Transformation transformation = new Transformation(translation, leftRotation, scale, rightRotation);
-
-	    display.setTransformation(transformation);
-
-	    // 텍스트가 고정된 위치로 표시되도록 설정
-	    display.setBillboard(TextDisplay.Billboard.CENTER);
-	}
-
-	
 	final public TextDisplay dinspawn(final Player p, Location l, Double d) {
 	    // TextDisplay 엔티티 생성
 	    final TextDisplay td = l.getWorld().spawn(l, TextDisplay.class, textDisplay ->{
@@ -494,14 +477,16 @@ public class CommonEvents extends Mobs implements Listener{
 		    textDisplay.setGravity(false);
 	        textDisplay.setTextOpacity((byte) 245);
 		    scaleDisplay(textDisplay);
-		    textDisplay.setTeleportDuration(15);
-		    textDisplay.setInterpolationDuration(15);
+		    textDisplay.setTeleportDuration(30);
+		    textDisplay.setInterpolationDuration(30);
 		});
+	    
+	    final Location tdal = td.getLocation().clone().add(0, 0.6, 0);
 
         Bukkit.getServer().getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
             @Override
             public void run() {
-    		    scaleDisplayAf(td);
+    		    td.teleport(tdal);
             }
         }, 1);
 	    // 데미지에 따라 표시할 텍스트 설정

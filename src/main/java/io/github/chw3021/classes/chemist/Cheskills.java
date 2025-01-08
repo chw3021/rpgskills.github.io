@@ -12,6 +12,11 @@ import io.github.chw3021.party.Party;
 
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Transformation;
+import org.bukkit.util.Vector;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
+
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
@@ -38,6 +43,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Display;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -47,6 +53,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.entity.TNTPrimed;
+import org.bukkit.entity.TextDisplay;
+import org.bukkit.entity.TextDisplay.TextAlignment;
 import org.bukkit.entity.ThrownPotion;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -317,6 +325,7 @@ public class Cheskills extends Pak {
 		
 		}
 	}
+	
 
 	final private void AcidStorm(Location tl) {
     	ArrayList<Location> ring = new ArrayList<Location>();
@@ -330,20 +339,105 @@ public class Cheskills extends Pak {
     		
     	});
 	}
+	private static void scaleDisplay(TextDisplay display) {
+	    // 변환 데이터 생성
+	    Vector3f translation = new Vector3f(0f,0f,-0.5f); // 위치
+	    Quaternionf leftRotation = new Quaternionf(0f, 0f, 0f, 1f); 
+	    Vector3f scale = new Vector3f(0.3f, 0.3f, 1f); // 세로로 길게 스케일 조정
+	    Quaternionf rightRotation = new Quaternionf(0f, 0f, 0f, 1f);
 
-	final private void AcidCloud(Player p) {
-		if(cloudh.containsKey(p.getUniqueId())) {
+	    // Transformation 생성
+	    Transformation transformation = new Transformation(translation, leftRotation, scale, rightRotation);
+
+	    display.setTransformation(transformation);
+
+	    // 텍스트가 고정된 위치로 표시되도록 설정
+	    display.setBillboard(TextDisplay.Billboard.CENTER);
+	}
+
+
+	private void displayAcidGauge(Player p) {
+	    Location eyeLocation = p.getEyeLocation();
+	    Vector direction = eyeLocation.getDirection().normalize().clone(); // 시야 방향
+	    Vector up = new Vector(0, 1, 0); // 월드의 상단 방향 (y축 기준)
+
+	    // 왼쪽으로 이동할 벡터 계산
+	    Vector left = direction.clone().crossProduct(up).normalize().multiply(0.16); 
+	    Vector offset = new Vector(0, 0.05, 0); // 약간 위로 올림 (y값)
+	    Location displayLocation = eyeLocation.clone().add(direction.clone().multiply(0.4)).add(left).add(offset); // 최종 위치 계산
+
+	    // TextDisplay 생성 및 설정
+	    TextDisplay textDisplay = (TextDisplay) p.getWorld().spawn(displayLocation, TextDisplay.class);
+	    textDisplay.setVisibleByDefault(false);
+	    p.showEntity(RMain.getInstance(), textDisplay);
+	    textDisplay.setText(ChatColor.GREEN + acidGauge.getOrDefault(p.getUniqueId(),0).toString() +"%");
+	    textDisplay.setBillboard(Display.Billboard.CENTER);
+	    textDisplay.setSeeThrough(true);
+	    textDisplay.setShadowed(false); 
+	    textDisplay.setDefaultBackground(false);
+	    textDisplay.setAlignment(TextAlignment.CENTER); 
+	    textDisplay.setGravity(false);
+	    textDisplay.setInterpolationDuration(10);
+	    textDisplay.setTeleportDuration(10);
+	    textDisplay.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+	    textDisplay.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), p.getName()));
+	    scaleDisplay(textDisplay);
+	    Bukkit.getScheduler().runTaskLater(RMain.getInstance(), () -> {
+	        textDisplay.setTextOpacity((byte) 0);
+	        textDisplay.remove();
+	    }, 4L);
+
+	}
+
+	private HashMap<UUID, Integer> acidGauge = new HashMap<UUID, Integer>();
+	private HashMap<UUID, Integer> acidGaugeRecoveryTask = new HashMap<UUID, Integer>();
+	
+	final private void acidGaugeRecovery(Player p) {
+    	if(cloudh.containsKey(p.getUniqueId())) {
+    		cloudh.remove(p.getUniqueId());
+    		if(cloudt.containsKey(p.getUniqueId())) {
+    			Bukkit.getServer().getScheduler().cancelTask(cloudt.remove(p.getUniqueId()));
+    		}
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
             	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.GREEN+"[산성구름 비활성화]").create());
-		    }
+    	    }
     		else {
             	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.GREEN+"[AcidCloud off]").create());
     		}
-        		cloudh.remove(p.getUniqueId());
-        		if(cloudt.containsKey(p.getUniqueId())) {
-        			Bukkit.getServer().getScheduler().cancelTask(cloudt.get(p.getUniqueId()));
-        			cloudt.remove(p.getUniqueId());
-        		}
+    	}
+		if(acidGauge.containsKey(p.getUniqueId())) {
+			Integer taskId = acidGaugeRecoveryTask.remove(p.getUniqueId()); 
+	        if (taskId != null) { 
+	            Bukkit.getScheduler().cancelTask(taskId); 
+	        }
+			
+			int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
+                @Override
+                public void run() 
+                {
+                	if(acidGauge.computeIfPresent(p.getUniqueId(), (k,v) -> v+1) >= 100) {
+            			Integer taskId = acidGaugeRecoveryTask.remove(p.getUniqueId()); 
+            	        if (taskId != null) { 
+            	            Bukkit.getScheduler().cancelTask(taskId); 
+            	        }
+                	}
+                	else {
+            	        displayAcidGauge(p);
+                	}
+                }
+			},20,5);
+			acidGaugeRecoveryTask.put(p.getUniqueId(), task);
+		}
+	}
+	
+	
+	final private void AcidCloud(Player p) {
+		acidGauge.putIfAbsent(p.getUniqueId(), 100);
+    	if(acidGauge.getOrDefault(p.getUniqueId(),0) <= 0) {
+    		return;
+    	}
+		if(cloudh.containsKey(p.getUniqueId())) {
+			acidGaugeRecovery(p);
 		}
 		else {
     		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -353,14 +447,26 @@ public class Cheskills extends Pak {
             	p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(ChatColor.GREEN+"[AcidCloud on]").create());
     		}
 			cloudh.put(p.getUniqueId(), 1);
+			Integer taskId = acidGaugeRecoveryTask.remove(p.getUniqueId()); 
+	        if (taskId != null) { 
+	            Bukkit.getScheduler().cancelTask(taskId); 
+	        }
 			int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
                 @Override
                 public void run() 
                 {
+                	acidGauge.computeIfPresent(p.getUniqueId(), (k,v) -> v-1);
+        	        displayAcidGauge(p);
+                	if(acidGauge.getOrDefault(p.getUniqueId(),0) <= 0) {
+
+            			acidGaugeRecovery(p);
+                	}
+                	
                 	if(!cloudh.containsKey(p.getUniqueId())) return;
                 	final Location fl = p.getLocation(); 
                     AreaEffectCloud cloud = (AreaEffectCloud) p.getWorld().spawnEntity(fl, EntityType.AREA_EFFECT_CLOUD);
 					cloud.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+					cloud.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), p.getName()));
                     cloud.setRadius((float) (1.5f+Proficiency.getpro(p)));
                     cloud.setSource(p);
                     cloud.setSilent(false);
@@ -463,12 +569,7 @@ public class Cheskills extends Pak {
 			return;
 		}
 		Player p = ev.getPlayer();
-    	if(cloudh.containsKey(p.getUniqueId())) {
-        		cloudh.remove(p.getUniqueId());
-        		if(cloudt.containsKey(p.getUniqueId())) {
-        			Bukkit.getServer().getScheduler().cancelTask(cloudt.get(p.getUniqueId()));
-        		}
-		}
+		acidGaugeRecovery(p);
     	if(chargingt.containsKey(p.getUniqueId())) {
     		Bukkit.getScheduler().cancelTask(chargingt.get(p.getUniqueId()));
     		chargingt.remove(p.getUniqueId());
@@ -479,12 +580,7 @@ public class Cheskills extends Pak {
 	public void Cloud(PlayerQuitEvent ev)
 	{
 		Player p = ev.getPlayer();
-    	if(cloudh.containsKey(p.getUniqueId())) {
-        		cloudh.remove(p.getUniqueId());
-        		if(cloudt.containsKey(p.getUniqueId())) {
-        			Bukkit.getServer().getScheduler().cancelTask(cloudt.get(p.getUniqueId()));
-        		}
-		}
+		acidGaugeRecovery(p);
     	if(chargingt.containsKey(p.getUniqueId())) {
     		Bukkit.getScheduler().cancelTask(chargingt.get(p.getUniqueId()));
     		chargingt.remove(p.getUniqueId());
@@ -495,12 +591,7 @@ public class Cheskills extends Pak {
 	public void Cloud(PlayerDeathEvent ev)
 	{
 		Player p = ev.getEntity();
-    	if(cloudh.containsKey(p.getUniqueId())) {
-        		cloudh.remove(p.getUniqueId());
-        		if(cloudt.containsKey(p.getUniqueId())) {
-        			Bukkit.getServer().getScheduler().cancelTask(cloudt.get(p.getUniqueId()));
-        		}
-		}
+		acidGaugeRecovery(p);
     	if(chargingt.containsKey(p.getUniqueId())) {
     		Bukkit.getScheduler().cancelTask(chargingt.get(p.getUniqueId()));
     		chargingt.remove(p.getUniqueId());
@@ -1223,7 +1314,7 @@ public class Cheskills extends Pak {
 		if(p.getInventory().getItemInMainHand().getType().name().contains("PICKAXE"))
 		{
 			Action ac = ev.getAction();
-			double sec =2*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec =6*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 	
 	        
 			
@@ -1256,30 +1347,38 @@ public class Cheskills extends Pak {
 	                		if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
 							{
 								LivingEntity le = (LivingEntity)e;
-									{
-						                le.playEffect(EntityEffect.HURT_BERRY_BUSH);
-						                le.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 200,2,false,false));
-										p.playSound(le.getLocation(), Sound.ENTITY_COW_MILK, 0.2f, 2f);
-										if(Tag.ENTITY_TYPES_SENSITIVE_TO_BANE_OF_ARTHROPODS.isTagged(le.getType())) {
-											extracted.put(p, 0);
-										}
-										else if(Tag.ENTITY_TYPES_SENSITIVE_TO_SMITE.isTagged(le.getType())) {
-											extracted.put(p, 1);
-										}
-										else if(Tag.ENTITY_TYPES_SENSITIVE_TO_IMPALING.isTagged(le.getType())) {
-											extracted.put(p, 2);
-										}
-										else if(le.getType() == EntityType.ENDERMAN) {
-											extracted.put(p, 3);
-										}
-										else {
-											extracted.put(p, 4);
-										}
-										if(Proficiency.getpro(p)>=2) {
-											Holding.superholding(p, le, 5l);
-										}
-									}
+				                le.playEffect(EntityEffect.HURT_BERRY_BUSH);
+				                le.playHurtAnimation(0);
+				                le.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 200,2,false,false));
+								p.playSound(le.getLocation(), Sound.ENTITY_COW_MILK, 0.2f, 2f);
+								if(Tag.ENTITY_TYPES_SENSITIVE_TO_BANE_OF_ARTHROPODS.isTagged(le.getType())) {
+									extracted.put(p, 0);
+								}
+								else if(Tag.ENTITY_TYPES_SENSITIVE_TO_SMITE.isTagged(le.getType())) {
+									extracted.put(p, 1);
+								}
+								else if(Tag.ENTITY_TYPES_SENSITIVE_TO_IMPALING.isTagged(le.getType())) {
+									extracted.put(p, 2);
+								}
+								else if(le.getType() == EntityType.ENDERMAN) {
+									extracted.put(p, 3);
+								}
+								else {
+									extracted.put(p, 4);
+								}
+								if(Proficiency.getpro(p)>=2) {
+									Holding.superholding(p, le, 5l);
+								}
 							}
+						}
+						if(Proficiency.getpro(p)>=2) {
+							if(acidGauge.getOrDefault(p, 0)<=100) {
+								acidGauge.computeIfPresent(p.getUniqueId(), (k,v) -> v+5);
+							}
+							else {
+								acidGauge.put(p.getUniqueId(), 100);
+							}
+							displayAcidGauge(p);
 						}
 	                    p.playSound(p.getLocation(), Sound.BLOCK_CONDUIT_ATTACK_TARGET, 1.0f, 2f);
 						p.playSound(p.getLocation(), Sound.BLOCK_BEACON_POWER_SELECT, 1.0f, 1f);

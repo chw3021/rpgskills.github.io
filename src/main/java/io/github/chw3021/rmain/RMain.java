@@ -65,6 +65,7 @@ import io.github.chw3021.monsters.Drops;
 import io.github.chw3021.monsters.MobArmor;
 import io.github.chw3021.monsters.MobDam;
 import io.github.chw3021.monsters.MobsSkillsEvents;
+import io.github.chw3021.monsters.raids.EndercoreRaids;
 import io.github.chw3021.monsters.raids.NethercoreRaids;
 import io.github.chw3021.monsters.raids.OverworldRaids;
 import io.github.chw3021.monsters.raids.RaidDifficulties;
@@ -201,6 +202,7 @@ public class RMain extends JavaPlugin{
 
         Bukkit.getPluginManager().registerEvents(OverworldRaids.getInstance(), this);
         Bukkit.getPluginManager().registerEvents(NethercoreRaids.getInstance(), this);
+        Bukkit.getPluginManager().registerEvents(EndercoreRaids.getInstance(), this);
         Bukkit.getPluginManager().registerEvents(NPCLoc.getInstance(), this);
     }
     
