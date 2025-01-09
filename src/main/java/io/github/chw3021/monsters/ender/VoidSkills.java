@@ -23,6 +23,7 @@ import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.EnderPearl;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -30,7 +31,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
-import org.bukkit.entity.Skeleton;
+import org.bukkit.entity.Snowball;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
@@ -40,12 +41,13 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
+
+import com.google.common.collect.HashMultimap;
 
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.monsters.raids.EndercoreRaids;
-import io.github.chw3021.monsters.raids.NethercoreRaids;
-import io.github.chw3021.monsters.raids.OverworldRaids;
 import io.github.chw3021.rmain.RMain;
 
 
@@ -101,10 +103,6 @@ public class VoidSkills extends EndercoreRaids{
 	}
 	
 
-	Material[] cookeds = new Material[] {Material.END_CRYSTAL, 
-			Material.END_ROD,
-			Material.ENDER_PEARL
-	};
 	public void bowshoot(EntityShootBowEvent ev) {
 	    if (ev.getEntity().hasMetadata("voidboss")) {
 	        ev.setCancelled(true);
@@ -123,14 +121,14 @@ public class VoidSkills extends EndercoreRaids{
 	        World world = boss.getWorld();
 
 	        // 부채꼴 형태로 물감 생성
-	        double angle = 30; // 부채꼴 각도 (30도)
+	        double angle = 60; // 부채꼴 각도 (30도)
 	        int pointsPerLine = 10; // 한 곡선당 점 개수
 	        for (int i = 0; i < pointsPerLine; i++) {
 	            double progress = (double) i / pointsPerLine; // 진행도 (0 ~ 1)
 	            double currentAngle = -angle / 2 + angle * progress; // 부채꼴 각도 내 분배
 	            Vector rotatedDir = direction.clone().rotateAroundY(Math.toRadians(currentAngle)); // Y축 회전
 
-	            Location paintLoc = startLocation.clone().add(rotatedDir.multiply(3)); // 궤적 위치 (3블록 거리)
+	            Location paintLoc = startLocation.clone().add(rotatedDir.multiply(5)); // 궤적 위치 (3블록 거리)
 	            paintLocations.add(paintLoc);
 	        }
 
@@ -141,53 +139,48 @@ public class VoidSkills extends EndercoreRaids{
 	        boss.getWorld().playSound(boss.getLocation(), Sound.ITEM_ARMOR_EQUIP_CHAIN, 1.0f, 1.2f);
 	    }
 	}
+	
+	private void scheduleExplosion(String rn, List<Location> locations, Particle.DustOptions paintColor, World world, LivingEntity p) {
+	
+	    // BukkitRunnable을 사용하여 틱당 3개의 위치를 처리
+	    new BukkitRunnable() {
+	        private int index = 0; // 현재 처리 중인 인덱스
+	
+	        @Override
+	        public void run() {
+	            // 리스트가 끝났으면 작업 종료
+	            if (index >= locations.size()) {
+	                this.cancel();
+	                return;
+	            }
+	    	    p.getWorld().playSound(locations.get(index), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 0.05f, 1.5f);
 
-	/**
-	 * 일정 시간 후 폭발 처리 메서드
-	 *
-	 * @param location 폭발 위치
-	 * @param paintColor 폭발 전 파티클 색상
-	 */private void scheduleExplosion(String rn, List<Location> locations, Particle.DustOptions paintColor, World world, LivingEntity p) {
-		    p.getWorld().playSound(locations.get(0), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 0.5f, 0.5f);
-
-		    // BukkitRunnable을 사용하여 틱당 3개의 위치를 처리
-		    new BukkitRunnable() {
-		        private int index = 0; // 현재 처리 중인 인덱스
-
-		        @Override
-		        public void run() {
-		            // 리스트가 끝났으면 작업 종료
-		            if (index >= locations.size()) {
-		                this.cancel();
-		                return;
-		            }
-
-		            // 현재 틱에서 처리할 위치들을 가져옴 (최대 3개)
-		            for (int i = 0; i < 3 && index < locations.size(); i++, index++) {
-		                Location location = locations.get(index);
-		                
-		                // 물감 파티클 생성
-		                world.spawnParticle(Particle.DUST, location, 10, 0.1, 0.1, 0.1, 0, paintColor);
-
-		                // 지연된 폭발 처리
-		                int task = Bukkit.getScheduler().runTaskLater(RMain.getInstance(), () -> {
-		                    // 폭발 효과
-		                    p.getWorld().spawnParticle(Particle.EXPLOSION, location, 1);
-
-		                    // 근처 엔티티에게 피해
-		                    for (Entity e : world.getNearbyEntities(location, 1.5, 1.5, 1.5)) {
-		                        if (e instanceof LivingEntity && !e.hasMetadata("portal") && e != p) {
-		                            LivingEntity le = (LivingEntity) e;
-		                            le.damage(2.5, p);
-		                        }
-		                    }
-		                }, 15L).getTaskId(); // 15틱 (0.75초) 후 폭발
-
-		                ordt.put(rn, task); // 작업 ID 저장
-		            }
-		        }
-		    }.runTaskTimer(RMain.getInstance(), 0L, 1L); // 매 틱마다 실행
-		}
+	            // 현재 틱에서 처리할 위치들을 가져옴 (최대 3개)
+	            for (int i = 0; i < 3 && index < locations.size(); i++, index++) {
+	                Location location = locations.get(index);
+	                
+	                // 물감 파티클 생성
+	                world.spawnParticle(Particle.DUST, location, 10, 0.1, 0.1, 0.1, 0, paintColor);
+	
+	                // 지연된 폭발 처리
+	                int task = Bukkit.getScheduler().runTaskLater(RMain.getInstance(), () -> {
+	                    // 폭발 효과
+	                    p.getWorld().spawnParticle(Particle.EXPLOSION, location, 1);
+	
+	                    // 근처 엔티티에게 피해
+	                    for (Entity e : world.getNearbyEntities(location, 1.5, 1.5, 1.5)) {
+	                        if (e instanceof LivingEntity && !e.hasMetadata("portal") && e != p) {
+	                            LivingEntity le = (LivingEntity) e;
+	                            le.damage(2.5, p);
+	                        }
+	                    }
+	                }, 15L).getTaskId(); // 15틱 (0.75초) 후 폭발
+	
+	                ordt.put(rn, task); // 작업 ID 저장
+	            }
+	        }
+	    }.runTaskTimer(RMain.getInstance(), 0L, 1L); // 매 틱마다 실행
+	}
 
 
 	private void teleportExplosion(LivingEntity p, final Location tl, final Location fl) {
@@ -231,6 +224,62 @@ public class VoidSkills extends EndercoreRaids{
             }
 		}, 26));
 	}
+	
+	Material[] paints = {Material.BLUE_DYE,Material.GREEN_DYE,Material.RED_DYE};
+	
+	private void paintRain(LivingEntity p) {
+
+
+    	grillable.remove(p.getUniqueId());
+        Holding.holding(null, p, 25l);
+
+        String rn = gethero(p);
+		
+        Location tl = gettargetblock(p,5).clone();
+        
+        ItemStack paper = new ItemStack(Material.PAPER);
+        
+		p.getWorld().playSound(tl, Sound.ITEM_BUCKET_FILL_LAVA, 1.1f, 0f);
+		p.getWorld().playSound(tl, Sound.ITEM_BOOK_PAGE_TURN, 0.6f, 0f);
+    	p.getWorld().spawnParticle(Particle.UNDERWATER, tl, 500, 4, 1, 4, 0);
+    	p.getWorld().spawnParticle(Particle.ITEM, tl, 300, 4, 0.2, 4, 0.2,paper);
+    	
+    	
+        ArrayList<Location> meats = new ArrayList<>();
+        AtomicInteger j = new AtomicInteger();
+        for(int i=0; i<25; i++) {
+            Random random=new Random();
+        	double number = random.nextDouble() * 3 * (random.nextBoolean() ? -1 : 1);
+        	double number2 = random.nextDouble() * 3 * (random.nextBoolean() ? -1 : 1);
+        	meats.add(tl.clone().add(number, 0.5, number2));
+        }
+        
+        
+        meats.forEach(l ->{
+			int t= Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                Random random=new Random();
+                @Override
+                public void run() 
+                {
+
+                	p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l, 1);
+
+    				Snowball sn = p.getWorld().spawn(l,Snowball.class);
+    				sn.setVelocity(new Vector(0,2.5,0)); 
+    				sn.setGravity(true);
+    				sn.setGlowing(true);
+    				sn.setShooter(p);
+    				sn.setItem(new ItemStack(paints[random.nextInt(paints.length)]));
+    				sn.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), true));
+    				sn.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), true));
+    				sn.setMetadata("voidPaint", new FixedMetadataValue(RMain.getInstance(), true));
+                	p.getWorld().spawnParticle(Particle.ITEM, tl, 300, 4, 0.2, 4, 0.2,paper);
+					p.getWorld().playSound(p.getLocation(), Sound.ITEM_DYE_USE, 0.1f, 1f);
+                }
+			}, j.incrementAndGet()*2+25);
+        	ordt.put(rn, t);
+        });
+	}
 
 
 
@@ -255,80 +304,14 @@ public class VoidSkills extends EndercoreRaids{
 	            else 
 	            {
 	            	rb3cooldown.remove(p.getUniqueId()); 
-
-	            	grillable.remove(p.getUniqueId());
-	                Holding.holding(null, p, 25l);
-
-	                String rn = gethero(p);
-					
-	                Location tl = gettargetblock(p,5).clone();
-	                
-					p.getWorld().playSound(tl, Sound.BLOCK_TRIAL_SPAWNER_OMINOUS_ACTIVATE, 1.1f, 0f);
-                	p.getWorld().spawnParticle(Particle.DRAGON_BREATH, tl, 500, 4, 1, 4, 0);
-                	p.getWorld().spawnParticle(Particle.PORTAL, tl, 500, 4, 1, 4, 0);
-                	p.getWorld().spawnParticle(Particle.INSTANT_EFFECT, tl, 500, 4, 1, 4, 0);
-                	
-                	
-                    ArrayList<Location> meats = new ArrayList<>();
-                    AtomicInteger j = new AtomicInteger();
-                    for(int i=0; i<41; i++) {
-			            Random random=new Random();
-                    	double number = random.nextDouble() * 3 * (random.nextBoolean() ? -1 : 1);
-                    	double number2 = random.nextDouble() * 3 * (random.nextBoolean() ? -1 : 1);
-                    	double number3 = random.nextDouble() * 7;
-                    	meats.add(tl.clone().add(number, number3, number2));
-                    }
-                    
-                    meats.forEach(l ->{
-						int t= Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() 
-			                {
-			                	teleportExplosion(p, l, tl);
-			                }
-						}, j.incrementAndGet()*2+25);
-	                	ordt.put(rn, t);
-                    });
+	            	paintRain(p);
 					rb3cooldown.put(p.getUniqueId(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
 	            }
 	        }
 	        else 
 	        {
 
-
-            	grillable.remove(p.getUniqueId());
-                Holding.holding(null, p, 25l);
-
-                String rn = gethero(p);
-				
-                Location tl = gettargetblock(p,5).clone();
-                
-				p.getWorld().playSound(tl, Sound.BLOCK_TRIAL_SPAWNER_OMINOUS_ACTIVATE, 1.1f, 0f);
-            	p.getWorld().spawnParticle(Particle.DRAGON_BREATH, tl, 500, 4, 1, 4, 0);
-            	p.getWorld().spawnParticle(Particle.PORTAL, tl, 500, 4, 1, 4, 0);
-            	p.getWorld().spawnParticle(Particle.INSTANT_EFFECT, tl, 500, 4, 1, 4, 0);
-            	
-            	
-                ArrayList<Location> meats = new ArrayList<>();
-                AtomicInteger j = new AtomicInteger();
-                for(int i=0; i<41; i++) {
-		            Random random=new Random();
-                	double number = random.nextDouble() * 3 * (random.nextBoolean() ? -1 : 1);
-                	double number2 = random.nextDouble() * 3 * (random.nextBoolean() ? -1 : 1);
-                	double number3 = random.nextDouble() * 7;
-                	meats.add(tl.clone().add(number, number3, number2));
-                }
-                
-                meats.forEach(l ->{
-					int t= Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() 
-		                {
-		                	teleportExplosion(p, l, tl);
-		                }
-					}, j.incrementAndGet()*2+25);
-                	ordt.put(rn, t);
-                });
+            	paintRain(p);
 				rb3cooldown.put(p.getUniqueId(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
 	        }
 		}					
@@ -346,91 +329,111 @@ public class VoidSkills extends EndercoreRaids{
             stand.setCollidable(false);
             stand.setMetadata("stuff" + rn, new FixedMetadataValue(RMain.getInstance(), rn));
             stand.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
-            stand.getEquipment().setHelmet(new ItemStack(Material.CLOCK));
-            stand.getAttribute(Attribute.SCALE).setBaseValue(4);
+            stand.getEquipment().setHelmet(new ItemStack(Material.BRUSH));
+            stand.setHeadPose(new EulerAngle(Math.toRadians(90), 0, 0)); // 아래로 90도 숙임
+            stand.getAttribute(Attribute.SCALE).setBaseValue(3.7);
         });
     }
-    
 
+    Material[] carpets = {Material.RED_CARPET, Material.BLUE_CARPET, Material.GREEN_CARPET, Material.YELLOW_CARPET, Material.PURPLE_CARPET};
+    
+    private BlockDisplay spawnBlockDisplay(World world, Location location, String rn) {
+    	Random random = new Random();
+        return world.spawn(location, BlockDisplay.class, stand -> {
+            stand.setGravity(false);
+            stand.setInvulnerable(true);
+            stand.setBlock(getBd(carpets[random.nextInt(carpets.length)]));
+            stand.setMetadata("stuff" + rn, new FixedMetadataValue(RMain.getInstance(), rn));
+            stand.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
+        });
+    }
+
+    
+    HashMultimap<String, BlockDisplay> carpetsGet = HashMultimap.create();
 	
     private void summonWoodPillar(LivingEntity boss, Location startLoc) {
         World world = startLoc.getWorld();
         String rn = gethero(boss);
 
-        List<ArmorStand> pillars = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            Location pillarLoc = startLoc.clone().add(0, i * 0.5, 0);
-            pillars.add(spawnArmorStand(world, pillarLoc, rn));
-        }
-
+        ArmorStand block = spawnArmorStand(world, startLoc.clone().add(0, -3, 0), rn);
+        
+        
         BukkitTask bt = Bukkit.getScheduler().runTaskTimer(RMain.getInstance(), new Runnable() {
             int tick = 0;
 
             @Override
             public void run() {
-                Player target = NethercoreRaids.getheroes(boss).stream()
+                Player target = getheroes(boss).stream()
                         .filter(p -> p.isValid() && p.getWorld().equals(world))
                         .min((p1, p2) -> Double.compare(p1.getLocation().distance(startLoc), p2.getLocation().distance(startLoc)))
                         .orElse(null);
 
-                if (target == null || tick >= 100) {
-                    removeFingers(pillars,boss);
+                if (target == null || tick >= 180) {
+                    removeFingers(block,boss);
                     this.cancel();
                     return;
                 }
 
-                movePillarTowardsPlayer(pillars, target.getLocation());
-
-                for (Entity e : world.getNearbyEntities(pillars.get(0).getLocation(), 2.5, 2.5, 2.5)) {
-                    if (e instanceof Player && e != boss) {
-                        Player player = (Player) e;
-                        player.damage(2, boss);
-                        player.setVelocity(player.getVelocity().multiply(0.1));
-                        boss.setVelocity(boss.getVelocity().multiply(2));
-                    }
-                }
-
-                tick = tick +2;
+                movePillarTowardsPlayer(block, target.getLocation(), world, rn);
+                
+                tick = tick +10;
             }
 
             private void cancel() {
-                Bukkit.getScheduler().cancelTask(this.hashCode());
+                Bukkit.getScheduler().cancelTask(blockt.remove(boss.getUniqueId()));
             }
-        }, 0L, 2L); // 0틱 지연, 2틱 간격으로 실행
+        }, 0L, 20L); 
 
         blockt.put(boss.getUniqueId(), bt.getTaskId());
         ordt.put(rn, bt.getTaskId());
     }
+    
+    
+    private Location movePillarTowardsPlayer(ArmorStand block, Location targetLoc, World world, String rn) {
+        world.spawnParticle(Particle.DRIPPING_WATER, block.getLocation(), 10, 1.5, 1.5, 1.5, 0.1);
+        world.playSound(block.getLocation(), Sound.ITEM_DYE_USE, 1f, 0f);
+        world.playSound(block.getLocation(), Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 0.1f, 0f);
 
-    private void movePillarTowardsPlayer(List<ArmorStand> pillars, Location targetLoc) {
-        for (ArmorStand block : pillars) {
-        	block.getWorld().spawnParticle(Particle.PORTAL, block.getLocation(), 10, 1.5, 1.5, 1.5, 0.1);
-        	block.getWorld().playSound(block.getLocation(), Sound.BLOCK_CHEST_LOCKED, 0.1f, 2f);
-            Vector moveDirection = targetLoc.toVector().subtract(block.getLocation().toVector());
-            double distance = moveDirection.length();
+        Vector moveDirection = targetLoc.toVector().subtract(block.getLocation().toVector());
+        double distance = moveDirection.length() + 2;
 
-            if (distance > 0.5) {
-                double speed = Math.log(distance + 0.5) * 0.1;
-                moveDirection.normalize().multiply(speed);
-                block.teleport(block.getLocation().add(moveDirection));
-            }
+        ArrayList<Location> line = new ArrayList<>();
+        for (double i = 0; i < distance; i += 0.4) {
+            Location l = block.getLocation().clone().add(moveDirection.clone().normalize().multiply(i));
+            line.add(l);
         }
+
+        long totalTick = 12; // 총 틱 수
+        int totalSteps = line.size(); // 총 이동 단계
+        int interval = (int) (totalTick / totalSteps); // 기본 인터벌
+        double batchSize = Math.ceil((double) totalSteps / totalTick); // 틱당 처리할 요소 개수
+
+        AtomicInteger task = new AtomicInteger();
+        task.set(Bukkit.getScheduler().runTaskTimer(RMain.getInstance(), new Runnable() {
+            int index = 0;
+
+            @Override
+            public void run() {
+                if (index >= line.size()) {
+                    Bukkit.getScheduler().cancelTask(task.get());
+                    return;
+                }
+
+                // batchSize만큼 처리
+                for (int i = 0; i < batchSize && index < line.size(); i++) {
+                    Location l = line.get(index);
+                    block.teleport(l);
+                    spawnBlockDisplay(world, l.clone().add(0, 0.1, 0), rn);
+                    index++;
+                }
+            }
+        }, 0, interval > 0 ? interval : 1).getTaskId()); // interval이 1 미만일 경우 최소 1로 설정
+
+        return block.getLocation();
     }
 
-    private void removeFingers(List<ArmorStand> pillars, LivingEntity p) {
-        for (ArmorStand pillar : pillars) {
-            pillar.remove();
-            Location tl = pillar.getLocation().clone();
-    		p.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, tl,1);
-        	p.getWorld().playSound(tl, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 0.5f, 0.5f);
-        	for(Entity e : pillar.getWorld().getNearbyEntities(tl, 3,3,3)) {
-        		if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && e!=p) {
-        			LivingEntity le = (LivingEntity)e;
-					le.damage(4.5, p);
-					le.teleport(tl);
-        		}
-        	}
-        }
+    private void removeFingers(ArmorStand pillar, LivingEntity p) {
+        pillar.remove();
     }
 
 	
@@ -509,7 +512,7 @@ public class VoidSkills extends EndercoreRaids{
 	}
 
 	public void teleportAndScatterEnderPearls(LivingEntity boss) {
-	    List<Player> heroes = NethercoreRaids.getheroes(boss).stream()
+	    List<Player> heroes = getheroes(boss).stream()
 	            .filter(hero -> hero.getWorld().equals(boss.getWorld())) // 같은 월드의 플레이어만 필터링
 	            .collect(Collectors.toList());
 
@@ -643,7 +646,7 @@ public class VoidSkills extends EndercoreRaids{
 	        if (checkAndApplyCharge(p, d)) return;
 
 	        if(p.hasMetadata("raid")) {
-	            Optional<Player> hero = NethercoreRaids.getheroes(p).stream()
+	            Optional<Player> hero = getheroes(p).stream()
 	                .filter(pe -> pe.getWorld().equals(p.getWorld()))
 	                .findAny();
 
@@ -842,12 +845,12 @@ public class VoidSkills extends EndercoreRaids{
                     int i1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
                         @Override
                         public void run() {
-                            Player tpe = OverworldRaids.getheroes(p).stream().filter(pe ->!pe.isDead()&&pe.getWorld().equals(p.getWorld())).findAny().get();
+                            Player tpe = getheroes(p).stream().filter(pe ->!pe.isDead()&&pe.getWorld().equals(p.getWorld())).findAny().get();
                             final Location tpel = tpe.getLocation().clone();
                             final Location tl = tpel.clone().add(tpel.clone().getDirection().normalize().multiply(3.5)).add(0, 0.5, 0);
                             p.teleport(tl);
                 			p.getWorld().spawnParticle(Particle.PORTAL, p.getLocation().clone(), 50,0.5,0.5,0.5,0.02);
-                            OverworldRaids.getheroes(p).forEach(pe ->{
+                            getheroes(p).forEach(pe ->{
                             	pe.playSound(p, Sound.ENTITY_SHULKER_TELEPORT, 1f, 1.26f);
                             });
                             int i1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -867,12 +870,12 @@ public class VoidSkills extends EndercoreRaids{
         	}
         	else {
 
-                Player tpe = OverworldRaids.getheroes(p).stream().filter(pe ->!pe.isDead()&&pe.getWorld().equals(p.getWorld())).findAny().get();
+                Player tpe = getheroes(p).stream().filter(pe ->!pe.isDead()&&pe.getWorld().equals(p.getWorld())).findAny().get();
                 final Location tpel = tpe.getLocation().clone();
                 final Location tl = tpel.clone().add(tpel.clone().getDirection().normalize().multiply(3.5)).add(0, 0.5, 0);
                 p.teleport(tl);
     			p.getWorld().spawnParticle(Particle.PORTAL, p.getLocation().clone(), 50,0.5,0.5,0.5,0.02);
-                OverworldRaids.getheroes(p).forEach(pe ->{
+                getheroes(p).forEach(pe ->{
                 	pe.playSound(p, Sound.ENTITY_SHULKER_TELEPORT, 0.6f, 1.26f);
                 	pe.playSound(p, Sound.BLOCK_VAULT_ACTIVATE, 1.2f, 0.9f);
                 });
@@ -975,7 +978,7 @@ public class VoidSkills extends EndercoreRaids{
         }
     	ordeal.remove(p.getUniqueId());
     	rb5cooldown.remove(p.getUniqueId()); 
-        for(Player pe : OverworldRaids.getheroes(p)) {
+        for(Player pe : getheroes(p)) {
     		if(pe.getWorld().equals(p.getWorld()) && pe.getWorld() == p.getWorld()) {
     			count.remove(p.getUniqueId());
 				if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
@@ -1001,7 +1004,7 @@ public class VoidSkills extends EndercoreRaids{
                 p.setInvulnerable(false);
                 Holding.ale(p).setInvulnerable(false);
 				p.getWorld().spawnParticle(Particle.SQUID_INK, p.getLocation(), 3000, 10,10,10);	
-                for(Player pe : OverworldRaids.getheroes(p)) {
+                for(Player pe : getheroes(p)) {
             		p.removeMetadata("fake", RMain.getInstance());
             		pe.setHealth(0);
                 }
@@ -1011,9 +1014,9 @@ public class VoidSkills extends EndercoreRaids{
 	
 	public void nightCounter(EntityDamageByEntityEvent d) 
 	{
-		if(d.getEntity().hasMetadata("voidboss") && d.getEntity() instanceof Skeleton&& !d.isCancelled() && d.getEntity().hasMetadata("ruined")) 
+		if(d.getEntity().hasMetadata("voidboss") && d.getEntity() instanceof LivingEntity&& !d.isCancelled() && d.getEntity().hasMetadata("ruined")) 
 		{
-			Skeleton p = (Skeleton)d.getEntity();
+			LivingEntity p = (LivingEntity)d.getEntity();
 			String rn = gethero(p);
 			
 			if(ordeal.containsKey(p.getUniqueId())) {
@@ -1025,13 +1028,13 @@ public class VoidSkills extends EndercoreRaids{
 					count.computeIfPresent(p.getUniqueId(), (k,v) -> v+1);
 					count.putIfAbsent(p.getUniqueId(), 1);
 					
-	                Location rl = OverworldRaids.getraidloc(p).clone();
+	                Location rl = getraidloc(p).clone();
 			        p.playHurtAnimation(0);
 			        Bukkit.getScheduler().cancelTask(countt.get(p.getUniqueId()));
                 	counterable.remove(p.getUniqueId());
 	                p.teleport(rl);
 
-			        OverworldRaids.getheroes(p).forEach(pe ->{
+			        getheroes(p).forEach(pe ->{
 			        	pe.playSound(pe, Sound.BLOCK_RESPAWN_ANCHOR_DEPLETE, 1, 1.1f);
 			        	pe.sendMessage(ChatColor.AQUA + "[" + count.get(p.getUniqueId()) + "/5]");
 			        	Random random1=new Random();
@@ -1059,7 +1062,7 @@ public class VoidSkills extends EndercoreRaids{
     		            rb5cooldown.put(p.getUniqueId(), System.currentTimeMillis());
     		            
 		            	Holding.ale(p).setMetadata("failed", new FixedMetadataValue(RMain.getInstance(),true));
-		                for(Player pe : OverworldRaids.getheroes(p)) {
+		                for(Player pe : getheroes(p)) {
 							if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
 								pe.sendMessage(ChatColor.BOLD + "차원파괴자: " + ChatColor.GRAY + "이 정도라면, 너희를 인정하지 않을 수 없군.");
 							}
@@ -1094,7 +1097,7 @@ public class VoidSkills extends EndercoreRaids{
 
     	ordeal.put(p.getUniqueId(), true);
 		String rn = gethero(p);
-        Location rl = OverworldRaids.getraidloc(p).clone();
+        Location rl = getraidloc(p).clone();
 
         if(ordt.containsKey(rn)) {
         	ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
@@ -1107,7 +1110,7 @@ public class VoidSkills extends EndercoreRaids{
         Holding.untouchable(p, ORDEALTIME);
         p.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
         
-        OverworldRaids.getheroes(p).forEach(pe ->{
+        getheroes(p).forEach(pe ->{
         	Holding.invur(pe, 60l);
         	AtomicReference<String> msg = new AtomicReference<String>(ChatColor.BOLD+"Attack the enemy at the right time");
         	if(pe.getLocale().equalsIgnoreCase("ko_kr")) {

@@ -29,6 +29,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.EntityEffect;
@@ -362,8 +364,8 @@ public class Cheskills extends Pak {
 	    Vector up = new Vector(0, 1, 0); // 월드의 상단 방향 (y축 기준)
 
 	    // 왼쪽으로 이동할 벡터 계산
-	    Vector left = direction.clone().crossProduct(up).normalize().multiply(0.16); 
-	    Vector offset = new Vector(0, 0.05, 0); // 약간 위로 올림 (y값)
+	    Vector left = direction.clone().crossProduct(up).normalize().multiply(-0.16); 
+	    Vector offset = new Vector(0, -0.15, 0); 
 	    Location displayLocation = eyeLocation.clone().add(direction.clone().multiply(0.4)).add(left).add(offset); // 최종 위치 계산
 
 	    // TextDisplay 생성 및 설정
@@ -377,14 +379,24 @@ public class Cheskills extends Pak {
 	    textDisplay.setDefaultBackground(false);
 	    textDisplay.setAlignment(TextAlignment.CENTER); 
 	    textDisplay.setGravity(false);
-	    textDisplay.setInterpolationDuration(10);
-	    textDisplay.setTeleportDuration(10);
+	    textDisplay.setInterpolationDuration(1);
+	    textDisplay.setTeleportDuration(1);
 	    textDisplay.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 	    textDisplay.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), p.getName()));
 	    scaleDisplay(textDisplay);
+
+		AtomicInteger task = new AtomicInteger(Bukkit.getScheduler().runTaskTimer(RMain.getInstance(), () -> {
+		    Location newEyeLocation = p.getEyeLocation().clone();
+			Vector newDirection = newEyeLocation.getDirection().normalize().clone();
+			Vector newLeft = newDirection.clone().crossProduct(up).normalize().multiply(-0.16);
+			Location newDisplayLocation = p.getEyeLocation().clone().add(newDirection.clone().multiply(0.4)).add(newLeft).add(offset);
+			textDisplay.teleport(newDisplayLocation);
+		}, 0L, 1L).getTaskId());
+	    
 	    Bukkit.getScheduler().runTaskLater(RMain.getInstance(), () -> {
 	        textDisplay.setTextOpacity((byte) 0);
 	        textDisplay.remove();
+	        Bukkit.getScheduler().cancelTask(task.get());
 	    }, 4L);
 
 	}
@@ -425,7 +437,7 @@ public class Cheskills extends Pak {
             	        displayAcidGauge(p);
                 	}
                 }
-			},20,5);
+			},10,4);
 			acidGaugeRecoveryTask.put(p.getUniqueId(), task);
 		}
 	}
@@ -464,10 +476,11 @@ public class Cheskills extends Pak {
                 	
                 	if(!cloudh.containsKey(p.getUniqueId())) return;
                 	final Location fl = p.getLocation(); 
+                	int pro = Proficiency.getpro(p);
                     AreaEffectCloud cloud = (AreaEffectCloud) p.getWorld().spawnEntity(fl, EntityType.AREA_EFFECT_CLOUD);
 					cloud.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 					cloud.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), p.getName()));
-                    cloud.setRadius((float) (1.5f+Proficiency.getpro(p)));
+                    cloud.setRadius((float) (1.5f+pro));
                     cloud.setSource(p);
                     cloud.setSilent(false);
                     cloud.setColor(Color.LIME);
@@ -479,18 +492,19 @@ public class Cheskills extends Pak {
 	                    p.playSound(fl, Sound.ENTITY_SPLASH_POTION_THROW, 0.08f, 1.6f);
 					}
                     if(vx.containsKey(p.getUniqueId())) {
-	                    cloud.setRadius((float) (1.5f+Proficiency.getpro(p)) + 3);
-	                    cloud.setColor(Color.FUCHSIA);
+	                    cloud.setRadius((float) (1.5f+pro) + 3);
+	                    cloud.setColor(Color.fromRGB(0X119523));
                     }
-                    cloud.setDuration(12);
+                    cloud.setDuration(24);
                     p.playSound(fl, Sound.BLOCK_BREWING_STAND_BREW, 0.1f, 0.2f);
-                    for(int i = 0; i<5; i++) {
+                    for(int i = 0; i<4+pro; i++) {
                     	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
                 		@Override
 		                	public void run() 
-			                {	
-		                    	for (Entity e : cloud.getNearbyEntities(1.5+Proficiency.getpro(p) + (vx.containsKey(p.getUniqueId()) ? 3 : 0), 1.5+Proficiency.getpro(p)+ (vx.containsKey(p.getUniqueId()) ? 3 : 0), 1.5+Proficiency.getpro(p)+ (vx.containsKey(p.getUniqueId()) ? 3 : 0)))
-		    					{
+							{
+								double radius = 1.5 + pro + (vx.containsKey(p.getUniqueId()) ? 3 : 0);
+								for (Entity e : cloud.getNearbyEntities(radius, radius, radius)) {
+
 		                    		if (e instanceof Player) 
 		    						{
 		    							
@@ -520,7 +534,7 @@ public class Cheskills extends Pak {
 		    						}
 		    					}
 				            }
-	                	   }, i*4); 
+                    	}, i*4); 
                     }
                 }
 			}, 0, 3); 
@@ -1927,7 +1941,7 @@ public class Cheskills extends Pak {
     		{
     			d.setCancelled(true);
     		}
-    		d.setDamage(d.getDamage()* (0.8 - (p.getActivePotionEffects().size() * 0.05))  );
+    		d.setDamage(d.getDamage()* (0.85 - (p.getActivePotionEffects().size() * 0.05))  );
 		}
 	}
 	/*

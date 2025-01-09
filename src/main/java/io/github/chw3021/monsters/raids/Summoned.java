@@ -843,7 +843,7 @@ public class Summoned extends Mobs{
 		}
 		sl.getBlock().setType(Material.END_GATEWAY);
 		EndGateway eg = (EndGateway) le.getWorld().getBlockState(sl);
-		eg.setExactTeleport(true);
+		eg.setExactTeleport(false);
 		eg.setExitLocation(null);
 		eg.setAge(0);
 		eg.update();
@@ -852,7 +852,7 @@ public class Summoned extends Mobs{
 		raidpor.put(rn, eg.getBlock());
 
 		
-		TextDisplay as = le.getWorld().spawn(sl.clone().add(0, 3, 0), TextDisplay.class, a ->{
+		TextDisplay as = le.getWorld().spawn(sl.clone().add(0, 2.5, 0), TextDisplay.class, a ->{
 			a.setInvulnerable(true);
 			a.setGravity(false);
 			a.setAlignment(TextAlignment.CENTER);
@@ -925,7 +925,7 @@ public class Summoned extends Mobs{
 		}
 		sl.getBlock().setType(Material.END_GATEWAY);
 		EndGateway eg = (EndGateway) le.getWorld().getBlockState(sl);
-		eg.setExactTeleport(true);
+		eg.setExactTeleport(false);
 		eg.setExitLocation(null);
 		eg.setAge(10000);
 		eg.update();
@@ -934,7 +934,7 @@ public class Summoned extends Mobs{
 		raidpor.put(rn, eg.getBlock());
 
 
-		TextDisplay as = le.getWorld().spawn(sl.clone().add(0, 3, 0), TextDisplay.class, a ->{
+		TextDisplay as = le.getWorld().spawn(sl.clone().add(0, 2.5, 0), TextDisplay.class, a ->{
 			a.setInvulnerable(true);
 			a.setGravity(false);
 			a.setAlignment(TextAlignment.CENTER);

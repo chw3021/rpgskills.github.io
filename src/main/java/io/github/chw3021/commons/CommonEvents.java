@@ -46,6 +46,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityKnockbackByEntityEvent;
 import org.bukkit.event.entity.EntityKnockbackEvent;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
@@ -133,11 +134,23 @@ public class CommonEvents extends Mobs implements Listener{
 	@EventHandler
 	public void mobKnockBackReducer(EntityKnockbackEvent d)
 	{
-		d.setFinalKnockback(d.getKnockback().multiply(0.25));
+		LivingEntity le = (LivingEntity) d.getEntity();
+		if (le.getMaximumNoDamageTicks() < 15) {
+			d.setFinalKnockback(d.getKnockback().multiply(0.55));
+		}
 		Location lel = d.getEntity().getEyeLocation().clone();
-		lel.getWorld().spawnParticle(Particle.DUST_PILLAR, lel, 6, 0.3,0.5,0.3, 0.5, getBd(Material.REDSTONE_BLOCK));
+		lel.getWorld().spawnParticle(Particle.DUST_PILLAR, lel, 6, 0.34,0.4,0.34, 0.1, getBd(Material.REDSTONE_BLOCK));
 	}
-	
+
+	@EventHandler
+	public void mobKnockBackReducer(EntityKnockbackByEntityEvent d) {
+		if (d.getSourceEntity() instanceof Player) {
+			Player p = (Player) d.getSourceEntity();
+			if (ClassData.pc.get(p.getUniqueId()) == 16 || ClassData.pc.get(p.getUniqueId()) == 15) {
+				d.setFinalKnockback(d.getKnockback().multiply(0.2));
+			}
+		}
+	}
 	
 	public void Thorndamcan(EntityDamageByEntityEvent d)
 	{

@@ -41,6 +41,8 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
 
+import com.google.common.collect.HashMultimap;
+
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.monsters.raids.OverworldRaids;
 import io.github.chw3021.monsters.raids.Summoned;
@@ -1089,7 +1091,7 @@ public class DarkSkills extends Summoned{
 		}
 	}
 	
-	static final private void nightmare(LivingEntity p, Location rl, String rn) {
+	final private void nightmare(LivingEntity p, Location rl, String rn) {
         try {
             Player tpe = OverworldRaids.getheroes(p).stream().filter(pe ->!pe.isDead()&&pe.getWorld().equals(p.getWorld())).findAny().get();
             final Location tpel = tpe.getLocation().clone();
@@ -1124,7 +1126,7 @@ public class DarkSkills extends Summoned{
                 	p.swingMainHand();
                 	tpe.playSound(tpe, Sound.ENTITY_WITHER_BREAK_BLOCK, 1f, 1.26f);
                 	if(tpe.getWorld().equals(p.getWorld())) {
-                    	tpe.damage(666,p);
+                    	tpe.damage(6.66,p);
                 	}
                 	counterable.remove(p.getUniqueId());
                 	p.teleport(rl.clone().add(0, 10, 0));
@@ -1138,32 +1140,45 @@ public class DarkSkills extends Summoned{
         }
 	}
 
-	final private static void nightswoop(LivingEntity p, Location pl, Location tl) 
-	{
-
-        List<Location> line = new ArrayList<>();
-        final Vector vec = tl.clone().toVector().subtract(pl.clone().toVector());
-        
-        for(double an =0; an<tl.distance(pl)-0.1; an+=0.1) {
-        	line.add(pl.clone().add(vec.clone().normalize().multiply(an)));
-        }
-
-    	AtomicInteger u = new AtomicInteger();
-        line.forEach(l -> {
-    		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-                @Override
-                public void run() 
-                {
-                	p.setRotation(l.getYaw(),l.getPitch());
-                	p.setGliding(true);
-    				p.getWorld().spawnParticle(Particle.SOUL, l, 3, 1, 1, 1);
-    				p.teleport(l);
-                }
-    		},u.getAndIncrement()/4);
-    	});
+	final private void nightswoop(LivingEntity p, Location pl, Location tl) {
+	    String rn = gethero(p);
+		
+		List<Location> line = new ArrayList<>();
+	    
+	    
+	    final Vector vec = tl.clone().toVector().subtract(pl.clone().toVector());
+	
+	    for (double an = 0; an < tl.distance(pl) - 0.1; an += 0.1) {
+	        line.add(pl.clone().add(vec.clone().normalize().multiply(an)));
+	    }
+	
+	    AtomicInteger currentIndex = new AtomicInteger(0);
+	    AtomicInteger taskId = new AtomicInteger();
+	    taskId.set(Bukkit.getScheduler().runTaskTimer(RMain.getInstance(), () -> {
+	        int index = currentIndex.getAndIncrement();
+	
+	        if (index >= line.size()) {
+	            Bukkit.getScheduler().cancelTask(taskId.get());
+	            nightMareTask.remove(rn, taskId.get()); 
+	            return;
+	        }
+	
+	        Location l = line.get(index);
+	        Vector dir = vec.clone().normalize();
+	        float yaw = (float) Math.toDegrees(Math.atan2(-dir.getX(), dir.getZ()));
+	        float pitch = (float) Math.toDegrees(-Math.asin(dir.getY()));
+	
+	        // 엔티티 이동 및 효과
+	        p.setRotation(yaw, pitch);
+	        p.setGliding(true);
+	        p.getWorld().spawnParticle(Particle.SOUL, l, 3, 1, 1, 1);
+	        p.teleport(l);
+	
+	    }, 0, 4).getTaskId());
+	
+	    nightMareTask.put(rn, taskId.get());
 	}
-	
-	
+
 	public void nightCounter(EntityDamageByEntityEvent d) 
 	{
 		if(d.getEntity().hasMetadata("darkboss") && d.getEntity() instanceof Skeleton&& !d.isCancelled() && d.getEntity().hasMetadata("ruined")) 
@@ -1197,7 +1212,7 @@ public class DarkSkills extends Summoned{
 			        	pe.teleport(esl1);
 			        });
 			        
-			        if(count.get(p.getUniqueId()) == 5) {
+			        if(count.get(p.getUniqueId()) >= 5) {
 		                p.teleport(rl);
 			        	
 			        	p.setGlowing(true);
@@ -1241,50 +1256,44 @@ public class DarkSkills extends Summoned{
 				}
 				else {
 
-                    if(ordt.containsKey(rn)) {
-                    	ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
-                    	ordt.removeAll(rn);
+                    if(nightMareTask.containsKey(rn)) {
+                    	nightMareTask.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
                     }
-                	ordeal.remove(p.getUniqueId());
-                	rb5cooldown.remove(p.getUniqueId()); 
+			        Bukkit.getScheduler().cancelTask(countt.remove(p.getUniqueId()));
+                    Location rl = OverworldRaids.getraidloc(p).clone();
+                    int i1 =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
+                        @Override
+                        public void run() {
+                            OverworldRaids.getheroes(p).forEach(pe ->{
+                            	pe.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 150,10,false,false));
+                            	pe.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 150,10,false,false));
+                            });
+                            nightmare(Holding.ale(p),rl,rn);
+                        }
+                    }, 30, 100);
+                    nightMareTask.put(rn, i1); 
 	                for(Player pe : OverworldRaids.getheroes(p)) {
                 		if(pe.getWorld().equals(p.getWorld()) && pe.getWorld() == p.getWorld()) {
                 			count.remove(p.getUniqueId());
 	    					if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-		                		pe.sendMessage(ChatColor.BOLD+"악몽의 형상: 빛은 어둠을 이길 수 없다..");
+		                		pe.sendMessage(ChatColor.BOLD+"악몽의 형상: 어리석군.");
 	    					}
 	    					else {
-		                		pe.sendMessage(ChatColor.BOLD+"NightMare: Light can't beat darkness..");
+		                		pe.sendMessage(ChatColor.BOLD+"NightMare: Stupid.");
 	    					}
-	            			p.getWorld().playSound(pe.getLocation(), Sound.ENTITY_WITHER_AMBIENT, 1, 0);
-	                		Holding.invur(pe, 10l);
-				        	p.setGlowing(true);
-		            		pe.teleport(p);
-							pe.removePotionEffect(PotionEffectType.BLINDNESS);
-		            		pe.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 60, 255 ,false,false));
-		            		pe.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 60, 255 ,false,false));
+	            			p.getWorld().playSound(pe.getLocation(), Sound.ENTITY_WITHER_AMBIENT, 0.5f, 2);
+	            			pe.setVelocity(new Vector(0,-6,0));
+	            			pe.damage(27, p);
                 		}
 	                }
-	 				Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() {	
-	                		p.removeMetadata("fake", RMain.getInstance());
-	                		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
-	    	                p.setInvulnerable(false);
-	    	                Holding.ale(p).setInvulnerable(false);
-							p.getWorld().spawnParticle(Particle.SQUID_INK, p.getLocation(), 3000, 10,10,10);	
-		                    for(Player pe : OverworldRaids.getheroes(p)) {
-		                		p.removeMetadata("fake", RMain.getInstance());
-		                		pe.setHealth(0);
-		                    }
-		                }
-		            }, 5); 
 				}
 			}
 		}
 	}
 	    
 		
+	HashMultimap<String,Integer> nightMareTask = HashMultimap.create();
+	
 	final private void nightmareevent(LivingEntity p, EntityDamageByEntityEvent d) {
 
     	ordeal.put(p.getUniqueId(), true);
@@ -1339,6 +1348,7 @@ public class DarkSkills extends Summoned{
                 nightmare(Holding.ale(p),rl,rn);
             }
         }, 100, 100);
+        nightMareTask.put(rn, i1);
 		ordt.put(rn, i1); 
 
 			int i2 = Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
