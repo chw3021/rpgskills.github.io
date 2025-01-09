@@ -41,6 +41,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EnderDragonChangePhaseEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -50,6 +51,8 @@ import org.bukkit.event.entity.EntityKnockbackByEntityEvent;
 import org.bukkit.event.entity.EntityKnockbackEvent;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
+import org.bukkit.event.entity.EntitySpawnEvent;
+import org.bukkit.event.entity.EntityTeleportEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerAnimationEvent;
@@ -63,6 +66,7 @@ import org.bukkit.event.player.PlayerLocaleChangeEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.event.world.WorldUnloadEvent;
@@ -481,7 +485,7 @@ public class CommonEvents extends Mobs implements Listener{
 		    // TextDisplay 기본 설정
 		    textDisplay.setVisibleByDefault(false);
 		    p.showEntity(RMain.getInstance(), textDisplay);
-		    textDisplay.setBillboard(Billboard.CENTER); // 텍스트가 플레이어를 따라오도록 설정
+		    textDisplay.setBillboard(Billboard.CENTER); 
 		    textDisplay.setGlowing(true); // 글자에 발광 효과
 		    textDisplay.setGlowColorOverride(Color.BLUE);
 		    textDisplay.setPersistent(false); // 임시 엔티티로 설정
@@ -792,15 +796,16 @@ public class CommonEvents extends Mobs implements Listener{
 
 	private void barremove(LivingEntity le) {
 
-		if(le.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
-			Entity din = Bukkit.getEntity(bar.get(le.getUniqueId()));
-			Bukkit.getScheduler().cancelTask(trackt.get(le.getUniqueId()));
-			if (din != null) {
-				din.setCustomNameVisible(false);
-				din.remove();
-				bart.remove(le.getUniqueId());
-				bar.remove(le.getUniqueId());
-			}
+		if(!bar.containsKey(le.getUniqueId())) {
+			return;
+		}
+		Entity din = Bukkit.getEntity(bar.get(le.getUniqueId()));
+		Bukkit.getScheduler().cancelTask(trackt.get(le.getUniqueId()));
+		if (din != null) {
+			din.setCustomNameVisible(false);
+			din.remove();
+			bart.remove(le.getUniqueId());
+			bar.remove(le.getUniqueId());
 		}
 	}
 
@@ -814,7 +819,9 @@ public class CommonEvents extends Mobs implements Listener{
 			{
 				if(d.getEntity() instanceof LivingEntity && bar.containsKey(d.getEntity().getUniqueId())) {
 					LivingEntity le = (LivingEntity) d.getEntity();
-					barremove(le);
+					if(le.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
+						barremove(le);
+					}
 				}
 			}
 		}, 2);
@@ -876,6 +883,13 @@ public class CommonEvents extends Mobs implements Listener{
 	    } else {
 	        return String.valueOf(health);
 	    }
+	}
+	
+	@EventHandler
+	public void barRemoveWhenTeleport(EntityTeleportEvent e) {
+		if(e.getEntity() instanceof LivingEntity le) {
+			barremove(le);
+		}
 	}
 
 	@EventHandler

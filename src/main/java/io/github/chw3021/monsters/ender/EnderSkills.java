@@ -22,6 +22,7 @@ import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.DragonFireball;
 import org.bukkit.entity.EnderPearl;
@@ -34,11 +35,15 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
 import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
 
 import com.google.common.collect.HashMultimap;
@@ -82,6 +87,25 @@ public class EnderSkills extends EndercoreRaids{
 			LivingEntity p = (LivingEntity) po.getShooter();
 			if(po.hasMetadata("enderbossPearl")) {
         		final Location l = d.getHitEntity() != null ? d.getHitEntity().getLocation() : d.getHitBlock().getLocation();
+				
+				if(po instanceof DragonFireball) {
+					d.setCancelled(true);
+					po.remove();
+					l.getWorld().spawn(l, AreaEffectCloud.class, cloud -> {
+						cloud.setBasePotionType(PotionType.HARMING);
+						cloud.addCustomEffect(new PotionEffect(PotionEffectType.NAUSEA,100,100,false,false), false);
+						cloud.setSource(p);
+						cloud.setParticle(Particle.DRAGON_BREATH);
+						cloud.setRadius(4f);
+						cloud.setRadiusPerTick(-1f);
+						cloud.setDuration(100);
+						cloud.setDurationOnUse(10);
+						cloud.setMetadata("stuff"+gethero(p), new FixedMetadataValue(RMain.getInstance(), true));
+						cloud.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+					});
+					return;
+				}
+				
 
 				l.getWorld().spawnParticle(Particle.REVERSE_PORTAL, l, 100);
 				l.getWorld().playSound(l, Sound.ENTITY_SHULKER_TELEPORT, 1f, 1.5f);
@@ -93,8 +117,8 @@ public class EnderSkills extends EndercoreRaids{
 							final Location bl = bossDoll.get(p.getUniqueId()).getLocation();
 							bossDoll.get(p.getUniqueId()).remove();
 							bossDoll.remove(p.getUniqueId());
-							l.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, bl, 1);
-							l.getWorld().playSound(bl, Sound.ENTITY_GENERIC_EXPLODE, 1f, 1.2f);
+							bl.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, bl, 1);
+							bl.getWorld().playSound(bl, Sound.ENTITY_GENERIC_EXPLODE, 1f, 1.2f);
 		            		for(Entity e : bl.getWorld().getNearbyEntities(bl, 2.5, 2.5, 2.5)) {
 								if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("portal"))) {
 									LivingEntity le = (LivingEntity)e;
@@ -133,8 +157,43 @@ public class EnderSkills extends EndercoreRaids{
         	p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_SHOOT, 0.5f, 2f);
 
 			p.getWorld().spawnParticle(Particle.END_ROD, p.getLocation(), 10);
-			
+
+			String rn = gethero(p);
+
+    		final Object ht = getherotype(rn);
+
+    		ItemStack mainf = new ItemStack(Material.BLAZE_ROD);
+    		ItemMeta mmf = mainf.getItemMeta();
+    		mmf.setCustomModelData(3010);
+    		mainf.setItemMeta(mmf);
+
+			if(ht instanceof Player) {
+				Player pe = (Player) ht;
+				pe.sendEquipmentChange(p, EquipmentSlot.HAND, mainf);
+			}
+			else if(getherotype(rn) instanceof HashSet){
+				@SuppressWarnings("unchecked")
+				HashSet<Player> par = (HashSet<Player>) ht;
+	    		par.forEach(pe -> {
+	    			pe.sendEquipmentChange(p, EquipmentSlot.HAND, mainf);
+	    		});
+			}
 			if(isRuined(p)) {
+				if (bossDoll.containsKey(p.getUniqueId())) {
+					final Location bl = bossDoll.get(p.getUniqueId()).getLocation();
+					bossDoll.get(p.getUniqueId()).remove();
+					bossDoll.remove(p.getUniqueId());
+					bl.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, bl, 1);
+					bl.getWorld().playSound(bl, Sound.ENTITY_GENERIC_EXPLODE, 1f, 1.2f);
+            		for(Entity e : bl.getWorld().getNearbyEntities(bl, 2.5, 2.5, 2.5)) {
+						if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("portal"))) {
+							LivingEntity le = (LivingEntity)e;
+							le.damage(4.3,p);
+							Holding.holding(null, le, 23l);
+						}
+                	}
+					
+				}
 				final Location pfl = p.getLocation().clone();
 				
 				p.getWorld().spawn(pfl, ArmorStand.class, stand -> {
@@ -150,6 +209,7 @@ public class EnderSkills extends EndercoreRaids{
 				});
 				
 				p.getWorld().playSound(pfl, Sound.ITEM_ARMOR_EQUIP_ELYTRA, 1f, 0.5f);
+    			p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY,15,100,false,false));
 			}
 
     		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -355,7 +415,7 @@ public class EnderSkills extends EndercoreRaids{
         String rn = gethero(boss);
 
         List<ArmorStand> pillars = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < (isRuined(boss) ? 3:1); i++) {
             Location pillarLoc = startLoc.clone().add(0, i * 2, 0);
             pillars.add(spawnArmorStand(world, pillarLoc, rn));
         }
@@ -376,13 +436,14 @@ public class EnderSkills extends EndercoreRaids{
                     return;
                 }
 
-                movePillarTowardsPlayer(pillars, target.getLocation());
+                movePillarTowardsPlayer(pillars, target.getLocation(),tick);
 
-                for (Entity e : world.getNearbyEntities(pillars.get(0).getLocation(), 2.5, 2.5, 2.5)) {
+                for (Entity e : world.getNearbyEntities(pillars.get(0).getLocation(), 2.5, 8, 2.5)) {
                     if (e instanceof Player && e != boss) {
                         Player player = (Player) e;
-                        player.setVelocity(player.getVelocity().multiply(-0.5));
+                        player.setVelocity(player.getVelocity().multiply(-1.5));
                         boss.setVelocity(boss.getVelocity().multiply(2.5));
+                        boss.setItemInUseTicks(0);
                     }
                 }
 
@@ -398,7 +459,7 @@ public class EnderSkills extends EndercoreRaids{
         ordt.put(rn, bt.getTaskId());
     }
 
-    private void movePillarTowardsPlayer(List<ArmorStand> pillars, Location targetLoc) {
+    private void movePillarTowardsPlayer(List<ArmorStand> pillars, Location targetLoc, int tick) {
         for (ArmorStand block : pillars) {
         	block.getWorld().spawnParticle(Particle.PORTAL, block.getLocation(), 10, 1.5, 1.5, 1.5, 0.1);
         	block.getWorld().playSound(block.getLocation(), Sound.BLOCK_CHEST_LOCKED, 0.1f, 2f);
@@ -410,9 +471,17 @@ public class EnderSkills extends EndercoreRaids{
                 moveDirection.normalize().multiply(speed);
                 block.teleport(block.getLocation().add(moveDirection));
             }
+            animateClock(block, tick);
         }
     }
+    private void animateClock(ArmorStand stand, double angle) {
 
+        EulerAngle newLeftArmPose = stand.getLeftArmPose().setY(Math.toRadians(angle));
+        EulerAngle newRightArmPose = stand.getRightArmPose().setY(Math.toRadians(-angle));
+
+        stand.setLeftArmPose(newLeftArmPose);
+        stand.setRightArmPose(newRightArmPose);
+    }
     private void removeFingers(List<ArmorStand> pillars, LivingEntity p) {
         for (ArmorStand pillar : pillars) {
             pillar.remove();
@@ -438,20 +507,23 @@ public class EnderSkills extends EndercoreRaids{
 		p.getWorld().playSound(p, Sound.BLOCK_END_PORTAL_SPAWN, 0.3f, 1.5f);
 
     	final World w = p.getWorld();
-		final Location pl = gettargetblock(p,6).clone().add(0,-5,0);
+		final Location pl = gettargetblock(p,6).clone().add(0,-6,0);
 		w.playSound(pl, Sound.ENTITY_SHULKER_TELEPORT, 1.0f, 0f);
 		w.spawnParticle(Particle.END_ROD, pl, 150, 2,2,2);
 		w.spawnParticle(Particle.REVERSE_PORTAL, pl, 150, 2,2,2);
 		w.spawnParticle(Particle.ENCHANT, pl, 150, 2,2,2);
 		
+		String rn = gethero(p);
+		
 
-		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
      		@Override
         	public void run() 
             {	
      			summonWoodPillar(p,pl);
             }
 	   	}, 35);
+		ordt.put(rn, task);
 	   	
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
      		@Override
@@ -695,10 +767,10 @@ public class EnderSkills extends EndercoreRaids{
 	                w.spawnParticle(Particle.DUST, particleLocation, 1, dustOptions);
 	            }
 
-	            p.getWorld().spawnParticle(Particle.ENTITY_EFFECT, cl, 500, 4, 1, 4, 1, Color.NAVY);
+	            p.getWorld().spawnParticle(Particle.ENTITY_EFFECT, cl, 500, 4, 1, 4, 0, Color.NAVY);
 
                 double offsetX = (Math.random() - 0.5) * 6; 
-                double offsetY = (Math.random() - 0.5) * 6; 
+                double offsetY = (Math.random()) * 6; 
                 double offsetZ = (Math.random() - 0.5) * 6; 
 
                 Location randomLocation = cl.clone().add(offsetX, offsetY, offsetZ);
@@ -722,6 +794,7 @@ public class EnderSkills extends EndercoreRaids{
 	    }, 40, 3);
 
 	    illusionTask.put(p.getUniqueId(), task);
+		ordt.put(gethero(p), task);
 
 	    // 일정 시간이 지나면 환각 효과와 스킬을 종료
 	    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -844,7 +917,8 @@ public class EnderSkills extends EndercoreRaids{
 	
 
 	final private void nightmare(LivingEntity p, Location rl, String rn, Boolean j) {
-        try {
+        
+		try {
         	if(!j) {
 
         		for(int i = 0; i<3; i++) {
@@ -852,7 +926,15 @@ public class EnderSkills extends EndercoreRaids{
                     int i1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
                         @Override
                         public void run() {
-                            Player tpe = EndercoreRaids.getheroes(p).stream().filter(pe ->!pe.isDead()&&pe.getWorld().equals(p.getWorld())).findAny().get();
+                            Optional<Player> optionalTpe = EndercoreRaids.getheroes(p).stream()
+                                    .filter(pe -> !pe.isDead() && pe.getWorld().equals(p.getWorld()))
+                                    .findAny();
+
+                            if (optionalTpe.isEmpty()) {
+                                return;
+                            }
+
+                            Player tpe = optionalTpe.get(); 
                             final Location tpel = tpe.getLocation().clone();
                             final Location tl = tpel.clone().add(tpel.clone().getDirection().normalize().multiply(-2.3)).add(0, 0.5, 0);
                             p.teleport(tl);
@@ -877,9 +959,17 @@ public class EnderSkills extends EndercoreRaids{
         	}
         	else {
 
-                Player tpe = EndercoreRaids.getheroes(p).stream().filter(pe ->!pe.isDead()&&pe.getWorld().equals(p.getWorld())).findAny().get();
+                Optional<Player> optionalTpe = EndercoreRaids.getheroes(p).stream()
+                        .filter(pe -> !pe.isDead() && pe.getWorld().equals(p.getWorld()))
+                        .findAny();
+
+                if (optionalTpe.isEmpty()) {
+                    return;
+                }
+
+                Player tpe = optionalTpe.get(); 
                 final Location tpel = tpe.getLocation().clone();
-                final Location tl = tpel.clone().add(tpel.clone().getDirection().normalize().multiply(-2.2)).add(1, 3, 1);
+                final Location tl = tpel.clone().add(tpel.clone().getDirection().normalize().multiply(-2.2)).add(0, 3, 0);
                 p.teleport(tl);
     			p.getWorld().spawnParticle(Particle.PORTAL, p.getLocation().clone(), 50,0.5,0.5,0.5,0.02);
                 EndercoreRaids.getheroes(p).forEach(pe ->{
@@ -919,7 +1009,7 @@ public class EnderSkills extends EndercoreRaids{
                                 	tpe.playSound(tpe, Sound.ENTITY_ZOGLIN_ATTACK, 0.5f, 1.87f);
                                 	if(tpe.getWorld().equals(p.getWorld())) {
                                     	p.teleport(tpe);
-                                    	tpe.damage(2,p);
+                                    	tpe.damage(5,p);
                                 	}
                                 }
                             }, i*4);
@@ -938,48 +1028,55 @@ public class EnderSkills extends EndercoreRaids{
         	return;
         }
 	}
-	final private void nightswoop(LivingEntity p, Location pl, Location tl, Boolean j, Integer duration) {
+	final private void nightswoop(LivingEntity p, Location pl, Location tl, Boolean j, Integer totalTick) {
 	    List<Location> line = new ArrayList<>();
 	    final Vector vec = tl.clone().toVector().subtract(pl.clone().toVector());
 
 	    // 이동 거리 증가값 설정
 	    double increasement = j ? 0.2 : 0.1;
 
-	    for (double an = 0; an <= tl.distance(pl); an += increasement) {
+	    for (double an = 0; an <= tl.distance(pl)+1; an += increasement) {
 	        line.add(pl.clone().add(vec.clone().normalize().multiply(an)));
 	    }
 
-	    int totalSteps = line.size(); // 이동해야 할 총 단계 수
-	    int interval = duration / totalSteps; // 각 단계 간의 간격(틱 단위)
+        int totalSteps = line.size(); // 총 이동 단계
+        int interval = (int) (totalTick / totalSteps); // 기본 인터벌
+        double batchSize = Math.ceil((double) totalSteps / totalTick); // 틱당 처리할 요소 개수
 
-	    AtomicInteger currentStep = new AtomicInteger();
 	    AtomicInteger task = new AtomicInteger();
     
-	    int t =Bukkit.getScheduler().runTaskTimer(RMain.getInstance(), () -> {
-	        if (currentStep.get() >= totalSteps) {
-                Bukkit.getScheduler().cancelTask(task.get());
-	            p.setGliding(false); 
-	            return;
-	        }
+	    int t =Bukkit.getScheduler().runTaskTimer(RMain.getInstance(), new Runnable() {
+            int index = 0;
 
-	        Location l = line.get(currentStep.getAndIncrement()); 
-	        Vector dir = vec.clone().normalize();
-	        float yaw = (float) Math.toDegrees(Math.atan2(-dir.getX(), dir.getZ()));
-	        float pitch = (float) Math.toDegrees(-Math.asin(dir.getY()));
+            @Override
+            public void run() {
+                if (index >= line.size()) {
+                    Bukkit.getScheduler().cancelTask(task.get());
+                    return;
+                }
 
-	        // 엔티티 이동 및 방향 설정
-	        p.setRotation(yaw, pitch);
-	        p.setGliding(true);
-	        p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l, 3, 1, 1, 1);
-	        p.teleport(l);
-
-	        // 주변 엔티티 데미지 처리
-	        for (Entity e : l.getWorld().getNearbyEntities(l, 1, 1, 1)) {
-	            if (p != e && e instanceof Player && !(e.hasMetadata("fake")) && !(e.hasMetadata("portal"))) {
-	                Player le = (Player) e;
-	                le.damage(3.0, p);
-	            }
-	        }
+                for (int i = 0; i < batchSize && index < line.size(); i++) {
+                    Location l = line.get(index);
+    		        Vector dir = vec.clone().normalize();
+    		        float yaw = (float) Math.toDegrees(Math.atan2(-dir.getX(), dir.getZ()));
+    		        float pitch = (float) Math.toDegrees(-Math.asin(dir.getY()));
+    	
+    		        // 엔티티 이동 및 방향 설정
+    		        p.setRotation(yaw, pitch);
+    		        p.setGliding(true);
+    		        p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l, 3, 1, 1, 1);
+    		        p.teleport(l);
+    	
+    		        // 주변 엔티티 데미지 처리
+    		        for (Entity e : l.getWorld().getNearbyEntities(l, 1, 1, 1)) {
+    		            if (p != e && e instanceof Player && !(e.hasMetadata("fake")) && !(e.hasMetadata("portal"))) {
+    		                Player le = (Player) e;
+    		                le.damage(1.0, p);
+    		            }
+    		        }
+                    index++;
+                }
+            }
 	    }, 0, interval).getTaskId();
 	    task.set(t);
 	    countt.put(p.getUniqueId(), t);
@@ -1059,7 +1156,18 @@ public class EnderSkills extends EndercoreRaids{
 			        EndercoreRaids.getheroes(p).forEach(pe ->{
 			        	pe.playSound(pe, Sound.BLOCK_RESPAWN_ANCHOR_DEPLETE, 1, 1.1f);
 			        	pe.sendMessage(ChatColor.AQUA + "[" + count.get(p.getUniqueId()) + "/6]");
+		        		pe.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1, 1,false,false));
 			        });
+			        Vector knockbackDirection = p.getLocation().getDirection()
+			            .normalize()
+			            .multiply(-1); 
+			        double knockbackDistance = 2.3; 
+
+			        Location knockbackLocation = p.getLocation().clone().add(knockbackDirection.multiply(knockbackDistance));
+
+			        p.teleport(knockbackLocation);
+
+			        
 			        
 			        if(count.get(p.getUniqueId()) >= 6) {
 			        	
@@ -1069,6 +1177,7 @@ public class EnderSkills extends EndercoreRaids{
 		        			ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
 		        		}
 
+		    			p.getWorld().spawnParticle(Particle.FLASH, p.getLocation().clone(), 150,2,2,2);
                 		Holding.reset(p);
                 		Holding.ale(p).setInvisible(false);
 	                	Holding.ale(p).setMetadata("failed", new FixedMetadataValue(RMain.getInstance(),true));
@@ -1079,6 +1188,7 @@ public class EnderSkills extends EndercoreRaids{
     		            
 		            	Holding.ale(p).setMetadata("failed", new FixedMetadataValue(RMain.getInstance(),true));
 		                for(Player pe : EndercoreRaids.getheroes(p)) {
+				        	pe.playSound(pe, Sound.BLOCK_VAULT_DEACTIVATE, 1, 0.1f);
 							if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
 								pe.sendMessage(ChatColor.BOLD + "차원파괴자: " + ChatColor.GRAY + "이 정도라면, 너희를 인정하지 않을 수 없군...");
 							}
@@ -1109,19 +1219,13 @@ public class EnderSkills extends EndercoreRaids{
 						pe.sendMessage(ChatColor.BOLD + "Destroyer: " + ChatColor.GRAY + "Idiot.");
 					}
             		Holding.holding(null, pe, 20l);
-		            int t3 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() {
-		                	pe.setHealth(0);
-		                }
-		            }, 20);
-					ordt.put(rn, t3);
+                	pe.setHealth(0);
 				}
 			}
 		}
 	}
 	    
-	final long ORDEALTIME = 1000;
+	final long ORDEALTIME = 1400;
 		
 	final private void nightmareevent(LivingEntity p, EntityDamageByEntityEvent d) {
 

@@ -345,7 +345,7 @@ public class Cheskills extends Pak {
 	    // 변환 데이터 생성
 	    Vector3f translation = new Vector3f(0f,0f,-0.5f); // 위치
 	    Quaternionf leftRotation = new Quaternionf(0f, 0f, 0f, 1f); 
-	    Vector3f scale = new Vector3f(0.3f, 0.3f, 1f); // 세로로 길게 스케일 조정
+	    Vector3f scale = new Vector3f(0.3f, 0.3f, 1f); 
 	    Quaternionf rightRotation = new Quaternionf(0f, 0f, 0f, 1f);
 
 	    // Transformation 생성
@@ -364,19 +364,19 @@ public class Cheskills extends Pak {
 	    Vector up = new Vector(0, 1, 0); // 월드의 상단 방향 (y축 기준)
 
 	    // 왼쪽으로 이동할 벡터 계산
-	    Vector left = direction.clone().crossProduct(up).normalize().multiply(-0.16); 
-	    Vector offset = new Vector(0, -0.15, 0); 
+	    Vector left = direction.clone().crossProduct(up).normalize().multiply(-0.37); 
+	    Vector offset = new Vector(0, 0.3, 0); 
 	    Location displayLocation = eyeLocation.clone().add(direction.clone().multiply(0.4)).add(left).add(offset); // 최종 위치 계산
 
 	    // TextDisplay 생성 및 설정
 	    TextDisplay textDisplay = (TextDisplay) p.getWorld().spawn(displayLocation, TextDisplay.class);
 	    textDisplay.setVisibleByDefault(false);
 	    p.showEntity(RMain.getInstance(), textDisplay);
-	    textDisplay.setText(ChatColor.GREEN + acidGauge.getOrDefault(p.getUniqueId(),0).toString() +"%");
+	    textDisplay.setText(ChatColor.AQUA + acidGauge.getOrDefault(p.getUniqueId(),0).toString() +"%");
 	    textDisplay.setBillboard(Display.Billboard.CENTER);
 	    textDisplay.setSeeThrough(true);
 	    textDisplay.setShadowed(false); 
-	    textDisplay.setDefaultBackground(false);
+	    textDisplay.setBackgroundColor(Color.GREEN);
 	    textDisplay.setAlignment(TextAlignment.CENTER); 
 	    textDisplay.setGravity(false);
 	    textDisplay.setInterpolationDuration(1);
@@ -388,7 +388,7 @@ public class Cheskills extends Pak {
 		AtomicInteger task = new AtomicInteger(Bukkit.getScheduler().runTaskTimer(RMain.getInstance(), () -> {
 		    Location newEyeLocation = p.getEyeLocation().clone();
 			Vector newDirection = newEyeLocation.getDirection().normalize().clone();
-			Vector newLeft = newDirection.clone().crossProduct(up).normalize().multiply(-0.16);
+			Vector newLeft = newDirection.clone().crossProduct(up).normalize().multiply(-0.37);
 			Location newDisplayLocation = p.getEyeLocation().clone().add(newDirection.clone().multiply(0.4)).add(newLeft).add(offset);
 			textDisplay.teleport(newDisplayLocation);
 		}, 0L, 1L).getTaskId());
