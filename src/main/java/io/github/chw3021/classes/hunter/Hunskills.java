@@ -178,7 +178,7 @@ public class Hunskills extends Pak {
 							.cooldown(sec)
 							.kname("그물투척")
 							.ename("Webthrow")
-							.slot(0)
+							.slot(1)
 							.hm(tbcooldown)
 							.skillUse(() -> {
 
@@ -419,7 +419,7 @@ public class Hunskills extends Pak {
 	public void Climb(PlayerSwapHandItemsEvent ev)
 	{
 		Player p = ev.getPlayer();
-		double sec =1*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		double sec =0.5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 /*
 		if(p.getInventory().getItemInMainHand().getType().name().contains("RAIL") && p.getInventory().getItemInOffHand().getType().name().contains("RAIL") && !p.isOnGround()) {
 			ev.setCancelled(true);
@@ -443,7 +443,7 @@ public class Hunskills extends Pak {
 						.cooldown(sec)
 						.kname("등반")
 						.ename("Climbing")
-						.slot(1)
+						.slot(0)
 						.hm(djcooldown)
 						.skillUse(() -> {
 							if(climb.containsKey(p.getName())) {

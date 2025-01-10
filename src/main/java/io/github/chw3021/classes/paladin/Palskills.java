@@ -202,7 +202,7 @@ public class Palskills extends Pak {
 						.cooldown(sec)
 						.kname("결박")
 						.ename("Restraint")
-						.slot(0)
+						.slot(1)
 						.hm(rscooldown)
 						.skillUse(() -> {
 
@@ -495,7 +495,7 @@ public class Palskills extends Pak {
 						.cooldown(sec)
 						.kname("기도")
 						.ename("Pray")
-						.slot(1)
+						.slot(5)
 						.hm(prcooldown)
 						.skillUse(() -> {
 
@@ -569,7 +569,7 @@ public class Palskills extends Pak {
 						.cooldown(sec)
 						.kname("격려")
 						.ename("Encourage")
-						.slot(2)
+						.slot(4)
 						.hm(eccooldown)
 						.skillUse(() -> {
 
@@ -905,7 +905,7 @@ public class Palskills extends Pak {
 							.cooldown(sec)
 							.kname("심판")
 							.ename("Judgement")
-							.slot(3)
+							.slot(2)
 							.hm(jmcooldown)
 							.skillUse(() -> {
 
@@ -1336,7 +1336,7 @@ public class Palskills extends Pak {
 						.cooldown(sec)
 						.kname("진압")
 						.ename("Thrust")
-						.slot(4)
+						.slot(0)
 						.hm(thcooldown)
 						.skillUse(() -> {
 		                    thrust(p);
@@ -1461,35 +1461,53 @@ public class Palskills extends Pak {
             	
                 Location tl = gettargetblock(p,2);
                 
-
                 ItemStack head = new ItemStack(Material.QUARTZ_PILLAR);
                 HashSet<ArmorStand> ash = new HashSet<>();
-                for(int i = -1; i<1; i++) {
-                    for(int i1 = -1; i1<1; i1++) {
-                        for(double d = -1; d<2; d+=0.3) {
-                            ArmorStand as = (ArmorStand)p.getWorld().spawnEntity(tl.clone().add(i, d, i1), EntityType.ARMOR_STAND);
-                            as.setCustomName(p.getName());
-                            as.setBasePlate(false);
-                            as.setGravity(true);
-                            as.setInvulnerable(true);
-                            as.setInvisible(true);
-                            as.getEquipment().setHelmet(head);
-                            as.setCanPickupItems(false);
-                            as.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-                            as.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-                            ash.add(as);
-                        }
-                    }
+
+                // 중앙 위치를 기준으로 십자가 모양으로 배치
+                for (double d = -3; d <= 1.5; d += 0.5) {
+                    // 수직 방향 (Y축)
+                    ArmorStand asVertical = (ArmorStand) p.getWorld().spawnEntity(tl.clone().add(0, d, 0), EntityType.ARMOR_STAND);
+                    asVertical.setBasePlate(false);
+                    asVertical.setGravity(true);
+                    asVertical.setCollidable(false);
+                    asVertical.setInvulnerable(true);
+                    asVertical.setInvisible(true);
+                    asVertical.getEquipment().setHelmet(head);
+                    asVertical.setCanPickupItems(false);
+                    asVertical.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+                    asVertical.setMetadata("rob" + p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+                    asVertical.getAttribute(Attribute.SCALE).setBaseValue(2);
+                    ash.add(asVertical);
                 }
+
+                // 수평 방향 (X축)
+                for (int i = -1; i <= 1; i++) {
+                    ArmorStand asHorizontal = (ArmorStand) p.getWorld().spawnEntity(tl.clone().add(i, 0, 0), EntityType.ARMOR_STAND);
+                    asHorizontal.setBasePlate(false);
+                    asHorizontal.setGravity(true);
+                    asHorizontal.setInvulnerable(true);
+                    asHorizontal.setCollidable(false);
+                    asHorizontal.setInvisible(true);
+                    asHorizontal.setMarker(true);
+                    asHorizontal.getEquipment().setHelmet(head);
+                    asHorizontal.setCanPickupItems(false);
+                    asHorizontal.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
+                    asHorizontal.setMetadata("rob" + p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+                    asHorizontal.getAttribute(Attribute.SCALE).setBaseValue(2);
+                    ash.add(asHorizontal);
+                }
+
 
 				for(int co = 0 ; co<4; co++) {
 					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		                @Override
 		                public void run() {
+		                    ash.forEach(r -> r.setVelocity(r.getVelocity().add(new Vector(0,0.1,0))));
 		                    p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_PLACE, 0.3f, 0.78f);
 		                    p.playSound(p.getLocation(), Sound.BLOCK_COPPER_BREAK, 1.0f, 0.3f); 
 		            		p.getWorld().spawnParticle(Particle.BLOCK, tl,100,1,1,1, Material.END_ROD.createBlockData());	   
-		            		p.getWorld().spawnParticle(Particle.ITEM, tl,100,1,1,1, new ItemStack(Material.END_ROD));	  
+		            		p.getWorld().spawnParticle(Particle.ITEM, tl,200,2,1,2, new ItemStack(Material.END_ROD));	  
 		    				for (Entity a : p.getWorld().getNearbyEntities(tl, 4, 4, 4))
 		    				{
 		                		if (a instanceof Player) 
@@ -1604,7 +1622,7 @@ public class Palskills extends Pak {
 							.cooldown(sec)
 							.kname("징벌")
 							.ename("Punish")
-							.slot(5)
+							.slot(3)
 							.hm(pncooldown)
 							.skillUse(() -> {
 				                Location l = p.getEyeLocation().add(p.getEyeLocation().clone().getDirection().normalize().multiply(1.5));

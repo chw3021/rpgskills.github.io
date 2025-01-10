@@ -158,7 +158,7 @@ public class Swordskills extends Pak {
 							.cooldown(sec)
 							.kname("지진")
 							.ename("SwordDrive")
-							.slot(0)
+							.slot(2)
 							.hm(sdcooldown)
 							.skillUse(() -> {
 								if(Proficiency.getpro(p)>=2) {
@@ -332,7 +332,7 @@ public class Swordskills extends Pak {
 								.cooldown(sec)
 								.kname("급습")
 								.ename("Swoop")
-								.slot(1)
+								.slot(5)
 								.hm(swcooldown)
 								.skillUse(() -> {
 									if(Proficiency.getpro(p)>=2) {
@@ -466,7 +466,7 @@ public class Swordskills extends Pak {
 							.cooldown(sec)
 							.kname("올려베기")
 							.ename("RisingBlades")
-							.slot(2)
+							.slot(0)
 							.hm(rscooldown)
 							.skillUse(() -> {
 								if(Proficiency.getpro(p)>=2) {
@@ -869,7 +869,7 @@ public class Swordskills extends Pak {
 						.cooldown(sec)
 						.kname("발도")
 						.ename("CriticalDraw")
-						.slot(3)
+						.slot(4)
 						.hm(cdcooldown)
 						.skillUse(() -> {
 							if(sdnct.containsKey(p.getUniqueId())) {
@@ -1408,7 +1408,7 @@ public class Swordskills extends Pak {
 							.cooldown(sec)
 							.kname("섬격")
 							.ename("FlashyRush")
-							.slot(5)
+							.slot(3)
 							.hm(frcooldown)
 							.skillUse(() -> {
 								p.setCooldown(CAREFUL, 3);
@@ -1528,7 +1528,7 @@ public class Swordskills extends Pak {
 							.cooldown(sec)
 							.kname("일격")
 							.ename("Strike")
-							.slot(4)
+							.slot(1)
 							.hm(smcooldown)
 							.skillUse(() -> {
 								if(Proficiency.getpro(p)>=2) {

@@ -229,14 +229,14 @@ public class SkillsGui {
 		input.addAll(des(inv));
 		input.add("");
 		if(dam1 != 0) {
-			input.add(ChatColor.BOLD+ "" +hit+ " X "+BigDecimal.valueOf(dam1 * (1 +  lv * dam2)).setScale(2, RoundingMode.HALF_EVEN)+"D");
+			input.add(ChatColor.BOLD+ "" +ChatColor.LIGHT_PURPLE+hit+ " X "+BigDecimal.valueOf(dam1 * (1 +  lv * dam2)).setScale(2, RoundingMode.HALF_EVEN)+"D");
 		}
 		if(masterlev != 0) {
 			input.add(ChatColor.GOLD+"Master LV."+masterlev);
 		}
 
-		input.forEach(l -> {
-			l=ChatColor.RESET+l;
+		input.stream().filter(s -> !s.contains("X") && !s.contains("Master")).forEach(l -> {
+			input.set(input.indexOf(l), ChatColor.RESET + (ChatColor.of(Color.LIGHT_GRAY) + l));
 		});
 		
 		items.setLore(input);
@@ -256,11 +256,17 @@ public class SkillsGui {
 		input.addAll(des(inv));
 		input.add("");
 		if(dam1 != 0) {
-			input.add(ChatColor.BOLD+ "" +hit+ " X "+BigDecimal.valueOf(dam1 * (1 +  lv * dam2)).setScale(2, RoundingMode.HALF_EVEN)+"D");
+			input.add(ChatColor.BOLD+ "" + ChatColor.LIGHT_PURPLE+hit+ " X "+BigDecimal.valueOf(dam1 * (1 +  lv * dam2)).setScale(2, RoundingMode.HALF_EVEN)+"D");
 		}
-
-		input.forEach(l -> {
-			l=ChatColor.RESET+l;
+		
+		if(input.stream().anyMatch(s -> s.contains("Master"))) {
+			input.stream().filter(s -> s.contains("Master")).forEach(l -> {
+				
+				input.set(input.indexOf(l),ChatColor.GOLD+ l);
+			});
+		}
+		input.stream().filter(s -> !s.contains("X") && !s.contains("Master")).forEach(l -> {
+			input.set(input.indexOf(l), ChatColor.RESET + (ChatColor.of(Color.LIGHT_GRAY) + l));
 		});
 		
 		items.setLore(input);
@@ -270,7 +276,7 @@ public class SkillsGui {
 
 	public void itemset(String display, ItemStack ID, int data, int stack, List<String> Lore, int loc, Inventory inv)
 	{
-		ItemStack item = new ItemStack(ID);
+		ItemStack item = ID;
 		ItemMeta items = item.getItemMeta();
 		items.setDisplayName(display);
 		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -278,16 +284,26 @@ public class SkillsGui {
 		items.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 		List<String> input = new ArrayList<>();
 
-		if(Lore.stream().anyMatch(s -> s.contains("Master"))) {
-			Lore.stream().filter(s -> s.contains("Master")).forEach(l -> {
-				Lore.set(Lore.indexOf(l),ChatColor.GOLD+ l);
-			});
-		}
 		input.addAll(Lore);
 		input.addAll(des(inv));
-		input.forEach(l -> {
-			l=ChatColor.RESET+l;
+		
+		if(input.stream().anyMatch(s -> s.contains("X"))) {
+			input.stream().filter(s -> s.contains("X")).forEach(l -> {
+				
+				input.set(input.indexOf(l),ChatColor.LIGHT_PURPLE+ l);
+			});
+		}
+		
+		if(input.stream().anyMatch(s -> s.contains("Master"))) {
+			input.stream().filter(s -> s.contains("Master")).forEach(l -> {
+				
+				input.set(input.indexOf(l),ChatColor.GOLD+ l);
+			});
+		}
+		input.stream().filter(s -> !s.contains("X") && !s.contains("Master")).forEach(l -> {
+			input.set(input.indexOf(l), ChatColor.RESET + (ChatColor.of(Color.LIGHT_GRAY) + l));
 		});
+		
 		items.setLore(input);
 		item.setItemMeta(items);
 		inv.setItem(loc, item);
