@@ -122,7 +122,7 @@ public class FireSkillsData implements Serializable, Listener{
 					new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
 
 					FireSkillsGui fsg = new FireSkillsGui();
-					fsg.FIreSkillsinv(p);
+					fsg.FireSkillsinv(p);
 				}
 			}
 			catch(NullPointerException ne)
@@ -146,7 +146,7 @@ public class FireSkillsData implements Serializable, Listener{
 				new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
 
 				FireSkillsGui fsg = new FireSkillsGui();
-				fsg.FIreSkillsinv(p);
+				fsg.FireSkillsinv(p);
 			}
 		}
 	}
@@ -251,7 +251,7 @@ public class FireSkillsData implements Serializable, Listener{
 								FlowingLava.put(p.getUniqueId(), FlowingLava.get(p.getUniqueId()) +1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -1);
 								new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
-						        fsg.FIreSkillsinv(p);
+						        fsg.FireSkillsinv(p);
 							}	
 						}
 						else if(e.getClick().equals(ClickType.RIGHT)) {
@@ -259,7 +259,7 @@ public class FireSkillsData implements Serializable, Listener{
 								FlowingLava.put(p.getUniqueId(), FlowingLava.get(p.getUniqueId()) -1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) +1);
 								new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
-						        fsg.FIreSkillsinv(p);
+						        fsg.FireSkillsinv(p);
 							}	
 						}
 						else if(e.getClick().equals(ClickType.SHIFT_LEFT)) {
@@ -276,7 +276,7 @@ public class FireSkillsData implements Serializable, Listener{
 									SkillPoints.put(p.getUniqueId(), 0);						
 								}
 								new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
-						        fsg.FIreSkillsinv(p);
+						        fsg.FireSkillsinv(p);
 							}
 						}
 						else if(e.getClick().equals(ClickType.SHIFT_RIGHT)) {
@@ -284,7 +284,7 @@ public class FireSkillsData implements Serializable, Listener{
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+FlowingLava.get(p.getUniqueId()));
 								FlowingLava.put(p.getUniqueId(), 0);
 								new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
-						        fsg.FIreSkillsinv(p);
+						        fsg.FireSkillsinv(p);
 							}
 						}
 						break;		}
@@ -296,7 +296,7 @@ public class FireSkillsData implements Serializable, Listener{
 								Ring.put(p.getUniqueId(), Ring.get(p.getUniqueId()) +1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -1);
 								new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
-						        fsg.FIreSkillsinv(p);
+						        fsg.FireSkillsinv(p);
 							}	
 						}
 						else if(e.getClick().equals(ClickType.RIGHT)) {
@@ -304,7 +304,7 @@ public class FireSkillsData implements Serializable, Listener{
 								Ring.put(p.getUniqueId(), Ring.get(p.getUniqueId()) -1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) +1);
 								new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
-						        fsg.FIreSkillsinv(p);
+						        fsg.FireSkillsinv(p);
 							}	
 						}
 						else if(e.getClick().equals(ClickType.SHIFT_LEFT)) {
@@ -321,7 +321,7 @@ public class FireSkillsData implements Serializable, Listener{
 									SkillPoints.put(p.getUniqueId(), 0);						
 								}
 								new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
-						        fsg.FIreSkillsinv(p);
+						        fsg.FireSkillsinv(p);
 							}
 						}
 						else if(e.getClick().equals(ClickType.SHIFT_RIGHT)) {
@@ -329,7 +329,7 @@ public class FireSkillsData implements Serializable, Listener{
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+Ring.get(p.getUniqueId()));
 								Ring.put(p.getUniqueId(), 0);
 								new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
-						        fsg.FIreSkillsinv(p);
+						        fsg.FireSkillsinv(p);
 							}
 						}
 						break;		}		
@@ -340,7 +340,7 @@ public class FireSkillsData implements Serializable, Listener{
 								Fireball.put(p.getUniqueId(), Fireball.get(p.getUniqueId()) +1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -1);
 								new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
-						        fsg.FIreSkillsinv(p);
+						        fsg.FireSkillsinv(p);
 							}	
 						}
 						else if(e.getClick().equals(ClickType.RIGHT)) {
@@ -348,7 +348,7 @@ public class FireSkillsData implements Serializable, Listener{
 								Fireball.put(p.getUniqueId(), Fireball.get(p.getUniqueId()) -1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) +1);
 								new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
-						        fsg.FIreSkillsinv(p);
+						        fsg.FireSkillsinv(p);
 							}	
 						}
 						else if(e.getClick().equals(ClickType.SHIFT_LEFT)) {
@@ -365,7 +365,7 @@ public class FireSkillsData implements Serializable, Listener{
 									SkillPoints.put(p.getUniqueId(), 0);						
 								}
 								new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
-						        fsg.FIreSkillsinv(p);
+						        fsg.FireSkillsinv(p);
 							}
 						}
 						else if(e.getClick().equals(ClickType.SHIFT_RIGHT)) {
@@ -373,7 +373,7 @@ public class FireSkillsData implements Serializable, Listener{
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+Fireball.get(p.getUniqueId()));
 								Fireball.put(p.getUniqueId(), 0);
 								new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
-						        fsg.FIreSkillsinv(p);
+						        fsg.FireSkillsinv(p);
 							}
 						}
 						break;		}
@@ -384,7 +384,7 @@ public class FireSkillsData implements Serializable, Listener{
 								Breath.put(p.getUniqueId(), Breath.get(p.getUniqueId()) +1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -1);
 								new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
-						        fsg.FIreSkillsinv(p);
+						        fsg.FireSkillsinv(p);
 							}	
 						}
 						else if(e.getClick().equals(ClickType.RIGHT)) {
@@ -392,7 +392,7 @@ public class FireSkillsData implements Serializable, Listener{
 								Breath.put(p.getUniqueId(), Breath.get(p.getUniqueId()) -1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) +1);
 								new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
-						        fsg.FIreSkillsinv(p);
+						        fsg.FireSkillsinv(p);
 							}	
 						}
 						else if(e.getClick().equals(ClickType.SHIFT_LEFT)) {
@@ -409,7 +409,7 @@ public class FireSkillsData implements Serializable, Listener{
 									SkillPoints.put(p.getUniqueId(), 0);						
 								}
 								new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
-						        fsg.FIreSkillsinv(p);
+						        fsg.FireSkillsinv(p);
 							}
 						}
 						else if(e.getClick().equals(ClickType.SHIFT_RIGHT)) {
@@ -417,7 +417,7 @@ public class FireSkillsData implements Serializable, Listener{
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+Breath.get(p.getUniqueId()));
 								Breath.put(p.getUniqueId(), 0);
 								new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
-						        fsg.FIreSkillsinv(p);
+						        fsg.FireSkillsinv(p);
 							}
 						}
 						break;		}
@@ -428,7 +428,7 @@ public class FireSkillsData implements Serializable, Listener{
 								AliveFlame.put(p.getUniqueId(), AliveFlame.get(p.getUniqueId()) +1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -1);
 								new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
-						        fsg.FIreSkillsinv(p);
+						        fsg.FireSkillsinv(p);
 							}	
 						}
 						else if(e.getClick().equals(ClickType.RIGHT)) {
@@ -436,7 +436,7 @@ public class FireSkillsData implements Serializable, Listener{
 								AliveFlame.put(p.getUniqueId(), AliveFlame.get(p.getUniqueId()) -1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) +1);
 								new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
-						        fsg.FIreSkillsinv(p);
+						        fsg.FireSkillsinv(p);
 							}	
 						}
 						else if(e.getClick().equals(ClickType.SHIFT_LEFT)) {
@@ -453,7 +453,7 @@ public class FireSkillsData implements Serializable, Listener{
 									SkillPoints.put(p.getUniqueId(), 0);						
 								}
 								new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
-						        fsg.FIreSkillsinv(p);
+						        fsg.FireSkillsinv(p);
 							}
 						}
 						else if(e.getClick().equals(ClickType.SHIFT_RIGHT)) {
@@ -461,7 +461,7 @@ public class FireSkillsData implements Serializable, Listener{
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+AliveFlame.get(p.getUniqueId()));
 								AliveFlame.put(p.getUniqueId(), 0);
 								new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
-						        fsg.FIreSkillsinv(p);
+						        fsg.FireSkillsinv(p);
 							}
 						}
 						break;		}
@@ -472,7 +472,7 @@ public class FireSkillsData implements Serializable, Listener{
 								HotBody.put(p.getUniqueId(), HotBody.get(p.getUniqueId()) +1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -1);
 								new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
-						        fsg.FIreSkillsinv(p);
+						        fsg.FireSkillsinv(p);
 							}	
 						}
 						else if(e.getClick().equals(ClickType.RIGHT)) {
@@ -480,7 +480,7 @@ public class FireSkillsData implements Serializable, Listener{
 								HotBody.put(p.getUniqueId(), HotBody.get(p.getUniqueId()) -1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) +1);
 								new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
-						        fsg.FIreSkillsinv(p);
+						        fsg.FireSkillsinv(p);
 							}	
 						}
 						else if(e.getClick().equals(ClickType.SHIFT_LEFT)) {
@@ -488,7 +488,7 @@ public class FireSkillsData implements Serializable, Listener{
 								HotBody.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+HotBody.get(p.getUniqueId()));
 								SkillPoints.put(p.getUniqueId(), 0);
 								new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
-						        fsg.FIreSkillsinv(p);
+						        fsg.FireSkillsinv(p);
 							}
 						}
 						else if(e.getClick().equals(ClickType.SHIFT_RIGHT)) {
@@ -496,7 +496,7 @@ public class FireSkillsData implements Serializable, Listener{
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+HotBody.get(p.getUniqueId()));
 								HotBody.put(p.getUniqueId(), 0);
 								new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
-						        fsg.FIreSkillsinv(p);
+						        fsg.FireSkillsinv(p);
 							}
 						}
 						break;		}			
@@ -507,7 +507,7 @@ public class FireSkillsData implements Serializable, Listener{
 								Spread.put(p.getUniqueId(), Spread.get(p.getUniqueId()) +1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) -1);
 								new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
-						        fsg.FIreSkillsinv(p);
+						        fsg.FireSkillsinv(p);
 							}	
 						}
 						else if(e.getClick().equals(ClickType.RIGHT)) {
@@ -515,7 +515,7 @@ public class FireSkillsData implements Serializable, Listener{
 								Spread.put(p.getUniqueId(), Spread.get(p.getUniqueId()) -1);
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId()) +1);
 								new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
-						        fsg.FIreSkillsinv(p);
+						        fsg.FireSkillsinv(p);
 							}	
 						}
 						else if(e.getClick().equals(ClickType.SHIFT_LEFT)) {
@@ -532,7 +532,7 @@ public class FireSkillsData implements Serializable, Listener{
 									SkillPoints.put(p.getUniqueId(), 0);						
 								}
 								new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
-						        fsg.FIreSkillsinv(p);
+						        fsg.FireSkillsinv(p);
 							}
 						}
 						else if(e.getClick().equals(ClickType.SHIFT_RIGHT)) {
@@ -540,7 +540,7 @@ public class FireSkillsData implements Serializable, Listener{
 								SkillPoints.put(p.getUniqueId(), SkillPoints.get(p.getUniqueId())+Spread.get(p.getUniqueId()));
 								Spread.put(p.getUniqueId(), 0);
 								new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
-						        fsg.FIreSkillsinv(p);
+						        fsg.FireSkillsinv(p);
 							}
 						}
 						break;		}
@@ -556,7 +556,7 @@ public class FireSkillsData implements Serializable, Listener{
 						AliveFlame.put(p.getUniqueId(), 0);
 						SkillPoints.put(p.getUniqueId(), p.getLevel() + ScrollPoint.sp.get(p.getUniqueId()));
 						new FireSkillsData(FlowingLava, Ring, Fireball, Spread, Breath, AliveFlame, HotBody, SkillPoints).saveData(path +"/plugins/RPGskills/FIreSkillsData.data");
-				        fsg.FIreSkillsinv(p);
+				        fsg.FireSkillsinv(p);
 				}break;	}
 			
 			}

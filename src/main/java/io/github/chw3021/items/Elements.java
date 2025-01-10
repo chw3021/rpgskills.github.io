@@ -569,7 +569,7 @@ public class Elements implements Listener {
 			else if(i == -2) {
 				ii.setType(Material.SOUL_SOIL);
 				imeta.setLore(Arrays.asList("무기 강화, 융합된 네더의 핵 제작에 사용됩니다","",ChatColor.GOLD +"융합된 네더의 핵은 네더지역에서 얻은",ChatColor.GOLD +"네가지 핵들을 조합하면 획득가능합니다",ChatColor.GOLD +"융합된 네더의 핵으로 헬멧 또는 갑옷 강화시",ChatColor.GOLD +"모든 능력치가 상승합니다(방어구당 한번만 가능)","",
-						ChatColor.GRAY +"무기강화시 네더지역 핵은",ChatColor.GRAY +"한가지만 부여 가능합니다", ChatColor.GRAY +"+50% 일반공격력, +15 행운", ChatColor.GRAY +"물,바람,어둠,서리 계열 공격력 +25%", "행운은 궁극기를 제외한 일반기술들의", "재사용 대기시간 감소에 영향을 줍니다"
+						ChatColor.GRAY +"무기강화시 네더지역 핵은",ChatColor.GRAY +"한가지만 부여 가능합니다", ChatColor.GRAY +"+50% 일반공격력, +15 행운", ChatColor.GRAY +"물,바람,어둠,서리 공격력 +25%", "행운은 궁극기를 제외한 일반기술들의", "재사용 대기시간 감소에 영향을 줍니다"
 						,"", ChatColor.AQUA +"제작대에서 [진홍빛 핵]으로 교환가능"));
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"영혼 응축물");
 				imeta.setItemName(ChatColor.LIGHT_PURPLE +"영혼 응축물");
@@ -577,7 +577,7 @@ public class Elements implements Listener {
 			else if(i == -3) {
 				ii.setType(Material.CRIMSON_HYPHAE);
 				imeta.setLore(Arrays.asList("무기 강화, 융합된 네더의 핵 제작에 사용됩니다","",ChatColor.GOLD +"융합된 네더의 핵은 네더지역에서 얻은",ChatColor.GOLD +"네가지 핵들을 조합하면 획득가능합니다",ChatColor.GOLD +"융합된 네더의 핵으로 헬멧 또는 갑옷 강화시",ChatColor.GOLD +"모든 능력치가 상승합니다(방어구당 한번만 가능)","",
-						ChatColor.GRAY +"무기강화시 네더지역 핵은",ChatColor.GRAY +"한가지만 부여 가능합니다", ChatColor.GRAY +"+50% 일반공격력, +15 행운", ChatColor.GRAY +"불,대지,번개,독 계열 공격력 +25%", "행운은 궁극기를 제외한 일반기술들의", "재사용 대기시간 감소에 영향을 줍니다"
+						ChatColor.GRAY +"무기강화시 네더지역 핵은",ChatColor.GRAY +"한가지만 부여 가능합니다", ChatColor.GRAY +"+50% 일반공격력, +15 행운", ChatColor.GRAY +"불,대지,번개,독 공격력 +25%", "행운은 궁극기를 제외한 일반기술들의", "재사용 대기시간 감소에 영향을 줍니다"
 						,"", ChatColor.AQUA +"제작대에서 [뒤틀린 핵]으로 교환가능"));
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"진홍빛 핵");
 				imeta.setItemName(ChatColor.LIGHT_PURPLE +"진홍빛 핵");
@@ -585,7 +585,7 @@ public class Elements implements Listener {
 			else if(i == -4) {
 				ii.setType(Material.WARPED_HYPHAE);
 				imeta.setLore(Arrays.asList("무기 강화, 융합된 네더의 핵 제작에 사용됩니다","",ChatColor.GOLD +"융합된 네더의 핵은 네더지역에서 얻은",ChatColor.GOLD +"네가지 핵들을 조합하면 획득가능합니다",ChatColor.GOLD +"융합된 네더의 핵으로 헬멧 또는 갑옷 강화시",ChatColor.GOLD +"모든 능력치가 상승합니다(방어구당 한번만 가능)","",
-						ChatColor.GRAY +"무기강화시 네더지역 핵은",ChatColor.GRAY +"한가지만 부여 가능합니다", ChatColor.GRAY +"+25% 일반공격력, +50 행운", ChatColor.GRAY +"물,바람,어둠,서리 계열 공격력 +25%", "행운은 궁극기를 제외한 일반기술들의", "재사용 대기시간 감소에 영향을 줍니다"
+						ChatColor.GRAY +"무기강화시 네더지역 핵은",ChatColor.GRAY +"한가지만 부여 가능합니다", ChatColor.GRAY +"+25% 일반공격력, +50 행운", ChatColor.GRAY +"물,바람,어둠,서리 공격력 +25%", "행운은 궁극기를 제외한 일반기술들의", "재사용 대기시간 감소에 영향을 줍니다"
 						,"", ChatColor.AQUA +"제작대에서 [화산의 핵]으로 교환가능"));
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"뒤틀린 핵");
 				imeta.setItemName(ChatColor.LIGHT_PURPLE +"뒤틀린 핵");
@@ -593,7 +593,7 @@ public class Elements implements Listener {
 			else if(i == -5) {
 				ii.setType(Material.GILDED_BLACKSTONE);
 				imeta.setLore(Arrays.asList("무기 강화, 융합된 네더의 핵 제작에 사용됩니다","",ChatColor.GOLD +"융합된 네더의 핵은 네더지역에서 얻은",ChatColor.GOLD +"네가지 핵들을 조합하면 획득가능합니다",ChatColor.GOLD +"융합된 네더의 핵으로 헬멧 또는 갑옷 강화시",ChatColor.GOLD +"모든 능력치가 상승합니다(방어구당 한번만 가능)","",
-						ChatColor.GRAY +"무기강화시 네더지역 핵은",ChatColor.GRAY +"한가지만 부여 가능합니다", ChatColor.GRAY +"+25% 일반공격력, +50 행운", ChatColor.GRAY +"불,대지,번개,독 계열 공격력 +25%", "행운은 궁극기를 제외한 일반기술들의", "재사용 대기시간 감소에 영향을 줍니다"
+						ChatColor.GRAY +"무기강화시 네더지역 핵은",ChatColor.GRAY +"한가지만 부여 가능합니다", ChatColor.GRAY +"+25% 일반공격력, +50 행운", ChatColor.GRAY +"불,대지,번개,독 공격력 +25%", "행운은 궁극기를 제외한 일반기술들의", "재사용 대기시간 감소에 영향을 줍니다"
 						,"", ChatColor.AQUA +"제작대에서 [영혼 응축물]으로 교환가능"));
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"화산의 핵");
 				imeta.setItemName(ChatColor.LIGHT_PURPLE +"화산의 핵");
@@ -601,7 +601,7 @@ public class Elements implements Listener {
 			else if(i == -6) {
 				ii.setType(Material.END_STONE_BRICKS);
 				imeta.setLore(Arrays.asList("무기 강화, 융합된 엔더의 핵 제작에 사용됩니다","",ChatColor.GOLD +"융합된 엔더의 핵은 엔더지역에서 얻은",ChatColor.GOLD +"두가지 핵들을 조합하면 획득가능합니다",ChatColor.GOLD +"융합된 엔더의 핵으로 레깅스 또는 부츠 강화시",ChatColor.GOLD +"모든 능력치가 상승합니다(방어구당 한번만 가능)","",
-						ChatColor.GRAY +"무기강화시 엔더지역 핵은",ChatColor.GRAY +"한가지만 부여 가능합니다", ChatColor.GRAY +"+80% 일반공격력, +30% 행운", ChatColor.GRAY +"모든 원소 계열 공격력 +35%", "행운은 궁극기를 제외한 일반기술들의", "재사용 대기시간 감소에 영향을 줍니다"
+						ChatColor.GRAY +"무기강화시 엔더지역 핵은",ChatColor.GRAY +"한가지만 부여 가능합니다", ChatColor.GRAY +"+80% 일반공격력, +30% 행운", ChatColor.GRAY +"모든 원소 공격력 +35%", "행운은 궁극기를 제외한 일반기술들의", "재사용 대기시간 감소에 영향을 줍니다"
 						,"", ChatColor.AQUA +"제작대에서 [공허의 핵]으로 교환가능"));
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"엔더 핵");
 				imeta.setItemName(ChatColor.LIGHT_PURPLE +"엔더 핵");
@@ -609,14 +609,14 @@ public class Elements implements Listener {
 			else if(i == -7) {
 				ii.setType(Material.PURPUR_PILLAR);
 				imeta.setLore(Arrays.asList("무기 강화, 융합된 엔더의 핵 제작에 사용됩니다","",ChatColor.GOLD +"융합된 엔더의 핵은 엔더지역에서 얻은",ChatColor.GOLD +"두가지 핵들을 조합하면 획득가능합니다",ChatColor.GOLD +"융합된 엔더의 핵으로 레깅스 또는 부츠 강화시",ChatColor.GOLD +"모든 능력치가 상승합니다(방어구당 한번만 가능)","",
-						ChatColor.GRAY +"무기강화시 엔더지역 핵은",ChatColor.GRAY +"한가지만 부여 가능합니다", ChatColor.GRAY +"+40% 일반공격력, +60% 행운", ChatColor.GRAY +"모든 원소 계열 공격력 +35%", "행운은 궁극기를 제외한 일반기술들의", "재사용 대기시간 감소에 영향을 줍니다"
+						ChatColor.GRAY +"무기강화시 엔더지역 핵은",ChatColor.GRAY +"한가지만 부여 가능합니다", ChatColor.GRAY +"+40% 일반공격력, +60% 행운", ChatColor.GRAY +"모든 원소 공격력 +35%", "행운은 궁극기를 제외한 일반기술들의", "재사용 대기시간 감소에 영향을 줍니다"
 						,"", ChatColor.AQUA +"제작대에서 [엔더 핵]으로 교환가능"));
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"공허의 핵");
 				imeta.setItemName(ChatColor.LIGHT_PURPLE +"공허의 핵");
 			}
 			else if(i == -8) {
 				ii.setType(Material.CRYING_OBSIDIAN);
-				imeta.setLore(Arrays.asList("무기 강화시 사용됩니다", "+110% 일반공격력, +80% 행운", "모든 원소 계열 공격력 +55%", "행운은 궁극기를 제외한 일반기술들의", "재사용 대기시간 감소에 영향을 줍니다"));
+				imeta.setLore(Arrays.asList("무기 강화시 사용됩니다", "+110% 일반공격력, +80% 행운", "모든 원소 공격력 +55%", "행운은 궁극기를 제외한 일반기술들의", "재사용 대기시간 감소에 영향을 줍니다"));
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"영웅의 상징");
 				imeta.setItemName(ChatColor.LIGHT_PURPLE +"영웅의 상징");
 			}
@@ -875,7 +875,7 @@ public class Elements implements Listener {
 			
 		}
 		else {
-			imeta.setLore(Arrays.asList("You Can Buy From [Archaeologist]","(Archaeologist Locates on the Jungle Pyramid)"));
+			imeta.setLore(Arrays.asList("You Can Buy From [Archaeologist]","🖮🖰 (Archaeologist Locates on the Jungle Pyramid)"));
 			if(i == 5) {
 				ii.setType(Material.GREEN_GLAZED_TERRACOTTA);
 				List<String> lore = imeta.getLore();
@@ -958,7 +958,7 @@ public class Elements implements Listener {
 			}
 			else if(i == 12) {
 				ii.setType(Material.BLACK_GLAZED_TERRACOTTA);
-				imeta.setLore(Arrays.asList("You can buy Strong Core from [Archaeologist]","(Archaeologist Locates on the Jungle Pyramid)"));
+				imeta.setLore(Arrays.asList("You can buy Strong Core from [Archaeologist]","🖮🖰 (Archaeologist Locates on the Jungle Pyramid)"));
 				imeta.setDisplayName(ChatColor.GOLD +"Strong Core");
 				imeta.setItemName(ChatColor.GOLD +"Strong Core");
 			}

@@ -66,8 +66,8 @@ public class Enchanting implements Listener {
 				lore.add("");
 				lore.add(ChatColor.GREEN + "방어구의 경우 [~로부터 보호]꼴의 마법부여와");
 				lore.add(ChatColor.GREEN + "[가시]는 최대 4레벨");
-				lore.add(ChatColor.GREEN + "부츠에 부여되는 [이동 계열] 마법부여도 최대 4레벨");
-				lore.add(ChatColor.GREEN + "투구에 부여되는 [수중 계열] 마법부여도 최대 4레벨");
+				lore.add(ChatColor.GREEN + "부츠에 부여되는 [이동] 마법부여도 최대 4레벨");
+				lore.add(ChatColor.GREEN + "투구에 부여되는 [수중] 마법부여도 최대 4레벨");
 				lore.add(ChatColor.GREEN + "그외 옵션은 255레벨까지 가능합니다");
 			}
 			else {

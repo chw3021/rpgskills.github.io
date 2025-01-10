@@ -345,6 +345,7 @@ public class VoidSkills extends EndercoreRaids{
             stand.setBlock(getBd(carpets[random.nextInt(carpets.length)]));
             stand.setMetadata("stuff" + rn, new FixedMetadataValue(RMain.getInstance(), rn));
             stand.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
+            carpetsGet.put(rn, stand);
         });
     }
 
@@ -398,7 +399,7 @@ public class VoidSkills extends EndercoreRaids{
         double distance = moveDirection.length() + 2;
 
         ArrayList<Location> line = new ArrayList<>();
-        for (double i = 0; i < distance; i += 0.4) {
+        for (double i = 0; i < distance; i += 0.5) {
             Location l = block.getLocation().clone().add(moveDirection.clone().normalize().multiply(i));
             line.add(l);
         }
@@ -429,11 +430,29 @@ public class VoidSkills extends EndercoreRaids{
             }
         }, 0, interval > 0 ? interval : 1).getTaskId()); // interval이 1 미만일 경우 최소 1로 설정
 
+        ordt.put(rn, task.get());
+        
+        
         return block.getLocation();
     }
 
     private void removeFingers(ArmorStand pillar, LivingEntity p) {
-        pillar.remove();
+    	pillar.remove();
+        carpetsGet.get(gethero(p)).forEach(bd ->{
+
+        	bd.getWorld().spawnParticle(Particle.DUST_PILLAR, bd.getLocation(), 30, 2, 4, 2, bd.getBlock());
+        	
+            for(Entity e : bd.getWorld().getNearbyEntities(bd.getLocation(), 2, 5, 2)) {
+                if(p != e && e instanceof LivingEntity && !(e.hasMetadata("fake")) && !(e.hasMetadata("portal"))) {
+                    LivingEntity le = (LivingEntity)e;
+
+                    le.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 10, 10));
+                    le.damage(4.0, p);
+                }
+            }
+            
+            bd.remove();
+        });
     }
 
 	

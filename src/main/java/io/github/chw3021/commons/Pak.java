@@ -798,14 +798,14 @@ public class Pak extends CombatMode implements Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[바람 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[바람 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Wind]>"));
-					lore.add(ChatColor.GRAY + "<[바람 계열 공격력]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.GREEN + "<[대지 계열 공격력]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.GRAY + "<[바람 공격력]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.GREEN + "<[대지 공격력]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 					lore.add(ChatColor.BOLD + "모든 스킬에 바람피해가 추가로 적용됩니다");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[바람 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[바람 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Wind]>"));
 					lore.add(ChatColor.GRAY + "<[Power Of Wind]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
 							+ ChatColor.GREEN + "<[Power Of Earth]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -815,14 +815,14 @@ public class Pak extends CombatMode implements Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[바람 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[바람 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Wind]>"));
-					lore.add(ChatColor.GRAY + "<[바람 계열 공격력]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.GREEN + "<[대지 계열 공격력]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.GRAY + "<[바람 공격력]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.GREEN + "<[대지 공격력]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 					lore.add(ChatColor.BOLD + "모든 스킬에 바람피해가 추가로 적용됩니다");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[바람 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[바람 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Wind]>"));
 					lore.add(ChatColor.GRAY + "<[Power Of Wind]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
 							+ ChatColor.GREEN + "<[Power Of Earth]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -837,14 +837,14 @@ public class Pak extends CombatMode implements Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[대지 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[대지 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Earth]>"));
-					lore.add(ChatColor.GRAY + "<[바람 계열 공격력]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.GREEN + "<[대지 계열 공격력]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.GRAY + "<[바람 공격력]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.GREEN + "<[대지 공격력]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 					lore.add(ChatColor.BOLD + "모든 스킬에 대지 피해가 추가로 적용됩니다");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[대지 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[대지 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Earth]>"));
 					lore.add(ChatColor.GRAY + "<[Power Of Wind]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
 							+ ChatColor.GREEN + "<[Power Of Earth]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -854,14 +854,14 @@ public class Pak extends CombatMode implements Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[대지 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[대지 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Earth]>"));
-					lore.add(ChatColor.GRAY + "<[바람 계열 공격력]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.GREEN + "<[대지 계열 공격력]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.GRAY + "<[바람 공격력]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.GREEN + "<[대지 공격력]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 					lore.add(ChatColor.BOLD + "모든 스킬에 대지 피해가 추가로 적용됩니다");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[대지 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[대지 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Earth]>"));
 					lore.add(ChatColor.GRAY + "<[Power Of Wind]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
 							+ ChatColor.GREEN + "<[Power Of Earth]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -876,14 +876,14 @@ public class Pak extends CombatMode implements Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[서리 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[서리 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Frost]>"));
-					lore.add(ChatColor.AQUA + "<[서리 계열 공격력]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.DARK_GREEN + "<[맹독 계열 공격력]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.AQUA + "<[서리 공격력]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.DARK_GREEN + "<[맹독 공격력]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 					lore.add(ChatColor.BOLD + "모든 스킬에 서리 피해가 추가로 적용됩니다");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[서리 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[서리 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Frost]>"));
 					lore.add(ChatColor.AQUA + "<[Power Of Frost]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.DARK_GREEN + "<[Power Of Poison]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -893,14 +893,14 @@ public class Pak extends CombatMode implements Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[서리 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[서리 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Frost]>"));
-					lore.add(ChatColor.AQUA + "<[서리 계열 공격력]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.DARK_GREEN + "<[맹독 계열 공격력]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.AQUA + "<[서리 공격력]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.DARK_GREEN + "<[맹독 공격력]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 					lore.add(ChatColor.BOLD + "모든 스킬에 서리 피해가 추가로 적용됩니다");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[서리 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[서리 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Frost]>"));
 					lore.add(ChatColor.AQUA + "<[Power Of Frost]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.DARK_GREEN + "<[Power Of Poison]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -915,14 +915,14 @@ public class Pak extends CombatMode implements Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[물 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[물 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Water]>"));
-					lore.add(ChatColor.BLUE + "<[물 계열 공격력]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.RED + "<[화염 계열 공격력]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BLUE + "<[물 공격력]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.RED + "<[화염 공격력]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 					lore.add(ChatColor.BOLD + "모든 스킬에 물 피해가 추가로 적용됩니다");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[물 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[물 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Water]>"));
 					lore.add(ChatColor.BLUE + "<[Power Of Water]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.RED + "<[Power Of Flame]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -932,14 +932,14 @@ public class Pak extends CombatMode implements Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[물 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[물 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Water]>"));
-					lore.add(ChatColor.BLUE + "<[물 계열 공격력]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.RED + "<[화염 계열 공격력]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BLUE + "<[물 공격력]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.RED + "<[화염 공격력]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 					lore.add(ChatColor.BOLD + "모든 스킬에 물 피해가 추가로 적용됩니다");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[물 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[물 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Water]>"));
 					lore.add(ChatColor.BLUE + "<[Power Of Water]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.RED + "<[Power Of Flame]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -954,14 +954,14 @@ public class Pak extends CombatMode implements Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[어둠 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[어둠 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Darkness]>"));
-					lore.add(ChatColor.DARK_GRAY + "<[어둠 계열 공격력]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.YELLOW + "<[번개 계열 공격력]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.DARK_GRAY + "<[어둠 공격력]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.YELLOW + "<[번개 공격력]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 					lore.add(ChatColor.BOLD + "모든 스킬에 어둠 피해가 추가로 적용됩니다");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[어둠 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[어둠 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Darkness]>"));
 					lore.add(ChatColor.DARK_GRAY + "<[Power Of Darkness]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.YELLOW + "<[Power Of Lightning]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -971,14 +971,14 @@ public class Pak extends CombatMode implements Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[어둠 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[어둠 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Darkness]>"));
-					lore.add(ChatColor.DARK_GRAY + "<[어둠 계열 공격력]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.YELLOW + "<[번개 계열 공격력]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.DARK_GRAY + "<[어둠 공격력]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.YELLOW + "<[번개 공격력]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 					lore.add(ChatColor.BOLD + "모든 스킬에 어둠 피해가 추가로 적용됩니다");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[어둠 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[어둠 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Darkness]>"));
 					lore.add(ChatColor.DARK_GRAY + "<[Power Of Darkness]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.YELLOW + "<[Power Of Lightning]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -993,14 +993,14 @@ public class Pak extends CombatMode implements Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[번개 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[번개 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Lightning]>"));
-					lore.add(ChatColor.DARK_GRAY + "<[어둠 계열 공격력]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.YELLOW + "<[번개 계열 공격력]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.DARK_GRAY + "<[어둠 공격력]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.YELLOW + "<[번개 공격력]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 					lore.add(ChatColor.BOLD + "모든 스킬에 번개 피해가 추가로 적용됩니다");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[번개 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[번개 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Lightning]>"));
 					lore.add(ChatColor.DARK_GRAY + "<[Power Of Darkness]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.YELLOW + "<[Power Of Lightning]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1010,14 +1010,14 @@ public class Pak extends CombatMode implements Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[번개 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[번개 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Lightning]>"));
-					lore.add(ChatColor.DARK_GRAY + "<[어둠 계열 공격력]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.YELLOW + "<[번개 계열 공격력]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.DARK_GRAY + "<[어둠 공격력]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.YELLOW + "<[번개 공격력]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 					lore.add(ChatColor.BOLD + "모든 스킬에 번개 피해가 추가로 적용됩니다");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[번개 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[번개 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Lightning]>"));
 					lore.add(ChatColor.DARK_GRAY + "<[Power Of Darkness]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.YELLOW + "<[Power Of Lightning]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1032,14 +1032,14 @@ public class Pak extends CombatMode implements Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[화염 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[화염 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Flame]>"));
-					lore.add(ChatColor.BLUE + "<[물 계열 공격력]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.RED + "<[화염 계열 공격력]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BLUE + "<[물 공격력]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.RED + "<[화염 공격력]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 					lore.add(ChatColor.BOLD + "모든 스킬에 화염 피해가 추가로 적용됩니다");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[화염 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[화염 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Flame]>"));
 					lore.add(ChatColor.BLUE + "<[Power Of Water]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.RED + "<[Power Of Flame]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1049,14 +1049,14 @@ public class Pak extends CombatMode implements Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[화염 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[화염 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Flame]>"));
-					lore.add(ChatColor.BLUE + "<[물 계열 공격력]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.RED + "<[화염 계열 공격력]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BLUE + "<[물 공격력]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.RED + "<[화염 공격력]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 					lore.add(ChatColor.BOLD + "모든 스킬에 화염 피해가 추가로 적용됩니다");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[바람 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[바람 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Flame]>"));
 					lore.add(ChatColor.BLUE + "<[Power Of Water]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.RED + "<[Power Of Flame]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1071,14 +1071,14 @@ public class Pak extends CombatMode implements Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[맹독 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[맹독 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Poison]>"));
-					lore.add(ChatColor.AQUA + "<[서리 계열 공격력]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.DARK_GREEN + "<[맹독 계열 공격력]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.AQUA + "<[서리 공격력]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.DARK_GREEN + "<[맹독 공격력]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 					lore.add(ChatColor.BOLD + "모든 스킬에 맹독 피해가 추가로 적용됩니다");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[맹독 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[맹독 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Poison]>"));
 					lore.add(ChatColor.AQUA + "<[Power Of Frost]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.DARK_GREEN + "<[Power Of Poison]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1088,14 +1088,14 @@ public class Pak extends CombatMode implements Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[맹독 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[맹독 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Poison]>"));
-					lore.add(ChatColor.AQUA + "<[서리 계열 공격력]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.DARK_GREEN + "<[맹독 계열 공격력]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.AQUA + "<[서리 공격력]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.DARK_GREEN + "<[맹독 공격력]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 					lore.add(ChatColor.BOLD + "모든 스킬에 맹독 피해가 추가로 적용됩니다");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[맹독 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[맹독 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Poison]>"));
 					lore.add(ChatColor.AQUA + "<[Power Of Frost]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.DARK_GREEN + "<[Power Of Poison]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1118,13 +1118,13 @@ public class Pak extends CombatMode implements Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[바람 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[바람 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Wind]>"));
-					lore.add(ChatColor.GRAY + "<[바람 계열 공격력]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.GREEN + "<[대지 계열 공격력]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.GRAY + "<[바람 공격력]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.GREEN + "<[대지 공격력]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[바람 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[바람 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Wind]>"));
 					lore.add(ChatColor.GRAY + "<[Power Of Wind]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
 							+ ChatColor.GREEN + "<[Power Of Earth]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1133,13 +1133,13 @@ public class Pak extends CombatMode implements Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[바람 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[바람 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Wind]>"));
-					lore.add(ChatColor.GRAY + "<[바람 계열 공격력]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.GREEN + "<[대지 계열 공격력]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.GRAY + "<[바람 공격력]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.GREEN + "<[대지 공격력]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[바람 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[바람 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Wind]>"));
 					lore.add(ChatColor.GRAY + "<[Power Of Wind]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
 							+ ChatColor.GREEN + "<[Power Of Earth]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1152,13 +1152,13 @@ public class Pak extends CombatMode implements Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[바람 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[바람 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Wind]>"));
-					lore.add(ChatColor.GRAY + "<[바람 계열 공격력]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.GREEN + "<[대지 계열 공격력]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.GRAY + "<[바람 공격력]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.GREEN + "<[대지 공격력]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[바람 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[바람 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Wind]>"));
 					lore.add(ChatColor.GRAY + "<[Power Of Wind]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
 							+ ChatColor.GREEN + "<[Power Of Earth]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1167,13 +1167,13 @@ public class Pak extends CombatMode implements Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[바람 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[바람 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Wind]>"));
-					lore.add(ChatColor.GRAY + "<[바람 계열 공격력]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.GREEN + "<[대지 계열 공격력]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.GRAY + "<[바람 공격력]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.GREEN + "<[대지 공격력]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[바람 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[바람 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Wind]>"));
 					lore.add(ChatColor.GRAY + "<[Power Of Wind]> +" +  Math.round(isp.getOrDefault(windydn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
 							+ ChatColor.GREEN + "<[Power Of Earth]> +" +  Math.round(isp.getOrDefault(earthdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1186,13 +1186,13 @@ public class Pak extends CombatMode implements Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[서리 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[서리 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Frost]>"));
-					lore.add(ChatColor.AQUA + "<[서리 계열 공격력]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.DARK_GREEN + "<[맹독 계열 공격력]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.AQUA + "<[서리 공격력]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.DARK_GREEN + "<[맹독 공격력]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[서리 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[서리 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Frost]>"));
 					lore.add(ChatColor.AQUA + "<[Power Of Frost]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.DARK_GREEN + "<[Power Of Poison]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1201,13 +1201,13 @@ public class Pak extends CombatMode implements Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[서리 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[서리 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Frost]>"));
-					lore.add(ChatColor.AQUA + "<[서리 계열 공격력]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.DARK_GREEN + "<[맹독 계열 공격력]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.AQUA + "<[서리 공격력]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.DARK_GREEN + "<[맹독 공격력]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[서리 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[서리 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Frost]>"));
 					lore.add(ChatColor.AQUA + "<[Power Of Frost]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.DARK_GREEN + "<[Power Of Poison]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1220,13 +1220,13 @@ public class Pak extends CombatMode implements Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[물 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[물 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Water]>"));
-					lore.add(ChatColor.BLUE + "<[물 계열 공격력]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.RED + "<[화염 계열 공격력]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BLUE + "<[물 공격력]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.RED + "<[화염 공격력]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[물 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[물 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Water]>"));
 					lore.add(ChatColor.BLUE + "<[Power Of Water]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.RED + "<[Power Of Flame]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1235,13 +1235,13 @@ public class Pak extends CombatMode implements Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[물 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[물 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Water]>"));
-					lore.add(ChatColor.BLUE + "<[물 계열 공격력]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.RED + "<[화염 계열 공격력]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BLUE + "<[물 공격력]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.RED + "<[화염 공격력]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[물 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[물 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Water]>"));
 					lore.add(ChatColor.BLUE + "<[Power Of Water]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.RED + "<[Power Of Flame]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1254,13 +1254,13 @@ public class Pak extends CombatMode implements Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[어둠 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[어둠 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Darkness]>"));
-					lore.add(ChatColor.DARK_GRAY + "<[어둠 계열 공격력]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.YELLOW + "<[번개 계열 공격력]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.DARK_GRAY + "<[어둠 공격력]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.YELLOW + "<[번개 공격력]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[어둠 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[어둠 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Darkness]>"));
 					lore.add(ChatColor.DARK_GRAY + "<[Power Of Darkness]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.YELLOW + "<[Power Of Lightning]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1269,13 +1269,13 @@ public class Pak extends CombatMode implements Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[어둠 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[어둠 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Darkness]>"));
-					lore.add(ChatColor.DARK_GRAY + "<[어둠 계열 공격력]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.YELLOW + "<[번개 계열 공격력]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.DARK_GRAY + "<[어둠 공격력]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.YELLOW + "<[번개 공격력]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[어둠 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[어둠 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Darkness]>"));
 					lore.add(ChatColor.DARK_GRAY + "<[Power Of Darkness]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.YELLOW + "<[Power Of Lightning]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1288,13 +1288,13 @@ public class Pak extends CombatMode implements Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[어둠 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[어둠 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Darkness]>"));
-					lore.add(ChatColor.DARK_GRAY + "<[어둠 계열 공격력]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.YELLOW + "<[번개 계열 공격력]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.DARK_GRAY + "<[어둠 공격력]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.YELLOW + "<[번개 공격력]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[어둠 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[어둠 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Darkness]>"));
 					lore.add(ChatColor.DARK_GRAY + "<[Power Of Darkness]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.YELLOW + "<[Power Of Lightning]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1303,13 +1303,13 @@ public class Pak extends CombatMode implements Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[어둠 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[어둠 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Darkness]>"));
-					lore.add(ChatColor.DARK_GRAY + "<[어둠 계열 공격력]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.YELLOW + "<[번개 계열 공격력]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.DARK_GRAY + "<[어둠 공격력]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.YELLOW + "<[번개 공격력]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[어둠 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[어둠 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Darkness]>"));
 					lore.add(ChatColor.DARK_GRAY + "<[Power Of Darkness]> +" +  Math.round(isp.getOrDefault(darkdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.YELLOW + "<[Power Of Lightning]> +" +  Math.round(isp.getOrDefault(lightningdn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1322,13 +1322,13 @@ public class Pak extends CombatMode implements Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[물 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[물 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Water]>"));
-					lore.add(ChatColor.BLUE + "<[물 계열 공격력]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.RED + "<[화염 계열 공격력]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BLUE + "<[물 공격력]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.RED + "<[화염 공격력]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[물 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[물 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Water]>"));
 					lore.add(ChatColor.BLUE + "<[Power Of Water]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.RED + "<[Power Of Flame]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1337,13 +1337,13 @@ public class Pak extends CombatMode implements Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[물 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[물 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Water]>"));
-					lore.add(ChatColor.BLUE + "<[물 계열 공격력]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.RED + "<[화염 계열 공격력]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BLUE + "<[물 공격력]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.RED + "<[화염 공격력]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[물 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[물 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Water]>"));
 					lore.add(ChatColor.BLUE + "<[Power Of Water]> +" +  Math.round(isp.getOrDefault(waterdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.RED + "<[Power Of Flame]> +" + Math.round(isp.getOrDefault(flamedn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1356,13 +1356,13 @@ public class Pak extends CombatMode implements Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[서리 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[서리 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Frost]>"));
-					lore.add(ChatColor.AQUA + "<[서리 계열 공격력]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.DARK_GREEN + "<[맹독 계열 공격력]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.AQUA + "<[서리 공격력]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.DARK_GREEN + "<[맹독 공격력]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[서리 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[서리 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Frost]>"));
 					lore.add(ChatColor.AQUA + "<[Power Of Frost]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.DARK_GREEN + "<[Power Of Poison]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1371,13 +1371,13 @@ public class Pak extends CombatMode implements Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[서리 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[서리 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Frost]>"));
-					lore.add(ChatColor.AQUA + "<[서리 계열 공격력]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.DARK_GREEN + "<[맹독 계열 공격력]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.AQUA + "<[서리 공격력]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.DARK_GREEN + "<[맹독 공격력]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[서리 계열 공격력]>"));
+					lore.removeIf(l -> l.contains("<[서리 공격력]>"));
 					lore.removeIf(l -> l.contains("<[Power Of Frost]>"));
 					lore.add(ChatColor.AQUA + "<[Power Of Frost]> +" + Math.round(isp.getOrDefault(frostdn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.DARK_GREEN + "<[Power Of Poison]> +" + Math.round(isp.getOrDefault(poisondn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1396,13 +1396,13 @@ public class Pak extends CombatMode implements Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[바람 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[바람 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Wind]>"));
-					lore.add(ChatColor.GRAY + "<[바람 계열 저항력]> +" +  Math.round(isp.getOrDefault(windyrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " +
-							ChatColor.GREEN + "<[대지 계열 저항력]> +" +  Math.round(isp.getOrDefault(earthrn, PersistentDataType.DOUBLE,0d)*100.0) + "%" );
+					lore.add(ChatColor.GRAY + "<[바람 저항력]> +" +  Math.round(isp.getOrDefault(windyrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " +
+							ChatColor.GREEN + "<[대지 저항력]> +" +  Math.round(isp.getOrDefault(earthrn, PersistentDataType.DOUBLE,0d)*100.0) + "%" );
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[바람 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[바람 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Wind]>"));
 					lore.add(ChatColor.GRAY + "<[Resistance To Wind]> +" +  Math.round(isp.getOrDefault(windyrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " +
 							ChatColor.GREEN + "<[Resistance To Earth]> +" +  Math.round(isp.getOrDefault(earthrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1411,13 +1411,13 @@ public class Pak extends CombatMode implements Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[바람 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[바람 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Wind]>"));
-					lore.add(ChatColor.GRAY + "<[바람 계열 저항력]> +" +  Math.round(isp.getOrDefault(windyrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " +
-							ChatColor.GREEN + "<[대지 계열 저항력]> +" +  Math.round(isp.getOrDefault(earthrn, PersistentDataType.DOUBLE,0d)*100.0) + "%" );
+					lore.add(ChatColor.GRAY + "<[바람 저항력]> +" +  Math.round(isp.getOrDefault(windyrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " +
+							ChatColor.GREEN + "<[대지 저항력]> +" +  Math.round(isp.getOrDefault(earthrn, PersistentDataType.DOUBLE,0d)*100.0) + "%" );
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[바람 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[바람 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Wind]>"));
 					lore.add(ChatColor.GRAY + "<[Resistance To Wind]> +" +  Math.round(isp.getOrDefault(windyrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " +
 							ChatColor.GREEN + "<[Resistance To Earth]> +" +  Math.round(isp.getOrDefault(earthrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1430,13 +1430,13 @@ public class Pak extends CombatMode implements Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[대지 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[대지 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Earth]>"));
-					lore.add(ChatColor.GRAY + "<[바람 계열 저항력]> +" +  Math.round(isp.getOrDefault(windyrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " +
-							ChatColor.GREEN + "<[대지 계열 저항력]> +" +  Math.round(isp.getOrDefault(earthrn, PersistentDataType.DOUBLE,0d)*100.0) + "%" );
+					lore.add(ChatColor.GRAY + "<[바람 저항력]> +" +  Math.round(isp.getOrDefault(windyrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " +
+							ChatColor.GREEN + "<[대지 저항력]> +" +  Math.round(isp.getOrDefault(earthrn, PersistentDataType.DOUBLE,0d)*100.0) + "%" );
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[대지 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[대지 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Earth]>"));
 					lore.add(ChatColor.GRAY + "<[Resistance To Wind]> +" +  Math.round(isp.getOrDefault(windyrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " +
 							ChatColor.GREEN + "<[Resistance To Earth]> +" +  Math.round(isp.getOrDefault(earthrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1445,13 +1445,13 @@ public class Pak extends CombatMode implements Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[대지 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[대지 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Earth]>"));
-					lore.add(ChatColor.GRAY + "<[바람 계열 저항력]> +" +  Math.round(isp.getOrDefault(windyrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " +
-							ChatColor.GREEN + "<[대지 계열 저항력]> +" +  Math.round(isp.getOrDefault(earthrn, PersistentDataType.DOUBLE,0d)*100.0) + "%" );
+					lore.add(ChatColor.GRAY + "<[바람 저항력]> +" +  Math.round(isp.getOrDefault(windyrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " +
+							ChatColor.GREEN + "<[대지 저항력]> +" +  Math.round(isp.getOrDefault(earthrn, PersistentDataType.DOUBLE,0d)*100.0) + "%" );
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[대지 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[대지 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Earth]>"));
 					lore.add(ChatColor.GRAY + "<[Resistance To Wind]> +" +  Math.round(isp.getOrDefault(windyrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " +
 							ChatColor.GREEN + "<[Resistance To Earth]> +" +  Math.round(isp.getOrDefault(earthrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1464,13 +1464,13 @@ public class Pak extends CombatMode implements Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[서리 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[서리 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Frost]>"));
-					lore.add(ChatColor.AQUA + "<[서리 계열 저항력]> +" + Math.round(isp.getOrDefault(frostrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
-							+ChatColor.DARK_GREEN + "<[맹독 계열 저항력]> +" + Math.round(isp.getOrDefault(poisonrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.AQUA + "<[서리 저항력]> +" + Math.round(isp.getOrDefault(frostrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
+							+ChatColor.DARK_GREEN + "<[맹독 저항력]> +" + Math.round(isp.getOrDefault(poisonrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[서리 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[서리 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Frost]>"));
 					lore.add(ChatColor.AQUA + "<[Resistance To Frost]> +" + Math.round(isp.getOrDefault(frostrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
 							+ChatColor.DARK_GREEN + "<[Resistance To Poison]> +" + Math.round(isp.getOrDefault(poisonrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1479,13 +1479,13 @@ public class Pak extends CombatMode implements Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[서리 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[서리 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Frost]>"));
-					lore.add(ChatColor.AQUA + "<[서리 계열 저항력]> +" + Math.round(isp.getOrDefault(frostrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
-							+ChatColor.DARK_GREEN + "<[맹독 계열 저항력]> +" + Math.round(isp.getOrDefault(poisonrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.AQUA + "<[서리 저항력]> +" + Math.round(isp.getOrDefault(frostrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
+							+ChatColor.DARK_GREEN + "<[맹독 저항력]> +" + Math.round(isp.getOrDefault(poisonrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[서리 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[서리 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Frost]>"));
 					lore.add(ChatColor.AQUA + "<[Resistance To Frost]> +" + Math.round(isp.getOrDefault(frostrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
 							+ChatColor.DARK_GREEN + "<[Resistance To Poison]> +" + Math.round(isp.getOrDefault(poisonrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1498,31 +1498,31 @@ public class Pak extends CombatMode implements Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[물 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[물 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Water]>"));
-					lore.add(ChatColor.BLUE + "<[물 계열 저항력]> +" +  Math.round(isp.getOrDefault(waterrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
-							+ChatColor.RED + "<[화염 계열 저항력]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BLUE + "<[물 저항력]> +" +  Math.round(isp.getOrDefault(waterrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
+							+ChatColor.RED + "<[화염 저항력]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[물 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[물 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Water]>"));
 					lore.add(ChatColor.BLUE + "<[Resistance To Water]> +" +  Math.round(isp.getOrDefault(waterrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
-							+ChatColor.RED + "<[화염 계열 저항력]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+							+ChatColor.RED + "<[화염 저항력]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				rm.setLore(lore);
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[물 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[물 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Water]>"));
-					lore.add(ChatColor.BLUE + "<[물 계열 저항력]> +" +  Math.round(isp.getOrDefault(waterrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
-							+ChatColor.RED + "<[화염 계열 저항력]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BLUE + "<[물 저항력]> +" +  Math.round(isp.getOrDefault(waterrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
+							+ChatColor.RED + "<[화염 저항력]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[물 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[물 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Water]>"));
 					lore.add(ChatColor.BLUE + "<[Resistance To Water]> +" +  Math.round(isp.getOrDefault(waterrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
-							+ChatColor.RED + "<[화염 계열 저항력]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+							+ChatColor.RED + "<[화염 저항력]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				rm.setLore(lore);
 			}
@@ -1532,13 +1532,13 @@ public class Pak extends CombatMode implements Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[어둠 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[어둠 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Darkness]>"));
-					lore.add(ChatColor.DARK_GRAY + "<[어둠 계열 저항력]> +" +  Math.round(isp.getOrDefault(darkrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.YELLOW + "<[번개 계열 저항력]> +" +  Math.round(isp.getOrDefault(lightningrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.DARK_GRAY + "<[어둠 저항력]> +" +  Math.round(isp.getOrDefault(darkrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.YELLOW + "<[번개 저항력]> +" +  Math.round(isp.getOrDefault(lightningrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[어둠 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[어둠 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Darkness]>"));
 					lore.add(ChatColor.DARK_GRAY + "<[Resistance To Darkness]> +" +  Math.round(isp.getOrDefault(darkrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.YELLOW + "<[Resistance To Lightning]> +" +  Math.round(isp.getOrDefault(lightningrn, PersistentDataType.DOUBLE,0d)*100.0) + "%" );
@@ -1547,13 +1547,13 @@ public class Pak extends CombatMode implements Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[어둠 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[어둠 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Darkness]>"));
-					lore.add(ChatColor.DARK_GRAY + "<[어둠 계열 저항력]> +" +  Math.round(isp.getOrDefault(darkrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.YELLOW + "<[번개 계열 저항력]> +" +  Math.round(isp.getOrDefault(lightningrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.DARK_GRAY + "<[어둠 저항력]> +" +  Math.round(isp.getOrDefault(darkrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.YELLOW + "<[번개 저항력]> +" +  Math.round(isp.getOrDefault(lightningrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[어둠 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[어둠 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Darkness]>"));
 					lore.add(ChatColor.DARK_GRAY + "<[Resistance To Darkness]> +" +  Math.round(isp.getOrDefault(darkrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.YELLOW + "<[Resistance To Lightning]> +" +  Math.round(isp.getOrDefault(lightningrn, PersistentDataType.DOUBLE,0d)*100.0) + "%" );
@@ -1566,13 +1566,13 @@ public class Pak extends CombatMode implements Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[어둠 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[어둠 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Darkness]>"));
-					lore.add(ChatColor.DARK_GRAY + "<[어둠 계열 저항력]> +" +  Math.round(isp.getOrDefault(darkrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.YELLOW + "<[번개 계열 저항력]> +" +  Math.round(isp.getOrDefault(lightningrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.DARK_GRAY + "<[어둠 저항력]> +" +  Math.round(isp.getOrDefault(darkrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.YELLOW + "<[번개 저항력]> +" +  Math.round(isp.getOrDefault(lightningrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[어둠 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[어둠 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Darkness]>"));
 					lore.add(ChatColor.DARK_GRAY + "<[Resistance To Darkness]> +" +  Math.round(isp.getOrDefault(darkrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.YELLOW + "<[Resistance To Lightning]> +" +  Math.round(isp.getOrDefault(lightningrn, PersistentDataType.DOUBLE,0d)*100.0) + "%" );
@@ -1581,13 +1581,13 @@ public class Pak extends CombatMode implements Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[어둠 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[어둠 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Darkness]>"));
-					lore.add(ChatColor.DARK_GRAY + "<[어둠 계열 저항력]> +" +  Math.round(isp.getOrDefault(darkrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
-							+ChatColor.YELLOW + "<[번개 계열 저항력]> +" +  Math.round(isp.getOrDefault(lightningrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.DARK_GRAY + "<[어둠 저항력]> +" +  Math.round(isp.getOrDefault(darkrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
+							+ChatColor.YELLOW + "<[번개 저항력]> +" +  Math.round(isp.getOrDefault(lightningrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[어둠 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[어둠 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Darkness]>"));
 					lore.add(ChatColor.DARK_GRAY + "<[Resistance To Darkness]> +" +  Math.round(isp.getOrDefault(darkrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | "
 							+ChatColor.YELLOW + "<[Resistance To Lightning]> +" +  Math.round(isp.getOrDefault(lightningrn, PersistentDataType.DOUBLE,0d)*100.0) + "%" );
@@ -1600,31 +1600,31 @@ public class Pak extends CombatMode implements Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[물 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[물 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Water]>"));
-					lore.add(ChatColor.BLUE + "<[물 계열 저항력]> +" +  Math.round(isp.getOrDefault(waterrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
-							+ChatColor.RED + "<[화염 계열 저항력]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BLUE + "<[물 저항력]> +" +  Math.round(isp.getOrDefault(waterrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
+							+ChatColor.RED + "<[화염 저항력]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[물 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[물 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Water]>"));
 					lore.add(ChatColor.BLUE + "<[Resistance To Water]> +" +  Math.round(isp.getOrDefault(waterrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
-							+ChatColor.RED + "<[화염 계열 저항력]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+							+ChatColor.RED + "<[화염 저항력]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				rm.setLore(lore);
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[물 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[물 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Water]>"));
-					lore.add(ChatColor.BLUE + "<[물 계열 저항력]> +" +  Math.round(isp.getOrDefault(waterrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
-							+ChatColor.RED + "<[화염 계열 저항력]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.BLUE + "<[물 저항력]> +" +  Math.round(isp.getOrDefault(waterrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
+							+ChatColor.RED + "<[화염 저항력]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[물 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[물 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Water]>"));
 					lore.add(ChatColor.BLUE + "<[Resistance To Water]> +" +  Math.round(isp.getOrDefault(waterrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
-							+ChatColor.RED + "<[화염 계열 저항력]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+							+ChatColor.RED + "<[화염 저항력]> +" + Math.round(isp.getOrDefault(flamern, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				rm.setLore(lore);
 			}
@@ -1634,13 +1634,13 @@ public class Pak extends CombatMode implements Listener{
 			if (rm.hasLore()) {
 				List<String> lore = rm.getLore();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[서리 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[서리 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Frost]>"));
-					lore.add(ChatColor.AQUA + "<[서리 계열 저항력]> +" + Math.round(isp.getOrDefault(frostrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
-							+ChatColor.DARK_GREEN + "<[맹독 계열 저항력]> +" + Math.round(isp.getOrDefault(poisonrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.AQUA + "<[서리 저항력]> +" + Math.round(isp.getOrDefault(frostrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
+							+ChatColor.DARK_GREEN + "<[맹독 저항력]> +" + Math.round(isp.getOrDefault(poisonrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[서리 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[서리 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Frost]>"));
 					lore.add(ChatColor.AQUA + "<[Resistance To Frost]> +" + Math.round(isp.getOrDefault(frostrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
 							+ChatColor.DARK_GREEN + "<[Resistance To Poison]> +" + Math.round(isp.getOrDefault(poisonrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -1649,13 +1649,13 @@ public class Pak extends CombatMode implements Listener{
 			} else {
 				List<String> lore = new ArrayList<>();
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					lore.removeIf(l -> l.contains("<[서리 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[서리 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Frost]>"));
-					lore.add(ChatColor.AQUA + "<[서리 계열 저항력]> +" + Math.round(isp.getOrDefault(frostrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
-							+ChatColor.DARK_GREEN + "<[맹독 계열 저항력]> +" + Math.round(isp.getOrDefault(poisonrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
+					lore.add(ChatColor.AQUA + "<[서리 저항력]> +" + Math.round(isp.getOrDefault(frostrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
+							+ChatColor.DARK_GREEN + "<[맹독 저항력]> +" + Math.round(isp.getOrDefault(poisonrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
 				}
 				else {
-					lore.removeIf(l -> l.contains("<[서리 계열 저항력]>"));
+					lore.removeIf(l -> l.contains("<[서리 저항력]>"));
 					lore.removeIf(l -> l.contains("<[Resistance To Frost]>"));
 					lore.add(ChatColor.AQUA + "<[Resistance To Frost]> +" + Math.round(isp.getOrDefault(frostrn, PersistentDataType.DOUBLE,0d)*100.0) + "% | " 
 							+ChatColor.DARK_GREEN + "<[Resistance To Poison]> +" + Math.round(isp.getOrDefault(poisonrn, PersistentDataType.DOUBLE,0d)*100.0) + "%");
@@ -2033,14 +2033,14 @@ public class Pak extends CombatMode implements Listener{
 	final public void eldmes(Player p) {
 
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			p.sendMessage("바람 계열 - 공격력: " +windyd.getOrDefault(p.getUniqueId(),0d) + " | 저항력: "+windyr.getOrDefault(p.getUniqueId(),0d));
-			p.sendMessage("대지 계열 - 공격력:" +earthd.getOrDefault(p.getUniqueId(),0d)+ " | 저항력: "+earthr.getOrDefault(p.getUniqueId(),0d));
-			p.sendMessage("서리 계열 - 공격력:" +frostd.getOrDefault(p.getUniqueId(),0d)+ " | 저항력: "+frostr.getOrDefault(p.getUniqueId(),0d));
-			p.sendMessage("물 계열 - 공격력:" +waterd.getOrDefault(p.getUniqueId(),0d)+ " | 저항력: "+waterr.getOrDefault(p.getUniqueId(),0d));
-			p.sendMessage("어둠 계열 - 공격력:" +darkd.getOrDefault(p.getUniqueId(),0d)+ " | 저항력: "+darkr.getOrDefault(p.getUniqueId(),0d));
-			p.sendMessage("번개 계열 - 공격력:" +lightningd.getOrDefault(p.getUniqueId(),0d)+ " | 저항력: "+lightningr.getOrDefault(p.getUniqueId(),0d));
-			p.sendMessage("화염 계열 - 공격력:" +flamed.getOrDefault(p.getUniqueId(),0d)+ " | 저항력: "+flamer.getOrDefault(p.getUniqueId(),0d));
-			p.sendMessage("독 계열 - 공격력:" +poisond.getOrDefault(p.getUniqueId(),0d)+ " | 저항력: "+poisonr.getOrDefault(p.getUniqueId(),0d));
+			p.sendMessage("바람 - 공격력: " +windyd.getOrDefault(p.getUniqueId(),0d) + " | 저항력: "+windyr.getOrDefault(p.getUniqueId(),0d));
+			p.sendMessage("대지 - 공격력:" +earthd.getOrDefault(p.getUniqueId(),0d)+ " | 저항력: "+earthr.getOrDefault(p.getUniqueId(),0d));
+			p.sendMessage("서리 - 공격력:" +frostd.getOrDefault(p.getUniqueId(),0d)+ " | 저항력: "+frostr.getOrDefault(p.getUniqueId(),0d));
+			p.sendMessage("물 - 공격력:" +waterd.getOrDefault(p.getUniqueId(),0d)+ " | 저항력: "+waterr.getOrDefault(p.getUniqueId(),0d));
+			p.sendMessage("어둠 - 공격력:" +darkd.getOrDefault(p.getUniqueId(),0d)+ " | 저항력: "+darkr.getOrDefault(p.getUniqueId(),0d));
+			p.sendMessage("번개 - 공격력:" +lightningd.getOrDefault(p.getUniqueId(),0d)+ " | 저항력: "+lightningr.getOrDefault(p.getUniqueId(),0d));
+			p.sendMessage("화염 - 공격력:" +flamed.getOrDefault(p.getUniqueId(),0d)+ " | 저항력: "+flamer.getOrDefault(p.getUniqueId(),0d));
+			p.sendMessage("독 - 공격력:" +poisond.getOrDefault(p.getUniqueId(),0d)+ " | 저항력: "+poisonr.getOrDefault(p.getUniqueId(),0d));
 		}
 		else {
 			p.sendMessage("Wind - Power: " +windyd.getOrDefault(p.getUniqueId(),0d) + " | Resistance: "+windyr.getOrDefault(p.getUniqueId(),0d));

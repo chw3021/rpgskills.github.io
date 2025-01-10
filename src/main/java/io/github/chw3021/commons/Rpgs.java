@@ -32,6 +32,7 @@ import com.google.common.collect.HashBasedTable;
 import io.github.chw3021.classes.ClassData;
 import io.github.chw3021.classes.Classgui;
 import io.github.chw3021.classes.Proficiency;
+import io.github.chw3021.classes.SkillsGui;
 import io.github.chw3021.classes.angler.AngSkillsGui;
 import io.github.chw3021.classes.archer.ArchSkillsGui;
 import io.github.chw3021.classes.berserker.BerSkillsGui;
@@ -234,7 +235,7 @@ public class Rpgs extends Summoned implements CommandExecutor, Listener {
 			p.sendMessage(ChatColor.GREEN +"[Made By chw3021]");
 			p.sendMessage(ChatColor.GREEN +"---Rpg 명령어---");
 			p.sendMessage(ChatColor.GREEN +"/rpg dam (/rpg d, /rpg damage) -> 현재 데미지를 표시합니다");
-			p.sendMessage(ChatColor.GREEN +"/rpg element (/rpg el) -> 현재 원소 계열 공격력, 저항력을 표시합니다");
+			p.sendMessage(ChatColor.GREEN +"/rpg element (/rpg el) -> 현재 원소 공격력, 저항력을 표시합니다");
 			p.sendMessage(ChatColor.GREEN +"/rpg escape (/rpg es) -> 현재 진행중인 전투를 종료합니다");
 			p.sendMessage(ChatColor.GREEN +"/rpg skill (/rpg s) -> 스킬창을 엽니다");
 			p.sendMessage(ChatColor.GREEN +"/rpg class (/rpg c) -> 직업 선택창을 엽니다");
@@ -482,156 +483,7 @@ public class Rpgs extends Summoned implements CommandExecutor, Listener {
 				}
 				else if(args[0].equalsIgnoreCase("skill") || args[0].equalsIgnoreCase("s"))
 				{
-					if(ClassData.pc.get(p.getUniqueId()) == 0)
-					{
-						SwordSkillsGui ssg = new SwordSkillsGui();
-						ssg.SwordSkillsinv(p);
-						ssg.SwordSkillsinv(p);
-					}
-					else if(ClassData.pc.get(p.getUniqueId()) == 1)
-					{
-						BerSkillsGui bsg = new BerSkillsGui();
-						bsg.Berskillsinv(p);
-						bsg.Berskillsinv(p);
-					}
-					else if(ClassData.pc.get(p.getUniqueId()) == 2)
-					{
-						HunSkillsGui hsg = new HunSkillsGui();
-						hsg.Hunskillsinv(p);
-						hsg.Hunskillsinv(p);
-					}
-					else if(ClassData.pc.get(p.getUniqueId()) == 3)
-					{
-						PalSkillsGui psg = new PalSkillsGui();
-						psg.PalSkillsinv(p);
-						psg.PalSkillsinv(p);
-					}
-					else if(ClassData.pc.get(p.getUniqueId()) == 4)
-					{
-						SnipSkillsGui l = new SnipSkillsGui();
-						l.Snipskillsinv(p);
-						l.Snipskillsinv(p);
-					}
-					else if(ClassData.pc.get(p.getUniqueId()) == 5)
-					{
-						LaunSkillsGui l = new LaunSkillsGui();
-						l.Launskillsinv(p);
-						l.Launskillsinv(p);
-					}
-					else if(ClassData.pc.get(p.getUniqueId()) == 6)
-					{
-						ArchSkillsGui l = new ArchSkillsGui();
-						l.Archskillsinv(p);
-						l.Archskillsinv(p);
-					}
-					else if(ClassData.pc.get(p.getUniqueId()) == 61)
-					{
-						MedSkillsGui l = new MedSkillsGui();
-						l.Medskillsinv(p);
-						l.Medskillsinv(p);
-					}
-					else if(ClassData.pc.get(p.getUniqueId()) == 7)
-					{
-						BoxSkillsGui l = new BoxSkillsGui();
-						l.BoxSkillsinv(p);
-						l.BoxSkillsinv(p);
-					}
-					else if(ClassData.pc.get(p.getUniqueId()) == 8)
-					{
-						WreSkillsGui wrg = new WreSkillsGui();
-						wrg.WreSkillsinv(p);
-						wrg.WreSkillsinv(p);
-					}
-					else if(ClassData.pc.get(p.getUniqueId()) == 9)
-					{
-						TamSkillsGui tsg = new TamSkillsGui();
-						tsg.TamSkillsinv(p);
-						tsg.TamSkillsinv(p);
-					}
-					else if(ClassData.pc.get(p.getUniqueId()) == 10)
-					{
-						TaoSkillsGui tag = new TaoSkillsGui();
-						tag.TaoSkillsinv(p);
-						tag.TaoSkillsinv(p);
-					}
-					else if(ClassData.pc.get(p.getUniqueId()) == 11)
-					{
-						IllSkillsGui ilg = new IllSkillsGui();
-						ilg.IllSkillsinv(p);
-						ilg.IllSkillsinv(p);
-					}
-					else if(ClassData.pc.get(p.getUniqueId()) == 12)
-					{
-						FireSkillsGui fsg = new FireSkillsGui();
-						fsg.FIreSkillsinv(p);
-						fsg.FIreSkillsinv(p);
-					}
-					else if(ClassData.pc.get(p.getUniqueId()) == 13)
-					{
-						WitSkillsGui wsg = new WitSkillsGui();
-						wsg.WitSkillsinv(p);
-						wsg.WitSkillsinv(p);
-					}
-					else if(ClassData.pc.get(p.getUniqueId()) == 14)
-					{
-						WdcSkillsGui wdg = new WdcSkillsGui();
-						wdg.WdcSkillsinv(p);
-						wdg.WdcSkillsinv(p);
-					}
-					else if(ClassData.pc.get(p.getUniqueId()) == 15)
-					{
-						CheSkillsGui chg = new CheSkillsGui();
-						chg.CheSkillsinv(p);
-						chg.CheSkillsinv(p);
-					}
-					else if(ClassData.pc.get(p.getUniqueId()) == 16)
-					{
-						ForSkillsGui fgg = new ForSkillsGui();
-						fgg.ForSkillsinv(p);
-						fgg.ForSkillsinv(p);
-					}
-					else if(ClassData.pc.get(p.getUniqueId()) == 17)
-					{
-						EngSkillsGui egg = new EngSkillsGui();
-						egg.EngSkillsinv(p);
-						egg.EngSkillsinv(p);
-					}
-					else if(ClassData.pc.get(p.getUniqueId()) == 18)
-					{
-						CookSkillsGui csg = new CookSkillsGui();
-						csg.CookSkillsinv(p);
-						csg.CookSkillsinv(p);
-					}
-					else if(ClassData.pc.get(p.getUniqueId()) == 19)
-					{
-						NobSkillsGui nsg = new NobSkillsGui();
-						nsg.NobSkillsinv(p);
-						nsg.NobSkillsinv(p);
-					}
-					else if(ClassData.pc.get(p.getUniqueId()) == 20)
-					{
-						OceSkillsGui osg = new OceSkillsGui();
-						osg.OceSkillsinv(p);
-						osg.OceSkillsinv(p);
-					}
-					else if(ClassData.pc.get(p.getUniqueId()) == 21)
-					{
-						FrostSkillsGui fsg = new FrostSkillsGui();
-						fsg.FrostSkillsinv(p);
-						fsg.FrostSkillsinv(p);
-					}
-					else if(ClassData.pc.get(p.getUniqueId()) == 22)
-					{
-						AngSkillsGui fsg = new AngSkillsGui();
-						fsg.AngSkillsinv(p);
-						fsg.AngSkillsinv(p);
-					}
-					else if(ClassData.pc.get(p.getUniqueId()) == 25)
-					{
-						BroSkillsGui bsg = new BroSkillsGui();
-						bsg.BroSkillsinv(p);
-						bsg.BroSkillsinv(p);
-					}
+					SkillsGui.openSkillsGui(p);
 				}
 				else
 				{

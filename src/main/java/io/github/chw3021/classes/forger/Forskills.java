@@ -1394,7 +1394,7 @@ public class Forskills extends Pak {
                     double z = Math.sin(radians) * currentRadius;
                     Location particleLoc = pfl.clone().add(x, 0, z);
 
-                    // 푸른색 계열의 파티클 생성
+                    // 푸른색의 파티클 생성
                     Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(50, 150, 255), 1.5f); // RGB 값으로 파란색 설정
                     pfl.getWorld().spawnParticle(Particle.DUST, particleLoc, 1, dustOptions);
                 }

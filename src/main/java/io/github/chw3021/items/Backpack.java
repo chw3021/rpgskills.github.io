@@ -201,12 +201,12 @@ public class Backpack implements Serializable, Listener{
 	public void Bag(InventoryClickEvent e)
 	{
         Player p = (Player) e.getWhoClicked();
-		if(ChatColor.stripColor(e.getView().getTitle()).contains("Skills") || ChatColor.stripColor(e.getView().getTitle()).contains("skills") || CombatMode.getInstance().isCombat(p))
+		if(ChatColor.stripColor(e.getView().getTitle()).contains("Utilites") || ChatColor.stripColor(e.getView().getTitle()).contains("Utilites") || CombatMode.getInstance().isCombat(p))
 		{
-			e.setCancelled(true);
+			e.setResult(Result.DENY);
 			if(e.getCurrentItem()==null||e.getCurrentItem().getType() == null|| !e.getCurrentItem().hasItemMeta())
 			{
-				e.setCancelled(false);
+				return;
 			}
 			else
 			{
@@ -217,7 +217,7 @@ public class Backpack implements Serializable, Listener{
 					p.setItemOnCursor(null);
 				}
 				else if(s.equals("Dumpster") || s.equals("쓰레기통")) {
-					e.setCancelled(false);
+					e.setResult(Result.DENY);
 					dumpster(p);
 					p.setItemOnCursor(null);
 				}

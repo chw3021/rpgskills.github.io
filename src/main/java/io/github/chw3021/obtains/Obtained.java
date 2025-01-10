@@ -13,10 +13,7 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 import org.bukkit.Bukkit;
-import org.bukkit.DyeColor;
 import org.bukkit.Material;
-import org.bukkit.block.banner.Pattern;
-import org.bukkit.block.banner.PatternType;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,7 +27,6 @@ import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -162,6 +158,15 @@ public class Obtained implements Serializable, Listener {
 			ucd.put(p.getUniqueId(), (ultc));
 			ncd.put(p.getUniqueId(), norc);
 			damageAndArmor(p);
+			
+			if (e.getCurrentItem() == null || e.getCurrentItem().getType() == null
+					|| !e.getCurrentItem().hasItemMeta()) {
+				return;
+			} else if(e.getCurrentItem().getItemMeta().getItemName().equals("RpgSkillsUtilities")){
+				p.closeInventory();
+				p.openInventory(itemset(p));
+			}
+			
 		}
 	}
 
@@ -897,7 +902,7 @@ public class Obtained implements Serializable, Listener {
 	}
 
 
-	public static void itemset(String display, ItemStack is, int data, int stack, List<String> Lore, int loc,
+	public static void itemsetbasic(String display, ItemStack is, int data, int stack, List<String> Lore, int loc,
 			Inventory inv) {
 		ItemStack item = is;
 		ItemMeta items = item.getItemMeta();
@@ -910,11 +915,41 @@ public class Obtained implements Serializable, Listener {
 		inv.setItem(loc, item);
 	}
 
+	public static void itemset(String display, ItemStack is, int data, int stack, List<String> Lore, int loc,
+			Inventory inv) {
+		ItemStack item = is;
+		ItemMeta items = item.getItemMeta();
+		items.setDisplayName(display);
+		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+		items.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
+		items.setLore(Lore);
+		item.setItemMeta(items);
+		inv.setItem(loc+3, item);
+	}
+
 
 	public static void itemset(Player p, Inventory inv) {
+
+		ItemStack is = new ItemStack(Material.VAULT);
+		ItemMeta im = is.getItemMeta();
+		im.setItemName("RpgSkillsUtilities");
+		is.setItemMeta(im);
+		
+		if (p.getLocale().equalsIgnoreCase("ko_kr")) {
+			itemsetbasic(ChatColor.GOLD + "기능들 및 전리품", is, 0, 1, Arrays.asList("여러가지 기능과 전리품들"),
+				31, inv);
+		}
+		else {
+			itemsetbasic(ChatColor.GOLD + "Utilites", is, 0, 1,
+					Arrays.asList("Functions And Trophies"), 31, inv);
+		}
+	}
+
+	public Inventory itemset(Player p) {
 		String path = new File("").getAbsolutePath();
-		Obtained od = new Obtained(Obtained.loadData(path + "/plugins/RPGskills/Obtained.data"));
-	
+		Obtained od = new Obtained(loadData(path + "/plugins/RPGskills/Obtained.data"));
+		Inventory inv = Bukkit.createInventory(null, 36, "Utilites");
 		ItemStack mp = new ItemStack(Material.CHEST);
 		mp.addUnsafeEnchantment(Enchantment.SMITE, 1);
 	
@@ -934,18 +969,7 @@ public class Obtained implements Serializable, Listener {
 		hs.addUnsafeEnchantment(Enchantment.SMITE, 1);
 		ItemStack jp = new ItemStack(Material.MOSSY_STONE_BRICKS);
 		jp.addUnsafeEnchantment(Enchantment.SMITE, 1);
-		ItemStack pe = new ItemStack(Material.WHITE_BANNER);
-		BannerMeta pem = (BannerMeta) pe.getItemMeta();
-		pem.addPattern(new Pattern(DyeColor.WHITE, PatternType.BASE));
-		pem.addPattern(new Pattern(DyeColor.CYAN, PatternType.RHOMBUS));
-		pem.addPattern(new Pattern(DyeColor.LIGHT_GRAY, PatternType.STRIPE_BOTTOM));
-		pem.addPattern(new Pattern(DyeColor.GRAY, PatternType.STRIPE_CENTER));
-		pem.addPattern(new Pattern(DyeColor.LIGHT_GRAY, PatternType.CURLY_BORDER));
-		pem.addPattern(new Pattern(DyeColor.BLACK, PatternType.STRIPE_MIDDLE));
-		pem.addPattern(new Pattern(DyeColor.LIGHT_GRAY, PatternType.HALF_HORIZONTAL));
-		pem.addPattern(new Pattern(DyeColor.LIGHT_GRAY, PatternType.CIRCLE));
-		pem.addPattern(new Pattern(DyeColor.BLACK, PatternType.BORDER));
-		pe.setItemMeta(pem);
+		ItemStack pe = new ItemStack(Material.GRAY_BANNER);
 		ItemStack cs = new ItemStack(Material.CHISELED_SANDSTONE);
 		cs.addUnsafeEnchantment(Enchantment.SMITE, 1);
 		ItemStack ef = new ItemStack(Material.END_PORTAL_FRAME);
@@ -966,383 +990,388 @@ public class Obtained implements Serializable, Listener {
 		ph.addUnsafeEnchantment(Enchantment.SMITE, 1);
 	
 		if (p.getLocale().equalsIgnoreCase("ko_kr")) {
-			itemset(ChatColor.GOLD + "쓰레기통", new ItemStack(Material.COMPOSTER), 0, 1, Arrays.asList("클릭시 쓰레기통을 엽니다"),
-					30, inv);
-			itemset(ChatColor.GOLD + "보조장비 관리", new ItemStack(Material.AMETHYST_SHARD), 0, 1, Arrays.asList("클릭시 보조장비 관리 창을 엽니다"),
-					31, inv);
-			itemset(ChatColor.GOLD + "셜커 가방", new ItemStack(Material.SHULKER_BOX), 0, 1, Arrays.asList("[웅크리기 + 설치]로 셜커상자를 가방처럼 사용할수 있습니다"),
-					32, inv);
-			itemset(ChatColor.GOLD + "배낭", new ItemStack(Material.BARREL), 0, 1, Arrays.asList("클릭시 배낭을 엽니다"),
-					33, inv);
+			itemsetbasic(ChatColor.GOLD + "쓰레기통", new ItemStack(Material.COMPOSTER), 0, 1, Arrays.asList("클릭시 쓰레기통을 엽니다"),
+				0, inv);
+			itemsetbasic(ChatColor.GOLD + "보조장비 관리", new ItemStack(Material.AMETHYST_SHARD), 0, 1, Arrays.asList("클릭시 보조장비 관리 창을 엽니다"),
+				1, inv);
+			itemsetbasic(ChatColor.GOLD + "셜커 가방", new ItemStack(Material.SHULKER_BOX), 0, 1, Arrays.asList("[웅크리기 + 설치]로 셜커상자를 가방처럼 사용할수 있습니다"),
+				2, inv);
+			itemsetbasic(ChatColor.GOLD + "배낭", new ItemStack(Material.BARREL), 0, 1, Arrays.asList("클릭시 배낭을 엽니다"),
+				3, inv);
+			itemsetbasic(ChatColor.GOLD + "기술", new ItemStack(Material.BORDURE_INDENTED_BANNER_PATTERN), 0, 1, Arrays.asList("Open Backpack If You Click"),
+					8, inv);
 			
 			
 			if (od.Mineshaft.getOrDefault(p.getUniqueId(), 0) >= 2) {
 				itemset(ChatColor.GOLD + "페광 전리품", ms, 0, 1, Arrays.asList("공격력과 방어력이 2% 증가합니다", "경험치 획득량이 5% 증가합니다"),
-						36, inv);
+					6, inv);
 			} else {
 				itemset(ChatColor.GOLD + "페광 전리품(아직 모두 획득하지 못함)", Material.POWERED_RAIL, 0, 1,
 						Arrays.asList(ChatColor.GOLD + "" + od.Mineshaft.getOrDefault(p.getUniqueId(), 0) + "/2 획득함"),
-						36, inv);
+					6, inv);
 			}
 
 
 			if (od.BuriedTreasure.getOrDefault(p.getUniqueId(), 0) >= 2) {
 				itemset(ChatColor.GOLD + "파묻힌 보물 전리품", mp, 0, 1,
-						Arrays.asList("공격력과 방어력이 3% 증가합니다", "경험치 획득량이 5% 증가합니다"), 37,
+						Arrays.asList("공격력과 방어력이 3% 증가합니다", "경험치 획득량이 5% 증가합니다"), 7,
 						inv);
 			} else {
 				itemset(ChatColor.GOLD + "파묻힌 보물 전리품(아직 모두 획득하지 못함)", Material.SPAWNER, 0, 1,
 						Arrays.asList(
 								ChatColor.GOLD + "" + od.BuriedTreasure.getOrDefault(p.getUniqueId(), 0) + "/2 획득함"),
-						37, inv);
+					7, inv);
 			}
 	
 			if (od.Igloo.getOrDefault(p.getUniqueId(), 0) >= 2) {
 				itemset(ChatColor.GOLD + "이글루 전리품", sb, 0, 1,
-						Arrays.asList("공격력과 방어력이 2.5% 증가합니다", "경험치 획득량이 5% 증가합니다", "둔화에 면역이 됩니다"), 38, inv);
+						Arrays.asList("공격력과 방어력이 2.5% 증가합니다", "경험치 획득량이 5% 증가합니다", "둔화에 면역이 됩니다"), 8, inv);
 			} else {
 				itemset(ChatColor.GOLD + "이글루 전리품(아직 모두 획득하지 못함)", Material.POWDER_SNOW_BUCKET, 0, 1,
-						Arrays.asList(ChatColor.GOLD + "" + od.Igloo.getOrDefault(p.getUniqueId(), 0) + "/2 획득함"), 38,
+						Arrays.asList(ChatColor.GOLD + "" + od.Igloo.getOrDefault(p.getUniqueId(), 0) + "/2 획득함"), 8,
 						inv);
 			}
 	
 			if (od.OceanRuins.getOrDefault(p.getUniqueId(), 0) >= 3) {
-				itemset(ChatColor.GOLD + "해저 폐허 전리품", pc, 0, 1, Arrays.asList("방어력이 5% 증가합니다", "익사에 면역이 됩니다"), 39, inv);
+				itemset(ChatColor.GOLD + "해저 폐허 전리품", pc, 0, 1, Arrays.asList("방어력이 5% 증가합니다", "익사에 면역이 됩니다"), 9, inv);
 			} else {
 				itemset(ChatColor.GOLD + "해저 폐허 전리품(아직 모두 획득하지 못함)", Material.PRISMARINE_CRYSTALS, 0, 1,
 						Arrays.asList(ChatColor.GOLD + "" + od.OceanRuins.getOrDefault(p.getUniqueId(), 0) + "/3 획득함"),
-						39, inv);
+					9, inv);
 			}
 	
 			if (od.WoodlandMansion.getOrDefault(p.getUniqueId(), 0) >= 1) {
-				itemset(ChatColor.GOLD + "삼림 대저택 전리품", ds, 0, 1, Arrays.asList("공격력이 3% 증가합니다", "방어력이 5% 증가합니다"), 40,
+				itemset(ChatColor.GOLD + "삼림 대저택 전리품", ds, 0, 1, Arrays.asList("공격력이 3% 증가합니다", "방어력이 5% 증가합니다"), 10,
 						inv);
 			} else {
 				itemset(ChatColor.GOLD + "삼림 대저택 전리품(아직 모두 획득하지 못함)", Material.DARK_OAK_SIGN, 0, 1,
 						Arrays.asList(
 								ChatColor.GOLD + "" + od.WoodlandMansion.getOrDefault(p.getUniqueId(), 0) + "/3 획득함"),
-						40, inv);
+					10, inv);
 			}
 	
 			if (od.Shipwreck.getOrDefault(p.getUniqueId(), 0) >= 3) {
 				itemset(ChatColor.GOLD + "난파선 전리품", bb, 0, 1, Arrays.asList("공격력과 방어력이 3% 증가합니다", "경험치 획득량이 5% 증가합니다"),
-						41, inv);
+					11, inv);
 			} else {
 				itemset(ChatColor.GOLD + "난파선 전리품(아직 모두 획득하지 못함)", Material.BIRCH_BOAT, 0, 1,
 						Arrays.asList(ChatColor.GOLD + "" + od.Shipwreck.getOrDefault(p.getUniqueId(), 0) + "/3 획득함"),
-						41, inv);
+					11, inv);
 			}
 	
 			if (od.OceanMonument.getOrDefault(p.getUniqueId(), 0) >= 1) {
 				itemset(ChatColor.GOLD + "해저 유적 전리품", hs, 0, 1, Arrays.asList("공격력과 방어력이 3% 증가합니다", "수영시 전도체의 힘을 얻습니다"),
-						42, inv);
+					12, inv);
 			} else {
 				itemset(ChatColor.GOLD + "해저 유적 전리품(아직 모두 획득하지 못함)", Material.HEART_OF_THE_SEA, 0, 1,
 						Arrays.asList(
 								ChatColor.GOLD + "" + od.OceanMonument.getOrDefault(p.getUniqueId(), 0) + "/1 획득함"),
-						42, inv);
+					12, inv);
 			}
 	
 			if (od.JungleTemple.getOrDefault(p.getUniqueId(), 0) >= 1) {
 				itemset(ChatColor.GOLD + "정글 사원 전리품", jp, 0, 1,
-						Arrays.asList("공격력과 방어력이 4% 증가합니다", "궁극기의 재사용 대기시간이 10% 감소합니다"), 43, inv);
+						Arrays.asList("공격력과 방어력이 4% 증가합니다", "궁극기의 재사용 대기시간이 10% 감소합니다"), 13, inv);
 			} else {
 				itemset(ChatColor.GOLD + "정글 사원 전리품(아직 모두 획득하지 못함)", Material.MOSSY_STONE_BRICKS, 0, 1,
 						Arrays.asList(
 								ChatColor.GOLD + "" + od.JungleTemple.getOrDefault(p.getUniqueId(), 0) + "/1 획득함"),
-						43, inv);
+					13, inv);
 			}
 	
 			if (od.PillagerOutpost.getOrDefault(p.getUniqueId(), 0) >= 2) {
 				pe.addUnsafeEnchantment(Enchantment.SMITE, 1);
-				itemset(ChatColor.GOLD + "약탈자 전초기지 전리품", pe, 0, 1, Arrays.asList("방어력이 6% 증가합니다"), 44, inv);
+				itemset(ChatColor.GOLD + "약탈자 전초기지 전리품", pe, 0, 1, Arrays.asList("방어력이 6% 증가합니다"), 14, inv);
 			} else {
 				itemset(ChatColor.GOLD + "약탈자 전초기지 전리품(아직 모두 획득하지 못함)", pe, 0, 1,
 						Arrays.asList(
 								ChatColor.GOLD + "" + od.PillagerOutpost.getOrDefault(p.getUniqueId(), 0) + "/2 획득함"),
-						44, inv);
+					14, inv);
 			}
 	
 			if (od.DesertPyramid.getOrDefault(p.getUniqueId(), 0) >= 1) {
 				itemset(ChatColor.GOLD + "사막 피라미드 전리품", cs, 0, 1,
-						Arrays.asList("공격력이 2% 증가합니다", "일반기술들의 재사용 대기시간이 10% 감소합니다"), 45, inv);
+						Arrays.asList("공격력이 2% 증가합니다", "일반기술들의 재사용 대기시간이 10% 감소합니다"), 15, inv);
 			} else {
 				itemset(ChatColor.GOLD + "사막 피라미드 전리품(아직 모두 획득하지 못함)", Material.CHISELED_SANDSTONE, 0, 1,
 						Arrays.asList(
 								ChatColor.GOLD + "" + od.DesertPyramid.getOrDefault(p.getUniqueId(), 0) + "/1 획득함"),
-						45, inv);
+					15, inv);
 			}
 	
 			if (od.Stronghold.getOrDefault(p.getUniqueId(), 0) >= 1) {
 				itemset(ChatColor.GOLD + "근거지 전리품", ef, 0, 1,
-						Arrays.asList("공격력과 방어력이 3% 증가합니다", "일반기술들의 재사용 대기시간이 10% 감소합니다"), 46, inv);
+						Arrays.asList("공격력과 방어력이 3% 증가합니다", "일반기술들의 재사용 대기시간이 10% 감소합니다"), 16, inv);
 			} else {
 				itemset(ChatColor.GOLD + "근거지 전리품(아직 모두 획득하지 못함)", Material.END_PORTAL_FRAME, 0, 1,
 						Arrays.asList(ChatColor.GOLD + "" + od.Stronghold.getOrDefault(p.getUniqueId(), 0) + "/1 획득함"),
-						46, inv);
+					16, inv);
 			}
 	
 			if (od.AncientCity.getOrDefault(p.getUniqueId(), 0) >= 2) {
-				itemset(ChatColor.GOLD + "고대 도시", my, 0, 1, Arrays.asList("방어력이 8% 증가합니다", "실명, 어둠에 면역이 됩니다"), 47, inv);
+				itemset(ChatColor.GOLD + "고대 도시", my, 0, 1, Arrays.asList("방어력이 8% 증가합니다", "실명, 어둠에 면역이 됩니다"), 17, inv);
 			} else {
 				itemset(ChatColor.GOLD + "고대 도시(아직 모두 획득하지 못함)", Material.SCULK_CATALYST, 0, 1,
 						Arrays.asList(ChatColor.GOLD + "" + od.AncientCity.getOrDefault(p.getUniqueId(), 0) + "/2 획득함"),
-						47, inv);
+					17, inv);
 			}
 	
 			if (od.Village.getOrDefault(p.getUniqueId(), 0) >= 5) {
 				itemset(ChatColor.GOLD + "마을 전리품", be, 0, 1,
-						Arrays.asList("공격력과 방어력이 2.5% 증가합니다", "경험치 획득량이 10% 증가합니다", "일반기술들의 재사용 대기시간이 10% 감소합니다"), 48,
+						Arrays.asList("공격력과 방어력이 2.5% 증가합니다", "경험치 획득량이 10% 증가합니다", "일반기술들의 재사용 대기시간이 10% 감소합니다"), 18,
 						inv);
 			} else {
 				itemset(ChatColor.GOLD + "마을 전리품(아직 모두 획득하지 못함)", Material.BELL, 0, 1,
-						Arrays.asList(ChatColor.GOLD + "" + od.Village.getOrDefault(p.getUniqueId(), 0) + "/5 획득함"), 48,
+						Arrays.asList(ChatColor.GOLD + "" + od.Village.getOrDefault(p.getUniqueId(), 0) + "/5 획득함"), 18,
 						inv);
 			}
 	
 			if (od.RuinedPortal.getOrDefault(p.getUniqueId(), 0) >= 4) {
 				itemset(ChatColor.GOLD + "무너진 차원문 전리품", co, 0, 1,
-						Arrays.asList("공격력과 방어력이 5% 증가합니다", "궁극기의 재사용 대기시간이 10% 감소합니다"), 49, inv);
+						Arrays.asList("공격력과 방어력이 5% 증가합니다", "궁극기의 재사용 대기시간이 10% 감소합니다"), 19, inv);
 			} else {
 				itemset(ChatColor.GOLD + "무너진 차원문 전리품(아직 모두 획득하지 못함)", Material.CRYING_OBSIDIAN, 0, 1,
 						Arrays.asList(
 								ChatColor.GOLD + "" + od.RuinedPortal.getOrDefault(p.getUniqueId(), 0) + "/4 획득함"),
-						49, inv);
+					19, inv);
 			}
 	
 			if (od.NetherFortress.getOrDefault(p.getUniqueId(), 0) >= 2) {
-				itemset(ChatColor.GOLD + "네더 요새 전리품", nq, 0, 1, Arrays.asList("공격력과 방어력이 8% 증가합니다"), 50, inv);
+				itemset(ChatColor.GOLD + "네더 요새 전리품", nq, 0, 1, Arrays.asList("공격력과 방어력이 8% 증가합니다"), 20, inv);
 			} else {
 				itemset(ChatColor.GOLD + "네더 요새 전리품(아직 모두 획득하지 못함)", Material.NETHER_QUARTZ_ORE, 0, 1,
 						Arrays.asList(
 								ChatColor.GOLD + "" + od.NetherFortress.getOrDefault(p.getUniqueId(), 0) + "/2 획득함"),
-						50, inv);
+					20, inv);
 			}
 	
 			if (od.BastionRemnant.getOrDefault(p.getUniqueId(), 0) >= 2) {
 				itemset(ChatColor.GOLD + "보루 잔해 전리품", ba, 0, 1,
-						Arrays.asList("공격력과 방어력이 6% 증가합니다", "일반기술들의 재사용 대기시간이 6% 감소합니다"), 51, inv);
+						Arrays.asList("공격력과 방어력이 6% 증가합니다", "일반기술들의 재사용 대기시간이 6% 감소합니다"), 21, inv);
 			} else {
 				itemset(ChatColor.GOLD + "보루 잔해 전리품(아직 모두 획득하지 못함)", Material.BASALT, 0, 1,
 						Arrays.asList(
 								ChatColor.GOLD + "" + od.BastionRemnant.getOrDefault(p.getUniqueId(), 0) + "/2 획득함"),
-						51, inv);
+					21, inv);
 			}
 	
 			if (od.EnderDragon.getOrDefault(p.getUniqueId(), 0) >= 1) {
 				itemset(ChatColor.GOLD + "엔더 드래곤 전리품", ms, 0, 1,
 						Arrays.asList(ChatColor.GOLD + "일반기술들의 재사용 대기시간이 10% 감소합니다", "궁극기의 재사용 대기시간이 10% 감소합니다", ""),
-						52, inv);
+					22, inv);
 			} else {
 				itemset(ChatColor.GOLD + "엔더 드래곤 전리품(아직 모두 획득하지 못함)", Material.DRAGON_HEAD, 0, 1,
 						Arrays.asList(ChatColor.GOLD + "" + od.EnderDragon.getOrDefault(p.getUniqueId(), 0) + "/1 획득함"),
-						52, inv);
+					22, inv);
 			}
 	
 			if (od.EndCity.getOrDefault(p.getUniqueId(), 0) >= 1) {
-				itemset(ChatColor.GOLD + "엔드 도시 전리품", ed, 0, 1, Arrays.asList("공격력과 방어력이 11% 증가합니다"), 53, inv);
+				itemset(ChatColor.GOLD + "엔드 도시 전리품", ed, 0, 1, Arrays.asList("공격력과 방어력이 11% 증가합니다"), 23, inv);
 			} else {
 				itemset(ChatColor.GOLD + "엔드 도시 전리품(아직 모두 획득하지 못함)", Material.END_STONE_BRICKS, 0, 1,
-						Arrays.asList(ChatColor.GOLD + "" + od.EndCity.getOrDefault(p.getUniqueId(), 0) + "/1 획득함"), 53,
+						Arrays.asList(ChatColor.GOLD + "" + od.EndCity.getOrDefault(p.getUniqueId(), 0) + "/1 획득함"), 23,
 						inv);
 			}
 		} else {
-			itemset(ChatColor.GOLD + "Dumpster", new ItemStack(Material.COMPOSTER), 0, 1, Arrays.asList("Open Dumpster If You Click"),
-					30, inv);
-			itemset(ChatColor.GOLD + "Artifact", new ItemStack(Material.AMETHYST_SHARD), 0, 1, Arrays.asList("Open Artifact management GUI If You Click"),
-					31, inv);
-			itemset(ChatColor.GOLD + "Shulker Bag", new ItemStack(Material.SHULKER_BOX), 0, 1, Arrays.asList("You can use Shulker Box as bag","By [Sneaking + Placing]"),
-					32, inv);
-			itemset(ChatColor.GOLD + "Backpack", new ItemStack(Material.BARREL), 0, 1, Arrays.asList("Open Backpack If You Click"),
-					33, inv);
+			itemsetbasic(ChatColor.GOLD + "Dumpster", new ItemStack(Material.COMPOSTER), 0, 1, Arrays.asList("Open Dumpster If You Click"),
+				0, inv);
+			itemsetbasic(ChatColor.GOLD + "Artifact", new ItemStack(Material.AMETHYST_SHARD), 0, 1, Arrays.asList("Open Artifact management GUI If You Click"),
+				1, inv);
+			itemsetbasic(ChatColor.GOLD + "Shulker Bag", new ItemStack(Material.SHULKER_BOX), 0, 1, Arrays.asList("You can use Shulker Box as bag","By [Sneaking + Placing]"),
+				2, inv);
+			itemsetbasic(ChatColor.GOLD + "Backpack", new ItemStack(Material.BARREL), 0, 1, Arrays.asList("Open Backpack If You Click"),
+				3, inv);
+			itemsetbasic(ChatColor.GOLD + "Skills", new ItemStack(Material.BORDURE_INDENTED_BANNER_PATTERN), 0, 1, Arrays.asList("Open Backpack If You Click"),
+					8, inv);
 			
 			if (od.Mineshaft.getOrDefault(p.getUniqueId(), 0) >= 2) {
 				itemset(ChatColor.GOLD + "Trophy Of MineShaft", ms, 0, 1,
-						Arrays.asList("Increase Damage & Armor 2%", "Increase Amount of Obtaining Experience 5%"), 36,
+						Arrays.asList("Increase Damage & Armor 2%", "Increase Amount of Obtaining Experience 5%"), 6,
 						inv);
 			} else {
 				itemset(ChatColor.GOLD + "Trophy Of MineShaft(Not Obtained All Yet)", Material.POWERED_RAIL, 0, 1,
 						Arrays.asList(
 								ChatColor.GOLD + "" + od.Mineshaft.getOrDefault(p.getUniqueId(), 0) + "/2 Obtained"),
-						36, inv);
+					6, inv);
 			}
 	
 			if (od.BuriedTreasure.getOrDefault(p.getUniqueId(), 0) >= 2) {
 				itemset(ChatColor.GOLD + "Trophy Of BuriedTreasure", mp, 0, 1,
-						Arrays.asList("Increase Damage & Armor 3%", "Increase Amount of Obtaining Experience 5%"), 37,
+						Arrays.asList("Increase Damage & Armor 3%", "Increase Amount of Obtaining Experience 5%"), 7,
 						inv);
 			} else {
 				itemset(ChatColor.GOLD + "Trophy Of BuriedTreasure(Not Obtained All Yet)", Material.SPAWNER, 0, 1,
 						Arrays.asList(
 								ChatColor.GOLD + "" + od.BuriedTreasure.getOrDefault(p.getUniqueId(), 0) + "/2 Obtained"),
-						37, inv);
+					7, inv);
 			}
 	
 			if (od.Igloo.getOrDefault(p.getUniqueId(), 0) >= 2) {
 				itemset(ChatColor.GOLD + "Trophy Of Igloo", sb, 0, 1, Arrays.asList("Increase Damage 2.5%",
-						"Immune To Slow", "Increase Amount of Obtaining Experience 5%"), 38, inv);
+						"Immune To Slow", "Increase Amount of Obtaining Experience 5%"), 8, inv);
 			} else {
 				itemset(ChatColor.GOLD + "Trophy Of Igloo(Not Obtained All Yet)", Material.POWDER_SNOW_BUCKET, 0, 1,
 						Arrays.asList(ChatColor.GOLD + "" + od.Igloo.getOrDefault(p.getUniqueId(), 0) + "/2 Obtained"),
-						38, inv);
+					8, inv);
 			}
 	
 			if (od.OceanRuins.getOrDefault(p.getUniqueId(), 0) >= 3) {
 				itemset(ChatColor.GOLD + "Trophy Of OceanRuins", pc, 0, 1,
-						Arrays.asList("Increase Armor 5%", "Immune To Drowning"), 39, inv);
+						Arrays.asList("Increase Armor 5%", "Immune To Drowning"), 9, inv);
 			} else {
 				itemset(ChatColor.GOLD + "Trophy Of OceanRuins(Not Obtained All Yet)", Material.PRISMARINE_CRYSTALS, 0,
 						1,
 						Arrays.asList(
 								ChatColor.GOLD + "" + od.OceanRuins.getOrDefault(p.getUniqueId(), 0) + "/3 Obtained"),
-						39, inv);
+					9, inv);
 			}
 	
 			if (od.WoodlandMansion.getOrDefault(p.getUniqueId(), 0) >= 1) {
 				itemset(ChatColor.GOLD + "Trophy Of WoodlandMansion", ds, 0, 1,
-						Arrays.asList("Increase Damage 3%", "Increase Armor 5%"), 40, inv);
+						Arrays.asList("Increase Damage 3%", "Increase Armor 5%"), 10, inv);
 			} else {
 				itemset(ChatColor.GOLD + "Trophy Of WoodlandMansion(Not Obtained All Yet)", Material.DARK_OAK_SIGN, 0,
 						1, Arrays.asList(ChatColor.GOLD + "" + od.WoodlandMansion.getOrDefault(p.getUniqueId(), 0)
 								+ "/3 Obtained"),
-						40, inv);
+					10, inv);
 			}
 	
 			if (od.Shipwreck.getOrDefault(p.getUniqueId(), 0) >= 3) {
 				itemset(ChatColor.GOLD + "Trophy Of Shipwreck", bb, 0, 1,
-						Arrays.asList("Increase Damage & Armor 3%", "Increase Amount of Obtaining Experience 5%"), 41,
+						Arrays.asList("Increase Damage & Armor 3%", "Increase Amount of Obtaining Experience 5%"), 11,
 						inv);
 			} else {
 				itemset(ChatColor.GOLD + "Trophy Of Shipwreck(Not Obtained All Yet)", Material.BIRCH_BOAT, 0, 1,
 						Arrays.asList(
 								ChatColor.GOLD + "" + od.Shipwreck.getOrDefault(p.getUniqueId(), 0) + "/3 Obtained"),
-						41, inv);
+					11, inv);
 			}
 	
 			if (od.OceanMonument.getOrDefault(p.getUniqueId(), 0) >= 1) {
 				itemset(ChatColor.GOLD + "Trophy Of OceanMonument", hs, 0, 1,
-						Arrays.asList("Increase Damage & Armor 3%", "Get Conduit Power When Swim"), 42, inv);
+						Arrays.asList("Increase Damage & Armor 3%", "Get Conduit Power When Swim"), 12, inv);
 			} else {
 				itemset(ChatColor.GOLD + "Trophy Of OceanMonument(Not Obtained All Yet)", Material.HEART_OF_THE_SEA, 0,
 						1, Arrays.asList(ChatColor.GOLD + "" + od.OceanMonument.getOrDefault(p.getUniqueId(), 0)
 								+ "/1 Obtained"),
-						42, inv);
+					12, inv);
 			}
 	
 			if (od.JungleTemple.getOrDefault(p.getUniqueId(), 0) >= 1) {
 				itemset(ChatColor.GOLD + "Trophy Of JungleTemple", jp, 0, 1,
-						Arrays.asList("Increase Damage & Armor 4%", "Decrease Ult's Cooldown 10%"), 43, inv);
+						Arrays.asList("Increase Damage & Armor 4%", "Decrease Ult's Cooldown 10%"), 13, inv);
 			} else {
 				itemset(ChatColor.GOLD + "Trophy Of JungleTemple(Not Obtained All Yet)", Material.MOSSY_STONE_BRICKS, 0,
 						1,
 						Arrays.asList(
 								ChatColor.GOLD + "" + od.JungleTemple.getOrDefault(p.getUniqueId(), 0) + "/1 Obtained"),
-						43, inv);
+					13, inv);
 			}
 	
 			if (od.PillagerOutpost.getOrDefault(p.getUniqueId(), 0) >= 2) {
 				pe.addUnsafeEnchantment(Enchantment.SMITE, 1);
-				itemset(ChatColor.GOLD + "Trophy Of PillagerOutpost", pe, 0, 1, Arrays.asList("Increase Armor 6%"), 44,
+				itemset(ChatColor.GOLD + "Trophy Of PillagerOutpost", pe, 0, 1, Arrays.asList("Increase Armor 6%"), 14,
 						inv);
 			} else {
 				itemset(ChatColor.GOLD + "Trophy Of PillagerOutpost(Not Obtained All Yet)", pe, 0, 1, Arrays.asList(
-						ChatColor.GOLD + "" + od.PillagerOutpost.getOrDefault(p.getUniqueId(), 0) + "/2 Obtained"), 44,
+						ChatColor.GOLD + "" + od.PillagerOutpost.getOrDefault(p.getUniqueId(), 0) + "/2 Obtained"), 14,
 						inv);
 			}
 	
 			if (od.DesertPyramid.getOrDefault(p.getUniqueId(), 0) >= 1) {
 				itemset(ChatColor.GOLD + "Trophy Of DesertPyramid", cs, 0, 1,
-						Arrays.asList("Increase Damage 2%", "Decrease Normal Skills' Cooldown 10%"), 45, inv);
+						Arrays.asList("Increase Damage 2%", "Decrease Normal Skills' Cooldown 10%"), 15, inv);
 			} else {
 				itemset(ChatColor.GOLD + "Trophy Of DesertPyramid(Not Obtained All Yet)", Material.CHISELED_SANDSTONE,
 						0, 1, Arrays.asList(ChatColor.GOLD + "" + od.DesertPyramid.getOrDefault(p.getUniqueId(), 0)
 								+ "/1 Obtained"),
-						45, inv);
+					15, inv);
 			}
 	
 			if (od.Stronghold.getOrDefault(p.getUniqueId(), 0) >= 1) {
 				itemset(ChatColor.GOLD + "Trophy Of Stronghold", ef, 0, 1,
-						Arrays.asList("Increase Damage & Armor 3%", "Decrease Normal Skills' Cooldown 10%"), 46, inv);
+						Arrays.asList("Increase Damage & Armor 3%", "Decrease Normal Skills' Cooldown 10%"), 16, inv);
 			} else {
 				itemset(ChatColor.GOLD + "Trophy Of Stronghold(Not Obtained All Yet)", Material.END_PORTAL_FRAME, 0, 1,
 						Arrays.asList(
 								ChatColor.GOLD + "" + od.Stronghold.getOrDefault(p.getUniqueId(), 0) + "/1 Obtained"),
-						46, inv);
+					16, inv);
 			}
 	
 			if (od.AncientCity.getOrDefault(p.getUniqueId(), 0) >= 2) {
 				itemset(ChatColor.GOLD + "Trophy Of AncientCity", my, 0, 1,
-						Arrays.asList("Increase Armor 8%", "Immune To Blindness, Darkness"), 47, inv);
+						Arrays.asList("Increase Armor 8%", "Immune To Blindness, Darkness"), 17, inv);
 			} else {
 				itemset(ChatColor.GOLD + "Trophy Of AncientCity(Not Obtained All Yet)", Material.SCULK_CATALYST, 0, 1,
 						Arrays.asList(
 								ChatColor.GOLD + "" + od.AncientCity.getOrDefault(p.getUniqueId(), 0) + "/2 Obtained"),
-						47, inv);
+					17, inv);
 			}
 	
 			if (od.Village.getOrDefault(p.getUniqueId(), 0) >= 5) {
 				itemset(ChatColor.GOLD + "Trophy Of Village", be, 0, 1, Arrays.asList("Increase Damage & Armor 2.5%",
-						"Increase Amount of Obtaining Experience 10%", "Decrease Normal Skills' Cooldown 10%"), 48,
+						"Increase Amount of Obtaining Experience 10%", "Decrease Normal Skills' Cooldown 10%"), 18,
 						inv);
 			} else {
 				itemset(ChatColor.GOLD + "Trophy Of Village(Not Obtained All Yet)", Material.BELL, 0, 1,
 						Arrays.asList(
 								ChatColor.GOLD + "" + od.Village.getOrDefault(p.getUniqueId(), 0) + "/5 Obtained"),
-						48, inv);
+					18, inv);
 			}
 	
 			if (od.RuinedPortal.getOrDefault(p.getUniqueId(), 0) >= 4) {
 				itemset(ChatColor.GOLD + "Trophy Of RuinedPortal", co, 0, 1,
-						Arrays.asList("Increase Damage & Armor 5%", "Decrease Ult's Cooldown 10%"), 49, inv);
+						Arrays.asList("Increase Damage & Armor 5%", "Decrease Ult's Cooldown 10%"), 19, inv);
 			} else {
 				itemset(ChatColor.GOLD + "Trophy Of RuinedPortal(Not Obtained All Yet)", Material.CRYING_OBSIDIAN, 0, 1,
 						Arrays.asList(
 								ChatColor.GOLD + "" + od.RuinedPortal.getOrDefault(p.getUniqueId(), 0) + "/4 Obtained"),
-						49, inv);
+					19, inv);
 			}
 	
 			if (od.NetherFortress.getOrDefault(p.getUniqueId(), 0) >= 2) {
 				itemset(ChatColor.GOLD + "Trophy Of NetherFortress", nq, 0, 1,
-						Arrays.asList("Increase Damage & Armor 8%"), 50, inv);
+						Arrays.asList("Increase Damage & Armor 8%"), 20, inv);
 			} else {
 				itemset(ChatColor.GOLD + "Trophy Of NetherFortress(Not Obtained All Yet)", Material.NETHER_QUARTZ_ORE,
 						0, 1, Arrays.asList(ChatColor.GOLD + "" + od.NetherFortress.getOrDefault(p.getUniqueId(), 0)
 								+ "/2 Obtained"),
-						50, inv);
+					20, inv);
 			}
 	
 			if (od.BastionRemnant.getOrDefault(p.getUniqueId(), 0) >= 2) {
 				itemset(ChatColor.GOLD + "Trophy Of BastionRemnant", ba, 0, 1,
-						Arrays.asList("Increase Damage & Armor 6%", "Decrease Normal Skills' Cooldown 6%"), 51, inv);
+						Arrays.asList("Increase Damage & Armor 6%", "Decrease Normal Skills' Cooldown 6%"), 21, inv);
 			} else {
 				itemset(ChatColor.GOLD + "Trophy Of BastionRemnant(Not Obtained All Yet)", Material.BASALT, 0, 1,
 						Arrays.asList(ChatColor.GOLD + "" + od.BastionRemnant.getOrDefault(p.getUniqueId(), 0)
 								+ "/2 Obtained"),
-						51, inv);
+					21, inv);
 			}
 	
 			if (od.EnderDragon.getOrDefault(p.getUniqueId(), 0) >= 1) {
 				itemset(ChatColor.GOLD + "Trophy Of EnderDragon", ms, 0, 1,
 						Arrays.asList(ChatColor.GOLD + "Decrease Normal Skills' Cooldown 10%",
 								"Decrease Ult's Cooldown 10%", ""),
-						52, inv);
+					22, inv);
 			} else {
 				itemset(ChatColor.GOLD + "Trophy Of EnderDragon(Not Obtained All Yet)", Material.DRAGON_HEAD, 0, 1,
 						Arrays.asList(ChatColor.GOLD + "" + od.EnderDragon.getOrDefault(p.getUniqueId(), 0) + "/1 획득함"),
-						52, inv);
+					22, inv);
 			}
 	
 			if (od.EndCity.getOrDefault(p.getUniqueId(), 0) >= 1) {
 				itemset(ChatColor.GOLD + "Trophy Of EndCity", ed, 0, 1, Arrays.asList("Increase Damage & Armor 11%"),
-						53, inv);
+					23, inv);
 			} else {
 				itemset(ChatColor.GOLD + "Trophy Of EndCity(Not Obtained All Yet)", Material.END_STONE_BRICKS, 0, 1,
 						Arrays.asList(
 								ChatColor.GOLD + "" + od.EndCity.getOrDefault(p.getUniqueId(), 0) + "/1 Obtained"),
-						53, inv);
+					23, inv);
 			}
 	
 		}
+		return inv;
 	}
 
 

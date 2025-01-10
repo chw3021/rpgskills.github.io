@@ -522,8 +522,8 @@ public class ClassData implements Serializable, Listener{
 			            
 			            p.closeInventory();new ClassData(playerclass).saveData(path +"/plugins/RPGskills/ClassData.data");
 						FireSkillsGui fsg = new FireSkillsGui();
-						fsg.FIreSkillsinv(p);
-						fsg.FIreSkillsinv(p);
+						fsg.FireSkillsinv(p);
+						fsg.FireSkillsinv(p);
 						break;
 					case"Witherist":
 					case"위더리스트":
