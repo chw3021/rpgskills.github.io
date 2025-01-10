@@ -898,7 +898,7 @@ public class Obtained implements Serializable, Listener {
 		items.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 		items.setLore(Lore);
 		item.setItemMeta(items);
-		inv.setItem(loc, item);
+		inv.setItem(loc+3, item);
 	}
 
 
@@ -949,7 +949,7 @@ public class Obtained implements Serializable, Listener {
 	public Inventory itemset(Player p) {
 		String path = new File("").getAbsolutePath();
 		Obtained od = new Obtained(loadData(path + "/plugins/RPGskills/Obtained.data"));
-		Inventory inv = Bukkit.createInventory(null, 36, "Utilites");
+		Inventory inv = Bukkit.createInventory(null, 27, "Utilites");
 		ItemStack mp = new ItemStack(Material.CHEST);
 		mp.addUnsafeEnchantment(Enchantment.SMITE, 1);
 	
@@ -969,7 +969,7 @@ public class Obtained implements Serializable, Listener {
 		hs.addUnsafeEnchantment(Enchantment.SMITE, 1);
 		ItemStack jp = new ItemStack(Material.MOSSY_STONE_BRICKS);
 		jp.addUnsafeEnchantment(Enchantment.SMITE, 1);
-		ItemStack pe = new ItemStack(Material.GRAY_BANNER);
+		ItemStack pe = new ItemStack(Material.CROSSBOW);
 		ItemStack cs = new ItemStack(Material.CHISELED_SANDSTONE);
 		cs.addUnsafeEnchantment(Enchantment.SMITE, 1);
 		ItemStack ef = new ItemStack(Material.END_PORTAL_FRAME);
@@ -1433,7 +1433,6 @@ public class Obtained implements Serializable, Listener {
 			out.close();
 			return this;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			return this;
 		}
 	}
@@ -1446,7 +1445,6 @@ public class Obtained implements Serializable, Listener {
 			in.close();
 			return data;
 		} catch (ClassNotFoundException | IOException | NullPointerException e) {
-			// TODO Auto-generated catch block
 
 			String path = new File("").getAbsolutePath();
 			Obtained data = new Obtained(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(),
