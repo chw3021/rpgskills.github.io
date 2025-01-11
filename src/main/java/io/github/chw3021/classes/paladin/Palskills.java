@@ -1385,30 +1385,42 @@ public class Palskills extends Pak {
 	            }, 45); 
             	pltlt.put(p.getUniqueId(), task);
             	
-            	
-                Location tl = gettargetblock(p,3);
-                
-                ArrayList<Location> line = new ArrayList<Location>();
-                AtomicInteger j = new AtomicInteger();
-                p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.6f, 0.5f);
-                p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_CLUSTER_BREAK, 0.6f, 1.5f);
-                for(double an = Math.PI/20; an>-Math.PI/20; an-=Math.PI/180) {
-                	Location pl = p.getEyeLocation();
-                	pl.add(pl.getDirection().rotateAroundY(an).normalize().multiply(2.5));
-                	line.add(pl);
-                }
-                line.forEach(l -> {
-					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                @Override
-		                public void run() 
-		                {
-			        		p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l,10,1,1,1,0);
-			        		p.getWorld().spawnParticle(Particle.BLOCK, l,10,1,1,1,0,Material.CHISELED_QUARTZ_BLOCK.createBlockData());	    
-			        		p.getWorld().spawnParticle(Particle.WHITE_ASH, l,10,2,2,2,0.1);
-		                }
-					}, j.incrementAndGet()/900); 
-                	
-                });
+            	Location tl = gettargetblock(p, 3);
+
+            	ArrayList<Location> line = new ArrayList<Location>();
+            	AtomicInteger j = new AtomicInteger();
+            	p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.6f, 0.5f);
+            	p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_CLUSTER_BREAK, 0.6f, 1.5f);
+
+            	// 십자가 형태의 파티클을 생성합니다.
+            	double length = 2.5; // 십자가의 길이
+            	int particleCount = 10; // 각 방향에 생성할 파티클 수
+
+            	// 수평 방향 파티클
+            	for (int i = -particleCount; i <= particleCount; i++) {
+            	    Location pl = p.getEyeLocation().clone();
+            	    pl.add(pl.getDirection().rotateAroundY(0).normalize().multiply(length * i / particleCount)); // 수평 방향
+            	    line.add(pl);
+            	}
+
+            	// 수직 방향 파티클
+            	for (int i = -particleCount; i <= particleCount; i++) {
+            	    Location pl = p.getEyeLocation().clone();
+            	    pl.add(pl.getDirection().rotateAroundX(Math.PI / 2).normalize().multiply(length * i / particleCount)); // 수직 방향
+            	    line.add(pl);
+            	}
+
+            	line.forEach(l -> {
+            	    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            	        @Override
+            	        public void run() {
+            	            p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l, 10, 1, 1, 1, 0);
+            	            p.getWorld().spawnParticle(Particle.BLOCK, l, 10, 1, 1, 1, 0, Material.CHISELED_QUARTZ_BLOCK.createBlockData());
+            	            p.getWorld().spawnParticle(Particle.WHITE_ASH, l, 10, 2, 2, 2, 0.1);
+            	        }
+            	    }, j.incrementAndGet() / 900);
+            	});
+
         		p.getWorld().spawnParticle(Particle.GLOW, tl,200,2,2,2,0);
 
 				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
