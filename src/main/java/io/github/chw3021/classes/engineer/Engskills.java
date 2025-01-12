@@ -157,7 +157,7 @@ public class Engskills extends Pak {
 						.cooldown(sec)
 						.kname("발사기")
 						.ename("Dispenser")
-						.slot(0)
+						.slot(5)
 						.hm(sdcooldown)
 						.skillUse(() -> {
 							if(Proficiency.getpro(p)>=1) {
@@ -1015,7 +1015,7 @@ public class Engskills extends Pak {
 						.cooldown(sec)
 						.kname("중력자")
 						.ename("Graviton")
-						.slot(2)
+						.slot(0)
 						.hm(cdcooldown)
 						.skillUse(() -> {
 							if(Proficiency.getpro(p)>=1) {
@@ -1800,7 +1800,7 @@ public class Engskills extends Pak {
 			Location el =le.getLocation();
 
 
-			double sec =20*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+			double sec =25*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 
 
@@ -1812,7 +1812,7 @@ public class Engskills extends Pak {
 							.cooldown(sec)
 							.kname("자기장")
 							.ename("Magnetic")
-							.slot(4)
+							.slot(2)
 							.hm(stcooldown)
 							.skillUse(() -> {
 								if(Proficiency.getpro(p)>=1) {
@@ -1889,7 +1889,7 @@ public class Engskills extends Pak {
 						.cooldown(sec)
 						.kname("제트팩")
 						.ename("Jetpack")
-						.slot(5)
+						.slot(4)
 						.hm(smcooldown)
 						.skillUse(() -> {
 							if(Proficiency.getpro(p)>=1) {

@@ -237,7 +237,7 @@ public class SkillsGui {
 			input.add(ChatColor.GOLD+"Master LV."+masterlev);
 		}
 
-		input.stream().filter(s -> !s.contains("X") && !s.contains("Master")).forEach(l -> {
+		input.stream().filter(s -> !s.contains(" X ") && !s.contains("Master")).forEach(l -> {
 			input.set(input.indexOf(l), ChatColor.RESET + (ChatColor.of(Color.LIGHT_GRAY) + l));
 		});
 		
@@ -268,7 +268,7 @@ public class SkillsGui {
 				input.set(input.indexOf(l),ChatColor.GOLD+ l);
 			});
 		}
-		input.stream().filter(s -> !s.contains("X") && !s.contains("Master")).forEach(l -> {
+		input.stream().filter(s -> !s.contains(" X ") && !s.contains("Master")).forEach(l -> {
 			input.set(input.indexOf(l), ChatColor.RESET + (ChatColor.of(Color.LIGHT_GRAY) + l));
 		});
 		
@@ -291,8 +291,8 @@ public class SkillsGui {
 		input.addAll(Lore);
 		input.addAll(des(loc));
 		
-		if(input.stream().anyMatch(s -> s.contains("X"))) {
-			input.stream().filter(s -> s.contains("X")).forEach(l -> {
+		if(input.stream().anyMatch(s -> s.contains(" X "))) {
+			input.stream().filter(s -> s.contains(" X ")).forEach(l -> {
 				
 				input.set(input.indexOf(l),ChatColor.LIGHT_PURPLE+ l);
 			});
@@ -304,7 +304,7 @@ public class SkillsGui {
 				input.set(input.indexOf(l),ChatColor.GOLD+ l);
 			});
 		}
-		input.stream().filter(s -> !s.contains("X") && !s.contains("Master")).forEach(l -> {
+		input.stream().filter(s -> !s.contains(" X ") && !s.contains("Master")).forEach(l -> {
 			input.set(input.indexOf(l), ChatColor.RESET + (ChatColor.of(Color.LIGHT_GRAY) + l));
 		});
 		
@@ -327,8 +327,8 @@ public class SkillsGui {
 		input.addAll(Lore);
 		input.addAll(des(loc));
 		
-		if(input.stream().anyMatch(s -> s.contains("X"))) {
-			input.stream().filter(s -> s.contains("X")).forEach(l -> {
+		if(input.stream().anyMatch(s -> s.contains(" X ") || s.contains("+"))) {
+			input.stream().filter(s -> s.contains(" X ") || s.contains("+")).forEach(l -> {
 				
 				input.set(input.indexOf(l),ChatColor.LIGHT_PURPLE+ l);
 			});
@@ -340,7 +340,7 @@ public class SkillsGui {
 				input.set(input.indexOf(l),ChatColor.GOLD+ l);
 			});
 		}
-		input.stream().filter(s -> !s.contains("X") && !s.contains("Master")).forEach(l -> {
+		input.stream().filter(s -> !s.contains(" X ") && !s.contains("Master")).forEach(l -> {
 			input.set(input.indexOf(l), ChatColor.RESET + (ChatColor.of(Color.LIGHT_GRAY) + l));
 		});
 		

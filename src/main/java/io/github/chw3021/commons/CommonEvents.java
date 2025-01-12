@@ -1,5 +1,15 @@
 package io.github.chw3021.commons;
 
+import java.io.BufferedInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1249,11 +1259,39 @@ public class CommonEvents extends Mobs implements Listener{
 
 	}
 
+    public static byte[] downloadResourcePack(String urlString) throws Exception {
+        URI uri = new URI(urlString);
+        URL url = uri.toURL();
+
+        try (InputStream in = new BufferedInputStream(url.openStream());
+    		FileOutputStream out = new FileOutputStream("RpsSkills.zip")) {
+            byte[] dataBuffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = in.read(dataBuffer, 0, dataBuffer.length)) != -1) {
+                out.write(dataBuffer, 0, bytesRead);
+            }
+        }
+        return Files.readAllBytes(Paths.get("RpsSkills.zip"));
+    }
+
+    public byte[] getSHA1Hash(byte[] data) throws NoSuchAlgorithmException {
+        MessageDigest digest = MessageDigest.getInstance("SHA-1");
+        return digest.digest(data); // Base64 인코딩 없이 바이트 배열 반환
+    }
 	public void join(PlayerJoinEvent ev)
 	{
 		Player p = ev.getPlayer();
-        p.setResourcePack(resourcePackUrl);
 
+        try {
+            String resourcePackUrl = "https://github.com/chw3021/RpgSkills/archive/refs/heads/master.zip";
+            byte[] data = downloadResourcePack(resourcePackUrl);
+            byte[] sha1Hash = getSHA1Hash(data);
+    		p.setResourcePack(resourcePackUrl, sha1Hash, false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+		
 		p.setGravity(true);
 		p.getAttribute(Attribute.ARMOR).setBaseValue(0);
 		p.getAttribute(Attribute.ARMOR_TOUGHNESS).setBaseValue(0);

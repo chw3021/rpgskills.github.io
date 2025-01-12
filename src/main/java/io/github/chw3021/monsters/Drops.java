@@ -10,9 +10,11 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityDropItemEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
+import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
@@ -25,11 +27,55 @@ public class Drops implements Listener {
 
 
 	Integer CHANCE = 1;
+
+	@EventHandler
+	public void ItemDrops(ItemSpawnEvent d) 
+	{
+
+		for(Entity e : d.getEntity().getNearbyEntities(2, 2, 2)) {
+			if (e instanceof Item item) {
+				item.setVelocity(new Vector(0,0,0));
+				Bukkit.getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
+                    @Override
+                    public void run() {
+        				item.setVelocity(new Vector(0,0,0));
+                    }
+				}, 20);
+			}
+		}
+	}
+	@EventHandler
+	public void ItemDrops(EntityChangeBlockEvent d) 
+	{
+
+		for(Entity e : d.getEntity().getNearbyEntities(2, 2, 2)) {
+			if (e instanceof Item item) {
+				item.setVelocity(new Vector(0,0,0));
+				Bukkit.getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
+                    @Override
+                    public void run() {
+        				item.setVelocity(new Vector(0,0,0));
+                    }
+				}, 20);
+			}
+		}
+	}
 	
 	@EventHandler
 	public void ItemDrops(EntityDropItemEvent d) 
 	{
 
+		for(Entity e : d.getItemDrop().getNearbyEntities(2, 2, 2)) {
+			if (e instanceof Item item) {
+				item.setVelocity(new Vector(0,0,0));
+				Bukkit.getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
+                    @Override
+                    public void run() {
+        				item.setVelocity(new Vector(0,0,0));
+                    }
+				}, 20);
+			}
+		}
 		if(d.getEntity().hasMetadata("raid")||d.getEntity().hasMetadata("summoned")) {
 			d.setCancelled(true);
 		}

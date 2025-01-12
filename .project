@@ -37,11 +37,4 @@
 		<nature>org.maven.ide.eclipse.maven2Nature</nature>
 		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>resources/RPGskills</name>
-			<type>2</type>
-			<locationURI>PARENT-2-PROJECT_LOC/AppData/Roaming/.minecraft/resourcepacks/RPGskills</locationURI>
-		</link>
-	</linkedResources>
 </projectDescription>

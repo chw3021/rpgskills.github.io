@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -37,7 +38,29 @@ public class Classgui implements Serializable {
 		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		items.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 		items.setDisplayName(display);
-		items.setLore(Lore);
+		
+		List<String> input = new ArrayList<>();
+		input.addAll(Lore);
+		input.stream().filter(s -> s.contains("/")).forEach(l -> {
+			input.set(input.indexOf(l), ChatColor.RESET + (ChatColor.GREEN + l));
+		});
+		input.stream().filter(s -> !s.contains("/") && s.contains(":")&& !s.contains("Difficulty")&& !s.contains("난이도")).forEach(l -> {
+			input.set(input.indexOf(l), ChatColor.RESET + (ChatColor.DARK_AQUA + l));
+		});
+		input.stream().filter(s -> !s.contains("/") && !s.contains(":")).forEach(l -> {
+			input.set(input.indexOf(l), ChatColor.RESET + (ChatColor.LIGHT_PURPLE + l));
+		});
+		input.stream().filter(s -> s.contains("Easy") || s.contains("쉬움")).forEach(l -> {
+			input.set(input.indexOf(l), ChatColor.RESET + (ChatColor.AQUA + l));
+		});
+		input.stream().filter(s -> s.contains("Normal") || s.contains("보통")).forEach(l -> {
+			input.set(input.indexOf(l), ChatColor.RESET + (ChatColor.YELLOW + l));
+		});
+		input.stream().filter(s -> s.contains("Hard") || s.contains("어려움")).forEach(l -> {
+			input.set(input.indexOf(l), ChatColor.RESET + (ChatColor.RED + l));
+		});
+		items.setLore(input);
+		
 		items.setAttributeModifiers(null);
 		item.setItemMeta(items);
 		inv.setItem(loc, item);
@@ -1008,7 +1031,7 @@ public class Classgui implements Serializable {
 					"방어: 2.5/5", "제어: 2.5/5", "지원: 1/5", "범위: 1/5", "사거리: 1/5", "기동: 5/5", "난이도: 어려움"), 19, inv);
 			itemset(ChatColor.BLUE + "투사[제작중]", Material.MACE, 0, 1, Arrays.asList("추천 장비:", "철퇴", "", "공격: 3/5",
 					"방어: 2.5/5", "제어: 4/5", "지원: 1/5", "범위: 4/5", "사거리: 2/5", "기동: 2.5/5", "난이도: 보통"), 28, inv);
-			itemset(ChatColor.BLUE + "성기사", Material.SHIELD, 0, 1, Arrays.asList("추천 장비:", "주:도끼 또는 철퇴, 보조:방패", "",
+			itemset(ChatColor.BLUE + "성기사", Material.SHIELD, 0, 1, Arrays.asList("추천 장비:", "주-도끼 또는 철퇴, 보조-방패", "",
 					"공격: 1.5/5", "방어: 5/5", "제어: 3/5", "지원: 4.5/5", "범위: 2/5", "사거리: 2/5", "기동: 2/5", "난이도: 쉬움"), 37,
 					inv);
 

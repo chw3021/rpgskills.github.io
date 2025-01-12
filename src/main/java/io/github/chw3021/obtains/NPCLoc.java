@@ -177,6 +177,12 @@ public class NPCLoc implements Serializable, Listener{
 		if(ChestLocs.add(l)) {
 			Spawn(l,structureKey);
 		}
+
+		System.out.println(l.getBlock().toString());
+		System.out.println(ih);
+		System.out.println((ih instanceof Entity));
+		System.out.println((ih instanceof Block));
+		System.out.println(ev.getEntity());
 		
 		l.getBlock().setMetadata("structureChest", new FixedMetadataValue(RMain.getInstance(),l.toString()));
 		
@@ -205,6 +211,7 @@ public class NPCLoc implements Serializable, Listener{
 			if(StructureKeys.containsKey(l)) {
 				if(!b.hasMetadata("structureChest")) {
 					b.setMetadata("structureChest", new FixedMetadataValue(RMain.getInstance(),l.toString()));
+					System.out.println("metadataset");
 				}
 				
 				StructureKeys.entries().forEach(en->{
@@ -217,6 +224,7 @@ public class NPCLoc implements Serializable, Listener{
 			if(b.hasMetadata("structureChest")) {
 				
 				d.setCancelled(true);
+				System.out.println("setCancelled");
 
 				Table<UUID, Location, ItemStack[]> Locs = getLocsdata().Locs;
 			    if (!Locs.contains(p.getUniqueId(), l)) {
@@ -841,12 +849,6 @@ public class NPCLoc implements Serializable, Listener{
     		
     	}
 		
-
-		w.getNearbyEntities(lel.clone(),4,4,4).forEach(e -> {
-			if(!(e instanceof Player) && !e.hasMetadata("untargetable") && !e.hasMetadata("obnpc")) {
-				e.remove();
-			}
-		});
     	return;
 	}
 	

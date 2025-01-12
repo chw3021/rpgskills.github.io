@@ -300,6 +300,13 @@ public class Forskills extends Pak {
 		mgaovercountt.put(p.getUniqueId(), task1);
 	}
 
+    public static double calculateValue(double g) {
+    	if(60 - g/3d < 10) {
+    		return 10;
+    	}
+    	return 60 - g/3d;
+    }
+    
 	public void MachineGun(PlayerSwapHandItemsEvent ev)
 	{
 		Player p = ev.getPlayer();
@@ -414,7 +421,7 @@ public class Forskills extends Pak {
 						else {
 							p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("MachineGun Reloading...").create());
 						}
-						Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,(60-fsd.Development.get(p.getUniqueId())/3)/20d,0,ChatColor.BLUE+"기관총",ChatColor.BLUE+"MachineGun"));
+						Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,calculateValue(fsd.Development.get(p.getUniqueId()))/20d,5,ChatColor.BLUE+"기관총",ChatColor.BLUE+"MachineGun"));
 
 						mga.remove(p);
 						mgar.put(p, 1);
@@ -437,7 +444,7 @@ public class Forskills extends Pak {
 								}
 
 							}
-						}, 60-fsd.Development.get(p.getUniqueId())/3);
+						}, (long) (calculateValue(fsd.Development.get(p.getUniqueId()))));
 					}
 				}
 				else if(!mga.containsKey(p)&&mgar.containsKey(p)){
@@ -477,7 +484,7 @@ public class Forskills extends Pak {
 							.cooldown(sec)
 							.kname("천둥포")
 							.ename("LightningCannon")
-							.slot(1)
+							.slot(3)
 							.hm(gdcooldown)
 							.skillUse(() -> {
 
@@ -788,7 +795,7 @@ public class Forskills extends Pak {
 						.cooldown(sec)
 						.kname("TNT발사기")
 						.ename("TNTLauncher")
-						.slot(2)
+						.slot(0)
 						.hm(cdcooldown)
 						.skillUse(() -> {
 							if(comprt.containsKey(p.getUniqueId())) {
@@ -1157,7 +1164,7 @@ public class Forskills extends Pak {
 							.cooldown(sec)
 							.kname("전자기관단총")
 							.ename("RailSMG")
-							.slot(3)
+							.slot(1)
 							.hm(frcooldown)
 							.skillUse(() -> {
 								if(Proficiency.getpro(p)>=2) {
@@ -1453,7 +1460,7 @@ public class Forskills extends Pak {
 					        .cooldown(sec)
 					        .kname("충격파")
 					        .ename("Shockwave")
-					        .slot(4)
+					        .slot(2)
 					        .hm(stcooldown)
 					        .skillUse(() -> {
 					            if (Proficiency.getpro(p) >= 2) {
@@ -1482,9 +1489,9 @@ public class Forskills extends Pak {
 					                        }
 
 					                        if (!(e == p) && e instanceof LivingEntity target && !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
-					                            // 밀리는 방향 계산: 적과 플레이어 간의 방향 벡터
+					                            
 					                        	shockWaveKnockBack(p, target, pfl);
-					                            atk1(0.135, p, target); // 추가 피해 계산
+					                            atk1(0.135, p, target); 
 					                            if (Proficiency.getpro(p) >= 1) {
 					                                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), () -> {
 					                                    Holding.holding(p, target, 20L);
@@ -1546,7 +1553,7 @@ public class Forskills extends Pak {
 						.cooldown(sec)
 						.kname("점착미사일")
 						.ename("HoneyMissile")
-						.slot(5)
+						.slot(4)
 						.hm(smcooldown)
 						.skillUse(() -> {
 							if(Proficiency.getpro(p)>=2) {

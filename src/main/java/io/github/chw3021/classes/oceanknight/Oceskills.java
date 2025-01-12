@@ -232,7 +232,7 @@ public class Oceskills extends Pak {
 						.cooldown(sec)
 						.kname("물의방벽")
 						.ename("WaterBarrier")
-						.slot(0)
+						.slot(1)
 						.hm(rscooldown)
 						.skillUse(() -> {
 		                	if(trdvt.containsKey(p.getUniqueId())) {
@@ -509,7 +509,7 @@ public class Oceskills extends Pak {
 						.cooldown(sec)
 						.kname("해풍참")
 						.ename("WetSwing")
-						.slot(1)
+						.slot(5)
 						.hm(prcooldown)
 						.skillUse(() -> {
 		                	if(bckwsht.containsKey(p.getUniqueId())) {
@@ -821,7 +821,7 @@ public class Oceskills extends Pak {
 						.cooldown(sec)
 						.kname("역조")
 						.ename("RipCurrent")
-						.slot(2)
+						.slot(3)
 						.hm(jmcooldown)
 						.skillUse(() -> {
 		                    p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 0.5f);
@@ -879,7 +879,7 @@ public class Oceskills extends Pak {
 							.cooldown(sec)
 							.kname("투창")
 							.ename("Javelin")
-							.slot(3)
+							.slot(2)
 							.hm(eccooldown)
 							.skillUse(() -> {
 				            	Trident firstarrow = p.launchProjectile(Trident.class);
@@ -1109,7 +1109,7 @@ public class Oceskills extends Pak {
 						.cooldown(sec)
 						.kname("바다창술")
 						.ename("WaterSpear")
-						.slot(4)
+						.slot(0)
 						.hm(thcooldown)
 						.skillUse(() -> {
 		                	if(drllt.containsKey(p.getUniqueId())) {
@@ -1398,7 +1398,7 @@ public class Oceskills extends Pak {
 							.cooldown(sec)
 							.kname("삼지창돌격")
 							.ename("OceanCharge")
-							.slot(5)
+							.slot(4)
 							.hm(pncooldown)
 							.skillUse(() -> {
 

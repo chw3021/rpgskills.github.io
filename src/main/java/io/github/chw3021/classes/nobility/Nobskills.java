@@ -106,9 +106,9 @@ public class Nobskills extends Pak {
 	private HashMap<UUID, Integer> ppcrst = new HashMap<UUID, Integer>();
 	
 
-	private HashMap<UUID, Integer> bckwsh = new HashMap<UUID, Integer>();
+	private HashMap<UUID, Location> bckwsh = new HashMap<UUID, Location>();
 	private HashMap<UUID, Integer> bckwsht = new HashMap<UUID, Integer>();
-	private HashMap<UUID, Integer> clve = new HashMap<UUID, Integer>();
+	private HashMap<UUID, Location> clve = new HashMap<UUID, Location>();
 	private HashMap<UUID, Integer> clvet = new HashMap<UUID, Integer>();
 	
 
@@ -138,7 +138,6 @@ public class Nobskills extends Pak {
 	private static HashMap<UUID, Integer> dolrt = new HashMap<UUID, Integer>();
 	private static HashMap<UUID, Integer> dolt = new HashMap<UUID, Integer>();
 	private static HashMap<UUID, Dolphin> dol = new HashMap<UUID, Dolphin>();
-	private static HashMap<UUID, Snowball> dolh = new HashMap<UUID, Snowball>();
 
 	private static HashMap<UUID, Integer> pint = new HashMap<UUID, Integer>();
 	
@@ -231,7 +230,7 @@ public class Nobskills extends Pak {
 							.cooldown(sec)
 							.kname("전이")
 							.ename("Transition")
-							.slot(0)
+							.slot(4)
 							.hm(rscooldown)
 							.skillUse(() -> {
 				                t.setMetadata("tras of "+p.getName(), new FixedMetadataValue(RMain.getInstance(),true));
@@ -938,7 +937,7 @@ public class Nobskills extends Pak {
 					.cooldown(sec)
 					.kname("가디언의저주")
 					.ename("GuardianCurse")
-					.slot(5)
+					.slot(3)
 					.hm(prcooldown)
 					.skillUse(() -> {
 	         			p.playSound(p.getEyeLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 0.5f, 1f);
@@ -1120,11 +1119,9 @@ public class Nobskills extends Pak {
 		}
 			Bukkit.getScheduler().cancelTask(dolrt.get(p.getUniqueId()));
 			Bukkit.getScheduler().cancelTask(dolt.get(p.getUniqueId()));
-    	dol.get(p.getUniqueId()).remove();   
-    	dolh.get(p.getUniqueId()).remove();   
+    	dol.get(p.getUniqueId()).remove();
     	dolrt.remove(p.getUniqueId());
     	dolt.remove(p.getUniqueId());
-    	dolh.remove(p.getUniqueId());
     	dol.remove(p.getUniqueId());
 	}
 	
@@ -1163,26 +1160,15 @@ public class Nobskills extends Pak {
 							.cooldown(sec)
 							.kname("돌고래타기")
 							.ename("DolphinSurf")
-							.slot(1)
+							.slot(5)
 							.hm(jmcooldown)
 							.skillUse(() -> {
 								p.setCooldown(Material.DOLPHIN_SPAWN_EGG,5);
-								Snowball ds = (Snowball) p.getWorld().spawnEntity(p.getLocation(), EntityType.SNOWBALL);
-								ds.setSilent(true);
-								ds.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-								ds.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
-								ds.setInvulnerable(true);
-								ds.setGravity(false);
-								ds.setVisibleByDefault(false);
-								ds.setItem(new ItemStack(Material.HEART_OF_THE_SEA));
-								ds.setVelocity(p.getEyeLocation().clone().getDirection().normalize().multiply(0.5));
-								ds.addPassenger(p);
-								Location dslf = ds.getLocation().clone().add(0, 0.1, 0);
+								Location dslf = p.getLocation().clone().add(0, 0.1, 0);
 								dslf.setDirection(p.getEyeLocation().clone().getDirection());
 								dslf.add(dslf.getDirection().clone().normalize().multiply(3));
 			                    Dolphin cs = (Dolphin) p.getWorld().spawnEntity(dslf, EntityType.DOLPHIN);
 								cs.setInvulnerable(true);
-								cs.setAI(false);
 								cs.setGravity(false);
 								cs.setCollidable(false);
 								cs.setCustomName(p.getName());
@@ -1190,18 +1176,17 @@ public class Nobskills extends Pak {
 								cs.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 								cs.setCollidable(false);
 								dol.put(p.getUniqueId(), cs);
-								dolh.put(p.getUniqueId(), ds);
+								cs.addPassenger(p);
 								int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
 					                @Override
 					                public void run() 
 					                {
 				             			if(cs.isValid()) {
-					             			if(ds.getLocation().add(ds.getVelocity().normalize().multiply(1)).getBlock().isPassable()){
-												ds.setVelocity(p.getEyeLocation().clone().getDirection().normalize().multiply(1));
-												Location dsl = ds.getLocation().clone();
-												dsl.setDirection(p.getEyeLocation().clone().getDirection());
-												dsl.add(dsl.getDirection().clone().normalize().multiply(3));
-												cs.teleport(dsl);
+					             			if(cs.getLocation().add(cs.getVelocity().normalize().multiply(1.6)).getBlock().isPassable()){
+					             				cs.setVelocity(p.getEyeLocation().clone().getDirection().normalize().multiply(1.6));
+					             				Vector cv = cs.getVelocity().clone();
+					             				Location cvl = cv.toLocation(cs.getWorld()).clone();
+					             			    cs.setRotation(cvl.getYaw(), cvl.getPitch());
 					             			}
 					             			else {
 
@@ -1223,7 +1208,6 @@ public class Nobskills extends Pak {
 								dolrt.put(p.getUniqueId(), task2);
 								dolt.put(p.getUniqueId(), task);
 								dol.put(p.getUniqueId(), cs);
-								dolh.put(p.getUniqueId(), ds);
 							});
 					bd.execute();
 		    					
@@ -1261,7 +1245,7 @@ public class Nobskills extends Pak {
 						.cooldown(sec)
 						.kname("돌격")
 						.ename("Assault")
-						.slot(2)
+						.slot(0)
 						.hm(thcooldown)
 						.skillUse(() -> {
 
@@ -1516,22 +1500,21 @@ public class Nobskills extends Pak {
 		}
 	}
 	
-	static private ArrayList<Location> WaterWheel(Location il, int a) {
+	static private Location WaterWheel(Location il, int a) {
 
 		ArrayList<Location> line = new ArrayList<Location>();
-        for(double an=0; an > -Math.PI*2; an -= Math.PI/180) {
-        	Location eye = il.clone().add(il.clone().getDirection().multiply(a*2));
-        	Vector eyev = eye.getDirection().clone().rotateAroundY(Math.PI/2);
-        	Location al = eye.clone().setDirection(eye.getDirection().rotateAroundAxis(eyev, an).normalize());
-        	line.add(al.add(al.getDirection().clone().normalize().multiply(2)));
+    	Location eye = il.clone().add(il.clone().getDirection().multiply(a*2));
+    	Vector eyev = eye.getDirection().clone().rotateAroundY(Math.PI/2);
+        for(double an=0; an > -Math.PI*2; an -= Math.PI/60) {
+        	Location al = eye.clone().setDirection(eye.clone().getDirection().rotateAroundAxis(eyev.clone(), an).normalize());
+        	line.add(al.add(al.getDirection().clone().normalize().multiply(3)));
         }
         line.forEach(l -> {
-    		l.getWorld().spawnParticle(Particle.CRIT, l,1,0.1,0.1,0.1,0);
     		l.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l,1,0.1,0.1,0.1,0);
-    		l.getWorld().spawnParticle(Particle.DOLPHIN, l,3,0.5,0.5,0.5,0);
+    		l.getWorld().spawnParticle(Particle.DOLPHIN, l,8,1,1,1,0);
         	
         });
-        return line;
+        return eye;
 	}
 
 
@@ -1553,7 +1536,7 @@ public class Nobskills extends Pak {
 						.cooldown(sec)
 						.kname("물바퀴")
 						.ename("WaterWheel")
-						.slot(3)
+						.slot(1)
 						.hm(pncooldown)
 						.skillUse(() -> {
 
@@ -1562,28 +1545,22 @@ public class Nobskills extends Pak {
 		                		bckwsht.remove(p.getUniqueId());
 		                	}
 
-		    				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		    	                @Override
-		    	                public void run() {
-		    						if(Proficiency.getpro(p)>=1) {
-		    							bckwsh.putIfAbsent(p.getUniqueId(), 0);
-		    						}
-		    	                }
-		    	            }, 20); 
 
-		            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		    	                @Override
-		    	                public void run() {
-		    						bckwsh.remove(p.getUniqueId());
-		    	                }
-		    	            }, 80); 
-		                	bckwsht.put(p.getUniqueId(), task);
+    						if(Proficiency.getpro(p)>=1) {
+    		            		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+    		    	                @Override
+    		    	                public void run() {
+    		    						bckwsh.remove(p.getUniqueId());
+    		    	                }
+    		    	            }, 80); 
+    		                	bckwsht.put(p.getUniqueId(), task);
+    						}
 			            	
 	                        p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1, 2);
 
+		                	HashSet<LivingEntity> les = new HashSet<LivingEntity>();
 	                        final Location pl = p.getEyeLocation().clone();
 
-	                        ArrayList<Location> line = new ArrayList<Location>();
 	                    	AtomicInteger j = new AtomicInteger();
 	                    	for(int i =0; i<15; i++) {
 	    	                	   Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -1591,34 +1568,32 @@ public class Nobskills extends Pak {
 	    				                public void run() 
 	    				                {
 	    				        			isTridentLaunched(p);
-	    				                	HashSet<LivingEntity> les = new HashSet<LivingEntity>();
-	    				                	WaterWheel(pl,j.incrementAndGet()).forEach(bl -> line.add(bl));
-	    				                    for(Location l : line) {
-
-	    				                    	for (Entity a : l.getWorld().getNearbyEntities(l, 1, 3, 1))
-	    										{
-	    											if ((!(a == p))&& a instanceof LivingEntity&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal"))) 
-	    											{
-	    												if (a instanceof Player) 
-	    												{
-	    													
-	    													Player p1 = (Player) a;
-	    													if(Party.hasParty(p) && Party.hasParty(p1))	{
-	    													if(Party.getParty(p).equals(Party.getParty(p1)))
-	    														{
-	    															continue;
-	    														}
-	    													}
-	    												}
-	    												LivingEntity le = (LivingEntity)a;
-	    												les.add(le);
-	    											}
-	    										}
-	    				                    }
-	    									for(LivingEntity le: les) {
-	    										p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
-	    										atk1(0.15*(1+fsd.WaterWheel.get(p.getUniqueId())*0.02), p, le);
-	    									}
+	    				                	Location l = WaterWheel(pl,j.incrementAndGet());
+	    		    						if(Proficiency.getpro(p)>=1 && bckwsht.containsKey(p.getUniqueId())) {
+	    		    							bckwsh.put(p.getUniqueId(), l);
+	    		    						}
+    				                    	for (Entity a : l.getWorld().getNearbyEntities(l, 2.5, 2.5, 2.5))
+    										{
+    											if ((!(a == p))&& a instanceof LivingEntity&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal"))) 
+    											{
+    												if (a instanceof Player) 
+    												{
+    													
+    													Player p1 = (Player) a;
+    													if(Party.hasParty(p) && Party.hasParty(p1))	{
+    													if(Party.getParty(p).equals(Party.getParty(p1)))
+    														{
+    															continue;
+    														}
+    													}
+    												}
+    												LivingEntity le = (LivingEntity)a;
+    												if(!les.contains(le)) {
+        	    										atk1(0.77*(1+fsd.WaterWheel.get(p.getUniqueId())*0.04), p, le);
+        												les.add(le);
+    												}
+    											}
+    										}
 	    				                }
 	    	                	   }, i*2); 
 	                    	}
@@ -1639,14 +1614,14 @@ public class Nobskills extends Pak {
 			if(p.getInventory().getItemInMainHand().getType()==Material.TRIDENT &&!p.isSneaking()) 
 			{
 					ev.setCancelled(true);
-		            Location fl = gettargetblock(p,20).clone();
-	                final Location tl = fl.clone();
 	                
 	            	if(bckwsht.containsKey(p.getUniqueId())) {
 	            		Bukkit.getScheduler().cancelTask(bckwsht.get(p.getUniqueId()));
 	            		bckwsht.remove(p.getUniqueId());
 	            	}
-					bckwsh.remove(p.getUniqueId());
+		            Location fl = bckwsh.remove(p.getUniqueId());
+	                final Location tl = fl.clone();
+					
 					
 
 
@@ -1659,7 +1634,7 @@ public class Nobskills extends Pak {
 		                @Override
 		                public void run() {
 							if(Proficiency.getpro(p)>=2) {
-								clve.putIfAbsent(p.getUniqueId(), 0);
+								clve.put(p.getUniqueId(), tl);
 							}
 		                }
 		            }, 5); 
@@ -1755,14 +1730,14 @@ public class Nobskills extends Pak {
 			{
 					ev.setCancelled(true);
 
-		            Location fl = gettargetblock(p,20).clone();
+		            Location fl = clve.remove(p.getUniqueId());
 	                final Location tl = fl.clone().add(0, 1.6, 0);
 	                
 	            	if(clvet.containsKey(p.getUniqueId())) {
 	            		Bukkit.getScheduler().cancelTask(clvet.get(p.getUniqueId()));
 	            		clvet.remove(p.getUniqueId());
 	            	}
-					clve.remove(p.getUniqueId());
+					
 
                     HashSet<Location> cir = new HashSet<>();
                     HashSet<Location> eye = new HashSet<>();
@@ -1862,7 +1837,7 @@ public class Nobskills extends Pak {
 							.cooldown(sec)
 							.kname("폭풍")
 							.ename("Storm")
-							.slot(4)
+							.slot(2)
 							.hm(eccooldown)
 							.skillUse(() -> {
 
