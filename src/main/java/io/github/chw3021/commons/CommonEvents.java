@@ -41,7 +41,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EnderDragonChangePhaseEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -51,7 +50,6 @@ import org.bukkit.event.entity.EntityKnockbackByEntityEvent;
 import org.bukkit.event.entity.EntityKnockbackEvent;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
-import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.EntityTeleportEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -66,7 +64,6 @@ import org.bukkit.event.player.PlayerLocaleChangeEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.event.world.WorldUnloadEvent;
@@ -498,7 +495,7 @@ public class CommonEvents extends Mobs implements Listener{
 		    textDisplay.setInterpolationDuration(30);
 		});
 	    
-	    final Location tdal = td.getLocation().clone().add(0, 0.6, 0);
+	    final Location tdal = td.getLocation().clone().add(0, 1.5, 0);
 
         Bukkit.getServer().getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
             @Override
@@ -521,7 +518,7 @@ public class CommonEvents extends Mobs implements Listener{
 	}
 
 	final public void damageind(final Player p, final LivingEntity le, Double d) {
-		final Location elf = le.getLocation().clone().add(0, 0.05, 0);
+		final Location elf = le.getLocation().clone().add(0, 0.2, 0);
 		final Location pl = p.getLocation().clone().add(0, 0.1, 0);
 
 	    // TextDisplay 생성
@@ -547,7 +544,7 @@ public class CommonEvents extends Mobs implements Listener{
 		}, 30);
 	}
 
-	final int barCount = 20;
+	final int barCount = 40;
 	//final String barChar = "❤"; // 하트 모양 문자
 	//final String barChar = "▇";
 	//final String barChar = "󠄀🀫";
@@ -648,18 +645,19 @@ public class CommonEvents extends Mobs implements Listener{
 	    // 변환 데이터 생성
 	    Vector3f translation = new Vector3f(-0.4f, -0.73f, 0.7f); // 위치
 	    Quaternionf leftRotation = new Quaternionf(0f, 0f, 0f, 1f); 
-	    Vector3f scale = new Vector3f(0.15f, 0.06f, 1f); // 세로로 길게 스케일 조정
+	    Vector3f scale = new Vector3f(0.15f, 0.03f, 1f); // 세로로 길게 스케일 조정
 	    Quaternionf rightRotation = new Quaternionf(0f, 0f, 1f, 1f); 
 	    if(small) {
 	    	translation.set(0f, 0.2f, 0f);
 	    	rightRotation.set(0f, 0f, 0f, 1f);
-	    	scale.set(0.11f, 0.2f, 1f);
+	    	scale.set(0.055f, 0.2f, 1f);
 	    }
 
 	    // Transformation 생성
 	    Transformation transformation = new Transformation(translation, leftRotation, scale, rightRotation);
 
 	    display.setTransformation(transformation);
+	    display.setLineWidth(1000);
 
 	    // 텍스트가 고정된 위치로 표시되도록 설정
 	    display.setBillboard(TextDisplay.Billboard.CENTER);
@@ -1254,6 +1252,7 @@ public class CommonEvents extends Mobs implements Listener{
 	public void join(PlayerJoinEvent ev)
 	{
 		Player p = ev.getPlayer();
+        p.setResourcePack(resourcePackUrl);
 
 		p.setGravity(true);
 		p.getAttribute(Attribute.ARMOR).setBaseValue(0);

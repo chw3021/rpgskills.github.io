@@ -1012,6 +1012,7 @@ public class SkillUsing implements Listener {
 		Snipskills.getInstance().WitherHunter(e);
 
 		Tamskills.getInstance().PressTheAttack(e);
+		Tamskills.getInstance().Fireball(e);
 
 		Taoskills.getInstance().Flip(e);
 

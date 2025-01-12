@@ -42,6 +42,7 @@ import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.Tag;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Arrow;
@@ -199,7 +200,7 @@ public class Cheskills extends Pak {
 						.cooldown(sec)
 						.kname("슬라임볼")
 						.ename("SlimeBall")
-						.slot(0)
+						.slot(5)
 						.hm(sdcooldown)
 						.skillUse(() -> {
 						
@@ -521,11 +522,11 @@ public class Cheskills extends Pak {
 		                				if(p.getInventory().getItemInMainHand().getType().name().contains("PICKAXE"))
 		                				{
 		    								LivingEntity le = (LivingEntity)e;
-		    								atk3(0.31*(1+csd.AcidCloud.get(p.getUniqueId())*0.04), (vx.containsKey(p.getUniqueId()) ? 0.5 : 0), p, le);
+		    								atk3(0.31*(1+csd.AcidCloud.get(p.getUniqueId())*0.04), (vx.containsKey(p.getUniqueId()) ? 0.5 : 0), p, le,11);
 		    								if(acidstorming.containsKey(p.getUniqueId())) {
 		    									le.teleport(fl.clone());
 		    									Holding.superholding(p, le, 10l);
-		    				                	atk1(0.58*(1+csd.Charge.get(p.getUniqueId())*0.07), p, le);
+		    				                	atk1(0.58*(1+csd.Charge.get(p.getUniqueId())*0.07), p, le,11);
 		    								}
 		    								if(Proficiency.getpro(p)>=2) {
 		    									atkab0(0.2*(1+csd.AcidCloud.get(p.getUniqueId())*0.035), (vx.containsKey(p.getUniqueId()) ? 0.5 : 0)*player_damage.get(p.getName()), p, le);
@@ -563,7 +564,7 @@ public class Cheskills extends Pak {
 						.cooldown(sec)
 						.kname("산성구름")
 						.ename("AcidCloud")
-						.slot(1)
+						.slot(3)
 						.hm(gdcooldown)
 						.skillUse(() -> {
 							AcidCloud(p);
@@ -642,7 +643,7 @@ public class Cheskills extends Pak {
 						.cooldown(sec)
 						.kname("네이팜")
 						.ename("Napalm")
-						.slot(2)
+						.slot(0)
 						.hm(cdcooldown)
 						.skillUse(() -> {
 						
@@ -728,7 +729,7 @@ public class Cheskills extends Pak {
 											                @Override
 											                public void run() 
 											                {
-											                	atk1(0.085*(1+csd.Coagulation.get(p.getUniqueId())*0.065), p, le);
+											                	atk1(0.085*(1+csd.Coagulation.get(p.getUniqueId())*0.065), p, le,10);
 											                }
 									                	 }, n*3); 														
 													}
@@ -851,7 +852,7 @@ public class Cheskills extends Pak {
 								                @Override
 								                public void run() 
 								                {
-								                	atk1(0.29*(1+csd.Coagulation.get(p.getUniqueId())*0.06), p, le);
+								                	atk1(0.29*(1+csd.Coagulation.get(p.getUniqueId())*0.06), p, le,10);
 													Holding.holding(p, le, 5l);
 								                }
 						                	 }, n*3); 														
@@ -948,8 +949,10 @@ public class Cheskills extends Pak {
 				                			LivingEntity le = (LivingEntity)e;
 				    							{
 													Holding.holding(p, le, 10l);
-				    								le.setFireTicks(150);
-				    								le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 150,1,false,false));
+								                	atk1(0.24*(1+csd.Coagulation.get(p.getUniqueId())*0.07), p, le,9);
+				    								le.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS, 150,1,false,true,false));
+				    								le.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 150,1,true,true,false));
+				    								le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 150,1,false,true,false));
 				    							}
 				    					}
 				    				}
@@ -1038,7 +1041,7 @@ public class Cheskills extends Pak {
                 		if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
     					{
                 			LivingEntity le = (LivingEntity)e;
-		                	atk1(0.79*(1+csd.Charge.get(p.getUniqueId())*0.078), p, le);
+		                	atk1(0.79*(1+csd.Charge.get(p.getUniqueId())*0.078), p, le,5);
 		                	Holding.holding(p, le, 20l);
                 			
     					}
@@ -1051,7 +1054,7 @@ public class Cheskills extends Pak {
 						.cooldown(sec)
 						.kname("돌진")
 						.ename("Charge")
-						.slot(3)
+						.slot(2)
 						.hm(frcooldown)
 						.skillUse(() -> {
 	                    int q =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
@@ -1305,7 +1308,7 @@ public class Cheskills extends Pak {
 							                @Override
 							                public void run() 
 							                {
-							                	atk1(0.5*(1+csd.Charge.get(p.getUniqueId())*0.05), p, le);
+							                	atk1(0.5*(1+csd.Charge.get(p.getUniqueId())*0.05), p, le,11);
 							                	Holding.holding(p, le, 15l);
 							                }
 					                	 }, n*3); 														
@@ -1342,7 +1345,7 @@ public class Cheskills extends Pak {
 						.cooldown(sec)
 						.kname("추출")
 						.ename("Extraction")
-						.slot(4)
+						.slot(1)
 						.hm(stcooldown)
 						.skillUse(() -> {
 						for (Entity e : p.getNearbyEntities(2, 2, 2))
@@ -1473,7 +1476,7 @@ public class Cheskills extends Pak {
 						.cooldown(sec)
 						.kname("화염병")
 						.ename("MolotovCocktail")
-						.slot(5)
+						.slot(4)
 						.hm(smcooldown)
 						.skillUse(() -> {
 						ItemStack is = new ItemStack(Material.SPLASH_POTION);
@@ -1524,7 +1527,7 @@ public class Cheskills extends Pak {
 									}
 								}
 							}
- 							atk1(0.45*(1+csd.SlimeBall.get(p.getUniqueId())*0.035), p, le);
+ 							atk1(0.45*(1+csd.SlimeBall.get(p.getUniqueId())*0.035), p, le,11);
  							Holding.holding(p, le, 20l);
  							le.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 40, 2, false, false));
  							le.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 40, 2, false, false));
@@ -1555,7 +1558,7 @@ public class Cheskills extends Pak {
 									}
 								}
 							}
- 							atk1(0.9*(1+csd.SlimeBall.get(p.getUniqueId())*0.07), p, le);
+ 							atk1(0.9*(1+csd.SlimeBall.get(p.getUniqueId())*0.07), p, le,10);
  							le.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 40, 2, false, false));
  							le.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 40, 2, false, false));
  							le.setFireTicks(40);
@@ -1585,7 +1588,7 @@ public class Cheskills extends Pak {
 									}
 								}
 							}
- 							atk1(0.8*(1+csd.SlimeBall.get(p.getUniqueId())*0.08), p, le);
+ 							atk1(0.8*(1+csd.SlimeBall.get(p.getUniqueId())*0.08), p, le,9);
  							le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 40, 2, false, false));
  						}
  					}
@@ -1619,7 +1622,7 @@ public class Cheskills extends Pak {
 							LivingEntity le = (LivingEntity)e;
 								{
 				                    le.setFireTicks(55);
-				                	atk1(0.569*(1+csd.MolotovCocktail.get(p.getUniqueId())*0.0435), p, le);
+				                	atk1(0.569*(1+csd.MolotovCocktail.get(p.getUniqueId())*0.0435), p, le,10);
 				                    if(Proficiency.getpro(p)>=1) {
 				                    	Holding.holding(p, le, 30l);
 				                    }
@@ -1647,7 +1650,7 @@ public class Cheskills extends Pak {
 							LivingEntity le = (LivingEntity)e;
 								{
 				                    le.setFireTicks(55);
-				                	atk1(0.569*(1+csd.MolotovCocktail.get(p.getUniqueId())*0.0435), p, le);
+				                	atk1(0.569*(1+csd.MolotovCocktail.get(p.getUniqueId())*0.0435), p, le,10);
 				                    if(Proficiency.getpro(p)>=1) {
 				                    	Holding.holding(p, le, 30l);
 				                    }
@@ -1771,7 +1774,11 @@ public class Cheskills extends Pak {
 							            }
 				                	   }, 5); 
 	                	final Location tl =gettargetblock(p,3).clone();
-	                    ArmorStand tp = tl.getWorld().spawn(tl, ArmorStand.class);
+	                	
+	                	ItemStack TNThelmet = new ItemStack(Material.TNT);
+	                	TNThelmet.addUnsafeEnchantment(Enchantment.AQUA_AFFINITY, 2);
+	                	
+	                    ArmorStand tp = tl.getWorld().spawn(tl.clone().add(0, -3, 0), ArmorStand.class);
 	                    tp.setInvisible(true);
 	                    tp.setCollidable(false);
 	                    tp.playEffect(EntityEffect.TNT_MINECART_IGNITE);
@@ -1780,7 +1787,7 @@ public class Cheskills extends Pak {
 	                    tp.setInvulnerable(true);
 	                    tp.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 	                    tp.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), "rob"+p.getName()));
-	                    tp.getEquipment().setHelmet(new ItemStack(Material.TNT));
+	                    tp.getEquipment().setHelmet(TNThelmet);
 	                    p.playSound(tp.getLocation(), Sound.ENTITY_TNT_PRIMED, 1f, 0);
 						for(int n = 0; n<25; n++) {
 		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -1830,7 +1837,7 @@ public class Cheskills extends Pak {
 		            						}
 		             						if(e instanceof LivingEntity && e!=p && !e.hasMetadata("fake") && !e.hasMetadata("portal")) {
 		             							LivingEntity le = (LivingEntity)e;
-		    				                	atk1(19.0, p, le);
+		    				                	atk1(19.0, p, le,11);
 		             							le.setFireTicks(60);
 		             		                    Holding.holding(p, le, 60l);
 		             		                    le.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,200,1,false,false));

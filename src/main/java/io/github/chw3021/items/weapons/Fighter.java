@@ -10,6 +10,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.attribute.AttributeModifier.Operation;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -74,15 +75,19 @@ public class Fighter extends Weapons implements Listener {
 		if(ev.getCurrentItem() != null && ev.getCurrentItem().hasItemMeta()) {
 			ItemMeta im = ev.getCurrentItem().getItemMeta();
 			if(im.hasItemName() && im.getItemName().equals("CopiedKnuckle")) {
-				ev.setCancelled(true);
-				ev.getCurrentItem().setAmount(0);
+				final ItemStack is = ev.getCurrentItem();
+				ev.setResult(Result.DENY);
+				ev.setCurrentItem(null);
+				is.setAmount(0);
 			}
-		}
-		for(ItemStack is : p.getInventory().getContents()) {
-			if(is != null && is.hasItemMeta()) {
-				ItemMeta im = is.getItemMeta();
-				if(im.hasItemName() && im.getItemName().equals("CopiedKnuckle")) {
-					is.setAmount(0);
+			else {
+				for(ItemStack is : p.getInventory().getContents()) {
+					if(is != null && is.hasItemMeta()) {
+						ItemMeta im1 = is.getItemMeta();
+						if(im1.hasItemName() && im1.getItemName().equals("CopiedKnuckle")) {
+							is.setAmount(0);
+						}
+					}
 				}
 			}
 		}

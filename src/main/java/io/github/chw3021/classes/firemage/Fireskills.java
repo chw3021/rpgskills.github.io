@@ -674,7 +674,7 @@ public class Fireskills extends Pak {
 						.cooldown(sec)
 						.kname("살아있는불꽃")
 						.ename("AliveFlame")
-						.slot(2)
+						.slot(5)
 						.hm(prcooldown)
 						.skillUse(() -> {
 		                    Casting(p);
@@ -1000,7 +1000,7 @@ public class Fireskills extends Pak {
 						.cooldown(sec)
 						.kname("화염의숨결")
 						.ename("Breath")
-						.slot(3)
+						.slot(4)
 						.hm(eccooldown)
 						.skillUse(() -> {
 						p.setCooldown(CAREFUL, 1);
@@ -1303,7 +1303,7 @@ public class Fireskills extends Pak {
 							.cooldown(sec)
 							.kname("화염구")
 							.ename("Fireball")
-							.slot(4)
+							.slot(2)
 							.hm(jmcooldown)
 							.skillUse(() -> {
 								Casting(p);
@@ -1544,7 +1544,7 @@ public class Fireskills extends Pak {
 					.cooldown(sec)
 					.kname("확산")
 					.ename("Spread")
-					.slot(5)
+					.slot(3)
 					.hm(pncooldown)
 					.skillUse(() -> {Casting(p);
 

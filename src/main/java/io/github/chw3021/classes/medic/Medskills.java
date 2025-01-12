@@ -425,6 +425,8 @@ public class Medskills extends Pak {
 									}
 								}
 							}
+
+							Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,0d,4,"화살치료","ArrowClinic"));
 							LivingEntity le = (LivingEntity)e;
 							decayed.computeIfPresent(le.getUniqueId(), (k,v) -> v+0.03*ssd.ArrowClinic.get(p.getUniqueId()));
 							decayed.putIfAbsent(le.getUniqueId(), 0d);
@@ -1249,7 +1251,7 @@ public class Medskills extends Pak {
 								.cooldown(sec)
 								.kname("자동제세동기")
 								.ename("AED")
-								.slot(3)
+								.slot(5)
 								.hm(cscooldown)
 								.skillUse(() -> {
 
@@ -1775,6 +1777,7 @@ public class Medskills extends Pak {
 
 			if(ev.isSneaking()&& p.getInventory().getItemInMainHand().getType().name().contains("CROSSBOW"))
 			{
+				Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,0d,3,"은신처","Hideout"));
 				int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
 					@Override
 					public void run()
@@ -2202,7 +2205,7 @@ public class Medskills extends Pak {
 					{
 						if(d.getDamage()>0) {
 							dset2(d, p, 1d, le, 14);
-							d.setDamage(d.getDamage()+ssd.Medicine.getOrDefault(p.getUniqueId(),0)*0.65);
+							d.setDamage(d.getDamage()*1.1+ssd.Medicine.getOrDefault(p.getUniqueId(),0)*0.65);
 							if(wing.containsKey(p.getUniqueId())) {
 								dset1(d, p, 1.0, 0.007);
 							}
@@ -2223,7 +2226,7 @@ public class Medskills extends Pak {
 					{
 						if(d.getDamage()>0) {
 							dset2(d, p, 1d, le, 14);
-							d.setDamage(d.getDamage()+ssd.Medicine.getOrDefault(p.getUniqueId(),0)*0.65);
+							d.setDamage(d.getDamage()*1.1+ssd.Medicine.getOrDefault(p.getUniqueId(),0)*0.65);
 							if(wing.containsKey(p.getUniqueId())) {
 								dset1(d, p, 1.0, 0.007);
 							}

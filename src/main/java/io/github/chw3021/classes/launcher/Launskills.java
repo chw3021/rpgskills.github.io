@@ -569,7 +569,7 @@ public class Launskills extends Pak {
 								if(el.clone().add(0, 1.869, 0).getBlock().isPassable()){
 									p.teleport(el);
 									p.setCooldown(Material.ENDER_PEARL, 80);
-									Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,4d,4,"엔더화살","EnderArrow"));
+									Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,4d,0,"엔더화살","EnderArrow"));
 								}
 							}
 
@@ -610,7 +610,7 @@ public class Launskills extends Pak {
 							.cooldown(sec)
 							.kname("방출")
 							.ename("Discharge")
-							.slot(1)
+							.slot(2)
 							.hm(dpcooldown)
 							.skillUse(() -> {
 								HashSet<Firework> fws = new HashSet<>();
@@ -939,7 +939,7 @@ public class Launskills extends Pak {
 							.cooldown(sec)
 							.kname("화살세례")
 							.ename("ArrowRain")
-							.slot(2)
+							.slot(1)
 							.hm(arcooldown)
 							.skillUse(() -> {
 
@@ -2007,7 +2007,8 @@ public class Launskills extends Pak {
 					}
 
 					cscooldown.put(p.getName(), System.currentTimeMillis());
-					Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,10*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d),5,"응집","ChargingShot"));
+					double sec = 10*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+					Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,sec,5,"응집","ChargingShot"));
 
 					for (Entity e : el.getWorld().getNearbyEntities(el, 3, 3, 3))
 					{

@@ -26,7 +26,7 @@ public class LaunSkillsGui extends SkillsGui {
 
 			itemset("화살변경", Material.ARROW, 1, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + lsd.ArrowChange.getOrDefault(p.getUniqueId(), 0), "",
-							"웅크리기 + 아이템바꾸기(마우스휠)", ChatColor.UNDERLINE+"✬[화염]" + "불의화살: 벌레, 수상몹에게 더 높은 피해",
+							"🖮🖰 웅크리기 + 아이템바꾸기(마우스휠)", ChatColor.UNDERLINE+"✬[화염]" + "불의화살: 벌레, 수상몹에게 더 높은 피해",
 							"적을 태웁니다", "", ChatColor.UNDERLINE+"✬[물]" + "물의화살: 약탈자, 엔더, 네더 몹들에게 더 높은 피해",
 							"둔화효과를 적용합니다", "", ChatColor.UNDERLINE+"✬[바람]" + "엔더화살: 공중부양 효과를 적용합니다",
 							"엔더화살로 블럭을 맞출경우", "해당위치로 순간이동 합니다(대기시간 4초)", "",
@@ -34,7 +34,7 @@ public class LaunSkillsGui extends SkillsGui {
 					0, skillsInv);
 			itemset("화살세례", Material.TIPPED_ARROW, 2, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + lsd.ArrowRain.getOrDefault(p.getUniqueId(), 0), "",
-							"웅크리기 + 손바꾸기", "",
+							"🖮🖰 웅크리기 + 손바꾸기", "",
 							ChatColor.BOLD + "10 X "
 									+ BigDecimal.valueOf(0.08*(1+lsd.ArrowRain.getOrDefault(p.getUniqueId(), 0) * 0.008))
 									.setScale(2, RoundingMode.HALF_EVEN)
@@ -42,7 +42,7 @@ public class LaunSkillsGui extends SkillsGui {
 							"Master LV.50"),
 					1, skillsInv);
 			itemset("방출", Material.FIREWORK_ROCKET, 3, 1,
-					Arrays.asList(ChatColor.AQUA + "LV." + lsd.Discharge.getOrDefault(p.getUniqueId(), 0), "", "좌클릭",
+					Arrays.asList(ChatColor.AQUA + "LV." + lsd.Discharge.getOrDefault(p.getUniqueId(), 0), "", "🖮🖰 좌클릭",
 							"",
 							ChatColor.BOLD + "3 X "
 									+ BigDecimal.valueOf(0.7 * (1 +lsd.Discharge.getOrDefault(p.getUniqueId(), 0) * 0.076))
@@ -52,7 +52,7 @@ public class LaunSkillsGui extends SkillsGui {
 					2, skillsInv);
 			itemset("거대화살", Material.TIPPED_ARROW, 4, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + lsd.GiantArrow.getOrDefault(p.getUniqueId(), 0), "",
-							"손바꾸기", "",
+							"🖮🖰 손바꾸기", "",
 							ChatColor.BOLD +""+ BigDecimal.valueOf(1.3*(1+lsd.GiantArrow.getOrDefault(p.getUniqueId(), 0) * 0.156))
 									.setScale(2, RoundingMode.HALF_EVEN)
 									+ "D",
@@ -60,7 +60,7 @@ public class LaunSkillsGui extends SkillsGui {
 					3, skillsInv);
 			itemset("폭발", Material.GUNPOWDER, 5, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + lsd.Explosion.getOrDefault(p.getUniqueId(), 0), "",
-							"웅크리기 + 발사", "",
+							"🖮🖰 웅크리기 + 발사", "",
 							ChatColor.BOLD + " X "
 									+ BigDecimal.valueOf(0.7*(1+lsd.Explosion.getOrDefault(p.getUniqueId(), 0) * 0.076))
 									.setScale(2, RoundingMode.HALF_EVEN)
@@ -69,7 +69,7 @@ public class LaunSkillsGui extends SkillsGui {
 					4, skillsInv);
 			itemset("응집", Material.FIREWORK_STAR, 6, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + lsd.ChargingShot.getOrDefault(p.getUniqueId(), 0), "",
-							"웅크리기 + 좌클릭", "",
+							"🖮🖰 웅크리기 + 좌클릭", "",
 							ChatColor.BOLD + " X "
 									+ BigDecimal.valueOf(1.8 * (1+lsd.ChargingShot.getOrDefault(p.getUniqueId(), 0) * 0.18))
 									.setScale(2, RoundingMode.HALF_EVEN)
@@ -216,7 +216,7 @@ public class LaunSkillsGui extends SkillsGui {
 
 			itemset("ArrowChange", Material.ARROW, 1, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + lsd.ArrowChange.getOrDefault(p.getUniqueId(), 0), "",
-							"Sneaking + ChangeItem(MouseWheel)",
+							"🖮🖰 Sneaking + ChangeItem(MouseWheel)",
 							ChatColor.UNDERLINE+"✬[Flame]" + "Flame: More Damage To Arthropod & Water Mob", "",
 							ChatColor.UNDERLINE+"✬[Water]" + "Aqua: More Damage To Pilliager, Ender & Nether Mob",
 							"Apply Slow Effect", "", ChatColor.UNDERLINE+"✬[Wind]" + "Ender: Apply Levitation Effect",
@@ -225,7 +225,7 @@ public class LaunSkillsGui extends SkillsGui {
 					0, skillsInv);
 			itemset("ArrowRain", Material.TIPPED_ARROW, 2, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + lsd.ArrowRain.getOrDefault(p.getUniqueId(), 0), "",
-							"Sneaking + SwapHand", "",
+							"🖮🖰 Sneaking + SwapHand", "",
 							ChatColor.BOLD + "10 X "
 									+ BigDecimal.valueOf(0.08*(1+lsd.ArrowRain.getOrDefault(p.getUniqueId(), 0) * 0.008))
 									.setScale(2, RoundingMode.HALF_EVEN)
@@ -234,7 +234,7 @@ public class LaunSkillsGui extends SkillsGui {
 					1, skillsInv);
 			itemset("Discharge", Material.FIREWORK_ROCKET, 3, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + lsd.Discharge.getOrDefault(p.getUniqueId(), 0), "",
-							"LeftClick", "",
+							"🖮🖰 LeftClick", "",
 							ChatColor.BOLD + "3 X "
 									+ BigDecimal.valueOf(0.7 * (1 +lsd.Discharge.getOrDefault(p.getUniqueId(), 0) * 0.076))
 									.setScale(2, RoundingMode.HALF_EVEN)
@@ -243,14 +243,14 @@ public class LaunSkillsGui extends SkillsGui {
 					2, skillsInv);
 			itemset("GiantArrow", Material.TIPPED_ARROW, 4, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + lsd.GiantArrow.getOrDefault(p.getUniqueId(), 0), "",
-							"SwapHand", "",
+							"🖮🖰 SwapHand", "",
 							ChatColor.BOLD +""+ BigDecimal.valueOf(1.3*(1+lsd.GiantArrow.getOrDefault(p.getUniqueId(), 0) * 0.156))
 									.setScale(2, RoundingMode.HALF_EVEN)+ "D",
 							"Master LV.50"),
 					3, skillsInv);
 			itemset("Explosion", Material.GUNPOWDER, 5, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + lsd.Explosion.getOrDefault(p.getUniqueId(), 0), "",
-							"Sneaking + Shoot", "",
+							"🖮🖰 Sneaking + Shoot", "",
 							ChatColor.BOLD + " X "
 									+ BigDecimal.valueOf(0.7*(1+lsd.Explosion.getOrDefault(p.getUniqueId(), 0) * 0.076))
 									.setScale(2, RoundingMode.HALF_EVEN)
@@ -259,7 +259,7 @@ public class LaunSkillsGui extends SkillsGui {
 					4, skillsInv);
 			itemset("ChargingShot", Material.FIREWORK_STAR, 6, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + lsd.ChargingShot.getOrDefault(p.getUniqueId(), 0), "",
-							"Sneaking + LeftClick", "",
+							"🖮🖰 Sneaking + LeftClick", "",
 							ChatColor.BOLD + " X "
 									+ BigDecimal.valueOf(1.8 * (1+lsd.ChargingShot.getOrDefault(p.getUniqueId(), 0) * 0.18))
 									.setScale(2, RoundingMode.HALF_EVEN)

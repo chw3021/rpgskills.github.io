@@ -187,7 +187,7 @@ public class Illskills extends Pak {
 						.cooldown(sec)
 						.kname("잭오랜턴")
 						.ename("JackoLantern")
-						.slot(0)
+						.slot(2)
 						.hm(sdcooldown)
 						.skillUse(() -> {
 							Location l = gettargetblock(p,4);
@@ -561,7 +561,7 @@ public class Illskills extends Pak {
 							.cooldown(sec)
 							.kname("역설")
 							.ename("Paradox")
-							.slot(1)
+							.slot(4)
 							.hm(swcooldown)
 							.skillUse(() -> {
 								stacking(p);
@@ -696,7 +696,7 @@ public class Illskills extends Pak {
 						.cooldown(sec)
 						.kname("허수아비")
 						.ename("FakeDoll")
-						.slot(2)
+						.slot(5)
 						.hm(cdcooldown)
 						.skillUse(() -> {
 
@@ -1138,7 +1138,7 @@ public class Illskills extends Pak {
 							.cooldown(sec)
 							.kname("바꿔치기")
 							.ename("Switch")
-							.slot(4)
+							.slot(0)
 							.hm(stcooldown)
 							.skillUse(() -> {
 								stacking(p);
@@ -1198,7 +1198,7 @@ public class Illskills extends Pak {
 								.cooldown(sec)
 								.kname("속임수")
 								.ename("Trick")
-								.slot(5)
+								.slot(1)
 								.hm(smcooldown)
 								.skillUse(() -> {
 									stacking(p);

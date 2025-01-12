@@ -32,6 +32,8 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
+
+import io.github.chw3021.classes.SkillsGui;
 import io.github.chw3021.rmain.RMain;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
@@ -147,7 +149,7 @@ public class Obtained implements Serializable, Listener {
 			}
 			
 		}
-		if(ChatColor.stripColor(e.getView().getTitle()).contains("skill"))
+		if(ChatColor.stripColor(e.getView().getTitle()).toLowerCase().contains("skill".toLowerCase())) 
 		{
 			e.setCancelled(true);
 			Player p = (Player) e.getWhoClicked();
@@ -165,6 +167,18 @@ public class Obtained implements Serializable, Listener {
 			} else if(e.getCurrentItem().getItemMeta().getItemName().equals("RpgSkillsUtilities")){
 				p.closeInventory();
 				p.openInventory(itemset(p));
+			}
+			
+		}
+		if(ChatColor.stripColor(e.getView().getTitle()).contains("BackToSkillsGUI")) 
+		{
+			if (e.getCurrentItem() == null || e.getCurrentItem().getType() == null
+					|| !e.getCurrentItem().hasItemMeta()) {
+				return;
+			} else if(e.getCurrentItem().getItemMeta().getItemName().equals("RpgSkillsUtilities")){
+				e.setCancelled(true);
+				Player p = (Player) e.getWhoClicked();
+				SkillsGui.openSkillsGui(p);
 			}
 			
 		}
@@ -988,6 +1002,11 @@ public class Obtained implements Serializable, Listener {
 		ed.addUnsafeEnchantment(Enchantment.SMITE, 1);
 		ItemStack ph = new ItemStack(Material.DRAGON_HEAD);
 		ph.addUnsafeEnchantment(Enchantment.SMITE, 1);
+		
+		ItemStack skillGUI = new ItemStack(Material.BORDURE_INDENTED_BANNER_PATTERN);
+		ItemMeta skillGUIMeta = skillGUI.getItemMeta();
+		skillGUIMeta.setItemName("BackToSkillsGUI");
+		skillGUI.setItemMeta(skillGUIMeta);
 	
 		if (p.getLocale().equalsIgnoreCase("ko_kr")) {
 			itemsetbasic(ChatColor.GOLD + "쓰레기통", new ItemStack(Material.COMPOSTER), 0, 1, Arrays.asList("클릭시 쓰레기통을 엽니다"),
@@ -998,7 +1017,7 @@ public class Obtained implements Serializable, Listener {
 				2, inv);
 			itemsetbasic(ChatColor.GOLD + "배낭", new ItemStack(Material.BARREL), 0, 1, Arrays.asList("클릭시 배낭을 엽니다"),
 				3, inv);
-			itemsetbasic(ChatColor.GOLD + "기술", new ItemStack(Material.BORDURE_INDENTED_BANNER_PATTERN), 0, 1, Arrays.asList("Open Backpack If You Click"),
+			itemsetbasic(ChatColor.GOLD + "기술", skillGUI, 0, 1, Arrays.asList("기술 관리 창으로 돌아갑니다"),
 					8, inv);
 			
 			
@@ -1181,7 +1200,7 @@ public class Obtained implements Serializable, Listener {
 				2, inv);
 			itemsetbasic(ChatColor.GOLD + "Backpack", new ItemStack(Material.BARREL), 0, 1, Arrays.asList("Open Backpack If You Click"),
 				3, inv);
-			itemsetbasic(ChatColor.GOLD + "Skills", new ItemStack(Material.BORDURE_INDENTED_BANNER_PATTERN), 0, 1, Arrays.asList("Open Backpack If You Click"),
+			itemsetbasic(ChatColor.GOLD + "Skills", skillGUI, 0, 1, Arrays.asList("Back to Skills GUI"),
 					8, inv);
 			
 			if (od.Mineshaft.getOrDefault(p.getUniqueId(), 0) >= 2) {

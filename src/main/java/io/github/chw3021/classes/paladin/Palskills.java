@@ -309,49 +309,57 @@ public class Palskills extends Pak {
 	                }
 	            }, 45); 
             	doomt.put(p.getUniqueId(), task);
+            	final Location l = p.getLocation().clone().add(p.getLocation().getDirection().clone().normalize().multiply(2.2));
 
-            	Location l = p.getLocation().clone().add(p.getLocation().getDirection().clone().normalize().multiply(2.2));
-				
-				HashSet<Location> cross = new HashSet<>();
-				
-				for(int i = 0; i<5; i++) {
-					cross.add(l.clone().add(0, i, 0));
-				}
-				for(int i = -2; i<2; i++) {
-					cross.add(l.clone().add(i, 3, 0));
-				}
-				p.getWorld().spawnParticle(Particle.FLASH, p.getLocation(), 10,4,2,4,0);
+            	HashSet<Location> cross = new HashSet<>();
 
-            	cross.forEach(cl -> {
-    				p.getWorld().spawnParticle(Particle.FLASH, cl, 5, 0.25,0.25,0.25,0);
-    				p.getWorld().spawnParticle(Particle.COMPOSTER, cl, 100, 0.25,0.25,0.25,0);
-    				p.getWorld().spawnParticle(Particle.WHITE_ASH, cl, 100, 0.25,0.25,0.25,0);
-    				p.getWorld().spawnParticle(Particle.BLOCK, cl, 100, 0.25,0.25,0.25,0, Material.CHISELED_QUARTZ_BLOCK.createBlockData());
-            	});
-            	
-				p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_STEP, 0.8f, 0f);
-				p.playSound(p.getLocation(), Sound.ENTITY_GLOW_SQUID_AMBIENT, 0.8f, 0f);
-                
-				for (Entity e : p.getWorld().getNearbyEntities(l, 4, 4, 4))
-				{
-            		if (e instanceof Player) 
-					{
-						Player p1 = (Player) e;
-						if(Party.hasParty(p) && Party.hasParty(p1))	{
-						if(Party.getParty(p).equals(Party.getParty(p1)))
-							{
-							continue;
-							}
-						}
-					}
-					if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
-					{
-						final LivingEntity le = (LivingEntity)e;
-						le.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 20, 4, false, false));
-						atks(0.9, psd.Restraint.get(p.getUniqueId())*0.9, p, le,9);
-						Holding.holding(p, le, 30l);
-					}
-				}
+            	for (int i = 0; i < 5; i++) {
+            	    cross.add(l.clone().add(0, i, 0));
+            	}
+            	for (int i = -2; i < 2; i++) {
+            	    cross.add(l.clone().add(i, 3, 0));
+            	}
+
+
+            	int totalHits = 8; // 총 히트 수
+            	int delay = 7; // 각 히트 간의 지연 시간 (틱)
+
+            	for (int i = 0; i < totalHits; i++) {
+            	    final int hitIndex = i; // 람다식에서 사용할 수 있도록 인덱스를 final로 선언
+            	    Bukkit.getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
+            	        @Override
+            	        public void run() {
+
+                        	cross.forEach(cl -> {
+                        	    p.getWorld().spawnParticle(Particle.FLASH, cl, 5, 0.25, 0.25, 0.25, 0);
+                        	    p.getWorld().spawnParticle(Particle.COMPOSTER, cl, 100, 0.25, 0.25, 0.25, 0);
+                        	    p.getWorld().spawnParticle(Particle.WHITE_ASH, cl, 100, 0.25, 0.25, 0.25, 0);
+                        	    p.getWorld().spawnParticle(Particle.BLOCK, cl, 100, 0.25, 0.25, 0.25, 0, Material.CHISELED_QUARTZ_BLOCK.createBlockData());
+                        	});
+                        	p.getWorld().spawnParticle(Particle.FLASH, p.getLocation(), 10, 4, 2, 4, 0);
+
+                        	p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_STEP, 0.8f, 0f);
+                        	p.playSound(p.getLocation(), Sound.ENTITY_GLOW_SQUID_AMBIENT, 0.7f, 0.2f);
+                        	
+            	            for (Entity e : p.getWorld().getNearbyEntities(l, 4, 4, 4)) {
+            	                if (e instanceof Player) {
+            	                    Player p1 = (Player) e;
+            	                    if (Party.hasParty(p) && Party.hasParty(p1)) {
+            	                        if (Party.getParty(p).equals(Party.getParty(p1))) {
+            	                            continue;
+            	                        }
+            	                    }
+            	                }
+            	                if (!(e == p) && e instanceof LivingEntity && !(e.hasMetadata("fake")) && !(e.hasMetadata("portal"))) {
+            	                    final LivingEntity le = (LivingEntity) e;
+            	                    le.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 20, 4, false, false));
+            	                    atks(0.12, psd.Restraint.get(p.getUniqueId()) * 0.12, p, le, 9);
+            	                    Holding.holding(p, le, 30L);
+            	                }
+            	            }
+            	        }
+            	    }, hitIndex * delay); // 각 히트마다 지연 시간 계산
+            	}
 				
 			}
 		}
@@ -1147,14 +1155,13 @@ public class Palskills extends Pak {
 						h.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 999999, 5, false, false));
 						h.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, 5, false, false));
 						h.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, 2, false, false));
-						h.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 999999, 2, false, false));
 						h.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 999999, 0, false, false));
 						h.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 999999, 2, false, false));
 						h.addPotionEffect(new PotionEffect(PotionEffectType.CONDUIT_POWER, 999999, 2, false, false));
 						h.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 999999, 2, false, false));
 						h.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 999999, 2, false, false));
-						
-						h.setJumpStrength(2);
+						h.getAttribute(Attribute.SCALE).setBaseValue(1.5);
+						h.getAttribute(Attribute.STEP_HEIGHT).setBaseValue(5);
 						h.setInvulnerable(true);
 						h.setCollidable(false);
 						h.setColor(Color.WHITE);
@@ -1191,8 +1198,8 @@ public class Palskills extends Pak {
             	h.getWorld().spawnParticle(Particle.WHITE_ASH, h.getLocation(), 100,2,2,2);
             	p.playSound(h.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 0.5f, 2);
             	p.playSound(h.getLocation(), Sound.ENTITY_ENDER_DRAGON_FLAP, 0.5f, 2);
-            	if(ev.getPower()>=0.8) {
-                	h.setVelocity(BlockFace.UP.getDirection().normalize().multiply(1.5));
+            	if(ev.getPower()>=0.7) {
+                	h.setVelocity(BlockFace.UP.getDirection().normalize().multiply(2.5));
             	}
             	for (Entity e : h.getWorld().getNearbyEntities(h.getLocation(), 4, 4, 4))
 				{
@@ -1384,8 +1391,8 @@ public class Palskills extends Pak {
 	                }
 	            }, 45); 
             	pltlt.put(p.getUniqueId(), task);
-            	
-            	Location tl = gettargetblock(p, 3);
+
+            	final Location tl = p.getLocation().clone().add(p.getLocation().getDirection().clone().normalize().multiply(3.2));
 
             	ArrayList<Location> line = new ArrayList<Location>();
             	AtomicInteger j = new AtomicInteger();
@@ -1393,8 +1400,8 @@ public class Palskills extends Pak {
             	p.playSound(p.getLocation(), Sound.BLOCK_AMETHYST_CLUSTER_BREAK, 0.6f, 1.5f);
 
             	// 십자가 형태의 파티클을 생성합니다.
-            	double length = 2.5; // 십자가의 길이
-            	int particleCount = 10; // 각 방향에 생성할 파티클 수
+            	double length = 4; // 십자가의 길이
+            	int particleCount = 20; // 각 방향에 생성할 파티클 수
 
             	// 수평 방향 파티클
             	for (int i = -particleCount; i <= particleCount; i++) {
@@ -1414,8 +1421,8 @@ public class Palskills extends Pak {
             	    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
             	        @Override
             	        public void run() {
-            	            p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l, 10, 1, 1, 1, 0);
-            	            p.getWorld().spawnParticle(Particle.BLOCK, l, 10, 1, 1, 1, 0, Material.CHISELED_QUARTZ_BLOCK.createBlockData());
+            	            p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l, 1, 1, 1, 1, 0);
+            	            p.getWorld().spawnParticle(Particle.BLOCK_CRUMBLE, l, 10, 1, 1, 1, 0, Material.CHISELED_QUARTZ_BLOCK.createBlockData());
             	            p.getWorld().spawnParticle(Particle.WHITE_ASH, l, 10, 2, 2, 2, 0.1);
             	        }
             	    }, j.incrementAndGet() / 900);
@@ -1470,8 +1477,9 @@ public class Palskills extends Pak {
             	}
 				pltl.remove(p.getUniqueId());
 
-            	
-                Location tl = gettargetblock(p,2);
+
+            	final Location tl = p.getLocation().clone().add(p.getLocation().getDirection().clone().normalize().multiply(3.2));
+
                 
                 ItemStack head = new ItemStack(Material.QUARTZ_PILLAR);
                 HashSet<ArmorStand> ash = new HashSet<>();
@@ -1613,7 +1621,6 @@ public class Palskills extends Pak {
 		
 
 	
-	@SuppressWarnings("deprecation")
 	public void Punish(PlayerInteractEvent ev) 
 	{
 		Player p = ev.getPlayer();
@@ -1622,8 +1629,8 @@ public class Palskills extends Pak {
         
 		
 		
-		if(ClassData.pc.get(p.getUniqueId()) == 3 && psd.Punish.getOrDefault(p.getUniqueId(), 0)>=1 && griffon.containsKey(p.getUniqueId()) && p.getVehicle() == griffon.get(p.getUniqueId())) {
-			if(weaponCheck(p)  && !p.isSneaking() && !p.isBlocking() && !p.isOnGround()) 
+		if(ClassData.pc.get(p.getUniqueId()) == 3 && psd.Punish.getOrDefault(p.getUniqueId(), 0)>=1 && griffon.containsKey(p.getUniqueId())) {
+			if(weaponCheck(p)  && !p.isSneaking() && !p.isBlocking()) 
 			{
 				if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK) && !p.hasCooldown(CAREFUL))
 				{
@@ -1715,6 +1722,12 @@ public class Palskills extends Pak {
 								Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 					                @Override
 					                public void run() {
+					                    for (double angle = 0; angle < 360; angle += 5) {
+					                        double radians = Math.toRadians(angle);
+					                        double x = 10 * Math.cos(radians);
+					                        double z = 10 * Math.sin(radians);
+					                        p.getWorld().spawnParticle(Particle.DUST_PLUME, p.getLocation().add(x, 0, z), 10, 0.2, 0.5, 0.2, 0);
+					                    }
 										for (Entity e : p.getNearbyEntities(10, 10, 10))
 										{
 				                    		if (e instanceof Player) 
@@ -1809,7 +1822,7 @@ public class Palskills extends Pak {
 			cross.add(tl.clone().add(0, 1, i));
 		}
 		
-		for(int co = 0 ; co<60; co++) {
+		for(int co = 0 ; co<30; co++) {
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
                 @Override
                 public void run() {
@@ -1867,7 +1880,7 @@ public class Palskills extends Pak {
 				
                 p.playSound(tl, Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1.0f, 0f);
 			}
-        }, 60); 
+        }, 30); 
 		
 		
 		for(int co = 0 ; co<10; co++) {
@@ -1895,7 +1908,7 @@ public class Palskills extends Pak {
         	            }, 3);
 					}
 				}
-            }, co*2+80); 
+            }, co*2+50); 
 		}
 	}
 	

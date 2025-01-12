@@ -6,6 +6,8 @@ import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Villager;
+import org.bukkit.entity.Villager.Profession;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.loot.LootTables;
@@ -28,6 +30,44 @@ public class Mobs extends Pak {
 			EntityType t = le.getType();
 			if(t== EntityType.AXOLOTL) {
 				return "아홀로틀";
+			}
+			else if(t== EntityType.VILLAGER) {
+				Villager vil = (Villager)le;
+				Profession prof = vil.getProfession();
+				if(prof == Profession.ARMORER) {
+					return "갑옷제조인";
+				}
+				else if (prof == Profession.BUTCHER) {
+					return "도살업자";
+				} else if (prof == Profession.CARTOGRAPHER) {
+					return "지도제작자";
+				} else if (prof == Profession.CLERIC) {
+					return "사제";
+				} else if (prof == Profession.FARMER) {
+					return "농부";
+				} else if (prof == Profession.FISHERMAN) {
+					return "어부";
+				} else if (prof == Profession.FLETCHER) {
+					return "화살제조인";
+				} else if (prof == Profession.LEATHERWORKER) {
+					return "가죽세공인";
+				} else if (prof == Profession.LIBRARIAN) {
+					return "사서";
+				} else if (prof == Profession.MASON) {
+					return "석공";
+				} else if (prof == Profession.NITWIT) {
+					return "멍청이";
+				} else if (prof == Profession.NONE) {
+					return "주민";
+				} else if (prof == Profession.SHEPHERD) {
+					return "양치기";
+				} else if (prof == Profession.TOOLSMITH) {
+					return "도구제조인";
+				} else if (prof == Profession.WEAPONSMITH) {
+					return "무기제조인";
+				} else {
+					return "주민";
+				}
 			}
 			else if(t== EntityType.ALLAY) {
 				return "알레이";
@@ -230,9 +270,6 @@ public class Mobs extends Pak {
 			}
 			else if(t== EntityType.VEX) {
 				return "벡스";
-			}
-			else if(t== EntityType.VILLAGER) {
-				return "주민";
 			}
 			else if(t== EntityType.VINDICATOR) {
 				return "변명자";

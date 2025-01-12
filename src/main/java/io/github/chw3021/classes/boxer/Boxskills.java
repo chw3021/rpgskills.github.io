@@ -305,7 +305,7 @@ public class Boxskills extends Pak {
 						.cooldown(sec)
 						.kname("철산고")
 						.ename("BodyBlow")
-						.slot(1)
+						.slot(3)
 						.hm(swcooldown)
 						.skillUse(() -> {
 						
@@ -594,7 +594,7 @@ public class Boxskills extends Pak {
 						.cooldown(sec)
 						.kname("뎀프시롤")
 						.ename("DempsyRoll")
-						.slot(2)
+						.slot(4)
 						.hm(cdcooldown)
 						.skillUse(() -> {
 						
@@ -1133,7 +1133,7 @@ public class Boxskills extends Pak {
 						.cooldown(sec)
 						.kname("붕권")
 						.ename("Straight")
-						.slot(3)
+						.slot(2)
 						.hm(frcooldown)
 						.skillUse(() -> {
 						ArrayList<Location> line = new ArrayList<Location>();
@@ -1482,7 +1482,7 @@ public class Boxskills extends Pak {
 						.cooldown(sec)
 						.kname("질풍권")
 						.ename("FlickerJab")
-						.slot(4)
+						.slot(1)
 						.hm(jbcooldown)
 						.skillUse(() -> {
 						

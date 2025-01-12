@@ -22,6 +22,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.bukkit.Bukkit;
@@ -187,6 +188,23 @@ public class Taoskills extends Pak {
 		
 		
 		final Integer proi = Proficiency.getpro(p)>=1 ? 1:0;
+	    int amp = amplify.getOrDefault(p.getName(), 0);
+	    int radius = 5 + amp; // 반지름 설정
+	    int particleCount = 100 * (1 + amp); // 파티클 수 설정
+	    
+	    final World w = p.getWorld();
+	    
+	    // 원의 위치를 저장할 HashSet
+	    Set<Location> circleLocations = new HashSet<>();
+
+	    // 원의 위치 계산
+	    for (int i = 0; i < particleCount; i++) {
+	        double angle = 2 * Math.PI * i / particleCount; // 각도 계산
+	        double x = radius * Math.cos(angle); // x 좌표
+	        double z = radius * Math.sin(angle); // z 좌표
+	        Location location = p.getLocation().add(x, 0.1, z); // 플레이어 위치에 추가
+	        circleLocations.add(location); // 위치 추가
+	    }
 		if(in == 0) {
 			
 			if(auranegetivetask.containsKey(p.getName())) {
@@ -206,18 +224,20 @@ public class Taoskills extends Pak {
 	            }
 			}, 10+mantra.getOrDefault(p.getName(),0)); 
 			auranegetivetask.put(p.getName(), task);
-			
-			
-			
-			int amp = amplify.getOrDefault(p.getName(), 0);
-			p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation(), 100*(1+amp), 5+amp,1,5+amp ,Material.WHITE_STAINED_GLASS.createBlockData());
-			p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation(), 100*(1+amp), 5+amp,1,5+amp ,Material.BLACK_STAINED_GLASS.createBlockData());
 
-        	if(amplify.containsKey(p.getName())) {
-            	p.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1,0, false,false));
-    			p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation(), 100*(1+amp), 5+amp,1,5+amp ,Material.IRON_BLOCK.createBlockData());
-    			p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation(), 100*(1+amp), 5+amp,1,5+amp ,Material.BLUE_WOOL.createBlockData());
-        	}
+		    for (Location loc : circleLocations) {
+		        w.spawnParticle(Particle.BLOCK_CRUMBLE, loc, 1, 0, 0, 0, getBd(Material.WHITE_STAINED_GLASS));
+		        w.spawnParticle(Particle.BLOCK_CRUMBLE, loc, 1, 0, 0, 0, getBd(Material.BLACK_STAINED_GLASS));
+		    }
+
+		    if (amplify.containsKey(p.getName())) {
+		        p.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 1, 0, false, false));
+
+		        for (Location loc : circleLocations) {
+		            w.spawnParticle(Particle.BLOCK_CRUMBLE, loc, 1, 0, 0, 0, getBd(Material.IRON_BLOCK));
+		            w.spawnParticle(Particle.BLOCK_CRUMBLE, loc, 1, 0, 0, 0, getBd(Material.BLUE_WOOL));
+		        }
+		    }
         	for (Entity e : p.getNearbyEntities(5+amp, 5+amp, 5+amp))
 			{
             	if ((!(e == p))&& e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) 
@@ -280,14 +300,16 @@ public class Taoskills extends Pak {
 			aurapositivetask.put(p.getName(), task);
 			
 			
-			int amp = amplify.getOrDefault(p.getName(), 0);
-			p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation(), 100*(1+amp), 5+amp,1,5+amp ,Material.RED_STAINED_GLASS.createBlockData());
-			p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation(), 100*(1+amp), 5+amp,1,5+amp ,Material.BLUE_STAINED_GLASS.createBlockData());
-
-
+			
+            for (Location loc : circleLocations) {
+    			w.spawnParticle(Particle.BLOCK_CRUMBLE, loc, 1, 0, 0, 0 ,getBd(Material.RED_STAINED_GLASS));
+    			w.spawnParticle(Particle.BLOCK_CRUMBLE, loc, 1, 0, 0, 0 ,getBd(Material.BLUE_STAINED_GLASS));
+            }
         	if(amplify.containsKey(p.getName())) {
-    			p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation(), 100*(1+amp), 5+amp,1,5+amp ,Material.JUNGLE_LEAVES.createBlockData());
-    			p.getWorld().spawnParticle(Particle.BLOCK, p.getLocation(), 100*(1+amp), 5+amp,1,5+amp ,Material.MAGMA_BLOCK.createBlockData());
+                for (Location loc : circleLocations) {
+        			p.getWorld().spawnParticle(Particle.BLOCK_CRUMBLE, loc, 1, 0, 0, 0 ,getBd(Material.JUNGLE_LEAVES));
+        			p.getWorld().spawnParticle(Particle.BLOCK_CRUMBLE, loc, 1, 0, 0, 0 ,getBd(Material.MAGMA_BLOCK));
+                }
         	}
         	
         	p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 10+mantra.getOrDefault(p.getName(),0),2, false,false));
@@ -353,7 +375,7 @@ public class Taoskills extends Pak {
 						p.setCollidable(false);
 					}
 					auras.putIfAbsent(p.getName(), 0);
-                    Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,0.1d,5,"기운","Aura"));
+                    Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,0.2d,-1,"기운","Aura"));
 
 					if(auras.getOrDefault(p.getName(), 0) == 0) {
 						auras.put(p.getName(), 1);
@@ -618,7 +640,7 @@ public class Taoskills extends Pak {
 						.cooldown(sec)
 						.kname("연상")
 						.ename("Imagery")
-						.slot(0)
+						.slot(1)
 						.hm(gdcooldown)
 						.skillUse(() -> {
 		                	if(blst.containsKey(p.getUniqueId())) {
@@ -912,7 +934,7 @@ public class Taoskills extends Pak {
 							.cooldown(sec)
 							.kname("증폭")
 							.ename("Amplify")
-							.slot(1)
+							.slot(3)
 							.hm(swcooldown)
 							.skillUse(() -> {
 			                	if(sernt.containsKey(p.getUniqueId())) {
@@ -1149,7 +1171,7 @@ public class Taoskills extends Pak {
 						.cooldown(sec)
 						.kname("부적")
 						.ename("Charm")
-						.slot(2)
+						.slot(4)
 						.hm(cdcooldown)
 						.skillUse(() -> {
 		                	if(ergst.containsKey(p.getUniqueId())) {
@@ -1986,7 +2008,7 @@ public class Taoskills extends Pak {
 							.cooldown(sec)
 							.kname("공중제비")
 							.ename("Flip")
-							.slot(3)
+							.slot(5)
 							.hm(sdcooldown)
 							.skillUse(() -> {
 			                	if(shpt.containsKey(p.getUniqueId())) {
@@ -2222,7 +2244,7 @@ public class Taoskills extends Pak {
 							.cooldown(sec)
 							.kname("잠해소비")
 							.ename("CombustInside")
-							.slot(4)
+							.slot(5)
 							.hm(smcooldown)
 							.skillUse(() -> {
 								p.playSound(p.getLocation(), Sound.BLOCK_LAVA_EXTINGUISH, 1.0f, 2.0f);

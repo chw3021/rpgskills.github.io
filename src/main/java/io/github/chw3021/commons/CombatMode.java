@@ -345,6 +345,9 @@ public class CombatMode {
 	public void modeAlert(SkillUseEvent ev) {
 		Player p = (Player) ev.getPlayer();
 		if (isCombat(p)) {
+			if(ev.getNum()<0) {
+				return;
+			}
 			ItemStack si = p.getInventory().getItem(ev.getNum());
 			ItemMeta sm = si.getItemMeta();
 			if (p.getLocale().equalsIgnoreCase("ko_kr")) {

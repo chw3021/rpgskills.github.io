@@ -11,6 +11,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemRarity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -218,7 +219,8 @@ public class SkillsGui {
 	public void itemset(String display, Material ID, int data, int stack, List<String> Lore,int lv, int hit, double dam1, double dam2, int masterlev, int loc, Inventory inv) {
 		ItemStack item = new ItemStack(ID, stack);
 		ItemMeta items = item.getItemMeta();
-		items.setDisplayName(display);
+		items.setRarity(ItemRarity.UNCOMMON);
+		items.setDisplayName(ChatColor.BOLD + display);
 		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		items.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
@@ -226,7 +228,7 @@ public class SkillsGui {
 		input.add(ChatColor.AQUA + "LV." + lv);
 		input.add("");
 		input.addAll(Lore);
-		input.addAll(des(inv));
+		input.addAll(des(loc));
 		input.add("");
 		if(dam1 != 0) {
 			input.add(ChatColor.BOLD+ "" +ChatColor.LIGHT_PURPLE+hit+ " X "+BigDecimal.valueOf(dam1 * (1 +  lv * dam2)).setScale(2, RoundingMode.HALF_EVEN)+"D");
@@ -247,13 +249,14 @@ public class SkillsGui {
 	public void itemset(String display, Material ID, int data, int stack, List<String> Lore,int lv, int hit, double dam1, double dam2, int loc, Inventory inv) {
 		ItemStack item = new ItemStack(ID, stack);
 		ItemMeta items = item.getItemMeta();
-		items.setDisplayName(display);
+		items.setRarity(ItemRarity.UNCOMMON);
+		items.setDisplayName(ChatColor.BOLD + display);
 		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		items.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 		List<String> input = new ArrayList<>();
 		input.addAll(Lore);
-		input.addAll(des(inv));
+		input.addAll(des(loc));
 		input.add("");
 		if(dam1 != 0) {
 			input.add(ChatColor.BOLD+ "" + ChatColor.LIGHT_PURPLE+hit+ " X "+BigDecimal.valueOf(dam1 * (1 +  lv * dam2)).setScale(2, RoundingMode.HALF_EVEN)+"D");
@@ -278,14 +281,15 @@ public class SkillsGui {
 	{
 		ItemStack item = ID;
 		ItemMeta items = item.getItemMeta();
-		items.setDisplayName(display);
+		items.setRarity(ItemRarity.UNCOMMON);
+		items.setDisplayName(ChatColor.BOLD + display);
 		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		items.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 		List<String> input = new ArrayList<>();
 
 		input.addAll(Lore);
-		input.addAll(des(inv));
+		input.addAll(des(loc));
 		
 		if(input.stream().anyMatch(s -> s.contains("X"))) {
 			input.stream().filter(s -> s.contains("X")).forEach(l -> {
@@ -313,14 +317,15 @@ public class SkillsGui {
 	{
 		ItemStack item = new ItemStack(ID);
 		ItemMeta items = item.getItemMeta();
-		items.setDisplayName(display);
+		items.setRarity(ItemRarity.UNCOMMON);
+		items.setDisplayName(ChatColor.BOLD + display);
 		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		items.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 		List<String> input = new ArrayList<>();
 
 		input.addAll(Lore);
-		input.addAll(des(inv));
+		input.addAll(des(loc));
 		
 		if(input.stream().anyMatch(s -> s.contains("X"))) {
 			input.stream().filter(s -> s.contains("X")).forEach(l -> {
@@ -349,13 +354,14 @@ public class SkillsGui {
 	{
 		ItemStack item = new ItemStack(ID);
 		ItemMeta items = item.getItemMeta();
-		items.setDisplayName(display);
+		items.setRarity(ItemRarity.UNCOMMON);
+		items.setDisplayName(ChatColor.BOLD + display);
 		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		items.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
 		List<String> input = new ArrayList<>();
 		input.addAll(Lore);
-		input.addAll(des(inv));
+		input.addAll(des(loc));
 		
 		input.forEach(l -> {
 			input.set(input.indexOf(l), ChatColor.RESET + (ChatColor.of(Color.LIGHT_GRAY) + l));
@@ -368,7 +374,8 @@ public class SkillsGui {
 	public void basic(String display, Material ID, int data, int stack, List<String> Lore,int lv, int hit, double dam1, double dam2, int masterlev, int loc, Inventory inv) {
 		ItemStack item = new ItemStack(ID, stack);
 		ItemMeta items = item.getItemMeta();
-		items.setDisplayName(display);
+		items.setRarity(ItemRarity.UNCOMMON);
+		items.setDisplayName(ChatColor.BOLD + display);
 		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		items.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
@@ -383,7 +390,7 @@ public class SkillsGui {
 		if(masterlev != 0) {
 			input.add(ChatColor.GOLD+"Master LV."+masterlev);
 		}
-		input.addAll(des(inv));
+		input.addAll(des(loc));
 
 		input.forEach(l -> {
 			input.set(input.indexOf(l), ChatColor.RESET + (ChatColor.of(Color.LIGHT_GRAY) + l));
@@ -397,7 +404,8 @@ public class SkillsGui {
 	public void passive(String display, Material ID, int data, int stack, List<String> Lore,int lv, double dam, int loc, Inventory inv) {
 		ItemStack item = new ItemStack(ID, stack);
 		ItemMeta items = item.getItemMeta();
-		items.setDisplayName(display);
+		items.setRarity(ItemRarity.UNCOMMON);
+		items.setDisplayName(ChatColor.BOLD + display);
 		items.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		items.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		items.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
@@ -409,7 +417,7 @@ public class SkillsGui {
 		if(dam != 0) {
 			input.add(ChatColor.LIGHT_PURPLE+ " X "+BigDecimal.valueOf(1 +lv * dam).setScale(2, RoundingMode.HALF_EVEN));
 		}
-		input.addAll(des(inv));
+		input.addAll(des(loc));
 
 		input.forEach(l -> {
 			input.set(input.indexOf(l), ChatColor.RESET + (ChatColor.of(Color.LIGHT_GRAY) + l));
@@ -420,8 +428,11 @@ public class SkillsGui {
 		inv.setItem(loc, item);
 	}
 	
-	final private List<String> des(Inventory inv){
-		List<String> retL = new ArrayList<>();;
+	final private List<String> des(int loc){
+		List<String> retL = new ArrayList<>();
+		if(loc>8) {
+			return retL;
+		}
 		retL.add("");
 		retL.add(ChatColor.YELLOW + "[Shift + Left]: + Max");
 		retL.add(ChatColor.YELLOW + "[Shift + Right]: - Max");

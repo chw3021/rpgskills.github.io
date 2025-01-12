@@ -53,6 +53,7 @@ import org.bukkit.entity.EnderDragonPart;
 import org.bukkit.entity.Enderman;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Fox;
 import org.bukkit.entity.IronGolem;
 import org.bukkit.entity.Item;
@@ -388,7 +389,8 @@ public class Tamskills extends Pak {
 							}
 							attention.put(p.getUniqueId(), le);
 			                sdcooldown.put(p.getName(), System.currentTimeMillis());
-		                    Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d),5,"집중공격","PressTheAttack"));
+			                double sec = 5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
+		                    Bukkit.getPluginManager().callEvent(new SkillUseEvent(p,sec,0,"집중공격","PressTheAttack"));
 			                if(Proficiency.getpro(p)>=1) {
 								p.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 2, 0, false, false));
 			                }
@@ -469,7 +471,7 @@ public class Tamskills extends Pak {
 						.cooldown(sec)
 						.kname("스파이디")
 						.ename("Spidey")
-						.slot(0)
+						.slot(1)
 						.hm(swcooldown)
 						.skillUse(() -> {
 							p.playSound(p.getLocation(), Sound.ENTITY_PHANTOM_BITE, 1, 0);
@@ -766,7 +768,7 @@ public class Tamskills extends Pak {
 						.cooldown(sec)
 						.kname("반려동물")
 						.ename("Pets")
-						.slot(1)
+						.slot(2)
 						.hm(cdcooldown)
 						.skillUse(() -> {
 		                    if(pets.containsKey(p.getUniqueId())) {
@@ -994,7 +996,7 @@ public class Tamskills extends Pak {
 						.cooldown(sec)
 						.kname("벌집")
 						.ename("BeeHive")
-						.slot(2)
+						.slot(3)
 						.hm(frcooldown)
 						.skillUse(() -> {
 
@@ -1211,25 +1213,51 @@ public class Tamskills extends Pak {
 
 					Chicken bees = (Chicken) p.getWorld().spawnEntity(p.getEyeLocation(), EntityType.CHICKEN);
 					bees.setAdult();
+					bees.getAttribute(Attribute.SCALE).setBaseValue(1.6);
 					bees.setInvulnerable(true);
-					bees.setHealth(bees.getMaxHealth());
 					bees.setMetadata("untargetable", new FixedMetadataValue(RMain.getInstance(), p.getName()));	
 					bees.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 					bees.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 					bees.setSilent(true);
-					bees.setCustomName(p.getName());         
+					bees.setVisualFire(true);
+					bees.setCustomName(p.getName());
+					bees.addPassenger(p);
 
+					for(int i = 0 ; i < 6; i++) {
+
+		        		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+			                @Override
+			                public void run() {
+	    						p.getWorld().playSound(bees.getLocation(), Sound.ENTITY_BLAZE_SHOOT, 0.5f, 1.5f);
+								Fireball fb = (Fireball) bees.getWorld().spawn(bees.getEyeLocation(), Fireball.class);
+								fb.setYield(-1f);
+								fb.setShooter(p);
+								if(attention.containsKey(p.getUniqueId())) {
+			    					LivingEntity at = (LivingEntity)attention.get(p.getUniqueId());
+			    					Vector v = at.getLocation().toVector().subtract(bees.getEyeLocation().toVector()).normalize().multiply(5);
+									fb.setVelocity(v);
+								}
+								else {
+									fb.setVelocity(p.getEyeLocation().getDirection().normalize().multiply(3));
+								}
+								fb.setIsIncendiary(false);
+								fb.setMetadata("HotChicken fb of"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
+
+			                }
+			            }, i*10); 
+					}
 					for(int i = 0 ; i < 30; i++) {
 
 		        		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 			                @Override
 			                public void run() {
-								p.addPassenger(bees);
+	    						p.getWorld().spawnParticle(Particle.SMALL_FLAME, bees.getLocation(), 5,1,0,1,0.01);
+	    						bees.setVelocity(new Vector(0,0.45,0));
+								
 			                }
 			            }, i*2); 
 					}
-					p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 60, 3, false, false));
-					p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 120, 3, false, false));
+					p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 150, 3, false, false));
 	        		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		                @Override
 		                public void run() {
@@ -1242,6 +1270,44 @@ public class Tamskills extends Pak {
 		}
 	}
 	
+
+
+	public void Fireball(ProjectileHitEvent ev) 
+	{
+
+        
+		if(ev.getEntity() instanceof Fireball) {
+			Fireball fb = (Fireball)ev.getEntity();
+			if(fb.getShooter() instanceof Player) {
+				Player p = (Player) fb.getShooter();
+				if(fb.hasMetadata("HotChicken fb of"+p.getName())) {
+					fb.getWorld().spawnParticle(Particle.EXPLOSION, fb.getLocation(),1);
+					p.playSound(fb.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 0.9f, 1.5f);
+					for(Entity n : fb.getNearbyEntities(4, 4, 4)) {
+						if(n!=p && n instanceof LivingEntity&& !(n.hasMetadata("fake"))&& !(n.hasMetadata("portal"))) {
+                    		if (n instanceof Player) 
+							{
+								
+								Player p1 = (Player) n;
+								if(Party.hasParty(p) && Party.hasParty(p1))	{
+								if(Party.getParty(p).equals(Party.getParty(p1)))
+									{
+										continue;
+									}
+								}
+							}
+							LivingEntity le = (LivingEntity)n;
+                    		atk1(0.38*(1+tsd.BeeHive.get(p.getUniqueId())*0.036), p, le);
+									
+						}
+					}
+				}
+			}
+			
+		}
+	}
+        
+		
 	
 	public void Creepey(ExplosionPrimeEvent d) 
 	{
@@ -1328,7 +1394,7 @@ public class Tamskills extends Pak {
 							.cooldown(sec)
 							.kname("크리퍼폭탄")
 							.ename("CreepBomb")
-							.slot(3)
+							.slot(4)
 							.hm(gdcooldown)
 							.skillUse(() -> {
 								p.playSound(p.getLocation(), Sound.ENTITY_CREEPER_PRIMED , 1.0f, 2.0f);
@@ -1463,7 +1529,7 @@ public class Tamskills extends Pak {
 							.cooldown(sec)
 							.kname("판다")
 							.ename("Panda")
-							.slot(4)
+							.slot(5)
 							.hm(smcooldown)
 							.skillUse(() -> {
 
