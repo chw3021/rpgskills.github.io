@@ -1083,7 +1083,7 @@ public class Classgui implements Serializable {
 					"공격: 4.5/5", "방어: 2.5/5", "제어: 2.5/5", "지원: 1/5", "범위: 3.5/5", "사거리: 4/5", "기동: 2/5", "난이도: 보통"),
 					24, inv);
 			itemset(ChatColor.BLUE + "빙술사", Material.PACKED_ICE, 0, 1,
-					Arrays.asList("추천 장비:", "비늘(프리즈머린 조각)", "", "공격: 3.5/5", "방어: 2.5/5", "제어: 4.5/5", "지원: 0/5",
+					Arrays.asList("추천 장비:", "단검", "", "공격: 3.5/5", "방어: 2.5/5", "제어: 4.5/5", "지원: 0/5",
 							"범위: 2.5/5", "사거리: 2.5/5", "기동: 1.5/5", "난이도: 어려움"),
 					33, inv);
 			itemset(ChatColor.BLUE + "낚시꾼", Material.FISHING_ROD, 0, 1, Arrays.asList("추천 장비:", "낚시대", "", "공격: 2.5/5",
@@ -1243,7 +1243,7 @@ public class Classgui implements Serializable {
 							"Difficulty: Normal"),
 					24, inv);
 			itemset(ChatColor.BLUE + "Frostman", Material.PACKED_ICE, 0, 1,
-					Arrays.asList("Recommended equipment:", "Shard", "", "Attack: 3.5/5", "Defence: 2.5/5",
+					Arrays.asList("Recommended equipment:", "Dagger", "", "Attack: 3.5/5", "Defence: 2.5/5",
 							"Control: 4.5/5", "Support: 0/5", "Area: 2.5/5", "Range: 2.5/5", "Mobility: 1.5/5",
 							"Difficulty: Hard"),
 					33, inv);
@@ -1259,7 +1259,7 @@ public class Classgui implements Serializable {
 							"Difficulty: Normal"),
 					16, inv);
 			itemset(ChatColor.BLUE + "Daggerist[To be updated]", Material.SHEARS, 0, 1,
-					Arrays.asList("Recommended equipment:", "Dagger in both Hands", "", "Attack: 4.75/5",
+					Arrays.asList("Recommended equipment:", "Dagger", "", "Attack: 4.75/5",
 							"Defence: 1.5/5", "Control: 2/5", "Support: 0/5", "Area: 3/5", "Range: 1.5/5",
 							"Mobility: 4.5/5", "Difficulty: Hard"),
 					25, inv);

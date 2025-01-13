@@ -186,7 +186,7 @@ public class Frostskills extends Pak {
 		double sec =3*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 
-		if(ClassData.pc.get(p.getUniqueId()) == 21&& bsd.FrozenCrystal.getOrDefault(p.getUniqueId(), 0)>=1 && p.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD && !(p.isSneaking()) && !crystal.containsKey(p))
+		if(ClassData.pc.get(p.getUniqueId()) == 21&& bsd.FrozenCrystal.getOrDefault(p.getUniqueId(), 0)>=1 && p.getInventory().getItemInMainHand().getType() == Material.SHEARS && !(p.isSneaking()) && !crystal.containsKey(p))
 		{
 
 			ev.setCancelled(true);
@@ -258,7 +258,7 @@ public class Frostskills extends Pak {
 		Player p = ev.getPlayer();
 
 
-		if(p.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD && !(p.isSneaking()) && ClassData.pc.get(p.getUniqueId()) == 21)
+		if(p.getInventory().getItemInMainHand().getType() == Material.SHEARS && !(p.isSneaking()) && ClassData.pc.get(p.getUniqueId()) == 21)
 		{
 			ev.setCancelled(true);
 
@@ -279,7 +279,7 @@ public class Frostskills extends Pak {
 		if(ClassData.pc.get(p.getUniqueId()) == 21&& bsd.Hailstones.getOrDefault(p.getUniqueId(), 0)>=1) {
 			final Location l = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR)), 6).getLocation().setDirection(p.getLocation().getDirection());
 			final Location el = new Location(p.getWorld(), l.getX(), l.getY()+5.5, l.getZ());
-			if(p.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD && p.isSneaking())
+			if(p.getInventory().getItemInMainHand().getType() == Material.SHEARS && p.isSneaking())
 			{
 				ev.setCancelled(true);
 
@@ -405,7 +405,7 @@ public class Frostskills extends Pak {
 		if(ClassData.pc.get(p.getUniqueId()) == 21 && avlnch.containsKey(p.getUniqueId())) {
 			final Location tl = p.getTargetBlock(new HashSet<>(Arrays.asList(Material.WATER, Material.LAVA, Material.AIR)), 6).getLocation().setDirection(p.getLocation().getDirection());
 			final Location el = new Location(p.getWorld(), tl.getX(), tl.getY()+1.5, tl.getZ());
-			if(p.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD && p.isSneaking())
+			if(p.getInventory().getItemInMainHand().getType() == Material.SHEARS && p.isSneaking())
 			{
 				ev.setCancelled(true);
 
@@ -502,7 +502,7 @@ public class Frostskills extends Pak {
 
 		Player p = ev.getPlayer();
 		if(ClassData.pc.get(p.getUniqueId()) == 21 && glcdr.containsKey(p.getUniqueId())) {
-			if(p.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD && p.isSneaking())
+			if(p.getInventory().getItemInMainHand().getType() == Material.SHEARS && p.isSneaking())
 			{
 				ev.setCancelled(true);
 
@@ -557,21 +557,21 @@ public class Frostskills extends Pak {
 	}
 
 	final private void IceSpikes(Location el, World w, AtomicInteger j) {
-		w.spawnParticle(Particle.BLOCK, el.clone().add(0, j.incrementAndGet()/5, 0), 10, 1, 2, 1, Material.PACKED_ICE.createBlockData());
-		w.spawnParticle(Particle.BLOCK, el.clone().add(0, j.incrementAndGet()/5, 0), 10, 0.5, 2, 0.5, Material.ICE.createBlockData());
-		w.spawnParticle(Particle.BLOCK, el.clone().add(0, j.incrementAndGet()/5+0.1, 0), 10, 0.1, 2, 0.1, Material.BLUE_ICE.createBlockData());
-		w.spawnParticle(Particle.BLOCK, el.clone().add(0, j.get()/5+1, 0), 10, 0.3, 2, 0.3, Material.PACKED_ICE.createBlockData());
-		w.spawnParticle(Particle.BLOCK, el.clone().add(0, j.get()/5+1, 0), 10, 0.2, 2, 0.2, Material.ICE.createBlockData());
-		w.spawnParticle(Particle.BLOCK, el.clone().add(0, j.get()/5+1.1, 0), 10, 0.1, 2, 0.1, Material.BLUE_ICE.createBlockData());
-		w.spawnParticle(Particle.BLOCK, el.clone().add(0, j.get()/5+2, 0), 10, 0.3, 2, 0.3, Material.PACKED_ICE.createBlockData());
-		w.spawnParticle(Particle.BLOCK, el.clone().add(0, j.get()/5+2, 0), 10, 0.2, 2, 0.2, Material.ICE.createBlockData());
-		w.spawnParticle(Particle.BLOCK, el.clone().add(0, j.get()/5+2.1, 0), 10, 0.1, 2, 0.1, Material.BLUE_ICE.createBlockData());
-		w.spawnParticle(Particle.BLOCK, el.clone().add(0, j.get()/5+3, 0), 10, 0.3, 2, 0.3, Material.PACKED_ICE.createBlockData());
-		w.spawnParticle(Particle.BLOCK, el.clone().add(0, j.get()/5+3, 0), 10, 0.2, 2, 0.2, Material.ICE.createBlockData());
-		w.spawnParticle(Particle.BLOCK, el.clone().add(0, j.get()/5+3.1, 0), 10, 0.1, 2, 0.1, Material.BLUE_ICE.createBlockData());
-		w.spawnParticle(Particle.BLOCK, el.clone().add(0, j.get()/5+4, 0), 10, 0.2, 2, 0.2, Material.PACKED_ICE.createBlockData());
-		w.spawnParticle(Particle.BLOCK, el.clone().add(0, j.get()/5+4, 0), 10, 0.1, 2, 0.1, Material.ICE.createBlockData());
-		w.spawnParticle(Particle.BLOCK, el.clone().add(0, j.get()/5+4.1, 0), 10, 0.05, 2, 0.05, Material.BLUE_ICE.createBlockData());
+		w.spawnParticle(Particle.DUST_PILLAR, el.clone().add(0, j.incrementAndGet() / 5, 0), 10, 1, 2, 1, getBd(Material.PACKED_ICE));
+		w.spawnParticle(Particle.DUST_PILLAR, el.clone().add(0, j.incrementAndGet() / 5, 0), 10, 0.5, 2, 0.5, getBd(Material.ICE));
+		w.spawnParticle(Particle.DUST_PILLAR, el.clone().add(0, j.incrementAndGet() / 5 + 0.1, 0), 10, 0.1, 2, 0.1, getBd(Material.BLUE_ICE));
+		w.spawnParticle(Particle.DUST_PILLAR, el.clone().add(0, j.get() / 5 + 1, 0), 10, 0.3, 2, 0.3, getBd(Material.PACKED_ICE));
+		w.spawnParticle(Particle.DUST_PILLAR, el.clone().add(0, j.get() / 5 + 1, 0), 10, 0.2, 2, 0.2, getBd(Material.ICE));
+		w.spawnParticle(Particle.DUST_PILLAR, el.clone().add(0, j.get() / 5 + 1.1, 0), 10, 0.1, 2, 0.1, getBd(Material.BLUE_ICE));
+		w.spawnParticle(Particle.DUST_PILLAR, el.clone().add(0, j.get() / 5 + 2, 0), 10, 0.3, 2, 0.3, getBd(Material.PACKED_ICE));
+		w.spawnParticle(Particle.DUST_PILLAR, el.clone().add(0, j.get() / 5 + 2, 0), 10, 0.2, 2, 0.2, getBd(Material.ICE));
+		w.spawnParticle(Particle.DUST_PILLAR, el.clone().add(0, j.get() / 5 + 2.1, 0), 10, 0.1, 2, 0.1, getBd(Material.BLUE_ICE));
+		w.spawnParticle(Particle.DUST_PILLAR, el.clone().add(0, j.get() / 5 + 3, 0), 10, 0.3, 2, 0.3, getBd(Material.PACKED_ICE));
+		w.spawnParticle(Particle.DUST_PILLAR, el.clone().add(0, j.get() / 5 + 3, 0), 10, 0.2, 2, 0.2, getBd(Material.ICE));
+		w.spawnParticle(Particle.DUST_PILLAR, el.clone().add(0, j.get() / 5 + 3.1, 0), 10, 0.1, 2, 0.1, getBd(Material.BLUE_ICE));
+		w.spawnParticle(Particle.DUST_PILLAR, el.clone().add(0, j.get() / 5 + 4, 0), 10, 0.2, 2, 0.2, getBd(Material.PACKED_ICE));
+		w.spawnParticle(Particle.DUST_PILLAR, el.clone().add(0, j.get() / 5 + 4, 0), 10, 0.1, 2, 0.1, getBd(Material.ICE));
+		w.spawnParticle(Particle.DUST_PILLAR, el.clone().add(0, j.get() / 5 + 4.1, 0), 10, 0.05, 2, 0.05, getBd(Material.BLUE_ICE));
 	}
 
 
@@ -584,7 +584,7 @@ public class Frostskills extends Pak {
             Location el = gettargetblock(p,6).clone();
 			if((p.isSneaking()) && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK))
 			{
-				if(p.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD)
+				if(p.getInventory().getItemInMainHand().getType() == Material.SHEARS)
 				{
 					p.setCooldown(CAREFUL, 2);
 
@@ -593,7 +593,7 @@ public class Frostskills extends Pak {
 							.cooldown(sec)
 							.kname("거대고드름")
 							.ename("IceSpikes")
-							.slot(2)
+							.slot(3)
 							.hm(smcooldown)
 							.skillUse(() -> {
 
@@ -633,7 +633,6 @@ public class Frostskills extends Pak {
 										{
 											IceSpikes(el, pw, j);
 											p.playSound(el.clone().add(0,4,0), Sound.BLOCK_GLASS_BREAK, 0.35f, j.get()*0.08f);
-											p.playSound(el.clone().add(0,4,0), Sound.BLOCK_LANTERN_BREAK, 0.35f, j.get()*0.08f);
 											p.playSound(el.clone().add(0,4,0), Sound.ITEM_TRIDENT_THROW, 0.35f, j.get()*0.08f);
 											for(Entity e : p.getWorld().getNearbyEntities(el.clone(), 2, 15, 2)) {
 												if (e instanceof Player)
@@ -675,7 +674,7 @@ public class Frostskills extends Pak {
             Location tl = gettargetblock(p,6).clone();
 			if((p.isSneaking()) && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK))
 			{
-				if(p.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD)
+				if(p.getInventory().getItemInMainHand().getType() == Material.SHEARS)
 				{
 
 					if(polarvt.containsKey(p.getUniqueId())) {
@@ -778,7 +777,7 @@ public class Frostskills extends Pak {
 		if(ClassData.pc.get(p.getUniqueId()) == 21 && iccdp.containsKey(p.getUniqueId())) {
 			if((p.isSneaking()) && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK))
 			{
-				if(p.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD)
+				if(p.getInventory().getItemInMainHand().getType() == Material.SHEARS)
 				{
 
 					if(iccdpt.containsKey(p.getUniqueId())) {
@@ -966,7 +965,7 @@ public class Frostskills extends Pak {
 		double sec =3.5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 		if(ClassData.pc.get(p.getUniqueId()) == 21&& bsd.SnowBreeze.getOrDefault(p.getUniqueId(), 0)>=1) {
 			final Location l = p.getLocation().clone();
-			if(p.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD &&!p.isSneaking()&& !p.isOnGround() &&!p.hasCooldown(CAREFUL))
+			if(p.getInventory().getItemInMainHand().getType() == Material.SHEARS &&!p.isSneaking()&& !p.isOnGround() &&!p.hasCooldown(CAREFUL))
 			{
 				if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK))
 				{
@@ -976,7 +975,7 @@ public class Frostskills extends Pak {
 							.cooldown(sec)
 							.kname("눈바람")
 							.ename("SnowBreeze")
-							.slot(3)
+							.slot(5)
 							.hm(gdcooldown)
 							.skillUse(() -> {
 								if(icefallt.containsKey(p.getUniqueId())) {
@@ -1067,7 +1066,7 @@ public class Frostskills extends Pak {
 		if(ClassData.pc.get(p.getUniqueId()) == 21&&icefall.containsKey(p.getUniqueId())) {
 			final Location hpl = p.getEyeLocation().clone().add(0,3,0);
 			final Location tl = gettargetblock(p,6);
-			if(p.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD &&!p.isSneaking()&& !p.isOnGround() &&!p.hasCooldown(CAREFUL))
+			if(p.getInventory().getItemInMainHand().getType() == Material.SHEARS &&!p.isSneaking()&& !p.isOnGround() &&!p.hasCooldown(CAREFUL))
 			{
 				if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK))
 				{
@@ -1166,7 +1165,7 @@ public class Frostskills extends Pak {
 		if(ClassData.pc.get(p.getUniqueId()) == 21&& bsd.IcicleShot.getOrDefault(p.getUniqueId(), 0)>=1) {
 			if(!(p.isSneaking()) && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK))
 			{
-				if(p.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD)
+				if(p.getInventory().getItemInMainHand().getType() == Material.SHEARS)
 				{
 
 					p.setCooldown(CAREFUL, 2);
@@ -1176,7 +1175,7 @@ public class Frostskills extends Pak {
 							.cooldown(sec)
 							.kname("고드름화살")
 							.ename("IcicleShot")
-							.slot(4)
+							.slot(2)
 							.hm(frcooldown)
 							.skillUse(() -> {
 								if(snballt.containsKey(p.getUniqueId())) {
@@ -1232,7 +1231,7 @@ public class Frostskills extends Pak {
 		if(ClassData.pc.get(p.getUniqueId()) == 21 && snball.containsKey(p.getUniqueId())) {
 			if(!(p.isSneaking()) && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK))
 			{
-				if(p.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD)
+				if(p.getInventory().getItemInMainHand().getType() == Material.SHEARS)
 				{
 					ev.setCancelled(true);
 
@@ -1384,7 +1383,7 @@ public class Frostskills extends Pak {
 		if(ClassData.pc.get(p.getUniqueId()) == 21) {
 			if(!(p.isSneaking()) && (ac == Action.RIGHT_CLICK_AIR || ac== Action.RIGHT_CLICK_BLOCK)&& icebl.containsKey(p.getUniqueId()))
 			{
-				if(p.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD)
+				if(p.getInventory().getItemInMainHand().getType() == Material.SHEARS)
 				{
 					ev.setCancelled(true);
 
@@ -1431,7 +1430,7 @@ public class Frostskills extends Pak {
 		Action ac = ev.getAction();
 		double sec =5*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 		if(ClassData.pc.get(p.getUniqueId()) == 21&& bsd.SnowBreeze.getOrDefault(p.getUniqueId(), 0)>=1) {
-			if(p.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD && p.isSneaking()&& !p.hasCooldown(CAREFUL))
+			if(p.getInventory().getItemInMainHand().getType() == Material.SHEARS && p.isSneaking()&& !p.hasCooldown(CAREFUL))
 			{
 				if((ac == Action.LEFT_CLICK_AIR || ac == Action.LEFT_CLICK_BLOCK))
 				{
@@ -1440,7 +1439,7 @@ public class Frostskills extends Pak {
 							.cooldown(sec)
 							.kname("균열")
 							.ename("Crack")
-							.slot(5)
+							.slot(4)
 							.hm(swcooldown)
 							.skillUse(() -> {
 
@@ -1562,7 +1561,7 @@ public class Frostskills extends Pak {
 					}
 				}
 
-				if(p.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD)
+				if(p.getInventory().getItemInMainHand().getType() == Material.SHEARS)
 				{
 					if(45+le.getFreezeTicks()>le.getMaxFreezeTicks()) {
 						le.setFreezeTicks(le.getMaxFreezeTicks());
@@ -1636,7 +1635,7 @@ public class Frostskills extends Pak {
 							}
 						}
 					}
-					if(p.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD)
+					if(p.getInventory().getItemInMainHand().getType() == Material.SHEARS)
 					{
 						if(45+le.getFreezeTicks()>le.getMaxFreezeTicks()) {
 							le.setFreezeTicks(le.getMaxFreezeTicks());
@@ -1803,7 +1802,7 @@ public class Frostskills extends Pak {
 
 	    ItemStack is = p.getInventory().getItemInMainHand();
 	    if (ClassData.pc.get(p.getUniqueId()) == 21 &&
-	        is.getType() == Material.PRISMARINE_SHARD &&
+	        is.getType() == Material.SHEARS &&
 	        ev.getNewSlot() == 3 &&
 	        p.isSneaking() &&
 	        Proficiency.getpro(p) >= 1) {
@@ -1928,7 +1927,7 @@ public class Frostskills extends Pak {
 			return;
 		}
 		ItemStack is = p.getInventory().getItemInMainHand();
-		if(ClassData.pc.get(p.getUniqueId()) == 21 && (is.getType() == Material.PRISMARINE_SHARD && ev.getNewSlot()==4 && p.isSneaking() && Proficiency.getpro(p) >=2))
+		if(ClassData.pc.get(p.getUniqueId()) == 21 && (is.getType() == Material.SHEARS && ev.getNewSlot()==4 && p.isSneaking() && Proficiency.getpro(p) >=2))
 		{
 			p.setCooldown(CAREFUL, 2);
 			ev.setCancelled(true);
@@ -2049,7 +2048,7 @@ public class Frostskills extends Pak {
 		Item it = ev.getItemDrop();
 		ItemStack is = it.getItemStack();
 
-		if(ClassData.pc.get(p.getUniqueId()) == 21  && ((is.getType()==Material.PRISMARINE_SHARD)) && !p.isSneaking()&& !p.isOnGround()&& !p.isSwimming()&& !p.isSprinting()&& Proficiency.getpro(p) >=2)
+		if(ClassData.pc.get(p.getUniqueId()) == 21  && ((is.getType()==Material.SHEARS)) && !p.isSneaking()&& !p.isOnGround()&& !p.isSwimming()&& !p.isSprinting()&& Proficiency.getpro(p) >=2)
 		{
 			ev.setCancelled(true);
 		}
@@ -2066,7 +2065,7 @@ public class Frostskills extends Pak {
 
 		if(ClassData.pc.get(p.getUniqueId()) == 21)
 		{
-			if(p.getInventory().getItemInMainHand().getType() == Material.PRISMARINE_SHARD)
+			if(p.getInventory().getItemInMainHand().getType() == Material.SHEARS)
 			{
 				e.setCancelled(true);
 			}

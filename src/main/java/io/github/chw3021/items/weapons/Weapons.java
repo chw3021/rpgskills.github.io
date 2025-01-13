@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -27,25 +28,34 @@ import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffectType;
 
 import com.google.common.util.concurrent.AtomicDouble;
 
+import io.github.chw3021.commons.ConfigManager;
 import io.github.chw3021.commons.Pak;
 import io.github.chw3021.rmain.RMain;
 import net.md_5.bungee.api.ChatColor;
 
 public class Weapons {
 
-	
+
+	final String lang = ConfigManager.getInstance(RMain.getInstance()).getCustomConfig().getString("Language");
 	private Pak pak = Pak.getInstance();
 
 	final static protected NamespacedKey nethercore = new NamespacedKey(RMain.getInstance(), "weapon_nether_core");
 	final static protected NamespacedKey endercore = new NamespacedKey(RMain.getInstance(), "weapon_ender_core");
 	final static protected NamespacedKey herocore = new NamespacedKey(RMain.getInstance(), "weapon_hero_core");
 
+    List<Material> planksMaterials = Arrays.stream(Material.values())
+            .filter(material -> material.name().contains("PLANKS"))
+            .collect(Collectors.toList());
+
+    // RecipeChoice.MaterialChoice 생성
+    final RecipeChoice rcc = new RecipeChoice.MaterialChoice(planksMaterials);
 
 	
 	final protected NamespacedKey getKey() {
@@ -533,7 +543,7 @@ public class Weapons {
 		else if(m.contains("TRIDENT")) {
 			return 10000;
 		}
-		else if(m.contains("SHARD")) {
+		else if(m.contains("SHEARS")) {
 			return 11000;
 		}
 		else if(m.contains("FISHING_ROD")) {
@@ -713,9 +723,9 @@ public class Weapons {
 					new AttributeModifier(getKey(), 1.1,
 							Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		}
-		else if(m == Material.PRISMARINE_SHARD) {
-			kname = "비늘";
-			ename = "Shard";
+		else if(m == Material.SHEARS) {
+			kname = "단검";
+			ename = "Dagger";
 			rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 			new AttributeModifier(getKey(), dm,
 					Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
@@ -934,9 +944,9 @@ public class Weapons {
 					new AttributeModifier(getKey(), 1.2,
 							Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
 		}
-		else if(m.contains("SHARD")) {
-			kname = "비늘";
-			ename = "Shard";
+		else if(m.contains("SHEARS")) {
+			kname = "단검";
+			ename = "Dagger";
 			rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
 			new AttributeModifier(getKey(), 27,
 					Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
@@ -1477,7 +1487,7 @@ public class Weapons {
 		itemset(arweapon(new ItemStack(Material.NETHERITE_SHOVEL), 12,p), 6, ElementsInv);
 		itemset(arweapon(new ItemStack(Material.CROSSBOW), 12,p), 7, ElementsInv);
 		itemset(arweapon(new ItemStack(Material.TRIDENT), 12,p), 8, ElementsInv);
-		itemset(arweapon(new ItemStack(Material.PRISMARINE_SHARD), 12,p), 9, ElementsInv);
+		itemset(arweapon(new ItemStack(Material.SHEARS), 12,p), 9, ElementsInv);
 		itemset(arweapon(new ItemStack(Material.BLAZE_ROD), 12,p), 10, ElementsInv);
 		itemset(arweapon(new ItemStack(Material.FISHING_ROD), 12,p), 11, ElementsInv);
 
@@ -1821,7 +1831,7 @@ public class Weapons {
 	}
 
 	final private boolean availableWeapons(Material m, ItemMeta im) {
-		return m == Material.PRISMARINE_SHARD || (m == Material.BLAZE_ROD && im.hasCustomModelData())|| (m == Material.SHEARS && im.hasCustomModelData()) 
+		return (m == Material.BLAZE_ROD && im.hasCustomModelData())|| (m == Material.SHEARS && im.hasCustomModelData()) 
 				|| m == Material.FISHING_ROD || m == Material.BOW || m == Material.CROSSBOW
 			|| m == Material.TRIDENT || (m == Material.GLOBE_BANNER_PATTERN && im.hasCustomModelData()) || m.name().contains("SWORD") || m.name().contains("AXE")
 			|| m.name().contains("HOE")	|| m.name().contains("SHOVEL") || m == Material.MACE;
@@ -1861,7 +1871,7 @@ public class Weapons {
 				}
 				ItemMeta im = is.getItemMeta();
 				Material m = is.getType();
-				if(m == Material.PRISMARINE_SHARD || (m == Material.BLAZE_ROD && im.hasCustomModelData())|| (m == Material.SHEARS && im.hasCustomModelData()) 
+				if(m == Material.SHEARS || (m == Material.BLAZE_ROD && im.hasCustomModelData())|| (m == Material.SHEARS && im.hasCustomModelData()) 
 						|| m == Material.FISHING_ROD || m == Material.BOW || m == Material.CROSSBOW
 					|| m == Material.TRIDENT || (m == Material.GLOBE_BANNER_PATTERN && im.hasCustomModelData()) || m.name().contains("SWORD") || m.name().contains("AXE")
 					|| m.name().contains("HOE")	|| m.name().contains("SHOVEL")) {

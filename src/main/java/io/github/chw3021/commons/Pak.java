@@ -743,7 +743,7 @@ public class Pak extends CombatMode implements Listener{
 		else if(classnum == 21) { //Frostman
 	
 				p.setFreezeTicks(0);
-				if(mi.getType() == Material.PRISMARINE_SHARD&& mi.hasItemMeta() && mi.getItemMeta().hasCustomModelData()&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
+				if(mi.getType() == Material.SHEARS&& mi.hasItemMeta() && mi.getItemMeta().hasCustomModelData()&& !oi.getType().name().contains("BANNER_PATTERN")&& !(oi.getType()==Material.TRIDENT)&& !(oi.getType()==Material.SHIELD))
 				{
 						player_damage.put(p.getName(), (p.getAttribute(Attribute.ATTACK_DAMAGE).getValue()) * (1 + mi.getEnchantmentLevel(Enchantment.SHARPNESS)*0.10) + p.getLevel()*0.125);
 						effectdamage(p);

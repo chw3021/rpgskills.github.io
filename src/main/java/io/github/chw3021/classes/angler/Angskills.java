@@ -59,6 +59,7 @@ import io.github.chw3021.classes.Proficiency;
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.commons.Pak;
 import io.github.chw3021.commons.SkillBuilder;
+import io.github.chw3021.commons.SkillUseEvent;
 import io.github.chw3021.obtains.Obtained;
 import io.github.chw3021.party.Party;
 import io.github.chw3021.rmain.RMain;
@@ -354,6 +355,7 @@ public class Angskills extends Pak{
 			if((ac == Action.LEFT_CLICK_AIR || ac==Action.LEFT_CLICK_BLOCK) &&p.getInventory().getItemInMainHand().getType()==Material.FISHING_ROD && !p.isSneaking()) {
 	
 					p.setCooldown(CAREFUL, 10);
+					Bukkit.getPluginManager().callEvent(new SkillUseEvent(p, 0.5, 2, "낚시대법", "Whipping"));
 					p.getWorld().spawnParticle(Particle.SPLASH, p.getLocation(), 100,2,2,2);
 					final Location tl = p.getEyeLocation().clone().add(p.getEyeLocation().clone().getDirection().normalize().multiply(2.7));
 					p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, tl, 10,2,1,2);
@@ -411,7 +413,7 @@ public class Angskills extends Pak{
 						.cooldown(sec)
 						.kname("산호뿌리")
 						.ename("CoralRoots")
-						.slot(2)
+						.slot(4)
 						.hm(prcooldown)
 						.skillUse(()->{
 
@@ -957,7 +959,7 @@ public class Angskills extends Pak{
 						.cooldown(sec)
 						.kname("음주가무")
 						.ename("DrunkenDance")
-						.slot(4)
+						.slot(5)
 						.hm(thcooldown)
 						.skillUse(()->{
 		                	if(ddasht.containsKey(p.getUniqueId())) {
@@ -1190,7 +1192,7 @@ public class Angskills extends Pak{
 			{
 			p.setCooldown(CAREFUL, 9);
 				ev.setCancelled(true);
-				double sec= 55/Proficiency.getpro(p)*Obtained.ucd.getOrDefault(p.getUniqueId(),1d);
+				double sec= 60/Proficiency.getpro(p)*Obtained.ucd.getOrDefault(p.getUniqueId(),1d);
 
 				SkillBuilder bd = new SkillBuilder()
 						.player(p)
@@ -1342,7 +1344,7 @@ public class Angskills extends Pak{
 		        					if(Party.getParty(p).equals(Party.getParty(p1)))
 		        						{
 		        							cleans(p1);
-		        							Holding.invur(p1, 100l);
+		        							Holding.invur(p1, 60l);
 		        							return;
 		        						}
 		        					}

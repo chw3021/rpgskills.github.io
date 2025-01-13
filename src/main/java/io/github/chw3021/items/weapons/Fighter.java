@@ -24,7 +24,6 @@ import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -157,7 +156,6 @@ public class Fighter extends Weapons implements Listener {
 		is.setItemMeta(meta);
 		ShapedRecipe rc = new ShapedRecipe(new NamespacedKey(RMain.getInstance(), "wooden_knuckle"), is);
 		rc.shape("xax", " x ");
-		RecipeChoice rcc =  new RecipeChoice.MaterialChoice(Material.ACACIA_PLANKS,Material.BIRCH_PLANKS,Material.CRIMSON_PLANKS,Material.DARK_OAK_PLANKS,Material.JUNGLE_PLANKS,Material.OAK_PLANKS,Material.SPRUCE_PLANKS,Material.WARPED_PLANKS);
 		rc.setIngredient('x', rcc);
 		rc.setIngredient('a', Material.STICK);
 		Bukkit.getServer().addRecipe(rc);

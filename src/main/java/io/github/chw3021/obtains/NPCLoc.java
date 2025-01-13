@@ -19,6 +19,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Axolotl;
@@ -41,12 +42,16 @@ import org.bukkit.entity.Villager.Type;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
+import org.bukkit.event.vehicle.VehicleMoveEvent;
 import org.bukkit.event.world.LootGenerateEvent;
 import org.bukkit.event.world.WorldUnloadEvent;
+import org.bukkit.inventory.BlockInventoryHolder;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -55,6 +60,7 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.loot.LootTables;
 import org.bukkit.loot.Lootable;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.util.Vector;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
 import org.jetbrains.annotations.Nullable;
@@ -77,10 +83,10 @@ public class NPCLoc implements Serializable, Listener{
 	/**
 	 * 
 	 */
-	public HashMultimap<Location, String> StructureKeys = HashMultimap.create();
-	public Table<UUID, Location, ItemStack[]> Locs = HashBasedTable.create();
+	public HashMultimap<StructureLocation, String> StructureKeys = HashMultimap.create();
+	public Table<UUID, StructureLocation, ItemStack[]> Locs = HashBasedTable.create();
 	static public HashSet<Location> NPCLocs = new HashSet<Location>();
-	static public HashSet<Location> ChestLocs = new HashSet<Location>();
+	static public HashSet<Location> SpawnLocs = new HashSet<Location>();
 
 
 	private static final NPCLoc instance = new NPCLoc ();
@@ -93,14 +99,14 @@ public class NPCLoc implements Serializable, Listener{
     public NPCLoc() {
     	
     }
-    public NPCLoc(Table<UUID, Location, ItemStack[]> Locs, HashMultimap<Location, String> StructureKeys) {
+    public NPCLoc(Table<UUID, StructureLocation, ItemStack[]> Locs, HashMultimap<StructureLocation, String> StructureKeys) {
     	this.Locs = Locs;
     	this.StructureKeys = StructureKeys;
     }
-    public NPCLoc(Table<UUID, Location, ItemStack[]> Locs) {
+    public NPCLoc(Table<UUID, StructureLocation, ItemStack[]> Locs) {
     	this.Locs = Locs;
     }
-    public NPCLoc(HashMultimap<Location, String> StructureKeys) {
+    public NPCLoc(HashMultimap<StructureLocation, String> StructureKeys) {
     	this.StructureKeys = StructureKeys;
     }
     // Can be used for loading
@@ -140,7 +146,7 @@ public class NPCLoc implements Serializable, Listener{
         NPCLoc data = new NPCLoc(loadData(path +"/plugins/RPGskills/NPCLoc.data"));
 		return data;
 	}
-	public static void chestSaver(Player p, Location sl, ItemStack[] is) {
+	public static void chestSaver(Player p, StructureLocation sl, ItemStack[] is) {
 
 	    NPCLoc npcLocData = getLocsdata();
 		
@@ -150,7 +156,7 @@ public class NPCLoc implements Serializable, Listener{
         npcLocData.saveData(path +"/plugins/RPGskills/NPCLoc.data");
 	}
 
-	public static void structureSaver(Location sl, String key) {
+	public static void structureSaver(StructureLocation sl, String key) {
 
 	    NPCLoc npcLocData = getLocsdata();
 
@@ -171,26 +177,42 @@ public class NPCLoc implements Serializable, Listener{
 		String structureKey = ev.getLootTable().getKey().getKey();
 		
 		InventoryHolder ih = ev.getInventoryHolder();
+		Boolean saveFlag = false;
 		
-		Location l = ih.getInventory().getLocation();
+		if(ih instanceof Entity) {
+			Entity e = (Entity) ih;
+			StructureLocation sl = new StructureLocation(e);
 
-		if(ChestLocs.add(l)) {
-			Spawn(l,structureKey);
+			if(SpawnLocs.add(sl.getActualLocation())) {
+				saveFlag = Spawn(sl.getActualLocation(),structureKey);
+			}
+			e.setMetadata("structureChest", new FixedMetadataValue(RMain.getInstance(),e.toString()));
+			if(structureKey.contains("trial")) {
+				return;
+			}
+			if(saveFlag) {
+				structureSaver(sl, structureKey);
+			}
 		}
 
-		System.out.println(l.getBlock().toString());
-		System.out.println(ih);
-		System.out.println((ih instanceof Entity));
-		System.out.println((ih instanceof Block));
-		System.out.println(ev.getEntity());
-		
-		l.getBlock().setMetadata("structureChest", new FixedMetadataValue(RMain.getInstance(),l.toString()));
-		
-		if(structureKey.contains("trial")) {
-			return;
-		}
+		else if(ih instanceof BlockInventoryHolder){
+			BlockInventoryHolder bih = (BlockInventoryHolder) ih.getInventory();
+			StructureLocation sl = new StructureLocation(bih);
 
-		structureSaver(l, structureKey);
+			if(SpawnLocs.add(sl.getActualLocation())) {
+				saveFlag = Spawn(sl.getActualLocation(),structureKey);
+			}
+			bih.getBlock().setMetadata("structureChest", new FixedMetadataValue(RMain.getInstance(),bih.toString()));
+			if(structureKey.contains("trial")) {
+				return;
+			}
+			if(saveFlag) {
+				structureSaver(sl, structureKey);
+			}
+		}
+		
+		
+
 
 		if(structureKey.contains("buried_treasure")) {
 			return;
@@ -205,44 +227,144 @@ public class NPCLoc implements Serializable, Listener{
 		Player p = (Player) d.getPlayer();
 		if(ci.getLocation() != null &&  ci.getLocation().getBlock() != null ) {
 
-			HashMultimap<Location, String> StructureKeys = getLocsdata().StructureKeys;
-			Location l = ci.getLocation();
-			Block b = l.getBlock();
-			if(StructureKeys.containsKey(l)) {
-				if(!b.hasMetadata("structureChest")) {
-					b.setMetadata("structureChest", new FixedMetadataValue(RMain.getInstance(),l.toString()));
-					System.out.println("metadataset");
-				}
-				
-				StructureKeys.entries().forEach(en->{
-					if(ChestLocs.add(en.getKey())) {
-						Spawn(en.getKey(),en.getValue());
+			HashMultimap<StructureLocation, String> StructureKeys = getLocsdata().StructureKeys;
+			System.out.println(ci.getLocation().getBlock());
+			
+			if(ci.getHolder() instanceof Entity e) {
+				if(StructureLocation.containsEntity(StructureKeys, e)) {
+					d.setCancelled(true);
+					if(!e.hasMetadata("structureChest")) {
+						e.setMetadata("structureChest", new FixedMetadataValue(RMain.getInstance(),e.toString()));
 					}
-				});
-			}
+					
+					StructureKeys.entries().forEach(en->{
+						if(SpawnLocs.add(en.getKey().getActualLocation())) {
+							Spawn(en.getKey().getActualLocation(),en.getValue());
+						}
+					});
+				}
 
-			if(b.hasMetadata("structureChest")) {
-				
-				d.setCancelled(true);
-				System.out.println("setCancelled");
+				if(e.hasMetadata("structureChest")) {
+					
+					d.setCancelled(true);
+					StructureLocation sl = new StructureLocation(e);
 
-				Table<UUID, Location, ItemStack[]> Locs = getLocsdata().Locs;
-			    if (!Locs.contains(p.getUniqueId(), l)) {
-			        chestSaver(p, l, ci.getContents());
-			    	Locs = getLocsdata().Locs;
-			    }
-			    
-			    Inventory inv = Bukkit.createInventory(p, 54, p.getName()+ " StructureChest");
-			    inv.setContents(Locs.get(p.getUniqueId(), l));
-			    p.openInventory(inv);
+					Table<UUID, StructureLocation, ItemStack[]> Locs = getLocsdata().Locs;
+				    if (!Locs.contains(p.getUniqueId(), sl)) {
+				        chestSaver(p, sl, ci.getContents());
+				    	Locs = getLocsdata().Locs;
+				    }
+				    
+				    Inventory inv = Bukkit.createInventory(p, 54, p.getName()+ " StructureChest");
+				    inv.setContents(Locs.get(p.getUniqueId(), sl));
+				    p.openInventory(inv);
+				}
 			}
+			else if(ci.getHolder() instanceof BlockInventoryHolder bih){
+				BlockState b = bih.getBlock().getState();
+				if(StructureLocation.containsChest(StructureKeys, bih)) {
+					d.setCancelled(true);
+					if(!b.hasMetadata("structureChest")) {
+						b.setMetadata("structureChest", new FixedMetadataValue(RMain.getInstance(),bih.toString()));
+					}
+					
+					StructureKeys.entries().forEach(en->{
+						if(SpawnLocs.add(en.getKey().getActualLocation())) {
+							Spawn(en.getKey().getActualLocation(),en.getValue());
+						}
+					});
+				}
+				if(b.hasMetadata("structureChest")) {
+					
+					d.setCancelled(true);
+					StructureLocation sl = new StructureLocation(bih);
+
+					Table<UUID, StructureLocation, ItemStack[]> Locs = getLocsdata().Locs;
+				    if (!Locs.contains(p.getUniqueId(), sl)) {
+				        chestSaver(p, sl, ci.getContents());
+				    	Locs = getLocsdata().Locs;
+				    }
+				    
+				    Inventory inv = Bukkit.createInventory(p, 54, p.getName()+ " StructureChest");
+				    inv.setContents(Locs.get(p.getUniqueId(), sl));
+				    p.openInventory(inv);
+				}
+			}
+			
+
 			
 			
 		}
 	}
 
 	@EventHandler	
-	public void ElderGuardian(EntityDeathEvent ev) 
+	public void EntityDamage(VehicleEntityCollisionEvent d) 
+	{
+		if(d.getVehicle() != null) {
+			if(d.getVehicle().hasMetadata("structureChest")) {
+				d.setCancelled(true);
+				Entity e = d.getVehicle();
+				e.setInvulnerable(true);
+				e.setPersistent(true);
+				e.setGravity(false);
+				e.setVelocity(new Vector(0,0,0));
+				HashMultimap<StructureLocation, String> StructureKeys = getLocsdata().StructureKeys;
+				if(StructureLocation.containsEntity(StructureKeys, e)) {
+					StructureLocation sl = new StructureLocation(e);
+					e.teleport(sl.getActualLocation());
+				}
+				
+			}
+		}
+	}
+
+	@EventHandler	
+	public void EntityDamage(VehicleMoveEvent d) 
+	{
+		if(d.getVehicle() != null) {
+			if(d.getVehicle().hasMetadata("structureChest")) {
+				Entity e = d.getVehicle();
+				e.setInvulnerable(true);
+				e.setPersistent(true);
+				e.setGravity(false);
+				e.setVelocity(new Vector(0,0,0));
+				HashMultimap<StructureLocation, String> StructureKeys = getLocsdata().StructureKeys;
+				if(StructureLocation.containsEntity(StructureKeys, e)) {
+					StructureLocation sl = new StructureLocation(e);
+					e.teleport(sl.getActualLocation());
+				}
+				
+			}
+		}
+	}
+	
+
+	
+	
+	@EventHandler	
+	public void EntityDamage(EntityDamageEvent d) 
+	{
+		if(d.getEntity() != null) {
+			if(d.getEntity().hasMetadata("structureChest")) {
+				d.setCancelled(true);
+				Entity e = d.getEntity();
+				e.setInvulnerable(true);
+				e.setPersistent(true);
+				e.setGravity(false);
+				e.setVelocity(new Vector(0,0,0));
+				HashMultimap<StructureLocation, String> StructureKeys = getLocsdata().StructureKeys;
+				if(StructureLocation.containsEntity(StructureKeys, e)) {
+					StructureLocation sl = new StructureLocation(e);
+					e.teleport(sl.getActualLocation());
+				}
+				
+			}
+		}
+	}
+	
+
+	@EventHandler	
+	public void EntityDeath(EntityDeathEvent ev) 
 	{
 		if(ev.getEntity() != null) {
 			if(ev.getEntity() instanceof ElderGuardian && !ev.getEntity().hasMetadata("rpgspawned")) {
@@ -263,8 +385,54 @@ public class NPCLoc implements Serializable, Listener{
 	{
 		Inventory ci = d.getInventory();
 		Player p = (Player) d.getPlayer();
-		if(ci.getLocation() != null &&  ci.getLocation().getBlock() != null && ci.getLocation().getBlock().hasMetadata("structureChest")) {
-			chestSaver(p,ci.getLocation(),ci.getContents());
+		if(ci.getLocation() != null &&  ci.getHolder() != null) {
+			HashMultimap<StructureLocation, String> StructureKeys = getLocsdata().StructureKeys;
+
+			if(ci.getHolder() instanceof Entity e) {
+				if(StructureLocation.containsEntity(StructureKeys, e)) {
+					if(!e.hasMetadata("structureChest")) {
+						e.setMetadata("structureChest", new FixedMetadataValue(RMain.getInstance(),e.toString()));
+					}
+					
+					StructureKeys.entries().forEach(en->{
+						if(SpawnLocs.add(en.getKey().getActualLocation())) {
+							Spawn(en.getKey().getActualLocation(),en.getValue());
+						}
+					});
+				}
+				if(e.hasMetadata("structureChest")) {
+					StructureLocation sl = new StructureLocation(e);
+					chestSaver(p,sl,ci.getContents());
+				}
+			}
+			else if(ci.getHolder() instanceof BlockInventoryHolder bih){
+				BlockState b = bih.getBlock().getState();
+				if(StructureLocation.containsChest(StructureKeys, bih)) {
+					if(!b.hasMetadata("structureChest")) {
+						b.setMetadata("structureChest", new FixedMetadataValue(RMain.getInstance(),bih.toString()));
+					}
+					
+					StructureKeys.entries().forEach(en->{
+						if(SpawnLocs.add(en.getKey().getActualLocation())) {
+							Spawn(en.getKey().getActualLocation(),en.getValue());
+						}
+					});
+				}
+				if(b.hasMetadata("structureChest")) {
+					
+					StructureLocation sl = new StructureLocation(bih);
+
+					Table<UUID, StructureLocation, ItemStack[]> Locs = getLocsdata().Locs;
+				    if (!Locs.contains(p.getUniqueId(), sl)) {
+				        chestSaver(p, sl, ci.getContents());
+				    	Locs = getLocsdata().Locs;
+				    }
+				    
+				    Inventory inv = Bukkit.createInventory(p, 54, p.getName()+ " StructureChest");
+				    inv.setContents(Locs.get(p.getUniqueId(), sl));
+				    p.openInventory(inv);
+				}
+			}
 		}
 	}
 
@@ -273,14 +441,16 @@ public class NPCLoc implements Serializable, Listener{
 	{
 		if(d.getBlock().getState() instanceof Chest) {
 			Chest c = (Chest) d.getBlock().getState();
-			HashMultimap<Location, String> StructureKeys = getLocsdata().StructureKeys;
+			HashMultimap<StructureLocation, String> StructureKeys = getLocsdata().StructureKeys;
 			Location l = c.getLocation();
-			if(StructureKeys.containsKey(l)) {
+			StructureLocation structureKey = new StructureLocation(c);
+			if(StructureKeys.containsKey(structureKey)) {
+				d.setCancelled(true);
 				if(!c.hasMetadata("structureChest")) {
 					c.setMetadata("structureChest", new FixedMetadataValue(RMain.getInstance(),l.toString()));
 				}
 				StructureKeys.entries().forEach(en->{
-					Spawn(en.getKey(),en.getValue());
+					Spawn(en.getKey().getActualLocation(),en.getValue());
 				});
 			}
 			if(c.hasMetadata("structureChest")) {
@@ -596,7 +766,7 @@ public class NPCLoc implements Serializable, Listener{
 	List<String> disabledWorlds = ConfigManager.getInstance(RMain.getInstance()).getCustomConfig().getStringList("Worlds");
 	
 	
-	final public void Spawn(final Location lel, String ns) {
+	final public boolean Spawn(final Location lel, String ns) {
 
 		final World w = lel.getWorld();
 		
@@ -608,7 +778,7 @@ public class NPCLoc implements Serializable, Listener{
         		v.setVillagerLevel(5);
         		v.setBreed(false);
     		}
-    		
+    		return true;
     	}
     	else if(ns.contains("buried_treasure")) {
 			ItemStack head = new ItemStack(Material.CHEST);
@@ -631,7 +801,8 @@ public class NPCLoc implements Serializable, Listener{
     		if(v != null) {
         		v.setConversionTime(-1);
     		}
-    		
+
+    		return true;
     	}
     	else if(ns.contains("pillager_outpost")) {
 			String reg = lang.contains("kr") ? "약탈당한 상인":"Looted Trader";
@@ -642,6 +813,7 @@ public class NPCLoc implements Serializable, Listener{
         		v.setBreed(false);
         		v.setDespawnDelay(-1);
     		}
+    		return true;
     	}
     	else if(ns.contains("stronghold")) {
 
@@ -650,6 +822,7 @@ public class NPCLoc implements Serializable, Listener{
     		if(v != null) {
         		v.setVillagerLevel(5);
     		}
+    		return true;
     	}
     	else if(ns.contains("ruined_portal")) {
 
@@ -670,7 +843,9 @@ public class NPCLoc implements Serializable, Listener{
 
     			String reg = lang.contains("kr") ? "사신":"Reaper";
     			mnpc(w,lel, EntityType.STRAY, "ruinedportal", reg,head,chest,leg,null,new ItemStack(Material.TOTEM_OF_UNDYING),new ItemStack(Material.NETHERITE_HOE));
-        }
+
+        		return true;
+    	}
 		
 
     	else if(ns.contains("woodland_mansion")) {
@@ -689,6 +864,7 @@ public class NPCLoc implements Serializable, Listener{
         		v.setVillagerLevel(5);
         		v.setBreed(false);
     		}
+    		return true;
     	}
 
     	else if(ns.contains("ancient_city")) {
@@ -698,6 +874,7 @@ public class NPCLoc implements Serializable, Listener{
     		if(v != null) {
         		v.setVillagerLevel(5);
     		}
+    		return true;
     		
     	}
     	else if(ns.contains("igloo_chest")) {
@@ -721,6 +898,7 @@ public class NPCLoc implements Serializable, Listener{
         		if(v != null) {
             		v.setDerp(true);
         		}
+        		return true;
     	}
 
     	else if(ns.contains("desert_pyramid")) {
@@ -742,6 +920,7 @@ public class NPCLoc implements Serializable, Listener{
             		v.setBaby();
             		v.setConversionTime(-1);
         		}
+        		return true;
     		
     	}
     	else if(ns.contains("jungle_temple")) {
@@ -751,45 +930,48 @@ public class NPCLoc implements Serializable, Listener{
     		if(v != null) {
         		v.setVillagerLevel(5);
     		}
+    		return true;
     	}
     	else if(ns.contains("underwater_ruin_big")) {
     		lel.getWorld().getNearbyEntities(lel, 100, 100, 100).forEach(e -> {
-        			if(!e.hasMetadata("rpgspawned") && !e.hasMetadata("fake") && (e.getType() == EntityType.DROWNED)) {
+    			if(!e.hasMetadata("rpgspawned") && !e.hasMetadata("fake") && (e.getType() == EntityType.DROWNED)) {
 
-        				e.remove();
-        			}
-        		});
-    			String reg = lang.contains("kr") ? "아홀로틀 요원":"Agent Axolotl";
-    			Axolotl v = (Axolotl) mnpc(w,lel, EntityType.AXOLOTL, "oceanruin", reg,null,null,null,null, new ItemStack(Material.CLOCK),null);
-        		if(v != null) {
-            		v.setAdult();
-            		v.setAgeLock(true);
-            		v.setVariant(Variant.BLUE);
-            		v.setBreed(false);
-        		}
-    		
+    				e.remove();
+    			}
+    		});
+			String reg = lang.contains("kr") ? "아홀로틀 요원":"Agent Axolotl";
+			Axolotl v = (Axolotl) mnpc(w,lel, EntityType.AXOLOTL, "oceanruin", reg,null,null,null,null, new ItemStack(Material.CLOCK),null);
+    		if(v != null) {
+        		v.setAdult();
+        		v.setAgeLock(true);
+        		v.setVariant(Variant.BLUE);
+        		v.setBreed(false);
+    		}
+    		return true;
+		
     	}
     	else if(ns.contains("shipwreck")) {
         		
-    			ItemStack head = new ItemStack(Material.DEAD_BRAIN_CORAL_BLOCK);
-    			ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
-    			LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
-    			chm.setColor(Color.RED);
-    			chest.setItemMeta(chm);
-    			ItemStack leg = new ItemStack(Material.LEATHER_LEGGINGS);
-    			LeatherArmorMeta lem = (LeatherArmorMeta) leg.getItemMeta();
-    			lem.setColor(Color.BLACK);
-    			leg.setItemMeta(lem);
-    			ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
-    			LeatherArmorMeta bom = (LeatherArmorMeta) boots.getItemMeta();
-    			bom.setColor(Color.OLIVE);
-    			boots.setItemMeta(bom);
-    			String reg = lang.contains("kr") ? "익사한 선원":"Drowned Sailor";
-        		Drowned v = (Drowned) mnpc(w,lel, EntityType.DROWNED, "shipwreck", reg ,head,chest,leg,boots,null,null);
-        		if(v != null) {
-            		v.setAdult();
-            		v.setConversionTime(-1);
-        		}
+			ItemStack head = new ItemStack(Material.DEAD_BRAIN_CORAL_BLOCK);
+			ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
+			LeatherArmorMeta chm = (LeatherArmorMeta) chest.getItemMeta();
+			chm.setColor(Color.RED);
+			chest.setItemMeta(chm);
+			ItemStack leg = new ItemStack(Material.LEATHER_LEGGINGS);
+			LeatherArmorMeta lem = (LeatherArmorMeta) leg.getItemMeta();
+			lem.setColor(Color.BLACK);
+			leg.setItemMeta(lem);
+			ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
+			LeatherArmorMeta bom = (LeatherArmorMeta) boots.getItemMeta();
+			bom.setColor(Color.OLIVE);
+			boots.setItemMeta(bom);
+			String reg = lang.contains("kr") ? "익사한 선원":"Drowned Sailor";
+    		Drowned v = (Drowned) mnpc(w,lel, EntityType.DROWNED, "shipwreck", reg ,head,chest,leg,boots,null,null);
+    		if(v != null) {
+        		v.setAdult();
+        		v.setConversionTime(-1);
+    		}
+    		return true;
     	}
     	else if(ns.contains("underwater_ruin_big")) {
     		
@@ -805,6 +987,7 @@ public class NPCLoc implements Serializable, Listener{
             		v.setAgeLock(true);
             		v.setBreed(false);
         		}
+        		return true;
     		
     	}
     	else if(ns.contains("nether_bridge")) {
@@ -818,6 +1001,7 @@ public class NPCLoc implements Serializable, Listener{
         		if(v != null) {
             		v.setImmuneToZombification(true);
         		}
+        		return true;
     	}
     	else if(ns.contains("bastion_treasure")) {
     			ItemStack head = new ItemStack(Material.IRON_HELMET);
@@ -827,7 +1011,8 @@ public class NPCLoc implements Serializable, Listener{
 
     			String reg = lang.contains("kr") ? "데스나이트":"Death Knight";
     			mnpc(w,lel, EntityType.WITHER_SKELETON, "bastionremnant", reg,head,chest,leg,boots,new ItemStack(Material.NETHERITE_SWORD),new ItemStack(Material.SHIELD));
-    		
+
+        		return true;
     	}
     	else if(ns.contains("end_city_treasure")) {
     			ItemStack head = new ItemStack(Material.DRAGON_HEAD);
@@ -846,10 +1031,11 @@ public class NPCLoc implements Serializable, Listener{
 
     			String reg = lang.contains("kr") ? "드래곤 사냥꾼":"Dragon Hunter";
     			mnpc(w,lel, EntityType.DROWNED, "endcity", reg,head,chest,leg,boots,new ItemStack(Material.CROSSBOW),new ItemStack(Material.RED_BED));
-    		
+
+        		return true;
     	}
 		
-    	return;
+    	return false;
 	}
 	
 }

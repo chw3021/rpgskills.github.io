@@ -177,7 +177,7 @@ public class Berskills extends Pak {
 					.cooldown(sec)
 					.kname("휩쓸기")
 					.ename("Swipe")
-					.slot(0)
+					.slot(2)
 					.hm(sdcooldown)
 					.skillUse(() -> {
 
@@ -346,7 +346,7 @@ public class Berskills extends Pak {
 	}
 	
 	final private void Conversion(Player p) {
-
+		
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 			switch (conv.getOrDefault(p.getUniqueId(),0))
 			{
@@ -417,7 +417,7 @@ public class Berskills extends Pak {
 						.cooldown(sec)
 						.kname("분사")
 						.ename("Spray")
-						.slot(1)
+						.slot(0)
 						.hm(cdcooldown)
 						.skillUse(() -> {
 
@@ -746,7 +746,7 @@ public class Berskills extends Pak {
 					.cooldown(sec)
 					.kname("흡입")
 					.ename("Inhale")
-					.slot(2)
+					.slot(3)
 					.hm(frcooldown)
 					.skillUse(() -> {
 
@@ -910,11 +910,11 @@ public class Berskills extends Pak {
 					.cooldown(sec)
 					.kname("진홍빛전진")
 					.ename("CrimsonAdvance")
-					.slot(3)
+					.slot(5)
 					.hm(cacooldown)
 					.skillUse(() -> {
 
-	                    if(conv.getOrDefault(p.getUniqueId(), 0) == 1) {
+	                    if(conv.getOrDefault(p.getUniqueId(), 0) == 1) {	                    	
 	                    	p.damage(3);
 	                    }
 	                    
@@ -1437,7 +1437,6 @@ public class Berskills extends Pak {
 		}
 	}
 	
-	@SuppressWarnings("deprecation")
 	public void Undying(EntityDamageEvent d) 
 	{
 		if(d.getEntity() instanceof Player && !d.isCancelled()) 
@@ -1457,19 +1456,19 @@ public class Berskills extends Pak {
 				}
 				
 						
-						if((p1.getHealth()<=d.getDamage() || d.getDamage()>= p1.getMaxHealth()) && d.getCause() != DamageCause.VOID) {
+						if((p1.getHealth()<=d.getDamage() || d.getDamage()>= p1.getAttribute(Attribute.MAX_HEALTH).getBaseValue()) && d.getCause() != DamageCause.VOID) {
 							
 							SkillBuilder bd = new SkillBuilder()
 									.player(p1)
 									.cooldown(sec)
 									.kname("불사")
 									.ename("Undying")
-									.slot(5)
+									.slot(1)
 									.hm(lncooldown)
 									.skillUse(() -> {
 						                d.setCancelled(true);
 						                p1.playSound(p1.getLocation(), Sound.ITEM_BUCKET_FILL_LAVA, 1f, 0f);
-						                p1.setHealth(p1.getMaxHealth()*0.05);
+						                p1.setHealth(p1.getAttribute(Attribute.MAX_HEALTH).getBaseValue()*0.05);
 										p1.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 80, 255, false, false));
 										p1.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 80, 4, false, false));
 										p1.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("[UNDYING]").color(ChatColor.BOLD).color(ChatColor.RED).create());

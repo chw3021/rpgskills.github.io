@@ -222,7 +222,7 @@ public class Witskills extends Pak {
 						.cooldown(sec)
 						.kname("위더장미")
 						.ename("Roses")
-						.slot(0)
+						.slot(5)
 						.hm(sdcooldown)
 						.skillUse(() -> {
 							if(demolt.containsKey(p.getUniqueId())) {
@@ -694,7 +694,7 @@ public class Witskills extends Pak {
 						.cooldown(sec)
 						.kname("위더해골")
 						.ename("WitherSkull")
-						.slot(2)
+						.slot(0)
 						.hm(cdcooldown)
 						.skillUse(() -> {
 							p.setCooldown(CAREFUL, 4);
@@ -1003,7 +1003,7 @@ public class Witskills extends Pak {
 							.cooldown(sec)
 							.kname("저주")
 							.ename("Curse")
-							.slot(5)
+							.slot(3)
 							.hm(frcooldown)
 							.skillUse(() -> {
 								if(blckspint.containsKey(p.getUniqueId())) {
@@ -1425,7 +1425,7 @@ public class Witskills extends Pak {
 						.cooldown(sec)
 						.kname("구속의낫")
 						.ename("WitherScythe")
-						.slot(4)
+						.slot(2)
 						.hm(stcooldown)
 						.skillUse(() -> {
 							Holding.superholding(p, le, 60l);
@@ -1518,7 +1518,7 @@ public class Witskills extends Pak {
 							.cooldown(sec)
 							.kname("부유")
 							.ename("Hover")
-							.slot(5)
+							.slot(4)
 							.hm(smcooldown)
 							.skillUse(() -> {
 								if(hovert.containsKey(p.getName())) {

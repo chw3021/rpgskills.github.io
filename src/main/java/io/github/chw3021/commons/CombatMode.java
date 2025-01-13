@@ -106,7 +106,7 @@ public class CombatMode {
 			}
 			break;
 		case 21:
-			if (mi.getType() == Material.PRISMARINE_SHARD) {
+			if (mi.getType() == Material.SHEARS) {
 				return true;
 			}
 			break;
