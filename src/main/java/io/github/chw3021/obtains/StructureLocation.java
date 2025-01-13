@@ -23,10 +23,6 @@ public class StructureLocation {
         this.key = entity;
         this.type = "Entity";
         this.actualLocation = entity.getLocation();
-        entity.setPersistent(true);
-        entity.setInvulnerable(true);
-        entity.setGravity(false);
-        entity.setVelocity(new Vector(0,0,0));
     }
 
     public Object getKey() {

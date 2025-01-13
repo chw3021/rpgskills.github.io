@@ -187,6 +187,10 @@ public class NPCLoc implements Serializable, Listener{
 				saveFlag = Spawn(sl.getActualLocation(),structureKey);
 			}
 			e.setMetadata("structureChest", new FixedMetadataValue(RMain.getInstance(),e.toString()));
+	        e.setPersistent(true);
+	        e.setInvulnerable(true);
+	        e.setGravity(false);
+	        e.setVelocity(new Vector(0,0,0));
 			if(structureKey.contains("trial")) {
 				return;
 			}
@@ -235,6 +239,10 @@ public class NPCLoc implements Serializable, Listener{
 					d.setCancelled(true);
 					if(!e.hasMetadata("structureChest")) {
 						e.setMetadata("structureChest", new FixedMetadataValue(RMain.getInstance(),e.toString()));
+				        e.setPersistent(true);
+				        e.setInvulnerable(true);
+				        e.setGravity(false);
+				        e.setVelocity(new Vector(0,0,0));
 					}
 					
 					StructureKeys.entries().forEach(en->{

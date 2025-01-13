@@ -45,6 +45,7 @@ import io.github.chw3021.classes.wreltler.WreSkillsData;
 import io.github.chw3021.commons.CommonEvents;
 import io.github.chw3021.commons.ConfigManager;
 import io.github.chw3021.commons.Pak;
+import io.github.chw3021.commons.ResourcePackManager;
 import io.github.chw3021.commons.Rpgs;
 import io.github.chw3021.commons.ShulkerBag;
 import io.github.chw3021.commons.SkillUsing;
@@ -204,6 +205,7 @@ public class RMain extends JavaPlugin{
         Bukkit.getPluginManager().registerEvents(NethercoreRaids.getInstance(), this);
         Bukkit.getPluginManager().registerEvents(EndercoreRaids.getInstance(), this);
         Bukkit.getPluginManager().registerEvents(NPCLoc.getInstance(), this);
+        Bukkit.getPluginManager().registerEvents(new ResourcePackManager(), this);
     }
     
     public static RMain getInstance()

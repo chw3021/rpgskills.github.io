@@ -9,12 +9,15 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
+import java.io.*;
+import java.nio.file.*;
+import java.util.zip.*;
+
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -72,6 +75,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLocaleChangeEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerResourcePackStatusEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.server.PluginDisableEvent;
@@ -1258,39 +1262,10 @@ public class CommonEvents extends Mobs implements Listener{
 		}, 20);
 
 	}
-
-    public static byte[] downloadResourcePack(String urlString) throws Exception {
-        URI uri = new URI(urlString);
-        URL url = uri.toURL();
-
-        try (InputStream in = new BufferedInputStream(url.openStream());
-    		FileOutputStream out = new FileOutputStream("RpsSkills.zip")) {
-            byte[] dataBuffer = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = in.read(dataBuffer, 0, dataBuffer.length)) != -1) {
-                out.write(dataBuffer, 0, bytesRead);
-            }
-        }
-        return Files.readAllBytes(Paths.get("RpsSkills.zip"));
-    }
-
-    public byte[] getSHA1Hash(byte[] data) throws NoSuchAlgorithmException {
-        MessageDigest digest = MessageDigest.getInstance("SHA-1");
-        return digest.digest(data); // Base64 인코딩 없이 바이트 배열 반환
-    }
+	
 	public void join(PlayerJoinEvent ev)
 	{
 		Player p = ev.getPlayer();
-
-        try {
-            String resourcePackUrl = "https://github.com/chw3021/RpgSkills/archive/refs/heads/master.zip";
-            byte[] data = downloadResourcePack(resourcePackUrl);
-            byte[] sha1Hash = getSHA1Hash(data);
-    		p.setResourcePack(resourcePackUrl, sha1Hash, false);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
 		
 		p.setGravity(true);
 		p.getAttribute(Attribute.ARMOR).setBaseValue(0);
