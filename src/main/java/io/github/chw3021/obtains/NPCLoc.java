@@ -215,7 +215,9 @@ public class NPCLoc implements Serializable, Listener{
 			}
 		}
 		
-		
+
+		System.out.println(ih);
+		System.out.println(ih.getInventory());
 
 
 		if(structureKey.contains("buried_treasure")) {

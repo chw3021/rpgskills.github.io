@@ -172,6 +172,7 @@ public class ResourcePackManager implements Listener{
         return new byte[][]{Files.readAllBytes(Paths.get(zipFilePath)), originalHash};  // 수정된 파일과 원본 해시 함께 반환
     }
 
+    @EventHandler
     public void join(PlayerJoinEvent ev) {
         Player p = ev.getPlayer();
 
