@@ -10,7 +10,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
-import org.bukkit.StructureType;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
@@ -30,7 +29,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Merchant;
 import org.bukkit.inventory.MerchantRecipe;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -64,9 +62,6 @@ public class ShipwreckQuest extends Mobs  implements Quest {
 
 	private HashMap<String, BossBar> qbar = new HashMap<String, BossBar>();
 	private HashMap<String, Integer> qbart = new HashMap<String, Integer>();
-	
-	
-	private ItemStack map = null;
 	
 
 	private static final ShipwreckQuest instance = new ShipwreckQuest ();
@@ -243,28 +238,6 @@ public class ShipwreckQuest extends Mobs  implements Quest {
 	        		mr5.setIngredients(aa);
 	        		mrl.add(mr5);
 
-	        		if(map == null) {
-		        		map = Bukkit.createExplorerMap(p.getWorld(), p.getLocation(),  StructureType.BURIED_TREASURE,200,true);
-		        		ItemMeta mapm = map.getItemMeta();
-		        		
-
-		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		        			mapm.setDisplayName(ChatColor.ITALIC+"보물 지도");
-					    }
-		        		else {
-		        			mapm.setDisplayName(ChatColor.ITALIC+"Treasure Map");
-		        		}
-		        		map.setItemMeta(mapm);
-		        		MerchantRecipe mr4 = new MerchantRecipe(map, 1,64,true);
-		        		mr4.setIngredients(aa);
-		        		mrl.add(mr4);
-		        		
-	        		}
-	        		else {
-		        		MerchantRecipe mr4 = new MerchantRecipe(map, 1,64,true);
-		        		mr4.setIngredients(aa);
-		        		mrl.add(mr4);
-	        		}
 	        		Merchant mi = Bukkit.createMerchant(le.getCustomName());
 	        		mi.setRecipes(mrl);
 	        		p.openMerchant(mi, true);

@@ -16,6 +16,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.ElderGuardian;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -29,35 +30,9 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import com.google.common.collect.HashBasedTable;
-import io.github.chw3021.classes.ClassData;
 import io.github.chw3021.classes.Classgui;
 import io.github.chw3021.classes.Proficiency;
 import io.github.chw3021.classes.SkillsGui;
-import io.github.chw3021.classes.angler.AngSkillsGui;
-import io.github.chw3021.classes.archer.ArchSkillsGui;
-import io.github.chw3021.classes.berserker.BerSkillsGui;
-import io.github.chw3021.classes.boxer.BoxSkillsGui;
-import io.github.chw3021.classes.broiler.BroSkillsGui;
-import io.github.chw3021.classes.chemist.CheSkillsGui;
-import io.github.chw3021.classes.cook.CookSkillsGui;
-import io.github.chw3021.classes.engineer.EngSkillsGui;
-import io.github.chw3021.classes.firemage.FireSkillsGui;
-import io.github.chw3021.classes.forger.ForSkillsGui;
-import io.github.chw3021.classes.frostman.FrostSkillsGui;
-import io.github.chw3021.classes.hunter.HunSkillsGui;
-import io.github.chw3021.classes.illusionist.IllSkillsGui;
-import io.github.chw3021.classes.launcher.LaunSkillsGui;
-import io.github.chw3021.classes.medic.MedSkillsGui;
-import io.github.chw3021.classes.nobility.NobSkillsGui;
-import io.github.chw3021.classes.oceanknight.OceSkillsGui;
-import io.github.chw3021.classes.paladin.PalSkillsGui;
-import io.github.chw3021.classes.sniper.SnipSkillsGui;
-import io.github.chw3021.classes.swordman.SwordSkillsGui;
-import io.github.chw3021.classes.tamer.TamSkillsGui;
-import io.github.chw3021.classes.taoist.TaoSkillsGui;
-import io.github.chw3021.classes.witchdoctor.WdcSkillsGui;
-import io.github.chw3021.classes.witherist.WitSkillsGui;
-import io.github.chw3021.classes.wreltler.WreSkillsGui;
 import io.github.chw3021.items.Elements;
 import io.github.chw3021.items.armors.Armors;
 import io.github.chw3021.items.armors.Boots;
@@ -292,6 +267,89 @@ public class Rpgs extends Summoned implements CommandExecutor, Listener {
 			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party list: Show Current Existing Parties & Owners");
 		}
 	}
+	
+	private void opCommands(String[] args, Player p) {
+
+		if(args[0].equalsIgnoreCase("exp") && p.isOp()&& !args[1].isEmpty())
+		{
+			p.giveExp(Integer.parseInt(args[1]));
+			Bukkit.getServer().getPluginManager().callEvent(new PlayerExpChangeEvent(p,Integer.parseInt(args[1])));
+		}
+		else if(args[0].equalsIgnoreCase("pro") && p.isOp()&& !args[1].isEmpty())
+		{
+			Bukkit.getServer().getPluginManager().callEvent(new PlayerExpChangeEvent(p,Integer.parseInt(args[1])));
+		}
+		else if((args[0].equalsIgnoreCase("elements")||args[0].equalsIgnoreCase("elm")) && p.isOp())
+		{
+			Elements.ElementsInv(p);
+		}
+		else if((args[0].equalsIgnoreCase("dimen")||args[0].equalsIgnoreCase("dim"))&& !args[1].isEmpty() && p.isOp())
+		{
+			teleportToDimension(p, args[1]);
+		}
+		else if((args[0].equalsIgnoreCase("armor")||args[0].equalsIgnoreCase("ar")) && p.isOp())
+		{
+			Elements.give(Boots.get(Integer.parseInt(args[1]), p), 1, p);
+			Elements.give(Helmet.get(Integer.parseInt(args[1]), p), 1, p);
+			Elements.give(Leggings.get(Integer.parseInt(args[1]), p), 1, p);
+			Elements.give(Chestplate.get(Integer.parseInt(args[1]), p), 1, p);
+		}
+		else if((args[0].equalsIgnoreCase("scroll")||args[0].equalsIgnoreCase("scroll")) && p.isOp())
+		{
+			Elements.give(Elements.getscroll(p), 1, p);
+		}
+		else if((args[0].equalsIgnoreCase("weapons")||args[0].equalsIgnoreCase("w")) && p.isOp())
+		{
+			Weapons w = new Weapons();
+			w.winv(p);
+		}
+		else if((args[0].equalsIgnoreCase("elweapon")||args[0].equalsIgnoreCase("elw")) && p.isOp()&& !args[1].isEmpty())
+		{
+			Weapons w = new Weapons();
+			w.giveElWeapon(Integer.parseInt(args[1]), p );
+		}
+		else if((args[0].equalsIgnoreCase("elarmors")||args[0].equalsIgnoreCase("elar")) && p.isOp()&& !args[1].isEmpty())
+		{
+			Armors ar = new Armors();
+			ar.giveElArmors(Integer.parseInt(args[1]), p);
+		}
+		else if(args[0].equalsIgnoreCase("bosstest") && p.isOp()&& !args[1].isEmpty())
+		{
+			bossTest(args[1], p);
+		}
+		else if(args[0].equalsIgnoreCase("god") && p.isOp()&& !args[1].isEmpty())
+		{
+			p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 999999, Integer.parseInt(args[1]), false, false));
+			p.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 999999, Integer.parseInt(args[1]), false, false));
+			p.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 999999, Integer.parseInt(args[1]), false, false));
+			p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, Integer.parseInt(args[1]), false, false));
+			p.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 999999, Integer.parseInt(args[1]), false, false));
+			p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 999999, Integer.parseInt(args[1]), false, false));
+			p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 999999, Integer.parseInt(args[1]), false, false));
+		}
+		else if(args[0].equalsIgnoreCase("speed") && p.isOp()&& !args[1].isEmpty())
+		{
+			p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, Integer.parseInt(args[1]), false, false));
+			p.addPotionEffect(new PotionEffect(PotionEffectType.HASTE, 999999, Integer.parseInt(args[1]), false, false));
+			p.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 999999, Integer.parseInt(args[1]), false, false));
+			p.addPotionEffect(new PotionEffect(PotionEffectType.CONDUIT_POWER, 999999, Integer.parseInt(args[1]), false, false));
+		}
+		else if((args[0].equalsIgnoreCase("enchant")||args[0].equalsIgnoreCase("ench")) && p.isOp() && !args[1].isEmpty())
+		{
+			if(args[1].equalsIgnoreCase("clear")) {
+				p.getEquipment().getItemInMainHand().getEnchantments().keySet().forEach(en -> {
+					p.getEquipment().getItemInMainHand().removeEnchantment(en);
+				});
+			}
+			else if(!args[2].isEmpty()) {
+				p.getEquipment().getItemInMainHand().addUnsafeEnchantment(Registry.ENCHANTMENT.get(NamespacedKey.fromString(args[1])), Integer.parseInt(args[2]));
+			}
+		}
+		else if((args[0].equalsIgnoreCase("elg")) && p.isOp())
+		{
+			p.getWorld().spawn(p.getLocation(), ElderGuardian.class);
+		}
+	}
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String alias, String [] args)         
@@ -317,23 +375,10 @@ public class Rpgs extends Summoned implements CommandExecutor, Listener {
 				help(p);
 			}
 
-			if(args[0].equalsIgnoreCase("water") && p.isOp())
-			{
-				HashSet<Location> lhs = new HashSet<>();
-				final Location rl = p.getLocation().clone();
-				for(int ix = -10; ix<10; ix++) {
-					for(int iy = -10; iy<10; iy++) {
-						for(int iz = -10; iz<10; iz++) {
-							if(rl.clone().add(ix, iy, iz).getBlock().getType().name().contains("WATER"))
-							lhs.add(rl.clone().add(ix, iy, iz));
-						}
-					}
-				}
-				lhs.forEach(l -> l.getBlock().setType(Material.VOID_AIR));
-				
-			}
 			else if(args.length > 0)
 			{
+				opCommands(args, p);
+				
 				if(args[0].equalsIgnoreCase("bm")  || args[0].equalsIgnoreCase("bi"))
 				{
 					p.sendRawMessage(p.getLocation().getBlock().getBiome().toString());
@@ -359,11 +404,6 @@ public class Rpgs extends Summoned implements CommandExecutor, Listener {
 					Pak pak = Pak.getInstance();
 					pak.eldmes(p);
 				}
-				else if(args[0].equalsIgnoreCase("exp") && p.isOp()&& !args[1].isEmpty())
-				{
-					p.giveExp(Integer.parseInt(args[1]));
-					Bukkit.getServer().getPluginManager().callEvent(new PlayerExpChangeEvent(p,Integer.parseInt(args[1])));
-				}
 				else if(args[0].equalsIgnoreCase("class") || args[0].equalsIgnoreCase("c"))
 				{
 					Classgui classgui = new Classgui();
@@ -372,77 +412,6 @@ public class Rpgs extends Summoned implements CommandExecutor, Listener {
 				else if(args[0].equalsIgnoreCase("rank") || args[0].equalsIgnoreCase("r"))
 				{
 					Proficiency.prorank(p);
-				}
-				else if(args[0].equalsIgnoreCase("pro") && p.isOp()&& !args[1].isEmpty())
-				{
-					Bukkit.getServer().getPluginManager().callEvent(new PlayerExpChangeEvent(p,Integer.parseInt(args[1])));
-				}
-				else if((args[0].equalsIgnoreCase("elements")||args[0].equalsIgnoreCase("elm")) && p.isOp())
-				{
-					Elements.ElementsInv(p);
-				}
-				else if((args[0].equalsIgnoreCase("dimen")||args[0].equalsIgnoreCase("dim"))&& !args[1].isEmpty() && p.isOp())
-				{
-					teleportToDimension(p, args[1]);
-				}
-				else if((args[0].equalsIgnoreCase("armor")||args[0].equalsIgnoreCase("ar")) && p.isOp())
-				{
-					Elements.give(Boots.get(Integer.parseInt(args[1]), p), 1, p);
-					Elements.give(Helmet.get(Integer.parseInt(args[1]), p), 1, p);
-					Elements.give(Leggings.get(Integer.parseInt(args[1]), p), 1, p);
-					Elements.give(Chestplate.get(Integer.parseInt(args[1]), p), 1, p);
-				}
-				else if((args[0].equalsIgnoreCase("scroll")||args[0].equalsIgnoreCase("scroll")) && p.isOp())
-				{
-					Elements.give(Elements.getscroll(p), 1, p);
-				}
-				else if((args[0].equalsIgnoreCase("weapons")||args[0].equalsIgnoreCase("w")) && p.isOp())
-				{
-					Weapons w = new Weapons();
-					w.winv(p);
-				}
-				else if((args[0].equalsIgnoreCase("elweapon")||args[0].equalsIgnoreCase("elw")) && p.isOp()&& !args[1].isEmpty())
-				{
-					Weapons w = new Weapons();
-					w.giveElWeapon(Integer.parseInt(args[1]), p );
-				}
-				else if((args[0].equalsIgnoreCase("elarmors")||args[0].equalsIgnoreCase("elar")) && p.isOp()&& !args[1].isEmpty())
-				{
-					Armors ar = new Armors();
-					ar.giveElArmors(Integer.parseInt(args[1]), p);
-				}
-				else if(args[0].equalsIgnoreCase("bosstest") && p.isOp()&& !args[1].isEmpty())
-				{
-					bossTest(args[1], p);
-				}
-				else if(args[0].equalsIgnoreCase("god") && p.isOp()&& !args[1].isEmpty())
-				{
-					p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 999999, Integer.parseInt(args[1]), false, false));
-					p.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 999999, Integer.parseInt(args[1]), false, false));
-					p.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 999999, Integer.parseInt(args[1]), false, false));
-					p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 999999, Integer.parseInt(args[1]), false, false));
-					p.addPotionEffect(new PotionEffect(PotionEffectType.STRENGTH, 999999, Integer.parseInt(args[1]), false, false));
-					p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 999999, Integer.parseInt(args[1]), false, false));
-					p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 999999, Integer.parseInt(args[1]), false, false));
-				}
-				else if(args[0].equalsIgnoreCase("speed") && p.isOp()&& !args[1].isEmpty())
-				{
-					p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999, Integer.parseInt(args[1]), false, false));
-					p.addPotionEffect(new PotionEffect(PotionEffectType.HASTE, 999999, Integer.parseInt(args[1]), false, false));
-					p.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 999999, Integer.parseInt(args[1]), false, false));
-					p.addPotionEffect(new PotionEffect(PotionEffectType.CONDUIT_POWER, 999999, Integer.parseInt(args[1]), false, false));
-				}
-				else if((args[0].equalsIgnoreCase("enchant")||args[0].equalsIgnoreCase("ench")) && p.isOp() && !args[1].isEmpty())
-				{
-					if(args[1].equalsIgnoreCase("clear")) {
-						p.getEquipment().getItemInMainHand().getEnchantments().keySet().forEach(en -> {
-							p.getEquipment().getItemInMainHand().removeEnchantment(en);
-						});
-						return true;
-					}
-					else if(!args[2].isEmpty()) {
-						p.getEquipment().getItemInMainHand().addUnsafeEnchantment(Registry.ENCHANTMENT.get(NamespacedKey.fromString(args[1])), Integer.parseInt(args[2]));
-					}
 				}
 				else if(args[0].equalsIgnoreCase("dam") || args[0].equalsIgnoreCase("d") || args[0].equalsIgnoreCase("damage"))
 				{

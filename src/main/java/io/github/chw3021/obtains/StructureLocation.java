@@ -1,26 +1,29 @@
 package io.github.chw3021.obtains;
 
+import java.io.Serializable;
+
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
-import org.bukkit.inventory.BlockInventoryHolder;
-import org.bukkit.util.Vector;
-
 import com.google.common.collect.HashMultimap;
 
-public class StructureLocation {
-    private final Object key;
+public class StructureLocation implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4423090718556522183L;
+	private final Object key;
     private final String type;
     private final Location actualLocation;
 
 
-	public StructureLocation(BlockInventoryHolder chest) {
+	public StructureLocation(Location chest) {
         this.key = chest;
         this.type = "Location";
-        this.actualLocation = chest.getInventory().getLocation();
+        this.actualLocation = chest;
     }
 
     public StructureLocation(Entity entity) {
-        this.key = entity;
+        this.key = entity.getUniqueId();
         this.type = "Entity";
         this.actualLocation = entity.getLocation();
     }
@@ -49,7 +52,13 @@ public class StructureLocation {
         return key.hashCode();
     }
     
-    public static boolean containsChest(HashMultimap<StructureLocation, String> map, BlockInventoryHolder chest) {
+    @Override
+	public String toString() {
+		return "StructureLocation [actualLocation=" + actualLocation + "]";
+	}
+
+	public static boolean containsChest(HashMultimap<StructureLocation, String> map, Location chest) {
+		chest.setZ(chest.getZ()+1);
         return map.containsKey(new StructureLocation(chest));
     }
 

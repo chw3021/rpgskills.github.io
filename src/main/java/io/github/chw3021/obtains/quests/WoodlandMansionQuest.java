@@ -11,7 +11,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.StructureType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Evoker;
@@ -28,7 +27,6 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Merchant;
 import org.bukkit.inventory.MerchantRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import io.github.chw3021.items.Elements;
@@ -57,8 +55,6 @@ public class WoodlandMansionQuest extends Mobs implements Quest {
 
 	private HashMap<UUID, Integer> qt = new HashMap<UUID, Integer>();
 	private Integer st = 0;
-
-	private ItemStack map = null;
 
 	private static Integer count = 0;
 	
@@ -263,33 +259,6 @@ public class WoodlandMansionQuest extends Mobs implements Quest {
 	        		hel.setIngredients(helia);
 	        		mrl.add(hel);
 	        		
-	        		MerchantRecipe mr5 = new MerchantRecipe(Elements.getpor(8,p), 1,64,true);
-	        		mr5.setIngredients(r);
-	        		mrl.add(mr5);
-
-	        		if(map == null) {
-		        		map = Bukkit.createExplorerMap(p.getWorld(), p.getLocation(),  StructureType.SWAMP_HUT,200,true);
-		        		ItemMeta mapm = map.getItemMeta();
-		        		
-
-		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		        			mapm.setDisplayName(ChatColor.ITALIC+"늪지 오두막 지도");
-					    }
-		        		else {
-		        			mapm.setDisplayName(ChatColor.ITALIC+"Swamp Hut Map");
-		        		}
-		        		map.setItemMeta(mapm);
-		        		MerchantRecipe mr4 = new MerchantRecipe(map, 1,64,true);
-		        		mr4.setIngredients(aa);
-		        		mrl.add(mr4);
-		        		
-	        		}
-	        		else {
-		        		MerchantRecipe mr4 = new MerchantRecipe(map, 1,64,true);
-		        		mr4.setIngredients(aa);
-		        		mrl.add(mr4);
-	        		}
-
 	        		Merchant mi = Bukkit.createMerchant(le.getCustomName());
 	        		mi.setRecipes(mrl);
 	        		p.openMerchant(mi, true);

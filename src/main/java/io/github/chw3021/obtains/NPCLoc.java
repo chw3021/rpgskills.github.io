@@ -47,6 +47,8 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.vehicle.VehicleDamageEvent;
+import org.bukkit.event.vehicle.VehicleDestroyEvent;
 import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
 import org.bukkit.event.vehicle.VehicleMoveEvent;
 import org.bukkit.event.world.LootGenerateEvent;
@@ -95,6 +97,7 @@ public class NPCLoc implements Serializable, Listener{
 		return instance;
 	}
 
+	LootTables ltLootTables;
 	
     public NPCLoc() {
     	
@@ -157,15 +160,16 @@ public class NPCLoc implements Serializable, Listener{
 	}
 
 	public static void structureSaver(StructureLocation sl, String key) {
-
 	    NPCLoc npcLocData = getLocsdata();
-
+	    
+	    
 	    npcLocData.StructureKeys.put(sl, key);
 	    
-        String path = new File("").getAbsolutePath();
-        npcLocData.saveData(path +"/plugins/RPGskills/NPCLoc.data");
+	    
+	    String path = new File("").getAbsolutePath();
+	    npcLocData.saveData(path + "/plugins/RPGskills/NPCLoc.data");
 	}
-	
+
 
 	@EventHandler	
 	public void spawning(LootGenerateEvent ev) 
@@ -186,7 +190,6 @@ public class NPCLoc implements Serializable, Listener{
 			if(SpawnLocs.add(sl.getActualLocation())) {
 				saveFlag = Spawn(sl.getActualLocation(),structureKey);
 			}
-			e.setMetadata("structureChest", new FixedMetadataValue(RMain.getInstance(),e.toString()));
 	        e.setPersistent(true);
 	        e.setInvulnerable(true);
 	        e.setGravity(false);
@@ -195,29 +198,27 @@ public class NPCLoc implements Serializable, Listener{
 				return;
 			}
 			if(saveFlag) {
+				e.setMetadata("structureChest", new FixedMetadataValue(RMain.getInstance(),e.toString()));
 				structureSaver(sl, structureKey);
 			}
 		}
 
 		else if(ih instanceof BlockInventoryHolder){
-			BlockInventoryHolder bih = (BlockInventoryHolder) ih.getInventory();
+			Location bih = ih.getInventory().getLocation();
 			StructureLocation sl = new StructureLocation(bih);
 
 			if(SpawnLocs.add(sl.getActualLocation())) {
 				saveFlag = Spawn(sl.getActualLocation(),structureKey);
 			}
-			bih.getBlock().setMetadata("structureChest", new FixedMetadataValue(RMain.getInstance(),bih.toString()));
 			if(structureKey.contains("trial")) {
 				return;
 			}
 			if(saveFlag) {
+				bih.getBlock().setMetadata("structureChest", new FixedMetadataValue(RMain.getInstance(),bih.toString()));
 				structureSaver(sl, structureKey);
 			}
 		}
 		
-
-		System.out.println(ih);
-		System.out.println(ih.getInventory());
 
 
 		if(structureKey.contains("buried_treasure")) {
@@ -231,11 +232,10 @@ public class NPCLoc implements Serializable, Listener{
 	{
 		Inventory ci = d.getInventory();
 		Player p = (Player) d.getPlayer();
-		if(ci.getLocation() != null &&  ci.getLocation().getBlock() != null ) {
+		if(ci.getLocation() != null) {
 
 			HashMultimap<StructureLocation, String> StructureKeys = getLocsdata().StructureKeys;
-			System.out.println(ci.getLocation().getBlock());
-			
+
 			if(ci.getHolder() instanceof Entity e) {
 				if(StructureLocation.containsEntity(StructureKeys, e)) {
 					d.setCancelled(true);
@@ -246,6 +246,7 @@ public class NPCLoc implements Serializable, Listener{
 				        e.setGravity(false);
 				        e.setVelocity(new Vector(0,0,0));
 					}
+					System.out.println("SpawnLocs: "+SpawnLocs);
 					
 					StructureKeys.entries().forEach(en->{
 						if(SpawnLocs.add(en.getKey().getActualLocation())) {
@@ -255,7 +256,8 @@ public class NPCLoc implements Serializable, Listener{
 				}
 
 				if(e.hasMetadata("structureChest")) {
-					
+
+					System.out.println("SpawnLocs: "+SpawnLocs);
 					d.setCancelled(true);
 					StructureLocation sl = new StructureLocation(e);
 
@@ -265,18 +267,19 @@ public class NPCLoc implements Serializable, Listener{
 				    	Locs = getLocsdata().Locs;
 				    }
 				    
-				    Inventory inv = Bukkit.createInventory(p, 54, p.getName()+ " StructureChest");
+				    Inventory inv = Bukkit.createInventory(ci.getHolder(), 54, p.getName()+ " StructureChest");
 				    inv.setContents(Locs.get(p.getUniqueId(), sl));
 				    p.openInventory(inv);
 				}
 			}
 			else if(ci.getHolder() instanceof BlockInventoryHolder bih){
 				BlockState b = bih.getBlock().getState();
-				if(StructureLocation.containsChest(StructureKeys, bih)) {
+				if(StructureLocation.containsChest(StructureKeys, b.getLocation())) {
 					d.setCancelled(true);
 					if(!b.hasMetadata("structureChest")) {
 						b.setMetadata("structureChest", new FixedMetadataValue(RMain.getInstance(),bih.toString()));
 					}
+
 					
 					StructureKeys.entries().forEach(en->{
 						if(SpawnLocs.add(en.getKey().getActualLocation())) {
@@ -287,15 +290,15 @@ public class NPCLoc implements Serializable, Listener{
 				if(b.hasMetadata("structureChest")) {
 					
 					d.setCancelled(true);
-					StructureLocation sl = new StructureLocation(bih);
-
+					StructureLocation sl = new StructureLocation(b.getLocation());
+					
 					Table<UUID, StructureLocation, ItemStack[]> Locs = getLocsdata().Locs;
 				    if (!Locs.contains(p.getUniqueId(), sl)) {
 				        chestSaver(p, sl, ci.getContents());
 				    	Locs = getLocsdata().Locs;
 				    }
 				    
-				    Inventory inv = Bukkit.createInventory(p, 54, p.getName()+ " StructureChest");
+				    Inventory inv = Bukkit.createInventory(bih, 54, p.getName()+ " StructureChest");
 				    inv.setContents(Locs.get(p.getUniqueId(), sl));
 				    p.openInventory(inv);
 				}
@@ -347,7 +350,48 @@ public class NPCLoc implements Serializable, Listener{
 			}
 		}
 	}
-	
+
+	@EventHandler	
+	public void EntityDamage(VehicleDamageEvent d) 
+	{
+		if(d.getVehicle() != null) {
+			if(d.getVehicle().hasMetadata("structureChest")) {
+				d.setCancelled(true);
+				Entity e = d.getVehicle();
+				e.setInvulnerable(true);
+				e.setPersistent(true);
+				e.setGravity(false);
+				e.setVelocity(new Vector(0,0,0));
+				HashMultimap<StructureLocation, String> StructureKeys = getLocsdata().StructureKeys;
+				if(StructureLocation.containsEntity(StructureKeys, e)) {
+					StructureLocation sl = new StructureLocation(e);
+					e.teleport(sl.getActualLocation());
+				}
+				
+			}
+		}
+	}
+
+	@EventHandler	
+	public void EntityDamage(VehicleDestroyEvent d) 
+	{
+		if(d.getVehicle() != null) {
+			if(d.getVehicle().hasMetadata("structureChest")) {
+				d.setCancelled(true);
+				Entity e = d.getVehicle();
+				e.setInvulnerable(true);
+				e.setPersistent(true);
+				e.setGravity(false);
+				e.setVelocity(new Vector(0,0,0));
+				HashMultimap<StructureLocation, String> StructureKeys = getLocsdata().StructureKeys;
+				if(StructureLocation.containsEntity(StructureKeys, e)) {
+					StructureLocation sl = new StructureLocation(e);
+					e.teleport(sl.getActualLocation());
+				}
+				
+			}
+		}
+	}
 
 	
 	
@@ -385,7 +429,24 @@ public class NPCLoc implements Serializable, Listener{
 				b.setMetadata("structureChest", new FixedMetadataValue(RMain.getInstance(),l.toString()));
 				Chest cstate = (Chest) b.getState();
 				cstate.setLootTable(LootTables.ELDER_GUARDIAN.getLootTable());
+				cstate.getBlockInventory().addItem(ev.getDrops().toArray(new ItemStack[0]));
+				ev.getDrops().clear();
+				
 				cstate.setCustomName("ElderGuaridan Chest");
+				Boolean saveFlag = false;
+
+				String structureKey = LootTables.ELDER_GUARDIAN.getKey().getKey();
+				
+				Location bih = b.getLocation();
+				StructureLocation sl = new StructureLocation(bih);
+
+				if(SpawnLocs.add(sl.getActualLocation())) {
+					saveFlag = Spawn(sl.getActualLocation(),structureKey);
+				}
+				if(saveFlag) {
+					bih.getBlock().setMetadata("structureChest", new FixedMetadataValue(RMain.getInstance(),bih.toString()));
+					structureSaver(sl, structureKey);
+				}
 			}
 		}
 	}
@@ -395,7 +456,7 @@ public class NPCLoc implements Serializable, Listener{
 	{
 		Inventory ci = d.getInventory();
 		Player p = (Player) d.getPlayer();
-		if(ci.getLocation() != null &&  ci.getHolder() != null) {
+		if(ci.getHolder() != null) {
 			HashMultimap<StructureLocation, String> StructureKeys = getLocsdata().StructureKeys;
 
 			if(ci.getHolder() instanceof Entity e) {
@@ -417,7 +478,7 @@ public class NPCLoc implements Serializable, Listener{
 			}
 			else if(ci.getHolder() instanceof BlockInventoryHolder bih){
 				BlockState b = bih.getBlock().getState();
-				if(StructureLocation.containsChest(StructureKeys, bih)) {
+				if(StructureLocation.containsChest(StructureKeys, b.getLocation())) {
 					if(!b.hasMetadata("structureChest")) {
 						b.setMetadata("structureChest", new FixedMetadataValue(RMain.getInstance(),bih.toString()));
 					}
@@ -429,18 +490,8 @@ public class NPCLoc implements Serializable, Listener{
 					});
 				}
 				if(b.hasMetadata("structureChest")) {
-					
-					StructureLocation sl = new StructureLocation(bih);
-
-					Table<UUID, StructureLocation, ItemStack[]> Locs = getLocsdata().Locs;
-				    if (!Locs.contains(p.getUniqueId(), sl)) {
-				        chestSaver(p, sl, ci.getContents());
-				    	Locs = getLocsdata().Locs;
-				    }
-				    
-				    Inventory inv = Bukkit.createInventory(p, 54, p.getName()+ " StructureChest");
-				    inv.setContents(Locs.get(p.getUniqueId(), sl));
-				    p.openInventory(inv);
+					StructureLocation sl = new StructureLocation(b.getLocation());
+					chestSaver(p,sl,ci.getContents());
 				}
 			}
 		}
@@ -453,7 +504,7 @@ public class NPCLoc implements Serializable, Listener{
 			Chest c = (Chest) d.getBlock().getState();
 			HashMultimap<StructureLocation, String> StructureKeys = getLocsdata().StructureKeys;
 			Location l = c.getLocation();
-			StructureLocation structureKey = new StructureLocation(c);
+			StructureLocation structureKey = new StructureLocation(l);
 			if(StructureKeys.containsKey(structureKey)) {
 				d.setCancelled(true);
 				if(!c.hasMetadata("structureChest")) {
@@ -983,7 +1034,7 @@ public class NPCLoc implements Serializable, Listener{
     		}
     		return true;
     	}
-    	else if(ns.contains("underwater_ruin_big")) {
+    	else if(ns.contains("elder_guardian")) {
     		
         		lel.getWorld().getNearbyEntities(lel, 100, 100, 100).forEach(e -> {
         			if(!e.hasMetadata("rpgspawned") && !e.hasMetadata("fake") && (e.getType() == EntityType.GUARDIAN)) {

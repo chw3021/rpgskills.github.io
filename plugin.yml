@@ -4,9 +4,6 @@ version: 1.0
 
 main: io.github.chw3021.rmain.RMain
 
-libraries:
-  - org.reflections:reflections:0.10.2
-
 commands:
    rpg:
       description: plugin

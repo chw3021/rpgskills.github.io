@@ -23,32 +23,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerResourcePackStatusEvent;
 
-import com.google.common.util.concurrent.ListenableFuture;
-
 public class ResourcePackManager implements Listener{
 
 	@EventHandler
 	public void onResourcePackStatus(PlayerResourcePackStatusEvent event) {
-	    Player player = event.getPlayer();
-	    switch (event.getStatus()) {
-	        case SUCCESSFULLY_LOADED:
-	            player.sendMessage("Resource pack applied successfully!");
-	            break;
-	        case DECLINED:
-	            player.sendMessage("Resource pack was declined.");
-	            break;
-	        case FAILED_DOWNLOAD:
-	            player.sendMessage("Failed to download resource pack.");
-	            break;
-	        case ACCEPTED:
-	            player.sendMessage("Resource pack accepted, downloading...");
-	            break;
-		default:
-            System.out.println(event.toString());
-            System.out.println(event.getID());
-            System.out.println(event.getStatus());
-			break;
-	    }
+        System.out.println(event.getID());
+        System.out.println(event.getStatus());
 	}
 
 	public static void fixZipStructure(String zipFilePath) throws IOException {
@@ -152,6 +132,7 @@ public class ResourcePackManager implements Listener{
         URL url = uri.toURL();
         String zipFilePath = "RpsSkills.zip";
 
+        // 1. 파일 다운로드
         try (InputStream in = new BufferedInputStream(url.openStream());
              FileOutputStream out = new FileOutputStream(zipFilePath)) {
             byte[] dataBuffer = new byte[1024];
@@ -161,31 +142,32 @@ public class ResourcePackManager implements Listener{
             }
         }
 
-        // 2. SHA-1 해시 계산 (압축 수정 전)
-        byte[] originalHash = calculateSHA1(zipFilePath); // 파일 다운로드 후 원본 해시 계산
-        System.out.println("Original SHA-1 hash: " + bytesToHex(originalHash));
-
-        // 3. 압축 구조 수정
+        // 2. 압축 구조 수정
         fixZipStructure(zipFilePath);
 
-        // 4. 수정된 파일 반환 (Minecraft에서 원본 해시 전달)
-        return new byte[][]{Files.readAllBytes(Paths.get(zipFilePath)), originalHash};  // 수정된 파일과 원본 해시 함께 반환
-    }
+        // 3. 수정된 파일의 SHA-1 해시 계산
+        byte[] modifiedHash = calculateSHA1(zipFilePath);
 
+        System.out.println("Modified SHA-1 hash: " + bytesToHex(modifiedHash));
+
+        // 4. 수정된 파일 반환
+        return new byte[][]{Files.readAllBytes(Paths.get(zipFilePath)), modifiedHash};
+    }
+	
     @EventHandler
     public void join(PlayerJoinEvent ev) {
         Player p = ev.getPlayer();
 
         try {
             String resourcePackUrl = "https://github.com/chw3021/RpgSkills/archive/refs/heads/master.zip";
-            byte[][] result = downloadResourcePack(resourcePackUrl);  // 파일과 해시 값 받기
-            byte[] data = result[0];  // 다운로드된 리소스팩
-            byte[] originalHash = result[1];  // 원본 해시 값
+            byte[][] resourcePackData = downloadResourcePack(resourcePackUrl);
 
-            System.out.println("Original SHA-1 hash before download: " + bytesToHex(originalHash));
-            System.out.println("data SHA-1 hash before download: " + bytesToHex(getSHA1Hash(data)));
+            byte[] modifiedFileData = resourcePackData[0];
+            byte[] modifiedHash = resourcePackData[1];
 
-            p.setResourcePack(resourcePackUrl, originalHash, false);
+            // 변환된 파일의 해시를 Minecraft 클라이언트에 전달
+            p.setResourcePack(resourcePackUrl);
+            
         } catch (Exception e) {
             e.printStackTrace();
         }

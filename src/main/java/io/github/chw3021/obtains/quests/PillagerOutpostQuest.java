@@ -9,7 +9,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.StructureType;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -26,8 +25,6 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Merchant;
 import org.bukkit.inventory.MerchantRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
@@ -53,7 +50,6 @@ public class PillagerOutpostQuest implements Quest {
 	private HashMap<UUID, Integer> qt = new HashMap<UUID, Integer>();
 	private static Multimap<String, UUID> qmobs = ArrayListMultimap.create();
 
-	private ItemStack map = null;
 
 
 	private static final PillagerOutpostQuest instance = new PillagerOutpostQuest ();
@@ -168,21 +164,6 @@ public class PillagerOutpostQuest implements Quest {
 	        		mr2.setIngredients(in2);
 	        		mrl.add(mr2);
 
-	        		MerchantRecipe mr3 = new MerchantRecipe(Elements.getpor(8,p), 1,64,true);
-	        		ArrayList<ItemStack> in3 = new ArrayList<>();
-	        		in3.add(new ItemStack(Material.EMERALD,6));
-	        		in3.add(new ItemStack(Material.LAPIS_LAZULI,6));
-	        		mr3.setIngredients(in3);
-	        		mrl.add(mr3);
-
-	        		MerchantRecipe mr4 = new MerchantRecipe(Elements.getpor(9,p), 1,64,true);
-	        		mr4.setIngredients(in3);
-	        		mrl.add(mr4);
-
-	        		MerchantRecipe mr6 = new MerchantRecipe(Elements.getpor(10,p), 1,64,true);
-	        		mr6.setIngredients(in3);
-	        		mrl.add(mr6);
-	        		
 	        		MerchantRecipe mr7 = new MerchantRecipe(new ItemStack(Material.SADDLE), 1,64,true);
 	        		ArrayList<ItemStack> in4 = new ArrayList<>();
 	        		in4.add(new ItemStack(Material.EMERALD,3));
@@ -191,28 +172,6 @@ public class PillagerOutpostQuest implements Quest {
 	        		
 	        		ArrayList<ItemStack> in5 = new ArrayList<>();
 	        		in5.add(new ItemStack(Material.EMERALD,3));
-	        		if(map == null) {
-		        		map = Bukkit.createExplorerMap(p.getWorld(), p.getLocation(),  StructureType.WOODLAND_MANSION,200,true);
-		        		ItemMeta mapm = map.getItemMeta();
-		        		
-
-		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		        			mapm.setDisplayName(ChatColor.ITALIC+"산림 대저택 기지 지도");
-					    }
-		        		else {
-		        			mapm.setDisplayName(ChatColor.ITALIC+"Woodland Mansion Map");
-		        		}
-		        		map.setItemMeta(mapm);
-		        		MerchantRecipe mr5 = new MerchantRecipe(map, 1,64,true);
-		        		mr5.setIngredients(in5);
-		        		mrl.add(mr5);
-		        		
-	        		}
-	        		else {
-		        		MerchantRecipe mr5 = new MerchantRecipe(map, 1,64,true);
-		        		mr5.setIngredients(in5);
-		        		mrl.add(mr5);
-	        		}
 	        		
 	        		Merchant mi = Bukkit.createMerchant(le.getCustomName());
 	        		mi.setRecipes(mrl);

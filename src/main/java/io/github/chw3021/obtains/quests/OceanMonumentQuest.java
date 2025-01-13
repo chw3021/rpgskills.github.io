@@ -10,7 +10,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.StructureType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -25,8 +24,6 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Merchant;
 import org.bukkit.inventory.MerchantRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
-
 import io.github.chw3021.items.Elements;
 import io.github.chw3021.items.Potions;
 import io.github.chw3021.items.armors.Boots;
@@ -51,7 +48,6 @@ public class OceanMonumentQuest implements Listener, Quest {
 	private HashMap<UUID, Integer> clearable = new HashMap<UUID, Integer>();
 
 	private HashMap<UUID, Integer> qt = new HashMap<UUID, Integer>();
-	private ItemStack map = null;
 
 
 	private static final OceanMonumentQuest instance = new OceanMonumentQuest ();
@@ -187,32 +183,6 @@ public class OceanMonumentQuest implements Listener, Quest {
 	        		mr7.setIngredients(helia);
 	        		mrl.add(mr7);
 	        		
-	        		MerchantRecipe mr8 = new MerchantRecipe(Elements.getpor(7,p), 1,64,true);
-	        		mr8.setIngredients(in1);
-	        		mrl.add(mr8);
-
-	        		if(map == null) {
-		        		map = Bukkit.createExplorerMap(p.getWorld(), p.getLocation(),  StructureType.STRONGHOLD,200,true);
-		        		ItemMeta mapm = map.getItemMeta();
-		        		
-
-		        		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		        			mapm.setDisplayName(ChatColor.ITALIC+"근거지 지도");
-					    }
-		        		else {
-		        			mapm.setDisplayName(ChatColor.ITALIC+"Stronghold Map");
-		        		}
-		        		map.setItemMeta(mapm);
-		        		MerchantRecipe mr4 = new MerchantRecipe(map, 1,64,true);
-		        		mr4.setIngredients(aa);
-		        		mrl.add(mr4);
-		        		
-	        		}
-	        		else {
-		        		MerchantRecipe mr4 = new MerchantRecipe(map, 1,64,true);
-		        		mr4.setIngredients(aa);
-		        		mrl.add(mr4);
-	        		}
 
 	        		Merchant mi = Bukkit.createMerchant(le.getCustomName());
 	        		mi.setRecipes(mrl);

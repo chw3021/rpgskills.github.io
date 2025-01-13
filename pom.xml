@@ -62,7 +62,6 @@
 		</repository>
 	</repositories>
 	<dependencies>
-
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
@@ -90,11 +89,6 @@
 			<artifactId>annotations</artifactId>
 			<version>17.0.0</version>
 			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.reflections</groupId>
-			<artifactId>reflections</artifactId>
-			<version>0.10.2</version>
 		</dependency>
 	</dependencies>
 </project>
