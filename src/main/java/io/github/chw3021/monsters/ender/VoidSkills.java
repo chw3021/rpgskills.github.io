@@ -1373,7 +1373,6 @@ public class VoidSkills extends EndercoreRaids{
 		        		if(ordt.containsKey(rn)) {
 		        			ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
 		        		}
-
                 		Holding.reset(p);
                 		Holding.ale(p).setInvisible(false);
 	                	Holding.ale(p).setMetadata("failed", new FixedMetadataValue(RMain.getInstance(),true));
