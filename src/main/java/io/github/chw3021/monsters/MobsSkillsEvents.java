@@ -58,6 +58,7 @@ import io.github.chw3021.monsters.dark.DarkRaids;
 import io.github.chw3021.monsters.dark.DarkSkills;
 import io.github.chw3021.monsters.ender.EnderMobsSpawn;
 import io.github.chw3021.monsters.ender.EnderSkills;
+import io.github.chw3021.monsters.ender.VoidSkills;
 import io.github.chw3021.monsters.hyper.HyperMobsSpawn;
 import io.github.chw3021.monsters.hyper.HyperRaids;
 import io.github.chw3021.monsters.hyper.HyperSkills;
@@ -403,6 +404,13 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 		EnderSkills.getInstance().nightMare(d);
 		EnderSkills.getInstance().teleportAndScatterEnderPearls(d);
 		EnderSkills.getInstance().teleportEx(d);
+		
+		VoidSkills.getInstance().grilled(d);
+		VoidSkills.getInstance().hand(d);
+		VoidSkills.getInstance().illusionCharge(d);
+		VoidSkills.getInstance().nightMare(d);
+		VoidSkills.getInstance().paintBallSpread(d);
+		VoidSkills.getInstance().teleportEx(d);
 	}
 
 
@@ -541,6 +549,8 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 		WarpSkills.getInstance().hit(e);
 		
 		EnderSkills.getInstance().hit(e);
+
+		VoidSkills.getInstance().hit(e);
 	}
 
 	@EventHandler
@@ -561,6 +571,8 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 		CrimsonSkills.getInstance().bowshoot(e);
 		
 		EnderSkills.getInstance().bowshoot(e);
+
+		VoidSkills.getInstance().bowshoot(e);
 	}
 		
 
@@ -579,6 +591,8 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 		RedSkills.getInstance().HotCreep(d);
 		
 		DarkSkills.getInstance().darkcreep(d);
+
+		VoidSkills.getInstance().activateCreeperSkill(d);
 	}
 	
 	

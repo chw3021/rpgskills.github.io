@@ -40,6 +40,12 @@ public class MobArmor implements Listener {
 			if(d.getEntity().hasMetadata("wild")) {
 				d.setDamage(d.getDamage()*0.6);
 			}
+			if(d.getEntity().hasMetadata("nether")) {
+				d.setDamage(d.getDamage()*0.32);
+			} 
+			if(d.getEntity().hasMetadata("ender")) {
+				d.setDamage(d.getDamage()*0.16);
+			}
 		}
 		if(d.getEntity().hasMetadata("raid")) {
 			d.setDamage(d.getDamage()*0.56);
@@ -57,10 +63,10 @@ public class MobArmor implements Listener {
 			d.setDamage(d.getDamage()*2.2);
 		}
 		if(d.getEntity().hasMetadata("nether")) {
-			d.setDamage(d.getDamage()*0.22);
+			d.setDamage(d.getDamage()*0.8);
 		} 
 		if(d.getEntity().hasMetadata("ender")) {
-			d.setDamage(d.getDamage()*0.14);
+			d.setDamage(d.getDamage()*0.5);
 		}
 		if(d.getEntity().hasMetadata("wither")) {
 			LivingEntity le = (LivingEntity) d.getEntity();

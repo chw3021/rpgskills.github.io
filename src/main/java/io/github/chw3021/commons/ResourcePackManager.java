@@ -154,7 +154,7 @@ public class ResourcePackManager implements Listener{
         return new byte[][]{Files.readAllBytes(Paths.get(zipFilePath)), modifiedHash};
     }
 	
-    @EventHandler
+    //@EventHandler
     public void join(PlayerJoinEvent ev) {
         Player p = ev.getPlayer();
 

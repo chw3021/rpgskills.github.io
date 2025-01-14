@@ -1078,6 +1078,7 @@ public class EnderSkills extends EndercoreRaids{
 	    }, 0, interval).getTaskId();
 	    task.set(t);
 	    countt.put(p.getUniqueId(), t);
+	    ordt.put(gethero(p), t);
 	}
 
 	
@@ -1217,7 +1218,8 @@ public class EnderSkills extends EndercoreRaids{
 						pe.sendMessage(ChatColor.BOLD + "Destroyer: " + ChatColor.GRAY + "Idiot.");
 					}
             		Holding.holding(null, pe, 20l);
-                	pe.setHealth(0);
+                	pe.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 25, 25));
+                	pe.damage(25, p);
 				}
 			}
 		}

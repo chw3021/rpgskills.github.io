@@ -112,7 +112,7 @@ public class EndercoreRaids extends Summoned implements Listener {
 	
 	Integer DelayTime =  100;
 	Integer LIVES = 5;
-	final public Double BOSSHP = 800000d;
+	final public Double BOSSHP = 80d;
 	
 	Integer BOSSNUM = -5;
 	
@@ -1430,7 +1430,7 @@ public class EndercoreRaids extends Summoned implements Listener {
 	        		    ItemStack leg = createDyedArmor(Material.LEATHER_LEGGINGS, enderColor);
 	        		    ItemStack boots = createDyedArmor(Material.LEATHER_BOOTS, enderColor);
 	            		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "차원파괴자":"Distroyer";
-	            		Stray newmob = (Stray) MobspawnLoc(esl, ChatColor.RED + reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, hel,
+	            		Stray newmob = (Stray) phaseChange(esl, ChatColor.RED + reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, hel,
 	            				bloodTrim2(chest, TrimPattern.COAST), bloodTrim2(leg,TrimPattern.DUNE), bloodTrim2(boots,TrimPattern.SHAPER), main, off, EntityType.STRAY);
 	        			newmob.setGlowing(true);
 	            		newmob.setLootTable(null);
@@ -1542,7 +1542,7 @@ public class EndercoreRaids extends Summoned implements Listener {
 	        		    ItemStack leg = createDyedArmor(Material.LEATHER_LEGGINGS, enderColor);
 	        		    ItemStack boots = createDyedArmor(Material.LEATHER_BOOTS, enderColor);
 	            		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "공허의화신":"VoidGod";
-	            		Stray newmob = (Stray) MobspawnLoc(esl, ChatColor.RED + reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, bloodTrim(hel, TrimPattern.SILENCE),
+	            		Stray newmob = (Stray) phaseChange(esl, ChatColor.RED + reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2, bloodTrim(hel, TrimPattern.SILENCE),
 	            				bloodTrim(chest, TrimPattern.EYE), bloodTrim(leg,TrimPattern.SILENCE), bloodTrim(boots,TrimPattern.DUNE), main, off, EntityType.STRAY);
 	            		newmob.setGlowing(true);
 	            		newmob.setLootTable(null);
