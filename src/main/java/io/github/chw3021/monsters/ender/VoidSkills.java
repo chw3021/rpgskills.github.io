@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Random;
@@ -15,34 +16,42 @@ import java.util.stream.Collectors;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
-import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.Particle.DustOptions;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.BlockDisplay;
-import org.bukkit.entity.EnderPearl;
+import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Minecart;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
+import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.EulerAngle;
+import org.bukkit.util.Transformation;
 import org.bukkit.util.Vector;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 
 import com.google.common.collect.HashMultimap;
 
@@ -70,6 +79,244 @@ public class VoidSkills extends EndercoreRaids{
 	{
 		return instance;
 	}
+
+    // 물감 색상에 따른 몬스터 맵핑
+    private final Map<Material, MonsterData> monsterMapping = Map.of(
+        Material.LIGHT_BLUE_DYE, new MonsterData(EntityType.DROWNED, Color.AQUA, Material.LIGHT_BLUE_CONCRETE),
+        Material.GREEN_DYE, new MonsterData(EntityType.CREEPER, null, null),
+        Material.MAGENTA_DYE, new MonsterData(EntityType.SKELETON, Color.FUCHSIA, Material.MAGENTA_CONCRETE)
+    );
+
+    // 몬스터 소환 메서드
+    public void summonMonster(LivingEntity summoner, Location spawnLocation, Material dye) {
+        if (!monsterMapping.containsKey(dye)) {
+            return;
+        }
+
+        MonsterData monsterData = monsterMapping.get(dye);
+        int task = new BukkitRunnable() {
+            int step = 0;
+
+            @Override
+            public void run() {
+                if (step >= 10) { // 20번 반복 후 종료
+                    cancel();
+                } else {
+                    createPaintEffect(spawnLocation, dye); // 페인트 웅덩이 생성
+                    step++;
+                }
+            }
+        }.runTaskTimer(RMain.getInstance(), 0, 2).getTaskId();
+        ordt.put(gethero(summoner), task);
+        
+        ordt.put(gethero(summoner), 
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                spawnMonsterAtLocation(spawnLocation, monsterData,summoner); // 1초 뒤 몬스터 소환
+            }
+        }.runTaskLater(RMain.getInstance(), 20L).getTaskId()); // 1초 후 실행 (20 ticks)
+    }
+
+    // 페인트 웅덩이 생성
+    private void createPaintEffect(Location location, Material dye) {
+        World world = location.getWorld();
+        if (world == null) return;
+
+        // 해당 위치에 파티클 효과 생성
+        world.spawnParticle(Particle.ITEM, location, 150, 1.5, 0.05, 1.5, 0, new ItemStack(dye));
+        world.playSound(location, Sound.ENTITY_SLIME_SQUISH, 0.1f, 0.1f);
+    }
+
+    // 몬스터 소환 및 커스터마이징
+    private void spawnMonsterAtLocation(Location location, MonsterData monsterData, LivingEntity summoner) {
+        World world = location.getWorld();
+        if (world == null) return;
+        
+        String rn = gethero(summoner);
+
+        LivingEntity monster = (LivingEntity) world.spawnEntity(location, monsterData.entityType);
+        monster.setAI(false);
+        monster.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), rn));
+        monster.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
+        monster.setMetadata("voidSummoned", new FixedMetadataValue(RMain.getInstance(), summoner.getUniqueId().toString()));
+        
+
+        // 가죽 갑옷 세트 커스터마이징
+        if (monsterData.armorColor != null) {
+            monster.getEquipment().setArmorContents(createColoredArmor(monsterData.armorColor));
+        }
+
+        // 헬멧 아이템 설정
+        if (monsterData.helmetMaterial != null) {
+            monster.getEquipment().setHelmet(new ItemStack(monsterData.helmetMaterial));
+        }
+
+        monster.teleport(location.clone().subtract(0, 2, 0)); 
+        int task = new BukkitRunnable() {
+            int step = 0;
+
+            @Override
+            public void run() {
+                if (step >= 20) { // 20번 반복 후 종료
+                    cancel();
+                } else {
+                    world.playSound(monster.getLocation(), Sound.BLOCK_SLIME_BLOCK_STEP, 0.2f, 0.2f);
+                    monster.teleport(monster.getLocation().add(0, 0.1, 0)); // 조금씩 위로 이동
+                    step++;
+                }
+            }
+        }.runTaskTimer(RMain.getInstance(), 0, 1).getTaskId();
+        ordt.put(rn, task);
+
+        int task2 = new BukkitRunnable() {
+            @Override
+            public void run() {
+            	switch (monsterData.entityType) {
+				case DROWNED: {
+					activateDrownedSkill(monster, summoner);
+				}
+				case SKELETON: {
+					activateSkeletonSkill(monster, summoner);
+				}
+				case CREEPER: {
+					activateCreeperSkill(monster);
+				}
+				default:
+					throw new IllegalArgumentException("Unexpected value: " + monsterData.entityType);
+				}
+            }
+        }.runTaskLater(RMain.getInstance(), 30).getTaskId();
+        ordt.put(rn, task2);
+        
+    }
+    private void activateDrownedSkill(LivingEntity monster, LivingEntity summoner) {
+        final Location currentLocation = monster.getLocation().clone();
+        Vector forwardVector = currentLocation.getDirection().normalize().clone();
+        monster.getWorld().playSound(monster.getLocation(), Sound.ENTITY_DROWNED_AMBIENT_WATER, 1.1f, 0.8f); // 효과음
+
+        // 1틱마다 몬스터를 전방으로 이동시키고, 그 위치에서 적을 공격합니다.
+        ordt.put(gethero(summoner), 
+        new BukkitRunnable() {
+            double distanceTraveled = 0.0;
+            final double maxDistance = 8; // 이동할 최대 거리 (2.5블록)
+
+            @Override
+            public void run() {
+                // 몬스터가 최대 이동 거리를 넘지 않으면 이동시키기
+            	monster.setRiptiding(true);
+                monster.getWorld().playSound(monster.getLocation(), Sound.ITEM_TRIDENT_RIPTIDE_1, 0.078f, 0.8f);
+                if (distanceTraveled < maxDistance) {
+                    distanceTraveled += 0.5; // 매 1틱마다 2블록씩 이동
+                    Location newLocation = currentLocation.clone().add(forwardVector.clone().multiply(distanceTraveled));
+                    if(newLocation.getBlock().isPassable()) {
+                        monster.teleport(newLocation); // 몬스터를 새 위치로 텔레포트
+                    }
+
+                    // 해당 위치에서 근처 적을 찾아서 공격
+                    for (Entity e : monster.getWorld().getNearbyEntities(newLocation, 1.5, 1.5, 1.5)) {
+                        if (summoner != e && e instanceof LivingEntity && !(e.hasMetadata("portal"))) {
+                            LivingEntity le = (LivingEntity) e;
+                            le.damage(2.5, summoner); // 공격
+                        }
+                    }
+
+                } else {
+                    // 이동이 완료되면 작업 종료
+                	monster.remove();
+                	monster.getWorld().spawnParticle(Particle.DUST_PLUME, monster.getLocation(), 200,1,1,1);
+                    this.cancel();
+                }
+            }
+        }.runTaskTimer(RMain.getInstance(), 5L, 2L).getTaskId()); // 1틱에 하나씩 실행
+    }
+
+    // 크리퍼 스킬 (1초 뒤 폭발)
+    private void activateCreeperSkill(LivingEntity monster) {
+        if (monster instanceof Creeper) {
+            Creeper creeper = (Creeper) monster;
+            creeper.setPowered(true); // 크리퍼 전기충격 활성화 (폭발 효과 강해짐)
+            creeper.setFuseTicks(20);
+            creeper.ignite();
+        }
+    }
+	public void activateCreeperSkill(ExplosionPrimeEvent d) 
+	{
+		Entity ex = d.getEntity();
+		
+		
+		if(ex instanceof Creeper) {
+			if(ex.hasMetadata("voidSummoned")) {
+				d.setRadius(0);
+				d.setCancelled(true);
+				ex.getWorld().playSound(ex.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1f, 0.8f);
+				ex.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, ex.getLocation(), 1);
+				String uidString = ex.getMetadata("voidSummoned").get(0).asString();
+				UUID leUUID = UUID.fromString(uidString);
+				LivingEntity p = (LivingEntity) Bukkit.getEntity(leUUID);
+				if(p != null) {
+                    for (Entity e : ex.getWorld().getNearbyEntities(ex.getLocation(), 3.5, 3.5, 3.5)) {
+                        if (p != e && e instanceof LivingEntity && !(e.hasMetadata("portal"))) {
+                            LivingEntity le = (LivingEntity) e;
+                            le.damage(5, p); // 공격
+                        }
+                    }
+				}
+			}
+		}
+	}
+
+    // 스켈레톤 스킬 (예시로 스켈레톤의 스킬을 다룰 수 있음)
+    private void activateSkeletonSkill(LivingEntity monster, LivingEntity summoner) {
+        // 예시로 스켈레톤에게 화살을 발사하는 스킬
+        if (monster instanceof Skeleton) {
+            Skeleton skeleton = (Skeleton) monster;
+            for(int i = 0; i <10; i++) {
+                Arrow arrow = skeleton.getWorld().spawnArrow(skeleton.getEyeLocation(),
+                		skeleton.getEyeLocation().getDirection(), 2, 5);
+                arrow.setColor(Color.FUCHSIA);
+                arrow.setShooter(summoner);
+            }
+            skeleton.getWorld().playSound(skeleton.getLocation(), Sound.ENTITY_SKELETON_SHOOT, 1.0f, 1.0f);
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                	monster.remove();
+                	monster.getWorld().spawnParticle(Particle.DUST_PLUME, monster.getLocation(), 200,1,1,1);
+                }
+            }.runTaskLater(RMain.getInstance(), 10);
+        }
+    }
+
+    // 가죽 갑옷 세트 생성
+    private ItemStack[] createColoredArmor(Color color) {
+        ItemStack[] armor = new ItemStack[4];
+        Material[] armorMaterials = {Material.LEATHER_BOOTS, Material.LEATHER_LEGGINGS, Material.LEATHER_CHESTPLATE, Material.LEATHER_HELMET};
+
+        for (int i = 0; i < armor.length-1; i++) {
+            ItemStack item = new ItemStack(armorMaterials[i]);
+            LeatherArmorMeta meta = (LeatherArmorMeta) item.getItemMeta();
+            if (meta != null) {
+                meta.setColor(color);
+                item.setItemMeta(meta);
+            }
+            armor[i] = item;
+        }
+        return armor;
+    }
+
+    // 몬스터 데이터를 담는 클래스
+    private static class MonsterData {
+        final EntityType entityType;
+        final Color armorColor;
+        final Material helmetMaterial;
+
+        public MonsterData(EntityType entityType, Color armorColor, Material helmetMaterial) {
+            this.entityType = entityType;
+            this.armorColor = armorColor;
+            this.helmetMaterial = helmetMaterial;
+        }
+    }
 	
 	
 	public void hit(ProjectileHitEvent d) 
@@ -77,27 +324,12 @@ public class VoidSkills extends EndercoreRaids{
 		Projectile po = d.getEntity();
 		if(po.getShooter() instanceof LivingEntity) {
 			LivingEntity p = (LivingEntity) po.getShooter();
-			if(po.hasMetadata("enderbossPearl")) {
+			if(po.hasMetadata("voidPaint")) {
         		final Location l = d.getHitEntity() != null ? d.getHitEntity().getLocation() : d.getHitBlock().getLocation();
-
-				l.getWorld().spawnParticle(Particle.REVERSE_PORTAL, l, 100);
-				l.getWorld().spawnParticle(Particle.END_ROD, l, 100);
-				l.getWorld().playSound(l, Sound.ENTITY_SHULKER_TELEPORT, 1f, 1.5f);
-
-        		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	                @Override
-	                public void run() {
-						l.getWorld().spawnParticle(Particle.PORTAL, l, 300);
-						l.getWorld().playSound(l, Sound.BLOCK_AMETHYST_BLOCK_BREAK, 1f, 1.5f);
-	            		for(Entity e : l.getWorld().getNearbyEntities(l, 1.5, 1.5, 1.5)) {
-							if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("portal"))) {
-								LivingEntity le = (LivingEntity)e;
-								le.damage(4.3,p);
-								Holding.holding(null, le, 23l);
-							}
-	                	}
-	                }
-	            }, 15); 
+        		
+        		Snowball sn = (Snowball) po;
+        		
+        		summonMonster(p, l, sn.getItem().getType());
 			}
 		}
 	}
@@ -182,50 +414,8 @@ public class VoidSkills extends EndercoreRaids{
 	    }.runTaskTimer(RMain.getInstance(), 0L, 1L); // 매 틱마다 실행
 	}
 
-
-	private void teleportExplosion(LivingEntity p, final Location tl, final Location fl) {
-    	p.getWorld().playSound(tl, Sound.ENTITY_EVOKER_CAST_SPELL, 0.5f, 2f);
-		p.getWorld().spawnParticle(Particle.END_ROD, tl, 20);
-		
-		String rn = gethero(p);
-		
-		ordt.put(rn, Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-            @Override
-            public void run() 
-            {
-        		p.getWorld().spawnParticle(Particle.DUST, tl, 20);
-            	p.getWorld().playSound(tl, Sound.ENTITY_ENDERMAN_TELEPORT, 0.5f, 1.5f);
-            	p.teleport(tl);
-            	for(Entity e : p.getWorld().getNearbyEntities(tl, 2,2,2)) {
-            		if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && e!=p) {
-            			LivingEntity le = (LivingEntity)e;
-            			le.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA,100,100,false,false));
-            			le.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS,100,100,false,false));
-						
-            		}
-            	}
-            }
-		}, 13));
-		
-		ordt.put(rn, Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-            @Override
-            public void run() 
-            {
-        		p.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, tl,1);
-            	p.getWorld().playSound(tl, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 0.5f, 0.5f);
-            	p.teleport(fl);
-            	for(Entity e : p.getWorld().getNearbyEntities(tl, 3,3,3)) {
-            		if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && e!=p) {
-            			LivingEntity le = (LivingEntity)e;
-						le.damage(4.5, p);
-						
-            		}
-            	}
-            }
-		}, 26));
-	}
 	
-	Material[] paints = {Material.BLUE_DYE,Material.GREEN_DYE,Material.RED_DYE};
+	Material[] paints = {Material.LIGHT_BLUE_DYE,Material.GREEN_DYE,Material.MAGENTA_DYE};
 	
 	private void paintRain(LivingEntity p) {
 
@@ -247,7 +437,7 @@ public class VoidSkills extends EndercoreRaids{
     	
         ArrayList<Location> meats = new ArrayList<>();
         AtomicInteger j = new AtomicInteger();
-        for(int i=0; i<25; i++) {
+        for(int i=0; i<7; i++) {
             Random random=new Random();
         	double number = random.nextDouble() * 3 * (random.nextBoolean() ? -1 : 1);
         	double number2 = random.nextDouble() * 3 * (random.nextBoolean() ? -1 : 1);
@@ -276,7 +466,7 @@ public class VoidSkills extends EndercoreRaids{
                 	p.getWorld().spawnParticle(Particle.ITEM, tl, 300, 4, 0.2, 4, 0.2,paper);
 					p.getWorld().playSound(p.getLocation(), Sound.ITEM_DYE_USE, 0.1f, 1f);
                 }
-			}, j.incrementAndGet()*2+25);
+			}, j.incrementAndGet()*15+25);
         	ordt.put(rn, t);
         });
 	}
@@ -437,6 +627,8 @@ public class VoidSkills extends EndercoreRaids{
     }
 
     private void removeFingers(ArmorStand pillar, LivingEntity p) {
+    	pillar.getWorld().playSound(pillar.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1f, 0f);
+    	pillar.getWorld().playSound(pillar.getLocation(), Sound.BLOCK_CHERRY_WOOD_BREAK, 1f, 0f);
     	pillar.remove();
         carpetsGet.get(gethero(p)).forEach(bd ->{
 
@@ -530,60 +722,99 @@ public class VoidSkills extends EndercoreRaids{
 		}
 	}
 
-	public void teleportAndScatterEnderPearls(LivingEntity boss) {
+    Color[] colors = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.GREEN};
+    
+	
+	private Location summonBall(LivingEntity boss, final Location randomLocation) {
+	    World world = randomLocation.getWorld();
+	    if (world == null) return randomLocation;
+
+	    // 반지름과 성장 속도 초기화
+	    final double maxRadius = 5.0; // 최대 반지름
+	    final double growthRate = 0.5; // 1틱당 반지름 증가량
+	    Random random = new Random();
+
+	    // 반복 작업으로 구형 파티클 소환
+	    new BukkitRunnable() {
+	        double radius = 0.0; // 현재 반지름
+
+	        @Override
+	        public void run() {
+	            if (radius > maxRadius) {
+	                this.cancel(); // 최대 반지름에 도달하면 작업 종료
+	                return;
+	            }
+
+	            // 구 형태의 파티클 소환
+	            for (double theta = 0; theta < Math.PI * 2; theta += Math.PI / 4) { // 수평면 각도
+	                for (double phi = 0; phi < Math.PI; phi += Math.PI / 4) { // 수직면 각도
+	                    double x = radius * Math.sin(phi) * Math.cos(theta);
+	                    double y = radius * Math.cos(phi);
+	                    double z = radius * Math.sin(phi) * Math.sin(theta);
+
+	                    Location particleLocation = randomLocation.clone().add(x, y, z);
+	                    DustOptions dop = new Particle.DustOptions(colors[random.nextInt(carpets.length)], 1f);
+	                    world.spawnParticle(Particle.DUST, particleLocation, 1, 0, 0, 0, 0,dop); // 파티클
+	                }
+	            }
+	            for(Entity e : world.getNearbyEntities(randomLocation, radius,radius,radius)) {
+	                if(boss != e && e instanceof LivingEntity && !(e.hasMetadata("fake")) && !(e.hasMetadata("portal"))) {
+	                    LivingEntity le = (LivingEntity)e;
+
+	                    le.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 10, 10));
+	                    le.damage(2.0, boss);
+	                }
+	            }
+
+	            // 반지름 증가
+	            radius += growthRate;
+	        }
+	    }.runTaskTimer(RMain.getInstance(), 0L, 2L);
+
+	    return randomLocation;
+	}
+
+
+	public void paintBallSpread(LivingEntity boss) {
 	    List<Player> heroes = getheroes(boss).stream()
 	            .filter(hero -> hero.getWorld().equals(boss.getWorld())) // 같은 월드의 플레이어만 필터링
 	            .collect(Collectors.toList());
 
 	    if (heroes.isEmpty()) return;
 
-	    List<Location> teleportLocations = new ArrayList<>();
+	    List<Location> randomLocations = new ArrayList<>();
 	    Random random = new Random();
 
-	    // 플레이어들의 위치에 랜덤 오프셋 추가하여 8개의 위치 생성
-	    for (int i = 0; i < 6; i++) {
+	    for (int i = 0; i < 9; i++) {
 	        Player randomPlayer = heroes.get(random.nextInt(heroes.size()));
 	        Location baseLocation = randomPlayer.getLocation();
-	        double offsetX = random.nextDouble() * 10 - 5; // -5 ~ 5 사이의 랜덤값
+	        double offsetX = random.nextDouble() * 10 - 5;
 	        double offsetZ = random.nextDouble() * 10 - 5;
-	        double offsetY = random.nextDouble() * 3; // 약간의 높이 차이
+	        double offsetY = random.nextDouble() * 3; 
 	        Location randomLocation = baseLocation.clone().add(offsetX, offsetY, offsetZ);
-	        teleportLocations.add(randomLocation);
+	        randomLocations.add(randomLocation);
 	    }
 
-	    // 텔레포트 및 엔더펄 뿌리기
 	    int t = Bukkit.getScheduler().runTaskTimer(RMain.getInstance(), new Runnable() {
 	        private int currentIndex = 0;
 
 	        @Override
 	        public void run() {
 	            World world = boss.getWorld();
-	            if (currentIndex >= teleportLocations.size()) {
+	            if (currentIndex >= randomLocations.size()) {
 	                Bukkit.getScheduler().cancelTask(this.hashCode());
 	                return;
 	            }
 
-	            Location teleportLocation = teleportLocations.get(currentIndex);
-	            boss.teleport(teleportLocation); // 보스 텔레포트
-	            world.playSound(teleportLocation, Sound.ENTITY_SHULKER_TELEPORT, 1.0f, 0f);
-	            world.spawnParticle(Particle.END_ROD, teleportLocation, 150, 2,2,2);
+	            Location randomLocation = randomLocations.get(currentIndex);
+	            world.playSound(randomLocation, Sound.BLOCK_BUBBLE_COLUMN_BUBBLE_POP, 1.0f, 0f);
+	            world.playSound(randomLocation, Sound.ITEM_BUNDLE_DROP_CONTENTS, 1.0f, 0f);
+	            
+	            summonBall(boss, randomLocation);
 
-	            for (int j = 0; j < 6; j++) {
-	                EnderPearl enderPearl = (EnderPearl) world.spawnEntity(teleportLocation, EntityType.ENDER_PEARL);
-	                enderPearl.setShooter(boss);
-	                enderPearl.setGlowing(true);
-	                enderPearl.setVelocity(new Vector(
-	                        random.nextDouble() * 2 - 1, // X 방향 랜덤
-	                        random.nextDouble() * 0.5 + 0.5, // Y 방향 위로 상승
-	                        random.nextDouble() * 2 - 1 // Z 방향 랜덤
-	                ));
-	                enderPearl.setMetadata("enderbossPearl", new FixedMetadataValue(RMain.getInstance(), true));
-	            }
-
-	            // 다음 위치로 이동
 	            currentIndex++;
 	        }
-	    }, 20L, 10L).getTaskId(); // 10틱(0.5초)마다 실행
+	    }, 20L, 6L).getTaskId(); 
         ordt.put(gethero(boss), t);
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
      		@Override
@@ -604,7 +835,7 @@ public class VoidSkills extends EndercoreRaids{
 	private HashMap<UUID, Boolean> porkable = new HashMap<UUID, Boolean>();
 	
 	
-	public void teleportAndScatterEnderPearls(EntityDamageByEntityEvent d) 
+	public void paintBallSpread(EntityDamageByEntityEvent d) 
 	{
 		if(d.getEntity().hasMetadata("voidboss") && (d.getEntity() instanceof Mob)) 
 		{
@@ -628,14 +859,14 @@ public class VoidSkills extends EndercoreRaids{
 		                else 
 		                {
 		                	aicooldown.remove(p.getUniqueId()); // removing player from HashMap
-		                	teleportAndScatterEnderPearls(p);
+		                	paintBallSpread(p);
 		                	aicooldown.put(p.getUniqueId(), System.currentTimeMillis());  
 		                }
 		            }
 		            else 
 		            {
 
-		            	teleportAndScatterEnderPearls(p);
+		            	paintBallSpread(p);
 	                	aicooldown.put(p.getUniqueId(), System.currentTimeMillis());  
 					}
 		}
@@ -646,20 +877,8 @@ public class VoidSkills extends EndercoreRaids{
 	private HashMap<UUID, Boolean> chargable = new HashMap<UUID, Boolean>();
 	private HashMap<UUID, Integer> illusionTask = new HashMap<UUID, Integer>();
 
-	// 원형 파티클 위치를 미리 계산하는 메서드
-	private HashSet<Location> calculateParticleLocations(Location center, double radius, int particleCount) {
-	    HashSet<Location> locations = new HashSet<>();
-	    World world = center.getWorld();
-	    for (int i = 0; i < particleCount; i++) {
-	        double angle = (2 * Math.PI / particleCount) * i;
-	        double x = center.getX() + (radius * Math.cos(angle));
-	        double z = center.getZ() + (radius * Math.sin(angle));
-	        locations.add(new Location(world, x, center.getY() + 0.5, z));
-	    }
-	    return locations;
-	}
 	public void illusionCharge(EntityDamageByEntityEvent d) {
-	    if(d.getEntity().hasMetadata("illusionboss")) {
+	    if(d.getEntity().hasMetadata("voidboss")) {
 	        final LivingEntity p = (LivingEntity)d.getEntity();
 
 	        if (checkAndApplyCharge(p, d)) return;
@@ -678,83 +897,111 @@ public class VoidSkills extends EndercoreRaids{
 	        }
 	    }
 	}
-
 	private void illusionStart(LivingEntity p, final Location tl) {
 	    final Location cl = tl.clone();
+	    final Location fl = p.getLocation().clone();
 	    final World w = cl.getWorld();
+	    final Vector v = tl.toVector().subtract(fl.toVector()).clone().normalize();
+	    String rn = gethero(p);
 
 	    p.swingMainHand();
-	    p.getWorld().playSound(cl, Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, 1.0f, 0f);
-	    p.getWorld().playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_CHAIN, 1.0f, 2f);
-	    p.playEffect(EntityEffect.WARDEN_TENDRIL_SHAKE);
-	    p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 65, 1));
-	    p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 65, 3));
-	    p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 65, 1));
-	    p.getWorld().spawnParticle(Particle.ENTITY_EFFECT, cl, 500, 5, 1, 5, 1, Color.PURPLE);
-	    p.getWorld().spawnParticle(Particle.EFFECT, cl, 1000, 5, 1, 5, 1);
+	    p.getWorld().playSound(cl, Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 0f);
+	    p.getWorld().playSound(fl, Sound.ENTITY_MINECART_RIDING, 0.1f, 2f);
 
-	    HashSet<Location> particleLocations = calculateParticleLocations(cl, 4, 80);
+	    List<Location> line = new ArrayList<>();
+	    for (int i = 0; i < 15 + cl.distance(fl); i++) {
+	        line.add(fl.clone().add(v.clone().multiply(i)));
+	    }
+	    
+	    HashSet<BlockDisplay> displays = new HashSet<BlockDisplay>();
 
-	    int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
+	    int railSpawn = new BukkitRunnable() {
+	        int tick = 0;
+
 	        @Override
 	        public void run() {
-	            if(p.isDead()) {
+	            if (tick >= line.size()) {
+	                this.cancel();
 	                return;
 	            }
 
-	            for (Location particleLocation : particleLocations) {
-	                Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(255, 105, 180), 1.5f); // 진한 분홍색
-	                w.spawnParticle(Particle.DUST, particleLocation, 1, dustOptions);
+	            Location l = line.get(tick++);
+	            BlockDisplay display = (BlockDisplay) w.spawnEntity(l, EntityType.BLOCK_DISPLAY);
+	            display.setBlock(getBd(Material.GRAY_CARPET));
+	            display.setTransformation(new Transformation(
+	                new Vector3f(0, 0, 0),
+	                new Quaternionf(),
+	                new Vector3f(2f, 0.1f, 2f),
+	                new Quaternionf()
+	            ));
+	            display.setInterpolationDelay(40);
+	            display.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), rn));
+	            display.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
+	            displays.add(display);
+	        }
+	    }.runTaskTimer(RMain.getInstance(), 0, 2).getTaskId();
+	    ordt.put(rn, railSpawn);
+
+	    int cart = Bukkit.getScheduler().runTaskLater(RMain.getInstance(), () -> {
+	        Minecart minecart = (Minecart) w.spawnEntity(fl, EntityType.MINECART);
+	        minecart.setGravity(false);
+	        minecart.setDisplayBlockData(getBd(Material.JUKEBOX));
+	        minecart.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), rn));
+	        minecart.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
+		    p.getWorld().playSound(minecart.getLocation(), Sound.ENTITY_MINECART_RIDING, 1.0f, 1.5f);
+		    p.getWorld().playSound(minecart.getLocation(), Sound.ENTITY_MINECART_RIDING, 1.0f, 0.5f);
+
+	        new BukkitRunnable() {
+	            @Override
+	            public void run() {
+	            	minecart.remove();
 	            }
+	        }.runTaskLater(RMain.getInstance(), line.size()*2).getTaskId();
+	        
+	        int cartRide = new BukkitRunnable() {
+	            int currentIndex = 0;
 
-	            p.getWorld().spawnParticle(Particle.ENTITY_EFFECT, cl, 500, 4, 1, 4, 1, Color.PURPLE);
-
-                double offsetX = (Math.random() - 0.5) * 6; // -3 ~ 3 범위의 x좌표
-                double offsetY = (Math.random() - 0.5) * 6; // -3 ~ 3 범위의 y좌표
-                double offsetZ = (Math.random() - 0.5) * 6; // -3 ~ 3 범위의 z좌표
-
-                Location randomLocation = cl.clone().add(offsetX, offsetY, offsetZ);
-	            p.getWorld().spawnParticle(Particle.REVERSE_PORTAL, randomLocation, 10);
-	            p.getWorld().playSound(randomLocation, Sound.ENTITY_ILLUSIONER_MIRROR_MOVE, 0.1f, 2f);
-	            // 4범위 내 적들에게 랜덤한 위치로 순간이동 및 피해 적용
-	            for(Entity e : cl.getWorld().getNearbyEntities(cl, 4, 4, 4)) {
-	                if(p != e && e instanceof LivingEntity && !(e.hasMetadata("fake")) && !(e.hasMetadata("portal"))) {
-	                    LivingEntity le = (LivingEntity)e;
-
-	                    // 적을 랜덤한 위치로 순간이동
-	                    le.teleport(randomLocation);
-
-	                    // 순간이동 후 피해
-	                    le.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 60, 1));
-	                    le.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 60, 1));
-	                    le.damage(3.0, p);
+	            @Override
+	            public void run() {
+	                if (currentIndex >= line.size() || minecart.isDead()) {
+	                    minecart.remove();
+	                    this.cancel();
+	                    return;
 	                }
-	            }
-	        }
-	    }, 40, 3);
 
-	    illusionTask.put(p.getUniqueId(), task);
+	                Location target = line.get(currentIndex++);
+	                minecart.teleport(target);
+	    		    p.getWorld().playSound(minecart.getLocation(), Sound.BLOCK_NOTE_BLOCK_COW_BELL, 0.1f, 0.53f);
+	    		    p.getWorld().playSound(minecart.getLocation(), Sound.BLOCK_NOTE_BLOCK_COW_BELL, 0.1f, 0.6f);
+	        		w.spawnParticle(Particle.NOTE, target, 35, 2,2,2);
 
-	    // 일정 시간이 지나면 환각 효과와 스킬을 종료
-	    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	        @Override
-	        public void run() {
-	            if(illusionTask.containsKey(p.getUniqueId())) {
-	                Bukkit.getScheduler().cancelTask(illusionTask.get(p.getUniqueId()));
-	                illusionTask.remove(p.getUniqueId());
+	                w.getNearbyEntities(target, 2.5, 2.5, 2.5).stream()
+	                        .filter(e -> e instanceof Player && !e.hasMetadata("portal") && !e.hasMetadata("fake") && !e.equals(p))
+	                        .forEach(e -> {
+	                        	Player pe = (Player) e;
+	                        	pe.damage(11.5, p);
+	                            pe.setVelocity(pe.getEyeLocation().getDirection().multiply(-20));
+	                        });
 	            }
-	            chargable.remove(p.getUniqueId());
+	        }.runTaskTimer(RMain.getInstance(), 0, 2).getTaskId();
+	        ordt.put(rn, cartRide);
+
+	        illusionTask.put(p.getUniqueId(), cartRide);
+	    }, 40L).getTaskId();
+	    ordt.put(rn, cart);
+
+	    Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), () -> {
+	        if (illusionTask.containsKey(p.getUniqueId())) {
+	            Bukkit.getScheduler().cancelTask(illusionTask.get(p.getUniqueId()));
+	            illusionTask.remove(p.getUniqueId());
 	        }
+	        displays.forEach(d -> d.remove());
+	        chargable.remove(p.getUniqueId());
 	    }, 85);
 
-	    // 일정 시간 후 복원 가능 상태로 변경
-	    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	        @Override
-	        public void run() {
-	            porkable.put(p.getUniqueId(), true);
-	        }
-	    }, 180);
+	    Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), () -> porkable.put(p.getUniqueId(), true), 180);
 	}
+
 
 
 	private void illusionCharge(LivingEntity p, Location tl) {
@@ -767,7 +1014,7 @@ public class VoidSkills extends EndercoreRaids{
 	    if(rb8cooldown.containsKey(p.getUniqueId())) {
 	        long timer = (rb8cooldown.get(p.getUniqueId()) / 1000 + 8) - System.currentTimeMillis() / 1000;
 	        if (timer < 0) {
-	            rb8cooldown.remove(p.getUniqueId()); // 쿨타임 끝났으면
+	            rb8cooldown.remove(p.getUniqueId()); 
 	            illusionStart(p, tl);
 	            rb8cooldown.put(p.getUniqueId(), System.currentTimeMillis());
 	        }
@@ -777,21 +1024,76 @@ public class VoidSkills extends EndercoreRaids{
 	    }
 	}
 	
+	private List<Location> generateSoundWavePattern(Location center, double radius, int points) {
+	    List<Location> waveLocations = new ArrayList<>();
+	    World world = center.getWorld();
+	    double increment = (2 * Math.PI) / points;
+
+	    for (int i = 0; i < points; i++) {
+	        double angle = i * increment;
+	        double x = center.getX() + radius * Math.cos(angle);
+	        double z = center.getZ() + radius * Math.sin(angle);
+	        double y = center.getY();
+	        waveLocations.add(new Location(world, x, y, z));
+	    }
+
+	    return waveLocations;
+	}
 
 
 	
-	final private void teleportEx(Location ptl, LivingEntity p, Integer dur) {
+	final private void noteBlock(Location ptl, LivingEntity p) {
 		
-		final Location fl = p.getLocation().clone();
-    	
-    	teleportExplosion(p, ptl, fl);
+		String rn = gethero(p);
+		ptl.getWorld().playSound(ptl, Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, 0.8f, 0.3f);
+        BlockDisplay display = (BlockDisplay)  ptl.getWorld().spawnEntity( ptl, EntityType.BLOCK_DISPLAY);
+        display.setBlock(getBd(Material.NOTE_BLOCK));
+        display.setTransformation(new Transformation(
+            new Vector3f(0, 0, 0),
+            new Quaternionf(),
+            new Vector3f(2.5f, 2.5f, 2.5f),
+            new Quaternionf()
+        ));
+        display.setInterpolationDelay(60);
+        display.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), rn));
+        display.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
+
+        List<Location> wavePattern = generateSoundWavePattern(ptl, 2.5, 30);
+        
+	    int railSpawn = new BukkitRunnable() {
+	        int tick = 0;
+
+	        @Override
+	        public void run() {
+	            if (tick++ > 6) {
+	                this.cancel();
+	                display.remove();
+	                return;
+	            }
+	            ptl.getWorld().playSound(ptl, Sound.BLOCK_NOTE_BLOCK_BASS, 0.8f, 0f);
+	            ptl.getWorld().playSound(ptl, Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 0.8f, 0.3f);
+	            ptl.getWorld().spawnParticle(Particle.NOTE, ptl, 100, 2,2,2);
+	            for (Location loc : wavePattern) {
+	                ptl.getWorld().spawnParticle(Particle.SHRIEK, loc, 5, 0.2, 0.2, 0.2, 2,1);
+	            }
+	            ptl.getWorld().getNearbyEntities(ptl, 2.5, 2.5, 2.5).stream()
+                .filter(e -> e instanceof Player && !e.hasMetadata("portal") && !e.hasMetadata("fake") && !e.equals(p))
+                .forEach(e -> {
+                	Player pe = (Player) e;
+                	pe.damage(2.5, p);
+                    pe.setVelocity(pe.getEyeLocation().getDirection().multiply(-1));
+                });
+        	}
+	    }.runTaskTimer(RMain.getInstance(), 20, 10).getTaskId();
+	    ordt.put(rn, railSpawn);
 	}
+	
 	public void teleportEx(EntityDamageByEntityEvent d) 
 	{
 		if((d.getEntity() instanceof Mob) && d.getEntity().hasMetadata("voidboss")) 
 		{
 			Mob p = (Mob)d.getEntity();
-			int sec = 4;
+			int sec = 9;
 	        
 
 			if(ordeal.containsKey(p.getUniqueId())) {
@@ -815,7 +1117,7 @@ public class VoidSkills extends EndercoreRaids{
 		                	rb4cooldown.remove(p.getUniqueId()); // removing player from HashMap
 		                	
 
-			                teleportEx(ptl, p,300);
+			                noteBlock(ptl, p);
 		                    
 		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		                 		@Override
@@ -833,7 +1135,7 @@ public class VoidSkills extends EndercoreRaids{
 		            {
 
 
-		                teleportEx(ptl, p,300);
+		                noteBlock(ptl, p);
 	                    
 	                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	                 		@Override

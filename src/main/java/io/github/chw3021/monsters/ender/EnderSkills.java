@@ -588,18 +588,16 @@ public class EnderSkills extends EndercoreRaids{
 	    
 	    Integer ruinedAdd = isRuined(boss) ? 2 : 0;
 
-	    // 플레이어들의 위치에 랜덤 오프셋 추가하여 8개의 위치 생성
 	    for (int i = 0; i < 5+ruinedAdd; i++) {
 	        Player randomPlayer = heroes.get(random.nextInt(heroes.size()));
 	        Location baseLocation = randomPlayer.getLocation();
-	        double offsetX = random.nextDouble() * 10 - 5; // -5 ~ 5 사이의 랜덤값
-	        double offsetZ = random.nextDouble() * 10 - 5;
-	        double offsetY = random.nextDouble() * 2.5; // 약간의 높이 차이
+	        double offsetX = random.nextDouble() * 4 - 2; // 
+	        double offsetZ = random.nextDouble() * 4 - 2;
+	        double offsetY = random.nextDouble() * 3.5; // 약간의 높이 차이
 	        Location randomLocation = baseLocation.clone().add(offsetX, offsetY, offsetZ);
 	        teleportLocations.add(randomLocation);
 	    }
 
-	    // 텔레포트 및 엔더펄 뿌리기
 	    int t = Bukkit.getScheduler().runTaskTimer(RMain.getInstance(), new Runnable() {
 	        private int currentIndex = 0;
 
