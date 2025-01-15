@@ -1,6 +1,7 @@
 package io.github.chw3021.monsters.ender;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1045,7 +1046,7 @@ public class VoidSkills extends EndercoreRaids{
 	        }
 	        displays.forEach(d -> d.remove());
 	        chargable.remove(p.getUniqueId());
-	    }, line.size()*2+10);
+	    }, line.size()*2+50);
 
 	    Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), () -> porkable.put(p.getUniqueId(), true), 180);
 	}
@@ -1221,16 +1222,19 @@ public class VoidSkills extends EndercoreRaids{
             });
     		setColorHead(p);
     		// 삼각형의 변 길이 (삼각형 크기 조절)
-    		double radius = 7.2; 
-
-    		// paints의 크기 (3개)
+    		
+    		double radius = 6.2; 
     		int vertexCount = paints.length;
     		Random random = new Random();
+
+    		// 리스트를 만들어서 셔플
+    		List<Material> shuffledPaints = new ArrayList<>(Arrays.asList(paints));
+    		Collections.shuffle(shuffledPaints, random);
 
     		// 삼각형 꼭짓점 계산
     		for (int i = 0; i < vertexCount; i++) {
     		    // 각도를 계산 (각 꼭짓점은 360도를 3등분한 각도에 위치)
-    		    double angle = 2 * Math.PI * i / vertexCount; 
+    		    double angle = 2 * Math.PI * i / vertexCount;
 
     		    // 삼각형 꼭짓점의 x, z 좌표 계산
     		    double offsetX = radius * Math.cos(angle);
@@ -1239,10 +1243,12 @@ public class VoidSkills extends EndercoreRaids{
     		    // 꼭짓점 위치
     		    Location vertex = fl.clone().add(offsetX, 0, offsetZ);
 
-    		    // 몬스터 소환
-    		    summonMonster(p, vertex, paints[random.nextInt(paints.length)]);
+    		    // 셔플된 순서대로 몬스터 소환
+    		    summonMonster(p, vertex, shuffledPaints.get(i));
     		}
-            swoopWarning(p, fl, tpe);
+
+    		swoopWarning(p, fl, tpe);
+
         	p.swingMainHand();
         
         }

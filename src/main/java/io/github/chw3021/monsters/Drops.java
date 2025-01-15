@@ -15,7 +15,11 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityDropItemEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 import io.github.chw3021.items.Elements;
@@ -32,16 +36,22 @@ public class Drops implements Listener {
 	public void ItemDrops(ItemSpawnEvent d) 
 	{
 
-		for(Entity e : d.getEntity().getNearbyEntities(2, 2, 2)) {
-			if (e instanceof Item item) {
-				item.setVelocity(new Vector(0,0,0));
-				Bukkit.getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
-                    @Override
-                    public void run() {
-        				item.setVelocity(new Vector(0,0,0));
-                    }
-				}, 20);
-			}
+		if (d.getEntity() instanceof Item item) {
+
+	        new BukkitRunnable() {
+
+				@Override
+				public void run() {
+					if(item.getVelocity().length()<=0) {
+						this.cancel();
+					}
+					
+					System.out.println(item.toString());
+    				item.setVelocity(new Vector(0,0,0));
+				}
+				
+			}.runTaskTimer(RMain.getInstance(), 20L, 5L);
+			
 		}
 	}
 	@EventHandler
@@ -50,11 +60,27 @@ public class Drops implements Listener {
 
 		for(Entity e : d.getEntity().getNearbyEntities(2, 2, 2)) {
 			if (e instanceof Item item) {
-				item.setVelocity(new Vector(0,0,0));
+				item.setVelocity(new Vector(0,-2,0));
 				Bukkit.getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
                     @Override
                     public void run() {
-        				item.setVelocity(new Vector(0,0,0));
+        				item.setVelocity(new Vector(0,-2,0));
+                    }
+				}, 20);
+			}
+		}
+	}
+
+	@EventHandler
+	public void ItemDrops(PlayerDropItemEvent d) 
+	{
+
+		for(Entity e : d.getItemDrop().getNearbyEntities(2, 2, 2)) {
+			if (e instanceof Item item) {
+				Bukkit.getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
+                    @Override
+                    public void run() {
+        				item.setVelocity(item.getVelocity().zero());
                     }
 				}, 20);
 			}
@@ -67,11 +93,11 @@ public class Drops implements Listener {
 
 		for(Entity e : d.getItemDrop().getNearbyEntities(2, 2, 2)) {
 			if (e instanceof Item item) {
-				item.setVelocity(new Vector(0,0,0));
+				item.setVelocity(new Vector(0,-2,0));
 				Bukkit.getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
                     @Override
                     public void run() {
-        				item.setVelocity(new Vector(0,0,0));
+        				item.setVelocity(new Vector(0,-2,0));
                     }
 				}, 20);
 			}
@@ -85,25 +111,25 @@ public class Drops implements Listener {
 	public void ItemDrops(EntityPickupItemEvent d) 
     {
 		LivingEntity le = d.getEntity();
-		d.getItem().setVelocity(new Vector(0,0,0));
+		d.getItem().setVelocity(new Vector(0,-2,0));
 		if(d.isCancelled()) {
 			Item item = d.getItem();
-			item.setVelocity(new Vector(0,0,0));
+			item.setVelocity(new Vector(0,-2,0));
 			Bukkit.getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
                 @Override
                 public void run() {
-    				item.setVelocity(new Vector(0,0,0));
+    				item.setVelocity(new Vector(0,-2,0));
                 }
 			}, 20);
 		}
 
 		for(Entity e : le.getNearbyEntities(2, 2, 2)) {
 			if (e instanceof Item item) {
-				item.setVelocity(new Vector(0,0,0));
+				item.setVelocity(new Vector(0,-2,0));
 				Bukkit.getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
                     @Override
                     public void run() {
-        				item.setVelocity(new Vector(0,0,0));
+        				item.setVelocity(new Vector(0,-2,0));
                     }
 				}, 20);
 			}
@@ -116,11 +142,11 @@ public class Drops implements Listener {
 		LivingEntity le = d.getEntity();
 		for(Entity e : le.getNearbyEntities(2, 2, 2)) {
 			if (e instanceof Item item) {
-				item.setVelocity(new Vector(0,0,0));
+				item.setVelocity(new Vector(0,-2,0));
 				Bukkit.getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
                     @Override
                     public void run() {
-        				item.setVelocity(new Vector(0,0,0));
+        				item.setVelocity(new Vector(0,-2,0));
                     }
 				}, 20);
 			}

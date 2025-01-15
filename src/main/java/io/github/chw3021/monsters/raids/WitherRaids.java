@@ -28,6 +28,7 @@ import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.BlockDisplay;
+import org.bukkit.entity.Display.Billboard;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.LivingEntity;
@@ -119,7 +120,7 @@ public class WitherRaids extends Summoned implements Listener {
 	Integer LIVES = 5;
 	final public Double BOSSHP = 2500000d;
 	
-	Integer BOSSNUM = -5;
+	Integer BOSSNUM = -8;
 	
 	
 	private static final WitherRaids instance = new WitherRaids ();
@@ -169,6 +170,9 @@ public class WitherRaids extends Summoned implements Listener {
 		ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
 		ordt.removeAll(rn);
 		
+		if(throne.containsKey(rn)) {
+			throne.remove(rn);
+		}
 		
 		if(raidbart.containsKey(rn)) {
 			Bukkit.getServer().getScheduler().cancelTask(raidbart.get(rn));
@@ -345,6 +349,9 @@ public class WitherRaids extends Summoned implements Listener {
             public void run() 
             {
 
+            	if(getPhase(newmob)==1 && throne.containsKey(rn)) {
+            		throne.get(rn).addPassenger(newmob);
+            	}
             	
 				if(Holding.ale(newmob)!=null) {
 					final double pr = Holding.ale(newmob).getHealth()/Holding.ale(newmob).getAttribute(Attribute.MAX_HEALTH).getValue();
@@ -371,9 +378,15 @@ public class WitherRaids extends Summoned implements Listener {
 	}
 
 
+	protected Boolean isRuined(LivingEntity p) {
+		if (p.hasMetadata("ruined")) {
+			return true;
+		}
+		return false;
+	}
 	
 	
-	private Integer getPhase(LivingEntity p) {
+	protected Integer getPhase(LivingEntity p) {
 		if(!p.hasMetadata("ruined")) {
 			if(p.getHealth()>= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.5) {
 				return 1;
@@ -401,6 +414,8 @@ public class WitherRaids extends Summoned implements Listener {
 	    ItemStack armor = new ItemStack(material);
 	    return armor;
 	}
+	
+	HashMap<String, BlockDisplay> throne = new HashMap<String, BlockDisplay>();
 	private void witherThrone(LivingEntity p, Location center, String rn) {
 	    Location throneLocation = p.getLocation();
 	    World world = throneLocation.getWorld();
@@ -408,17 +423,17 @@ public class WitherRaids extends Summoned implements Listener {
 
 	    // 중심을 기준으로 방향 계산
 	    Vector direction = center.toVector().subtract(throneLocation.toVector()).normalize();
-	    double scale = 2.5;
+	    double scale = 3.5;
 
 	    // 기본 거리 계산 (왕좌의 구성 요소 위치)
 	    Vector baseOffset = direction.clone().multiply(0.5); // Base는 중심에서 0.5m 거리
 	    Vector seatOffset = direction.clone().multiply(0.5).add(new Vector(0, scale * 0.5, 0)); // Seat는 위로 높임
-	    Vector backrestOffset = direction.clone().multiply(0.2).add(new Vector(0, scale, -0.5 * scale)); // Backrest는 뒤쪽으로
 
 	    // Base BlockDisplay
 	    Location baseLocation = throneLocation.clone().add(baseOffset);
 	    BlockDisplay base = (BlockDisplay) world.spawn(baseLocation, BlockDisplay.class);
-	    base.setBlock(getBd(Material.QUARTZ_BRICKS));
+	    base.setBlock(getBd(Material.QUARTZ_PILLAR));
+	    base.setBillboard(Billboard.VERTICAL);
 	    base.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 	    base.setMetadata("stuff" + rn, new FixedMetadataValue(RMain.getInstance(), rn));
 	    base.setMetadata("throne" + rn, new FixedMetadataValue(RMain.getInstance(), rn));
@@ -436,50 +451,29 @@ public class WitherRaids extends Summoned implements Listener {
 	    seat.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 	    seat.setMetadata("stuff" + rn, new FixedMetadataValue(RMain.getInstance(), rn));
 	    seat.setMetadata("throne" + rn, new FixedMetadataValue(RMain.getInstance(), rn));
+	    seat.setBillboard(Billboard.VERTICAL);
 	    setDisplayScale(seat, scale);
 	    seat.addPassenger(p);
+	    throne.put(rn, seat);
 
-	    // Backrest BlockDisplay
-	    Location backrestLocation = throneLocation.clone().add(backrestOffset);
-	    BlockDisplay backrest = (BlockDisplay) world.spawn(backrestLocation, BlockDisplay.class);
-	    backrest.setBlock(getBd(Material.QUARTZ_PILLAR));
-	    backrest.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-	    backrest.setMetadata("stuff" + rn, new FixedMetadataValue(RMain.getInstance(), rn));
-	    backrest.setMetadata("throne" + rn, new FixedMetadataValue(RMain.getInstance(), rn));
-	    setDisplayScale(backrest, scale);
 
 	    // 각 BlockDisplay의 방향 설정
 	    float yaw = (float) Math.toDegrees(Math.atan2(direction.getZ(), direction.getX())) - 90;
 	    base.setRotation(yaw, 0);
 	    seat.setRotation(yaw, 0);
-	    backrest.setRotation(yaw, 0);
 
-	    // 물리적 상호작용 차단
 	    base.setGravity(false);
 	    seat.setGravity(false);
-	    backrest.setGravity(false);
 
 	    base.setPersistent(false);
 	    seat.setPersistent(false);
-	    backrest.setPersistent(false);
-	}
-
-	@EventHandler
-	public void throne(VehicleExitEvent d) 
-	{
-		if(d.getExited().hasMetadata("witherboss")) {
-			LivingEntity p = d.getExited();
-			if(p.getHealth()>= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.5) {
-				d.setCancelled(true);
-			}
-		}
 	}
 
 	// BlockDisplay의 크기를 설정하는 헬퍼 메서드
 	private void setDisplayScale(BlockDisplay display, double scale) {
 	    // 스케일 매트릭스 생성
 	    Transformation transformation = new Transformation(
-	        new Vector3f(0, 0, 0), // 위치 오프셋
+	        new Vector3f((float) -1.5, (float) -2, (float)-1.5), // 위치 오프셋
             new Quaternionf(),
 	        new Vector3f((float) scale, (float) scale, (float) scale), // 스케일
             new Quaternionf()

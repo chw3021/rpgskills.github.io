@@ -7,7 +7,6 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.bukkit.World;
@@ -44,6 +43,7 @@ import io.github.chw3021.monsters.raids.EndercoreRaids;
 import io.github.chw3021.monsters.raids.NethercoreRaids;
 import io.github.chw3021.monsters.raids.OverworldRaids;
 import io.github.chw3021.monsters.raids.Summoned;
+import io.github.chw3021.monsters.raids.WitherRaids;
 import net.md_5.bungee.api.ChatColor;
 
 public class Rpgs extends Summoned implements CommandExecutor, Listener {
@@ -79,6 +79,7 @@ public class Rpgs extends Summoned implements CommandExecutor, Listener {
 			}
 		});
 	}
+	WitherRaids wtr = WitherRaids.getInstance();
 
 	EndercoreRaids ecr = EndercoreRaids.getInstance();
 	NethercoreRaids ncr = NethercoreRaids.getInstance();
@@ -98,7 +99,7 @@ public class Rpgs extends Summoned implements CommandExecutor, Listener {
 			ncr.bossgen(p.getLocation(), p, rn, input, ncr.BOSSHP);
 			
 		}
-		else if(input <= -6) {
+		else if(input <= -6&& input >-8) {
 			EndercoreRaids.beforepl.put(p.getUniqueId(), p.getLocation());
 			EndercoreRaids.heroes.put(rn, p.getUniqueId());
 			EndercoreRaids.raidloc.put(rn, p.getLocation());
@@ -106,6 +107,15 @@ public class Rpgs extends Summoned implements CommandExecutor, Listener {
 			ecr.difen.put(rn, 0);
 			ecr.language.put(rn, p.getLocale());
 			ecr.bossgen(p.getLocation(), p, rn, input, ecr.BOSSHP);
+			
+		}
+		else if(input == -8) {
+			WitherRaids.beforepl.put(p.getUniqueId(), p.getLocation());
+			WitherRaids.heroes.put(rn, p.getUniqueId());
+			WitherRaids.raidloc.put(rn, p.getLocation());
+			wtr.difen.put(rn, 0);
+			wtr.language.put(rn, p.getLocale());
+			wtr.bossgen(p.getLocation(), p, rn, input, wtr.BOSSHP);
 			
 		}
 		else {

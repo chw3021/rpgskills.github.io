@@ -24,6 +24,7 @@ import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.DragonFireball;
 import org.bukkit.entity.EnderPearl;
 import org.bukkit.entity.Entity;
@@ -32,7 +33,9 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
+import org.bukkit.entity.WitherSkull;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -42,6 +45,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
@@ -73,87 +77,17 @@ public class WitherSkills extends WitherRaids{
 	{
 		return instance;
 	}
-	private Boolean isRuined(LivingEntity p) {
-		if (p.hasMetadata("ruined")) {
-			return true;
-		}
-		return false;
-	}
-	public void hit(ProjectileHitEvent d) 
-	{
-		Projectile po = d.getEntity();
-		if(po.getShooter() instanceof LivingEntity) {
-			LivingEntity p = (LivingEntity) po.getShooter();
-			if(po.hasMetadata("enderbossPearl")) {
-        		final Location l = d.getHitEntity() != null ? d.getHitEntity().getLocation() : d.getHitBlock().getLocation();
-				
-				if(po instanceof DragonFireball) {
-					d.setCancelled(true);
-					po.remove();
-					l.getWorld().spawn(l, AreaEffectCloud.class, cloud -> {
-						cloud.setBasePotionType(PotionType.HARMING);
-						cloud.addCustomEffect(new PotionEffect(PotionEffectType.NAUSEA,100,100,false,false), false);
-						cloud.setSource(p);
-						cloud.setParticle(Particle.DRAGON_BREATH);
-						cloud.setRadius(4f);
-						cloud.setRadiusPerTick(-1f);
-						cloud.setDuration(100);
-						cloud.setDurationOnUse(10);
-						cloud.setMetadata("stuff"+gethero(p), new FixedMetadataValue(RMain.getInstance(), true));
-						cloud.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-					});
-					return;
-				}
-				
-
-				l.getWorld().spawnParticle(Particle.REVERSE_PORTAL, l, 100);
-				l.getWorld().playSound(l, Sound.ENTITY_SHULKER_TELEPORT, 1f, 1.5f);
-
-        		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	                @Override
-	                public void run() {
-						if (bossDoll.containsKey(p.getUniqueId())) {
-							final Location bl = bossDoll.get(p.getUniqueId()).getLocation();
-							bossDoll.get(p.getUniqueId()).remove();
-							bossDoll.remove(p.getUniqueId());
-							bl.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, bl, 1);
-							bl.getWorld().playSound(bl, Sound.ENTITY_GENERIC_EXPLODE, 1f, 1.2f);
-		            		for(Entity e : bl.getWorld().getNearbyEntities(bl, 2.5, 2.5, 2.5)) {
-								if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("portal"))) {
-									LivingEntity le = (LivingEntity)e;
-									le.damage(4.3,p);
-									Holding.holding(null, le, 23l);
-								}
-		                	}
-							
-						}
-						l.getWorld().spawnParticle(Particle.DRAGON_BREATH, l, 300,2,2,2,0.05);
-						l.getWorld().playSound(l, Sound.ENTITY_ENDER_DRAGON_SHOOT, 1f, 0.2f);
-	            		for(Entity e : l.getWorld().getNearbyEntities(l, 2, 2, 2)) {
-							if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("portal"))) {
-								LivingEntity le = (LivingEntity)e;
-								le.damage(4.3,p);
-								Holding.holding(null, le, 23l);
-							}
-	                	}
-	                }
-	            }, 15); 
-			}
-		}
-	}
-	
-
 	HashMap<UUID, LivingEntity> bossDoll = new HashMap<UUID, LivingEntity>();	
 	
 	public void bowshoot(EntityShootBowEvent ev) 
 	{
-		if(ev.getEntity().hasMetadata("enderboss")){
+		if(ev.getEntity().hasMetadata("witherboss")){
 
 			ev.setCancelled(true);
 			
 		    LivingEntity p = ev.getEntity();
 		    
-        	p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_SHOOT, 0.5f, 2f);
+        	p.getWorld().playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.5f, 0f);
 
 			p.getWorld().spawnParticle(Particle.END_ROD, p.getLocation(), 10);
 
@@ -163,7 +97,7 @@ public class WitherSkills extends WitherRaids{
 
     		ItemStack mainf = new ItemStack(Material.BLAZE_ROD);
     		ItemMeta mmf = mainf.getItemMeta();
-    		mmf.setCustomModelData(3010);
+    		mmf.setCustomModelData(3008);
     		mainf.setItemMeta(mmf);
 
 			if(ht instanceof Player) {
@@ -177,186 +111,120 @@ public class WitherSkills extends WitherRaids{
 	    			pe.sendEquipmentChange(p, EquipmentSlot.HAND, mainf);
 	    		});
 			}
-			if(isRuined(p)) {
-				if (bossDoll.containsKey(p.getUniqueId())) {
-					final Location bl = bossDoll.get(p.getUniqueId()).getLocation();
-					bossDoll.get(p.getUniqueId()).remove();
-					bossDoll.remove(p.getUniqueId());
-					bl.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, bl, 1);
-					bl.getWorld().playSound(bl, Sound.ENTITY_GENERIC_EXPLODE, 1f, 1.2f);
-            		for(Entity e : bl.getWorld().getNearbyEntities(bl, 2.5, 2.5, 2.5)) {
-						if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("portal"))) {
-							LivingEntity le = (LivingEntity)e;
-							le.damage(4.3,p);
-							Holding.holding(null, le, 23l);
-						}
-                	}
-					
-				}
-				final Location pfl = p.getLocation().clone();
-				
-				p.getWorld().spawn(pfl, ArmorStand.class, stand -> {
-                    stand.setGravity(false);
-                    stand.setInvulnerable(true);
-                    stand.setInvisible(true);
-                    stand.setBasePlate(false);
-                    stand.setCollidable(false);
-                    stand.setMetadata("stuff"+gethero(p), new FixedMetadataValue(RMain.getInstance(), true));
-                    stand.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
-                    stand.getEquipment().setArmorContents(p.getEquipment().getArmorContents());
-                    bossDoll.put(p.getUniqueId(), stand);
-				});
-				
-				p.getWorld().playSound(pfl, Sound.ITEM_ARMOR_EQUIP_ELYTRA, 1f, 0.5f);
-    			p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY,15,100,false,false));
-			}
-
-    		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-                @Override
-                public void run() {
-                	p.swingMainHand();
-                	p.getWorld().playSound(p.getLocation(), Sound.ENTITY_ENDER_PEARL_THROW, 1f, 1.2f);
-                    EnderPearl ws = (EnderPearl) p.launchProjectile(EnderPearl.class);
-                    ws.setShooter(p);
-                    ws.setGlowing(true);
-                    ws.setVelocity(p.getLocation().getDirection().normalize().multiply(1.3));
-        			ws.setMetadata("enderbossPearl", new FixedMetadataValue(RMain.getInstance(), true));
-                }
-            }, 7); 
+			
+            for(int i = 0; i<6; i++) {
+	            int ta = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	                @Override
+	                public void run() {
+	            		p.swingMainHand();
+	            		Arrow ar = p.getWorld().spawnArrow(p.getLocation(), p.getLocation().getDirection(), 2.2f, 6.66f);
+						ar.remove();
+	            		p.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_SHOOT, 0.666f, 0.666f);
+	                    WitherSkull ws = (WitherSkull) p.launchProjectile(WitherSkull.class);
+	                    ws.setYield(0.0f);
+	                    ws.setShooter(p);
+	                    ws.setVelocity(ar.getVelocity());
+	                    ws.setIsIncendiary(false);
+	                	ws.setCharged(true);
+						ws.setMetadata("witherthrow", new FixedMetadataValue(RMain.getInstance(), true));
+						ws.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), rn));
+	                }
+	            }, 20+i*2); 
+                ordt.put(rn, ta);
+            }
 
 
 		 }
 	}
-	
-	private void Explosion(LivingEntity p, final Location tl, final Location fl) {
-    	p.getWorld().playSound(tl, Sound.ENTITY_EVOKER_CAST_SPELL, 0.5f, 2f);
-		p.getWorld().spawnParticle(Particle.ENCHANT, tl, 200);
-		
-		String rn = gethero(p);
-		
-		ordt.put(rn, Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-            @Override
-            public void run() 
-            {
-        		p.getWorld().spawnParticle(Particle.PORTAL, tl, 150);
-            	p.getWorld().playSound(tl, Sound.ENTITY_ILLUSIONER_CAST_SPELL, 0.5f, 1.5f);
-            }
-		}, 13));
-		
-		ordt.put(rn, Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-            @Override
-            public void run() 
-            {
-        		p.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, tl,1);
-            	p.getWorld().playSound(tl, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 0.5f, 0.5f);
-            	for(Entity e : p.getWorld().getNearbyEntities(tl, 3,3,3)) {
-            		if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && e!=p) {
-            			LivingEntity le = (LivingEntity)e;
-            			le.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA,100,100,false,false));
-            			le.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS,100,100,false,false));
-						le.damage(4.5, p);
-						
-            		}
+
+	public void witherskullthrow(ProjectileHitEvent d) 
+	{
+		if(d.getEntity() instanceof WitherSkull) 
+		{
+			WitherSkull po = (WitherSkull)d.getEntity();
+			if(po.hasMetadata("witherthrow") && po.getShooter() instanceof LivingEntity) {
+				LivingEntity p = (LivingEntity) po.getShooter();
+    			if(p.isDead()) {
+    				return;
+    			}
+				po.getWorld().playSound(po.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 0.666f, 0.666f);
+				p.getWorld().spawnParticle(Particle.EXPLOSION, po.getLocation(), 4, 2,2,2);
+        		for(Entity e : p.getWorld().getNearbyEntities(po.getLocation(), 3.6, 3.6, 3.6)) {
+					if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("portal"))) {
+						LivingEntity le = (LivingEntity)e;
+						le.damage(6.66,p);
+					}
             	}
-            }
-		}, 26));
+				
+			}
+			
+		}
+	}
+	public void witherskullthrow(EntityExplodeEvent ev) 
+	{
+	    
+		
+		if(ev.getEntity() instanceof WitherSkull) {
+			WitherSkull fb = (WitherSkull)ev.getEntity();
+			if(fb.hasMetadata("witherthrow")) {
+				ev.setCancelled(true);
+			}
+			
+		}
+	}
+	public void createGrowingCircle(LivingEntity p, double maxRadius, long interval, double damage) {
+	    new BukkitRunnable() {
+	        double currentRadius = 0.5; // 초기 반지름
+
+	        @Override
+	        public void run() {
+	            if (currentRadius > maxRadius) {
+	                this.cancel(); // 최대 반지름에 도달하면 태스크 중지
+	                return;
+	            }
+
+	            // 현재 반지름에 대한 원의 위치 계산
+	            HashSet<Location> circleLocations = calculateCircleLocations(p.getLocation(), currentRadius);
+
+	            // 파티클 생성 및 선 밟은 엔티티 처리
+	            for (Location loc : circleLocations) {
+	                // 검은색 파티클 생성
+	                loc.getWorld().spawnParticle(Particle.DUST, loc, 1, new Particle.DustOptions(Color.BLACK, 1));
+
+	                // 해당 위치를 밟은 엔티티에게 데미지
+	                for (Entity e : loc.getWorld().getNearbyEntities(loc, 0.5, 4, 0.5)) {
+	                    if (p!=e && e instanceof LivingEntity le && !(e.hasMetadata("fake"))) {
+	                    	le.damage(damage, p);
+	                    }
+	                }
+	            }
+
+	            currentRadius += 0.5; // 반지름 점진적으로 증가
+	        }
+	    }.runTaskTimer(RMain.getInstance(), 0, interval); // 매 interval 틱마다 실행
+	}
+	private HashSet<Location> calculateCircleLocations(Location center, double radius) {
+	    HashSet<Location> locations = new HashSet<>();
+	    World world = center.getWorld();
+	    if (world == null) return locations;
+
+	    int points = (int) (radius * 15); // 원의 해상도(반지름에 비례)
+	    for (int i = 0; i < points; i++) {
+	        double angle = 2 * Math.PI * i / points; // 각도 계산
+	        double x = center.getX() + radius * Math.cos(angle);
+	        double z = center.getZ() + radius * Math.sin(angle);
+	        locations.add(new Location(world, x, center.getY(), z));
+	    }
+	    return locations;
 	}
 
-
-	
-	private void tExplosion(LivingEntity p, final Location tl) {
-    	p.getWorld().playSound(tl, Sound.ENTITY_EVOKER_CAST_SPELL, 0.5f, 2f);
-		p.getWorld().spawnParticle(Particle.ENCHANT, tl, 200);
-		
-		String rn = gethero(p);
-		
-		ordt.put(rn, Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-            @Override
-            public void run() 
-            {
-            	p.teleport(tl);
-        		p.getWorld().spawnParticle(Particle.PORTAL, tl, 150);
-        		p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, tl, 8,1,1,1);
-            	p.getWorld().playSound(tl, Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, 0.5f, 1.5f);
-            	for(Entity e : p.getWorld().getNearbyEntities(tl, 1.5,1.5,1.5)) {
-            		if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && e!=p) {
-            			LivingEntity le = (LivingEntity)e;
-            			le.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA,100,100,false,false));
-            			le.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS,100,100,false,false));
-						
-            		}
-            	}
-            }
-		}, 13));
-	}
-
-	private void tExplosionChain(LivingEntity p) {
-
-    	grillable.remove(p.getUniqueId());
-        Holding.holding(null, p, 25l);
-
-        String rn = gethero(p);
-		
-        final Location tl = gettargetblock(p,5).clone();
-        final Location fl = p.getLocation().clone();
-        
-		p.getWorld().playSound(tl, Sound.BLOCK_TRIAL_SPAWNER_OMINOUS_ACTIVATE, 1.1f, 0f);
-    	p.getWorld().spawnParticle(Particle.DRAGON_BREATH, tl, 500, 4, 1, 4, 0);
-    	p.getWorld().spawnParticle(Particle.PORTAL, tl, 500, 4, 1, 4, 0);
-    	p.getWorld().spawnParticle(Particle.INSTANT_EFFECT, tl, 500, 4, 1, 4, 0);
-    	
-    	
-        ArrayList<Location> meats = new ArrayList<>();
-        AtomicInteger j = new AtomicInteger();
-	    Integer ruinedAdd = isRuined(p) ? 6 : 0;
-        for(int i=0; i<16+ruinedAdd; i++) {
-            Random random=new Random();
-        	double number = random.nextDouble() * 3 * (random.nextBoolean() ? -1 : 1);
-        	double number2 = random.nextDouble() * 3 * (random.nextBoolean() ? -1 : 1);
-        	double number3 = random.nextDouble() * 2;
-        	meats.add(tl.clone().add(number, number3, number2));
-        }
-        
-        meats.forEach(l ->{
-			int t= Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-                @Override
-                public void run() 
-                {
-                    Holding.holding(null, p, 6l);
-                	tExplosion(p, l);
-                }
-			}, j.incrementAndGet()+25);
-        	ordt.put(rn, t);
-        });
-		int t= Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-            @Override
-            public void run() 
-            {
-            	p.teleport(fl);
-            	
-            	meats.forEach(l ->{
-            		p.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, l,1);
-                	p.getWorld().playSound(l, Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 0.5f, 0.5f);
-                	for(Entity e : p.getWorld().getNearbyEntities(l, 3,3,3)) {
-                		if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && e!=p) {
-                			LivingEntity le = (LivingEntity)e;	
-                			le.damage(4.5, p);
-            			}
-                	}
-            	});
-            }
-		}, j.incrementAndGet()+30);
-    	ordt.put(rn, t);
-	}
-	
-	
 
 	private HashMap<UUID, Integer> grillable = new HashMap<UUID, Integer>();
 	public void grilled(EntityDamageByEntityEvent d) 
 	{
 	    
 		int sec = 9;
-		if(d.getEntity().hasMetadata("enderboss") && grillable.containsKey(d.getEntity().getUniqueId())) 
+		if(d.getEntity().hasMetadata("witherboss") && grillable.containsKey(d.getEntity().getUniqueId())) 
 		{
 			LivingEntity p = (LivingEntity)d.getEntity();
 			if(ordeal.containsKey(p.getUniqueId()) || p.hasMetadata("failed")) {
@@ -372,15 +240,13 @@ public class WitherSkills extends WitherRaids{
 	            else 
 	            {
 	            	rb3cooldown.remove(p.getUniqueId()); 
-	            	tExplosionChain(p);
+	            	createGrowingCircle(p, 16.66, 6, 6.66);
 					rb3cooldown.put(p.getUniqueId(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
 	            }
 	        }
 	        else 
 	        {
-
-
-            	tExplosionChain(p);
+            	createGrowingCircle(p, 16.66, 6, 6.66);
 				rb3cooldown.put(p.getUniqueId(), System.currentTimeMillis()); // adding players name + current system time in miliseconds
 	        }
 		}					
@@ -543,7 +409,7 @@ public class WitherSkills extends WitherRaids{
 
 	public void hand(EntityDamageByEntityEvent d) 
 	{
-		if(d.getEntity().hasMetadata("enderboss")) 
+		if(d.getEntity().hasMetadata("witherboss")) 
 		{
 			Mob p = (Mob)d.getEntity();
 			
@@ -626,7 +492,7 @@ public class WitherSkills extends WitherRaids{
 	                        random.nextDouble() * -0.1 +0.5, // Y 방향 위로 상승
 	                        random.nextDouble() * 1.5 - 0.8 // Z 방향 랜덤
 	                ));
-	                enderPearl.setMetadata("enderbossPearl", new FixedMetadataValue(RMain.getInstance(), true));
+	                enderPearl.setMetadata("witherbossPearl", new FixedMetadataValue(RMain.getInstance(), true));
 	                enderPearl.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 	        		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	             		@Override
@@ -663,7 +529,7 @@ public class WitherSkills extends WitherRaids{
 	
 	public void teleportAndScatterEnderPearls(EntityDamageByEntityEvent d) 
 	{
-		if(d.getEntity().hasMetadata("enderboss") && (d.getEntity() instanceof Mob)) 
+		if(d.getEntity().hasMetadata("witherboss") && (d.getEntity() instanceof Mob)) 
 		{
 			Mob p = (Mob)d.getEntity();
 			int sec = 13;
@@ -716,7 +582,7 @@ public class WitherSkills extends WitherRaids{
 	    return locations;
 	}
 	public void illusionCharge(EntityDamageByEntityEvent d) {
-	    if(d.getEntity().hasMetadata("enderboss")) {
+	    if(d.getEntity().hasMetadata("witherboss")) {
 	        final LivingEntity p = (LivingEntity)d.getEntity();
 
 	        if (checkAndApplyCharge(p, d)) return;
@@ -842,11 +708,10 @@ public class WitherSkills extends WitherRaids{
 		
 		final Location fl = p.getLocation().clone();
     	
-    	Explosion(p, ptl, fl);
 	}
 	public void teleportEx(EntityDamageByEntityEvent d) 
 	{
-		if((d.getEntity() instanceof Mob) && d.getEntity().hasMetadata("enderboss")) 
+		if((d.getEntity() instanceof Mob) && d.getEntity().hasMetadata("witherboss")) 
 		{
 			Mob p = (Mob)d.getEntity();
 			int sec = 4;
@@ -1130,7 +995,7 @@ public class WitherSkills extends WitherRaids{
 		if(!(d.getDamager() instanceof Player)) {
 			return;
 		}
-		if(d.getEntity().hasMetadata("enderboss") && d.getEntity() instanceof LivingEntity&& d.getEntity().hasMetadata("ruined")) 
+		if(d.getEntity().hasMetadata("witherboss") && d.getEntity() instanceof LivingEntity&& d.getEntity().hasMetadata("ruined")) 
 		{
 			LivingEntity p = (LivingEntity)d.getEntity();
 			String rn = gethero(p);
@@ -1284,7 +1149,7 @@ public class WitherSkills extends WitherRaids{
 	{
 	    
 		int sec = 70;
-		if(d.getEntity().hasMetadata("enderboss") && d.getEntity() instanceof LivingEntity&& !d.isCancelled() && d.getEntity().hasMetadata("ruined")) 
+		if(d.getEntity().hasMetadata("witherboss") && d.getEntity() instanceof LivingEntity&& !d.isCancelled() && d.getEntity().hasMetadata("ruined")) 
 		{
 			LivingEntity p = (LivingEntity)d.getEntity();
 			if(p.hasMetadata("failed")) {

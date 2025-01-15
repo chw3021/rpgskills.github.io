@@ -231,8 +231,6 @@ public class DarkSkills extends Summoned{
 		}
 	}
 
-
-	@SuppressWarnings("deprecation")
 	public void witherskullthrow(EntityDamageByEntityEvent d) 
 	{
 	    
@@ -272,7 +270,6 @@ public class DarkSkills extends Summoned{
 								p.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_SHOOT, 1, 1);
 			                    WitherSkull ws = (WitherSkull) p.launchProjectile(WitherSkull.class);
 			                    ws.setYield(0.0f);
-			                    ws.setBounce(false);
 			                    ws.setShooter(p);
 			                    ws.setVelocity(p.getLocation().getDirection().normalize().multiply(2));
 			                    ws.setIsIncendiary(false);
@@ -304,7 +301,6 @@ public class DarkSkills extends Summoned{
 							p.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_SHOOT, 1, 1);
 		                    WitherSkull ws = (WitherSkull) p.launchProjectile(WitherSkull.class);
 		                    ws.setYield(0.0f);
-		                    ws.setBounce(false);
 		                    ws.setShooter(p);
 		                    ws.setVelocity(p.getLocation().getDirection().normalize().multiply(2));
 		                    ws.setIsIncendiary(false);
