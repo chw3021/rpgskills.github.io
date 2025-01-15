@@ -25,7 +25,7 @@ public class EngSkillsGui extends SkillsGui {
 		if (p.getLocale().equalsIgnoreCase("ko_kr")) {
 			itemset("중력자", Material.WOODEN_PICKAXE, 0, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + esd.Graviton.getOrDefault(p.getUniqueId(), 0), "",
-							ChatColor.UNDERLINE+"✬[번개]", "🖮🖰 손바꾸기", "",
+							ChatColor.UNDERLINE+"❈ [번개]", "🖮🖰 손바꾸기", "",
 							ChatColor.BOLD + " 10 X "
 									+ BigDecimal.valueOf(0.12 *(1 + esd.Graviton.getOrDefault(p.getUniqueId(), 0) * 0.0085))
 									.setScale(2, RoundingMode.HALF_EVEN)+"D"
@@ -36,7 +36,7 @@ public class EngSkillsGui extends SkillsGui {
 					0, skillsInv);
 			itemset("엑스선", Material.STONE_PICKAXE, 0, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + esd.X_ray.getOrDefault(p.getUniqueId(), 0), "",
-							ChatColor.UNDERLINE+"✬[번개]", "🖮🖰 웅크리기 + 우클릭", "적의 공격력을 낮춥니다", "",
+							ChatColor.UNDERLINE+"❈ [번개]", "🖮🖰 웅크리기 + 우클릭", "적의 공격력을 낮춥니다", "",
 							ChatColor.BOLD + "1 X "
 									+ BigDecimal.valueOf(0.32 * (1 +esd.X_ray.getOrDefault(p.getUniqueId(), 0) * 0.024)).setScale(2,
 									RoundingMode.HALF_EVEN)+"D",
@@ -48,7 +48,7 @@ public class EngSkillsGui extends SkillsGui {
 					2, skillsInv);
 			itemset("정전기장", Material.IRON_PICKAXE, 0, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + esd.Electrostatic.getOrDefault(p.getUniqueId(), 0), "",
-							ChatColor.UNDERLINE+"✬[번개]", "🖮🖰 우클릭", "",
+							ChatColor.UNDERLINE+"❈ [번개]", "🖮🖰 우클릭", "",
 							ChatColor.BOLD + "8 X "
 									+ BigDecimal.valueOf(0.1 * (1+esd.Electrostatic.getOrDefault(p.getUniqueId(), 0) * 0.0078))
 									.setScale(2, RoundingMode.HALF_EVEN)+"D",
@@ -61,7 +61,7 @@ public class EngSkillsGui extends SkillsGui {
 					4, skillsInv);
 			itemset("발사기", Material.DIAMOND_PICKAXE, 0, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + esd.Dispenser.getOrDefault(p.getUniqueId(), 0), "",
-							ChatColor.UNDERLINE+"✬[번개]", "🖮🖰 손바꾸기 + 웅크리기", "",
+							ChatColor.UNDERLINE+"❈ [번개]", "🖮🖰 손바꾸기 + 웅크리기", "",
 							ChatColor.BOLD + " 20 X "
 									+ BigDecimal.valueOf(0.06 * (1+esd.Dispenser.getOrDefault(p.getUniqueId(), 0) * 0.006))
 									.setScale(2, RoundingMode.HALF_EVEN)+"D",
@@ -93,27 +93,27 @@ public class EngSkillsGui extends SkillsGui {
 						Arrays.asList("요구 숙련도: " + Proficiency.getproexp(p) + "/29315"), 17, skillsInv);
 			} else if (Proficiency.getpro(p) < 2 && Proficiency.getpro(p) >= 1) {
 				itemset("에너지구체", Material.AZURE_BLUET, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE+"✬[번개]", "🖮🖰 재입력시 에너지구체를 발사합니다", "(피해량은 중력자 레벨에 비례합니다)", "",
+						Arrays.asList(ChatColor.UNDERLINE+"❈ [번개]", "🖮🖰 재입력시 에너지구체를 발사합니다", "(피해량은 중력자 레벨에 비례합니다)", "",
 								ChatColor.BOLD + "20 X "
 										+ BigDecimal.valueOf(0.25*(1+esd.Graviton.getOrDefault(p.getUniqueId(), 0) * 0.025))
 										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						9, skillsInv);
 				itemset("EMP", Material.SCULK_SENSOR, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE+"✬[번개]", "🖮🖰 재입력시 EMP를 발사합니다", "(피해량은 엑스선 레벨에 비례합니다)", "",
+						Arrays.asList(ChatColor.UNDERLINE+"❈ [번개]", "🖮🖰 재입력시 EMP를 발사합니다", "(피해량은 엑스선 레벨에 비례합니다)", "",
 								ChatColor.BOLD + "1 X "
 										+ BigDecimal.valueOf(0.7 * (1+esd.X_ray.getOrDefault(p.getUniqueId(), 0) * 0.057))
 										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						10, skillsInv);
 				itemset("강자기장", Material.LODESTONE, 0, 1, Arrays.asList("여러적들을 끌어올수 있습니다"), 11, skillsInv);
 				itemset("썬더콜러", Material.LIGHTNING_ROD, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE+"✬[번개]", "🖮🖰 재입력시 썬더콜러를 설치합니다", "(피해량은 정전기장 레벨에 비례합니다)", "",
+						Arrays.asList(ChatColor.UNDERLINE+"❈ [번개]", "🖮🖰 재입력시 썬더콜러를 설치합니다", "(피해량은 정전기장 레벨에 비례합니다)", "",
 								ChatColor.BOLD + "1 X "
 										+ BigDecimal.valueOf(2.1*(1+esd.Electrostatic.getOrDefault(p.getUniqueId(), 0) * 0.2))
 										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						12, skillsInv);
 				itemset("추진", Material.BARREL, 0, 1, Arrays.asList("재입력시 전방으로 빠르게 이동합니다"), 13, skillsInv);
 				itemset("관측기", Material.OBSERVER, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE+"✬[번개]", "🖮🖰 재입력시 관측기를 설치합니다", "(피해량은 발사기 레벨에 비례합니다)", "",
+						Arrays.asList(ChatColor.UNDERLINE+"❈ [번개]", "🖮🖰 재입력시 관측기를 설치합니다", "(피해량은 발사기 레벨에 비례합니다)", "",
 								ChatColor.BOLD + "5 X "
 										+ BigDecimal.valueOf(0.1*(1+esd.Dispenser.getOrDefault(p.getUniqueId(), 0) * 0.006))
 										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
@@ -138,27 +138,27 @@ public class EngSkillsGui extends SkillsGui {
 						Arrays.asList("요구 숙련도: " + Proficiency.getproexp(p) + "/155015"), 26, skillsInv);
 			} else {
 				itemset("에너지구체", Material.AZURE_BLUET, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE+"✬[번개]", "🖮🖰 재입력시 에너지구체를 발사합니다", "(피해량은 중력자 레벨에 비례합니다)", "",
+						Arrays.asList(ChatColor.UNDERLINE+"❈ [번개]", "🖮🖰 재입력시 에너지구체를 발사합니다", "(피해량은 중력자 레벨에 비례합니다)", "",
 								ChatColor.BOLD + "20 X "
 										+ BigDecimal.valueOf(0.25*(1+esd.Graviton.getOrDefault(p.getUniqueId(), 0) * 0.025))
 										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						9, skillsInv);
 				itemset("EMP", Material.SCULK_SENSOR, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE+"✬[번개]", "🖮🖰 재입력시 EMP를 발사합니다", "(피해량은 엑스선 레벨에 비례합니다)", "",
+						Arrays.asList(ChatColor.UNDERLINE+"❈ [번개]", "🖮🖰 재입력시 EMP를 발사합니다", "(피해량은 엑스선 레벨에 비례합니다)", "",
 								ChatColor.BOLD + "1 X "
 										+ BigDecimal.valueOf(0.7 * (1+esd.X_ray.getOrDefault(p.getUniqueId(), 0) * 0.057))
 										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						10, skillsInv);
 				itemset("강자기장", Material.LODESTONE, 0, 1, Arrays.asList("여러적들을 끌어올수 있습니다"), 11, skillsInv);
 				itemset("썬더콜러", Material.LIGHTNING_ROD, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE+"✬[번개]", "🖮🖰 재입력시 썬더콜러를 설치합니다", "(피해량은 정전기장 레벨에 비례합니다)", "",
+						Arrays.asList(ChatColor.UNDERLINE+"❈ [번개]", "🖮🖰 재입력시 썬더콜러를 설치합니다", "(피해량은 정전기장 레벨에 비례합니다)", "",
 								ChatColor.BOLD + "1 X "
 										+ BigDecimal.valueOf(2.1*(1+esd.Electrostatic.getOrDefault(p.getUniqueId(), 0) * 0.2))
 										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						12, skillsInv);
 				itemset("추진", Material.BARREL, 0, 1, Arrays.asList("재입력시 전방으로 빠르게 이동합니다"), 13, skillsInv);
 				itemset("관측기", Material.OBSERVER, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE+"✬[번개]", "🖮🖰 재입력시 관측기를 설치합니다", "(피해량은 발사기 레벨에 비례합니다)", "",
+						Arrays.asList(ChatColor.UNDERLINE+"❈ [번개]", "🖮🖰 재입력시 관측기를 설치합니다", "(피해량은 발사기 레벨에 비례합니다)", "",
 								ChatColor.BOLD + "5 X "
 										+ BigDecimal.valueOf(0.1*(1+esd.Dispenser.getOrDefault(p.getUniqueId(), 0) * 0.006))
 										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
@@ -171,24 +171,24 @@ public class EngSkillsGui extends SkillsGui {
 
 
 				itemset("원자궤도", Material.BUCKET, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE+"✬[번개]", "🖮🖰 재입력시 원자궤도를 생성합니다", "(피해량은 중력자 레벨에 비례합니다)", "",
+						Arrays.asList(ChatColor.UNDERLINE+"❈ [번개]", "🖮🖰 재입력시 원자궤도를 생성합니다", "(피해량은 중력자 레벨에 비례합니다)", "",
 								ChatColor.BOLD + "13 X "
 										+ BigDecimal.valueOf(0.2*(1+esd.Graviton.getOrDefault(p.getUniqueId(), 0) * 0.045))
 										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						18, skillsInv);
 				itemset("중력가속", Material.QUARTZ, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE+"✬[번개]", "🖮🖰 재입력시 중력가속을 사용합니다", "(피해량은 엑스선 레벨에 비례합니다)", "",
+						Arrays.asList(ChatColor.UNDERLINE+"❈ [번개]", "🖮🖰 재입력시 중력가속을 사용합니다", "(피해량은 엑스선 레벨에 비례합니다)", "",
 								ChatColor.BOLD + "1 X "+ BigDecimal.valueOf(0.76*(1+esd.X_ray.getOrDefault(p.getUniqueId(), 0) * 0.045))
 										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						19, skillsInv);
 				itemset("역중력장", Material.PISTON, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE+"✬[번개]", "🖮🖰 재입력시 역중력장을 생성합니다", "(피해량은 정전기장 레벨에 비례합니다)", "",
+						Arrays.asList(ChatColor.UNDERLINE+"❈ [번개]", "🖮🖰 재입력시 역중력장을 생성합니다", "(피해량은 정전기장 레벨에 비례합니다)", "",
 								ChatColor.BOLD + "1 X + "
 										+ BigDecimal.valueOf(1.1 *(1+ esd.Electrostatic.getOrDefault(p.getUniqueId(), 0) * 0.1))
 										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						21, skillsInv);
 				itemset("팩토리", Material.COMMAND_BLOCK_MINECART, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE+"✬[번개]", "🖮🖰 재입력시 팩토리를 설치합니다", "(피해량은 발사기 레벨에 비례합니다)", "",
+						Arrays.asList(ChatColor.UNDERLINE+"❈ [번개]", "🖮🖰 재입력시 팩토리를 설치합니다", "(피해량은 발사기 레벨에 비례합니다)", "",
 								ChatColor.BOLD + "10 X  "
 										+ BigDecimal.valueOf(0.34 * (1+ esd.Dispenser.getOrDefault(p.getUniqueId(), 0) * 0.04))
 										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
@@ -196,7 +196,7 @@ public class EngSkillsGui extends SkillsGui {
 				itemset("원자로", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("공격력과 방어력이 증가합니다", "전투 순양함 쿨타임이 감소합니다"), 24,
 						skillsInv);
 				itemset("블랙홀", Material.WRITTEN_BOOK, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE+"✬[번개]", "🖮🖰 웅크리기 + num5", "", ChatColor.BOLD + " X 16.4D"), 26, skillsInv);
+						Arrays.asList(ChatColor.UNDERLINE+"❈ [번개]", "🖮🖰 웅크리기 + num5", "", ChatColor.BOLD + " X 16.4D"), 26, skillsInv);
 			}
 
 			itemset("현재 숙련도", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("" + Proficiency.getproexp(p)), 27,
@@ -209,7 +209,7 @@ public class EngSkillsGui extends SkillsGui {
 		} else {
 			itemset("Graviton", Material.WOODEN_PICKAXE, 0, 1, Arrays.asList(
 					ChatColor.AQUA + "LV." + esd.Graviton.getOrDefault(p.getUniqueId(), 0), "",
-					ChatColor.UNDERLINE+"✬[Lightning]", "🖮🖰 SwapHand", "",
+					ChatColor.UNDERLINE+"❈ [Lightning]", "🖮🖰 SwapHand", "",
 					ChatColor.BOLD + " 10 X "
 							+ BigDecimal.valueOf(0.12 *(1 + esd.Graviton.getOrDefault(p.getUniqueId(), 0) * 0.0085))
 							.setScale(2, RoundingMode.HALF_EVEN)+"D"
@@ -219,7 +219,7 @@ public class EngSkillsGui extends SkillsGui {
 					"Master LV.50"), 0, skillsInv);
 			itemset("X_ray", Material.STONE_PICKAXE, 0, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + esd.X_ray.getOrDefault(p.getUniqueId(), 0), "",
-							ChatColor.UNDERLINE+"✬[Lightning]", "🖮🖰 Sneaking + Rightclick",
+							ChatColor.UNDERLINE+"❈ [Lightning]", "🖮🖰 Sneaking + Rightclick",
 							"Decreases Mob's Attack Damage", "",
 							ChatColor.BOLD + "1 X "
 									+ BigDecimal.valueOf(0.32 * (1 +esd.X_ray.getOrDefault(p.getUniqueId(), 0) * 0.024)).setScale(2,
@@ -232,7 +232,7 @@ public class EngSkillsGui extends SkillsGui {
 					2, skillsInv);
 			itemset("Electrostatic", Material.IRON_PICKAXE, 0, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + esd.Electrostatic.getOrDefault(p.getUniqueId(), 0), "",
-							ChatColor.UNDERLINE+"✬[Lightning]", "🖮🖰 Rightclick", "",
+							ChatColor.UNDERLINE+"❈ [Lightning]", "🖮🖰 Rightclick", "",
 							ChatColor.BOLD + "8 X "
 									+ BigDecimal.valueOf(0.1 * (1+esd.Electrostatic.getOrDefault(p.getUniqueId(), 0) * 0.0078))
 									.setScale(2, RoundingMode.HALF_EVEN)+"D",
@@ -246,7 +246,7 @@ public class EngSkillsGui extends SkillsGui {
 					4, skillsInv);
 			itemset("Dispenser", Material.DIAMOND_PICKAXE, 0, 1,
 					Arrays.asList(ChatColor.AQUA + "LV." + esd.Dispenser.getOrDefault(p.getUniqueId(), 0), "",
-							ChatColor.UNDERLINE+"✬[Lightning]", "🖮🖰 SwapHand + Sneaking", "",
+							ChatColor.UNDERLINE+"❈ [Lightning]", "🖮🖰 SwapHand + Sneaking", "",
 							ChatColor.BOLD + " 20 X "
 									+ BigDecimal.valueOf(0.06 * (1+esd.Dispenser.getOrDefault(p.getUniqueId(), 0) * 0.006))
 									.setScale(2, RoundingMode.HALF_EVEN)+"D",
@@ -285,14 +285,14 @@ public class EngSkillsGui extends SkillsGui {
 						skillsInv);
 			} else if (Proficiency.getpro(p) < 2 && Proficiency.getpro(p) >= 1) {
 				itemset("EnergyBall", Material.AZURE_BLUET, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE+"✬[Lightning]", "🖮🖰 Throw EnergyBall When Use Once More",
+						Arrays.asList(ChatColor.UNDERLINE+"❈ [Lightning]", "🖮🖰 Throw EnergyBall When Use Once More",
 								"(Damage Affected By Graviton)", "",
 								ChatColor.BOLD + "20 X "
 										+ BigDecimal.valueOf(0.25*(1+esd.Graviton.getOrDefault(p.getUniqueId(), 0) * 0.025))
 										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						9, skillsInv);
 				itemset("EMP", Material.SCULK_SENSOR, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE+"✬[Lightning]", "🖮🖰 Shot EMP When Use Once More",
+						Arrays.asList(ChatColor.UNDERLINE+"❈ [Lightning]", "🖮🖰 Shot EMP When Use Once More",
 								"(Damage Affected By X_ray)", "",
 								ChatColor.BOLD + "1 X "
 										+ BigDecimal.valueOf(0.7 * (1+esd.X_ray.getOrDefault(p.getUniqueId(), 0) * 0.057))
@@ -301,7 +301,7 @@ public class EngSkillsGui extends SkillsGui {
 				itemset("Strong Magnetic", Material.LODESTONE, 0, 1, Arrays.asList("Pull Multiple Enemies"), 11,
 						skillsInv);
 				itemset("Thunder Caller", Material.LIGHTNING_ROD, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE+"✬[Lightning]", "🖮🖰 Place Thunder Caller When Use Once More",
+						Arrays.asList(ChatColor.UNDERLINE+"❈ [Lightning]", "🖮🖰 Place Thunder Caller When Use Once More",
 								"(Damage Affected By Electrostatic)", "",
 								ChatColor.BOLD + "1 X "
 										+ BigDecimal.valueOf(2.1*(1+esd.Electrostatic.getOrDefault(p.getUniqueId(), 0) * 0.2))
@@ -310,7 +310,7 @@ public class EngSkillsGui extends SkillsGui {
 				itemset("Propellant", Material.BARREL, 0, 1, Arrays.asList("Move Forward Fastly When Use Once More"),
 						13, skillsInv);
 				itemset("Observer", Material.OBSERVER, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE+"✬[Lightning]", "🖮🖰 Place Observer When Use Once More",
+						Arrays.asList(ChatColor.UNDERLINE+"❈ [Lightning]", "🖮🖰 Place Observer When Use Once More",
 								"(Damage Affected By Dispenser)", "",
 								ChatColor.BOLD + "5 X "
 										+ BigDecimal.valueOf(0.1*(1+esd.Dispenser.getOrDefault(p.getUniqueId(), 0) * 0.006))
@@ -341,14 +341,14 @@ public class EngSkillsGui extends SkillsGui {
 						skillsInv);
 			} else {
 				itemset("EnergyBall", Material.AZURE_BLUET, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE+"✬[Lightning]", "🖮🖰 Throw EnergyBall When Use Once More",
+						Arrays.asList(ChatColor.UNDERLINE+"❈ [Lightning]", "🖮🖰 Throw EnergyBall When Use Once More",
 								"(Damage Affected By Graviton)", "",
 								ChatColor.BOLD + "20 X "
 										+ BigDecimal.valueOf(0.25*(1+esd.Graviton.getOrDefault(p.getUniqueId(), 0) * 0.025))
 										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						9, skillsInv);
 				itemset("EMP", Material.SCULK_SENSOR, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE+"✬[Lightning]", "🖮🖰 Shot EMP When Use Once More",
+						Arrays.asList(ChatColor.UNDERLINE+"❈ [Lightning]", "🖮🖰 Shot EMP When Use Once More",
 								"(Damage Affected By X_ray)", "",
 								ChatColor.BOLD + "1 X "
 										+ BigDecimal.valueOf(0.7 * (1+esd.X_ray.getOrDefault(p.getUniqueId(), 0) * 0.057))
@@ -357,7 +357,7 @@ public class EngSkillsGui extends SkillsGui {
 				itemset("Strong Magnetic", Material.LODESTONE, 0, 1, Arrays.asList("Pull Multiple Enemies"), 11,
 						skillsInv);
 				itemset("Thunder Caller", Material.LIGHTNING_ROD, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE+"✬[Lightning]", "🖮🖰 Place Thunder Caller When Use Once More",
+						Arrays.asList(ChatColor.UNDERLINE+"❈ [Lightning]", "🖮🖰 Place Thunder Caller When Use Once More",
 								"(Damage Affected By Electrostatic)", "",
 								ChatColor.BOLD + "1 X "
 										+ BigDecimal.valueOf(2.1*(1+esd.Electrostatic.getOrDefault(p.getUniqueId(), 0) * 0.2))
@@ -366,7 +366,7 @@ public class EngSkillsGui extends SkillsGui {
 				itemset("Propellant", Material.BARREL, 0, 1, Arrays.asList("Move Forward Fastly When Use Once More"),
 						13, skillsInv);
 				itemset("Observer", Material.OBSERVER, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE+"✬[Lightning]", "🖮🖰 Place Observer When Use Once More",
+						Arrays.asList(ChatColor.UNDERLINE+"❈ [Lightning]", "🖮🖰 Place Observer When Use Once More",
 								"(Damage Affected By Dispenser)", "",
 								ChatColor.BOLD + "5 X "
 										+ BigDecimal.valueOf(0.1*(1+esd.Dispenser.getOrDefault(p.getUniqueId(), 0) * 0.006))
@@ -378,27 +378,27 @@ public class EngSkillsGui extends SkillsGui {
 						Arrays.asList("🖮🖰 Sneaking + num4", "","Increase Damage and Range", ChatColor.BOLD + " + 0.1D"), 17, skillsInv);
 
 				itemset("Orbital", Material.BUCKET, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE+"✬[Lightning]", "🖮🖰 Make Orbital When Use Once More",
+						Arrays.asList(ChatColor.UNDERLINE+"❈ [Lightning]", "🖮🖰 Make Orbital When Use Once More",
 								"(Damage Affected By Graviton)", "",
 								ChatColor.BOLD + "13 X "
 										+ BigDecimal.valueOf(0.2*(1+esd.Graviton.getOrDefault(p.getUniqueId(), 0) * 0.045))
 										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						18, skillsInv);
 				itemset("GravityShift", Material.QUARTZ, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE+"✬[Lightning]", "🖮🖰 Use GravityShift When Use Once More",
+						Arrays.asList(ChatColor.UNDERLINE+"❈ [Lightning]", "🖮🖰 Use GravityShift When Use Once More",
 								"(Damage Affected By X_ray)", "",
 								ChatColor.BOLD + "1 X "+ BigDecimal.valueOf(0.76*(1+esd.X_ray.getOrDefault(p.getUniqueId(), 0) * 0.045))
 										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						19, skillsInv);
 				itemset("Anti-Gravity", Material.PISTON, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE+"✬[Lightning]", "🖮🖰 Make Anti-Gravity When Use Once More",
+						Arrays.asList(ChatColor.UNDERLINE+"❈ [Lightning]", "🖮🖰 Make Anti-Gravity When Use Once More",
 								"(Damage Affected By Electrostatic)", "",
 								ChatColor.BOLD + "1 X + "
 										+ BigDecimal.valueOf(1.1 *(1+ esd.Electrostatic.getOrDefault(p.getUniqueId(), 0) * 0.1))
 										.setScale(2, RoundingMode.HALF_EVEN)+"D"),
 						21, skillsInv);
 				itemset("Factory", Material.COMMAND_BLOCK_MINECART, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE+"✬[Lightning]", "🖮🖰 Place Factory When Use Once More",
+						Arrays.asList(ChatColor.UNDERLINE+"❈ [Lightning]", "🖮🖰 Place Factory When Use Once More",
 								"(Damage Affected By Dispenser)", "",
 								ChatColor.BOLD + "10 X  "
 										+ BigDecimal.valueOf(0.34 * (1+ esd.Dispenser.getOrDefault(p.getUniqueId(), 0) * 0.04))
@@ -407,7 +407,7 @@ public class EngSkillsGui extends SkillsGui {
 				itemset("NuclearReactor", Material.ENCHANTED_BOOK, 0, 1,
 						Arrays.asList("Increases Damage & Armor", "Decreases Battle Cruiser Cooldown"), 24, skillsInv);
 				itemset("BlackHole", Material.WRITTEN_BOOK, 0, 1,
-						Arrays.asList(ChatColor.UNDERLINE+"✬[Lightning]","🖮🖰 Sneaking + num5", "", ChatColor.BOLD + " X 16.4D"), 26, skillsInv);
+						Arrays.asList(ChatColor.UNDERLINE+"❈ [Lightning]","🖮🖰 Sneaking + num5", "", ChatColor.BOLD + " X 16.4D"), 26, skillsInv);
 			}
 
 			itemset("Current Proficiency", Material.WRITTEN_BOOK, 0, 1, Arrays.asList("" + Proficiency.getproexp(p)),

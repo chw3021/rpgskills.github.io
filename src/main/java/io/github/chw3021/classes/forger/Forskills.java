@@ -261,7 +261,7 @@ public class Forskills extends Pak {
 						}
 					}
 					LivingEntity le = (LivingEntity)a;
-					p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
+					p.setCooldown(MELEE, 2);
 					atk1(0.0658*(1+fsd.MachineGun.get(p.getUniqueId())*0.064)*(1+(mgaovercount.getOrDefault(p, 1)/100d))* (mgaover.containsKey(p)?2:1), p, le,14);
 				}
 			}
@@ -531,7 +531,7 @@ public class Forskills extends Pak {
 									@Override
 									public void run()
 									{
-										p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
+										p.setCooldown(MELEE, 2);
 										ArrayList<Location> line = new ArrayList<Location>();
 										for(double d = 0.1; d <= 45.1; d += 0.2) {
 											Location pl = p.getEyeLocation().clone();
@@ -572,7 +572,7 @@ public class Forskills extends Pak {
 									public void run()
 									{
 										for(LivingEntity le: les) {
-											p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
+											p.setCooldown(MELEE, 2);
 											w.spawn(le.getLocation(), BlockDisplay.class, lightning ->{
 												lightning.setSilent(true);
 												lightning.setBlock(getBd(Material.WHITE_GLAZED_TERRACOTTA));
@@ -767,7 +767,7 @@ public class Forskills extends Pak {
 									}
 								}
 								for(LivingEntity le: les) {
-									p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
+									p.setCooldown(MELEE, 2);
 									atk1(0.5*(1+fsd.LightningCannon.get(p.getUniqueId())*0.03), p, le);
 								}
 							}
@@ -868,7 +868,7 @@ public class Forskills extends Pak {
 											{
 												LivingEntity le = (LivingEntity)e;
 												{
-													p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
+													p.setCooldown(MELEE, 2);
 													atk1(0.35*(1+fsd.TNTLauncher.get(p.getUniqueId())*0.0312), p, le,14);
 												}
 											}
@@ -1042,7 +1042,7 @@ public class Forskills extends Pak {
 				{
 					LivingEntity le = (LivingEntity)e;
 					{
-						p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
+						p.setCooldown(MELEE, 2);
 						atk1(1.42*(1+fsd.TNTLauncher.get(p.getUniqueId())*0.1), p, le,9);
 						Holding.holding(p, le, 50l);
 						le.teleport(tl);
@@ -1131,7 +1131,7 @@ public class Forskills extends Pak {
 				public void run()
 				{
 					for(LivingEntity le : les) {
-						p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
+						p.setCooldown(MELEE, 2);
 						atk1(0.113*(1+fsd.RailSMG.get(p.getUniqueId())*0.042), p, le,9);
 						le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,15,1,false,false));
 					}
@@ -1294,7 +1294,7 @@ public class Forskills extends Pak {
 									}
 								});
 								les.forEach(le ->{
-									p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
+									p.setCooldown(MELEE, 2);
 									atk1(0.32*(1+fsd.RailSMG.get(p.getUniqueId())*0.092), p, le);
 								});
 							}
@@ -1369,7 +1369,7 @@ public class Forskills extends Pak {
 						}
 					});
 					les.forEach(le ->{
-						p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
+						p.setCooldown(MELEE, 2);
 						atk1(1.66*(1+fsd.RailSMG.get(p.getUniqueId())*0.06), p, le);
 						Holding.holding(p, le, 10l);
 					});
@@ -1732,7 +1732,7 @@ public class Forskills extends Pak {
 							{
 								if(heshc.containsKey(le.getUniqueId())) {
 
-									p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
+									p.setCooldown(MELEE, 2);
 									atk1(0.53*(1+fsd.HoneyMissile.get(p.getUniqueId())*0.042)*(Proficiency.getpro(p)>=1 ? 2:1), p, le,9);
 									le.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, le.getLocation(), 1,0.1,0.1,0.1);
 									le.getWorld().spawnParticle(Particle.LANDING_HONEY, le.getLocation(), 100, 2,2,2,3);
@@ -1782,7 +1782,7 @@ public class Forskills extends Pak {
 							if(Bukkit.getEntity(leu) != null && !Bukkit.getEntity(leu).isDead()) {
 								LivingEntity le = (LivingEntity) Bukkit.getEntity(leu);
 
-								p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
+								p.setCooldown(MELEE, 2);
 								atk1(1.1*(1+fsd.HoneyMissile.get(p.getUniqueId())*0.0789)*(Proficiency.getpro(p)), p, le,9);
 								p.getWorld().playSound(le.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 1);
 								le.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, le.getLocation(), 1,0.1,0.1,0.1);
@@ -1878,7 +1878,7 @@ public class Forskills extends Pak {
 
 									for(LivingEntity le : les) {
 
-										p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
+										p.setCooldown(MELEE, 2);
 										atk1(1.05, p, le);
 										le.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 40, 2, false, false));
 

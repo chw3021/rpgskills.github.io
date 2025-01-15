@@ -85,6 +85,17 @@ public class Drops implements Listener {
 	public void ItemDrops(EntityPickupItemEvent d) 
     {
 		LivingEntity le = d.getEntity();
+		d.getItem().setVelocity(new Vector(0,0,0));
+		if(d.isCancelled()) {
+			Item item = d.getItem();
+			item.setVelocity(new Vector(0,0,0));
+			Bukkit.getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
+                @Override
+                public void run() {
+    				item.setVelocity(new Vector(0,0,0));
+                }
+			}, 20);
+		}
 
 		for(Entity e : le.getNearbyEntities(2, 2, 2)) {
 			if (e instanceof Item item) {
@@ -98,6 +109,7 @@ public class Drops implements Listener {
 			}
 		}
     }
+	
 	@EventHandler
 	public void ItemDrops(EntityDeathEvent d) 
 	{
@@ -138,17 +150,6 @@ public class Drops implements Listener {
     			d.setDroppedExp(200);
 				
 			}
-			/*if(d.getEntity().hasMetadata("treasureraid")) {
-				
-				ItemStack i2 = new ItemStack(Material.EXPERIENCE_BOTTLE,1);
-				ItemStack i4 = new ItemStack(Material.LAPIS_LAZULI,1);
-				ItemStack i5 = new ItemStack(Material.EMERALD,1);
-				ItemStack i3 = new ItemStack(Material.NETHERITE_SCRAP,1);
-    			le.getWorld().dropItemNaturally(le.getLocation(), i2);
-    			le.getWorld().dropItemNaturally(le.getLocation(), i4);
-    			le.getWorld().dropItemNaturally(le.getLocation(), i3);
-    			le.getWorld().dropItemNaturally(le.getLocation(), i5);
-			}*/
 			if(d.getEntity().hasMetadata("plain")) {
 				
 				ItemStack ii = Elements.getel(14, p);
@@ -336,17 +337,17 @@ public class Drops implements Listener {
 				
 			}
 			if(d.getEntity().hasMetadata("wither")) {
-				
-
-				ItemStack ii = Elements.getel(-8, p);
-				ii.setAmount(1);
-
-    			le.getWorld().dropItem(le.getLocation(), ii);
-	            if(le.hasMetadata("boss")) {
-	            	ii.setAmount(5);
-	    			le.getWorld().dropItem(le.getLocation(), ii);
-	    			
-	            }
+//				
+//
+//				ItemStack ii = Elements.getel(-8, p);
+//				ii.setAmount(1);
+//
+//    			le.getWorld().dropItem(le.getLocation(), ii);
+//	            if(le.hasMetadata("boss")) {
+//	            	ii.setAmount(5);
+//	    			le.getWorld().dropItem(le.getLocation(), ii);
+//	    			
+//	            }
 			}
 		}
 	}

@@ -1138,7 +1138,7 @@ public class Snipskills extends Pak {
 
 
 			if(ClassData.pc.get(p.getUniqueId()) == 4 && ssd.AirStrike.getOrDefault(p.getUniqueId(), 0)>=1 && (le.getType()==EntityType.ENDERMAN || (le.getType() == EntityType.WITHER && le.getHealth()<=le.getMaxHealth()*0.5))) {
-				if(p.getInventory().getItemInMainHand().getType() == Material.CROSSBOW && !p.hasCooldown(Material.YELLOW_TERRACOTTA))
+				if(p.getInventory().getItemInMainHand().getType() == Material.CROSSBOW && !p.hasCooldown(MELEE))
 				{
 
 					if (le instanceof Player)

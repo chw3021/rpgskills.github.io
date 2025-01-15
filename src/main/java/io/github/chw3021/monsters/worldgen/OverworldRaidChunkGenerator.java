@@ -76,7 +76,7 @@ public class OverworldRaidChunkGenerator extends ChunkGenerator {
     
     @Override
     public List<BlockPopulator> getDefaultPopulators(World world) {
-        return Arrays.asList((BlockPopulator)new MountainsTrees());
+        return Arrays.asList((BlockPopulator)new ObsidiansPillar());
     }
     
 }

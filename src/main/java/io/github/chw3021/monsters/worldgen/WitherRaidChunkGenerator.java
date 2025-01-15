@@ -12,14 +12,15 @@ import org.bukkit.generator.WorldInfo;
 import org.bukkit.util.noise.SimplexOctaveGenerator;
 import org.jetbrains.annotations.NotNull;
 
-public class EnderRaidChunkGenerator extends ChunkGenerator {
+public class WitherRaidChunkGenerator extends ChunkGenerator {
 	@Override
 	public void generateSurface(@NotNull WorldInfo worldInfo, @NotNull Random random, int chunkX, int chunkZ, @NotNull ChunkGenerator.ChunkData chunkData) {
 	    SimplexOctaveGenerator generator = new SimplexOctaveGenerator(new Random(worldInfo.getSeed()), 6);
 	    generator.setScale(0.008);
 
 	    Material material;
-        material = Material.END_STONE_BRICKS;
+        material = Material.OBSIDIAN;
+        Material surfaceCover = Material.CAVE_AIR;
 
 	    int worldX = chunkX * 16;
 	    int worldZ = chunkZ * 16;
@@ -33,7 +34,10 @@ public class EnderRaidChunkGenerator extends ChunkGenerator {
 	                chunkData.setBlock(x, y, z, material);
 	            }
 	            for (int y = chunkData.getMinHeight() + 2; y < 40; y++) {
-	                chunkData.setBlock(x, y, z, Material.BEDROCK);
+	                chunkData.setBlock(x, y, z, Material.OBSIDIAN);
+	            }
+	            for (int y = height; y < height+10; y++) {
+	                chunkData.setBlock(x, y, z, surfaceCover);
 	            }
 	        }
 	    }

@@ -321,7 +321,7 @@ public class Swordskills extends Pak {
 			final Location fl = p.getLocation().clone();
 
 			if(ClassData.pc.get(p.getUniqueId()) == 0 && ssd.Swoop.getOrDefault(p.getUniqueId(), 0)>=1) {
-				if((p.isSneaking()) && !p.hasCooldown(Material.YELLOW_TERRACOTTA))
+				if((p.isSneaking()) && !p.hasCooldown(MELEE))
 				{
 					if(p.getInventory().getItemInMainHand().getType().name().contains("SWORD"))
 					{

@@ -603,7 +603,7 @@ public class Illskills extends Pak {
 											{
 												LivingEntity le = (LivingEntity)e;
 												atk1(0.66*(1+isd.Trick.get(p.getUniqueId())*0.0535), p, le);
-												p.setCooldown(Material.YELLOW_TERRACOTTA, 1);
+												p.setCooldown(MELEE, 1);
 												if(Proficiency.getpro(p)>=2 && le.isValid() && !le.isDead()) {
 													if(hypnosist.containsKey(le.getUniqueId())) {
 														Bukkit.getScheduler().cancelTask(hypnosist.get(le.getUniqueId()));
@@ -1131,7 +1131,7 @@ public class Illskills extends Pak {
 
 
 			if(ClassData.pc.get(p.getUniqueId()) == 11 && isd.Switch.getOrDefault(p.getUniqueId(), 0)>=1 && !le.hasMetadata("fake") && !le.hasMetadata("portal")) {
-				if((p.getInventory().getItemInMainHand().getType()==Material.BLAZE_ROD) && (p.isSneaking()) && !(p.hasCooldown(Material.YELLOW_TERRACOTTA)))
+				if((p.getInventory().getItemInMainHand().getType()==Material.BLAZE_ROD) && (p.isSneaking()) && !(p.hasCooldown(MELEE)))
 				{
 					SkillBuilder bd = new SkillBuilder()
 							.player(p)

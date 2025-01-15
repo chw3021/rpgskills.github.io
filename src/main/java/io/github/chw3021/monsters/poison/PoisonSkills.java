@@ -1394,7 +1394,7 @@ public class PoisonSkills extends OverworldRaids{
 			Player player = (Player)d.getDamager();
 			if(ordeal.containsKey(p.getUniqueId())) {
 				d.setCancelled(true);
-				if(!player.hasCooldown(Material.YELLOW_TERRACOTTA)) {
+				if(!player.hasCooldown(MELEE)) {
 					bossfailed(p, gethero(p));
 				}
 			}

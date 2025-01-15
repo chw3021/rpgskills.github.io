@@ -7,7 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.generator.BlockPopulator;
 
-public class MountainsTrees extends BlockPopulator {
+public class ObsidiansPillar extends BlockPopulator {
 	/*@Override
 	public void populate(WorldInfo world, Random random, int chunkX, int chunkZ, LimitedRegion lr) {
 		if (random.nextBoolean()) {

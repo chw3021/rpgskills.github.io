@@ -1033,7 +1033,7 @@ public class Frostskills extends Pak {
 									}
 									if(e instanceof LivingEntity&& !(e.hasMetadata("fake")) && e!=p&& !(e.hasMetadata("portal"))) {
 										LivingEntity le = (LivingEntity)e;
-										p.setCooldown(Material.YELLOW_TERRACOTTA, 1);
+										p.setCooldown(MELEE, 1);
 										atk1(0.25, p, le);
 
 

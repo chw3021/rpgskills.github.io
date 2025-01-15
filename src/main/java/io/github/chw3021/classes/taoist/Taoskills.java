@@ -1463,7 +1463,7 @@ public class Taoskills extends Pak {
         	    				}, 15);
     	                	}
     	    				
-    						p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
+    						p.setCooldown(MELEE, 2);
     		            	HashSet<LivingEntity> les = new HashSet<LivingEntity>();
     	                    ArrayList<Location> line = new ArrayList<Location>();
     	                    for(double d = 0.1; d <= 16.1; d += 0.2) {
@@ -1496,7 +1496,7 @@ public class Taoskills extends Pak {
     							}
     	                    });
     						les.forEach(le -> {
-    							p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
+    							p.setCooldown(MELEE, 2);
     							atk0(0.1, tsd.Charm.get(p.getUniqueId())*0.12, p, le);
     		                    Holding.superholding(p, le, 36l);
     							
@@ -2219,7 +2219,7 @@ public class Taoskills extends Pak {
 		final LivingEntity le = (LivingEntity)d.getEntity();
 		
 		
-		if(ClassData.pc.get(p.getUniqueId()) == 10&& tsd.CombustInside.get(p.getUniqueId())>=1 && !p.hasCooldown(Material.YELLOW_TERRACOTTA))	
+		if(ClassData.pc.get(p.getUniqueId()) == 10&& tsd.CombustInside.get(p.getUniqueId())>=1 && !p.hasCooldown(MELEE))	
 		{
 			if((le.hasMetadata("fake")) || (le.hasMetadata("portal"))) {
 				return;

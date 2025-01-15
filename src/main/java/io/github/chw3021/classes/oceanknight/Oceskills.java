@@ -2224,8 +2224,8 @@ public class Oceskills extends Pak {
 			if(p.getInventory().getItemInMainHand().getType()==Material.TRIDENT|| p.getInventory().getItemInMainHand().getType()==Material.SHIELD)
 			{
 				dset2(d, p, 1.1*(1+fsd.Splash.get(p.getUniqueId())*0.03415), le, 7);
-				if(p.getCooldown(Material.YELLOW_TERRACOTTA)<=0) {
-    				p.setCooldown(Material.YELLOW_TERRACOTTA, 3);
+				if(p.getCooldown(MELEE)<=0) {
+    				p.setCooldown(MELEE, 3);
     				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
     	                @Override
     	                public void run() {

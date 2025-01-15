@@ -2,6 +2,7 @@ package io.github.chw3021.monsters;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.EntityType;
@@ -396,13 +397,14 @@ public class Mobs extends Pak {
 	final private LivingEntity SummonEffect(Location l, @Nullable EntityType type) {
 		final LivingEntity creature = (LivingEntity) l.getWorld().spawnEntity(l.clone(), type);
 		Holding.holding(null, creature, 20l);
-		l.getWorld().playSound(l, Sound.BLOCK_RESPAWN_ANCHOR_CHARGE, 0.1f, 1.5f);
 		for(int dou = 0; dou < 10; dou++) {
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
                 @Override
                 public void run() 
                 {
-                	creature.teleport(creature.getLocation().add(creature.getLocation().getDirection().rotateAroundX(-Math.PI/2).normalize().multiply(0.1)));
+            		l.getWorld().playSound(l, Sound.ENTITY_ENDER_EYE_DEATH, 0.08f, 0.2f);
+                	creature.teleport(creature.getLocation().add(0,0.12,0));
+                	l.getWorld().spawnParticle(Particle.GUST, creature.getLocation(), 200,1,2.5,1);
                 }
 			}, dou*2);
 		}
@@ -478,6 +480,7 @@ public class Mobs extends Pak {
 		creature.getEquipment().setItemInMainHandDropChance(0);
 		creature.getEquipment().setItemInOffHandDropChance(0);
 		creature.getEquipment().setLeggingsDropChance(0);
+		
 		
 		equipsum(creature,head,chest,leg,boots,main,off);
 		

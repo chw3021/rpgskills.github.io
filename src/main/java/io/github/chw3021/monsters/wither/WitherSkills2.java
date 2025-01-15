@@ -1,7 +1,6 @@
-package io.github.chw3021.monsters.ender;
+package io.github.chw3021.monsters.wither;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -65,7 +64,7 @@ import io.github.chw3021.rmain.RMain;
 
 
 
-public class VoidSkills extends EndercoreRaids{
+public class WitherSkills2 extends EndercoreRaids{
 
 	
 	Holding hold = Holding.getInstance();
@@ -78,18 +77,12 @@ public class VoidSkills extends EndercoreRaids{
 	
 
 	
-	private static final VoidSkills instance = new VoidSkills ();
-	public static VoidSkills getInstance()
+	private static final WitherSkills2 instance = new WitherSkills2 ();
+	public static WitherSkills2 getInstance()
 	{
 		return instance;
 	}
-
-	private Boolean isRuined(LivingEntity p) {
-		if (p.hasMetadata("ruined")) {
-			return true;
-		}
-		return false;
-	}
+	
 	final Material DHEAD = Material.LIGHT_BLUE_CONCRETE;
 	final Material SHEAD = Material.MAGENTA_CONCRETE;
 
@@ -446,7 +439,7 @@ public class VoidSkills extends EndercoreRaids{
 		if(po.getShooter() instanceof LivingEntity) {
 			LivingEntity p = (LivingEntity) po.getShooter();
 			if(po.hasMetadata("voidPaint")) {
-        		Location l = d.getHitEntity() != null ? d.getHitEntity().getLocation() : d.getHitBlock().getLocation();
+        		final Location l = d.getHitEntity() != null ? d.getHitEntity().getLocation() : d.getHitBlock().getLocation();
         		
         		Snowball sn = (Snowball) po;
         		l.setDirection(p.getEyeLocation().getDirection());
@@ -477,8 +470,7 @@ public class VoidSkills extends EndercoreRaids{
     	
         ArrayList<Location> meats = new ArrayList<>();
         AtomicInteger j = new AtomicInteger();
-        int max = isRuined(p) ? 6 : 10;
-        for(int i=0; i<max; i++) {
+        for(int i=0; i<9; i++) {
             Random random=new Random();
         	double number = random.nextDouble() * 4 * (random.nextBoolean() ? -1 : 1);
         	double number2 = random.nextDouble() * 4 * (random.nextBoolean() ? -1 : 1);
@@ -771,7 +763,7 @@ public class VoidSkills extends EndercoreRaids{
 	    if (world == null) return randomLocation;
 
 	    // 반지름과 성장 속도 초기화
-	    final double maxRadius = isRuined(boss) ? 6.5 : 4 ; // 최대 반지름
+	    final double maxRadius = 4.0; // 최대 반지름
 	    final double growthRate = 0.5; // 1틱당 반지름 증가량
 	    Random random = new Random();
 	    final DustOptions dop = new Particle.DustOptions(colors[random.nextInt(carpets.length)], 2f);
@@ -795,7 +787,7 @@ public class VoidSkills extends EndercoreRaids{
 	                    double z = radius * Math.sin(phi) * Math.sin(theta);
 
 	                    Location particleLocation = randomLocation.clone().add(x, y, z);
-	                    world.spawnParticle(Particle.DUST, particleLocation, 5, 0.1, 0.1, 0.1, 0,dop); // 파티클
+	                    world.spawnParticle(Particle.DUST, particleLocation, 1, 0, 0, 0, 0,dop); // 파티클
 	                }
 	            }
 
@@ -954,11 +946,6 @@ public class VoidSkills extends EndercoreRaids{
 	    for (int i = 0; i < 15 + cl.distance(fl); i++) {
 	        line.add(fl.clone().add(v.clone().multiply(i)));
 	    }
-	    if(isRuined(p)) {
-	    	List<Location> reversed = new ArrayList<>(line);
-	    	Collections.reverse(reversed);
-	    	line.addAll(reversed);
-	    }
 	    
 	    HashSet<BlockDisplay> displays = new HashSet<BlockDisplay>();
 
@@ -992,7 +979,6 @@ public class VoidSkills extends EndercoreRaids{
 	    int cart = Bukkit.getScheduler().runTaskLater(RMain.getInstance(), () -> {
 	        Minecart minecart = (Minecart) w.spawnEntity(fl, EntityType.MINECART);
 	        minecart.setGravity(false);
-	        minecart.setInvulnerable(true);
 	        minecart.setDisplayBlockData(getBd(Material.JUKEBOX));
 	        minecart.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), rn));
 	        minecart.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
@@ -1018,7 +1004,6 @@ public class VoidSkills extends EndercoreRaids{
 
 	                Location target = line.get(currentIndex++);
 	                minecart.teleport(target);
-	    	        minecart.removePassenger(p);
 	    		    p.getWorld().playSound(minecart.getLocation(), Sound.BLOCK_NOTE_BLOCK_COW_BELL, 0.1f, 0.53f);
 	    		    p.getWorld().playSound(minecart.getLocation(), Sound.BLOCK_NOTE_BLOCK_COW_BELL, 0.1f, 0.6f);
 	        		w.spawnParticle(Particle.NOTE, target, 35, 2,2,2);
@@ -1045,7 +1030,7 @@ public class VoidSkills extends EndercoreRaids{
 	        }
 	        displays.forEach(d -> d.remove());
 	        chargable.remove(p.getUniqueId());
-	    }, line.size()*2+10);
+	    }, 85);
 
 	    Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), () -> porkable.put(p.getUniqueId(), true), 180);
 	}
@@ -1225,7 +1210,6 @@ public class VoidSkills extends EndercoreRaids{
 
     		// paints의 크기 (3개)
     		int vertexCount = paints.length;
-    		Random random = new Random();
 
     		// 삼각형 꼭짓점 계산
     		for (int i = 0; i < vertexCount; i++) {
@@ -1240,7 +1224,7 @@ public class VoidSkills extends EndercoreRaids{
     		    Location vertex = fl.clone().add(offsetX, 0, offsetZ);
 
     		    // 몬스터 소환
-    		    summonMonster(p, vertex, paints[random.nextInt(paints.length)]);
+    		    summonMonster(p, vertex, paints[i]);
     		}
             swoopWarning(p, fl, tpe);
         	p.swingMainHand();

@@ -851,7 +851,7 @@ public class CrimsonSkills extends Summoned{
 		{
 			d.setCancelled(true);
 
-			if(d.getDamager() instanceof Player hp && !hp.hasCooldown(Material.YELLOW_TERRACOTTA)) 
+			if(d.getDamager() instanceof Player hp && !hp.hasCooldown(MELEE)) 
 			{
 				LivingEntity p = (LivingEntity) Bukkit.getEntity(getbossbyalter.get(as.getUniqueId()));
 				

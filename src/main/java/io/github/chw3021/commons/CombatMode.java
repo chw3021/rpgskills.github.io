@@ -8,6 +8,7 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Result;
@@ -34,8 +35,32 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 
 public class CombatMode {
 
+	private ItemStack getCareful() {
+		ItemStack is = new ItemStack(Material.EVOKER_SPAWN_EGG);
+		is.addUnsafeEnchantment(Enchantment.BREACH, 1);
+		ItemMeta im = is.getItemMeta();
+		im.setMaxStackSize(1);
+		im.setItemName("CAREFUL");
+		is.setItemMeta(im);
+		
+		return is;
+	}
 
-	protected Material CAREFUL = Material.EVOKER_SPAWN_EGG;
+	protected final ItemStack CAREFUL = getCareful();
+
+	private ItemStack getMelee() {
+		ItemStack is = new ItemStack(Material.YELLOW_TERRACOTTA);
+		is.addUnsafeEnchantment(Enchantment.DENSITY, 1);
+		ItemMeta im = is.getItemMeta();
+		im.setMaxStackSize(1);
+		im.setItemName("MELEE");
+		is.setItemMeta(im);
+		
+		return is;
+	}
+
+	protected final ItemStack MELEE = getMelee();
+	
 	
 	private static final CombatMode instance = new CombatMode();
 	private HashMap<String, Long> hm = new HashMap<String, Long>();

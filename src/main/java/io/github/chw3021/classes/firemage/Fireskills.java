@@ -1531,7 +1531,7 @@ public class Fireskills extends Pak {
 		{
 		Player p = (Player)d.getDamager();
 		double sec =4*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
-		if( p.getInventory().getItemInMainHand().getType()==Material.BLAZE_ROD && (p.isSneaking()) && !(p.hasCooldown(Material.YELLOW_TERRACOTTA)))
+		if( p.getInventory().getItemInMainHand().getType()==Material.BLAZE_ROD && (p.isSneaking()) && !(p.hasCooldown(MELEE)))
 		{
 		LivingEntity le = (LivingEntity)d.getEntity();
 	    

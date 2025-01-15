@@ -1595,7 +1595,7 @@ public class Palskills extends Pak {
 				if(p.getAttackCooldown()==1) 
 				{
 					
-					if(weaponCheck(p)&& !(p.hasCooldown(Material.YELLOW_TERRACOTTA)) && !(p.isSneaking()) && !(p.isOnGround()) && !(p.hasCooldown(Material.YELLOW_TERRACOTTA)))
+					if(weaponCheck(p)&& !(p.hasCooldown(MELEE)) && !(p.isSneaking()) && !(p.isOnGround()) && !(p.hasCooldown(MELEE)))
 						{
 						SkillBuilder bd = new SkillBuilder()
 								.player(p)

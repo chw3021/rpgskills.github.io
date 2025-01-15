@@ -1106,7 +1106,7 @@ public class Archskills extends Pak{
 			}
 
 
-			if(ClassData.pc.get(p.getUniqueId()) == 6 && asd.HookAndShot.getOrDefault(p.getUniqueId(),0)>=1 && (p.isSneaking()) && !(p.hasCooldown(Material.YELLOW_TERRACOTTA))) {
+			if(ClassData.pc.get(p.getUniqueId()) == 6 && asd.HookAndShot.getOrDefault(p.getUniqueId(),0)>=1 && (p.isSneaking()) && !(p.hasCooldown(MELEE))) {
 				if(p.getInventory().getItemInMainHand().getType() == Material.BOW)
 				{
 
@@ -1437,7 +1437,7 @@ public class Archskills extends Pak{
 					}
 					if(e.getHealth() <= e.getAttribute(Attribute.MAX_HEALTH).getValue()/2)
 					{
-						p.setCooldown(Material.YELLOW_TERRACOTTA, 1);
+						p.setCooldown(MELEE, 1);
 						e.damage(bbArrow(ar), p);
 						ev.getEntity().remove();
 					}
@@ -1460,7 +1460,7 @@ public class Archskills extends Pak{
 								}
 							}
 						}
-						p.setCooldown(Material.YELLOW_TERRACOTTA, 1);
+						p.setCooldown(MELEE, 1);
 						e.damage(bbArrow(ar), p);
 						Holding.holding(p, e, 2l);
 						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {

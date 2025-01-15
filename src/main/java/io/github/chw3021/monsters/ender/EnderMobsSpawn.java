@@ -110,21 +110,10 @@ public class EnderMobsSpawn extends Mobs {
 		ItemStack head = new ItemStack(Material.ENDER_CHEST);
 		String reg = lang.contains("kr") ? "엔더미믹":"EnderMimic";
 		Stray newmob = (Stray) Mobspawn(le, reg, 75000.0, head,  new ItemStack(Material.VOID_AIR),  new ItemStack(Material.VOID_AIR),  new ItemStack(Material.VOID_AIR), new ItemStack(Material.VOID_AIR),  new ItemStack(Material.VOID_AIR), EntityType.STRAY);
-		newmob.setSwimming(true);
 		newmob.setGravity(true);
 		newmob.setAI(false);
 		newmob.setInvisible(true);
-		newmob.getAttribute(Attribute.WATER_MOVEMENT_EFFICIENCY).setBaseValue(20);
-		newmob.getAttribute(Attribute.OXYGEN_BONUS).setBaseValue(20);
-		newmob.getAttribute(Attribute.GRAVITY).setBaseValue(10000);
-		newmob.getAttribute(Attribute.STEP_HEIGHT).setBaseValue(30);
-		newmob.getAttribute(Attribute.JUMP_STRENGTH).setBaseValue(30);
-		newmob.addPotionEffect(
-				new PotionEffect(PotionEffectType.WATER_BREATHING, 999999, 255, false, false));
-		newmob.addPotionEffect(
-				new PotionEffect(PotionEffectType.CONDUIT_POWER, 999999, 3, false, false));
-		newmob.addPotionEffect(
-				new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 999999, 3, false, false));
+		newmob.getAttribute(Attribute.SCALE).setBaseValue(1.2);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("ender", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("enderMimic", new FixedMetadataValue(RMain.getInstance(), true));

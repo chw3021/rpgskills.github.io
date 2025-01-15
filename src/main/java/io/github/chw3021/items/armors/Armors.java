@@ -280,6 +280,9 @@ public class Armors {
 			return r;
 		}
 		else if (cmdt == 205) {
+			if(m.contains("CHESTPLATE")) {
+				rm.setGlider(true);
+			}
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 				rm.setDisplayName(ChatColor.GOLD +"바람의 "+kname);
 				rm.setItemName(ChatColor.GOLD +"Windy "+ename);

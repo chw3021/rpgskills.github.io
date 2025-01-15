@@ -91,6 +91,29 @@ public class RaidWorldLoad implements Listener {
             }
         }
     }
+
+    @EventHandler
+    public void witherRaidWorldLoad(WorldLoadEvent ev) {
+        if (ev.getWorld().getName().equals("EndercoreRaid")) {
+            if (Bukkit.getServer().getWorld("WitherRaid") == null) {
+                if (worldExists("WitherRaid")) {
+                    // 월드가 존재하면 불러오기 (청크 생성기 강제 적용)
+                    World rw = Bukkit.getServer().createWorld(new WorldCreator("WitherRaid").generator(new WitherRaidChunkGenerator()));
+                    configureRaidWorld(rw, Environment.NETHER);
+                } else {
+                    // 월드가 존재하지 않으면 새로 생성
+                    WorldCreator rwc = new WorldCreator("WitherRaid");
+                    rwc.environment(Environment.NETHER);
+                    rwc.generator(new WitherRaidChunkGenerator());
+
+                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), () -> {
+                        World rw = rwc.createWorld();
+                        configureRaidWorld(rw, Environment.NETHER);
+                    }, 50);
+                }
+            }
+        }
+    }
     
     private void configureRaidWorld(World world, Environment environment) {
         world.setMetadata("rpgraidworld", new FixedMetadataValue(RMain.getInstance(), true));

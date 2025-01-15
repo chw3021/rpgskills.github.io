@@ -1639,7 +1639,7 @@ public class Engskills extends Pak {
 												});
 												enar.setDamage(player_damage.get(p.getName())*3 + esd.Electrostatic.get(p.getUniqueId())*3);
 											}
-											p.setCooldown(Material.YELLOW_TERRACOTTA, 1);
+											p.setCooldown(MELEE, 1);
 											le.damage(0, p);
 											le.damage(player_damage.get(p.getName())*3 + esd.Electrostatic.get(p.getUniqueId())*3, p);
 											*/
@@ -1805,7 +1805,7 @@ public class Engskills extends Pak {
 
 
 			if(ClassData.pc.get(p.getUniqueId()) == 17 && esd.Magnetic.get(p.getUniqueId())>=1) {
-				if((p.getInventory().getItemInMainHand().getType().name().contains("PICKAXE")) && (p.isSneaking()) && !(p.hasCooldown(Material.YELLOW_TERRACOTTA)))
+				if((p.getInventory().getItemInMainHand().getType().name().contains("PICKAXE")) && (p.isSneaking()) && !(p.hasCooldown(MELEE)))
 				{
 					SkillBuilder bd = new SkillBuilder()
 							.player(p)

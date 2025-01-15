@@ -419,7 +419,6 @@ public class ArmorSet implements Listener{
 			p.getAttribute(Attribute.LUCK).setBaseValue(p.getAttribute(Attribute.LUCK).getBaseValue()+20);
 			p.getAttribute(Attribute.ATTACK_SPEED).setBaseValue(p.getAttribute(Attribute.ATTACK_SPEED).getBaseValue()*5);
 			p.getAttribute(Attribute.SAFE_FALL_DISTANCE).setBaseValue(20);
-			p.getAttribute(Attribute.GRAVITY).setBaseValue(0.04);
 		 }
 		 if(boots == 6) {
 			p.getAttribute(Attribute.ARMOR).setBaseValue(p.getAttribute(Attribute.ARMOR).getBaseValue()+5);

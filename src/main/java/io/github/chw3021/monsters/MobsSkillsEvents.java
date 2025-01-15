@@ -104,7 +104,7 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 
     // private 생성자
     private MobsSkillsEvents() {
-        super(); // Mobs의 생성자 호출
+        super();
     }
 
     // 싱글톤 인스턴스 반환 메서드
@@ -113,7 +113,6 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
     }
 
 	
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void Mobspawn(CreatureSpawnEvent ev) {
 		if (ev.getEntityType() == EntityType.ARMOR_STAND|| ev.getEntity() instanceof Player) {
@@ -148,34 +147,29 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 			le.setCustomName(null);
 			if (ev.getEntityType() == EntityType.WITHER) {
 				le.setCustomName(trans(le));
-				ev.getEntity().setMaxHealth(900000);
+				ev.getEntity().getAttribute(Attribute.MAX_HEALTH).setBaseValue(900000);
 				ev.getEntity().setHealth(900000);
 				ev.getEntity().setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
-				ev.getEntity().setMetadata("nether", new FixedMetadataValue(RMain.getInstance(), true));
 				ev.getEntity().setMetadata("wither", new FixedMetadataValue(RMain.getInstance(), true));
 			} else if (ev.getEntityType() == EntityType.WARDEN) {
 				le.setCustomName(trans(le));
-				ev.getEntity().setMaxHealth(9999999);
+				ev.getEntity().getAttribute(Attribute.MAX_HEALTH).setBaseValue(9999999);
 				ev.getEntity().setHealth(9999999);
 				ev.getEntity().setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
-				ev.getEntity().setMetadata("ender", new FixedMetadataValue(RMain.getInstance(), true));
-				ev.getEntity().setMetadata("nether", new FixedMetadataValue(RMain.getInstance(), true));
-				ev.getEntity().setMetadata("wither", new FixedMetadataValue(RMain.getInstance(), true));
-				ev.getEntity().setMetadata("void", new FixedMetadataValue(RMain.getInstance(), true));
+				ev.getEntity().setMetadata("warden", new FixedMetadataValue(RMain.getInstance(), true));
 			}else if (ev.getEntityType() == EntityType.ENDER_DRAGON) {
 				le.setCustomName(trans(le));
-				ev.getEntity().setMaxHealth(200000);
-				ev.getEntity().setHealth(200000);
+				ev.getEntity().getAttribute(Attribute.MAX_HEALTH).setBaseValue(1000000);
+				ev.getEntity().setHealth(1000000);
 				ev.getEntity().setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 				ev.getEntity().setMetadata("ender", new FixedMetadataValue(RMain.getInstance(), true));
-				ev.getEntity().setMetadata("void", new FixedMetadataValue(RMain.getInstance(), true));
 			} else if (ev.getEntityType() == EntityType.GIANT) {
 				le.setAI(false);
 				le.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 				le.getAttribute(Attribute.GRAVITY).setBaseValue(10);
 				le.getAttribute(Attribute.SCALE).setBaseValue(0.2);
-				le.setCustomName("SandBag");
-				ev.getEntity().setMaxHealth(9999999);
+				le.setCustomName("❦");
+				ev.getEntity().getAttribute(Attribute.MAX_HEALTH).setBaseValue(9999999);
 				ev.getEntity().setHealth(9999999);
 				ev.getEntity().setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 				ev.getEntity().setMetadata("sandbag", new FixedMetadataValue(RMain.getInstance(), true));
@@ -206,7 +200,6 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 				
 				NetherMobsSpawn.getInstance().Spawn(le, b);
 				EnderMobsSpawn.getInstance().Spawn(le, b);
-				
 
 			}
 		}

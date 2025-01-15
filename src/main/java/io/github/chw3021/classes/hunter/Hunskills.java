@@ -36,6 +36,7 @@ import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.GameMode;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
@@ -60,6 +61,7 @@ import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 
 public class Hunskills extends Pak {
@@ -95,6 +97,20 @@ public class Hunskills extends Pak {
 
 	Holding hold = Holding.getInstance();
 	private HunSkillsData hsd;
+
+	private ItemStack getA() {
+		ItemStack is = new ItemStack(Material.GLISTERING_MELON_SLICE);
+		is.addUnsafeEnchantment(Enchantment.BREACH, 1);
+		ItemMeta im = is.getItemMeta();
+		im.setMaxStackSize(1);
+		im.setItemName("CAREFUL");
+		is.setItemMeta(im);
+		
+		return is;
+	}
+
+	protected final ItemStack ATROCITY = getA();
+	
 
 	private static final Hunskills instance = new Hunskills ();
 	public static Hunskills getInstance()
@@ -974,7 +990,7 @@ public class Hunskills extends Pak {
 					}
 				}
 			}
-			if(ClassData.pc.get(p.getUniqueId()) == 2 && p.getCooldown(Material.GLISTERING_MELON_SLICE)<=0&& !le.hasMetadata("fake")&& !le.hasMetadata("portal"))
+			if(ClassData.pc.get(p.getUniqueId()) == 2 && p.getCooldown(ATROCITY)<=0&& !le.hasMetadata("fake")&& !le.hasMetadata("portal"))
 			{
 				if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE")&& !p.getInventory().getItemInMainHand().getType().name().contains("SHIELD")&& !p.getInventory().getItemInOffHand().getType().name().contains("NUGGET")&& !(p.getInventory().getItemInOffHand().getType()==Material.TRIDENT)&& !(p.getInventory().getItemInOffHand().getType()==Material.SHIELD)) {
 
@@ -1192,7 +1208,7 @@ public class Hunskills extends Pak {
 			final LivingEntity le = (LivingEntity)d.getEntity();
 
 
-			if(ClassData.pc.get(p.getUniqueId()) == 2 && hsd.Daze.get(p.getUniqueId())>=1&& p.getCooldown(Material.GLISTERING_MELON_SLICE)<=0)
+			if(ClassData.pc.get(p.getUniqueId()) == 2 && hsd.Daze.get(p.getUniqueId())>=1&& p.getCooldown(ATROCITY)<=0)
 			{
 				if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE")&& !p.getInventory().getItemInMainHand().getType().name().contains("PICK") && p.isSneaking())
 				{
@@ -1346,7 +1362,7 @@ public class Hunskills extends Pak {
 			LivingEntity le = (LivingEntity)d.getEntity();
 
 
-			if(ClassData.pc.get(p.getUniqueId()) == 2 && hsd.SkullCrusher.get(p.getUniqueId())>=1&& p.getCooldown(Material.GLISTERING_MELON_SLICE)<=0 && !p.isOnGround())	{
+			if(ClassData.pc.get(p.getUniqueId()) == 2 && hsd.SkullCrusher.get(p.getUniqueId())>=1&& p.getCooldown(ATROCITY)<=0 && !p.isOnGround())	{
 				if(!le.hasMetadata("fake")&& !le.hasMetadata("portal"))
 				{
 
@@ -1616,7 +1632,7 @@ public class Hunskills extends Pak {
 
 			if (e instanceof LivingEntity && (e!=p)&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")))
 			{
-				if(ClassData.pc.get(p.getUniqueId()) == 2&& p.getCooldown(Material.GLISTERING_MELON_SLICE)<=0)
+				if(ClassData.pc.get(p.getUniqueId()) == 2&& p.getCooldown(ATROCITY)<=0)
 				{
 					if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE")&& !p.getInventory().getItemInMainHand().getType().name().contains("PICK") && rage.containsEntry(p.getUniqueId(), e))
 					{
@@ -1819,7 +1835,7 @@ public class Hunskills extends Pak {
 
 				if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE")&& !p.getInventory().getItemInMainHand().getType().name().contains("PICK"))
 				{
-					if(p.getAttackCooldown()==1 && p.getCooldown(Material.GLISTERING_MELON_SLICE)<=0&& !le.hasMetadata("fake")&& !le.hasMetadata("portal"))
+					if(p.getAttackCooldown()==1 && p.getCooldown(ATROCITY)<=0&& !le.hasMetadata("fake")&& !le.hasMetadata("portal"))
 					{
 						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable()
 						{
@@ -1828,7 +1844,7 @@ public class Hunskills extends Pak {
 							public void run()
 							{
 
-								p.setCooldown(Material.GLISTERING_MELON_SLICE, 3);
+								p.setCooldown(ATROCITY, 3);
 								atks(0d, le.getMaxHealth()*(0.05+hsd.Atrocity.get(p.getUniqueId())*0.0002), p, le);
 							}
 						}, 3);
@@ -1887,131 +1903,6 @@ public class Hunskills extends Pak {
 			}
 		}
 	}
-/*
-
-	public void Swing(EntityDamageByEntityEvent d)
-	{
-
-		if(d.getDamager() instanceof Player && d.getEntity() instanceof LivingEntity)
-		{
-		Player p = (Player)d.getDamager();
-		LivingEntity e = (LivingEntity) d.getEntity();
-
-
-		if (e instanceof Player)
-		{
-			Player p1 = (Player) e;
-			 {
-			if(PartyData.hasParty(p) && PartyData.hasParty(p1))	{
-			if(PartyData.getParty(p).equals(PartyData.getParty(p1)))
-				{
-				d.setCancelled(true);
-					return;
-				}
-			}}
-			catch(NullPointerException ne) {
-				d.setCancelled(true);
-				return;
-			}
-		}
-		if(ClassData.pc.get(p.getUniqueId()) == 2 && p.getCooldown(Material.GLISTERING_MELON_SLICE)<=0)
-		{
-			if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE")&& !p.getInventory().getItemInMainHand().getType().name().contains("SHIELD")&& !p.getInventory().getItemInOffHand().getType().name().contains("NUGGET")&& !(p.getInventory().getItemInOffHand().getType()==Material.TRIDENT)&& !(p.getInventory().getItemInOffHand().getType()==Material.SHIELD)) {
-
-				if(Proficiency.getpro(p)>=2&& !p.hasCooldown(Material.YELLOW_TERRACOTTA)) {
-					p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
-					e.damage(0,p);
-					for(Entity e1 : e.getNearbyEntities(2, 2, 2)) {
-	            		if (e1 instanceof Player)
-						{
-
-							Player p1 = (Player) e1;
-							if(PartyData.hasParty(p) && PartyData.hasParty(p1))	{
-							if(PartyData.getParty(p).equals(PartyData.getParty(p1)))
-								{
-								continue;
-								}
-							}
-						}
-	            		if ((!(e1 == p))&& !(e1 == e)&&e1 instanceof LivingEntity&& !(e1.hasMetadata("fake"))&& !(e1.hasMetadata("portal")))
-						{
-							LivingEntity le1 = (LivingEntity)e1;
-							if(le1 instanceof EnderDragon) {
-			                    Arrow firstarrow = p.launchProjectile(Arrow.class);
-			                    firstarrow.setDamage(0);
-			                    firstarrow.remove();
-								Arrow enar = (Arrow) p.getWorld().spawn(le1.getLocation().add(0, 5.163, 0), Arrow.class, ar->{
-									ar.setShooter(p);
-									ar.setCritical(false);
-									ar.setSilent(true);
-									ar.setPickupStatus(PickupStatus.DISALLOWED);
-									ar.setVelocity(le1.getLocation().clone().add(0, -1, 0).toVector().subtract(le1.getLocation().toVector()).normalize().multiply(2.6));
-								});
-								enar.setDamage(d.getDamage());
-							}
-							le1.damage(d.getDamage(),p);
-						}
-					}
-				}
-			}
-
-		}
-		}
-		if(d.getDamager() instanceof Arrow && d.getEntity() instanceof LivingEntity)
-		{
-			Arrow a = (Arrow)d.getDamager();
-			LivingEntity e = (LivingEntity) d.getEntity();
-
-
-
-			if(a.getShooter() instanceof Player) {
-				Player p = (Player) a.getShooter();
-				if(ClassData.pc.get(p.getUniqueId()) == 2 && p.getCooldown(Material.GLISTERING_MELON_SLICE)<=0) {
-					if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE")&& p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()&& !p.getInventory().getItemInOffHand().getType().name().contains("NUGGET")&& !(p.getInventory().getItemInOffHand().getType()==Material.TRIDENT)&& !(p.getInventory().getItemInOffHand().getType()==Material.SHIELD))
-					{
-
-						if(Proficiency.getpro(p)>=2&& !p.hasCooldown(Material.YELLOW_TERRACOTTA)) {
-							p.setCooldown(Material.YELLOW_TERRACOTTA, 2);
-							e.damage(0,p);
-							for(Entity e1 : e.getNearbyEntities(2, 2, 2)) {
-			            		if (e1 instanceof Player)
-								{
-
-									Player p1 = (Player) e1;
-									if(PartyData.hasParty(p) && PartyData.hasParty(p1))	{
-									if(PartyData.getParty(p).equals(PartyData.getParty(p1)))
-										{
-										continue;
-										}
-									}
-								}
-			            		if ((!(e1 == p))&& !(e1 == e)&&e1 instanceof LivingEntity&& !(e1.hasMetadata("fake"))&& !(e1.hasMetadata("portal")))
-								{
-									LivingEntity le1 = (LivingEntity)e1;
-									if(le1 instanceof EnderDragon) {
-					                    Arrow firstarrow = p.launchProjectile(Arrow.class);
-					                    firstarrow.setDamage(0);
-					                    firstarrow.remove();
-										Arrow enar = (Arrow) p.getWorld().spawn(le1.getLocation().add(0, 5.163, 0), Arrow.class, ar->{
-											ar.setShooter(p);
-											ar.setCritical(false);
-											ar.setSilent(true);
-											ar.setPickupStatus(PickupStatus.DISALLOWED);
-											ar.setVelocity(le1.getLocation().clone().add(0, -1, 0).toVector().subtract(le1.getLocation().toVector()).normalize().multiply(2.6));
-										});
-										enar.setDamage(d.getDamage());
-									}
-									le1.damage(d.getDamage(),p);
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-	*/
-
 
 	public void Equipment(PlayerItemDamageEvent e)
 	{
@@ -2050,7 +1941,7 @@ public class Hunskills extends Pak {
 					}
 				}
 			}
-			if(ClassData.pc.get(p.getUniqueId()) == 2 && p.getCooldown(Material.GLISTERING_MELON_SLICE)<=0&& !le.hasMetadata("fake")&& !le.hasMetadata("portal"))
+			if(ClassData.pc.get(p.getUniqueId()) == 2 && p.getCooldown(ATROCITY)<=0&& !le.hasMetadata("fake")&& !le.hasMetadata("portal"))
 			{
 				if(p.getInventory().getItemInMainHand().getType().name().contains("_AXE")&& !p.getInventory().getItemInMainHand().getType().name().contains("SHIELD")&& !p.getInventory().getItemInOffHand().getType().name().contains("NUGGET")&& !(p.getInventory().getItemInOffHand().getType()==Material.TRIDENT)&& !(p.getInventory().getItemInOffHand().getType()==Material.SHIELD)) {
 

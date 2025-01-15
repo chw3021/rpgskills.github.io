@@ -1417,7 +1417,7 @@ public class Witskills extends Pak {
 
 
 
-			if(ClassData.pc.get(p.getUniqueId()) == 13 && p.isSneaking() && !p.hasCooldown(Material.YELLOW_TERRACOTTA)) {
+			if(ClassData.pc.get(p.getUniqueId()) == 13 && p.isSneaking() && !p.hasCooldown(MELEE)) {
 				double sec =8*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 				SkillBuilder bd = new SkillBuilder()

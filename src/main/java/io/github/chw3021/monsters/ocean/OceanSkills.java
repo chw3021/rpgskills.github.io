@@ -70,6 +70,16 @@ public class OceanSkills extends OverworldRaids{
 	{
 		if(d.getEntity() instanceof LivingEntity) {
 			LivingEntity p = (LivingEntity) d.getEntity();
+			if(d.getDamager() instanceof Player pe) {
+				if(pe.hasCooldown(MELEE)) {
+					return;
+				}
+			}
+			else {
+				return;
+			}
+			
+			
 			if(p.hasMetadata("mimic") && !p.hasAI() && p.isInvisible()) {
 				p.removeMetadata("fake", RMain.getInstance());
 				d.setCancelled(false);
@@ -99,7 +109,7 @@ public class OceanSkills extends OverworldRaids{
 				ee.setItemInOffHand(main);
 				p.removeMetadata("mimic", RMain.getInstance());
 			}
-			else if(p.hasMetadata("enderMimic") && !p.hasAI() && p.isInvisible()) {
+			if(p.hasMetadata("enderMimic") && !p.hasAI() && p.isInvisible()) {
 				p.removeMetadata("fake", RMain.getInstance());
 				d.setCancelled(false);
 				p.setAI(true);
@@ -749,7 +759,7 @@ public class OceanSkills extends OverworldRaids{
 		d.setCancelled(true);
 		if(d.getDamager() instanceof Player) {
 			Player dp = (Player) d.getDamager();
-			if(dp.hasCooldown(Material.YELLOW_TERRACOTTA)) {
+			if(dp.hasCooldown(MELEE)) {
 				return;
 			}
 		}

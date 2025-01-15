@@ -1090,7 +1090,7 @@ public class SnowSkills extends Summoned{
 			}
 			if(d.getDamager() instanceof Player) {
 				Player dp = (Player) d.getDamager();
-				if(dp.hasCooldown(Material.YELLOW_TERRACOTTA)) {
+				if(dp.hasCooldown(MELEE)) {
 					return;
 				}
 			}

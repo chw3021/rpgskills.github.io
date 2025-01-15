@@ -872,7 +872,7 @@ public class Broskills extends Pak {
 
 		if(playerclass.get(p.getUniqueId()) == 25) {
 
-				if((p.getInventory().getItemInMainHand().getType().name().contains("SHOVEL")) && (p.isSneaking()) && !(p.hasCooldown(Material.YELLOW_TERRACOTTA)))
+				if((p.getInventory().getItemInMainHand().getType().name().contains("SHOVEL")) && (p.isSneaking()) && !(p.hasCooldown(MELEE)))
 				{
 				if(stcooldown.containsKey(p.getName())) // if cooldown has players name in it (on first trow cooldown is empty)
 		        {

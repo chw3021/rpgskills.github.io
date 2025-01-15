@@ -66,8 +66,6 @@ public class Pak extends CombatMode implements Listener{
 	public String path = new File("").getAbsolutePath();
 	
 
-	static public HashMap<UUID, Boolean> battlemod = new HashMap<UUID, Boolean>();
-
 	static public HashMap<UUID, Double> windyd = new HashMap<UUID, Double>();
 	static public HashMap<UUID, Double> earthd = new HashMap<UUID, Double>();
 	static public HashMap<UUID, Double> frostd = new HashMap<UUID, Double>();
@@ -2155,7 +2153,7 @@ public class Pak extends CombatMode implements Listener{
 		ch.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		ch.setMetadata("rob"+p.getName(), new FixedMetadataValue(RMain.getInstance(), true));
 		ch.setMetadata("enderdragondamager", new FixedMetadataValue(RMain.getInstance(), true));
-		p.setCooldown(Material.YELLOW_TERRACOTTA,1);
+		p.setCooldown(MELEE,1);
 		ch.damage(d*0.046, p);
 		Double dam = 9999999-ch.getHealth();
 		if(le.getHealth()-dam>0) {
@@ -2191,7 +2189,7 @@ public class Pak extends CombatMode implements Listener{
 		if(!Holding.superholding.containsKey(le.getUniqueId())) {
 			le.setInvulnerable(false);
 		}
-		p.setCooldown(Material.YELLOW_TERRACOTTA,1);
+		p.setCooldown(MELEE,1);
 		le.damage(fd, p);
 	}
 
@@ -2217,7 +2215,7 @@ public class Pak extends CombatMode implements Listener{
 		if(!Holding.superholding.containsKey(le.getUniqueId())) {
 			le.setInvulnerable(false);
 		}
-		p.setCooldown(Material.YELLOW_TERRACOTTA,1);
+		p.setCooldown(MELEE,1);
 		le.damage(fd, p);
 	}
 
@@ -2244,7 +2242,7 @@ public class Pak extends CombatMode implements Listener{
 		if(!Holding.superholding.containsKey(le.getUniqueId())) {
 			le.setInvulnerable(false);
 		}
-		p.setCooldown(Material.YELLOW_TERRACOTTA,1);
+		p.setCooldown(MELEE,1);
 		le.damage(fd, p);
 	}
 
@@ -2270,7 +2268,7 @@ public class Pak extends CombatMode implements Listener{
 		if(!Holding.superholding.containsKey(le.getUniqueId())) {
 			le.setInvulnerable(false);
 		}
-		p.setCooldown(Material.YELLOW_TERRACOTTA,1);
+		p.setCooldown(MELEE,1);
 		le.damage(fd, p);
 	}
 
@@ -2296,7 +2294,7 @@ public class Pak extends CombatMode implements Listener{
 		if(!Holding.superholding.containsKey(le.getUniqueId())) {
 			le.setInvulnerable(false);
 		}
-		p.setCooldown(Material.YELLOW_TERRACOTTA,1);
+		p.setCooldown(MELEE,1);
 		le.damage(fd, p);
 	}
 	/**
@@ -2320,7 +2318,7 @@ public class Pak extends CombatMode implements Listener{
 		if(!Holding.superholding.containsKey(le.getUniqueId())) {
 			le.setInvulnerable(false);
 		}
-		p.setCooldown(Material.YELLOW_TERRACOTTA,1);
+		p.setCooldown(MELEE,1);
 		le.damage(fd, p);
 	}
 	
@@ -2346,7 +2344,7 @@ public class Pak extends CombatMode implements Listener{
 		if(!Holding.superholding.containsKey(le.getUniqueId())) {
 			le.setInvulnerable(false);
 		}
-		p.setCooldown(Material.YELLOW_TERRACOTTA,1);
+		p.setCooldown(MELEE,1);
 		le.damage(fd, p);
 	}
 	/**
@@ -2370,7 +2368,7 @@ public class Pak extends CombatMode implements Listener{
 		if(!Holding.superholding.containsKey(le.getUniqueId())) {
 			le.setInvulnerable(false);
 		}
-		p.setCooldown(Material.YELLOW_TERRACOTTA,1);
+		p.setCooldown(MELEE,1);
 		le.damage(fd, p);
 	}
 
@@ -2395,7 +2393,7 @@ public class Pak extends CombatMode implements Listener{
 		if(!Holding.superholding.containsKey(le.getUniqueId())) {
 			le.setInvulnerable(false);
 		}
-		p.setCooldown(Material.YELLOW_TERRACOTTA,1);
+		p.setCooldown(MELEE,1);
 		le.damage(fd , p);
 	}
 	/**
@@ -2419,7 +2417,7 @@ public class Pak extends CombatMode implements Listener{
 		if(!Holding.superholding.containsKey(le.getUniqueId())) {
 			le.setInvulnerable(false);
 		}
-		p.setCooldown(Material.YELLOW_TERRACOTTA,1);
+		p.setCooldown(MELEE,1);
 		le.damage(fd , p);
 	}
 	

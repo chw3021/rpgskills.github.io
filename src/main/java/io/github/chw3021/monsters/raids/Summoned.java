@@ -839,7 +839,7 @@ public class Summoned extends Mobs{
 		}
 		Location sl = le.getLocation().clone().add(0, 1, 0);
 		if(!sl.getBlock().isEmpty()) {
-			sl = CommonEvents.getInstance().BlankFinder(sl);
+			sl = CommonEvents.getInstance().BlankFinder(sl).clone().add(1, 0, 1);
 		}
 		sl.getBlock().setType(Material.END_GATEWAY);
 		EndGateway eg = (EndGateway) le.getWorld().getBlockState(sl);
@@ -921,7 +921,7 @@ public class Summoned extends Mobs{
 		}
 		Location sl = le.getLocation().clone().add(0, 1, 0);
 		if(!sl.getBlock().isEmpty()) {
-			sl = CommonEvents.getInstance().BlankFinder(sl);
+			sl = CommonEvents.getInstance().BlankFinder(sl).clone().add(1, 0, 1);
 		}
 		sl.getBlock().setType(Material.END_GATEWAY);
 		EndGateway eg = (EndGateway) le.getWorld().getBlockState(sl);
@@ -987,6 +987,86 @@ public class Summoned extends Mobs{
 	
 	}
 
+	@SuppressWarnings("unchecked")
+	private final void EndercorePortal(String rn, Integer combo, LivingEntity le) {
+
+		if(raidporstand.containsKey(rn)) {
+			if(Bukkit.getEntity(raidporstand.get(rn)) != null) {
+				Bukkit.getEntity(raidporstand.get(rn)).remove();
+			}
+			raidporstand.remove(rn);
+		}
+		if(raidpor.containsKey(rn)) {
+			raidpor.get(rn).setType(Material.VOID_AIR);
+			raidpor.remove(rn);
+		}
+		Location sl = le.getLocation().clone().add(0, 1, 0);
+		if(!sl.getBlock().isEmpty()) {
+			sl = CommonEvents.getInstance().BlankFinder(sl).clone().add(1, 0, 1);
+		}
+		sl.getBlock().setType(Material.END_GATEWAY);
+		EndGateway eg = (EndGateway) le.getWorld().getBlockState(sl);
+		eg.setExactTeleport(false);
+		eg.setExitLocation(null);
+		eg.setAge(50000);
+		eg.update();
+		eg.setMetadata("EndercoreRaidPortal", new FixedMetadataValue(RMain.getInstance(), rn));
+		eg.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
+		raidpor.put(rn, eg.getBlock());
+
+
+		TextDisplay as = le.getWorld().spawn(sl.clone().add(0, 2.5, 0), TextDisplay.class, a ->{
+			a.setInvulnerable(true);
+			a.setGravity(false);
+			a.setAlignment(TextAlignment.CENTER);
+			a.setGlowing(true);
+			a.setBackgroundColor(Color.WHITE);
+			a.setBillboard(Billboard.CENTER);
+			a.setSeeThrough(true);
+			a.setViewRange(15f);
+			a.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
+			a.setMetadata("rob", new FixedMetadataValue(RMain.getInstance(), rn));
+			raidporstand.put(rn, a.getUniqueId());
+			a.setCustomNameVisible(false);
+		});
+		
+		if(getherotype(rn) instanceof Player) {
+			Player p = (Player) getherotype(rn);
+			Holding.invur(p, 100l);
+			p.teleport(CommonEvents.getInstance().BlankFinder(sl.clone().add(2, 0, 2)));
+			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+				as.setText(ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다");
+				p.sendTitle(ChatColor.RED +"엔더 코어 포탈 소환", ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다", 10,35, 10);
+				p.sendMessage(ChatColor.RED +"엔더 코어 포탈 소환", ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다");
+			}
+			else {
+				as.setText(ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
+				p.sendTitle(ChatColor.RED +"Ender Core Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)", 10,35, 10);
+				p.sendMessage(ChatColor.RED +"Ender Core Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
+			}
+		}
+		else if(getherotype(rn) instanceof HashSet){
+			HashSet<Player> par = (HashSet<Player>) getherotype(rn);
+			par.forEach(p ->{
+				Holding.invur(p, 100l);
+				Location lel = le.getLocation().clone().add(2, 1, 2);
+				if(!lel.getBlock().isEmpty()) {
+					lel = CommonEvents.getInstance().BlankFinder(lel);
+				}
+				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+					as.setText(ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다");
+					p.sendTitle(ChatColor.RED +"엔더 코어 포탈 소환", ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다", 10,35, 10);
+					p.sendMessage(ChatColor.RED +"엔더 코어 포탈 소환", ChatColor.DARK_RED +"우클릭(맨손)으로 입장이 가능합니다");
+				}
+				else {
+					as.setText(ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
+					p.sendTitle(ChatColor.RED +"Ender Core Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)", 10,35, 10);
+					p.sendMessage(ChatColor.RED +"Ender Core Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
+				}
+			});
+		}
+	
+	}
 	
 	@SuppressWarnings("unchecked")
 	private final void ComboMessage(String rn, Integer combo, Boolean boss) {
@@ -1071,6 +1151,13 @@ public class Summoned extends Mobs{
 					}
 					else if(combo >= MAXCOMBO) {
                 		RaidFinish(rn,"","",0,meta);
+					}
+				}
+				else if(meta.equals("enderMimic")) {
+
+					if(combo==1) {
+						EndercorePortal(rn, combo, le);
+						return rn;
 					}
 				}
 				else {

@@ -2196,7 +2196,7 @@ public class Tamskills extends Pak {
 					 }
 				 }
 				 else if(!tamed.containsEntry(p.getUniqueId(), le)){
-					 if(!p.hasCooldown(Material.YELLOW_TERRACOTTA)) {
+					 if(!p.hasCooldown(MELEE)) {
 							attention.put(p.getUniqueId(), le);
 
 							if(tamed.containsKey(p.getUniqueId())) {
@@ -2226,7 +2226,7 @@ public class Tamskills extends Pak {
 				 }
 			 }
 			 else {
-				 if(!p.hasCooldown(Material.YELLOW_TERRACOTTA)) {
+				 if(!p.hasCooldown(MELEE)) {
 						attention.put(p.getUniqueId(), le);
 						if(tamed.containsKey(p.getUniqueId())) {
         	        		if (le instanceof Player) 

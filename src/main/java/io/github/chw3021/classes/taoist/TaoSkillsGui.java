@@ -51,7 +51,7 @@ public class TaoSkillsGui extends SkillsGui{
 			itemset("공중제비", Material.BLUE_BANNER, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+Flip,"","🖮🖰 점프 + 좌클릭",
 					"",ChatColor.BOLD+" X (0.3D + "+BigDecimal.valueOf(Flip*0.34).setScale(2, RoundingMode.HALF_EVEN)+")" ,"Master LV.50"), 5, skillsInv);
 			itemset("기운", Material.CANDLE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+Aura,"","웅크리기 + 아이템바꾸기(마우스휠)"
-					,ChatColor.UNDERLINE+"✬[화염, 대지]","🖮🖰 양의기운: 파티원들의 공격력(30%), 속도 증가","",ChatColor.UNDERLINE+"✬[서리, 어둠]","🖮🖰 음의기운: ","파티원들의 방어력 30%증가","적 공격시 파티원 체력 회복", "Master Lv.1"), 6, skillsInv);
+					,ChatColor.UNDERLINE+"❈ [화염, 대지]","🖮🖰 양의기운: 파티원들의 공격력(30%), 속도 증가","",ChatColor.UNDERLINE+"❈ [서리, 어둠]","🖮🖰 음의기운: ","파티원들의 방어력 30%증가","적 공격시 파티원 체력 회복", "Master Lv.1"), 6, skillsInv);
 			itemset("내공", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+Vibe,"","공격력이 증가합니다","",ChatColor.BOLD+" + "+BigDecimal.valueOf(Vibe*0.6).setScale(2, RoundingMode.HALF_EVEN)), 7, skillsInv);
 			if(Proficiency.getpro(p)<1) {
 				itemset("공명(잠김)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("요구 숙련도: "+ Proficiency.getproexp(p) + "/29315"), 9, skillsInv);
@@ -123,7 +123,7 @@ public class TaoSkillsGui extends SkillsGui{
 			itemset("Flip", Material.BLUE_BANNER, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+Flip,"","🖮🖰 Jump + LeftClick",
 					"",ChatColor.BOLD+" X (0.3D + "+BigDecimal.valueOf(Flip*0.34).setScale(2, RoundingMode.HALF_EVEN)+")" ,"Master LV.50"), 5, skillsInv);
 			itemset("Aura", Material.CANDLE, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+Aura,"","🖮🖰 Sneaking + Item Change(MouseWheel)"
-					,ChatColor.UNDERLINE+"✬[Fire, Earth]","🖮🖰 Aura Of Positive: Increases Party Damage(30%), Speed","",ChatColor.UNDERLINE+"✬[Frost, Dark]","🖮🖰 Aura Of Negative: ","Increases Party Armor 30%","Heal Party When You Attack", "Master Lv.1"), 6, skillsInv);
+					,ChatColor.UNDERLINE+"❈ [Fire, Earth]","🖮🖰 Aura Of Positive: Increases Party Damage(30%), Speed","",ChatColor.UNDERLINE+"❈ [Frost, Dark]","🖮🖰 Aura Of Negative: ","Increases Party Armor 30%","Heal Party When You Attack", "Master Lv.1"), 6, skillsInv);
 			itemset("Vibe", Material.BOOK, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+Vibe,"","Increases damage","",ChatColor.BOLD+" + "+BigDecimal.valueOf(Vibe*0.6).setScale(2, RoundingMode.HALF_EVEN)), 7, skillsInv);
 			if(Proficiency.getpro(p)<1) {
 				itemset("Resonance(Locked)", Material.STRUCTURE_VOID, 0, 1, Arrays.asList("Required Proficiency: "+ Proficiency.getproexp(p) + "/29315"), 9, skillsInv);

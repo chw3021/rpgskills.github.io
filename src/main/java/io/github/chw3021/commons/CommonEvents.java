@@ -188,7 +188,7 @@ public class CommonEvents extends Mobs implements Listener{
 	{
 		if(d.getDamager() instanceof Player){
 			Player p = (Player) d.getDamager();
-			if(!p.hasCooldown(Material.YELLOW_TERRACOTTA)) {
+			if(!p.hasCooldown(MELEE)) {
 				Bukkit.getPluginManager().callEvent(new PlayerInteractEvent(p, Action.LEFT_CLICK_AIR, p.getEquipment().getItemInMainHand(), null, p.getFacing()));
 			}
 		}

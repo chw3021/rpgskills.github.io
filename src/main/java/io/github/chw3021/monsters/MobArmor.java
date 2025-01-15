@@ -1,10 +1,12 @@
 package io.github.chw3021.monsters;
 
 import org.bukkit.attribute.Attribute;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
 
 public class MobArmor implements Listener {
@@ -12,6 +14,15 @@ public class MobArmor implements Listener {
 	@EventHandler
 	public void MobDam(EntityDamageEvent d) 
 	{
+		if(d.getEntity().hasMetadata("treasurepig")) {
+			if(d.getCause() != DamageCause.ENTITY_ATTACK && d.getCause() != DamageCause.VOID) {
+				d.setCancelled(true);
+				return;
+			}
+			d.setDamage(0.1);
+			Entity entity = d.getEntity();
+			entity.teleport(entity.getLocation().add(1, 0.5, -1));
+		}
 		if(d.getEntity().hasMetadata("quest")) {
 			d.setDamage(d.getDamage()*0.8);
 		}

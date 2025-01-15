@@ -895,7 +895,7 @@ public class Wreskills extends Pak {
 		LivingEntity le = (LivingEntity)d.getEntity();
 		
 		
-		if(ClassData.pc.get(p.getUniqueId()) == 8 && p.isSneaking() && wsd.GiantSwing.getOrDefault(p.getUniqueId(), 0)>=1 && !p.hasCooldown(Material.YELLOW_TERRACOTTA)) {
+		if(ClassData.pc.get(p.getUniqueId()) == 8 && p.isSneaking() && wsd.GiantSwing.getOrDefault(p.getUniqueId(), 0)>=1 && !p.hasCooldown(MELEE)) {
 			double sec = 26*(1-p.getAttribute(Attribute.LUCK).getValue()/1024d)*Obtained.ncd.getOrDefault(p.getUniqueId(), 1d);
 
 			SkillBuilder bd = new SkillBuilder()

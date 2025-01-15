@@ -2071,7 +2071,7 @@ public class Launskills extends Pak {
 					Wither e =(Wither) ev.getHitEntity();
 					if(e.getHealth() <= e.getAttribute(Attribute.MAX_HEALTH).getValue()/2)
 					{
-						p.setCooldown(Material.YELLOW_TERRACOTTA, 1);
+						p.setCooldown(MELEE, 1);
 						e.damage(bbArrow(ar), p);
 						ev.getEntity().remove();
 					}
@@ -2079,7 +2079,7 @@ public class Launskills extends Pak {
 				if(ev.getHitEntity() instanceof Enderman || ev.getHitEntity() instanceof Breeze) {
 					LivingEntity e =(LivingEntity) ev.getHitEntity();
 					{
-						p.setCooldown(Material.YELLOW_TERRACOTTA, 1);
+						p.setCooldown(MELEE, 1);
 						e.damage(bbArrow(ar), p);
 						ev.getEntity().remove();
 					}
