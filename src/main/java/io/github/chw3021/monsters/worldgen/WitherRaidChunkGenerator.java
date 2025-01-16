@@ -19,7 +19,7 @@ public class WitherRaidChunkGenerator extends ChunkGenerator {
 	    generator.setScale(0.008);
 
 	    Material material;
-        material = Material.OBSIDIAN;
+        material = Material.CHISELED_QUARTZ_BLOCK;
         Material surfaceCover = Material.CAVE_AIR;
 
 	    int worldX = chunkX * 16;

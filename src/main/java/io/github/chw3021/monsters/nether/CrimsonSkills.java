@@ -209,7 +209,7 @@ public class CrimsonSkills extends Summoned{
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
                 @Override
                 public void run() {
-                    line.forEach(l ->  {	
+                    line.forEach(l ->  {
                     	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
                 		@Override
                         	public void run() 

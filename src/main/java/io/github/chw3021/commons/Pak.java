@@ -39,6 +39,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.event.server.PluginEnableEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -227,6 +228,21 @@ public class Pak extends CombatMode implements Listener{
 					}
 				}
 			
+		}
+	}
+	
+	public void sendItemChange(LivingEntity p, Object ht, ItemStack mainf) {
+
+		if(ht instanceof Player) {
+			Player p1 = (Player) ht;
+			p1.sendEquipmentChange(p, EquipmentSlot.HAND, mainf);
+		}
+		else if(ht instanceof HashSet){
+			@SuppressWarnings("unchecked")
+			HashSet<Player> par = (HashSet<Player>) ht;
+    		par.forEach(p1 -> {
+    			p1.sendEquipmentChange(p, EquipmentSlot.HAND, mainf);
+    		});
 		}
 	}
 	

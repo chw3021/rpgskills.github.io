@@ -102,12 +102,12 @@ public class Summoned extends Mobs{
 	    if ((p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue() * 0.2) 
 	            && !ordealable.containsKey(p.getUniqueId()) 
 	            && p.hasMetadata("ruined")) {
-	        p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue() * 0.2); // 체력 고정
-	        d.setCancelled(true); // 이벤트 취소
-	        ordealable.put(p.getUniqueId(), true); // 유니크 ID 저장
-	        return true; // 조건이 충족됨
+	        p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue() * 0.2);
+	        d.setCancelled(true);
+	        ordealable.put(p.getUniqueId(), true);
+	        return true;
 	    }
-	    return false; // 조건이 충족되지 않음
+	    return false;
 	}
 
 	protected final void addraider(String rn, String meta, LivingEntity le)

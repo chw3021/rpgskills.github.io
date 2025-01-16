@@ -693,8 +693,7 @@ public class VoidSkills extends EndercoreRaids{
 	private HashMap<UUID, Boolean> handable = new HashMap<UUID, Boolean>();
 	
 	final private void hand(LivingEntity p) {
-		p.getWorld().playSound(p, Sound.ENTITY_BREEZE_CHARGE, 0.6f, 0.6f);
-		p.getWorld().playSound(p, Sound.BLOCK_END_PORTAL_SPAWN, 0.3f, 1.5f);
+		p.getWorld().playSound(p, Sound.ENTITY_ENDER_EYE_DEATH, 1f, 0.2f);
 
     	final World w = p.getWorld();
 		Location pl = gettargetblock(p,6);
@@ -796,7 +795,7 @@ public class VoidSkills extends EndercoreRaids{
 	                    double z = radius * Math.sin(phi) * Math.sin(theta);
 
 	                    Location particleLocation = randomLocation.clone().add(x, y, z);
-	                    world.spawnParticle(Particle.DUST, particleLocation, 5, 0.1, 0.1, 0.1, 0,dop); // 파티클
+	                    world.spawnParticle(Particle.DUST, particleLocation, 3, 0.1, 0.1, 0.1, 0,dop); // 파티클
 	                }
 	            }
 
@@ -812,7 +811,7 @@ public class VoidSkills extends EndercoreRaids{
 	            // 반지름 증가
 	            radius += growthRate;
 	        }
-	    }.runTaskTimer(RMain.getInstance(), 0L, 4L);
+	    }.runTaskTimer(RMain.getInstance(), 0L, 5L);
 
 	    return randomLocation;
 	}
@@ -828,11 +827,11 @@ public class VoidSkills extends EndercoreRaids{
 	    List<Location> randomLocations = new ArrayList<>();
 	    Random random = new Random();
 
-	    for (int i = 0; i < 9; i++) {
+	    for (int i = 0; i < 7; i++) {
 	        Player randomPlayer = heroes.get(random.nextInt(heroes.size()));
 	        Location baseLocation = randomPlayer.getLocation();
-	        double offsetX = random.nextDouble() * 5 - 2.5;
-	        double offsetZ = random.nextDouble() * 5 - 2.5;
+	        double offsetX = random.nextDouble() * 7 - 3.5;
+	        double offsetZ = random.nextDouble() * 7 - 3.5;
 	        double offsetY = random.nextDouble() * 3; 
 	        Location randomLocation = baseLocation.clone().add(offsetX, offsetY, offsetZ);
 	        randomLocations.add(randomLocation);
@@ -857,7 +856,7 @@ public class VoidSkills extends EndercoreRaids{
 
 	            currentIndex++;
 	        }
-	    }, 20L, 6L).getTaskId(); 
+	    }, 5L, 5L).getTaskId(); 
         ordt.put(gethero(boss), t);
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
      		@Override

@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -56,7 +57,6 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
-import org.bukkit.event.vehicle.VehicleExitEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ArmorMeta;
@@ -350,7 +350,9 @@ public class WitherRaids extends Summoned implements Listener {
             {
 
             	if(getPhase(newmob)==1 && throne.containsKey(rn)) {
-            		throne.get(rn).addPassenger(newmob);
+            		BlockDisplay bd = throne.get(rn);
+            		bd.addPassenger(newmob);
+            		newmob.setRotation(bd.getLocation().getYaw(), bd.getLocation().getPitch());
             	}
             	
 				if(Holding.ale(newmob)!=null) {
@@ -415,7 +417,7 @@ public class WitherRaids extends Summoned implements Listener {
 	    return armor;
 	}
 	
-	HashMap<String, BlockDisplay> throne = new HashMap<String, BlockDisplay>();
+	protected HashMap<String, BlockDisplay> throne = new HashMap<String, BlockDisplay>();
 	private void witherThrone(LivingEntity p, Location center, String rn) {
 	    Location throneLocation = p.getLocation();
 	    World world = throneLocation.getWorld();
@@ -451,7 +453,7 @@ public class WitherRaids extends Summoned implements Listener {
 	    seat.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 	    seat.setMetadata("stuff" + rn, new FixedMetadataValue(RMain.getInstance(), rn));
 	    seat.setMetadata("throne" + rn, new FixedMetadataValue(RMain.getInstance(), rn));
-	    seat.setBillboard(Billboard.VERTICAL);
+	    seat.setBillboard(Billboard.FIXED);
 	    setDisplayScale(seat, scale);
 	    seat.addPassenger(p);
 	    throne.put(rn, seat);
@@ -526,7 +528,7 @@ public class WitherRaids extends Summoned implements Listener {
     		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.36);
     		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
     		newmob.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(4);
-    		newmob.getAttribute(Attribute.SCALE).setBaseValue(2.5);
+    		newmob.getAttribute(Attribute.SCALE).setBaseValue(2.3);
     		newmob.setRemoveWhenFarAway(false);
     		raider.put(rn, newmob.getUniqueId());
 			newmob.setMetadata("witherboss", new FixedMetadataValue(RMain.getInstance(), true));
@@ -546,7 +548,7 @@ public class WitherRaids extends Summoned implements Listener {
 
     		ItemStack mainf = new ItemStack(Material.BLAZE_ROD);
     		ItemMeta mmf = mainf.getItemMeta();
-    		mmf.setCustomModelData(3008);
+    		mmf.setCustomModelData(9008);
     		mainf.setItemMeta(mmf);
 
     		Bukkit.getScheduler().runTaskLater(RMain.getInstance(), new Runnable() {
@@ -1422,7 +1424,7 @@ public class WitherRaids extends Summoned implements Listener {
 	
 
 	@EventHandler
-	public void EnderBoss2(EntityDeathEvent d) 
+	public void WitherBoss3(EntityDeathEvent d) 
 	{	
 
 		if(d.getEntity().hasMetadata("bosswave1") && d.getEntity().hasMetadata("witherboss") && raider.containsValue(d.getEntity().getUniqueId())) {
@@ -1445,7 +1447,7 @@ public class WitherRaids extends Summoned implements Listener {
 	                	Location esl = d.getEntity().getLocation().clone().add(0,0.5, 0);
 
 	            		String reg = language.get(rn).equalsIgnoreCase("ko_kr") ? "[더 위더: 트루폼]":"[The Wither: True Form]";
-	            		Wither newmob = (Wither) phaseChange(esl, ChatColor.DARK_GRAY + reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.2,null,null,null,null,null,null, EntityType.WITHER);
+	            		Wither newmob = (Wither) phaseChange(esl, ChatColor.DARK_GRAY + reg, le.getAttribute(Attribute.MAX_HEALTH).getValue()*1.5,null,null,null,null,null,null, EntityType.WITHER);
 	        			newmob.setGlowing(true);
 	            		newmob.setLootTable(null);
 	            		newmob.setItemInUseTicks(5);
@@ -1473,7 +1475,7 @@ public class WitherRaids extends Summoned implements Listener {
 	    	    		
 	
 	
-	    	    		bossbargen("Distroyer", rn, newmob);
+	    	    		bossbargen("[The Wither: True Form]", rn, newmob);
 	    	    		
 	    	    		targeting(rn);
 	            		

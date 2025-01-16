@@ -756,7 +756,6 @@ public class DarkSkills extends Summoned{
 		         	    							LivingEntity le = (LivingEntity)e;
 		         	    							le.damage(3.5,p);
 		         	    							le.teleport(ptl);
-		         	    							Holding.holding(null, le, 20l);
 		         	    						}
 											}
 					         			
@@ -865,7 +864,6 @@ public class DarkSkills extends Summoned{
 	         	    							LivingEntity le = (LivingEntity)e;
 	         	    							le.damage(3.5,p);
 	         	    							le.teleport(ptl);
-	         	    							Holding.holding(null, le, 20l);
 	         	    						}
 										}
 				         			
