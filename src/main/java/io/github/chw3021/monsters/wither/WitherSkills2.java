@@ -3,14 +3,10 @@ package io.github.chw3021.monsters.wither;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.EntityEffect;
 import org.bukkit.Location;
@@ -24,14 +20,12 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Snowball;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -56,7 +50,6 @@ public class WitherSkills2 extends Summoned{
 	Holding hold = Holding.getInstance();
 	private HashMap<UUID, Long> rb3cooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Long> rb4cooldown = new HashMap<UUID, Long>();
-	private HashMap<UUID, Long> rb6cooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Long> rb8cooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Long> shcooldown = new HashMap<UUID, Long>();
 	private HashMap<UUID, Long> aicooldown = new HashMap<UUID, Long>();
@@ -77,12 +70,10 @@ public class WitherSkills2 extends Summoned{
 			Projectile po = (Projectile)d.getEntity();
 			if(po.getShooter() instanceof LivingEntity) {
 				LivingEntity p = (LivingEntity) po.getShooter();
-				if(po.hasMetadata("")) {
+				if(po.hasMetadata("witherarrow")) {
             		final Location l = d.getHitEntity() != null ? d.getHitEntity().getLocation() : d.getHitBlock().getLocation();
-
-					l.getWorld().spawnParticle(Particle.SMALL_FLAME, l, 50);
-					l.getWorld().spawnParticle(Particle.BLOCK, l, 200,1.5,1.5,1.5,getBd(Material.FIRE_CORAL_BLOCK));
-					l.getWorld().playSound(l, Sound.BLOCK_CORAL_BLOCK_BREAK, 1f, 1.5f);
+            		po.remove();
+					l.getWorld().spawnParticle(Particle.WITCH, l, 50);
 					
             		for(Entity e : l.getWorld().getNearbyEntities(l, 1.5, 1.5, 1.5)) {
 						if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
@@ -512,44 +503,67 @@ public class WitherSkills2 extends Summoned{
                 .orElse(null);
         w.playSound(boss.getLocation(), Sound.ITEM_ARMOR_EQUIP_NETHERITE, 1.2f, 0.2f);
 		boss.getWorld().spawnParticle(Particle.CRIT, pl, 100, 2,2,2);
+		boss.getWorld().spawnParticle(Particle.GUST, pl, 66, 1,1,1);
 		boss.getWorld().spawnParticle(Particle.ENCHANTED_HIT, pl, 100, 2,2,2);
         int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
      		@Override
         	public void run() 
             {
     	        Vector pv = target.getLocation().clone().toVector().subtract(boss.getLocation().clone().toVector()).normalize();
-     			Location tel = boss.getLocation().clone().add(pv.clone().multiply(0.7));
-     			if(tel.getBlock().isPassable()) {
-        			boss.teleport(tel);
-     			}
+     			ArrayList<Location> line = new ArrayList<Location>();
             	boss.swingMainHand();
-            	w.playSound(boss.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.2f, 0f);
-                w.playSound(boss.getLocation(), Sound.ENTITY_WITHER_SKELETON_STEP, 0.1f, 1.5f);
- 				w.spawnParticle(Particle.SWEEP_ATTACK, pl, 25, 2,2,2);
- 				w.spawnParticle(Particle.WITCH, pl, 25, 1.5,1.5,1.5);
+            	w.playSound(boss.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.6f, 0f);
+                w.playSound(boss.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 0.9f, 0.6f);
+    	        for(int i = 0; i <7; i++) {
+        	        final Location tel = boss.getLocation().clone();
+         			if(tel.clone().add(pv.clone().multiply(0.21)).getBlock().isPassable()) {
+            			line.add(tel.add(pv.clone().multiply(0.21)));
+         			}
+         			else {
+         				line.add(tel);
+         			}
+     			}
+    	        int task = new BukkitRunnable() {
+                	int tick = 0;
+                    @Override
+                    public void run() {
+    	            
+                    	if(tick>=line.size()) {
+                    		this.cancel();
+                    	}
+    	     			Location tel = line.get(tick++);
 
-            	for(Entity e : boss.getWorld().getNearbyEntities(tel, 2,2,2)) {
-            		if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && e!=boss) {
-            			LivingEntity le = (LivingEntity)e;
+    	 				w.spawnParticle(Particle.SWEEP_ATTACK, pl, 5,2,2,2);
+    	 				w.spawnParticle(Particle.WITCH, pl, 1,0);
 
-						le.damage(2, boss);
-						if(tel.getBlock().isPassable()) {
-							le.teleport(tel);
-						}
-						
-            		}
-            	}
+    	            	for(Entity e : boss.getWorld().getNearbyEntities(tel, 1.5,1.5,1.5)) {
+    	            		if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && e!=boss) {
+    	            			LivingEntity le = (LivingEntity)e;
+
+    							le.damage(2, boss);
+    							if(tel.getBlock().isPassable()) {
+    								le.teleport(tel);
+    							}
+    							
+    	            		}
+    	            	}
+    	            }
+    		   	}.runTaskTimer(RMain.getInstance(), 0,1).getTaskId();
+    	        ordt.put(gethero(boss), task);
+    	        
             	
             }
-	   	}, 25,6);
+	   	}, 15,12);
         ordt.put(gethero(boss), task);
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
      		@Override
         	public void run() 
             {	
      			Bukkit.getScheduler().cancelTask(task);
-     			boss.teleport(target.getLocation().clone().add(0, 5, 0));
-    	        Vector pv = new Vector(0,-0.5,0);
+     			boss.teleport(target.getLocation().clone().add(0, 6, 0));
+    	        Vector pv = new Vector(0,-0.6,0);
+            	w.playSound(boss.getLocation(), Sound.ENTITY_ENDER_PEARL_THROW, 0.6f, 0f);
+                w.playSound(boss.getLocation(), Sound.ENTITY_SHULKER_TELEPORT, 0.9f, 0.6f);
 
                 int task2 = new BukkitRunnable() {
                 	int tick = 0;
@@ -564,7 +578,7 @@ public class WitherSkills2 extends Summoned{
              			}
                     	boss.swingMainHand();
                     	w.playSound(boss.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.3f, 0.6f);
-                        w.playSound(boss.getLocation(), Sound.ENTITY_WITHER_SKELETON_STEP, 0.1f, 1.5f);
+                        w.playSound(boss.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 0.2f, 0.6f);
          				w.spawnParticle(Particle.SWEEP_ATTACK, pl, 25, 1,1,1);
          				w.spawnParticle(Particle.WITCH, pl, 25, 1.5,1.5,1.5);
                     	for(Entity e : boss.getWorld().getNearbyEntities(boss.getLocation(), 1,1,1)) {
@@ -576,11 +590,11 @@ public class WitherSkills2 extends Summoned{
                     		}
                     	}
                     }
-                }.runTaskTimer(RMain.getInstance(), 20,5).getTaskId();
+                }.runTaskTimer(RMain.getInstance(), 5,5).getTaskId();
                 ordt.put(gethero(boss), task2);
      			phantomable.remove(boss.getUniqueId());
             }
-	   	}, 63);
+	   	}, 66);
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
      		@Override
         	public void run() 
@@ -661,7 +675,6 @@ public class WitherSkills2 extends Summoned{
 		w.playSound(boss.getLocation(), Sound.ITEM_ARMOR_EQUIP_IRON, 1.0f, 0.1f);
 		w.spawnParticle(Particle.CLOUD, boss.getLocation(), 200, 1,1,1);
 
-        final Location fl = boss.getLocation().clone();
         AtomicInteger j = new AtomicInteger(0);
         Holding.holding(null, boss, 25l);
         
@@ -678,6 +691,8 @@ public class WitherSkills2 extends Summoned{
 					Arrow arrow = w.spawnArrow(boss.getEyeLocation(), boss.getEyeLocation().getDirection(), 1.6f, 6f);
 					arrow.setColor(Color.BLACK);
 					arrow.setBasePotionType(PotionType.WEAKNESS);
+					arrow.setShooter(boss);
+					arrow.setMetadata("witherarrow", new FixedMetadataValue(RMain.getInstance(), true));
 					
 				}
             }
@@ -711,14 +726,23 @@ public class WitherSkills2 extends Summoned{
 	    }
 	}
 	
-	final private void jumpAndHit(final Location tl, LivingEntity p) {
+	final private void riptide(final Location tl, LivingEntity p) {
+
+		ItemStack mainf = new ItemStack(Material.TRIDENT);
+		ItemMeta mmf = mainf.getItemMeta();
+		mmf.setCustomModelData(10008);
+		mainf.setItemMeta(mmf);
+
+		sendItemChange(p, getherotype(gethero(p)), mainf);
 		
-		Holding.holding(null, p, 22l);
-	    Location fl = p.getLocation().clone(); // 시작 위치
-	    Location jl = tl.clone().add(0, 4, 0); // 목표 도약 위치
+		Holding.holding(null, p, 10l);
+		final Location first = p.getLocation().clone();
+		p.teleport(first.clone().add(0, 3, 0));
+	    Location fl = first.clone().add(0, 3, 0).clone(); // 시작 위치
+	    Location jl = tl.clone(); // 목표 도약 위치
 	    World world = p.getWorld();
-        world.spawnParticle(Particle.WHITE_SMOKE, tl, 20, 2, 0.2, 2, 0);
-	    world.playSound(tl, Sound.ENTITY_ENDER_DRAGON_GROWL, 1f, 2f);
+        world.spawnParticle(Particle.GUST_EMITTER_LARGE, first, 5, 2, 0.2, 2, 0);
+	    world.playSound(first, Sound.ITEM_MACE_SMASH_GROUND, 1f, 1.2f);
 
 	    // 초기 이동 설정
 	    double totalTicks = 7; // 도약에 걸리는 전체 시간 (tick 단위)
@@ -729,6 +753,7 @@ public class WitherSkills2 extends Summoned{
 	    Vector horizontalDirection = jl.toVector().subtract(fl.toVector()).normalize(); // 수평 이동 방향
 	    double totalDistance = fl.distance(jl); // 총 이동 거리
 	    double speed = totalDistance / totalTicks; // 수평 속도
+	    p.setRiptiding(true);
 	    
 
 	    AtomicInteger j = new AtomicInteger();
@@ -737,48 +762,34 @@ public class WitherSkills2 extends Summoned{
 	        public void run() {
 	            int tick = currentTick.getAndIncrement();
 	            if (tick > totalTicks) {
-	                // 도착 후 공격 동작 실행
-	                performAttack(tl, p);
 	                Bukkit.getScheduler().cancelTask(j.get());
+	                p.setRiptiding(false);
 	                return;
 	            }
 
-	            // 로그 곡선 기반 높이 계산
-	            double progress = (double) tick / totalTicks; // 진행 비율 (0 ~ 1)
-	            double height = 4 * Math.log10(1 + 9 * progress); // 높이 값 (로그 함수: log10(1 + 9x))
-
+	    	    world.playSound(tl, Sound.ITEM_TRIDENT_RIPTIDE_2, 0.06f, 0.6f);
 	            // 새로운 위치 계산
 	            Location newLocation = fl.clone().add(horizontalDirection.clone().multiply(speed * tick)); // 수평 이동
-	            newLocation.setY(fl.getY() + height); // 높이 적용
 
 	            // 보스몹 이동
 	            p.teleport(newLocation);
 
 	            // 이동 중 파티클 효과
-	            world.spawnParticle(Particle.CRIMSON_SPORE, newLocation, 5, 0.2, 0.2, 0.2, 0);
+	            world.spawnParticle(Particle.SWEEP_ATTACK, newLocation, 3, 1, 1, 1, 0);
+	            world.spawnParticle(Particle.WITCH, newLocation, 5, 0.2, 0.2, 0.2);
+
+                for (Entity e : world.getNearbyEntities(newLocation, 2, 2, 2)) {
+					if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal"))) {
+						LivingEntity le = (LivingEntity)e;
+						le.damage(2.6,p);
+						le.teleport(p);
+					}
+				}
 	        }
-	    }, 22L, (long) tickInterval)); 
+	    }, 10L, (long) tickInterval)); 
 
 	    // 태스크 저장 (필요 시 추가 관리)
 	    ordt.put(gethero(p), j.get());
-	}
-
-	private void performAttack(Location tl, LivingEntity p) {
-	    World world = p.getWorld();
-
-	    p.teleport(tl);
-	    // 내려찍기 공격 효과
-	    world.playSound(tl, Sound.ENTITY_ELDER_GUARDIAN_HURT, 2.0f, 0f);
-	    world.spawnParticle(Particle.EXPLOSION, tl, 10, 3, 1, 3, 0);
-
-	    // 피해 판정
-	    for (Entity entity : world.getNearbyEntities(tl, 3, 3, 3)) {
-	        if (entity instanceof LivingEntity && entity != p) {
-	            LivingEntity target = (LivingEntity) entity;
-	            target.damage(6.0, p);
-	            target.setVelocity(BlockFace.DOWN.getDirection().multiply(5));
-	        }
-	    }
 	}
 
 	
@@ -808,9 +819,8 @@ public class WitherSkills2 extends Summoned{
 		                {
 		                	rb4cooldown.remove(p.getUniqueId()); // removing player from HashMap
 		                	
-			                Holding.holding(null, p, 10l);
 
-			                jumpAndHit(ptl, p);
+			                riptide(ptl, p);
 		                    
 		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		                 		@Override
@@ -835,9 +845,7 @@ public class WitherSkills2 extends Summoned{
 		            {
 
 
-		                Holding.holding(null, p, 10l);
-
-		                jumpAndHit(ptl, p);
+		                riptide(ptl, p);
 	                    
 	                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	                 		@Override

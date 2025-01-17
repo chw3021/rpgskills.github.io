@@ -148,7 +148,10 @@ public class WitherSkills extends WitherRaids{
 		}
 	}
 	public void createGrowingCircle(LivingEntity p, double maxRadius, long interval, double damage) {
-	    new BukkitRunnable() {
+		String rn = gethero(p);
+		p.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_SHOOT, 1.0f, 0f);
+		p.getWorld().spawnParticle(Particle.WITCH, p.getLocation(), 150, 2,2,2);
+	    ordt.put(rn, new BukkitRunnable() {
 	        double currentRadius = 0.5; // 초기 반지름
 
 	        @Override
@@ -177,7 +180,7 @@ public class WitherSkills extends WitherRaids{
 
 	            currentRadius += 0.5; // 반지름 점진적으로 증가
 	        }
-	    }.runTaskTimer(RMain.getInstance(), 0, interval); // 매 interval 틱마다 실행
+	    }.runTaskTimer(RMain.getInstance(), 0, interval).getTaskId()); // 매 interval 틱마다 실행
 	}
 	private HashSet<Location> calculateCircleLocations(Location center, double radius) {
 	    HashSet<Location> locations = new HashSet<>();
@@ -390,6 +393,7 @@ public class WitherSkills extends WitherRaids{
 		if(d.getEntity().hasMetadata("witherboss")) 
 		{
 			Mob p = (Mob)d.getEntity();
+
 			
 			int sec = 10;
 	

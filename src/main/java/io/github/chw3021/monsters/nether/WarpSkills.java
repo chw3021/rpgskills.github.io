@@ -316,6 +316,7 @@ public class WarpSkills extends NethercoreRaids{
             }
         }, 0L, 2L); // 0틱 지연, 2틱 간격으로 실행
 
+        ordt.put(rn, bt.getTaskId());
         blockt.put(boss.getUniqueId(), bt.getTaskId());
     }
 
@@ -510,6 +511,7 @@ public class WarpSkills extends NethercoreRaids{
 		{
 			final LivingEntity p = (LivingEntity)d.getEntity();
 
+            if (checkAndApplyCharge(p, d)) return;
 			if(p.hasMetadata("raid")) {
 				if(!NethercoreRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| p.hasMetadata("failed")) {
 					return;
