@@ -75,6 +75,9 @@ public class WitherSkills3 extends WitherRaids{
 		    LivingEntity p = (LivingEntity) ev.getEntity().getShooter();
 		    
 		    if(p.hasMetadata("witherboss")) {
+			    if(getPhase(p) !=3) {
+			    	return;
+			    }
 		        String rn = gethero(p);
 		        Projectile sn = ev.getEntity();
 				sn.setMetadata("witherthrow", new FixedMetadataValue(RMain.getInstance(), true));
@@ -143,8 +146,8 @@ public class WitherSkills3 extends WitherRaids{
 
 	        @Override
 	        public void run() {
-	            if (count > 6) {
-	                this.cancel(); // 최대 반지름에 도달하면 태스크 중지
+	            if (count++ > 6) {
+	                this.cancel();
 	                return;
 	            }
 	            WitherSkills.getInstance().createGrowingCircle(p, 16.66, 6, 6.66);
@@ -158,7 +161,7 @@ public class WitherSkills3 extends WitherRaids{
 	public void cursed(EntityDamageByEntityEvent d) 
 	{
 	    
-		int sec = 7;
+		int sec = 9;
 		if(d.getEntity().hasMetadata("witherboss") && cursable.containsKey(d.getEntity().getUniqueId())) 
 		{
 			LivingEntity p = (LivingEntity)d.getEntity();
@@ -252,13 +255,13 @@ public class WitherSkills3 extends WitherRaids{
         Vector moveDirection = targetLoc.toVector().subtract(fl.toVector());
         double distance = moveDirection.length();
         List<Location> line = new ArrayList<Location>();
-        for(double d = 0; d<distance+0.2; d+=0.2) {
+        for(double d = 0; d<distance+0.1; d+=0.1) {
         	line.add(fl.clone().add(moveDirection.normalize().multiply(d)));
         }
 
         ordt.put(rn,new BukkitRunnable() {
             int tick = 0;
-            int stepsPerTick = line.size() / 9; // 8틱 동안 분배하여 이동
+            int stepsPerTick = line.size() / 9;
             int currentIndex = 0; // 현재 이동 중인 line 인덱스
 
             @Override
@@ -284,7 +287,11 @@ public class WitherSkills3 extends WitherRaids{
 
                 int endIndex = Math.min(currentIndex + stepsPerTick, line.size());
                 for (int i = currentIndex; i < endIndex; i++) {
-                    block.teleport(line.get(i)); // ArmorStand 이동
+                	try {
+                        block.teleport(line.get(i));
+                	}
+                	catch(IllegalArgumentException e){
+                	}
                 }
 
                 // 다음 틱을 위해 인덱스 갱신
@@ -297,7 +304,7 @@ public class WitherSkills3 extends WitherRaids{
 
     private void removeFingers(ArmorStand shadow, LivingEntity p) {
     	Location bl = shadow.getLocation();
-    	bl.getWorld().spawnParticle(Particle.SQUID_INK, bl, 60,6);
+    	bl.getWorld().spawnParticle(Particle.SQUID_INK, bl, 60);
     	shadow.setRiptiding(true);
     	bl.getWorld().playSound(bl, Sound.ENTITY_TNT_PRIMED, 0.4f, 0.6f);
 		ordt.put(gethero(p), Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -332,6 +339,7 @@ public class WitherSkills3 extends WitherRaids{
 	final private void hand(LivingEntity p) {
 
     	final World w = p.getWorld();
+		System.out.println(Bukkit.getBossBars().next().toString());
         Holding.holding(null, p, 25l);
 		Location pl = gettargetblock(p,6);
 		w.playSound(pl, Sound.ENTITY_SHULKER_TELEPORT, 1.0f, 0f);
@@ -373,7 +381,7 @@ public class WitherSkills3 extends WitherRaids{
 			p.getWorld().playSound(p, Sound.ENTITY_BREEZE_CHARGE, 0.6f, 0.6f);
 			p.getWorld().playSound(p, Sound.PARTICLE_SOUL_ESCAPE, 0.6f, 1.5f);
 			
-			int sec = 9;
+			int sec = 11;
 	
 	
 			if(p.hasMetadata("failed")|| ordeal.containsKey(p.getUniqueId()) || !handable.containsKey(p.getUniqueId())) {
@@ -405,6 +413,9 @@ public class WitherSkills3 extends WitherRaids{
     private Map<String, List<BlockDisplay>> prisonDisplays = new HashMap<>();
 
 	final private void prison(LivingEntity p, Player pe, String rn) {
+		if(!pe.getWorld().equals(p.getWorld()) || pe.isDead()) {
+			return;
+		}
 	    Location center = pe.getLocation().clone().add(0,0.1,0); // 감옥 중심 좌표
 	    World world = pe.getWorld();
 
@@ -419,9 +430,9 @@ public class WitherSkills3 extends WitherRaids{
 	    List<BlockDisplay> displays = new ArrayList<>();
 	    // 감옥 블록 총 개수 계산 (바닥 제외)
 	    int totalBlocks = 0;
-	    for (int x = -2; x <= 2; x++) {
-	        for (int y = 0; y <= 3; y++) { // y == 0 (바닥)는 제외
-	            for (int z = -2; z <= 2; z++) {
+	    for (int x = -3; x <= 3; x++) {
+	        for (int y = 1; y <= 4; y++) { // y == 0 (바닥)는 제외
+	            for (int z = -3; z <= 3; z++) {
 	                totalBlocks++;
 	                prisonLocs.add(center.clone().add(x, y, z));
 	            }
@@ -446,7 +457,7 @@ public class WitherSkills3 extends WitherRaids{
             // 블록 고정
             display.setGravity(false);
             display.setPersistent(false);
-            display.setBillboard(Billboard.CENTER);
+            display.setBillboard(Billboard.FIXED);
             display.setMetadata("stuff" + rn, new FixedMetadataValue(RMain.getInstance(), rn));
             display.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
             displays.add(display);
@@ -464,14 +475,15 @@ public class WitherSkills3 extends WitherRaids{
 	            display.remove();
                 prisonDisplays.remove(rn);
 	        }
-	    }, 40).getTaskId()); // 40틱 = 2초
+	    }, 60).getTaskId()); 
 
 	    // 감옥 외부로 나갈 시 강제 텔레포트 및 피해
 	    ordt.put(rn ,new BukkitRunnable() {
 	        @Override
 	        public void run() {
-		        if (displays.isEmpty()) {
-		           return;
+		        if (displays.isEmpty() || !prisonDisplays.containsKey(rn)) {
+		        	this.cancel();
+		        	return;
 		        }
 	            if (pe.getLocation().distance(center) > 2.2) { // 감옥 범위 밖으로 나갔을 경우
 	                pe.damage(66.0,p); // 대량 피해
@@ -520,8 +532,7 @@ public class WitherSkills3 extends WitherRaids{
     		Location pfl = pe.getEyeLocation().clone();
     		w.playSound(pfl, Sound.BLOCK_VAULT_ACTIVATE, 1.0f, 0f);
     		w.playSound(pfl, Sound.BLOCK_VAULT_OPEN_SHUTTER, 1.0f, 0f);
-    		w.spawnParticle(Particle.SCULK_SOUL, pfl, 150, 2,2,2);
-    		w.spawnParticle(Particle.BLOCK_MARKER, pfl, 20,1,1,1, getBd(Material.BLACK_CONCRETE));
+    		w.spawnParticle(Particle.SCULK_SOUL, pfl, 350, 2,2,2);
         }
 		
 		String rn = gethero(p);
@@ -546,6 +557,7 @@ public class WitherSkills3 extends WitherRaids{
 		{
 			Mob p = (Mob)d.getEntity();
 			int sec = 18;
+            if (checkAndApplyCharge(p, d)) return;
 			
 
 			if(p.hasMetadata("failed")|| ordeal.containsKey(p.getUniqueId())) {
@@ -682,7 +694,7 @@ public class WitherSkills3 extends WitherRaids{
 
 
 		        }
-		    }, 20L, 2L);
+		    }, 20L, 3L);
 
 		    whirlTaskMap.put(p.getUniqueId(), taskId);
 		    ordt.put(gethero(p), taskId);
@@ -696,7 +708,7 @@ public class WitherSkills3 extends WitherRaids{
 	    }
 
 	    if (rb8cooldown.containsKey(p.getUniqueId())) {
-	        long timer = (rb8cooldown.get(p.getUniqueId()) / 1000 + 11) - System.currentTimeMillis() / 1000;
+	        long timer = (rb8cooldown.get(p.getUniqueId()) / 1000 + 13) - System.currentTimeMillis() / 1000;
 	        if (timer < 0) {
 	            rb8cooldown.remove(p.getUniqueId());
 	            witherTentacle(p);
@@ -707,69 +719,93 @@ public class WitherSkills3 extends WitherRaids{
 	        rb8cooldown.put(p.getUniqueId(), System.currentTimeMillis());
 	    }
 	}
-	final private double whirl(final Location tl, Integer j, World w) {
-	    ArrayList<Location> treeLocations = new ArrayList<>();
 
-	    w.playSound(tl, Sound.BLOCK_END_PORTAL_FRAME_FILL, 0.2f, 0.5f);
+	
+	final private void jumpAndHit(final Location tl, LivingEntity p) {
+		
+		Holding.holding(null, p, 22l);
+	    Location fl = p.getLocation().clone(); // 시작 위치
+	    Location jl = tl.clone().add(0, 4, 0); // 목표 도약 위치
+	    World world = p.getWorld();
+        world.spawnParticle(Particle.LARGE_SMOKE, tl, 20, 2, 0.2, 2, 0);
+	    world.playSound(tl, Sound.ENTITY_ENDER_DRAGON_FLAP, 1f, 0f);
 
-	    // 트렁크(나무 줄기) 생성
-	    double trunkHeight = 4 + j; // 줄기의 높이는 j 값에 따라 증가
-	    for (double y = 0; y < trunkHeight; y += 0.2) {
-	        treeLocations.add(tl.clone().add(0, y, 0)); // 줄기는 y 축으로 올라감
-	    }
+	    // 초기 이동 설정
+	    double totalTicks = 7; // 도약에 걸리는 전체 시간 (tick 단위)
+	    double tickInterval = 1; // 각 tick 간격 (1tick = 50ms)
+	    AtomicInteger currentTick = new AtomicInteger(0); // 현재 진행 중인 tick
 
-	    // 브랜치(나뭇가지) 생성
-	    double branchLength = 2 + j * 0.5; // 나뭇가지 길이
-	    double angleStep = Math.PI / 4; // 각도 간격
-	    for (double angle = 0; angle < Math.PI * 2; angle += angleStep) {
-	        for (double length = 0; length < branchLength; length += 0.3) {
-	            // 나뭇가지는 줄기 상단에서 시작
-	            Location branchBase = tl.clone().add(0, trunkHeight, 0);
-	            treeLocations.add(branchBase.clone().add(
-	                Math.cos(angle) * length, // x 방향
-	                length * 0.5,             // 가지는 위로 살짝 기울어짐
-	                Math.sin(angle) * length  // z 방향
-	            ));
+	    // 방향 벡터 계산
+	    Vector horizontalDirection = jl.toVector().subtract(fl.toVector()).normalize(); // 수평 이동 방향
+	    double totalDistance = fl.distance(jl); // 총 이동 거리
+	    double speed = totalDistance / totalTicks; // 수평 속도
+	    
+
+	    AtomicInteger j = new AtomicInteger();
+	    j.set(Bukkit.getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
+	        @Override
+	        public void run() {
+	            int tick = currentTick.getAndIncrement();
+	            if (tick > totalTicks) {
+	                // 도착 후 공격 동작 실행
+	                performAttack(tl, p);
+	                Bukkit.getScheduler().cancelTask(j.get());
+	                return;
+	            }
+
+	            // 로그 곡선 기반 높이 계산
+	            double progress = (double) tick / totalTicks; // 진행 비율 (0 ~ 1)
+	            double height = 7 * Math.log10(1 + 9 * progress); // 높이 값 (로그 함수: log10(1 + 9x))
+
+	            // 새로운 위치 계산
+	            Location newLocation = fl.clone().add(horizontalDirection.clone().multiply(speed * tick)); // 수평 이동
+	            newLocation.setY(fl.getY() + height); // 높이 적용
+
+	            // 보스몹 이동
+	            p.teleport(newLocation);
+
+	            // 이동 중 파티클 효과
+	            world.spawnParticle(Particle.WITCH, newLocation, 5, 0.2, 0.2, 0.2, 0);
 	        }
-	    }
+	    }, 22L, (long) tickInterval)); 
 
-	    // 각 위치에 파티클 생성
-	    treeLocations.forEach(location -> {
-	        w.spawnParticle(Particle.BLOCK, location, 60, 0.1, 0.1, 0.1, 0, getBd(Material.WARPED_STEM));
-	    });
-        w.spawnParticle(Particle.BLOCK, tl.clone().add(0, trunkHeight+3, 0), 350*j, j, j, j, 0.05, getBd(Material.WARPED_WART_BLOCK));
-
-	    return 2 + j * 0.5;
+	    // 태스크 저장 (필요 시 추가 관리)
+	    ordt.put(gethero(p), j.get());
 	}
 
+	private void performAttack(Location tl, LivingEntity p) {
+	    World world = p.getWorld();
+
+	    p.teleport(tl);
+	    // 내려찍기 공격 효과
+	    world.playSound(tl, Sound.ENTITY_WITHER_BREAK_BLOCK, 1.0f, 0f);
+	    world.spawnParticle(Particle.EXPLOSION, tl, 10, 3, 1, 3, 0);
+	    world.spawnParticle(Particle.SONIC_BOOM, tl, 10, 3, 1, 3, 0);
+
+	    // 피해 판정
+	    for (Entity entity : world.getNearbyEntities(tl, 3, 3, 3)) {
+	        if (entity instanceof LivingEntity && entity != p) {
+	            LivingEntity target = (LivingEntity) entity;
+	            target.damage(6.66, p);
+	            target.setVelocity(BlockFace.DOWN.getDirection().multiply(5));
+	        }
+	    }
+	}
 	
-	
-	//private HashMap<UUID, Boolean> stormable = new HashMap<UUID, Boolean>();
-	
-	final private void storm(Location tl, LivingEntity p) {
-		
+	final private void storm(LivingEntity p) {
+
+
+	    Player pe = WitherRaids.getheroes(p).stream().filter(pf -> pf.getWorld().equals(p.getWorld()) && !pf.isDead()).findAny().orElse(null);
+	    if(pe == null) {
+	    	return;
+	    }
+    	pe.setVelocity(new Vector(0,-20,0));
+    	Location tl = pe.getLocation().clone();
 		World w = tl.getWorld();
-		tl.getWorld().playSound(tl, Sound.ENTITY_BREEZE_INHALE, 1.0f, 0f);
-		tl.getWorld().spawnParticle(Particle.OMINOUS_SPAWNING, tl, 150, 2,0.5,2,0.1);
+		w.playSound(pe, Sound.ENTITY_WITHER_SPAWN, 0.8f, 2f);
+		w.spawnParticle(Particle.OMINOUS_SPAWNING, tl, 150, 2,0.5,2,0.1);
 		
-    	AtomicInteger j = new AtomicInteger();	
-		for(int i = 0; i <4; i++) {
-            int t = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-                @Override
-                public void run() {
-                	
-                	double off = whirl(tl.clone(),j.getAndIncrement(), w);
-					for(Entity e : tl.getWorld().getNearbyEntities(tl,off, 7, off)) {
-						if(p!=e && e instanceof LivingEntity&& !(e.hasMetadata("fake"))) {
-							LivingEntity le = (LivingEntity)e;
-							le.damage(2.5,p);
-							Holding.holding(null, le, 10l);
-						}
-					}
-                }
-            }, i*3+28); 	   
-            ordt.put(gethero(p), t);                 	
-        }
+		jumpAndHit(tl, pe);
 	}
 	
 	public void storm(EntityDamageByEntityEvent d) 
@@ -781,56 +817,57 @@ public class WitherSkills3 extends WitherRaids{
 	        
 
             if (checkAndApplyCharge(p, d)) return;
-			if(p.getTarget() == null|| !(p.getTarget() instanceof Player)|| ordeal.containsKey(p.getUniqueId())||p.hasMetadata("failed")) {
+			if(ordeal.containsKey(p.getUniqueId())||p.hasMetadata("failed")) {
 				return;
 			}
-			final Player tar = (Player) p.getTarget();
-			final Location ptl = tar.getLocation().clone();
+			if(!WitherRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| p.hasMetadata("failed")) {
+				return;
+			}
 			
-					if(rb4cooldown.containsKey(p.getUniqueId()))
-		            {
-		                long timer = (rb4cooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
-		                if(!(timer < 0))
-		                {
-		                }
-		                else 
-		                {
-		                	rb4cooldown.remove(p.getUniqueId()); // removing player from HashMap
-		                	
-			                Holding.holding(null, p, 10l);
+			if(rb4cooldown.containsKey(p.getUniqueId()))
+            {
+                long timer = (rb4cooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
+                if(!(timer < 0))
+                {
+                }
+                else 
+                {
+                	rb4cooldown.remove(p.getUniqueId()); // removing player from HashMap
+                	
+	                Holding.holding(null, p, 10l);
 
-			                storm(ptl, p);
-		                    
-		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-		                 		@Override
-		                    	public void run() 
-		                        {	
-		                 			handable.put(p.getUniqueId(), true);
-		        	            }
-		                    }, 46); 
-		                    
-	             			
-							rb4cooldown.put(p.getUniqueId(), System.currentTimeMillis());  
-		                }
-		            }
-		            else 
-		            {
+	                storm(p);
+                    
+                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                 		@Override
+                    	public void run() 
+                        {	
+                 			handable.put(p.getUniqueId(), true);
+        	            }
+                    }, 46); 
+                    
+         			
+					rb4cooldown.put(p.getUniqueId(), System.currentTimeMillis());  
+                }
+            }
+            else 
+            {
 
 
-		                Holding.holding(null, p, 10l);
+                Holding.holding(null, p, 10l);
 
-		                storm(ptl, p);
-	                    
-	                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	                 		@Override
-	                    	public void run() 
-	                        {	
-	                 			handable.put(p.getUniqueId(), true);
-	        	            }
-	                    }, 46); 
-	                    
-						rb4cooldown.put(p.getUniqueId(), System.currentTimeMillis());  
-					}
+                storm(p);
+                
+                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+             		@Override
+                	public void run() 
+                    {	
+             			handable.put(p.getUniqueId(), true);
+    	            }
+                }, 46); 
+                
+				rb4cooldown.put(p.getUniqueId(), System.currentTimeMillis());  
+			}
 		}
 	}
 

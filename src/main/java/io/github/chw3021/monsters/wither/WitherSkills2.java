@@ -38,13 +38,12 @@ import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
 
 import io.github.chw3021.commons.Holding;
-import io.github.chw3021.monsters.raids.NethercoreRaids;
-import io.github.chw3021.monsters.raids.Summoned;
+import io.github.chw3021.monsters.raids.WitherRaids;
 import io.github.chw3021.rmain.RMain;
 
 
 
-public class WitherSkills2 extends Summoned{
+public class WitherSkills2 extends WitherRaids{
 
 	
 	Holding hold = Holding.getInstance();
@@ -95,6 +94,9 @@ public class WitherSkills2 extends Summoned{
 		if(ev.getEntity().hasMetadata("witherboss")){
 
 		    LivingEntity p = ev.getEntity();
+		    if(getPhase(p) !=2) {
+		    	return;
+		    }
 		    
 		    String rn = gethero(p);
 		    
@@ -119,7 +121,7 @@ public class WitherSkills2 extends Summoned{
 		    p.swingMainHand();
 		    p.playEffect(EntityEffect.ZOGLIN_ATTACK);
             p.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_SKELETON_STEP, 1.0f, 0.2f);
-            int sweep = 6;
+            int sweep = 3;
             
 			for(int i = 0; i<sweep; i++) {
                 ordt.put(rn, Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -151,7 +153,7 @@ public class WitherSkills2 extends Summoned{
          				p.swingMainHand();
 	                	
 		            }
-        	   	}, i*10+6));
+        	   	}, i*4+3));
 			}
 
 		 }
@@ -262,7 +264,7 @@ public class WitherSkills2 extends Summoned{
                 	public void run() 
 	                {	
 					w.spawnParticle(Particle.PORTAL, ptl, 200, 3,1.5,3); 
-					w.spawnParticle(Particle.SCULK_SOUL, ptl, 50, 1.5,1.5,1.5,Material.CRYING_OBSIDIAN.createBlockData()); 
+					w.spawnParticle(Particle.SCULK_SOUL, ptl, 50, 1.5,1.5,1.5); 
      				w.playSound(ptl, Sound.BLOCK_CHAIN_PLACE, 0.2f, 0);
      				w.playSound(ptl, Sound.ENTITY_WITHER_HURT, 0.2f, 2f);
 						for (LivingEntity e : w.getLivingEntities().stream().filter(le -> le.getLocation().distance(ptl)<4.5).toList())
@@ -313,7 +315,12 @@ public class WitherSkills2 extends Summoned{
 			if(ordeal.containsKey(p.getUniqueId()) || p.hasMetadata("failed")) {
 				return;
 			}
-            if (checkAndApplyCharge(p, d)) return;
+            if (checkAndApplyCharge(p, d)) {
+            	return;
+            }
+		    if(getPhase(p) !=2) {
+		    	return;
+		    }
 			if(rb3cooldown.containsKey(p.getUniqueId()))
 	        {
 	            long timer = (rb3cooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
@@ -382,6 +389,7 @@ public class WitherSkills2 extends Summoned{
 		ItemMeta mmf = mainf.getItemMeta();
 		mmf.setCustomModelData(7008);
 		mainf.setItemMeta(mmf);
+		Holding.holding(null, boss, 40l);
 
 		sendItemChange(boss, getherotype(rn), mainf);
 		
@@ -390,7 +398,7 @@ public class WitherSkills2 extends Summoned{
 
             @Override
             public void run() {
-                Player target = NethercoreRaids.getheroes(boss).stream()
+                Player target = WitherRaids.getheroes(boss).stream()
                         .filter(p -> p.isValid() && p.getWorld().equals(world))
                         .max((p1, p2) -> Double.compare(p1.getLocation().distance(startLoc), p2.getLocation().distance(startLoc)))
                         .orElse(null);
@@ -403,13 +411,13 @@ public class WitherSkills2 extends Summoned{
                 world.playSound(target, Sound.BLOCK_BEACON_ACTIVATE, 0.8f, 1.6f);
                 Ray(target, boss);
 
-                tick = tick++;
+                tick++;
             }
 
             private void cancel() {
                 Bukkit.getScheduler().cancelTask(this.hashCode());
             }
-        }, 0L, 6L); 
+        }, 6L, 4L); 
 
         ordt.put(rn, bt.getTaskId());
     }
@@ -418,7 +426,7 @@ public class WitherSkills2 extends Summoned{
 	
 	private HashMap<UUID, Boolean> handable = new HashMap<UUID, Boolean>();
 	
-	final private void hand(LivingEntity p) {
+	final private void rayWither(LivingEntity p) {
 
     	final World w = p.getWorld();
 		Location pl = p.getEyeLocation().clone();
@@ -446,7 +454,7 @@ public class WitherSkills2 extends Summoned{
 	}
 	
 
-	public void hand(EntityDamageByEntityEvent d) 
+	public void rayWither(EntityDamageByEntityEvent d) 
 	{
 		if(d.getEntity().hasMetadata("witherboss")) 
 		{
@@ -468,13 +476,13 @@ public class WitherSkills2 extends Summoned{
 		                else 
 		                {
 		                	shcooldown.remove(p.getUniqueId()); // removing player from HashMap
-		                	hand(p);
+		                	rayWither(p);
 		                	shcooldown.put(p.getUniqueId(), System.currentTimeMillis());  
 		                }
 		            }
 		            else 
 		            {
-		            	hand(p);
+		            	rayWither(p);
 		            	shcooldown.put(p.getUniqueId(), System.currentTimeMillis());  
 					}
 		}
@@ -483,7 +491,7 @@ public class WitherSkills2 extends Summoned{
 
 
 	private HashMap<UUID, Boolean> phantomable = new HashMap<UUID, Boolean>();
-	final private void phantom(LivingEntity boss) {
+	final private void phantomFist(LivingEntity boss) {
 
 		World w = boss.getWorld();
 		
@@ -497,7 +505,7 @@ public class WitherSkills2 extends Summoned{
 
 		sendItemChange(boss, getherotype(rn), mainf);
 
-        final Player target = NethercoreRaids.getheroes(boss).stream()
+        final Player target = WitherRaids.getheroes(boss).stream()
                 .filter(p -> p.isValid() && p.getWorld().equals(w))
                 .max((p1, p2) -> Double.compare(p1.getLocation().distance(pl), p2.getLocation().distance(pl)))
                 .orElse(null);
@@ -509,15 +517,15 @@ public class WitherSkills2 extends Summoned{
      		@Override
         	public void run() 
             {
-    	        Vector pv = target.getLocation().clone().toVector().subtract(boss.getLocation().clone().toVector()).normalize();
+    	        Vector pv = target.getLocation().clone().add(0, 0.5, 0).toVector().subtract(boss.getLocation().clone().toVector()).normalize();
      			ArrayList<Location> line = new ArrayList<Location>();
             	boss.swingMainHand();
             	w.playSound(boss.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.6f, 0f);
                 w.playSound(boss.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 0.9f, 0.6f);
     	        for(int i = 0; i <7; i++) {
         	        final Location tel = boss.getLocation().clone();
-         			if(tel.clone().add(pv.clone().multiply(0.21)).getBlock().isPassable()) {
-            			line.add(tel.add(pv.clone().multiply(0.21)));
+         			if(tel.clone().add(pv.clone().multiply(0.31)).getBlock().isPassable()) {
+            			line.add(tel.add(pv.clone().multiply(0.31)));
          			}
          			else {
          				line.add(tel);
@@ -530,11 +538,12 @@ public class WitherSkills2 extends Summoned{
     	            
                     	if(tick>=line.size()) {
                     		this.cancel();
+                    		return;
                     	}
     	     			Location tel = line.get(tick++);
 
     	 				w.spawnParticle(Particle.SWEEP_ATTACK, pl, 5,2,2,2);
-    	 				w.spawnParticle(Particle.WITCH, pl, 1,0);
+    	 				w.spawnParticle(Particle.WITCH, pl, 1);
 
     	            	for(Entity e : boss.getWorld().getNearbyEntities(tel, 1.5,1.5,1.5)) {
     	            		if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && e!=boss) {
@@ -571,6 +580,7 @@ public class WitherSkills2 extends Summoned{
                     public void run() {
                     	if(tick++>8) {
                     		this.cancel();
+                    		return;
                     	}
              			Location tel = boss.getLocation().clone().add(pv);
              			if(tel.getBlock().isPassable()) {
@@ -625,14 +635,14 @@ public class WitherSkills2 extends Summoned{
 		                else 
 		                {
 		                	aicooldown.remove(p.getUniqueId()); // removing player from HashMap
-		                	phantom(p);
+		                	phantomFist(p);
 		                	aicooldown.put(p.getUniqueId(), System.currentTimeMillis());  
 		                }
 		            }
 		            else 
 		            {
 
-		            	phantom(p);
+		            	phantomFist(p);
 	                	aicooldown.put(p.getUniqueId(), System.currentTimeMillis());  
 					}
 		}
@@ -648,17 +658,17 @@ public class WitherSkills2 extends Summoned{
 			final LivingEntity p = (LivingEntity)d.getEntity();
 
 			if(p.hasMetadata("raid")) {
-				if(!NethercoreRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| p.hasMetadata("failed")) {
+				if(!WitherRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| p.hasMetadata("failed")) {
 					return;
 				}
 
-				final Location tl = NethercoreRaids.getheroes(p).stream().filter(pe -> pe.getWorld().equals(p.getWorld())).findAny().get().getLocation().clone().add(0,0.2,0);
+				final Location tl = WitherRaids.getheroes(p).stream().filter(pe -> pe.getWorld().equals(p.getWorld())).findAny().get().getLocation().clone().add(0,0.2,0);
 				wave(p,tl);
 			}
 		}
 	}
 	
-	final private void waveStart(LivingEntity boss, Location tl) {
+	final private void waveArrow(LivingEntity boss, Location tl) {
 		
         String rn = gethero(boss);
 
@@ -676,7 +686,6 @@ public class WitherSkills2 extends Summoned{
 		w.spawnParticle(Particle.CLOUD, boss.getLocation(), 200, 1,1,1);
 
         AtomicInteger j = new AtomicInteger(0);
-        Holding.holding(null, boss, 25l);
         
     	j.set(Bukkit.getServer().getScheduler().runTaskTimer(RMain.getInstance(), new Runnable() {
     		
@@ -687,6 +696,7 @@ public class WitherSkills2 extends Summoned{
 				if(tick++>=12) {
 					Bukkit.getScheduler().cancelTask(j.get());
 				}
+				w.playSound(boss.getLocation(), Sound.ENTITY_ARROW_SHOOT, 1.0f, 0.1f);
 				for(int i = 0; i<6; i++) {
 					Arrow arrow = w.spawnArrow(boss.getEyeLocation(), boss.getEyeLocation().getDirection(), 1.6f, 6f);
 					arrow.setColor(Color.BLACK);
@@ -714,14 +724,14 @@ public class WitherSkills2 extends Summoned{
 	    }
 
 	    if (rb8cooldown.containsKey(p.getUniqueId())) {
-	        long timer = (rb8cooldown.get(p.getUniqueId()) / 1000 + 4) - System.currentTimeMillis() / 1000;
+	        long timer = (rb8cooldown.get(p.getUniqueId()) / 1000 + 5) - System.currentTimeMillis() / 1000;
 	        if (timer < 0) {
 	            rb8cooldown.remove(p.getUniqueId());
-	            waveStart(p, tl);
+	            waveArrow(p, tl);
 	            rb8cooldown.put(p.getUniqueId(), System.currentTimeMillis());
 	        }
 	    } else {
-	        waveStart(p, tl);
+	        waveArrow(p, tl);
 	        rb8cooldown.put(p.getUniqueId(), System.currentTimeMillis());
 	    }
 	}
@@ -735,13 +745,13 @@ public class WitherSkills2 extends Summoned{
 
 		sendItemChange(p, getherotype(gethero(p)), mainf);
 		
-		Holding.holding(null, p, 10l);
+		Holding.holding(null, p, 20l);
 		final Location first = p.getLocation().clone();
 		p.teleport(first.clone().add(0, 3, 0));
 	    Location fl = first.clone().add(0, 3, 0).clone(); // 시작 위치
 	    Location jl = tl.clone(); // 목표 도약 위치
 	    World world = p.getWorld();
-        world.spawnParticle(Particle.GUST_EMITTER_LARGE, first, 5, 2, 0.2, 2, 0);
+        world.spawnParticle(Particle.GUST_EMITTER_LARGE, first, 25, 2, 0.2, 2, 0);
 	    world.playSound(first, Sound.ITEM_MACE_SMASH_GROUND, 1f, 1.2f);
 
 	    // 초기 이동 설정
@@ -786,7 +796,7 @@ public class WitherSkills2 extends Summoned{
 					}
 				}
 	        }
-	    }, 10L, (long) tickInterval)); 
+	    }, 20L, (long) tickInterval)); 
 
 	    // 태스크 저장 (필요 시 추가 관리)
 	    ordt.put(gethero(p), j.get());
@@ -873,7 +883,7 @@ public class WitherSkills2 extends Summoned{
 			return true;
 		}
 	    if (!p.hasMetadata("ruined")
-	            && p.hasMetadata("ejected")) {
+	            && getPhase(p)==2) {
 		    return false;
 	    }
 	    return true;

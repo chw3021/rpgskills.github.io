@@ -1171,77 +1171,83 @@ public class CommonEvents extends Mobs implements Listener{
 			{
 				final String loc = p.getLocale();
 				if(loc.equalsIgnoreCase("ko_kr")) {
-					sb.append(ChatColor.GOLD + "현재 레벨: "+lev + ChatColor.DARK_AQUA + "  추천 군계: ");
-					if(0<=lev && lev <=40) {
-						sb.append(ChatColor.GREEN + "[평원]");
-					}
-					if(30<=lev && lev <=70) {
-						sb.append(ChatColor.GRAY + "[산, 언덕, 타이가]");
-					}
-					if(60<=lev && lev <=100) {
-						sb.append(ChatColor.AQUA + "[한대, 냉대 기후]");
-					}
-					if(90<=lev && lev <=130) {
-						sb.append(ChatColor.BLUE + "[바다]");
-					}
-					if(120<=lev && lev <=160) {
-						sb.append(ChatColor.DARK_GREEN + "[숲, 동굴]");
-					}
-					if(150<=lev && lev <=190) {
-						sb.append(ChatColor.LIGHT_PURPLE + "[사막, 사바나]");
-					}
-					if(180<=lev && lev <=220) {
-						sb.append(ChatColor.RED + "[악지]");
-					}
-					if(210<=lev && lev <=250) {
-						sb.append(ChatColor.DARK_GRAY + "[늪, 버섯 들판]");
-					}
-					if(240<=lev && lev <=300) {
-						sb.append(ChatColor.YELLOW + "[정글]");
-					}
-					if(300<=lev && lev <=400) {
-						sb.append(ChatColor.DARK_RED + "[지옥]");
-					}
-					if(400<=lev) {
-						sb.append(ChatColor.DARK_PURPLE + "[엔더]");
-					}
+				    sb.append(ChatColor.GOLD + "현재 레벨: "+lev + ChatColor.DARK_AQUA + "  추천 군계: ");
+				    if(0<=lev && lev <=40) {
+				        sb.append(ChatColor.GREEN + "[평원]");
+				    }
+				    if(30<=lev && lev <=70) {
+				        sb.append(ChatColor.GRAY + "[산, 언덕, 타이가]");
+				    }
+				    if(60<=lev && lev <=100) {
+				        sb.append(ChatColor.AQUA + "[한대, 냉대 기후]");
+				    }
+				    if(90<=lev && lev <=150) {
+				        sb.append(ChatColor.BLUE + "[바다]");
+				    }
+				    if(140<=lev && lev <=180) {
+				        sb.append(ChatColor.DARK_GREEN + "[숲, 동굴]");
+				    }
+				    if(170<=lev && lev <=210) {
+				        sb.append(ChatColor.LIGHT_PURPLE + "[사막, 사바나]");
+				    }
+				    if(200<=lev && lev <=260) {
+				        sb.append(ChatColor.RED + "[악지]");
+				    }
+				    if(250<=lev && lev <=310) {
+				        sb.append(ChatColor.DARK_GRAY + "[늪, 버섯 들판]");
+				    }
+				    if(300<=lev && lev <=450) {
+				        sb.append(ChatColor.YELLOW + "[정글]");
+				    }
+				    if(450<=lev && lev <=620) {
+				        sb.append(ChatColor.DARK_RED + "[지옥]");
+				    }
+				    if(620<=lev) {
+				        sb.append(ChatColor.DARK_PURPLE + "[엔더]");
+				    }
+				    if(850<=lev) {
+				        sb.append(ChatColor.BLACK + "[위더 사냥]");
+				    }
+				} else {
+				    sb.append(ChatColor.GOLD + "Current Level: "+lev + ChatColor.DARK_AQUA + "  Recommended Biome: ");
+				    if(0<=lev && lev <=40) {
+				        sb.append(ChatColor.GREEN + "[Plains]");
+				    }
+				    if(30<=lev && lev <=70) {
+				        sb.append(ChatColor.GRAY + "[Mountains, Hills, Taiga]");
+				    }
+				    if(60<=lev && lev <=100) {
+				        sb.append(ChatColor.AQUA + "[Snowy, Frozen]");
+				    }
+				    if(90<=lev && lev <=150) { // 수정된 범위
+				        sb.append(ChatColor.BLUE + "[Ocean]");
+				    }
+				    if(140<=lev && lev <=180) { // 수정된 범위
+				        sb.append(ChatColor.DARK_GREEN + "[Forest, Cave]");
+				    }
+				    if(170<=lev && lev <=210) { // 수정된 범위
+				        sb.append(ChatColor.LIGHT_PURPLE + "[Desert, Savana]");
+				    }
+				    if(200<=lev && lev <=260) { // 수정된 범위
+				        sb.append(ChatColor.RED + "[Badlands]");
+				    }
+				    if(250<=lev && lev <=310) { // 수정된 범위
+				        sb.append(ChatColor.DARK_GRAY + "[Swamp, Mushroom Fields]");
+				    }
+				    if(300<=lev && lev <=450) { // 수정된 범위
+				        sb.append(ChatColor.YELLOW + "[Jungle]");
+				    }
+				    if(450<=lev && lev <=620) { // 수정된 범위
+				        sb.append(ChatColor.DARK_RED + "[Nether]");
+				    }
+				    if(620<=lev) { // 수정된 범위
+				        sb.append(ChatColor.DARK_PURPLE + "[Ender]");
+				    }
+				    if(850<=lev) { // 수정된 범위
+				        sb.append(ChatColor.BLACK + "[Wither Hunting]");
+				    }
 				}
-				else {
-					sb.append(ChatColor.GOLD + "Current Level: "+lev + ChatColor.DARK_AQUA + "  Recommended Biome: ");
-					if(0<=lev && lev <=40) {
-						sb.append(ChatColor.GREEN + "[Plains]");
-					}
-					if(30<=lev && lev <=70) {
-						sb.append(ChatColor.GRAY + "[Mountains, Hills, Taiga]");
-					}
-					if(60<=lev && lev <=100) {
-						sb.append(ChatColor.AQUA + "[Snowy, Frozen]");
-					}
-					if(90<=lev && lev <=130) {
-						sb.append(ChatColor.BLUE + "[Ocean]");
-					}
-					if(120<=lev && lev <=160) {
-						sb.append(ChatColor.DARK_GREEN + "[Forest, Cave]");
-					}
-					if(150<=lev && lev <=190) {
-						sb.append(ChatColor.LIGHT_PURPLE + "[Desert, Savana]");
-					}
-					if(180<=lev && lev <=220) {
-						sb.append(ChatColor.RED + "[Badlands]");
-					}
-					if(210<=lev && lev <=250) {
-						sb.append(ChatColor.DARK_GRAY + "[Swamp, Mushroom Fields]");
-					}
-					if(240<=lev && lev <=300) {
-						sb.append(ChatColor.YELLOW + "[Jungle]");
-					}
-					if(300<=lev && lev <=400) {
-						sb.append(ChatColor.DARK_RED + "[Nether]");
-					}
-					if(400<=lev) {
-						sb.append(ChatColor.DARK_PURPLE + "[Ender]");
-					}
-				}
+
 				p.sendMessage(sb.toString());
 			}
 		}, 20);

@@ -27,6 +27,7 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bukkit.Bukkit;
+import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -496,16 +497,14 @@ public class Swordskills extends Pak {
 
 								AtomicInteger f = new AtomicInteger();
 								p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 120, 0, false,false));
-								p.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 50, 3, false,false));
+								p.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 10, 2, false,false));
 								final double pro = 3.5+Proficiency.getpro(p);
 								for(int i =0; i<3; i++) {
 									Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 										@Override
 										public void run()
 										{
-
-											p.setCooldown(CAREFUL, 4);
-											p.swingOffHand();
+											p.startRiptideAttack(5, 1f, p.getEquipment().getItemInMainHand());;
 											Location fl = p.getEyeLocation().clone();
 											Location monsters = gettargetblock(p,1);
 											for(double d = 0; d <= 2.5; d += 0.1) {
@@ -542,7 +541,7 @@ public class Swordskills extends Pak {
 												}
 											}
 										}
-									}, i*3);
+									}, i*3+1);
 								}
 							});
 					bd.execute();
@@ -620,14 +619,13 @@ public class Swordskills extends Pak {
 					}
 
 
-					p.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 50, 3, false,false));
+					p.addPotionEffect(new PotionEffect(PotionEffectType.RESISTANCE, 10, 2, false,false));
 					for(int i =0; i<5; i++) {
 						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 							@Override
 							public void run()
 							{
-								p.setCooldown(CAREFUL, 3);
-								p.swingOffHand();
+								p.playEffect(EntityEffect.IRON_GOLEN_ATTACK);
 								Location monsters = gettargetblock(p,1);
 								ArrayList<Location> line = new ArrayList<Location>();
 								p.playSound(p.getLocation(), Sound.BLOCK_AZALEA_LEAVES_FALL, 0.5f, 2f);
@@ -671,7 +669,8 @@ public class Swordskills extends Pak {
 									}
 								}
 							}
-						}, i*2);
+							
+						}, i*2+1);
 					}
 
 
@@ -708,6 +707,7 @@ public class Swordskills extends Pak {
 						frcooldown.computeIfPresent(p.getName(), (k,v)-> v-1000);
 					}
 
+					p.setCooldown(CAREFUL, 3);
 					p.swingMainHand();
 					ArrayList<Location> line1 = new ArrayList<Location>();
 					ArrayList<Location> line2 = new ArrayList<Location>();
@@ -894,7 +894,7 @@ public class Swordskills extends Pak {
 							}, 25);
 							sdnct.put(p.getUniqueId(), task);
 
-							p.setCooldown(CAREFUL, 1);
+							p.setCooldown(CAREFUL, 2);
 							p.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 3, 255, false, false));
 							p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 0.1f);
 							ArrayList<Location> draw = new ArrayList<Location>();
@@ -1045,8 +1045,8 @@ public class Swordskills extends Pak {
 				ArrayList<Location> sight = SwordDancesight(pl);
 				ArrayList<Location> sight2 = SwordDancesight2(pl);
 
-				p.setCooldown(CAREFUL, 3);
 				p.playSound(eye, Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.82f, 1.3f);
+				p.setCooldown(CAREFUL, 3);
 				p.swingMainHand();
 				line1.forEach(l -> {
 					w.spawnParticle(Particle.SWEEP_ATTACK, l,1,0.5,0.5,0.5);
@@ -1412,7 +1412,7 @@ public class Swordskills extends Pak {
 							.hm(frcooldown)
 							.skillUse(() -> {
 								p.setCooldown(CAREFUL, 3);
-								p.swingOffHand();
+								p.swingMainHand();
 								ArrayList<Location> line = new ArrayList<Location>();
 								HashSet<LivingEntity> les = new HashSet<LivingEntity>();
 								p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 2f);

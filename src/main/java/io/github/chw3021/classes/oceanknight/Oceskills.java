@@ -489,16 +489,12 @@ public class Oceskills extends Pak {
 			if(p.getInventory().getItemInMainHand().getType()==Material.TRIDENT && shield.containsKey(p.getName()))
 			{
 				ev.setCancelled(true);
-				p.sendEquipmentChange(p, EquipmentSlot.OFF_HAND, shield.get(p.getName()));
-                shield.remove(p.getName());
-                Bukkit.getScheduler().cancelTask(shieldt.get(p.getName()));
+				hideShield(p, EquipmentSlot.OFF_HAND);
 			}
 			else if(p.getInventory().getItemInOffHand().getType()==Material.TRIDENT && shield.containsKey(p.getName()))
 			{
 				ev.setCancelled(true);
-				p.sendEquipmentChange(p, EquipmentSlot.HAND, shield.get(p.getName()));
-                shield.remove(p.getName());
-                Bukkit.getScheduler().cancelTask(shieldt.get(p.getName()));
+				hideShield(p, EquipmentSlot.HAND);
 			}
 			if((p.getInventory().getItemInMainHand().getType()==Material.TRIDENT || p.getInventory().getItemInMainHand().getType()==Material.SHIELD) && p.isSneaking()&& !p.isRiptiding() && !p.isBlocking())
 			{
@@ -1457,7 +1453,7 @@ public class Oceskills extends Pak {
 					                public void run() 
 					                {
 					                	Location pel = p.getEyeLocation().clone().add(p.getEyeLocation().clone().getDirection().normalize().multiply(1.8));
-					                	
+					                	Boolean riptiable = false;
 					                	for (Entity e : p.getWorld().getNearbyEntities(p.getLocation(), 2, 2, 2))
 										{
 				                    		if (e instanceof Player) 
@@ -1477,14 +1473,22 @@ public class Oceskills extends Pak {
 												atk1(0.6*(1+fsd.OceanCharge.get(p.getUniqueId())*0.055), p, le);
 												le.teleport(pel.clone());
 												p.setCooldown(CAREFUL, 3);
-												p.startRiptideAttack(25, 0f, p.getInventory().getItemInMainHand().clone());
 												Holding.superholding(p, le, 20l);
-												Holding.holding(null, p, 20l);
+												Holding.holding(null, p, 15l);
 							                    p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_LAND, 0.15f, 2.0f);
+							                    riptiable = true;
 											}
 										}
+					                	if(riptiable) {
+					                		ItemStack main = p.getInventory().getItemInMainHand().clone();
+					                		if(main.getType() != Material.SHIELD) {
+					                			hideShield(p, EquipmentSlot.OFF_HAND);
+					                		}
+											p.startRiptideAttack(15, 0f, p.getInventory().getItemInMainHand().clone());
+					                	}
 			         					p.getWorld().spawnParticle(Particle.BUBBLE_POP,pel, 50,1,1,1);
 			         					p.getWorld().spawnParticle(Particle.SPLASH,pel, 50,1,1,1);
+			         					p.getWorld().spawnParticle(Particle.ENCHANTED_HIT,pel, 50,1,1,1);
 					                    p.playSound(p.getLocation(), Sound.ENTITY_DROWNED_SHOOT, 0.35f, 2.0f);
 					                    p.playSound(p.getLocation(), Sound.ITEM_TRIDENT_HIT, 0.5f, 0.0f);
 					                }
@@ -1563,10 +1567,9 @@ public class Oceskills extends Pak {
 								atk1(0.9*(1+fsd.OceanCharge.get(p.getUniqueId())*0.065), p, le);
 							}
 						}
-	 					p.getWorld().spawnParticle(Particle.BUBBLE_POP, pel,50, 1,1,1,1);
-	 					p.getWorld().spawnParticle(Particle.SPLASH,pel,50, 1,1,1,1);
-	 					p.getWorld().spawnParticle(Particle.BUBBLE_POP, pel,50);
-	 					p.getWorld().spawnParticle(Particle.SPLASH,pel,50);
+	 					p.getWorld().spawnParticle(Particle.SPLASH, pel,100, 1,1,1,1);
+	 					p.getWorld().spawnParticle(Particle.SMALL_GUST,pel,50, 2,2,2,1);
+	 					p.getWorld().spawnParticle(Particle.BUBBLE, pel,50);
 	                    p.playSound(p.getLocation(), Sound.ENTITY_ZOMBIE_CONVERTED_TO_DROWNED, 0.35f, 2.0f);
 	                    p.playSound(p.getLocation(), Sound.ENTITY_BREEZE_WIND_BURST, 0.5f, 0.0f);
 					}
@@ -1597,59 +1600,52 @@ public class Oceskills extends Pak {
 	                	HashSet<LivingEntity> les = new HashSet<LivingEntity>();
 
 						p.playSound(p.getLocation(), Sound.ITEM_ARMOR_EQUIP_IRON, 0.8f, 0f);
-		            	Holding.invur(p, 10l);
-						
-						
-						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-			                @Override
-			                public void run() {
-								p.playSound(p.getLocation(), Sound.ENTITY_DROWNED_SHOOT, 0.5f, 0.9f);
-			                	p.playSound(p.getLocation(), Sound.ITEM_TRIDENT_THROW,0.5f, 0.6f);
-			                	p.playSound(p.getLocation(), Sound.ITEM_TRIDENT_HIT, 0.3f, 0.8f);
-			                	p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.4f, 0.8f);
-				            	p.setCooldown(CAREFUL, 3);
-								p.swingOffHand();
-			                	
-			                	ArrayList<Location> line = new ArrayList<Location>();
-			                    for(double dou = 0.1; dou <= 4.1; dou += 0.2) {
-				                    Location pl = p.getEyeLocation().clone();
-									pl.add(p.getEyeLocation().getDirection().normalize().multiply(dou));
-									line.add(pl);
-			                    }
-			                    line.forEach(l ->{
-			                    	p.getWorld().spawnParticle(Particle.DRIPPING_DRIPSTONE_WATER, l.add(0, -0.289, 0),5, 0.05,0.05,0.05,0);
-			                    	p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l.add(0, -0.289, 0),5, 0.5,0.5,0.5,0);
-			                    	p.getWorld().spawnParticle(Particle.CRIT, l.add(0, -0.289, 0),3);
 
-			                    	for (Entity a : p.getWorld().getNearbyEntities(l, 3, 3, 3))
+						p.playSound(p.getLocation(), Sound.ENTITY_DROWNED_SHOOT, 0.5f, 0.9f);
+	                	p.playSound(p.getLocation(), Sound.ITEM_TRIDENT_THROW,0.5f, 0.6f);
+	                	p.playSound(p.getLocation(), Sound.ITEM_TRIDENT_HIT, 0.3f, 0.8f);
+	                	p.playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.4f, 0.8f);
+		            	p.setCooldown(CAREFUL, 3);
+						p.swingOffHand();
+	                	
+	                	ArrayList<Location> line = new ArrayList<Location>();
+	                    for(double dou = 0.1; dou <= 6.1; dou += 0.3) {
+		                    Location pl = p.getEyeLocation().clone();
+							pl.add(p.getEyeLocation().getDirection().normalize().multiply(dou));
+							line.add(pl);
+	                    }
+	                    line.forEach(l ->{
+	                    	p.getWorld().spawnParticle(Particle.DRIPPING_DRIPSTONE_WATER, l.add(0, -0.289, 0),5, 0.05,0.05,0.05,0);
+	                    	p.getWorld().spawnParticle(Particle.SWEEP_ATTACK, l.add(0, -0.289, 0),5, 0.5,0.5,0.5,0);
+	                    	p.getWorld().spawnParticle(Particle.SMALL_GUST, l.add(0, -0.289, 0),5, 0.5,0.5,0.5,0);
+
+	                    	for (Entity a : p.getWorld().getNearbyEntities(l, 3, 3, 3))
+							{
+								if ((!(a == p))&& a instanceof LivingEntity&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal"))) 
+								{
+									if (a instanceof Player) 
 									{
-										if ((!(a == p))&& a instanceof LivingEntity&& !(a.hasMetadata("fake"))&& !(a.hasMetadata("portal"))) 
-										{
-											if (a instanceof Player) 
+										Player p1 = (Player) a;
+										if(Party.hasParty(p) && Party.hasParty(p1))	{
+										if(Party.getParty(p).equals(Party.getParty(p1)))
 											{
-												Player p1 = (Player) a;
-												if(Party.hasParty(p) && Party.hasParty(p1))	{
-												if(Party.getParty(p).equals(Party.getParty(p1)))
-													{
-														continue;
-													}
-												}
-											}
-											LivingEntity le = (LivingEntity)a;
-											les.add(le);
-											if(l.getBlock().isPassable()) {
-												le.teleport(l);
+												continue;
 											}
 										}
 									}
-			                    });
-			                	for(LivingEntity le : les) {
-			            			atk1(1.1*(1+fsd.OceanCharge.get(p.getUniqueId())*0.0834), p, le);
-					            	Holding.superholding(p, le, 10l);
-										
-			                	}
-			                }
-			            }, 5); 
+									LivingEntity le = (LivingEntity)a;
+									les.add(le);
+									if(l.getBlock().isPassable()) {
+										le.teleport(l);
+									}
+								}
+							}
+	                    });
+	                	for(LivingEntity le : les) {
+	            			atk1(1.1*(1+fsd.OceanCharge.get(p.getUniqueId())*0.0834), p, le);
+			            	Holding.superholding(p, le, 10l);
+								
+	                	}
 					}
 					
 				}
@@ -2063,10 +2059,36 @@ public class Oceskills extends Pak {
 		{
 			if(p.getInventory().getItemInMainHand().getType()==Material.TRIDENT || p.getInventory().getItemInMainHand().getType()==Material.SHIELD)
 			{
-					e.setCancelled(true);
+				e.setCancelled(true);
 			}
 		}
 		
+	}
+	
+	private void hideShield(Player p, EquipmentSlot esl) {
+
+		if(shieldt.containsKey(p.getName())) {
+	        Bukkit.getScheduler().cancelTask(shieldt.get(p.getName()));
+		}
+		p.updateInventory();
+		final ItemStack is = p.getInventory().getItemInOffHand();
+		shield.put(p.getName(), is.clone());
+		p.sendEquipmentChange(p, esl, new ItemStack(Material.VOID_AIR));
+		int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+				p.sendEquipmentChange(p, esl, shield.get(p.getName()));
+                shield.remove(p.getName());
+            }
+        }, 30);  
+		shieldt.put(p.getName(), task);
+	}
+
+	private void showShield(Player p, EquipmentSlot esl) {
+
+		p.sendEquipmentChange(p, esl, shield.get(p.getName()));
+        shield.remove(p.getName());
+        Bukkit.getScheduler().cancelTask(shieldt.get(p.getName()));
 	}
 
 
@@ -2077,31 +2099,11 @@ public class Oceskills extends Pak {
 		{
 			if(p.getInventory().getItemInMainHand().getType()==Material.TRIDENT&& p.getInventory().getItemInOffHand().getType()==Material.SHIELD)
 			{
-				final ItemStack is = p.getInventory().getItemInOffHand();
-				shield.put(p.getName(), is.clone());
-				p.sendEquipmentChange(p, EquipmentSlot.OFF_HAND, new ItemStack(Material.VOID_AIR));
-				int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	                @Override
-	                public void run() {
-	    				p.sendEquipmentChange(p, EquipmentSlot.OFF_HAND, shield.get(p.getName()));
-	                    shield.remove(p.getName());
-	                }
-	            }, 30);  
-        		shieldt.put(p.getName(), task);
+				hideShield(p, EquipmentSlot.OFF_HAND);
 			}
 			else if(p.getInventory().getItemInMainHand().getType()==Material.SHIELD&& p.getInventory().getItemInOffHand().getType()==Material.TRIDENT)
 			{
-				final ItemStack is = p.getInventory().getItemInMainHand();
-				shield.put(p.getName(), is.clone());
-				p.sendEquipmentChange(p, EquipmentSlot.HAND, new ItemStack(Material.VOID_AIR));
-        		int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-	                @Override
-	                public void run() {
-	    				p.sendEquipmentChange(p, EquipmentSlot.HAND, shield.get(p.getName()));
-	                    shield.remove(p.getName());
-	                }
-	            }, 30);  
-        		shieldt.put(p.getName(), task);
+				hideShield(p, EquipmentSlot.HAND);
 			}
 		}
 		
@@ -2116,16 +2118,12 @@ public class Oceskills extends Pak {
 				if(p.getInventory().getItemInMainHand().getType()==Material.TRIDENT && shield.containsKey(p.getName()))
 				{
 					ev.setCancelled(true);
-    				p.sendEquipmentChange(p, EquipmentSlot.OFF_HAND, shield.get(p.getName()));
-                    shield.remove(p.getName());
-	                Bukkit.getScheduler().cancelTask(shieldt.get(p.getName()));
+					showShield(p, EquipmentSlot.OFF_HAND);
 				}
 				else if(p.getInventory().getItemInOffHand().getType()==Material.TRIDENT && shield.containsKey(p.getName()))
 				{
 					ev.setCancelled(true);
-    				p.sendEquipmentChange(p, EquipmentSlot.HAND, shield.get(p.getName()));
-                    shield.remove(p.getName());
-	                Bukkit.getScheduler().cancelTask(shieldt.get(p.getName()));
+					showShield(p, EquipmentSlot.HAND);
 				}
 			}
 		}
@@ -2139,15 +2137,11 @@ public class Oceskills extends Pak {
 			if(p.isRiptiding()) {
 				if(p.getInventory().getItemInMainHand().getType()==Material.TRIDENT && shield.containsKey(p.getName()))
 				{
-    				p.sendEquipmentChange(p, EquipmentSlot.OFF_HAND, shield.get(p.getName()));
-                    shield.remove(p.getName());
-	                Bukkit.getScheduler().cancelTask(shieldt.get(p.getName()));
+					showShield(p, EquipmentSlot.OFF_HAND);
 				}
 				else if(p.getInventory().getItemInOffHand().getType()==Material.TRIDENT && shield.containsKey(p.getName()))
 				{
-    				p.sendEquipmentChange(p, EquipmentSlot.HAND, shield.get(p.getName()));
-                    shield.remove(p.getName());
-	                Bukkit.getScheduler().cancelTask(shieldt.get(p.getName()));
+					showShield(p, EquipmentSlot.HAND);
 				}
 			}
 		}

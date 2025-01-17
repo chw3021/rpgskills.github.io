@@ -90,6 +90,9 @@ import io.github.chw3021.monsters.snow.SnowRaids;
 import io.github.chw3021.monsters.snow.SnowSkills;
 import io.github.chw3021.monsters.wild.WildMobsSpawn;
 import io.github.chw3021.monsters.wild.WildRaids;
+import io.github.chw3021.monsters.wither.WitherSkills;
+import io.github.chw3021.monsters.wither.WitherSkills2;
+import io.github.chw3021.monsters.wither.WitherSkills3;
 import io.github.chw3021.party.PartyLeaveEvent;
 import io.github.chw3021.rmain.RMain;
 
@@ -268,7 +271,8 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 
 	@EventHandler
 	public void Click(PlayerInteractEvent d) 
-	{	
+	{
+		WitherSkills3.getInstance().escapePrison(d);
 	}
 
 	@EventHandler
@@ -404,6 +408,26 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 		VoidSkills.getInstance().nightMare(d);
 		VoidSkills.getInstance().paintBallSpread(d);
 		VoidSkills.getInstance().teleportEx(d);
+		
+		WitherSkills.getInstance().grilled(d);
+		WitherSkills.getInstance().hand(d);
+		WitherSkills.getInstance().pillar(d);
+		WitherSkills.getInstance().rose(d);
+		WitherSkills.getInstance().summonRose(d);
+		WitherSkills.getInstance().witherPrison(d);
+		
+		WitherSkills2.getInstance().curse(d);
+		WitherSkills2.getInstance().rayWither(d);
+		WitherSkills2.getInstance().phantom(d);
+		WitherSkills2.getInstance().storm(d);
+		WitherSkills2.getInstance().wave(d);
+		
+		WitherSkills3.getInstance().cursed(d);
+		WitherSkills3.getInstance().hand(d);
+		WitherSkills3.getInstance().prison(d);
+		WitherSkills3.getInstance().storm(d);
+		WitherSkills3.getInstance().wave(d);
+		
 	}
 
 
@@ -519,6 +543,8 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 		HarvesterSkills.getInstance().bowshoot(e);
 		
 		WarpSkills.getInstance().bowshoot(e);
+		
+		WitherSkills3.getInstance().bowshoot(e);
 	}
 	@EventHandler
 	public void Hit(ProjectileHitEvent e) 
@@ -544,6 +570,10 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 		EnderSkills.getInstance().hit(e);
 
 		VoidSkills.getInstance().hit(e);
+
+		WitherSkills.getInstance().witherskullthrow(e);
+		WitherSkills2.getInstance().hit(e);
+		WitherSkills3.getInstance().hit(e);
 	}
 
 	@EventHandler
@@ -566,6 +596,9 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 		EnderSkills.getInstance().bowshoot(e);
 
 		VoidSkills.getInstance().bowshoot(e);
+		
+		WitherSkills.getInstance().bowshoot(e);
+		WitherSkills2.getInstance().bowshoot(e);
 	}
 		
 
@@ -574,6 +607,8 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 	{
 		RedSkills.getInstance().Fireball(ev);
 		DarkSkills.getInstance().witherskullthrow(ev);
+		
+		WitherSkills.getInstance().witherskullthrow(ev);
 	}
 
 	@EventHandler
@@ -603,6 +638,8 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 		MountainsSkills.getInstance().EarthBlock(ev);
 
 		PiglinSkills.getInstance().Block(ev);
+		
+		WitherSkills.getInstance().rose(ev);
 	}
 
 	@EventHandler
@@ -626,6 +663,8 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 		MountainsSkills.getInstance().EarthBlock(ev);
 
 		PiglinSkills.getInstance().Block(ev);
+
+		WitherSkills.getInstance().rose(ev);
 	}
 
 

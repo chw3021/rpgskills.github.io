@@ -9,8 +9,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
-import java.util.stream.Collectors;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -354,6 +352,16 @@ public class WitherRaids extends Summoned implements Listener {
             		bd.addPassenger(newmob);
             		newmob.setRotation(bd.getLocation().getYaw(), bd.getLocation().getPitch());
             	}
+            	else {
+
+            		newmob.getWorld().getEntities().stream().filter(ent -> ent.hasMetadata("throne"+gethero(newmob))).forEach(block ->{
+        	        	Location tl = block.getLocation().clone();
+        	    		tl.getWorld().spawnParticle(Particle.GUST_EMITTER_LARGE, tl, 20,2,2,2);
+        	    		newmob.getWorld().playSound(tl, Sound.ENTITY_GENERIC_EXPLODE, 0.06f, 0);
+        	    		newmob.getWorld().playSound(tl, Sound.BLOCK_DEEPSLATE_TILES_BREAK, 0.2f, 0);
+        	    		block.remove();
+        	        });;
+            	}
             	
 				if(Holding.ale(newmob)!=null) {
 					final double pr = Holding.ale(newmob).getHealth()/Holding.ale(newmob).getAttribute(Attribute.MAX_HEALTH).getValue();
@@ -435,7 +443,7 @@ public class WitherRaids extends Summoned implements Listener {
 	    Location baseLocation = throneLocation.clone().add(baseOffset);
 	    BlockDisplay base = (BlockDisplay) world.spawn(baseLocation, BlockDisplay.class);
 	    base.setBlock(getBd(Material.QUARTZ_PILLAR));
-	    base.setBillboard(Billboard.VERTICAL);
+	    base.setBillboard(Billboard.FIXED);
 	    base.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 	    base.setMetadata("stuff" + rn, new FixedMetadataValue(RMain.getInstance(), rn));
 	    base.setMetadata("throne" + rn, new FixedMetadataValue(RMain.getInstance(), rn));
@@ -456,6 +464,7 @@ public class WitherRaids extends Summoned implements Listener {
 	    seat.setBillboard(Billboard.FIXED);
 	    setDisplayScale(seat, scale);
 	    seat.addPassenger(p);
+	    seat.setPersistent(true);
 	    throne.put(rn, seat);
 
 
@@ -1475,7 +1484,7 @@ public class WitherRaids extends Summoned implements Listener {
 	    	    		
 	
 	
-	    	    		bossbargen("[The Wither: True Form]", rn, newmob);
+	    	    		bossbargen("witherbossfinal", rn, newmob);
 	    	    		
 	    	    		targeting(rn);
 	            		

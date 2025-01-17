@@ -72,6 +72,10 @@ public class WitherSkills extends WitherRaids{
 			ev.setCancelled(true);
 			
 		    LivingEntity p = ev.getEntity();
+		    if(getPhase(p) !=1) {
+		    	return;
+		    }
+		    
 		    
         	p.getWorld().playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.5f, 0f);
 
@@ -92,15 +96,16 @@ public class WitherSkills extends WitherRaids{
 	                @Override
 	                public void run() {
 	            		p.swingMainHand();
-	            		Arrow ar = p.getWorld().spawnArrow(p.getLocation(), p.getLocation().getDirection(), 2.2f, 6.66f);
+	            		Arrow ar = p.getWorld().spawnArrow(p.getLocation(), p.getLocation().getDirection(), 1.2f, 6.66f);
 						ar.remove();
 	            		p.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_SHOOT, 0.666f, 0.666f);
 	                    WitherSkull ws = (WitherSkull) p.launchProjectile(WitherSkull.class);
 	                    ws.setYield(0.0f);
 	                    ws.setShooter(p);
-	                    ws.setVelocity(ar.getVelocity());
+	                    ws.setGravity(true);
+	                    ws.setVelocity(ar.getVelocity().add(new Vector(0,-0.7,0)));
 	                    ws.setIsIncendiary(false);
-	                	ws.setCharged(true);
+	                	ws.setCharged(false);
 						ws.setMetadata("witherthrow", new FixedMetadataValue(RMain.getInstance(), true));
 						ws.setMetadata("stuff"+rn, new FixedMetadataValue(RMain.getInstance(), rn));
 	                }
@@ -162,18 +167,18 @@ public class WitherSkills extends WitherRaids{
 	            }
 
 	            // 현재 반지름에 대한 원의 위치 계산
-	            HashSet<Location> circleLocations = calculateCircleLocations(p.getLocation(), currentRadius);
+	            HashSet<Location> circleLocations = calculateCircleLocations(p.getLocation().add(0,-0.8,0), currentRadius);
 
 	            // 파티클 생성 및 선 밟은 엔티티 처리
 	            for (Location loc : circleLocations) {
 	                // 검은색 파티클 생성
-	                loc.getWorld().spawnParticle(Particle.DUST, loc, 1, new Particle.DustOptions(Color.BLACK, 1));
+	                loc.getWorld().spawnParticle(Particle.LANDING_OBSIDIAN_TEAR, loc, 20,0.5,1,0.5);
 
 	                // 해당 위치를 밟은 엔티티에게 데미지
-	                for (Entity e : loc.getWorld().getNearbyEntities(loc, 0.5, 4, 0.5)) {
+	                for (Entity e : loc.getWorld().getNearbyEntities(loc, 0.5, 1, 0.5)) {
 	                    if (p!=e && e instanceof LivingEntity le && !(e.hasMetadata("fake"))) {
 	                    	le.damage(damage, p);
-	                	    le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 66, 6));
+	                	    le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 66, 1));
 	                    }
 	                }
 	            }
@@ -202,7 +207,7 @@ public class WitherSkills extends WitherRaids{
 	public void grilled(EntityDamageByEntityEvent d) 
 	{
 	    
-		int sec = 9;
+		int sec = 14;
 		if(d.getEntity().hasMetadata("witherboss") && grillable.containsKey(d.getEntity().getUniqueId())) 
 		{
 			LivingEntity p = (LivingEntity)d.getEntity();
@@ -283,7 +288,7 @@ public class WitherSkills extends WitherRaids{
                 movePillarTowardsPlayer(pillars, target.getLocation(),tick);
                 
                 if(tick%10==0) {
-                	shotWitherSkull(pillars, startLoc, boss);
+                	shotWitherSkull(pillars, target.getLocation(), boss);
                 }
 
                 tick = tick +2;
@@ -303,12 +308,13 @@ public class WitherSkills extends WitherRaids{
         	block.getWorld().playSound(block.getLocation(), Sound.ENTITY_WITHER_SHOOT, 0.6f, 1f);
             Vector moveDirection = targetLoc.toVector().subtract(block.getEyeLocation().toVector());
 
-            WitherSkull ws = (WitherSkull) p.launchProjectile(WitherSkull.class);
+            WitherSkull ws = (WitherSkull) block.getWorld().spawn(block.getEyeLocation(), WitherSkull.class);
             ws.setYield(0.0f);
             ws.setShooter(p);
-            ws.setVelocity(moveDirection.multiply(1.5));
+            ws.setVelocity(moveDirection.normalize().multiply(1.2));
             ws.setIsIncendiary(false);
-        	ws.setCharged(false);
+            ws.setGravity(true);
+        	ws.setCharged(true);
 			ws.setMetadata("witherthrow", new FixedMetadataValue(RMain.getInstance(), true));
 			ws.setMetadata("stuff"+gethero(p), new FixedMetadataValue(RMain.getInstance(), gethero(p)));
         }
@@ -320,8 +326,8 @@ public class WitherSkills extends WitherRaids{
             Vector moveDirection = targetLoc.toVector().subtract(block.getLocation().toVector());
             double distance = moveDirection.length();
 
-            if (distance > 0.4) {
-                double speed = Math.log(distance + 0.4) * 0.2;
+            if (distance > 0.3) {
+                double speed = Math.log(distance + 0.3) * 0.15;
                 moveDirection.normalize().multiply(speed);
                 block.teleport(block.getLocation().add(moveDirection));
             }
@@ -338,7 +344,6 @@ public class WitherSkills extends WitherRaids{
         		if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && e!=p) {
         			LivingEntity le = (LivingEntity)e;
 					le.damage(6.66, p);
-					le.teleport(tl);
         		}
         	}
         }
@@ -395,7 +400,7 @@ public class WitherSkills extends WitherRaids{
 			Mob p = (Mob)d.getEntity();
 
 			
-			int sec = 10;
+			int sec = 19;
 	
 	
 			if(p.hasMetadata("failed")|| getPhase(p) != 1|| ordeal.containsKey(p.getUniqueId()) || !handable.containsKey(p.getUniqueId())) {
@@ -430,7 +435,7 @@ public class WitherSkills extends WitherRaids{
 		LivingEntity p = (LivingEntity) Holding.ale(witherblock.get(fallingb.getUniqueId()));
 		Location tl = fallingb.getLocation();
 		tl.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, tl, 1);
-		tl.getWorld().spawnParticle(Particle.SQUID_INK, tl, 666,3,3,3);
+		tl.getWorld().spawnParticle(Particle.SQUID_INK, tl,6);
 		p.getWorld().playSound(tl, Sound.ENTITY_WITHER_BREAK_BLOCK, 0.36f, 0);
 
 		for (Entity e : p.getWorld().getNearbyEntities(tl, 3, 3, 3))
@@ -438,7 +443,7 @@ public class WitherSkills extends WitherRaids{
 			if(p!=e && e instanceof Player) {
 				Player le = (Player)e;
         		le.damage(6, p);
-        	    le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 66, 6));
+        	    le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 66, 1));
 			}
 			
 		}
@@ -517,7 +522,6 @@ public class WitherSkills extends WitherRaids{
 
 	            boss.setNoActionTicks(20);
 	            Location rLocation = rLocations.get(currentIndex);
-	            boss.teleport(rLocation); // 보스 텔레포트
 	            world.playSound(rLocation, Sound.ENTITY_WITHER_AMBIENT, 0.3f, 2f);
 	            world.spawnParticle(Particle.FALLING_OBSIDIAN_TEAR, rLocation, 50, 1,1,1);
 
@@ -558,7 +562,7 @@ public class WitherSkills extends WitherRaids{
 		if(d.getEntity().hasMetadata("witherboss") && (d.getEntity() instanceof Mob)) 
 		{
 			Mob p = (Mob)d.getEntity();
-			int sec = 13;
+			int sec = 15;
 
 			if(ordeal.containsKey(p.getUniqueId())) {
 				return;
@@ -637,10 +641,10 @@ public class WitherSkills extends WitherRaids{
 	    p.swingMainHand();
 	    pe.getWorld().playSound(pe.getLocation(), Sound.AMBIENT_NETHER_WASTES_ADDITIONS, 0.4f, 2f);
 	    pe.getWorld().playSound(pe.getLocation(), Sound.ENTITY_WITHER_HURT, 0.8f, 0.6f);
-	    p.getWorld().spawnParticle(Particle.ENTITY_EFFECT, cl, 500, 4, 1, 4, 0, Color.BLACK);
-	    p.getWorld().spawnParticle(Particle.DUST_PILLAR, cl, 500, 4, 1, 4, 0.2, getBd(Material.BLACK_GLAZED_TERRACOTTA));
+	    p.getWorld().spawnParticle(Particle.ENTITY_EFFECT, cl, 400, 6, 0.2, 6, 0, Color.BLACK);
+	    p.getWorld().spawnParticle(Particle.ASH, cl, 500, 4, 0.2, 4, 0);
 
-	    HashSet<Location> particleLocations = calculateParticleLocations(cl, 4, 66);
+	    HashSet<Location> particleLocations = calculateParticleLocations(cl, 6, 66);
         Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(0, 0, 0), 1.5f); 
 
 	    int task = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
@@ -654,7 +658,7 @@ public class WitherSkills extends WitherRaids{
 	            for (Location particleLocation : particleLocations) {
 	                w.spawnParticle(Particle.DUST, particleLocation, 4,0,2,0, dustOptions);
 	            }
-	            if(cl.distance(pe.getLocation())>4) {
+	            if(cl.distance(pe.getLocation())>6) {
 	            	pe.setVelocity(new Vector(0,0,0));
 	            	getheroes(p).forEach(par ->{
 		            	par.damage(6.66,p);
@@ -662,7 +666,7 @@ public class WitherSkills extends WitherRaids{
 	            }
 
 	        }
-	    }, 20, 1);
+	    }, 30, 1);
 
 	    illusionTask.put(p.getUniqueId(), task);
 		ordt.put(gethero(p), task);
@@ -672,13 +676,11 @@ public class WitherSkills extends WitherRaids{
 	        @Override
 	        public void run() {
 	            if(illusionTask.containsKey(p.getUniqueId())) {
-	                Bukkit.getScheduler().cancelTask(illusionTask.get(p.getUniqueId()));
-	                illusionTask.remove(p.getUniqueId());
+	                Bukkit.getScheduler().cancelTask(illusionTask.remove(p.getUniqueId()));
 	            }
 	        }
 	    }, 100);
 
-	    // 일정 시간 후 복원 가능 상태로 변경
 	    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	        @Override
 	        public void run() {
@@ -696,7 +698,7 @@ public class WitherSkills extends WitherRaids{
 	        return;
 	    }
 	    if(rb8cooldown.containsKey(p.getUniqueId())) {
-	        long timer = (rb8cooldown.get(p.getUniqueId()) / 1000 + 12) - System.currentTimeMillis() / 1000;
+	        long timer = (rb8cooldown.get(p.getUniqueId()) / 1000 + 15) - System.currentTimeMillis() / 1000;
 	        if (timer < 0) {
 	            rb8cooldown.remove(p.getUniqueId()); 
 	            prisonStart(p, tl, hero);
@@ -715,7 +717,7 @@ public class WitherSkills extends WitherRaids{
 
 		ptl.getWorld().playSound(ptl, Sound.ENTITY_WITHER_SKELETON_DEATH, 0.8f, 0f);
 		ptl.getWorld().playSound(ptl, Sound.BLOCK_LAVA_AMBIENT, 0.2f, 0f);
-    	ptl.getWorld().spawnParticle(Particle.BLOCK_CRUMBLE, ptl, 666,2.5,0.2,2.5, getBd(Material.CHISELED_POLISHED_BLACKSTONE));
+    	ptl.getWorld().spawnParticle(Particle.DUST_PILLAR, ptl, 666,2.5,0.2,2.5, getBd(Material.NETHER_GOLD_ORE));
 	    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	        @Override
 	        public void run() {
@@ -725,8 +727,8 @@ public class WitherSkills extends WitherRaids{
 	    			if(p!=e && e instanceof Player) {
 	    				Player le = (Player)e;
 	            		le.damage(6.66, p);
-	            	    le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 66, 6));
-	            	    le.setVelocity(new Vector(0,2,0));
+	            	    le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 66, 1));
+	            	    le.setVelocity(new Vector(0,1,0));
 	    			}
 	    			
 	    		}
@@ -740,14 +742,14 @@ public class WitherSkills extends WitherRaids{
 		if((d.getEntity() instanceof Mob) && d.getEntity().hasMetadata("witherboss")) 
 		{
 			Mob p = (Mob)d.getEntity();
-			int sec = 4;
+			int sec = 6;
 	        
 
 			if(ordeal.containsKey(p.getUniqueId())) {
 				return;
 			}
             if (checkAndApplyCharge(p, d)) return;
-			if(p.getTarget() == null|| !(p.getTarget() instanceof Player)||p.hasMetadata("failed")) {
+			if(p.getTarget() == null|| getPhase(p) != 1|| !(p.getTarget() instanceof Player)||p.hasMetadata("failed")) {
 				return;
 			}
 			final Player tar = (Player) p.getTarget();
@@ -807,11 +809,15 @@ public class WitherSkills extends WitherRaids{
 	        d.setCancelled(true);
 	        p.setMetadata("ejected", new FixedMetadataValue(RMain.getInstance(), true));
 	        throne.remove(gethero(p));
-	        p.getWorld().getEntities().stream().filter(ent -> ent.hasMetadata("stuff"+gethero(p))).forEach(block ->{
+	        p.getWorld().getEntities().stream().filter(ent -> ent.hasMetadata("throne"+gethero(p))).forEach(block ->{
 	        	Location tl = block.getLocation().clone();
 	    		tl.getWorld().spawnParticle(Particle.GUST_EMITTER_LARGE, tl, 20,2,2,2);
 	    		p.getWorld().playSound(tl, Sound.ENTITY_GENERIC_EXPLODE, 0.06f, 0);
 	    		p.getWorld().playSound(tl, Sound.BLOCK_DEEPSLATE_TILES_BREAK, 0.2f, 0);
+	    		block.remove();
+	        });;
+	        p.getWorld().getEntities().stream().filter(ent -> ent.hasMetadata("stuff"+gethero(p))).forEach(block ->{
+	    		block.remove();
 	        });;
 	        return true;
 	    }

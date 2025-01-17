@@ -170,12 +170,12 @@ public class Obtained implements Serializable, Listener {
 			}
 			
 		}
-		if(ChatColor.stripColor(e.getView().getTitle()).contains("BackToSkillsGUI")) 
+		if(ChatColor.stripColor(e.getView().getTitle()).contains("Utilities")) 
 		{
 			if (e.getCurrentItem() == null || e.getCurrentItem().getType() == null
 					|| !e.getCurrentItem().hasItemMeta()) {
 				return;
-			} else if(e.getCurrentItem().getItemMeta().getItemName().equals("RpgSkillsUtilities")){
+			} else if(e.getCurrentItem().getItemMeta().getItemName().equals("BackToSkillsGUI")){
 				e.setCancelled(true);
 				Player p = (Player) e.getWhoClicked();
 				SkillsGui.openSkillsGui(p);
@@ -955,7 +955,7 @@ public class Obtained implements Serializable, Listener {
 				31, inv);
 		}
 		else {
-			itemsetbasic(ChatColor.GOLD + "Utilites", is, 0, 1,
+			itemsetbasic(ChatColor.GOLD + "Utilities", is, 0, 1,
 					Arrays.asList("Functions And Trophies"), 31, inv);
 		}
 	}
@@ -963,7 +963,7 @@ public class Obtained implements Serializable, Listener {
 	public Inventory itemset(Player p) {
 		String path = new File("").getAbsolutePath();
 		Obtained od = new Obtained(loadData(path + "/plugins/RPGskills/Obtained.data"));
-		Inventory inv = Bukkit.createInventory(null, 27, "Utilites");
+		Inventory inv = Bukkit.createInventory(null, 27, "Utilities");
 		ItemStack mp = new ItemStack(Material.CHEST);
 		mp.addUnsafeEnchantment(Enchantment.SMITE, 1);
 	

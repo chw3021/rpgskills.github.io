@@ -46,7 +46,6 @@ public class Drops implements Listener {
 						this.cancel();
 					}
 					
-					System.out.println(item.toString());
     				item.setVelocity(new Vector(0,0,0));
 				}
 				
