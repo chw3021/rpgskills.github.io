@@ -24,17 +24,13 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Display.Billboard;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.EvokerFangs;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Snowball;
-import org.bukkit.entity.Vex;
 import org.bukkit.entity.WitherSkull;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
@@ -49,8 +45,6 @@ import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 import com.google.common.collect.HashMultimap;
-import com.google.common.util.concurrent.AtomicDouble;
-
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.monsters.raids.WitherRaids;
 import io.github.chw3021.rmain.RMain;
@@ -493,7 +487,10 @@ public class WitherSkills3 extends WitherRaids{
             if(!heroes.containsValue(player.getUniqueId())) {
             	return;
             }
-            Entity targetBlock = player.rayTraceBlocks(5).getHitEntity();
+            if(player.rayTraceBlocks(2) == null || player.rayTraceBlocks(2).getHitEntity() == null) {
+            	return;
+            }
+            Entity targetBlock = player.rayTraceBlocks(2).getHitEntity();
             if (targetBlock instanceof BlockDisplay display) {
             	String rn = getheroname(player);
             	if(prisonDisplays.containsKey(rn)) {
@@ -516,7 +513,7 @@ public class WitherSkills3 extends WitherRaids{
         }
     }
 	
-	final private void phantom(LivingEntity p) {
+	final private void prison(LivingEntity p) {
 
     	final World w = p.getWorld();
         for(Player pe : WitherRaids.getheroes(p)) {
@@ -543,7 +540,7 @@ public class WitherSkills3 extends WitherRaids{
 	   	}, 180);
 	}
 	
-	public void phantom(EntityDamageByEntityEvent d) 
+	public void prison(EntityDamageByEntityEvent d) 
 	{
 		if(d.getEntity().hasMetadata("witherboss")) 
 		{
@@ -563,14 +560,14 @@ public class WitherSkills3 extends WitherRaids{
 		                else 
 		                {
 		                	aicooldown.remove(p.getUniqueId()); // removing player from HashMap
-		                	phantom(p);
+		                	prison(p);
 		                	aicooldown.put(p.getUniqueId(), System.currentTimeMillis());  
 		                }
 		            }
 		            else 
 		            {
 
-		            	phantom(p);
+		            	prison(p);
 	                	aicooldown.put(p.getUniqueId(), System.currentTimeMillis());  
 					}
 		}
@@ -584,6 +581,7 @@ public class WitherSkills3 extends WitherRaids{
 		if(d.getEntity().hasMetadata("witherboss")) 
 		{
 			final LivingEntity p = (LivingEntity)d.getEntity();
+            if (checkAndApplyCharge(p, d)) return;
 
 			if(p.hasMetadata("raid")) {
 				if(!WitherRaids.getheroes(p).stream().anyMatch(pe -> pe.getWorld().equals(p.getWorld()))|| p.hasMetadata("failed")) {
@@ -676,7 +674,7 @@ public class WitherSkills3 extends WitherRaids{
 	                Location particleLocation = startLocation.clone()
 	                        .add(direction.clone().multiply(tick++ * 0.36));
 
-                    if (p.isDead() || particleLocation.distance(tl) <1) { // 촉수가 도달하거나 시간이 종료되면
+                    if (p.isDead() || particleLocation.distance(tl) <1|| tick>=30) { // 촉수가 도달하거나 시간이 종료되면
                         tentacleGrab(p, world, startLocation);
                     }
 	                world.spawnParticle(Particle.SQUID_INK, particleLocation, 66, 1, 1 ,1,0.1);
