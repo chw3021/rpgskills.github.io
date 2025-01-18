@@ -360,6 +360,7 @@ public class WitherSkills2 extends WitherRaids{
 
 		line.forEach(l -> {
 			snw.spawnParticle(Particle.END_ROD, l, 6, 1,1,1,0);
+			snw.spawnParticle(Particle.FLASH, l, 1);
 			snw.spawnParticle(Particle.BLOCK, l, 30, 2,2,2,0,getBd(Material.BLACK_STAINED_GLASS));
 		});
 		int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
@@ -377,7 +378,7 @@ public class WitherSkills2 extends WitherRaids{
 					}
         		});
             }
-        }, 16); 
+        }, 23); 
         ordt.put(gethero(p), task);
 	}
 	
@@ -417,7 +418,7 @@ public class WitherSkills2 extends WitherRaids{
             private void cancel() {
                 Bukkit.getScheduler().cancelTask(this.hashCode());
             }
-        }, 6L, 4L); 
+        }, 6L, 3L); 
 
         ordt.put(rn, bt.getTaskId());
     }
@@ -444,13 +445,14 @@ public class WitherSkills2 extends WitherRaids{
             	handable.remove(p.getUniqueId());
             }
 	   	}, 60);
-		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
      		@Override
         	public void run() 
             {	
-     			waveable.putIfAbsent(p.getUniqueId(), true);
+     			phantomable.put(p.getUniqueId(), true);
             }
-	   	}, 80);
+        }, 80); 
 	}
 	
 
@@ -460,7 +462,7 @@ public class WitherSkills2 extends WitherRaids{
 		{
 			Mob p = (Mob)d.getEntity();
 			
-			int sec = 9;
+			int sec = 11;
 	
 	
 			if(p.hasMetadata("failed")|| ordeal.containsKey(p.getUniqueId()) || !handable.containsKey(p.getUniqueId())) {
@@ -755,13 +757,12 @@ public class WitherSkills2 extends WitherRaids{
 	    world.playSound(first, Sound.ITEM_MACE_SMASH_GROUND, 1f, 1.2f);
 
 	    // 초기 이동 설정
-	    double totalTicks = 7; // 도약에 걸리는 전체 시간 (tick 단위)
-	    double tickInterval = 1; // 각 tick 간격 (1tick = 50ms)
+	    double totalTicks = 25; // 도약에 걸리는 전체 시간 (tick 단위)
 	    AtomicInteger currentTick = new AtomicInteger(0); // 현재 진행 중인 tick
 
 	    // 방향 벡터 계산
 	    Vector horizontalDirection = jl.toVector().subtract(fl.toVector()).normalize(); // 수평 이동 방향
-	    double totalDistance = fl.distance(jl); // 총 이동 거리
+	    double totalDistance = fl.distance(jl)+2; // 총 이동 거리
 	    double speed = totalDistance / totalTicks; // 수평 속도
 	    p.setRiptiding(true);
 	    
@@ -774,6 +775,7 @@ public class WitherSkills2 extends WitherRaids{
 	            if (tick > totalTicks) {
 	                Bukkit.getScheduler().cancelTask(j.get());
 	                p.setRiptiding(false);
+	                p.teleport(tl);
 	                return;
 	            }
 
@@ -796,7 +798,7 @@ public class WitherSkills2 extends WitherRaids{
 					}
 				}
 	        }
-	    }, 20L, (long) tickInterval)); 
+	    }, 20L, 1)); 
 
 	    // 태스크 저장 (필요 시 추가 관리)
 	    ordt.put(gethero(p), j.get());
@@ -809,7 +811,7 @@ public class WitherSkills2 extends WitherRaids{
 		if((d.getEntity() instanceof Mob) && d.getEntity().hasMetadata("witherboss")) 
 		{
 			Mob p = (Mob)d.getEntity();
-			int sec = 5;
+			int sec = 12;
 	        
 
             if (checkAndApplyCharge(p, d)) return;
@@ -838,15 +840,14 @@ public class WitherSkills2 extends WitherRaids{
 		                        {	
 		                 			handable.put(p.getUniqueId(), true);
 		        	            }
-		                    }, 46); 
-
+		                    }, 60); 
 		                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		                 		@Override
 		                    	public void run() 
 		                        {	
-		                 			phantomable.put(p.getUniqueId(), true);
+		                 			waveable.put(p.getUniqueId(), true);
 		        	            }
-		                    }, 50); 
+		                    }, 80); 
 	             			
 							rb4cooldown.put(p.getUniqueId(), System.currentTimeMillis());  
 		                }
@@ -863,15 +864,14 @@ public class WitherSkills2 extends WitherRaids{
 	                        {	
 	                 			handable.put(p.getUniqueId(), true);
 	        	            }
-	                    }, 46); 
-
+	                    }, 60); 
 	                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	                 		@Override
 	                    	public void run() 
 	                        {	
-	                 			phantomable.put(p.getUniqueId(), true);
+	                 			waveable.put(p.getUniqueId(), true);
 	        	            }
-	                    }, 50); 
+	                    }, 80); 
              			
 						rb4cooldown.put(p.getUniqueId(), System.currentTimeMillis());  
 					}

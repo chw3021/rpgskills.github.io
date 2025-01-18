@@ -1484,7 +1484,6 @@ public class WitherRaids extends Summoned implements Listener {
 	    	    		
 	
 	
-	    	    		bossbargen("witherbossfinal", rn, newmob);
 	    	    		
 	    	    		targeting(rn);
 	            		

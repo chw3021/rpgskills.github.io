@@ -12,6 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
+import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -117,11 +118,10 @@ public class WitherSkills3 extends WitherRaids{
         Location hitLocation = hit.clone().add(0, 0.16, 0); // 시작 지점
         
         for(int i = 0; i<6; i++) {
-        	Arrow ar = world.spawnArrow(hitLocation, new Vector(0,2.6,0), 1.6f, 16);
+        	Arrow ar = world.spawnArrow(hitLocation, new Vector(0,1.2,0), 1.6f, 16);
         	world.spawn(hitLocation, WitherSkull.class, ws -> {
-        		ws.setVelocity(ar.getVelocity());
+        		ws.setVelocity(ar.getVelocity().add(new Vector(0,-0.66,0)));
         		ws.setShooter(shooter);
-        		ws.setAcceleration(new Vector(0,-0.66,0));
                 ws.setYield(0.0f);
                 ws.setIsIncendiary(false);
             	ws.setCharged(true);
@@ -132,7 +132,111 @@ public class WitherSkills3 extends WitherRaids{
         }
 	}
 
+	
+	private Location findGroundBlock(Location startLocation) {
+	    World world = startLocation.getWorld();
+	    if (world == null) return null;
+	
+	    Location current = startLocation.clone();
+	
+	    // Y축 아래로 탐색
+	    while (current.getY() > world.getMinHeight()) {
+	        current.subtract(0, 1, 0); // 아래로 1블록 이동
+	        if (!current.getBlock().isPassable()) { // Solid 블록인지 확인
+	            return current; // Solid 블록이면 반환
+	        }
+	    }
+	    return null; // 바닥을 찾지 못한 경우
+	}
+	
+	public void createGrowingCircle(LivingEntity p, double maxRadius, long interval, double damage) {
+		String rn = gethero(p);
+		p.getWorld().playSound(p.getLocation(), Sound.BLOCK_BIG_DRIPLEAF_TILT_DOWN, 1.0f, 0f);
+		p.getWorld().spawnParticle(Particle.WITCH, p.getLocation(), 150, 2,2,2);
+		
+		World world = p.getWorld();
+		final Location startLocation = p.getLocation().clone();
+		Location groundLocation = findGroundBlock(startLocation);
+		if (groundLocation == null) {
+		    return; // 바닥 블록을 찾지 못하면 중지
+		}
 
+		double totalDistance = startLocation.getY() - groundLocation.getY(); // 총 Y축 이동 거리
+		int totalTicks = 20; // 1초(20틱)
+		double distancePerTick = totalDistance / totalTicks; // 매 틱 이동해야 할 거리
+
+		ordt.put(rn, new BukkitRunnable() {
+		    int tickCount = 0; // 현재 틱 수
+		    double yOffset = 0; // 현재까지 이동한 거리
+
+		    @Override
+		    public void run() {
+		        if (tickCount >= totalTicks) {
+		            this.cancel(); // 1초(20틱) 경과 후 태스크 종료
+		            p.teleport(groundLocation.add(0.5, 0, 0.5)); // 목표 지점 정렬
+		            world.playSound(groundLocation, Sound.BLOCK_SCULK_SPREAD, 1.0f, 0f);
+		            world.spawnParticle(Particle.WITCH, groundLocation, 150, 2, 2, 2);
+		            return;
+		        }
+
+		        yOffset += distancePerTick; // 매 틱 이동 거리 추가
+		        Location newLocation = startLocation.clone().subtract(0, yOffset, 0); // 새로운 위치 계산
+		        p.teleport(newLocation); // 위더 위치 업데이트
+		        world.spawnParticle(Particle.SMOKE, newLocation, 10, 0.3, 0.3, 0.3, 0.01);
+		        world.playSound(newLocation, Sound.ENTITY_WITHER_HURT, 0.5f, 0.8f);
+
+		        tickCount++; // 틱 수 증가
+		    }
+		}.runTaskTimer(RMain.getInstance(), 0L, 1L).getTaskId()); // 0틱 후 시작, 1틱 간격으로 실행
+
+		ordt.put(rn, new BukkitRunnable() {
+	        double currentRadius = 0.5; // 초기 반지름
+
+	        @Override
+	        public void run() {
+	            if (currentRadius > maxRadius) {
+	                this.cancel(); // 최대 반지름에 도달하면 태스크 중지
+	                return;
+	            }
+
+	            // 현재 반지름에 대한 원의 위치 계산
+	            HashSet<Location> circleLocations = calculateCircleLocations(p.getLocation().add(0,-0.8,0), currentRadius);
+
+	            // 파티클 생성 및 선 밟은 엔티티 처리
+	            for (Location loc : circleLocations) {
+	                // 검은색 파티클 생성
+	                loc.getWorld().spawnParticle(Particle.FALLING_DUST, loc, 66,1,2,1,getBd(Material.BLACKSTONE));
+
+	                // 해당 위치를 밟은 엔티티에게 데미지
+	                for (Entity e : loc.getWorld().getNearbyEntities(loc, 1, 2, 1)) {
+	                    if (p!=e && e instanceof LivingEntity le && !(e.hasMetadata("fake"))) {
+	                    	le.damage(damage, p);
+	                	    le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 66, 1));
+	                    }
+	                }
+	            }
+
+	            currentRadius += 1; // 반지름 점진적으로 증가
+	        }
+	    }.runTaskTimer(RMain.getInstance(), 20, interval).getTaskId()); // 매 interval 틱마다 실행
+	}
+	
+	private HashSet<Location> calculateCircleLocations(Location center, double radius) {
+	    HashSet<Location> locations = new HashSet<>();
+	    World world = center.getWorld();
+	    if (world == null) return locations;
+
+	    int points = 12; // 12개의 각도로 분할
+	    double offsetAngle = Math.random() * 2 * Math.PI; // 0~2π 사이의 랜덤 오프셋 각도 생성
+
+	    for (int i = 0; i < points; i++) {
+	        double angle = offsetAngle + 2 * Math.PI * i / points; // 랜덤 오프셋 각도 추가
+	        double x = center.getX() + radius * Math.cos(angle);
+	        double z = center.getZ() + radius * Math.sin(angle);
+	        locations.add(new Location(world, x, center.getY(), z));
+	    }
+	    return locations;
+	}
 
 	private HashMap<UUID, Integer> cursable = new HashMap<UUID, Integer>();
 	
@@ -150,9 +254,9 @@ public class WitherSkills3 extends WitherRaids{
 	                this.cancel();
 	                return;
 	            }
-	            WitherSkills.getInstance().createGrowingCircle(p, 16.66, 6, 6.66);
+	            createGrowingCircle(p, 16, 16, 16);
 	        }
-	    }.runTaskTimer(RMain.getInstance(), 0, 16).getTaskId()); 
+	    }.runTaskTimer(RMain.getInstance(), 0, 22).getTaskId()); 
 		
         
 	}
@@ -161,7 +265,7 @@ public class WitherSkills3 extends WitherRaids{
 	public void cursed(EntityDamageByEntityEvent d) 
 	{
 	    
-		int sec = 9;
+		int sec = 13;
 		if(d.getEntity().hasMetadata("witherboss") && cursable.containsKey(d.getEntity().getUniqueId())) 
 		{
 			LivingEntity p = (LivingEntity)d.getEntity();
@@ -243,62 +347,38 @@ public class WitherSkills3 extends WitherRaids{
                 private void cancel() {
                     Bukkit.getScheduler().cancelTask(this.hashCode());
                 }
-            }, 0L, 20L); 
+            }, 0L, 26L); 
             blockt.put(boss.getUniqueId(), bt.getTaskId());
             ordt.put(rn, bt.getTaskId());
         });
     }
 
     private void movePillarTowardsPlayer(ArmorStand block, Location targetLoc, String rn, LivingEntity p) {
-    	final Location fl = block.getLocation().clone();
-    	block.getWorld().spawnParticle(Particle.WITCH, fl, 10, 1.5, 1.5, 1.5, 0.1);
-        Vector moveDirection = targetLoc.toVector().subtract(fl.toVector());
-        double distance = moveDirection.length();
-        List<Location> line = new ArrayList<Location>();
-        for(double d = 0; d<distance+0.1; d+=0.1) {
-        	line.add(fl.clone().add(moveDirection.normalize().multiply(d)));
-        }
+    	targetLoc.getWorld().spawnParticle(Particle.WITCH, targetLoc, 30, 1.5, 1.5, 1.5, 0.1);
+    	targetLoc.getWorld().playSound(targetLoc, Sound.ENTITY_BREEZE_IDLE_GROUND, 0.4f, 1.6f);
 
         ordt.put(rn,new BukkitRunnable() {
-            int tick = 0;
-            int stepsPerTick = line.size() / 9;
-            int currentIndex = 0; // 현재 이동 중인 line 인덱스
 
             @Override
             public void run() {
 
-                if (tick >= 8 || currentIndex >= line.size()) {
-                	Location bl = block.getLocation();
-                	bl.getWorld().spawnParticle(Particle.SWEEP_ATTACK, bl, 6, 1.7, 1.7, 1.7, 0.1);
-                	bl.getWorld().spawnParticle(Particle.WITCH, bl, 6, 1.7, 1.7, 1.7, 0.1);
-                	bl.getWorld().playSound(bl, Sound.ENTITY_BREEZE_SHOOT, 0.4f, 1.6f);
-                	block.swingMainHand();
-                	block.swingOffHand();
-                	
-                	for(Entity e : bl.getWorld().getNearbyEntities(bl, 1.6,1.6,1.6)) {
-                		if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && e!=p) {
-                			LivingEntity le = (LivingEntity)e;
-        					le.damage(6.66, p);
-                		}
-                	}
-                    this.cancel();
-                    return;
-                }
-
-                int endIndex = Math.min(currentIndex + stepsPerTick, line.size());
-                for (int i = currentIndex; i < endIndex; i++) {
-                	try {
-                        block.teleport(line.get(i));
-                	}
-                	catch(IllegalArgumentException e){
-                	}
-                }
-
-                // 다음 틱을 위해 인덱스 갱신
-                currentIndex = endIndex;
-                tick++;
+            	block.teleport(targetLoc);
+            	Location bl = block.getLocation();
+            	bl.getWorld().spawnParticle(Particle.SWEEP_ATTACK, bl, 6, 1.7, 1.7, 1.7, 0.1);
+            	bl.getWorld().spawnParticle(Particle.PORTAL, bl, 6, 1.7, 1.7, 1.7, 0.1);
+            	bl.getWorld().playSound(bl, Sound.ENTITY_BREEZE_SHOOT, 0.5f, 1.6f);
+            	block.swingMainHand();
+            	block.swingOffHand();
+            	block.playEffect(EntityEffect.ARMOR_STAND_HIT);
+            	
+            	for(Entity e : bl.getWorld().getNearbyEntities(bl, 1.6,1.6,1.6)) {
+            		if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && e!=p) {
+            			LivingEntity le = (LivingEntity)e;
+    					le.damage(6.66, p);
+            		}
+            	}
             }
-        }.runTaskTimer(RMain.getInstance(), 0, 1).getTaskId());
+        }.runTaskLater(RMain.getInstance(), 16).getTaskId());
         
     }
 
@@ -381,7 +461,7 @@ public class WitherSkills3 extends WitherRaids{
 			p.getWorld().playSound(p, Sound.ENTITY_BREEZE_CHARGE, 0.6f, 0.6f);
 			p.getWorld().playSound(p, Sound.PARTICLE_SOUL_ESCAPE, 0.6f, 1.5f);
 			
-			int sec = 11;
+			int sec = 15;
 	
 	
 			if(p.hasMetadata("failed")|| ordeal.containsKey(p.getUniqueId()) || !handable.containsKey(p.getUniqueId())) {
@@ -449,6 +529,7 @@ public class WitherSkills3 extends WitherRaids{
 
             // 진한 회색 블록과 검은 블록 설정
             if (i == randomIndex) {
+            	display.setGlowing(true);
                 display.setBlock(Bukkit.createBlockData(grayBlockMaterial));
             } else {
                 display.setBlock(Bukkit.createBlockData(blackBlockMaterial));
@@ -503,6 +584,7 @@ public class WitherSkills3 extends WitherRaids{
             	return;
             }
             Entity targetBlock = player.rayTraceBlocks(2).getHitEntity();
+            World w = player.getWorld();
             if (targetBlock instanceof BlockDisplay display) {
             	String rn = getheroname(player);
             	if(prisonDisplays.containsKey(rn)) {
@@ -516,6 +598,8 @@ public class WitherSkills3 extends WitherRaids{
                             }
                             displays.clear();
                             prisonDisplays.remove(rn);
+                    		w.playSound(player.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_DEPLETE, 1.0f, 2f);
+                    		w.spawnParticle(Particle.FLASH, player.getLocation(), 5, 1,0.2,1);
                         }
                         event.setCancelled(true);
                         return;
@@ -727,47 +811,20 @@ public class WitherSkills3 extends WitherRaids{
 	    Location fl = p.getLocation().clone(); // 시작 위치
 	    Location jl = tl.clone().add(0, 4, 0); // 목표 도약 위치
 	    World world = p.getWorld();
-        world.spawnParticle(Particle.LARGE_SMOKE, tl, 20, 2, 0.2, 2, 0);
-	    world.playSound(tl, Sound.ENTITY_ENDER_DRAGON_FLAP, 1f, 0f);
-
-	    // 초기 이동 설정
-	    double totalTicks = 7; // 도약에 걸리는 전체 시간 (tick 단위)
-	    double tickInterval = 1; // 각 tick 간격 (1tick = 50ms)
-	    AtomicInteger currentTick = new AtomicInteger(0); // 현재 진행 중인 tick
-
-	    // 방향 벡터 계산
-	    Vector horizontalDirection = jl.toVector().subtract(fl.toVector()).normalize(); // 수평 이동 방향
-	    double totalDistance = fl.distance(jl); // 총 이동 거리
-	    double speed = totalDistance / totalTicks; // 수평 속도
+        world.spawnParticle(Particle.LARGE_SMOKE, jl, 100, 2, 0.2, 2, 0);
+        world.spawnParticle(Particle.LARGE_SMOKE, fl, 100, 2, 0.2, 2, 0);
+	    world.playSound(fl, Sound.ENTITY_ENDER_DRAGON_FLAP, 1f, 0f);
+	    world.playSound(jl, Sound.ITEM_CHORUS_FRUIT_TELEPORT, 1f, 0f);
+	    world.playSound(jl, Sound.ENTITY_ENDER_DRAGON_FLAP, 1f, 0f);
 	    
 
 	    AtomicInteger j = new AtomicInteger();
-	    j.set(Bukkit.getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
+	    j.set(Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 	        @Override
 	        public void run() {
-	            int tick = currentTick.getAndIncrement();
-	            if (tick > totalTicks) {
-	                // 도착 후 공격 동작 실행
-	                performAttack(tl, p);
-	                Bukkit.getScheduler().cancelTask(j.get());
-	                return;
-	            }
-
-	            // 로그 곡선 기반 높이 계산
-	            double progress = (double) tick / totalTicks; // 진행 비율 (0 ~ 1)
-	            double height = 7 * Math.log10(1 + 9 * progress); // 높이 값 (로그 함수: log10(1 + 9x))
-
-	            // 새로운 위치 계산
-	            Location newLocation = fl.clone().add(horizontalDirection.clone().multiply(speed * tick)); // 수평 이동
-	            newLocation.setY(fl.getY() + height); // 높이 적용
-
-	            // 보스몹 이동
-	            p.teleport(newLocation);
-
-	            // 이동 중 파티클 효과
-	            world.spawnParticle(Particle.WITCH, newLocation, 5, 0.2, 0.2, 0.2, 0);
+	        	performAttack(tl, p);
 	        }
-	    }, 22L, (long) tickInterval)); 
+	    }, 22L)); 
 
 	    // 태스크 저장 (필요 시 추가 관리)
 	    ordt.put(gethero(p), j.get());
@@ -799,7 +856,7 @@ public class WitherSkills3 extends WitherRaids{
 	    if(pe == null) {
 	    	return;
 	    }
-    	pe.setVelocity(new Vector(0,-20,0));
+    	pe.setVelocity(new Vector(0,-25,0));
     	Location tl = pe.getLocation().clone();
 		World w = tl.getWorld();
 		w.playSound(pe, Sound.ENTITY_WITHER_SPAWN, 0.8f, 2f);
@@ -813,7 +870,7 @@ public class WitherSkills3 extends WitherRaids{
 		if((d.getEntity() instanceof Mob) && d.getEntity().hasMetadata("witherboss")) 
 		{
 			Mob p = (Mob)d.getEntity();
-			int sec = 7;
+			int sec = 10;
 	        
 
             if (checkAndApplyCharge(p, d)) return;
@@ -844,7 +901,7 @@ public class WitherSkills3 extends WitherRaids{
                         {	
                  			handable.put(p.getUniqueId(), true);
         	            }
-                    }, 46); 
+                    }, 65); 
                     
          			
 					rb4cooldown.put(p.getUniqueId(), System.currentTimeMillis());  
@@ -864,7 +921,7 @@ public class WitherSkills3 extends WitherRaids{
                     {	
              			handable.put(p.getUniqueId(), true);
     	            }
-                }, 46); 
+                }, 65); 
                 
 				rb4cooldown.put(p.getUniqueId(), System.currentTimeMillis());  
 			}
@@ -978,10 +1035,10 @@ public class WitherSkills3 extends WitherRaids{
 		AtomicBoolean bool = new AtomicBoolean(false);
         for(Player pe : WitherRaids.getheroes(p)) {
 			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-        		pe.sendMessage(ChatColor.BOLD+"왜곡된망령: 아직 끝나지 않았다.");
+        		pe.sendMessage(ChatColor.BOLD+"[더 위더]: 아직 끝나지 않았다.");
 			}
 			else {
-        		pe.sendMessage(ChatColor.BOLD+"DistortedWraith: It’s not over yet.");
+        		pe.sendMessage(ChatColor.BOLD+"[The Wither]: It’s not over yet.");
 			}
     		Holding.invur(pe, 60l);
 			p.getWorld().playSound(pe.getLocation(), Sound.ENTITY_TNT_PRIMED, 1, 0);
@@ -1054,10 +1111,10 @@ public class WitherSkills3 extends WitherRaids{
         Holding.untouchable(p, ordealTime);
         for(Player pe : WitherRaids.getheroes(p)) {
 			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-        		pe.sendMessage(ChatColor.BOLD+"왜곡된망령: 조용히 흩어져라.");
+        		pe.sendMessage(ChatColor.BOLD+"[더 위더]: 조용히 흩어져라.");
 			}
 			else {
-        		pe.sendMessage(ChatColor.BOLD+"DistortedWraith: Scatter quietly.");
+        		pe.sendMessage(ChatColor.BOLD+"[The Wither]: Scatter quietly.");
 			}
     		pe.teleport(rl.clone().add(-2, 1.5, 0));
     		Holding.invur(pe, 40l);
@@ -1096,10 +1153,10 @@ public class WitherSkills3 extends WitherRaids{
 		Bukkit.getWorld("NethercoreRaid").getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(e -> e.remove());
         for(Player pe : WitherRaids.getheroes(p)) {
 			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-        		pe.sendMessage(ChatColor.BOLD+"왜곡된망령: 잠시 숲이 조용해질 거다.");
+        		pe.sendMessage(ChatColor.BOLD+"[더 위더]: 잠시 숲이 조용해질 거다.");
 			}
 			else {
-        		pe.sendMessage(ChatColor.BOLD+"DistortedWraith: The forest will rest for now.");
+        		pe.sendMessage(ChatColor.BOLD+"[The Wither]: The forest will rest for now.");
 			}
     		Holding.holding(pe, p, 300l);
     		p.removeMetadata("fake", RMain.getInstance());

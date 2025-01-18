@@ -152,6 +152,7 @@ public class WitherSkills extends WitherRaids{
 			
 		}
 	}
+	
 	public void createGrowingCircle(LivingEntity p, double maxRadius, long interval, double damage) {
 		String rn = gethero(p);
 		p.getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_SHOOT, 1.0f, 0f);
