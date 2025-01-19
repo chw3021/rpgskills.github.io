@@ -427,6 +427,7 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 		WitherSkills3.getInstance().prison(d);
 		WitherSkills3.getInstance().storm(d);
 		WitherSkills3.getInstance().wave(d);
+		//WitherSkills3.getInstance().Ordeal(d);
 		
 	}
 

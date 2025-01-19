@@ -246,7 +246,6 @@ public class NPCLoc implements Serializable, Listener{
 				        e.setGravity(false);
 				        e.setVelocity(new Vector(0,0,0));
 					}
-					System.out.println("SpawnLocs: "+SpawnLocs);
 					
 					StructureKeys.entries().forEach(en->{
 						if(SpawnLocs.add(en.getKey().getActualLocation())) {
@@ -257,7 +256,6 @@ public class NPCLoc implements Serializable, Listener{
 
 				if(e.hasMetadata("structureChest")) {
 
-					System.out.println("SpawnLocs: "+SpawnLocs);
 					d.setCancelled(true);
 					StructureLocation sl = new StructureLocation(e);
 

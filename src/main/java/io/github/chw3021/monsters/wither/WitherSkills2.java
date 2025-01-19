@@ -504,13 +504,12 @@ public class WitherSkills2 extends WitherRaids{
 		ItemMeta mmf = mainf.getItemMeta();
 		mmf.setCustomModelData(1008);
 		mainf.setItemMeta(mmf);
+		Holding.holding(null, boss, 30l);
 
 		sendItemChange(boss, getherotype(rn), mainf);
 
         final Player target = WitherRaids.getheroes(boss).stream()
-                .filter(p -> p.isValid() && p.getWorld().equals(w))
-                .max((p1, p2) -> Double.compare(p1.getLocation().distance(pl), p2.getLocation().distance(pl)))
-                .orElse(null);
+                .filter(p -> p.isValid() && p.getWorld().equals(w)).findAny().get();
         w.playSound(boss.getLocation(), Sound.ITEM_ARMOR_EQUIP_NETHERITE, 1.2f, 0.2f);
 		boss.getWorld().spawnParticle(Particle.CRIT, pl, 100, 2,2,2);
 		boss.getWorld().spawnParticle(Particle.GUST, pl, 66, 1,1,1);
@@ -519,19 +518,15 @@ public class WitherSkills2 extends WitherRaids{
      		@Override
         	public void run() 
             {
-    	        Vector pv = target.getLocation().clone().add(0, 0.5, 0).toVector().subtract(boss.getLocation().clone().toVector()).normalize();
+     			Holding.holding(null, boss, 30l);
+    	        Vector pv = boss.getEyeLocation().getDirection();
      			ArrayList<Location> line = new ArrayList<Location>();
             	boss.swingMainHand();
             	w.playSound(boss.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.6f, 0f);
                 w.playSound(boss.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 0.9f, 0.6f);
     	        for(int i = 0; i <7; i++) {
-        	        final Location tel = boss.getLocation().clone();
-         			if(tel.clone().add(pv.clone().multiply(0.31)).getBlock().isPassable()) {
-            			line.add(tel.add(pv.clone().multiply(0.31)));
-         			}
-         			else {
-         				line.add(tel);
-         			}
+        	        Location tel = boss.getLocation().clone();
+        			line.add(tel.clone().add(pv.normalize().clone().multiply(0.51)));
      			}
     	        int task = new BukkitRunnable() {
                 	int tick = 0;
@@ -543,6 +538,7 @@ public class WitherSkills2 extends WitherRaids{
                     		return;
                     	}
     	     			Location tel = line.get(tick++);
+    	     			boss.teleport(tel);
 
     	 				w.spawnParticle(Particle.SWEEP_ATTACK, pl, 5,2,2,2);
     	 				w.spawnParticle(Particle.WITCH, pl, 1);
@@ -552,9 +548,6 @@ public class WitherSkills2 extends WitherRaids{
     	            			LivingEntity le = (LivingEntity)e;
 
     							le.damage(2, boss);
-    							if(tel.getBlock().isPassable()) {
-    								le.teleport(tel);
-    							}
     							
     	            		}
     	            	}
@@ -591,8 +584,8 @@ public class WitherSkills2 extends WitherRaids{
                     	boss.swingMainHand();
                     	w.playSound(boss.getLocation(), Sound.ENTITY_PLAYER_ATTACK_SWEEP, 0.3f, 0.6f);
                         w.playSound(boss.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASEDRUM, 0.2f, 0.6f);
-         				w.spawnParticle(Particle.SWEEP_ATTACK, pl, 25, 1,1,1);
-         				w.spawnParticle(Particle.WITCH, pl, 25, 1.5,1.5,1.5);
+         				w.spawnParticle(Particle.SWEEP_ATTACK, boss.getLocation(), 25, 1,1,1);
+         				w.spawnParticle(Particle.WITCH, boss.getLocation(), 25, 1.5,1.5,1.5);
                     	for(Entity e : boss.getWorld().getNearbyEntities(boss.getLocation(), 1,1,1)) {
                     		if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && e!=boss) {
                     			LivingEntity le = (LivingEntity)e;

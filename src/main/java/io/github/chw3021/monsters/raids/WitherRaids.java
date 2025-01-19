@@ -108,9 +108,6 @@ public class WitherRaids extends Summoned implements Listener {
 	public HashMap<String, Integer> difen = new HashMap<String, Integer>();
 	private HashMap<String, Integer> difent = new HashMap<String, Integer>();
 
-	private HashMap<String, UUID> inhibitor = new HashMap<String, UUID>();
-	private HashMap<String, Integer> inhibitorhp = new HashMap<String, Integer>();
-
 
 	public HashMap<String, String> language = new HashMap<String, String>();
 	
@@ -132,13 +129,21 @@ public class WitherRaids extends Summoned implements Listener {
 		if(le.hasMetadata("raid")) {
 			String rn = le.getMetadata("raid").get(0).asString();
 			Collection<Player> pc = new ArrayList<Player>();
-			heroes.get(rn).forEach(pu -> pc.add(Bukkit.getPlayer(pu)));
+			heroes.get(rn).forEach(pu -> {
+				if(Bukkit.getPlayer(pu) != null) {
+					pc.add(Bukkit.getPlayer(pu));
+				}
+			});
 			return pc;
 		}
 		else if(le.hasMetadata("witherRaidVil")) {
 			String rn = le.getMetadata("witherRaidVil").get(0).asString();
 			Collection<Player> pc = new ArrayList<Player>();
-			heroes.get(rn).forEach(pu -> pc.add(Bukkit.getPlayer(pu)));
+			heroes.get(rn).forEach(pu -> {
+				if(Bukkit.getPlayer(pu) != null) {
+					pc.add(Bukkit.getPlayer(pu));
+				}
+			});
 			return pc;
 		}
 		else{
@@ -224,16 +229,6 @@ public class WitherRaids extends Summoned implements Listener {
 				Bukkit.getEntity(vil.get(rn)).remove();
 			}
 		}
-
-		if(inhibitor.containsKey(rn)) {
-			if(Bukkit.getEntity(inhibitor.get(rn)) !=null) {
-				Bukkit.getEntity(inhibitor.get(rn)).remove();
-			}
-		}
-
-		if(inhibitorhp.containsKey(rn)) {
-			inhibitorhp.remove(rn);
-		}
 		
 		language.remove(rn);
 		
@@ -261,8 +256,8 @@ public class WitherRaids extends Summoned implements Listener {
 	            	p.spawnParticle(Particle.ANGRY_VILLAGER, spl, 1000,6,6,6);
 	    		}
 	    		else {
-	    			if(RaidDifficulties.getMaxDifficulty(p, RaidCategory.ENDER) <= difen.get(rn)) {
-	        			RaidDifficulties.saver(p, RaidCategory.ENDER, difen.get(rn)+2);
+	    			if(RaidDifficulties.getMaxDifficulty(p, RaidCategory.WITHER) <= difen.get(rn)) {
+	        			RaidDifficulties.saver(p, RaidCategory.WITHER, difen.get(rn)+2);
 	    			}
 	    			
 	        		String reg = p.getLocale().equalsIgnoreCase("ko_kr") ? "승리":"Victory!";
@@ -514,7 +509,7 @@ public class WitherRaids extends Summoned implements Listener {
 		}
 		
 		
-		//Double dif = 100000 * BigDecimal.valueOf(1 + 0.1*RaidDifficulties.getPlayerDifficulty(p, RaidCategory.ENDER)).setScale(1, RoundingMode.HALF_EVEN).doubleValue();
+		//Double dif = 100000 * BigDecimal.valueOf(1 + 0.1*RaidDifficulties.getPlayerDifficulty(p, RaidCategory.WITHER)).setScale(1, RoundingMode.HALF_EVEN).doubleValue();
 
 		
 		if(in == -8) {
@@ -809,16 +804,16 @@ public class WitherRaids extends Summoned implements Listener {
     		if(Party.hasParty(p)) {
 				if(Party.isOwner(p)) {
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "난이도를 입력하세요 (최소: 0, 최대: "+RaidDifficulties.getMaxDifficulty(p, RaidCategory.ENDER)+")").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "난이도를 입력하세요 (최소: 0, 최대: "+RaidDifficulties.getMaxDifficulty(p, RaidCategory.WITHER)+")").create());
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BLUE + "5초안에 미입력 또는 올바른 입력이 아닐 시 도전 가능한 가장 높은 난이도로 자동 설정됩니다").create());
 					}
 					else {
-		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "Enter difficulty level (min: 0, MAX: "+RaidDifficulties.getMaxDifficulty(p, RaidCategory.ENDER)+")").create());
+		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "Enter difficulty level (min: 0, MAX: "+RaidDifficulties.getMaxDifficulty(p, RaidCategory.WITHER)+")").create());
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BLUE + "If you do not enter anything in 5 second or enter invalid inputs").create());
 		            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BLUE + "It will be automatically set to the highest level of difficulty you can challenge").create());
 
 					}
-					difen.put(rn, RaidDifficulties.getMaxDifficulty(p, RaidCategory.ENDER));
+					difen.put(rn, RaidDifficulties.getMaxDifficulty(p, RaidCategory.WITHER));
 					int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 			            @Override
 			            public void run() 
@@ -841,16 +836,16 @@ public class WitherRaids extends Summoned implements Listener {
 			}
 			else {
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "난이도를 입력하세요 (최소: 0, 최대: "+RaidDifficulties.getMaxDifficulty(p, RaidCategory.ENDER)+")").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "난이도를 입력하세요 (최소: 0, 최대: "+RaidDifficulties.getMaxDifficulty(p, RaidCategory.WITHER)+")").create());
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BLUE + "5초안에 미입력 또는 올바른 입력이 아닐 시 도전 가능한 가장 높은 난이도로 자동 설정됩니다").create());
 				}
 				else {
-	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "Enter difficulty level (min: 0, MAX: "+RaidDifficulties.getMaxDifficulty(p, RaidCategory.ENDER)+")").create());
+	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.GOLD + "Enter difficulty level (min: 0, MAX: "+RaidDifficulties.getMaxDifficulty(p, RaidCategory.WITHER)+")").create());
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BLUE + "If you do not enter anything in 5 second or enter invalid inputs").create());
 	            	p.spigot().sendMessage(ChatMessageType.CHAT, new ComponentBuilder(ChatColor.BLUE + "It will be automatically set to the highest level of difficulty you can challenge").create());
 
 				}
-				difen.put(rn, RaidDifficulties.getMaxDifficulty(p, RaidCategory.ENDER));
+				difen.put(rn, RaidDifficulties.getMaxDifficulty(p, RaidCategory.WITHER));
 				int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
 		            @Override
 		            public void run() 
@@ -1008,12 +1003,12 @@ public class WitherRaids extends Summoned implements Listener {
 			d.setCancelled(true);
 			try {
 				endif = Integer.parseInt(d.getMessage());
-				if(endif > RaidDifficulties.getMaxDifficulty(p,RaidCategory.ENDER)) {
-					endif = RaidDifficulties.getMaxDifficulty(p,RaidCategory.ENDER);
+				if(endif > RaidDifficulties.getMaxDifficulty(p,RaidCategory.WITHER)) {
+					endif = RaidDifficulties.getMaxDifficulty(p,RaidCategory.WITHER);
 				}
 			}
 			catch(NumberFormatException e) {
-				endif = RaidDifficulties.getMaxDifficulty(p,RaidCategory.ENDER);
+				endif = RaidDifficulties.getMaxDifficulty(p,RaidCategory.WITHER);
 			}
 
 			difen.put(rn, endif);

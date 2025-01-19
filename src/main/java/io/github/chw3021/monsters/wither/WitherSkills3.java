@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Color;
 import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -31,8 +31,8 @@ import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Snowball;
+import org.bukkit.entity.WitherSkeleton;
 import org.bukkit.entity.WitherSkull;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
@@ -44,8 +44,6 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
-
-import com.google.common.collect.HashMultimap;
 import io.github.chw3021.commons.Holding;
 import io.github.chw3021.monsters.raids.WitherRaids;
 import io.github.chw3021.rmain.RMain;
@@ -200,15 +198,15 @@ public class WitherSkills3 extends WitherRaids{
 	            }
 
 	            // 현재 반지름에 대한 원의 위치 계산
-	            HashSet<Location> circleLocations = calculateCircleLocations(p.getLocation().add(0,-0.8,0), currentRadius);
+	            HashSet<Location> circleLocations = calculateCircleLocations(p.getLocation().add(0,-1.1,0), currentRadius);
 
 	            // 파티클 생성 및 선 밟은 엔티티 처리
 	            for (Location loc : circleLocations) {
 	                // 검은색 파티클 생성
-	                loc.getWorld().spawnParticle(Particle.FALLING_DUST, loc, 66,1,2,1,getBd(Material.BLACKSTONE));
+	                loc.getWorld().spawnParticle(Particle.FALLING_DUST, loc, 150,0,1.5,0,getBd(Material.BLACKSTONE));
 
 	                // 해당 위치를 밟은 엔티티에게 데미지
-	                for (Entity e : loc.getWorld().getNearbyEntities(loc, 1, 2, 1)) {
+	                for (Entity e : loc.getWorld().getNearbyEntities(loc, 1, 1.5, 1)) {
 	                    if (p!=e && e instanceof LivingEntity le && !(e.hasMetadata("fake"))) {
 	                    	le.damage(damage, p);
 	                	    le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 66, 1));
@@ -250,7 +248,7 @@ public class WitherSkills3 extends WitherRaids{
 
 	        @Override
 	        public void run() {
-	            if (count++ > 6) {
+	            if (count++ > 2) {
 	                this.cancel();
 	                return;
 	            }
@@ -383,6 +381,9 @@ public class WitherSkills3 extends WitherRaids{
     }
 
     private void removeFingers(ArmorStand shadow, LivingEntity p) {
+    	if(shadow.isDead() || shadow.isEmpty() || !shadow.isValid()) {
+    		return;
+    	}
     	Location bl = shadow.getLocation();
     	bl.getWorld().spawnParticle(Particle.SQUID_INK, bl, 60);
     	shadow.setRiptiding(true);
@@ -419,7 +420,6 @@ public class WitherSkills3 extends WitherRaids{
 	final private void hand(LivingEntity p) {
 
     	final World w = p.getWorld();
-		System.out.println(Bukkit.getBossBars().next().toString());
         Holding.holding(null, p, 25l);
 		Location pl = gettargetblock(p,6);
 		w.playSound(pl, Sound.ENTITY_SHULKER_TELEPORT, 1.0f, 0f);
@@ -502,17 +502,17 @@ public class WitherSkills3 extends WitherRaids{
 	    Holding.holding(null, pe, 10l);
 	    
 	    // 감옥 생성에 사용될 블록
-	    Material blackBlockMaterial = Material.BLACK_CONCRETE;
-	    Material grayBlockMaterial = Material.GRAY_CONCRETE;
+	    Material blackBlockMaterial = Material.BLACK_STAINED_GLASS;
+	    Material grayBlockMaterial = Material.WHITE_CONCRETE;
 
 	    // 감옥 블록의 위치를 저장
 	    List<Location> prisonLocs = new ArrayList<Location>();
 	    List<BlockDisplay> displays = new ArrayList<>();
 	    // 감옥 블록 총 개수 계산 (바닥 제외)
 	    int totalBlocks = 0;
-	    for (int x = -3; x <= 3; x++) {
-	        for (int y = 1; y <= 4; y++) { // y == 0 (바닥)는 제외
-	            for (int z = -3; z <= 3; z++) {
+	    for (int x = -2; x <= 2; x=x+4) {
+	        for (int y = 1; y <= 3; y++) { // y == 0 (바닥)는 제외
+	            for (int z = -2; z <= 2; z=z+4) {
 	                totalBlocks++;
 	                prisonLocs.add(center.clone().add(x, y, z));
 	            }
@@ -575,7 +575,7 @@ public class WitherSkills3 extends WitherRaids{
 	}
 	
 	public void escapePrison(PlayerInteractEvent event) {
-        if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
+        if (event.getAction().name().contains("CLICK")) {
             Player player = event.getPlayer();
             if(!heroes.containsValue(player.getUniqueId())) {
             	return;
@@ -591,7 +591,7 @@ public class WitherSkills3 extends WitherRaids{
                     List<BlockDisplay> displays = prisonDisplays.get(rn);
                     if (displays.contains(display)) {
                         // 감옥의 회색 블록인지 확인
-                        if (display.getBlock().getMaterial() == Material.GRAY_CONCRETE) {
+                        if (display.getBlock().getMaterial() == Material.WHITE_CONCRETE) {
                             // 감옥 탈출 처리
                             for (BlockDisplay d : displays) {
                                 d.remove();
@@ -605,6 +605,18 @@ public class WitherSkills3 extends WitherRaids{
                         return;
                     }
             	}
+            }
+            if (targetBlock instanceof ArmorStand stand) {
+
+	            if (stand.hasMetadata("lightsphere")) {
+	                UUID uid = UUID.fromString(stand.getMetadata("lightsphere").get(0).asString());
+	                Entity entity = Bukkit.getEntity(uid);
+	                if(entity == null) {
+	                	return;
+	                }
+	                moveLightSphere(stand, player, (LivingEntity) entity);
+	                stand.addPassenger(player);
+	            }
             }
         }
     }
@@ -773,7 +785,7 @@ public class WitherSkills3 extends WitherRaids{
                     if (p.isDead() || particleLocation.distance(tl) <1|| tick>=30) { // 촉수가 도달하거나 시간이 종료되면
                         tentacleGrab(p, world, startLocation);
                     }
-	                world.spawnParticle(Particle.SQUID_INK, particleLocation, 66, 1, 1 ,1,0.1);
+	                world.spawnParticle(Particle.SQUID_INK, particleLocation, 30, 0.2, 0.5 ,0.2,0);
 	                pe.setVelocity(new Vector(0, -2, 0));
 
 
@@ -841,7 +853,7 @@ public class WitherSkills3 extends WitherRaids{
 
 	    // 피해 판정
 	    for (Entity entity : world.getNearbyEntities(tl, 3, 3, 3)) {
-	        if (entity instanceof LivingEntity && entity != p) {
+	        if (entity instanceof LivingEntity && entity != p && !entity.hasMetadata("fake") && !entity.hasMetadata("portal")) {
 	            LivingEntity target = (LivingEntity) entity;
 	            target.damage(6.66, p);
 	            target.setVelocity(BlockFace.DOWN.getDirection().multiply(5));
@@ -928,215 +940,7 @@ public class WitherSkills3 extends WitherRaids{
 		}
 	}
 
-	private HashMultimap<UUID, LivingEntity> armorstands = HashMultimap.create();
 
-	public HashMap<UUID, Integer> ast = new HashMap<UUID, Integer>();//ArmorStands damage 태스크 저장
-	public HashMap<UUID, Integer> asdt = new HashMap<UUID, Integer>();//ArmorStands remove 태스크 저장
-	
-	final private void asSpawn(Player pe, String rn, LivingEntity p, final Location fl) {
-
-		final World w = fl.getWorld();
-		
-		if(pe.getLocation().distance(p.getLocation())>17) {
-			pe.teleport(p);
-	        p.getWorld().playSound(p.getLocation(), Sound.ENTITY_BREEZE_INHALE, 1.2f, 0);
-		}
-
-	    Location spawnLocation = fl.clone();
-	    spawnLocation.setY(w.getHighestBlockYAt(spawnLocation) + 1); // 지형에 맞게 Y 좌표 조정
-        p.getWorld().playSound(p.getLocation(), Sound.ITEM_NETHER_WART_PLANT, 1.2f, 0);
-
-	    ArmorStand newmob = w.spawn(spawnLocation, ArmorStand.class);
-	    newmob.setMetadata("stuff" + rn, new FixedMetadataValue(RMain.getInstance(), true));
-	    newmob.setGravity(false);
-	    newmob.setCollidable(false);
-	    newmob.setCustomNameVisible(false);
-	    newmob.setVisible(false);
-	    newmob.getEquipment().setHelmet(new ItemStack(Material.WARPED_HYPHAE));
-	    newmob.setInvulnerable(false);
-	    newmob.setMetadata("witherseed", new FixedMetadataValue(RMain.getInstance(), rn));
-	    newmob.setMetadata("witherseed"+rn, new FixedMetadataValue(RMain.getInstance(), rn));
-	    newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), rn));
-	    newmob.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
-	    newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
-	    armorstands.put(p.getUniqueId(), newmob);
-
-
-	    int t2 = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-	        @Override
-	        public void run() {
-            	for(Entity e : p.getWorld().getNearbyEntities(spawnLocation, 1,1,1)) {
-            		if(e instanceof LivingEntity&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && e!=p) {
-            			LivingEntity le = (LivingEntity)e;
-
-						le.damage(4, p);
-						
-            		}
-            	}
-	        }
-	    }, 0, 1);
-
-	    ordt.put(rn, t2);
-	    ast.put(newmob.getUniqueId(), t2);
-		
-	}
-
-	// 원형 파티클 위치를 미리 계산하는 메서드
-	private HashSet<Location> calculateParticleLocations(Location center, double radius, int particleCount) {
-	    HashSet<Location> locations = new HashSet<>();
-	    World world = center.getWorld();
-	    for (int i = 0; i < particleCount; i++) {
-	        double angle = (2 * Math.PI / particleCount) * i;
-	        double x = center.getX() + (radius * Math.cos(angle));
-	        double z = center.getZ() + (radius * Math.sin(angle));
-	        locations.add(new Location(world, x, center.getY() + 0.5, z));
-	    }
-	    return locations;
-	}
-	
-	final private void seed(LivingEntity p) {
-	    HashSet<Location> particleLocations = calculateParticleLocations(p.getLocation(), 17, 300);
-
-		final World w = p.getWorld();
-		
-        for (Location particleLocation : particleLocations) {
-        	Particle.DustOptions dustOptions =  new Particle.DustOptions(Color.fromRGB(204,249,248), 1.5f); 
-            w.spawnParticle(Particle.DUST, particleLocation, 1, dustOptions);
-
-        }
-        
-		String rn = p.getMetadata("raid").get(0).asString();
-        for(Player pe : WitherRaids.getheroes(p)) {
-        	
-        	if(!pe.getWorld().equals(p.getWorld()) || pe.isDead()) {
-        		continue;
-        	}
-        	
-            
-            final Location fl = pe.getLocation().clone();
-            pe.setVelocity(pe.getVelocity().add(BlockFace.DOWN.getDirection().multiply(10)));
-
-			p.getWorld().playSound(pe.getLocation(), Sound.ENTITY_BREEZE_IDLE_GROUND, 1, 2);
-			p.getWorld().spawnParticle(Particle.WARPED_SPORE, fl, 60,1,1,1);
-            
-			int t1 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-                @Override
-                public void run() {
-            		asSpawn(pe, rn, p, fl);
-                }
-            }, 6); 
-			ordt.put(rn, t1);  
-        }
-	}
-	
-	final private boolean judge(LivingEntity p, String rn) {
-
-		Holding.invur(p, 20l);
-		AtomicBoolean bool = new AtomicBoolean(false);
-        for(Player pe : WitherRaids.getheroes(p)) {
-			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-        		pe.sendMessage(ChatColor.BOLD+"[더 위더]: 아직 끝나지 않았다.");
-			}
-			else {
-        		pe.sendMessage(ChatColor.BOLD+"[The Wither]: It’s not over yet.");
-			}
-    		Holding.invur(pe, 60l);
-			p.getWorld().playSound(pe.getLocation(), Sound.ENTITY_TNT_PRIMED, 1, 0);
-    	}
-
-        int t3 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-            @Override
-            public void run() {
-    			p.getWorld().playSound(p.getLocation(), Sound.ENTITY_BREEZE_WIND_BURST, 2, 0);
-            	armorstands.get(p.getUniqueId()).forEach(ars ->{
-            		final Location al = ars.getLocation().clone();
-        			p.getWorld().spawnParticle(Particle.EXPLOSION, al, 1);
-
-                	for(Entity e : p.getWorld().getNearbyEntities(al, 2.2, 35, 2.2)) {
-                		if(e instanceof Player&& !(e.hasMetadata("fake"))&& !(e.hasMetadata("portal")) && e!=p) {
-                			Player pe = (Player)e;
-                			if(WitherRaids.getheroes(p).contains(pe)) {
-                    			bool.set(true);
-                			}
-    						
-                		}
-                	}
-                	Bukkit.getScheduler().cancelTask(ast.remove(ars.getUniqueId()));
-                	Holding.ale(ars).remove();
-            	});
-
-        		Holding.invur(p, 20l);
-        		
-    			armorstands.removeAll(p.getUniqueId());
-
-        		if(bool.get()) {
-
-            		if(ordt.containsKey(rn)) {
-            			ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
-            		}
-            		
-            		ordeal.remove(p.getUniqueId());
-                    for(Player pe : WitherRaids.getheroes(p)) {
-                		pe.setHealth(0);
-                	}
-                    rb6cooldown.remove(p.getUniqueId());
-        		}
-        		else {
-        			bossfailed(p,rn);
-        		}
-            }
-        }, 20);
-		ordt.put(rn, t3);
-		
-		
-		return bool.get();
-	}
-
-	final private void ordeal(LivingEntity p, EntityDamageByEntityEvent d) {
-		String rn = p.getMetadata("raid").get(0).asString();
-        if(ordt.containsKey(rn)) {
-        	ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
-        	ordt.removeAll(rn);
-        }
-        ordeal.put(p.getUniqueId(), true);
-        Location rl = WitherRaids.getraidloc(p).clone();
-		p.setHealth(p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2);
-        d.setCancelled(true);
-        
-        Long ordealTime = 450L;
-        
-        
-    	p.teleport(rl.clone().add(1, 0.5, 1));
-        Holding.holding(null, p, ordealTime);
-        Holding.untouchable(p, ordealTime);
-        for(Player pe : WitherRaids.getheroes(p)) {
-			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-        		pe.sendMessage(ChatColor.BOLD+"[더 위더]: 조용히 흩어져라.");
-			}
-			else {
-        		pe.sendMessage(ChatColor.BOLD+"[The Wither]: Scatter quietly.");
-			}
-    		pe.teleport(rl.clone().add(-2, 1.5, 0));
-    		Holding.invur(pe, 40l);
-        }
-        
-        int t1 = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
-            @Override
-            public void run() {
-            	seed(p);
-            }
-        }, 40, 10);
-		ordt.put(rn, t1);
-		
-        int t3 =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-            @Override
-            public void run() {
-            	judge(p,rn);
-            }
-        }, ordealTime);
-		ordt.put(rn, t3);
-	}
-	
 
 	final private void bossfailed(LivingEntity p, String rn) {
 		if(ordt.containsKey(rn)) {
@@ -1144,19 +948,23 @@ public class WitherSkills3 extends WitherRaids{
         	ordt.removeAll(rn);
 		}
 		ordeal.remove(p.getUniqueId());
+    	successCount.remove(rn);
+    	darkSphereMap.remove(rn);
+    	darkSphereSize.remove(rn);
+    	
     	p.playHurtAnimation(0);
 		p.getWorld().playSound(p.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_DEPLETE, 1, 2);
 		p.getWorld().spawnParticle(Particle.FLASH, p.getLocation(), 10, 2,2,2);
     	Holding.reset(Holding.ale(p));
     	Holding.ale(p).setMetadata("failed", new FixedMetadataValue(RMain.getInstance(),true));
 		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
-		Bukkit.getWorld("NethercoreRaid").getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(e -> e.remove());
+		Bukkit.getWorld("WitherRaid").getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(e -> e.remove());
         for(Player pe : WitherRaids.getheroes(p)) {
 			if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
-        		pe.sendMessage(ChatColor.BOLD+"[더 위더]: 잠시 숲이 조용해질 거다.");
+        		pe.sendMessage(ChatColor.BOLD+"[더 위더]: ");
 			}
 			else {
-        		pe.sendMessage(ChatColor.BOLD+"[The Wither]: The forest will rest for now.");
+        		pe.sendMessage(ChatColor.BOLD+"[The Wither]: ");
 			}
     		Holding.holding(pe, p, 300l);
     		p.removeMetadata("fake", RMain.getInstance());
@@ -1184,26 +992,268 @@ public class WitherSkills3 extends WitherRaids{
 			if(!(p.getHealth() - d.getDamage() <= p.getAttribute(Attribute.MAX_HEALTH).getValue()*0.2)|| !ordealable.containsKey(p.getUniqueId())|| ordeal.containsKey(p.getUniqueId())) {
 				return;
 			}
-				if(rb6cooldown.containsKey(p.getUniqueId()))
-		        {
-		            long timer = (rb6cooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
-		            if(!(timer < 0))
-		            {
-		            }
-		            else 
-		            {
-		                rb6cooldown.remove(p.getUniqueId()); // removing player from HashMap
-		                ordeal(p,d);
-			            rb6cooldown.put(p.getUniqueId(), System.currentTimeMillis());
-		            }
-		        }
-		        else 
-		        {
-	                ordeal(p,d);
+			if(rb6cooldown.containsKey(p.getUniqueId()))
+	        {
+	            long timer = (rb6cooldown.get(p.getUniqueId())/1000 + sec) - System.currentTimeMillis()/1000; 
+	            if(!(timer < 0))
+	            {
+	            }
+	            else 
+	            {
+	                rb6cooldown.remove(p.getUniqueId()); // removing player from HashMap
+	                executeLightAndDarknessPattern(p,d);
 		            rb6cooldown.put(p.getUniqueId(), System.currentTimeMillis());
-		        }
-			}
+	            }
+	        }
+	        else 
+	        {
+	        	executeLightAndDarknessPattern(p,d);
+	            rb6cooldown.put(p.getUniqueId(), System.currentTimeMillis());
+	        }
+		}
 	}
+	
+	private HashMap<String, Integer> successCount = new HashMap<String, Integer>();
+
+	final long ORDEALTIME = 1200;
+	private void executeLightAndDarknessPattern(LivingEntity p, EntityDamageByEntityEvent d) {
+		
+
+    	ordeal.put(p.getUniqueId(), true);
+		String rn = gethero(p);
+        final Location rl = getraidloc(p).clone();
+
+		p.getWorld().getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(e -> e.remove());
+        if(ordt.containsKey(rn)) {
+        	ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
+        	ordt.removeAll(rn);
+        }
+
+		
+        d.setCancelled(true);
+        p.teleport(rl.clone().add(0, 2, 0));
+        Holding.holding(null, p, ORDEALTIME);
+        Holding.invur(p, 100l);
+        Holding.untouchable(p, ORDEALTIME);
+        
+        
+	    spawnDarkSphere(p, rn, rl.clone().add(0, -2, 0));
+	    
+	    successCount.put(rn, 0);
+
+	    getheroes(p).forEach(pe ->{
+        	Holding.invur(pe, 60l);
+        	AtomicReference<String> msg = new AtomicReference<String>(ChatColor.BOLD+"");
+        	if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
+        		msg.set(ChatColor.BOLD+"");
+			}
+    		pe.sendTitle(ChatColor.DARK_PURPLE + (ChatColor.MAGIC + "123456"), ChatColor.DARK_PURPLE + (ChatColor.MAGIC + "123456"), 20, 35, 20);
+				Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+                @Override
+                public void run() {	
+            		pe.sendMessage(msg.get());
+                }
+            }, 20);
+        });
+        
+		p.getWorld().spawnParticle(Particle.PORTAL, p.getLocation().clone(), 200,2,2,2,0.1);
+		p.getWorld().spawnParticle(Particle.DRAGON_BREATH, p.getLocation().clone(), 200,2,2,2,0.1);
+        int i1 =Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+    	        Location randomLocation = getRandomLocation(rl.clone(), 6, 10);
+    	        spawnLightSphere(p, rn, rl.getWorld(), randomLocation);
+            }
+        }, 60, 100);
+		ordt.put(rn, i1); 
+
+			int i2 = Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() {	
+				killAll(p, rn);
+            }
+        }, ORDEALTIME+1); 
+		ordt.put(rn, i2); 
+	}
+
+	private void killAll(LivingEntity p, String rn) {
+
+		
+
+        if(ordt.containsKey(rn)) {
+        	ordt.get(rn).forEach(t -> Bukkit.getScheduler().cancelTask(t));
+        	ordt.removeAll(rn);
+        }
+    	ordeal.remove(p.getUniqueId());
+    	successCount.remove(rn);
+    	darkSphereMap.remove(rn);
+    	darkSphereSize.remove(rn);
+    	rb6cooldown.remove(p.getUniqueId()); 
+		p.getWorld().getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(e -> e.remove());
+        for(Player pe : getheroes(p)) {
+    		if(pe.getWorld().equals(p.getWorld()) && pe.getWorld() == p.getWorld()) {
+				if(pe.getLocale().equalsIgnoreCase("ko_kr")) {
+					pe.sendMessage(ChatColor.BOLD + "[더 위더]: " + ChatColor.RED + "죽어라..");
+				}
+				else {
+					pe.sendMessage(ChatColor.BOLD + "[The Wither]: " + ChatColor.RED + "Die...");
+				}
+    			p.getWorld().playSound(pe.getLocation(), Sound.ENTITY_WITHER_AMBIENT, 1, 0);
+        		Holding.invur(pe, 10l);
+	        	p.setGlowing(true);
+        		pe.teleport(p);
+				pe.removePotionEffect(PotionEffectType.BLINDNESS);
+        		pe.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 60, 255 ,false,false));
+        		pe.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 60, 255 ,false,false));
+    		}
+        }
+			Bukkit.getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() {	
+        		p.getWorld().getEntities().stream().filter(e -> e.hasMetadata("stuff"+rn)).forEach(e -> e.remove());
+        		p.removeMetadata("fake", RMain.getInstance());
+        		Holding.ale(p).removeMetadata("fake", RMain.getInstance());
+                p.setInvulnerable(false);
+                Holding.ale(p).setInvulnerable(false);
+				p.getWorld().spawnParticle(Particle.SQUID_INK, p.getLocation(), 3000, 10,10,10);	
+                for(Player pe : getheroes(p)) {
+            		p.removeMetadata("fake", RMain.getInstance());
+            		pe.setHealth(0);
+                }
+            }
+        }, 5); 
+	}
+	private HashMap<String, ArmorStand> darkSphereMap = new HashMap<String, ArmorStand>();
+	// 암흑의 구체 생성 메서드
+	private ArmorStand spawnDarkSphere(LivingEntity p, String rn, Location center) {
+		ArmorStand darkSphere = center.getWorld().spawn(center, ArmorStand.class, stand -> {
+	        stand.setGravity(false);
+	        stand.setInvulnerable(true);
+            stand.setMetadata("stuff" + rn, new FixedMetadataValue(RMain.getInstance(), rn));
+            stand.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
+            stand.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
+            stand.setInvisible(true);
+            stand.getEquipment().setHelmet(new ItemStack(Material.CRYING_OBSIDIAN));
+            darkSphereMap.put(rn, stand);
+	    });
+
+	    // 암흑의 구체 크기 증가
+	    BukkitRunnable darkSphereTask = new BukkitRunnable() {
+	    	double currentRadius = 2.0d;
+	    	final double increase = 0.1d;
+
+	        @Override
+	        public void run() {
+	            darkSphereSizeUp(rn, darkSphere, currentRadius, increase);
+	            darkSphere.getWorld().spawnParticle(Particle.SMOKE, darkSphere.getLocation(), 10, 0.5, 0.5, 0.5, 0.1);
+	            Double radius = darkSphereSize.get(rn)*0.5;
+        	    for (Entity entity : center.getWorld().getNearbyEntities(center, radius, radius, radius)) {
+        	        if (entity instanceof LivingEntity && entity != p && !entity.hasMetadata("fake") && !entity.hasMetadata("portal")) {
+        	            LivingEntity target = (LivingEntity) entity;
+        	            target.damage(6.66, p);
+        	        }
+        	    }
+	            currentRadius = radius;
+	        }
+	    };
+	    darkSphereTask.runTaskTimer(RMain.getInstance(), 0, 2); // 매 2틱마다 크기 증가
+	    ordt.put(rn, darkSphereTask.getTaskId());
+
+	    return darkSphere;
+	}
+	private HashMap<String, Double> darkSphereSize = new HashMap<String, Double>();
+	
+	private double darkSphereSizeUp(String rn, final ArmorStand display, double radius, double inc) {
+        display.getAttribute(Attribute.SCALE).setBaseValue(radius+inc);
+        darkSphereSize.put(rn, radius+inc);
+        return radius+inc;
+	}
+
+	
+	
+	
+	private void spawnLightSphere(LivingEntity p, String rn, World world, Location spawnLocation) {
+	    // 빛의 구체 생성 (ArmorStand)
+	    ArmorStand lightSphere = world.spawn(spawnLocation, ArmorStand.class, stand -> {
+	        stand.setInvisible(true);
+	        stand.setGravity(false);
+	        stand.setInvulnerable(true);
+            stand.setMetadata("stuff" + rn, new FixedMetadataValue(RMain.getInstance(), rn));
+            stand.setMetadata("lightsphere", new FixedMetadataValue(RMain.getInstance(), p.getUniqueId()));
+            stand.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
+            stand.getEquipment().setHelmet(new ItemStack(Material.PEARLESCENT_FROGLIGHT));
+            stand.setCustomName("10");
+            stand.setCustomNameVisible(true);
+	    });
+	    world.playSound(spawnLocation, Sound.BLOCK_FROGLIGHT_PLACE, 1.0f, 0f);
+	    world.spawnParticle(Particle.GLOW, spawnLocation, 10, 3, 1, 3, 0);
+
+	    // 빛의 구체 주변 방해 몬스터 소환
+	    for (int i = 0; i < 3; i++) {
+	        world.spawn(spawnLocation, WitherSkeleton.class, mob -> {
+	            mob.setTarget(WitherRaids.getheroes(p).stream().filter(pe -> pe.isValid()).findAny().get());
+	            mob.setMetadata("stuff" + rn, new FixedMetadataValue(RMain.getInstance(), rn));
+	            mob.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), rn));
+	            mob.setInvulnerable(true);
+	        });
+	    }
+	    BukkitRunnable task = new BukkitRunnable() {
+
+	    	int count = 0;
+	        @Override
+	        public void run() {
+	        	lightSphere.setCustomName(String.valueOf(10 - (count++)));
+	        	if(count >= 10) {
+	        		this.cancel();
+	        		lightSphere.remove();
+	        		
+	        		Location tl = lightSphere.getEyeLocation().clone();
+	        		
+	        	    world.playSound(tl, Sound.BLOCK_GLASS_BREAK, 1.0f, 0f);
+	        	    world.spawnParticle(Particle.GLOW, tl, 10, 3, 1, 3, 0);
+	        	    world.spawnParticle(Particle.SONIC_BOOM, tl, 10, 3, 1, 3, 0);
+
+	        	    // 피해 판정
+	        	    for (Entity entity : world.getNearbyEntities(tl, 2.5, 2.5, 2.5)) {
+	        	        if (entity instanceof LivingEntity && entity != p && !entity.hasMetadata("fake") && !entity.hasMetadata("portal")) {
+	        	            LivingEntity target = (LivingEntity) entity;
+	        	            target.damage(6.66, p);
+	        	            Holding.holding(null, target, 20l);
+	        	        }
+	        	    }
+	                return;
+	        		
+	        	}
+	        }
+	    };
+	    task.runTaskTimer(RMain.getInstance(), 0, 20); // 매 2틱마다 크기 증가
+	    ordt.put(rn, task.getTaskId());
+	}
+
+	// 빛의 구체 움직임
+	private void moveLightSphere(ArmorStand lightSphere, Player player, LivingEntity p) {
+        String rn = gethero(lightSphere);
+        successCount.compute(rn, (k,v) -> v + 1);
+        darkSphereSizeUp(rn, darkSphereMap.get(rn), darkSphereSize.get(rn), -0.5f);
+        lightSphere.remove(); // 빛의 구체 제거
+        lightSphere.getWorld().playSound(lightSphere.getLocation(), Sound.BLOCK_GLASS_BREAK, 1.0f, 0f);
+        if(successCount.get(rn)>=5) {
+        	bossfailed(p, rn);
+        }
+        return;
+	}
+
+	// 랜덤한 위치 반환
+	private Location getRandomLocation(Location center, int minDistance, int maxDistance) {
+	    Random random = new Random();
+	    double angle = random.nextDouble() * 2 * Math.PI;
+	    double distance = minDistance + (maxDistance - minDistance) * random.nextDouble();
+	    double x = center.getX() + distance * Math.cos(angle);
+	    double z = center.getZ() + distance * Math.sin(angle);
+	    double y = center.getY(); // 동일한 높이
+	    return new Location(center.getWorld(), x, y, z);
+	}
+
 
 	public boolean checkAndApplyCharge(LivingEntity p, EntityDamageByEntityEvent d) {
 	    // 체력 조건 확인 및 적용

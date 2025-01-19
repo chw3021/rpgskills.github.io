@@ -1011,7 +1011,7 @@ public class Obtained implements Serializable, Listener {
 		if (p.getLocale().equalsIgnoreCase("ko_kr")) {
 			itemsetbasic(ChatColor.GOLD + "쓰레기통", new ItemStack(Material.COMPOSTER), 0, 1, Arrays.asList("클릭시 쓰레기통을 엽니다"),
 				0, inv);
-			itemsetbasic(ChatColor.GOLD + "보조장비 관리", new ItemStack(Material.AMETHYST_SHARD), 0, 1, Arrays.asList("클릭시 보조장비 관리 창을 엽니다"),
+			itemsetbasic(ChatColor.GOLD + "보조장비 관리(미구현)", new ItemStack(Material.AMETHYST_SHARD), 0, 1, Arrays.asList("클릭시 보조장비 관리 창을 엽니다"),
 				1, inv);
 			itemsetbasic(ChatColor.GOLD + "셜커 가방", new ItemStack(Material.SHULKER_BOX), 0, 1, Arrays.asList("[웅크리기 + 설치]로 셜커상자를 가방처럼 사용할수 있습니다"),
 				2, inv);
@@ -1194,7 +1194,7 @@ public class Obtained implements Serializable, Listener {
 		} else {
 			itemsetbasic(ChatColor.GOLD + "Dumpster", new ItemStack(Material.COMPOSTER), 0, 1, Arrays.asList("Open Dumpster If You Click"),
 				0, inv);
-			itemsetbasic(ChatColor.GOLD + "Artifact", new ItemStack(Material.AMETHYST_SHARD), 0, 1, Arrays.asList("Open Artifact management GUI If You Click"),
+			itemsetbasic(ChatColor.GOLD + "Artifact(Not available yet)", new ItemStack(Material.AMETHYST_SHARD), 0, 1, Arrays.asList("Open Artifact management GUI If You Click"),
 				1, inv);
 			itemsetbasic(ChatColor.GOLD + "Shulker Bag", new ItemStack(Material.SHULKER_BOX), 0, 1, Arrays.asList("You can use Shulker Box as bag","By [Sneaking + Placing]"),
 				2, inv);

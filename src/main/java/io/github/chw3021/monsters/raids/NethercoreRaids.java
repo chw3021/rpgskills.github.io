@@ -483,7 +483,6 @@ public class NethercoreRaids extends Summoned implements Listener {
     		newmob.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(4);
     		newmob.setRemoveWhenFarAway(false);
     		raider.put(rn, newmob.getUniqueId());
-    		System.out.println(raider.toString());
 			newmob.setMetadata("volcanicboss", new FixedMetadataValue(RMain.getInstance(), true));
     		newmob.setMetadata("nether", new FixedMetadataValue(RMain.getInstance(), true));
 			newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), armor));
