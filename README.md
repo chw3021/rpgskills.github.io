@@ -1,4 +1,4 @@
-# RPGskills Plugin for MineCraft(incomplete)
+# RPGskills Plugin for MineCraft
 
 References
 
