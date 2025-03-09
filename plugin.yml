@@ -9,5 +9,7 @@ commands:
       description: plugin
    party:
       description: plugin
+smith:
+   description: plugin
       
 api-version: 1.21

@@ -511,7 +511,7 @@ public class Weapons {
 	}
 	
 
-	final private Integer getwn(Material ma) {
+	protected final Integer getwn(Material ma) {
 		final String m = ma.name();
 		if(m.contains("_BANNER")) {
 			return 1000;
@@ -811,6 +811,81 @@ public class Weapons {
 		r.setItemMeta(rm);
 		return r;
 	}
+	
+
+	//{@link io.github.chw3021.items.Elements.getstel(int, Player)}
+	final protected ItemStack netheriteCustomWeapon(ItemStack i0, Integer cmdt, Player p) {
+	
+		ItemStack r = i0.clone();
+		String kname = "";
+		String ename = "";
+		ItemMeta rm = r.getItemMeta();
+		rm.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
+		rm.setMaxStackSize(1);
+		
+				
+		final String m = r.getType().name();
+		
+		if(m.contains("_BANNER")) {
+			kname = "너클";
+			ename = "Knuckle";
+			rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 5, Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
+			rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 4, Operation.ADD_NUMBER, EquipmentSlotGroup.OFFHAND));
+			
+		}
+		else if(m.equals("BOW")) {
+			kname = "활";
+			ename = "Bow";
+			rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 8, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+
+		}
+		else if(m.equals("CROSSBOW")) {
+			kname = "쇠뇌";
+			ename = "Crossbow";
+			rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 10, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+
+		}
+		else if(m.contains("BLAZE_ROD")) {
+			kname = "완드";
+			ename = "Wand";
+			rm.addAttributeModifier(Attribute.ATTACK_DAMAGE,
+			new AttributeModifier(getKey(), 29,
+					Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
+			rm.addAttributeModifier(Attribute.ATTACK_SPEED,
+					new AttributeModifier(getKey(), 1.6,
+							Operation.ADD_NUMBER, EquipmentSlotGroup.MAINHAND));
+		}
+		else if(m.contains("SHEARS")) {
+			kname = "단검";
+			ename = "Dagger";
+			rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 7, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+
+		}
+		else if(m.contains("FISHING_ROD")) {
+			kname = "낚시대";
+			ename = "FishingRod";					
+			rm.addAttributeModifier(Attribute.ATTACK_DAMAGE, new AttributeModifier(getKey(), 7, Operation.ADD_NUMBER, EquipmentSlotGroup.HAND));
+
+		}
+		else {
+			return null;
+		}
+		
+		
+		rm.setCustomModelData(getwn(r.getType()) + 60);
+
+		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+			rm.setDisplayName(ChatColor.GOLD +"네더라이트 "+kname);
+			rm.setItemName(ChatColor.GOLD +"Netherite "+ename);
+		}
+		else {
+			rm.setDisplayName(ChatColor.GOLD +"Netherite "+ename);
+			rm.setItemName(ChatColor.GOLD +"Netherite "+ename);
+		}
+		return r;
+	}
+
+	
 
 	//{@link io.github.chw3021.items.Elements.getstel(int, Player)}
 	final protected ItemStack elweapon(ItemStack i0, Integer cmdt, Player p) {
@@ -1075,7 +1150,26 @@ public class Weapons {
 		}
 	}
 
-	private ItemStack csc(Inventory inv, Player p) {
+	protected ItemStack netheritesc(Inventory inv, Player p) {
+	
+		final ItemStack i0 = inv.getItem(0);
+		final ItemStack i1 = inv.getItem(1);
+		if (i0 != null && i0.getAmount() >= 1
+				&& i1 != null
+				&& i1.getType() == Material.NETHERITE_INGOT
+				&& !i0.getItemMeta().getPersistentDataContainer()
+						.getOrDefault(nethercore, PersistentDataType.STRING, "none").equals("netherCore")
+				&& !i0.getItemMeta().getPersistentDataContainer()
+						.getOrDefault(endercore, PersistentDataType.STRING, "none").equals("enderCore")
+				&& !i0.getItemMeta().getPersistentDataContainer()
+						.getOrDefault(herocore, PersistentDataType.STRING, "none").equals("heroCore")) {
+			return netheritesc(inv, p);
+		} else {
+			return null;
+		}
+	}
+	
+	protected ItemStack csc(Inventory inv, Player p) {
 	
 		final ItemStack i0 = inv.getItem(0);
 		final ItemStack i1 = inv.getItem(1);
@@ -1168,7 +1262,7 @@ public class Weapons {
 		}
 	}
 
-	private ItemStack nsc(Inventory inv, Player p) {
+	protected ItemStack nsc(Inventory inv, Player p) {
 
 		final ItemStack i0 = inv.getItem(0);
 		final ItemStack i1 = inv.getItem(1);
@@ -1236,7 +1330,7 @@ public class Weapons {
 		}
 	}
 
-	private ItemStack esc(Inventory inv, Player p) {
+	protected ItemStack esc(Inventory inv, Player p) {
 	
 		if (inv.getItem(0) != null
 				&& inv.getItem(0).getItemMeta().getPersistentDataContainer()
@@ -1305,7 +1399,7 @@ public class Weapons {
 		}
 	}
 
-	private ItemStack hsc(Inventory inv, Player p) {
+	protected ItemStack hsc(Inventory inv, Player p) {
 	
 		if (inv.getItem(0) != null
 				&& inv.getItem(0).getItemMeta().getPersistentDataContainer()

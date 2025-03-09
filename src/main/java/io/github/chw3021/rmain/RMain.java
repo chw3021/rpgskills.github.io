@@ -54,6 +54,7 @@ import io.github.chw3021.items.Elements;
 import io.github.chw3021.items.Enchanting;
 import io.github.chw3021.items.NamingPrevent;
 import io.github.chw3021.items.ScrollPoint;
+import io.github.chw3021.items.UpgradeCommand;
 import io.github.chw3021.items.armors.ArmorSet;
 import io.github.chw3021.items.armors.ArmorSetEffects;
 import io.github.chw3021.items.weapons.Bow;
@@ -135,6 +136,8 @@ public class RMain extends JavaPlugin{
 
         Bukkit.getPluginManager().registerEvents(new Party(), this);
         this.getCommand("party").setExecutor(new Party());
+
+        this.getCommand("smith").setExecutor(new UpgradeCommand());
         
         Bukkit.getPluginManager().registerEvents(new SwordSkillsData(), this);
         Bukkit.getPluginManager().registerEvents(new BerSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()), this);
