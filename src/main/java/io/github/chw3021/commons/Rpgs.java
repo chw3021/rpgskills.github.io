@@ -227,6 +227,7 @@ public class Rpgs extends Summoned implements CommandExecutor, Listener {
 			p.sendMessage(ChatColor.GREEN +"/rpg rank (/rpg r) -> 자신의 직업의 숙련도 10순위를 표시합니다");
 			p.sendMessage(ChatColor.GREEN +"/rpg graph (/rpg g) -> 적들에게 입힌 피해량을 표시합니다");
 			p.sendMessage(ChatColor.GREEN +"/rpg gclear (/rpg gc) -> 기록된 피해량들을 모두 지웁니다");
+			p.sendMessage(ChatColor.GREEN +"/smith -> 첫번째 슬롯에 있는 장비를 두번째 슬롯에 있는 재료로 강화합니다");
 			if(p.isOp())
 			{
 				p.sendMessage(ChatColor.RED +"/rpg exp [amounts]-> give player amounts of exp");
@@ -257,6 +258,7 @@ public class Rpgs extends Summoned implements CommandExecutor, Listener {
 			p.sendMessage(ChatColor.GREEN +"/rpg rank (/rpg r) -> show Top 10 ranking of proficiency of your class");
 			p.sendMessage(ChatColor.GREEN +"/rpg graph (/rpg g) -> show the damage you've done to your enemies");
 			p.sendMessage(ChatColor.GREEN +"/rpg gclear (/rpg gc) -> clear all recorded damage");
+			p.sendMessage(ChatColor.GREEN +"/smith -> Smith Equipment in first slot by using ingredient in second slot");
 			if(p.isOp())
 			{
 				p.sendMessage(ChatColor.RED +"/rpg exp [amounts]-> give player amounts of exp");
@@ -367,15 +369,6 @@ public class Rpgs extends Summoned implements CommandExecutor, Listener {
 		if(!(sender instanceof Player) &&alias.equals("rpg"))
 		{
 		}
-		if (sender instanceof ConsoleCommandSender && alias.equals("rpg")) { 
-	        if (args.length > 0 && args[0].equalsIgnoreCase("jjj")) {
-	            Bukkit.getWorlds().forEach(w -> {
-	                Bukkit.unloadWorld(w, false);
-	            });
-	            sender.sendMessage("모든 월드를 언로드했습니다.");
-	            return true; // 명령어 처리 성공
-	        }
-	    }
 		if(sender instanceof Player && alias.equals("rpg"))
 		{
 			Player p = (Player)sender;

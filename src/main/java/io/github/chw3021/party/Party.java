@@ -71,462 +71,440 @@ public class Party implements CommandExecutor, Serializable, Listener{
         if(ev.getCommands().contains("party")) {
         }
  	}
-    
-	final private void addNewParty(Player p, String name)
-	{
-		if(Summoned.combo.containsRow(p.getName()))
-		{
-			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				p.sendMessage("�����߿��� ��Ƽ������ �Ұ��� �մϴ�");
-			}
-			else {
-				p.sendMessage("You Can't Create Party While Fightning");
-			}
-			return;
-		}
-		PartyCreateEvent pe = new PartyCreateEvent(p, name);
-		Bukkit.getPluginManager().callEvent(pe);
-		
-		if(!pe.isCancelled()) {
-			Party.put(name, p.getUniqueId());
-			Owner.put(p.getUniqueId(), true);
+    final private void addNewParty(Player p, String name)
+    {
+        if(Summoned.combo.containsRow(p.getName()))
+        {
+            if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+                p.sendMessage("전투 중에는 파티를 생성할 수 없습니다.");
+            }
+            else {
+                p.sendMessage("You Can't Create Party While Fighting");
+            }
+            return;
+        }
+        PartyCreateEvent pe = new PartyCreateEvent(p, name);
+        Bukkit.getPluginManager().callEvent(pe);
+        
+        if(!pe.isCancelled()) {
+            Party.put(name, p.getUniqueId());
+            Owner.put(p.getUniqueId(), true);
 
-			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				p.sendMessage(ChatColor.GOLD+ "��Ƽ [" + name + "] �� �����Ǿ����ϴ�");
-			}
-			else {
-				p.sendMessage(ChatColor.GOLD+ "Party [" + name + "] created");
-			}
-	        Scoreboard nboard = Bukkit.getScoreboardManager().getNewScoreboard();
-	        Scoreboard board = p.getScoreboard();
-	        pb.put(p.getUniqueId(), board);
-			Objective heart = nboard.registerNewObjective(name ,Criteria.HEALTH, "[Health]", RenderType.HEARTS);
-			heart.setDisplaySlot(DisplaySlot.BELOW_NAME);
-	        Objective po = nboard.registerNewObjective(name+"p" ,Criteria.DUMMY, ChatColor.GOLD + "Party: [" + name+"]");
-			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				heart.setDisplayName(ChatColor.GREEN + "[�����]");
-				po.setDisplayName(ChatColor.GOLD + "��Ƽ: [" + name+"]");
-			}
-	        po.setDisplaySlot(DisplaySlot.SIDEBAR);
-	        
-			Team t = nboard.registerNewTeam(name);
-			p.setScoreboard(nboard);
-			t.setOption(Option.NAME_TAG_VISIBILITY, OptionStatus.FOR_OWN_TEAM);
-			t.addEntry(p.getName());
-			t.setCanSeeFriendlyInvisibles(true);
-			t.setAllowFriendlyFire(true);
-			t.setPrefix(ChatColor.LIGHT_PURPLE + "["+name + "]");
-			po.getScore(p.getName()).setScore((int) p.getHealth());
-		}
-	}
-	
-	final private void setNewOwner(Player p1, Player p2, String name)
-	{
-		Owner.put(p1.getUniqueId(), false);
-		Owner.put(p2.getUniqueId(), true);
-	}
-	
-	final private void addNewPartyMember(Player p, String name)
-	{
-		Bukkit.getScheduler().runTask(RMain.getInstance(), () -> {
+            if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+                p.sendMessage(ChatColor.GOLD + "파티 [" + name + "]가 생성되었습니다.");
+            }
+            else {
+                p.sendMessage(ChatColor.GOLD + "Party [" + name + "] created");
+            }
+            Scoreboard nboard = Bukkit.getScoreboardManager().getNewScoreboard();
+            Scoreboard board = p.getScoreboard();
+            pb.put(p.getUniqueId(), board);
+            Objective heart = nboard.registerNewObjective(name ,Criteria.HEALTH, "[Health]", RenderType.HEARTS);
+            heart.setDisplaySlot(DisplaySlot.BELOW_NAME);
+            Objective po = nboard.registerNewObjective(name + "p" ,Criteria.DUMMY, ChatColor.GOLD + "Party: [" + name + "]");
+            if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+                heart.setDisplayName(ChatColor.GREEN + "[체력]");
+                po.setDisplayName(ChatColor.GOLD + "파티: [" + name + "]");
+            }
+            po.setDisplaySlot(DisplaySlot.SIDEBAR);
+            
+            Team t = nboard.registerNewTeam(name);
+            p.setScoreboard(nboard);
+            t.setOption(Option.NAME_TAG_VISIBILITY, OptionStatus.FOR_OWN_TEAM);
+            t.addEntry(p.getName());
+            t.setCanSeeFriendlyInvisibles(true);
+            t.setAllowFriendlyFire(true);
+            t.setPrefix(ChatColor.LIGHT_PURPLE + "[" + name + "]");
+            po.getScore(p.getName()).setScore((int) p.getHealth());
+        }
+    }
 
-			if(Summoned.combo.containsRow(name))
-			{
-				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					p.sendMessage("�����߿��� ��Ƽ�� �߰��� �Ұ��� �մϴ�");
-				}
-				else {
-					p.sendMessage("You Can't Add member while fighting");
-				}
-				return;
-			}
-			
-			if(Party.get(name).size()>8) {
-				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					p.sendMessage("��Ƽ���� �ִ� 8����� �����մϴ�");
-				}
-				else {
-					p.sendMessage("Party members should be less than 8 people.");
-				}
-				return;
-			}
-			
-			PartyJoinEvent pe = new PartyJoinEvent(p, name);
-			
-			Bukkit.getPluginManager().callEvent(pe);
-			
-			if(!pe.isCancelled()) {
+    final private void setNewOwner(Player p1, Player p2, String name)
+    {
+        Owner.put(p1.getUniqueId(), false);
+        Owner.put(p2.getUniqueId(), true);
+    }
 
-				Party.put(name, p.getUniqueId());
-				Owner.put(p.getUniqueId(), false);
+    final private void addNewPartyMember(Player p, String name)
+    {
+        Bukkit.getScheduler().runTask(RMain.getInstance(), () -> {
 
-				Scoreboard oboard = getOwner(name).getScoreboard();
-				Scoreboard pboard = p.getScoreboard();
-				Team t = oboard.getTeam(name);
-		        pb.put(p.getUniqueId(), pboard);
-				t.addEntry(p.getName());
-				p.setScoreboard(oboard);
-				oboard.getObjective(name+"p").getScore(p.getName()).setScore((int) p.getHealth());
+            if(Summoned.combo.containsRow(name))
+            {
+                if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+                    p.sendMessage("전투 중에는 파티에 멤버를 추가할 수 없습니다.");
+                }
+                else {
+                    p.sendMessage("You Can't Add member while fighting");
+                }
+                return;
+            }
+            
+            if(Party.get(name).size() > 8) {
+                if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+                    p.sendMessage("파티원은 8명 이하로만 설정할 수 있습니다.");
+                }
+                else {
+                    p.sendMessage("Party members should be less than 8 people.");
+                }
+                return;
+            }
+            
+            PartyJoinEvent pe = new PartyJoinEvent(p, name);
+            
+            Bukkit.getPluginManager().callEvent(pe);
+            
+            if(!pe.isCancelled()) {
 
-				getPlayerMembers(name).forEach(m -> {
-					if(m.getLocale().equalsIgnoreCase("ko_kr")) {
-						m.sendMessage(ChatColor.GOLD + p.getDisplayName() +  "�� [" + name +"] ��Ƽ�� �����߽��ϴ�");
-					}
-					else {
-						m.sendMessage(ChatColor.GOLD + p.getDisplayName() +"joined party [" + name+"]");
-					}
-				});
-			}
+                Party.put(name, p.getUniqueId());
+                Owner.put(p.getUniqueId(), false);
 
-		});
-	}
-	
-	final private void removePartyMember(final Player p, String name)
-	{
-		Bukkit.getPluginManager().callEvent(new PartyLeaveEvent(p, name));
-		
-		Party.remove(name, p.getUniqueId());
-		Owner.remove(p.getUniqueId());
+                Scoreboard oboard = getOwner(name).getScoreboard();
+                Scoreboard pboard = p.getScoreboard();
+                Team t = oboard.getTeam(name);
+                pb.put(p.getUniqueId(), pboard);
+                t.addEntry(p.getName());
+                p.setScoreboard(oboard);
+                oboard.getObjective(name + "p").getScore(p.getName()).setScore((int) p.getHealth());
+
+                getPlayerMembers(name).forEach(m -> {
+                    if(m.getLocale().equalsIgnoreCase("ko_kr")) {
+                        m.sendMessage(ChatColor.GOLD + p.getDisplayName() + "가 [" + name + "] 파티에 합류했습니다.");
+                    }
+                    else {
+                        m.sendMessage(ChatColor.GOLD + p.getDisplayName() + " joined party [" + name + "]");
+                    }
+                });
+            }
+
+        });
+    }
+
+    final private void removePartyMember(final Player p, String name)
+    {
+        Bukkit.getPluginManager().callEvent(new PartyLeaveEvent(p, name));
+        
+        Party.remove(name, p.getUniqueId());
+        Owner.remove(p.getUniqueId());
         if(password.containsKey(name)) {
-        	password.remove(name);
+            password.remove(name);
         }
         
-		Scoreboard lboard = p.getScoreboard();
-		lboard.resetScores(p.getName());
-		Scoreboard pboard = pb.get(p.getUniqueId());
-		
-		Team t = lboard.getEntryTeam(p.getName());
-		t.removeEntry(p.getName());
-		p.setScoreboard(pboard);
+        Scoreboard lboard = p.getScoreboard();
+        lboard.resetScores(p.getName());
+        Scoreboard pboard = pb.get(p.getUniqueId());
+        
+        Team t = lboard.getEntryTeam(p.getName());
+        t.removeEntry(p.getName());
+        p.setScoreboard(pboard);
 
-		getPlayerMembers(name).forEach(m -> {
-			if(m.getLocale().equalsIgnoreCase("ko_kr")) {
-				m.sendMessage(ChatColor.GOLD + p.getDisplayName() +  "�� [" + name +"] ��Ƽ���� �������ϴ�");
-			}
-			else {
-				m.sendMessage(ChatColor.GOLD + p.getDisplayName() +"left party [" + name+"]");
-			}
-		});
-	}
-	
+        getPlayerMembers(name).forEach(m -> {
+            if(m.getLocale().equalsIgnoreCase("ko_kr")) {
+                m.sendMessage(ChatColor.GOLD + p.getDisplayName() + "가 [" + name + "] 파티에서 나갔습니다.");
+            }
+            else {
+                m.sendMessage(ChatColor.GOLD + p.getDisplayName() + " left party [" + name + "]");
+            }
+        });
+    }
+
+    final private void removeParty(String name)
+    {
+        getPlayerMembers(name).forEach(p -> {
+            if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+                p.sendMessage(ChatColor.RED + "파티 [" + name + "]가 해체되었습니다.");
+            }
+            else {
+                p.sendMessage(ChatColor.RED + "Party [" + name + "] has been disbanded");
+            }
+            Scoreboard lboard = p.getScoreboard();
+            lboard.resetScores(p.getName());
+            Scoreboard pboard = pb.get(p.getUniqueId());
+            
+            Team t = lboard.getEntryTeam(p.getName());
+            t.removeEntry(p.getName());
+            p.setScoreboard(pboard);
+        });
+        Party.get(name).forEach(pu -> Owner.remove(pu));
+        Party.removeAll(name);
+        if(password.containsKey(name)) {
+            password.remove(name);
+        }
+    }
+
+    final private boolean isnameable(String name)
+    {
+        HashSet<String> sh = new HashSet<>();
+        for(OfflinePlayer p : Bukkit.getOfflinePlayers()) {
+            sh.add(p.getName());
+        }
+        return sh.contains(name);
+    }
+
+    public static boolean isPartyexist(String name)
+    {
+        return Party.containsKey(name);
+    }
+
+    public static String getParty(Player p)
+    {
+        return Party.keySet().stream().filter(x -> Party.containsEntry(x, p.getUniqueId())).findFirst().get();
+    }
+
+    public static List<Player> getPlayerMembers(String name)
+    {
+        List<Player> pl = new ArrayList<>();
+        Party.get(name).forEach(pu -> {
+            if(Bukkit.getPlayer(pu) != null) {
+                pl.add(Bukkit.getPlayer(pu));
+            }
+        });
+        return pl;
+    }
+
+    public static Stream<UUID> getMembers(String name)
+    {
+        return Party.get(name).stream();
+    }
+
+    public static Player getOwner(String name)
+    {
+        return Bukkit.getPlayer(Party.get(name).stream().filter(pu -> Owner.get(pu) == true).findFirst().get());
+    }
+
+
+    public static boolean isInSameParty(Player p1, Player p2)
+    {
+        if(p1 == null || p2 == null) {
+            return false;
+        }
+        if(p1 == p2 || p1.equals(p2)) {
+            return true;
+        }
+        if(Party.containsValue(p1.getUniqueId()) && Party.containsValue(p2.getUniqueId())) {
+            return Party.keySet().stream().anyMatch(x -> Party.containsEntry(x, p1.getUniqueId()) && Party.containsEntry(x, p2.getUniqueId()));
+        }
+        else {
+            return false;
+        }
+    }
+
+    public static boolean hasParty(Player p)
+    {
+        if(p == null) {
+            return false;
+        }
+        
+        return Party.containsValue(p.getUniqueId());
+    }
+
+    public static boolean isOwner(Player p)
+    {
+        return Owner.getOrDefault(p.getUniqueId(), false) == true;
+    }
+
+    final private void unlock(Player p, String party) {
+        if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+            p.sendMessage("파티 비밀번호는 10초 이내에 입력해야 합니다.");
+        }
+        else {
+            p.sendMessage("Please Enter the password in 10 seconds to join.");
+        }
+        if(unlockablet.containsKey(p.getUniqueId())) {
+            Bukkit.getScheduler().cancelTask(unlockablet.get(p.getUniqueId()));
+            unlockablet.remove(p.getUniqueId());
+        }
+        unlockable.put(p.getUniqueId(), party);
+        int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+            @Override
+            public void run() 
+            {
+                unlockable.remove(p.getUniqueId());
+                unlockablet.remove(p.getUniqueId());
+            }
+        }, 200); 
+        unlockablet.put(p.getUniqueId(), task);
+    }
+
+    final private void tolock(AsyncPlayerChatEvent e) {
+        Player p = e.getPlayer();
+        if(unlockable.containsKey(p.getUniqueId())) {
+            e.setCancelled(true);
+            String sbs = unlockable.get(p.getUniqueId());
+            String chat = e.getMessage();
+            if(password.get(sbs).equals(chat)) {
+                Scoreboard oboard = getOwner(sbs).getScoreboard();
+                Scoreboard pboard = p.getScoreboard();
+                Team t = oboard.getTeam(sbs);
+                pb.put(p.getUniqueId(), pboard);
+                t.addEntry(p.getName());
+                p.setScoreboard(oboard);
+                addNewPartyMember(p, sbs);
+                if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+                    p.sendMessage(sbs + " 파티에 합류했습니다.");
+                }
+                else {
+                    p.sendMessage("joined party " + sbs);
+                }
+                oboard.getObjective(sbs + "p").getScore(p.getName()).setScore((int) p.getHealth());
+            }
+            else {
+                if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+                    p.sendMessage("비밀번호가 틀렸습니다.");
+                }
+                else {
+                    p.sendMessage("The password is incorrect.");
+                }
+            }
+        }
+    }
 	final private Stream<UUID> getOwners()
 	{
 		return Owner.keySet().stream().filter(k -> Owner.get(k) == true);
 	}
-	
-	final private void removeParty(String name)
-	{
-		getPlayerMembers(name).forEach(p -> {
-			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				p.sendMessage(ChatColor.RED + "��Ƽ ["+ name + "] �� ��ü�Ǿ����ϴ�");
-			}
-			else {
-				p.sendMessage(ChatColor.RED + "Party ["+ name + "] has been disbanded");
-			}
-			Scoreboard lboard = p.getScoreboard();
-			lboard.resetScores(p.getName());
-			Scoreboard pboard = pb.get(p.getUniqueId());
-			
-			Team t = lboard.getEntryTeam(p.getName());
-			t.removeEntry(p.getName());
-			p.setScoreboard(pboard);
-		});
-        Party.get(name).forEach(pu -> Owner.remove(pu));
-        Party.removeAll(name);
-        if(password.containsKey(name)) {
-        	password.remove(name);
-        }
-        
-	}
-	
-	final private boolean isnameable(String name)
-	{
-		HashSet<String> sh = new HashSet<>();
-		for(OfflinePlayer p : Bukkit.getOfflinePlayers()) {
-			sh.add(p.getName());
-		}
-		return sh.contains(name);
-	}
-	
-	public static boolean isPartyexist(String name)
-	{
-		return Party.containsKey(name);
-	}
-	
-	public static String getParty(Player p)
-	{
-		return Party.keySet().stream().filter(x -> Party.containsEntry(x, p.getUniqueId())).findFirst().get();
-	}
-
-	public static List<Player> getPlayerMembers(String name)
-	{
-		List<Player> pl = new ArrayList<>();
-		Party.get(name).forEach(pu -> {
-			if(Bukkit.getPlayer(pu) != null) {
-				pl.add(Bukkit.getPlayer(pu));
-			}
-		});
-		return pl;
-	}
-	
-	public static Stream<UUID> getMembers(String name)
-	{
-		return Party.get(name).stream();
-	}
-
-	public static Player getOwner(String name)
-	{
-		return Bukkit.getPlayer(Party.get(name).stream().filter(pu -> Owner.get(pu) == true).findFirst().get());
-	}
-
-	
-	public static boolean isInSameParty(Player p1, Player p2)
-	{
-		if(p1 == null || p2 == null) {
-			return false;
-		}
-		if(p1 == p2 || p1.equals(p2)) {
-			return true;
-		}
-		if(Party.containsValue(p1.getUniqueId()) && Party.containsValue(p2.getUniqueId())) {
-			return Party.keySet().stream().anyMatch(x -> Party.containsEntry(x, p1.getUniqueId()) && Party.containsEntry(x, p2.getUniqueId()));
-		}
-		else {
-			return false;
-		}
-	}
-	
-	public static boolean hasParty(Player p)
-	{
-		if(p == null) {
-			return false;
-		}
-		
-		
-		return Party.containsValue(p.getUniqueId());
-	}
-	
-	public static boolean isOwner(Player p)
-	{
-		return Owner.getOrDefault(p.getUniqueId(),false) == true;
-	}
-
-	final private void unlock(Player p, String party) {
-		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			p.sendMessage("�ش� ��Ƽ�� ��й�ȣ�� 10�ʾȿ� �Է����ּ���");
-		}
-		else {
-			p.sendMessage("Please Enter the password in 10 seconds To join.");
-		}
-		if(unlockablet.containsKey(p.getUniqueId())) {
-			Bukkit.getScheduler().cancelTask(unlockablet.get(p.getUniqueId()));
-			unlockablet.remove(p.getUniqueId());
-		}
-		unlockable.put(p.getUniqueId(), party);
-		int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-            @Override
-            public void run() 
-            {
-            	unlockable.remove(p.getUniqueId());
-    			unlockablet.remove(p.getUniqueId());
-            }
-		}, 200); 
-		unlockablet.put(p.getUniqueId(), task);
-	}
-
-	final private void tolock(AsyncPlayerChatEvent e) {
-		Player p = e.getPlayer();
-		if(unlockable.containsKey(p.getUniqueId())) {
-			e.setCancelled(true);
-			String sbs = unlockable.get(p.getUniqueId());
-			String chat = e.getMessage();
-			if(password.get(sbs).equals(chat)) {
-				Scoreboard oboard = getOwner(sbs).getScoreboard();
-				Scoreboard pboard = p.getScoreboard();
-				Team t = oboard.getTeam(sbs);
-		        pb.put(p.getUniqueId(), pboard);
-				t.addEntry(p.getName());
-				p.setScoreboard(oboard);
-				addNewPartyMember(p, sbs);
-				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					p.sendMessage(sbs +" ��Ƽ�� �����߽��ϴ�");
-				}
-				else {
-					p.sendMessage("joined party " + sbs);
-				}
-				oboard.getObjective(sbs+"p").getScore(p.getName()).setScore((int) p.getHealth());
-			}
-			else {
-				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					p.sendMessage("��й�ȣ�� Ʋ�Ƚ��ϴ�");
-				}
-				else {
-					p.sendMessage("Wrong Password");
-				}
-			}
-			if(unlockablet.containsKey(p.getUniqueId())) {
-				Bukkit.getScheduler().cancelTask(unlockablet.get(p.getUniqueId()));
-				unlockablet.remove(p.getUniqueId());
-			}
-        	unlockable.remove(p.getUniqueId());
-		}
-	}
-	
 	final private void joinreq(Player p, String party) {
-		if(join.containsKey(party)) {
-			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				p.sendMessage(ChatColor.RED + "��û�� ���ؼ� ����ϼž��մϴ�");
-			}
-			else {
-				p.sendMessage(ChatColor.LIGHT_PURPLE + "You still have to wait to apply");
-			}
-			return;
-		}
-		Player owner = getOwner(party);
-		if(owner.getLocale().equalsIgnoreCase("ko_kr")) {
-			owner.sendMessage(ChatColor.LIGHT_PURPLE + p.getDisplayName() + "�� ��Ƽ ���� ��û�� ���½��ϴ�.");
-			owner.sendMessage(ChatColor.LIGHT_PURPLE + "[����: a] [����: d] 5�ʾȿ� ���Է½� �ڵ����� �����˴ϴ�");
-		}
-		else {
-			owner.sendMessage(ChatColor.LIGHT_PURPLE + p.getDisplayName() + "wants to join your party");
-			owner.sendMessage(ChatColor.LIGHT_PURPLE + "[Accept: a] [Deny: d]");
-			owner.sendMessage(ChatColor.LIGHT_PURPLE + "Deny Automatically If you don't enter in 5 seconds");
-		}
-		if(joint.containsKey(party)) {
-			Bukkit.getScheduler().cancelTask(joint.get(party));
-			joint.remove(party);
-		}
-		join.put(party, p.getUniqueId());
-		int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-            @Override
-            public void run() 
-            {
-            	join.remove(party);
-    			joint.remove(party);
-            }
-		}, 100); 
-		joint.put(party, task);
+	    if (join.containsKey(party)) {
+	        if (p.getLocale().equalsIgnoreCase("ko_kr")) {
+	            p.sendMessage(ChatColor.RED + "이미 신청한 상태입니다");
+	        } else {
+	            p.sendMessage(ChatColor.LIGHT_PURPLE + "You still have to wait to apply");
+	        }
+	        return;
+	    }
+	    Player owner = getOwner(party);
+	    if (owner.getLocale().equalsIgnoreCase("ko_kr")) {
+	        owner.sendMessage(ChatColor.LIGHT_PURPLE + p.getDisplayName() + "가 파티에 가입을 신청했습니다.");
+	        owner.sendMessage(ChatColor.LIGHT_PURPLE + "[수락: a] [거절: d] 5초 이내에 응답이 없으면 자동으로 거절됩니다.");
+	    } else {
+	        owner.sendMessage(ChatColor.LIGHT_PURPLE + p.getDisplayName() + " wants to join your party");
+	        owner.sendMessage(ChatColor.LIGHT_PURPLE + "[Accept: a] [Deny: d]");
+	        owner.sendMessage(ChatColor.LIGHT_PURPLE + "Deny Automatically If you don't enter in 5 seconds");
+	    }
+	    if (joint.containsKey(party)) {
+	        Bukkit.getScheduler().cancelTask(joint.get(party));
+	        joint.remove(party);
+	    }
+	    join.put(party, p.getUniqueId());
+	    int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	        @Override
+	        public void run() {
+	            join.remove(party);
+	            joint.remove(party);
+	        }
+	    }, 100);
+	    joint.put(party, task);
 	}
 
 	final private void tojoin(AsyncPlayerChatEvent e) {
-		Player owp = e.getPlayer();
-		if(hasParty(owp) && isOwner(owp)) {
-			String par = getParty(owp);
-			if(join.containsKey(par)) {
-				
-				Player p = Bukkit.getPlayer(join.get(par));
-				e.setCancelled(true);
-				String chat = e.getMessage();
-				if(chat.equals("a")) {
-					Scoreboard oboard = getOwner(par).getScoreboard();
-					Scoreboard pboard = p.getScoreboard();
-					Team t = oboard.getTeam(par);
-			        pb.put(p.getUniqueId(), pboard);
-					t.addEntry(p.getName());
-					p.setScoreboard(oboard);
-					addNewPartyMember(p, par);
-					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						p.sendMessage(ChatColor.GOLD + "[" + par +"] ��Ƽ�� �����߽��ϴ�");
-					}
-					else {
-						p.sendMessage(ChatColor.GOLD +"joined party [" + par+"]");
-					}
-					oboard.getObjective(par+"p").getScore(p.getName()).setScore((int) p.getHealth());
-				}
-				else {
-					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						p.sendMessage(ChatColor.GRAY +"��û�� �����Ǿ����ϴ�");
-					}
-					else {
-						p.sendMessage(ChatColor.GRAY +"Your application has been declined");
-					}
-				}
-				if(joint.containsKey(par)) {
-					Bukkit.getScheduler().cancelTask(joint.get(par));
-					joint.remove(par);
-				}
-	        	join.remove(par);
-			}
-		}
+	    Player owp = e.getPlayer();
+	    if (hasParty(owp) && isOwner(owp)) {
+	        String par = getParty(owp);
+	        if (join.containsKey(par)) {
+
+	            Player p = Bukkit.getPlayer(join.get(par));
+	            e.setCancelled(true);
+	            String chat = e.getMessage();
+	            if (chat.equals("a")) {
+	                Scoreboard oboard = getOwner(par).getScoreboard();
+	                Scoreboard pboard = p.getScoreboard();
+	                Team t = oboard.getTeam(par);
+	                pb.put(p.getUniqueId(), pboard);
+	                t.addEntry(p.getName());
+	                p.setScoreboard(oboard);
+	                addNewPartyMember(p, par);
+	                if (p.getLocale().equalsIgnoreCase("ko_kr")) {
+	                    p.sendMessage(ChatColor.GOLD + "[" + par + "] 파티에 가입되었습니다");
+	                } else {
+	                    p.sendMessage(ChatColor.GOLD + "joined party [" + par + "]");
+	                }
+	                oboard.getObjective(par + "p").getScore(p.getName()).setScore((int) p.getHealth());
+	            } else {
+	                if (p.getLocale().equalsIgnoreCase("ko_kr")) {
+	                    p.sendMessage(ChatColor.GRAY + "신청이 거절되었습니다");
+	                } else {
+	                    p.sendMessage(ChatColor.GRAY + "Your application has been declined");
+	                }
+	            }
+	            if (joint.containsKey(par)) {
+	                Bukkit.getScheduler().cancelTask(joint.get(par));
+	                joint.remove(par);
+	            }
+	            join.remove(par);
+	        }
+	    }
 	}
-	
+
 	final private void invitereq(Player p, Player ow) {
-		String party = getParty(ow);
-		if(invite.containsKey(p.getUniqueId())) {
-			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				p.sendMessage(ChatColor.RED + "�ʴ븦 ���ؼ� ����ϼž��մϴ�");
-			}
-			else {
-				p.sendMessage(ChatColor.LIGHT_PURPLE + "You still have to wait to invite");
-			}
-			return;
-		}
-		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			p.sendMessage(ChatColor.LIGHT_PURPLE + "[" + party + "] ��Ƽ�� ���� �ʴ�޾ҽ��ϴ�.");
-			p.sendMessage(ChatColor.LIGHT_PURPLE + "[����: a] [����: d] 5�ʾȿ� ���Է½� �ڵ����� �����˴ϴ�");
-		}
-		else {
-			p.sendMessage(ChatColor.LIGHT_PURPLE + "You're just invited from Party [" + party + "]");
-			p.sendMessage(ChatColor.LIGHT_PURPLE + "[Accept: a] [Deny: d]");
-			p.sendMessage(ChatColor.LIGHT_PURPLE + "Deny Automatically If you don't enter in 5 seconds");
-		}
-		if(invitet.containsKey(p.getUniqueId())) {
-			Bukkit.getScheduler().cancelTask(invitet.get(p.getUniqueId()));
-			invitet.remove(p.getUniqueId());
-		}
-		invite.put(p.getUniqueId(), party);
-		int task =Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
-            @Override
-            public void run() 
-            {
-            	invite.remove(p.getUniqueId());
-    			invitet.remove(p.getUniqueId());
-            }
-		}, 100); 
-		invitet.put(p.getUniqueId(), task);
+	    String party = getParty(ow);
+	    if (invite.containsKey(p.getUniqueId())) {
+	        if (p.getLocale().equalsIgnoreCase("ko_kr")) {
+	            p.sendMessage(ChatColor.RED + "아직 초대 대기 중입니다");
+	        } else {
+	            p.sendMessage(ChatColor.LIGHT_PURPLE + "You still have to wait to invite");
+	        }
+	        return;
+	    }
+	    if (p.getLocale().equalsIgnoreCase("ko_kr")) {
+	        p.sendMessage(ChatColor.LIGHT_PURPLE + "[" + party + "] 파티에 초대되었습니다.");
+	        p.sendMessage(ChatColor.LIGHT_PURPLE + "[수락: a] [거절: d] 5초 이내에 응답이 없으면 자동으로 거절됩니다.");
+	    } else {
+	        p.sendMessage(ChatColor.LIGHT_PURPLE + "You're just invited from Party [" + party + "]");
+	        p.sendMessage(ChatColor.LIGHT_PURPLE + "[Accept: a] [Deny: d]");
+	        p.sendMessage(ChatColor.LIGHT_PURPLE + "Deny Automatically If you don't enter in 5 seconds");
+	    }
+	    if (invitet.containsKey(p.getUniqueId())) {
+	        Bukkit.getScheduler().cancelTask(invitet.get(p.getUniqueId()));
+	        invitet.remove(p.getUniqueId());
+	    }
+	    invite.put(p.getUniqueId(), party);
+	    int task = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable() {
+	        @Override
+	        public void run() {
+	            invite.remove(p.getUniqueId());
+	            invitet.remove(p.getUniqueId());
+	        }
+	    }, 100);
+	    invitet.put(p.getUniqueId(), task);
 	}
 
 	final private void toinvite(AsyncPlayerChatEvent e) {
-		Player p = e.getPlayer();
-			if(invite.containsKey(p.getUniqueId())) {
-				
-			String par  = invite.get(p.getUniqueId());
-			Player owner = getOwner(par);
-			
-			e.setCancelled(true);
-			String chat = e.getMessage();
-			if(chat.equals("a")) {
-				Scoreboard oboard = getOwner(par).getScoreboard();
-				Scoreboard pboard = p.getScoreboard();
-				Team t = oboard.getTeam(par);
-		        pb.put(p.getUniqueId(), pboard);
-				t.addEntry(p.getName());
-				p.setScoreboard(oboard);
-				addNewPartyMember(p, par);
-				if(owner.getLocale().equalsIgnoreCase("ko_kr")) {
-					owner.sendMessage(ChatColor.GRAY +"�ʴ밡 �����Ǿ����ϴ�");
-				}
-				else {
-					owner.sendMessage(ChatColor.GRAY +"Your invitation has been accepted");
-				}
-				oboard.getObjective(par+"p").getScore(p.getName()).setScore((int) p.getHealth());
-			}
-			else {
-				if(owner.getLocale().equalsIgnoreCase("ko_kr")) {
-					owner.sendMessage(ChatColor.GRAY +"�ʴ밡 �����Ǿ����ϴ�");
-				}
-				else {
-					owner.sendMessage(ChatColor.GRAY +"Your invitation has been declined");
-				}
-			}
-			if(invitet.containsKey(p.getUniqueId())) {
-				Bukkit.getScheduler().cancelTask(invitet.get(p.getUniqueId()));
-				invitet.remove(p.getUniqueId());
-			}
-        	invite.remove(p.getUniqueId());
-		}
+	    Player p = e.getPlayer();
+	    if (invite.containsKey(p.getUniqueId())) {
+
+	        String par = invite.get(p.getUniqueId());
+	        Player owner = getOwner(par);
+
+	        e.setCancelled(true);
+	        String chat = e.getMessage();
+	        if (chat.equals("a")) {
+	            Scoreboard oboard = getOwner(par).getScoreboard();
+	            Scoreboard pboard = p.getScoreboard();
+	            Team t = oboard.getTeam(par);
+	            pb.put(p.getUniqueId(), pboard);
+	            t.addEntry(p.getName());
+	            p.setScoreboard(oboard);
+	            addNewPartyMember(p, par);
+	            if (owner.getLocale().equalsIgnoreCase("ko_kr")) {
+	                owner.sendMessage(ChatColor.GRAY + "초대가 수락되었습니다");
+	            } else {
+	                owner.sendMessage(ChatColor.GRAY + "Your invitation has been accepted");
+	            }
+	            oboard.getObjective(par + "p").getScore(p.getName()).setScore((int) p.getHealth());
+	        } else {
+	            if (owner.getLocale().equalsIgnoreCase("ko_kr")) {
+	                owner.sendMessage(ChatColor.GRAY + "초대가 거절되었습니다");
+	            } else {
+	                owner.sendMessage(ChatColor.GRAY + "Your invitation has been declined");
+	            }
+	        }
+	        if (invitet.containsKey(p.getUniqueId())) {
+	            Bukkit.getScheduler().cancelTask(invitet.get(p.getUniqueId()));
+	            invitet.remove(p.getUniqueId());
+	        }
+	        invite.remove(p.getUniqueId());
+	    }
 	}
-	
+
 	@EventHandler
 	public void Chat(AsyncPlayerChatEvent e)
 	{
@@ -535,21 +513,20 @@ public class Party implements CommandExecutor, Serializable, Listener{
 		toinvite(e);
 	}
 	
-	
 	final private void help(Player p) {
 
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 			p.sendMessage(ChatColor.GREEN +"[Made By chw3021]");
-			p.sendMessage(ChatColor.LIGHT_PURPLE +"---��Ƽ ��ɾ�---");
-			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party create <��Ƽ��> (/party c): ��Ƽ�� �����ϰ� ��Ƽ���� �˴ϴ�");
-			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party join <��Ƽ��> (/party j): �ش� ��Ƽ�� �����մϴ�");
-			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party password <��й�ȣ> (/party p): ��Ƽ�� �ش� ��й�ȣ�� ��ż�, ��й�ȣ�� �Է��ؾ� ��Ƽ�� �����Ҽ� �ְ��մϴ�");
-			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party invite <��Ƽ��> (/party i): (��Ƽ�常 ����) �ش� �÷��̾ �ʴ��մϴ�");
-			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party kick <�÷��̾� �̸�> (/party k): (��Ƽ�常 ����) �ش� �÷��̾ �����մϴ�");
-			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party disband (/party d): (��Ƽ�常 ����) ��Ƽ�� ��ü�մϴ�");
-			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party leave (/party lv): ��Ƽ�� �����ϴ�");
-			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party assemble (/party a): (��Ƽ�常 ����) ��Ƽ������ �ڽ��� ��ġ�� �̵���ŵ�ϴ�");
-			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party list (/party li): ���� �����Ǿ��ִ� ��Ƽ���� ����� ǥ���մϴ�");
+			p.sendMessage(ChatColor.LIGHT_PURPLE +"---파티 명령어---");
+			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party create <파티명> (/party c): 파티를 생성하고 파티장이 됩니다.");
+			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party join <파티명> (/party j): 다른 파티에 가입합니다.");
+			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party password <비밀번호> (/party p): 파티에 비밀번호를 설정하고, 비밀번호를 입력해야 파티에 가입할 수 있습니다.");
+			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party invite <플레이어명> (/party i): (파티장만 사용) 다른 플레이어를 초대합니다.");
+			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party kick <플레이어명> (/party k): (파티장만 사용) 파티에서 플레이어를 추방합니다.");
+			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party disband (/party d): (파티장만 사용) 파티를 해산합니다.");
+			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party leave (/party lv): 파티에서 나갑니다.");
+			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party assemble (/party a): (파티장만 사용) 파티원들을 지정된 장소로 텔레포트합니다.");
+			p.sendMessage(ChatColor.LIGHT_PURPLE +"/party list (/party li): 현재 존재하는 파티들과 파티장들을 표시합니다.");
 		}
 		else {
 			p.sendMessage(ChatColor.GREEN +"[Made By chw3021]");
@@ -579,13 +556,13 @@ public class Party implements CommandExecutor, Serializable, Listener{
 					Player newowner = (Player) Bukkit.getPlayer(getMembers(par).filter(o->(o!=p.getUniqueId())).findAny().get());
 					setNewOwner(p,newowner,par);
 					if(newowner.getLocale().equalsIgnoreCase("ko_kr")) {
-						newowner.sendMessage("��Ƽ���� ���ӹ޾ҽ��ϴ�");
+						newowner.sendMessage("새로운 파티장이 되었습니다.");
 					}
 					else {
 						newowner.sendMessage("You just took over owner of this party");
 					}
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						p.sendMessage("��Ƽ�� �������ϴ�");
+						p.sendMessage("파티를 떠났습니다.");
 					}
 					else {
 						p.sendMessage("You left your party");
@@ -596,7 +573,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 				{
 					String par = getParty(p);
 					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						p.sendMessage("��Ƽ�� �������ϴ�");
+						p.sendMessage("파티를 떠났습니다.");
 					}
 					else {
 						p.sendMessage("You left your party");
@@ -607,7 +584,7 @@ public class Party implements CommandExecutor, Serializable, Listener{
 			else {
 				String par = getParty(p);
 				if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-					p.sendMessage("��Ƽ�� �������ϴ�");
+					p.sendMessage("파티를 떠났습니다.");
 				}
 				else {
 					p.sendMessage("You left your party");
@@ -617,266 +594,266 @@ public class Party implements CommandExecutor, Serializable, Listener{
 		}
 		else {
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-				p.sendMessage("��Ƽ�� �������� �ʽ��ϴ�");
+				p.sendMessage("현재 파티에 속해있지 않습니다.");
 			}
 			else {
 				p.sendMessage("You aren't in any party");
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String alias, String[] args)         
-    {
-		if(sender instanceof Player && alias.equals("party"))
-		{
-			if(args.length==0 || args[0].equals("help"))
-			{
-				Player p = (Player)sender;
-				
-				help(p);
-				
-				if(hasParty(p)) {
-					if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-						p.sendMessage(ChatColor.LIGHT_PURPLE +"���� �����ִ� ��Ƽ: " + getParty(p));
-					}
-					else {
-						p.sendMessage(ChatColor.LIGHT_PURPLE +"You belong to party: " + getParty(p));
-					}
-				}
-			}
-			else if(args.length > 0)
-			{
-				try{				
-				if(args[0].equals("create") || args[0].equals("c"))
-				{
-					Player p = (Player)sender;
-					String sbs = args[1];
-					if(!hasParty(p))
-						if(isPartyexist(sbs)) {
-							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								p.sendMessage(ChatColor.LIGHT_PURPLE +"�̹� ������� ��Ƽ���Դϴ�");
-							}
-							else {
-								p.sendMessage(ChatColor.LIGHT_PURPLE +"Already existing party");
-							}
-						}
+	{
+	    if(sender instanceof Player && alias.equals("party"))
+	    {
+	        if(args.length == 0 || args[0].equals("help"))
+	        {
+	            Player p = (Player)sender;
 
-						else if(isnameable(sbs)) {
-							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								p.sendMessage(ChatColor.LIGHT_PURPLE +"�÷��̾��� �̸��� ��Ƽ������ ����Ҽ� �����ϴ�");
-							}
-							else {
-								p.sendMessage(ChatColor.LIGHT_PURPLE +"Party's Name Cannot be Player's Name");
-							}
-						}
-						else {
-							addNewParty(p, sbs);
-						}
-					else
-					{
-						if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-							p.sendMessage(ChatColor.LIGHT_PURPLE +"�̹� ��Ƽ�� �����ֽ��ϴ�");
-						}
-						else {
-							p.sendMessage(ChatColor.LIGHT_PURPLE +"You're already in a party");
-						}
-					}
-				}
-				else if(args[0].equals("password") || args[0].equals("p"))
-				{
-					Player p = (Player) sender;
-					String sbs = args[1];
-					
-					if(hasParty(p)&& isOwner(p) && sbs != null) 
-					{
-						password.put(getParty(p), sbs);
-						if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-							p.sendMessage(ChatColor.LIGHT_PURPLE +"��й�ȣ ���� �Ϸ�: " +args[1]);
-						}
-						else {
-							p.sendMessage(ChatColor.LIGHT_PURPLE +"Password Set: " +args[1]);
-						}
-					}
-					else {
-						if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-							p.sendMessage(ChatColor.LIGHT_PURPLE +"��Ƽ�常 �����մϴ�");
-						}
-						else {
-							p.sendMessage(ChatColor.LIGHT_PURPLE +"You should be owner of a party");
-						}
-					}
-				}
-				else if(args[0].equals("join") || args[0].equals("j"))
-				{
-					Player p = (Player) sender;
-					String sbs = args[1];
-					
-					if(isPartyexist(sbs)) 
-					{
-						if(hasParty(p))
-						{
-							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								p.sendMessage(ChatColor.LIGHT_PURPLE +"�̹� ��Ƽ�� �����ֽ��ϴ�");
-							}
-							else {
-								p.sendMessage(ChatColor.LIGHT_PURPLE +"You're already in a party");
-							}
-						}
-						else {
-							if(password.containsKey(sbs)) {
-								unlock(p,sbs);
-							}
-							else {
-								joinreq(p,sbs);
-							}
-						}
-					}
-					else {
-						if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-							p.sendMessage(ChatColor.LIGHT_PURPLE +"�������� �ʴ� ��Ƽ�Դϴ�");
-						}
-						else {
-							p.sendMessage(ChatColor.LIGHT_PURPLE +"invalid party");
-						}
-					}
-				}
-				else if(args[0].equals("invite") || args[0].equals("i"))
-				{
-					Player p = (Player)sender;
-					String sbs = args[1];
-					
-					if(hasParty(p) && isOwner(p)) 
-					{
-						if(hasParty(Bukkit.getPlayer(sbs)))
-						{
-							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								p.sendMessage(ChatColor.LIGHT_PURPLE +"�̹� ��Ƽ�� �����ִ� �÷��̾� �Դϴ�");
-							}
-							else {
-								p.sendMessage(ChatColor.LIGHT_PURPLE +"The player is already in a party");
-							}
-						}
-						else {
-							invitereq(Bukkit.getPlayer(sbs),p);
-							}
-					}
-					else {
-						if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-							p.sendMessage(ChatColor.LIGHT_PURPLE +"��Ƽ�常 �����մϴ�");
-						}
-						else {
-							p.sendMessage(ChatColor.LIGHT_PURPLE +"You should be owner of a party");
-						}
-					}
-						
-				}
-				else if(args[0].equals("kick") || args[0].equals("k"))
-				{
-					Player p = (Player)sender;
-					String sbs = args[1];
-					
-					if(isOwner(p) && hasParty(p)) {
-						if(Bukkit.getPlayer(sbs)!=null && hasParty(Bukkit.getPlayer(sbs))) {
-							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								p.sendMessage(ChatColor.LIGHT_PURPLE +sbs + " �� ���� ���߽��ϴ�");
-							}
-							else {
-								p.sendMessage(ChatColor.LIGHT_PURPLE +sbs + " kicked from your party");
-							}
-							if(Bukkit.getPlayer(sbs).getLocale().equalsIgnoreCase("ko_kr")) {
-								Bukkit.getPlayer(sbs).sendMessage(ChatColor.LIGHT_PURPLE +getParty(p)+" ��Ƽ���� ���� ���߽��ϴ�"  );
-							}
-							else {
-								Bukkit.getPlayer(sbs).sendMessage(ChatColor.LIGHT_PURPLE +"You just kicked from party " + getParty(p));
-							}
-							removePartyMember(Bukkit.getPlayer(sbs), getParty(p));
-						}
-						else {
-							if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-								p.sendMessage(ChatColor.LIGHT_PURPLE +"�ش� �÷��̾�� ����Ƽ�� �����ϴ�");
-							}
-							else {
-								p.sendMessage(ChatColor.LIGHT_PURPLE +"The player isn't in the party");
-							}
-						}
-					}
-					else {
-						if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-							p.sendMessage(ChatColor.LIGHT_PURPLE +"��Ƽ�常 �����մϴ�");
-						}
-						else {
-							p.sendMessage(ChatColor.LIGHT_PURPLE +"You should be owner of a party");
-						}
-					}
-				}
-				else if(args[0].equals("disband") || args[0].equals("d"))
-				{
-					Player p = (Player)sender;
-					if(isOwner(p) && hasParty(p)) {
-						removeParty(getParty(p));
-					}
-				}
-				else if(args[0].equals("leave") || args[0].equals("lv"))
-				{					
-					Player p = (Player)sender;
-					leave(p);
-				}
-				else if(args[0].equals("list") || args[0].equals("li"))
-				{					
-					Player p = (Player)sender;
-					
-					getOwners().forEach(o -> {
-						String party =  getParty(Bukkit.getPlayer(o));
-						if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-							p.sendMessage(ChatColor.LIGHT_PURPLE +"��Ƽ��: "+ party +" | ��Ƽ��: " + Bukkit.getPlayer(o).getDisplayName() + " | ��Ƽ����: " + (getMembers(party).toArray().length));
-						}
-						else {
-							p.sendMessage(ChatColor.LIGHT_PURPLE +"Party Name: "+ getParty(Bukkit.getPlayer(o)) +" | Owner: " + Bukkit.getPlayer(o).getDisplayName() + " | Number of Members: " + (getMembers(party).toArray().length));
-						}
-					});
-				}
-				else if(args[0].equals("assemble") || args[0].equals("a"))
-				{
-					Player p = (Player)sender;
-					
-					if(isOwner(p) && hasParty(p)) 
-					{
-						for(UUID mem : getMembers(getParty(p)).collect(Collectors.toSet()))
-						{
-							Bukkit.getPlayer(mem).teleport(p.getLocation());
-						}
-					}
-					else {
-						if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-							p.sendMessage(ChatColor.LIGHT_PURPLE +"��Ƽ�常 �����մϴ�");
-						}
-						else {
-							p.sendMessage(ChatColor.LIGHT_PURPLE +"You should be owner of a party");
-						}
-					}
-				}
-				else {
-					Player p = (Player)sender;
-					p.sendMessage(ChatColor.LIGHT_PURPLE +"invalid command");
-					help(p);
-				}
+	            help(p);
+
+	            if(hasParty(p)) {
+	                if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+	                    p.sendMessage(ChatColor.LIGHT_PURPLE +"현재 속한 파티: " + getParty(p));
+	                }
+	                else {
+	                    p.sendMessage(ChatColor.LIGHT_PURPLE +"You belong to party: " + getParty(p));
+	                }
+	            }
+	        }
+	        else if(args.length > 0)
+	        {
+	            try{                
+	            if(args[0].equals("create") || args[0].equals("c"))
+	            {
+	                Player p = (Player)sender;
+	                String sbs = args[1];
+	                if(!hasParty(p))
+	                    if(isPartyexist(sbs)) {
+	                        if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+	                            p.sendMessage(ChatColor.LIGHT_PURPLE +"이미 존재하는 파티입니다");
+	                        }
+	                        else {
+	                            p.sendMessage(ChatColor.LIGHT_PURPLE +"Already existing party");
+	                        }
+	                    }
+
+	                    else if(isnameable(sbs)) {
+	                        if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+	                            p.sendMessage(ChatColor.LIGHT_PURPLE +"플레이어 이름은 파티 이름으로 사용할 수 없습니다");
+	                        }
+	                        else {
+	                            p.sendMessage(ChatColor.LIGHT_PURPLE +"Party's Name Cannot be Player's Name");
+	                        }
+	                    }
+	                    else {
+	                        addNewParty(p, sbs);
+	                    }
+	                else
+	                {
+	                    if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+	                        p.sendMessage(ChatColor.LIGHT_PURPLE +"이미 파티에 가입되어 있습니다");
+	                    }
+	                    else {
+	                        p.sendMessage(ChatColor.LIGHT_PURPLE +"You're already in a party");
+	                    }
+	                }
+	            }
+	            else if(args[0].equals("password") || args[0].equals("p"))
+	            {
+	                Player p = (Player) sender;
+	                String sbs = args[1];
+
+	                if(hasParty(p) && isOwner(p) && sbs != null) 
+	                {
+	                    password.put(getParty(p), sbs);
+	                    if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+	                        p.sendMessage(ChatColor.LIGHT_PURPLE +"비밀번호 설정됨: " +args[1]);
+	                    }
+	                    else {
+	                        p.sendMessage(ChatColor.LIGHT_PURPLE +"Password Set: " +args[1]);
+	                    }
+	                }
+	                else {
+	                    if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+	                        p.sendMessage(ChatColor.LIGHT_PURPLE +"파티장이 아니면 비밀번호를 설정할 수 없습니다");
+	                    }
+	                    else {
+	                        p.sendMessage(ChatColor.LIGHT_PURPLE +"You should be owner of a party");
+	                    }
+	                }
+	            }
+	            else if(args[0].equals("join") || args[0].equals("j"))
+	            {
+	                Player p = (Player) sender;
+	                String sbs = args[1];
+
+	                if(isPartyexist(sbs)) 
+	                {
+	                    if(hasParty(p))
+	                    {
+	                        if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+	                            p.sendMessage(ChatColor.LIGHT_PURPLE +"이미 파티에 가입되어 있습니다");
+	                        }
+	                        else {
+	                            p.sendMessage(ChatColor.LIGHT_PURPLE +"You're already in a party");
+	                        }
+	                    }
+	                    else {
+	                        if(password.containsKey(sbs)) {
+	                            unlock(p,sbs);
+	                        }
+	                        else {
+	                            joinreq(p,sbs);
+	                        }
+	                    }
+	                }
+	                else {
+	                    if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+	                        p.sendMessage(ChatColor.LIGHT_PURPLE +"잘못된 파티입니다");
+	                    }
+	                    else {
+	                        p.sendMessage(ChatColor.LIGHT_PURPLE +"invalid party");
+	                    }
+	                }
+	            }
+	            else if(args[0].equals("invite") || args[0].equals("i"))
+	            {
+	                Player p = (Player)sender;
+	                String sbs = args[1];
+
+	                if(hasParty(p) && isOwner(p)) 
+	                {
+	                    if(hasParty(Bukkit.getPlayer(sbs)))
+	                    {
+	                        if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+	                            p.sendMessage(ChatColor.LIGHT_PURPLE +"상대방은 이미 파티에 속해있습니다");
+	                        }
+	                        else {
+	                            p.sendMessage(ChatColor.LIGHT_PURPLE +"The player is already in a party");
+	                        }
+	                    }
+	                    else {
+	                        invitereq(Bukkit.getPlayer(sbs),p);
+	                    }
+	                }
+	                else {
+	                    if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+	                        p.sendMessage(ChatColor.LIGHT_PURPLE +"파티장이 아니면 초대할 수 없습니다");
+	                    }
+	                    else {
+	                        p.sendMessage(ChatColor.LIGHT_PURPLE +"You should be owner of a party");
+	                    }
+	                }
+	            }
+	            else if(args[0].equals("kick") || args[0].equals("k"))
+	            {
+	                Player p = (Player)sender;
+	                String sbs = args[1];
+
+	                if(isOwner(p) && hasParty(p)) {
+	                    if(Bukkit.getPlayer(sbs)!=null && hasParty(Bukkit.getPlayer(sbs))) {
+	                        if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+	                            p.sendMessage(ChatColor.LIGHT_PURPLE +sbs + "님이 파티에서 강제 퇴출되었습니다");
+	                        }
+	                        else {
+	                            p.sendMessage(ChatColor.LIGHT_PURPLE +sbs + " kicked from your party");
+	                        }
+	                        if(Bukkit.getPlayer(sbs).getLocale().equalsIgnoreCase("ko_kr")) {
+	                            Bukkit.getPlayer(sbs).sendMessage(ChatColor.LIGHT_PURPLE +getParty(p)+" 파티에서 강제 퇴출되었습니다"  );
+	                        }
+	                        else {
+	                            Bukkit.getPlayer(sbs).sendMessage(ChatColor.LIGHT_PURPLE +"You just kicked from party " + getParty(p));
+	                        }
+	                        removePartyMember(Bukkit.getPlayer(sbs), getParty(p));
+	                    }
+	                    else {
+	                        if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+	                            p.sendMessage(ChatColor.LIGHT_PURPLE +"상대방은 파티에 속해 있지 않습니다");
+	                        }
+	                        else {
+	                            p.sendMessage(ChatColor.LIGHT_PURPLE +"The player isn't in the party");
+	                        }
+	                    }
+	                }
+	                else {
+	                    if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+	                        p.sendMessage(ChatColor.LIGHT_PURPLE +"파티장이 아니면 강제 퇴출할 수 없습니다");
+	                    }
+	                    else {
+	                        p.sendMessage(ChatColor.LIGHT_PURPLE +"You should be owner of a party");
+	                    }
+	                }
+	            }
+	            else if(args[0].equals("disband") || args[0].equals("d"))
+	            {
+	                Player p = (Player)sender;
+	                if(isOwner(p) && hasParty(p)) {
+	                    removeParty(getParty(p));
+	                }
+	            }
+	            else if(args[0].equals("leave") || args[0].equals("lv"))
+	            {                    
+	                Player p = (Player)sender;
+	                leave(p);
+	            }
+	            else if(args[0].equals("list") || args[0].equals("li"))
+	            {                    
+	                Player p = (Player)sender;
+
+	                getOwners().forEach(o -> {
+	                    String party =  getParty(Bukkit.getPlayer(o));
+	                    if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+	                        p.sendMessage(ChatColor.LIGHT_PURPLE +"파티명: "+ party +" | 파티장: " + Bukkit.getPlayer(o).getDisplayName() + " | 파티원 수: " + (getMembers(party).toArray().length));
+	                    }
+	                    else {
+	                        p.sendMessage(ChatColor.LIGHT_PURPLE +"Party Name: "+ getParty(Bukkit.getPlayer(o)) +" | Owner: " + Bukkit.getPlayer(o).getDisplayName() + " | Number of Members: " + (getMembers(party).toArray().length));
+	                    }
+	                });
+	            }
+	            else if(args[0].equals("assemble") || args[0].equals("a"))
+	            {
+	                Player p = (Player)sender;
+
+	                if(isOwner(p) && hasParty(p)) 
+	                {
+	                    for(UUID mem : getMembers(getParty(p)).collect(Collectors.toSet()))
+	                    {
+	                        Bukkit.getPlayer(mem).teleport(p.getLocation());
+	                    }
+	                }
+	                else {
+	                    if(p.getLocale().equalsIgnoreCase("ko_kr")) {
+	                        p.sendMessage(ChatColor.LIGHT_PURPLE +"파티장이 아니면 소집할 수 없습니다");
+	                    }
+	                    else {
+	                        p.sendMessage(ChatColor.LIGHT_PURPLE +"You should be owner of a party");
+	                    }
+	                }
+	            }
+	            else {
+	                Player p = (Player)sender;
+	                p.sendMessage(ChatColor.LIGHT_PURPLE +"invalid command");
+	                help(p);
+	            }
 	            return true;
 	            }
-				catch (NullPointerException | NoSuchMethodError e)
-				{
-					Player p = (Player)sender;
-					p.sendMessage("invalid command");
-					help(p);
-				}
-			}
-		}
-		else
-		{
-			sender.sendMessage("invaild sender");
-		}
-		return false;
+	            catch (NullPointerException | NoSuchMethodError e)
+	            {
+	                Player p = (Player)sender;
+	                p.sendMessage("invalid command");
+	                help(p);
+	            }
+	        }
+	    }
+	    else
+	    {
+	        sender.sendMessage("invalid sender");
+	    }
+	    return false;
 	}
+
 
 	@EventHandler
 	public void Partydamcan(EntityDamageByEntityEvent d) 

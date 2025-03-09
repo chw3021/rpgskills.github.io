@@ -593,16 +593,16 @@ public class Weapons {
 
 		if(lev == 1) {
 			if(!(rm.hasCustomModelData() && rm.getCustomModelData() - wn == 60)) {
-				return null;
-			}
-			if (!(!rm.hasCustomModelData() && (m.name().contains("NETHERITE") || m == Material.MACE || m == Material.TRIDENT ) )) {
-				return null;
+				if (!(!rm.hasCustomModelData() && (m.name().contains("NETHERITE") || m == Material.MACE || m == Material.TRIDENT ) )) {
+					return null;
+				}
 			}
 			
 		}
 		else if(lev != 1 && lev <= rm.getCustomModelData()-wn-100) {
 			return null;
 		}
+		
 		
 		rm.removeAttributeModifier(Attribute.ATTACK_DAMAGE);
 		rm.setMaxStackSize(1);
@@ -1195,6 +1195,7 @@ public class Weapons {
 				return arweapon(i0, cmdt, p);
 			} 
 			else if ((!i0.getItemMeta().hasCustomModelData())) { //normal
+				System.out.println(i0);
 
 				return arweapon(i0, cmdt, p);
 			}

@@ -5,12 +5,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
-
 import io.github.chw3021.items.weapons.Weapons;
 
 public class UpgradeCommand extends Weapons implements CommandExecutor {
@@ -18,8 +14,7 @@ public class UpgradeCommand extends Weapons implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!(sender instanceof Player)) {
-            sender.sendMessage(ChatColor.RED + "플레이어만 사용 가능합니다.");
+        if (!(sender instanceof Player) ||  !label.equals("smith")) {
             return false;
         }
 
@@ -44,6 +39,7 @@ public class UpgradeCommand extends Weapons implements CommandExecutor {
         ItemStack upgradedItem2 = nsc(inventory, p);
         ItemStack upgradedItem3 = esc(inventory, p);
         ItemStack upgradedItem4 = hsc(inventory, p);
+        ItemStack upgradedItemb = netheritesc(inventory, p);
 
         if (upgradedItem != null) {
         	Elements.give(upgradedItem, 1, p);
@@ -64,7 +60,13 @@ public class UpgradeCommand extends Weapons implements CommandExecutor {
         	Elements.give(upgradedItem4, 1, p);
             firstItem.setAmount(firstItem.getAmount() - 1);
             secondItem.setAmount(secondItem.getAmount() - 1);
+        }
+        else if (upgradedItemb != null) {
+        	Elements.give(upgradedItemb, 1, p);
+            firstItem.setAmount(firstItem.getAmount() - 1);
+            secondItem.setAmount(secondItem.getAmount() - 1);
         } else {
+        	System.out.println("upgradedItem: " + upgradedItem);
         }
 
         return true;

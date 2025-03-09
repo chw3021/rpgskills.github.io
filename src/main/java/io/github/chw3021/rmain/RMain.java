@@ -136,7 +136,6 @@ public class RMain extends JavaPlugin{
 
         Bukkit.getPluginManager().registerEvents(new Party(), this);
         this.getCommand("party").setExecutor(new Party());
-
         this.getCommand("smith").setExecutor(new UpgradeCommand());
         
         Bukkit.getPluginManager().registerEvents(new SwordSkillsData(), this);
