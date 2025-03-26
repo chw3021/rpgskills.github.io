@@ -404,7 +404,7 @@ public class Mobs extends Pak {
                 {
             		l.getWorld().playSound(l, Sound.ENTITY_ENDER_EYE_DEATH, 0.08f, 0.2f);
                 	creature.teleport(creature.getLocation().add(0,0.12,0));
-                	l.getWorld().spawnParticle(Particle.GUST, creature.getLocation(), 200,1,2.5,1);
+                	l.getWorld().spawnParticle(Particle.GUST, creature.getLocation(), 20,1,2.5,1);
                 }
 			}, dou*2);
 		}

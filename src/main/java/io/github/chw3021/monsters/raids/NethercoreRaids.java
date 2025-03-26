@@ -117,7 +117,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 	Integer LIVES = 5;
 	final public Double BOSSHP = 250000d;
 	
-	Integer BOSSNUM = -5;
+	Integer BOSSNUM = 1;
 	
 	
 	private static final NethercoreRaids instance = new NethercoreRaids ();
@@ -482,6 +482,7 @@ public class NethercoreRaids extends Summoned implements Listener {
     		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
     		newmob.getAttribute(Attribute.ATTACK_DAMAGE).setBaseValue(4);
     		newmob.setRemoveWhenFarAway(false);
+    		newmob.setPersistent(true);
     		raider.put(rn, newmob.getUniqueId());
 			newmob.setMetadata("volcanicboss", new FixedMetadataValue(RMain.getInstance(), true));
     		newmob.setMetadata("nether", new FixedMetadataValue(RMain.getInstance(), true));
@@ -867,7 +868,7 @@ public class NethercoreRaids extends Summoned implements Listener {
     		portal.setGravity(false);
     		portal.getEquipment().setHelmet(new ItemStack(Material.OBSIDIAN));
     		portal.setCollidable(false);
-    		portal.getAttribute(Attribute.SCALE).setBaseValue(3);
+    		portal.getAttribute(Attribute.SCALE).setBaseValue(1.5);
     		
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
         		portal.setCustomName(rn + "파티의 출구 (웅크린상태에서 맨손으로 가격)");
@@ -1922,6 +1923,7 @@ public class NethercoreRaids extends Summoned implements Listener {
 	        			newmob.setImmuneToZombification(true);
 	        			newmob.setIsAbleToHunt(false);
 	            		newmob.setLootTable(null);
+	            		newmob.setItemInUseTicks(5);
 
 	            		final Object ht = getherotype(rn);
 
@@ -1947,7 +1949,6 @@ public class NethercoreRaids extends Summoned implements Listener {
 	            		    }
 	            		}, 2L); 
 
-	    	    		newmob.setGlowing(true);
 	    	    		newmob.setMetadata("volcanicboss", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		newmob.setMetadata("ruined", new FixedMetadataValue(RMain.getInstance(), true));
 	            		newmob.setMetadata("nether", new FixedMetadataValue(RMain.getInstance(), true));
@@ -1955,14 +1956,13 @@ public class NethercoreRaids extends Summoned implements Listener {
 	    	    		newmob.setMetadata("boss", new FixedMetadataValue(RMain.getInstance(), le.getMetadata("boss").get(0).asDouble()));
 	    	    		newmob.setMetadata("raid", new FixedMetadataValue(RMain.getInstance(), rn));
 	    	    		newmob.setMetadata("finalboss", new FixedMetadataValue(RMain.getInstance(), true));
-	    	    		newmob.setLootTable(null);
-	    	    		newmob.setConversionTime(-1);
 	    	    		
 	    	    		
 	    	    		newmob.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(0.4);
 	    	    		newmob.getAttribute(Attribute.KNOCKBACK_RESISTANCE).setBaseValue(1);
 	    	    		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 	    	    		newmob.setRemoveWhenFarAway(false);
+	    	    		newmob.setPersistent(true);
 	    	    		raider.put(rn, newmob.getUniqueId());
 	    	    		
 	

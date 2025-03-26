@@ -982,7 +982,7 @@ public class NPCLoc implements Serializable, Listener{
         		return true;
     		
     	}
-    	else if(ns.contains("jungle_temple")) {
+    	else if(ns.equals("jungle_temple")) {
 
 			String reg = lang.contains("kr") ? "고고학자":"Archaeologist";
     		Villager v = vnpc(w,lel, "junglepyramid" ,reg, Type.JUNGLE, Profession.LIBRARIAN);
@@ -1009,7 +1009,7 @@ public class NPCLoc implements Serializable, Listener{
     		return true;
 		
     	}
-    	else if(ns.contains("shipwreck")) {
+    	else if(ns.contains("shipwreck_treasure")) {
         		
 			ItemStack head = new ItemStack(Material.DEAD_BRAIN_CORAL_BLOCK);
 			ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);

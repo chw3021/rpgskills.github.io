@@ -1026,7 +1026,7 @@ public class OverworldRaids extends Summoned implements Listener {
     		portal.setGravity(false);
     		portal.setCollidable(false);
     		portal.getEquipment().setHelmet(new ItemStack(Material.OBSIDIAN));
-    		portal.getAttribute(Attribute.SCALE).setBaseValue(3);
+    		portal.getAttribute(Attribute.SCALE).setBaseValue(1.5);
     		
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
         		portal.setCustomName(rn + "파티의 출구 (웅크린상태에서 맨손으로 가격)");

@@ -30,7 +30,7 @@ public class RaidWorldLoad implements Listener {
         if (Bukkit.getServer().getWorld("OverworldRaid") == null) {
             if (worldExists("OverworldRaid")) {
                 // 월드가 존재하면 불러오기 (청크 생성기 강제 적용)
-                World rw = Bukkit.getServer().createWorld(new WorldCreator("OverworldRaid").generator(new OverworldRaidChunkGenerator()));
+                World rw = Bukkit.getServer().createWorld(new WorldCreator("OverworldRaid").environment(Environment.NORMAL).generator(new OverworldRaidChunkGenerator()));
                 configureRaidWorld(rw, Environment.NORMAL); // 월드 설정
             } else {
                 // 월드가 존재하지 않으면 새로 생성
@@ -52,7 +52,7 @@ public class RaidWorldLoad implements Listener {
             if (Bukkit.getServer().getWorld("NethercoreRaid") == null) {
                 if (worldExists("NethercoreRaid")) {
                     // 월드가 존재하면 불러오기 (청크 생성기 강제 적용)
-                    World rw = Bukkit.getServer().createWorld(new WorldCreator("NethercoreRaid").generator(new NetherRaidChunkGenerator()));
+                    World rw = Bukkit.getServer().createWorld(new WorldCreator("NethercoreRaid").environment(Environment.NETHER).generator(new NetherRaidChunkGenerator()));
                     configureRaidWorld(rw, Environment.NETHER);
                 } else {
                     // 월드가 존재하지 않으면 새로 생성
@@ -75,7 +75,7 @@ public class RaidWorldLoad implements Listener {
             if (Bukkit.getServer().getWorld("EndercoreRaid") == null) {
                 if (worldExists("EndercoreRaid")) {
                     // 월드가 존재하면 불러오기 (청크 생성기 강제 적용)
-                    World rw = Bukkit.getServer().createWorld(new WorldCreator("EndercoreRaid").generator(new EnderRaidChunkGenerator()));
+                    World rw = Bukkit.getServer().createWorld(new WorldCreator("EndercoreRaid").environment(Environment.THE_END).generator(new EnderRaidChunkGenerator()));
                     configureRaidWorld(rw, Environment.THE_END);
                 } else {
                     // 월드가 존재하지 않으면 새로 생성
@@ -98,7 +98,7 @@ public class RaidWorldLoad implements Listener {
             if (Bukkit.getServer().getWorld("WitherRaid") == null) {
                 if (worldExists("WitherRaid")) {
                     // 월드가 존재하면 불러오기 (청크 생성기 강제 적용)
-                    World rw = Bukkit.getServer().createWorld(new WorldCreator("WitherRaid").generator(new WitherRaidChunkGenerator()));
+                    World rw = Bukkit.getServer().createWorld(new WorldCreator("WitherRaid").environment(Environment.NETHER).generator(new WitherRaidChunkGenerator()));
                     configureRaidWorld(rw, Environment.NETHER);
                 } else {
                     // 월드가 존재하지 않으면 새로 생성
@@ -126,7 +126,7 @@ public class RaidWorldLoad implements Listener {
         // 게임 규칙 설정
         world.setGameRule(GameRule.KEEP_INVENTORY, true);
         world.setGameRule(GameRule.DO_INSOMNIA, false);
-        world.setGameRule(GameRule.DO_IMMEDIATE_RESPAWN, environment != Environment.NORMAL);
+        world.setGameRule(GameRule.DO_IMMEDIATE_RESPAWN, true);
         world.setGameRule(GameRule.DISABLE_RAIDS, true);
         world.setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
         world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
@@ -141,6 +141,8 @@ public class RaidWorldLoad implements Listener {
         world.setGameRule(GameRule.DROWNING_DAMAGE, false);
         world.setGameRule(GameRule.MOB_GRIEFING, true);
         world.setGameRule(GameRule.SPAWN_RADIUS, 0);
+        world.setGameRule(GameRule.DO_FIRE_TICK, false);
+        world.setGameRule(GameRule.DISABLE_PLAYER_MOVEMENT_CHECK, true);
     }
 	
 	@EventHandler
