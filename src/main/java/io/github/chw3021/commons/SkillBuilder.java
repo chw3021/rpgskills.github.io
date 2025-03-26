@@ -18,18 +18,6 @@ public class SkillBuilder {
     private HashMap<String, Long> hm;
     private int slot=-1;
 
-    /*
-                SkillBuilder bd = new SkillBuilder()
-                        .player(p)
-                        .cooldown(sec)
-                        .kname("")
-                        .ename("")
-                        .slot(2)
-                        .hm(prcooldown)
-                        .skillUse(() -> {
-                        });
-                bd.execute();
-                */
     public SkillBuilder() {}
 
     public SkillBuilder skillUse(SkillUse skillUse) {

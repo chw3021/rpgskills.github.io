@@ -544,9 +544,6 @@ public class CommonEvents extends Mobs implements Listener{
 	}
 
 	final int barCount = 40;
-	//final String barChar = "❤"; // 하트 모양 문자
-	//final String barChar = "▇";
-	//final String barChar = "󠄀🀫";
 	final String barChar = "█";
 	
 	final private void damagebar(Double max, Double cur, Double last, Double dam, final TextDisplay ar) {
@@ -699,7 +696,6 @@ public class CommonEvents extends Mobs implements Listener{
 	        int track = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(RMain.getInstance(), new Runnable() {
 	            @Override
 	            public void run() {
-	                // 체력바의 위치를 계속해서 업데이트
 	    	        Location lel = le.getEyeLocation().clone().add(0, -0.2, 0);
 	    	        
 	    	        if (issmall(le)) {

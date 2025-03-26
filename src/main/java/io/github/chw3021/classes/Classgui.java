@@ -990,19 +990,6 @@ public class Classgui implements Serializable {
 
 	final public void open(Player p) {
 		
-		/*final BlockData fb = p.getLocation().getBlock().getBlockData();
-		final Material fm = p.getLocation().getBlock().getType();
-		
-		p.getWorld().setType(p.getLocation(), Material.CHEST);
-		BlockState ch = p.getWorld().getBlockState(p.getLocation());
-		Chest chh = (Chest) ch;
-		chh.setCustomName("Classes");
-		
-
-		chh.setType(fm);
-		chh.setBlockData(fb);*/
-
-
 		Inventory inv = Bukkit.createInventory(null, 54, "Classes");
 		if (p.getLocale().equalsIgnoreCase("ko_kr")) {
 

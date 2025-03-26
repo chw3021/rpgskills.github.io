@@ -201,9 +201,10 @@ public class Backpack implements Serializable, Listener{
 	public void Bag(InventoryClickEvent e)
 	{
         Player p = (Player) e.getWhoClicked();
-		if(ChatColor.stripColor(e.getView().getTitle()).contains("Utilites") || ChatColor.stripColor(e.getView().getTitle()).contains("Utilites") || CombatMode.getInstance().isCombat(p))
+		if(ChatColor.stripColor(e.getView().getTitle()).contains("Utilities") || CombatMode.getInstance().isCombat(p))
 		{
 			e.setResult(Result.DENY);
+			e.setCancelled(true);;
 			if(e.getCurrentItem()==null||e.getCurrentItem().getType() == null|| !e.getCurrentItem().hasItemMeta())
 			{
 				return;

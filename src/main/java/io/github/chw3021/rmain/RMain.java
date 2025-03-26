@@ -116,13 +116,13 @@ public class RMain extends JavaPlugin{
         	}
         	w.setSpawnLimit(SpawnCategory.MONSTER, 300);
         	w.setSpawnLimit(SpawnCategory.WATER_UNDERGROUND_CREATURE, 20);
-        	w.setTicksPerSpawns(SpawnCategory.AMBIENT, 1);
-        	w.setTicksPerSpawns(SpawnCategory.AXOLOTL, 1);
-        	w.setTicksPerSpawns(SpawnCategory.ANIMAL, 1);
-        	w.setTicksPerSpawns(SpawnCategory.MONSTER, 1);
-        	w.setTicksPerSpawns(SpawnCategory.WATER_AMBIENT, 1);
-        	w.setTicksPerSpawns(SpawnCategory.WATER_ANIMAL, 1);
-        	w.setTicksPerSpawns(SpawnCategory.WATER_UNDERGROUND_CREATURE, 1);
+        	w.setTicksPerSpawns(SpawnCategory.AMBIENT, 300);
+        	w.setTicksPerSpawns(SpawnCategory.AXOLOTL, 300);
+        	w.setTicksPerSpawns(SpawnCategory.ANIMAL, 300);
+        	w.setTicksPerSpawns(SpawnCategory.MONSTER, 200);
+        	w.setTicksPerSpawns(SpawnCategory.WATER_AMBIENT, 300);
+        	w.setTicksPerSpawns(SpawnCategory.WATER_ANIMAL, 300);
+        	w.setTicksPerSpawns(SpawnCategory.WATER_UNDERGROUND_CREATURE, 300);
         });
         Bukkit.getPluginManager().registerEvents(new RaidWorldLoad(), this);
         
