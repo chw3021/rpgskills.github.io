@@ -123,7 +123,7 @@ public class EndCityQuest implements Quest {
 	{	
 		if(d.getRightClicked().hasMetadata("obnpc") && d.getRightClicked().hasMetadata(META)) {
 			d.setCancelled(true);
-				Villager le = (Villager)d.getRightClicked();
+				LivingEntity le = (LivingEntity)d.getRightClicked();
 				Player p = (Player) d.getPlayer();
 				if(p.hasCooldown(Material.RAIL)) {
 					return;

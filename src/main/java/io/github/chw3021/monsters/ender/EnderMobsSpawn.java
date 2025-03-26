@@ -116,6 +116,7 @@ public class EnderMobsSpawn extends Mobs {
 		newmob.getAttribute(Attribute.SCALE).setBaseValue(1.2);
 		newmob.setMetadata("rpgspawned", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("ender", new FixedMetadataValue(RMain.getInstance(), true));
+		newmob.setMetadata("enderMimicPortalTrigger", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("enderMimic", new FixedMetadataValue(RMain.getInstance(), true));
 		newmob.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(), true));
 		return newmob;
@@ -224,37 +225,40 @@ public class EnderMobsSpawn extends Mobs {
 		if (le.getLocation().getWorld().getEnvironment() != Environment.THE_END) {
 			return;
 		}
-		Random random=new Random();
-    	int ri = random.nextInt(30);
-    	if(ri <= 3) {
-    		for(int i = 0; i < 3; i++) {
-    			DragonGuardian(le);
-    		}
-    	}
-    	else if(ri <= 4) {
-			EnderMimic(le);
-    	}
-    	else if(ri <= 8) {
-			EnderShulker(le);
-    	}
-    	else if(ri <= 13) {
-    		for(int i = 0; i < 3; i++) {
-    			DragonMinion(le);
-    		}
-    	}
-    	else if(ri <= 18) {
-    		for(int i = 0; i < 3; i++) {
-    			DragonArcher(le);
-    		}
-    	}
-    	else if(ri <= 23) {
-    		for(int i = 0; i < 3; i++) {
-    			DragonLancer(le);
-    		}
-    	}
+		
+		Random random=new Random(); 
+		int ri = random.nextInt(26); 
+		if(ri <= 3) {
+			for(int i = 0; i < 3; i++) {
+				DragonGuardian(le); 
+			} 
+		} 
+		else if(ri <= 8) {
+			EnderMimic(le); 
+		} 
+		else if(ri <= 10) 
+		{ 
+			EnderShulker(le); 
+		} 
+		else if(ri <= 14) {
+			for(int i = 0; i < 3; i++) {
+				DragonMinion(le); 
+			} 
+		} 
+		else if(ri <= 18) {
+			 for(int i = 0; i < 3; i++) {
+				 DragonArcher(le); 
+			 } 
+		} 
+		else if(ri <= 22) {
+			for(int i = 0; i < 3; i++) {
+				DragonLancer(le); 
+			} 
+		} 
 		else {
-    		Default(le);
+			Default(le); 
 		}
+	 
 	}
 	
 

@@ -57,6 +57,7 @@ import io.github.chw3021.monsters.dark.DarkMobsSpawn;
 import io.github.chw3021.monsters.dark.DarkRaids;
 import io.github.chw3021.monsters.dark.DarkSkills;
 import io.github.chw3021.monsters.ender.EnderMobsSpawn;
+import io.github.chw3021.monsters.ender.EnderRaidsPortal;
 import io.github.chw3021.monsters.ender.EnderSkills;
 import io.github.chw3021.monsters.ender.VoidSkills;
 import io.github.chw3021.monsters.hyper.HyperMobsSpawn;
@@ -90,6 +91,7 @@ import io.github.chw3021.monsters.snow.SnowRaids;
 import io.github.chw3021.monsters.snow.SnowSkills;
 import io.github.chw3021.monsters.wild.WildMobsSpawn;
 import io.github.chw3021.monsters.wild.WildRaids;
+import io.github.chw3021.monsters.wither.WitherRaidsPortal;
 import io.github.chw3021.monsters.wither.WitherSkills;
 import io.github.chw3021.monsters.wither.WitherSkills2;
 import io.github.chw3021.monsters.wither.WitherSkills3;
@@ -470,7 +472,9 @@ public class MobsSkillsEvents extends Mobs implements Listener  {
 		WildRaids.getInstance().WildCombo(d);
 		
 		NetherRaids.getInstance().NetherCombo(d);
-		
+
+		EnderRaidsPortal.getInstance().EnderCombo(d);
+		WitherRaidsPortal.getInstance().EnderCombo(d);
 	
 		RedSkills.getInstance().Fireball(d);
 	}

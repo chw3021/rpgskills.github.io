@@ -114,7 +114,7 @@ public class EndercoreRaids extends Summoned implements Listener {
 	Integer LIVES = 5;
 	final public Double BOSSHP = 800000d;
 	
-	Integer BOSSNUM = -5;
+	Integer BOSSNUM = 0;
 	
 	
 	private static final EndercoreRaids instance = new EndercoreRaids ();
@@ -892,7 +892,7 @@ public class EndercoreRaids extends Summoned implements Listener {
 		                	Location esl = spl.clone().add(number, 1, number2);
 	                    	
 		                	
-	                    	int ri = random.nextInt(-5,-1);
+		                	int ri = random.nextBoolean() ? -6 : -7;
 	                    	if(BOSSNUM<0) {
 		                    	ri=BOSSNUM;
 	                    	}

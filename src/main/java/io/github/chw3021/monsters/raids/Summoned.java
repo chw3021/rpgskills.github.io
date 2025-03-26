@@ -92,7 +92,7 @@ public class Summoned extends Mobs{
 	static public HashMap<UUID, Boolean> ordealable = new HashMap<UUID, Boolean>();
 	public static HashMap<UUID, Boolean> ordeal = new HashMap<UUID, Boolean>();
 
-	private Multimap<UUID, String> damaged = HashMultimap.create();
+	static private Multimap<UUID, String> damaged = HashMultimap.create();
 	
 	public boolean checkAndApplyCharge(LivingEntity p, EntityDamageByEntityEvent d) {
 	    // 체력 조건 확인 및 적용
@@ -1256,13 +1256,13 @@ public class Summoned extends Mobs{
 				}
 			}
 			else {
+				System.out.println(damaged.containsKey(le.getUniqueId()));
 				if(damaged.containsKey(le.getUniqueId())) {
 					HashSet<String> hs = new HashSet<>();
 					damaged.get(le.getUniqueId()).forEach(rn -> {
 						int combo = comin(rn,meta);
 
-						if(meta.equals("enderMimic")) {
-
+						if(meta.equals("enderMimicPortalTrigger")) {
 							if(combo==1) {
 								EndercorePortal(rn, combo, le);
 								hs.add(rn);
@@ -1335,6 +1335,7 @@ public class Summoned extends Mobs{
 
 				final Player p = (Player) d.getDamager();
 				damaged.put(le.getUniqueId(), getheroname(p));
+				System.out.println(damaged.containsKey(le.getUniqueId()));
 			}
 			if(d.getDamager() instanceof Projectile) {
 
