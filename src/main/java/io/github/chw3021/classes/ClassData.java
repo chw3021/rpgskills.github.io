@@ -87,7 +87,7 @@ public class ClassData implements Serializable, Listener{
             return this;
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            //e.printStackTrace();
             return this;
         }
     }
@@ -104,7 +104,7 @@ public class ClassData implements Serializable, Listener{
             String path = new File("").getAbsolutePath();
             ClassData data = new ClassData(new HashMap<UUID, Integer>()).saveData(path +"/plugins/RPGskills/ClassData.data");
             
-            e.printStackTrace();
+            //e.printStackTrace();
             return data;
         }
     }

@@ -105,7 +105,7 @@ public class AngSkillsGui extends SkillsGui{
 			itemset("Whipping", Material.STRING, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+whipping,"",ChatColor.UNDERLINE+"❈ [Wind]","🖮🖰 LeftClick","",ChatColor.BOLD+" (X 0.65D + "+BigDecimal.valueOf(whipping*0.35).setScale(2, RoundingMode.HALF_EVEN)+")", "Master Lv.50"), 2, skillsInv);
 			itemset("CoralLiquor", Material.POTION, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+coralliquor,"","🖮🖰 Sneaking + SwapHand", "Set Your Party Invulnerable for "+ BigDecimal.valueOf(coralliquor*0.2d).setScale(2, RoundingMode.HALF_EVEN) +  "s", "Increases Party Damage",
 				"",ChatColor.BOLD+"X "+BigDecimal.valueOf(1+coralliquor*0.016* (Proficiency.getpro(p)>=2? 2:1)).setScale(2, RoundingMode.HALF_EVEN)
-				, "Decreases Taking Damage"+demical(fsd.CoralLiquor.get(p.getUniqueId())*0.01525* (Proficiency.getpro(p)>=2? 2:1)), "Master LV.20"), 3, skillsInv);
+				, "Decreases Taking Damage"+demical(fsd.CoralLiquor.getOrDefault(p.getUniqueId(),0)*0.01525* (Proficiency.getpro(p)>=2? 2:1)), "Master LV.20"), 3, skillsInv);
 			
 			itemset("CoralRoots", Material.BUBBLE_CORAL, 0, 1, Arrays.asList(ChatColor.AQUA+"LV."+root,"",ChatColor.UNDERLINE+"❈ [Water]","🖮🖰 Sneaking + Hit","",ChatColor.BOLD+"4 X (0.4443D + "+BigDecimal.valueOf(root*0.43).setScale(2, RoundingMode.HALF_EVEN)+")"
 					, "Master Lv.50"), 4, skillsInv);

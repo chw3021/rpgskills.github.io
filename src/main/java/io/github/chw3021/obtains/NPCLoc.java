@@ -125,7 +125,7 @@ public class NPCLoc implements Serializable, Listener{
             out.close();
             return this;
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             return this;
         }
     }

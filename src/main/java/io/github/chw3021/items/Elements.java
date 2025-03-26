@@ -492,7 +492,7 @@ public class Elements implements Listener {
 	
 		
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
-			imeta.setLore(Arrays.asList("무기를 강화할때 사용합니다"));
+			imeta.setLore(Arrays.asList("무기를 강화할때 사용합니다", ChatColor.LIGHT_PURPLE + "/smith 명령어를 통해 강화할 수 있습니다", ChatColor.LIGHT_PURPLE + "[퀵슬롯의 1번에 장비, 2번에 핵] -> /smith"));
 			if(i == 5) {
 				List<String> lore = imeta.getLore();
 				lore.addAll(Arrays.asList("",ChatColor.LIGHT_PURPLE + "[원소기운의 무기-1단계]를 강화시", ChatColor.LIGHT_PURPLE + "[원소기운의 무기-2단계]를 획득합니다"));
@@ -568,7 +568,8 @@ public class Elements implements Listener {
 			}
 			else if(i == -2) {
 				ii.setType(Material.SOUL_SOIL);
-				imeta.setLore(Arrays.asList("무기 강화, 융합된 네더의 핵 제작에 사용됩니다","",ChatColor.GOLD +"융합된 네더의 핵은 네더지역에서 얻은",ChatColor.GOLD +"네가지 핵들을 조합하면 획득가능합니다",ChatColor.GOLD +"융합된 네더의 핵으로 헬멧 또는 갑옷 강화시",ChatColor.GOLD +"모든 능력치가 상승합니다(방어구당 한번만 가능)","",
+				imeta.setLore(Arrays.asList("무기 강화, 융합된 네더의 핵 제작에 사용됩니다","",ChatColor.GOLD +"융합된 네더의 핵은 네더지역에서 얻은",ChatColor.GOLD +"네가지 핵들을 조합하면 획득가능합니다",ChatColor.GOLD +"융합된 네더의 핵으로 헬멧 또는 갑옷 강화시",ChatColor.GOLD +"모든 능력치가 상승합니다(방어구당 한번만 가능)"
+						,"",
 						ChatColor.GRAY +"무기강화시 네더지역 핵은",ChatColor.GRAY +"한가지만 부여 가능합니다", ChatColor.GRAY +"+50% 일반공격력, +15 행운", ChatColor.GRAY +"물,바람,어둠,서리 공격력 +25%", "행운은 궁극기를 제외한 일반기술들의", "재사용 대기시간 감소에 영향을 줍니다"
 						,"", ChatColor.AQUA +"제작대에서 [진홍빛 핵]으로 교환가능"));
 				imeta.setDisplayName(ChatColor.LIGHT_PURPLE +"영혼 응축물");
@@ -625,7 +626,7 @@ public class Elements implements Listener {
 			
 		}
 		else {
-			imeta.setLore(Arrays.asList("Used For Smithing Weapon"));
+			imeta.setLore(Arrays.asList("Used For Smithing Weapon", ChatColor.LIGHT_PURPLE + "[QuickSlot num1: Equipment, num2: Core] -> /smith"));
 			if(i == 5) {
 				ii.setType(Material.GREEN_GLAZED_TERRACOTTA);
 				List<String> lore = imeta.getLore();
@@ -766,7 +767,7 @@ public class Elements implements Listener {
 		ItemStack ii = new ItemStack(Material.GRASS_BLOCK);
 		ItemMeta imeta = ii.getItemMeta();
 		imeta.setCustomModelData(200*(i>0?1:-1) + i);
-		imeta.setLore(Arrays.asList("고고학자에게 구매 가능합니다","고고학자는 정글피라미드에서 찾을수 있습니다"));
+		imeta.setLore(Arrays.asList("고고학자에게 구매 가능합니다","고고학자는 정글피라미드에서 찾을수 있습니다", ChatColor.LIGHT_PURPLE + "/smith 명령어를 통해 강화할 수 있습니다", ChatColor.LIGHT_PURPLE + "[퀵슬롯의 1번에 장비, 2번에 핵] -> /smith"));
 		if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 			if(i == 5) {
 				ii.setType(Material.GREEN_GLAZED_TERRACOTTA);
@@ -875,7 +876,7 @@ public class Elements implements Listener {
 			
 		}
 		else {
-			imeta.setLore(Arrays.asList("You Can Buy From [Archaeologist]","🖮🖰 (Archaeologist Locates on the Jungle Pyramid)"));
+			imeta.setLore(Arrays.asList("You Can Buy From [Archaeologist]","(Archaeologist Locates on the Jungle Pyramid)", ChatColor.LIGHT_PURPLE + "[QuickSlot num1: Equipment, num2: Core] -> /smith"));
 			if(i == 5) {
 				ii.setType(Material.GREEN_GLAZED_TERRACOTTA);
 				List<String> lore = imeta.getLore();

@@ -57,151 +57,151 @@ public class SkillsGui {
 	
 	public static void openSkillsGui(Player p) {
 
-		if(ClassData.pc.get(p.getUniqueId()) == 0)
+		if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 0)
 		{
 			SwordSkillsGui ssg = new SwordSkillsGui();
 			ssg.SwordSkillsinv(p);
 			ssg.SwordSkillsinv(p);
 		}
-		else if(ClassData.pc.get(p.getUniqueId()) == 1)
+		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 1)
 		{
 			BerSkillsGui bsg = new BerSkillsGui();
 			bsg.Berskillsinv(p);
 			bsg.Berskillsinv(p);
 		}
-		else if(ClassData.pc.get(p.getUniqueId()) == 2)
+		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 2)
 		{
 			HunSkillsGui hsg = new HunSkillsGui();
 			hsg.Hunskillsinv(p);
 			hsg.Hunskillsinv(p);
 		}
-		else if(ClassData.pc.get(p.getUniqueId()) == 3)
+		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 3)
 		{
 			PalSkillsGui psg = new PalSkillsGui();
 			psg.PalSkillsinv(p);
 			psg.PalSkillsinv(p);
 		}
-		else if(ClassData.pc.get(p.getUniqueId()) == 4)
+		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 4)
 		{
 			SnipSkillsGui l = new SnipSkillsGui();
 			l.Snipskillsinv(p);
 			l.Snipskillsinv(p);
 		}
-		else if(ClassData.pc.get(p.getUniqueId()) == 5)
+		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 5)
 		{
 			LaunSkillsGui l = new LaunSkillsGui();
 			l.Launskillsinv(p);
 			l.Launskillsinv(p);
 		}
-		else if(ClassData.pc.get(p.getUniqueId()) == 6)
+		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 6)
 		{
 			ArchSkillsGui l = new ArchSkillsGui();
 			l.Archskillsinv(p);
 			l.Archskillsinv(p);
 		}
-		else if(ClassData.pc.get(p.getUniqueId()) == 61)
+		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 61)
 		{
 			MedSkillsGui l = new MedSkillsGui();
 			l.Medskillsinv(p);
 			l.Medskillsinv(p);
 		}
-		else if(ClassData.pc.get(p.getUniqueId()) == 7)
+		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 7)
 		{
 			BoxSkillsGui l = new BoxSkillsGui();
 			l.BoxSkillsinv(p);
 			l.BoxSkillsinv(p);
 		}
-		else if(ClassData.pc.get(p.getUniqueId()) == 8)
+		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 8)
 		{
 			WreSkillsGui wrg = new WreSkillsGui();
 			wrg.WreSkillsinv(p);
 			wrg.WreSkillsinv(p);
 		}
-		else if(ClassData.pc.get(p.getUniqueId()) == 9)
+		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 9)
 		{
 			TamSkillsGui tsg = new TamSkillsGui();
 			tsg.TamSkillsinv(p);
 			tsg.TamSkillsinv(p);
 		}
-		else if(ClassData.pc.get(p.getUniqueId()) == 10)
+		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 10)
 		{
 			TaoSkillsGui tag = new TaoSkillsGui();
 			tag.TaoSkillsinv(p);
 			tag.TaoSkillsinv(p);
 		}
-		else if(ClassData.pc.get(p.getUniqueId()) == 11)
+		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 11)
 		{
 			IllSkillsGui ilg = new IllSkillsGui();
 			ilg.IllSkillsinv(p);
 			ilg.IllSkillsinv(p);
 		}
-		else if(ClassData.pc.get(p.getUniqueId()) == 12)
+		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 12)
 		{
 			FireSkillsGui fsg = new FireSkillsGui();
 			fsg.FireSkillsinv(p);
 			fsg.FireSkillsinv(p);
 		}
-		else if(ClassData.pc.get(p.getUniqueId()) == 13)
+		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 13)
 		{
 			WitSkillsGui wsg = new WitSkillsGui();
 			wsg.WitSkillsinv(p);
 			wsg.WitSkillsinv(p);
 		}
-		else if(ClassData.pc.get(p.getUniqueId()) == 14)
+		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 14)
 		{
 			WdcSkillsGui wdg = new WdcSkillsGui();
 			wdg.WdcSkillsinv(p);
 			wdg.WdcSkillsinv(p);
 		}
-		else if(ClassData.pc.get(p.getUniqueId()) == 15)
+		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 15)
 		{
 			CheSkillsGui chg = new CheSkillsGui();
 			chg.CheSkillsinv(p);
 			chg.CheSkillsinv(p);
 		}
-		else if(ClassData.pc.get(p.getUniqueId()) == 16)
+		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 16)
 		{
 			ForSkillsGui fgg = new ForSkillsGui();
 			fgg.ForSkillsinv(p);
 			fgg.ForSkillsinv(p);
 		}
-		else if(ClassData.pc.get(p.getUniqueId()) == 17)
+		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 17)
 		{
 			EngSkillsGui egg = new EngSkillsGui();
 			egg.EngSkillsinv(p);
 			egg.EngSkillsinv(p);
 		}
-		else if(ClassData.pc.get(p.getUniqueId()) == 18)
+		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 18)
 		{
 			CookSkillsGui csg = new CookSkillsGui();
 			csg.CookSkillsinv(p);
 			csg.CookSkillsinv(p);
 		}
-		else if(ClassData.pc.get(p.getUniqueId()) == 19)
+		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 19)
 		{
 			NobSkillsGui nsg = new NobSkillsGui();
 			nsg.NobSkillsinv(p);
 			nsg.NobSkillsinv(p);
 		}
-		else if(ClassData.pc.get(p.getUniqueId()) == 20)
+		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 20)
 		{
 			OceSkillsGui osg = new OceSkillsGui();
 			osg.OceSkillsinv(p);
 			osg.OceSkillsinv(p);
 		}
-		else if(ClassData.pc.get(p.getUniqueId()) == 21)
+		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 21)
 		{
 			FrostSkillsGui fsg = new FrostSkillsGui();
 			fsg.FrostSkillsinv(p);
 			fsg.FrostSkillsinv(p);
 		}
-		else if(ClassData.pc.get(p.getUniqueId()) == 22)
+		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 22)
 		{
 			AngSkillsGui fsg = new AngSkillsGui();
 			fsg.AngSkillsinv(p);
 			fsg.AngSkillsinv(p);
 		}
-		else if(ClassData.pc.get(p.getUniqueId()) == 25)
+		else if(ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 25)
 		{
 			BroSkillsGui bsg = new BroSkillsGui();
 			bsg.BroSkillsinv(p);

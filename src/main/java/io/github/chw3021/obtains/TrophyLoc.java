@@ -44,7 +44,7 @@ public class TrophyLoc implements Serializable, Listener{
             return this;
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            //e.printStackTrace();
             return this;
         }
     }
@@ -60,7 +60,7 @@ public class TrophyLoc implements Serializable, Listener{
 
             String path = new File("").getAbsolutePath();
             TrophyLoc data = new TrophyLoc(HashMultimap.create()).saveData(path +"/plugins/RPGskills/TrophyLoc.data");
-            e.printStackTrace();
+            //e.printStackTrace();
             return data;
         }
     }

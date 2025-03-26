@@ -1474,7 +1474,7 @@ public class Obtained implements Serializable, Listener {
 					new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>())
 							.saveData(path + "/plugins/RPGskills/Obtained.data");
 
-			e.printStackTrace();
+			//e.printStackTrace();
 			return data;
 		}
 	}

@@ -70,7 +70,7 @@ public class WitSkillsData implements Serializable, Listener{
             return this;
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            //e.printStackTrace();
             return this;
         }
     }
@@ -87,7 +87,7 @@ public class WitSkillsData implements Serializable, Listener{
         	
             WitSkillsData data = new WitSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()).saveData(path +"/plugins/RPGskills/WitSkillsData.data");
             
-            e.printStackTrace();
+            //e.printStackTrace();
             return data;
         }
     }

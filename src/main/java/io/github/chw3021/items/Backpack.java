@@ -69,7 +69,7 @@ public class Backpack implements Serializable, Listener{
             return this;
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            //e.printStackTrace();
             String path = new File("").getAbsolutePath();
             new Backpack(HashBasedTable.create()).saveData(path +"/plugins/RPGskills/Backpack.data");
             
@@ -89,7 +89,7 @@ public class Backpack implements Serializable, Listener{
             String path = new File("").getAbsolutePath();
             Backpack data = new Backpack(HashBasedTable.create()).saveData(path +"/plugins/RPGskills/Backpack.data");
             
-            e.printStackTrace();
+            //e.printStackTrace();
             return data;
         }
     }

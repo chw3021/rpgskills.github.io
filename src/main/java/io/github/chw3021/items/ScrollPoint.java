@@ -80,7 +80,7 @@ public class ScrollPoint implements Serializable, Listener{
             return this;
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            //e.printStackTrace();
             return this;
         }
     }
@@ -97,7 +97,7 @@ public class ScrollPoint implements Serializable, Listener{
             String path = new File("").getAbsolutePath();
             ScrollPoint data = new ScrollPoint(new HashMap<UUID, Integer>()).saveData(path +"/plugins/RPGskills/ScrollPoint.data");
             
-            e.printStackTrace();
+            //e.printStackTrace();
             return data;
         }
     }

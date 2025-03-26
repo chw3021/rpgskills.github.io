@@ -112,7 +112,7 @@ public class BuriedTreasureQuest extends Mobs implements Serializable, Quest  {
             return this;
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            //e.printStackTrace();
             return this;
         }
     }
@@ -128,7 +128,7 @@ public class BuriedTreasureQuest extends Mobs implements Serializable, Quest  {
 
             String path = new File("").getAbsolutePath();
             BuriedTreasureQuest data = new BuriedTreasureQuest(HashBasedTable.create()).saveData(path +"/plugins/RPGskills/BuriedTreasureQuest.data");
-            e.printStackTrace();
+            //e.printStackTrace();
             return data;
         }
     }

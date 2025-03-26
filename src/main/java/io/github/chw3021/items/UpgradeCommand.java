@@ -7,10 +7,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+
+import io.github.chw3021.items.armors.Armors;
 import io.github.chw3021.items.weapons.Weapons;
 
 public class UpgradeCommand extends Weapons implements CommandExecutor {
 
+	final static private Armors armors = new Armors();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -41,6 +44,12 @@ public class UpgradeCommand extends Weapons implements CommandExecutor {
         ItemStack upgradedItem4 = hsc(inventory, p);
         ItemStack upgradedItemb = netheritesc(inventory, p);
 
+        ItemStack upgradedArmor1 = armors.csc(inventory, p);
+        ItemStack upgradedArmor2 = armors.nsc(inventory, p);
+        ItemStack upgradedArmor3 = armors.esc(inventory, p);
+        
+        
+        
         if (upgradedItem != null) {
         	Elements.give(upgradedItem, 1, p);
             firstItem.setAmount(firstItem.getAmount() - 1);
@@ -65,8 +74,23 @@ public class UpgradeCommand extends Weapons implements CommandExecutor {
         	Elements.give(upgradedItemb, 1, p);
             firstItem.setAmount(firstItem.getAmount() - 1);
             secondItem.setAmount(secondItem.getAmount() - 1);
+        }
+        else if (upgradedArmor1 != null) {
+        	Elements.give(upgradedArmor1, 1, p);
+            firstItem.setAmount(firstItem.getAmount() - 1);
+            secondItem.setAmount(secondItem.getAmount() - 1);
+        }
+        else if (upgradedArmor2 != null) {
+        	Elements.give(upgradedArmor2, 1, p);
+            firstItem.setAmount(firstItem.getAmount() - 1);
+            secondItem.setAmount(secondItem.getAmount() - 1);
+        }
+        else if (upgradedArmor3 != null) {
+        	Elements.give(upgradedArmor3, 1, p);
+            firstItem.setAmount(firstItem.getAmount() - 1);
+            secondItem.setAmount(secondItem.getAmount() - 1);
         } else {
-        	System.out.println("upgradedItem: " + upgradedItem);
+        	//System.out.println("upgradedItem: " + upgradedItem);
         }
 
         return true;

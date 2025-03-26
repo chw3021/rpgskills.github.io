@@ -71,7 +71,7 @@ public class WdcSkillsData implements Serializable, Listener{
             return this;
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            //e.printStackTrace();
             return this;
         }
     }
@@ -88,7 +88,7 @@ public class WdcSkillsData implements Serializable, Listener{
             String path = new File("").getAbsolutePath();
             WdcSkillsData data = new WdcSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(),  new HashMap<UUID, Integer>()).saveData(path +"/plugins/RPGskills/WdcSkillsData.data");
             
-            e.printStackTrace();
+            //e.printStackTrace();
             return data;
         }
     }

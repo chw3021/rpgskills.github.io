@@ -62,7 +62,7 @@ public class ConfigManager {
         try {
             customConfig.save(customConfigFile);
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
     
@@ -113,7 +113,7 @@ public class ConfigManager {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 

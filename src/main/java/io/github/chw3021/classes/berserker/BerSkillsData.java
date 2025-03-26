@@ -75,7 +75,7 @@ public class BerSkillsData implements Serializable, Listener{
             return this;
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            //e.printStackTrace();
             return this;
         }
     }
@@ -92,7 +92,7 @@ public class BerSkillsData implements Serializable, Listener{
         	
             BerSkillsData data = new BerSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()).saveData(path +"/plugins/RPGskills/BerskillsData.data");
            
-            e.printStackTrace();
+            //e.printStackTrace();
             return data;
         }
     }

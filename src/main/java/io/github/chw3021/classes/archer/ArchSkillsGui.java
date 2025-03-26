@@ -48,7 +48,7 @@ public class ArchSkillsGui extends SkillsGui{
 			else if(Proficiency.getpro(p)<2 && Proficiency.getpro(p)>=1) {
 				itemset("민첩함", Material.BOW, 0, 1, Arrays.asList("사용횟수가 증가합니다", "화살로 적을 맞추면 사용횟수가 1회 충전됩니다"), 9, skillsInv);
 				itemset("상처", Material.ARROW, 0, 1, Arrays.asList("한번더 공격하고 적을 잠시 제압합니다"), 10, skillsInv);
-				itemset("나선화살", Material.SPECTRAL_ARROW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"❈ [대지]","🖮🖰 재입력시 나선화살을 쏩니다", "(피해량은 속사 레벨에 비례합니다)","",ChatColor.BOLD+"10 X "+demical(0.34*(1+asd.RapidFire.get(p.getUniqueId())*0.2))+"D"), 11, skillsInv);
+				itemset("나선화살", Material.SPECTRAL_ARROW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"❈ [대지]","🖮🖰 재입력시 나선화살을 쏩니다", "(피해량은 속사 레벨에 비례합니다)","",ChatColor.BOLD+"10 X "+demical(0.34*(1+asd.RapidFire.getOrDefault(p.getUniqueId(),0)*0.2))+"D"), 11, skillsInv);
 				itemset("흩뿌리기", Material.TARGET, 0, 1, Arrays.asList("발사횟수가 3번으로 증가합니다"), 12, skillsInv);
 				itemset("꽂기", Material.DIRT, 0, 1, Arrays.asList("맞은 적은 잠시 기절합니다"), 13, skillsInv);
 				itemset("쿼드라샷", Material.ARROW, 0, 1, Arrays.asList("발사횟수와 연사력이 증가합니다", "데미지가 증가합니다"), 14, skillsInv);
@@ -64,7 +64,7 @@ public class ArchSkillsGui extends SkillsGui{
 			else {
 				itemset("민첩함", Material.BOW, 0, 1, Arrays.asList("사용횟수가 증가합니다", "화살로 적을 맞추면 사용횟수가 1회 충전됩니다"), 9, skillsInv);
 				itemset("상처", Material.ARROW, 0, 1, Arrays.asList("한번더 공격하고 적을 잠시 제압합니다"), 10, skillsInv);
-				itemset("나선화살", Material.SPECTRAL_ARROW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"❈ [대지]","🖮🖰 재입력시 나선화살을 쏩니다", "(피해량은 속사 레벨에 비례합니다)","",ChatColor.BOLD+"10 X "+demical(0.34*(1+asd.RapidFire.get(p.getUniqueId())*0.2))+"D"), 11, skillsInv);
+				itemset("나선화살", Material.SPECTRAL_ARROW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"❈ [대지]","🖮🖰 재입력시 나선화살을 쏩니다", "(피해량은 속사 레벨에 비례합니다)","",ChatColor.BOLD+"10 X "+demical(0.34*(1+asd.RapidFire.getOrDefault(p.getUniqueId(),0)*0.2))+"D"), 11, skillsInv);
 				itemset("흩뿌리기", Material.TARGET, 0, 1, Arrays.asList("발사횟수가 3번으로 증가합니다"), 12, skillsInv);
 				itemset("꽂기", Material.DIRT, 0, 1, Arrays.asList("맞은 적은 잠시 기절합니다"), 13, skillsInv);
 				itemset("쿼드라샷", Material.ARROW, 0, 1, Arrays.asList("발사횟수와 연사력이 증가합니다", "데미지가 증가합니다"), 14, skillsInv);
@@ -72,7 +72,7 @@ public class ArchSkillsGui extends SkillsGui{
 				itemset("광란의화살", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"❈ [대지]","🖮🖰 웅크리기 + num4", "",ChatColor.BOLD+"(20 x 30) X 0.028D"), 17, skillsInv);
 				
 				itemset("약점공격", Material.BOW, 0, 1, Arrays.asList("주변적을 기절시킨 후 한번더 공격합니다"), 18, skillsInv);
-				itemset("곡사", Material.SPECTRAL_ARROW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"❈ [대지]","🖮🖰 재입력시 곡사을 쏩니다", "(피해량은 속사 레벨에 비례합니다)","",ChatColor.BOLD+"20 X "+demical(0.28*(1+asd.RapidFire.get(p.getUniqueId())*0.16))+"D"), 20, skillsInv);
+				itemset("곡사", Material.SPECTRAL_ARROW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"❈ [대지]","🖮🖰 재입력시 곡사을 쏩니다", "(피해량은 속사 레벨에 비례합니다)","",ChatColor.BOLD+"20 X "+demical(0.28*(1+asd.RapidFire.getOrDefault(p.getUniqueId(),0)*0.16))+"D"), 20, skillsInv);
 				itemset("세븐즈샷", Material.BOW, 0, 1, Arrays.asList("한번에 7개의 화살들을 발사합니다"), 23, skillsInv);
 				itemset("백전불태", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("공격력과 방어력이 증가합니다","광란의화살 대기시간이 감소합니다","위더의 보호막과 엔더맨도 공격이 가능해집니다"), 25, skillsInv);
 				itemset("화살의춤", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"❈ [대지]","🖮🖰 웅크리기 + num5", "",ChatColor.BOLD+"60 X 0.35D"), 26, skillsInv);
@@ -102,7 +102,7 @@ public class ArchSkillsGui extends SkillsGui{
 			else if(Proficiency.getpro(p)<2 && Proficiency.getpro(p)>=1) {
 				itemset("Agility", Material.BOW, 0, 1, Arrays.asList("Increases Use Times", "Charge One Time When You Hit Enemy With Arrow"), 9, skillsInv);
 				itemset("Wound", Material.ARROW, 0, 1, Arrays.asList("Attack Once More & Hold Enemy Shortly"), 10, skillsInv);
-				itemset("SpinShots", Material.SPECTRAL_ARROW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"❈ [Earth]","🖮🖰 Use SpinShots When Use Once More","(Damage Affected By RapidFire)","",ChatColor.BOLD+"10 X "+demical(0.34*(1+asd.RapidFire.get(p.getUniqueId())*0.2))+"D"), 11, skillsInv);
+				itemset("SpinShots", Material.SPECTRAL_ARROW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"❈ [Earth]","🖮🖰 Use SpinShots When Use Once More","(Damage Affected By RapidFire)","",ChatColor.BOLD+"10 X "+demical(0.34*(1+asd.RapidFire.getOrDefault(p.getUniqueId(),0)*0.2))+"D"), 11, skillsInv);
 				itemset("ScatterShot", Material.TARGET, 0, 1, Arrays.asList("Shoot Three Times"), 12, skillsInv);
 				itemset("Pitch", Material.DIRT, 0, 1, Arrays.asList("Pitchs Hit Enemy"), 13, skillsInv);
 				itemset("QuadraShot", Material.ARROW, 0, 1, Arrays.asList("Increases Shoot Time & Rate", "Increases Damage"), 14, skillsInv);
@@ -118,7 +118,7 @@ public class ArchSkillsGui extends SkillsGui{
 			else {
 				itemset("Agility", Material.BOW, 0, 1, Arrays.asList("Increases Use Times", "Charge One Time When You Hit Enemy With Arrow"), 9, skillsInv);
 				itemset("Wound", Material.ARROW, 0, 1, Arrays.asList("Attack Once More & Hold Enemy Shortly"), 10, skillsInv);
-				itemset("SpinShots", Material.SPECTRAL_ARROW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"❈ [Earth]","🖮🖰 Use SpinShots When Use Once More","(Damage Affected By RapidFire)","",ChatColor.BOLD+"10 X "+demical(0.34*(1+asd.RapidFire.get(p.getUniqueId())*0.2))+"D"), 11, skillsInv);
+				itemset("SpinShots", Material.SPECTRAL_ARROW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"❈ [Earth]","🖮🖰 Use SpinShots When Use Once More","(Damage Affected By RapidFire)","",ChatColor.BOLD+"10 X "+demical(0.34*(1+asd.RapidFire.getOrDefault(p.getUniqueId(),0)*0.2))+"D"), 11, skillsInv);
 				itemset("ScatterShot", Material.TARGET, 0, 1, Arrays.asList("Shoot Three Times"), 12, skillsInv);
 				itemset("Pitch", Material.DIRT, 0, 1, Arrays.asList("Pitchs Hit Enemy"), 13, skillsInv);
 				itemset("QuadraShot", Material.ARROW, 0, 1, Arrays.asList("Increases Shoot Time", "Increases Damage"), 14, skillsInv);
@@ -126,7 +126,7 @@ public class ArchSkillsGui extends SkillsGui{
 				itemset("CrazyArrows", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"❈ [Earth]","🖮🖰 Sneaking + num4", "Ult's damage is only affected by your explevels.","",ChatColor.BOLD+"(20 x 30) X 0.028D"), 17, skillsInv);
 				
 				itemset("Blindside ", Material.BOW, 0, 1, Arrays.asList("Stuns Hit Enemies And Shot Once More"), 18, skillsInv);
-				itemset("ArcShot", Material.SPECTRAL_ARROW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"❈ [Earth]","🖮🖰 Use ArcShot When Use Once More","(Damage Affected By RapidFire)","",ChatColor.BOLD+"20 X "+demical(0.28*(1+asd.RapidFire.get(p.getUniqueId())*0.16))+"D"), 20, skillsInv);
+				itemset("ArcShot", Material.SPECTRAL_ARROW, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"❈ [Earth]","🖮🖰 Use ArcShot When Use Once More","(Damage Affected By RapidFire)","",ChatColor.BOLD+"20 X "+demical(0.28*(1+asd.RapidFire.getOrDefault(p.getUniqueId(),0)*0.16))+"D"), 20, skillsInv);
 				itemset("7Shots", Material.BOW, 0, 1, Arrays.asList("Shoot Seven Times"), 23, skillsInv);
 				itemset("Advanced Tactics", Material.ENCHANTED_BOOK, 0, 1, Arrays.asList("Increases Damage & Armor","Decreases CrazyArrows Cooldown","Able To Hit Enderman & Wither's Barrier"), 25, skillsInv);
 				itemset("Arrow Arts", Material.WRITTEN_BOOK, 0, 1, Arrays.asList(ChatColor.UNDERLINE+"❈ [Earth]","🖮🖰 Sneaking + num5", "Ult's damage is only affected by your explevels.","",ChatColor.BOLD+"60 X 0.35D"), 26, skillsInv);

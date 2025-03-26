@@ -85,7 +85,7 @@ public class Classgui implements Serializable {
 		HashMap<UUID, Integer> playerclass = cdata.playerclass;
 		p.setDisplayName(p.getName());
 		p.setPlayerListName(p.getName());
-		switch (playerclass.get(p.getUniqueId())) {
+		switch (playerclass.getOrDefault(p.getUniqueId(),-1)) {
 		case 0: {
 			if (p.getLocale().equalsIgnoreCase("ko_kr")) {
 				if (Proficiency.getpro(p) == 1) { // 대지

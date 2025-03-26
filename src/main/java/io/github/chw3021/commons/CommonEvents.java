@@ -146,7 +146,7 @@ public class CommonEvents extends Mobs implements Listener{
 	public void mobKnockBackReducer(EntityKnockbackByEntityEvent d) {
 		if (d.getSourceEntity() instanceof Player) {
 			Player p = (Player) d.getSourceEntity();
-			if (ClassData.pc.get(p.getUniqueId()) == 16 || ClassData.pc.get(p.getUniqueId()) == 15) {
+			if (ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 16 || ClassData.pc.getOrDefault(p.getUniqueId(),-1) == 15) {
 				d.setFinalKnockback(d.getKnockback().multiply(0.2));
 			}
 		}
@@ -356,57 +356,6 @@ public class CommonEvents extends Mobs implements Listener{
 		}
 	}
 
-	/*
-	final private ArmorStand dinspawn(final Player p,Location l, Double d) {
-
-		final ArmorStand din = l.getWorld().spawn(l, ArmorStand.class, e -> e.setVisible(false));
-		din.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 12,1,false,false));
-		din.setMetadata("din", new FixedMetadataValue(RMain.getInstance(),true));
-		din.setMetadata("fake", new FixedMetadataValue(RMain.getInstance(),true));
-		din.setMetadata("din of "+p.getName(), new FixedMetadataValue(RMain.getInstance(),true));
-		din.setSilent(true);
-		din.setSmall(true);
-		din.setCollidable(false);
-		din.setInvulnerable(true);
-		if(d<0.1) {
-			din.setCustomName( ChatColor.AQUA + String.valueOf(Math.round(d*1000)/1000.000) + " ["+ p.getName()+"]");
-		}
-		else if(d>=9999999) {
-			din.setCustomName( ChatColor.RED + "!9999999!" + " ["+ p.getName()+"]");
-		}
-		else {
-			din.setCustomName( ChatColor.AQUA + String.valueOf(Math.round(d*10)/10.0) + " ["+ p.getName()+"]");
-		}
-		din.setCustomNameVisible(true);
-		return din;
-	}
-
-	final private void damageind(final Player p, final LivingEntity le, Double d) {
-		final Location elf = le.getLocation().clone().add(0, 0.05, 0);
-		final Location pl = p.getLocation().clone().add(0, 0.1, 0);
-		
-		final ArmorStand din = dinspawn(p, disloc(p,le,pl,elf), d);
-
-		ind.put(p.getUniqueId(), din.getUniqueId());
-		if(ind.containsKey(p.getUniqueId()) && ind.get(p.getUniqueId()).size() > 5) {
-			UUID enu = ind.get(p.getUniqueId()).stream().findFirst().get();
-			if(Bukkit.getEntity(enu) != null) {
-				Bukkit.getEntity(enu).remove();
-			}
-			ind.remove(p.getUniqueId(), enu);
-		}
-
-
-		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(RMain.getInstance(), new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				din.remove();
-				ind.remove(p.getUniqueId(), din.getUniqueId());
-			}
-		}, 30);
-	}*/
 	final public Location rightUp(Location pl, Location elf) {
 	    // 몬스터를 바라보는 방향 벡터
 	    Vector monsterDirection = elf.toVector().subtract(pl.toVector()).normalize();

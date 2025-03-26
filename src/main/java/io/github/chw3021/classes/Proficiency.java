@@ -168,8 +168,8 @@ public class Proficiency implements Serializable, Listener{
  
     final static public int getproexp(Player p) {
         Table<UUID, Integer, Integer> proficiencyexp = getProficiencydata().proficiencyexp;
-		if(proficiencyexp.contains(p.getUniqueId(), playerclass.get(p.getUniqueId()))) {
-	        return proficiencyexp.get(p.getUniqueId(), playerclass.get(p.getUniqueId()));
+		if(proficiencyexp.contains(p.getUniqueId(), playerclass.getOrDefault(p.getUniqueId(),-1))) {
+	        return proficiencyexp.get(p.getUniqueId(), playerclass.getOrDefault(p.getUniqueId(),-1));
 		}
 		else {
 			return 0;
@@ -209,7 +209,7 @@ public class Proficiency implements Serializable, Listener{
             return this;
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            //e.printStackTrace();
             return this;
         }
     }
@@ -225,7 +225,7 @@ public class Proficiency implements Serializable, Listener{
 
             String path = new File("").getAbsolutePath();
             Proficiency data = new Proficiency(HashBasedTable.create() ,HashBasedTable.create()).saveData(path +"/plugins/RPGskills/Proficiency.data");
-            e.printStackTrace();
+            //e.printStackTrace();
             return data;
         }
     }
@@ -238,36 +238,36 @@ public class Proficiency implements Serializable, Listener{
 
         Table<UUID, Integer, Integer> proficiencyexp = getProficiencydata().proficiencyexp;
         Table<UUID, Integer, Integer> limit = getProficiencydata().limit;
-		if(proficiencyexp.contains(p.getUniqueId(), playerclass.get(p.getUniqueId()))) {
-			proficiencyexp.put(p.getUniqueId(), playerclass.get(p.getUniqueId()), e.getAmount() + proficiencyexp.get(p.getUniqueId(), playerclass.get(p.getUniqueId())));
+		if(proficiencyexp.contains(p.getUniqueId(), playerclass.getOrDefault(p.getUniqueId(),-1))) {
+			proficiencyexp.put(p.getUniqueId(), playerclass.getOrDefault(p.getUniqueId(),-1), e.getAmount() + proficiencyexp.get(p.getUniqueId(), playerclass.getOrDefault(p.getUniqueId(),-1)));
 		}
 		else {
-			proficiencyexp.put(p.getUniqueId(), playerclass.get(p.getUniqueId()), e.getAmount());
+			proficiencyexp.put(p.getUniqueId(), playerclass.getOrDefault(p.getUniqueId(),-1), e.getAmount());
 		}
 		new Proficiency(proficiencyexp, limit).saveData(path +"/plugins/RPGskills/Proficiency.data");
 		
 		if(e.getAmount() <0) {
 			if(getproexp(p) >= 29315 && getproexp(p) < 155015) {
 		        proint.put(p.getUniqueId(), 1);
-				limit.put(p.getUniqueId(), playerclass.get(p.getUniqueId()), 1);
+				limit.put(p.getUniqueId(), playerclass.getOrDefault(p.getUniqueId(),-1), 1);
 			}
 			else if(getproexp(p) >= 155015) {
 		        proint.put(p.getUniqueId(), 2);
-				limit.put(p.getUniqueId(), playerclass.get(p.getUniqueId()), 2);
+				limit.put(p.getUniqueId(), playerclass.getOrDefault(p.getUniqueId(),-1), 2);
 			}
 			else {
 		        proint.put(p.getUniqueId(), 0);
-				limit.put(p.getUniqueId(), playerclass.get(p.getUniqueId()), 0);
+				limit.put(p.getUniqueId(), playerclass.getOrDefault(p.getUniqueId(),-1), 0);
 			}
 			new Proficiency(proficiencyexp, limit).saveData(path +"/plugins/RPGskills/Proficiency.data");
 			Classgui.LimitBreak(p);
 			return;
 		}
-		if(!limit.contains(p.getUniqueId(), playerclass.get(p.getUniqueId()))) {
-			limit.put(p.getUniqueId(), playerclass.get(p.getUniqueId()), 0);
+		if(!limit.contains(p.getUniqueId(), playerclass.getOrDefault(p.getUniqueId(),-1))) {
+			limit.put(p.getUniqueId(), playerclass.getOrDefault(p.getUniqueId(),-1), 0);
 			new Proficiency(proficiencyexp, limit).saveData(path +"/plugins/RPGskills/Proficiency.data");
 		}
-		if(getproexp(p) >= 29315 && getproexp(p) < 155015 && limit.get(p.getUniqueId(), playerclass.get(p.getUniqueId())) <1) {
+		if(getproexp(p) >= 29315 && getproexp(p) < 155015 && limit.get(p.getUniqueId(), playerclass.getOrDefault(p.getUniqueId(),-1)) <1) {
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 				p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + "첫번째 한계 돌파") , ChatColor.BOLD +(ChatColor.GOLD +"스킬들이 향상되었습니다"), 20, 60, 20);
 			}
@@ -275,11 +275,11 @@ public class Proficiency implements Serializable, Listener{
 				p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + "First Limit Broken") , ChatColor.BOLD +(ChatColor.GOLD +"Your skills have improved"), 20, 60, 20);
 			}
 			p.playSound(p.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 1f, 1f);
-			limit.put(p.getUniqueId(), playerclass.get(p.getUniqueId()), 1);
+			limit.put(p.getUniqueId(), playerclass.getOrDefault(p.getUniqueId(),-1), 1);
 		    proint.put(p.getUniqueId(), 1);
 			new Proficiency(proficiencyexp, limit).saveData(path +"/plugins/RPGskills/Proficiency.data");
 		}
-		if(getproexp(p) >= 155015 && limit.get(p.getUniqueId(), playerclass.get(p.getUniqueId())) <2) {
+		if(getproexp(p) >= 155015 && limit.get(p.getUniqueId(), playerclass.getOrDefault(p.getUniqueId(),-1)) <2) {
 			if(p.getLocale().equalsIgnoreCase("ko_kr")) {
 				p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + "두번째 한계 돌파") , ChatColor.BOLD +(ChatColor.GOLD +"스킬들이 향상되었습니다"), 20, 60, 20);
 			}
@@ -287,7 +287,7 @@ public class Proficiency implements Serializable, Listener{
 				p.sendTitle(ChatColor.BOLD +(ChatColor.GOLD + "Second Limit Broken") , ChatColor.BOLD +(ChatColor.GOLD +"Your skills have improved"), 20, 60, 20);
 			}
 			p.playSound(p.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 1f, 1f);
-			limit.put(p.getUniqueId(), playerclass.get(p.getUniqueId()), 2);
+			limit.put(p.getUniqueId(), playerclass.getOrDefault(p.getUniqueId(),-1), 2);
 	        proint.put(p.getUniqueId(), 2);
 			new Proficiency(proficiencyexp, limit).saveData(path +"/plugins/RPGskills/Proficiency.data");
 		}

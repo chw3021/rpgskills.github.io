@@ -69,7 +69,7 @@ public class LaunSkillsData implements Serializable, Listener{
             return this;
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            //e.printStackTrace();
             return this;
         }
     }
@@ -86,7 +86,7 @@ public class LaunSkillsData implements Serializable, Listener{
             String path = new File("").getAbsolutePath();
             LaunSkillsData data = new LaunSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(),  new HashMap<UUID, Integer>()).saveData(path +"/plugins/RPGskills/LaunskillsData.data");
             
-            e.printStackTrace();
+            //e.printStackTrace();
             return data;
         }
     }

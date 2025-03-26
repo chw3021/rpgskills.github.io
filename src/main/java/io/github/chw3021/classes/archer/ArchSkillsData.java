@@ -74,7 +74,7 @@ public class ArchSkillsData implements Serializable, Listener{
             return this;
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            //e.printStackTrace();
             return this;
         }
     }
@@ -91,7 +91,7 @@ public class ArchSkillsData implements Serializable, Listener{
             String path = new File("").getAbsolutePath();
             ArchSkillsData data = new ArchSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(),  new HashMap<UUID, Integer>()).saveData(path +"/plugins/RPGskills/ArchskillsData.data");
             
-            e.printStackTrace();
+            //e.printStackTrace();
             return data;
         }
     }

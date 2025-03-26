@@ -169,7 +169,7 @@ public class ResourcePackManager implements Listener{
             p.setResourcePack(resourcePackUrl);
             
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 

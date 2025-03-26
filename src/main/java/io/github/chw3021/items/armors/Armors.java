@@ -138,8 +138,15 @@ public class Armors {
 	public ItemStack[] giveElArmors(Integer el, Player p) {
 		ItemStack[] elArmors = new ItemStack[4];
 		Integer cmdt = el +200;
-		for(int i = 0; i <4; i++) {
-			elArmors[i] = elArmor(acArmor(i,p), cmdt , p);
+		if(el == 12) {
+			for(int i = 0; i <4; i++) {
+				elArmors[i] = acArmor(i,p);
+			}
+		}
+		else {
+			for(int i = 0; i <4; i++) {
+				elArmors[i] = elArmor(acArmor(i,p), cmdt , p);
+			}
 		}
 		p.getInventory().addItem(elArmors);
 		
@@ -365,7 +372,7 @@ public class Armors {
 	}
 
 
-	private ItemStack csc(Inventory inv, Player p) {
+	public ItemStack csc(Inventory inv, Player p) {
 	
 		final ItemStack i0 = inv.getItem(0);
 		final ItemStack i1 = inv.getItem(1);
@@ -440,7 +447,7 @@ public class Armors {
 	}
 	
 
-	private ItemStack nsc(Inventory inv, Player p) {
+	public ItemStack nsc(Inventory inv, Player p) {
 
 		final ItemStack i0 = inv.getItem(0);
 		final ItemStack i1 = inv.getItem(1);
@@ -495,7 +502,7 @@ public class Armors {
 		}
 	}
 
-	private ItemStack esc(Inventory inv, Player p) {
+	public ItemStack esc(Inventory inv, Player p) {
 	
 		if (inv.getItem(0) != null
 				&& !inv.getItem(0).getItemMeta().getPersistentDataContainer()

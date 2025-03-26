@@ -76,7 +76,7 @@ public class WreSkillsData implements Serializable, Listener{
             return this;
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            //e.printStackTrace();
             return this;
         }
     }
@@ -93,7 +93,7 @@ public class WreSkillsData implements Serializable, Listener{
             String path = new File("").getAbsolutePath();
             WreSkillsData data = new WreSkillsData(new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>(), new HashMap<UUID, Integer>()).saveData(path +"/plugins/RPGskills/WreSkillsData.data");
             
-            e.printStackTrace();
+            //e.printStackTrace();
             return data;
         }
     }

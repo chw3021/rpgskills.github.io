@@ -101,7 +101,7 @@ public class RaidDifficulties implements Serializable,Listener{
             return this;
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            //e.printStackTrace();
             return this;
         }
     }
@@ -118,7 +118,7 @@ public class RaidDifficulties implements Serializable,Listener{
             String path = new File("").getAbsolutePath();
             RaidDifficulties data = new RaidDifficulties(HashBasedTable.create()).saveData(path +"/plugins/RPGskills/RaidDifficulties.data");
             
-            e.printStackTrace();
+            //e.printStackTrace();
             return data;
         }
     }
