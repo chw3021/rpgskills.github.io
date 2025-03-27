@@ -979,8 +979,8 @@ public class Summoned extends Mobs{
 				}
 				else {
 					as.setText(ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
-					p.sendTitle(ChatColor.RED +"Nether Core Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)", 10,35, 10);
-					p.sendMessage(ChatColor.RED +"Nether Core Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
+					p.sendTitle(ChatColor.RED +"Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)", 10,35, 10);
+					p.sendMessage(ChatColor.RED +"Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
 				}
 			});
 		}
@@ -1041,8 +1041,8 @@ public class Summoned extends Mobs{
 			}
 			else {
 				as.setText(ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
-				p.sendTitle(ChatColor.RED +"Ender Core Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)", 10,35, 10);
-				p.sendMessage(ChatColor.RED +"Ender Core Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
+				p.sendTitle(ChatColor.RED +"Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)", 10,35, 10);
+				p.sendMessage(ChatColor.RED +"Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
 			}
 		}
 		else if(getherotype(rn) instanceof HashSet){
@@ -1060,8 +1060,8 @@ public class Summoned extends Mobs{
 				}
 				else {
 					as.setText(ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
-					p.sendTitle(ChatColor.RED +"Ender Core Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)", 10,35, 10);
-					p.sendMessage(ChatColor.RED +"Ender Core Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
+					p.sendTitle(ChatColor.RED +"Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)", 10,35, 10);
+					p.sendMessage(ChatColor.RED +"Portal Summoned", ChatColor.DARK_RED +"Enter by RightClick(Barehand)");
 				}
 			});
 		}
@@ -1256,7 +1256,6 @@ public class Summoned extends Mobs{
 				}
 			}
 			else {
-				System.out.println(damaged.containsKey(le.getUniqueId()));
 				if(damaged.containsKey(le.getUniqueId())) {
 					HashSet<String> hs = new HashSet<>();
 					damaged.get(le.getUniqueId()).forEach(rn -> {
@@ -1335,7 +1334,6 @@ public class Summoned extends Mobs{
 
 				final Player p = (Player) d.getDamager();
 				damaged.put(le.getUniqueId(), getheroname(p));
-				System.out.println(damaged.containsKey(le.getUniqueId()));
 			}
 			if(d.getDamager() instanceof Projectile) {
 
